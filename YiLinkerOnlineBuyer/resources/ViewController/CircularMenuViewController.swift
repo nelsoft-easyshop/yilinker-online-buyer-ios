@@ -11,37 +11,21 @@ import UIKit
 class CircularMenuViewController: UIViewController {
 
     @IBOutlet weak var shadowView: UIView!
-    @IBOutlet var helpButton: UIView!
-    @IBOutlet var followedSellerButton: UIView!
+    
+    @IBOutlet var helpButton: RoundedButton!
+    @IBOutlet var followedSellerButton: RoundedButton!
     @IBOutlet weak var messagingButton: RoundedButton!
     @IBOutlet weak var customizeShoppingButton: RoundedButton!
     @IBOutlet weak var todaysPromoButton: RoundedButton!
-    
     @IBOutlet weak var categoryButton: RoundedButton!
-    
     @IBOutlet weak var roundedProfileImageView: RoundedImageView!
     @IBOutlet weak var roundedButton: RoundedButton!
     
     @IBOutlet weak var dimView: UIView!
-    
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        dimView.userInteractionEnabled = true
-        let tapGesture: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dissmissViewController")
-        dimView.addGestureRecognizer(tapGesture)
-            
-        roundedButton.layer.zPosition = 10
-        self.dimView.alpha = 0.0
-        self.helpButton.layer.zPosition = 10
-        self.followedSellerButton.layer.zPosition = 10
-        self.messagingButton.layer.zPosition = 10
-        self.customizeShoppingButton.layer.zPosition = 10
-        self.todaysPromoButton.layer.zPosition = 10
-        self.categoryButton.layer.zPosition = 10
-        self.roundedButton.layer.zPosition = 10
-        self.roundedProfileImageView.layer.zPosition = 10
+        self.initDimView()
     }
     
     override func viewDidLayoutSubviews() {
@@ -62,13 +46,7 @@ class CircularMenuViewController: UIViewController {
         let categoryButtonFrame: CGRect = categoryButton.frame
         let roundedProfileImageViewFrame: CGRect = roundedProfileImageView.frame
         
-        helpButton.frame = CGRectMake(helpButton.frame.origin.x, view.frame.size.height + 50, helpButton.frame.size.width, helpButton.frame.size.height)
-        followedSellerButton.frame = CGRectMake(followedSellerButton.frame.origin.x, view.frame.size.height + 50, followedSellerButton.frame.size.width, followedSellerButton.frame.size.height)
-        messagingButton.frame = CGRectMake(messagingButton.frame.origin.x, view.frame.size.height + 50, messagingButton.frame.size.width, messagingButton.frame.size.height)
-        customizeShoppingButton.frame = CGRectMake(customizeShoppingButton.frame.origin.x, view.frame.size.height + 50, customizeShoppingButton.frame.size.width, customizeShoppingButton.frame.size.height)
-        todaysPromoButton.frame = CGRectMake(customizeShoppingButton.frame.origin.x, view.frame.size.height + 50, customizeShoppingButton.frame.size.width, customizeShoppingButton.frame.size.height)
-        categoryButton.frame = CGRectMake(categoryButton.frame.origin.x, view.frame.size.height + 50, categoryButton.frame.size.width, categoryButton.frame.size.height)
-        roundedProfileImageView.frame = CGRectMake(roundedProfileImageView.frame.origin.x, view.frame.size.height + 50, roundedProfileImageView.frame.size.width, roundedProfileImageView.frame.size.height)
+        self.hideControlNotAnimated()
         
         UIView.animateWithDuration(0.5, delay: 0.0, usingSpringWithDamping: 0.8, initialSpringVelocity: 3.0, options: UIViewAnimationOptions.CurveEaseInOut, animations: ({
             self.helpButton.frame = helpFrame
@@ -90,10 +68,22 @@ class CircularMenuViewController: UIViewController {
     }
     
     @IBAction func closeCircularMenuView(sender: AnyObject) {
-        dissmissViewController()
+        dissmissViewControllerAnimated()
     }
     
-    func dissmissViewController() {
+    
+    func hideControlNotAnimated() {
+        self.helpButton.frame = CGRectMake(helpButton.frame.origin.x, view.frame.size.height + 50, helpButton.frame.size.width, helpButton.frame.size.height)
+        self.followedSellerButton.frame = CGRectMake(self.followedSellerButton.frame.origin.x, self.view.frame.size.height + 50, self.followedSellerButton.frame.size.width, self.followedSellerButton.frame.size.height)
+        self.messagingButton.frame = CGRectMake(self.messagingButton.frame.origin.x, self.view.frame.size.height + 50, self.messagingButton.frame.size.width, self.messagingButton.frame.size.height)
+        self.customizeShoppingButton.frame = CGRectMake(self.customizeShoppingButton.frame.origin.x, self.view.frame.size.height + 50, self.customizeShoppingButton.frame.size.width, self.customizeShoppingButton.frame.size.height)
+        self.todaysPromoButton.frame = CGRectMake(self.customizeShoppingButton.frame.origin.x, view.frame.size.height + 50, self.customizeShoppingButton.frame.size.width, self.customizeShoppingButton.frame.size.height)
+        self.categoryButton.frame = CGRectMake(self.categoryButton.frame.origin.x, self.view.frame.size.height + 50, self.categoryButton.frame.size.width, self.categoryButton.frame.size.height)
+        self.roundedProfileImageView.frame = CGRectMake(self.roundedProfileImageView.frame.origin.x, self.view.frame.size.height + 50, self.roundedProfileImageView.frame.size.width, self.roundedProfileImageView.frame.size.height)
+    }
+    
+    
+    func dissmissViewControllerAnimated() {
         UIView.animateWithDuration(0.5, delay: 0.0, usingSpringWithDamping: 0.8, initialSpringVelocity: 3.0, options: UIViewAnimationOptions.CurveEaseInOut, animations: ({
             
             let inset: CGFloat = 64
@@ -136,6 +126,14 @@ class CircularMenuViewController: UIViewController {
             
             
         })
+    }
+    
+    
+    func initDimView() {
+        self.dimView.alpha = 0.0
+        dimView.userInteractionEnabled = true
+        let tapGesture: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dissmissViewController")
+        dimView.addGestureRecognizer(tapGesture)
     }
 
     @IBAction func helpAction(sender: AnyObject) {

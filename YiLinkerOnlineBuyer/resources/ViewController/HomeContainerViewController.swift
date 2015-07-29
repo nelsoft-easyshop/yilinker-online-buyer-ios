@@ -65,7 +65,7 @@ class HomeContainerViewController: UIViewController, UITabBarDelegate {
     }
     
     func initViewControllers() {
-        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let storyBoard: UIStoryboard = UIStoryboard(name: "HomeStoryBoard", bundle: nil)
         homePageCollectionViewController = storyBoard.instantiateViewControllerWithIdentifier("HomePageCollectionViewController") as? HomePageCollectionViewController
         searchViewContoller = storyBoard.instantiateViewControllerWithIdentifier("SearchViewController") as? SearchViewController
         circularMenuViewController = storyBoard.instantiateViewControllerWithIdentifier("CircularMenuViewController") as? CircularMenuViewController
@@ -83,7 +83,7 @@ class HomeContainerViewController: UIViewController, UITabBarDelegate {
         if item.tag != 2{
             setSelectedViewControllerWithIndex(item.tag)
         } else {
-            let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            let storyBoard: UIStoryboard = UIStoryboard(name: "HomeStoryBoard", bundle: nil)
             let animatedViewController: CircularMenuViewController = storyBoard.instantiateViewControllerWithIdentifier("CircularMenuViewController") as! CircularMenuViewController
             
             animatedViewController.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext

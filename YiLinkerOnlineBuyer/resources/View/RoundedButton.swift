@@ -20,4 +20,7 @@ import UIKit
         }
     }
     
+    override func awakeFromNib() {
+        self.layer.zPosition = 10
+    }
 }
