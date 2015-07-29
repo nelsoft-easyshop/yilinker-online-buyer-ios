@@ -10,13 +10,10 @@ import UIKit
 
 @IBDesignable class RoundedButton: UIButton {
 
-    @IBInspectable var cornerRadius: CGFloat {
-        get {
-            return layer.cornerRadius
-        }
-        set {
+    @IBInspectable var cornerRadius: CGFloat = 0 {
+        didSet {
             layer.cornerRadius = self.frame.size.width / 2
-            layer.masksToBounds = newValue > 0
+            layer.masksToBounds = cornerRadius > 0
         }
     }
     
