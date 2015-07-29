@@ -15,6 +15,13 @@
 		0C8A7CA21B6774110039F013 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C8A7C9E1B6774110039F013 /* LaunchScreen.xib */; };
 		0C8A7CA41B677B760039F013 /* SessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8A7CA31B677B760039F013 /* SessionManager.swift */; };
 		0C8A7CA61B677B930039F013 /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8A7CA51B677B930039F013 /* APIManager.swift */; };
+		0C8A7CAF1B6785350039F013 /* HomePageCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8A7CAE1B6785350039F013 /* HomePageCollectionViewController.swift */; };
+		0C8A7CB11B6785C60039F013 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8A7CB01B6785C60039F013 /* SearchViewController.swift */; };
+		0C8A7CB31B6785DD0039F013 /* WishlistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8A7CB21B6785DD0039F013 /* WishlistViewController.swift */; };
+		0C8A7CB51B6785F20039F013 /* CartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8A7CB41B6785F20039F013 /* CartViewController.swift */; };
+		0C8A7CB71B6787A50039F013 /* CircularMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8A7CB61B6787A50039F013 /* CircularMenuViewController.swift */; };
+		0C8A7CBB1B6794160039F013 /* RoundedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8A7CB91B6794160039F013 /* RoundedButton.swift */; };
+		0C8A7CBC1B6794160039F013 /* RoundedImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8A7CBA1B6794160039F013 /* RoundedImageView.swift */; };
 		259317CFB9AE0C865DD7552C /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 10E5F5EBAF8BF56A3DD642A2 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -43,6 +50,13 @@
 		0C8A7CA31B677B760039F013 /* SessionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionManager.swift; sourceTree = "<group>"; };
 		0C8A7CA51B677B930039F013 /* APIManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
 		0C8A7CA71B677BB10039F013 /* YiLinkerOnlineBuyer-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "YiLinkerOnlineBuyer-Bridging-Header.h"; path = "../../YiLinkerOnlineBuyer-Bridging-Header.h"; sourceTree = "<group>"; };
+		0C8A7CAE1B6785350039F013 /* HomePageCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomePageCollectionViewController.swift; sourceTree = "<group>"; };
+		0C8A7CB01B6785C60039F013 /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
+		0C8A7CB21B6785DD0039F013 /* WishlistViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WishlistViewController.swift; sourceTree = "<group>"; };
+		0C8A7CB41B6785F20039F013 /* CartViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CartViewController.swift; sourceTree = "<group>"; };
+		0C8A7CB61B6787A50039F013 /* CircularMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircularMenuViewController.swift; sourceTree = "<group>"; };
+		0C8A7CB91B6794160039F013 /* RoundedButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoundedButton.swift; sourceTree = "<group>"; };
+		0C8A7CBA1B6794160039F013 /* RoundedImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoundedImageView.swift; sourceTree = "<group>"; };
 		10E5F5EBAF8BF56A3DD642A2 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		9140515446F9D97EC8790C7B /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -124,11 +138,11 @@
 		0C8A7C931B6774110039F013 /* resources */ = {
 			isa = PBXGroup;
 			children = (
+				0C8A7CB81B6794160039F013 /* View */,
 				0C8A7C941B6774110039F013 /* AppDelegate */,
 				0C8A7C961B6774110039F013 /* Helper */,
 				0C8A7C971B6774110039F013 /* Model */,
 				0C8A7C981B6774110039F013 /* StoryBoard */,
-				0C8A7C9A1B6774110039F013 /* View */,
 				0C8A7C9B1B6774110039F013 /* ViewController */,
 				0C8A7C9D1B6774110039F013 /* Xib */,
 			);
@@ -168,17 +182,15 @@
 			path = StoryBoard;
 			sourceTree = "<group>";
 		};
-		0C8A7C9A1B6774110039F013 /* View */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
 		0C8A7C9B1B6774110039F013 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
 				0C8A7C9C1B6774110039F013 /* HomeContainerViewController.swift */,
+				0C8A7CAE1B6785350039F013 /* HomePageCollectionViewController.swift */,
+				0C8A7CB01B6785C60039F013 /* SearchViewController.swift */,
+				0C8A7CB21B6785DD0039F013 /* WishlistViewController.swift */,
+				0C8A7CB41B6785F20039F013 /* CartViewController.swift */,
+				0C8A7CB61B6787A50039F013 /* CircularMenuViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -189,6 +201,15 @@
 				0C8A7C9E1B6774110039F013 /* LaunchScreen.xib */,
 			);
 			path = Xib;
+			sourceTree = "<group>";
+		};
+		0C8A7CB81B6794160039F013 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				0C8A7CB91B6794160039F013 /* RoundedButton.swift */,
+				0C8A7CBA1B6794160039F013 /* RoundedImageView.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		4B7F3416B5D5AAFB972FEF8E /* Pods */ = {
@@ -343,9 +364,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0C8A7CB11B6785C60039F013 /* SearchViewController.swift in Sources */,
+				0C8A7CBB1B6794160039F013 /* RoundedButton.swift in Sources */,
 				0C8A7CA61B677B930039F013 /* APIManager.swift in Sources */,
 				0C8A7CA11B6774110039F013 /* HomeContainerViewController.swift in Sources */,
+				0C8A7CB31B6785DD0039F013 /* WishlistViewController.swift in Sources */,
+				0C8A7CB51B6785F20039F013 /* CartViewController.swift in Sources */,
 				0C8A7C9F1B6774110039F013 /* AppDelegate.swift in Sources */,
+				0C8A7CB71B6787A50039F013 /* CircularMenuViewController.swift in Sources */,
+				0C8A7CBC1B6794160039F013 /* RoundedImageView.swift in Sources */,
+				0C8A7CAF1B6785350039F013 /* HomePageCollectionViewController.swift in Sources */,
 				0C8A7CA41B677B760039F013 /* SessionManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
