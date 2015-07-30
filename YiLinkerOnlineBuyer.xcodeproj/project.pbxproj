@@ -15,6 +15,9 @@
 		0C8A7CA21B6774110039F013 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C8A7C9E1B6774110039F013 /* LaunchScreen.xib */; };
 		0C8A7CA41B677B760039F013 /* SessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8A7CA31B677B760039F013 /* SessionManager.swift */; };
 		0C8A7CA61B677B930039F013 /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8A7CA51B677B930039F013 /* APIManager.swift */; };
+		0CB9DB071B6A1E6600F2CA13 /* StartPageStoryBoard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0CB9DB061B6A1E6600F2CA13 /* StartPageStoryBoard.storyboard */; };
+		0CB9DB391B6A3DC700F2CA13 /* StartPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CB9DB381B6A3DC700F2CA13 /* StartPageViewController.swift */; };
+		0CB9DB3B1B6A3EA100F2CA13 /* StarterContentPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CB9DB3A1B6A3EA100F2CA13 /* StarterContentPageViewController.swift */; };
 		259317CFB9AE0C865DD7552C /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 10E5F5EBAF8BF56A3DD642A2 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -43,6 +46,9 @@
 		0C8A7CA31B677B760039F013 /* SessionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionManager.swift; sourceTree = "<group>"; };
 		0C8A7CA51B677B930039F013 /* APIManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
 		0C8A7CA71B677BB10039F013 /* YiLinkerOnlineBuyer-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "YiLinkerOnlineBuyer-Bridging-Header.h"; path = "../../YiLinkerOnlineBuyer-Bridging-Header.h"; sourceTree = "<group>"; };
+		0CB9DB061B6A1E6600F2CA13 /* StartPageStoryBoard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = StartPageStoryBoard.storyboard; sourceTree = "<group>"; };
+		0CB9DB381B6A3DC700F2CA13 /* StartPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartPageViewController.swift; sourceTree = "<group>"; };
+		0CB9DB3A1B6A3EA100F2CA13 /* StarterContentPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StarterContentPageViewController.swift; sourceTree = "<group>"; };
 		10E5F5EBAF8BF56A3DD642A2 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		9140515446F9D97EC8790C7B /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -164,6 +170,7 @@
 			isa = PBXGroup;
 			children = (
 				0C8A7C991B6774110039F013 /* Main.storyboard */,
+				0CB9DB061B6A1E6600F2CA13 /* StartPageStoryBoard.storyboard */,
 			);
 			path = StoryBoard;
 			sourceTree = "<group>";
@@ -179,6 +186,8 @@
 			isa = PBXGroup;
 			children = (
 				0C8A7C9C1B6774110039F013 /* HomeContainerViewController.swift */,
+				0CB9DB381B6A3DC700F2CA13 /* StartPageViewController.swift */,
+				0CB9DB3A1B6A3EA100F2CA13 /* StarterContentPageViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -291,6 +300,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0C8A7C7B1B6772670039F013 /* Images.xcassets in Resources */,
+				0CB9DB071B6A1E6600F2CA13 /* StartPageStoryBoard.storyboard in Resources */,
 				0C8A7CA21B6774110039F013 /* LaunchScreen.xib in Resources */,
 				0C8A7CA01B6774110039F013 /* Main.storyboard in Resources */,
 			);
@@ -343,10 +353,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0CB9DB391B6A3DC700F2CA13 /* StartPageViewController.swift in Sources */,
 				0C8A7CA61B677B930039F013 /* APIManager.swift in Sources */,
 				0C8A7CA11B6774110039F013 /* HomeContainerViewController.swift in Sources */,
 				0C8A7C9F1B6774110039F013 /* AppDelegate.swift in Sources */,
 				0C8A7CA41B677B760039F013 /* SessionManager.swift in Sources */,
+				0CB9DB3B1B6A3EA100F2CA13 /* StarterContentPageViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <scenes>
+        <!--Start Page View Controller-->
+        <scene sceneID="B9m-V8-sQ5">
+            <objects>
+                <viewController storyboardIdentifier="StartPageViewController" id="bWQ-bx-9Zw" customClass="StartPageViewController" customModule="YiLinkerOnlineBuyer" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="RGa-5u-GFd"/>
+                        <viewControllerLayoutGuide type="bottom" id="KZQ-Gd-cRr"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="BWs-Xk-YUY">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="YiLinker-main" translatesAutoresizingMaskIntoConstraints="NO" id="Vxb-gR-hzl">
+                                <rect key="frame" x="124" y="247" width="126" height="116"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="116" id="1b0-7W-L7r"/>
+                                    <constraint firstAttribute="width" constant="126" id="6xq-bd-n7Y"/>
+                                </constraints>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nyD-bG-MsP">
+                                <rect key="frame" x="10" y="580" width="354" height="59"/>
+                                <color key="backgroundColor" red="0.35294117647058826" green="0.12156862745098039" blue="0.45882352941176469" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="59" id="tNq-Fz-FoX"/>
+                                </constraints>
+                                <state key="normal" title="GET STARTED">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="nyD-bG-MsP" firstAttribute="leading" secondItem="BWs-Xk-YUY" secondAttribute="leadingMargin" constant="-6" id="1OU-pL-4w7"/>
+                            <constraint firstAttribute="centerX" secondItem="Vxb-gR-hzl" secondAttribute="centerX" id="2fP-JU-1mt"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="nyD-bG-MsP" secondAttribute="trailing" constant="-5" id="8NW-9s-aiP"/>
+                            <constraint firstItem="KZQ-Gd-cRr" firstAttribute="top" secondItem="nyD-bG-MsP" secondAttribute="bottom" constant="28" id="m0v-OQ-x5F"/>
+                            <constraint firstAttribute="centerY" secondItem="Vxb-gR-hzl" secondAttribute="centerY" constant="28.5" id="s27-xf-F6V"/>
+                        </constraints>
+                    </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <connections>
+                        <outlet property="companyLogoImageView" destination="Vxb-gR-hzl" id="YX4-wU-7oy"/>
+                        <outlet property="getStartedButton" destination="nyD-bG-MsP" id="qr4-U5-gvm"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="nlk-Ow-eKL" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-46.5" y="211.5"/>
+        </scene>
+        <!--Page View Controller-->
+        <scene sceneID="2l6-z7-Jns">
+            <objects>
+                <pageViewController storyboardIdentifier="PageViewController" autoresizesArchivedViewToFullSize="NO" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="5cy-fP-0nf" sceneMemberID="viewController">
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                </pageViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="737-Rb-D2r" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="509.5" y="211.5"/>
+        </scene>
+        <!--Starter Content Page View Controller-->
+        <scene sceneID="6Fv-ov-Eln">
+            <objects>
+                <viewController storyboardIdentifier="StarterContentPageViewController" id="YDj-RV-pIy" customClass="StarterContentPageViewController" customModule="YiLinkerOnlineBuyer" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="f4W-FB-fQJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="pfI-LL-zSh"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="mjO-Ih-OC2">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="shoes" translatesAutoresizingMaskIntoConstraints="NO" id="grn-sk-Had">
+                                <rect key="frame" x="-7" y="-7" width="388" height="680"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="SHOES IN ONE PLACE" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z2I-8I-Ow5">
+                                <rect key="frame" x="85" y="92" width="205" height="21"/>
+                                <fontDescription key="fontDescription" name="DINAlternate-Bold" family="DIN Alternate" pointSize="20"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="UsB-xC-f8Q" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="523.5" y="1036.5"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="YiLinker-main" width="537" height="498"/>
+        <image name="shoes" width="640" height="1136"/>
+    </resources>
+</document>
