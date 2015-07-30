@@ -84,14 +84,21 @@ class HomeContainerViewController: UIViewController, UITabBarDelegate {
             setSelectedViewControllerWithIndex(item.tag)
         } else {
             let storyBoard: UIStoryboard = UIStoryboard(name: "HomeStoryBoard", bundle: nil)
-            let animatedViewController: CircularMenuViewController = storyBoard.instantiateViewControllerWithIdentifier("CircularMenuViewController") as! CircularMenuViewController
+            var animatedViewController: CircularMenuViewController?
             
-            animatedViewController.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
-            animatedViewController.providesPresentationContextTransitionStyle = true
-            animatedViewController.definesPresentationContext = true
-            animatedViewController.view.backgroundColor = UIColor.clearColor()
+            if IphoneType.isIphone4() {
+                animatedViewController  = storyBoard.instantiateViewControllerWithIdentifier("CircularMenuViewController4s") as? CircularMenuViewController
+
+            } else {
+                animatedViewController  = storyBoard.instantiateViewControllerWithIdentifier("CircularMenuViewController") as? CircularMenuViewController
+            }
             
-            self.presentViewController(animatedViewController, animated: false, completion: nil)
+            animatedViewController!.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
+            animatedViewController!.providesPresentationContextTransitionStyle = true
+            animatedViewController!.definesPresentationContext = true
+            animatedViewController!.view.backgroundColor = UIColor.clearColor()
+            
+            self.presentViewController(animatedViewController!, animated: false, completion: nil)
         }
     }
     

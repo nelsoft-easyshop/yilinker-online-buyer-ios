@@ -24,6 +24,7 @@
 		0C8A7CBC1B6794160039F013 /* RoundedImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8A7CBA1B6794160039F013 /* RoundedImageView.swift */; };
 		0C8E47711B68999400857816 /* RoundedLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8E47701B68999400857816 /* RoundedLabel.swift */; };
 		0C8E47731B689CDE00857816 /* SemiRoundedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8E47721B689CDE00857816 /* SemiRoundedButton.swift */; };
+		0CB9DB051B6A140F00F2CA13 /* IPhoneType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CB9DB041B6A140F00F2CA13 /* IPhoneType.swift */; };
 		259317CFB9AE0C865DD7552C /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 10E5F5EBAF8BF56A3DD642A2 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -61,6 +62,7 @@
 		0C8A7CBA1B6794160039F013 /* RoundedImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoundedImageView.swift; sourceTree = "<group>"; };
 		0C8E47701B68999400857816 /* RoundedLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoundedLabel.swift; sourceTree = "<group>"; };
 		0C8E47721B689CDE00857816 /* SemiRoundedButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SemiRoundedButton.swift; sourceTree = "<group>"; };
+		0CB9DB041B6A140F00F2CA13 /* IPhoneType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IPhoneType.swift; path = ../ViewController/IPhoneType.swift; sourceTree = "<group>"; };
 		10E5F5EBAF8BF56A3DD642A2 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		9140515446F9D97EC8790C7B /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -164,6 +166,7 @@
 		0C8A7C961B6774110039F013 /* Helper */ = {
 			isa = PBXGroup;
 			children = (
+				0CB9DB041B6A140F00F2CA13 /* IPhoneType.swift */,
 				0C8A7CA71B677BB10039F013 /* YiLinkerOnlineBuyer-Bridging-Header.h */,
 				0C8A7CA51B677B930039F013 /* APIManager.swift */,
 				0C8A7CA31B677B760039F013 /* SessionManager.swift */,
@@ -376,6 +379,7 @@
 				0C8A7CA61B677B930039F013 /* APIManager.swift in Sources */,
 				0C8E47731B689CDE00857816 /* SemiRoundedButton.swift in Sources */,
 				0C8A7CA11B6774110039F013 /* HomeContainerViewController.swift in Sources */,
+				0CB9DB051B6A140F00F2CA13 /* IPhoneType.swift in Sources */,
 				0C8A7CB31B6785DD0039F013 /* WishlistViewController.swift in Sources */,
 				0C8A7CB51B6785F20039F013 /* CartViewController.swift in Sources */,
 				0C8A7C9F1B6774110039F013 /* AppDelegate.swift in Sources */,
