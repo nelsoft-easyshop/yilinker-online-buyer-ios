@@ -9,6 +9,10 @@
 import UIKit
 
 class ViewMoreFooterCollectionViewCell: UICollectionViewCell {
+    
+    var viewMoreAction: String = ""
+    var viewMoreSlug: String = ""
+    var viewMoreUrl: String = ""
 
     override func awakeFromNib() {
         super.awakeFromNib()
