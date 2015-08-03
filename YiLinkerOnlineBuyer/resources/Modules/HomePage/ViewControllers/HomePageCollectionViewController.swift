@@ -14,7 +14,7 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
     
     var section1: [String] = ["banner1", "sub-banner1", "sub-banner2", "sub-banner3"]
     var section2: [String] = ["sub-banner1", "sub-banner1", "sub-banner2"]
-    var section3: [String] = ["six_item_1", "six_item_2", "six_item_3", "six_item_4", "six_item_5", "six_item_6"]
+    var section3: [String] = ["six_item_1", "six_item_2", "six_item_3", "six_item_4", "six_item_5", "six_item_3"]
     var section4: [String] = ["six_item_1", "six_item_1", "six_item_1", "six_item_1", "six_item_1", "six_item_1"]
     var section5: [String] = ["six_item_1", "six_item_1"]
     var section6: [String] = ["six_item_1", "six_item_1", "six_item_1"]
@@ -26,6 +26,7 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
     var section9: [String] = ["six_item_1", "six_item_2", "six_item_3", "six_item_4", "six_item_5", "six_item_6"]
     
     var section10: [String] = ["six_item_1", "six_item_2", "six_item_3", "six_item_4", "six_item_5", "six_item_6"]
+    var section11: [String] = ["six_item_1", "six_item_1", "six_item_1", "six_item_1", "six_item_1"]
     
     var sections: NSMutableArray?
     var collectionView: UICollectionView?
@@ -44,6 +45,7 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
         self.sections?.addObject(section8)
         self.sections?.addObject(section9)
         self.sections?.addObject(section10)
+        self.sections?.addObject(section11)
     }
     
     
@@ -192,6 +194,13 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
             let sectionItems: NSArray = self.sections?.objectAtIndex(indexPath.section) as! NSArray
             
             return twoColumnGridCollectionViewCell
+        } else if indexPath.section == 10 {
+            let fullImageCollectionViewCell: FullImageCollectionViewCell = self.collectionView?.dequeueReusableCellWithReuseIdentifier("FullImageCollectionViewCell", forIndexPath: indexPath) as! FullImageCollectionViewCell
+            
+            let sectionItems: NSArray = self.sections?.objectAtIndex(indexPath.section) as! NSArray
+            
+            fullImageCollectionViewCell.itemProductImageView.image = UIImage(named: sectionItems[indexPath.row] as! String)
+            return fullImageCollectionViewCell
         } else {
             
             let fullImageCollectionViewCell: FullImageCollectionViewCell = self.collectionView?.dequeueReusableCellWithReuseIdentifier("FullImageCollectionViewCell", forIndexPath: indexPath) as! FullImageCollectionViewCell
@@ -206,7 +215,7 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
     
     func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
         if kind == "UICollectionElementKindSectionFooter" {
-            if indexPath.section == 1 || indexPath.section == 2 || indexPath.section == 3 || indexPath.section == 4 {
+            if indexPath.section == 1 || indexPath.section == 2 || indexPath.section == 3 || indexPath.section == 4 || indexPath.section == 10 {
                 let footerView = self.collectionView?.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: "ViewMoreFooterCollectionViewCell", forIndexPath: indexPath) as! ViewMoreFooterCollectionViewCell
                 
                 return footerView
@@ -215,7 +224,7 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
             }
             
         } else {
-            if indexPath.section == 1 || indexPath.section == 2 || indexPath.section == 3 || indexPath.section == 4 || indexPath.section == 5 || indexPath.section == 6 || indexPath.section == 7 || indexPath.section == 8 || indexPath.section == 9 {
+            if indexPath.section == 1 || indexPath.section == 2 || indexPath.section == 3 || indexPath.section == 4 || indexPath.section == 5 || indexPath.section == 6 || indexPath.section == 7 || indexPath.section == 8 || indexPath.section == 9 || indexPath.section == 10 {
                 let headerView = self.collectionView?.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: "LayoutHeaderCollectionViewCell", forIndexPath: indexPath) as! LayoutHeaderCollectionViewCell
                 
                 return headerView

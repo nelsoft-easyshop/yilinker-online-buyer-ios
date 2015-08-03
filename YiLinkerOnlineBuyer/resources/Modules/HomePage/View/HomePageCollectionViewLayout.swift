@@ -43,6 +43,7 @@ class HomePageCollectionViewLayout: UICollectionViewLayout {
         self.sellerLayout(7)
         self.newSellerScrollableImageLayout(8)
         self.twoColumnGridLayout(9)
+        self.fourImageLayout(10)
     }
     
     
@@ -229,17 +230,9 @@ class HomePageCollectionViewLayout: UICollectionViewLayout {
         for var item = 0; item < numberOfItems; item++ {
             let indexPath = NSIndexPath(forItem: item, inSection: section)
             let attribute = UICollectionViewLayoutAttributes(forCellWithIndexPath: indexPath)
-            
             if item == 0 {
                 itemSize = CGSizeMake(halfScreenWidth, 95)
-            } else if item == 1 || item == 2 {
-                itemSize = CGSizeMake((halfScreenWidth - self.horizontalInset) / 2 , 80)
-                if item == 1 {
-                    yPosition = yPosition + self.horizontalInset + 95
-                } else {
-                    xPosition = self.horizontalInset + itemSize.width + xPosition
-                }
-            } else if item == 3 {
+            } else if item == 1 {
                 let cellItemHeight: CGFloat = 182
                 let cellItemWidth: CGFloat = halfScreenWidth / 2.2
                 
@@ -247,17 +240,24 @@ class HomePageCollectionViewLayout: UICollectionViewLayout {
                 yPosition = defaultYPosition + verticalInset
                 
                 itemSize = CGSizeMake(cellItemWidth, cellItemHeight)
-            } else {
+            } else if item == 2 {
                 let cellItemWidth: CGFloat = (halfScreenWidth / 2 )
                 let cellHeight: CGFloat = (182 - verticalInset) / 2
-
+                
                 xPosition = halfScreenWidth + (halfScreenWidth / 2.2) + (self.horizontalInset * 3)
-                
-                if item == 5 {
-                    yPosition = yPosition + itemSize.height + self.verticalInset
-                }
-                
                 itemSize = CGSizeMake(cellItemWidth, cellHeight)
+            } else if item == 3 || item == 4 {
+                itemSize = CGSizeMake((halfScreenWidth - self.horizontalInset) / 2 , 80)
+                if item == 3 {
+                    yPosition = yPosition + self.horizontalInset + 95
+                    xPosition = self.horizontalInset
+                } else {
+                    xPosition = xPosition + itemSize.width + horizontalInset
+                }
+
+            } else {
+                itemSize = CGSizeMake((halfScreenWidth) / 2 , 80)
+                xPosition = halfScreenWidth + (halfScreenWidth / 2.2) + (self.horizontalInset * 3)
             }
             
             attribute.frame = CGRectMake(xPosition, yPosition, itemSize.width, itemSize.height)
@@ -309,42 +309,43 @@ class HomePageCollectionViewLayout: UICollectionViewLayout {
         for var item = 0; item < numberOfItems; item++ {
             let indexPath = NSIndexPath(forItem: item, inSection: section)
             let attribute = UICollectionViewLayoutAttributes(forCellWithIndexPath: indexPath)
-            
             if item == 0 || item == 1 {
                 itemSize = CGSizeMake((halfScreenWidth - self.horizontalInset) / 2 , 80)
                 if item == 1 {
                     xPosition = self.horizontalInset + itemSize.width + xPosition
                 }
-            } else if item == 2 {
-                xPosition = self.horizontalInset
-                yPosition = yPosition + itemSize.height + self.verticalInset
-                itemSize = CGSizeMake(halfScreenWidth, 95)
-            } else if item == 3 || item == 4 {
+            } else if item == 2 || item == 3 {
                 let cellItemWidth: CGFloat = (halfScreenWidth / 2 )
                 var cellHeight: CGFloat = 0
                 
-                if item == 4 {
-                    yPosition = yPosition + itemSize.height + self.verticalInset
-                    cellHeight = 95
-                } else {
+                if item == 2 {
                     cellHeight = 80
                     xPosition = xPosition + itemSize.width + self.horizontalInset
+                    itemSize = CGSizeMake(cellItemWidth, cellHeight)
+                } else {
+                    let cellItemWidth: CGFloat = (halfScreenWidth / 2 )
+                    var cellHeight: CGFloat = 0
+                    
+                    xPosition = xPosition + self.horizontalInset + cellItemWidth
                     yPosition = defaultYPosition + self.verticalInset
+                    itemSize = CGSizeMake(halfScreenWidth / 2.2, 180)
                 }
                 
-                itemSize = CGSizeMake(cellItemWidth, cellHeight)
-                
+            } else if item == 4 {
+                xPosition = self.horizontalInset
+                yPosition = yPosition + 80 + self.verticalInset
+                itemSize = CGSizeMake(halfScreenWidth, 95)
             } else if item == 5 {
                 let cellItemWidth: CGFloat = (halfScreenWidth / 2 )
-                var cellHeight: CGFloat = 0
+                var cellHeight: CGFloat = 95
                 
-                xPosition = xPosition + self.horizontalInset + cellItemWidth
-                yPosition = defaultYPosition + self.verticalInset
-                itemSize = CGSizeMake(halfScreenWidth / 2.2, 180)
+                xPosition = horizontalInset + itemSize.width + horizontalInset
+                itemSize = CGSizeMake(cellItemWidth, cellHeight)
             }
-            
+
+
             attribute.frame = CGRectMake(xPosition, yPosition, itemSize.width, itemSize.height)
-            
+
             let key: String = self.layoutKeyForIndexPath(indexPath)
             self.layoutAttributes[key] = attribute
         }
@@ -694,6 +695,78 @@ class HomePageCollectionViewLayout: UICollectionViewLayout {
         
         let decorationKey: String = self.layoutKeyForDecorationViewAtIndexPath(path)
         self.layoutAttributes[decorationKey] = decorationViewAttribute
+    }
+    
+    
+    func fourImageLayout(section: Int) {
+        var defaultYPosition = self.currentScreenHeigth
+        
+        let path = NSIndexPath(forItem: 0, inSection: section)
+        
+        //Add decoration view
+        let decorationViewAttribute: UICollectionViewLayoutAttributes = UICollectionViewLayoutAttributes(forDecorationViewOfKind: "SectionBackground", withIndexPath: path)
+        decorationViewAttribute.frame = CGRectMake(0, defaultYPosition + self.headerViewHeight, screenRect!.width, sectionHeight + 10)
+        decorationViewAttribute.zIndex = -1
+        let decorationKey: String = self.layoutKeyForDecorationViewAtIndexPath(path)
+        self.layoutAttributes[decorationKey] = decorationViewAttribute
+        
+        //Add header view
+        let headerAttribute = UICollectionViewLayoutAttributes(forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withIndexPath: path)
+        let headerHeight = self.headerViewHeight
+        headerAttribute.frame = CGRectMake(0, defaultYPosition, self.collectionView!.frame.size.width, headerHeight)
+        let headerKey = layoutKeyForHeaderAtIndexPath(path)
+        self.layoutAttributes[headerKey] = headerAttribute
+        
+        //Add cells
+        var xPosition: CGFloat = self.horizontalInset
+        defaultYPosition = defaultYPosition + headerViewHeight
+        var yPosition: CGFloat = defaultYPosition + self.verticalInset
+        
+        let numberOfItems = self.collectionView?.numberOfItemsInSection(section)
+        let initialMargin: CGFloat = 8
+        
+        let fullSectionItemHeight: CGFloat = 225
+        var itemSize: CGSize = CGSizeZero
+        
+        for var item = 0; item < numberOfItems; item++ {
+            let indexPath = NSIndexPath(forItem: item, inSection: section)
+            let attribute = UICollectionViewLayoutAttributes(forCellWithIndexPath: indexPath)
+            
+            if item == 0 {
+                let screenWidth: CGFloat =  screenRect!.width * 0.35
+                itemSize = CGSizeMake(screenWidth, fullSectionItemHeight)
+            } else if item == 1 {
+                xPosition = xPosition + horizontalInset + itemSize.width
+                let screenWidth: CGFloat =  screenRect!.width - (self.horizontalInset) - (self.screenRect!.width * 0.35)
+                itemSize = CGSizeMake(screenWidth - 10, 110)
+            } else if item == 2 {
+                let screenWidth: CGFloat =  (itemSize.width - self.horizontalInset) / 2
+                itemSize = CGSizeMake(screenWidth, 110)
+                yPosition = yPosition + self.verticalInset + itemSize.height
+            } else if item == 3 {
+                itemSize = CGSizeMake(itemSize.width, 110)
+                xPosition = xPosition + self.horizontalInset + itemSize.width
+            }
+            
+            attribute.frame = CGRectMake(xPosition, yPosition, itemSize.width, itemSize.height)
+            
+            let key: String = self.layoutKeyForIndexPath(indexPath)
+            self.layoutAttributes[key] = attribute
+        }
+        
+        yPosition = yPosition + itemSize.height + self.verticalInset
+        xPosition = 0
+        
+        //Add footer view
+        let footerAttribute: UICollectionViewLayoutAttributes = UICollectionViewLayoutAttributes(forSupplementaryViewOfKind: UICollectionElementKindSectionFooter, withIndexPath: path)
+        footerAttribute.frame = CGRectMake(xPosition, yPosition, self.screenRect!.width, self.footerHeight)
+        let footerKey = layoutKeyForFooterAtIndexPath(path)
+        self.layoutAttributes[footerKey] = footerAttribute
+        
+        let height: CGFloat = yPosition + footerAttribute.frame.size.height
+        
+        self.currentScreenHeigth = height
+        self.contentSize = CGSizeMake(screenRect!.width, self.currentScreenHeigth)
     }
 
     

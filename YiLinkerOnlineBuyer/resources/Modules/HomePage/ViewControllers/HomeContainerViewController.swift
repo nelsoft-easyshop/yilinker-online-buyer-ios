@@ -145,7 +145,6 @@ class HomeContainerViewController: UIViewController, UITabBarDelegate {
             counter++
         }
         scrollView.showsHorizontalScrollIndicator = false
-        scrollView.pagingEnabled = true
         self.navigationController?.navigationBar.addSubview(scrollView)
     }
     
