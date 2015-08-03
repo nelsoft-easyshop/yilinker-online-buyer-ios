@@ -176,6 +176,7 @@
 				0C8A7C931B6774110039F013 /* resources */,
 				0C8A7C7A1B6772670039F013 /* Images.xcassets */,
 				0C8A7C711B6772670039F013 /* Supporting Files */,
+				0C8A7C941B6774110039F013 /* System */,
 			);
 			path = YiLinkerOnlineBuyer;
 			sourceTree = "<group>";
@@ -210,7 +211,6 @@
 			children = (
 				0CE928551B6F81C300882B50 /* CommonFiles */,
 				0CE9285F1B6F81C300882B50 /* Modules */,
-				0C8A7C941B6774110039F013 /* AppDelegate */,
 				0C8A7C961B6774110039F013 /* Helper */,
 				0C8A7C971B6774110039F013 /* Model */,
 				0C8A7C981B6774110039F013 /* StoryBoard */,
@@ -218,12 +218,13 @@
 			path = resources;
 			sourceTree = "<group>";
 		};
-		0C8A7C941B6774110039F013 /* AppDelegate */ = {
+		0C8A7C941B6774110039F013 /* System */ = {
 			isa = PBXGroup;
 			children = (
 				0C8A7C951B6774110039F013 /* AppDelegate.swift */,
 			);
-			path = AppDelegate;
+			name = System;
+			path = resources/AppDelegate;
 			sourceTree = "<group>";
 		};
 		0C8A7C961B6774110039F013 /* Helper */ = {
