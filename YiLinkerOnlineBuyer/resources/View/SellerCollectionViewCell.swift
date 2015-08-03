@@ -9,7 +9,18 @@
 import UIKit
 
 class SellerCollectionViewCell: UICollectionViewCell {
-
+    
+    @IBOutlet weak var sellerTitleLabel: UILabel!
+    @IBOutlet weak var sellerSubTitleLabel: UILabel!
+    
+    
+    @IBOutlet weak var productOneImageView: UIImageView!
+    @IBOutlet weak var productTwoImageView: UIImageView!
+    @IBOutlet weak var productThreeImageView: UIImageView!
+    
+    @IBOutlet weak var sellerProfileImageView: RoundedImageView!
+    var productModel: HomePageProductModel?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

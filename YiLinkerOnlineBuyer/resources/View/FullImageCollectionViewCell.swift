@@ -8,9 +8,11 @@
 
 import UIKit
 
-class BannerCollectionViewCell: UICollectionViewCell {
+class FullImageCollectionViewCell: UICollectionViewCell {
 
     @IBOutlet weak var itemProductImageView: UIImageView!
+    
+    var productModel: HomePageProductModel?
     
     override func awakeFromNib() {
         super.awakeFromNib()

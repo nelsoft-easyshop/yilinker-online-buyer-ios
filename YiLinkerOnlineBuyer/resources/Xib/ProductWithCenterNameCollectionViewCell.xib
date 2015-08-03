@@ -6,7 +6,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ScrollableProductCollectionViewCell" id="gTV-IL-0wX" customClass="ScrollableProductCollectionViewCell" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ProductWithCenterNameCollectionViewCell" id="gTV-IL-0wX" customClass="ProductWithCenterNameCollectionViewCell" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="142" height="135"/>
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -44,7 +44,8 @@
             </constraints>
             <size key="customSize" width="142" height="135"/>
             <connections>
-                <outlet property="productItemImageView" destination="Tyk-Oe-Cmj" id="eiP-9Q-0pq"/>
+                <outlet property="productItemImageView" destination="Tyk-Oe-Cmj" id="RNb-Jb-sms"/>
+                <outlet property="productNameLabel" destination="z1Z-RK-0Ai" id="hbI-Kp-PnB"/>
             </connections>
             <point key="canvasLocation" x="505" y="196.5"/>
         </collectionViewCell>

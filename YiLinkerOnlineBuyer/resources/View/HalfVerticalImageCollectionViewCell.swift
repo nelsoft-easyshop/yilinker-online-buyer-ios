@@ -8,7 +8,18 @@
 
 import UIKit
 
-class FourImageHalfVerticalCollectionViewCell: UICollectionViewCell {
+class HalfVerticalImageCollectionViewCell: UICollectionViewCell {
+    
+    @IBOutlet weak var originalPriceLabel: DynamicRoundedLabel!
+    @IBOutlet weak var discountedPriceLabel: UILabel!
+    @IBOutlet weak var productNameLabel: UILabel!
+    
+    @IBOutlet weak var productItemImageView: UIImageView!
+    @IBOutlet weak var discountPercentageLabel: DynamicRoundedLabel!
+    
+    
+    
+    var productModel: HomePageProductModel?
 
     override func awakeFromNib() {
         super.awakeFromNib()

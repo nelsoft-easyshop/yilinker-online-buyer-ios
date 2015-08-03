@@ -32,6 +32,17 @@ class HomePageCollectionViewLayout: UICollectionViewLayout {
         self.screenRect = self.collectionView!.bounds
         self.layoutAttributes = Dictionary<String, UICollectionViewLayoutAttributes>()
         self.numberOfSections  = self.collectionView?.numberOfSections()
+        
+        self.bannerLayout(0)
+        self.threeImageLayout2(1)
+        self.sixImageLayout(2)
+        self.sixImageLayout2(3)
+        self.twoImageLayout(4)
+        self.threeImageLayout(5)
+        self.scrollableImageLayout(6)
+        self.sellerLayout(7)
+        self.newSellerScrollableImageLayout(8)
+        self.twoColumnGridLayout(9)
     }
     
     

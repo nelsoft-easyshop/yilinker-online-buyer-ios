@@ -8,8 +8,11 @@
 
 import UIKit
 
-class FourImageLayoutHeaderCollectionViewCell: UICollectionViewCell {
-
+class LayoutHeaderCollectionViewCell: UICollectionViewCell {
+    
+    var isWhiteBackgroundPresent: Bool = true
+    var headerTitle: String = ""
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

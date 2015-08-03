@@ -6,7 +6,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="FourImageHalfImage" id="gTV-IL-0wX" customClass="FourImageCollectionViewCell" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="VerticalImageCollectionViewCell" id="gTV-IL-0wX" customClass="VerticalImageCollectionViewCell" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="202" height="245"/>
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -87,8 +87,11 @@
             </constraints>
             <size key="customSize" width="202" height="245"/>
             <connections>
-                <outlet property="discountLabel" destination="0p9-52-dFh" id="Pzd-aL-acQ"/>
-                <outlet property="productItemImageView" destination="5ia-Jp-qLe" id="xPE-6l-fR5"/>
+                <outlet property="discountPercentageLabel" destination="Lbh-CJ-22K" id="5Ke-kI-md4"/>
+                <outlet property="discountedPriceLabel" destination="0p9-52-dFh" id="BVK-gZ-DXi"/>
+                <outlet property="originalPriceLabel" destination="wQZ-G9-bat" id="4qm-H4-cNE"/>
+                <outlet property="productItemImageView" destination="5ia-Jp-qLe" id="Rtm-Pg-dR4"/>
+                <outlet property="productNameLabel" destination="zbT-pN-AHE" id="Otx-Ja-WwZ"/>
             </connections>
             <point key="canvasLocation" x="354" y="251.5"/>
         </collectionViewCell>

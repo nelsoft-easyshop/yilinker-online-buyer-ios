@@ -78,7 +78,6 @@
                 <constraint firstItem="A1l-cx-tha" firstAttribute="leading" secondItem="COi-1W-g4z" secondAttribute="trailing" id="Joq-Ca-z1H"/>
                 <constraint firstItem="uc1-1p-Quo" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="12" id="K5T-Py-rUZ"/>
                 <constraint firstAttribute="centerX" secondItem="A1l-cx-tha" secondAttribute="centerX" id="MBj-kC-9SP"/>
-                <constraint firstItem="zPX-iG-aKl" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="27" id="OHi-SC-XPp"/>
                 <constraint firstAttribute="trailing" secondItem="jVL-Ps-RHo" secondAttribute="trailing" constant="7" id="OOp-rf-fFV"/>
                 <constraint firstAttribute="trailing" secondItem="zPX-iG-aKl" secondAttribute="trailing" constant="8" id="Ujp-Jc-gbM"/>
                 <constraint firstItem="cSJ-E4-XpF" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="8" id="Vch-4H-CkU"/>
@@ -92,8 +91,17 @@
                 <constraint firstItem="uc1-1p-Quo" firstAttribute="leading" secondItem="RCB-co-n67" secondAttribute="trailing" constant="7" id="puQ-26-NT2"/>
                 <constraint firstAttribute="bottom" secondItem="jVL-Ps-RHo" secondAttribute="bottom" constant="15" id="q6E-4J-Hr3"/>
                 <constraint firstItem="COi-1W-g4z" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="8" id="r7A-Qz-dVe"/>
+                <constraint firstItem="zPX-iG-aKl" firstAttribute="top" secondItem="uc1-1p-Quo" secondAttribute="bottom" constant="-6" id="vXo-ri-ICV"/>
             </constraints>
             <size key="customSize" width="221" height="287"/>
+            <connections>
+                <outlet property="productOneImageView" destination="cSJ-E4-XpF" id="KCP-HG-hip"/>
+                <outlet property="productThreeImageView" destination="jVL-Ps-RHo" id="ULd-VE-gR3"/>
+                <outlet property="productTwoImageView" destination="COi-1W-g4z" id="n0m-se-swZ"/>
+                <outlet property="sellerProfileImageView" destination="RCB-co-n67" id="y7z-IP-ARy"/>
+                <outlet property="sellerSubTitleLabel" destination="zPX-iG-aKl" id="hqf-KA-Eyx"/>
+                <outlet property="sellerTitleLabel" destination="uc1-1p-Quo" id="8WC-1P-R0Y"/>
+            </connections>
             <point key="canvasLocation" x="325.5" y="336.5"/>
         </collectionViewCell>
     </objects>

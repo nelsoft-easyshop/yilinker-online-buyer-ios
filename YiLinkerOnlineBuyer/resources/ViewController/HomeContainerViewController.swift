@@ -50,11 +50,12 @@ class HomeContainerViewController: UIViewController, UITabBarDelegate {
     }
     
     func setSelectedViewController(viewController: UIViewController) {
-        if !(selectedChildViewController?.isEqual(viewController) != nil) {
+        if !(selectedChildViewController == viewController) {
             if self.isViewLoaded() {
                 selectedChildViewController?.willMoveToParentViewController(self)
                 selectedChildViewController?.view.removeFromSuperview()
-                selectedChildViewController?.removeFromParentViewController()            }
+                selectedChildViewController?.removeFromParentViewController()
+            }
         }
         self.view.layoutIfNeeded()
         self.addChildViewController(viewController)

@@ -8,8 +8,13 @@
 
 import UIKit
 
-class ScrollableProductCollectionViewCell: UICollectionViewCell {
+class ProductWithCenterNameCollectionViewCell: UICollectionViewCell {
 
+    @IBOutlet weak var productItemImageView: UIImageView!
+    @IBOutlet weak var productNameLabel: RoundedLabel!
+    
+    var productModel: HomePageProductModel?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
