@@ -10,6 +10,11 @@ import UIKit
 
 class NewSellerCollectionViewCell: UICollectionViewCell {
 
+    @IBOutlet weak var sellerImageView: UIImageView!
+    @IBOutlet weak var sellerNameLabel: UILabel!
+    
+    var productModel: HomePageProductModel?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

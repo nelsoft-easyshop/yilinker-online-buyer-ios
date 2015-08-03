@@ -51,6 +51,10 @@
                 <constraint firstItem="Fhq-GK-pwq" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="nsh-Jx-AcI"/>
             </constraints>
             <size key="customSize" width="85" height="154"/>
+            <connections>
+                <outlet property="sellerImageView" destination="Fhq-GK-pwq" id="13o-yk-XpB"/>
+                <outlet property="sellerNameLabel" destination="A2I-Ii-OsH" id="ZRP-5F-gvH"/>
+            </connections>
             <point key="canvasLocation" x="443" y="398"/>
         </collectionViewCell>
     </objects>
