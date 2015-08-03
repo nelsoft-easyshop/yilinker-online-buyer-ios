@@ -8,14 +8,16 @@
 
 import UIKit
 
-class LabelWithDiscountLine: UILabel {
+class DiscountLabel: UILabel {
 
-    /*
-    // Only override drawRect: if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func drawRect(rect: CGRect) {
-        // Drawing code
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        let myString: NSString = self.text!
+        
+        let stringSize: CGSize = myString.sizeWithAttributes([NSFontAttributeName: UIFont.systemFontOfSize(12.0)])
+        
+        let discoutLine: CALayer = CALayer()
+        discoutLine.frame = CGRectMake(0, self.frame.size.height / 2, stringSize.width, self.frame.size.height)
     }
-    */
 
 }
