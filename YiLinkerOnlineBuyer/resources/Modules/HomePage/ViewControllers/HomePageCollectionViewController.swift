@@ -10,7 +10,7 @@ import UIKit
 
 let reuseIdentifier = "Cell"
 
-class HomePageCollectionViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UITabBarControllerDelegate {
+class HomePageCollectionViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
     
     var section1: [String] = ["dummy-placeholder", "dummy-placeholder", "dummy-placeholder", "dummy-placeholder"]
     var section2: [String] = ["dummy-placeholder", "dummy-placeholder", "dummy-placeholder"]
@@ -44,34 +44,6 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
         self.sections?.addObject(section8)
         self.sections?.addObject(section9)
         self.sections?.addObject(section10)
-        self.tabBarController!.delegate = self
-        circularDraweView()
-    }
-    
-    func tabBarController(tabBarController: UITabBarController, shouldSelectViewController viewController: UIViewController) -> Bool {
-        if self != viewController && viewController != tabBarController.viewControllers![2] as! UIViewController {
-            return true
-        } else {
-            let storyBoard: UIStoryboard = UIStoryboard(name: "HomeStoryBoard", bundle: nil)
-            var animatedViewController: CircularMenuViewController?
-            
-            if IphoneType.isIphone4() {
-                animatedViewController  = storyBoard.instantiateViewControllerWithIdentifier("CircularMenuViewController4s") as? CircularMenuViewController
-                
-            } else {
-                animatedViewController  = storyBoard.instantiateViewControllerWithIdentifier("CircularMenuViewController") as? CircularMenuViewController
-            }
-            
-            animatedViewController!.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
-            animatedViewController!.providesPresentationContextTransitionStyle = true
-            animatedViewController!.definesPresentationContext = true
-            animatedViewController!.view.backgroundColor = UIColor.clearColor()
-            //self.presentViewController(animatedViewController!, animated: false, completion: nil)
-            self.tabBarController?.presentViewController(animatedViewController!, animated: false, completion: nil)
-            
-            return false
-        }
-        
     }
     
     override func viewDidLayoutSubviews() {
@@ -255,13 +227,5 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
         let leftRightInset = 0
         
         return UIEdgeInsetsMake(0, 0, 0, 0)
-    }
-    
-    func circularDraweView() {
-        let unselectedImage: UIImage = UIImage(named: "circular-drawer")!.imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
-        let item2: UITabBarItem = self.tabBarController?.tabBar.items![2] as! UITabBarItem
-        item2.selectedImage = unselectedImage
-        item2.image = unselectedImage
-        item2.imageInsets = UIEdgeInsets(top: 6, left: 0, bottom: -6, right: 0)
     }
 }
