@@ -8,11 +8,11 @@
 
 import UIKit
 
-class HomeContainerViewController: UIViewController, UITabBarDelegate {
+class HomeContainerViewController: UIViewController, UITabBarControllerDelegate {
     
     @IBOutlet weak var contentView: UIView!
-    @IBOutlet weak var tabBar: UITabBar!
     
+    let viewControllerIndex = 0
     
     var homePageCollectionViewController: HomePageCollectionViewController?
     var searchViewContoller: SearchViewController?
@@ -28,12 +28,21 @@ class HomeContainerViewController: UIViewController, UITabBarDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.tabBar.delegate = self
-        
-        initViewControllers()
-        circularDraweView()
-        setSelectedViewControllerWithIndex(0)
+        self.tabBarController!.delegate = self
+        //circularDraweView()
     }
+    
+    func tabBarController(tabBarController: UITabBarController, shouldSelectViewController viewController: UIViewController) -> Bool {
+        if self != viewController && viewController != tabBarController.viewControllers![2] as! UIViewController {
+            return true
+        } else {
+            
+            return false
+        }
+        
+    }
+    
+
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -42,6 +51,10 @@ class HomeContainerViewController: UIViewController, UITabBarDelegate {
     
     override func viewDidLayoutSubviews() {
         contentViewFrame = contentView.bounds
+        if self.viewControllers.count == 0 {
+            initViewControllers()
+            setSelectedViewControllerWithIndex(0)
+        }
     }
     
     // This function is for executing child view logic code
@@ -104,13 +117,13 @@ class HomeContainerViewController: UIViewController, UITabBarDelegate {
         }
     }
     
-    func circularDraweView() {
-        self.tabBar.selectedItem = self.tabBar.items![0] as? UITabBarItem
-        let unselectedImage: UIImage = UIImage(named: "circular-drawer")!.imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
-        let item2: UITabBarItem = self.tabBar.items![2] as! UITabBarItem
-        item2.selectedImage = unselectedImage
-        item2.image = unselectedImage
-        item2.imageInsets = UIEdgeInsets(top: 6, left: 0, bottom: -6, right: 0)
-    }
-    
+//    func circularDraweView() {
+//        self.tabBar.selectedItem = self.tabBar.items![0] as? UITabBarItem
+//        let unselectedImage: UIImage = UIImage(named: "circular-drawer")!.imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
+//        let item2: UITabBarItem = self.tabBar.items![2] as! UITabBarItem
+//        item2.selectedImage = unselectedImage
+//        item2.image = unselectedImage
+//        item2.imageInsets = UIEdgeInsets(top: 6, left: 0, bottom: -6, right: 0)
+//    }
+//    
 }
