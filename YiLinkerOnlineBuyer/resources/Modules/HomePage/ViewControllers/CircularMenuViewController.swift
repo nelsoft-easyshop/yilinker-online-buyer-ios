@@ -14,32 +14,120 @@ class CircularMenuViewController: UIViewController {
     
     @IBOutlet weak var dimView: UIView!
     
-    var buttonImages: [String] = [""]
-    
-    
-  /* @IBOutlet weak var logoutSemiRoundedButton: SemiRoundedButton!
-    @IBOutlet weak var categoryLabel: RoundedLabel!
-    @IBOutlet weak var todaysPromoLabel: RoundedLabel!
-    @IBOutlet weak var customizeShoppingLabel: RoundedLabel!
-    @IBOutlet weak var messagingLabel: RoundedLabel!
-    @IBOutlet weak var followedSellerLabel: RoundedLabel!
-    @IBOutlet weak var helpLabel: RoundedLabel!
-    @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var messageTitleButton: UIButton! */
+    var buttonImages: [String] = ["help", "following", "message", "customize-shopping", "promo", "category", "dummy-profile-image"]
+    var buttonTitles: [String] = ["HELP", "FOLLOWED SELLER", "MESSAGING", "CUSTOMIZE SHOPPING", "TODAY'S PROMO", "CATEGORIES", "LOGOUT"]
+    var buttonRightText: [String] = ["", "", "You have 1 unread message", "", "", "", "Jessica Joe \nMetro Manila, City"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.initDimView()
-        self.hideControlTitlesNotAnimated()
-        
-        /*let tapGesture: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "tapProfile")
-        self.roundedProfileImageView.userInteractionEnabled = true
-        self.roundedProfileImageView.addGestureRecognizer(tapGesture)*/
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        self.presentCirculardMenuAnimate()
+        let screenSize: CGRect = UIScreen.mainScreen().bounds
+        if self.view.subviews.count <= 4 {
+            let xPosition: CGFloat = (self.view.frame.size.width / 2) - 25
+            var yPosition: CGFloat = self.roundedButton.frame.origin.y - 70
+            for (index, imageName) in enumerate(self.buttonImages) {
+                let button: UIButton = UIButton(frame: CGRectMake(xPosition, self.view.frame.size.height + 100, 50, 50))
+                button.backgroundColor = UIColor.clearColor()
+                button.layer.borderWidth = 1
+                button.layer.borderColor = UIColor.whiteColor().CGColor
+                button.layer.cornerRadius = button.frame.size.width / CGFloat(2)
+                button.tag = index + 1
+                button.setImage(UIImage(named: imageName), forState: UIControlState.Normal)
+                button.clipsToBounds = true
+                button.addTarget(self, action: "menuClick:", forControlEvents: UIControlEvents.TouchUpInside)
+                self.view.addSubview(button)
+                
+                var stringSize: CGSize = self.buttonTitles[index].sizeWithAttributes([NSFontAttributeName: UIFont.systemFontOfSize(12.0)])
+                var fontSize: CGFloat = 12
+                if IphoneType.isIphone5() {
+                    stringSize = self.buttonTitles[index].sizeWithAttributes([NSFontAttributeName: UIFont.systemFontOfSize(10.0)])
+                    fontSize = 9
+                } else if IphoneType.isIphone4() {
+                    
+                }
+                
+                var labelPosition: CGFloat = xPosition - (stringSize.width + 30)
+                println(stringSize.width)
+                if index != 6 {
+                    var width: CGFloat = stringSize.width + 20
+                    if IphoneType.isIphone6() {
+                        if stringSize.width > 137 {
+                            width = width - 10
+                            labelPosition = labelPosition + 10
+                        }
+                    } else if IphoneType.isIphone5() {
+                        if stringSize.width > 115 {
+                            width = width - 15
+                            labelPosition = labelPosition + 15
+                        }
+                    }
+                    
+                    let label: UILabel = UILabel(frame: CGRectMake(labelPosition, yPosition + 15, width, 20))
+                    label.backgroundColor = UIColor.whiteColor()
+                    label.text = self.buttonTitles[index]
+                    label.adjustsFontSizeToFitWidth = true
+                    label.textAlignment = NSTextAlignment.Center
+                    label.layer.cornerRadius = 10
+                    label.clipsToBounds = true
+                    label.font = UIFont(name: label.font.fontName, size: fontSize)
+                    label.tag = 100 + index
+                    label.alpha = 0
+                    self.view.addSubview(label)
+                    
+                    if index == 2 && self.buttonRightText[index] != "" {
+                        let label: UILabel = UILabel(frame: CGRectMake(xPosition + 60, yPosition + 15, 150, 20))
+                        label.backgroundColor = UIColor.redColor()
+                        label.text = self.buttonRightText[index]
+                        label.adjustsFontSizeToFitWidth = true
+                        label.textAlignment = NSTextAlignment.Center
+                        label.layer.cornerRadius = 10
+                        label.clipsToBounds = true
+                        label.font = UIFont(name: label.font.fontName, size: 10)
+                        label.textColor = UIColor.whiteColor()
+                        label.tag = 100 + index
+                        label.alpha = 0
+                        self.view.addSubview(label)
+                    }
+                    
+                    yPosition = yPosition - button.frame.size.height - 20
+                } else {
+                    var logoutPosition: CGFloat = xPosition - 125
+                    let logoutButton: UIButton = UIButton(frame: CGRectMake(logoutPosition, yPosition + 15, 100, 30))
+                    logoutButton.backgroundColor = UIColor.redColor()
+                    logoutButton.setTitle(self.buttonTitles[index], forState: UIControlState.Normal)
+                    logoutButton.layer.cornerRadius = 10
+                    logoutButton.titleLabel!.font =  UIFont(name: "HelveticaNeue", size: 14)
+                    logoutButton.clipsToBounds = true
+                    logoutButton.tag = 100 + index
+                    logoutButton.alpha = 0
+                    self.view.addSubview(logoutButton)
+                    
+                    
+                    if  self.buttonRightText[index] != "" {
+                        let label: UILabel = UILabel(frame: CGRectMake(xPosition + 75, yPosition, 150, 60))
+                        label.backgroundColor = UIColor.clearColor()
+                        label.text = self.buttonRightText[index]
+                        label.adjustsFontSizeToFitWidth = true
+                        label.textAlignment = NSTextAlignment.Left
+                        label.font = UIFont(name: label.font.fontName, size: 14)
+                        label.textColor = UIColor.whiteColor()
+                        label.tag = 100 + index
+                        label.alpha = 0
+                        label.lineBreakMode = NSLineBreakMode.ByWordWrapping
+                        label.numberOfLines = 0
+                        self.view.addSubview(label)
+                    }
+                }
+         
+            }
+            
+            self.presentCirculardMenuAnimate()
+        }
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -52,83 +140,66 @@ class CircularMenuViewController: UIViewController {
     }
     
     private func presentCirculardMenuAnimate() {
-        let delay = 0.01 * Double(NSEC_PER_SEC)
-        let time = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
-        dispatch_after(time, dispatch_get_main_queue()) {
-            UIView.animateWithDuration(0.2, delay: 0.0, options: nil, animations: {
-                //self.roundedButton.transform = CGAffineTransformMakeScale(1.2, 1.2)
-                }, completion: nil)
-        }
-        
-       /* let helpFrame: CGRect = helpButton.frame
-        let followedSellerFrame: CGRect = followedSellerButton.frame
-        let messagingFrame: CGRect = messagingButton.frame
-        let customizeShoppingFrame: CGRect = customizeShoppingButton.frame
-        let todayPromoFrame: CGRect = todaysPromoButton.frame
-        let categoryButtonFrame: CGRect = categoryButton.frame
-        let roundedProfileImageViewFrame: CGRect = roundedProfileImageView.frame */
-        
-        self.hideControlNotAnimated()
-        
         UIView.animateWithDuration(0.5, delay: 0.0, usingSpringWithDamping: 0.8, initialSpringVelocity: 3.0, options: UIViewAnimationOptions.CurveEaseInOut, animations: ({
-           /* self.helpButton.frame = helpFrame
-            self.followedSellerButton.frame = followedSellerFrame
-            self.messagingButton.frame = messagingFrame
-            self.customizeShoppingButton.frame = customizeShoppingFrame
-            self.todaysPromoButton.frame = todayPromoFrame
-            self.categoryButton.frame = categoryButtonFrame
-            self.roundedButton.frame = roundedProfileImageViewFrame
-            self.roundedProfileImageView.frame = roundedProfileImageViewFrame*/
+            var yPosition: CGFloat = self.roundedButton.frame.origin.y - 70
+            let xPosition: CGFloat = (self.view.frame.size.width / 2) - 25
+            
+            for tempView in self.view.subviews {
+                if tempView.tag != 0 && tempView.tag < 100 {
+                    let buttonView: UIButton = tempView as! UIButton
+                    buttonView.frame = CGRectMake(xPosition, yPosition, 50, 50)
+                    yPosition = yPosition - buttonView.frame.size.height - 20
+                } else if tempView.tag > 99 {
+                    let tempView: UIView = tempView as! UIView
+                    tempView.alpha = 1
+                }
+            }
             self.dimView.alpha = 0.6
+            //self.showTitles()
+        }), completion: { (value: Bool) in
+            self.animateProfileImage()
+        })
+    }
+    
+    func animateProfileImage() {
+        UIView.animateWithDuration(0.5, delay: 0.0, usingSpringWithDamping: 0.8, initialSpringVelocity: 3.0, options: UIViewAnimationOptions.CurveEaseInOut, animations: ({
+            var yPosition: CGFloat = self.roundedButton.frame.origin.y - 70
+            let xPosition: CGFloat = (self.view.frame.size.width / 2) - 25
+            
+            for tempView in self.view.subviews {
+                if tempView.tag != 0 && tempView.tag < 99 {
+                    let buttonView: UIButton = tempView as! UIButton
+                    if tempView.tag == 7 {
+                        buttonView.transform = CGAffineTransformMakeScale(1.6, 1.6)
+                    }
+                }
+            }
             //self.showTitles()
         }), completion: nil)
     }
     
-    
-    private func hideControlNotAnimated() {
-       /* self.helpButton.frame = CGRectMake(helpButton.frame.origin.x, view.frame.size.height + 50, helpButton.frame.size.width, helpButton.frame.size.height)
-        self.followedSellerButton.frame = CGRectMake(self.followedSellerButton.frame.origin.x, self.view.frame.size.height + 50, self.followedSellerButton.frame.size.width, self.followedSellerButton.frame.size.height)
-        self.messagingButton.frame = CGRectMake(self.messagingButton.frame.origin.x, self.view.frame.size.height + 50, self.messagingButton.frame.size.width, self.messagingButton.frame.size.height)
-        self.customizeShoppingButton.frame = CGRectMake(self.customizeShoppingButton.frame.origin.x, self.view.frame.size.height + 50, self.customizeShoppingButton.frame.size.width, self.customizeShoppingButton.frame.size.height)
-        self.todaysPromoButton.frame = CGRectMake(self.customizeShoppingButton.frame.origin.x, view.frame.size.height + 50, self.customizeShoppingButton.frame.size.width, self.customizeShoppingButton.frame.size.height)
-        self.categoryButton.frame = CGRectMake(self.categoryButton.frame.origin.x, self.view.frame.size.height + 50, self.categoryButton.frame.size.width, self.categoryButton.frame.size.height)
-        self.roundedProfileImageView.frame = CGRectMake(self.roundedProfileImageView.frame.origin.x, self.view.frame.size.height + 50, self.roundedProfileImageView.frame.size.width, self.roundedProfileImageView.frame.size.height) */
-    }
-    
-    
      func dissmissViewControllerAnimated() {
+        let screenSize: CGRect = UIScreen.mainScreen().bounds
+        view.setTranslatesAutoresizingMaskIntoConstraints(false)
+        
         UIView.animateWithDuration(0.5, delay: 0.0, usingSpringWithDamping: 0.8, initialSpringVelocity: 3.0, options: UIViewAnimationOptions.CurveEaseInOut, animations: ({
-            self.hideControlNotAnimated()
-          /*  self.roundedProfileImageView.transform = CGAffineTransformMakeScale(0.1, 0.1)
-            
-            self.helpButton.transform = CGAffineTransformMakeScale(0.1, 0.1)
-            self.followedSellerButton.transform = CGAffineTransformMakeScale(0.1, 0.1)
-            self.messagingButton.transform = CGAffineTransformMakeScale(0.1, 0.1)
-            self.customizeShoppingButton.transform = CGAffineTransformMakeScale(0.1, 0.1)
-            self.todaysPromoButton.transform = CGAffineTransformMakeScale(0.1, 0.1)
-            self.categoryButton.transform = CGAffineTransformMakeScale(0.1, 0.1)
-            self.roundedProfileImageView.transform = CGAffineTransformMakeScale(0.1, 0.1) */
+            let xPosition: CGFloat = (self.view.frame.size.width / 2) - 25
+            self.roundedButton.alpha = 0
+            for tempView in self.view.subviews {
+                if tempView.tag != 0 && tempView.tag < 99 {
+                    let buttonView: UIButton = tempView as! UIButton
+                    buttonView.frame = CGRectMake(xPosition, screenSize.size.height, 50, 50)
+                    buttonView.transform = CGAffineTransformMakeScale(0.3, 0.3)
+                } else if tempView.tag > 99 {
+                    let tempView: UIView = tempView as! UIView
+                    tempView.alpha = 0
+                }
+            }
             self.dimView.alpha = 0.0
-            
-            self.hideControlTitlesNotAnimated()
-            
-            UIView.animateWithDuration(0.5, delay: 0.0, options: nil, animations: {
-                //self.roundedButton.transform = CGAffineTransformMakeScale(0.1, 0.1)
-                }, completion: {(value: Bool) in
-                    self.dismissViewControllerAnimated(false, completion: nil)
-            })
-            
         }), completion: {
             (value: Bool) in
             
-          /*  self.helpButton.hidden = true
-            self.followedSellerButton.hidden = true
-            self.messagingButton.hidden = true
-            self.customizeShoppingButton.hidden = true
-            self.todaysPromoButton.hidden = true
-            self.categoryButton.hidden = true
-            self.roundedProfileImageView.hidden = true */
-            
+              self.dismissViewControllerAnimated(false, completion: nil)
             
         })
     }
@@ -140,62 +211,13 @@ class CircularMenuViewController: UIViewController {
         let tapGesture: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dissmissViewControllerAnimated")
         dimView.addGestureRecognizer(tapGesture)
     }
-    
-    func tapProfile() {
-        println("Profile tap")
-    }
-    
-    func showTitles() {
-      /*  self.logoutSemiRoundedButton.alpha = 1.0
-        self.categoryLabel.alpha = 1.0
-        self.todaysPromoLabel.alpha = 1.0
-        self.customizeShoppingLabel.alpha = 1.0
-        self.messagingLabel.alpha = 1.0
-        self.followedSellerLabel.alpha = 1.0
-        self.helpLabel.alpha = 1.0
-        self.nameLabel.alpha = 1.0
-        self.messageTitleButton.alpha = 1.0*/
-    }
-    
-    func hideControlTitlesNotAnimated() {
-       /* self.logoutSemiRoundedButton.alpha = 0.0
-        self.categoryLabel.alpha = 0.0
-        self.todaysPromoLabel.alpha = 0.0
-        self.customizeShoppingLabel.alpha = 0.0
-        self.messagingLabel.alpha = 0.0
-        self.followedSellerLabel.alpha = 0.0
-        self.helpLabel.alpha = 0.0
-        self.nameLabel.alpha = 0.0
-        self.messageTitleButton.alpha = 0.0*/
-    }
-    
-    
+
     @IBAction func logout(sender: AnyObject) {
         //logout function
     }
     
-    @IBAction func helpAction(sender: AnyObject) {
-        //help action
-    }
-    
-    @IBAction func followedSellerAction(sender: AnyObject) {
-        //followed action
-    }
-    
-    @IBAction func messagingAction(sender: AnyObject) {
-        //messaging action
-    }
-    
-    @IBAction func customizeAction(sender: AnyObject) {
-        //customizedAction
-    }
-    
-    @IBAction func todaysPromoAction(sender: AnyObject) {
-        //todaysAction
-    }
-    
-    @IBAction func categoriesAction(sender: AnyObject) {
-
+    @IBAction func menuClick(sender: UIButton) {
+        println(sender.tag)
     }
     
 }
