@@ -12,7 +12,7 @@
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                 <rect key="frame" x="0.0" y="0.0" width="221" height="287"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="six_item_4" translatesAutoresizingMaskIntoConstraints="NO" id="RCB-co-n67" customClass="RoundedImageView" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dummy-placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="RCB-co-n67" customClass="RoundedImageView" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
                         <rect key="frame" x="8" y="8" width="47" height="47"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="47" id="a8r-TA-OlR"/>
@@ -42,13 +42,13 @@
                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sub-banner3" translatesAutoresizingMaskIntoConstraints="NO" id="cSJ-E4-XpF">
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dummy-placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="cSJ-E4-XpF">
                         <rect key="frame" x="8" y="64" width="205" height="132"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="132" id="xe0-AR-G6E"/>
                         </constraints>
                     </imageView>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="six_item_1" translatesAutoresizingMaskIntoConstraints="NO" id="COi-1W-g4z">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dummy-placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="COi-1W-g4z">
                         <rect key="frame" x="8" y="198" width="102" height="74"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="74" id="x0V-bW-PBx"/>
@@ -62,7 +62,7 @@
                             <constraint firstAttribute="width" constant="1" id="cze-vO-JCz"/>
                         </constraints>
                     </view>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="six_item_1" translatesAutoresizingMaskIntoConstraints="NO" id="jVL-Ps-RHo">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dummy-placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="jVL-Ps-RHo">
                         <rect key="frame" x="112" y="198" width="102" height="74"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="74" id="rC2-h3-b29"/>
@@ -106,8 +106,6 @@
         </collectionViewCell>
     </objects>
     <resources>
-        <image name="six_item_1" width="200" height="105"/>
-        <image name="six_item_4" width="85" height="191"/>
-        <image name="sub-banner3" width="133" height="102"/>
+        <image name="dummy-placeholder" width="1280" height="800"/>
     </resources>
 </document>

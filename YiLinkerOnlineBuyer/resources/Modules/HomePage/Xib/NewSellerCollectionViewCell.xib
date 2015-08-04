@@ -12,7 +12,7 @@
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                 <rect key="frame" x="0.0" y="0.0" width="122" height="154"/>
                 <subviews>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="six_item_3" translatesAutoresizingMaskIntoConstraints="NO" id="Fhq-GK-pwq">
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dummy-placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="Fhq-GK-pwq">
                         <rect key="frame" x="0.0" y="0.0" width="122" height="112"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="112" id="yU0-TG-1IZ"/>
@@ -59,6 +59,6 @@
         </collectionViewCell>
     </objects>
     <resources>
-        <image name="six_item_3" width="98" height="79"/>
+        <image name="dummy-placeholder" width="1280" height="800"/>
     </resources>
 </document>

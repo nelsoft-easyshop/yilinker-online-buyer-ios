@@ -12,20 +12,20 @@ let reuseIdentifier = "Cell"
 
 class HomePageCollectionViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
     
-    var section1: [String] = ["banner1", "sub-banner1", "sub-banner2", "sub-banner3"]
-    var section2: [String] = ["sub-banner1", "sub-banner1", "sub-banner2"]
-    var section3: [String] = ["six_item_1", "six_item_2", "six_item_3", "six_item_4", "six_item_5", "six_item_6"]
-    var section4: [String] = ["six_item_1", "six_item_1", "six_item_1", "six_item_1", "six_item_1", "six_item_1"]
-    var section5: [String] = ["six_item_1", "six_item_1"]
-    var section6: [String] = ["six_item_1", "six_item_1", "six_item_1"]
-    var section7: [String] = ["six_item_1", "six_item_2", "six_item_3", "six_item_4", "six_item_5", "six_item_6"]
+    var section1: [String] = ["dummy-placeholder", "dummy-placeholder", "dummy-placeholder", "dummy-placeholder"]
+    var section2: [String] = ["dummy-placeholder", "dummy-placeholder", "dummy-placeholder"]
+    var section3: [String] = ["dummy-placeholder", "dummy-placeholder", "dummy-placeholder", "dummy-placeholder", "dummy-placeholder", "dummy-placeholder"]
+    var section4: [String] = ["dummy-placeholder", "dummy-placeholder", "dummy-placeholder", "dummy-placeholder", "dummy-placeholder", "dummy-placeholder"]
+    var section5: [String] = ["dummy-placeholder", "dummy-placeholder"]
+    var section6: [String] = ["dummy-placeholder", "dummy-placeholder", "dummy-placeholder"]
+    var section7: [String] = ["dummy-placeholder", "dummy-placeholder", "dummy-placeholder", "dummy-placeholder", "dummy-placeholder", "dummy-placeholder"]
 
     //seller
-    var section8: [String] = ["six_item_1", "six_item_2", "six_item_1", "six_item_2", "six_item_1", "six_item_2"]
+    var section8: [String] = ["dummy-placeholder", "dummy-placeholder", "dummy-placeholder", "dummy-placeholder", "dummy-placeholder", "dummy-placeholder"]
     //new seller
-    var section9: [String] = ["six_item_1", "six_item_2", "six_item_3", "six_item_4", "six_item_5", "six_item_6"]
+    var section9: [String] = ["dummy-placeholder", "dummy-placeholder", "dummy-placeholder", "dummy-placeholder", "dummy-placeholder", "dummy-placeholder"]
     
-    var section10: [String] = ["six_item_1", "six_item_2", "six_item_3", "six_item_4", "six_item_5", "six_item_6"]
+    var section10: [String] = ["dummy-placeholder", "dummy-placeholder", "dummy-placeholder", "dummy-placeholder", "dummy-placeholder", "dummy-placeholder"]
     
     var sections: NSMutableArray?
     var collectionView: UICollectionView?
@@ -46,14 +46,12 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
         self.sections?.addObject(section10)
     }
     
-    
     override func viewDidLayoutSubviews() {
         if self.collectionView == nil {
             let layout: HomePageCollectionViewLayout = HomePageCollectionViewLayout()
             self.collectionView = UICollectionView(frame: self.view.bounds, collectionViewLayout: layout)
             self.collectionView!.delegate = self
             self.collectionView!.dataSource = self
-            self.view.backgroundColor = UIColor.clearColor()
             self.collectionView?.backgroundColor = UIColor.clearColor()
             self.view.addSubview(self.collectionView!)
             
@@ -225,10 +223,6 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
         }
     }
     
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        println("click")
-    }
-
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
         let leftRightInset = 0
         
