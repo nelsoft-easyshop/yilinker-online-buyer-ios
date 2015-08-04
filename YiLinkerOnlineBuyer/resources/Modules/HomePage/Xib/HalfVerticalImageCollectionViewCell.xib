@@ -12,7 +12,7 @@
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                 <rect key="frame" x="0.0" y="0.0" width="202" height="98"/>
                 <subviews>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cute" translatesAutoresizingMaskIntoConstraints="NO" id="lrX-WJ-zSN">
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dummy-placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="lrX-WJ-zSN">
                         <rect key="frame" x="6" y="3" width="123" height="95"/>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10 % OFF" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kcv-hj-ten" customClass="DynamicRoundedLabel" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
@@ -97,6 +97,6 @@
         </collectionViewCell>
     </objects>
     <resources>
-        <image name="cute" width="1280" height="800"/>
+        <image name="dummy-placeholder" width="1280" height="800"/>
     </resources>
 </document>

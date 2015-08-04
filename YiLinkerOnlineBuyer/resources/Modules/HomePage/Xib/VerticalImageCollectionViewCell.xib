@@ -47,7 +47,7 @@
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cute" translatesAutoresizingMaskIntoConstraints="NO" id="5ia-Jp-qLe">
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dummy-placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="5ia-Jp-qLe">
                         <rect key="frame" x="6" y="6" width="190" height="183"/>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10 % OFF" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lbh-CJ-22K" customClass="DynamicRoundedLabel" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
@@ -97,6 +97,6 @@
         </collectionViewCell>
     </objects>
     <resources>
-        <image name="cute" width="1280" height="800"/>
+        <image name="dummy-placeholder" width="1280" height="800"/>
     </resources>
 </document>

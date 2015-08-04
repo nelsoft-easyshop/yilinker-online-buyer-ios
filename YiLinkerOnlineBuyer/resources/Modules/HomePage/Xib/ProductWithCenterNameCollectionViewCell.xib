@@ -12,7 +12,7 @@
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                 <rect key="frame" x="0.0" y="0.0" width="142" height="135"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cute" translatesAutoresizingMaskIntoConstraints="NO" id="Tyk-Oe-Cmj">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dummy-placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="Tyk-Oe-Cmj">
                         <rect key="frame" x="0.0" y="0.0" width="142" height="135"/>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Product 1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="z1Z-RK-0Ai" customClass="RoundedLabel" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
@@ -51,6 +51,6 @@
         </collectionViewCell>
     </objects>
     <resources>
-        <image name="cute" width="1280" height="800"/>
+        <image name="dummy-placeholder" width="1280" height="800"/>
     </resources>
 </document>
