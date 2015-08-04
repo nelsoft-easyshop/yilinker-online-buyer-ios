@@ -50,6 +50,17 @@ class CircularMenuViewController: UIViewController {
                     
                 }
                 
+                var verticalMargin: CGFloat = 0.0
+                var verticalMarginLabel: CGFloat = 0.0
+                
+                if IphoneType.isIphone4() {
+                    verticalMargin = 5
+                    verticalMarginLabel = 30
+                } else {
+                    verticalMargin = 20
+                    verticalMarginLabel = 15
+                }
+                
                 var labelPosition: CGFloat = xPosition - (stringSize.width + 30)
                 println(stringSize.width)
                 if index != 6 {
@@ -64,9 +75,16 @@ class CircularMenuViewController: UIViewController {
                             width = width - 15
                             labelPosition = labelPosition + 15
                         }
+                    } else if IphoneType.isIphone4() {
+                        if index != 0 {
+                            width = width - 40
+                            labelPosition = labelPosition + 40
+                        }
+                     
+                        fontSize = 8
                     }
                     
-                    let label: UILabel = UILabel(frame: CGRectMake(labelPosition, yPosition + 15, width, 20))
+                    let label: UILabel = UILabel(frame: CGRectMake(labelPosition, yPosition + verticalMarginLabel, width, 20))
                     label.backgroundColor = UIColor.whiteColor()
                     label.text = self.buttonTitles[index]
                     label.adjustsFontSizeToFitWidth = true
@@ -79,22 +97,38 @@ class CircularMenuViewController: UIViewController {
                     self.view.addSubview(label)
                     
                     if index == 2 && self.buttonRightText[index] != "" {
-                        let label: UILabel = UILabel(frame: CGRectMake(xPosition + 60, yPosition + 15, 150, 20))
+                        
+                        var labelWidth: CGFloat = 150
+                        var fontSize: CGFloat = 10.0
+                        if IphoneType.isIphone4() {
+                            labelWidth = 120
+                            fontSize = 8
+                        }
+                        
+                        let label: UILabel = UILabel(frame: CGRectMake(xPosition + 60, yPosition + verticalMarginLabel, labelWidth, 20))
                         label.backgroundColor = UIColor.redColor()
                         label.text = self.buttonRightText[index]
                         label.adjustsFontSizeToFitWidth = true
                         label.textAlignment = NSTextAlignment.Center
                         label.layer.cornerRadius = 10
                         label.clipsToBounds = true
-                        label.font = UIFont(name: label.font.fontName, size: 10)
+                        label.font = UIFont(name: label.font.fontName, size: fontSize)
                         label.textColor = UIColor.whiteColor()
                         label.tag = 100 + index
                         label.alpha = 0
                         self.view.addSubview(label)
                     }
                     
-                    yPosition = yPosition - button.frame.size.height - 20
+                    yPosition = yPosition - button.frame.size.height - verticalMargin
                 } else {
+                    
+                    var labelWidth: CGFloat = 150
+                    var fontSize: CGFloat = 14.0
+                    if IphoneType.isIphone4() {
+                        labelWidth = 120
+                        fontSize = 10
+                    }
+                    
                     var logoutPosition: CGFloat = xPosition - 125
                     let logoutButton: UIButton = UIButton(frame: CGRectMake(logoutPosition, yPosition + 15, 100, 30))
                     logoutButton.backgroundColor = UIColor.redColor()
@@ -108,12 +142,12 @@ class CircularMenuViewController: UIViewController {
                     
                     
                     if  self.buttonRightText[index] != "" {
-                        let label: UILabel = UILabel(frame: CGRectMake(xPosition + 75, yPosition, 150, 60))
+                        let label: UILabel = UILabel(frame: CGRectMake(xPosition + 75, yPosition, labelWidth, 60))
                         label.backgroundColor = UIColor.clearColor()
                         label.text = self.buttonRightText[index]
                         label.adjustsFontSizeToFitWidth = true
                         label.textAlignment = NSTextAlignment.Left
-                        label.font = UIFont(name: label.font.fontName, size: 14)
+                        label.font = UIFont(name: label.font.fontName, size: fontSize)
                         label.textColor = UIColor.whiteColor()
                         label.tag = 100 + index
                         label.alpha = 0
@@ -141,14 +175,37 @@ class CircularMenuViewController: UIViewController {
     
     private func presentCirculardMenuAnimate() {
         UIView.animateWithDuration(0.5, delay: 0.0, usingSpringWithDamping: 0.8, initialSpringVelocity: 3.0, options: UIViewAnimationOptions.CurveEaseInOut, animations: ({
+            
             var yPosition: CGFloat = self.roundedButton.frame.origin.y - 70
+            if IphoneType.isIphone4() {
+                yPosition = self.roundedButton.frame.origin.y - 55
+            } else {
+                
+            }
+            
+           
             let xPosition: CGFloat = (self.view.frame.size.width / 2) - 25
+            
+            var verticalMargin: CGFloat = 0.0
+            
+            if IphoneType.isIphone4() {
+                verticalMargin = 5
+            } else {
+                verticalMargin = 20
+            }
             
             for tempView in self.view.subviews {
                 if tempView.tag != 0 && tempView.tag < 100 {
                     let buttonView: UIButton = tempView as! UIButton
+                    
+                    if IphoneType.isIphone4() {
+                        if tempView.tag == 7 {
+                            yPosition = yPosition - 20
+                        }
+                    }
+             
                     buttonView.frame = CGRectMake(xPosition, yPosition, 50, 50)
-                    yPosition = yPosition - buttonView.frame.size.height - 20
+                    yPosition = yPosition - buttonView.frame.size.height - verticalMargin
                 } else if tempView.tag > 99 {
                     let tempView: UIView = tempView as! UIView
                     tempView.alpha = 1
