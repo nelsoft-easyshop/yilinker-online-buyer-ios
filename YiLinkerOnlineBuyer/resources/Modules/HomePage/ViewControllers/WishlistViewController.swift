@@ -10,6 +10,8 @@ import UIKit
 
 class WishlistViewController: UIViewController {
 
+    let viewControllerIndex = 2
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 

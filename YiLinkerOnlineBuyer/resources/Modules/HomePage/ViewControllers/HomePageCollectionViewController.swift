@@ -46,14 +46,12 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
         self.sections?.addObject(section10)
     }
     
-    
     override func viewDidLayoutSubviews() {
         if self.collectionView == nil {
             let layout: HomePageCollectionViewLayout = HomePageCollectionViewLayout()
             self.collectionView = UICollectionView(frame: self.view.bounds, collectionViewLayout: layout)
             self.collectionView!.delegate = self
             self.collectionView!.dataSource = self
-            self.view.backgroundColor = UIColor.clearColor()
             self.collectionView?.backgroundColor = UIColor.clearColor()
             self.view.addSubview(self.collectionView!)
             
@@ -225,10 +223,6 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
         }
     }
     
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        println("click")
-    }
-
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
         let leftRightInset = 0
         

@@ -10,6 +10,8 @@ import UIKit
 
 class SearchViewController: UIViewController {
 
+    let viewControllerIndex = 1
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 

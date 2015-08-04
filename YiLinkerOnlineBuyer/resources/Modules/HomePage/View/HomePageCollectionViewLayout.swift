@@ -170,6 +170,8 @@ class HomePageCollectionViewLayout: UICollectionViewLayout {
                 xPosition = halfScreenWidth
                 if item == 2 {
                     yPosition = yPosition + rowHeight + self.verticalInset
+                } else {
+                    yPosition = yPosition + 3
                 }
             }
 

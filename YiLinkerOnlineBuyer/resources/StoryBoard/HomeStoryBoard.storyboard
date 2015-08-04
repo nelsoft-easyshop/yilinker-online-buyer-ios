@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="50F-va-nfX">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="tG5-US-oYc">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -17,29 +17,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <tabBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UfK-Ab-oGk">
-                                <rect key="frame" x="0.0" y="618" width="375" height="49"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="49" id="sJB-H9-Pu8"/>
-                                </constraints>
-                                <items>
-                                    <tabBarItem title="Home" image="home" id="V2L-r2-Ydc"/>
-                                    <tabBarItem tag="1" title="Search" image="search" id="RgC-fi-ciP"/>
-                                    <tabBarItem tag="2" image="circular-drawer" id="Tqx-qG-JZC">
-                                        <offsetWrapper key="titlePositionAdjustment" horizontal="-100" vertical="-100"/>
-                                    </tabBarItem>
-                                    <tabBarItem tag="3" title="Wishlist" image="wishlist" id="6mD-Df-vjp"/>
-                                    <tabBarItem tag="4" title="Cart" image="cart" id="dFI-Rs-kcv"/>
-                                </items>
-                                <color key="tintColor" red="0.35294117650000001" green="0.1215686275" blue="0.45882352939999999" alpha="1" colorSpace="calibratedRGB"/>
-                                <color key="selectedImageTintColor" red="0.35294117650000001" green="0.1215686275" blue="0.45882352939999999" alpha="1" colorSpace="calibratedRGB"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="tintColor">
-                                        <color key="value" red="0.3411764705882353" green="0.10980392156862745" blue="0.43137254901960786" alpha="1" colorSpace="calibratedRGB"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                            </tabBar>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eRg-sm-joy">
                                 <rect key="frame" x="0.0" y="64" width="375" height="554"/>
                                 <color key="backgroundColor" red="0.88235294117647056" green="0.88235294117647056" blue="0.88235294117647056" alpha="1" colorSpace="calibratedRGB"/>
@@ -47,25 +24,21 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="1tV-ne-YDq" firstAttribute="top" secondItem="UfK-Ab-oGk" secondAttribute="bottom" id="1b8-Rc-WHR"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="UfK-Ab-oGk" secondAttribute="trailing" constant="-16" id="VYw-i3-fCO"/>
-                            <constraint firstItem="UfK-Ab-oGk" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="-16" id="acd-lB-HnI"/>
-                            <constraint firstItem="UfK-Ab-oGk" firstAttribute="top" secondItem="eRg-sm-joy" secondAttribute="bottom" id="jZ8-lm-egM"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="eRg-sm-joy" secondAttribute="trailing" constant="-16" id="mvd-q8-r3m"/>
-                            <constraint firstItem="eRg-sm-joy" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="-16" id="nmd-8Y-los"/>
-                            <constraint firstItem="eRg-sm-joy" firstAttribute="top" secondItem="Dd6-QL-TZm" secondAttribute="bottom" id="ss5-5X-riE"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="eRg-sm-joy" secondAttribute="trailing" constant="-16" id="1c5-vo-HLb"/>
+                            <constraint firstItem="eRg-sm-joy" firstAttribute="top" secondItem="Dd6-QL-TZm" secondAttribute="bottom" id="YHH-55-hZn"/>
+                            <constraint firstItem="eRg-sm-joy" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="-16" id="bED-7f-Mc6"/>
+                            <constraint firstItem="1tV-ne-YDq" firstAttribute="top" secondItem="eRg-sm-joy" secondAttribute="bottom" id="tgi-ma-kp9"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="DKy-sG-2VX"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="contentView" destination="eRg-sm-joy" id="PtU-OD-HVr"/>
-                        <outlet property="tabBar" destination="UfK-Ab-oGk" id="wqz-13-XPa"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1317.5" y="132.5"/>
+            <point key="canvasLocation" x="122.5" y="-279.5"/>
         </scene>
         <!--Home Page Collection View Controller-->
         <scene sceneID="zcW-qI-wkN">
@@ -78,13 +51,14 @@
                     <view key="view" contentMode="scaleToFill" id="5Xe-Ig-kRc">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
+                    <navigationItem key="navigationItem" id="1aE-DR-VgH"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UFg-B1-vxZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1317.5" y="858.5"/>
+            <point key="canvasLocation" x="538.5" y="-287.5"/>
         </scene>
         <!--Search View Controller-->
         <scene sceneID="sOP-GE-LsJ">
@@ -99,11 +73,32 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.81508443809999997" green="0.2175958271" blue="0.15775290240000001" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
+                    <navigationItem key="navigationItem" id="911-y2-xae"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RkB-9s-hDu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1747.5" y="866.49999999999989"/>
+            <point key="canvasLocation" x="719.5" y="637.5"/>
+        </scene>
+        <!--Cart View Controller-->
+        <scene sceneID="ZFY-xj-sOF">
+            <objects>
+                <viewController id="bFy-Zg-Ywq" customClass="CartViewController" customModule="YiLinkerOnlineBuyer" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="M8v-fe-xRD"/>
+                        <viewControllerLayoutGuide type="bottom" id="Zsi-fO-TMG"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="a66-Cj-ZsM">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="" id="zVu-wm-JX2"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wod-ZN-7lU" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-471" y="556"/>
         </scene>
         <!--Circular Menu View Controller-->
         <scene sceneID="eDJ-1Z-hqC">
@@ -137,6 +132,259 @@
                                     <action selector="closeCircularMenuView:" destination="NQ4-pz-ScH" eventType="touchUpInside" id="YbA-ax-Zm7"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8LB-5x-goo" customClass="RoundedButton" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
+                                <rect key="frame" x="158" y="541" width="58" height="58"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="58" id="V0k-FE-O6f"/>
+                                    <constraint firstAttribute="height" constant="58" id="iSj-83-R3z"/>
+                                </constraints>
+                                <state key="normal" backgroundImage="help">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="1"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="helpAction:" destination="NQ4-pz-ScH" eventType="touchUpInside" id="RP0-mr-zQ4"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hE1-7B-jbC" customClass="RoundedButton" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
+                                <rect key="frame" x="158" y="475" width="58" height="58"/>
+                                <color key="backgroundColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="58" id="HMx-MC-yh1"/>
+                                    <constraint firstAttribute="width" constant="58" id="gz7-9A-NRj"/>
+                                </constraints>
+                                <state key="normal" title="x">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="1"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="followedSellerAction:" destination="NQ4-pz-ScH" eventType="touchUpInside" id="Nc9-2k-RUp"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gIR-Ft-roR" customClass="RoundedButton" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
+                                <rect key="frame" x="158" y="409" width="58" height="58"/>
+                                <color key="backgroundColor" red="0.13315701269999999" green="0.4452507201" blue="0.77138573229999996" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="58" id="MOU-4c-Fl0"/>
+                                    <constraint firstAttribute="height" constant="58" id="Vcz-A9-FWO"/>
+                                </constraints>
+                                <state key="normal" title="x">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="1"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="messagingAction:" destination="NQ4-pz-ScH" eventType="touchUpInside" id="cgO-bf-A94"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PhJ-gD-neB" customClass="RoundedButton" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
+                                <rect key="frame" x="158" y="343" width="58" height="58"/>
+                                <color key="backgroundColor" red="1" green="0.23568081560000001" blue="0.22770982479999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="58" id="0ck-1b-31H"/>
+                                    <constraint firstAttribute="height" constant="58" id="l4f-wJ-wqU"/>
+                                </constraints>
+                                <state key="normal" title="x">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="1"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="customizeAction:" destination="NQ4-pz-ScH" eventType="touchUpInside" id="eDu-6r-S38"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gOP-gA-hFB" customClass="RoundedButton" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
+                                <rect key="frame" x="158" y="277" width="58" height="58"/>
+                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="58" id="LKf-FD-eNx"/>
+                                    <constraint firstAttribute="height" constant="58" id="Lfb-w1-y2G"/>
+                                </constraints>
+                                <state key="normal" title="x">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="1"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="todaysPromoAction:" destination="NQ4-pz-ScH" eventType="touchUpInside" id="DEe-mh-abG"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qky-Os-slT" customClass="RoundedButton" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
+                                <rect key="frame" x="158" y="211" width="58" height="58"/>
+                                <color key="backgroundColor" red="0.37647058820000001" green="0.1215686275" blue="0.46666666670000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="58" id="Goc-xw-DKK"/>
+                                    <constraint firstAttribute="height" constant="58" id="TkU-pp-1V7"/>
+                                </constraints>
+                                <state key="normal" title="x">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="1"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="categoriesAction:" destination="NQ4-pz-ScH" eventType="touchUpInside" id="OUO-y2-voX"/>
+                                </connections>
+                            </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dummy-placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="XZW-9h-bYV" customClass="RoundedImageView" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
+                                <rect key="frame" x="150" y="128" width="75" height="75"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="75" id="67w-TI-O5P"/>
+                                    <constraint firstAttribute="width" constant="75" id="IY6-er-YPo"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="1"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Help" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="6" translatesAutoresizingMaskIntoConstraints="NO" id="why-tR-ny4" customClass="RoundedLabel" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
+                                <rect key="frame" x="58" y="559" width="92" height="21"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="sXK-j9-Jsa"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="11"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="1"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="FOLLOWED SELLER" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="6" translatesAutoresizingMaskIntoConstraints="NO" id="Lyl-66-MJh" customClass="RoundedLabel" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
+                                <rect key="frame" x="7" y="493" width="143" height="21"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="mq5-rx-1wb"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="11"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="1"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MESSAGING" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="6" translatesAutoresizingMaskIntoConstraints="NO" id="WLV-QL-fwo" customClass="RoundedLabel" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
+                                <rect key="frame" x="34" y="427" width="116" height="21"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="b7P-uT-GB9"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="11"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="1"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CUSTOMIZE SHOPPING" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="6" translatesAutoresizingMaskIntoConstraints="NO" id="9vo-Xs-0Ma" customClass="RoundedLabel" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
+                                <rect key="frame" x="7" y="361" width="143" height="21"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="bZj-Gd-pS6"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="11"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="1"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TODAY'S PROMO" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="6" translatesAutoresizingMaskIntoConstraints="NO" id="otc-1k-W7O" customClass="RoundedLabel" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
+                                <rect key="frame" x="34" y="295" width="116" height="21"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="CC6-2m-AvW"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="11"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="1"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CATEGORIES" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="6" translatesAutoresizingMaskIntoConstraints="NO" id="vGO-Bj-l6f" customClass="RoundedLabel" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
+                                <rect key="frame" x="58" y="229" width="92" height="21"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="iGn-Xg-zix"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="11"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="1"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rx5-ly-Kb6" customClass="SemiRoundedButton" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
+                                <rect key="frame" x="45" y="150" width="97" height="31"/>
+                                <color key="backgroundColor" red="0.89631470960000004" green="0.029226388759999999" blue="0.12704667019999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="31" id="WtI-ZC-2CG"/>
+                                </constraints>
+                                <state key="normal" title="Logout">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="15"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="logout:" destination="NQ4-pz-ScH" eventType="touchUpInside" id="c4o-73-ubd"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text="Jessica Joe" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1RK-bn-r1b">
+                                <rect key="frame" x="233" y="154" width="127" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" priority="50" constant="34" id="nsX-el-SZw"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tsk-Xt-aQm">
+                                <rect key="frame" x="223" y="425" width="138" height="26"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="26" id="vWW-XK-9pV"/>
+                                </constraints>
+                                <state key="normal" backgroundImage="popover">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+>>>>>>> development
                         </subviews>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -148,7 +396,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="d8O-YA-vsr" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2191.5" y="858.5"/>
+            <point key="canvasLocation" x="-2140.5" y="1424.5"/>
         </scene>
         <!--Wishlist View Controller-->
         <scene sceneID="w4B-f7-lDi">
@@ -163,11 +411,12 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.1276144226" green="0.5" blue="0.44086934719999998" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
+                    <navigationItem key="navigationItem" id="mec-SK-MXQ"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="q1R-0B-bvT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2633.5" y="866.49999999999989"/>
+            <point key="canvasLocation" x="-1317.5" y="625.5"/>
         </scene>
         <!--Cart View Controller-->
         <scene sceneID="2ww-zW-8F6">
@@ -182,16 +431,18 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="1" green="0.89177344680000004" blue="0.51266724220000004" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
+                    <navigationItem key="navigationItem" id="ECi-yG-sDA"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GUq-0F-wQx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3105.5" y="866.49999999999989"/>
+            <point key="canvasLocation" x="-1027.5" y="1456.5"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Home-->
         <scene sceneID="f5o-jU-cQQ">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="50F-va-nfX" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Home" image="home" id="pUK-hO-T7N"/>
                     <toolbarItems/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="pfp-vE-PgG">
@@ -201,12 +452,40 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="vXZ-lx-hvc" kind="relationship" relationship="rootViewController" id="P1d-ux-4db"/>
+                        <segue destination="vXZ-lx-hvc" kind="relationship" relationship="rootViewController" id="j4c-di-sYF"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="O25-nE-cX7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="685.5" y="357.5"/>
+            <point key="canvasLocation" x="-286.5" y="-258.5"/>
+        </scene>
+        <!--Tab Bar Controller-->
+        <scene sceneID="rTh-Px-Dxx">
+            <objects>
+                <tabBarController id="tG5-US-oYc" sceneMemberID="viewController">
+                    <nil key="simulatedBottomBarMetrics"/>
+                    <tabBar key="tabBar" contentMode="scaleToFill" id="zzA-Wf-dpj">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="color" keyPath="tintColor">
+                                <color key="value" red="0.3411764705882353" green="0.10980392156862745" blue="0.43137254901960786" alpha="1" colorSpace="calibratedRGB"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </tabBar>
+                    <connections>
+                        <outlet property="delegate" destination="zzA-Wf-dpj" id="nnL-Zh-zdR"/>
+                        <segue destination="50F-va-nfX" kind="relationship" relationship="viewControllers" id="QeB-qk-gpW"/>
+                        <segue destination="pmu-kM-w58" kind="relationship" relationship="viewControllers" id="d1V-TH-qZm"/>
+                        <segue destination="bFy-Zg-Ywq" kind="relationship" relationship="viewControllers" id="sxz-3H-M1D"/>
+                        <segue destination="zdr-QK-lsh" kind="relationship" relationship="viewControllers" id="OpU-aG-G3I"/>
+                        <segue destination="ozl-KO-cHe" kind="relationship" relationship="viewControllers" id="gdb-mQ-tIi"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Dk7-r5-vq0" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1173" y="-287"/>
         </scene>
         <!--Circular Menu View Controller-->
         <scene sceneID="Psd-QN-Fy7">
@@ -571,18 +850,79 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iLa-l1-8PB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2191" y="1610"/>
+            <point key="canvasLocation" x="3003" y="1610"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="e6f-rk-0e4">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="pmu-kM-w58" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" systemItem="search" id="lFe-IV-KSW"/>
+                    <toolbarItems/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="cdm-cd-jEA">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.35294117650000001" green="0.1215686275" blue="0.45882352939999999" alpha="1" colorSpace="calibratedRGB"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="qKJ-E3-g51" kind="relationship" relationship="rootViewController" id="8dG-z4-Pzq"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4Bo-ty-28a" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="167" y="621"/>
+        </scene>
+        <!--Wishlist-->
+        <scene sceneID="DTV-NR-UKP">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="zdr-QK-lsh" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Wishlist" image="wishlist" id="PfU-pX-fau"/>
+                    <toolbarItems/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="nKa-3Y-9PW">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.35294117650000001" green="0.1215686275" blue="0.45882352939999999" alpha="1" colorSpace="calibratedRGB"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="JPs-GR-MAc" kind="relationship" relationship="rootViewController" id="4My-l7-5Iv"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="rfm-7E-bgX" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2130" y="625"/>
+        </scene>
+        <!--Cart-->
+        <scene sceneID="9lL-GD-PWr">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="ozl-KO-cHe" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Cart" image="cart" id="6pk-Wq-BIG"/>
+                    <toolbarItems/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="NIq-W8-ib2">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.35294117650000001" green="0.1215686275" blue="0.45882352939999999" alpha="1" colorSpace="calibratedRGB"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Y5w-eS-nUZ" kind="relationship" relationship="rootViewController" id="vj4-K2-PBf"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5rN-bZ-2b1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1505" y="1417"/>
         </scene>
     </scenes>
     <resources>
         <image name="cart" width="25" height="25"/>
-        <image name="circular-drawer" width="50" height="50"/>
-        <image name="close" width="35" height="35"/>
         <image name="cute" width="1280" height="800"/>
+        <image name="dummy-placeholder" width="1280" height="800"/>
         <image name="help" width="70" height="70"/>
         <image name="home" width="25" height="25"/>
         <image name="popover" width="243" height="46"/>
-        <image name="search" width="25" height="25"/>
         <image name="wishlist" width="25" height="25"/>
     </resources>
 </document>
