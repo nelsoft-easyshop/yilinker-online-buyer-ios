@@ -58,14 +58,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate 
         } else {
             let storyBoard: UIStoryboard = UIStoryboard(name: "HomeStoryBoard", bundle: nil)
             var animatedViewController: CircularMenuViewController?
-            
-            if IphoneType.isIphone4() {
-                animatedViewController  = storyBoard.instantiateViewControllerWithIdentifier("CircularMenuViewController4s") as? CircularMenuViewController
-                
-            } else {
-                animatedViewController  = storyBoard.instantiateViewControllerWithIdentifier("CircularMenuViewController") as? CircularMenuViewController
-            }
-            
+            animatedViewController  = storyBoard.instantiateViewControllerWithIdentifier("CircularMenuViewController") as? CircularMenuViewController
             animatedViewController!.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
             animatedViewController!.providesPresentationContextTransitionStyle = true
             animatedViewController!.definesPresentationContext = true
