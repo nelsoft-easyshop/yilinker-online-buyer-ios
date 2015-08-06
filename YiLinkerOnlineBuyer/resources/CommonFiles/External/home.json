@@ -1,0 +1,305 @@
+{
+  "featured": {
+    "mainbanner": [{
+      "image": "https://s3-ap-southeast-1.amazonaws.com/easyshop-production/assets/images/ads/gadgetsgalore.jpg",
+      "target": "banner",
+      "targetType": "product page"
+    },{
+        "image": "https://s3-ap-southeast-1.amazonaws.com/easyshop-production/assets/images/homeslider/150306170342.png",
+        "target": "banner",
+        "targetType": "product page"
+      },
+      {
+        "image": "https://s3-ap-southeast-1.amazonaws.com/easyshop-production/assets/images/ads/gadgetsgalore.jpg",
+        "target": "banner",
+        "targetType": "product page"
+      },
+      {
+        "image": "https://s3-ap-southeast-1.amazonaws.com/easyshop-production/assets/images/ads/150306050329.png",
+        "target": "banner",
+        "targetType": "product page"
+      }],
+    "promo": [
+      {
+        "productName": "iPhone 6",
+        "image": "http://www.itnewsafrica.com/wp-content/uploads/2014/09/iphone-61.jpg",
+        "originalPrice": 30000,
+        "discountedPrice": 24000,
+        "discountPercentage": 20,
+        "target": "iphone6"
+      },
+      {
+        "productName": "Hero 4",
+        "image": "http://cnet3.cbsistatic.com/hub/i/r/2014/09/28/29697659-b8f9-4ddf-934a-cd8a14835b9c/thumbnail/770x433/11fb90c4a06f432ce5883c1b0cb644e9/gopro-hero4-black-08.jpg",
+        "originalPrice": 20000,
+        "discountedPrice": 10000,
+        "discountPercentage": 50,
+        "target": "goPro"
+      },
+      {
+        "productName": "Beats",
+        "image": "http://images.gizmag.com/hero/9674_230708121308_0.jpg",
+        "originalPrice": 30000,
+        "discountedPrice": 25500,
+        "discountPercentage": 15,
+        "target": "beats"
+      }
+    ],
+    "popularCategories": [
+      {
+        "categoryImage": "http://2.bp.blogspot.com/-bBIU7cCQAWA/UCM6v-quciI/AAAAAAAADoA/qchEFZTPyXg/s640/2012+0808+Halona+V-Neck+Short+Sleeve+Belted+Dress.png",
+        "target": "1"
+      },
+      {
+        "categoryImage": "https://s3-ap-southeast-1.amazonaws.com/easyshop-production/assets/images/ads/gadgetsgalore.jpg",
+        "target": "2"
+      },
+      {
+        "categoryImage": "http://cdn03.androidauthority.net/wp-content/uploads/2014/05/LG-G3-quickcircle-smart-cover-press.jpg",
+        "target": "3"
+      },
+      {
+        "categoryImage": "http://maxcdn.thedesigninspiration.com/wp-content/uploads/2013/11/2015-Chak-Motors-Molot-004.jpg",
+        "target": "4"
+      }
+    ],
+    "trendingItems": [
+      {
+        "categoryImage": "http://www.dividend.com/assets/dividend/nke/nike-shoes-bb098f57129e558e1cdf393c308987bf.jpg",
+        "target": "1"
+      },
+      {
+        "categoryImage": "http://www.vulcan100.com/image/data/0/shoes-discount/Nike-Shoes/Nike-Free-Run-Women/Nike-Flex-Experience/Cheap-Most-Ever-Top-Design-Nike-Flex-Experience-Unisex-Orange-White-Running-Shoes-For-Sale-2171.jpg",
+        "target": "2"
+      },
+      {
+        "categoryImage": "https://s-media-cache-ak0.pinimg.com/736x/c6/5e/ce/c65ece8d805d7d98c43f945ec1612f8a.jpg",
+        "target": "3"
+      },
+      {
+        "categoryImage": "http://www.3dcart.com/images/sell-online/banner_handmade-jewelry.jpg",
+        "target": "4"
+      }
+    ],
+    "itemsYouMayLike": [
+      {
+        "productName": "Vans",
+        "image": "http://cdn.sneakernews.com/wp-content/uploads/2013/01/vans-era-59-c-l.jpg",
+        "originalPrice": 3000,
+        "discountedPrice": 1500,
+        "discountPercentage": 50,
+        "target": "1"
+      },
+      {
+        "productName": "Vans",
+        "image": "http://cdn.sneakernews.com/wp-content/uploads/2013/01/vans-era-59-c-l.jpg",
+        "originalPrice": 3000,
+        "discountedPrice": 1500,
+        "discountPercentage": 50,
+        "target": "1"
+      },
+      {
+        "productName": "Vans 2",
+        "image": "http://g02.a.alicdn.com/kf/HTB1iyzPHVXXXXbZXpXXq6xXFXXX2/Summer-Canvas-font-b-Vans-b-font-Shoes-Where-The-Wild-Things-Are-Hand-Painted-Women.jpg",
+        "originalPrice": 2000,
+        "discountedPrice": 1000,
+        "discountPercentage": 50,
+        "target": ""
+      },
+      {
+        "productName": "Tribal Jacket Small Size Lorem",
+        "image": "https://stylefilosofia.files.wordpress.com/2013/02/img_57681.jpg",
+        "originalPrice": 2000,
+        "discountedPrice": 1000,
+        "discountPercentage": 50,
+        "target": ""
+      }
+    ]
+  },
+  "hotItems": {
+    "topbanners": [
+      {
+        "image": "https://s3-ap-southeast-1.amazonaws.com/easyshop-production/assets/images/homeslider/150306170342.png",
+        "target": "banner",
+        "targetType": "product page"
+      },
+      {
+        "image": "https://s3-ap-southeast-1.amazonaws.com/easyshop-production/assets/images/ads/gadgetsgalore.jpg",
+        "target": "banner",
+        "targetType": "product page"
+      },
+      {
+        "image": "https://s3-ap-southeast-1.amazonaws.com/easyshop-production/assets/images/ads/150306050329.png",
+        "target": "banner",
+        "targetType": "product page"
+      }
+    ],
+    "toppicks": [
+      {
+        "productName": "Hero 4",
+        "image": "http://cnet3.cbsistatic.com/hub/i/r/2014/09/28/29697659-b8f9-4ddf-934a-cd8a14835b9c/thumbnail/770x433/11fb90c4a06f432ce5883c1b0cb644e9/gopro-hero4-black-08.jpg",
+        "originalPrice": 20000,
+        "discountedPrice": 10000,
+        "discountPercentage": 50,
+        "target": "goPro"
+      },
+      {
+        "productName": "Beats",
+        "image": "http://images.gizmag.com/hero/9674_230708121308_0.jpg",
+        "originalPrice": 30000,
+        "discountedPrice": 25500,
+        "discountPercentage": 15,
+        "target": "beats"
+      }
+    ],
+    "categories": [
+      {
+        "categoryName": "Clothes",
+        "layoutId": "1",
+        "viewMoreTarget": "view more url",
+        "images": [
+          {
+            "image": "http://dressh.link/wp-content/uploads/2015/06/prom-cocktail-dress-vghv8fsbj.jpg",
+            "target": "1",
+            "targetType": "type"
+          },
+          {
+            "image": "http://image.dhgate.com/albu_240203564_00-1.0x0/fashion-style-prom-bowknot-long-sleeves-cocktail.jpg",
+            "target": "2",
+            "targetType": "type"
+          },
+          {
+            "image": "http://image.dhgate.com/albu_209822654_00-1.0x0/mens-suits-men-suit-dress-blac-men-suit-custom.jpg",
+            "target": "2",
+            "targetType": "type"
+          }
+        ]
+      },
+      {
+        "categoryName": "Shoes",
+        "layoutId": "2",
+        "viewMoreTarget": "view more url",
+        "images": [
+          {
+            "productName": "Vans",
+            "image": "http://cdn.sneakernews.com/wp-content/uploads/2013/01/vans-era-59-c-l.jpg",
+            "target": "1"
+          },
+          {
+            "productName": "Nike 1",
+            "image": "http://www.dividend.com/assets/dividend/nke/nike-shoes-bb098f57129e558e1cdf393c308987bf.jpg",
+            "target": "2"
+          },
+          {
+            "productName": "Nike 2",
+            "image": "http://g02.a.alicdn.com/kf/HTB1iyzPHVXXXXbZXpXXq6xXFXXX2/Summer-Canvas-font-b-Vans-b-font-Shoes-Where-The-Wild-Things-Are-Hand-Painted-Women.jpg",
+            "target": "3"
+          }
+        ]
+      }
+    ],
+    "bottomBanners": [
+      {
+        "image": "https://s3-ap-southeast-1.amazonaws.com/easyshop-production/assets/images/homeslider/150306170342.png",
+        "target": "banner",
+        "targetType": "product page"
+      },
+      {
+        "image": "https://s3-ap-southeast-1.amazonaws.com/easyshop-production/assets/images/ads/gadgetsgalore.jpg",
+        "target": "banner",
+        "targetType": "product page"
+      },
+      {
+        "image": "https://s3-ap-southeast-1.amazonaws.com/easyshop-production/assets/images/ads/150306050329.png",
+        "target": "banner",
+        "targetType": "product page"
+      }
+    ]
+  },
+  "newItems": {
+    "shopByCategories": [
+      {
+        "categoryImage": "http://www.dividend.com/assets/dividend/nke/nike-shoes-bb098f57129e558e1cdf393c308987bf.jpg",
+        "target": "1"
+      },
+      {
+        "categoryImage": "http://www.vulcan100.com/image/data/0/shoes-discount/Nike-Shoes/Nike-Free-Run-Women/Nike-Flex-Experience/Cheap-Most-Ever-Top-Design-Nike-Flex-Experience-Unisex-Orange-White-Running-Shoes-For-Sale-2171.jpg",
+        "target": "2"
+      },
+      {
+        "categoryImage": "https://s-media-cache-ak0.pinimg.com/736x/c6/5e/ce/c65ece8d805d7d98c43f945ec1612f8a.jpg",
+        "target": "3"
+      },
+      {
+        "categoryImage": "http://www.3dcart.com/images/sell-online/banner_handmade-jewelry.jpg",
+        "target": "4"
+      },
+      {
+        "categoryImage": "http://www.dividend.com/assets/dividend/nke/nike-shoes-bb098f57129e558e1cdf393c308987bf.jpg",
+        "target": "1"
+      },
+      {
+        "categoryImage": "http://www.vulcan100.com/image/data/0/shoes-discount/Nike-Shoes/Nike-Free-Run-Women/Nike-Flex-Experience/Cheap-Most-Ever-Top-Design-Nike-Flex-Experience-Unisex-Orange-White-Running-Shoes-For-Sale-2171.jpg",
+        "target": "2"
+      },
+      {
+        "categoryImage": "https://s-media-cache-ak0.pinimg.com/736x/c6/5e/ce/c65ece8d805d7d98c43f945ec1612f8a.jpg",
+        "target": "3"
+      },
+      {
+        "categoryImage": "http://www.3dcart.com/images/sell-online/banner_handmade-jewelry.jpg",
+        "target": "4"
+      }
+    ]
+  },
+  "shopByNewRelease": [
+    {
+      "productName": "iPhone 6",
+      "image": "http://www.itnewsafrica.com/wp-content/uploads/2014/09/iphone-61.jpg",
+      "originalPrice": 30000,
+      "discountedPrice": 24000,
+      "discountPercentage": 20,
+      "target": "iphone6"
+    },
+    {
+      "productName": "Hero 4",
+      "image": "http://cnet3.cbsistatic.com/hub/i/r/2014/09/28/29697659-b8f9-4ddf-934a-cd8a14835b9c/thumbnail/770x433/11fb90c4a06f432ce5883c1b0cb644e9/gopro-hero4-black-08.jpg",
+      "originalPrice": 20000,
+      "discountedPrice": 10000,
+      "discountPercentage": 50,
+      "target": "goPro"
+    },
+    {
+      "productName": "Beats",
+      "image": "http://images.gizmag.com/hero/9674_230708121308_0.jpg",
+      "originalPrice": 30000,
+      "discountedPrice": 25500,
+      "discountPercentage": 15,
+      "target": "beats"
+    },
+    {
+      "productName": "iPhone 6",
+      "image": "http://www.itnewsafrica.com/wp-content/uploads/2014/09/iphone-61.jpg",
+      "originalPrice": 30000,
+      "discountedPrice": 24000,
+      "discountPercentage": 20,
+      "target": "iphone6"
+    },
+    {
+      "productName": "Hero 4",
+      "image": "http://cnet3.cbsistatic.com/hub/i/r/2014/09/28/29697659-b8f9-4ddf-934a-cd8a14835b9c/thumbnail/770x433/11fb90c4a06f432ce5883c1b0cb644e9/gopro-hero4-black-08.jpg",
+      "originalPrice": 20000,
+      "discountedPrice": 10000,
+      "discountPercentage": 50,
+      "target": "goPro"
+    },
+    {
+      "productName": "Beats",
+      "image": "http://images.gizmag.com/hero/9674_230708121308_0.jpg",
+      "originalPrice": 30000,
+      "discountedPrice": 25500,
+      "discountPercentage": 15,
+      "target": "beats"
+    }
+  ]
+}
