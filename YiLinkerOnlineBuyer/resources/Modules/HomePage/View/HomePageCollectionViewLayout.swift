@@ -26,6 +26,8 @@ class HomePageCollectionViewLayout: UICollectionViewLayout {
     
     var currentScreenHeigth: CGFloat = 0.0
     
+    var layouts: [String] = []
+    
     override func prepareLayout() {
         super.prepareLayout()
         self.collectionView?.layoutIfNeeded()
@@ -33,16 +35,29 @@ class HomePageCollectionViewLayout: UICollectionViewLayout {
         self.layoutAttributes = Dictionary<String, UICollectionViewLayoutAttributes>()
         self.numberOfSections  = self.collectionView?.numberOfSections()
         
-        self.bannerLayout(0)
-        self.threeImageLayout2(1)
-        self.sixImageLayout(2)
-        self.sixImageLayout2(3)
-        self.twoImageLayout(4)
-        self.threeImageLayout(5)
-        self.scrollableImageLayout(6)
-        self.sellerLayout(7)
-        self.newSellerScrollableImageLayout(8)
-        self.twoColumnGridLayout(9)
+        for (index, layout) in enumerate(layouts) {
+            if layout == "layout1" {
+                self.bannerLayout(index)
+            } else if layout == "layout2" {
+                self.subBannerLayout(index)
+            } else if layout == "layout3" {
+                self.threeImageLayout2(index)
+            } else if layout == "layout4" {
+                self.fourImageLayout(index)
+            } else if layout == "layout5" {
+                self.sixImageLayout(index)
+            } else if layout == "layout6" {
+                self.twoColumnGridLayout(index)
+            } else if layout == "layout7" {
+                self.twoImageLayout(index)
+            } else if layout == "layout8" {
+                self.scrollableImageLayout(index)
+            } else if layout == "layout9" {
+                self.newSellerScrollableImageLayout(index)
+            } else if layout == "layout10" {
+                self.sellerLayout(index)
+            }
+        }
     }
     
     
@@ -90,7 +105,7 @@ class HomePageCollectionViewLayout: UICollectionViewLayout {
         
         let numberOfItems = self.collectionView?.numberOfItemsInSection(section)
         let initialMargin: CGFloat = 8
-        for var item = 0; item < numberOfItems; item++ {
+        for var item = 0; item < 1; item++ {
             let indexPath = NSIndexPath(forItem: item, inSection: section)
             let attributes = UICollectionViewLayoutAttributes(forCellWithIndexPath: indexPath)
             
@@ -101,10 +116,12 @@ class HomePageCollectionViewLayout: UICollectionViewLayout {
                 itemSize = CGSizeMake(screenRect!.width + horizontalInset, mainBannerHeightSize)
                 xPosition = 0
                 yPosition = defaultYPosition
-            } else {
+            }
+            
+            /*else {
                 let miniScreenWidth = (((screenRect!.width - (initialMargin * 2)) - (horizontalInset * CGFloat(numberOfItems! - 2)))  / (CGFloat(numberOfItems!) - 1))
                 itemSize = CGSizeMake(miniScreenWidth, 80)
-            }
+            }*/
             
             attributes.frame = CGRectMake(xPosition, yPosition, itemSize.width , itemSize.height)
             
@@ -115,11 +132,9 @@ class HomePageCollectionViewLayout: UICollectionViewLayout {
                 horizontalInset = 6
                 yPosition = yPosition + itemSize.height + self.horizontalInset
                 xPosition  = initialMargin
-            } else {
-                xPosition = xPosition + self.horizontalInset + itemSize.width
             }
             
-            bannerSectionHeight = yPosition + itemSize.height + self.horizontalInset
+            bannerSectionHeight = yPosition
         }
         
         self.currentScreenHeigth = bannerSectionHeight
@@ -478,6 +493,47 @@ class HomePageCollectionViewLayout: UICollectionViewLayout {
         
     }
     
+    func subBannerLayout(section: Int) {
+        var defaultYPosition = self.currentScreenHeigth
+        
+        let path = NSIndexPath(forItem: 0, inSection: section)
+        
+        var xPosition: CGFloat = self.horizontalInset
+        var yPosition: CGFloat = defaultYPosition
+        
+        let numberOfItems = self.collectionView?.numberOfItemsInSection(section)
+        let initialMargin: CGFloat = 8
+        
+        let fullSectionItemHeight: CGFloat = 230
+        var itemSize: CGSize = CGSizeZero
+        
+        let screenWidth: CGFloat =  ((screenRect!.width - (self.horizontalInset * 4)) /  3)
+        
+        for var item = 0; item < numberOfItems; item++ {
+            let indexPath = NSIndexPath(forItem: item, inSection: section)
+            let attribute = UICollectionViewLayoutAttributes(forCellWithIndexPath: indexPath)
+            let cellHeight: CGFloat = 100
+            
+            if item == 1 || item == 2 {
+                xPosition = xPosition + self.horizontalInset + screenWidth
+            }
+            
+            itemSize = CGSizeMake(screenWidth, cellHeight)
+            
+            attribute.frame = CGRectMake(xPosition, yPosition, itemSize.width, itemSize.height)
+            
+            let key: String = self.layoutKeyForIndexPath(indexPath)
+            self.layoutAttributes[key] = attribute
+        }
+        
+        yPosition = yPosition + itemSize.height + self.horizontalInset + 20
+        xPosition = 0
+        
+        self.currentScreenHeigth = yPosition
+        self.contentSize = CGSizeMake(screenRect!.width, self.currentScreenHeigth)
+            
+    }
+    
     
     func scrollableImageLayout(section: Int) {
         var defaultYPosition = self.currentScreenHeigth
@@ -687,7 +743,9 @@ class HomePageCollectionViewLayout: UICollectionViewLayout {
         self.currentScreenHeigth = yPosition
         self.contentSize = CGSizeMake(screenRect!.width, self.currentScreenHeigth)
         
-        let decorationViewHeight: CGFloat = 287 * ((CGFloat(numberOfItems!) + 1) / 2)
+        let multiplier: Int = Int(((CGFloat(numberOfItems!) + 1) / 2))
+        let insets: CGFloat = (CGFloat(numberOfItems!) + 1) * verticalInset
+        let decorationViewHeight: CGFloat = 287 * CGFloat(multiplier) + insets
         
         //Add decoration view
         let decorationViewAttribute: UICollectionViewLayoutAttributes = UICollectionViewLayoutAttributes(forDecorationViewOfKind: "SectionBackground", withIndexPath: path)
@@ -696,6 +754,77 @@ class HomePageCollectionViewLayout: UICollectionViewLayout {
         
         let decorationKey: String = self.layoutKeyForDecorationViewAtIndexPath(path)
         self.layoutAttributes[decorationKey] = decorationViewAttribute
+    }
+    
+    func fourImageLayout(section: Int) {
+        var defaultYPosition = self.currentScreenHeigth
+        
+        let path = NSIndexPath(forItem: 0, inSection: section)
+        
+        //Add decoration view
+        let decorationViewAttribute: UICollectionViewLayoutAttributes = UICollectionViewLayoutAttributes(forDecorationViewOfKind: "SectionBackground", withIndexPath: path)
+        decorationViewAttribute.frame = CGRectMake(0, defaultYPosition + self.headerViewHeight, screenRect!.width, sectionHeight + 10)
+        decorationViewAttribute.zIndex = -1
+        let decorationKey: String = self.layoutKeyForDecorationViewAtIndexPath(path)
+        self.layoutAttributes[decorationKey] = decorationViewAttribute
+        
+        //Add header view
+        let headerAttribute = UICollectionViewLayoutAttributes(forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withIndexPath: path)
+        let headerHeight = self.headerViewHeight
+        headerAttribute.frame = CGRectMake(0, defaultYPosition, self.collectionView!.frame.size.width, headerHeight)
+        let headerKey = layoutKeyForHeaderAtIndexPath(path)
+        self.layoutAttributes[headerKey] = headerAttribute
+        
+        //Add cells
+        var xPosition: CGFloat = self.horizontalInset
+        defaultYPosition = defaultYPosition + headerViewHeight
+        var yPosition: CGFloat = defaultYPosition + self.verticalInset
+        
+        let numberOfItems = self.collectionView?.numberOfItemsInSection(section)
+        let initialMargin: CGFloat = 8
+        
+        let fullSectionItemHeight: CGFloat = 225
+        var itemSize: CGSize = CGSizeZero
+        
+        for var item = 0; item < numberOfItems; item++ {
+            let indexPath = NSIndexPath(forItem: item, inSection: section)
+            let attribute = UICollectionViewLayoutAttributes(forCellWithIndexPath: indexPath)
+            
+            if item == 0 {
+                let screenWidth: CGFloat =  screenRect!.width * 0.35
+                itemSize = CGSizeMake(screenWidth, fullSectionItemHeight)
+            } else if item == 1 {
+                xPosition = xPosition + horizontalInset + itemSize.width
+                let screenWidth: CGFloat =  screenRect!.width - (self.horizontalInset) - (self.screenRect!.width * 0.35)
+                itemSize = CGSizeMake(screenWidth - 10, 110)
+            } else if item == 2 {
+                let screenWidth: CGFloat =  (itemSize.width - self.horizontalInset) / 2
+                itemSize = CGSizeMake(screenWidth, 110)
+                yPosition = yPosition + self.verticalInset + itemSize.height
+            } else if item == 3 {
+                itemSize = CGSizeMake(itemSize.width, 110)
+                xPosition = xPosition + self.horizontalInset + itemSize.width
+            }
+            
+            attribute.frame = CGRectMake(xPosition, yPosition, itemSize.width, itemSize.height)
+            
+            let key: String = self.layoutKeyForIndexPath(indexPath)
+            self.layoutAttributes[key] = attribute
+        }
+        
+        yPosition = yPosition + itemSize.height + self.verticalInset
+        xPosition = 0
+        
+        //Add footer view
+        let footerAttribute: UICollectionViewLayoutAttributes = UICollectionViewLayoutAttributes(forSupplementaryViewOfKind: UICollectionElementKindSectionFooter, withIndexPath: path)
+        footerAttribute.frame = CGRectMake(xPosition, yPosition, self.screenRect!.width, self.footerHeight)
+        let footerKey = layoutKeyForFooterAtIndexPath(path)
+        self.layoutAttributes[footerKey] = footerAttribute
+        
+        let height: CGFloat = yPosition + footerAttribute.frame.size.height
+        
+        self.currentScreenHeigth = height
+        self.contentSize = CGSizeMake(screenRect!.width, self.currentScreenHeigth)
     }
 
     
