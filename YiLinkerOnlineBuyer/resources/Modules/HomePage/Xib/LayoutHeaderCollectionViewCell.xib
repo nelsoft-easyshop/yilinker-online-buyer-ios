@@ -31,10 +31,10 @@
                         </constraints>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xy7-vk-Ry8">
-                        <rect key="frame" x="110" y="30" width="295" height="2"/>
+                        <rect key="frame" x="7" y="30" width="405" height="2"/>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="2" id="pxd-NY-U7w"/>
+                            <constraint firstAttribute="height" constant="2" id="M0b-oi-RBR"/>
                         </constraints>
                     </view>
                 </subviews>
@@ -44,13 +44,18 @@
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="kqL-74-UCh" secondAttribute="bottom" id="FGu-TC-m2t"/>
                 <constraint firstAttribute="centerY" secondItem="Pfl-XH-KQK" secondAttribute="centerY" id="Rya-6o-AYO"/>
+                <constraint firstItem="Xy7-vk-Ry8" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="7" id="SXg-Hp-O9E"/>
                 <constraint firstItem="kqL-74-UCh" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="5" id="fAe-Ks-9SK"/>
-                <constraint firstAttribute="bottom" secondItem="Xy7-vk-Ry8" secondAttribute="bottom" id="p0w-PY-fu1"/>
-                <constraint firstItem="Xy7-vk-Ry8" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="110" id="qef-yT-2rK"/>
+                <constraint firstAttribute="trailing" secondItem="Xy7-vk-Ry8" secondAttribute="trailing" constant="4" id="kSG-na-VBl"/>
+                <constraint firstAttribute="bottom" secondItem="Xy7-vk-Ry8" secondAttribute="bottom" id="qsz-tK-2pS"/>
                 <constraint firstItem="Pfl-XH-KQK" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="5" id="wXv-vM-Ee5"/>
-                <constraint firstAttribute="trailing" secondItem="Xy7-vk-Ry8" secondAttribute="trailing" constant="11" id="xzR-LB-Jux"/>
             </constraints>
             <size key="customSize" width="416" height="32"/>
+            <connections>
+                <outlet property="titleLabel" destination="Pfl-XH-KQK" id="bM7-fd-tJp"/>
+                <outlet property="titleLineView" destination="kqL-74-UCh" id="8Ad-zv-4dr"/>
+                <outlet property="widthConstraint" destination="XGE-MX-M2n" id="fEA-Lj-J5c"/>
+            </connections>
             <point key="canvasLocation" x="323" y="338"/>
         </collectionViewCell>
     </objects>

@@ -10,7 +10,7 @@ import UIKit
 
 let reuseIdentifier = "Cell"
 
-class HomePageCollectionViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
+class HomePageCollectionViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, ScrollableCollectionViewCellDelegate, NewSellerScrollableCollectionViewCellDelegate, ViewMoreFooterCollectionViewCellDelegate {
     var collectionView: UICollectionView?
     
     var dictionary: NSDictionary = NSDictionary()
@@ -50,7 +50,7 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
         collectionView?.registerNib(halfVerticalCollectionViewCellNib, forCellWithReuseIdentifier: "HalfVerticalImageCollectionViewCell")
         
         var decorationViewNib: UINib = UINib(nibName: "SectionBackground", bundle: nil)
-        // CollectionView.CollectionViewLayout.RegisterClassForDecorationView
+
         self.collectionView?.collectionViewLayout.registerNib(decorationViewNib, forDecorationViewOfKind: "SectionBackground")
         //ProductItemWithVerticalDisplayCollectionViewCell
         
@@ -85,17 +85,17 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
 
 
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if self.layouts[section] == "layout1" {
+        if self.layouts[section] == Constants.HomePage.layoutOneKey {
             return 1
-        } else if self.layouts[section] == "layout2" {
+        } else if self.layouts[section] == Constants.HomePage.layoutTwoKey {
             return 3
-        } else if self.layouts[section] == "layout3" {
+        } else if self.layouts[section] == Constants.HomePage.layoutThreeKey {
             return 3
-        } else if self.layouts[section] == "layout4" {
+        } else if self.layouts[section] == Constants.HomePage.layoutFourKey {
             return 4
-        } else if self.layouts[section] == "layout5" {
+        } else if self.layouts[section] == Constants.HomePage.layoutFiveKey {
             return 6
-        } else if self.layouts[section] == "layout6" {
+        } else if self.layouts[section] == Constants.HomePage.layoutSixKey {
             if let val: AnyObject = self.dictionary["itemsYouMayLike"] {
                 let array: NSArray = self.dictionary["itemsYouMayLike"] as! NSArray
                 return array.count
@@ -103,13 +103,13 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
                 let array: NSArray = self.dictionary["shopByNewRelease"] as! NSArray
                 return array.count
             }
-        } else if layouts[section] == "layout7" {
+        } else if layouts[section] == Constants.HomePage.layoutSevenKey {
             return 2
-        } else if layouts[section] == "layout8" {
+        } else if layouts[section] == Constants.HomePage.layoutEightKey {
             return 1
-        } else if layouts[section] == "layout9" {
+        } else if layouts[section] == Constants.HomePage.layoutNineKey {
             return 1
-        } else if layouts[section] == "layout10" {
+        } else if layouts[section] == Constants.HomePage.layoutTenKey {
             let sellerArray: NSArray = self.dictionary["topSellers"] as! NSArray
             return sellerArray.count
         } else {
@@ -118,15 +118,17 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        if self.layouts[indexPath.section] == "layout1" {
+        if self.layouts[indexPath.section] == Constants.HomePage.layoutOneKey {
             let productDictionary: NSDictionary = dictionary["mainbanner"] as! NSDictionary
             let fullImageColectionViewCell: FullImageCollectionViewCell = self.collectionView?.dequeueReusableCellWithReuseIdentifier("FullImageCollectionViewCell", forIndexPath: indexPath) as! FullImageCollectionViewCell
             let homeProductModel: HomePageProductModel = HomePageProductModel.parseDataWithDictionary(productDictionary)
-            
-            fullImageColectionViewCell.itemProductImageView.sd_setImageWithURL(homeProductModel.productImageURL, placeholderImage: UIImage(named: "dummy-placeholder"))
 
+            fullImageColectionViewCell.targetType = homeProductModel.targetType
+            fullImageColectionViewCell.target = homeProductModel.target
+            
+            fullImageColectionViewCell.itemProductImageView.sd_setImageWithURL(homeProductModel.imageURL, placeholderImage: UIImage(named: "dummy-placeholder"))
             return fullImageColectionViewCell
-        } else if self.layouts[indexPath.section] == "layout2" {
+        } else if self.layouts[indexPath.section] == Constants.HomePage.layoutTwoKey {
             
             var productDictionary: NSArray = NSArray()
             if let val: AnyObject = self.dictionary["subbanners"] {
@@ -141,11 +143,13 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
             let homeProductModels: [HomePageProductModel] = HomePageProductModel.parseDataWithArray(productDictionary)
             
             let homeProductModel: HomePageProductModel = homeProductModels[indexPath.row]
-            fullImageColectionViewCell.itemProductImageView.sd_setImageWithURL(homeProductModel.productImageURL, placeholderImage: UIImage(named: "dummy-placeholder"))
+            fullImageColectionViewCell.itemProductImageView.sd_setImageWithURL(homeProductModel.imageURL, placeholderImage: UIImage(named: "dummy-placeholder"))
+            fullImageColectionViewCell.targetType = homeProductModel.targetType
+            fullImageColectionViewCell.target = homeProductModel.target
             
             return fullImageColectionViewCell
-        } else if self.layouts[indexPath.section] == "layout3" {
             
+        } else if self.layouts[indexPath.section] == Constants.HomePage.layoutThreeKey {
             var homeProductModel: HomePageProductModel?
             var productArray: NSArray = NSArray()
             if let val: AnyObject = self.dictionary["promo"] {
@@ -167,36 +171,46 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
             
             if indexPath.row == 0 {
                 let fourImageCollectionViewCell: VerticalImageCollectionViewCell = self.collectionView?.dequeueReusableCellWithReuseIdentifier("VerticalImageCollectionViewCell", forIndexPath: indexPath) as! VerticalImageCollectionViewCell
-                fourImageCollectionViewCell.productItemImageView.sd_setImageWithURL(homeProductModel!.productImageURL, placeholderImage: UIImage(named: "dummy-placeholder"))
-                fourImageCollectionViewCell.productNameLabel.text = homeProductModel!.productName
+                fourImageCollectionViewCell.productItemImageView.sd_setImageWithURL(homeProductModel!.imageURL, placeholderImage: UIImage(named: "dummy-placeholder"))
+                fourImageCollectionViewCell.productNameLabel.text = homeProductModel!.name
                 
-                if homeProductModel!.productDiscountedPrice != "" {
-                    fourImageCollectionViewCell.discountedPriceLabel.text = "P \(homeProductModel!.productDiscountedPrice)"
-                    fourImageCollectionViewCell.discountPercentageLabel.text = "\(homeProductModel!.productDiscountPercentage) %"
+                if homeProductModel!.discountedPrice != "" {
+                    fourImageCollectionViewCell.discountedPriceLabel.text = "P \(homeProductModel!.discountedPrice)"
+                    fourImageCollectionViewCell.discountPercentageLabel.text = "\(homeProductModel!.discountPercentage) %"
                 } else {
                     fourImageCollectionViewCell.discountedPriceLabel.hidden = true
                     fourImageCollectionViewCell.discountPercentageLabel.hidden = true
                 }
+                
+                fourImageCollectionViewCell.targetType = homeProductModel!.targetType
+                fourImageCollectionViewCell.target = homeProductModel!.target
+                fourImageCollectionViewCell.discountedPriceLabel.drawDiscountLine()
                 
                 return fourImageCollectionViewCell
             } else {
                 let fourImageCollectionViewCell: HalfVerticalImageCollectionViewCell = self.collectionView?.dequeueReusableCellWithReuseIdentifier("HalfVerticalImageCollectionViewCell", forIndexPath: indexPath) as! HalfVerticalImageCollectionViewCell
                 
-                fourImageCollectionViewCell.productItemImageView.sd_setImageWithURL(homeProductModel!.productImageURL, placeholderImage: UIImage(named: "dummy-placeholder"))
-                fourImageCollectionViewCell.productNameLabel.text = homeProductModel!.productName
+                fourImageCollectionViewCell.productItemImageView.sd_setImageWithURL(homeProductModel!.imageURL, placeholderImage: UIImage(named: "dummy-placeholder"))
+                fourImageCollectionViewCell.productNameLabel.text = homeProductModel!.name
                 
-                if homeProductModel!.productDiscountedPrice != "" {
-                    fourImageCollectionViewCell.discountedPriceLabel.text = "P \(homeProductModel!.productDiscountedPrice)"
-                    fourImageCollectionViewCell.discountPercentageLabel.text = "\(homeProductModel!.productDiscountPercentage) %"
+                fourImageCollectionViewCell.targetType = homeProductModel!.targetType
+                fourImageCollectionViewCell.target = homeProductModel!.target
+                
+                if homeProductModel!.discountedPrice != "" {
+                    fourImageCollectionViewCell.discountedPriceLabel.text = "P \(homeProductModel!.discountedPrice)"
+                    fourImageCollectionViewCell.discountPercentageLabel.text = "\(homeProductModel!.discountPercentage) %"
                 } else {
                     fourImageCollectionViewCell.discountedPriceLabel.hidden = true
                     fourImageCollectionViewCell.discountPercentageLabel.hidden = true
                 }
-             
+                fourImageCollectionViewCell.targetType = homeProductModel!.targetType
+                fourImageCollectionViewCell.target = homeProductModel!.target
+                fourImageCollectionViewCell.discountedPriceLabel.drawDiscountLine()
+                
                 return fourImageCollectionViewCell
             }
             
-        } else if self.layouts[indexPath.section] == "layout4" {
+        } else if self.layouts[indexPath.section] == Constants.HomePage.layoutFourKey {
             var homeProductModel: HomePageProductModel?
             var productArray: NSArray = NSArray()
             
@@ -217,20 +231,24 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
             
             let fullImageColectionViewCell: FullImageCollectionViewCell = self.collectionView?.dequeueReusableCellWithReuseIdentifier("FullImageCollectionViewCell", forIndexPath: indexPath) as! FullImageCollectionViewCell
            
-            fullImageColectionViewCell.itemProductImageView.sd_setImageWithURL(homeProductModel!.productImageURL, placeholderImage: UIImage(named: "dummy-placeholder"))
+            fullImageColectionViewCell.itemProductImageView.sd_setImageWithURL(homeProductModel!.imageURL, placeholderImage: UIImage(named: "dummy-placeholder"))
+            fullImageColectionViewCell.targetType = homeProductModel!.targetType
+            fullImageColectionViewCell.target = homeProductModel!.target
+            
             return fullImageColectionViewCell
 
-        }  else if self.layouts[indexPath.section] == "layout5" {
+        }  else if self.layouts[indexPath.section] == Constants.HomePage.layoutFiveKey {
             let productDictionary: NSArray = dictionary["trendingItems"] as! NSArray
             let fullImageColectionViewCell: FullImageCollectionViewCell = self.collectionView?.dequeueReusableCellWithReuseIdentifier("FullImageCollectionViewCell", forIndexPath: indexPath) as! FullImageCollectionViewCell
             let homeProductModels: [HomePageProductModel] = HomePageProductModel.parseDataWithArray(productDictionary)
             
             let homeProductModel: HomePageProductModel = homeProductModels[indexPath.row]
-            fullImageColectionViewCell.itemProductImageView.sd_setImageWithURL(homeProductModel.productImageURL, placeholderImage: UIImage(named: "dummy-placeholder"))
-            
+            fullImageColectionViewCell.itemProductImageView.sd_setImageWithURL(homeProductModel.imageURL, placeholderImage: UIImage(named: "dummy-placeholder"))
+            fullImageColectionViewCell.targetType = homeProductModel.targetType
+            fullImageColectionViewCell.target = homeProductModel.target
             return fullImageColectionViewCell
             
-        } else if self.layouts[indexPath.section] == "layout6" {
+        } else if self.layouts[indexPath.section] == Constants.HomePage.layoutSixKey {
             let twoColumnGridCollectionViewCell: TwoColumnGridCollectionViewCell = self.collectionView?.dequeueReusableCellWithReuseIdentifier("TwoColumnGridCollectionViewCell", forIndexPath: indexPath) as! TwoColumnGridCollectionViewCell
             
             var productArray: NSArray = NSArray()
@@ -246,31 +264,38 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
                 let homeProductModels: [HomePageProductModel] = HomePageProductModel.parseDataWithArray(productArray)
                 homeProductModel = homeProductModels[indexPath.row]
             }
-           
-            twoColumnGridCollectionViewCell.productItemImageView.sd_setImageWithURL(homeProductModel!.productImageURL, placeholderImage: UIImage(named: "dummy-placeholder"))
+            twoColumnGridCollectionViewCell.productNameLabel.text = homeProductModel?.name
+            twoColumnGridCollectionViewCell.targetType = homeProductModel!.targetType
+            twoColumnGridCollectionViewCell.target = homeProductModel!.target
+            twoColumnGridCollectionViewCell.productItemImageView.sd_setImageWithURL(homeProductModel!.imageURL, placeholderImage: UIImage(named: "dummy-placeholder"))
+            twoColumnGridCollectionViewCell.discountedPriceLabel.drawDiscountLine()
             return twoColumnGridCollectionViewCell
-        } else if self.layouts[indexPath.section] == "layout7"  {
+        } else if self.layouts[indexPath.section] == Constants.HomePage.layoutSevenKey {
             let productItemWithVerticalDisplay: ProductItemWithVerticalDisplayCollectionViewCell = self.collectionView?.dequeueReusableCellWithReuseIdentifier("ProductItemWithVerticalDisplayCollectionViewCell", forIndexPath: indexPath) as! ProductItemWithVerticalDisplayCollectionViewCell
             
             let productDictionary: NSArray = dictionary["toppicks"] as! NSArray
             let homeProductModels: [HomePageProductModel] = HomePageProductModel.parseDataWithArray(productDictionary)
             
             let homeProductModel: HomePageProductModel = homeProductModels[indexPath.row]
-            productItemWithVerticalDisplay.productItemImageView.sd_setImageWithURL(homeProductModel.productImageURL, placeholderImage: UIImage(named: "dummy-placeholder"))
-            productItemWithVerticalDisplay.originalPriceLabel.text = homeProductModel.productOriginalPrice
-            productItemWithVerticalDisplay.productNameLabel.text = homeProductModel.productName
+            productItemWithVerticalDisplay.productItemImageView.sd_setImageWithURL(homeProductModel.imageURL, placeholderImage: UIImage(named: "dummy-placeholder"))
+            productItemWithVerticalDisplay.originalPriceLabel.text = homeProductModel.originalPrice
+            productItemWithVerticalDisplay.productNameLabel.text = homeProductModel.name
           
-            if homeProductModel.productDiscountedPrice != "" {
-                productItemWithVerticalDisplay.discountedPriceLabel.text = "P \(homeProductModel.productDiscountedPrice)"
-                productItemWithVerticalDisplay.discountPercentageLabel.text = "\(homeProductModel.productDiscountPercentage) %"
+            if homeProductModel.discountedPrice != "" {
+                productItemWithVerticalDisplay.discountedPriceLabel.text = "P \(homeProductModel.discountedPrice)"
+                productItemWithVerticalDisplay.discountPercentageLabel.text = "\(homeProductModel.discountPercentage) %"
             } else {
                 productItemWithVerticalDisplay.discountedPriceLabel.hidden = true
                 productItemWithVerticalDisplay.discountPercentageLabel.hidden = true
             }
+            productItemWithVerticalDisplay.targetType = homeProductModel.targetType
+            productItemWithVerticalDisplay.target = homeProductModel.target
+            productItemWithVerticalDisplay.discountedPriceLabel.drawDiscountLine()
             
             return productItemWithVerticalDisplay
-        } else if layouts[indexPath.section] == "layout8" {
+        } else if layouts[indexPath.section] == Constants.HomePage.layoutEightKey {
             let scrollableCell: ScrollableCollectionViewCell = self.collectionView?.dequeueReusableCellWithReuseIdentifier("ScrollableCollectionViewCell", forIndexPath: indexPath) as! ScrollableCollectionViewCell
+            scrollableCell.delegate = self
             var productHomeModels: [HomePageProductModel] = [HomePageProductModel]()
             let products: NSArray = self.dictionary["shopByCategories"] as! NSArray
             
@@ -283,7 +308,7 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
             scrollableCell.productModels = productHomeModels
             
             return scrollableCell
-        } else if layouts[indexPath.section] == "layout9" {
+        } else if layouts[indexPath.section] == Constants.HomePage.layoutNineKey {
             let scrollableCell: NewSellerScrollableCollectionViewCell = self.collectionView?.dequeueReusableCellWithReuseIdentifier("NewSellerScrollableCollectionViewCell", forIndexPath: indexPath) as! NewSellerScrollableCollectionViewCell
             
             var productHomeModels: [HomePageProductModel] = [HomePageProductModel]()
@@ -295,11 +320,11 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
                 productHomeModels.append(productModel)
             }
             
-            
+            scrollableCell.delegate = self
             scrollableCell.productModels = productHomeModels
             
             return scrollableCell
-        } else if layouts[indexPath.section] == "layout10" {
+        } else if layouts[indexPath.section] == Constants.HomePage.layoutTenKey {
             let sellerCollectionView: SellerCollectionViewCell = self.collectionView?.dequeueReusableCellWithReuseIdentifier("SellerCollectionViewCell", forIndexPath: indexPath) as! SellerCollectionViewCell
             let sellerArray: NSArray = self.dictionary["topSellers"] as! NSArray
             
@@ -315,6 +340,8 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
             sellerCollectionView.productTwoImageView.sd_setImageWithURL(NSURL(string: sellerModel.images[1] as! String)!, placeholderImage: UIImage(named: "dummy-placeholder"))
             sellerCollectionView.productThreeImageView.sd_setImageWithURL(NSURL(string: sellerModel.images[2] as! String)!, placeholderImage: UIImage(named: "dummy-placeholder"))
             
+            sellerCollectionView.target = sellerModel.target
+     
             return sellerCollectionView
         } else {
             let productDictionary: NSArray = dictionary["mainbanner"] as! NSArray
@@ -322,8 +349,8 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
             let homeProductModels: [HomePageProductModel] = HomePageProductModel.parseDataWithArray(productDictionary)
             
             let homeProductModel: HomePageProductModel = homeProductModels[indexPath.row]
-            println(homeProductModel.productImageURL)
-            fullImageColectionViewCell.itemProductImageView.sd_setImageWithURL(homeProductModel.productImageURL, placeholderImage: UIImage(named: "dummy-placeholder"))
+            println(homeProductModel.imageURL)
+            fullImageColectionViewCell.itemProductImageView.sd_setImageWithURL(homeProductModel.imageURL, placeholderImage: UIImage(named: "dummy-placeholder"))
             
             return fullImageColectionViewCell
         }
@@ -332,8 +359,19 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
     func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
         if kind == "UICollectionElementKindSectionFooter" {
             if indexPath.section == 1 || indexPath.section == 2 || indexPath.section == 3 || indexPath.section == 4 {
+               
                 let footerView = self.collectionView?.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: "ViewMoreFooterCollectionViewCell", forIndexPath: indexPath) as! ViewMoreFooterCollectionViewCell
                 
+                if let val: AnyObject = self.dictionary["categories"] {
+                    let categoryArray: NSArray = self.dictionary["categories"] as! NSArray
+                    
+                    for (index, category) in enumerate(categoryArray) {
+                        let categoryDictionary: NSDictionary = category as! NSDictionary
+                        footerView.target = "footer target"
+                    }
+                }
+                
+                footerView.delegate = self
                 return footerView
             } else {
                 return UICollectionReusableView(frame: CGRectMake(0, 0, 0, 0))
@@ -343,11 +381,11 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
 
             let headerView: LayoutHeaderCollectionViewCell = self.collectionView?.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: "LayoutHeaderCollectionViewCell", forIndexPath: indexPath) as! LayoutHeaderCollectionViewCell
             
-            if self.layouts[indexPath.section] == "layout1" {
+            if self.layouts[indexPath.section] == Constants.HomePage.layoutOneKey {
                 
-            } else if self.layouts[indexPath.section] == "layout2" {
+            } else if self.layouts[indexPath.section] == Constants.HomePage.layoutTwoKey {
                 
-            } else if self.layouts[indexPath.section] == "layout3" {
+            } else if self.layouts[indexPath.section] == Constants.HomePage.layoutThreeKey {
                 if let val: AnyObject = dictionary["promo"] {
                     headerView.titleLabel.text = "Today's Promo"
                 } else {
@@ -356,7 +394,7 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
                     headerView.titleLabel.text = dictionaryCategory["categoryName"] as? String
                 }
 
-            } else if self.layouts[indexPath.section] == "layout4" {
+            } else if self.layouts[indexPath.section] == Constants.HomePage.layoutFourKey {
                 if let val: AnyObject = dictionary["popularCategories"] {
                     headerView.titleLabel.text = "Popular Categories"
                 } else {
@@ -364,14 +402,27 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
                     let dictionaryCategory: NSDictionary = arrayCategory[1] as! NSDictionary
                     headerView.titleLabel.text = dictionaryCategory["categoryName"] as? String
                 }
-            } else if self.layouts[indexPath.section] == "layout5" {
-                headerView.titleLabel.text = "Trending Items"
-            } else if self.layouts[indexPath.section] == "layout9" {
-                 headerView.titleLabel.text = "New Sellers"
-            }
-
+                 headerView.backgroundColor = UIColor.whiteColor()
                 
-                return headerView
+            } else if self.layouts[indexPath.section] == Constants.HomePage.layoutFiveKey {
+                headerView.titleLabel.text = "Trending Items"
+            } else if self.layouts[indexPath.section] == Constants.HomePage.layoutSixKey {
+                headerView.titleLabel.text = "Items you my like"
+                headerView.backgroundColor = UIColor.clearColor()
+            } else if self.layouts[indexPath.section] == Constants.HomePage.layoutEightKey {
+                headerView.titleLabel.text = "Shop by category"
+                headerView.backgroundColor = UIColor.clearColor()
+            } else if self.layouts[indexPath.section] == Constants.HomePage.layoutTenKey {
+                headerView.titleLabel.text = "Top Sellers"
+                headerView.backgroundColor = UIColor.clearColor()
+            } else if self.layouts[indexPath.section] == Constants.HomePage.layoutNineKey {
+                headerView.titleLabel.text = "New Sellers"
+                headerView.backgroundColor = UIColor.clearColor()
+            }
+            
+            headerView.updateTitleLine()
+            
+            return headerView
         }
     }
     
@@ -381,7 +432,46 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
         return UIEdgeInsetsMake(0, 0, 0, 0)
     }
     
-//    func tapProductWithTarget(target: String, targetType: String) {
-//        println("target: \(target) \n target type: \(targetType)")
-//    }
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        let cell: UICollectionViewCell = self.collectionView!.cellForItemAtIndexPath(indexPath)!
+
+        if cell.isKindOfClass(FullImageCollectionViewCell) {
+            let fullImageCollectionViewCell: FullImageCollectionViewCell = self.collectionView!.cellForItemAtIndexPath(indexPath) as! FullImageCollectionViewCell
+            println("Target: \(fullImageCollectionViewCell.target)")
+            
+        } else if cell.isKindOfClass(HalfVerticalImageCollectionViewCell) {
+            let halfVerticalImageCollectionViewCell: HalfVerticalImageCollectionViewCell = self.collectionView!.cellForItemAtIndexPath(indexPath) as! HalfVerticalImageCollectionViewCell
+            println(halfVerticalImageCollectionViewCell.target)
+            
+        } else if cell.isKindOfClass(ProductItemWithVerticalDisplayCollectionViewCell) {
+            let productItemWithVerticalDisplayCollectionViewCell: ProductItemWithVerticalDisplayCollectionViewCell = cell as! ProductItemWithVerticalDisplayCollectionViewCell
+            println("Target: \(productItemWithVerticalDisplayCollectionViewCell.target)")
+            
+        } else if cell.isKindOfClass(ProductWithCenterNameCollectionViewCell) {
+            let productWithCenterNameCollectionViewCell: ProductWithCenterNameCollectionViewCell = cell as! ProductWithCenterNameCollectionViewCell
+            println("Target: \(productWithCenterNameCollectionViewCell.target)")
+            
+        } else if cell.isKindOfClass(TwoColumnGridCollectionViewCell) {
+            let twoColumnGridCollectionViewCell: TwoColumnGridCollectionViewCell = cell as! TwoColumnGridCollectionViewCell
+            println("Target: \(twoColumnGridCollectionViewCell.target)")
+            println("Target: \(twoColumnGridCollectionViewCell.targetType)")
+            
+        } else if cell.isKindOfClass(VerticalImageCollectionViewCell) {
+            let verticalImageCollectionViewCell: VerticalImageCollectionViewCell = cell as! VerticalImageCollectionViewCell
+             println("Target: \(verticalImageCollectionViewCell.target)")
+        }
+       
+    }
+    
+    func didSelectectCellWithTarget(target: String, targetType: String) {
+        println("target: \(target) \ntarget type:\(targetType)")
+    }
+    
+    func didSelectSellerCellWithTarget(target: String, targetType: String) {
+        println("target: \(target) \ntarget type:\(targetType)")
+    }
+    
+    func didSelectViewMoreWithtarget(target: String, targetType: String) {
+        println("target: \(target) \ntarget type:\(targetType)")
+    }
 }

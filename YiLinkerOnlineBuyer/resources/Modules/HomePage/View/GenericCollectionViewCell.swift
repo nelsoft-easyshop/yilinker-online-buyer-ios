@@ -9,5 +9,6 @@
 import UIKit
 
 class GenericCollectionViewCell: UICollectionViewCell {
-    
+    var target: String = ""
+    var targetType: String = ""
 }

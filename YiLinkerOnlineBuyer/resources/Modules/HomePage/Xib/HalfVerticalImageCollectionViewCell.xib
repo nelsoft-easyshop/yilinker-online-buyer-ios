@@ -57,7 +57,7 @@
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="P 3,000" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KnZ-NC-aQ1" customClass="DiscountLabel" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="P 3,000" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KnZ-NC-aQ1" customClass="DiscountLabel" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
                         <rect key="frame" x="137" y="39" width="56" height="21"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="21" id="1gh-ec-odW"/>
@@ -88,9 +88,9 @@
             <size key="customSize" width="202" height="98"/>
             <connections>
                 <outlet property="discountPercentageLabel" destination="kcv-hj-ten" id="9YL-7A-5JG"/>
-                <outlet property="discountedPriceLabel" destination="KnZ-NC-aQ1" id="EIZ-9m-tZr"/>
+                <outlet property="discountedPriceLabel" destination="KnZ-NC-aQ1" id="Nfh-rx-T18"/>
                 <outlet property="originalPriceLabel" destination="3ln-bJ-Yvq" id="1ze-aA-ubD"/>
-                <outlet property="productItemImageView" destination="lrX-WJ-zSN" id="MKd-cT-zjo"/>
+                <outlet property="productItemImageView" destination="lrX-WJ-zSN" id="IPK-NG-19Y"/>
                 <outlet property="productNameLabel" destination="pbc-g9-8rb" id="DWx-Wj-Jbj"/>
             </connections>
             <point key="canvasLocation" x="354" y="479"/>

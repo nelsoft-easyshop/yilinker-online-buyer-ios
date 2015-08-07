@@ -8,10 +8,15 @@
 
 import UIKit
 
+protocol ScrollableCollectionViewCellDelegate {
+    func didSelectectCellWithTarget(target: String, targetType: String)
+}
+
 class ScrollableCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var collectionView: UICollectionView!
     var productModels: [HomePageProductModel]!
+    var delegate: ScrollableCollectionViewCellDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -31,12 +36,19 @@ class ScrollableCollectionViewCell: UICollectionViewCell {
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let scrollableProductCollectionViewCell: ProductWithCenterNameCollectionViewCell = self.collectionView?.dequeueReusableCellWithReuseIdentifier("ProductWithCenterNameCollectionViewCell", forIndexPath: indexPath) as! ProductWithCenterNameCollectionViewCell
+        let homeProductModel: HomePageProductModel = self.productModels[indexPath.row] 
+        scrollableProductCollectionViewCell.productItemImageView.sd_setImageWithURL(homeProductModel.imageURL, placeholderImage: UIImage(named: "dummy-placeholder"))
+        scrollableProductCollectionViewCell.productNameLabel.text = homeProductModel.name
         
+        if homeProductModel.name == "" {
+            scrollableProductCollectionViewCell.productNameLabel.hidden = true
+        }
         
         return scrollableProductCollectionViewCell
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        println("click!!!")
+         let homeProductModel: HomePageProductModel = self.productModels[indexPath.row]
+        self.delegate?.didSelectectCellWithTarget(homeProductModel.target, targetType: homeProductModel.targetType)
     }
 }

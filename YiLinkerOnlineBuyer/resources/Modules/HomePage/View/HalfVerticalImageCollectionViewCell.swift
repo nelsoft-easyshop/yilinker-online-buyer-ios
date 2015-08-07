@@ -11,13 +11,15 @@ import UIKit
 class HalfVerticalImageCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var originalPriceLabel: DynamicRoundedLabel!
-    @IBOutlet weak var discountedPriceLabel: UILabel!
+    
+    @IBOutlet weak var discountedPriceLabel: DiscountLabel!
     @IBOutlet weak var productNameLabel: UILabel!
     
-    @IBOutlet weak var productItemImageView: UIImageView!
     @IBOutlet weak var discountPercentageLabel: DynamicRoundedLabel!
+    @IBOutlet weak var productItemImageView: UIImageView!
     
-    
+    var target: String = ""
+    var targetType: String = ""
     
     var productModel: HomePageProductModel?
 

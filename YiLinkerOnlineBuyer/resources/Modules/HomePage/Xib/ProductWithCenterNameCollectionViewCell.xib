@@ -44,7 +44,7 @@
             </constraints>
             <size key="customSize" width="142" height="135"/>
             <connections>
-                <outlet property="productItemImageView" destination="Tyk-Oe-Cmj" id="RNb-Jb-sms"/>
+                <outlet property="productItemImageView" destination="Tyk-Oe-Cmj" id="DHr-NP-6pI"/>
                 <outlet property="productNameLabel" destination="z1Z-RK-0Ai" id="hbI-Kp-PnB"/>
             </connections>
             <point key="canvasLocation" x="505" y="196.5"/>

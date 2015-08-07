@@ -62,7 +62,6 @@ class CircularMenuViewController: UIViewController {
                 }
                 
                 var labelPosition: CGFloat = xPosition - (stringSize.width + 30)
-                println(stringSize.width)
                 if index != 6 {
                     var width: CGFloat = stringSize.width + 20
                     if IphoneType.isIphone6() {

@@ -13,9 +13,25 @@ class LayoutHeaderCollectionViewCell: UICollectionViewCell {
     var isWhiteBackgroundPresent: Bool = true
     var headerTitle: String = ""
     
+    var target: String = ""
+    var targetType: String = ""
+    
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var widthConstraint: NSLayoutConstraint!
+    @IBOutlet weak var titleLineView: UIView!
+
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        titleLineView.layer.zPosition = 100
+    }
+    
+    func updateTitleLine() {
+        let myString: String = self.titleLabel.text!
+        let stringSize: CGSize = myString.sizeWithAttributes([NSFontAttributeName: self.titleLabel.font])
+        self.widthConstraint.constant = stringSize.width
+        self.titleLineView.layoutIfNeeded()
+        self.titleLineView.updateConstraints()
     }
 
 }

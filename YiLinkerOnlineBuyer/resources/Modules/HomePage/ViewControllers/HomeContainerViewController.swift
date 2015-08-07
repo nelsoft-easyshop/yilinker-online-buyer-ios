@@ -188,14 +188,16 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate 
     func populateHomePageWithDictionary(dictionary: NSDictionary) {
         let storyBoard: UIStoryboard = UIStoryboard(name: "HomeStoryBoard", bundle: nil)
         featuredCollectionViewController = storyBoard.instantiateViewControllerWithIdentifier("HomePageCollectionViewController") as? HomePageCollectionViewController
+        
         var featuredDictionary: NSDictionary = dictionary["featured"] as! NSDictionary
-        var featuredLayouts: [String] = ["layout1", "layout2", "layout3", "layout4", "layout5", "layout6"]
+        var featuredLayouts: [String] = [Constants.HomePage.layoutOneKey, Constants.HomePage.layoutTwoKey, Constants.HomePage.layoutThreeKey, Constants.HomePage.layoutFourKey, Constants.HomePage.layoutFiveKey, Constants.HomePage.layoutSixKey]
+        
         featuredCollectionViewController?.dictionary = featuredDictionary
         featuredCollectionViewController?.layouts = featuredLayouts
         
         hotItemsCollectionViewController = storyBoard.instantiateViewControllerWithIdentifier("HomePageCollectionViewController") as? HomePageCollectionViewController
         let hotItemsDictionary: NSDictionary = dictionary["hotItems"] as! NSDictionary
-        var hotItemLayouts: [String] = ["layout2", "layout7"]
+        var hotItemLayouts: [String] = [Constants.HomePage.layoutTwoKey, Constants.HomePage.layoutSevenKey]
         
         let categories: NSArray = hotItemsDictionary["categories"] as! NSArray
         
@@ -204,28 +206,28 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate 
             let layoutId: String = categoryDictionary["layoutId"] as! String
             var layout: String = ""
             if layoutId == "1" {
-                layout = "layout3"
+                layout = Constants.HomePage.layoutThreeKey
             } else if layoutId == "2" {
-                layout = "layout4"
+                layout = Constants.HomePage.layoutFourKey
             }
             
             hotItemLayouts.append(layout)
         }
         
-        hotItemLayouts.append("layout2")
+        hotItemLayouts.append(Constants.HomePage.layoutTwoKey)
         hotItemsCollectionViewController?.dictionary = hotItemsDictionary
         hotItemsCollectionViewController?.layouts = hotItemLayouts
         
         
         newItemsCollectionViewController = storyBoard.instantiateViewControllerWithIdentifier("HomePageCollectionViewController") as? HomePageCollectionViewController
         let newItemsDictionary: NSDictionary = dictionary["newItems"] as! NSDictionary
-        var newItemslayout: [String] = ["layout8", "layout6"]
+        var newItemslayout: [String] = [Constants.HomePage.layoutEightKey, Constants.HomePage.layoutSixKey]
         newItemsCollectionViewController?.dictionary = newItemsDictionary
         newItemsCollectionViewController?.layouts = newItemslayout
         
         sellersCollectionViewController = storyBoard.instantiateViewControllerWithIdentifier("HomePageCollectionViewController") as? HomePageCollectionViewController
         let sellerDictionary: NSDictionary = dictionary["sellers"] as! NSDictionary
-        let sellerLayouts: [String] = ["layout9", "layout10"]
+        let sellerLayouts: [String] = [Constants.HomePage.layoutNineKey, Constants.HomePage.layoutTenKey]
         sellersCollectionViewController?.dictionary = sellerDictionary
         sellersCollectionViewController?.layouts = sellerLayouts
         

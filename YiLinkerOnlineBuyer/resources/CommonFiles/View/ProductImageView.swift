@@ -8,14 +8,12 @@
 
 import UIKit
 
-class ProductImageView: UIView {
-
-    /*
-    // Only override drawRect: if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func drawRect(rect: CGRect) {
-        // Drawing code
+class ProductImageView: UIImageView {
+    var target: String = ""
+    var targetType: String = ""
+    
+    override func awakeFromNib() {
+      
     }
-    */
-
+    
 }
