@@ -9,177 +9,188 @@
 import UIKit
 
 class HomePageProductModel: ProductModel {
-    var productTargetType: String = ""
-    var productTargetUrl: String = ""
+    var targetType: String = ""
+    var targetUrl: String = ""
     
-     init(productName: String, productImageURL: NSURL, productOriginalPrice: String, productDiscountedPrice: String, productDiscountPercentage: String, productTarget: String, productTargetType: String, productTargetUrl: String) {
+     init(name: String, imageURL: NSURL, originalPrice: String, discountedPrice: String, discountPercentage: String, target: String, targetType: String, targetUrl: String) {
         
-        super.init(productName: "", productImageURL: NSURL(string: "")!, productOriginalPrice: "", productDiscountedPrice: "", productDiscountPercentage: "", productTarget: "")
+        super.init(name: "", imageURL: NSURL(string: "")!, originalPrice: "", discountedPrice: "", discountPercentage: "", target: "")
         
-        self.productName = productName
-        self.productImageURL = productImageURL
-        self.productOriginalPrice = productOriginalPrice
-        self.productDiscountedPrice = productDiscountedPrice
-        self.productDiscountPercentage = productDiscountPercentage
-        self.productTarget = productTarget
-        self.productTargetType = productTargetType
-        self.productTargetUrl = productTargetUrl
+        self.name = name
+        self.imageURL = imageURL
+        self.originalPrice = originalPrice
+        self.discountedPrice = discountedPrice
+        self.discountPercentage = discountPercentage
+        self.target = target
+        self.targetType = targetType
+        self.targetUrl = targetUrl
     }
     
     
     class func parseDataWithDictionary(dictionary: AnyObject) -> HomePageProductModel {
-        /*
-            if let tempDealTitle = dictionary["deal_title"] as? String {
-            dealTitle = tempDealTitle
-            } else {
-            dealTitle = ""
-            }
-        
-        */
-        var productName: String = ""
-        var productImageURL: NSURL = NSURL(string: "")!
-        var productOriginalPrice: String = ""
-        var productDiscountedPrice: String = ""
-        var productTarget: String = ""
-        var productDiscountPercentage: String = ""
-        var productTargetType: String = ""
+        var name: String = ""
+        var imageURL: NSURL = NSURL(string: "")!
+        var originalPrice: String = ""
+        var discountedPrice: String = ""
+        var target: String = ""
+        var discountPercentage: String = ""
+        var targetType: String = ""
         
         if dictionary.isKindOfClass(NSDictionary) {
            
             if let val: AnyObject = dictionary["productName"] {
                 if let tempProductname = dictionary["productName"] as? String {
-                    productName = tempProductname
+                    name = tempProductname
                 } else {
-                    productName = ""
+                    name = ""
                 }
             }
 
             if let val: AnyObject = dictionary["image"] {
                 if let tempProductImageURL = dictionary["image"] as? String {
-                    productImageURL = NSURL(string: tempProductImageURL)!
+                    
+                    imageURL = NSURL(string: tempProductImageURL)!
                 } else {
-                    productImageURL = NSURL(string: "")!
+                    imageURL = NSURL(string: "")!
                 }
             }
 
             if let val: AnyObject = dictionary["originalPrice"] {
                 if let tempProductOriginalPrice = dictionary["originalPrice"] as? String {
-                    productOriginalPrice = tempProductOriginalPrice
+                    originalPrice = tempProductOriginalPrice
                 } else {
-                    productOriginalPrice = ""
+                    originalPrice = ""
                 }
             }
 
             if let val: AnyObject = dictionary["discountedPrice"] {
                 if let tempDiscountedPrice = dictionary["discountedPrice"] as? String {
-                    productDiscountedPrice = tempDiscountedPrice
+                    discountedPrice = tempDiscountedPrice
                 } else {
-                    productDiscountedPrice = ""
+                    discountedPrice = ""
                 }
             }
             
             if let val: AnyObject = dictionary["discountPercentage"] {
                 if let tempDiscountPercentege = dictionary["discountPercentage"] as? String {
-                    productDiscountPercentage = tempDiscountPercentege
+                    discountPercentage = tempDiscountPercentege
                 } else {
-                    productDiscountPercentage = ""
+                    discountPercentage = ""
                 }
             }
             
             if let val: AnyObject = dictionary["targetType"] {
                 if let tempTargetType = dictionary["targetType"] as? String {
-                    productTargetType = tempTargetType
+                    targetType = tempTargetType
                 } else {
-                    productTargetType = ""
+                    targetType = ""
                 }
             }
             
             if let val: AnyObject = dictionary["categoryImage"] {
                 if let tempCategoryImage = dictionary["categoryImage"] as? String {
-                    productImageURL = NSURL(string: tempCategoryImage)!
+                    imageURL = NSURL(string: tempCategoryImage)!
                 } else {
-                    productImageURL = NSURL(string: "")!
+                    imageURL = NSURL(string: "")!
                 }
             }
             
-            let homePageProductModel: HomePageProductModel = HomePageProductModel(productName: productName, productImageURL: productImageURL, productOriginalPrice: productOriginalPrice, productDiscountedPrice: productDiscountedPrice, productDiscountPercentage: productDiscountPercentage, productTarget: productTarget, productTargetType: productTargetType, productTargetUrl: "")
-         
+            if let val: AnyObject = dictionary["target"] {
+                if let tempTarget = dictionary["target"] as? String {
+                    target = tempTarget
+                } else {
+                    target = ""
+                }
+            }
+            
+            let homePageProductModel: HomePageProductModel = HomePageProductModel(name: name, imageURL: imageURL, originalPrice: originalPrice, discountedPrice: discountedPrice, discountPercentage: discountPercentage, target: target, targetType: targetType, targetUrl: "")
             return homePageProductModel
         } else {
-            
-            return HomePageProductModel(productName: "", productImageURL: NSURL(string: "")!, productOriginalPrice: "", productDiscountedPrice: "", productDiscountPercentage: "", productTarget: "", productTargetType: "", productTargetUrl: "")
+             let homePageProductModel: HomePageProductModel = HomePageProductModel(name: "", imageURL: NSURL(string:"")!, originalPrice: "", discountedPrice: "", discountPercentage: "", target: "", targetType: "", targetUrl: "")
+            return homePageProductModel
         }
     }
     
     class func parseDataWithArray(datas: NSArray) -> [HomePageProductModel]{
+        
         var models: [HomePageProductModel] = [HomePageProductModel]()
         for (index, data) in enumerate(datas) {
             let dictionary: NSDictionary = data as! NSDictionary
-            var productName: String = ""
-            var productImageURL: NSURL = NSURL(string: "")!
-            var productOriginalPrice: String = ""
-            var productDiscountedPrice: String = ""
-            var productTarget: String = ""
-            var productDiscountPercentage: String = ""
-            var productTargetType: String = ""
+            var name: String = ""
+            var imageUrl: NSURL = NSURL(string: "")!
+            var originalPrice: String = ""
+            var discountedPrice: String = ""
+            var target: String = ""
+            var discountPercentage: String = ""
+            var targetType: String = ""
                 
             if let val: AnyObject = dictionary["productName"] {
                 if let tempProductname = dictionary["productName"] as? String {
-                    productName = tempProductname
+                    name = tempProductname
                 } else {
-                    productName = ""
+                    name = ""
                 }
             }
             
             if let val: AnyObject = dictionary["image"] {
                 if let tempProductImageURL = dictionary["image"] as? String {
-                    productImageURL = NSURL(string: tempProductImageURL)!
+                    imageUrl = NSURL(string: tempProductImageURL)!
                 } else {
-                    productImageURL = NSURL(string: "")!
+                    imageUrl = NSURL(string: "")!
                 }
             }
             
             if let val: AnyObject = dictionary["originalPrice"] {
                 if let tempProductOriginalPrice = dictionary["originalPrice"] as? String {
-                    productOriginalPrice = tempProductOriginalPrice
+                    originalPrice = tempProductOriginalPrice
                 } else {
-                    productOriginalPrice = ""
+                    originalPrice = ""
                 }
             }
             
             if let val: AnyObject = dictionary["discountedPrice"] {
                 if let tempDiscountedPrice = dictionary["discountedPrice"] as? String {
-                    productDiscountedPrice = tempDiscountedPrice
+                    discountedPrice = tempDiscountedPrice
                 } else {
-                    productDiscountedPrice = ""
+                    discountedPrice = ""
                 }
             }
             
             if let val: AnyObject = dictionary["discountPercentage"] {
                 if let tempDiscountPercentege = dictionary["discountPercentage"] as? String {
-                    productDiscountPercentage = tempDiscountPercentege
+                    discountPercentage = tempDiscountPercentege
                 } else {
-                    productDiscountPercentage = ""
+                    discountPercentage = ""
                 }
             }
             
             if let val: AnyObject = dictionary["targetType"] {
                 if let tempTargetType = dictionary["targetType"] as? String {
-                    productTargetType = tempTargetType
+                    targetType = tempTargetType
                 } else {
-                    productTargetType = ""
+                    targetType = ""
+                }
+            }
+            
+            if let val: AnyObject = dictionary["target"] {
+                if let tempTarget = dictionary["target"] as? String {
+                    target = tempTarget
+                } else {
+                    target = ""
                 }
             }
             
             if let val: AnyObject = dictionary["categoryImage"] {
                 if let tempCategoryImage = dictionary["categoryImage"] as? String {
-                    productImageURL = NSURL(string: tempCategoryImage)!
+                    imageUrl = NSURL(string: tempCategoryImage)!
                 } else {
-                    productImageURL = NSURL(string: "")!
+                    imageUrl = NSURL(string: "")!
                 }
             }
             
-            let homePageProductModel: HomePageProductModel = HomePageProductModel(productName: productName, productImageURL: productImageURL, productOriginalPrice: productOriginalPrice, productDiscountedPrice: productDiscountedPrice, productDiscountPercentage: productDiscountPercentage, productTarget: productTarget, productTargetType: productTargetType, productTargetUrl: "")
+           
+            let homePageProductModel: HomePageProductModel = HomePageProductModel(name: name, imageURL: imageUrl, originalPrice: originalPrice, discountedPrice: discountedPrice, discountPercentage: discountPercentage, target: target, targetType: targetType, targetUrl: "")
+            
             
             models.append(homePageProductModel)
     }
