@@ -6,4 +6,18 @@
 //  Copyright (c) 2015 yiLinker-online-buyer. All rights reserved.
 //
 
-import Foundation
+struct Constants {
+    struct HomePage {
+        static let layoutOneKey = "layout1"
+        static let layoutTwoKey = "layout2"
+        static let layoutThreeKey = "layout3"
+        static let layoutFourKey = "layout4"
+        static let layoutFiveKey = "layout5"
+        static let layoutSixKey = "layout6"
+        static let layoutSevenKey = "layout7"
+        static let layoutEightKey = "layout8"
+        static let layoutNineKey = "layout9"
+        static let layoutTenKey = "layout10"
+    }
+    
+}
