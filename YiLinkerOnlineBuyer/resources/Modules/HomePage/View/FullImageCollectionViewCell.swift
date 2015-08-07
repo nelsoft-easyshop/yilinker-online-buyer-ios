@@ -12,11 +12,12 @@ class FullImageCollectionViewCell: UICollectionViewCell {
 
     @IBOutlet weak var itemProductImageView: UIImageView!
     
-    var productModel: HomePageProductModel?
+    var target: String = ""
+    var targetType: String = ""
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+
     }
     
 }

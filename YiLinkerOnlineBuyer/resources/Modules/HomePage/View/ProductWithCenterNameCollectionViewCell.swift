@@ -14,6 +14,8 @@ class ProductWithCenterNameCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var productNameLabel: RoundedLabel!
     
     var productModel: HomePageProductModel?
+    var target: String = ""
+    var targetType: String = ""
     
     override func awakeFromNib() {
         super.awakeFromNib()

@@ -14,7 +14,7 @@ struct APIEnvironment {
     
     static func baseUrl() -> String {
         if development {
-            return "http://"
+            return ""
         } else if staging {
             return ""
         } else  {

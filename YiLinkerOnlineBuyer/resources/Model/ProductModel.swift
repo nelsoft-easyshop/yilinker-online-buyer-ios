@@ -9,19 +9,19 @@
 import UIKit
 
 class ProductModel: NSObject {
-    var productName: String = ""
-    var productImageURL: NSURL?
-    var productOriginalPrice: NSNumber = 0.0
-    var productDiscountedPrice: NSNumber = 0.0
-    var productDiscountPercentage: NSNumber = 0.0
-    var productSlug: String = ""
+    var name: String = ""
+    var imageURL: NSURL?
+    var originalPrice: String = ""
+    var discountedPrice: String = ""
+    var discountPercentage: String = ""
+    var target: String = ""
     
-    init(productName: String, productImageURL: NSURL, productOriginalPrice: NSNumber, productDiscountedPrice: NSNumber, productDiscountPercentage: NSNumber, productSlug: String) {
-        self.productName = productName
-        self.productImageURL = productImageURL
-        self.productOriginalPrice = productOriginalPrice
-        self.productDiscountedPrice = productDiscountedPrice
-        self.productDiscountPercentage = productDiscountPercentage
-        self.productSlug = productSlug
+    init(name: String, imageURL: NSURL, originalPrice: String, discountedPrice: String, discountPercentage: String, target: String) {
+        self.name = name
+        self.imageURL = imageURL
+        self.originalPrice = originalPrice
+        self.discountedPrice = discountedPrice
+        self.discountPercentage = discountPercentage
+        self.target = target
     }
 }

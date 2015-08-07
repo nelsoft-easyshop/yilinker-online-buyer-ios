@@ -8,15 +8,23 @@
 
 import UIKit
 
+protocol ViewMoreFooterCollectionViewCellDelegate {
+    func didSelectViewMoreWithtarget(target: String, targetType: String)
+}
+
 class ViewMoreFooterCollectionViewCell: UICollectionViewCell {
     
-    var viewMoreAction: String = ""
-    var viewMoreSlug: String = ""
-    var viewMoreUrl: String = ""
-
+    var target: String = ""
+    var targetType: String = ""
+    var delegate: ViewMoreFooterCollectionViewCellDelegate?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+    }
+    
+    @IBAction func fireViewMore(sender: UIButton) {
+        self.delegate?.didSelectViewMoreWithtarget(self.target, targetType: self.targetType)
     }
 
 }

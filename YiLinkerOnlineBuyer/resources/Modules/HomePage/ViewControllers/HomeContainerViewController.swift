@@ -31,7 +31,9 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate 
     var sellersCollectionViewController: HomePageCollectionViewController?
     
     var curentCollectionViewController: Int = 0
-
+    
+    var featuredViewLoadData: Bool = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         circularDraweView()
@@ -46,9 +48,8 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate 
     override func viewDidLayoutSubviews() {
         contentViewFrame = contentView.bounds
         if self.viewControllers.count == 0 {
-            initViewControllers()
-            setSelectedViewControllerWithIndex(0)
             addSuHeaderScrollView()
+            self.fireGetHomePageData()
         }
     }
     
@@ -73,8 +74,10 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate 
     
     // This function is for executing child view logic code
     func setSelectedViewControllerWithIndex(index: Int) {
-        let viewController: UIViewController = viewControllers[index]
-        setSelectedViewController(viewController)
+        if self.viewControllers.count != 0 {
+            let viewController: UIViewController = viewControllers[index]
+            setSelectedViewController(viewController)
+        }
     }
     
     func setSelectedViewController(viewController: UIViewController) {
@@ -166,5 +169,73 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate 
         item2.selectedImage = unselectedImage
         item2.image = unselectedImage
         item2.imageInsets = UIEdgeInsets(top: 6, left: 0, bottom: -6, right: 0)
+    }
+    
+    func fireGetHomePageData() {
+        /*let dictionary: NSDictionary = ParseLocalJSON.fileName("home")*/
+        let manager = APIManager.sharedInstance
+        
+        manager.GET("http://demo9190076.mockable.io/yilinker/home", parameters: nil, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+                self.populateHomePageWithDictionary(responseObject as! NSDictionary)
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                
+        })
+
+    }
+    
+    func populateHomePageWithDictionary(dictionary: NSDictionary) {
+        let storyBoard: UIStoryboard = UIStoryboard(name: "HomeStoryBoard", bundle: nil)
+        featuredCollectionViewController = storyBoard.instantiateViewControllerWithIdentifier("HomePageCollectionViewController") as? HomePageCollectionViewController
+        
+        var featuredDictionary: NSDictionary = dictionary["featured"] as! NSDictionary
+        var featuredLayouts: [String] = [Constants.HomePage.layoutOneKey, Constants.HomePage.layoutTwoKey, Constants.HomePage.layoutThreeKey, Constants.HomePage.layoutFourKey, Constants.HomePage.layoutFiveKey, Constants.HomePage.layoutSixKey]
+        
+        featuredCollectionViewController?.dictionary = featuredDictionary
+        featuredCollectionViewController?.layouts = featuredLayouts
+        
+        hotItemsCollectionViewController = storyBoard.instantiateViewControllerWithIdentifier("HomePageCollectionViewController") as? HomePageCollectionViewController
+        let hotItemsDictionary: NSDictionary = dictionary["hotItems"] as! NSDictionary
+        var hotItemLayouts: [String] = [Constants.HomePage.layoutTwoKey, Constants.HomePage.layoutSevenKey]
+        
+        let categories: NSArray = hotItemsDictionary["categories"] as! NSArray
+        
+        for (index, category) in enumerate(categories) {
+            let categoryDictionary: NSDictionary = category as! NSDictionary
+            let layoutId: String = categoryDictionary["layoutId"] as! String
+            var layout: String = ""
+            if layoutId == "1" {
+                layout = Constants.HomePage.layoutThreeKey
+            } else if layoutId == "2" {
+                layout = Constants.HomePage.layoutFourKey
+            }
+            
+            hotItemLayouts.append(layout)
+        }
+        
+        hotItemLayouts.append(Constants.HomePage.layoutTwoKey)
+        hotItemsCollectionViewController?.dictionary = hotItemsDictionary
+        hotItemsCollectionViewController?.layouts = hotItemLayouts
+        
+        
+        newItemsCollectionViewController = storyBoard.instantiateViewControllerWithIdentifier("HomePageCollectionViewController") as? HomePageCollectionViewController
+        let newItemsDictionary: NSDictionary = dictionary["newItems"] as! NSDictionary
+        var newItemslayout: [String] = [Constants.HomePage.layoutEightKey, Constants.HomePage.layoutSixKey]
+        newItemsCollectionViewController?.dictionary = newItemsDictionary
+        newItemsCollectionViewController?.layouts = newItemslayout
+        
+        sellersCollectionViewController = storyBoard.instantiateViewControllerWithIdentifier("HomePageCollectionViewController") as? HomePageCollectionViewController
+        let sellerDictionary: NSDictionary = dictionary["sellers"] as! NSDictionary
+        let sellerLayouts: [String] = [Constants.HomePage.layoutNineKey, Constants.HomePage.layoutTenKey]
+        sellersCollectionViewController?.dictionary = sellerDictionary
+        sellersCollectionViewController?.layouts = sellerLayouts
+        
+        viewControllers.append(featuredCollectionViewController!)
+        viewControllers.append(hotItemsCollectionViewController!)
+        viewControllers.append(newItemsCollectionViewController!)
+        viewControllers.append(sellersCollectionViewController!)
+        
+        setSelectedViewControllerWithIndex(self.curentCollectionViewController)
     }
 }

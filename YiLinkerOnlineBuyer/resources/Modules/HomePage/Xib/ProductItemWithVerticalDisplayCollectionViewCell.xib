@@ -87,10 +87,10 @@
             <size key="customSize" width="233" height="230"/>
             <connections>
                 <outlet property="discountPercentageLabel" destination="BZ1-g8-7Td" id="Dag-rC-WNj"/>
-                <outlet property="discountedPriceLabel" destination="BGN-cG-IEZ" id="kqP-Vb-zkH"/>
+                <outlet property="discountedPriceLabel" destination="BGN-cG-IEZ" id="MUY-B8-Me8"/>
                 <outlet property="originalPriceLabel" destination="QPJ-Yi-w7v" id="EuM-ab-zOT"/>
-                <outlet property="productItemImageView" destination="zZw-Ck-UbU" id="EaC-I5-EBl"/>
-                <outlet property="productNameLabel" destination="nh6-uz-CLV" id="obg-Qg-SGB"/>
+                <outlet property="productItemImageView" destination="zZw-Ck-UbU" id="0aL-By-W1z"/>
+                <outlet property="productNameLabel" destination="nh6-uz-CLV" id="bHB-qy-WBE"/>
             </connections>
             <point key="canvasLocation" x="555.5" y="438"/>
         </collectionViewCell>

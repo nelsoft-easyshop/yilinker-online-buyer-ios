@@ -88,7 +88,7 @@
             <size key="customSize" width="202" height="253"/>
             <connections>
                 <outlet property="discountPercentageLabel" destination="l3P-Ax-TG6" id="fAe-BU-NTs"/>
-                <outlet property="discountedPriceLabel" destination="wEB-Zw-B48" id="zn3-Ob-n7o"/>
+                <outlet property="discountedPriceLabel" destination="wEB-Zw-B48" id="FVG-7F-vaI"/>
                 <outlet property="originalPriceLabel" destination="Pv5-v6-Srr" id="OfY-av-4px"/>
                 <outlet property="productItemImageView" destination="cjA-HH-cIs" id="AZW-s8-W0I"/>
                 <outlet property="productNameLabel" destination="G8N-KU-BLz" id="GTW-Li-h6d"/>

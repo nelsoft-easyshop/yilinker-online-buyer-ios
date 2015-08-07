@@ -11,7 +11,7 @@ import UIKit
 class TwoColumnGridCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var originalPriceLabel: DynamicRoundedLabel!
-    @IBOutlet weak var discountedPriceLabel: UILabel!
+    @IBOutlet weak var discountedPriceLabel: DiscountLabel!
     @IBOutlet weak var productNameLabel: UILabel!
     
     @IBOutlet weak var productItemImageView: UIImageView!
@@ -19,9 +19,11 @@ class TwoColumnGridCollectionViewCell: UICollectionViewCell {
     
     var productModel: HomePageProductModel?
     
+    var target: String = ""
+    var targetType: String = ""
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
     }
 
 }

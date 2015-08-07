@@ -95,12 +95,12 @@
             </constraints>
             <size key="customSize" width="221" height="287"/>
             <connections>
-                <outlet property="productOneImageView" destination="cSJ-E4-XpF" id="KCP-HG-hip"/>
-                <outlet property="productThreeImageView" destination="jVL-Ps-RHo" id="ULd-VE-gR3"/>
-                <outlet property="productTwoImageView" destination="COi-1W-g4z" id="n0m-se-swZ"/>
-                <outlet property="sellerProfileImageView" destination="RCB-co-n67" id="y7z-IP-ARy"/>
-                <outlet property="sellerSubTitleLabel" destination="zPX-iG-aKl" id="hqf-KA-Eyx"/>
-                <outlet property="sellerTitleLabel" destination="uc1-1p-Quo" id="8WC-1P-R0Y"/>
+                <outlet property="productOneImageView" destination="cSJ-E4-XpF" id="iBk-hS-jcf"/>
+                <outlet property="productThreeImageView" destination="jVL-Ps-RHo" id="l7C-cn-PO0"/>
+                <outlet property="productTwoImageView" destination="COi-1W-g4z" id="HWq-nW-vyu"/>
+                <outlet property="sellerProfileImageView" destination="RCB-co-n67" id="vXZ-Qa-2aC"/>
+                <outlet property="sellerSubTitleLabel" destination="zPX-iG-aKl" id="U51-EB-Qsg"/>
+                <outlet property="sellerTitleLabel" destination="uc1-1p-Quo" id="iXW-3s-Fn6"/>
             </connections>
             <point key="canvasLocation" x="325.5" y="336.5"/>
         </collectionViewCell>

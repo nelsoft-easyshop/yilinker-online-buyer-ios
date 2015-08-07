@@ -17,13 +17,14 @@ class SellerCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var productOneImageView: UIImageView!
     @IBOutlet weak var productTwoImageView: UIImageView!
     @IBOutlet weak var productThreeImageView: UIImageView!
-    
     @IBOutlet weak var sellerProfileImageView: RoundedImageView!
-    var productModel: HomePageProductModel?
+    
+    var target: String = ""
+    var targetType: String = ""
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        self.layer.cornerRadius = 5
     }
 
 }

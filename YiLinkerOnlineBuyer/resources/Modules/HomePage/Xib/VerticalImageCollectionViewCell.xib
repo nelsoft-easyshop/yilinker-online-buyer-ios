@@ -48,7 +48,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dummy-placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="5ia-Jp-qLe">
-                        <rect key="frame" x="6" y="6" width="190" height="183"/>
+                        <rect key="frame" x="6" y="3" width="190" height="186"/>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10 % OFF" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lbh-CJ-22K" customClass="DynamicRoundedLabel" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
                         <rect key="frame" x="16" y="23" width="68" height="18"/>
@@ -79,18 +79,18 @@
                 <constraint firstAttribute="trailing" secondItem="5ia-Jp-qLe" secondAttribute="trailing" constant="6" id="SbF-JR-yxC"/>
                 <constraint firstAttribute="bottom" secondItem="0p9-52-dFh" secondAttribute="bottom" constant="10" id="Wqm-DQ-dwn"/>
                 <constraint firstItem="5ia-Jp-qLe" firstAttribute="bottom" secondItem="zbT-pN-AHE" secondAttribute="bottom" constant="-22" id="XTK-48-Upp"/>
-                <constraint firstItem="5ia-Jp-qLe" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="6" id="YSt-bb-T7A"/>
+                <constraint firstItem="5ia-Jp-qLe" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="3" id="YSt-bb-T7A"/>
                 <constraint firstItem="wQZ-G9-bat" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="8" id="dbE-Ns-4yW"/>
                 <constraint firstItem="0p9-52-dFh" firstAttribute="leading" secondItem="wQZ-G9-bat" secondAttribute="trailing" constant="17" id="slZ-td-nnJ"/>
                 <constraint firstItem="zbT-pN-AHE" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="8" id="yuB-Fa-bQN"/>
-                <constraint firstItem="Lbh-CJ-22K" firstAttribute="top" secondItem="5ia-Jp-qLe" secondAttribute="top" constant="17" id="yzy-Gy-3GP"/>
+                <constraint firstItem="Lbh-CJ-22K" firstAttribute="top" secondItem="5ia-Jp-qLe" secondAttribute="top" constant="20" id="yzy-Gy-3GP"/>
             </constraints>
             <size key="customSize" width="202" height="245"/>
             <connections>
                 <outlet property="discountPercentageLabel" destination="Lbh-CJ-22K" id="5Ke-kI-md4"/>
-                <outlet property="discountedPriceLabel" destination="0p9-52-dFh" id="BVK-gZ-DXi"/>
+                <outlet property="discountedPriceLabel" destination="0p9-52-dFh" id="VLN-VO-JeZ"/>
                 <outlet property="originalPriceLabel" destination="wQZ-G9-bat" id="4qm-H4-cNE"/>
-                <outlet property="productItemImageView" destination="5ia-Jp-qLe" id="Rtm-Pg-dR4"/>
+                <outlet property="productItemImageView" destination="5ia-Jp-qLe" id="yt7-lp-VXi"/>
                 <outlet property="productNameLabel" destination="zbT-pN-AHE" id="Otx-Ja-WwZ"/>
             </connections>
             <point key="canvasLocation" x="354" y="251.5"/>
