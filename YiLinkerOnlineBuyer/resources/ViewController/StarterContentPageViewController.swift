@@ -11,13 +11,23 @@ import UIKit
 class StarterContentPageViewController: UIViewController {
     
     var pageIndex = 0
-    var titleText = ""
     var imageFile = ""
+    
+    @IBOutlet weak var imageView: UIImageView!
+    
+    @IBOutlet weak var titleLabel: UILabel!
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(true)
+        self.imageView.image = UIImage(named: imageFile)
+        
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
     }
 
     override func didReceiveMemoryWarning() {

@@ -8,24 +8,34 @@
 
 import UIKit
 
-class StartPageViewController: UIViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate {
+class StartPageViewController: UIViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate, UIScrollViewDelegate {
     
     @IBOutlet weak var companyLogoImageView: UIImageView!
     @IBOutlet weak var getStartedButton: UIButton!
+    @IBOutlet weak var pageControl: UIPageControl!
     
+    @IBOutlet weak var titleLabel: UILabel!
     var pageViewController: UIPageViewController?
     var pageTitles: NSArray?
     var pageImages: NSArray?
     
+    @IBOutlet weak var orLabel: UILabel!
+    @IBOutlet weak var signInButton: DynamicRoundedButton!
+    
+    var timer = NSTimer()
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.pageTitles = ["Over 200 Tips and Tricks", "Discover Hidden Features", "Bookmark Favorite Tip", "Free Regular Update"]
-        self.pageImages = ["page1", "page2", "page3", "page4"]
+        self.pageTitles = ["SHOES IN ONE PLACE", "CAMERA IN ONE PLACE", "SHOES IN ONE PLACE", "CAMERA IN ONE PLACE"]
+        self.pageImages = ["shoes", "camera", "shoes", "camera"]
     
         self.pageViewController = self.storyboard?.instantiateViewControllerWithIdentifier("PageViewController") as? UIPageViewController
         
         self.pageViewController?.dataSource = self
+        self.pageViewController?.delegate = self
         
         let startingViewController = viewControllerAtIndex(0)
         var viewControllers: NSArray = NSArray(object: startingViewController!)
@@ -41,14 +51,40 @@ class StartPageViewController: UIViewController, UIPageViewControllerDataSource,
         self.view.addSubview(self.pageViewController!.view)
         self.pageViewController?.didMoveToParentViewController(self)
         
-        let pageControll: UIPageControl = UIPageControl.appearance()
-        pageControll.pageIndicatorTintColor = UIColor.lightGrayColor()
-        pageControll.currentPageIndicatorTintColor = UIColor.blackColor()
-        pageControll.backgroundColor = UIColor.clearColor()
+        self.pageControl.pageIndicatorTintColor = UIColor.lightGrayColor()
+        self.pageControl.currentPageIndicatorTintColor = UIColor.blackColor()
+        self.pageControl.backgroundColor = UIColor.clearColor()
+        self.pageControl.numberOfPages = self.pageImages!.count
         
+        self.pageControl.layer.zPosition = 100
         self.companyLogoImageView.layer.zPosition = 100
-        self.getStartedButton.layer.zPosition = 100
+        self.orLabel.layer.zPosition = 100
         
+        self.view.bringSubviewToFront(self.getStartedButton)
+        self.view.bringSubviewToFront(self.signInButton)
+        
+        for view in self.pageViewController!.view.subviews {
+            if let scrollView = view as? UIScrollView {
+                scrollView.delegate = self
+            }
+        }
+        self.timer = NSTimer.scheduledTimerWithTimeInterval(2.0, target: self, selector: Selector("scrollPage"), userInfo: nil, repeats: false)
+    }
+    
+    func scrollPage() {
+        var index = 0
+        if self.pageControl.currentPage != (self.pageImages!.count - 1) {
+            index = self.pageControl.currentPage + 1
+            self.pageControl.currentPage = index
+        } else {
+            self.pageControl.currentPage = 0
+        }
+        self.titleLabel.text = self.pageTitles?.objectAtIndex(index) as? String
+        let viewControllers: NSArray = NSArray(object: self.viewControllerAtIndex(index)!)
+        self.pageViewController!.setViewControllers(viewControllers as! [AnyObject],
+            direction: .Forward,
+            animated: true,
+            completion: nil)
     }
     
     func pageViewController(pageViewController: UIPageViewController,
@@ -58,6 +94,7 @@ class StartPageViewController: UIViewController, UIPageViewControllerDataSource,
             if (index == NSNotFound) {
                 return nil
             }
+
             index++
             if (index == pageTitles!.count ){
                 return nil
@@ -92,8 +129,6 @@ class StartPageViewController: UIViewController, UIPageViewControllerDataSource,
         storyboard?.instantiateViewControllerWithIdentifier(
             "StarterContentPageViewController") as! StarterContentPageViewController
         //set the properties for the controller.
-        pageContentVC.titleText = self.pageTitles?.objectAtIndex(index) as! String
-        
         pageContentVC.imageFile = self.pageImages?.objectAtIndex(index) as! String
         pageContentVC.pageIndex = index
         return pageContentVC
@@ -105,5 +140,58 @@ class StartPageViewController: UIViewController, UIPageViewControllerDataSource,
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    func pageViewController(pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [AnyObject], transitionCompleted completed: Bool) {
+        
+        if completed {
+            let contentViewController: StarterContentPageViewController = self.pageViewController?.viewControllers.last as! StarterContentPageViewController
+            self.pageControl.currentPage = contentViewController.pageIndex
+            self.titleLabel.text = self.pageTitles?.objectAtIndex(contentViewController.pageIndex) as? String
+            let delay = 2.5 * Double(NSEC_PER_SEC)
+            let time = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
+            dispatch_after(time, dispatch_get_main_queue()) {
+                self.timer = NSTimer.scheduledTimerWithTimeInterval(2.0, target: self, selector: Selector("scrollPage"), userInfo: nil, repeats: false)
+            }
+        }
+    }
+    
+    func scrollViewDidEndScrollingAnimation(scrollView: UIScrollView) {
+        let delay = 2.5 * Double(NSEC_PER_SEC)
+        let time = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
+        dispatch_after(time, dispatch_get_main_queue()) {
+            self.timer = NSTimer.scheduledTimerWithTimeInterval(2.0, target: self, selector: Selector("scrollPage"), userInfo: nil, repeats: false)
+        }
+    }
+    
+    func scrollViewWillBeginDragging(scrollView: UIScrollView) {
+        self.timer.invalidate()
+    }
+    
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        self.timer.invalidate()
+    }
+    
+    func touchesEnd() {
+        let delay = 1.5 * Double(NSEC_PER_SEC)
+        let time = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
+        dispatch_after(time, dispatch_get_main_queue()) {
+            self.timer = NSTimer.scheduledTimerWithTimeInterval(2.0, target: self, selector: Selector("scrollPage"), userInfo: nil, repeats: false)
+        }
+    }
+    
+    @IBAction func getStarted(sender: AnyObject) {
+        let homeStoryBoard: UIStoryboard = UIStoryboard(name: "HomeStoryBoard", bundle: nil)
+        let tabController: UITabBarController = homeStoryBoard.instantiateViewControllerWithIdentifier("TabBarController") as! UITabBarController
+        var modalStyle: UIModalTransitionStyle = UIModalTransitionStyle.CrossDissolve
+        tabController.modalTransitionStyle = modalStyle
+        self.presentViewController(tabController, animated: true, completion: nil)
+    }
+    
+    
+    @IBAction func signIn(sender: AnyObject) {
+        let loginContainerView: LoginAndRegisterContentViewController = self.storyboard!.instantiateViewControllerWithIdentifier("LoginAndRegisterContentViewController") as! LoginAndRegisterContentViewController
+        self.presentViewController(loginContainerView, animated: true, completion: nil)
+    }
+    
     
 }
