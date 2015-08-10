@@ -12,23 +12,26 @@ class StartPageViewController: UIViewController, UIPageViewControllerDataSource,
     
     @IBOutlet weak var companyLogoImageView: UIImageView!
     @IBOutlet weak var getStartedButton: UIButton!
-    @IBOutlet weak var pageControl: UIPageControl!
-    
     @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var orLabel: UILabel!
+    
     var pageViewController: UIPageViewController?
     var pageTitles: NSArray?
     var pageImages: NSArray?
     
-    @IBOutlet weak var orLabel: UILabel!
     @IBOutlet weak var signInButton: DynamicRoundedButton!
-    
     var timer = NSTimer()
-    
-    
+
+    @IBOutlet weak var pageControlVerticalConstraint: NSLayoutConstraint!
+    @IBOutlet weak var pageControl: UIPageControl!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        if IphoneType.isIphone4() {
+            self.pageControlVerticalConstraint.constant = 10
+        }
+        
         self.pageTitles = ["SHOES IN ONE PLACE", "CAMERA IN ONE PLACE", "SHOES IN ONE PLACE", "CAMERA IN ONE PLACE"]
         self.pageImages = ["shoes", "camera", "shoes", "camera"]
     
@@ -189,7 +192,13 @@ class StartPageViewController: UIViewController, UIPageViewControllerDataSource,
     
     
     @IBAction func signIn(sender: AnyObject) {
-        let loginContainerView: LoginAndRegisterContentViewController = self.storyboard!.instantiateViewControllerWithIdentifier("LoginAndRegisterContentViewController") as! LoginAndRegisterContentViewController
+        var loginContainerView: LoginAndRegisterContentViewController
+        if IphoneType.isIphone5() || IphoneType.isIphone4() {
+            loginContainerView = self.storyboard!.instantiateViewControllerWithIdentifier("LoginAndRegisterContentViewController5") as! LoginAndRegisterContentViewController
+        } else {
+            loginContainerView = self.storyboard!.instantiateViewControllerWithIdentifier("LoginAndRegisterContentViewController") as! LoginAndRegisterContentViewController
+        }
+        
         self.presentViewController(loginContainerView, animated: true, completion: nil)
     }
     

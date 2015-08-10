@@ -23,7 +23,33 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window?.rootViewController = startingPageViewController
         UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: true)
         self.window?.makeKeyAndVisible()
-        return true
+        
+        //Google Sign In
+        // Initialize sign-in
+        var configureError: NSError?
+        GGLContext.sharedInstance().configureWithError(&configureError)
+        assert(configureError == nil, "Error configuring Google services: \(configureError)")
+        GIDSignIn.sharedInstance().clientID = "613594712632-q9iak1vgc6ua44fkc9kg5tut0s5vuo5m.apps.googleusercontent.com"
+        
+        return FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
+    }
+    
+    func application(application: UIApplication,
+        openURL url: NSURL,
+        sourceApplication: String?,
+        annotation: AnyObject?) -> Bool {
+
+        return FBSDKApplicationDelegate.sharedInstance().application(
+            application,
+            openURL: url,
+            sourceApplication: sourceApplication,
+            annotation: annotation)
+    }
+    
+    func signIn(signIn: GIDSignIn!, didDisconnectWithUser user:GIDGoogleUser!,
+        withError error: NSError!) {
+            // Perform any operations when the user disconnects from app here.
+            // ...
     }
 
     func applicationWillResignActive(application: UIApplication) {

@@ -12,4 +12,5 @@ class SessionManager {
     
     var accessToken: String = ""
     var refreshToken: String = ""
+    var loginType: LoginType = LoginType.GoogleLogin
 }

@@ -23,4 +23,14 @@ struct Constants {
     struct Colors {
         static let appTheme: UIColor = HexaColor.colorWithHexa(0x5A1F75)
     }
+    
+    struct Facebook {
+        static let userNameKey = "name"
+        static let userIDKey = "id"
+        static let userEmail = "email"
+        
+        static let userPermissionEmailKey = "email"
+        static let userPermissionPublicProfileKey = "public_profile"
+        static let userPermissionFriendsKey = "user_friends"
+    }
 }
