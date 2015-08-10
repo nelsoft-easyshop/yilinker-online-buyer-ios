@@ -44,6 +44,18 @@ class HomePageProductModel: ProductModel {
                 } else {
                     name = ""
                 }
+            } else if let val: AnyObject = dictionary["categoryName"] {
+                if let tempCategoryName = dictionary["categoryName"] as? String {
+                    name = tempCategoryName
+                } else {
+                    name = ""
+                }
+            } else if let val: AnyObject = dictionary["name"] {
+                if let tempProductname = dictionary["name"] as? String {
+                    name = tempProductname
+                } else {
+                    name = ""
+                }
             }
 
             if let val: AnyObject = dictionary["image"] {
@@ -71,8 +83,8 @@ class HomePageProductModel: ProductModel {
                 }
             }
             
-            if let val: AnyObject = dictionary["discountPercentage"] {
-                if let tempDiscountPercentege = dictionary["discountPercentage"] as? String {
+            if let val: AnyObject = dictionary["discountedPercentage"] {
+                if let tempDiscountPercentege = dictionary["discountedPercentage"] as? String {
                     discountPercentage = tempDiscountPercentege
                 } else {
                     discountPercentage = ""
@@ -130,6 +142,12 @@ class HomePageProductModel: ProductModel {
                 } else {
                     name = ""
                 }
+            } else if let val: AnyObject = dictionary["categoryName"] {
+                if let tempCategoryName = dictionary["categoryName"] as? String {
+                    name = tempCategoryName
+                } else {
+                    name = ""
+                }
             }
             
             if let val: AnyObject = dictionary["image"] {
@@ -156,8 +174,8 @@ class HomePageProductModel: ProductModel {
                 }
             }
             
-            if let val: AnyObject = dictionary["discountPercentage"] {
-                if let tempDiscountPercentege = dictionary["discountPercentage"] as? String {
+            if let val: AnyObject = dictionary["discountedPercentage"] {
+                if let tempDiscountPercentege = dictionary["discountedPercentage"] as? String {
                     discountPercentage = tempDiscountPercentege
                 } else {
                     discountPercentage = ""
