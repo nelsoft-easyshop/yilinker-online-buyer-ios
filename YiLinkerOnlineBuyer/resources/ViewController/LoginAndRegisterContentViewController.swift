@@ -12,6 +12,7 @@ class LoginAndRegisterContentViewController: UIViewController {
     @IBOutlet weak var contentView: UIView!
     @IBOutlet weak var signInButton: DynamicRoundedButton!
     @IBOutlet weak var registerButton: DynamicRoundedButton!
+    @IBOutlet weak var closeButton: DynamicRoundedButton!
     
     var viewControllers = [UIViewController]()
     var selectedChildViewController: UIViewController?
@@ -20,10 +21,21 @@ class LoginAndRegisterContentViewController: UIViewController {
     var loginViewController: LoginViewController?
     var registerViewController: RegisterViewController?
     
+    @IBOutlet weak var logoWidthConstraint: NSLayoutConstraint!
+    @IBOutlet weak var logoHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var verticalSpaceConstraint: NSLayoutConstraint!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.initViewControllers()
         self.setSelectedViewControllerWithIndex(0)
+
+        if IphoneType.isIphone4() {
+            self.logoHeightConstraint.constant = 50
+            self.logoWidthConstraint.constant = 50
+        }
+        
+
     }
     
     override func viewDidLayoutSubviews() {
@@ -34,6 +46,9 @@ class LoginAndRegisterContentViewController: UIViewController {
     func initViewControllers() {
         self.loginViewController  = self.storyboard!.instantiateViewControllerWithIdentifier("LoginViewController") as? LoginViewController
         self.registerViewController = self.storyboard?.instantiateViewControllerWithIdentifier("RegisterViewController") as? RegisterViewController
+        
+        loginViewController?.parentView = self.view
+        
         self.viewControllers.append(self.loginViewController!)
         self.viewControllers.append(self.registerViewController!)
     }
@@ -82,4 +97,7 @@ class LoginAndRegisterContentViewController: UIViewController {
         self.registerButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
     }
 
+    @IBAction func close(sender: AnyObject) {
+       self.dismissViewControllerAnimated(true, completion: nil)
+    }
 }
