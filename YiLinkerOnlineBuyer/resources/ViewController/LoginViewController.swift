@@ -86,24 +86,35 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, GIDSignIn
                 // Process error
                 println("Error: \(error)")
             } else {
+                var uid: String = ""
+                
                 if let val: AnyObject = result.valueForKey(Constants.Facebook.userNameKey) {
                     let userName : NSString = result.valueForKey(Constants.Facebook.userNameKey) as! NSString
                     println("fetched user: \(userName)")
                 }
                 
                 if let val: AnyObject = result.valueForKey(Constants.Facebook.userIDKey) {
-                    let uid : NSString = result.valueForKey(Constants.Facebook.userIDKey) as! NSString
+                    uid = result.valueForKey(Constants.Facebook.userIDKey) as! String
                     println("fetched userID: \(uid)")
                 }
                
                 if let val: AnyObject = result.valueForKey(Constants.Facebook.userEmail) {
-                    let email : NSString = result.valueForKey(Constants.Facebook.userEmail) as! NSString
+                    let email : String = result.valueForKey(Constants.Facebook.userEmail) as! String
                     println("fetched userID: \(email)")
                 } else {
                     println("Email is not available!")
                 }
+                
+                self.getProfileImage(uid)
+                self.getFaceBookAccessToken()
             }
         })
+    }
+    
+    func getFaceBookAccessToken() {
+        var accessToken = FBSDKAccessToken.currentAccessToken().tokenString
+        let sessionManager: SessionManager = SessionManager.sharedInstance
+        sessionManager.setAccessToken(accessToken)
     }
     
     @IBAction func facebookLogin(sender: AnyObject) {
@@ -127,7 +138,11 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, GIDSignIn
                 let idToken = user.authentication.idToken // Safe to send to the server
                 let name = user.profile.name
                 let email = user.profile.email
-                // ...
+                let image: NSURL = user.profile.imageURLWithDimension(300)
+                println(image)
+                let sessionManager: SessionManager = SessionManager.sharedInstance
+                sessionManager.setAccessToken(idToken)
+                sessionManager.setProfileImage("\(image)")
             } else {
                 println("\(error.localizedDescription)")
             }
@@ -237,5 +252,10 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, GIDSignIn
             }, completion: {(value: Bool) in
                 
         })
+    }
+    
+    func getProfileImage(userID: String) {
+        let sessionManager: SessionManager = SessionManager.sharedInstance
+        sessionManager.setProfileImage("http://graph.facebook.com/\(userID)/picture?type=large")
     }
 }

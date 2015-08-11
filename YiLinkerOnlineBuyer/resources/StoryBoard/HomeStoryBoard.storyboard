@@ -677,7 +677,7 @@
     </scenes>
     <resources>
         <image name="cart" width="25" height="25"/>
-        <image name="close" width="35" height="35"/>
+        <image name="close" width="22" height="22"/>
         <image name="cute" width="1280" height="800"/>
         <image name="help" width="70" height="70"/>
         <image name="home" width="25" height="25"/>
