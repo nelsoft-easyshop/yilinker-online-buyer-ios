@@ -113,8 +113,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, GIDSignIn
     
     func getFaceBookAccessToken() {
         var accessToken = FBSDKAccessToken.currentAccessToken().tokenString
-        let sessionManager: SessionManager = SessionManager.sharedInstance
-        sessionManager.setAccessToken(accessToken)
+        SessionManager.setAccessToken(accessToken)
     }
     
     @IBAction func facebookLogin(sender: AnyObject) {
@@ -140,9 +139,8 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, GIDSignIn
                 let email = user.profile.email
                 let image: NSURL = user.profile.imageURLWithDimension(300)
                 println(image)
-                let sessionManager: SessionManager = SessionManager.sharedInstance
-                sessionManager.setAccessToken(idToken)
-                sessionManager.setProfileImage("\(image)")
+                SessionManager.setAccessToken(idToken)
+                SessionManager.setProfileImage("\(image)")
             } else {
                 println("\(error.localizedDescription)")
             }
@@ -255,7 +253,6 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, GIDSignIn
     }
     
     func getProfileImage(userID: String) {
-        let sessionManager: SessionManager = SessionManager.sharedInstance
-        sessionManager.setProfileImage("http://graph.facebook.com/\(userID)/picture?type=large")
+        SessionManager.setProfileImage("http://graph.facebook.com/\(userID)/picture?type=large")
     }
 }
