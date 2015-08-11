@@ -58,9 +58,8 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
         setBorderOf(view: addToCartButton, width: 1, color: .grayColor(), radius: 3)
         setBorderOf(view: buyItNowView, width: 1, color: .grayColor(), radius: 3)
         setBorderOf(view: cartCheckoutButton, width: 1, color: .grayColor(), radius: 3)
+        
         buyItNowView.addGestureRecognizer(tapGesture("buyItNowAction:"))
-        
-        
     }
 
     // MARK: - Table View Data Source
@@ -228,7 +227,7 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
     }
     
     func showCartCheckout(bool: Bool, title: String) {
-        cartCheckoutButton.hidden = false
+        cartCheckoutButton.hidden = bool
         cartCheckoutButton.setTitle(title, forState: .Normal)
     }
 }

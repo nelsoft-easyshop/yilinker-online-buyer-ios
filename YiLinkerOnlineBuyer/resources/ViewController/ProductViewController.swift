@@ -237,7 +237,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
             
             var tap = UITapGestureRecognizer()
             tap.numberOfTapsRequired = 1
-            tap.addTarget(self, action: "seeMoreAttribute:")
+            tap.addTarget(self, action: "gotoAttributes:")
             titleLabel.addGestureRecognizer(tap)
             
             var arrowImageView = UIImageView(frame: CGRectMake(self.productAttributeView.frame.size.width - 20, 11.5, 9, 17))
@@ -334,7 +334,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         showAlert("Message")
     }
     
-    func seeMoreAttribute(gesture: UIGestureRecognizer, bool: Bool, title: String) {
+    func seeMoreAttribute(bool: Bool, title: String) {
         var attributeModal = ProductAttributeViewController(nibName: "ProductAttributeViewController", bundle: nil)
         attributeModal.delegate = self
         attributeModal.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
@@ -518,11 +518,11 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     // MARK: Actions
     
     @IBAction func addToCartAction(sender: AnyObject) {
-        seeMoreAttribute(UITapGestureRecognizer(), bool: true, title: "ADD TO CART")
+        seeMoreAttribute(false, title: "ADD TO CART")
     }
     
     func buyItNowAction(gesture: UIGestureRecognizer) {
-        seeMoreAttribute(gesture, bool: true, title: "PROCEED TO CHECKOUT")
+        seeMoreAttribute(false, title: "PROCEED TO CHECKOUT")
     }
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
@@ -574,5 +574,9 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     
     func barWishlistActon() {
         showAlert("Wishlist")
+    }
+    
+    func gotoAttributes(gesture: UIGestureRecognizer) {
+        seeMoreAttribute(true, title: "")
     }
 }
