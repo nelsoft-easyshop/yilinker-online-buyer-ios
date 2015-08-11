@@ -13,14 +13,14 @@ class SellerModel: NSObject {
     var avatar: NSURL = NSURL(string: "")!
     var specialty: String = ""
     var target: String = ""
-    var images: NSArray = NSArray()
+    var products: [HomePageProductModel] = [HomePageProductModel]()
     
-    init(name: String, avatar: NSURL, specialty: String, target: String, images: NSArray) {
+    init(name: String, avatar: NSURL, specialty: String, target: String, products: [HomePageProductModel]) {
         self.name = name
         self.avatar = avatar
         self.specialty = specialty
         self.target = target
-        self.images = images
+        self.products = products
     }
     
     class func parseDataFromDictionary(dictionary: NSDictionary) -> SellerModel {
@@ -28,7 +28,7 @@ class SellerModel: NSObject {
         var avatar: NSURL = NSURL(string: "")!
         var specialty: String = ""
         var target: String = ""
-        var images: NSArray = NSArray()
+        var products: [ProductModel]?
         
         if let tempSellerAvatar = dictionary["sellerAvatar"] as? String {
             avatar = NSURL(string: tempSellerAvatar)!
@@ -48,20 +48,17 @@ class SellerModel: NSObject {
             specialty = ""
         }
         
-        if let tempImages = dictionary["images"] as? NSArray {
-            var url: [String] = []
-            
-            for tempDictionary in tempImages as! [NSDictionary] {
-                url.append(tempDictionary["imageUrl"] as! String)
+        var homePageProductModels: [HomePageProductModel] = [HomePageProductModel]()
+        
+        if let val: AnyObject = dictionary["products"] {
+            let products: NSArray = dictionary["products"] as! NSArray
+            for productDictionary in products as! [NSDictionary] {
+                let productModel: HomePageProductModel = HomePageProductModel.parseDataWithDictionary(productDictionary)
+                homePageProductModels.append(productModel)
             }
-            
-            images = url
-            
-        } else {
-            images = NSArray()
         }
         
-        let sellerModel: SellerModel = SellerModel(name: name, avatar: avatar, specialty: specialty, target: target, images: images)
+        let sellerModel: SellerModel = SellerModel(name: name, avatar: avatar, specialty: specialty, target: target, products: homePageProductModels)
 
         return sellerModel
     }

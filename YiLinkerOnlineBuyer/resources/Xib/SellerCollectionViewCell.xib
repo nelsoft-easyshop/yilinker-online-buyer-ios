@@ -42,13 +42,13 @@
                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dummy-placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="cSJ-E4-XpF">
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" tag="1" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dummy-placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="cSJ-E4-XpF" customClass="ProductImageView" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
                         <rect key="frame" x="8" y="64" width="205" height="132"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="132" id="xe0-AR-G6E"/>
                         </constraints>
                     </imageView>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dummy-placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="COi-1W-g4z">
+                    <imageView userInteractionEnabled="NO" tag="2" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dummy-placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="COi-1W-g4z" customClass="ProductImageView" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
                         <rect key="frame" x="8" y="198" width="102" height="74"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="74" id="x0V-bW-PBx"/>
@@ -62,7 +62,7 @@
                             <constraint firstAttribute="width" constant="1" id="cze-vO-JCz"/>
                         </constraints>
                     </view>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dummy-placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="jVL-Ps-RHo">
+                    <imageView userInteractionEnabled="NO" tag="3" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dummy-placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="jVL-Ps-RHo" customClass="ProductImageView" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
                         <rect key="frame" x="112" y="198" width="102" height="74"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="74" id="rC2-h3-b29"/>
@@ -95,9 +95,9 @@
             </constraints>
             <size key="customSize" width="221" height="287"/>
             <connections>
-                <outlet property="productOneImageView" destination="cSJ-E4-XpF" id="iBk-hS-jcf"/>
-                <outlet property="productThreeImageView" destination="jVL-Ps-RHo" id="l7C-cn-PO0"/>
-                <outlet property="productTwoImageView" destination="COi-1W-g4z" id="HWq-nW-vyu"/>
+                <outlet property="productOneImageView" destination="cSJ-E4-XpF" id="Vix-zs-FjV"/>
+                <outlet property="productThreeImageView" destination="jVL-Ps-RHo" id="ocx-pH-Owy"/>
+                <outlet property="productTwoImageView" destination="COi-1W-g4z" id="47k-9W-Xpz"/>
                 <outlet property="sellerProfileImageView" destination="RCB-co-n67" id="vXZ-Qa-2aC"/>
                 <outlet property="sellerSubTitleLabel" destination="zPX-iG-aKl" id="U51-EB-Qsg"/>
                 <outlet property="sellerTitleLabel" destination="uc1-1p-Quo" id="iXW-3s-Fn6"/>
