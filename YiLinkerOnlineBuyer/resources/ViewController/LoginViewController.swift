@@ -48,7 +48,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, GIDSignIn
     }
     
     @IBAction func signIn(sender: AnyObject) {
-        self.fireLogin()
+        self.login()
     }
     
     func setUpTextFields() {
@@ -107,6 +107,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, GIDSignIn
                 
                 self.getProfileImage(uid)
                 self.getFaceBookAccessToken()
+                self.showSuccessMessage()
             }
         })
     }
@@ -141,6 +142,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, GIDSignIn
                 println(image)
                 SessionManager.setAccessToken(idToken)
                 SessionManager.setProfileImage("\(image)")
+                self.showSuccessMessage()
             } else {
                 println("\(error.localizedDescription)")
             }
@@ -199,13 +201,13 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, GIDSignIn
             self.next()
         } else {
             self.done()
-            self.fireLogin()
+            self.login()
         }
         
         return true
     }
     
-    func fireLogin() {
+    func login() {
         var errorMessage: String = ""
         
         if !self.emailAddressTextField.isNotEmpty() {
@@ -218,10 +220,56 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, GIDSignIn
         
         if errorMessage != "" {
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorMessage)
+        } else {
+            fireLogin()
         }
         
         self.view.endEditing(true)
         self.adjustTextFieldYInsetWithInset(0)
+    }
+    
+    func fireLogin() {
+        SVProgressHUD.show()
+        SVProgressHUD.setBackgroundColor(UIColor.clearColor())
+        let manager: APIManager = APIManager.sharedInstance
+        //seller@easyshop.ph
+        //password
+        let parameters: NSDictionary = ["email": self.emailAddressTextField.text,"password": self.passwordTextField.text, "client_id": "1_167rxzqvid8g8swggwokcoswococscocc8ck44wo0g88owgkcc", "client_secret": "317eq8nohry84ooc0o8woo8000c0k844c4cggws84g80scwwog", "grant_type": "http://yilinker-online.com/grant/buyer"]
+        
+        manager.GET(APIAtlas.loginUrl, parameters: parameters, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+                SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+                SVProgressHUD.dismiss()
+                self.showSuccessMessage()
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                
+                if task.statusCode == 401 {
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Mismatch username and password", title: "Login Failed")
+                } else {
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+                }
+
+                SVProgressHUD.dismiss()
+        })
+    }
+    
+    func showSuccessMessage() {
+        let alertController = UIAlertController(title: "Success", message: "Successfully login.", preferredStyle: .Alert)
+    
+        let OKAction = UIAlertAction(title: "OK", style: .Default) { (action) in
+            alertController.dismissViewControllerAnimated(true, completion: nil)
+            
+            let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+            appDelegate.changeRootToHomeView()
+        }
+        
+        alertController.addAction(OKAction)
+        
+        self.presentViewController(alertController, animated: true) {
+            
+        }
     }
     
     func adjustTextFieldYInsetWithInset(inset: CGFloat) {

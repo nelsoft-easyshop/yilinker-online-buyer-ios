@@ -55,4 +55,27 @@ class SessionManager {
             return false
         }
     }
+    
+    class func parseTokensFromResponseObject(dictionary: NSDictionary) {
+        if dictionary.isKindOfClass(NSDictionary) {
+            var accessToken: String = ""
+            var refreshToken: String = ""
+            
+            if let val: AnyObject = dictionary["access_token"] {
+                if let tempAccessToken = dictionary["access_token"] as? String {
+                    accessToken = tempAccessToken
+                }
+            }
+            
+            if let val: AnyObject = dictionary["refresh_token"] {
+                if let tempRefreshAccessToken = dictionary["refresh_token"] as? String {
+                    refreshToken = tempRefreshAccessToken
+                }
+            }
+            
+            self.setAccessToken(accessToken)
+            self.setRefreshToken(refreshToken)
+            self.setProfileImage("http://besthqimages.mobi/wp-content/uploads/default-profile-picture-png-pictures-2.png")  
+        }
+    }
 }
