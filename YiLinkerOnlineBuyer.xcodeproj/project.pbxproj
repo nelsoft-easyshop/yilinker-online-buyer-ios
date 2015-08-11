@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0C2670CD1B77290200394E29 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0C2670CC1B77290200394E29 /* GoogleService-Info.plist */; };
+		0C2670CF1B772E4B00394E29 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C2670CE1B772E4B00394E29 /* Enums.swift */; };
+		0C6490761B7781E400F88F92 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C6490751B7781E400F88F92 /* Category.swift */; };
 		0C8A7C7B1B6772670039F013 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0C8A7C7A1B6772670039F013 /* Images.xcassets */; };
 		0C8A7C8A1B6772670039F013 /* YiLinkerOnlineBuyerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8A7C891B6772670039F013 /* YiLinkerOnlineBuyerTests.swift */; };
 		0C9937391B750583000D6074 /* dummyHome.json in Resources */ = {isa = PBXBuildFile; fileRef = 0C9936FC1B750583000D6074 /* dummyHome.json */; };
@@ -20,7 +23,6 @@
 		0C9937411B750583000D6074 /* ProductModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C9937061B750583000D6074 /* ProductModel.swift */; };
 		0C9937421B750583000D6074 /* SellerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C9937071B750583000D6074 /* SellerModel.swift */; };
 		0C9937431B750583000D6074 /* HomeStoryBoard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0C9937091B750583000D6074 /* HomeStoryBoard.storyboard */; };
-		0C9937441B750583000D6074 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0C99370A1B750583000D6074 /* Main.storyboard */; };
 		0C9937451B750583000D6074 /* DiscountLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C99370C1B750583000D6074 /* DiscountLabel.swift */; };
 		0C9937461B750583000D6074 /* DynamicRoundedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C99370D1B750583000D6074 /* DynamicRoundedButton.swift */; };
 		0C9937471B750583000D6074 /* DynamicRoundedLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C99370E1B750583000D6074 /* DynamicRoundedLabel.swift */; };
@@ -64,6 +66,13 @@
 		0C99376D1B750583000D6074 /* VerticalImageCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C9937361B750583000D6074 /* VerticalImageCollectionViewCell.xib */; };
 		0C99376E1B750583000D6074 /* ViewMoreFooterCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C9937371B750583000D6074 /* ViewMoreFooterCollectionViewCell.xib */; };
 		0C9937711B75063B000D6074 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C9937701B75063B000D6074 /* AppDelegate.swift */; };
+		0CB9DB071B6A1E6600F2CA13 /* StartPageStoryBoard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0CB9DB061B6A1E6600F2CA13 /* StartPageStoryBoard.storyboard */; };
+		0CB9DB391B6A3DC700F2CA13 /* StartPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CB9DB381B6A3DC700F2CA13 /* StartPageViewController.swift */; };
+		0CB9DB3B1B6A3EA100F2CA13 /* StarterContentPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CB9DB3A1B6A3EA100F2CA13 /* StarterContentPageViewController.swift */; };
+		0CDA117A1B760E1A007B5DED /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CDA11791B760E1A007B5DED /* LoginViewController.swift */; };
+		0CDA117C1B764015007B5DED /* LoginAndRegisterContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CDA117B1B764015007B5DED /* LoginAndRegisterContentViewController.swift */; };
+		0CDA117E1B764B79007B5DED /* DynamicRoundedTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CDA117D1B764B79007B5DED /* DynamicRoundedTextField.swift */; };
+		0CE35EB81B76711400AAA8F1 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CE35EB71B76711400AAA8F1 /* RegisterViewController.swift */; };
 		259317CFB9AE0C865DD7552C /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 10E5F5EBAF8BF56A3DD642A2 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -79,6 +88,10 @@
 
 /* Begin PBXFileReference section */
 		081427E2B6C708A40D908245 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		0C25D94D1B76F81A00E9EFA6 /* YiLinkerOnlineBuyer-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "YiLinkerOnlineBuyer-Bridging-Header.h"; sourceTree = "<group>"; };
+		0C2670CC1B77290200394E29 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		0C2670CE1B772E4B00394E29 /* Enums.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
+		0C6490751B7781E400F88F92 /* Category.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 		0C8A7C6E1B6772670039F013 /* YiLinkerOnlineBuyer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YiLinkerOnlineBuyer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0C8A7C721B6772670039F013 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0C8A7C7A1B6772670039F013 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
@@ -96,7 +109,6 @@
 		0C9937061B750583000D6074 /* ProductModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductModel.swift; sourceTree = "<group>"; };
 		0C9937071B750583000D6074 /* SellerModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SellerModel.swift; sourceTree = "<group>"; };
 		0C9937091B750583000D6074 /* HomeStoryBoard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = HomeStoryBoard.storyboard; sourceTree = "<group>"; };
-		0C99370A1B750583000D6074 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		0C99370C1B750583000D6074 /* DiscountLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscountLabel.swift; sourceTree = "<group>"; };
 		0C99370D1B750583000D6074 /* DynamicRoundedButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DynamicRoundedButton.swift; sourceTree = "<group>"; };
 		0C99370E1B750583000D6074 /* DynamicRoundedLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DynamicRoundedLabel.swift; sourceTree = "<group>"; };
@@ -140,6 +152,13 @@
 		0C9937361B750583000D6074 /* VerticalImageCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VerticalImageCollectionViewCell.xib; sourceTree = "<group>"; };
 		0C9937371B750583000D6074 /* ViewMoreFooterCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ViewMoreFooterCollectionViewCell.xib; sourceTree = "<group>"; };
 		0C9937701B75063B000D6074 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		0CB9DB061B6A1E6600F2CA13 /* StartPageStoryBoard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = StartPageStoryBoard.storyboard; sourceTree = "<group>"; };
+		0CB9DB381B6A3DC700F2CA13 /* StartPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartPageViewController.swift; sourceTree = "<group>"; };
+		0CB9DB3A1B6A3EA100F2CA13 /* StarterContentPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StarterContentPageViewController.swift; sourceTree = "<group>"; };
+		0CDA11791B760E1A007B5DED /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		0CDA117B1B764015007B5DED /* LoginAndRegisterContentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginAndRegisterContentViewController.swift; sourceTree = "<group>"; };
+		0CDA117D1B764B79007B5DED /* DynamicRoundedTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DynamicRoundedTextField.swift; sourceTree = "<group>"; };
+		0CE35EB71B76711400AAA8F1 /* RegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		10E5F5EBAF8BF56A3DD642A2 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		9140515446F9D97EC8790C7B /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -236,6 +255,7 @@
 		0C9936FB1B750583000D6074 /* External */ = {
 			isa = PBXGroup;
 			children = (
+				0C2670CC1B77290200394E29 /* GoogleService-Info.plist */,
 				0C9936FC1B750583000D6074 /* dummyHome.json */,
 			);
 			path = External;
@@ -244,12 +264,14 @@
 		0C9936FD1B750583000D6074 /* Helper */ = {
 			isa = PBXGroup;
 			children = (
+				0C25D94D1B76F81A00E9EFA6 /* YiLinkerOnlineBuyer-Bridging-Header.h */,
 				0C9936FE1B750583000D6074 /* APIManager.swift */,
 				0C9936FF1B750583000D6074 /* Constansts.swift */,
 				0C9937001B750583000D6074 /* HexaColor.swift */,
 				0C9937011B750583000D6074 /* IPhoneType.swift */,
 				0C9937021B750583000D6074 /* ParseLocalJSON.swift */,
 				0C9937031B750583000D6074 /* SessionManager.swift */,
+				0C2670CE1B772E4B00394E29 /* Enums.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -268,7 +290,7 @@
 			isa = PBXGroup;
 			children = (
 				0C9937091B750583000D6074 /* HomeStoryBoard.storyboard */,
-				0C99370A1B750583000D6074 /* Main.storyboard */,
+				0CB9DB061B6A1E6600F2CA13 /* StartPageStoryBoard.storyboard */,
 			);
 			path = StoryBoard;
 			sourceTree = "<group>";
@@ -298,6 +320,8 @@
 				0C99371F1B750583000D6074 /* TwoColumnGridCollectionViewCell.swift */,
 				0C9937201B750583000D6074 /* VerticalImageCollectionViewCell.swift */,
 				0C9937211B750583000D6074 /* ViewMoreFooterCollectionViewCell.swift */,
+				0CDA117D1B764B79007B5DED /* DynamicRoundedTextField.swift */,
+				0C6490751B7781E400F88F92 /* Category.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -305,12 +329,17 @@
 		0C9937221B750583000D6074 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				0CB9DB381B6A3DC700F2CA13 /* StartPageViewController.swift */,
+				0CB9DB3A1B6A3EA100F2CA13 /* StarterContentPageViewController.swift */,
 				0C9937231B750583000D6074 /* CartViewController.swift */,
 				0C9937241B750583000D6074 /* CircularMenuViewController.swift */,
 				0C9937251B750583000D6074 /* HomeContainerViewController.swift */,
 				0C9937261B750583000D6074 /* HomePageCollectionViewController.swift */,
 				0C9937271B750583000D6074 /* SearchViewController.swift */,
 				0C9937281B750583000D6074 /* WishlistViewController.swift */,
+				0CDA11791B760E1A007B5DED /* LoginViewController.swift */,
+				0CDA117B1B764015007B5DED /* LoginAndRegisterContentViewController.swift */,
+				0CE35EB71B76711400AAA8F1 /* RegisterViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -449,15 +478,16 @@
 				0C9937621B750583000D6074 /* HalfVerticalImageCollectionViewCell.xib in Resources */,
 				0C9937651B750583000D6074 /* NewSellerCollectionViewCell.xib in Resources */,
 				0C8A7C7B1B6772670039F013 /* Images.xcassets in Resources */,
+				0CB9DB071B6A1E6600F2CA13 /* StartPageStoryBoard.storyboard in Resources */,
 				0C9937631B750583000D6074 /* LaunchScreen.xib in Resources */,
 				0C99376A1B750583000D6074 /* SectionBackground.xib in Resources */,
 				0C9937611B750583000D6074 /* FullImageCollectionViewCell.xib in Resources */,
 				0C99376E1B750583000D6074 /* ViewMoreFooterCollectionViewCell.xib in Resources */,
+				0C2670CD1B77290200394E29 /* GoogleService-Info.plist in Resources */,
 				0C9937641B750583000D6074 /* LayoutHeaderCollectionViewCell.xib in Resources */,
 				0C9937691B750583000D6074 /* ScrollableCollectionViewCell.xib in Resources */,
 				0C9937391B750583000D6074 /* dummyHome.json in Resources */,
 				0C99376B1B750583000D6074 /* SellerCollectionViewCell.xib in Resources */,
-				0C9937441B750583000D6074 /* Main.storyboard in Resources */,
 				0C9937671B750583000D6074 /* ProductItemWithVerticalDisplayCollectionViewCell.xib in Resources */,
 				0C9937681B750583000D6074 /* ProductWithCenterNameCollectionViewCell.xib in Resources */,
 				0C9937661B750583000D6074 /* NewSellerScrollableCollectionViewCell.xib in Resources */,
@@ -511,24 +541,31 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0CB9DB391B6A3DC700F2CA13 /* StartPageViewController.swift in Sources */,
+				0CB9DB3B1B6A3EA100F2CA13 /* StarterContentPageViewController.swift in Sources */,
+				0CDA117A1B760E1A007B5DED /* LoginViewController.swift in Sources */,
 				0C99373A1B750583000D6074 /* APIManager.swift in Sources */,
 				0C9937501B750583000D6074 /* ProductitemWithVerticalDisplayCollectionViewCell.swift in Sources */,
 				0C9937711B75063B000D6074 /* AppDelegate.swift in Sources */,
 				0C9937541B750583000D6074 /* RoundedLabel.swift in Sources */,
+				0C2670CF1B772E4B00394E29 /* Enums.swift in Sources */,
 				0C9937551B750583000D6074 /* ScrollableCollectionViewCell.swift in Sources */,
 				0C9937601B750583000D6074 /* WishlistViewController.swift in Sources */,
 				0C99375F1B750583000D6074 /* SearchViewController.swift in Sources */,
 				0C9937591B750583000D6074 /* VerticalImageCollectionViewCell.swift in Sources */,
 				0C99374C1B750583000D6074 /* LayoutHeaderCollectionViewCell.swift in Sources */,
+				0CDA117C1B764015007B5DED /* LoginAndRegisterContentViewController.swift in Sources */,
 				0C99374A1B750583000D6074 /* HalfVerticalImageCollectionViewCell.swift in Sources */,
 				0C99375C1B750583000D6074 /* CircularMenuViewController.swift in Sources */,
 				0C9937481B750583000D6074 /* FullImageCollectionViewCell.swift in Sources */,
 				0C99374F1B750583000D6074 /* ProductImageView.swift in Sources */,
+				0CDA117E1B764B79007B5DED /* DynamicRoundedTextField.swift in Sources */,
 				0C9937581B750583000D6074 /* TwoColumnGridCollectionViewCell.swift in Sources */,
 				0C99375A1B750583000D6074 /* ViewMoreFooterCollectionViewCell.swift in Sources */,
 				0C9937561B750583000D6074 /* SellerCollectionViewCell.swift in Sources */,
 				0C9937471B750583000D6074 /* DynamicRoundedLabel.swift in Sources */,
 				0C99374E1B750583000D6074 /* NewSellerScrollableCollectionViewCell.swift in Sources */,
+				0CE35EB81B76711400AAA8F1 /* RegisterViewController.swift in Sources */,
 				0C9937421B750583000D6074 /* SellerModel.swift in Sources */,
 				0C9937531B750583000D6074 /* RoundedImageView.swift in Sources */,
 				0C99373E1B750583000D6074 /* ParseLocalJSON.swift in Sources */,
@@ -541,6 +578,7 @@
 				0C99373B1B750583000D6074 /* Constansts.swift in Sources */,
 				0C99373F1B750583000D6074 /* SessionManager.swift in Sources */,
 				0C99373C1B750583000D6074 /* HexaColor.swift in Sources */,
+				0C6490761B7781E400F88F92 /* Category.swift in Sources */,
 				0C99375D1B750583000D6074 /* HomeContainerViewController.swift in Sources */,
 				0C9937521B750583000D6074 /* RoundedButton.swift in Sources */,
 				0C9937411B750583000D6074 /* ProductModel.swift in Sources */,
@@ -661,7 +699,7 @@
 				INFOPLIST_FILE = YiLinkerOnlineBuyer/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "YiLinkerOnlineBuyer/YiLinkerOnlineBuyer-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "YiLinkerOnlineBuyer/Resources/Helper/YiLinkerOnlineBuyer-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -675,7 +713,7 @@
 				INFOPLIST_FILE = YiLinkerOnlineBuyer/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "YiLinkerOnlineBuyer/YiLinkerOnlineBuyer-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "YiLinkerOnlineBuyer/Resources/Helper/YiLinkerOnlineBuyer-Bridging-Header.h";
 			};
 			name = Release;
 		};
