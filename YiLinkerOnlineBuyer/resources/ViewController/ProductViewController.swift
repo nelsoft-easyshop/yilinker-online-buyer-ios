@@ -352,6 +352,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     
     func seeMoreDescription(controller: ProductDescriptionView) {
         let description = ProductDescriptionViewController(nibName: "ProductDescriptionViewController", bundle: nil)
+        description.url = self.productDetailsModel.fullDescription
         self.presentViewController(description, animated: true, completion: nil)
     }
     
@@ -430,10 +431,8 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     
     func populateSeller() {
         println("POPULATING SELLER DETAILS")
-        let seller = self.productSellerModel
-        self.productSellerView.setSellerDetails(seller.logoUrl, name: seller.name, specialty: seller.specialty, description: seller.description, contactNo: seller.contactNo, images: seller.images)
+        self.productSellerView.setSellerDetails(self.productSellerModel)
         setUpViews()
-        
         // after populating here, removed the loader view
     }
     
