@@ -6,8 +6,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ProductViewController" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
             <connections>
-                <outlet property="addToCartButton" destination="rFw-Vh-kz2" id="L9E-2j-pSb"/>
-                <outlet property="buyItNowButton" destination="ReW-To-OAc" id="Pml-Ey-qLj"/>
+                <outlet property="addToCartButton" destination="h9O-cg-S2c" id="6hb-Fe-KRc"/>
+                <outlet property="buyItNowView" destination="IQR-t4-99U" id="VGI-gN-oqo"/>
                 <outlet property="dimView" destination="E51-2e-Dng" id="BEl-KQ-PAN"/>
                 <outlet property="tableView" destination="r01-f0-aka" id="6la-mP-bFW"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -18,10 +18,6 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view alpha="0.0" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="E51-2e-Dng" userLabel="Dim View">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                </view>
                 <tabBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dYJ-sS-GLs">
                     <rect key="frame" x="0.0" y="618" width="375" height="49"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -43,11 +39,11 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="C60-aW-ouZ" userLabel="buttons container">
                     <rect key="frame" x="0.0" y="543" width="375" height="75"/>
                     <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rFw-Vh-kz2">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h9O-cg-S2c">
                             <rect key="frame" x="13" y="14" width="166" height="48"/>
-                            <color key="backgroundColor" red="0.38039215686274508" green="0.12549019607843137" blue="0.46666666666666667" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="backgroundColor" red="0.3803921569" green="0.12549019610000001" blue="0.46666666670000001" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="48" id="VXR-Zy-QmR"/>
+                                <constraint firstAttribute="height" constant="48" id="eVC-WY-FaO"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
                             <state key="normal" title="ADD TO CART">
@@ -55,36 +51,58 @@
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
                             <connections>
-                                <action selector="addToCartAction:" destination="-1" eventType="touchUpInside" id="vyi-g5-hLz"/>
+                                <action selector="addToCartAction:" destination="-1" eventType="touchUpInside" id="m2x-lk-aVX"/>
                             </connections>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ReW-To-OAc">
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IQR-t4-99U" userLabel="BUY IT NOW">
                             <rect key="frame" x="196" y="14" width="166" height="48"/>
-                            <color key="backgroundColor" red="0.27450980392156865" green="0.66274509803921566" blue="0.58823529411764708" alpha="1" colorSpace="calibratedRGB"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="BUY IT NOW  " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fhZ-EI-5fo">
+                                    <rect key="frame" x="0.0" y="0.0" width="150" height="48"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="48" id="GNq-Gt-cMm"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="buy" translatesAutoresizingMaskIntoConstraints="NO" id="E2e-kT-h2R">
+                                    <rect key="frame" x="130" y="15" width="20" height="17"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="17" id="cuI-aB-sXL"/>
+                                        <constraint firstAttribute="width" constant="20" id="wF9-S1-oMV"/>
+                                    </constraints>
+                                </imageView>
+                            </subviews>
+                            <color key="backgroundColor" red="0.27450980390000002" green="0.66274509800000003" blue="0.58823529409999997" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="48" id="eq6-bP-X7t"/>
+                                <constraint firstItem="fhZ-EI-5fo" firstAttribute="leading" secondItem="IQR-t4-99U" secondAttribute="leading" id="04T-ql-Y2g"/>
+                                <constraint firstAttribute="trailing" secondItem="E2e-kT-h2R" secondAttribute="trailing" constant="16" id="BUF-UW-y9e"/>
+                                <constraint firstAttribute="bottom" secondItem="E2e-kT-h2R" secondAttribute="bottom" constant="16" id="Cpa-g3-Rj4"/>
+                                <constraint firstAttribute="trailing" secondItem="fhZ-EI-5fo" secondAttribute="trailing" constant="16" id="KYo-uc-Iaa"/>
+                                <constraint firstItem="fhZ-EI-5fo" firstAttribute="top" secondItem="IQR-t4-99U" secondAttribute="top" id="P8Z-88-LbQ"/>
+                                <constraint firstAttribute="bottom" secondItem="fhZ-EI-5fo" secondAttribute="bottom" id="QCu-yN-HhE"/>
+                                <constraint firstAttribute="height" constant="48" id="TWe-KD-WwE"/>
+                                <constraint firstItem="E2e-kT-h2R" firstAttribute="top" secondItem="IQR-t4-99U" secondAttribute="top" constant="15" id="i9V-Lc-RCm"/>
+                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="48" id="rCJ-ce-NB4"/>
                             </constraints>
-                            <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
-                            <state key="normal" title="BUY IT NOW -&gt;">
-                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                            </state>
-                            <connections>
-                                <action selector="buyItNow:" destination="-1" eventType="touchUpInside" id="LkV-Ex-RQF"/>
-                            </connections>
-                        </button>
+                        </view>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstAttribute="bottom" secondItem="ReW-To-OAc" secondAttribute="bottom" constant="13" id="1iL-FC-Jgh"/>
-                        <constraint firstAttribute="trailing" secondItem="ReW-To-OAc" secondAttribute="trailing" constant="13" id="CQF-Ut-P9e"/>
+                        <constraint firstAttribute="trailing" secondItem="IQR-t4-99U" secondAttribute="trailing" constant="13" id="0yc-yp-InI"/>
                         <constraint firstAttribute="height" constant="75" id="EEF-4f-jPs"/>
-                        <constraint firstItem="ReW-To-OAc" firstAttribute="leading" secondItem="rFw-Vh-kz2" secondAttribute="trailing" constant="17" id="I8T-ji-YM7"/>
-                        <constraint firstItem="rFw-Vh-kz2" firstAttribute="leading" secondItem="C60-aW-ouZ" secondAttribute="leading" constant="13" id="Nzh-Xn-684"/>
-                        <constraint firstItem="rFw-Vh-kz2" firstAttribute="height" secondItem="ReW-To-OAc" secondAttribute="height" id="edi-N4-791"/>
-                        <constraint firstAttribute="bottom" secondItem="rFw-Vh-kz2" secondAttribute="bottom" constant="13" id="sJY-Ti-x6d"/>
-                        <constraint firstItem="rFw-Vh-kz2" firstAttribute="width" secondItem="ReW-To-OAc" secondAttribute="width" id="yf4-0W-u0n"/>
+                        <constraint firstItem="IQR-t4-99U" firstAttribute="height" secondItem="h9O-cg-S2c" secondAttribute="height" id="Kgg-8f-aKh"/>
+                        <constraint firstItem="IQR-t4-99U" firstAttribute="width" secondItem="h9O-cg-S2c" secondAttribute="width" id="N6D-5Q-6qh"/>
+                        <constraint firstAttribute="bottom" secondItem="IQR-t4-99U" secondAttribute="bottom" constant="13" id="axw-y5-U1H"/>
+                        <constraint firstItem="IQR-t4-99U" firstAttribute="leading" secondItem="h9O-cg-S2c" secondAttribute="trailing" constant="17" id="hhs-CH-dGJ"/>
+                        <constraint firstItem="h9O-cg-S2c" firstAttribute="leading" secondItem="C60-aW-ouZ" secondAttribute="leading" constant="13" id="i0K-m4-Uxm"/>
+                        <constraint firstAttribute="bottom" secondItem="h9O-cg-S2c" secondAttribute="bottom" constant="13" id="qU4-4y-8Bt"/>
                     </constraints>
+                </view>
+                <view alpha="0.0" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="E51-2e-Dng" userLabel="Dim View">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
             </subviews>
             <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
@@ -104,4 +122,7 @@
             <point key="canvasLocation" x="352.5" y="339.5"/>
         </view>
     </objects>
+    <resources>
+        <image name="buy" width="192" height="180"/>
+    </resources>
 </document>

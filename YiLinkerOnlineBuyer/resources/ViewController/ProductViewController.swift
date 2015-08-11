@@ -17,7 +17,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var dimView: UIView!
     @IBOutlet weak var addToCartButton: UIButton!
-    @IBOutlet weak var buyItNowButton: UIButton!
+    @IBOutlet weak var buyItNowView: UIView!
     
     var headerView: UIView!
     var footerView: UIView!
@@ -80,8 +80,8 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         self.productReviewFooterView.delegate = self
         self.productSellerView.delegate = self
 
-        setBorderOf(view: self.addToCartButton, width: 1, color: .grayColor(), radius: 3)
-        setBorderOf(view: self.buyItNowButton, width: 1, color: .grayColor(), radius: 3)
+        setBorderOf(view: addToCartButton, width: 1, color: .grayColor(), radius: 3)
+        setBorderOf(view: buyItNowView, width: 1, color: .grayColor(), radius: 3)
         
         let product = "https://demo5885209.mockable.io/api/v1/product/getProductDetail?productId=1000"
         let review = "https://demo5885209.mockable.io/api/v1/product/getReviews?productId=1000"
@@ -90,6 +90,8 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         requestReviewDetails(review, params: nil)
         
         configureNavigationBar()
+        
+        buyItNowView.addGestureRecognizer(tapGesture("buyItNowAction:"))
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -150,11 +152,11 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         self.navigationController?.navigationBar.tintColor = .grayColor()
         
 //        let close = UIBarButtonItem(image: img.image, style: .Plain, target: self, action: "barCloseAction")
-        let close = UIBarButtonItem(barButtonSystemItem: .Stop, target: self, action: "barCloseAction:")
+        let close = UIBarButtonItem(barButtonSystemItem: .Stop, target: self, action: "barWishlistAction")
         let wishlist = UIBarButtonItem(image: UIImage(named: "wishlist"), style: .Plain, target: self, action: "barCloseAction")
-        let rate = UIBarButtonItem(image: UIImage(named: "rating"), style: .Plain, target: self, action: "barCloseAction")
-        let message = UIBarButtonItem(image: UIImage(named: "msg"), style: .Plain, target: self, action: "barCloseAction")
-        let share = UIBarButtonItem(image: UIImage(named: "share"), style: .Plain, target: self, action: "barCloseAction")
+        let rate = UIBarButtonItem(image: UIImage(named: "rating"), style: .Plain, target: self, action: "barRatetAction")
+        let message = UIBarButtonItem(image: UIImage(named: "msg"), style: .Plain, target: self, action: "barShareAction")
+        let share = UIBarButtonItem(image: UIImage(named: "share"), style: .Plain, target: self, action: "barShareAction")
         var betweenSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Action, target: nil, action: nil)
         
         wishlist.imageInsets = UIEdgeInsetsMake(0, 0, 0, -75)
@@ -332,7 +334,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         showAlert("Message")
     }
     
-    func seeMoreAttribute(gesture: UIGestureRecognizer) {
+    func seeMoreAttribute(gesture: UIGestureRecognizer, bool: Bool, title: String) {
         var attributeModal = ProductAttributeViewController(nibName: "ProductAttributeViewController", bundle: nil)
         attributeModal.delegate = self
         attributeModal.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
@@ -340,7 +342,8 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         attributeModal.definesPresentationContext = true
         attributeModal.view.backgroundColor = UIColor.clearColor()
         attributeModal.view.frame.origin.y = attributeModal.view.frame.size.height
-        attributeModal.passModel(attributes: productDetailsModel.attributes, combinationModel: productDetailsModel.combinations, selectedValue: selectedValue)
+        attributeModal.passModel(productDetailsModel: productDetailsModel, combinationModel: productDetailsModel.combinations, selectedValue: selectedValue)
+        attributeModal.showCartCheckout(bool, title: title)
         self.navigationController?.presentViewController(attributeModal, animated: true, completion: nil)
         
         UIView.animateWithDuration(0.3, animations: {
@@ -515,11 +518,11 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     // MARK: Actions
     
     @IBAction func addToCartAction(sender: AnyObject) {
-        println("Add to cart")
+        seeMoreAttribute(UITapGestureRecognizer(), bool: true, title: "ADD TO CART")
     }
     
-    @IBAction func buyItNow(sender: AnyObject) {
-        println("Buy it now")
+    func buyItNowAction(gesture: UIGestureRecognizer) {
+        seeMoreAttribute(gesture, bool: true, title: "PROCEED TO CHECKOUT")
     }
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
@@ -557,5 +560,19 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
         alertController.addAction(defaultAction)
         presentViewController(alertController, animated: true, completion: nil)
+    }
+    
+    func tapGesture(action: Selector) -> UITapGestureRecognizer {
+        var tap = UITapGestureRecognizer()
+        tap.numberOfTapsRequired = 1
+        tap.addTarget(self, action: action)
+        
+        return tap
+    }
+    
+    // Navigation Bar Actions
+    
+    func barWishlistActon() {
+        showAlert("Wishlist")
     }
 }
