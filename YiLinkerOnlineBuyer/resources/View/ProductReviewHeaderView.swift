@@ -1,0 +1,21 @@
+//
+//  ProductReviewHeaderView.swift
+//  YiLinkerOnlineBuyer
+//
+//  Created by Rj Constantino on 8/5/15.
+//  Copyright (c) 2015 yiLinker-online-buyer. All rights reserved.
+//
+
+import UIKit
+
+class ProductReviewHeaderView: UIView {
+
+    override func awakeFromNib() {
+        
+    }
+    
+    func setRating(rate: Float) {
+        
+    }
+
+}
