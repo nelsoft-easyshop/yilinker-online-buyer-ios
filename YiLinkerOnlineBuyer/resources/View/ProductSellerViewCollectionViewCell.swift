@@ -17,8 +17,8 @@ class ProductSellerViewCollectionViewCell: UICollectionViewCell {
         
     }
     
-    func setImage(image: UIImage!) {
-        self.imageView.image = image
+    func setImage(image: String) {
+        self.imageView.sd_setImageWithURL(NSURL(string: image)!, placeholderImage: UIImage(named: "dummy-placeholder"))
     }
 
 }

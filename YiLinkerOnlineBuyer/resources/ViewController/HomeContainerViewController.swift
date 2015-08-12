@@ -38,6 +38,9 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate 
         super.viewDidLoad()
         circularDraweView()
         self.tabBarController!.delegate = self
+        
+        let productPage = ProductViewController(nibName: "ProductViewController", bundle: nil)
+        self.navigationController?.pushViewController(productPage, animated: true)
     }
     
     override func didReceiveMemoryWarning() {

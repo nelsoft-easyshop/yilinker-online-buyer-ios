@@ -12,15 +12,16 @@ class ProductDescriptionViewController: UIViewController {
 
     @IBOutlet weak var webView: UIWebView!
     
+    var url: String = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        webView.loadHTMLString(url, baseURL: nil)
     }
 
     @IBAction func closeAction(sender: AnyObject) {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
-
-
 }

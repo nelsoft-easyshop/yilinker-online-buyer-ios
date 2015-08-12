@@ -8,32 +8,19 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ProductViewsViewController" customModule="YiLinkerOnlineBuyer" customModuleProvider="target"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT" customClass="ProductImagesView" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="375" height="593"/>
+            <rect key="frame" x="0.0" y="0.0" width="375" height="543"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="GOO-gy-vhj">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="531"/>
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="481"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="375" id="P4e-d5-u7M"/>
-                        <constraint firstAttribute="height" constant="531" id="PPc-4j-BDZ"/>
-                    </constraints>
                     <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="6Dp-Js-7JR">
-                        <size key="itemSize" width="375" height="530"/>
+                        <size key="itemSize" width="375" height="480"/>
                         <size key="headerReferenceSize" width="0.0" height="0.0"/>
                         <size key="footerReferenceSize" width="0.0" height="0.0"/>
                         <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                     </collectionViewFlowLayout>
                 </collectionView>
-                <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" hidesForSinglePage="YES" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="aWQ-Wr-v5c">
-                    <rect key="frame" x="168" y="505" width="39" height="37"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="37" id="kgS-Zv-LEf"/>
-                        <constraint firstAttribute="width" constant="39" id="qfs-11-1fa"/>
-                    </constraints>
-                    <color key="pageIndicatorTintColor" red="0.7019608021" green="0.7019608021" blue="0.7019608021" alpha="1" colorSpace="calibratedRGB"/>
-                    <color key="currentPageIndicatorTintColor" red="0.50122048590000001" green="0.0" blue="0.7202493687" alpha="1" colorSpace="calibratedRGB"/>
-                </pageControl>
                 <view alpha="0.84999999999999987" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Mf8-6k-Nbf" userLabel="wishlist">
                     <rect key="frame" x="327" y="34" width="42" height="42"/>
                     <subviews>
@@ -134,7 +121,7 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="b53-al-htE" userLabel="Name  &amp; Price Container">
-                    <rect key="frame" x="0.0" y="531" width="375" height="62"/>
+                    <rect key="frame" x="0.0" y="481" width="375" height="62"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Samsung Edge - 32gb" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0jG-D7-b0E">
                             <rect key="frame" x="8" y="0.0" width="249" height="62"/>
@@ -172,20 +159,25 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Dh9-WO-r2Y" userLabel="separator">
-                    <rect key="frame" x="0.0" y="592" width="375" height="1"/>
+                    <rect key="frame" x="0.0" y="542" width="375" height="1"/>
                     <color key="backgroundColor" red="0.7019608021" green="0.7019608021" blue="0.7019608021" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="375" id="RfB-bx-50P"/>
                         <constraint firstAttribute="height" constant="1" id="XlL-lj-lin"/>
                     </constraints>
                 </view>
+                <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" hidesForSinglePage="YES" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="aWQ-Wr-v5c">
+                    <rect key="frame" x="168" y="444" width="39" height="37"/>
+                    <color key="pageIndicatorTintColor" red="0.7019608021" green="0.7019608021" blue="0.7019608021" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="currentPageIndicatorTintColor" red="0.50122048590000001" green="0.0" blue="0.7202493687" alpha="1" colorSpace="calibratedRGB"/>
+                </pageControl>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="b53-al-htE" secondAttribute="trailing" id="3w0-t7-fxc"/>
                 <constraint firstItem="sVc-rl-QSJ" firstAttribute="top" secondItem="Mf8-6k-Nbf" secondAttribute="bottom" constant="8" id="7ZR-eu-Wco"/>
                 <constraint firstAttribute="trailing" secondItem="Dh9-WO-r2Y" secondAttribute="trailing" id="7n8-UL-0Rz"/>
-                <constraint firstAttribute="bottom" secondItem="aWQ-Wr-v5c" secondAttribute="bottom" constant="51" id="9i9-9V-YfE"/>
+                <constraint firstAttribute="bottom" secondItem="aWQ-Wr-v5c" secondAttribute="bottom" constant="62" id="9i9-9V-YfE"/>
                 <constraint firstItem="aWQ-Wr-v5c" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="168" id="Bfp-MR-W8N"/>
                 <constraint firstItem="Dh9-WO-r2Y" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="D0V-8B-MiB"/>
                 <constraint firstAttribute="trailing" secondItem="aWQ-Wr-v5c" secondAttribute="trailing" constant="168" id="EEc-wv-NX8"/>
@@ -220,7 +212,7 @@
                 <outlet property="shareContainerView" destination="ryl-d0-Apw" id="592-ML-uYD"/>
                 <outlet property="wishlistContainerView" destination="Mf8-6k-Nbf" id="kRH-h4-fQr"/>
             </connections>
-            <point key="canvasLocation" x="364.5" y="438.5"/>
+            <point key="canvasLocation" x="364.5" y="399.5"/>
         </view>
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="hYp-dZ-AVK" customClass="ProductDescriptionView" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="375" height="116"/>
@@ -317,28 +309,28 @@
                     <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="rating2" translatesAutoresizingMaskIntoConstraints="NO" id="IyE-s0-iXP">
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="rating" translatesAutoresizingMaskIntoConstraints="NO" id="IyE-s0-iXP">
                     <rect key="frame" x="260" y="11" width="20" height="20"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="20" id="jOz-xF-nFn"/>
                         <constraint firstAttribute="width" constant="20" id="pY8-C1-2pq"/>
                     </constraints>
                 </imageView>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="rating2" translatesAutoresizingMaskIntoConstraints="NO" id="q8d-r6-3GB">
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="rating" translatesAutoresizingMaskIntoConstraints="NO" id="q8d-r6-3GB">
                     <rect key="frame" x="282" y="11" width="20" height="20"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="20" id="HtC-9m-Leg"/>
                         <constraint firstAttribute="height" constant="20" id="uqj-Gj-8oR"/>
                     </constraints>
                 </imageView>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="rating2" translatesAutoresizingMaskIntoConstraints="NO" id="yUt-XK-dy2">
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="rating" translatesAutoresizingMaskIntoConstraints="NO" id="yUt-XK-dy2">
                     <rect key="frame" x="303" y="11" width="20" height="20"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="20" id="fPs-hx-BIC"/>
                         <constraint firstAttribute="height" constant="20" id="xYb-fS-Tfv"/>
                     </constraints>
                 </imageView>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="rating2" translatesAutoresizingMaskIntoConstraints="NO" id="n0T-ab-e77">
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="rating" translatesAutoresizingMaskIntoConstraints="NO" id="n0T-ab-e77">
                     <rect key="frame" x="324" y="11" width="20" height="20"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="20" id="3cY-22-3BQ"/>
@@ -386,6 +378,13 @@
                 <constraint firstItem="MjI-X3-d3h" firstAttribute="top" secondItem="IyE-s0-iXP" secondAttribute="bottom" constant="11" id="vDU-Nx-fxN"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="rate1" destination="IyE-s0-iXP" id="iUX-Lg-3C7"/>
+                <outlet property="rate2" destination="q8d-r6-3GB" id="PUo-bJ-Jea"/>
+                <outlet property="rate3" destination="yUt-XK-dy2" id="iUI-EY-y4a"/>
+                <outlet property="rate4" destination="n0T-ab-e77" id="HIl-TR-xqQ"/>
+                <outlet property="rate5" destination="c0h-un-3yd" id="FpV-bd-i3X"/>
+            </connections>
             <point key="canvasLocation" x="364.5" y="1077"/>
         </view>
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="TvZ-9r-jaQ" customClass="ProductReviewFooterView" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
@@ -477,7 +476,7 @@
                         <constraint firstAttribute="height" constant="1" id="STD-Z2-5aY"/>
                     </constraints>
                 </view>
-                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="beats" translatesAutoresizingMaskIntoConstraints="NO" id="JQN-fu-kVc">
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dummy-placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="JQN-fu-kVc">
                     <rect key="frame" x="10" y="58" width="50" height="50"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="50" id="Bd8-pg-Ezx"/>
@@ -580,17 +579,16 @@
         </view>
     </objects>
     <resources>
-        <image name="beats" width="230" height="202"/>
         <image name="close" width="22" height="22"/>
+        <image name="dummy-placeholder" width="1280" height="800"/>
         <image name="genuine" width="200" height="152"/>
         <image name="guarantee" width="200" height="131"/>
         <image name="msg" width="22" height="22"/>
         <image name="rating" width="22" height="21"/>
-        <image name="rating2" width="200" height="188"/>
         <image name="right" width="97" height="200"/>
         <image name="seeMore" width="97" height="200"/>
         <image name="share" width="22" height="27"/>
         <image name="verify" width="135" height="200"/>
-        <image name="wishlist" width="22" height="19"/>
+        <image name="wishlist" width="25" height="25"/>
     </resources>
 </document>

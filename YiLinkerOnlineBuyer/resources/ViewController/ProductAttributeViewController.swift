@@ -23,6 +23,9 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
     @IBOutlet weak var decreaseButton: UIButton!
     @IBOutlet weak var increaseButton: UIButton!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var addToCartButton: UIButton!
+    @IBOutlet weak var buyItNowView: UIView!
+    @IBOutlet weak var cartCheckoutButton: UIButton!
     
     var delegate: ProductAttributeViewControllerDelegate?
     
@@ -30,6 +33,7 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
     var maximumStock = 1
     var stocks: Int = 0
     
+    var productDetailModel: ProductDetailsModel?
     var attributes: [ProductAttributeModel] = []
     var availableCombinations: [ProductAvailableAttributeCombinationModel] = []
     var selectedValue: [String] = []
@@ -50,6 +54,12 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
         tap.addTarget(self, action: "dimViewAction:")
         self.dimView.addGestureRecognizer(tap)
         self.dimView.backgroundColor = .clearColor()
+        
+        setBorderOf(view: addToCartButton, width: 1, color: .grayColor(), radius: 3)
+        setBorderOf(view: buyItNowView, width: 1, color: .grayColor(), radius: 3)
+        setBorderOf(view: cartCheckoutButton, width: 1, color: .grayColor(), radius: 3)
+        
+        buyItNowView.addGestureRecognizer(tapGesture("buyItNowAction:"))
     }
 
     // MARK: - Table View Data Source
@@ -95,8 +105,9 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
     
     // MARK: - Methods
     
-    func passModel(#attributes: NSArray, combinationModel: [ProductAvailableAttributeCombinationModel], selectedValue: NSArray) {
-        self.attributes = attributes as! [ProductAttributeModel]
+    func passModel(#productDetailsModel: ProductDetailsModel, combinationModel: [ProductAvailableAttributeCombinationModel], selectedValue: NSArray) {
+        setDetail("http://shop.bench.com.ph/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/Y/W/YWH0089BU4.jpg", title: productDetailsModel.title, price: productDetailsModel.newPrice)
+        self.attributes = productDetailsModel.attributes as [ProductAttributeModel]
         self.availableCombinations = combinationModel
         self.selectedValue = selectedValue as! [String]
         self.selectedCombination = combinationModel[0].combination
@@ -166,6 +177,13 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
         }
     }
     
+    func setDetail(image: String, title: String, price: Float) {
+        
+        productImageView.sd_setImageWithURL(NSURL(string: image), placeholderImage: UIImage(named: "dummy-placeholder"))
+        nameLabel.text = title
+        priceLabel.text = String(format: "P %.2f", price)
+    }
+    
     func disableButton(button: UIButton) {
         button.userInteractionEnabled = false
         button.alpha = 0.3
@@ -184,4 +202,32 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
         cancelAction(nil)
     }
     
+    @IBAction func addToCartAction(sender: AnyObject) {
+    }
+    
+    @IBAction func cartCheckoutAction(sender: AnyObject) {
+    }
+    
+    func tapGesture(action: Selector) -> UITapGestureRecognizer {
+        var tap = UITapGestureRecognizer()
+        tap.numberOfTapsRequired = 1
+        tap.addTarget(self, action: action)
+        
+        return tap
+    }
+    
+    func buyItNowAction(gesture: UIGestureRecognizer) {
+        println("checkout")
+    }
+    
+    func setBorderOf(#view: AnyObject, width: CGFloat, color: UIColor, radius: CGFloat) {
+        view.layer.borderWidth = width
+        view.layer.borderColor = color.CGColor
+        view.layer.cornerRadius = radius
+    }
+    
+    func showCartCheckout(bool: Bool, title: String) {
+        cartCheckoutButton.hidden = bool
+        cartCheckoutButton.setTitle(title, forState: .Normal)
+    }
 }

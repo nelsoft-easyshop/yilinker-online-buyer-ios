@@ -35,6 +35,8 @@ class ProductImagesView: UIView, UICollectionViewDataSource, UICollectionViewDel
     
     override func awakeFromNib() {
         
+        println(self.frame)
+        
         self.closeContainerView.layer.cornerRadius = self.closeContainerView.frame.size.width / 2
         self.closeContainerView.layer.borderWidth  = 1.5
         self.closeContainerView.layer.borderColor = UIColor.grayColor().CGColor
@@ -48,20 +50,18 @@ class ProductImagesView: UIView, UICollectionViewDataSource, UICollectionViewDel
         self.collectionView.delegate = self
         var nib = UINib(nibName: "ProductSellerViewCollectionViewCell", bundle:nil)
         self.collectionView.registerNib(nib, forCellWithReuseIdentifier: "productSellerIdentifier")
-        
-        self.pageControl.numberOfPages = 8
     }
     
     // MARK: - Collection View Data Source
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 8
+        return self.images.count
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell: ProductSellerViewCollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier("productSellerIdentifier", forIndexPath: indexPath) as! ProductSellerViewCollectionViewCell
         
-        cell.setImage(UIImage(named: "s6\(indexPath.row + 1)"))
+        cell.setImage(self.images[indexPath.row] as! String)
         
         return cell
     }
@@ -109,10 +109,19 @@ class ProductImagesView: UIView, UICollectionViewDataSource, UICollectionViewDel
     
     func setDetails(name: String, price: Float, images: NSArray) {
         self.nameLabel.text = name
-        self.priceLabel.text = String(stringInterpolationSegment: price)
         
-//        self.images = images
-//        self.collectionView.reloadData()
+        self.priceLabel.text = String(format: "P%.2f", price)
+        
+        self.images = images
+        if self.images.count == 0 {
+            self.images = ["http://shop.bench.com.ph/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/Y/W/YWH0089BU4.jpg",
+                "http://shop.bench.com.ph/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/Y/W/YWH0089BU4_F.jpg",
+                "http://shop.bench.com.ph/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/Y/W/YWH0089BU4_S.jpg",
+                "http://shop.bench.com.ph/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/Y/W/YWH0089BU4_B.jpg",
+                "http://shop.bench.com.ph/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/Y/W/YWH0089BU4_45.jpg"]
+        }
+         self.pageControl.numberOfPages = self.images.count
+        self.collectionView.reloadData()
     }
     
 }

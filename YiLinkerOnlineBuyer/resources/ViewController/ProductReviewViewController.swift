@@ -20,6 +20,12 @@ class ProductReviewViewController: UIViewController {
     @IBOutlet weak var dimView: UIView!
     @IBOutlet weak var cancelContainer: UIView!
     
+    @IBOutlet weak var rate1: UIImageView!
+    @IBOutlet weak var rate2: UIImageView!
+    @IBOutlet weak var rate3: UIImageView!
+    @IBOutlet weak var rate4: UIImageView!
+    @IBOutlet weak var rate5: UIImageView!
+    
     var model: ProductReviewModel!
     
     var delegate: ProductReviewViewControllerDelegate?
@@ -78,9 +84,56 @@ class ProductReviewViewController: UIViewController {
     
     func passModel(model: ProductReviewModel) {
         self.model = model
+        
+        setRating(model.rating)
+        var font = [NSFontAttributeName : UIFont.boldSystemFontOfSize(35.0)]
+        var rater = NSMutableAttributedString(string: String(format: "%.f", model.rating), attributes: font)
+        var textToAppend = NSMutableAttributedString(string: rateLabel.text!)
+        rater.appendAttributedString(textToAppend)
+        
+        rateLabel.text = String(format: "%.f/5", model.rating)
+        rateLabel.attributedText = rater
+        
+        font = [NSFontAttributeName : UIFont.boldSystemFontOfSize(14.0)]
+        rater = NSMutableAttributedString(string: "\(model.reviews.count)", attributes: font)
+        textToAppend = NSMutableAttributedString(string: " people rate this product")
+        rater.appendAttributedString(textToAppend)
+        
+        numberOfPeopleLabel.attributedText = rater
     }
     
     func dimViewAction(gesture: UIGestureRecognizer) {
         cancelAction(nil)
     }
+    
+    func setRating(rate: Float) {
+        
+        if rate > 4 {
+            rateImage(rate5)
+        }
+        
+        if rate > 3 {
+            rateImage(rate4)
+        }
+        
+        if rate > 2 {
+            rateImage(rate3)
+        }
+        
+        if rate > 1  {
+            rateImage(rate2)
+        }
+        
+        if rate > 0 {
+            rateImage(rate1)
+        }
+        
+    }
+    
+    func rateImage(ctr: UIImageView) {
+        ctr.image = UIImage(named: "rating2")
+    }
+    
+    
+    
 }
