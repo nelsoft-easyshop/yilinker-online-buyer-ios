@@ -64,7 +64,25 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate 
             animatedViewController!.providesPresentationContextTransitionStyle = true
             animatedViewController!.definesPresentationContext = true
             animatedViewController!.view.backgroundColor = UIColor.clearColor()
-            //self.presentViewController(animatedViewController!, animated: false, completion: nil)
+            
+            if SessionManager.accessToken() != "" {
+                var buttonImages: [String] = ["help", "following", "message", "customize-shopping", "promo", "category", SessionManager.profileImageStringUrl()]
+                var buttonTitles: [String] = ["HELP", "FOLLOWED SELLER", "MESSAGING", "CUSTOMIZE SHOPPING", "TODAY'S PROMO", "CATEGORIES", "LOGOUT"]
+                var buttonRightText: [String] = ["", "", "You have 1 unread message", "", "", "", "Jessica Joe \nMetro Manila, City"]
+                
+                animatedViewController?.buttonImages = buttonImages
+                animatedViewController?.buttonTitles = buttonTitles
+                animatedViewController?.buttonRightText = buttonRightText
+            } else {
+                var buttonImages: [String] = ["help", "register", "sign_in", "message","customize-shopping", "promo", "category"]
+                var buttonTitles: [String] = ["HELP", "REGISTER", "SIGN IN", "MESSAGING", "CUSTOMIZE SHOPPING", "TODAYS PROMO", "CATEGORIES"]
+                var buttonRightText: [String] = ["", "", "Must be Sign in", "Must be Sign in", "", "", ""]
+                
+                animatedViewController?.buttonImages = buttonImages
+                animatedViewController?.buttonTitles = buttonTitles
+                animatedViewController?.buttonRightText = buttonRightText
+            }
+            
             self.tabBarController?.presentViewController(animatedViewController!, animated: false, completion: nil)
             
             return false
@@ -172,10 +190,8 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate 
     }
     
     func fireGetHomePageData() {
-        /*let dictionary: NSDictionary = ParseLocalJSON.fileName("home")*/
         let manager = APIManager.sharedInstance
-        
-        manager.GET("http://demo9190076.mockable.io/yilinker/home", parameters: nil, success: {
+        manager.GET("http://online.api.easydeal.ph/content/home/mobile?access_token=MTc3YTA0YmY0YjUxMGVkY2I3Y2VhOGE3YTU0NDU3YzJkMWVmNmJjZTQ0MTkzMDlmMmU4MGIxNTI0NDJlNGFmZg", parameters: nil, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
                 self.populateHomePageWithDictionary(responseObject as! NSDictionary)
             }, failure: {
@@ -189,14 +205,16 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate 
         let storyBoard: UIStoryboard = UIStoryboard(name: "HomeStoryBoard", bundle: nil)
         featuredCollectionViewController = storyBoard.instantiateViewControllerWithIdentifier("HomePageCollectionViewController") as? HomePageCollectionViewController
         
-        var featuredDictionary: NSDictionary = dictionary["featured"] as! NSDictionary
+        let dataDictionary: NSDictionary = dictionary["data"] as! NSDictionary
+        
+        var featuredDictionary: NSDictionary = dataDictionary["featured"] as! NSDictionary
         var featuredLayouts: [String] = [Constants.HomePage.layoutOneKey, Constants.HomePage.layoutTwoKey, Constants.HomePage.layoutThreeKey, Constants.HomePage.layoutFourKey, Constants.HomePage.layoutFiveKey, Constants.HomePage.layoutSixKey]
         
         featuredCollectionViewController?.dictionary = featuredDictionary
         featuredCollectionViewController?.layouts = featuredLayouts
         
         hotItemsCollectionViewController = storyBoard.instantiateViewControllerWithIdentifier("HomePageCollectionViewController") as? HomePageCollectionViewController
-        let hotItemsDictionary: NSDictionary = dictionary["hotItems"] as! NSDictionary
+        let hotItemsDictionary: NSDictionary = dataDictionary["hotItems"] as! NSDictionary
         var hotItemLayouts: [String] = [Constants.HomePage.layoutTwoKey, Constants.HomePage.layoutSevenKey]
         
         let categories: NSArray = hotItemsDictionary["categories"] as! NSArray
@@ -206,9 +224,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate 
             let layoutId: String = categoryDictionary["layoutId"] as! String
             var layout: String = ""
             if layoutId == "1" {
-                layout = Constants.HomePage.layoutThreeKey
-            } else if layoutId == "2" {
-                layout = Constants.HomePage.layoutFourKey
+                layout = Constants.HomePage.layoutFiveKey
             }
             
             hotItemLayouts.append(layout)
@@ -220,13 +236,13 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate 
         
         
         newItemsCollectionViewController = storyBoard.instantiateViewControllerWithIdentifier("HomePageCollectionViewController") as? HomePageCollectionViewController
-        let newItemsDictionary: NSDictionary = dictionary["newItems"] as! NSDictionary
+        let newItemsDictionary: NSDictionary = dataDictionary["newItems"] as! NSDictionary
         var newItemslayout: [String] = [Constants.HomePage.layoutEightKey, Constants.HomePage.layoutSixKey]
         newItemsCollectionViewController?.dictionary = newItemsDictionary
         newItemsCollectionViewController?.layouts = newItemslayout
         
         sellersCollectionViewController = storyBoard.instantiateViewControllerWithIdentifier("HomePageCollectionViewController") as? HomePageCollectionViewController
-        let sellerDictionary: NSDictionary = dictionary["sellers"] as! NSDictionary
+        let sellerDictionary: NSDictionary = dataDictionary["sellers"] as! NSDictionary
         let sellerLayouts: [String] = [Constants.HomePage.layoutNineKey, Constants.HomePage.layoutTenKey]
         sellersCollectionViewController?.dictionary = sellerDictionary
         sellersCollectionViewController?.layouts = sellerLayouts

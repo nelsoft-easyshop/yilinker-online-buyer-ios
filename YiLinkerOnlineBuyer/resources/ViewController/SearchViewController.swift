@@ -124,12 +124,12 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
         /*let dictionary: NSDictionary = ParseLocalJSON.fileName("home")*/
         let manager = APIManager.sharedInstance
         
-        manager.GET("http://demo9190076.mockable.io/yilinker/home", parameters: nil, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            self.populateHomePageWithDictionary(responseObject as! NSDictionary)
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-        })
+//        manager.GET("http://demo9190076.mockable.io/yilinker/home", parameters: nil, success: {
+//            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+//            self.populateHomePageWithDictionary(responseObject as! NSDictionary)
+//            }, failure: {
+//                (task: NSURLSessionDataTask!, error: NSError!) in
+//        })
         
     }
 
