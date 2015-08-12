@@ -73,6 +73,9 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func requestProductDetails(url: String, params: NSDictionary!) {
+        SVProgressHUD.show()
+        SVProgressHUD.setBackgroundColor(UIColor.clearColor())
+        
         manager.GET(url, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             //print(responseObject as! NSDictionary)
@@ -87,10 +90,12 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
                 self.cartTableView.reloadData()
             }
             self.updateCounterLabel()
+            SVProgressHUD.dismiss()
             
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 println("failed: \(error)")
+                SVProgressHUD.dismiss()
         })
     }
     
