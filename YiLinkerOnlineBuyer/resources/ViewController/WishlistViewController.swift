@@ -10,13 +10,18 @@ import UIKit
 
 class WishlistViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, WishlistTableViewCellDelegate {
     
+    let manager = APIManager()
+    
     @IBOutlet var wishlistTableView: UITableView!
     
     @IBOutlet var wishListCounterLabel: UILabel!
     
     let viewControllerIndex = 2
     
-    var tableData: [String] = ["Ferrari", "BMW", "Mitsubishi", "Lambo"]
+    var tableData: [CartModel] = []
+    
+    //formatter of Text to remove trailing decimal
+    let formatter = NSNumberFormatter()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,6 +32,11 @@ class WishlistViewController: UIViewController, UITableViewDelegate, UITableView
         var nib = UINib(nibName: "WishlistTableViewCell", bundle: nil)
         wishlistTableView.registerNib(nib, forCellReuseIdentifier: "WishlistTableViewCell")
         
+        self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
+        
+        formatter.minimumFractionDigits = 0
+        formatter.maximumFractionDigits = 2
+        
         populateWishListTableView()
     }
     
@@ -35,17 +45,69 @@ class WishlistViewController: UIViewController, UITableViewDelegate, UITableView
         // Dispose of any resources that can be recreated.
     }
     
-    func populateWishListTableView (){
-        updateCounterLabel()
+    //REST API request
+    //
+    func fireDeleteCartItem(url: String, params: NSDictionary!) {
+        manager.DELETE(url, parameters: params, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            print(responseObject as! NSDictionary)
+            self.updateCounterLabel()
+            
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                println("failed: \(error)")
+        })
+    }
+    
+    func fireAddToßCartItem(url: String, params: NSDictionary!) {
+        manager.DELETE(url, parameters: params, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            print(responseObject as! NSDictionary)
+            self.updateCounterLabel()
+            
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                println("failed: \(error)")
+        })
+    }
+    
+    func requestProductDetails(url: String, params: NSDictionary!) {
+        SVProgressHUD.show()
+        SVProgressHUD.setBackgroundColor(UIColor.clearColor())
+        
+        manager.GET(url, parameters: params, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            if let value: AnyObject = responseObject["data"] {
+                for subValue in value["cartItems"] as! NSArray {
+                    
+                    let model: CartModel = CartModel.parseDataWithDictionary(subValue as! NSDictionary)
+                    
+                    self.tableData.append(model)
+                }
+                self.wishlistTableView.reloadData()
+            }
+            self.updateCounterLabel()
+            SVProgressHUD.dismiss()
+            
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                println("failed: \(error)")
+                SVProgressHUD.dismiss()
+        })
+    }
+    
+    
+    // MARK: Methods Updating Values
+    func populateWishListTableView () {
+        requestProductDetails("http://demo5885209.mockable.io/api/v1/cart/getCart", params: nil)
     }
     
     func updateCounterLabel() {
         if tableData.count < 2 {
             wishListCounterLabel.text = "You have \(tableData.count) item in your wishlist"
-        } else{
+        } else {
             wishListCounterLabel.text = "You have \(tableData.count) items in your wishlist"
         }
-        
     }
     
     // MARK: - Table View Delegate
@@ -57,7 +119,33 @@ class WishlistViewController: UIViewController, UITableViewDelegate, UITableView
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell 	{
         var cell:WishlistTableViewCell = self.wishlistTableView.dequeueReusableCellWithIdentifier("WishlistTableViewCell") as! WishlistTableViewCell
         
-        cell.productNameLabel.text = tableData[indexPath.row]
+        //Set cell data
+        var tempModel: CartModel = tableData[indexPath.row]
+        cell.productNameLabel.text = tempModel.productDetails.title
+        //cell.productItemImageView.sd_setImageWithURL(tempModel.productDetails?.a, placeholderImage: <#UIImage!#>)   //no image yet in API
+        var tempAttributesText: String = ""
+        var tempAttributeId: [Int] = []
+        var tempAttributeName: [String] = []
+        
+        for tempAttribute in tempModel.productDetails.attributes{
+            tempAttributeId += tempAttribute.valueId
+            tempAttributeName += tempAttribute.valueName
+        }
+        
+        for tempId in tempModel.selectedAttributes {
+            if let index = find(tempAttributeId, tempId) {
+                if tempAttributesText.isEmpty {
+                    tempAttributesText = tempAttributeName[index]
+                } else {
+                    tempAttributesText += " | " + tempAttributeName[index]
+                }
+                
+            }
+        }
+        cell.productDetailsLabel?.text = tempAttributesText
+        
+        cell.productPriceLabel.text = "P\(formatter.stringFromNumber(tempModel.productDetails.newPrice)!) x\(tempModel.quantity)"
+        
         cell.delegate = self
         return cell
     }
@@ -83,12 +171,21 @@ class WishlistViewController: UIViewController, UITableViewDelegate, UITableView
         wishlistTableView.deleteRowsAtIndexPaths([pathOfTheCell], withRowAnimation: UITableViewRowAnimation.Fade)
         NSLog("rowofthecell %d", rowOfTheCell);
         updateCounterLabel()
+        
+        //No API yet
+        //fireDeleteCartItem(<#url: String#>, params: <#NSDictionary!#>)
     }
     
     func addToCartButtonActionForIndex(sender: AnyObject){
         var pathOfTheCell: NSIndexPath = wishlistTableView.indexPathForCell(sender as! UITableViewCell)!
         var rowOfTheCell: Int = pathOfTheCell.row
+        tableData.removeAtIndex(pathOfTheCell.row);
+        wishlistTableView.deleteRowsAtIndexPaths([pathOfTheCell], withRowAnimation: UITableViewRowAnimation.Fade)
         NSLog("rowofthecell %d", rowOfTheCell);
+        updateCounterLabel()
+        
+        //No API yet
+        //fireAddToßCartItem(<#url: String#>, params: <#NSDictionary!#>)
     }
     
 }
