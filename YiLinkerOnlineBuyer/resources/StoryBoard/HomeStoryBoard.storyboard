@@ -83,7 +83,6 @@
         <!--View Controller-->
         <scene sceneID="ZFY-xj-sOF">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="wod-ZN-7lU" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="bFy-Zg-Ywq" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="M8v-fe-xRD"/>
@@ -97,6 +96,7 @@
                     <tabBarItem key="tabBarItem" title="" id="zVu-wm-JX2"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wod-ZN-7lU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-487" y="638"/>
         </scene>
@@ -222,7 +222,7 @@
                                             <constraint firstAttribute="height" constant="21" id="xPV-Ke-tb0"/>
                                         </constraints>
                                         <attributedString key="attributedText">
-                                            <fragment content="PRICE">
+                                            <fragment content="P 0">
                                                 <attributes>
                                                     <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <font key="NSFont" size="17" name="HelveticaNeue"/>
