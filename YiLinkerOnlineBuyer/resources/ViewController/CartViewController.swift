@@ -19,8 +19,10 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     @IBOutlet var checkoutButton: UIButton!
     
-    var tableData: [String] = ["Ferrari", "BMW", "Mitsubishi", "Lambo"]
+    var tableData: [CartModel] = []
     
+    //formatter of Text to remove trailing decimal
+    let formatter = NSNumberFormatter()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,6 +35,9 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
         var nib = UINib(nibName: "CartTableViewCell", bundle: nil)
         cartTableView.registerNib(nib, forCellReuseIdentifier: "CartTableViewCell")
         
+        formatter.minimumFractionDigits = 0
+        formatter.maximumFractionDigits = 2
+        
         populateWishListTableView()
     }
     
@@ -43,13 +48,55 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBAction func buttonClicked(sender: AnyObject) {
     }
     
+    func fireDeleteCartItem(url: String, params: NSDictionary!) {
+        manager.DELETE(url, parameters: params, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            print(responseObject as! NSDictionary)
+                self.updateCounterLabel()
+            
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                println("failed: \(error)")
+        })
+    }
+    
+    func fireEditCartItem(url: String, params: NSDictionary!) {
+        manager.DELETE(url, parameters: params, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            print(responseObject as! NSDictionary)
+            self.updateCounterLabel()
+            
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                println("failed: \(error)")
+        })
+    }
+    
     func requestProductDetails(url: String, params: NSDictionary!) {
-        
+        manager.GET(url, parameters: params, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            //print(responseObject as! NSDictionary)
+            
+            if let value: AnyObject = responseObject["data"] {
+                for subValue in value["cartItems"] as! NSArray {
+                    
+                    let model: CartModel = CartModel.parseDataWithDictionary(subValue as! NSDictionary)
+                    
+                    self.tableData.append(model)
+                }
+                self.cartTableView.reloadData()
+            }
+            self.updateCounterLabel()
+            
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                println("failed: \(error)")
+        })
     }
     
     // MARK: Methods Updating Values
     func populateWishListTableView (){
-        updateCounterLabel()
+        requestProductDetails("http://demo5885209.mockable.io/api/v1/cart/getCart", params: nil)
     }
     
     func updateCounterLabel() {
@@ -61,7 +108,13 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func calculateTotalPrice() {
-        
+        var totalPrice: Double = 0.0
+        for tempModel in tableData {
+            if tempModel.selected {
+                totalPrice += (Double(tempModel.productDetails.newPrice) * Double(tempModel.quantity))
+            }
+        }
+        totalPriceLabel.text = "P \(formatter.stringFromNumber(totalPrice)!)"
     }
     
     // MARK: - Table View Delegate
@@ -72,7 +125,33 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell 	{
         var cell:CartTableViewCell = self.cartTableView.dequeueReusableCellWithIdentifier("CartTableViewCell") as! CartTableViewCell
         
-        cell.productNameLabel.text = tableData[indexPath.row]
+        //Set cell data
+        var tempModel: CartModel = tableData[indexPath.row]
+        cell.productNameLabel.text = tempModel.productDetails.title
+        //cell.productItemImageView.sd_setImageWithURL(tempModel.productDetails?.a, placeholderImage: <#UIImage!#>)   //no image yet in API
+        var tempAttributesText: String = ""
+        var tempAttributeId: [Int] = []
+        var tempAttributeName: [String] = []
+        
+        for tempAttribute in tempModel.productDetails.attributes{
+            tempAttributeId += tempAttribute.valueId
+            tempAttributeName += tempAttribute.valueName
+        }
+        
+        for tempId in tempModel.selectedAttributes {
+            if let index = find(tempAttributeId, tempId) {
+                if tempAttributesText.isEmpty {
+                    tempAttributesText = tempAttributeName[index]
+                } else {
+                    tempAttributesText += " | " + tempAttributeName[index]
+                }
+                
+            }
+        }
+        cell.productDetailsLabel?.text = tempAttributesText
+        
+        cell.productPriceLabel.text = "P\(formatter.stringFromNumber(tempModel.productDetails.newPrice)!) x\(tempModel.quantity)"
+        
         cell.delegate = self
         return cell
     }
@@ -104,6 +183,9 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
         var pathOfTheCell: NSIndexPath = cartTableView.indexPathForCell(sender as! UITableViewCell)!
         var rowOfTheCell: Int = pathOfTheCell.row
         
+        var tempModel: CartModel = tableData[rowOfTheCell]
+        tempModel.selected = state
+
         calculateTotalPrice()
     }
     
