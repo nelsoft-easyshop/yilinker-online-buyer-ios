@@ -92,4 +92,11 @@ extension UIAlertController {
         target.presentViewController(alert, animated: true, completion: nil)
     }
     
+    class func displayNoInternetConnectionError(target: AnyObject) {
+        let alert = UIAlertController(title: "No Internet Connection", message: "Please check your internet connection.", preferredStyle: UIAlertControllerStyle.Alert)
+        let OKAction = UIAlertAction(title: "OK", style: .Default) { (action) in }
+        alert.addAction(OKAction)
+        target.presentViewController(alert, animated: true, completion: nil)
+    }
+    
 }
