@@ -157,7 +157,7 @@
             </objects>
             <point key="canvasLocation" x="-2140.5" y="1424.5"/>
         </scene>
-        <!--Wishlist View Controller-->
+        <!--Wishlist-->
         <scene sceneID="w4B-f7-lDi">
             <objects>
                 <viewController storyboardIdentifier="WishlistViewController" id="JPs-GR-MAc" customClass="WishlistViewController" customModule="YiLinkerOnlineBuyer" customModuleProvider="target" sceneMemberID="viewController">
@@ -204,7 +204,7 @@
                             <constraint firstItem="QM6-3q-0fn" firstAttribute="leading" secondItem="U4b-3y-sJx" secondAttribute="leadingMargin" constant="-16" id="w43-Pn-QBn"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="mec-SK-MXQ"/>
+                    <navigationItem key="navigationItem" title="Wishlist" id="mec-SK-MXQ"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="wishListCounterLabel" destination="M20-0g-60V" id="X22-4s-vbA"/>
