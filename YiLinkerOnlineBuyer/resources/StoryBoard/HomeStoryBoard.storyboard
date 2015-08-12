@@ -177,7 +177,7 @@
             </objects>
             <point key="canvasLocation" x="-1317.5" y="625.5"/>
         </scene>
-        <!--Cart View Controller-->
+        <!--Cart-->
         <scene sceneID="2ww-zW-8F6">
             <objects>
                 <viewController storyboardIdentifier="CartViewController" id="Y5w-eS-nUZ" customClass="CartViewController" customModule="YiLinkerOnlineBuyer" customModuleProvider="target" sceneMemberID="viewController">
@@ -188,10 +188,94 @@
                     <view key="view" contentMode="scaleToFill" id="fCv-gF-g2z">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="1" green="0.89177344680000004" blue="0.51266724220000004" alpha="1" colorSpace="calibratedRGB"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DP3-44-XbQ">
+                                <rect key="frame" x="0.0" y="64" width="375" height="35"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="You have 2 items in your wishlist" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PGR-Y7-dO2">
+                                        <rect key="frame" x="8" y="7" width="359" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="35" id="Nco-hE-fbs"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vgh-W9-rFp">
+                                <rect key="frame" x="0.0" y="548" width="375" height="70"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Total" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R5e-rH-Gus">
+                                        <rect key="frame" x="8" y="12" width="185" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d0X-nt-S88">
+                                        <rect key="frame" x="8" y="26" width="185" height="21"/>
+                                        <attributedString key="attributedText">
+                                            <fragment content="PRICE">
+                                                <attributes>
+                                                    <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <font key="NSFont" size="17" name="HelveticaNeue"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                                </attributes>
+                                            </fragment>
+                                        </attributedString>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="fill" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QsH-XS-WrT" customClass="SemiRoundedButton" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
+                                        <rect key="frame" x="201" y="12" width="166" height="45"/>
+                                        <color key="backgroundColor" red="0.2666666667" green="0.64313725489999995" blue="0.56862745100000001" alpha="1" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <state key="normal" title="CHECKOUT">
+                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <real key="value" value="5"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="buttonClicked:" destination="Y5w-eS-nUZ" eventType="touchUpInside" id="EXP-jK-ccQ"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="70" id="1Jk-CK-SpD"/>
+                                </constraints>
+                            </view>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" style="plain" allowsSelection="NO" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="mFe-cC-ywX">
+                                <rect key="frame" x="0.0" y="99" width="375" height="448"/>
+                                <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="vgh-W9-rFp" firstAttribute="leading" secondItem="fCv-gF-g2z" secondAttribute="leadingMargin" constant="-16" id="1wU-Rr-TJP"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="vgh-W9-rFp" secondAttribute="trailing" constant="-16" id="3hL-o6-WUq"/>
+                            <constraint firstItem="DP3-44-XbQ" firstAttribute="top" secondItem="Q5h-SR-VNN" secondAttribute="bottom" id="RgK-nt-gsx"/>
+                            <constraint firstItem="mFe-cC-ywX" firstAttribute="leading" secondItem="fCv-gF-g2z" secondAttribute="leadingMargin" constant="-16" id="arj-me-sAF"/>
+                            <constraint firstItem="DP3-44-XbQ" firstAttribute="leading" secondItem="fCv-gF-g2z" secondAttribute="leadingMargin" constant="-16" id="btH-nf-Gzh"/>
+                            <constraint firstItem="vgh-W9-rFp" firstAttribute="top" secondItem="mFe-cC-ywX" secondAttribute="bottom" constant="1" id="ePP-KP-ZM1"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="DP3-44-XbQ" secondAttribute="trailing" constant="-16" id="eu6-Af-dIk"/>
+                            <constraint firstItem="mFe-cC-ywX" firstAttribute="top" secondItem="DP3-44-XbQ" secondAttribute="bottom" id="iag-Vm-UXp"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="mFe-cC-ywX" secondAttribute="trailing" constant="-16" id="l1n-Ga-tb5"/>
+                            <constraint firstItem="9HC-u3-3mw" firstAttribute="top" secondItem="vgh-W9-rFp" secondAttribute="bottom" id="pEh-70-9NZ"/>
+                        </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="ECi-yG-sDA"/>
+                    <navigationItem key="navigationItem" title="Cart" id="ECi-yG-sDA"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <connections>
+                        <outlet property="cartCounterLabel" destination="PGR-Y7-dO2" id="WGL-Iz-Se7"/>
+                        <outlet property="cartTableView" destination="mFe-cC-ywX" id="GdG-2D-8Wv"/>
+                        <outlet property="checkoutButton" destination="QsH-XS-WrT" id="vXL-p5-paz"/>
+                        <outlet property="totalPriceLabel" destination="d0X-nt-S88" id="kH7-C0-0gX"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GUq-0F-wQx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
