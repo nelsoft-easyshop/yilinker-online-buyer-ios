@@ -168,10 +168,48 @@
                     <view key="view" tag="4" contentMode="scaleToFill" id="U4b-3y-sJx">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="0.1276144226" green="0.5" blue="0.44086934719999998" alpha="1" colorSpace="calibratedRGB"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QM6-3q-0fn">
+                                <rect key="frame" x="0.0" y="64" width="375" height="35"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M20-0g-60V">
+                                        <rect key="frame" x="8" y="7" width="359" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="M20-0g-60V" firstAttribute="leading" secondItem="QM6-3q-0fn" secondAttribute="leading" constant="8" id="4Lb-xI-jUc"/>
+                                    <constraint firstAttribute="bottom" secondItem="M20-0g-60V" secondAttribute="bottom" constant="7" id="CX6-Zp-Ce6"/>
+                                    <constraint firstItem="M20-0g-60V" firstAttribute="top" secondItem="QM6-3q-0fn" secondAttribute="top" constant="7" id="OfD-AK-sYE"/>
+                                    <constraint firstAttribute="height" constant="35" id="mKf-LK-s9D"/>
+                                    <constraint firstAttribute="trailing" secondItem="M20-0g-60V" secondAttribute="trailing" constant="8" id="pBf-S6-UCW"/>
+                                </constraints>
+                            </view>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" style="plain" allowsSelection="NO" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Oju-HB-quM">
+                                <rect key="frame" x="0.0" y="100" width="375" height="518"/>
+                                <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="Oju-HB-quM" firstAttribute="leading" secondItem="U4b-3y-sJx" secondAttribute="leadingMargin" constant="-16" id="6Q4-If-ybZ"/>
+                            <constraint firstItem="QM6-3q-0fn" firstAttribute="top" secondItem="m8O-vp-ewv" secondAttribute="bottom" id="Css-FU-o1z"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="QM6-3q-0fn" secondAttribute="trailing" constant="-16" id="YOF-3X-lIg"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Oju-HB-quM" secondAttribute="trailing" constant="-16" id="fLC-Vl-PXe"/>
+                            <constraint firstItem="Oju-HB-quM" firstAttribute="top" secondItem="QM6-3q-0fn" secondAttribute="bottom" constant="1" id="gGB-Jk-KJK"/>
+                            <constraint firstItem="Gah-ew-xOB" firstAttribute="top" secondItem="Oju-HB-quM" secondAttribute="bottom" id="lq3-Er-4dV"/>
+                            <constraint firstItem="QM6-3q-0fn" firstAttribute="leading" secondItem="U4b-3y-sJx" secondAttribute="leadingMargin" constant="-16" id="w43-Pn-QBn"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="mec-SK-MXQ"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <connections>
+                        <outlet property="wishListCounterLabel" destination="M20-0g-60V" id="X22-4s-vbA"/>
+                        <outlet property="wishlistTableView" destination="Oju-HB-quM" id="fKb-71-VyF"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="q1R-0B-bvT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -192,7 +230,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DP3-44-XbQ">
                                 <rect key="frame" x="0.0" y="64" width="375" height="35"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="You have 2 items in your wishlist" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PGR-Y7-dO2">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text=" " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PGR-Y7-dO2">
                                         <rect key="frame" x="8" y="7" width="359" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
