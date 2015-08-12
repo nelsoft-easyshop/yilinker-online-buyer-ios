@@ -137,7 +137,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
             self.next()
         } else {
             self.done()
-            self.fireRegister()
+            self.register()
         }
         
         return true
@@ -154,7 +154,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         })
     }
     
-    func fireRegister() {
+    func register() {
         var errorMessage: String = ""
         
         if !self.firstNameTextField.isNotEmpty() {
@@ -182,7 +182,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         if errorMessage != "" {
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorMessage)
         } else {
-            self.done()
+            self.fireRegister()
         }
     }
     
@@ -203,5 +203,51 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
                 
         })
     }
+    
+    func fireRegister() {
+        SVProgressHUD.show()
+        SVProgressHUD.setBackgroundColor(UIColor.clearColor())
+        let manager: APIManager = APIManager.sharedInstance
 
+        let parameters: NSDictionary = ["email": self.emailAddressTextField.text,"password": self.passwordTextField.text, "fullname": "\(self.firstNameTextField.text) \(self.lastNameTextField.text)"]
+        
+        manager.POST(APIAtlas.registerUrl, parameters: parameters, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+                let registerModel: RegisterModel = RegisterModel.parseDataFromDictionary(responseObject as! NSDictionary)
+                if registerModel.isSuccessful {
+                    SVProgressHUD.dismiss()
+                    println(responseObject)
+                    self.showSuccessMessage()
+                } else {
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: registerModel.message, title: "Error")
+                }
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                
+                if !Reachability.isConnectedToNetwork() {
+                    UIAlertController.displayNoInternetConnectionError(self)
+                } else {
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+                }
+                
+                SVProgressHUD.dismiss()
+        })
+    }
+    
+    func showSuccessMessage() {
+        let alertController = UIAlertController(title: "Success", message: "Successfully login.", preferredStyle: .Alert)
+        
+        let OKAction = UIAlertAction(title: "OK", style: .Default) { (action) in
+            alertController.dismissViewControllerAnimated(true, completion: nil)
+            let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+            appDelegate.changeRootToHomeView()
+        }
+        
+        alertController.addAction(OKAction)
+        
+        self.presentViewController(alertController, animated: true) {
+            
+        }
+    }
 }

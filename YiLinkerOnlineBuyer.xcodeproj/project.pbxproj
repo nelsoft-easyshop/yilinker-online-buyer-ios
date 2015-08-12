@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		0C2670CD1B77290200394E29 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0C2670CC1B77290200394E29 /* GoogleService-Info.plist */; };
 		0C2670CF1B772E4B00394E29 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C2670CE1B772E4B00394E29 /* Enums.swift */; };
+		0C329E731B7B2A71005BE2B6 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C329E721B7B2A71005BE2B6 /* Reachability.swift */; };
+		0C329E751B7B2D32005BE2B6 /* RegisterModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C329E741B7B2D32005BE2B6 /* RegisterModel.swift */; };
 		0C6490761B7781E400F88F92 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C6490751B7781E400F88F92 /* Category.swift */; };
 		0C8A7C7B1B6772670039F013 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0C8A7C7A1B6772670039F013 /* Images.xcassets */; };
 		0C8A7C8A1B6772670039F013 /* YiLinkerOnlineBuyerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8A7C891B6772670039F013 /* YiLinkerOnlineBuyerTests.swift */; };
@@ -123,6 +125,8 @@
 		0C25D94D1B76F81A00E9EFA6 /* YiLinkerOnlineBuyer-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "YiLinkerOnlineBuyer-Bridging-Header.h"; sourceTree = "<group>"; };
 		0C2670CC1B77290200394E29 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		0C2670CE1B772E4B00394E29 /* Enums.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
+		0C329E721B7B2A71005BE2B6 /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
+		0C329E741B7B2D32005BE2B6 /* RegisterModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterModel.swift; sourceTree = "<group>"; };
 		0C6490751B7781E400F88F92 /* Category.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 		0C8A7C6E1B6772670039F013 /* YiLinkerOnlineBuyer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YiLinkerOnlineBuyer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0C8A7C721B6772670039F013 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -337,6 +341,7 @@
 				0C9937031B750583000D6074 /* SessionManager.swift */,
 				0C2670CE1B772E4B00394E29 /* Enums.swift */,
 				26AFB3921B79DD9100E50926 /* XibHelper.swift */,
+				0C329E721B7B2A71005BE2B6 /* Reachability.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -353,6 +358,7 @@
 				26AFB3971B79DDEA00E50926 /* ProductReviewModel.swift */,
 				26AFB3981B79DDEA00E50926 /* ProductReviewsModel.swift */,
 				26AFB3991B79DDEA00E50926 /* ProductSellerModel.swift */,
+				0C329E741B7B2D32005BE2B6 /* RegisterModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -654,6 +660,7 @@
 				0C9937711B75063B000D6074 /* AppDelegate.swift in Sources */,
 				0C9937541B750583000D6074 /* RoundedLabel.swift in Sources */,
 				0C2670CF1B772E4B00394E29 /* Enums.swift in Sources */,
+				0C329E731B7B2A71005BE2B6 /* Reachability.swift in Sources */,
 				0C9937551B750583000D6074 /* ScrollableCollectionViewCell.swift in Sources */,
 				26AFB3B81B79DE3800E50926 /* ProductReviewViewController.swift in Sources */,
 				26AFB3931B79DD9100E50926 /* XibHelper.swift in Sources */,
@@ -692,6 +699,7 @@
 				0C9937401B750583000D6074 /* HomePageProductModel.swift in Sources */,
 				26AFB3B71B79DE3800E50926 /* ProductAttributeViewController.swift in Sources */,
 				26AFB3AD1B79DE2900E50926 /* ReviewTableViewCell.swift in Sources */,
+				0C329E751B7B2D32005BE2B6 /* RegisterModel.swift in Sources */,
 				0C99374B1B750583000D6074 /* HomePageCollectionViewLayout.swift in Sources */,
 				0C9937451B750583000D6074 /* DiscountLabel.swift in Sources */,
 				26AFB3AB1B79DE2900E50926 /* ProductReviewFooterView.swift in Sources */,
