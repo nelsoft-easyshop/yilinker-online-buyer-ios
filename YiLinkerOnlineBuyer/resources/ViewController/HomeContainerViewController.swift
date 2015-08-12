@@ -67,7 +67,25 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate 
             animatedViewController!.providesPresentationContextTransitionStyle = true
             animatedViewController!.definesPresentationContext = true
             animatedViewController!.view.backgroundColor = UIColor.clearColor()
-            //self.presentViewController(animatedViewController!, animated: false, completion: nil)
+            
+            if SessionManager.accessToken() != "" {
+                var buttonImages: [String] = ["help", "following", "message", "customize-shopping", "promo", "category", SessionManager.profileImageStringUrl()]
+                var buttonTitles: [String] = ["HELP", "FOLLOWED SELLER", "MESSAGING", "CUSTOMIZE SHOPPING", "TODAY'S PROMO", "CATEGORIES", "LOGOUT"]
+                var buttonRightText: [String] = ["", "", "You have 1 unread message", "", "", "", "Jessica Joe \nMetro Manila, City"]
+                
+                animatedViewController?.buttonImages = buttonImages
+                animatedViewController?.buttonTitles = buttonTitles
+                animatedViewController?.buttonRightText = buttonRightText
+            } else {
+                var buttonImages: [String] = ["help", "register", "sign_in", "message","customize-shopping", "promo", "category"]
+                var buttonTitles: [String] = ["HELP", "REGISTER", "SIGN IN", "MESSAGING", "CUSTOMIZE SHOPPING", "TODAYS PROMO", "CATEGORIES"]
+                var buttonRightText: [String] = ["", "", "Must be Sign in", "Must be Sign in", "", "", ""]
+                
+                animatedViewController?.buttonImages = buttonImages
+                animatedViewController?.buttonTitles = buttonTitles
+                animatedViewController?.buttonRightText = buttonRightText
+            }
+            
             self.tabBarController?.presentViewController(animatedViewController!, animated: false, completion: nil)
             
             return false
