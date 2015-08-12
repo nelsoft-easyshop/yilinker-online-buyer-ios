@@ -38,7 +38,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="122.5" y="-279.5"/>
+            <point key="canvasLocation" x="-7.5" y="-502.5"/>
         </scene>
         <!--Home Page Collection View Controller-->
         <scene sceneID="zcW-qI-wkN">
@@ -80,10 +80,11 @@
             </objects>
             <point key="canvasLocation" x="719.5" y="637.5"/>
         </scene>
-        <!--Cart View Controller-->
+        <!--View Controller-->
         <scene sceneID="ZFY-xj-sOF">
             <objects>
-                <viewController id="bFy-Zg-Ywq" customClass="CartViewController" customModule="YiLinkerOnlineBuyer" customModuleProvider="target" sceneMemberID="viewController">
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wod-ZN-7lU" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <viewController id="bFy-Zg-Ywq" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="M8v-fe-xRD"/>
                         <viewControllerLayoutGuide type="bottom" id="Zsi-fO-TMG"/>
@@ -96,9 +97,8 @@
                     <tabBarItem key="tabBarItem" title="" id="zVu-wm-JX2"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="wod-ZN-7lU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-471" y="556"/>
+            <point key="canvasLocation" x="-487" y="638"/>
         </scene>
         <!--Circular Menu View Controller-->
         <scene sceneID="eDJ-1Z-hqC">
@@ -207,14 +207,20 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vgh-W9-rFp">
                                 <rect key="frame" x="0.0" y="548" width="375" height="70"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Total" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R5e-rH-Gus">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Total" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R5e-rH-Gus">
                                         <rect key="frame" x="8" y="12" width="185" height="21"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="21" id="TR4-in-OcC"/>
+                                        </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d0X-nt-S88">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d0X-nt-S88">
                                         <rect key="frame" x="8" y="26" width="185" height="21"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="21" id="xPV-Ke-tb0"/>
+                                        </constraints>
                                         <attributedString key="attributedText">
                                             <fragment content="PRICE">
                                                 <attributes>
@@ -226,9 +232,13 @@
                                         </attributedString>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="fill" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QsH-XS-WrT" customClass="SemiRoundedButton" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="fill" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QsH-XS-WrT" customClass="SemiRoundedButton" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
                                         <rect key="frame" x="201" y="12" width="166" height="45"/>
                                         <color key="backgroundColor" red="0.2666666667" green="0.64313725489999995" blue="0.56862745100000001" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="166" id="3MF-6A-4Sd"/>
+                                            <constraint firstAttribute="height" constant="45" id="epZ-WG-XpK"/>
+                                        </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <state key="normal" title="CHECKOUT">
                                             <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -247,6 +257,14 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="70" id="1Jk-CK-SpD"/>
+                                    <constraint firstItem="d0X-nt-S88" firstAttribute="leading" secondItem="vgh-W9-rFp" secondAttribute="leading" constant="8" id="1vh-bb-ZCc"/>
+                                    <constraint firstAttribute="bottom" secondItem="d0X-nt-S88" secondAttribute="bottom" constant="23" id="6Ck-Pq-mDP"/>
+                                    <constraint firstItem="QsH-XS-WrT" firstAttribute="leading" secondItem="R5e-rH-Gus" secondAttribute="trailing" constant="8" id="Ajo-oc-gGs"/>
+                                    <constraint firstItem="R5e-rH-Gus" firstAttribute="leading" secondItem="vgh-W9-rFp" secondAttribute="leading" constant="8" id="Orj-AU-cVb"/>
+                                    <constraint firstAttribute="bottom" secondItem="QsH-XS-WrT" secondAttribute="bottom" constant="13" id="OuD-Wl-Ntv"/>
+                                    <constraint firstItem="QsH-XS-WrT" firstAttribute="leading" secondItem="d0X-nt-S88" secondAttribute="trailing" constant="8" id="TnA-2L-bnz"/>
+                                    <constraint firstAttribute="bottom" secondItem="R5e-rH-Gus" secondAttribute="bottom" constant="37" id="xRg-Sl-PaV"/>
+                                    <constraint firstAttribute="trailing" secondItem="QsH-XS-WrT" secondAttribute="trailing" constant="8" id="xoa-cn-2mu"/>
                                 </constraints>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" style="plain" allowsSelection="NO" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="mFe-cC-ywX">
@@ -279,7 +297,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GUq-0F-wQx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1027.5" y="1456.5"/>
+            <point key="canvasLocation" x="-367.5" y="1480.5"/>
         </scene>
         <!--Home-->
         <scene sceneID="f5o-jU-cQQ">
@@ -300,7 +318,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="O25-nE-cX7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-286.5" y="-258.5"/>
+            <point key="canvasLocation" x="-492.5" y="-502.5"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="rTh-Px-Dxx">
@@ -329,371 +347,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Dk7-r5-vq0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1173" y="-287"/>
-        </scene>
-        <!--Circular Menu View Controller-->
-        <scene sceneID="Psd-QN-Fy7">
-            <objects>
-                <viewController storyboardIdentifier="CircularMenuViewController4s" id="kP6-h1-puC" customClass="CircularMenuViewController" customModule="YiLinkerOnlineBuyer" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="sUt-Aq-XBH"/>
-                        <viewControllerLayoutGuide type="bottom" id="mfo-a5-Hjc"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="IYH-FM-Fh4">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <view alpha="0.60000002384185791" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NAY-fm-LVK">
-                                <rect key="frame" x="-34" y="-100" width="387" height="681"/>
-                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                            </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9PW-oW-TSH" customClass="RoundedButton" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
-                                <rect key="frame" x="142" y="433" width="39" height="39"/>
-                                <color key="backgroundColor" red="0.89631470960000004" green="0.029226388759999999" blue="0.12704667019999999" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="39" id="cdu-mr-cgY"/>
-                                    <constraint firstAttribute="height" constant="39" id="fox-Wn-4xH"/>
-                                </constraints>
-                                <state key="normal" title="x">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="1"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <action selector="closeCircularMenuView:" destination="NQ4-pz-ScH" eventType="touchUpInside" id="JaL-5V-TlJ"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KZT-Rk-kIh" customClass="RoundedButton" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
-                                <rect key="frame" x="136" y="375" width="50" height="50"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="S5f-9E-0vX"/>
-                                    <constraint firstAttribute="width" constant="50" id="fQ0-JK-L05"/>
-                                </constraints>
-                                <state key="normal" backgroundImage="help">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="1"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <action selector="helpAction:" destination="NQ4-pz-ScH" eventType="touchUpInside" id="mav-FB-aTX"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DZK-Vu-AFn" customClass="RoundedButton" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
-                                <rect key="frame" x="135" y="317" width="50" height="50"/>
-                                <color key="backgroundColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="TFe-E3-Lak"/>
-                                    <constraint firstAttribute="width" constant="50" id="Z3T-4j-bcT"/>
-                                </constraints>
-                                <state key="normal" title="x">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="1"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <action selector="followedSellerAction:" destination="NQ4-pz-ScH" eventType="touchUpInside" id="OIs-4d-7Ps"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L1y-AP-Jya" customClass="RoundedButton" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
-                                <rect key="frame" x="136" y="259" width="50" height="50"/>
-                                <color key="backgroundColor" red="0.13315701269999999" green="0.4452507201" blue="0.77138573229999996" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="43r-p3-3hR"/>
-                                    <constraint firstAttribute="width" constant="50" id="miT-Yl-cMh"/>
-                                </constraints>
-                                <state key="normal" title="x">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="1"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <action selector="messagingAction:" destination="NQ4-pz-ScH" eventType="touchUpInside" id="N7B-oG-cUr"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WGQ-Sj-e89" customClass="RoundedButton" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
-                                <rect key="frame" x="136" y="201" width="50" height="50"/>
-                                <color key="backgroundColor" red="1" green="0.23568081560000001" blue="0.22770982479999999" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="50" id="fg5-ye-14q"/>
-                                    <constraint firstAttribute="height" constant="50" id="wli-ym-jXV"/>
-                                </constraints>
-                                <state key="normal" title="x">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="1"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <action selector="customizeAction:" destination="NQ4-pz-ScH" eventType="touchUpInside" id="7ZK-sO-V9l"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AhS-Ar-2AQ" customClass="RoundedButton" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
-                                <rect key="frame" x="135" y="143" width="50" height="50"/>
-                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="50" id="Akz-Yi-JD0"/>
-                                    <constraint firstAttribute="height" constant="50" id="pdG-gF-JnY"/>
-                                </constraints>
-                                <state key="normal" title="x">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="1"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <action selector="todaysPromoAction:" destination="NQ4-pz-ScH" eventType="touchUpInside" id="Iyr-y5-Oap"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zu8-aZ-RcK" customClass="RoundedButton" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
-                                <rect key="frame" x="135" y="85" width="50" height="50"/>
-                                <color key="backgroundColor" red="0.37647058820000001" green="0.1215686275" blue="0.46666666670000001" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="50" id="PT5-uf-Nsa"/>
-                                    <constraint firstAttribute="height" constant="50" id="wQh-Oy-Hpz"/>
-                                </constraints>
-                                <state key="normal" title="x">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="1"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <action selector="categoriesAction:" destination="NQ4-pz-ScH" eventType="touchUpInside" id="CJO-iB-ovQ"/>
-                                </connections>
-                            </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cute" translatesAutoresizingMaskIntoConstraints="NO" id="jju-d2-yOc" customClass="RoundedImageView" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
-                                <rect key="frame" x="133" y="22" width="55" height="55"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="55" id="6AX-fk-wF3"/>
-                                    <constraint firstAttribute="height" constant="55" id="c9B-iB-2uF"/>
-                                </constraints>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="1"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                            </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Help" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="6" translatesAutoresizingMaskIntoConstraints="NO" id="8Uw-fv-eWp" customClass="RoundedLabel" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
-                                <rect key="frame" x="35" y="389" width="92" height="21"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="21" id="8x0-q6-5iZ"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="11"/>
-                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="1"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="FOLLOWED SELLER" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="6" translatesAutoresizingMaskIntoConstraints="NO" id="5nc-w0-Yv6" customClass="RoundedLabel" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
-                                <rect key="frame" x="11" y="331" width="116" height="21"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="21" id="fjR-wp-YL9"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="9"/>
-                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="1"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MESSAGING" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="6" translatesAutoresizingMaskIntoConstraints="NO" id="doC-vu-PDh" customClass="RoundedLabel" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
-                                <rect key="frame" x="11" y="273" width="116" height="21"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="21" id="qK4-Uv-C3Y"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="10"/>
-                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="1"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CUSTOMIZE SHOPPING" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="6" translatesAutoresizingMaskIntoConstraints="NO" id="RAF-vP-Oew" customClass="RoundedLabel" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
-                                <rect key="frame" x="16" y="215" width="111" height="21"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="21" id="IQa-5w-Sxp"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="8"/>
-                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="1"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TODAY'S PROMO" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="6" translatesAutoresizingMaskIntoConstraints="NO" id="jqa-jU-9cx" customClass="RoundedLabel" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
-                                <rect key="frame" x="11" y="157" width="116" height="21"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="21" id="RLt-03-355"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="10"/>
-                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="1"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CATEGORIES" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="6" translatesAutoresizingMaskIntoConstraints="NO" id="c9x-R5-7EQ" customClass="RoundedLabel" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
-                                <rect key="frame" x="35" y="99" width="92" height="21"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="21" id="ype-Lj-opJ"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="10"/>
-                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="1"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j2y-Zs-Nqh" customClass="SemiRoundedButton" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
-                                <rect key="frame" x="28" y="42" width="97" height="31"/>
-                                <color key="backgroundColor" red="0.89631470960000004" green="0.029226388759999999" blue="0.12704667019999999" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="31" id="LBB-1l-oy8"/>
-                                </constraints>
-                                <state key="normal" title="Logout">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="15"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <action selector="logout:" destination="NQ4-pz-ScH" eventType="touchUpInside" id="Kag-TI-mdT"/>
-                                </connections>
-                            </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text="Jessica Joe" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JVg-1r-Qbn">
-                                <rect key="frame" x="201" y="46" width="103" height="21"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="21" id="meG-x6-i2x"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YSB-ja-fo8">
-                                <rect key="frame" x="192" y="271" width="122" height="26"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="26" id="qcA-Y0-wTa"/>
-                                </constraints>
-                                <state key="normal" backgroundImage="popover">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                            </button>
-                        </subviews>
-                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="8Uw-fv-eWp" firstAttribute="leading" secondItem="IYH-FM-Fh4" secondAttribute="leadingMargin" constant="19" id="0lc-8e-HpB"/>
-                            <constraint firstItem="L1y-AP-Jya" firstAttribute="top" secondItem="WGQ-Sj-e89" secondAttribute="bottom" constant="8" id="1hE-DO-iUy"/>
-                            <constraint firstItem="JVg-1r-Qbn" firstAttribute="leading" secondItem="jju-d2-yOc" secondAttribute="trailing" constant="13" id="4YF-ud-quP"/>
-                            <constraint firstItem="doC-vu-PDh" firstAttribute="leading" secondItem="IYH-FM-Fh4" secondAttribute="leadingMargin" constant="-5" id="4kd-37-Sfq"/>
-                            <constraint firstItem="doC-vu-PDh" firstAttribute="top" secondItem="RAF-vP-Oew" secondAttribute="bottom" constant="37" id="55d-O7-Pnx"/>
-                            <constraint firstItem="j2y-Zs-Nqh" firstAttribute="leading" secondItem="IYH-FM-Fh4" secondAttribute="leadingMargin" constant="12" id="7bA-Uh-MfB"/>
-                            <constraint firstItem="DZK-Vu-AFn" firstAttribute="top" secondItem="L1y-AP-Jya" secondAttribute="bottom" constant="8" id="8GD-Hg-yOu"/>
-                            <constraint firstAttribute="centerX" secondItem="zu8-aZ-RcK" secondAttribute="centerX" id="9vy-WH-Wif"/>
-                            <constraint firstAttribute="centerX" secondItem="KZT-Rk-kIh" secondAttribute="centerX" constant="-1" id="9xD-U3-0bw"/>
-                            <constraint firstItem="mfo-a5-Hjc" firstAttribute="top" secondItem="YSB-ja-fo8" secondAttribute="bottom" constant="183" id="AeU-sy-LVR"/>
-                            <constraint firstAttribute="centerX" secondItem="WGQ-Sj-e89" secondAttribute="centerX" constant="-1" id="BJx-eU-aFK"/>
-                            <constraint firstItem="KZT-Rk-kIh" firstAttribute="top" secondItem="DZK-Vu-AFn" secondAttribute="bottom" constant="8" id="D3v-SL-GIE"/>
-                            <constraint firstAttribute="centerX" secondItem="9PW-oW-TSH" secondAttribute="centerX" constant="-1.5" id="DGw-cr-v0u"/>
-                            <constraint firstItem="JVg-1r-Qbn" firstAttribute="trailing" secondItem="IYH-FM-Fh4" secondAttribute="trailingMargin" id="Eqh-Ht-qmC"/>
-                            <constraint firstItem="RAF-vP-Oew" firstAttribute="leading" secondItem="IYH-FM-Fh4" secondAttribute="leadingMargin" id="J0O-bp-4IF"/>
-                            <constraint firstAttribute="centerX" secondItem="AhS-Ar-2AQ" secondAttribute="centerX" id="Jh1-em-EOb"/>
-                            <constraint firstItem="c9x-R5-7EQ" firstAttribute="leading" secondItem="IYH-FM-Fh4" secondAttribute="leadingMargin" constant="19" id="KaZ-Lq-hkO"/>
-                            <constraint firstItem="8Uw-fv-eWp" firstAttribute="top" secondItem="5nc-w0-Yv6" secondAttribute="bottom" constant="37" id="Ldl-Rz-rvA"/>
-                            <constraint firstAttribute="centerX" secondItem="DZK-Vu-AFn" secondAttribute="centerX" id="Nxf-sO-CFJ"/>
-                            <constraint firstItem="AhS-Ar-2AQ" firstAttribute="top" secondItem="zu8-aZ-RcK" secondAttribute="bottom" constant="8" id="P6v-k0-7Gk"/>
-                            <constraint firstItem="5nc-w0-Yv6" firstAttribute="top" secondItem="doC-vu-PDh" secondAttribute="bottom" constant="37" id="PVn-Cs-boN"/>
-                            <constraint firstItem="jqa-jU-9cx" firstAttribute="top" secondItem="c9x-R5-7EQ" secondAttribute="bottom" constant="37" id="QgQ-y4-oGM"/>
-                            <constraint firstAttribute="centerX" secondItem="jju-d2-yOc" secondAttribute="centerX" id="SYT-Zk-oMA"/>
-                            <constraint firstItem="mfo-a5-Hjc" firstAttribute="top" secondItem="9PW-oW-TSH" secondAttribute="bottom" constant="8" id="SeQ-VC-6Iz"/>
-                            <constraint firstItem="RAF-vP-Oew" firstAttribute="top" secondItem="jqa-jU-9cx" secondAttribute="bottom" constant="37" id="TNB-Pj-nTN"/>
-                            <constraint firstItem="DZK-Vu-AFn" firstAttribute="leading" secondItem="5nc-w0-Yv6" secondAttribute="trailing" constant="8" id="Wk5-3d-eId"/>
-                            <constraint firstItem="mfo-a5-Hjc" firstAttribute="top" secondItem="8Uw-fv-eWp" secondAttribute="bottom" constant="70" id="avn-4K-akK"/>
-                            <constraint firstItem="WGQ-Sj-e89" firstAttribute="top" secondItem="AhS-Ar-2AQ" secondAttribute="bottom" constant="8" id="b6H-gh-iVd"/>
-                            <constraint firstItem="9PW-oW-TSH" firstAttribute="top" secondItem="KZT-Rk-kIh" secondAttribute="bottom" constant="8" id="bfP-GW-Bxk"/>
-                            <constraint firstItem="zu8-aZ-RcK" firstAttribute="top" secondItem="jju-d2-yOc" secondAttribute="bottom" constant="8" id="gBr-Xt-pc2"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="YSB-ja-fo8" secondAttribute="trailing" constant="-10" id="gq3-P2-MlW"/>
-                            <constraint firstItem="YSB-ja-fo8" firstAttribute="leading" secondItem="L1y-AP-Jya" secondAttribute="trailing" constant="6" id="hgh-ji-J4D"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="NAY-fm-LVK" secondAttribute="trailing" constant="-49" id="jGn-SN-COW"/>
-                            <constraint firstAttribute="bottomMargin" secondItem="NAY-fm-LVK" secondAttribute="bottom" constant="-101" id="jmS-Hm-JGv"/>
-                            <constraint firstItem="NAY-fm-LVK" firstAttribute="leading" secondItem="IYH-FM-Fh4" secondAttribute="leadingMargin" constant="-50" id="lpP-KG-w8a"/>
-                            <constraint firstItem="5nc-w0-Yv6" firstAttribute="leading" secondItem="IYH-FM-Fh4" secondAttribute="leadingMargin" constant="-5" id="pUu-JK-BBc"/>
-                            <constraint firstAttribute="centerX" secondItem="L1y-AP-Jya" secondAttribute="centerX" constant="-1" id="pfu-Qp-vcc"/>
-                            <constraint firstItem="NAY-fm-LVK" firstAttribute="top" secondItem="IYH-FM-Fh4" secondAttribute="topMargin" constant="-100" id="qVo-Bp-IAy"/>
-                            <constraint firstItem="WGQ-Sj-e89" firstAttribute="leading" secondItem="RAF-vP-Oew" secondAttribute="trailing" constant="9" id="tc8-fJ-DEd"/>
-                            <constraint firstItem="JVg-1r-Qbn" firstAttribute="top" secondItem="sUt-Aq-XBH" secondAttribute="bottom" constant="26" id="uyv-p0-ocv"/>
-                            <constraint firstItem="AhS-Ar-2AQ" firstAttribute="leading" secondItem="jqa-jU-9cx" secondAttribute="trailing" constant="8" id="v14-jO-Q5O"/>
-                            <constraint firstItem="KZT-Rk-kIh" firstAttribute="leading" secondItem="8Uw-fv-eWp" secondAttribute="trailing" constant="9" id="vRF-0P-q36"/>
-                            <constraint firstItem="zu8-aZ-RcK" firstAttribute="leading" secondItem="c9x-R5-7EQ" secondAttribute="trailing" constant="8" id="vu2-Pm-Gsp"/>
-                            <constraint firstItem="jju-d2-yOc" firstAttribute="leading" secondItem="j2y-Zs-Nqh" secondAttribute="trailing" constant="8" id="x0Y-02-iex"/>
-                            <constraint firstItem="j2y-Zs-Nqh" firstAttribute="top" secondItem="sUt-Aq-XBH" secondAttribute="bottom" constant="22" id="xAD-dw-KgN"/>
-                            <constraint firstItem="jqa-jU-9cx" firstAttribute="leading" secondItem="IYH-FM-Fh4" secondAttribute="leadingMargin" constant="-5" id="yTW-rG-5nL"/>
-                            <constraint firstItem="L1y-AP-Jya" firstAttribute="leading" secondItem="doC-vu-PDh" secondAttribute="trailing" constant="9" id="zx6-3d-h2C"/>
-                        </constraints>
-                    </view>
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
-                    <connections>
-                        <outlet property="categoryButton" destination="zu8-aZ-RcK" id="XwG-RF-shS"/>
-                        <outlet property="categoryLabel" destination="c9x-R5-7EQ" id="5KD-7A-1cu"/>
-                        <outlet property="customizeShoppingButton" destination="WGQ-Sj-e89" id="3zJ-KC-tb4"/>
-                        <outlet property="customizeShoppingLabel" destination="RAF-vP-Oew" id="eBn-UV-vLP"/>
-                        <outlet property="dimView" destination="NAY-fm-LVK" id="f3L-dt-yoC"/>
-                        <outlet property="followedSellerButton" destination="DZK-Vu-AFn" id="eRT-aJ-plW"/>
-                        <outlet property="followedSellerLabel" destination="5nc-w0-Yv6" id="hss-pT-KQ6"/>
-                        <outlet property="helpButton" destination="KZT-Rk-kIh" id="bdl-xP-JXZ"/>
-                        <outlet property="helpLabel" destination="8Uw-fv-eWp" id="GOK-sb-g7n"/>
-                        <outlet property="logoutSemiRoundedButton" destination="j2y-Zs-Nqh" id="hsU-wq-Ozm"/>
-                        <outlet property="messageTitleButton" destination="YSB-ja-fo8" id="2su-kx-TTs"/>
-                        <outlet property="messagingButton" destination="L1y-AP-Jya" id="hsw-Vs-hQ0"/>
-                        <outlet property="messagingLabel" destination="doC-vu-PDh" id="ay1-D5-YNo"/>
-                        <outlet property="nameLabel" destination="JVg-1r-Qbn" id="mnv-GW-KJa"/>
-                        <outlet property="roundedButton" destination="9PW-oW-TSH" id="q8T-Pg-UxW"/>
-                        <outlet property="roundedProfileImageView" destination="jju-d2-yOc" id="PJm-Ee-51f"/>
-                        <outlet property="todaysPromoButton" destination="AhS-Ar-2AQ" id="MZU-fC-9eM"/>
-                        <outlet property="todaysPromoLabel" destination="jqa-jU-9cx" id="rAy-5d-de0"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="iLa-l1-8PB" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="3003" y="1610"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="e6f-rk-0e4">
@@ -756,16 +409,13 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5rN-bZ-2b1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1505" y="1417"/>
+            <point key="canvasLocation" x="-895" y="1425"/>
         </scene>
     </scenes>
     <resources>
         <image name="cart" width="25" height="25"/>
         <image name="close" width="22" height="22"/>
-        <image name="cute" width="1280" height="800"/>
-        <image name="help" width="70" height="70"/>
         <image name="home" width="25" height="25"/>
-        <image name="popover" width="243" height="46"/>
         <image name="wishlist" width="25" height="25"/>
     </resources>
 </document>
