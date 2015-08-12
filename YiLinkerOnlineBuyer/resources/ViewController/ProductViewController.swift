@@ -344,7 +344,8 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         attributeModal.view.frame.origin.y = attributeModal.view.frame.size.height
         attributeModal.passModel(productDetailsModel: productDetailsModel, combinationModel: productDetailsModel.combinations, selectedValue: selectedValue)
         attributeModal.showCartCheckout(bool, title: title)
-        self.navigationController?.presentViewController(attributeModal, animated: true, completion: nil)
+//        self.navigationController?.presentViewController(attributeModal, animated: true, completion: nil)
+        self.tabBarController?.presentViewController(attributeModal, animated: true, completion: nil)
         
         UIView.animateWithDuration(0.3, animations: {
             self.dimView.alpha = 0.5
@@ -356,7 +357,8 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     func seeMoreDescription(controller: ProductDescriptionView) {
         let description = ProductDescriptionViewController(nibName: "ProductDescriptionViewController", bundle: nil)
         description.url = self.productDetailsModel.fullDescription
-        self.presentViewController(description, animated: true, completion: nil)
+//        self.presentViewController(description, animated: true, completion: nil)
+        self.tabBarController?.presentViewController(description, animated: true, completion: nil)
     }
     
     func seeMoreReview(controller: ProductReviewFooterView) {
@@ -368,7 +370,8 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         reviewModal.view.backgroundColor = UIColor.clearColor()
         reviewModal.view.frame.origin.y = reviewModal.view.frame.size.height
         reviewModal.passModel(self.productReviewModel)
-        self.navigationController?.presentViewController(reviewModal, animated: true, completion: nil)
+//        self.navigationController?.presentViewController(reviewModal, animated: true, completion: nil)
+        self.tabBarController?.presentViewController(reviewModal, animated: true, completion: nil)
         
         UIView.animateWithDuration(0.3, animations: {
             self.dimView.alpha = 0.5
