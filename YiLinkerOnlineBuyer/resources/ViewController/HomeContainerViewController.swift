@@ -8,7 +8,7 @@
 
 import UIKit
 
-class HomeContainerViewController: UIViewController, UITabBarControllerDelegate {
+class HomeContainerViewController: UIViewController, UITabBarControllerDelegate, EmptyViewDelegate {
     
     @IBOutlet weak var contentView: UIView!
     
@@ -34,11 +34,26 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate 
     
     var featuredViewLoadData: Bool = false
     
+    var emptyView: EmptyView?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        circularDraweView()
+        self.circularDraweView()
         self.tabBarController!.delegate = self
+        self.addSuHeaderScrollView()
+        if Reachability.isConnectedToNetwork() {
+            self.fireGetHomePageData()
+        } else {
+            self.addEmptyView()
+        }
     }
+    
+    func addEmptyView() {
+        self.emptyView = UIView.loadFromNibNamed("EmptyView", bundle: nil) as? EmptyView
+        self.emptyView!.delegate = self
+        self.view.addSubview(self.emptyView!)
+    }
+    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -47,10 +62,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate 
     
     override func viewDidLayoutSubviews() {
         contentViewFrame = contentView.bounds
-        if self.viewControllers.count == 0 {
-            addSuHeaderScrollView()
-            self.fireGetHomePageData()
-        }
+       
     }
     
     func tabBarController(tabBarController: UITabBarController, shouldSelectViewController viewController: UIViewController) -> Bool {
@@ -190,13 +202,17 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate 
     }
     
     func fireGetHomePageData() {
+        SVProgressHUD.show()
+        SVProgressHUD.setBackgroundColor(UIColor.whiteColor())
         let manager = APIManager.sharedInstance
-        manager.GET("http://online.api.easydeal.ph/content/home/mobile?access_token=MTc3YTA0YmY0YjUxMGVkY2I3Y2VhOGE3YTU0NDU3YzJkMWVmNmJjZTQ0MTkzMDlmMmU4MGIxNTI0NDJlNGFmZg", parameters: nil, success: {
+        manager.GET("http://demo5885209.mockable.io/api/v1/home/getItems", parameters: nil, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
                 self.populateHomePageWithDictionary(responseObject as! NSDictionary)
+            SVProgressHUD.dismiss()
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                
+                SVProgressHUD.dismiss()
+                self.addEmptyView()
         })
 
     }
@@ -253,5 +269,10 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate 
         viewControllers.append(sellersCollectionViewController!)
         
         setSelectedViewControllerWithIndex(self.curentCollectionViewController)
+    }
+    
+    func didTapReload() {
+        self.fireGetHomePageData()
+        self.emptyView?.removeFromSuperview()
     }
 }
