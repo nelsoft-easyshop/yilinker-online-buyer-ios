@@ -65,6 +65,8 @@
 		0C99376E1B750583000D6074 /* ViewMoreFooterCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C9937371B750583000D6074 /* ViewMoreFooterCollectionViewCell.xib */; };
 		0C9937711B75063B000D6074 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C9937701B75063B000D6074 /* AppDelegate.swift */; };
 		259317CFB9AE0C865DD7552C /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 10E5F5EBAF8BF56A3DD642A2 /* libPods.a */; };
+		964F38D51B7A04F40071B74B /* SearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 964F38D41B7A04F40071B74B /* SearchTableViewCell.swift */; };
+		96892E2B1B7AF75300AAAD48 /* DummyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96892E2A1B7AF75300AAAD48 /* DummyViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -142,6 +144,8 @@
 		0C9937701B75063B000D6074 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		10E5F5EBAF8BF56A3DD642A2 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		9140515446F9D97EC8790C7B /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		964F38D41B7A04F40071B74B /* SearchTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SearchTableViewCell.swift; path = YiLinkerOnlineBuyer/resources/View/SearchTableViewCell.swift; sourceTree = SOURCE_ROOT; };
+		96892E2A1B7AF75300AAAD48 /* DummyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DummyViewController.swift; path = YiLinkerOnlineBuyer/resources/ViewController/DummyViewController.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -298,6 +302,7 @@
 				0C99371F1B750583000D6074 /* TwoColumnGridCollectionViewCell.swift */,
 				0C9937201B750583000D6074 /* VerticalImageCollectionViewCell.swift */,
 				0C9937211B750583000D6074 /* ViewMoreFooterCollectionViewCell.swift */,
+				964F38D41B7A04F40071B74B /* SearchTableViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -311,6 +316,7 @@
 				0C9937261B750583000D6074 /* HomePageCollectionViewController.swift */,
 				0C9937271B750583000D6074 /* SearchViewController.swift */,
 				0C9937281B750583000D6074 /* WishlistViewController.swift */,
+				96892E2A1B7AF75300AAAD48 /* DummyViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -532,7 +538,9 @@
 				0C9937421B750583000D6074 /* SellerModel.swift in Sources */,
 				0C9937531B750583000D6074 /* RoundedImageView.swift in Sources */,
 				0C99373E1B750583000D6074 /* ParseLocalJSON.swift in Sources */,
+				964F38D51B7A04F40071B74B /* SearchTableViewCell.swift in Sources */,
 				0C99374D1B750583000D6074 /* NewSellerCollectionViewCell.swift in Sources */,
+				96892E2B1B7AF75300AAAD48 /* DummyViewController.swift in Sources */,
 				0C99373D1B750583000D6074 /* IPhoneType.swift in Sources */,
 				0C9937511B750583000D6074 /* ProductWithCenterNameCollectionViewCell.swift in Sources */,
 				0C9937401B750583000D6074 /* HomePageProductModel.swift in Sources */,
