@@ -26,7 +26,10 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, GIDSignIn
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
-        self.done()
+        
+        if self.parentViewController!.isKindOfClass(LoginAndRegisterContentViewController) {
+            self.done()
+        }
     }
     
     override func viewDidLoad() {
@@ -273,34 +276,42 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, GIDSignIn
     }
     
     func adjustTextFieldYInsetWithInset(inset: CGFloat) {
-        UIView.animateWithDuration(0.5, delay: 0.0, options: nil, animations: {
+        if self.parentViewController!.isKindOfClass(LoginAndRegisterContentViewController) {
+            UIView.animateWithDuration(0.5, delay: 0.0, options: nil, animations: {
                 let parentViewController: LoginAndRegisterContentViewController = self.parentViewController as! LoginAndRegisterContentViewController
                 parentViewController.verticalSpaceConstraint.constant = inset
                 self.parentViewController!.view.layoutIfNeeded()
-            }, completion: {(value: Bool) in
-                
-        })
+                }, completion: {(value: Bool) in
+                    
+            })
+        }
     }
     
     func hideCloseButton() {
-        UIView.animateWithDuration(0.3, delay: 0.0, options: nil, animations: {
+        if self.parentViewController!.isKindOfClass(LoginAndRegisterContentViewController) {
+            UIView.animateWithDuration(0.3, delay: 0.0, options: nil, animations: {
                 let parentViewController: LoginAndRegisterContentViewController = self.parentViewController as! LoginAndRegisterContentViewController
                 parentViewController.closeButton.alpha = 0
-            }, completion: {(value: Bool) in
-                
-        })
+                }, completion: {(value: Bool) in
+                    
+            })
+        }
+       
     }
     
     func showCloseButton() {
-        UIView.animateWithDuration(0.3, delay: 0.0, options: nil, animations: {
-            let parentViewController: LoginAndRegisterContentViewController = self.parentViewController as! LoginAndRegisterContentViewController
-            parentViewController.closeButton.alpha = 1
-            }, completion: {(value: Bool) in
-                
-        })
+        if self.parentViewController!.isKindOfClass(LoginAndRegisterContentViewController) {
+            UIView.animateWithDuration(0.3, delay: 0.0, options: nil, animations: {
+                let parentViewController: LoginAndRegisterContentViewController = self.parentViewController as! LoginAndRegisterContentViewController
+                parentViewController.closeButton.alpha = 1
+                }, completion: {(value: Bool) in
+                    
+            })
+        }
     }
     
     func getProfileImage(userID: String) {
         SessionManager.setProfileImage("http://graph.facebook.com/\(userID)/picture?type=large")
     }
+    
 }

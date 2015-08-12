@@ -80,25 +80,40 @@
             </objects>
             <point key="canvasLocation" x="719.5" y="637.5"/>
         </scene>
-        <!--View Controller-->
+        <!--Hidden View Controller-->
         <scene sceneID="ZFY-xj-sOF">
             <objects>
-                <viewController id="bFy-Zg-Ywq" sceneMemberID="viewController">
+                <viewController id="bFy-Zg-Ywq" customClass="HiddenViewController" customModule="YiLinkerOnlineBuyer" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="M8v-fe-xRD"/>
                         <viewControllerLayoutGuide type="bottom" id="Zsi-fO-TMG"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="a66-Cj-ZsM">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="baG-73-DIM">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="baG-73-DIM" firstAttribute="top" secondItem="a66-Cj-ZsM" secondAttribute="top" id="44d-Nf-H4K"/>
+                            <constraint firstItem="baG-73-DIM" firstAttribute="leading" secondItem="a66-Cj-ZsM" secondAttribute="leading" id="vRY-d6-AcU"/>
+                            <constraint firstAttribute="bottom" secondItem="baG-73-DIM" secondAttribute="bottom" id="xSF-hG-D32"/>
+                            <constraint firstAttribute="trailing" secondItem="baG-73-DIM" secondAttribute="trailing" id="yNH-ZA-PDN"/>
+                        </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="" id="zVu-wm-JX2"/>
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                    <connections>
+                        <outlet property="contentView" destination="baG-73-DIM" id="vnr-bB-HjA"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wod-ZN-7lU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-487" y="638"/>
+            <point key="canvasLocation" x="-320" y="611"/>
         </scene>
         <!--Circular Menu View Controller-->
         <scene sceneID="eDJ-1Z-hqC">
@@ -358,10 +373,10 @@
             </objects>
             <point key="canvasLocation" x="-492.5" y="-502.5"/>
         </scene>
-        <!--Tab Bar Controller-->
+        <!--Custom Tab Bar Controller-->
         <scene sceneID="rTh-Px-Dxx">
             <objects>
-                <tabBarController storyboardIdentifier="TabBarController" id="tG5-US-oYc" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="TabBarController" id="tG5-US-oYc" customClass="CustomTabBarController" customModule="YiLinkerOnlineBuyer" customModuleProvider="target" sceneMemberID="viewController">
                     <nil key="simulatedBottomBarMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="zzA-Wf-dpj">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>

@@ -21,21 +21,45 @@ class LoginAndRegisterContentViewController: UIViewController {
     var loginViewController: LoginViewController?
     var registerViewController: RegisterViewController?
     
+    var isFromDrawer: Bool = false
+    
     @IBOutlet weak var logoWidthConstraint: NSLayoutConstraint!
     @IBOutlet weak var logoHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var verticalSpaceConstraint: NSLayoutConstraint!
     
+    var defaultViewControllerIndex: Int = 0
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        if self.registerViewController != nil {
+            self.setSelectedViewControllerWithIndex(self.defaultViewControllerIndex)
+            if self.defaultViewControllerIndex == 0 {
+                self.signIn(self.signInButton)
+            } else {
+                self.register(self.registerButton)
+            }
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.initViewControllers()
-        self.setSelectedViewControllerWithIndex(0)
-
+        
+        self.setSelectedViewControllerWithIndex(self.defaultViewControllerIndex)
         if IphoneType.isIphone4() {
-            self.logoHeightConstraint.constant = 50
-            self.logoWidthConstraint.constant = 50
+            if self.logoWidthConstraint != nil {
+                self.logoHeightConstraint.constant = 50
+                self.logoWidthConstraint.constant = 50
+            }
         }
         
-
+        if self.defaultViewControllerIndex == 0 {
+            self.signIn(self.signInButton)
+        } else {
+            self.register(self.registerButton)
+        }
+        
+        
     }
     
     override func viewDidLayoutSubviews() {

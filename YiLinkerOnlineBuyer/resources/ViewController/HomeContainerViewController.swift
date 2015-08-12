@@ -13,8 +13,6 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     @IBOutlet weak var contentView: UIView!
     
     let viewControllerIndex = 0
-    
-    var homePageCollectionViewController: HomePageCollectionViewController?
     var searchViewContoller: SearchViewController?
     var circularMenuViewController: CircularMenuViewController?
     var wishlisViewController: WishlistViewController?
@@ -32,12 +30,15 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     
     var curentCollectionViewController: Int = 0
     
-    var featuredViewLoadData: Bool = false
-    
     var emptyView: EmptyView?
+    
+    var customTabBarController: CustomTabBarController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        //set customTabbar
+        self.customTabBarController = self.tabBarController as? CustomTabBarController
+        self.customTabBarController?.isValidToSwitchToMenuTabBarItems = false
         self.circularDraweView()
         self.tabBarController!.delegate = self
         self.addSuHeaderScrollView()
@@ -68,7 +69,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     func tabBarController(tabBarController: UITabBarController, shouldSelectViewController viewController: UIViewController) -> Bool {
         if self != viewController && viewController != tabBarController.viewControllers![2] as! UIViewController {
             return true
-        } else {
+        } else if self.customTabBarController?.isValidToSwitchToMenuTabBarItems != true {
             let storyBoard: UIStoryboard = UIStoryboard(name: "HomeStoryBoard", bundle: nil)
             var animatedViewController: CircularMenuViewController?
             animatedViewController  = storyBoard.instantiateViewControllerWithIdentifier("CircularMenuViewController") as? CircularMenuViewController
@@ -94,10 +95,12 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                 animatedViewController?.buttonTitles = buttonTitles
                 animatedViewController?.buttonRightText = buttonRightText
             }
-            
+            animatedViewController?.customTabBarController = self.customTabBarController!
             self.tabBarController?.presentViewController(animatedViewController!, animated: false, completion: nil)
-            
             return false
+        } else {
+            
+            return true
         }
         
     }
