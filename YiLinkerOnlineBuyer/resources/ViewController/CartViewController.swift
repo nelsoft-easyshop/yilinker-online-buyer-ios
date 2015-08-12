@@ -32,6 +32,8 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
         cartTableView.delegate = self
         cartTableView.dataSource = self
         
+        cartTableView.tableFooterView = UIView()
+        
         var nib = UINib(nibName: "CartTableViewCell", bundle: nil)
         cartTableView.registerNib(nib, forCellReuseIdentifier: "CartTableViewCell")
         
