@@ -20,7 +20,7 @@ class CartTableViewCell: UITableViewCell, UIScrollViewDelegate {
     
     var isSwipeViewOpen: Bool = false
     
-    let buttonViewWidth: CGFloat = 163          //Button view width
+    let buttonViewWidth: CGFloat = 163         
     let swipeForOptionsCellEnclosingTableViewDidBeginScrollingNotification: String = "SwipeForOptionsCellEnclosingTableViewDidBeginScrollingNotification"
     
     @IBOutlet weak var cellScrollView: UIScrollView!
@@ -141,8 +141,6 @@ class CartTableViewCell: UITableViewCell, UIScrollViewDelegate {
         if scrollView.contentOffset.x < 0 {
             scrollView.contentOffset = CGPointZero
         }
-        //cellButtonView.frame = CGRectMake(scrollView.contentOffset.x + (CGRectGetWidth(self.bounds) - buttonViewWidth), 0.0, buttonViewWidth, CGRectGetHeight(self.bounds))
-        
     }
     
     func scrollViewWillEndDragging(scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
