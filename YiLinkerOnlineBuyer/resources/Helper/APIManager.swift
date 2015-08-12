@@ -14,7 +14,7 @@ struct APIEnvironment {
     
     static func baseUrl() -> String {
         if development {
-            return "http://online.api.easydeal.ph"
+            return "http://online.api.easydeal.ph/api/v1"
         } else if staging {
             return ""
         } else  {
@@ -25,7 +25,8 @@ struct APIEnvironment {
 
 struct APIAtlas {
     
-    static let loginUrl = "api/v1/login"
+    static let loginUrl = "login"
+    static let registerUrl = "user/register"
     static let baseUrl = APIEnvironment.baseUrl()
     static let productPageUrl = ""
 }
