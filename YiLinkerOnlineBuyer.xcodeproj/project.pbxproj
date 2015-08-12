@@ -105,6 +105,7 @@
 		26AFB3CB1B79DE5C00E50926 /* ProductSellerViewCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26AFB3C71B79DE5C00E50926 /* ProductSellerViewCollectionViewCell.xib */; };
 		797D490F1B7A509300617F6B /* CartTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797D490E1B7A509300617F6B /* CartTableViewCell.swift */; };
 		797D49111B7A50BA00617F6B /* CartTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 797D49101B7A50BA00617F6B /* CartTableViewCell.xib */; };
+		B01A2CC32988CDE866ACAB7A /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D31E898308E33AE05EA53AC /* libPods.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -219,6 +220,7 @@
 		26AFB3C51B79DE5C00E50926 /* ProductAttributeTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProductAttributeTableViewCell.xib; sourceTree = "<group>"; };
 		26AFB3C61B79DE5C00E50926 /* ProductAttributeCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProductAttributeCollectionViewCell.xib; sourceTree = "<group>"; };
 		26AFB3C71B79DE5C00E50926 /* ProductSellerViewCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProductSellerViewCollectionViewCell.xib; sourceTree = "<group>"; };
+		2D31E898308E33AE05EA53AC /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		797D490E1B7A509300617F6B /* CartTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CartTableViewCell.swift; sourceTree = "<group>"; };
 		797D49101B7A50BA00617F6B /* CartTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CartTableViewCell.xib; sourceTree = "<group>"; };
 		9140515446F9D97EC8790C7B /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
@@ -230,6 +232,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				259317CFB9AE0C865DD7552C /* (null) in Frameworks */,
+				B01A2CC32988CDE866ACAB7A /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -477,6 +480,7 @@
 		6E2C7023C2EB23DC920F908B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2D31E898308E33AE05EA53AC /* libPods.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";

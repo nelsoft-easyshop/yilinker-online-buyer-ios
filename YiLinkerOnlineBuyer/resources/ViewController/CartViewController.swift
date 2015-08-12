@@ -10,6 +10,8 @@ import UIKit
 
 class CartViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, CartTableViewCellDelegate {
     
+    let manager = APIManager()
+    
     @IBOutlet var cartTableView: UITableView!
     
     @IBOutlet var totalPriceLabel: UILabel!
@@ -39,6 +41,10 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     @IBAction func buttonClicked(sender: AnyObject) {
+    }
+    
+    func requestProductDetails(url: String, params: NSDictionary!) {
+        
     }
     
     // MARK: Methods Updating Values
