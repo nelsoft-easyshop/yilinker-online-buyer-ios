@@ -18,6 +18,9 @@ class HiddenViewController: UIViewController {
     var todaysPromoViewController: TodaysPromoViewController?
     var categoriesViewController: CategoriesViewController?
     
+    var followedSellerViewController: FollowedSellerViewController?
+    var profileViewController: ProfileViewController?
+    
     var viewControllers = [UIViewController]()
     var contentViewFrame: CGRect?
     
@@ -77,7 +80,21 @@ class HiddenViewController: UIViewController {
     
     func initViews() {
         if SessionManager.isLoggedIn() {
+            self.helpViewController = HelpViewController(nibName: "HelpViewController", bundle: nil)
+            self.followedSellerViewController = FollowedSellerViewController(nibName: "FollowedSellerViewController", bundle: nil)
+            self.messagingViewController = MessagingViewController(nibName: "MessagingViewController", bundle: nil)
+            self.customizeShoppingViewController = CustomizeShoppingViewController(nibName: "CustomizeShoppingViewController", bundle: nil)
+            self.todaysPromoViewController = TodaysPromoViewController(nibName: "TodaysPromoViewController", bundle: nil)
+            self.categoriesViewController = CategoriesViewController(nibName: "CategoriesViewController", bundle: nil)
+            self.profileViewController = ProfileViewController(nibName: "ProfileViewController", bundle: nil)
             
+            self.viewControllers.append(self.helpViewController!)
+            self.viewControllers.append(self.followedSellerViewController!)
+            self.viewControllers.append(self.messagingViewController!)
+            self.viewControllers.append(self.customizeShoppingViewController!)
+            self.viewControllers.append(self.todaysPromoViewController!)
+            self.viewControllers.append(self.categoriesViewController!)
+            self.viewControllers.append(self.profileViewController!)
         } else {
             self.helpViewController = HelpViewController(nibName: "HelpViewController", bundle: nil)
             
