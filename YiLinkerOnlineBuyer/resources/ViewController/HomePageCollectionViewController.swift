@@ -539,21 +539,32 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
             println("Target: \(sellerCollectionViewCell.target)")
             println("Target type: \(sellerCollectionViewCell.targetType)")
         }
+        
+        self.redirectToProductpageWithProductID("1")
     }
     
     func didSelectectCellWithTarget(target: String, targetType: String) {
         println("target: \(target) \ntarget type:\(targetType)")
+        self.redirectToProductpageWithProductID("1")
     }
     
     func didSelectSellerCellWithTarget(target: String, targetType: String) {
         println("target: \(target) \ntarget type:\(targetType)")
+        self.redirectToProductpageWithProductID("1")
     }
     
     func didSelectViewMoreWithtarget(target: String, targetType: String) {
         println("target: \(target) \ntarget type:\(targetType)")
+        self.redirectToProductpageWithProductID("1")
     }
     
     func didSelectProductWithTarget(target: String, targetType: String) {
         println("target: \(target) \ntarget type:\(targetType)")
+        self.redirectToProductpageWithProductID("1")
+    }
+    
+    func redirectToProductpageWithProductID(productID: String) {
+        let productViewController: ProductViewController = ProductViewController(nibName: "ProductViewController", bundle: nil)
+        self.navigationController?.pushViewController(productViewController, animated: true)
     }
 }
