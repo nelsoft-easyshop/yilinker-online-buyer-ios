@@ -17,6 +17,7 @@ class CircularMenuViewController: UIViewController {
     var buttonImages: [String] = []
     var buttonTitles: [String] = []
     var buttonRightText: [String] = []
+    var customTabBarController: CustomTabBarController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -368,7 +369,23 @@ class CircularMenuViewController: UIViewController {
     }
     
     @IBAction func menuClick(sender: UIButton) {
-        println(sender.tag)
+        let index: Int = sender.tag - 1
+        self.customTabBarController?.isValidToSwitchToMenuTabBarItems = true
+        if SessionManager.isLoggedIn() {
+            
+        } else {
+            if index == 0 {
+                
+            }
+        }
+        println(index)
+        self.customTabBarController?.selectedIndex = 2
+        
+        let hiddenViewController: HiddenViewController = self.customTabBarController!.viewControllers![2] as! HiddenViewController
+        hiddenViewController.selectViewControllerAtIndex(index)
+        
+        self.customTabBarController?.isValidToSwitchToMenuTabBarItems = false
+        self.dissmissViewControllerAnimated()
     }
     
 }
