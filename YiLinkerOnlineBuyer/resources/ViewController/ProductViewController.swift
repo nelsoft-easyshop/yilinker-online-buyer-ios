@@ -384,6 +384,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         
         UIView.animateWithDuration(0.3, animations: {
             self.dimView.alpha = 0.5
+            self.dimView.layer.zPosition = 2
             self.view.transform = CGAffineTransformMakeScale(0.92, 0.95)
             self.navigationController?.navigationBar.alpha = 0.0
         })
@@ -410,6 +411,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         
         UIView.animateWithDuration(0.3, animations: {
             self.dimView.alpha = 0.5
+            self.dimView.layer.zPosition = 2
             self.view.transform = CGAffineTransformMakeScale(0.92, 0.93)
             self.navigationController?.navigationBar.alpha = 0.0
         })
@@ -444,6 +446,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         UIView.animateWithDuration(0.3, animations: {
             self.view.transform = CGAffineTransformMakeTranslation(1, 1)
             self.dimView.alpha = 0
+            self.dimView.layer.zPosition = -1
             self.navigationController?.navigationBar.alpha = CGFloat(self.visibility)
         })
     }
@@ -452,6 +455,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         UIView.animateWithDuration(0.3, animations: {
             self.view.transform = CGAffineTransformMakeTranslation(1, 1)
             self.dimView.alpha = 0
+            self.dimView.layer.zPosition = -1
             self.navigationController?.navigationBar.alpha = CGFloat(self.visibility)
         })
     }
@@ -588,7 +592,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     // MARK: Actions
     
     @IBAction func addToCartAction(sender: AnyObject) {
-        seeMoreAttribute(false, title: "ADD TO CART")
+        seeMoreAttribute(true, title: "ADD TO CART")
     }
     
     func buyItNowAction(gesture: UIGestureRecognizer) {

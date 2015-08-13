@@ -26,6 +26,7 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
     @IBOutlet weak var addToCartButton: UIButton!
     @IBOutlet weak var buyItNowView: UIView!
     @IBOutlet weak var cartCheckoutButton: UIButton!
+    @IBOutlet weak var doneButton: UIButton!
     
     var delegate: ProductAttributeViewControllerDelegate?
     
@@ -229,4 +230,10 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
         cartCheckoutButton.hidden = bool
         cartCheckoutButton.setTitle(title, forState: .Normal)
     }
+
+    @IBAction func doneAction(sender: AnyObject) {
+
+    }
+
+    
 }
