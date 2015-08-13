@@ -12,6 +12,7 @@
                 <outlet property="cartCheckoutButton" destination="FCI-XP-LEy" id="3Io-mz-4XR"/>
                 <outlet property="decreaseButton" destination="uIc-uv-kX7" id="gyL-sg-clB"/>
                 <outlet property="dimView" destination="k2O-S7-h4z" id="d7b-38-wAb"/>
+                <outlet property="doneButton" destination="8Qx-pn-leh" id="zyX-BQ-8ck"/>
                 <outlet property="increaseButton" destination="Qyk-Vt-Dnb" id="0gq-CW-AzR"/>
                 <outlet property="nameLabel" destination="BP7-Yr-SBU" id="5YI-4Q-Qzf"/>
                 <outlet property="priceLabel" destination="N2z-E7-mxv" id="gUq-2a-Yda"/>
@@ -55,12 +56,30 @@
                                 <constraint firstAttribute="height" constant="1" id="uCQ-aA-ez7"/>
                             </constraints>
                         </view>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8Qx-pn-leh">
+                            <rect key="frame" x="321" y="5" width="46" height="30"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="30" id="iTi-Cy-LB8"/>
+                                <constraint firstAttribute="width" constant="46" id="lb4-Ir-g8w"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
+                            <state key="normal" title="DONE">
+                                <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="doneAction:" destination="-1" eventType="touchUpInside" id="jBC-Of-Svu"/>
+                            </connections>
+                        </button>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
+                        <constraint firstItem="jmi-ce-V3b" firstAttribute="top" secondItem="8Qx-pn-leh" secondAttribute="bottom" constant="5" id="2Lz-gd-llU"/>
                         <constraint firstItem="dQw-Uh-E2D" firstAttribute="leading" secondItem="kD4-bH-4p0" secondAttribute="leading" constant="8" id="Exp-8J-kIh"/>
                         <constraint firstAttribute="bottom" secondItem="jmi-ce-V3b" secondAttribute="bottom" id="FvE-UU-bRm"/>
                         <constraint firstItem="jmi-ce-V3b" firstAttribute="leading" secondItem="kD4-bH-4p0" secondAttribute="leading" id="TCg-4R-vbb"/>
+                        <constraint firstItem="8Qx-pn-leh" firstAttribute="top" secondItem="kD4-bH-4p0" secondAttribute="top" constant="5" id="aOd-YO-QZw"/>
+                        <constraint firstAttribute="trailing" secondItem="8Qx-pn-leh" secondAttribute="trailing" constant="8" id="h0b-JY-6nW"/>
                         <constraint firstItem="dQw-Uh-E2D" firstAttribute="top" secondItem="kD4-bH-4p0" secondAttribute="top" constant="5" id="hDg-lo-SXL"/>
                         <constraint firstAttribute="trailing" secondItem="jmi-ce-V3b" secondAttribute="trailing" id="qvn-Ta-K8E"/>
                         <constraint firstAttribute="height" constant="41" id="ser-xK-71x"/>
@@ -217,7 +236,7 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iHe-wA-fu5" userLabel="Buttons">
                     <rect key="frame" x="0.0" y="592" width="375" height="75"/>
                     <subviews>
-                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zRo-9M-CKY">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zRo-9M-CKY">
                             <rect key="frame" x="13" y="14" width="166" height="48"/>
                             <color key="backgroundColor" red="0.3803921569" green="0.12549019610000001" blue="0.46666666670000001" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
@@ -233,7 +252,7 @@
                                 <action selector="addToCartAction:" destination="-1" eventType="touchUpInside" id="DEA-RK-ZAT"/>
                             </connections>
                         </button>
-                        <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vdm-Tb-5sF" userLabel="BUY IT NOW">
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vdm-Tb-5sF" userLabel="BUY IT NOW">
                             <rect key="frame" x="196" y="14" width="166" height="48"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="BUY IT NOW  " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9JC-Ma-tek">
