@@ -10,6 +10,7 @@ import UIKit
 
 protocol ProductAttributeViewControllerDelegate {
     func pressedCancelAttribute(controller: ProductAttributeViewController)
+    func pressedDoneAttribute(controller: ProductAttributeViewController)
 }
 
 class ProductAttributeViewController: UIViewController, UITableViewDelegate, ProductAttributeTableViewCellDelegate {
@@ -232,7 +233,11 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
     }
 
     @IBAction func doneAction(sender: AnyObject) {
-
+        println(selectedValue)
+        self.dismissViewControllerAnimated(true, completion: nil)
+        if let delegate = self.delegate {
+            delegate.pressedDoneAttribute(self)
+        }
     }
 
     
