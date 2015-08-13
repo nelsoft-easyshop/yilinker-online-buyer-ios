@@ -29,6 +29,8 @@ class WishlistViewController: UIViewController, UITableViewDelegate, UITableView
         wishlistTableView.delegate = self;
         wishlistTableView.dataSource = self;
         
+        wishlistTableView.tableFooterView = UIView()
+        
         var nib = UINib(nibName: "WishlistTableViewCell", bundle: nil)
         wishlistTableView.registerNib(nib, forCellReuseIdentifier: "WishlistTableViewCell")
         
