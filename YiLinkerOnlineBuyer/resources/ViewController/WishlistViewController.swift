@@ -10,7 +10,7 @@ import UIKit
 
 class WishlistViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, WishlistTableViewCellDelegate {
     
-    let manager = APIManager()
+    let manager = APIManager.sharedInstance
     
     @IBOutlet var wishlistTableView: UITableView!
     
@@ -38,8 +38,6 @@ class WishlistViewController: UIViewController, UITableViewDelegate, UITableView
         
         formatter.minimumFractionDigits = 0
         formatter.maximumFractionDigits = 2
-        
-        populateWishListTableView()
     }
     
     override func didReceiveMemoryWarning() {
@@ -47,35 +45,44 @@ class WishlistViewController: UIViewController, UITableViewDelegate, UITableView
         // Dispose of any resources that can be recreated.
     }
     
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(true)
+        populateWishListTableView()
+    }
+    
     //REST API request
     //
     func fireDeleteCartItem(url: String, params: NSDictionary!) {
+        showLoader()
         manager.DELETE(url, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             print(responseObject as! NSDictionary)
             self.updateCounterLabel()
-            
+            self.dismissLoader()
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 println("failed: \(error)")
+                self.dismissLoader()
         })
     }
     
     func fireAddToßCartItem(url: String, params: NSDictionary!) {
+        showLoader()
         manager.DELETE(url, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             print(responseObject as! NSDictionary)
             self.updateCounterLabel()
+            self.dismissLoader()
             
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 println("failed: \(error)")
+                self.dismissLoader()
         })
     }
     
     func requestProductDetails(url: String, params: NSDictionary!) {
-        SVProgressHUD.show()
-        SVProgressHUD.setBackgroundColor(UIColor.clearColor())
+        showLoader()
         
         manager.GET(url, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
@@ -89,19 +96,29 @@ class WishlistViewController: UIViewController, UITableViewDelegate, UITableView
                 self.wishlistTableView.reloadData()
             }
             self.updateCounterLabel()
-            SVProgressHUD.dismiss()
+            self.dismissLoader()
             
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 println("failed: \(error)")
-                SVProgressHUD.dismiss()
+                self.dismissLoader()
         })
     }
     
     
+    //Loader function
+    func showLoader() {
+        SVProgressHUD.show()
+        SVProgressHUD.setBackgroundColor(UIColor.whiteColor())
+    }
+    
+    func dismissLoader() {
+        SVProgressHUD.dismiss()
+    }
+    
     // MARK: Methods Updating Values
     func populateWishListTableView () {
-        requestProductDetails("http://demo5885209.mockable.io/api/v1/cart/getCart", params: nil)
+        requestProductDetails(APIAtlas.wishlistUrl, params: nil)
     }
     
     func updateCounterLabel() {
@@ -124,7 +141,7 @@ class WishlistViewController: UIViewController, UITableViewDelegate, UITableView
         //Set cell data
         var tempModel: CartModel = tableData[indexPath.row]
         cell.productNameLabel.text = tempModel.productDetails.title
-        //cell.productItemImageView.sd_setImageWithURL(tempModel.productDetails?.a, placeholderImage: <#UIImage!#>)   //no image yet in API
+        cell.productItemImageView.sd_setImageWithURL(tempModel.productDetails.image, placeholderImage: UIImage(named: "dummy-placeholder"))  //no image yet in API
         var tempAttributesText: String = ""
         var tempAttributeId: [Int] = []
         var tempAttributeName: [String] = []
