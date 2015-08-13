@@ -167,13 +167,12 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
         } else if stocks == maximumStock {
             stocksLabel.alpha = 1.0
             disableButton(increaseButton)
-            enableButton(decreaseButton)
         } else if stocks == minimumStock {
             stocksLabel.alpha = 1.0
             disableButton(decreaseButton)
+        } else if stocks > 0 || stocks < maximumStock {
             enableButton(increaseButton)
-        } else {
-            println("----ProductAttributeViewController")
+            enableButton(decreaseButton)
         }
     }
     
