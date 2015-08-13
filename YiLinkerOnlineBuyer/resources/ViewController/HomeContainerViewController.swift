@@ -211,7 +211,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         SVProgressHUD.show()
         SVProgressHUD.setBackgroundColor(UIColor.whiteColor())
         let manager = APIManager.sharedInstance
-        manager.GET("http://demo5885209.mockable.io/api/v1/home/getItems", parameters: nil, success: {
+        manager.GET(APIAtlas.homeUrl, parameters: nil, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
                 self.populateHomePageWithDictionary(responseObject as! NSDictionary)
             SVProgressHUD.dismiss()
