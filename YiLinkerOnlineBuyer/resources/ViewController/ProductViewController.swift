@@ -182,8 +182,8 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         
 //        let close = UIBarButtonItem(image: img.image, style: .Plain, target: self, action: "barCloseAction")
         let close = UIBarButtonItem(barButtonSystemItem: .Stop, target: self, action: "barCloseAction")
-        let wishlist = UIBarButtonItem(image: UIImage(named: "wishlist"), style: .Plain, target: self, action: "barCloseAction")
-        let rate = UIBarButtonItem(image: UIImage(named: "rating"), style: .Plain, target: self, action: "barRatetAction")
+        let wishlist = UIBarButtonItem(image: UIImage(named: "wishlist"), style: .Plain, target: self, action: "barWishlistAction")
+        let rate = UIBarButtonItem(image: UIImage(named: "rating"), style: .Plain, target: self, action: "barRateAction")
         let message = UIBarButtonItem(image: UIImage(named: "msg"), style: .Plain, target: self, action: "barMessageAction")
         let share = UIBarButtonItem(image: UIImage(named: "share"), style: .Plain, target: self, action: "barShareAction")
         var betweenSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Action, target: nil, action: nil)
@@ -384,6 +384,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         
         UIView.animateWithDuration(0.3, animations: {
             self.dimView.alpha = 0.5
+            self.dimView.layer.zPosition = 2
             self.view.transform = CGAffineTransformMakeScale(0.92, 0.95)
             self.navigationController?.navigationBar.alpha = 0.0
         })
@@ -410,6 +411,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         
         UIView.animateWithDuration(0.3, animations: {
             self.dimView.alpha = 0.5
+            self.dimView.layer.zPosition = 2
             self.view.transform = CGAffineTransformMakeScale(0.92, 0.93)
             self.navigationController?.navigationBar.alpha = 0.0
         })
@@ -444,6 +446,15 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         UIView.animateWithDuration(0.3, animations: {
             self.view.transform = CGAffineTransformMakeTranslation(1, 1)
             self.dimView.alpha = 0
+            self.dimView.layer.zPosition = -1
+            self.navigationController?.navigationBar.alpha = CGFloat(self.visibility)
+        })
+    }
+    func pressedDoneAttribute(controller: ProductAttributeViewController) {
+        UIView.animateWithDuration(0.3, animations: {
+            self.view.transform = CGAffineTransformMakeTranslation(1, 1)
+            self.dimView.alpha = 0
+            self.dimView.layer.zPosition = -1
             self.navigationController?.navigationBar.alpha = CGFloat(self.visibility)
         })
     }
@@ -452,6 +463,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         UIView.animateWithDuration(0.3, animations: {
             self.view.transform = CGAffineTransformMakeTranslation(1, 1)
             self.dimView.alpha = 0
+            self.dimView.layer.zPosition = -1
             self.navigationController?.navigationBar.alpha = CGFloat(self.visibility)
         })
     }
@@ -588,7 +600,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     // MARK: Actions
     
     @IBAction func addToCartAction(sender: AnyObject) {
-        seeMoreAttribute(false, title: "ADD TO CART")
+        seeMoreAttribute(true, title: "ADD TO CART")
     }
     
     func buyItNowAction(gesture: UIGestureRecognizer) {
@@ -683,20 +695,20 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         self.navigationController?.popToRootViewControllerAnimated(true)
     }
 
-    func barWishlistction() {
-        println("Wishlist")
+    func barWishlistAction() {
+        showAlert("Wishlist")
     }
 
     func barRateAction() {
-        println("Rate")
+        showAlert("Rate")
     }
 
     func barMessageAction() {
-        println("Message")
+        showAlert("Message")
     }
 
     func barShareAction() {
-        println("Share")
+        showAlert("Share")
     }
     
 }
