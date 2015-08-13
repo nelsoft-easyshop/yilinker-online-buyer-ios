@@ -204,6 +204,18 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
     }
     
     @IBAction func addToCartAction(sender: AnyObject) {
+        
+        let url: String = "api/v1/auth/cart/updateCartItem"
+        
+        let params: NSDictionary = ["accessToken": "access token here",
+                                      "productId": productDetailModel!.title,
+                                         "unitId": "unit id here",
+                                  "combinationId": "combination id here",
+                                       "quantity": "quantity here"]
+        
+        println(params)
+        
+        requestAddCartItem(url, params: params)
     }
     
     @IBAction func cartCheckoutAction(sender: AnyObject) {
@@ -240,5 +252,21 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
         }
     }
 
+    func requestAddCartItem(url: String, params: NSDictionary) {
+        SVProgressHUD.show()
+        let manager = APIManager.sharedInstance
+        
+        manager.GET(APIAtlas.productPageUrl, parameters: params, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            
+            SVProgressHUD.dismiss()
+            println("product success")
+            
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                SVProgressHUD.dismiss()
+                println("product failed")
+        })
+    }
     
 }
