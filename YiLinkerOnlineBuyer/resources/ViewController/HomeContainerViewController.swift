@@ -148,7 +148,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         var xPosition: CGFloat = 10
         var counter = 0
         for title in titles {
-            let button: UIButton = UIButton(frame: CGRectMake(xPosition, 5, 80, 30))
+            let button: UIButton = UIButton(frame: CGRectMake(xPosition, 5, 90, 30))
             button.setTitle(title, forState: UIControlState.Normal)
             button.titleLabel!.font =  UIFont(name: "HelveticaNeue", size: 10)
             button.layer.cornerRadius = 15
@@ -167,7 +167,10 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             counter++
         }
         scrollView.showsHorizontalScrollIndicator = false
-        self.navigationController?.navigationBar.addSubview(scrollView)
+        let navigationSpacer: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
+        navigationSpacer.width = -20
+        
+        self.navigationItem.leftBarButtonItems = [navigationSpacer, UIBarButtonItem(customView: scrollView)]
     }
     
     @IBAction func clickSubCategories(sender: UIButton) {
