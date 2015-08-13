@@ -94,18 +94,19 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         requestProductDetails(productUrl, params: nil)
         requestReviewDetails(reviewUrl, params: nil)
         
-        configureNavigationBar()
-        
         buyItNowView.addGestureRecognizer(tapGesture("buyItNowAction:"))
     }
     
     override func viewWillAppear(animated: Bool) {
-//        self.navigationController?.navigationBarHidden = true
-//        self.navigationController?.navigationBar.alpha = 0
+        configureNavigationBar()
     }
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
+        
+        self.navigationController?.navigationBar.alpha = 1.0
+        self.navigationController?.navigationBar.barTintColor = Constants.Colors.appTheme
+        UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.LightContent
         
         SVProgressHUD.dismiss()
     }
@@ -174,15 +175,16 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     }
     
     func configureNavigationBar() {
-//        self.navigationController?.navigationBar.alpha = 0
-//        self.navigationController?.navigationBar.barTintColor = .whiteColor()
-//        self.navigationController?.navigationBar.tintColor = .grayColor()
+        self.navigationController?.navigationBar.alpha = 0
+        UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.Default
+        self.navigationController?.navigationBar.barTintColor = .whiteColor()
+        self.navigationController?.navigationBar.tintColor = .grayColor()
         
 //        let close = UIBarButtonItem(image: img.image, style: .Plain, target: self, action: "barCloseAction")
-        let close = UIBarButtonItem(barButtonSystemItem: .Stop, target: self, action: "barWishlistAction")
+        let close = UIBarButtonItem(barButtonSystemItem: .Stop, target: self, action: "barCloseAction")
         let wishlist = UIBarButtonItem(image: UIImage(named: "wishlist"), style: .Plain, target: self, action: "barCloseAction")
         let rate = UIBarButtonItem(image: UIImage(named: "rating"), style: .Plain, target: self, action: "barRatetAction")
-        let message = UIBarButtonItem(image: UIImage(named: "msg"), style: .Plain, target: self, action: "barShareAction")
+        let message = UIBarButtonItem(image: UIImage(named: "msg"), style: .Plain, target: self, action: "barMessageAction")
         let share = UIBarButtonItem(image: UIImage(named: "share"), style: .Plain, target: self, action: "barShareAction")
         var betweenSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Action, target: nil, action: nil)
         
@@ -352,7 +354,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     // MARK: - Product View Delegates
     
     func close(controller: ProductImagesView) {
-        showAlert("close")
+        self.navigationController?.popToRootViewControllerAnimated(true)
     }
     
     func wishlist(controller: ProductImagesView) {
@@ -515,7 +517,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
             
             var label = UILabel(frame: CGRectMake(43, topMargin, self.productDetailsView.frame.size.width - 50, 25))
             label.text = list[i] as? String
-            label.textColor = UIColor.redColor()
+            label.textColor = Constants.Colors.productDetails
             label.font = UIFont(name: label.font.fontName, size: 13)
             
             topMargin = CGFloat(i * 25) + 14
@@ -676,4 +678,25 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         self.requestReviewDetails(reviewUrl, params: nil)
         self.emptyView?.removeFromSuperview()
     }
+
+    func barCloseAction() {
+        self.navigationController?.popToRootViewControllerAnimated(true)
+    }
+
+    func barWishlistction() {
+        println("Wishlist")
+    }
+
+    func barRateAction() {
+        println("Rate")
+    }
+
+    func barMessageAction() {
+        println("Message")
+    }
+
+    func barShareAction() {
+        println("Share")
+    }
+    
 }

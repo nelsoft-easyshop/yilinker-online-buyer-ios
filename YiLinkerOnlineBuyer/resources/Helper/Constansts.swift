@@ -22,6 +22,7 @@ struct Constants {
     
     struct Colors {
         static let appTheme: UIColor = HexaColor.colorWithHexa(0x5A1F75)
+        static let productDetails: UIColor = HexaColor.colorWithHexa(0xd52371)
     }
     
     struct Facebook {
