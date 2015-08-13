@@ -5,4 +5,7 @@ inhibit_all_warnings!
 pod 'AFNetworking'
 pod 'SDWebImage'
 pod 'iCarousel'
-
+pod 'FBSDKLoginKit'
+pod 'FBSDKCoreKit'
+pod 'Google/SignIn'
+pod 'SVProgressHUD'
