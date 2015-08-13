@@ -233,7 +233,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, GIDSignIn
     
     func fireLogin() {
         SVProgressHUD.show()
-        SVProgressHUD.setBackgroundColor(UIColor.clearColor())
+        SVProgressHUD.setBackgroundColor(UIColor.whiteColor())
         let manager: APIManager = APIManager.sharedInstance
         //seller@easyshop.ph
         //password

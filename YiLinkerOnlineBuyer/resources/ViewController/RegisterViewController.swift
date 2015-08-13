@@ -214,7 +214,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
     
     func fireRegister() {
         SVProgressHUD.show()
-        SVProgressHUD.setBackgroundColor(UIColor.clearColor())
+        SVProgressHUD.setBackgroundColor(UIColor.whiteColor())
         let manager: APIManager = APIManager.sharedInstance
 
         let parameters: NSDictionary = ["email": self.emailAddressTextField.text,"password": self.passwordTextField.text, "fullname": "\(self.firstNameTextField.text) \(self.lastNameTextField.text)"]
