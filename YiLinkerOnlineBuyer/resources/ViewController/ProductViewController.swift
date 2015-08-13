@@ -32,7 +32,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     var productReviewFooterView: ProductReviewFooterView!
     var productSellerView: ProductSellerView!
     
-    let manager = APIManager()
+    let manager = APIManager.sharedInstance
     
     var productDetailsModel: ProductDetailsModel!
     var attributes: [ProductAttributeModel] = []
@@ -115,7 +115,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         SVProgressHUD.show()
         SVProgressHUD.setBackgroundColor(UIColor.clearColor())
         
-        manager.GET(url, parameters: params, success: {
+        manager.GET(APIAtlas.productPageUrl, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
             self.productDetailsModel = ProductDetailsModel.parseDataWithDictionary(responseObject)
@@ -136,7 +136,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     }
     
     func requestReviewDetails(url: String, params: NSDictionary!) {
-        manager.GET(url, parameters: params, success: {
+        manager.GET(APIAtlas.productReviewUrl, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
 
             self.productReviewModel = ProductReviewModel.parseDataWithDictionary(responseObject)
@@ -156,7 +156,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     
     func requestSellerDetails(url: String, params: NSDictionary!) {
         
-        manager.GET(url, parameters: nil, success: {
+        manager.GET(APIAtlas.getSellerUrl, parameters: nil, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
             self.productSellerModel = ProductSellerModel.parseDataWithDictionary(responseObject)
