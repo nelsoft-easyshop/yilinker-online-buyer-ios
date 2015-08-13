@@ -12,12 +12,14 @@ protocol ProductViewControllerDelegate {
     func dismissPresentedController(controller: ProductViewController)
 }
 
-class ProductViewController: UIViewController, ProductImagesViewDelegate, ProductDescriptionViewDelegate, ProductReviewFooterViewDelegate, ProductSellerViewDelegate, ProductReviewViewControllerDelegate, ProductAttributeViewControllerDelegate {
+class ProductViewController: UIViewController, ProductImagesViewDelegate, ProductDescriptionViewDelegate, ProductReviewFooterViewDelegate, ProductSellerViewDelegate, ProductReviewViewControllerDelegate, ProductAttributeViewControllerDelegate, EmptyViewDelegate {
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var dimView: UIView!
     @IBOutlet weak var addToCartButton: UIButton!
     @IBOutlet weak var buyItNowView: UIView!
+    @IBOutlet weak var buttonsContainer: UIView!
+    @IBOutlet weak var buttonSubContainer: UIView!
     
     var headerView: UIView!
     var footerView: UIView!
@@ -45,14 +47,18 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     var visibility = 0.0
     var lastContentOffset: CGFloat = 0.0
     
+    var reviewRequest = false
+    var sellerRquest = false
+    var productSuccess = false
+    var reviewSuccess = false
+    var sellerSuccess = false
+    
     var delegate: ProductViewControllerDelegate?
     
-    var list = ["Free Shipping (metro manila)",
-        "7-Day Return",
-        "Cash on Delivery"]
+    var emptyView: EmptyView?
     
-    let bodyText = ["Proin gravida nibh vel velit auctor aliquet. Aenean solicitudin, lorem quis bibendum auctir, nisi elit consequat ipsum.",
-        "Proin gravida nibh vel velit auctor aliquet. Aenean solicitudin, lorem quis bibendum auctir, nisi elit consequat ipsum, nec sagittis sem nibh id elit. Duis sed odio sit amet nibh vulputate."]
+    let productUrl = "https://demo1928934.mockable.io/yi/getproductDetails?productId=1000"
+    let reviewUrl = "https://demo5885209.mockable.io/api/v1/product/getReviews?productId=1000"
     
     // MARK: - View Life Cycle
     
@@ -64,30 +70,29 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         self.tableView.rowHeight = UITableViewAutomaticDimension
         self.tableView.estimatedRowHeight = 100.0
         
-        self.getHeaderView().addSubview(self.getProductImagesView())
-        self.getHeaderView().addSubview(self.getProductDetailsView([]))
-        self.getHeaderView().addSubview(self.getProductAttributeView())
-        self.getHeaderView().addSubview(self.getProductDescriptionView())
-        self.getHeaderView().addSubview(self.getProductReviewHeaderView())
+//        self.getHeaderView().addSubview(self.getProductImagesView())
+//        self.getHeaderView().addSubview(self.getProductDetailsView([]))
+//        self.getHeaderView().addSubview(self.getProductAttributeView())
+//        self.getHeaderView().addSubview(self.getProductDescriptionView())
+//        self.getHeaderView().addSubview(self.getProductReviewHeaderView())
+//        
+//        self.getFooterView().addSubview(self.getProductReviewFooterView())
+//        self.getFooterView().addSubview(self.getProductSellerView())
+//        
+//        setUpViews()
         
-        self.getFooterView().addSubview(self.getProductReviewFooterView())
-        self.getFooterView().addSubview(self.getProductSellerView())
-        
-        setUpViews()
-        
-        self.productImagesView.delegate = self
-        self.productDescriptionView.delegate = self
-        self.productReviewFooterView.delegate = self
-        self.productSellerView.delegate = self
+//        self.productImagesView.delegate = self
+//        self.productDescriptionView.delegate = self
+//        self.productReviewFooterView.delegate = self
+//        self.productSellerView.delegate = self
 
+        //
+        
         setBorderOf(view: addToCartButton, width: 1, color: .grayColor(), radius: 3)
         setBorderOf(view: buyItNowView, width: 1, color: .grayColor(), radius: 3)
         
-        let product = "https://demo5885209.mockable.io/api/v1/product/getProductDetail?productId=1000"
-        let review = "https://demo5885209.mockable.io/api/v1/product/getReviews?productId=1000"
-        
-        requestProductDetails(product, params: nil)
-        requestReviewDetails(review, params: nil)
+        requestProductDetails(productUrl, params: nil)
+        requestReviewDetails(reviewUrl, params: nil)
         
         configureNavigationBar()
         
@@ -99,8 +104,15 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
 //        self.navigationController?.navigationBar.alpha = 0
     }
     
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        SVProgressHUD.dismiss()
+    }
+    
     func requestProductDetails(url: String, params: NSDictionary!) {
-        // show loader view here
+        SVProgressHUD.show()
+        SVProgressHUD.setBackgroundColor(UIColor.clearColor())
         
         manager.GET(url, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
@@ -113,9 +125,12 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
             let seller = "https://demo5885209.mockable.io/api/v1/seller/getDetails?sellerId=111"
             self.requestSellerDetails(seller, params: nil)
             
+            self.productSuccess = true
+            println("product success")
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                println("failed: \(error)")
+                println("product failed")
+                self.productSuccess = false
         })
     }
     
@@ -124,11 +139,17 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
 
             self.productReviewModel = ProductReviewModel.parseDataWithDictionary(responseObject)
-            self.populateReviews()
+            self.reviewRequest = true
+            self.reviewSuccess = true
+            self.checkRequests()
+            println("review success")
             
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                println("failed: \(error)")
+                println("review failed")
+                self.reviewRequest = true
+                self.reviewSuccess = false
+                self.checkRequests()
         })
     }
     
@@ -138,18 +159,24 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
             self.productSellerModel = ProductSellerModel.parseDataWithDictionary(responseObject)
-            self.populateSeller()
+            self.sellerRquest = true
+            self.sellerSuccess = true
+            self.checkRequests()
+            println("seller success")
             
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                println("failed: \(error)")
+                println("seller failed")
+                self.sellerRquest = true
+                self.sellerSuccess = false
+                self.checkRequests()
         })
     }
     
     func configureNavigationBar() {
-        self.navigationController?.navigationBar.alpha = 0
-        self.navigationController?.navigationBar.barTintColor = .whiteColor()
-        self.navigationController?.navigationBar.tintColor = .grayColor()
+//        self.navigationController?.navigationBar.alpha = 0
+//        self.navigationController?.navigationBar.barTintColor = .whiteColor()
+//        self.navigationController?.navigationBar.tintColor = .grayColor()
         
 //        let close = UIBarButtonItem(image: img.image, style: .Plain, target: self, action: "barCloseAction")
         let close = UIBarButtonItem(barButtonSystemItem: .Stop, target: self, action: "barWishlistAction")
@@ -181,6 +208,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         let cell: ReviewTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("reviewIdentifier") as! ReviewTableViewCell
         
         cell.selectionStyle = UITableViewCellSelectionStyle.None
+//        cell.frame.size.width = 320
         
         cell.setName(productReviewModel.reviews[indexPath.row].name)
         cell.setDisplayPicture(productReviewModel.reviews[indexPath.row].imageUrl)
@@ -211,6 +239,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     func getProductImagesView() -> ProductImagesView {
         if self.productImagesView == nil {
             self.productImagesView = XibHelper.puffViewWithNibName("ProductViewsViewController", index: 0) as! ProductImagesView
+            self.productImagesView.frame.size.width = self.view.frame.size.width
         }
         return self.productImagesView
     }
@@ -225,7 +254,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     
     func getProductAttributeView() -> UIView {
         if self.productAttributeView == nil {
-            
+            println(self.view.frame.size.width)
             self.productAttributeView = UIView(frame: CGRectMake(0, 41, self.view.frame.size.width, 50))
             self.productAttributeView.backgroundColor = .whiteColor()
             
@@ -256,6 +285,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     func getProductDescriptionView() -> ProductDescriptionView {
         if self.productDescriptionView == nil {
             self.productDescriptionView = XibHelper.puffViewWithNibName("ProductViewsViewController", index: 1) as! ProductDescriptionView
+            self.productDescriptionView.frame.size.width = self.view.frame.size.width
         }
         return self.productDescriptionView
     }
@@ -263,6 +293,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     func getProductReviewHeaderView() -> ProductReviewHeaderView {
         if self.productReviewHeaderView == nil {
             self.productReviewHeaderView = XibHelper.puffViewWithNibName("ProductViewsViewController", index: 2) as! ProductReviewHeaderView
+            self.productReviewHeaderView.frame.size.width = self.view.frame.size.width
         }
         return self.productReviewHeaderView
     }
@@ -270,6 +301,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     func getProductReviewFooterView() -> ProductReviewFooterView {
         if self.productReviewFooterView == nil {
             self.productReviewFooterView = XibHelper.puffViewWithNibName("ProductViewsViewController", index: 3) as! ProductReviewFooterView
+            self.productReviewFooterView.frame.size.width = self.view.frame.size.width
         }
         return self.productReviewFooterView
     }
@@ -277,6 +309,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     func getProductSellerView() -> ProductSellerView {
         if self.productSellerView == nil {
             self.productSellerView = XibHelper.puffViewWithNibName("ProductViewsViewController", index: 4) as! ProductSellerView
+            self.productSellerView.frame.size.width = self.view.frame.size.width
         }
         return self.productSellerView
     }
@@ -422,24 +455,55 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     }
     
     func populateDetails() {
-        println("POPULATING PRODUCT DETAILS")
+//        println("POPULATING PRODUCT DETAILS")
+//        self.productImagesView.setDetails(productDetailsModel.title, price: productDetailsModel.newPrice, images: [])
+//        self.setDetails(productDetailsModel.details)
+//        self.setAttributes(productDetailsModel.attributes, combinationModel: productDetailsModel.combinations)
+//        self.productDescriptionView.setDescription(productDetailsModel.shortDescription, full: productDetailsModel.fullDescription)
+    }
+    
+    func populateReviews() {
+//        println("POPULATING PRODUCT REVIEWS")
+//        self.productReviewHeaderView.setRating(self.productReviewModel.rating)
+//        self.tableView.reloadData()
+    }
+    
+    func populateSeller() {
+        println("POPULATING DETAILS")
+        
+    }
+    
+    func loadViewsWithDetails() {
+        
+        self.buttonsContainer.hidden = false
+        
+        self.getHeaderView().addSubview(self.getProductImagesView())
+        self.getHeaderView().addSubview(self.getProductDetailsView([]))
+        self.getHeaderView().addSubview(self.getProductAttributeView())
+        self.getHeaderView().addSubview(self.getProductDescriptionView())
+        self.getHeaderView().addSubview(self.getProductReviewHeaderView())
+        
+        self.getFooterView().addSubview(self.getProductReviewFooterView())
+        self.getFooterView().addSubview(self.getProductSellerView())
+        
         self.productImagesView.setDetails(productDetailsModel.title, price: productDetailsModel.newPrice, images: [])
         self.setDetails(productDetailsModel.details)
         self.setAttributes(productDetailsModel.attributes, combinationModel: productDetailsModel.combinations)
         self.productDescriptionView.setDescription(productDetailsModel.shortDescription, full: productDetailsModel.fullDescription)
-    }
-    
-    func populateReviews() {
-        println("POPULATING PRODUCT REVIEWS")
+        
         self.productReviewHeaderView.setRating(self.productReviewModel.rating)
         self.tableView.reloadData()
-    }
-    
-    func populateSeller() {
-        println("POPULATING SELLER DETAILS")
+        
         self.productSellerView.setSellerDetails(self.productSellerModel)
+        
         setUpViews()
-        // after populating here, removed the loader view
+        
+        self.productImagesView.delegate = self
+        self.productDescriptionView.delegate = self
+        self.productReviewFooterView.delegate = self
+        self.productSellerView.delegate = self
+        
+        SVProgressHUD.dismiss()
     }
     
     func setDetails(list: NSArray) {
@@ -474,6 +538,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         var leftMargin: CGFloat = 0
         var reseter: Int = 0
         var counter: Int = 1
+        var labelWidth = (self.view.frame.size.width / 3)
         
         selectedName = []
         selectedValue = []
@@ -496,10 +561,10 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
                 counter += 1
             }
             
-            leftMargin = CGFloat(reseter * 122)
+            leftMargin = CGFloat(reseter * Int(labelWidth))
             reseter += 1
             
-            var attributesLabel = UILabel(frame: CGRectMake(leftMargin + 10, topMargin + 50, 112, 23))
+            var attributesLabel = UILabel(frame: CGRectMake(leftMargin + 10, topMargin + 50, labelWidth - 12, 23))
             attributesLabel.font = UIFont.systemFontOfSize(14.0)
             attributesLabel.textColor = .grayColor()
             
@@ -581,5 +646,34 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     
     func gotoAttributes(gesture: UIGestureRecognizer) {
         seeMoreAttribute(true, title: "")
+    }
+    
+    func checkRequests() {
+        
+        println(productSuccess)
+        println(reviewSuccess)
+        println(sellerSuccess)
+        
+        
+        if productSuccess && reviewSuccess && sellerSuccess {
+            self.loadViewsWithDetails()
+        } else if reviewRequest && sellerRquest {
+            if productSuccess == false || reviewSuccess == false || sellerSuccess == false {
+                addEmptyView()
+                SVProgressHUD.dismiss()
+            }
+        }
+    }
+    
+    func addEmptyView() {
+        self.emptyView = UIView.loadFromNibNamed("EmptyView", bundle: nil) as? EmptyView
+        self.emptyView!.delegate = self
+        self.view.addSubview(self.emptyView!)
+    }
+    
+    func didTapReload() {
+        self.requestProductDetails(productUrl, params: nil)
+        self.requestReviewDetails(reviewUrl, params: nil)
+        self.emptyView?.removeFromSuperview()
     }
 }
