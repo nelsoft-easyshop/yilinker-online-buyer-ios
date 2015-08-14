@@ -118,6 +118,7 @@ class WishlistViewController: UIViewController, UITableViewDelegate, UITableView
     
     // MARK: Methods Updating Values
     func populateWishListTableView () {
+        tableData = []
         requestProductDetails(APIAtlas.wishlistUrl, params: nil)
     }
     
