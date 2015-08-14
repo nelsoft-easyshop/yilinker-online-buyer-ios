@@ -66,7 +66,7 @@ class WishlistViewController: UIViewController, UITableViewDelegate, UITableView
         })
     }
     
-    func fireAddToßCartItem(url: String, params: NSDictionary!) {
+    func fireAddToCartItem(url: String, params: NSDictionary!) {
         showLoader()
         manager.DELETE(url, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
@@ -205,6 +205,10 @@ class WishlistViewController: UIViewController, UITableViewDelegate, UITableView
         
         //No API yet
         //fireAddToßCartItem(<#url: String#>, params: <#NSDictionary!#>)
+    }
+    
+    func swipeViewDidScroll(sender: AnyObject) {
+        NSNotificationCenter.defaultCenter().postNotificationName("SwipeForOptionsCellEnclosingTableViewDidBeginScrollingNotification", object: self)
     }
     
 }

@@ -11,6 +11,7 @@ import UIKit
 protocol WishlistTableViewCellDelegate{
     func deleteButtonActionForIndex(sender: AnyObject)
     func addToCartButtonActionForIndex(sender: AnyObject)
+    func swipeViewDidScroll(sender: AnyObject)
 }
 
 class WishlistTableViewCell: UITableViewCell, UIScrollViewDelegate {
@@ -51,10 +52,10 @@ class WishlistTableViewCell: UITableViewCell, UIScrollViewDelegate {
     @IBAction func buttonClicked(sender : AnyObject) {
         cellScrollView.setContentOffset(CGPointZero, animated: true)
         if(sender as! NSObject == deleteButton){
-            delegate?.deleteButtonActionForIndex(self)
+            delegate!.deleteButtonActionForIndex(self)
         } else if(sender as! NSObject == addToCartButton) {
             updateSwipeViewStatus()
-            delegate?.addToCartButtonActionForIndex(self)
+            delegate!.addToCartButtonActionForIndex(self)
         } else if(sender as! NSObject == swipeIndicatorButton) {
             updateSwipeViewStatus()
         } else {
@@ -79,7 +80,7 @@ class WishlistTableViewCell: UITableViewCell, UIScrollViewDelegate {
         cellContentView.frame = CGRectMake(0, 0, width, CGRectGetHeight(self.bounds))
         swipeIndicatorView.frame = CGRectMake((width - 25), 0, 25, CGRectGetHeight(self.bounds))
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "enclosingTableViewDidScroll", name: swipeForOptionsCellEnclosingTableViewDidBeginScrollingNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "closeSwipeView", name: swipeForOptionsCellEnclosingTableViewDidBeginScrollingNotification, object: nil)
     }
     
     func updateSwipeViewStatus(){
@@ -102,6 +103,7 @@ class WishlistTableViewCell: UITableViewCell, UIScrollViewDelegate {
         }
     }
     
+    
     /*
     // MARK: - Methods 
     
@@ -123,7 +125,7 @@ class WishlistTableViewCell: UITableViewCell, UIScrollViewDelegate {
     */
     
     // Close Swipe View
-    func enclosingTableViewDidScroll() {
+    func closeSwipeView() {
         if isSwipeViewOpen {
             updateSwipeViewStatus()
         }
@@ -135,10 +137,12 @@ class WishlistTableViewCell: UITableViewCell, UIScrollViewDelegate {
         if scrollView.contentOffset.x < 0 {
             scrollView.contentOffset = CGPointZero
         }
+        
         //cellButtonView.frame = CGRectMake(scrollView.contentOffset.x + (CGRectGetWidth(self.bounds) - buttonViewWidth), 0.0, buttonViewWidth, CGRectGetHeight(self.bounds))
     }
     
     func scrollViewWillEndDragging(scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        delegate?.swipeViewDidScroll(self)
         if scrollView.contentOffset.x > buttonViewWidth {
             Float(targetContentOffset.memory.x) == Float(buttonViewWidth)
             if !isSwipeViewOpen{
@@ -150,4 +154,5 @@ class WishlistTableViewCell: UITableViewCell, UIScrollViewDelegate {
         }
 
     }
+
 }
