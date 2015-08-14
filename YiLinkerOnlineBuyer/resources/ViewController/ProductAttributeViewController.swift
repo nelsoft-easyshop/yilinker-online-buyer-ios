@@ -9,8 +9,7 @@
 import UIKit
 
 protocol ProductAttributeViewControllerDelegate {
-    func pressedCancelAttribute(controller: ProductAttributeViewController)
-    func pressedDoneAttribute(controller: ProductAttributeViewController)
+    func dissmissAttributeViewController(controller: ProductAttributeViewController, type: String)
 }
 
 class ProductAttributeViewController: UIViewController, UITableViewDelegate, ProductAttributeTableViewCellDelegate {
@@ -40,6 +39,8 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
     var availableCombinations: [ProductAvailableAttributeCombinationModel] = []
     var selectedValue: [String] = []
     var selectedCombination: [Int] = []
+    
+    var tabController = CustomTabBarController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -99,10 +100,7 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
     }
     
     @IBAction func cancelAction(sender: AnyObject!) {
-        self.dismissViewControllerAnimated(true, completion: nil)
-        if let delegate = self.delegate {
-            delegate.pressedCancelAttribute(self)
-        }
+        hideSelf("cancel")
     }
     
     // MARK: - Methods
@@ -208,14 +206,14 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
         let url: String = "api/v1/auth/cart/updateCartItem"
         
         let params: NSDictionary = ["accessToken": "access token here",
-                                      "productId": productDetailModel!.title,
+                                      "productId": "product id here",
                                          "unitId": "unit id here",
                                   "combinationId": "combination id here",
                                        "quantity": "quantity here"]
         
         println(params)
         
-        requestAddCartItem(url, params: params)
+        requestAddCartItem(APIAtlas.productPageUrl, params: nil)
     }
     
     @IBAction func cartCheckoutAction(sender: AnyObject) {
@@ -246,13 +244,10 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
 
     @IBAction func doneAction(sender: AnyObject) {
         println(selectedValue)
-        self.dismissViewControllerAnimated(true, completion: nil)
-        if let delegate = self.delegate {
-            delegate.pressedDoneAttribute(self)
-        }
+        hideSelf("done")
     }
 
-    func requestAddCartItem(url: String, params: NSDictionary) {
+    func requestAddCartItem(url: String, params: NSDictionary!) {
         SVProgressHUD.show()
         let manager = APIManager.sharedInstance
         
@@ -262,11 +257,26 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
             SVProgressHUD.dismiss()
             println("product success")
             
+            if let badgeValue = (self.tabController.tabBar.items![4] as! UITabBarItem).badgeValue?.toInt() {
+                (self.tabController.tabBar.items![4] as! UITabBarItem).badgeValue = String(badgeValue + 1)
+            } else {
+                (self.tabController.tabBar.items![4] as! UITabBarItem).badgeValue = "1"
+            }
+            
+            self.hideSelf("cart")
+            
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 SVProgressHUD.dismiss()
                 println("product failed")
         })
+    }
+    
+    func hideSelf(action: String) {
+        self.dismissViewControllerAnimated(true, completion: nil)
+        if let delegate = self.delegate {
+            delegate.dissmissAttributeViewController(self, type: action)
+        }
     }
     
 }

@@ -60,6 +60,8 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     let productUrl = "https://demo1928934.mockable.io/yi/getproductDetails?productId=1000"
     let reviewUrl = "https://demo5885209.mockable.io/api/v1/product/getReviews?productId=1000"
     
+    var tabController = CustomTabBarController()
+    
     // MARK: - View Life Cycle
     
     override func viewDidLoad() {
@@ -70,23 +72,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         self.tableView.rowHeight = UITableViewAutomaticDimension
         self.tableView.estimatedRowHeight = 100.0
         
-//        self.getHeaderView().addSubview(self.getProductImagesView())
-//        self.getHeaderView().addSubview(self.getProductDetailsView([]))
-//        self.getHeaderView().addSubview(self.getProductAttributeView())
-//        self.getHeaderView().addSubview(self.getProductDescriptionView())
-//        self.getHeaderView().addSubview(self.getProductReviewHeaderView())
-//        
-//        self.getFooterView().addSubview(self.getProductReviewFooterView())
-//        self.getFooterView().addSubview(self.getProductSellerView())
-//        
-//        setUpViews()
-        
-//        self.productImagesView.delegate = self
-//        self.productDescriptionView.delegate = self
-//        self.productReviewFooterView.delegate = self
-//        self.productSellerView.delegate = self
-
-        //
+        println(tabController.tabBar.items!.count)
         
         setBorderOf(view: addToCartButton, width: 1, color: .grayColor(), radius: 3)
         setBorderOf(view: buyItNowView, width: 1, color: .grayColor(), radius: 3)
@@ -379,6 +365,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         attributeModal.view.frame.origin.y = attributeModal.view.frame.size.height
         attributeModal.passModel(productDetailsModel: productDetailsModel, combinationModel: productDetailsModel.combinations, selectedValue: selectedValue)
         attributeModal.showCartCheckout(bool, title: title)
+        attributeModal.tabController = self.tabController
 //        self.navigationController?.presentViewController(attributeModal, animated: true, completion: nil)
         self.tabBarController?.presentViewController(attributeModal, animated: true, completion: nil)
         
@@ -442,21 +429,21 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         self.presentViewController(activityViewController, animated: true, completion: nil)
     }
     
-    func pressedCancelAttribute(controller: ProductAttributeViewController) {
+    func dissmissAttributeViewController(controller: ProductAttributeViewController, type: String) {
+        
         UIView.animateWithDuration(0.3, animations: {
             self.view.transform = CGAffineTransformMakeTranslation(1, 1)
             self.dimView.alpha = 0
             self.dimView.layer.zPosition = -1
             self.navigationController?.navigationBar.alpha = CGFloat(self.visibility)
-        })
-    }
-    func pressedDoneAttribute(controller: ProductAttributeViewController) {
-        UIView.animateWithDuration(0.3, animations: {
-            self.view.transform = CGAffineTransformMakeTranslation(1, 1)
-            self.dimView.alpha = 0
-            self.dimView.layer.zPosition = -1
-            self.navigationController?.navigationBar.alpha = CGFloat(self.visibility)
-        })
+            }, completion: { finished in
+                if type == "cart" {
+                    self.showAlert("This item has been added to your cart.")
+                } else {
+                    self.showAlert(type)
+                }
+            })
+
     }
     
     func pressedCancelReview(controller: ProductReviewViewController) {
@@ -601,6 +588,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     
     @IBAction func addToCartAction(sender: AnyObject) {
         seeMoreAttribute(true, title: "ADD TO CART")
+        
     }
     
     func buyItNowAction(gesture: UIGestureRecognizer) {
