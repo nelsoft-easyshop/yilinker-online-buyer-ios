@@ -35,8 +35,6 @@ class ProductImagesView: UIView, UICollectionViewDataSource, UICollectionViewDel
     
     override func awakeFromNib() {
         
-        println(self.frame)
-        
         self.closeContainerView.layer.cornerRadius = self.closeContainerView.frame.size.width / 2
         self.closeContainerView.layer.borderWidth  = 1.5
         self.closeContainerView.layer.borderColor = UIColor.grayColor().CGColor

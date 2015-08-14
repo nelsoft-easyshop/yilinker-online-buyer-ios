@@ -193,7 +193,7 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
         button.alpha = 1
     }
     
-    func dismissPresentedController(controller: ProductViewController) {
+    func pressedDimViewFromProductPage(controller: ProductViewController) {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     

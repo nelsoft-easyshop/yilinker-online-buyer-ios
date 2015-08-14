@@ -9,7 +9,7 @@
 import UIKit
 
 protocol ProductViewControllerDelegate {
-    func dismissPresentedController(controller: ProductViewController)
+    func pressedDimViewFromProductPage(controller: ProductViewController)
 }
 
 class ProductViewController: UIViewController, ProductImagesViewDelegate, ProductDescriptionViewDelegate, ProductReviewFooterViewDelegate, ProductSellerViewDelegate, ProductReviewViewControllerDelegate, ProductAttributeViewControllerDelegate, EmptyViewDelegate {
@@ -72,8 +72,6 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         self.tableView.rowHeight = UITableViewAutomaticDimension
         self.tableView.estimatedRowHeight = 100.0
         
-        println(tabController.tabBar.items!.count)
-        
         setBorderOf(view: addToCartButton, width: 1, color: .grayColor(), radius: 3)
         setBorderOf(view: buyItNowView, width: 1, color: .grayColor(), radius: 3)
         
@@ -113,7 +111,6 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
             self.requestSellerDetails(seller, params: nil)
             
             self.productSuccess = true
-            println("product success")
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 println("product failed")
@@ -129,7 +126,6 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
             self.reviewRequest = true
             self.reviewSuccess = true
             self.checkRequests()
-            println("review success")
             
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
@@ -149,7 +145,6 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
             self.sellerRquest = true
             self.sellerSuccess = true
             self.checkRequests()
-            println("seller success")
             
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
@@ -242,7 +237,6 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     
     func getProductAttributeView() -> UIView {
         if self.productAttributeView == nil {
-            println(self.view.frame.size.width)
             self.productAttributeView = UIView(frame: CGRectMake(0, 41, self.view.frame.size.width, 50))
             self.productAttributeView.backgroundColor = .whiteColor()
             
@@ -344,7 +338,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     }
     
     func wishlist(controller: ProductImagesView) {
-        showAlert("Wishlist")
+        barWishlistAction()
     }
     
     func rate(controller: ProductImagesView) {
@@ -439,7 +433,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
             }, completion: { finished in
                 if type == "cart" {
                     self.showAlert("This item has been added to your cart.")
-                } else {
+                } else if type == "done" {
                     self.showAlert(type)
                 }
             })
@@ -642,10 +636,6 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     
     // Navigation Bar Actions
     
-    func barWishlistActon() {
-        showAlert("Wishlist")
-    }
-    
     func gotoAttributes(gesture: UIGestureRecognizer) {
         seeMoreAttribute(true, title: "")
     }
@@ -684,7 +674,40 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     }
 
     func barWishlistAction() {
-        showAlert("Wishlist")
+//        showAlert("This item has been added to your Wishlist")
+        
+//        SVProgressHUD.show()
+        
+        var imageToAnimate = UIImageView()
+        imageToAnimate.frame = self.productImagesView.collectionView.frame
+        
+        for subView in self.productImagesView.collectionView.subviews as! [UIView] {
+            for views in subView.subviews as! [UIView] {
+                for imageView in views.subviews as! [UIImageView] {
+                    if imageView.isKindOfClass(UIImageView) {
+                        imageToAnimate.image = imageView.image
+                    }
+                }
+            }
+        }
+        
+        self.view.addSubview(imageToAnimate)
+        UIView.animateWithDuration(0.3, animations: {
+            imageToAnimate.transform = CGAffineTransformMakeScale(0.1, 0.1)
+            }, completion: { finished in //after scaling
+                UIView.animateWithDuration(0.3, animations: { //after animating
+                    imageToAnimate.center = CGPointMake(250, self.tabController.tabBar.frame.origin.y - (self.tabController.tabBar.frame.size.height / 2))
+                    imageToAnimate.alpha = 0.0
+                    }, completion: { finished in
+                        if let badgeValue = (self.tabController.tabBar.items![3] as! UITabBarItem).badgeValue?.toInt() {
+                            (self.tabController.tabBar.items![3] as! UITabBarItem).badgeValue = String(badgeValue + 1)
+                        } else {
+                            (self.tabController.tabBar.items![3] as! UITabBarItem).badgeValue = "1"
+                        }
+                })
+        })
+        
+//        SVProgressHUD.dismiss()
     }
 
     func barRateAction() {
