@@ -8,10 +8,11 @@
 
 import UIKit
 
-class FollowedSellerViewController: UIViewController, UITableViewDelegate {
+class FollowedSellerViewController: UIViewController, EmptyViewDelegate {
 
     @IBOutlet weak var tableView: UITableView!
 
+    var emptyView: EmptyView?
     var followedSellerModel: FollowedSellerModel!
     
     override func viewDidLoad() {
@@ -21,12 +22,6 @@ class FollowedSellerViewController: UIViewController, UITableViewDelegate {
         self.tableView.registerNib(nib, forCellReuseIdentifier: "FollowedSellerIdentifier")
         
         requestReviewDetails()
-    }
-
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        SVProgressHUD.show()
     }
     
     // MARK: - Table View Data Source
@@ -65,8 +60,9 @@ class FollowedSellerViewController: UIViewController, UITableViewDelegate {
     // MARK: - Request
     
     func requestReviewDetails() {
-        let manager = APIManager.sharedInstance
+        SVProgressHUD.show()
         
+        let manager = APIManager.sharedInstance
         manager.GET("https://demo3526363.mockable.io/follwedSeller", parameters: nil, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
@@ -76,9 +72,22 @@ class FollowedSellerViewController: UIViewController, UITableViewDelegate {
             
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                println("failed")
+                self.addEmptyView()
+                SVProgressHUD.dismiss()
         })
     }
     
+    // MARK: - Empty View
+    
+    func addEmptyView() {
+        self.emptyView = UIView.loadFromNibNamed("EmptyView", bundle: nil) as? EmptyView
+        self.emptyView!.delegate = self
+        self.view.addSubview(self.emptyView!)
+    }
+    
+    func didTapReload() {
+        requestReviewDetails()
+        self.emptyView?.removeFromSuperview()
+    }
     
 }
