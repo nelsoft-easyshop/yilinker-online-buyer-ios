@@ -65,11 +65,11 @@ class CartProductAttributeViewController: UIViewController, UITableViewDelegate,
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell: ProductAttributeTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("AttributeTableCell") as! ProductAttributeTableViewCell
         
-        cell.delegate = self
-        cell.passAvailableCombination(availableCombinations)
+//        cell.delegate = self
+//        cell.passAvailableCombination(availableCombinations)
         
-        cell.tag = indexPath.row
-        cell.setAttribute(name: attributes[indexPath.row].attributeName, values: attributes[indexPath.row].valueName, id: attributes[indexPath.row].valueId, selectedValue: selectedValue)
+//        cell.tag = indexPath.row
+//        cell.setAttribute(name: attributes[indexPath.row].attributeName, values: attributes[indexPath.row].valueName, id: attributes[indexPath.row].valueId, selectedValue: selectedValue)
         
         return cell
     }

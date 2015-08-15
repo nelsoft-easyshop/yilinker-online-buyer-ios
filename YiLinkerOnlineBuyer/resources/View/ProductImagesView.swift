@@ -28,8 +28,10 @@ class ProductImagesView: UIView, UICollectionViewDataSource, UICollectionViewDel
     @IBOutlet weak var shareContainerView: UIView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var priceLabel: UILabel!
-
+    @IBOutlet weak var originalPrice: UILabel!
+    
     var images: NSArray = []
+    var width: CGFloat = 0
     
     var delegate: ProductImagesViewDelegate?
     
@@ -46,8 +48,23 @@ class ProductImagesView: UIView, UICollectionViewDataSource, UICollectionViewDel
         
         self.collectionView.dataSource = self
         self.collectionView.delegate = self
-        var nib = UINib(nibName: "ProductSellerViewCollectionViewCell", bundle:nil)
-        self.collectionView.registerNib(nib, forCellWithReuseIdentifier: "productSellerIdentifier")
+        var nib = UINib(nibName: "ProductImagesViewCollectionViewCell", bundle:nil)
+        self.collectionView.registerNib(nib, forCellWithReuseIdentifier: "ImagesViewIdentifier")
+        
+        addTapTo(self.closeContainerView, action: "closeAction:")
+        addTapTo(self.wishlistContainerView, action: "wishlistAction:")
+        addTapTo(self.rateContainerView, action: "rateAction:")
+        addTapTo(self.messageContainerView, action: "messageAction:")
+        addTapTo(self.shareContainerView, action: "shareAction:")
+        
+        priceLabel.textColor = Constants.Colors.productPrice
+    }
+    
+    func addTapTo(view: UIView, action: Selector) {
+        let tap = UITapGestureRecognizer()
+        tap.numberOfTapsRequired = 1
+        tap.addTarget(self, action: action)
+        view.addGestureRecognizer(tap)
     }
     
     // MARK: - Collection View Data Source
@@ -57,7 +74,7 @@ class ProductImagesView: UIView, UICollectionViewDataSource, UICollectionViewDel
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell: ProductSellerViewCollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier("productSellerIdentifier", forIndexPath: indexPath) as! ProductSellerViewCollectionViewCell
+        let cell: ProductImagesViewCollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier("ImagesViewIdentifier", forIndexPath: indexPath) as! ProductImagesViewCollectionViewCell
         
         cell.setImage(self.images[indexPath.row] as! String)
         
@@ -66,6 +83,10 @@ class ProductImagesView: UIView, UICollectionViewDataSource, UICollectionViewDel
 
     // MARK: - Collection View Delegate
     
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+        return CGSizeMake(width, self.collectionView.frame.size.height - 1)
+    }
+    
     func scrollViewDidScroll(scrollView: UIScrollView) {
         var page: CGFloat = self.collectionView.frame.size.width
         self.pageControl.currentPage = Int(self.collectionView.contentOffset.x / page)
@@ -73,31 +94,31 @@ class ProductImagesView: UIView, UICollectionViewDataSource, UICollectionViewDel
     
     // MARK: - Actions
     
-    @IBAction func closeAction(sender: AnyObject) {
+    func closeAction(gesture: UIGestureRecognizer) {
         if let delegate = self.delegate {
             delegate.close(self)
         }
     }
-    
-    @IBAction func wishlistAction(sender: AnyObject) {
+
+    func wishlistAction(gesture: UIGestureRecognizer) {
         if let delegate = self.delegate {
             delegate.wishlist(self)
         }
     }
-    
-    @IBAction func rateAction(sender: AnyObject) {
+
+    func rateAction(gesture: UIGestureRecognizer) {
         if let delegate = self.delegate {
             delegate.rate(self)
         }
     }
-    
-    @IBAction func messageAction(sender: AnyObject) {
+
+    func messageAction(gesture: UIGestureRecognizer) {
         if let delegate = self.delegate {
             delegate.message(self)
         }
     }
-    
-    @IBAction func shareAction(sender: AnyObject) {
+
+    func shareAction(gesture: UIGestureRecognizer) {
         if let delegate = self.delegate {
             delegate.share(self)
         }
@@ -105,10 +126,12 @@ class ProductImagesView: UIView, UICollectionViewDataSource, UICollectionViewDel
     
     // Functions
     
-    func setDetails(name: String, price: Float, images: NSArray) {
+    func setDetails(name: String, price: Float, originalPrice: Float, images: NSArray, width: CGFloat) {
         self.nameLabel.text = name
-        
+        self.nameLabel.sizeToFit()
+        self.originalPrice.text = String(format: "P%.2f", originalPrice)
         self.priceLabel.text = String(format: "P%.2f", price)
+        self.width = width
         
         self.images = images
         if self.images.count == 0 {

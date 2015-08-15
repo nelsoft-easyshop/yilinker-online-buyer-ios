@@ -83,6 +83,20 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     
     override func viewWillAppear(animated: Bool) {
         configureNavigationBar()
+        
+        var seeMoreLabel = UILabel(frame: CGRectMake((buyItNowView.frame.size.width / 2) - 60, 0, 90, buyItNowView.frame.size.height))
+        seeMoreLabel.frame.origin.x = 0
+        seeMoreLabel.frame.size.width = addToCartButton.frame.size.width
+        seeMoreLabel.text = "BUY IT NOW"
+        seeMoreLabel.textAlignment = .Center
+        seeMoreLabel.textColor = .whiteColor()
+        seeMoreLabel.backgroundColor = .redColor()
+        seeMoreLabel.font = UIFont.boldSystemFontOfSize(13.0)
+        
+        var seeMoreImageView = UIImageView(frame: CGRectMake(seeMoreLabel.frame.size.width, (seeMoreLabel.frame.size.height / 2) - 6, 13, 13))
+        seeMoreImageView.image = UIImage(named: "buy")
+//        seeMoreLabel.addSubview(seeMoreImageView)
+//        self.buyItNowView.addSubview(seeMoreLabel)
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -223,6 +237,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         if self.productImagesView == nil {
             self.productImagesView = XibHelper.puffViewWithNibName("ProductViewsViewController", index: 0) as! ProductImagesView
             self.productImagesView.frame.size.width = self.view.frame.size.width
+            self.productImagesView.frame.size.height = self.view.frame.size.height - 114
         }
         return self.productImagesView
     }
@@ -268,6 +283,19 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         if self.productDescriptionView == nil {
             self.productDescriptionView = XibHelper.puffViewWithNibName("ProductViewsViewController", index: 1) as! ProductDescriptionView
             self.productDescriptionView.frame.size.width = self.view.frame.size.width
+            
+            var seeMoreLabel = UILabel(frame: CGRectMake(0, 0, 90, 41))
+            seeMoreLabel.text = "SEE MORE"
+            seeMoreLabel.textColor = .blueColor()
+            seeMoreLabel.font = UIFont.systemFontOfSize(15.0)
+            seeMoreLabel.textAlignment = .Center
+            
+            var seeMoreImageView = UIImageView(frame: CGRectMake(seeMoreLabel.frame.size.width, (seeMoreLabel.frame.size.height / 2) - 6, 8, 12))
+            seeMoreImageView.image = UIImage(named: "seeMore")
+            seeMoreLabel.addSubview(seeMoreImageView)
+            
+            seeMoreLabel.center.x = self.view.center.x - 5
+            self.productDescriptionView.seeMoreView.addSubview(seeMoreLabel)
         }
         return self.productDescriptionView
     }
@@ -284,6 +312,20 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         if self.productReviewFooterView == nil {
             self.productReviewFooterView = XibHelper.puffViewWithNibName("ProductViewsViewController", index: 3) as! ProductReviewFooterView
             self.productReviewFooterView.frame.size.width = self.view.frame.size.width
+            
+            var seeMoreLabel = UILabel(frame: self.productReviewFooterView.frame)
+            seeMoreLabel.frame.size.width = 90
+            seeMoreLabel.text = "SEE MORE"
+            seeMoreLabel.textColor = .blueColor()
+            seeMoreLabel.font = UIFont.systemFontOfSize(15.0)
+            seeMoreLabel.textAlignment = .Center
+            
+            var seeMoreImageView = UIImageView(frame: CGRectMake(seeMoreLabel.frame.size.width, (seeMoreLabel.frame.size.height / 2) - 6, 8, 12))
+            seeMoreImageView.image = UIImage(named: "seeMore")
+            seeMoreLabel.addSubview(seeMoreImageView)
+            
+            seeMoreLabel.center.x = self.view.center.x - 5
+            self.productReviewFooterView.addSubview(seeMoreLabel)
         }
         return self.productReviewFooterView
     }
@@ -349,7 +391,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         showAlert("Message")
     }
     
-    func seeMoreAttribute(bool: Bool, title: String) {
+    func seeMoreAttribute(title: String) {
         var attributeModal = ProductAttributeViewController(nibName: "ProductAttributeViewController", bundle: nil)
         attributeModal.delegate = self
         attributeModal.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
@@ -358,9 +400,10 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         attributeModal.view.backgroundColor = UIColor.clearColor()
         attributeModal.view.frame.origin.y = attributeModal.view.frame.size.height
         attributeModal.passModel(productDetailsModel: productDetailsModel, combinationModel: productDetailsModel.combinations, selectedValue: selectedValue)
-        attributeModal.showCartCheckout(bool, title: title)
+//        attributeModal.setButtons(title)
+        attributeModal.setTitle = title
         attributeModal.tabController = self.tabController
-//        self.navigationController?.presentViewController(attributeModal, animated: true, completion: nil)
+        attributeModal.screenWidth = self.view.frame.width
         self.tabBarController?.presentViewController(attributeModal, animated: true, completion: nil)
         
         UIView.animateWithDuration(0.3, animations: {
@@ -481,7 +524,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         self.getFooterView().addSubview(self.getProductReviewFooterView())
         self.getFooterView().addSubview(self.getProductSellerView())
         
-        self.productImagesView.setDetails(productDetailsModel.title, price: productDetailsModel.newPrice, images: [])
+        self.productImagesView.setDetails(productDetailsModel.title, price: productDetailsModel.newPrice, originalPrice: productDetailsModel.originalPrice, images: [], width: self.view.frame.size.width)
         self.setDetails(productDetailsModel.details)
         self.setAttributes(productDetailsModel.attributes, combinationModel: productDetailsModel.combinations)
         self.productDescriptionView.setDescription(productDetailsModel.shortDescription, full: productDetailsModel.fullDescription)
@@ -581,12 +624,12 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     // MARK: Actions
     
     @IBAction func addToCartAction(sender: AnyObject) {
-        seeMoreAttribute(true, title: "ADD TO CART")
+        seeMoreAttribute("cart")
         
     }
     
     func buyItNowAction(gesture: UIGestureRecognizer) {
-        seeMoreAttribute(false, title: "PROCEED TO CHECKOUT")
+        seeMoreAttribute("buy")
     }
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
@@ -637,7 +680,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     // Navigation Bar Actions
     
     func gotoAttributes(gesture: UIGestureRecognizer) {
-        seeMoreAttribute(true, title: "")
+        seeMoreAttribute("")
     }
     
     func checkRequests() {
