@@ -16,10 +16,12 @@ class CategoriesTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        
+        pictureImageView.clipsToBounds = true
     }
 
     func setPicture(text: String) {
-        
+        self.pictureImageView.sd_setImageWithURL(NSURL(string: text), placeholderImage: UIImage(named: "dummy-placeholder"))
     }
     
 }

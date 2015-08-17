@@ -6,6 +6,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CategoriesViewController" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
             <connections>
+                <outlet property="parentArrowView" destination="xQ8-9z-9Rd" id="Gw8-oZ-y2L"/>
                 <outlet property="parentLabel" destination="6gS-4J-vfU" id="r91-AW-fT4"/>
                 <outlet property="parentView" destination="Lmw-P6-eAo" id="h7O-aR-PCe"/>
                 <outlet property="tableView" destination="Y89-Pe-zpq" id="loF-cf-JGo"/>
@@ -21,26 +22,39 @@
                     <rect key="frame" x="0.0" y="40" width="375" height="627"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <connections>
-                        <outlet property="dataSource" destination="-1" id="CY3-Ae-iCz"/>
-                        <outlet property="delegate" destination="-1" id="VDg-4Q-QJi"/>
+                        <outlet property="dataSource" destination="-1" id="fec-Bf-GsR"/>
+                        <outlet property="delegate" destination="-1" id="Z2W-zK-qsd"/>
                     </connections>
                 </tableView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Lmw-P6-eAo">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="40"/>
                     <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Parent" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6gS-4J-vfU">
-                            <rect key="frame" x="0.0" y="0.0" width="121" height="40"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Parent" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6gS-4J-vfU">
+                            <rect key="frame" x="0.0" y="0.0" width="50" height="40"/>
+                            <constraints>
+                                <constraint firstAttribute="width" priority="500" id="N2s-N1-ZPj"/>
+                            </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="right" translatesAutoresizingMaskIntoConstraints="NO" id="xQ8-9z-9Rd">
-                            <rect key="frame" x="134" y="10" width="13" height="20"/>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="right" translatesAutoresizingMaskIntoConstraints="NO" id="xQ8-9z-9Rd">
+                            <rect key="frame" x="63" y="10" width="13" height="20"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="13" id="SQV-gA-8dw"/>
+                                <constraint firstAttribute="height" constant="20" id="tiV-2p-lAY"/>
+                            </constraints>
                         </imageView>
                     </subviews>
                     <color key="backgroundColor" red="0.80000001190000003" green="0.80000001190000003" blue="0.80000001190000003" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="40" id="2Qg-Jb-JdI"/>
+                        <constraint firstItem="6gS-4J-vfU" firstAttribute="top" secondItem="Lmw-P6-eAo" secondAttribute="top" id="6fl-4j-Vyy"/>
+                        <constraint firstAttribute="bottom" secondItem="6gS-4J-vfU" secondAttribute="bottom" id="FwQ-bA-W9U"/>
+                        <constraint firstItem="6gS-4J-vfU" firstAttribute="leading" secondItem="Lmw-P6-eAo" secondAttribute="leading" id="MFH-kx-iyr"/>
+                        <constraint firstItem="xQ8-9z-9Rd" firstAttribute="leading" secondItem="6gS-4J-vfU" secondAttribute="trailing" constant="13" id="OPD-hg-NTQ"/>
+                        <constraint firstItem="xQ8-9z-9Rd" firstAttribute="top" secondItem="Lmw-P6-eAo" secondAttribute="top" constant="10" id="YgG-nH-qOY"/>
+                        <constraint firstAttribute="bottom" secondItem="xQ8-9z-9Rd" secondAttribute="bottom" constant="10" id="kSg-ux-Ce8"/>
                     </constraints>
                 </view>
             </subviews>
