@@ -47,8 +47,10 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     var visibility = 0.0
     var lastContentOffset: CGFloat = 0.0
     
+    var productRequest = false
     var reviewRequest = false
-    var sellerRquest = false
+    var sellerRequest = false
+    
     var productSuccess = false
     var reviewSuccess = false
     var sellerSuccess = false
@@ -116,6 +118,8 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         manager.GET(/*APIAtlas.productPageUrl*/"http://online.api.easydeal.ph/api/v1/product/getProductDetail?productId=1", parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
+            println("product success")
+            
             self.productDetailsModel = ProductDetailsModel.parseDataWithDictionary(responseObject)
             self.attributes = self.productDetailsModel.attributes
 //            self.combinations = self.productDetailsModel.combinations
@@ -124,11 +128,16 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
             let seller = "https://demo5885209.mockable.io/api/v1/seller/getDetails?sellerId=111"
             self.requestSellerDetails(seller, params: nil)
             
+            self.productRequest = true
             self.productSuccess = true
+            self.checkRequests()
+            
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 println("product failed")
+                self.productRequest = true
                 self.productSuccess = false
+                self.checkRequests()
         })
     }
     
@@ -136,6 +145,8 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         manager.GET(APIAtlas.productReviewUrl, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
 
+            println("review success")
+            
             self.productReviewModel = ProductReviewModel.parseDataWithDictionary(responseObject)
             self.reviewRequest = true
             self.reviewSuccess = true
@@ -155,15 +166,17 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         manager.GET(APIAtlas.getSellerUrl, parameters: nil, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
+            println("seller success")
+            
             self.productSellerModel = ProductSellerModel.parseDataWithDictionary(responseObject)
-            self.sellerRquest = true
+            self.sellerRequest = true
             self.sellerSuccess = true
             self.checkRequests()
             
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 println("seller failed")
-                self.sellerRquest = true
+                self.sellerRequest = true
                 self.sellerSuccess = false
                 self.checkRequests()
         })
@@ -399,7 +412,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         attributeModal.definesPresentationContext = true
         attributeModal.view.backgroundColor = UIColor.clearColor()
         attributeModal.view.frame.origin.y = attributeModal.view.frame.size.height
-//        attributeModal.passModel(productDetailsModel: productDetailsModel, combinationModel: productDetailsModel.combinations, selectedValue: selectedValue)
+        attributeModal.passModel(productDetailsModel: productDetailsModel, selectedValue: selectedValue)
 //        attributeModal.setButtons(title)
         attributeModal.setTitle = title
         attributeModal.tabController = self.tabController
@@ -493,45 +506,10 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     }
     
     func populateDetails() {
-        println("=====RESPONSE====")
-        println("     isSuccessful : \(self.productDetailsModel.isSuccessful)")
-        println("          message : \(self.productDetailsModel.message)")
-        println("               id : \(self.productDetailsModel.id)")
-        println("            title : \(self.productDetailsModel.title)")
-        println("             slug : \(self.productDetailsModel.slug)")
-        println("            image : \(self.productDetailsModel.image)")
-        println("           images : \(self.productDetailsModel.images)")
-        println("short description : \(self.productDetailsModel.shortDescription)")
-        println(" full description : \(self.productDetailsModel.fullDescription)")
-        println("        seller id : \(self.productDetailsModel.sellerId)")
-        println("       ATTRIBUTES")
-        for i in 0..<self.productDetailsModel.attributes.count {
-            println("       Group Name : \(self.productDetailsModel.attributes[i].attributeName)")
-            println("        Attribute : \(self.productDetailsModel.attributes[i].valueName)")
-        }
-        println("    PRODUCT UNITS")
-        for i in 0..<self.productDetailsModel.productUnits.count {
-        println("  product unit id : \(self.productDetailsModel.productUnits[i].productUnitId)")
-        println("         quantity : \(self.productDetailsModel.productUnits[i].quantity)")
-        println("              sku : \(self.productDetailsModel.productUnits[i].sku)")
-        println("            price : \(self.productDetailsModel.productUnits[i].price)")
-        println("  discountedPrice : \(self.productDetailsModel.productUnits[i].discountedPrice)")
-        println("      Date Created")
-        println("             date : \(self.productDetailsModel.productUnits[i].createdDate)")
-        println("    timezone type : \(self.productDetailsModel.productUnits[i].createdTimzeZoneType)")
-        println("         timezone : \(self.productDetailsModel.productUnits[i].createdTimezone)")
-        println("Date Last Modified")
-        println("             date : \(self.productDetailsModel.productUnits[i].lastModifiedDate)")
-        println("    timezone type : \(self.productDetailsModel.productUnits[i].lastModifiedTimeZoneType)")
-        println("         timezone : \(self.productDetailsModel.productUnits[i].lastModifiedTimeZone)")
-        println("           status : \(self.productDetailsModel.productUnits[i].status)")
-        println("        image ids : \(self.productDetailsModel.productUnits[i].imageIds)")
-        println("      combination : \(self.productDetailsModel.productUnits[i].combination)")
-        }
         
-        println("=====END=====")
-//        println("POPULATING PRODUCT DETAILS")
-//        self.productImagesView.setDetails(productDetailsModel.title, price: productDetailsModel.newPrice, images: [])
+        println("POPULATING PRODUCT DETAILS")
+        println(self.productDetailsModel.title)
+//        self.productImagesView.setDetails(productDetailsModel.title, price: productDetailsModel.newPrice, images: images)
 //        self.setDetails(productDetailsModel.details)
 //        self.setAttributes(productDetailsModel.attributes, combinationModel: productDetailsModel.combinations)
 //        self.productDescriptionView.setDescription(productDetailsModel.shortDescription, full: productDetailsModel.fullDescription)
@@ -561,9 +539,9 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         self.getFooterView().addSubview(self.getProductReviewFooterView())
         self.getFooterView().addSubview(self.getProductSellerView())
         
-//        self.productImagesView.setDetails(productDetailsModel.title, price: productDetailsModel.newPrice, originalPrice: productDetailsModel.originalPrice, images: [], width: self.view.frame.size.width)
+        self.productImagesView.setDetails(self.productDetailsModel, width: self.view.frame.size.width)
 //        self.setDetails(productDetailsModel.details)
-//        self.setAttributes(productDetailsModel.attributes, combinationModel: productDetailsModel.combinations)
+        self.setAttributes(self.productDetailsModel.attributes, productUnit: self.productDetailsModel.productUnits)
         self.productDescriptionView.setDescription(productDetailsModel.shortDescription, full: productDetailsModel.fullDescription)
         
         self.productReviewHeaderView.setRating(self.productReviewModel.rating)
@@ -607,7 +585,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         self.productDetailsView.frame = newFrame
     }
     
-    func setAttributes(attributes: [ProductAttributeModel], combinationModel: [ProductAvailableAttributeCombinationModel]) {
+    func setAttributes(attributes: [ProductAttributeModel], productUnit: [ProductUnitsModel]) {
         
         var topMargin: CGFloat = 0
         var leftMargin: CGFloat = 0
@@ -617,15 +595,15 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         
         selectedName = []
         selectedValue = []
-        selectedName.append("Quantity")
+//        selectedName.append("Quantity")
 //        selectedValue.append(String(combinationModel[0].quantity) + "x")
         
         for i in 0..<attributes.count {
             for j in 0..<attributes[i].valueId.count {
-//                if combinationModel[0].combination[i] == attributes[i].valueId[j] {
-//                    selectedName.append(attributes[i].attributeName)
-//                    selectedValue.append(attributes[i].valueName[j])
-//                }
+                if productUnit[0].combination[i] == attributes[i].valueId[j] {
+                    selectedName.append(attributes[i].attributeName)
+                    selectedValue.append(attributes[i].valueName[j])
+                }
             }
         }
         
@@ -645,8 +623,8 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
             
             var attributedCategory = NSMutableAttributedString(string: "\(selectedName[i]): ")
             var font = [NSFontAttributeName : UIFont.boldSystemFontOfSize(14.0)]
-//            var attributeItem = NSMutableAttributedString(string: selectedValue[i], attributes: font)
-//            attributedCategory.appendAttributedString(attributeItem)
+            var attributeItem = NSMutableAttributedString(string: selectedValue[i], attributes: font)
+            attributedCategory.appendAttributedString(attributeItem)
             
             attributesLabel.attributedText = attributedCategory
             
@@ -722,14 +700,13 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     
     func checkRequests() {
         
-        println(productSuccess)
-        println(reviewSuccess)
-        println(sellerSuccess)
-        
+//        println("Request Product Details Successful: " + String(stringInterpolationSegment: productSuccess))
+//        println("Request Review  Details Successful: " + String(stringInterpolationSegment: reviewSuccess))
+//        println("Request Seller  Details Successful: " + String(stringInterpolationSegment: sellerSuccess))
         
         if productSuccess && reviewSuccess && sellerSuccess {
             self.loadViewsWithDetails()
-        } else if reviewRequest && sellerRquest {
+        } else if productRequest && reviewRequest && sellerRequest {
             if productSuccess == false || reviewSuccess == false || sellerSuccess == false {
                 addEmptyView()
                 SVProgressHUD.dismiss()

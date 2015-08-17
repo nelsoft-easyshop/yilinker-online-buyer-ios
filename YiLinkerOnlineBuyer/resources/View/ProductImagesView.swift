@@ -126,14 +126,15 @@ class ProductImagesView: UIView, UICollectionViewDataSource, UICollectionViewDel
     
     // Functions
     
-    func setDetails(name: String, price: Float, originalPrice: String, images: NSArray, width: CGFloat) {
-        self.nameLabel.text = name
+    func setDetails(model: ProductDetailsModel, width: CGFloat) {
+        
+        self.nameLabel.text = model.title
         self.nameLabel.sizeToFit()
-        self.originalPrice.text = String(format: "P%.2f", originalPrice)
-        self.priceLabel.text = String(format: "P%.2f", price)
+        self.originalPrice.text = "P" + model.productUnits[0].price
+        self.priceLabel.text = "P" + model.productUnits[0].discountedPrice
         self.width = width
         
-        self.images = images
+        self.images = model.productUnits[0].imageIds
         if self.images.count == 0 {
             self.images = ["http://shop.bench.com.ph/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/Y/W/YWH0089BU4.jpg",
                 "http://shop.bench.com.ph/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/Y/W/YWH0089BU4_F.jpg",

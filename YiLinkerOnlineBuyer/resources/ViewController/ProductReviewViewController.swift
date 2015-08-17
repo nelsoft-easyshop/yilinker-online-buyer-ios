@@ -55,7 +55,7 @@ class ProductReviewViewController: UIViewController {
         self.dimView.addGestureRecognizer(tap)
         self.dimView.backgroundColor = .clearColor()
         
-        rateLabel.textColor = Constants.Colors.productReviewGreen
+        rateLabel.backgroundColor = Constants.Colors.productReviewGreen
         
     }
 

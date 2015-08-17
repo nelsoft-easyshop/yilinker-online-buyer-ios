@@ -133,7 +133,7 @@ class CartProductAttributeViewController: UIViewController, UITableViewDelegate,
     
     func selectedAttribute(controller: ProductAttributeTableViewCell, attributeIndex: Int, attributeValue: String!, attributeId: Int) {
         self.selectedValue[attributeIndex + 1] = String(attributeValue)
-        self.selectedCombination[attributeIndex] = attributeId
+//        self.selectedCombination[attributeIndex] = attributeId
         
         maximumStock = availableStock(selectedCombination)
         self.availabilityStocksLabel.text = "Available stocks : " + String(availableStock(selectedCombination))

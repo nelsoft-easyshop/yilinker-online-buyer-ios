@@ -21,7 +21,7 @@ class ProductAttributeTableViewCell: UITableViewCell {
     var selectedAttributeIndex = 0
     var aSelected: String = ""
     
-    var attributesId: [Int] = []
+    var attributesId: [String] = []
     var attributesName: [String] = []
     var selectedValue: [String] = []
     var selectedAttributes: [String] = []
@@ -35,17 +35,28 @@ class ProductAttributeTableViewCell: UITableViewCell {
     }
     
     // MARK: - Methods
-    
-    func setAttribute(#name: String, values: NSArray, id: NSArray, selectedValue: NSArray, width: CGFloat) {
-        attributeLabel.text = "Select \(name)"
+
+    func setAttribute(model: ProductAttributeModel, selectedValue: NSArray, width: CGFloat) {
+        attributeLabel.text = "Select \(model.attributeName)"
         
         self.attributesId = []
-        self.attributesId = id as! [Int]
+        self.attributesId = model.valueId
         self.attributesName = []
-        self.attributesName = values as! [String]
+        self.attributesName = model.valueName
         
-        addScrollViewWithAttributes(values, selectedValue: selectedValue, width: width)
+        addScrollViewWithAttributes(model.valueName, selectedValue: selectedValue, width: width)
     }
+    
+//    func setAttribute(#name: String, values: NSArray, id: NSArray, selectedValue: NSArray, width: CGFloat) {
+//        attributeLabel.text = "Select \(name)"
+//        
+//        self.attributesId = []
+//        self.attributesId = id as! [String]
+//        self.attributesName = []
+//        self.attributesName = values as! [String]
+//        
+//        addScrollViewWithAttributes(values, selectedValue: selectedValue, width: width)
+//    }
     
     func passAvailableCombination(model: NSArray) {
         combination = model as! [ProductAvailableAttributeCombinationModel]
@@ -66,7 +77,7 @@ class ProductAttributeTableViewCell: UITableViewCell {
             button.layer.cornerRadius = 15
             button.backgroundColor = UIColor.whiteColor()
             button.addTarget(self, action: "clickedAttriubte:", forControlEvents: .TouchUpInside)
-            button.tag = attributesId[i]
+            button.tag = attributesId[i].toInt()!
 //            //>>>>
 //            button.sizeToFit()
 //            button.frame.size.width += CGFloat(30)
@@ -94,6 +105,9 @@ class ProductAttributeTableViewCell: UITableViewCell {
     func clickedAttriubte(sender: UIButton!) {
         if sender.selected { // Unselect
             DeselectButton(sender)
+            if let delegate = self.delegate {
+                delegate.selectedAttribute(self, attributeIndex: self.tag, attributeValue: sender.titleLabel?.text, attributeId: -1)
+            }
         } else {
             for view in scroll.subviews as! [UIView]{
                 if let button = view as? UIButton {
@@ -118,7 +132,7 @@ class ProductAttributeTableViewCell: UITableViewCell {
         button.setTitleColor(UIColor.whiteColor(), forState: .Normal)
         
         if let delegate = self.delegate {
-            delegate.selectedAttribute(self, attributeIndex: self.tag, attributeValue: button.titleLabel?.text, attributeId: button.tag)
+            delegate.selectedAttribute(self, attributeIndex: self.tag, attributeValue: button.titleLabel?.text!, attributeId: button.tag)
         }
         
     }

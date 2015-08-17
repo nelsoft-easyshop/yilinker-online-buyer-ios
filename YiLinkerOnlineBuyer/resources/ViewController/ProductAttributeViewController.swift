@@ -35,11 +35,12 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
     var maximumStock = 1
     var stocks: Int = 0
     
-    var productDetailModel: ProductDetailsModel?
+    var productDetailsModel: ProductDetailsModel!
     var attributes: [ProductAttributeModel] = []
     var availableCombinations: [ProductAvailableAttributeCombinationModel] = []
     var selectedValue: [String] = []
-    var selectedCombination: [Int] = []
+    var selectedID: [String] = []
+    var selectedCombination: [String] = []
     
     var screenWidth: CGFloat = 0.0
     var seeMoreLabel = UILabel()
@@ -123,7 +124,8 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
         cell.delegate = self
         cell.passAvailableCombination(availableCombinations)
         cell.tag = indexPath.row
-        cell.setAttribute(name: attributes[indexPath.row].attributeName, values: attributes[indexPath.row].valueName, id: attributes[indexPath.row].valueId, selectedValue: selectedValue, width: screenWidth)
+        cell.setAttribute(self.productDetailsModel.attributes[indexPath.row], selectedValue: selectedValue, width: self.view.frame.size.width)
+//        cell.setAttribute(name: attributes[indexPath.row].attributeName, values: attributes[indexPath.row].valueName, id: attributes[indexPath.row].valueId, selectedValue: selectedValue, width: screenWidth)
         
         return cell
     }
@@ -150,13 +152,16 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
     
     // MARK: - Methods
     
-    func passModel(#productDetailsModel: ProductDetailsModel, combinationModel: [ProductAvailableAttributeCombinationModel], selectedValue: NSArray) {
-//        setDetail("http://shop.bench.com.ph/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/Y/W/YWH0089BU4.jpg", title: productDetailsModel.title, price: productDetailsModel.newPrice)
+    func passModel(#productDetailsModel: ProductDetailsModel, selectedValue: NSArray) {
+        setDetail("http://shop.bench.com.ph/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/Y/W/YWH0089BU4.jpg", title: productDetailsModel.title, price: productDetailsModel.productUnits[0].price)
+        self.productDetailsModel = productDetailsModel
         self.attributes = productDetailsModel.attributes as [ProductAttributeModel]
-        self.availableCombinations = combinationModel
+//        self.availableCombinations = combinationModel
         self.selectedValue = selectedValue as! [String]
-        self.selectedCombination = combinationModel[0].combination
-        self.maximumStock = combinationModel[0].quantity
+        self.selectedCombination = productDetailsModel.productUnits[0].combination
+        self.maximumStock = productDetailsModel.productUnits[0].quantity
+        
+        self.availabilityStocksLabel.text = "Available stocks : \(productDetailsModel.productUnits[0].quantity)"
         
         if self.maximumStock != 0 {
             stocks = 1
@@ -169,11 +174,13 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
     }
     
     func selectedAttribute(controller: ProductAttributeTableViewCell, attributeIndex: Int, attributeValue: String!, attributeId: Int) {
-        self.selectedValue[attributeIndex + 1] = String(attributeValue)
-        self.selectedCombination[attributeIndex] = attributeId
 
+        self.selectedValue[attributeIndex] = String(attributeValue)
+        self.selectedCombination[attributeIndex] = String(attributeId)
+        println(selectedCombination)
         maximumStock = availableStock(selectedCombination)
-        self.availabilityStocksLabel.text = "Available stocks : " + String(availableStock(selectedCombination))
+        
+        self.availabilityStocksLabel.text = "Available stocks : " + String(maximumStock)
         
         if self.maximumStock != 0 {
             stocks = 1
@@ -187,11 +194,10 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
     
     func availableStock(combination: NSArray) -> Int {
         
-        for i in 0..<availableCombinations.count {
-            println(selectedCombination)
-            if availableCombinations[i].combination == selectedCombination {
-                println("benga! > \(availableCombinations[i].quantity)")
-                return availableCombinations[i].quantity
+        for i in 0..<self.productDetailsModel.productUnits.count {
+            if selectedCombination == self.productDetailsModel.productUnits[i].combination {
+                println("benga! > \(self.productDetailsModel.productUnits[i].quantity)")
+                return self.productDetailsModel.productUnits[i].quantity
             }
         }
         return 0
@@ -205,6 +211,8 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
             stocksLabel.text = String(stringInterpolationSegment: stocks)
         }
         
+        println(stocks)
+        
         if stocks == 0 {
             disableButton(increaseButton)
             disableButton(decreaseButton)
@@ -215,17 +223,32 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
         } else if stocks == minimumStock {
             stocksLabel.alpha = 1.0
             disableButton(decreaseButton)
-        } else if stocks > 0 || stocks < maximumStock {
+            enableButton(increaseButton)
+        } else if stocks > 0 && stocks < maximumStock {
+            stocksLabel.alpha = 1.0
             enableButton(increaseButton)
             enableButton(decreaseButton)
+
         }
+        
+//        else if stocks == maximumStock {
+//            stocksLabel.alpha = 1.0
+//            disableButton(increaseButton)
+//        } else if stocks == minimumStock {
+//            stocksLabel.alpha = 1.0
+//            disableButton(decreaseButton)
+//        } else if stocks > 0 && stocks < maximumStock {
+//            stocksLabel.alpha = 1.0
+//            enableButton(increaseButton)
+//            enableButton(decreaseButton)
+//        }
     }
     
-    func setDetail(image: String, title: String, price: Float) {
+    func setDetail(image: String, title: String, price: String) {
         
         productImageView.sd_setImageWithURL(NSURL(string: image), placeholderImage: UIImage(named: "dummy-placeholder"))
         nameLabel.text = title
-        priceLabel.text = String(format: "P %.2f", price)
+        priceLabel.text = price
     }
     
     func disableButton(button: UIButton) {
@@ -260,6 +283,11 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
         requestAddCartItem(APIAtlas.productPageUrl, params: nil)
     }
     
+    @IBAction func doneAction(sender: AnyObject) {
+        println(selectedValue)
+        hideSelf("done")
+    }
+    
     @IBAction func checkoutAction(sender: AnyObject) {
         println("CHECKOUT")
     }
@@ -280,11 +308,6 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
         view.layer.borderWidth = width
         view.layer.borderColor = color.CGColor
         view.layer.cornerRadius = radius
-    }
-
-    @IBAction func doneAction(sender: AnyObject) {
-        println(selectedValue)
-        hideSelf("done")
     }
 
     func requestAddCartItem(url: String, params: NSDictionary!) {
