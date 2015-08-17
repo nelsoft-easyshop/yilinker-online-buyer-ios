@@ -12,6 +12,7 @@ class CartProductDetailsModel: NSObject {
     
     var id: Int = 0
     var title: String = ""
+    var image: NSURL = NSURL(string: "")!
     var shortDescription: String = ""
     var fullDescription: String = ""
     var sellerId: Int = 0
@@ -23,10 +24,11 @@ class CartProductDetailsModel: NSObject {
     var attributes: [ProductAttributeModel] = []
     var combinations: [ProductAvailableAttributeCombinationModel] = []
     
-    init(id: Int, title: String, originalPrice: Float, newPrice: Float, discount: Float, shortDescription: String, fullDescription: String, sellerId: Int, details: NSArray, attributes: NSArray, combinations: NSArray) {
+    init(id: Int, title: String, image: NSURL, originalPrice: Float, newPrice: Float, discount: Float, shortDescription: String, fullDescription: String, sellerId: Int, details: NSArray, attributes: NSArray, combinations: NSArray) {
         
         self.id = id
         self.title = title
+        self.image = image
         self.originalPrice = originalPrice
         self.newPrice = newPrice
         self.discount = discount
@@ -44,6 +46,7 @@ class CartProductDetailsModel: NSObject {
         
         var id: Int = 0
         var title: String = ""
+        var image: NSURL = NSURL(string: "")!
         var shortDescription: String = ""
         var fullDescription: String = ""
         var sellerId: Int = 0
@@ -62,6 +65,10 @@ class CartProductDetailsModel: NSObject {
             
             if let tempVar = dictionary["title"] as? String {
                 title = tempVar
+            }
+            
+            if let tempVar = dictionary["image"] as? String {
+                image = NSURL(string: tempVar)!
             }
             
             if let tempVar = dictionary["shortDescription"] as? String {
@@ -103,7 +110,7 @@ class CartProductDetailsModel: NSObject {
         } // end if dictionary
         
         return  CartProductDetailsModel(id: id,
-            title: title,
+            title: title, image: image,
             originalPrice: originalPrice,
             newPrice: newPrice,
             discount: discount,

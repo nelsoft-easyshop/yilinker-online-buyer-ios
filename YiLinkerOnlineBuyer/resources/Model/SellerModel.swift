@@ -30,7 +30,7 @@ class SellerModel: NSObject {
         var target: String = ""
         var products: [ProductModel]?
         
-        if let tempSellerAvatar = dictionary["sellerAvatar"] as? String {
+        if let tempSellerAvatar = dictionary["image"] as? String {
             avatar = NSURL(string: tempSellerAvatar)!
         } else {
             avatar = NSURL(string: "")!

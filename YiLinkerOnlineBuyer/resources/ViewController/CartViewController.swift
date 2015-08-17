@@ -8,11 +8,12 @@
 
 import UIKit
 
-class CartViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, CartTableViewCellDelegate {
+class CartViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, CartTableViewCellDelegate, CartProductAttributeViewControllerDelegate {
     
-    let manager = APIManager()
+    var manager = APIManager()
     
     @IBOutlet var cartTableView: UITableView!
+    @IBOutlet weak var dimView: UIView!
     
     @IBOutlet var totalPriceLabel: UILabel!
     @IBOutlet var cartCounterLabel: UILabel!
@@ -20,13 +21,14 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBOutlet var checkoutButton: UIButton!
     
     var tableData: [CartModel] = []
+    var selectedValue: [String] = []
     
     //formatter of Text to remove trailing decimal
     let formatter = NSNumberFormatter()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        manager = APIManager.sharedInstance
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
         
         cartTableView.delegate = self
@@ -39,45 +41,38 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         formatter.minimumFractionDigits = 0
         formatter.maximumFractionDigits = 2
-        
-        populateWishListTableView()
+    
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
     
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(true)
+        
+        populateWishListTableView()
+    }
+    
     @IBAction func buttonClicked(sender: AnyObject) {
     }
     
     func fireDeleteCartItem(url: String, params: NSDictionary!) {
+        showLoader()
         manager.DELETE(url, parameters: params, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            print(responseObject as! NSDictionary)
+                (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+                print(responseObject as! NSDictionary)
                 self.updateCounterLabel()
-            
+                self.dismissLoader()
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 println("failed: \(error)")
-        })
-    }
-    
-    func fireEditCartItem(url: String, params: NSDictionary!) {
-        manager.DELETE(url, parameters: params, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            print(responseObject as! NSDictionary)
-            self.updateCounterLabel()
-            
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                println("failed: \(error)")
+                self.dismissLoader()
         })
     }
     
     func requestProductDetails(url: String, params: NSDictionary!) {
-        SVProgressHUD.show()
-        SVProgressHUD.setBackgroundColor(UIColor.clearColor())
-        
+        showLoader()
         manager.GET(url, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             //print(responseObject as! NSDictionary)
@@ -92,18 +87,94 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
                 self.cartTableView.reloadData()
             }
             self.updateCounterLabel()
-            SVProgressHUD.dismiss()
+            self.dismissLoader()
             
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 println("failed: \(error)")
-                SVProgressHUD.dismiss()
+                self.dismissLoader()
         })
     }
     
+    func fireDeleteCartItem(url: String, index: Int!) {
+        
+        var params = Dictionary<String, String>()
+        
+        var cartModelTemp = tableData[index]
+        
+        params["access_token"] = "access_token"
+        params["productId"] = "\(cartModelTemp.productDetails.id)"
+        params["unitId"] = "\(cartModelTemp.unitId)"
+        params["quantity"] = "\(0)"
+        
+        showLoader()
+        manager.GET(url, parameters: params, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            self.dismissLoader()
+            self.populateWishListTableView()
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                println("failed: \(error)")
+                self.dismissLoader()
+        })
+    }
+    
+    func seeMoreAttribute(index: Int) {
+        
+        var tempModel: CartModel = tableData[index]
+        
+        selectedValue = []
+        selectedValue.append(String(tempModel.productDetails.combinations[0].quantity) + "x")
+        
+        var tempAttributeId: [Int] = []
+        var tempAttributeName: [String] = []
+        
+        for tempAttribute in tempModel.productDetails.attributes{
+            tempAttributeId += tempAttribute.valueId
+            tempAttributeName += tempAttribute.valueName
+        }
+        
+        for tempId in tempModel.selectedAttributes {
+            if let index = find(tempAttributeId, tempId) {
+                selectedValue.append(tempAttributeName[index])
+            }
+        }
+        
+        println(selectedValue)
+        
+        var attributeModal = CartProductAttributeViewController(nibName: "CartProductAttributeViewController", bundle: nil)
+        attributeModal.delegate = self
+        attributeModal.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
+        attributeModal.providesPresentationContextTransitionStyle = true
+        attributeModal.definesPresentationContext = true
+        attributeModal.view.backgroundColor = UIColor.clearColor()
+        attributeModal.view.frame.origin.y = attributeModal.view.frame.size.height
+        attributeModal.passModel(cartModel: tableData[index], combinationModel: tempModel.productDetails.combinations, selectedValue: selectedValue, quantity: tempModel.quantity)
+        //        self.navigationController?.presentViewController(attributeModal, animated: true, completion: nil)
+        self.tabBarController?.presentViewController(attributeModal, animated: true, completion: nil)
+        
+        UIView.animateWithDuration(0.3, animations: {
+            self.dimView.alpha = 0.5
+            self.view.transform = CGAffineTransformMakeScale(0.92, 0.95)
+            self.navigationController?.navigationBar.alpha = 0.0
+        })
+
+    }
+    
+    //Loader function
+    func showLoader() {
+        SVProgressHUD.show()
+        SVProgressHUD.setBackgroundColor(UIColor.whiteColor())
+    }
+    
+    func dismissLoader() {
+        SVProgressHUD.dismiss()
+    }
+    
     // MARK: Methods Updating Values
-    func populateWishListTableView (){
-        requestProductDetails("http://demo5885209.mockable.io/api/v1/cart/getCart", params: nil)
+    func populateWishListTableView () {
+        tableData = []
+        requestProductDetails(APIAtlas.cartUrl, params: nil)
     }
     
     func updateCounterLabel() {
@@ -135,7 +206,8 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
         //Set cell data
         var tempModel: CartModel = tableData[indexPath.row]
         cell.productNameLabel.text = tempModel.productDetails.title
-        //cell.productItemImageView.sd_setImageWithURL(tempModel.productDetails?.a, placeholderImage: <#UIImage!#>)   //no image yet in API
+        cell.productItemImageView.sd_setImageWithURL(tempModel.productDetails.image, placeholderImage: UIImage(named: "dummy-placeholder"))   //no image yet in API
+        println("\(tempModel.productDetails.image)")
         var tempAttributesText: String = ""
         var tempAttributeId: [Int] = []
         var tempAttributeName: [String] = []
@@ -176,14 +248,13 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
     func deleteButtonActionForIndex(sender: AnyObject){
         var pathOfTheCell: NSIndexPath = cartTableView.indexPathForCell(sender as! UITableViewCell)!
         var rowOfTheCell: Int = pathOfTheCell.row
-        tableData.removeAtIndex(pathOfTheCell.row);
-        cartTableView.deleteRowsAtIndexPaths([pathOfTheCell], withRowAnimation: UITableViewRowAnimation.Fade)
-        updateCounterLabel()
+        fireDeleteCartItem("https://demo3526363.mockable.io/api/v1/auth/cart/updateCartItem", index: rowOfTheCell)
     }
     
     func editButtonActionForIndex(sender: AnyObject){
         var pathOfTheCell: NSIndexPath = cartTableView.indexPathForCell(sender as! UITableViewCell)!
         var rowOfTheCell: Int = pathOfTheCell.row
+        seeMoreAttribute(rowOfTheCell)
     }
     
     func checkBoxButtonActionForIndex(sender: AnyObject, state: Bool){
@@ -194,6 +265,29 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
         tempModel.selected = state
 
         calculateTotalPrice()
+    }
+    
+    func swipeViewDidScroll(sender: AnyObject) {
+        NSNotificationCenter.defaultCenter().postNotificationName("SwipeForOptionsCellEnclosingTableViewDidBeginScrollingNotification", object: self)
+    }
+    
+    // MARK: - Cart Product Attribute View Controller Delegate
+    func pressedCancelAttribute(controller: CartProductAttributeViewController) {
+        UIView.animateWithDuration(0.3, animations: {
+            self.view.transform = CGAffineTransformMakeTranslation(1, 1)
+            self.dimView.alpha = 0
+            self.navigationController?.navigationBar.alpha = 1.0
+        })
+    }
+    
+    func pressedDoneAttribute(controller: CartProductAttributeViewController) {
+        UIView.animateWithDuration(0.3, animations: {
+            self.view.transform = CGAffineTransformMakeTranslation(1, 1)
+            self.dimView.alpha = 0
+            self.navigationController?.navigationBar.alpha = 1.0
+        })
+        
+        populateWishListTableView()
     }
     
     /*

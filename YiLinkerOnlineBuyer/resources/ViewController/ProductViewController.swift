@@ -32,7 +32,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     var productReviewFooterView: ProductReviewFooterView!
     var productSellerView: ProductSellerView!
     
-    let manager = APIManager()
+    let manager = APIManager.sharedInstance
     
     var productDetailsModel: ProductDetailsModel!
     var attributes: [ProductAttributeModel] = []
@@ -115,7 +115,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         SVProgressHUD.show()
         SVProgressHUD.setBackgroundColor(UIColor.clearColor())
         
-        manager.GET(url, parameters: params, success: {
+        manager.GET(APIAtlas.productPageUrl, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
             self.productDetailsModel = ProductDetailsModel.parseDataWithDictionary(responseObject)
@@ -136,7 +136,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     }
     
     func requestReviewDetails(url: String, params: NSDictionary!) {
-        manager.GET(url, parameters: params, success: {
+        manager.GET(APIAtlas.productReviewUrl, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
 
             self.productReviewModel = ProductReviewModel.parseDataWithDictionary(responseObject)
@@ -156,7 +156,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     
     func requestSellerDetails(url: String, params: NSDictionary!) {
         
-        manager.GET(url, parameters: nil, success: {
+        manager.GET(APIAtlas.getSellerUrl, parameters: nil, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
             self.productSellerModel = ProductSellerModel.parseDataWithDictionary(responseObject)
@@ -182,8 +182,8 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         
 //        let close = UIBarButtonItem(image: img.image, style: .Plain, target: self, action: "barCloseAction")
         let close = UIBarButtonItem(barButtonSystemItem: .Stop, target: self, action: "barCloseAction")
-        let wishlist = UIBarButtonItem(image: UIImage(named: "wishlist"), style: .Plain, target: self, action: "barCloseAction")
-        let rate = UIBarButtonItem(image: UIImage(named: "rating"), style: .Plain, target: self, action: "barRatetAction")
+        let wishlist = UIBarButtonItem(image: UIImage(named: "wishlist"), style: .Plain, target: self, action: "barWishlistAction")
+        let rate = UIBarButtonItem(image: UIImage(named: "rating"), style: .Plain, target: self, action: "barRateAction")
         let message = UIBarButtonItem(image: UIImage(named: "msg"), style: .Plain, target: self, action: "barMessageAction")
         let share = UIBarButtonItem(image: UIImage(named: "share"), style: .Plain, target: self, action: "barShareAction")
         var betweenSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Action, target: nil, action: nil)
@@ -450,6 +450,14 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
             self.navigationController?.navigationBar.alpha = CGFloat(self.visibility)
         })
     }
+    func pressedDoneAttribute(controller: ProductAttributeViewController) {
+        UIView.animateWithDuration(0.3, animations: {
+            self.view.transform = CGAffineTransformMakeTranslation(1, 1)
+            self.dimView.alpha = 0
+            self.dimView.layer.zPosition = -1
+            self.navigationController?.navigationBar.alpha = CGFloat(self.visibility)
+        })
+    }
     
     func pressedCancelReview(controller: ProductReviewViewController) {
         UIView.animateWithDuration(0.3, animations: {
@@ -687,20 +695,20 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         self.navigationController?.popToRootViewControllerAnimated(true)
     }
 
-    func barWishlistction() {
-        println("Wishlist")
+    func barWishlistAction() {
+        showAlert("Wishlist")
     }
 
     func barRateAction() {
-        println("Rate")
+        showAlert("Rate")
     }
 
     func barMessageAction() {
-        println("Message")
+        showAlert("Message")
     }
 
     func barShareAction() {
-        println("Share")
+        showAlert("Share")
     }
     
 }

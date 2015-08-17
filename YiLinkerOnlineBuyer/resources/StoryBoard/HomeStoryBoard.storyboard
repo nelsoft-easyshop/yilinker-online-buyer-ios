@@ -210,12 +210,12 @@
                         </subviews>
                         <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="Oju-HB-quM" firstAttribute="leading" secondItem="U4b-3y-sJx" secondAttribute="leadingMargin" constant="-16" id="6Q4-If-ybZ"/>
+                            <constraint firstItem="Gah-ew-xOB" firstAttribute="top" secondItem="Oju-HB-quM" secondAttribute="bottom" id="90g-n3-NhS"/>
                             <constraint firstItem="QM6-3q-0fn" firstAttribute="top" secondItem="m8O-vp-ewv" secondAttribute="bottom" id="Css-FU-o1z"/>
+                            <constraint firstItem="Oju-HB-quM" firstAttribute="top" secondItem="QM6-3q-0fn" secondAttribute="bottom" constant="1" id="OCe-kG-wsO"/>
+                            <constraint firstItem="Oju-HB-quM" firstAttribute="leading" secondItem="U4b-3y-sJx" secondAttribute="leading" id="Vdy-Iv-NOx"/>
                             <constraint firstAttribute="trailingMargin" secondItem="QM6-3q-0fn" secondAttribute="trailing" constant="-16" id="YOF-3X-lIg"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="Oju-HB-quM" secondAttribute="trailing" constant="-16" id="fLC-Vl-PXe"/>
-                            <constraint firstItem="Oju-HB-quM" firstAttribute="top" secondItem="QM6-3q-0fn" secondAttribute="bottom" constant="1" id="gGB-Jk-KJK"/>
-                            <constraint firstItem="Gah-ew-xOB" firstAttribute="top" secondItem="Oju-HB-quM" secondAttribute="bottom" id="lq3-Er-4dV"/>
+                            <constraint firstAttribute="trailing" secondItem="Oju-HB-quM" secondAttribute="trailing" id="iwP-Hw-X5U"/>
                             <constraint firstItem="QM6-3q-0fn" firstAttribute="leading" secondItem="U4b-3y-sJx" secondAttribute="leadingMargin" constant="-16" id="w43-Pn-QBn"/>
                         </constraints>
                     </view>
@@ -242,7 +242,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DP3-44-XbQ">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DP3-44-XbQ" userLabel="Counter View">
                                 <rect key="frame" x="0.0" y="64" width="375" height="35"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text=" " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PGR-Y7-dO2">
@@ -257,7 +257,7 @@
                                     <constraint firstAttribute="height" constant="35" id="Nco-hE-fbs"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vgh-W9-rFp">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vgh-W9-rFp" userLabel="Checkout View">
                                 <rect key="frame" x="0.0" y="548" width="375" height="70"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Total" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R5e-rH-Gus">
@@ -324,19 +324,27 @@
                                 <rect key="frame" x="0.0" y="99" width="375" height="448"/>
                                 <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
                             </tableView>
+                            <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Yk8-Ux-T9y" userLabel="Dim View">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="vgh-W9-rFp" firstAttribute="leading" secondItem="fCv-gF-g2z" secondAttribute="leadingMargin" constant="-16" id="1wU-Rr-TJP"/>
                             <constraint firstAttribute="trailingMargin" secondItem="vgh-W9-rFp" secondAttribute="trailing" constant="-16" id="3hL-o6-WUq"/>
+                            <constraint firstItem="Yk8-Ux-T9y" firstAttribute="leading" secondItem="fCv-gF-g2z" secondAttribute="leading" id="DeV-Lg-1mo"/>
+                            <constraint firstAttribute="trailing" secondItem="Yk8-Ux-T9y" secondAttribute="trailing" id="FoR-nT-nm7"/>
+                            <constraint firstItem="mFe-cC-ywX" firstAttribute="leading" secondItem="fCv-gF-g2z" secondAttribute="leading" id="QMV-wu-5qI"/>
                             <constraint firstItem="DP3-44-XbQ" firstAttribute="top" secondItem="Q5h-SR-VNN" secondAttribute="bottom" id="RgK-nt-gsx"/>
-                            <constraint firstItem="mFe-cC-ywX" firstAttribute="leading" secondItem="fCv-gF-g2z" secondAttribute="leadingMargin" constant="-16" id="arj-me-sAF"/>
+                            <constraint firstItem="Yk8-Ux-T9y" firstAttribute="top" secondItem="fCv-gF-g2z" secondAttribute="top" id="V7t-NU-ABb"/>
+                            <constraint firstAttribute="trailing" secondItem="mFe-cC-ywX" secondAttribute="trailing" id="ZnZ-Jb-huT"/>
                             <constraint firstItem="DP3-44-XbQ" firstAttribute="leading" secondItem="fCv-gF-g2z" secondAttribute="leadingMargin" constant="-16" id="btH-nf-Gzh"/>
-                            <constraint firstItem="vgh-W9-rFp" firstAttribute="top" secondItem="mFe-cC-ywX" secondAttribute="bottom" constant="1" id="ePP-KP-ZM1"/>
                             <constraint firstAttribute="trailingMargin" secondItem="DP3-44-XbQ" secondAttribute="trailing" constant="-16" id="eu6-Af-dIk"/>
-                            <constraint firstItem="mFe-cC-ywX" firstAttribute="top" secondItem="DP3-44-XbQ" secondAttribute="bottom" id="iag-Vm-UXp"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="mFe-cC-ywX" secondAttribute="trailing" constant="-16" id="l1n-Ga-tb5"/>
+                            <constraint firstItem="vgh-W9-rFp" firstAttribute="top" secondItem="mFe-cC-ywX" secondAttribute="bottom" constant="1" id="fj0-mv-m9i"/>
+                            <constraint firstItem="mFe-cC-ywX" firstAttribute="top" secondItem="DP3-44-XbQ" secondAttribute="bottom" id="lt9-ps-Suq"/>
                             <constraint firstItem="9HC-u3-3mw" firstAttribute="top" secondItem="vgh-W9-rFp" secondAttribute="bottom" id="pEh-70-9NZ"/>
+                            <constraint firstAttribute="bottom" secondItem="Yk8-Ux-T9y" secondAttribute="bottom" id="tm1-RZ-zaA"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Cart" id="ECi-yG-sDA"/>
@@ -345,6 +353,7 @@
                         <outlet property="cartCounterLabel" destination="PGR-Y7-dO2" id="WGL-Iz-Se7"/>
                         <outlet property="cartTableView" destination="mFe-cC-ywX" id="GdG-2D-8Wv"/>
                         <outlet property="checkoutButton" destination="QsH-XS-WrT" id="vXL-p5-paz"/>
+                        <outlet property="dimView" destination="Yk8-Ux-T9y" id="O3T-MN-L23"/>
                         <outlet property="totalPriceLabel" destination="d0X-nt-S88" id="kH7-C0-0gX"/>
                     </connections>
                 </viewController>
