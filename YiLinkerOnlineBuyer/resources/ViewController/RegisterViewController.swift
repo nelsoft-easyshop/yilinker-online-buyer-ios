@@ -248,8 +248,6 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         
         let OKAction = UIAlertAction(title: "OK", style: .Default) { (action) in
             alertController.dismissViewControllerAnimated(true, completion: nil)
-            let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-            appDelegate.changeRootToHomeView()
         }
         
         alertController.addAction(OKAction)

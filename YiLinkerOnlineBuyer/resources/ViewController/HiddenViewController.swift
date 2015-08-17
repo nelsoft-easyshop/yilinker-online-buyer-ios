@@ -19,7 +19,7 @@ class HiddenViewController: UIViewController {
     var categoriesViewController: CategoriesViewController?
     
     var followedSellerViewController: FollowedSellerViewController?
-    var profileViewController: ProfileViewController?
+    var profileViewController: ProfileCollectionViewController?
     
     var viewControllers = [UIViewController]()
     var contentViewFrame: CGRect?
@@ -86,7 +86,7 @@ class HiddenViewController: UIViewController {
             self.customizeShoppingViewController = CustomizeShoppingViewController(nibName: "CustomizeShoppingViewController", bundle: nil)
             self.todaysPromoViewController = TodaysPromoViewController(nibName: "TodaysPromoViewController", bundle: nil)
             self.categoriesViewController = CategoriesViewController(nibName: "CategoriesViewController", bundle: nil)
-            self.profileViewController = ProfileViewController(nibName: "ProfileViewController", bundle: nil)
+            self.profileViewController = ProfileCollectionViewController(nibName: "ProfileCollectionViewController", bundle: nil)
             
             self.viewControllers.append(self.helpViewController!)
             self.viewControllers.append(self.followedSellerViewController!)

@@ -10,6 +10,7 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="106"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ju7-Il-n4p" id="OGO-7r-rfL">
+                <rect key="frame" x="0.0" y="0.0" width="375" height="105"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" id="rcr-Cw-LIl">
