@@ -126,7 +126,7 @@ class ProductImagesView: UIView, UICollectionViewDataSource, UICollectionViewDel
     
     // Functions
     
-    func setDetails(name: String, price: Float, originalPrice: Float, images: NSArray, width: CGFloat) {
+    func setDetails(name: String, price: Float, originalPrice: String, images: NSArray, width: CGFloat) {
         self.nameLabel.text = name
         self.nameLabel.sizeToFit()
         self.originalPrice.text = String(format: "P%.2f", originalPrice)

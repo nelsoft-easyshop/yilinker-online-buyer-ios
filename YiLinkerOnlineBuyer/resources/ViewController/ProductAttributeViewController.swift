@@ -151,7 +151,7 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
     // MARK: - Methods
     
     func passModel(#productDetailsModel: ProductDetailsModel, combinationModel: [ProductAvailableAttributeCombinationModel], selectedValue: NSArray) {
-        setDetail("http://shop.bench.com.ph/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/Y/W/YWH0089BU4.jpg", title: productDetailsModel.title, price: productDetailsModel.newPrice)
+//        setDetail("http://shop.bench.com.ph/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/Y/W/YWH0089BU4.jpg", title: productDetailsModel.title, price: productDetailsModel.newPrice)
         self.attributes = productDetailsModel.attributes as [ProductAttributeModel]
         self.availableCombinations = combinationModel
         self.selectedValue = selectedValue as! [String]

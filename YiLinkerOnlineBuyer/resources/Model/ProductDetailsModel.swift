@@ -10,50 +10,63 @@ import Foundation
 
 class ProductDetailsModel {
 
-    var id: Int = 0
+    var message: String = ""
+    var isSuccessful: Bool = false
+    
+    var id: String = ""
     var title: String = ""
+    var slug: String = ""
+    var image: String = ""
+    var images: [String] = []
     var shortDescription: String = ""
     var fullDescription: String = ""
     var sellerId: Int = 0
-    var originalPrice: Float = 0
-    var newPrice: Float = 0
-    var discount: Float = 0
-    var details: [String] = []
     
-    var attributes: [ProductAttributeModel] = []
-    var combinations: [ProductAvailableAttributeCombinationModel] = []
+    var attributes: [ProductAttributeModel] = [] //done
+    var productUnits: [ProductUnitsModel] = []
     
-    init(id: Int, title: String, originalPrice: Float, newPrice: Float, discount: Float, shortDescription: String, fullDescription: String, sellerId: Int, details: NSArray, attributes: NSArray, combinations: NSArray) {
+    //DETAILS ???
+    //BADGES  ???
+    
+    init(message: String, isSuccessful: Bool, id: String, title: String, slug: String, image: String, images: NSArray, shortDescription: String, fullDescription: String, sellerId: Int, attributes: NSArray, productUnits: NSArray) {
+        
+        self.message = message
+        self.isSuccessful = isSuccessful
         
         self.id = id
         self.title = title
-        self.originalPrice = originalPrice
-        self.newPrice = newPrice
-        self.discount = discount
+        self.slug = slug
+        self.image = image
+        self.images = images as! [String]
         self.shortDescription = shortDescription
         self.fullDescription = fullDescription
-        self.details = details as! [String]
         self.sellerId = sellerId
+        
         self.attributes = attributes as! [ProductAttributeModel]
-        self.combinations = combinations as! [ProductAvailableAttributeCombinationModel]
+        self.productUnits = productUnits as! [ProductUnitsModel]
     }
     
     class func parseDataWithDictionary(dictionary: AnyObject) -> ProductDetailsModel {
         
         var message: String = ""
-        var isSuccessful: String = ""
+        var isSuccessful: Bool = false
         
-        var id: Int = 0
+        var id: String = ""
         var title: String = ""
+        var slug: String = ""
+        var image: String = ""
+        var images: [String] = []
         var shortDescription: String = ""
         var fullDescription: String = ""
         var sellerId: Int = 0
-        var originalPrice: Float = 0
-        var newPrice: Float = 0
-        var discount: Float = 0
-        var details: [String] = []
         
-        var attributes: [ProductAttributeModel] = []
+        var attributes: [ProductAttributeModel] = [] //done
+        var productUnits: [ProductUnitsModel] = []
+        
+        //DETAILS ???
+        //BADGES  ???
+        
+        // ----
         var combinations: [ProductAvailableAttributeCombinationModel] = []
         
         if dictionary.isKindOfClass(NSDictionary) {
@@ -62,18 +75,31 @@ class ProductDetailsModel {
                 message = tempVar
             }
             
-            if let tempVar = dictionary["isSuccessful"] as? String {
+            if let tempVar = dictionary["isSuccessful"] as? Bool {
                 isSuccessful = tempVar
             }
             
             if let value: AnyObject = dictionary["data"] {
                 
-                if let tempVar = value["id"] as? Int {
+                if let tempVar = value["id"] as? String {
                     id = tempVar
                 }
                 
                 if let tempVar = value["title"] as? String {
                     title = tempVar
+                }
+                
+                if let tempVar = value["slug"] as? String {
+                    slug = tempVar
+                }
+                
+                
+                if let tempVar = value["image"] as? String {
+                    image = tempVar
+                }
+                
+                if let tempVar = value["images"] as? NSArray {
+                    images = tempVar as! [String]
                 }
                 
                 if let tempVar = value["shortDescription"] as? String {
@@ -87,49 +113,34 @@ class ProductDetailsModel {
                 if let tempVar = value["sellerId"] as? Int {
                     sellerId = tempVar
                 }
-             
-                if let tempVar = value["originalPrice"] as? Float {
-                    originalPrice = tempVar
-                }
-                
-                if let tempVar = value["newPrice"] as? Float {
-                    newPrice = tempVar
-                }
-                
-                if let tempVar = value["discount"] as? Float {
-                    discount = tempVar
-                }
                 
                 for subValue in value["attributes"] as! NSArray {
                     let model: ProductAttributeModel = ProductAttributeModel.parseAttribute(subValue as! NSDictionary)
                     attributes.append(model)
                 }
 
-                for subValue in value["availableAttributeCombi"] as! NSArray {
-                    let model: ProductAvailableAttributeCombinationModel = ProductAvailableAttributeCombinationModel.parseCombination(subValue as! NSDictionary)
-                    
-                    combinations.append(model)
+                for subValue in value["productUnits"] as! NSArray {
+                    let model: ProductUnitsModel = ProductUnitsModel.parseProductUnits(subValue as! NSDictionary)
+                    productUnits.append(model)
                 }
                 
-                if let tempVar = value["details"] as? NSArray {
-                    details = tempVar as! [String]
-                }
-            }
-        } // end if dictionary
+            } // data
+        } // dictionary
         
-        return  ProductDetailsModel(id: id,
+        return ProductDetailsModel(message: message,
+            isSuccessful: isSuccessful,
+            id: id,
             title: title,
-            originalPrice: originalPrice,
-            newPrice: newPrice,
-            discount: discount,
+            slug: slug,
+            image: image,
+            images: images,
             shortDescription: shortDescription,
             fullDescription: fullDescription,
             sellerId: sellerId,
-            details: details,
             attributes: attributes,
-            combinations: combinations)
+            productUnits: productUnits)
         
         
-    }// parseDataWithDictionary
+    } // parseDataWithDictionary
     
 }

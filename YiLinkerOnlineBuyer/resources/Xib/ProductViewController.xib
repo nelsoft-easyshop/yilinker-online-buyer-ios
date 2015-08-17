@@ -32,7 +32,7 @@
                         <outlet property="delegate" destination="-1" id="FVY-ai-ilb"/>
                     </connections>
                 </tableView>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="C60-aW-ouZ" userLabel="buttons container">
+                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="C60-aW-ouZ" userLabel="buttons container">
                     <rect key="frame" x="0.0" y="553" width="375" height="65"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h9O-cg-S2c">
