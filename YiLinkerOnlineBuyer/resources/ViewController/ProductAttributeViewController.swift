@@ -177,10 +177,11 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
 
         self.selectedValue[attributeIndex] = String(attributeValue)
         self.selectedCombination[attributeIndex] = String(attributeId)
-        println(selectedCombination)
+
         maximumStock = availableStock(selectedCombination)
-        
         self.availabilityStocksLabel.text = "Available stocks : " + String(maximumStock)
+
+        listAvailableCombinations()
         
         if self.maximumStock != 0 {
             stocks = 1
@@ -192,11 +193,15 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
         }
     }
     
+    func listAvailableCombinations() {
+        println(selectedCombination)
+    }
+    
     func availableStock(combination: NSArray) -> Int {
         
         for i in 0..<self.productDetailsModel.productUnits.count {
             if selectedCombination == self.productDetailsModel.productUnits[i].combination {
-                println("benga! > \(self.productDetailsModel.productUnits[i].quantity)")
+                println("PRODUCT UNIT ID : \(self.productDetailsModel.productUnits[i].productUnitId)")
                 return self.productDetailsModel.productUnits[i].quantity
             }
         }
@@ -210,8 +215,6 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
         } else {
             stocksLabel.text = String(stringInterpolationSegment: stocks)
         }
-        
-        println(stocks)
         
         if stocks == 0 {
             disableButton(increaseButton)
@@ -231,17 +234,6 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
 
         }
         
-//        else if stocks == maximumStock {
-//            stocksLabel.alpha = 1.0
-//            disableButton(increaseButton)
-//        } else if stocks == minimumStock {
-//            stocksLabel.alpha = 1.0
-//            disableButton(decreaseButton)
-//        } else if stocks > 0 && stocks < maximumStock {
-//            stocksLabel.alpha = 1.0
-//            enableButton(increaseButton)
-//            enableButton(decreaseButton)
-//        }
     }
     
     func setDetail(image: String, title: String, price: String) {
