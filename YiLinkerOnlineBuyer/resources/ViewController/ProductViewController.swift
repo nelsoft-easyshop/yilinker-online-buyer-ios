@@ -144,8 +144,6 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         manager.POST(/*APIAtlas.productReviewUrl*/url, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
-            println(responseObject)
-            
             self.productReviewModel = ProductReviewModel.parseDataWithDictionary(responseObject)
             self.reviewRequest = true
             self.reviewSuccess = true

@@ -278,20 +278,6 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
         cancelAction(nil)
     }
     
-    @IBAction func addToCartAction(sender: AnyObject) {
-        
-        let url: String = "api/v1/auth/cart/updateCartItem"
-        
-        let params: NSDictionary = ["accessToken": "access token here",
-                                         "unitId": "unit id here",
-                                  "combinationId": "combination id here",
-                                       "quantity": "quantity here"]
-        
-        println(params)
-        
-        requestAddCartItem(APIAtlas.productPageUrl, params: nil)
-    }
-    
     @IBAction func doneAction(sender: AnyObject) {
         println(selectedValue)
         hideSelf("done")
@@ -299,6 +285,70 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
     
     @IBAction func checkoutAction(sender: AnyObject) {
         println("CHECKOUT")
+    }
+    
+    @IBAction func addToCartAction(sender: AnyObject) {
+        
+        let url: String = "http://online.api.easydeal.ph/api/v1/auth/cart/updateCartItem"
+        let quantity = stocksLabel.text?.toInt()
+        let params: NSDictionary = ["access_token": "NDEwMDZkYmQ2ZmU5YmVjMTRkNmM1NjI4NWMyMTM2MTcwMmRmZGM5OWExNTQ2YTAwNjU1ZGE5NTcyYmNjZTNjZQ",
+                                       "productId": "1",
+                                          "unitId": "1",
+                                        "quantity": "10"]
+        
+        println(params)
+        
+        requestAddCartItem(url, params: params)
+    }
+    
+    func requestAddCartItem(url: String, params: NSDictionary!) {
+        SVProgressHUD.show()
+        let manager = APIManager.sharedInstance
+        
+        manager.POST(url, parameters: params, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            
+            SVProgressHUD.dismiss()
+            
+            if responseObject.isKindOfClass(NSDictionary) {
+                
+                if let tempVar = responseObject["isSuccessful"] as? Bool {
+                    if tempVar {
+                        self.hideSelf("cart")
+                        self.addBadge()
+                    } else {
+                        if let tempVar = responseObject["message"] as? String {
+                            println(tempVar)
+                        }
+                    }
+                }
+            }
+            
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                SVProgressHUD.dismiss()
+                
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                println(task.statusCode)
+                
+                println("update cart failed")
+                println(error)
+        })
+    }
+    
+    func hideSelf(action: String) {
+        self.dismissViewControllerAnimated(true, completion: nil)
+        if let delegate = self.delegate {
+            delegate.dissmissAttributeViewController(self, type: action)
+        }
+    }
+    
+    func addBadge() {
+        if let badgeValue = (self.tabController.tabBar.items![4] as! UITabBarItem).badgeValue?.toInt() {
+            (self.tabController.tabBar.items![4] as! UITabBarItem).badgeValue = String(badgeValue + 1)
+        } else {
+            (self.tabController.tabBar.items![4] as! UITabBarItem).badgeValue = "1"
+        }
     }
     
     func tapGesture(action: Selector) -> UITapGestureRecognizer {
@@ -317,38 +367,6 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
         view.layer.borderWidth = width
         view.layer.borderColor = color.CGColor
         view.layer.cornerRadius = radius
-    }
-
-    func requestAddCartItem(url: String, params: NSDictionary!) {
-        SVProgressHUD.show()
-        let manager = APIManager.sharedInstance
-        
-        manager.GET(APIAtlas.productPageUrl, parameters: params, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            
-            SVProgressHUD.dismiss()
-            println("product success")
-            
-            if let badgeValue = (self.tabController.tabBar.items![4] as! UITabBarItem).badgeValue?.toInt() {
-                (self.tabController.tabBar.items![4] as! UITabBarItem).badgeValue = String(badgeValue + 1)
-            } else {
-                (self.tabController.tabBar.items![4] as! UITabBarItem).badgeValue = "1"
-            }
-            
-            self.hideSelf("cart")
-            
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                SVProgressHUD.dismiss()
-                println("product failed")
-        })
-    }
-    
-    func hideSelf(action: String) {
-        self.dismissViewControllerAnimated(true, completion: nil)
-        if let delegate = self.delegate {
-            delegate.dissmissAttributeViewController(self, type: action)
-        }
     }
     
 }
