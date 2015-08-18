@@ -8,13 +8,15 @@
 
 import UIKit
 
-protocol ProductAttributeViewControllerDelegate {
-    func pressedCancelAttribute(controller: ProductAttributeViewController)
-    func pressedDoneAttribute(controller: ProductAttributeViewController)
+protocol CartProductAttributeViewControllerDelegate {
+    func pressedCancelAttribute(controller: CartProductAttributeViewController)
+    func pressedDoneAttribute(controller: CartProductAttributeViewController)
 }
 
-class ProductAttributeViewController: UIViewController, UITableViewDelegate, ProductAttributeTableViewCellDelegate {
-
+class CartProductAttributeViewController: UIViewController, UITableViewDelegate, ProductAttributeTableViewCellDelegate {
+    
+    var manager = APIManager()
+    
     @IBOutlet weak var dimView: UIView!
     @IBOutlet weak var productImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
@@ -23,19 +25,18 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
     @IBOutlet weak var stocksLabel: UILabel!
     @IBOutlet weak var decreaseButton: UIButton!
     @IBOutlet weak var increaseButton: UIButton!
-    @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var addToCartButton: UIButton!
-    @IBOutlet weak var buyItNowView: UIView!
-    @IBOutlet weak var cartCheckoutButton: UIButton!
     @IBOutlet weak var doneButton: UIButton!
+    @IBOutlet weak var cancelButton: UIButton!
+    @IBOutlet weak var tableView: UITableView!
     
-    var delegate: ProductAttributeViewControllerDelegate?
+    var delegate: CartProductAttributeViewControllerDelegate?
     
     var minimumStock = 1
     var maximumStock = 1
     var stocks: Int = 0
     
-    var productDetailModel: ProductDetailsModel?
+    var cartModel : CartModel?
+    var productDetailModel: CartProductDetailsModel?
     var attributes: [ProductAttributeModel] = []
     var availableCombinations: [ProductAvailableAttributeCombinationModel] = []
     var selectedValue: [String] = []
@@ -43,7 +44,7 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         stocksLabel.layer.borderWidth = 1.2
         stocksLabel.layer.borderColor = UIColor.grayColor().CGColor
         stocksLabel.layer.cornerRadius = 5
@@ -56,14 +57,34 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
         tap.addTarget(self, action: "dimViewAction:")
         self.dimView.addGestureRecognizer(tap)
         self.dimView.backgroundColor = .clearColor()
-        
-        setBorderOf(view: addToCartButton, width: 1, color: .grayColor(), radius: 3)
-        setBorderOf(view: buyItNowView, width: 1, color: .grayColor(), radius: 3)
-        setBorderOf(view: cartCheckoutButton, width: 1, color: .grayColor(), radius: 3)
-        
-        buyItNowView.addGestureRecognizer(tapGesture("buyItNowAction:"))
     }
-
+    
+    func fireEditCartItem(url: String, quantity: Int!) {
+        
+        var params = Dictionary<String, String>()
+        
+        params["access_token"] = "access_token"
+        params["productId"] = "\(cartModel?.productDetails.id)"
+        params["unitId"] = "\(cartModel?.unitId)"
+        params["quantity"] = "\(quantity)"
+        
+        showLoader()
+        manager.GET(url, parameters: params, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+                self.dismissLoader()
+                println(params)
+                self.dismissViewControllerAnimated(true, completion: nil)
+                if let delegate = self.delegate {
+                    delegate.pressedDoneAttribute(self)
+                }
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                println("failed: \(error)")
+                self.dismissLoader()
+        })
+    }
+    
+    
     // MARK: - Table View Data Source
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -100,46 +121,43 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
     
     @IBAction func cancelAction(sender: AnyObject!) {
         self.dismissViewControllerAnimated(true, completion: nil)
+        println(attributes.count)
+        println(availableCombinations.count)
         if let delegate = self.delegate {
             delegate.pressedCancelAttribute(self)
         }
     }
     
+    @IBAction func doneAction(sender: AnyObject!) {
+        fireEditCartItem("https://demo3526363.mockable.io/api/v1/auth/cart/updateCartItem", quantity: stocks)
+    }
+    
     // MARK: - Methods
     
-    func passModel(#productDetailsModel: ProductDetailsModel, combinationModel: [ProductAvailableAttributeCombinationModel], selectedValue: NSArray) {
-        setDetail("http://shop.bench.com.ph/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/Y/W/YWH0089BU4.jpg", title: productDetailsModel.title, price: productDetailsModel.newPrice)
-        self.attributes = productDetailsModel.attributes as [ProductAttributeModel]
+    func passModel(#cartModel: CartModel, combinationModel: [ProductAvailableAttributeCombinationModel], selectedValue: NSArray, quantity: Int) {
+        setDetail("\(cartModel.productDetails.image)", title: cartModel.productDetails.title, price: cartModel.productDetails.newPrice)
+        self.cartModel = cartModel
+        self.attributes = cartModel.productDetails.attributes as [ProductAttributeModel]
         self.availableCombinations = combinationModel
         self.selectedValue = selectedValue as! [String]
         self.selectedCombination = combinationModel[0].combination
         self.maximumStock = combinationModel[0].quantity
         
-        if self.maximumStock != 0 {
-            stocks = 1
-            checkStock(stocks)
-        } else if self.maximumStock == 0 {
-            checkStock(0)
-        } else {
-            println("----ProductAttributeViewController")
-        }
+        stocks = quantity
+        
+        checkStock(stocks)
     }
     
     func selectedAttribute(controller: ProductAttributeTableViewCell, attributeIndex: Int, attributeValue: String!, attributeId: Int) {
+        stocks = 0
+        checkStock(stocks)
         self.selectedValue[attributeIndex + 1] = String(attributeValue)
         self.selectedCombination[attributeIndex] = attributeId
-
+        
         maximumStock = availableStock(selectedCombination)
         self.availabilityStocksLabel.text = "Available stocks : " + String(availableStock(selectedCombination))
         
-        if self.maximumStock != 0 {
-            stocks = 1
-            checkStock(stocks)
-        } else if self.maximumStock == 0 {
-            checkStock(0)
-        } else {
-            println("----ProductAttributeViewController")
-        }
+        checkStock(stocks)
     }
     
     func availableStock(combination: NSArray) -> Int {
@@ -162,10 +180,13 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
             stocksLabel.text = String(stringInterpolationSegment: stocks)
         }
         
-        if stocks == 0 {
-            disableButton(increaseButton)
+        if stocks == 0  && maximumStock != 0 {
+            enableButton(increaseButton)
             disableButton(decreaseButton)
+            stocksLabel.alpha = 1.0
+        } else if stocks == 0  && maximumStock == 0{
             stocksLabel.alpha = 0.3
+            disableButton(increaseButton)
         } else if stocks == maximumStock {
             stocksLabel.alpha = 1.0
             disableButton(increaseButton)
@@ -203,42 +224,13 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
         cancelAction(nil)
     }
     
-    @IBAction func addToCartAction(sender: AnyObject) {
+    //Loader function
+    func showLoader() {
+        SVProgressHUD.show()
+        SVProgressHUD.setBackgroundColor(UIColor.whiteColor())
     }
     
-    @IBAction func cartCheckoutAction(sender: AnyObject) {
+    func dismissLoader() {
+        SVProgressHUD.dismiss()
     }
-    
-    func tapGesture(action: Selector) -> UITapGestureRecognizer {
-        var tap = UITapGestureRecognizer()
-        tap.numberOfTapsRequired = 1
-        tap.addTarget(self, action: action)
-        
-        return tap
-    }
-    
-    func buyItNowAction(gesture: UIGestureRecognizer) {
-        println("checkout")
-    }
-    
-    func setBorderOf(#view: AnyObject, width: CGFloat, color: UIColor, radius: CGFloat) {
-        view.layer.borderWidth = width
-        view.layer.borderColor = color.CGColor
-        view.layer.cornerRadius = radius
-    }
-    
-    func showCartCheckout(bool: Bool, title: String) {
-        cartCheckoutButton.hidden = bool
-        cartCheckoutButton.setTitle(title, forState: .Normal)
-    }
-
-    @IBAction func doneAction(sender: AnyObject) {
-        println(selectedValue)
-        self.dismissViewControllerAnimated(true, completion: nil)
-        if let delegate = self.delegate {
-            delegate.pressedDoneAttribute(self)
-        }
-    }
-
-    
 }

@@ -214,12 +214,12 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
     
     func fireRegister() {
         SVProgressHUD.show()
-        SVProgressHUD.setBackgroundColor(UIColor.clearColor())
+        SVProgressHUD.setBackgroundColor(UIColor.whiteColor())
         let manager: APIManager = APIManager.sharedInstance
 
         let parameters: NSDictionary = ["email": self.emailAddressTextField.text,"password": self.passwordTextField.text, "fullname": "\(self.firstNameTextField.text) \(self.lastNameTextField.text)"]
         
-        manager.POST(APIAtlas.registerUrl, parameters: parameters, success: {
+        manager.GET(APIAtlas.registerUrl, parameters: nil, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
                 let registerModel: RegisterModel = RegisterModel.parseDataFromDictionary(responseObject as! NSDictionary)
                 if registerModel.isSuccessful {

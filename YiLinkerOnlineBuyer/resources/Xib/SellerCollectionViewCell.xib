@@ -48,7 +48,7 @@
                             <constraint firstAttribute="height" constant="132" id="xe0-AR-G6E"/>
                         </constraints>
                     </imageView>
-                    <imageView userInteractionEnabled="NO" tag="2" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dummy-placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="COi-1W-g4z" customClass="ProductImageView" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" tag="2" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dummy-placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="COi-1W-g4z" customClass="ProductImageView" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
                         <rect key="frame" x="8" y="198" width="102" height="74"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="74" id="x0V-bW-PBx"/>
@@ -62,7 +62,7 @@
                             <constraint firstAttribute="width" constant="1" id="cze-vO-JCz"/>
                         </constraints>
                     </view>
-                    <imageView userInteractionEnabled="NO" tag="3" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dummy-placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="jVL-Ps-RHo" customClass="ProductImageView" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" tag="3" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dummy-placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="jVL-Ps-RHo" customClass="ProductImageView" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
                         <rect key="frame" x="112" y="198" width="102" height="74"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="74" id="rC2-h3-b29"/>

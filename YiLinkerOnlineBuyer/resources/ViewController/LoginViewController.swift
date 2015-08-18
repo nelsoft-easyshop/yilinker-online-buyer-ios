@@ -233,13 +233,13 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, GIDSignIn
     
     func fireLogin() {
         SVProgressHUD.show()
-        SVProgressHUD.setBackgroundColor(UIColor.clearColor())
+        SVProgressHUD.setBackgroundColor(UIColor.whiteColor())
         let manager: APIManager = APIManager.sharedInstance
         //seller@easyshop.ph
         //password
         let parameters: NSDictionary = ["email": self.emailAddressTextField.text,"password": self.passwordTextField.text, "client_id": "1_167rxzqvid8g8swggwokcoswococscocc8ck44wo0g88owgkcc", "client_secret": "317eq8nohry84ooc0o8woo8000c0k844c4cggws84g80scwwog", "grant_type": "http://yilinker-online.com/grant/buyer"]
         
-        manager.GET(APIAtlas.loginUrl, parameters: parameters, success: {
+        manager.GET(APIAtlas.loginUrl, parameters: nil, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
                 SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
                 SVProgressHUD.dismiss()

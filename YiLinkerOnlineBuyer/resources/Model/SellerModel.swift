@@ -58,7 +58,10 @@ class SellerModel: NSObject {
         var moreSellertarget: String = ""
         var reviews: [ProductReviewsModel] = [ProductReviewsModel]()
         
-        if let tempSellerAvatar = dictionary["sellerAvatar"] as? String {
+
+        if let tempSellerAvatar = dictionary["image"] as? String {
+            avatar = NSURL(string: tempSellerAvatar)!
+        } else if let tempSellerAvatar = dictionary["sellerAvatar"] as? String {
             avatar = NSURL(string: tempSellerAvatar)!
         } else {
             avatar = NSURL(string: "")!

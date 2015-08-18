@@ -45,7 +45,7 @@ class CartModel: NSObject {
             }
             
             if let tempVar = dictionary["quantity"] as? Int {
-                unitId = tempVar
+                quantity = tempVar
             }
         }
         
