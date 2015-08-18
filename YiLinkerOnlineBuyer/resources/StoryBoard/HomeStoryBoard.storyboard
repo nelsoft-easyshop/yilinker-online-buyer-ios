@@ -60,7 +60,7 @@
             </objects>
             <point key="canvasLocation" x="538.5" y="-287.5"/>
         </scene>
-        <!--Search View Controller-->
+        <!--Search-->
         <scene sceneID="sOP-GE-LsJ">
             <objects>
                 <viewController storyboardIdentifier="SearchViewController" id="qKJ-E3-g51" customClass="SearchViewController" customModule="YiLinkerOnlineBuyer" customModuleProvider="target" sceneMemberID="viewController">
@@ -71,10 +71,47 @@
                     <view key="view" tag="1" contentMode="scaleToFill" id="PI8-5S-usc">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="0.81508443809999997" green="0.2175958271" blue="0.15775290240000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <subviews>
+                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="g03-j7-I0r">
+                                <rect key="frame" x="0.0" y="64" width="375" height="44"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="barTintColor" red="0.37647058820000001" green="0.12549019610000001" blue="0.46666666670000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <scopeButtonTitles>
+                                    <string>Product</string>
+                                    <string>Seller</string>
+                                </scopeButtonTitles>
+                                <connections>
+                                    <outlet property="delegate" destination="qKJ-E3-g51" id="Ryb-1h-23A"/>
+                                </connections>
+                            </searchBar>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Xoe-gT-EE2">
+                                <rect key="frame" x="0.0" y="108" width="375" height="510"/>
+                                <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="qKJ-E3-g51" id="RfK-p1-Tt4"/>
+                                    <outlet property="delegate" destination="qKJ-E3-g51" id="S6a-T0-dZE"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="Xoe-gT-EE2" firstAttribute="leading" secondItem="PI8-5S-usc" secondAttribute="leading" id="73L-Tg-ltv"/>
+                            <constraint firstItem="Xoe-gT-EE2" firstAttribute="top" secondItem="g03-j7-I0r" secondAttribute="bottom" id="JSv-pu-4Gv"/>
+                            <constraint firstItem="Xoe-gT-EE2" firstAttribute="top" secondItem="g03-j7-I0r" secondAttribute="bottom" id="K2q-Ns-bc0"/>
+                            <constraint firstItem="bTC-kd-R7e" firstAttribute="top" secondItem="Xoe-gT-EE2" secondAttribute="bottom" id="L9I-d1-jsr"/>
+                            <constraint firstAttribute="trailing" secondItem="g03-j7-I0r" secondAttribute="trailing" id="Vn9-fA-smd"/>
+                            <constraint firstItem="g03-j7-I0r" firstAttribute="leading" secondItem="PI8-5S-usc" secondAttribute="leading" id="tK9-g3-71L"/>
+                            <constraint firstAttribute="trailing" secondItem="Xoe-gT-EE2" secondAttribute="trailing" id="uJE-Tf-NL7"/>
+                            <constraint firstItem="g03-j7-I0r" firstAttribute="top" secondItem="au9-A8-A7j" secondAttribute="bottom" id="wve-YR-ADx"/>
+                        </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="911-y2-xae"/>
+                    <navigationItem key="navigationItem" title="Search" id="911-y2-xae"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <connections>
+                        <outlet property="searchBar" destination="g03-j7-I0r" id="0Ul-br-1N7"/>
+                        <outlet property="searchResultTableView" destination="Xoe-gT-EE2" id="RUs-7f-mrt"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RkB-9s-hDu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
