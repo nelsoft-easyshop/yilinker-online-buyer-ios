@@ -194,9 +194,10 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
     }
     
     func selectedAttribute(controller: ProductAttributeTableViewCell, attributeIndex: Int, attributeValue: String!, attributeId: Int) {
+        self.selectedId[attributeIndex] = String(attributeId)
         self.selectedValue[attributeIndex] = String(attributeValue)
         self.selectedCombination[attributeIndex] = String(attributeId)
-        println(selectedValue)
+
         maximumStock = availableStock(selectedCombination)
         self.availabilityStocksLabel.text = "Available stocks : " + String(maximumStock)
 
@@ -214,6 +215,33 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
     
     func listAvailableCombinations() {
         println(selectedCombination)
+        let not = "[^,]*"
+        var regex: String = ""
+        
+        regex += "("
+
+        for i in 0..<self.selectedCombination.count {
+            if self.selectedCombination[i].toInt() != -1 {
+                regex += self.selectedCombination[i]
+                if i != self.selectedCombination.count - 1 {
+                    regex += "_"
+                }
+            }
+            
+            if i != self.selectedCombination.count - 1 {
+                regex += not
+            }
+        }
+        
+//        for i in 0..<self.attributes.count {
+//            println(self.attributes[i].attributeName)
+//            for j in 0..<self.attributes[i].valueId.count {
+//                println("\(self.attributes[i].valueId[j]) - \(self.attributes[i].valueName[j])")
+//            }
+//        }
+        
+        regex += ")"
+        println(regex)
     }
     
     func availableStock(combination: NSArray) -> Int {

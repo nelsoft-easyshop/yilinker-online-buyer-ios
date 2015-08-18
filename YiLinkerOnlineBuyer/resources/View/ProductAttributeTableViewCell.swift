@@ -90,6 +90,7 @@ class ProductAttributeTableViewCell: UITableViewCell {
 //            //<<<<
             for v in 0..<selectedId.count {
                 if attributesId[i] == selectedId[v] as! String {
+                    button.selected = true
                     button.layer.borderColor = UIColor.purpleColor().CGColor
                     button.backgroundColor = UIColor.purpleColor()
                     button.setTitleColor(UIColor.whiteColor(), forState: .Normal)
