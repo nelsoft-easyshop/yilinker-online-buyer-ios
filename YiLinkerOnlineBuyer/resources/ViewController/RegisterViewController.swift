@@ -35,7 +35,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         self.view.needsUpdateConstraints()
         self.view.layoutIfNeeded()
         self.setUpTextFields()
-        self.registerButton.addTarget(self, action: "fireRegister", forControlEvents: UIControlEvents.TouchUpInside)
+        self.registerButton.addTarget(self, action: "register", forControlEvents: UIControlEvents.TouchUpInside)
     }
     
     override func viewDidLayoutSubviews() {
