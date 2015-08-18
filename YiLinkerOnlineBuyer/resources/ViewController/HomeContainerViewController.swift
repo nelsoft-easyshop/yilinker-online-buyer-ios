@@ -43,6 +43,9 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         self.tabBarController!.delegate = self
         self.addSuHeaderScrollView()
         if Reachability.isConnectedToNetwork() {
+            if SessionManager.isLoggedIn() {
+                self.fireGetUserInfo()
+            }
             self.fireGetHomePageData()
         } else {
             self.addEmptyView()
@@ -281,4 +284,32 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         self.fireGetHomePageData()
         self.emptyView?.removeFromSuperview()
     }
+    
+    func fireGetUserInfo() {
+        let manager: APIManager = APIManager.sharedInstance
+        //seller@easyshop.ph
+        //password
+        let parameters: NSDictionary = ["access_token": SessionManager.accessToken()]
+        
+        manager.POST(APIAtlas.getUserInfoUrl, parameters: parameters, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            SVProgressHUD.dismiss()
+            let profileModel: ProfileModel = ProfileModel.pareseDataFromResponseObject(responseObject as! NSDictionary)
+            println(profileModel.name)
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                
+                if task.statusCode == 401 {
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Mismatch username and password", title: "Login Failed")
+                } else {
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+                }
+                
+                SVProgressHUD.dismiss()
+        })
+        
+    }
+    
+
 }
