@@ -550,7 +550,7 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
     
     func didSelectSellerCellWithTarget(target: String, targetType: String) {
         println("target: \(target) \ntarget type:\(targetType)")
-        self.redirectToProductpageWithProductID("1")
+        self.redirectToSellerWithID("asdasdas3w")
     }
     
     func didSelectViewMoreWithtarget(target: String, targetType: String) {
@@ -571,5 +571,10 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
     func redirectToProductpageWithProductID(productID: String) {
         let productViewController: ProductViewController = ProductViewController(nibName: "ProductViewController", bundle: nil)
         self.navigationController?.pushViewController(productViewController, animated: true)
+    }
+    
+    func redirectToSellerWithID(sellerID: String) {
+        let sellerViewController: SellerViewController = SellerViewController(nibName: "SellerViewController", bundle: nil)
+        self.navigationController!.pushViewController(sellerViewController, animated: true)
     }
 }
