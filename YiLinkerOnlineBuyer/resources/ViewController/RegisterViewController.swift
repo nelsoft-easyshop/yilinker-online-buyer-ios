@@ -224,15 +224,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
                 let registerModel: RegisterModel = RegisterModel.parseDataFromDictionary(responseObject as! NSDictionary)
                 if registerModel.isSuccessful {
                     SVProgressHUD.dismiss()
-                    SessionManager.setAccessToken(registerModel.accessToken)
-                    SessionManager.setRefreshToken(registerModel.refreshToken)
-                    
-                    if registerModel.accessToken == "" {
-                        SessionManager.setAccessToken("sample access token!")
-                        SessionManager.setRefreshToken("sample refresh token!")
-                    }
-                    
-                    self.showSuccessMessage()
+                    self.fireLogin(self.emailAddressTextField.text, password: self.passwordTextField.text)
                 } else {
                     UIAlertController.displayErrorMessageWithTarget(self, errorMessage: registerModel.message, title: "Error")
                 }
@@ -249,6 +241,34 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
                 SVProgressHUD.dismiss()
         })
     }
+    
+    func fireLogin(email: String, password: String) {
+        SVProgressHUD.show()
+        SVProgressHUD.setBackgroundColor(UIColor.whiteColor())
+        let manager: APIManager = APIManager.sharedInstance
+        //seller@easyshop.ph
+        //password
+        let parameters: NSDictionary = ["email": email,"password": password, "client_id": "1_167rxzqvid8g8swggwokcoswococscocc8ck44wo0g88owgkcc", "client_secret": "317eq8nohry84ooc0o8woo8000c0k844c4cggws84g80scwwog", "grant_type": "http://yilinker-online.com/grant/buyer"]
+        
+        manager.POST(APIAtlas.loginUrl, parameters: parameters, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+            SVProgressHUD.dismiss()
+            self.showSuccessMessage()
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                
+                if task.statusCode == 401 {
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Mismatch username and password", title: "Login Failed")
+                } else {
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+                }
+                
+                SVProgressHUD.dismiss()
+        })
+    }
+
     
     func showSuccessMessage() {
         let alertController = UIAlertController(title: "Success", message: "Successfully login.", preferredStyle: .Alert)
