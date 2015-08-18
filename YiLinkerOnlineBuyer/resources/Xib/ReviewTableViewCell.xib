@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -91,31 +92,21 @@
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text="Proin gravida nibh vel velit auctor aliquet. Aenean solicitudin, lorem quis bibendum auctir, nisi elit consequat ipsum." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l9A-Vf-OxS">
                         <rect key="frame" x="10" y="65" width="355" height="29"/>
                         <constraints>
-                            <constraint firstAttribute="height" priority="500" constant="29" id="qPy-Ee-jgU"/>
+                            <constraint firstAttribute="height" constant="29" id="Jvo-dv-gMd"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kJw-fo-rsu">
-                        <rect key="frame" x="0.0" y="109" width="375" height="1"/>
-                        <color key="backgroundColor" red="0.7019608021" green="0.7019608021" blue="0.7019608021" alpha="1" colorSpace="calibratedRGB"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="1" id="3gA-af-Ewl"/>
-                        </constraints>
-                    </view>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="kJw-fo-rsu" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="0kF-fd-R1q"/>
-                    <constraint firstAttribute="trailing" secondItem="kJw-fo-rsu" secondAttribute="trailing" id="205-pE-n97"/>
-                    <constraint firstItem="l9A-Vf-OxS" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="BpM-qE-bRZ"/>
-                    <constraint firstAttribute="trailing" secondItem="l9A-Vf-OxS" secondAttribute="trailing" constant="10" id="HO7-5b-HYr"/>
+                    <constraint firstItem="l9A-Vf-OxS" firstAttribute="top" secondItem="L3C-R2-Int" secondAttribute="bottom" id="JBZ-UP-QBq"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="l9A-Vf-OxS" secondAttribute="trailing" constant="2" id="KKg-rP-MPW"/>
                     <constraint firstItem="L3C-R2-Int" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="Re6-Xb-5L3"/>
-                    <constraint firstAttribute="bottom" secondItem="kJw-fo-rsu" secondAttribute="bottom" constant="-1" id="Uv3-xX-THw"/>
+                    <constraint firstItem="l9A-Vf-OxS" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="2" id="TN4-qB-GdP"/>
                     <constraint firstItem="L3C-R2-Int" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="WRK-2s-doD"/>
-                    <constraint firstItem="l9A-Vf-OxS" firstAttribute="top" secondItem="L3C-R2-Int" secondAttribute="bottom" id="cis-H2-5xv"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="l9A-Vf-OxS" secondAttribute="bottom" constant="7" id="m1H-GK-dol"/>
                     <constraint firstAttribute="trailing" secondItem="L3C-R2-Int" secondAttribute="trailing" id="nfg-pD-kZm"/>
-                    <constraint firstItem="kJw-fo-rsu" firstAttribute="top" secondItem="l9A-Vf-OxS" secondAttribute="bottom" constant="15" id="wis-bE-vxm"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
