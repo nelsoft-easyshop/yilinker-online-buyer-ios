@@ -183,13 +183,11 @@ class StartPageViewController: UIViewController, UIPageViewControllerDataSource,
     }
     
     @IBAction func getStarted(sender: AnyObject) {
-        let vc = CategoriesViewController(nibName: "CategoriesViewController", bundle: nil)
-        self.presentViewController(vc, animated: true, completion: nil)
-//        let homeStoryBoard: UIStoryboard = UIStoryboard(name: "HomeStoryBoard", bundle: nil)
-//        let tabController: UITabBarController = homeStoryBoard.instantiateViewControllerWithIdentifier("TabBarController") as! UITabBarController
-//        var modalStyle: UIModalTransitionStyle = UIModalTransitionStyle.CrossDissolve
-//        tabController.modalTransitionStyle = modalStyle
-//        self.presentViewController(tabController, animated: true, completion: nil)
+        let homeStoryBoard: UIStoryboard = UIStoryboard(name: "HomeStoryBoard", bundle: nil)
+        let tabController: UITabBarController = homeStoryBoard.instantiateViewControllerWithIdentifier("TabBarController") as! UITabBarController
+        var modalStyle: UIModalTransitionStyle = UIModalTransitionStyle.CrossDissolve
+        tabController.modalTransitionStyle = modalStyle
+        self.presentViewController(tabController, animated: true, completion: nil)
     }
     
     

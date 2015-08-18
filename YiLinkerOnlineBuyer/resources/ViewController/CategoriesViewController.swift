@@ -26,8 +26,15 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
         self.tableView.registerNib(nib, forCellReuseIdentifier: "CategoryIdentifier")
         
         requestCategories(parentId: "")
+        println(self.tableView)
     }
 
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.navigationController?.navigationBarHidden = false
+    }
+    
     // MARK: - Table View Data Source
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -55,7 +62,10 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
         if categoryModel.isParent[indexPath.row] {
             let categories = CategoriesViewController(nibName: "CategoriesViewController", bundle: nil)
             categories.requestCategories(parentId: categoryModel.id[indexPath.row])
-            self.navigationController?.pushViewController(categories, animated: true)
+//            self.navigationController?.pushViewController(categories, animated: true)
+            self.presentViewController(categories, animated: true, completion: nil)
+            
+            println(categoryModel.name[indexPath.row])
         } else {
             println("Load List Here")
         }
@@ -65,6 +75,7 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
     
     func requestCategories(#parentId: String) {
         SVProgressHUD.show()
+        SVProgressHUD.setBackgroundColor(Constants.Colors.appTheme)
         let manager = APIManager.sharedInstance
         let categoryUrl = "https://demo3526363.mockable.io/getCategories?parentId=1"
         
@@ -72,7 +83,10 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             SVProgressHUD.dismiss()
             self.categoryModel = CategoryModel.parseCategories(responseObject)
-            self.tableView.reloadData()
+            
+            if self.tableView != nil {
+                self.tableView.reloadData()
+            }
             
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
