@@ -163,11 +163,11 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         
         if !self.firstNameTextField.isNotEmpty() {
             errorMessage = "First name is required."
-        } else if !self.firstNameTextField.isAlphaNumeric() {
+        } else if !self.firstNameTextField.isValidName() {
             errorMessage = "First name contains illegal characters. It can only contain letters, numbers and underscores."
         } else if !self.lastNameTextField.isNotEmpty() {
             errorMessage = "Last name is required."
-        } else if !self.lastNameTextField.isAlphaNumeric() {
+        } else if !self.lastNameTextField.isValidName() {
             errorMessage = "Last name contains illegal characters. It can only contain letters, numbers and underscores."
         } else if !self.emailAddressTextField.isNotEmpty() {
             errorMessage = "Email is required."
@@ -219,13 +219,12 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
 
         let parameters: NSDictionary = ["email": self.emailAddressTextField.text,"password": self.passwordTextField.text, "fullname": "\(self.firstNameTextField.text) \(self.lastNameTextField.text)"]
         
-        manager.GET(APIAtlas.registerUrl, parameters: nil, success: {
+        manager.POST(APIAtlas.registerUrl, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
                 let registerModel: RegisterModel = RegisterModel.parseDataFromDictionary(responseObject as! NSDictionary)
                 if registerModel.isSuccessful {
                     SVProgressHUD.dismiss()
-                    println(responseObject)
-                    self.showSuccessMessage()
+                    self.fireLogin(self.emailAddressTextField.text, password: self.passwordTextField.text)
                 } else {
                     UIAlertController.displayErrorMessageWithTarget(self, errorMessage: registerModel.message, title: "Error")
                 }
@@ -242,6 +241,34 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
                 SVProgressHUD.dismiss()
         })
     }
+    
+    func fireLogin(email: String, password: String) {
+        SVProgressHUD.show()
+        SVProgressHUD.setBackgroundColor(UIColor.whiteColor())
+        let manager: APIManager = APIManager.sharedInstance
+        //seller@easyshop.ph
+        //password
+        let parameters: NSDictionary = ["email": email,"password": password, "client_id": "1_167rxzqvid8g8swggwokcoswococscocc8ck44wo0g88owgkcc", "client_secret": "317eq8nohry84ooc0o8woo8000c0k844c4cggws84g80scwwog", "grant_type": "http://yilinker-online.com/grant/buyer"]
+        
+        manager.POST(APIAtlas.loginUrl, parameters: parameters, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+            SVProgressHUD.dismiss()
+            self.showSuccessMessage()
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                
+                if task.statusCode == 401 {
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Mismatch username and password", title: "Login Failed")
+                } else {
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+                }
+                
+                SVProgressHUD.dismiss()
+        })
+    }
+
     
     func showSuccessMessage() {
         let alertController = UIAlertController(title: "Success", message: "Successfully login.", preferredStyle: .Alert)
