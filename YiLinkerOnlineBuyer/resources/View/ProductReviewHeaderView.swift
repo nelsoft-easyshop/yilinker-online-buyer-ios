@@ -20,7 +20,7 @@ class ProductReviewHeaderView: UIView {
         
     }
     
-    func setRating(rate: Float) {
+    func setRating(rate: Int) {
         
         if rate > 4 {
             rateImage(rate5)

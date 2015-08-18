@@ -78,7 +78,8 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         setBorderOf(view: buyItNowView, width: 1, color: .grayColor(), radius: 3)
         
         requestProductDetails(productUrl, params: nil)
-        requestReviewDetails(reviewUrl, params: nil)
+//        requestReviewDetails(reviewUrl, params: nil)
+        requestReviewDetails("http://online.api.easydeal.ph/api/v1/product/getProductReviews", params: ["productId": "1"])
         
         buyItNowView.addGestureRecognizer(tapGesture("buyItNowAction:"))
     }
@@ -140,8 +141,10 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     }
     
     func requestReviewDetails(url: String, params: NSDictionary!) {
-        manager.GET(APIAtlas.productReviewUrl, parameters: params, success: {
+        manager.POST(/*APIAtlas.productReviewUrl*/url, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            
+            println(responseObject)
             
             self.productReviewModel = ProductReviewModel.parseDataWithDictionary(responseObject)
             self.reviewRequest = true
@@ -201,8 +204,10 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     // MARK: - Table View Data Source
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if productReviewModel != nil {
+        if productReviewModel != nil && productReviewModel.reviews.count > 1 {
             return 2
+        } else if productReviewModel != nil && productReviewModel.reviews.count < 2 {
+            return productReviewModel.reviews.count
         }
         
         return 0
@@ -212,12 +217,11 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         let cell: ReviewTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("reviewIdentifier") as! ReviewTableViewCell
         
         cell.selectionStyle = UITableViewCellSelectionStyle.None
-//        cell.frame.size.width = 320
-        
-        cell.setName(productReviewModel.reviews[indexPath.row].name)
-        cell.setDisplayPicture(productReviewModel.reviews[indexPath.row].imageUrl)
-        cell.setMessage(productReviewModel.reviews[indexPath.row].message)
+
+        cell.nameLabel.text = productReviewModel.reviews[indexPath.row].fullName
+        cell.setDisplayPicture(productReviewModel.reviews[indexPath.row].profileImageUrl)
         cell.setRating(productReviewModel.reviews[indexPath.row].rating)
+        cell.messageLabel.text = productReviewModel.reviews[indexPath.row].review
         
         return cell
     }
@@ -535,7 +539,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         self.setAttributes(self.productDetailsModel.attributes, productUnit: self.productDetailsModel.productUnits)
         self.productDescriptionView.setDescription(productDetailsModel.shortDescription, full: productDetailsModel.fullDescription)
         
-        self.productReviewHeaderView.setRating(self.productReviewModel.rating)
+        self.productReviewHeaderView.setRating(self.productReviewModel.ratingAverage)
         self.tableView.reloadData()
         
         self.productSellerView.setSellerDetails(self.productSellerModel)

@@ -10,20 +10,26 @@ import Foundation
 
 class ProductReviewsModel {
     
-    var name: String = ""
-    var imageUrl: String = ""
-    var rating: Float = 0
-    var message: String = ""
+    var fullName: String = ""
+    var profileImageUrl: String = ""
+    var rating: String = ""
+    var title: String = ""
+    var review: String = ""
+    var dateAdded: String = ""
+    var userId: Int = 0
     
     class func parseProductReviesModel(reviews: NSDictionary) -> ProductReviewsModel! {
         
         var model = ProductReviewsModel()
 
         if reviews.isKindOfClass(NSDictionary) {
-            model.name = reviews["name"] as! String
-            model.imageUrl = reviews["imageUrl"] as! String
-            model.rating = reviews["rating"] as! Float
-            model.message = reviews["message"] as! String
+            model.fullName = reviews["fullName"] as! String
+            model.profileImageUrl = reviews["profileImageUrl"] as! String
+            model.rating = reviews["rating"] as! String
+            model.title = reviews["title"] as! String
+            model.dateAdded = reviews["dateAdded"] as! String
+            model.userId = reviews["userId"] as! Int
+            model.review = reviews["review"] as! String
         }
 
         return model
