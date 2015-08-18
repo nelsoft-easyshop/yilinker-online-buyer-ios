@@ -42,6 +42,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     
     var selectedName: [String] = []
     var selectedValue: [String] = []
+    var selectedId: [String] = []
     
     var newFrame: CGRect!
     var visibility = 0.0
@@ -116,7 +117,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         SVProgressHUD.show()
         SVProgressHUD.setBackgroundColor(UIColor.clearColor())
         
-        manager.GET("https://demo3526363.mockable.io/api/v1/productPage"/*"http://online.api.easydeal.ph/api/v1/product/getProductDetail?productId=1"*/, parameters: params, success: {
+        manager.GET(/*"https://demo3526363.mockable.io/api/v1/productPage"*/"http://online.api.easydeal.ph/api/v1/product/getProductDetail?productId=1", parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
             self.productDetailsModel = ProductDetailsModel.parseDataWithDictionary(responseObject)
@@ -408,8 +409,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         attributeModal.definesPresentationContext = true
         attributeModal.view.backgroundColor = UIColor.clearColor()
         attributeModal.view.frame.origin.y = attributeModal.view.frame.size.height
-        attributeModal.passModel(productDetailsModel: productDetailsModel, selectedValue: selectedValue)
-//        attributeModal.setButtons(title)
+        attributeModal.passModel(productDetailsModel: productDetailsModel, selectedValue: selectedValue, selectedId: selectedId)
         attributeModal.setTitle = title
         attributeModal.tabController = self.tabController
         attributeModal.screenWidth = self.view.frame.width
@@ -426,7 +426,6 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     func seeMoreDescription(controller: ProductDescriptionView) {
         let description = ProductDescriptionViewController(nibName: "ProductDescriptionViewController", bundle: nil)
         description.url = self.productDetailsModel.fullDescription
-//        self.presentViewController(description, animated: true, completion: nil)
         self.tabBarController?.presentViewController(description, animated: true, completion: nil)
     }
     
@@ -439,7 +438,6 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         reviewModal.view.backgroundColor = UIColor.clearColor()
         reviewModal.view.frame.origin.y = reviewModal.view.frame.size.height
         reviewModal.passModel(self.productReviewModel)
-//        self.navigationController?.presentViewController(reviewModal, animated: true, completion: nil)
         self.tabBarController?.presentViewController(reviewModal, animated: true, completion: nil)
         
         UIView.animateWithDuration(0.3, animations: {
@@ -588,6 +586,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         
         selectedName = []
         selectedValue = []
+        selectedId = []
 //        selectedName.append("Quantity")
 //        selectedValue.append(String(combinationModel[0].quantity) + "x")
         
@@ -595,6 +594,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
             for j in 0..<attributes[i].valueId.count {
                 if productUnit[0].combination[i] == attributes[i].valueId[j] {
                     selectedName.append(attributes[i].attributeName)
+                    selectedId.append(attributes[i].valueId[j])
                     selectedValue.append(attributes[i].valueName[j])
                 }
             }

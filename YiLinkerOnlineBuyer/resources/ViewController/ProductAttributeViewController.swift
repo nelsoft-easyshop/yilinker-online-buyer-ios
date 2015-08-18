@@ -39,7 +39,8 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
     var attributes: [ProductAttributeModel] = []
     var availableCombinations: [ProductAvailableAttributeCombinationModel] = []
     var selectedValue: [String] = []
-    var selectedID: [String] = []
+    var selectedId: [String] = []
+    
     var selectedCombination: [String] = []
     var combinationString: String = ""
     
@@ -140,7 +141,7 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
         cell.passAvailableCombination(availableCombinations)
         cell.tag = indexPath.row
         println(selectedValue)
-        cell.setAttribute(self.productDetailsModel.attributes[indexPath.row], selectedValue: selectedValue, width: self.view.frame.size.width)
+        cell.setAttribute(self.productDetailsModel.attributes[indexPath.row], selectedValue: selectedValue, selectedId: selectedId, width: self.view.frame.size.width)
         
         return cell
     }
@@ -167,15 +168,16 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
     
     // MARK: - Methods
     
-    func passModel(#productDetailsModel: ProductDetailsModel, selectedValue: NSArray) {
+    func passModel(#productDetailsModel: ProductDetailsModel, selectedValue: NSArray, selectedId: NSArray) {
         setDetail("http://shop.bench.com.ph/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/Y/W/YWH0089BU4.jpg", title: productDetailsModel.title, price: productDetailsModel.productUnits[0].price)
         self.productDetailsModel = productDetailsModel
         self.attributes = productDetailsModel.attributes as [ProductAttributeModel]
-//        self.availableCombinations = combinationModel
+        self.selectedId = selectedId as! [String]
         self.selectedValue = selectedValue as! [String]
-        self.selectedCombination = productDetailsModel.productUnits[0].combination
-        self.maximumStock = productDetailsModel.productUnits[0].quantity
         
+        self.selectedCombination = productDetailsModel.productUnits[0].combination
+        
+        self.maximumStock = productDetailsModel.productUnits[0].quantity
         self.availabilityStocksLabel.text = "Available stocks : \(productDetailsModel.productUnits[0].quantity)"
         
         convertCombinationToString()

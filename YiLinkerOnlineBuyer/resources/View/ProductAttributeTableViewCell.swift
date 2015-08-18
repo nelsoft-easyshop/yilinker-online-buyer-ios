@@ -23,6 +23,7 @@ class ProductAttributeTableViewCell: UITableViewCell {
     
     var attributesId: [String] = []
     var attributesName: [String] = []
+    var selectedId: [String] = []
     var selectedValue: [String] = []
     var selectedAttributes: [String] = []
     
@@ -36,7 +37,7 @@ class ProductAttributeTableViewCell: UITableViewCell {
     
     // MARK: - Methods
 
-    func setAttribute(model: ProductAttributeModel, selectedValue: NSArray, width: CGFloat) {
+    func setAttribute(model: ProductAttributeModel, selectedValue: NSArray, selectedId: NSArray, width: CGFloat) {
         attributeLabel.text = "Select \(model.attributeName)"
         
         self.attributesId = []
@@ -44,7 +45,7 @@ class ProductAttributeTableViewCell: UITableViewCell {
         self.attributesName = []
         self.attributesName = model.valueName
         
-        addScrollViewWithAttributes(model.valueName, selectedValue: selectedValue, width: width)
+        addScrollViewWithAttributes(model.valueName, selectedValue: selectedValue, selectedId: selectedId, width: width)
     }
     
 //    func setAttribute(#name: String, values: NSArray, id: NSArray, selectedValue: NSArray, width: CGFloat) {
@@ -62,7 +63,7 @@ class ProductAttributeTableViewCell: UITableViewCell {
         combination = model as! [ProductAvailableAttributeCombinationModel]
     }
     
-    func addScrollViewWithAttributes(attributes: NSArray, selectedValue: NSArray, width: CGFloat) {
+    func addScrollViewWithAttributes(attributes: NSArray, selectedValue: NSArray, selectedId: NSArray, width: CGFloat) {
         scroll = UIScrollView(frame: CGRectMake(0, self.frame.size.height - 70, width, 70))
         var spacingX: CGFloat = 0.0
         
@@ -87,8 +88,8 @@ class ProductAttributeTableViewCell: UITableViewCell {
 //            spacingX += 10.0
 //            button.frame.origin.x += CGFloat(spacingX)
 //            //<<<<
-            for v in 0..<selectedValue.count {
-                if attributesName[i] == selectedValue[v] as! String {
+            for v in 0..<selectedId.count {
+                if attributesId[i] == selectedId[v] as! String {
                     button.layer.borderColor = UIColor.purpleColor().CGColor
                     button.backgroundColor = UIColor.purpleColor()
                     button.setTitleColor(UIColor.whiteColor(), forState: .Normal)
