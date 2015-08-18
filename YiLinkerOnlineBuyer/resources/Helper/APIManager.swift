@@ -27,6 +27,7 @@ struct APIAtlas {
     
     static let loginUrl = "login"
     static let registerUrl = "user/register"
+    static let getUserInfoUrl = "auth/user/getUser"
     static let homeUrl = "v1/home"
     static let cartUrl = "v1/cart"
     static let wishlistUrl = "v1/cart"

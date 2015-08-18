@@ -223,10 +223,10 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
                 let registerModel: RegisterModel = RegisterModel.parseDataFromDictionary(responseObject as! NSDictionary)
                 if registerModel.isSuccessful {
-                    SVProgressHUD.dismiss()
                     self.fireLogin(self.emailAddressTextField.text, password: self.passwordTextField.text)
                 } else {
                     UIAlertController.displayErrorMessageWithTarget(self, errorMessage: registerModel.message, title: "Error")
+                     SVProgressHUD.dismiss()
                 }
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
@@ -243,8 +243,6 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
     }
     
     func fireLogin(email: String, password: String) {
-        SVProgressHUD.show()
-        SVProgressHUD.setBackgroundColor(UIColor.whiteColor())
         let manager: APIManager = APIManager.sharedInstance
         //seller@easyshop.ph
         //password
@@ -268,7 +266,6 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
                 SVProgressHUD.dismiss()
         })
     }
-
     
     func showSuccessMessage() {
         let alertController = UIAlertController(title: "Success", message: "Successfully login.", preferredStyle: .Alert)
