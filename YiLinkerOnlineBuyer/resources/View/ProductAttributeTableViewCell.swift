@@ -106,7 +106,7 @@ class ProductAttributeTableViewCell: UITableViewCell {
         if sender.selected { // Unselect
             DeselectButton(sender)
             if let delegate = self.delegate {
-                delegate.selectedAttribute(self, attributeIndex: self.tag, attributeValue: sender.titleLabel?.text, attributeId: -1)
+                delegate.selectedAttribute(self, attributeIndex: self.tag, attributeValue: "", attributeId: -1)
             }
         } else {
             for view in scroll.subviews as! [UIView]{
