@@ -555,7 +555,12 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
     
     func didSelectViewMoreWithtarget(target: String, targetType: String) {
         println("target: \(target) \ntarget type:\(targetType)")
-        self.redirectToProductpageWithProductID("1")
+        self.redirectToResultView("target")
+    }
+    
+    func redirectToResultView(target: String) {
+        let resultViewController: ResultViewController = ResultViewController(nibName: "ResultViewController", bundle: nil)
+        self.navigationController!.pushViewController(resultViewController, animated: true)
     }
     
     func didSelectProductWithTarget(target: String, targetType: String) {
