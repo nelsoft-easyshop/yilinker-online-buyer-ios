@@ -163,11 +163,11 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         
         if !self.firstNameTextField.isNotEmpty() {
             errorMessage = "First name is required."
-        } else if !self.firstNameTextField.isAlphaNumeric() {
+        } else if !self.firstNameTextField.isValidName() {
             errorMessage = "First name contains illegal characters. It can only contain letters, numbers and underscores."
         } else if !self.lastNameTextField.isNotEmpty() {
             errorMessage = "Last name is required."
-        } else if !self.lastNameTextField.isAlphaNumeric() {
+        } else if !self.lastNameTextField.isValidName() {
             errorMessage = "Last name contains illegal characters. It can only contain letters, numbers and underscores."
         } else if !self.emailAddressTextField.isNotEmpty() {
             errorMessage = "Email is required."
@@ -219,12 +219,19 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
 
         let parameters: NSDictionary = ["email": self.emailAddressTextField.text,"password": self.passwordTextField.text, "fullname": "\(self.firstNameTextField.text) \(self.lastNameTextField.text)"]
         
-        manager.GET(APIAtlas.registerUrl, parameters: nil, success: {
+        manager.POST(APIAtlas.registerUrl, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
                 let registerModel: RegisterModel = RegisterModel.parseDataFromDictionary(responseObject as! NSDictionary)
                 if registerModel.isSuccessful {
                     SVProgressHUD.dismiss()
-                    println(responseObject)
+                    SessionManager.setAccessToken(registerModel.accessToken)
+                    SessionManager.setRefreshToken(registerModel.refreshToken)
+                    
+                    if registerModel.accessToken == "" {
+                        SessionManager.setAccessToken("sample access token!")
+                        SessionManager.setRefreshToken("sample refresh token!")
+                    }
+                    
                     self.showSuccessMessage()
                 } else {
                     UIAlertController.displayErrorMessageWithTarget(self, errorMessage: registerModel.message, title: "Error")

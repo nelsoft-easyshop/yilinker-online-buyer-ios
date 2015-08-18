@@ -46,6 +46,13 @@ extension UITextField {
         return passwordTest.evaluateWithObject(self.text)
     }
     
+    func isValidName() -> Bool {
+        let nameRegex = "^[a-zA-Z ]*$"
+        let nameTest = NSPredicate(format: "SELF MATCHES %@", nameRegex)
+        
+        return nameTest.evaluateWithObject(self.text)
+    }
+    
     func isGreaterThanEightCharacters() -> Bool {
         var result: Bool = false
         if count(self.text) >= 8 {
