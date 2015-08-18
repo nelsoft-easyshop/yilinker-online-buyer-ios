@@ -118,8 +118,6 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         manager.GET(/*APIAtlas.productPageUrl*/"http://online.api.easydeal.ph/api/v1/product/getProductDetail?productId=1", parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
-            println("product success")
-            
             self.productDetailsModel = ProductDetailsModel.parseDataWithDictionary(responseObject)
             self.attributes = self.productDetailsModel.attributes
 //            self.combinations = self.productDetailsModel.combinations
@@ -144,8 +142,6 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     func requestReviewDetails(url: String, params: NSDictionary!) {
         manager.GET(APIAtlas.productReviewUrl, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-
-            println("review success")
             
             self.productReviewModel = ProductReviewModel.parseDataWithDictionary(responseObject)
             self.reviewRequest = true
@@ -165,8 +161,6 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         
         manager.GET(APIAtlas.getSellerUrl, parameters: nil, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            
-            println("seller success")
             
             self.productSellerModel = ProductSellerModel.parseDataWithDictionary(responseObject)
             self.sellerRequest = true
@@ -506,9 +500,6 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     }
     
     func populateDetails() {
-        
-        println("POPULATING PRODUCT DETAILS")
-        println(self.productDetailsModel.title)
 //        self.productImagesView.setDetails(productDetailsModel.title, price: productDetailsModel.newPrice, images: images)
 //        self.setDetails(productDetailsModel.details)
 //        self.setAttributes(productDetailsModel.attributes, combinationModel: productDetailsModel.combinations)

@@ -41,6 +41,7 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
     var selectedValue: [String] = []
     var selectedID: [String] = []
     var selectedCombination: [String] = []
+    var combinationString: String = ""
     
     var screenWidth: CGFloat = 0.0
     var seeMoreLabel = UILabel()
@@ -75,6 +76,7 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
         buyItNowView.addGestureRecognizer(tapGesture("buyItNowAction:"))
         
         priceLabel.textColor = Constants.Colors.productPrice
+        
     }
 
     override func viewWillAppear(animated: Bool) {
@@ -112,6 +114,19 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
         }
     }
     
+    func convertCombinationToString() {
+        
+        for i in 0..<self.productDetailsModel.productUnits.count {
+            for j in 0..<self.productDetailsModel.productUnits[i].combination.count {
+                self.combinationString += self.productDetailsModel.productUnits[i].combination[j]
+                if j != self.productDetailsModel.productUnits[i].combination.count - 1{
+                    self.combinationString += "_"
+                }
+            }
+            self.combinationString += ","
+        }
+    }
+    
     // MARK: - Table View Data Source
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -124,8 +139,8 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
         cell.delegate = self
         cell.passAvailableCombination(availableCombinations)
         cell.tag = indexPath.row
+        println(selectedValue)
         cell.setAttribute(self.productDetailsModel.attributes[indexPath.row], selectedValue: selectedValue, width: self.view.frame.size.width)
-//        cell.setAttribute(name: attributes[indexPath.row].attributeName, values: attributes[indexPath.row].valueName, id: attributes[indexPath.row].valueId, selectedValue: selectedValue, width: screenWidth)
         
         return cell
     }
@@ -163,6 +178,9 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
         
         self.availabilityStocksLabel.text = "Available stocks : \(productDetailsModel.productUnits[0].quantity)"
         
+        convertCombinationToString()
+        println(combinationString)
+        
         if self.maximumStock != 0 {
             stocks = 1
             checkStock(stocks)
@@ -174,10 +192,9 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
     }
     
     func selectedAttribute(controller: ProductAttributeTableViewCell, attributeIndex: Int, attributeValue: String!, attributeId: Int) {
-
         self.selectedValue[attributeIndex] = String(attributeValue)
         self.selectedCombination[attributeIndex] = String(attributeId)
-
+        println(selectedValue)
         maximumStock = availableStock(selectedCombination)
         self.availabilityStocksLabel.text = "Available stocks : " + String(maximumStock)
 
