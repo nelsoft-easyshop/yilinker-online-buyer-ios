@@ -34,6 +34,10 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
                 self.collectionView?.reloadData()
             }
         }
+        
+        self.navigationController?.navigationBar.alpha = 1.0
+        self.navigationController?.navigationBar.barTintColor = Constants.Colors.appTheme
+        UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.LightContent
     }
     
     func registerCells() {
