@@ -104,13 +104,12 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     }
     
     override func viewWillDisappear(animated: Bool) {
-        super.viewWillDisappear(animated)
-        
         self.navigationController?.navigationBar.alpha = 1.0
         self.navigationController?.navigationBar.barTintColor = Constants.Colors.appTheme
-        UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.LightContent
-        
+        UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.LightContent        
         SVProgressHUD.dismiss()
+        
+        super.viewWillDisappear(animated)
     }
     
     func requestProductDetails(url: String, params: NSDictionary!) {
