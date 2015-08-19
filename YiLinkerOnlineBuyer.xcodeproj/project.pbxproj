@@ -39,6 +39,8 @@
 		0C5111EA1B821D6F002F0001 /* SeeMoreTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C5111E81B821D6F002F0001 /* SeeMoreTableViewCell.xib */; };
 		0C5926011B8327BA0021EA76 /* ResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5925FF1B8327BA0021EA76 /* ResultViewController.swift */; };
 		0C5926021B8327BA0021EA76 /* ResultViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C5926001B8327BA0021EA76 /* ResultViewController.xib */; };
+		0C5926041B836C670021EA76 /* ProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5926031B836C670021EA76 /* ProfileModel.swift */; };
+		0C5926061B836EA30021EA76 /* AddressModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5926051B836EA30021EA76 /* AddressModel.swift */; };
 		0C6490761B7781E400F88F92 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C6490751B7781E400F88F92 /* Category.swift */; };
 		0C8A7C7B1B6772670039F013 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0C8A7C7A1B6772670039F013 /* Images.xcassets */; };
 		0C8A7C8A1B6772670039F013 /* YiLinkerOnlineBuyerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8A7C891B6772670039F013 /* YiLinkerOnlineBuyerTests.swift */; };
@@ -202,6 +204,8 @@
 		0C5111E81B821D6F002F0001 /* SeeMoreTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SeeMoreTableViewCell.xib; sourceTree = "<group>"; };
 		0C5925FF1B8327BA0021EA76 /* ResultViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultViewController.swift; sourceTree = "<group>"; };
 		0C5926001B8327BA0021EA76 /* ResultViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ResultViewController.xib; path = ../ViewController/ResultViewController.xib; sourceTree = "<group>"; };
+		0C5926031B836C670021EA76 /* ProfileModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileModel.swift; sourceTree = "<group>"; };
+		0C5926051B836EA30021EA76 /* AddressModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressModel.swift; sourceTree = "<group>"; };
 		0C6490751B7781E400F88F92 /* Category.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 		0C8A7C6E1B6772670039F013 /* YiLinkerOnlineBuyer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YiLinkerOnlineBuyer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0C8A7C721B6772670039F013 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -456,6 +460,8 @@
 				79F0DD9B1B7B17D500EB8053 /* CartModel.swift */,
 				79F0DD9D1B7B24CB00EB8053 /* CartProductDetailsModel.swift */,
 				0C329E741B7B2D32005BE2B6 /* RegisterModel.swift */,
+				0C5926031B836C670021EA76 /* ProfileModel.swift */,
+				0C5926051B836EA30021EA76 /* AddressModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -816,6 +822,7 @@
 			files = (
 				0CB9DB391B6A3DC700F2CA13 /* StartPageViewController.swift in Sources */,
 				79A1C6EF1B8329390043AA36 /* SearchSuggestionTableViewCell.swift in Sources */,
+				0C5926061B836EA30021EA76 /* AddressModel.swift in Sources */,
 				0CB9DB3B1B6A3EA100F2CA13 /* StarterContentPageViewController.swift in Sources */,
 				0CDA117A1B760E1A007B5DED /* LoginViewController.swift in Sources */,
 				0C99373A1B750583000D6074 /* APIManager.swift in Sources */,
@@ -832,6 +839,7 @@
 				26AFB3B81B79DE3800E50926 /* ProductReviewViewController.swift in Sources */,
 				0C329E801B7B7376005BE2B6 /* MessagingViewController.swift in Sources */,
 				0C329E8C1B7B73B7005BE2B6 /* CategoriesViewController.swift in Sources */,
+				0C5926041B836C670021EA76 /* ProfileModel.swift in Sources */,
 				26AFB3931B79DD9100E50926 /* XibHelper.swift in Sources */,
 				0C5111E11B8207C7002F0001 /* ProductsTableViewCell.swift in Sources */,
 				26AFB3AE1B79DE2900E50926 /* ProductAttributeTableViewCell.swift in Sources */,
