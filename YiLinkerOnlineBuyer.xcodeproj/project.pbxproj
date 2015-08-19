@@ -9,6 +9,12 @@
 /* Begin PBXBuildFile section */
 		0C2670CD1B77290200394E29 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0C2670CC1B77290200394E29 /* GoogleService-Info.plist */; };
 		0C2670CF1B772E4B00394E29 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C2670CE1B772E4B00394E29 /* Enums.swift */; };
+		0C2F44A51B848B3A00021F45 /* SummaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C2F44A31B848B3A00021F45 /* SummaryViewController.swift */; };
+		0C2F44A61B848B3A00021F45 /* SummaryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C2F44A41B848B3A00021F45 /* SummaryViewController.xib */; };
+		0C2F44A91B848B5400021F45 /* PaymentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C2F44A71B848B5300021F45 /* PaymentViewController.swift */; };
+		0C2F44AA1B848B5400021F45 /* PaymentViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C2F44A81B848B5400021F45 /* PaymentViewController.xib */; };
+		0C2F44AD1B848B7E00021F45 /* OverViewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C2F44AB1B848B7E00021F45 /* OverViewViewController.swift */; };
+		0C2F44AE1B848B7E00021F45 /* OverViewViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C2F44AC1B848B7E00021F45 /* OverViewViewController.xib */; };
 		0C329E731B7B2A71005BE2B6 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C329E721B7B2A71005BE2B6 /* Reachability.swift */; };
 		0C329E751B7B2D32005BE2B6 /* RegisterModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C329E741B7B2D32005BE2B6 /* RegisterModel.swift */; };
 		0C329E771B7B47DC005BE2B6 /* EmptyView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C329E761B7B47DC005BE2B6 /* EmptyView.xib */; };
@@ -185,6 +191,12 @@
 		0C25D94D1B76F81A00E9EFA6 /* YiLinkerOnlineBuyer-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "YiLinkerOnlineBuyer-Bridging-Header.h"; sourceTree = "<group>"; };
 		0C2670CC1B77290200394E29 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		0C2670CE1B772E4B00394E29 /* Enums.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
+		0C2F44A31B848B3A00021F45 /* SummaryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SummaryViewController.swift; sourceTree = "<group>"; };
+		0C2F44A41B848B3A00021F45 /* SummaryViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SummaryViewController.xib; path = ../ViewController/SummaryViewController.xib; sourceTree = "<group>"; };
+		0C2F44A71B848B5300021F45 /* PaymentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentViewController.swift; sourceTree = "<group>"; };
+		0C2F44A81B848B5400021F45 /* PaymentViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PaymentViewController.xib; path = ../ViewController/PaymentViewController.xib; sourceTree = "<group>"; };
+		0C2F44AB1B848B7E00021F45 /* OverViewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OverViewViewController.swift; sourceTree = "<group>"; };
+		0C2F44AC1B848B7E00021F45 /* OverViewViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = OverViewViewController.xib; path = ../ViewController/OverViewViewController.xib; sourceTree = "<group>"; };
 		0C329E721B7B2A71005BE2B6 /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		0C329E741B7B2D32005BE2B6 /* RegisterModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterModel.swift; sourceTree = "<group>"; };
 		0C329E761B7B47DC005BE2B6 /* EmptyView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EmptyView.xib; sourceTree = "<group>"; };
@@ -588,6 +600,9 @@
 				2689FBF51B80412D007BEA68 /* CategoriesTableViewCell.swift */,
 				2689FBFD1B844A69007BEA68 /* CheckoutContainerViewController.swift */,
 				0C5925FF1B8327BA0021EA76 /* ResultViewController.swift */,
+				0C2F44A31B848B3A00021F45 /* SummaryViewController.swift */,
+				0C2F44A71B848B5300021F45 /* PaymentViewController.swift */,
+				0C2F44AB1B848B7E00021F45 /* OverViewViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -595,6 +610,9 @@
 		0C9937291B750583000D6074 /* Xib */ = {
 			isa = PBXGroup;
 			children = (
+				0C2F44AC1B848B7E00021F45 /* OverViewViewController.xib */,
+				0C2F44A81B848B5400021F45 /* PaymentViewController.xib */,
+				0C2F44A41B848B3A00021F45 /* SummaryViewController.xib */,
 				2689FBFE1B844A69007BEA68 /* CheckoutContainerViewController.xib */,
 				79A1C6F21B83574A0043AA36 /* ProductResultListCollectionViewCell.xib */,
 				79A1C6F61B835A090043AA36 /* ProductResultGridCollectionViewCell.xib */,
@@ -774,6 +792,7 @@
 				26AFB3C91B79DE5C00E50926 /* ProductAttributeTableViewCell.xib in Resources */,
 				0CC8A63C1B7B9BBF00C91425 /* FollowedSellerViewController.xib in Resources */,
 				0C9937631B750583000D6074 /* LaunchScreen.xib in Resources */,
+				0C2F44A61B848B3A00021F45 /* SummaryViewController.xib in Resources */,
 				26AFB3BF1B79DE5600E50926 /* ProductViewController.xib in Resources */,
 				0C99376A1B750583000D6074 /* SectionBackground.xib in Resources */,
 				0C9937611B750583000D6074 /* FullImageCollectionViewCell.xib in Resources */,
@@ -801,11 +820,13 @@
 				0C5111DE1B81F21A002F0001 /* AboutSellerTableViewCell.xib in Resources */,
 				79A1C6F11B8329490043AA36 /* SearchSuggestionTableViewCell.xib in Resources */,
 				0C5111E61B8211B6002F0001 /* GeneralRatingTableViewCell.xib in Resources */,
+				0C2F44AE1B848B7E00021F45 /* OverViewViewController.xib in Resources */,
 				26AFB3C81B79DE5C00E50926 /* ReviewTableViewCell.xib in Resources */,
 				0C9937681B750583000D6074 /* ProductWithCenterNameCollectionViewCell.xib in Resources */,
 				2689FBF81B80412D007BEA68 /* CategoriesTableViewCell.xib in Resources */,
 				2632F5221B7F8690006931E4 /* FollowedSellerTableViewCell.xib in Resources */,
 				79A1C6FB1B83787B0043AA36 /* SellerResultCollectionViewCell.xib in Resources */,
+				0C2F44AA1B848B5400021F45 /* PaymentViewController.xib in Resources */,
 				0C9937661B750583000D6074 /* NewSellerScrollableCollectionViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -881,9 +902,11 @@
 				0C5926041B836C670021EA76 /* ProfileModel.swift in Sources */,
 				26AFB3931B79DD9100E50926 /* XibHelper.swift in Sources */,
 				0C5111E11B8207C7002F0001 /* ProductsTableViewCell.swift in Sources */,
+				0C2F44A51B848B3A00021F45 /* SummaryViewController.swift in Sources */,
 				26AFB3AE1B79DE2900E50926 /* ProductAttributeTableViewCell.swift in Sources */,
 				2689FBFF1B844A69007BEA68 /* CheckoutContainerViewController.swift in Sources */,
 				0C9937601B750583000D6074 /* WishlistViewController.swift in Sources */,
+				0C2F44A91B848B5400021F45 /* PaymentViewController.swift in Sources */,
 				26AFB39E1B79DDEA00E50926 /* ProductReviewsModel.swift in Sources */,
 				0C99375F1B750583000D6074 /* SearchViewController.swift in Sources */,
 				0C329E7C1B7B7353005BE2B6 /* HelpViewController.swift in Sources */,
@@ -912,6 +935,7 @@
 				0C9937471B750583000D6074 /* DynamicRoundedLabel.swift in Sources */,
 				2632F5211B7F8690006931E4 /* FollowedSellerTableViewCell.swift in Sources */,
 				0C99374E1B750583000D6074 /* NewSellerScrollableCollectionViewCell.swift in Sources */,
+				0C2F44AD1B848B7E00021F45 /* OverViewViewController.swift in Sources */,
 				0CE35EB81B76711400AAA8F1 /* RegisterViewController.swift in Sources */,
 				26AFB3B51B79DE3800E50926 /* ProductViewController.swift in Sources */,
 				79F0DD9E1B7B24CB00EB8053 /* CartProductDetailsModel.swift in Sources */,
