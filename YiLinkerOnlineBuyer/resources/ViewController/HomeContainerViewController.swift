@@ -37,6 +37,8 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     override func viewDidLoad() {
         super.viewDidLoad()
         //set customTabbar
+        self.view.layoutIfNeeded()
+        self.contentViewFrame = self.view.frame
         self.customTabBarController = self.tabBarController as? CustomTabBarController
         self.customTabBarController?.isValidToSwitchToMenuTabBarItems = false
         self.circularDraweView()
@@ -50,12 +52,18 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         } else {
             self.addEmptyView()
         }
+        
     }
     
     func addEmptyView() {
-        self.emptyView = UIView.loadFromNibNamed("EmptyView", bundle: nil) as? EmptyView
-        self.emptyView!.delegate = self
-        self.view.addSubview(self.emptyView!)
+        if self.emptyView == nil {
+            self.emptyView = UIView.loadFromNibNamed("EmptyView", bundle: nil) as? EmptyView
+            self.emptyView?.frame = self.contentViewFrame!
+            self.emptyView!.delegate = self
+            self.view.addSubview(self.emptyView!)
+        } else {
+            self.emptyView!.hidden = false
+        }
     }
     
     
@@ -282,7 +290,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     
     func didTapReload() {
         self.fireGetHomePageData()
-        self.emptyView?.removeFromSuperview()
+        self.emptyView?.hidden = true
     }
     
     func fireGetUserInfo() {
