@@ -117,7 +117,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         SVProgressHUD.show()
         SVProgressHUD.setBackgroundColor(UIColor.clearColor())
         
-        manager.GET(/*"https://demo3526363.mockable.io/api/v1/productPage"*/"http://online.api.easydeal.ph/api/v1/product/getProductDetail?productId=1", parameters: params, success: {
+        manager.GET("http://online.api.easydeal.ph/api/v1/product/getProductDetail?productId=1", parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
             self.productDetailsModel = ProductDetailsModel.parseDataWithDictionary(responseObject)
@@ -142,7 +142,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     }
     
     func requestReviewDetails(url: String, params: NSDictionary!) {
-        manager.POST(/*APIAtlas.productReviewUrl*/url, parameters: params, success: {
+        manager.POST(url, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
             self.productReviewModel = ProductReviewModel.parseDataWithDictionary(responseObject)
@@ -161,7 +161,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     
     func requestSellerDetails(url: String, params: NSDictionary!) {
         
-        manager.GET(APIAtlas.getSellerUrl, parameters: nil, success: {
+        manager.GET("https://demo3526363.mockable.io/productSeller", parameters: nil, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
             self.productSellerModel = ProductSellerModel.parseDataWithDictionary(responseObject)

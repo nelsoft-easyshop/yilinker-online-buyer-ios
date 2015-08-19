@@ -71,20 +71,6 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
         })
     }
     
-    func fireEditCartItem(url: String, params: NSDictionary!) {
-        showLoader()
-        manager.DELETE(url, parameters: params, success: {
-                (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-                print(responseObject as! NSDictionary)
-                self.updateCounterLabel()
-                self.dismissLoader()
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                println("failed: \(error)")
-                self.dismissLoader()
-        })
-    }
-    
     func requestProductDetails(url: String, params: NSDictionary!) {
         showLoader()
         manager.GET(url, parameters: params, success: {
@@ -103,6 +89,29 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
             self.updateCounterLabel()
             self.dismissLoader()
             
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                println("failed: \(error)")
+                self.dismissLoader()
+        })
+    }
+    
+    func fireDeleteCartItem(url: String, index: Int!) {
+        
+        var params = Dictionary<String, String>()
+        
+        var cartModelTemp = tableData[index]
+        
+        params["access_token"] = "access_token"
+        params["productId"] = "\(cartModelTemp.productDetails.id)"
+        params["unitId"] = "\(cartModelTemp.unitId)"
+        params["quantity"] = "\(0)"
+        
+        showLoader()
+        manager.GET(url, parameters: params, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            self.dismissLoader()
+            self.populateWishListTableView()
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 println("failed: \(error)")
@@ -140,7 +149,7 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
         attributeModal.definesPresentationContext = true
         attributeModal.view.backgroundColor = UIColor.clearColor()
         attributeModal.view.frame.origin.y = attributeModal.view.frame.size.height
-        attributeModal.passModel(productDetailsModel: tempModel.productDetails, combinationModel: tempModel.productDetails.combinations, selectedValue: selectedValue, quantity: tempModel.quantity)
+        attributeModal.passModel(cartModel: tableData[index], combinationModel: tempModel.productDetails.combinations, selectedValue: selectedValue, quantity: tempModel.quantity)
         //        self.navigationController?.presentViewController(attributeModal, animated: true, completion: nil)
         self.tabBarController?.presentViewController(attributeModal, animated: true, completion: nil)
         
@@ -239,15 +248,13 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
     func deleteButtonActionForIndex(sender: AnyObject){
         var pathOfTheCell: NSIndexPath = cartTableView.indexPathForCell(sender as! UITableViewCell)!
         var rowOfTheCell: Int = pathOfTheCell.row
-        tableData.removeAtIndex(pathOfTheCell.row);
-        cartTableView.deleteRowsAtIndexPaths([pathOfTheCell], withRowAnimation: UITableViewRowAnimation.Fade)
-        updateCounterLabel()
+        fireDeleteCartItem("https://demo3526363.mockable.io/api/v1/auth/cart/updateCartItem", index: rowOfTheCell)
     }
     
     func editButtonActionForIndex(sender: AnyObject){
         var pathOfTheCell: NSIndexPath = cartTableView.indexPathForCell(sender as! UITableViewCell)!
         var rowOfTheCell: Int = pathOfTheCell.row
-        //seeMoreAttribute(rowOfTheCell)
+        seeMoreAttribute(rowOfTheCell)
     }
     
     func checkBoxButtonActionForIndex(sender: AnyObject, state: Bool){
@@ -258,6 +265,10 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
         tempModel.selected = state
 
         calculateTotalPrice()
+    }
+    
+    func swipeViewDidScroll(sender: AnyObject) {
+        NSNotificationCenter.defaultCenter().postNotificationName("SwipeForOptionsCellEnclosingTableViewDidBeginScrollingNotification", object: self)
     }
     
     // MARK: - Cart Product Attribute View Controller Delegate

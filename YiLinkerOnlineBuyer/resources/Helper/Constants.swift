@@ -25,6 +25,7 @@ struct Constants {
         static let productDetails: UIColor = HexaColor.colorWithHexa(0xd52371)
         static let productPrice: UIColor = HexaColor.colorWithHexa(0x75348a)
         static let productReviewGreen: UIColor = HexaColor.colorWithHexa(0xb3b233)
+        static let grayLine: UIColor = HexaColor.colorWithHexa(0x606060)
     }
     
     struct Facebook {
@@ -35,5 +36,14 @@ struct Constants {
         static let userPermissionEmailKey = "email"
         static let userPermissionPublicProfileKey = "public_profile"
         static let userPermissionFriendsKey = "user_friends"
+    }
+    
+    struct Seller {
+        static let aboutSellerTableViewCellNibNameAndIdentifier = "AboutSellerTableViewCell"
+        static let productsTableViewCellNibNameAndIdentifier = "ProductsTableViewCell"
+        static let generalRatingTableViewCellNibNameAndIndentifier = "GeneralRatingTableViewCell"
+        static let reviewIdentifier = "reviewIdentifier"
+        static let reviewNibName = "ReviewTableViewCell"
+        static let seeMoreTableViewCellNibNameAndIdentifier = "SeeMoreTableViewCell"
     }
 }

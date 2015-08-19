@@ -21,7 +21,6 @@ class ProductReviewsModel {
     class func parseProductReviesModel(reviews: NSDictionary) -> ProductReviewsModel! {
         
         var model = ProductReviewsModel()
-
         if reviews.isKindOfClass(NSDictionary) {
             model.fullName = reviews["fullName"] as! String
             model.profileImageUrl = reviews["profileImageUrl"] as! String
