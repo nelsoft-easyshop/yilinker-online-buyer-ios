@@ -12,13 +12,13 @@ class ProductReviewModel {
     
     var message: String = ""
     var isSuccessful: Bool = false
-    var rating: Float = 0.0
+    var ratingAverage: Int = 0
     var reviews: [ProductReviewsModel] = []
     
-    init(message: String, isSuccessful: Bool, rating: Float, reviews: NSArray) {
+    init(message: String, isSuccessful: Bool, ratingAverage: Int, reviews: NSArray) {
         self.message = message
         self.isSuccessful = isSuccessful
-        self.rating = rating
+        self.ratingAverage = ratingAverage
         self.reviews = reviews as! [ProductReviewsModel]
     }
     
@@ -26,7 +26,8 @@ class ProductReviewModel {
         
         var message: String = ""
         var isSuccessful: Bool = false
-        var rating: Float = 0.0
+        
+        var ratingAverage: Int = 0
         var reviews: [ProductReviewsModel] = []
         
         if dictionary.isKindOfClass(NSDictionary) {
@@ -40,8 +41,8 @@ class ProductReviewModel {
             }
             
             if let value: AnyObject = dictionary["data"] {
-                if let tempVar = value["rating"] as? Float {
-                    rating = tempVar
+                if let tempVar = value["ratingAverage"] as? Int {
+                    ratingAverage = tempVar
                 }
                 
                 for subValue in value["reviews"] as! NSArray {
@@ -49,12 +50,8 @@ class ProductReviewModel {
                     reviews.append(model)
                 }
             }
-            
-            return ProductReviewModel(message: message, isSuccessful: isSuccessful, rating: rating, reviews: reviews)
-        } else {
-            return ProductReviewModel(message: "", isSuccessful: false, rating: 0.0, reviews: [])
-        }
+        } // dictionary
         
-        
-    }
+        return ProductReviewModel(message: message, isSuccessful: isSuccessful, ratingAverage: ratingAverage, reviews: reviews)
+    } // parse
 }

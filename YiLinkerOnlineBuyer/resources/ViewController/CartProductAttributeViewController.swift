@@ -94,11 +94,11 @@ class CartProductAttributeViewController: UIViewController, UITableViewDelegate,
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell: ProductAttributeTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("AttributeTableCell") as! ProductAttributeTableViewCell
         
-        cell.delegate = self
-        cell.passAvailableCombination(availableCombinations)
+//        cell.delegate = self
+//        cell.passAvailableCombination(availableCombinations)
         
-        cell.tag = indexPath.row
-        cell.setAttribute(name: attributes[indexPath.row].attributeName, values: attributes[indexPath.row].valueName, id: attributes[indexPath.row].valueId, selectedValue: selectedValue)
+//        cell.tag = indexPath.row
+//        cell.setAttribute(name: attributes[indexPath.row].attributeName, values: attributes[indexPath.row].valueName, id: attributes[indexPath.row].valueId, selectedValue: selectedValue)
         
         return cell
     }
@@ -152,7 +152,7 @@ class CartProductAttributeViewController: UIViewController, UITableViewDelegate,
         stocks = 0
         checkStock(stocks)
         self.selectedValue[attributeIndex + 1] = String(attributeValue)
-        self.selectedCombination[attributeIndex] = attributeId
+//        self.selectedCombination[attributeIndex] = attributeId
         
         maximumStock = availableStock(selectedCombination)
         self.availabilityStocksLabel.text = "Available stocks : " + String(availableStock(selectedCombination))

@@ -21,39 +21,39 @@ class ProductAttributeTableViewCell: UITableViewCell {
     var selectedAttributeIndex = 0
     var aSelected: String = ""
     
-    var attributesId: [Int] = []
+    var attributesId: [String] = []
     var attributesName: [String] = []
+    var selectedId: [String] = []
     var selectedValue: [String] = []
     var selectedAttributes: [String] = []
     
     var delegate: ProductAttributeTableViewCellDelegate?
     
-    var combination: [ProductAvailableAttributeCombinationModel] = []
+    var productDetailModel: ProductDetailsModel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
     }
     
     // MARK: - Methods
-    
-    func setAttribute(#name: String, values: NSArray, id: NSArray, selectedValue: NSArray) {
-        attributeLabel.text = "Select \(name)"
+
+    func setAttribute( model: ProductAttributeModel, availableCombination: NSArray, selectedValue: NSArray, selectedId: NSArray, width: CGFloat) {
+        attributeLabel.text = "Select \(model.attributeName)"
         
         self.attributesId = []
-        self.attributesId = id as! [Int]
+        self.attributesId = model.valueId
         self.attributesName = []
-        self.attributesName = values as! [String]
+        self.attributesName = model.valueName
         
-        addScrollViewWithAttributes(values, selectedValue: selectedValue)
+        addScrollViewWithAttributes(model.valueName, availableCombination: availableCombination, selectedValue: selectedValue, selectedId: selectedId, width: width)
     }
     
-    func passAvailableCombination(model: NSArray) {
-        combination = model as! [ProductAvailableAttributeCombinationModel]
+    func passProductDetailModel(model: ProductDetailsModel) {
+        self.productDetailModel = model
     }
     
-    func addScrollViewWithAttributes(attributes: NSArray, selectedValue: NSArray) {
-        scroll = UIScrollView(frame: CGRectMake(0, self.frame.size.height - 70, self.frame.size.width, 70))
-
+    func addScrollViewWithAttributes(attributes: NSArray, availableCombination: NSArray, selectedValue: NSArray, selectedId: NSArray, width: CGFloat) {
+        scroll = UIScrollView(frame: CGRectMake(0, self.frame.size.height - 70, width, 70))
         var spacingX: CGFloat = 0.0
         
         for i in 0..<attributes.count {
@@ -67,7 +67,7 @@ class ProductAttributeTableViewCell: UITableViewCell {
             button.layer.cornerRadius = 15
             button.backgroundColor = UIColor.whiteColor()
             button.addTarget(self, action: "clickedAttriubte:", forControlEvents: .TouchUpInside)
-            button.tag = attributesId[i]
+            button.tag = attributesId[i].toInt()!
 //            //>>>>
 //            button.sizeToFit()
 //            button.frame.size.width += CGFloat(30)
@@ -77,8 +77,19 @@ class ProductAttributeTableViewCell: UITableViewCell {
 //            spacingX += 10.0
 //            button.frame.origin.x += CGFloat(spacingX)
 //            //<<<<
-            for v in 0..<selectedValue.count {
-                if attributesName[i] == selectedValue[v] as! String {
+
+            for ac in 0..<availableCombination.count {
+                for c in 0..<self.productDetailModel.productUnits.count {
+                    println(">> \(availableCombination[ac]) - \(self.productDetailModel.productUnits[c].combination)")
+//                    if availableCombination[ac] == self.productDetailModel.productUnits[c].combination {
+//                        println("benga")
+//                    }
+                }
+            }
+            
+            for a in 0..<selectedId.count {
+                if attributesId[i] == selectedId[a] as! String {
+                    button.selected = true
                     button.layer.borderColor = UIColor.purpleColor().CGColor
                     button.backgroundColor = UIColor.purpleColor()
                     button.setTitleColor(UIColor.whiteColor(), forState: .Normal)
@@ -95,6 +106,9 @@ class ProductAttributeTableViewCell: UITableViewCell {
     func clickedAttriubte(sender: UIButton!) {
         if sender.selected { // Unselect
             DeselectButton(sender)
+            if let delegate = self.delegate {
+                delegate.selectedAttribute(self, attributeIndex: self.tag, attributeValue: "", attributeId: -1)
+            }
         } else {
             for view in scroll.subviews as! [UIView]{
                 if let button = view as? UIButton {
@@ -119,8 +133,18 @@ class ProductAttributeTableViewCell: UITableViewCell {
         button.setTitleColor(UIColor.whiteColor(), forState: .Normal)
         
         if let delegate = self.delegate {
-            delegate.selectedAttribute(self, attributeIndex: self.tag, attributeValue: button.titleLabel?.text, attributeId: button.tag)
+            delegate.selectedAttribute(self, attributeIndex: self.tag, attributeValue: button.titleLabel?.text!, attributeId: button.tag)
         }
         
+    }
+    
+    func enableButton(button: UIButton) {
+        button.alpha = 1.0
+        button.userInteractionEnabled = true
+    }
+    
+    func disableButton(button: UIButton) {
+        button.alpha = 0.3
+        button.userInteractionEnabled = false
     }
 }

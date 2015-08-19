@@ -149,9 +149,9 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
             let reviewCell: ReviewTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(Constants.Seller.reviewIdentifier) as! ReviewTableViewCell
             
             let reviewModel: ProductReviewsModel = self.sellerModel!.reviews[index]
-            reviewCell.displayPictureImageView.sd_setImageWithURL(NSURL(string: reviewModel.imageUrl)!, placeholderImage: UIImage(named: "dummy-placeholder"))
-            reviewCell.messageLabel.text = reviewModel.message
-            reviewCell.nameLabel.text = reviewModel.name
+//            reviewCell.displayPictureImageView.sd_setImageWithURL(NSURL(string: reviewModel.imageUrl)!, placeholderImage: UIImage(named: "dummy-placeholder"))
+//            reviewCell.messageLabel.text = reviewModel.message
+//            reviewCell.nameLabel.text = reviewModel.name
             reviewCell.setRating(reviewModel.rating)
             return reviewCell
         }

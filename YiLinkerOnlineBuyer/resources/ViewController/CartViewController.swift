@@ -129,10 +129,10 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
         var tempAttributeId: [Int] = []
         var tempAttributeName: [String] = []
         
-        for tempAttribute in tempModel.productDetails.attributes{
-            tempAttributeId += tempAttribute.valueId
-            tempAttributeName += tempAttribute.valueName
-        }
+//        for tempAttribute in tempModel.productDetails.attributes{
+//            tempAttributeId += tempAttribute.valueId
+//            tempAttributeName += tempAttribute.valueName
+//        }
         
         for tempId in tempModel.selectedAttributes {
             if let index = find(tempAttributeId, tempId) {
@@ -212,10 +212,10 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
         var tempAttributeId: [Int] = []
         var tempAttributeName: [String] = []
         
-        for tempAttribute in tempModel.productDetails.attributes{
-            tempAttributeId += tempAttribute.valueId
-            tempAttributeName += tempAttribute.valueName
-        }
+//        for tempAttribute in tempModel.productDetails.attributes{
+//            tempAttributeId += tempAttribute.valueId
+//            tempAttributeName += tempAttribute.valueName
+//        }
         
         for tempId in tempModel.selectedAttributes {
             if let index = find(tempAttributeId, tempId) {
