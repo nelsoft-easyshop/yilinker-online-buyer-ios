@@ -9,7 +9,7 @@
 import UIKit
 
 protocol ProductViewControllerDelegate {
-    func dismissPresentedController(controller: ProductViewController)
+    func pressedDimViewFromProductPage(controller: ProductViewController)
 }
 
 class ProductViewController: UIViewController, ProductImagesViewDelegate, ProductDescriptionViewDelegate, ProductReviewFooterViewDelegate, ProductSellerViewDelegate, ProductReviewViewControllerDelegate, ProductAttributeViewControllerDelegate, EmptyViewDelegate {
@@ -42,13 +42,16 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     
     var selectedName: [String] = []
     var selectedValue: [String] = []
+    var selectedId: [String] = []
     
     var newFrame: CGRect!
     var visibility = 0.0
     var lastContentOffset: CGFloat = 0.0
     
+    var productRequest = false
     var reviewRequest = false
-    var sellerRquest = false
+    var sellerRequest = false
+    
     var productSuccess = false
     var reviewSuccess = false
     var sellerSuccess = false
@@ -60,6 +63,8 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     let productUrl = "https://demo1928934.mockable.io/yi/getproductDetails?productId=1000"
     let reviewUrl = "https://demo5885209.mockable.io/api/v1/product/getReviews?productId=1000"
     
+    var tabController = CustomTabBarController()
+    
     // MARK: - View Life Cycle
     
     override func viewDidLoad() {
@@ -70,35 +75,32 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         self.tableView.rowHeight = UITableViewAutomaticDimension
         self.tableView.estimatedRowHeight = 100.0
         
-//        self.getHeaderView().addSubview(self.getProductImagesView())
-//        self.getHeaderView().addSubview(self.getProductDetailsView([]))
-//        self.getHeaderView().addSubview(self.getProductAttributeView())
-//        self.getHeaderView().addSubview(self.getProductDescriptionView())
-//        self.getHeaderView().addSubview(self.getProductReviewHeaderView())
-//        
-//        self.getFooterView().addSubview(self.getProductReviewFooterView())
-//        self.getFooterView().addSubview(self.getProductSellerView())
-//        
-//        setUpViews()
-        
-//        self.productImagesView.delegate = self
-//        self.productDescriptionView.delegate = self
-//        self.productReviewFooterView.delegate = self
-//        self.productSellerView.delegate = self
-
-        //
-        
         setBorderOf(view: addToCartButton, width: 1, color: .grayColor(), radius: 3)
         setBorderOf(view: buyItNowView, width: 1, color: .grayColor(), radius: 3)
         
         requestProductDetails(productUrl, params: nil)
-        requestReviewDetails(reviewUrl, params: nil)
+//        requestReviewDetails(reviewUrl, params: nil)
+        requestReviewDetails("http://online.api.easydeal.ph/api/v1/product/getProductReviews", params: ["productId": "1"])
         
         buyItNowView.addGestureRecognizer(tapGesture("buyItNowAction:"))
     }
     
     override func viewWillAppear(animated: Bool) {
         configureNavigationBar()
+        
+        var seeMoreLabel = UILabel(frame: CGRectMake((buyItNowView.frame.size.width / 2) - 60, 0, 90, buyItNowView.frame.size.height))
+        seeMoreLabel.frame.origin.x = 0
+        seeMoreLabel.frame.size.width = addToCartButton.frame.size.width
+        seeMoreLabel.text = "BUY IT NOW"
+        seeMoreLabel.textAlignment = .Center
+        seeMoreLabel.textColor = .whiteColor()
+        seeMoreLabel.backgroundColor = .redColor()
+        seeMoreLabel.font = UIFont.boldSystemFontOfSize(13.0)
+        
+        var seeMoreImageView = UIImageView(frame: CGRectMake(seeMoreLabel.frame.size.width, (seeMoreLabel.frame.size.height / 2) - 6, 13, 13))
+        seeMoreImageView.image = UIImage(named: "buy")
+//        seeMoreLabel.addSubview(seeMoreImageView)
+//        self.buyItNowView.addSubview(seeMoreLabel)
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -115,35 +117,38 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         SVProgressHUD.show()
         SVProgressHUD.setBackgroundColor(UIColor.clearColor())
         
-        manager.GET(APIAtlas.productPageUrl, parameters: params, success: {
+        manager.GET("http://online.api.easydeal.ph/api/v1/product/getProductDetail?productId=1", parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
             self.productDetailsModel = ProductDetailsModel.parseDataWithDictionary(responseObject)
             self.attributes = self.productDetailsModel.attributes
-            self.combinations = self.productDetailsModel.combinations
+//            self.combinations = self.productDetailsModel.combinations
             self.populateDetails()
             
             let seller = "https://demo5885209.mockable.io/api/v1/seller/getDetails?sellerId=111"
             self.requestSellerDetails(seller, params: nil)
             
+            self.productRequest = true
             self.productSuccess = true
-            println("product success")
+            self.checkRequests()
+            
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 println("product failed")
+                self.productRequest = true
                 self.productSuccess = false
+                self.checkRequests()
         })
     }
     
     func requestReviewDetails(url: String, params: NSDictionary!) {
-        manager.GET(APIAtlas.productReviewUrl, parameters: params, success: {
+        manager.POST(url, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-
+            
             self.productReviewModel = ProductReviewModel.parseDataWithDictionary(responseObject)
             self.reviewRequest = true
             self.reviewSuccess = true
             self.checkRequests()
-            println("review success")
             
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
@@ -156,19 +161,18 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     
     func requestSellerDetails(url: String, params: NSDictionary!) {
         
-        manager.GET(APIAtlas.getSellerUrl, parameters: nil, success: {
+        manager.GET("https://demo3526363.mockable.io/productSeller", parameters: nil, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
             self.productSellerModel = ProductSellerModel.parseDataWithDictionary(responseObject)
-            self.sellerRquest = true
+            self.sellerRequest = true
             self.sellerSuccess = true
             self.checkRequests()
-            println("seller success")
             
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 println("seller failed")
-                self.sellerRquest = true
+                self.sellerRequest = true
                 self.sellerSuccess = false
                 self.checkRequests()
         })
@@ -199,8 +203,10 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     // MARK: - Table View Data Source
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if productReviewModel != nil {
+        if productReviewModel != nil && productReviewModel.reviews.count > 1 {
             return 2
+        } else if productReviewModel != nil && productReviewModel.reviews.count < 2 {
+            return productReviewModel.reviews.count
         }
         
         return 0
@@ -210,12 +216,11 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         let cell: ReviewTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("reviewIdentifier") as! ReviewTableViewCell
         
         cell.selectionStyle = UITableViewCellSelectionStyle.None
-//        cell.frame.size.width = 320
-        
-        cell.setName(productReviewModel.reviews[indexPath.row].name)
-        cell.setDisplayPicture(productReviewModel.reviews[indexPath.row].imageUrl)
-        cell.setMessage(productReviewModel.reviews[indexPath.row].message)
+
+        cell.nameLabel.text = productReviewModel.reviews[indexPath.row].fullName
+        cell.setDisplayPicture(productReviewModel.reviews[indexPath.row].profileImageUrl)
         cell.setRating(productReviewModel.reviews[indexPath.row].rating)
+        cell.messageLabel.text = productReviewModel.reviews[indexPath.row].review
         
         return cell
     }
@@ -242,6 +247,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         if self.productImagesView == nil {
             self.productImagesView = XibHelper.puffViewWithNibName("ProductViewsViewController", index: 0) as! ProductImagesView
             self.productImagesView.frame.size.width = self.view.frame.size.width
+            self.productImagesView.frame.size.height = self.view.frame.size.height - 114
         }
         return self.productImagesView
     }
@@ -256,7 +262,6 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     
     func getProductAttributeView() -> UIView {
         if self.productAttributeView == nil {
-            println(self.view.frame.size.width)
             self.productAttributeView = UIView(frame: CGRectMake(0, 41, self.view.frame.size.width, 50))
             self.productAttributeView.backgroundColor = .whiteColor()
             
@@ -288,6 +293,19 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         if self.productDescriptionView == nil {
             self.productDescriptionView = XibHelper.puffViewWithNibName("ProductViewsViewController", index: 1) as! ProductDescriptionView
             self.productDescriptionView.frame.size.width = self.view.frame.size.width
+            
+            var seeMoreLabel = UILabel(frame: CGRectMake(0, 0, 90, 41))
+            seeMoreLabel.text = "SEE MORE"
+            seeMoreLabel.textColor = .blueColor()
+            seeMoreLabel.font = UIFont.systemFontOfSize(15.0)
+            seeMoreLabel.textAlignment = .Center
+            
+            var seeMoreImageView = UIImageView(frame: CGRectMake(seeMoreLabel.frame.size.width, (seeMoreLabel.frame.size.height / 2) - 6, 8, 12))
+            seeMoreImageView.image = UIImage(named: "seeMore")
+            seeMoreLabel.addSubview(seeMoreImageView)
+            
+            seeMoreLabel.center.x = self.view.center.x - 5
+            self.productDescriptionView.seeMoreView.addSubview(seeMoreLabel)
         }
         return self.productDescriptionView
     }
@@ -304,6 +322,20 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         if self.productReviewFooterView == nil {
             self.productReviewFooterView = XibHelper.puffViewWithNibName("ProductViewsViewController", index: 3) as! ProductReviewFooterView
             self.productReviewFooterView.frame.size.width = self.view.frame.size.width
+            
+            var seeMoreLabel = UILabel(frame: self.productReviewFooterView.frame)
+            seeMoreLabel.frame.size.width = 90
+            seeMoreLabel.text = "SEE MORE"
+            seeMoreLabel.textColor = .blueColor()
+            seeMoreLabel.font = UIFont.systemFontOfSize(15.0)
+            seeMoreLabel.textAlignment = .Center
+            
+            var seeMoreImageView = UIImageView(frame: CGRectMake(seeMoreLabel.frame.size.width, (seeMoreLabel.frame.size.height / 2) - 6, 8, 12))
+            seeMoreImageView.image = UIImage(named: "seeMore")
+            seeMoreLabel.addSubview(seeMoreImageView)
+            
+            seeMoreLabel.center.x = self.view.center.x - 5
+            self.productReviewFooterView.addSubview(seeMoreLabel)
         }
         return self.productReviewFooterView
     }
@@ -358,7 +390,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     }
     
     func wishlist(controller: ProductImagesView) {
-        showAlert("Wishlist")
+        barWishlistAction()
     }
     
     func rate(controller: ProductImagesView) {
@@ -369,7 +401,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         showAlert("Message")
     }
     
-    func seeMoreAttribute(bool: Bool, title: String) {
+    func seeMoreAttribute(title: String) {
         var attributeModal = ProductAttributeViewController(nibName: "ProductAttributeViewController", bundle: nil)
         attributeModal.delegate = self
         attributeModal.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
@@ -377,9 +409,10 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         attributeModal.definesPresentationContext = true
         attributeModal.view.backgroundColor = UIColor.clearColor()
         attributeModal.view.frame.origin.y = attributeModal.view.frame.size.height
-        attributeModal.passModel(productDetailsModel: productDetailsModel, combinationModel: productDetailsModel.combinations, selectedValue: selectedValue)
-        attributeModal.showCartCheckout(bool, title: title)
-//        self.navigationController?.presentViewController(attributeModal, animated: true, completion: nil)
+        attributeModal.passModel(productDetailsModel: productDetailsModel, selectedValue: selectedValue, selectedId: selectedId)
+        attributeModal.setTitle = title
+        attributeModal.tabController = self.tabController
+        attributeModal.screenWidth = self.view.frame.width
         self.tabBarController?.presentViewController(attributeModal, animated: true, completion: nil)
         
         UIView.animateWithDuration(0.3, animations: {
@@ -393,7 +426,6 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     func seeMoreDescription(controller: ProductDescriptionView) {
         let description = ProductDescriptionViewController(nibName: "ProductDescriptionViewController", bundle: nil)
         description.url = self.productDetailsModel.fullDescription
-//        self.presentViewController(description, animated: true, completion: nil)
         self.tabBarController?.presentViewController(description, animated: true, completion: nil)
     }
     
@@ -406,7 +438,6 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         reviewModal.view.backgroundColor = UIColor.clearColor()
         reviewModal.view.frame.origin.y = reviewModal.view.frame.size.height
         reviewModal.passModel(self.productReviewModel)
-//        self.navigationController?.presentViewController(reviewModal, animated: true, completion: nil)
         self.tabBarController?.presentViewController(reviewModal, animated: true, completion: nil)
         
         UIView.animateWithDuration(0.3, animations: {
@@ -442,21 +473,26 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         self.presentViewController(activityViewController, animated: true, completion: nil)
     }
     
-    func pressedCancelAttribute(controller: ProductAttributeViewController) {
+    func dissmissAttributeViewController(controller: ProductAttributeViewController, type: String) {
+        
         UIView.animateWithDuration(0.3, animations: {
             self.view.transform = CGAffineTransformMakeTranslation(1, 1)
             self.dimView.alpha = 0
             self.dimView.layer.zPosition = -1
             self.navigationController?.navigationBar.alpha = CGFloat(self.visibility)
-        })
+            }, completion: { finished in
+                if type == "cart" {
+                    self.showAlert("This item has been added to your cart.")
+                } else if type == "done" {
+                    self.showAlert(type)
+                }
+            })
+
     }
-    func pressedDoneAttribute(controller: ProductAttributeViewController) {
-        UIView.animateWithDuration(0.3, animations: {
-            self.view.transform = CGAffineTransformMakeTranslation(1, 1)
-            self.dimView.alpha = 0
-            self.dimView.layer.zPosition = -1
-            self.navigationController?.navigationBar.alpha = CGFloat(self.visibility)
-        })
+    
+    func gotoCheckoutFromAttributes(controller: ProductAttributeViewController) {
+        let checkout = CheckoutContainerViewController(nibName: "CheckoutContainerViewController", bundle: nil)
+        self.navigationController?.pushViewController(checkout, animated: true)
     }
     
     func pressedCancelReview(controller: ProductReviewViewController) {
@@ -469,8 +505,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     }
     
     func populateDetails() {
-//        println("POPULATING PRODUCT DETAILS")
-//        self.productImagesView.setDetails(productDetailsModel.title, price: productDetailsModel.newPrice, images: [])
+//        self.productImagesView.setDetails(productDetailsModel.title, price: productDetailsModel.newPrice, images: images)
 //        self.setDetails(productDetailsModel.details)
 //        self.setAttributes(productDetailsModel.attributes, combinationModel: productDetailsModel.combinations)
 //        self.productDescriptionView.setDescription(productDetailsModel.shortDescription, full: productDetailsModel.fullDescription)
@@ -500,12 +535,12 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         self.getFooterView().addSubview(self.getProductReviewFooterView())
         self.getFooterView().addSubview(self.getProductSellerView())
         
-        self.productImagesView.setDetails(productDetailsModel.title, price: productDetailsModel.newPrice, images: [])
-        self.setDetails(productDetailsModel.details)
-        self.setAttributes(productDetailsModel.attributes, combinationModel: productDetailsModel.combinations)
+        self.productImagesView.setDetails(self.productDetailsModel, width: self.view.frame.size.width)
+//        self.setDetails(productDetailsModel.details)
+        self.setAttributes(self.productDetailsModel.attributes, productUnit: self.productDetailsModel.productUnits)
         self.productDescriptionView.setDescription(productDetailsModel.shortDescription, full: productDetailsModel.fullDescription)
         
-        self.productReviewHeaderView.setRating(self.productReviewModel.rating)
+        self.productReviewHeaderView.setRating(self.productReviewModel.ratingAverage)
         self.tableView.reloadData()
         
         self.productSellerView.setSellerDetails(self.productSellerModel)
@@ -546,7 +581,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         self.productDetailsView.frame = newFrame
     }
     
-    func setAttributes(attributes: [ProductAttributeModel], combinationModel: [ProductAvailableAttributeCombinationModel]) {
+    func setAttributes(attributes: [ProductAttributeModel], productUnit: [ProductUnitsModel]) {
         
         var topMargin: CGFloat = 0
         var leftMargin: CGFloat = 0
@@ -556,13 +591,15 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         
         selectedName = []
         selectedValue = []
-        selectedName.append("Quantity")
-        selectedValue.append(String(combinationModel[0].quantity) + "x")
+        selectedId = []
+//        selectedName.append("Quantity")
+//        selectedValue.append(String(combinationModel[0].quantity) + "x")
         
         for i in 0..<attributes.count {
             for j in 0..<attributes[i].valueId.count {
-                if combinationModel[0].combination[i] == attributes[i].valueId[j] {
+                if productUnit[0].combination[i] == attributes[i].valueId[j] {
                     selectedName.append(attributes[i].attributeName)
+                    selectedId.append(attributes[i].valueId[j])
                     selectedValue.append(attributes[i].valueName[j])
                 }
             }
@@ -600,11 +637,12 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     // MARK: Actions
     
     @IBAction func addToCartAction(sender: AnyObject) {
-        seeMoreAttribute(true, title: "ADD TO CART")
+        seeMoreAttribute("cart")
+        
     }
     
     func buyItNowAction(gesture: UIGestureRecognizer) {
-        seeMoreAttribute(false, title: "PROCEED TO CHECKOUT")
+        seeMoreAttribute("buy")
     }
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
@@ -654,24 +692,19 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     
     // Navigation Bar Actions
     
-    func barWishlistActon() {
-        showAlert("Wishlist")
-    }
-    
     func gotoAttributes(gesture: UIGestureRecognizer) {
-        seeMoreAttribute(true, title: "")
+        seeMoreAttribute("")
     }
     
     func checkRequests() {
         
-        println(productSuccess)
-        println(reviewSuccess)
-        println(sellerSuccess)
-        
+//        println("Request Product Details Successful: " + String(stringInterpolationSegment: productSuccess))
+//        println("Request Review  Details Successful: " + String(stringInterpolationSegment: reviewSuccess))
+//        println("Request Seller  Details Successful: " + String(stringInterpolationSegment: sellerSuccess))
         
         if productSuccess && reviewSuccess && sellerSuccess {
             self.loadViewsWithDetails()
-        } else if reviewRequest && sellerRquest {
+        } else if productRequest && reviewRequest && sellerRequest {
             if productSuccess == false || reviewSuccess == false || sellerSuccess == false {
                 addEmptyView()
                 SVProgressHUD.dismiss()
@@ -696,7 +729,40 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     }
 
     func barWishlistAction() {
-        showAlert("Wishlist")
+//        showAlert("This item has been added to your Wishlist")
+        
+//        SVProgressHUD.show()
+        
+        var imageToAnimate = UIImageView()
+        imageToAnimate.frame = self.productImagesView.collectionView.frame
+        
+        for subView in self.productImagesView.collectionView.subviews as! [UIView] {
+            for views in subView.subviews as! [UIView] {
+                for imageView in views.subviews as! [UIImageView] {
+                    if imageView.isKindOfClass(UIImageView) {
+                        imageToAnimate.image = imageView.image
+                    }
+                }
+            }
+        }
+        
+        self.view.addSubview(imageToAnimate)
+        UIView.animateWithDuration(0.3, animations: {
+            imageToAnimate.transform = CGAffineTransformMakeScale(0.1, 0.1)
+            }, completion: { finished in //after scaling
+                UIView.animateWithDuration(0.3, animations: { //after animating
+                    imageToAnimate.center = CGPointMake(250, self.tabController.tabBar.frame.origin.y - (self.tabController.tabBar.frame.size.height / 2))
+                    imageToAnimate.alpha = 0.0
+                    }, completion: { finished in
+                        if let badgeValue = (self.tabController.tabBar.items![3] as! UITabBarItem).badgeValue?.toInt() {
+                            (self.tabController.tabBar.items![3] as! UITabBarItem).badgeValue = String(badgeValue + 1)
+                        } else {
+                            (self.tabController.tabBar.items![3] as! UITabBarItem).badgeValue = "1"
+                        }
+                })
+        })
+        
+//        SVProgressHUD.dismiss()
     }
 
     func barRateAction() {

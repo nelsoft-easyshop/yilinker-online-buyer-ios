@@ -177,6 +177,7 @@ class CircularMenuViewController: UIViewController {
                         logoutButton.clipsToBounds = true
                         logoutButton.tag = 100 + index
                         logoutButton.alpha = 0
+                        logoutButton.addTarget(self, action: "logout", forControlEvents: UIControlEvents.TouchUpInside)
                         self.view.addSubview(logoutButton)
                     } else {
                         
@@ -381,10 +382,18 @@ class CircularMenuViewController: UIViewController {
         println(index)
         self.customTabBarController?.selectedIndex = 2
         
-        let hiddenViewController: HiddenViewController = self.customTabBarController!.viewControllers![2] as! HiddenViewController
+        let navigationController: UINavigationController = self.customTabBarController!.viewControllers![2] as! UINavigationController
+        let hiddenViewController: HiddenViewController = navigationController.viewControllers[0] as! HiddenViewController
         hiddenViewController.selectViewControllerAtIndex(index)
         
         self.customTabBarController?.isValidToSwitchToMenuTabBarItems = false
+        self.dissmissViewControllerAnimated()
+    }
+    
+    //logout
+    
+    func logout() {
+        SessionManager.logout()
         self.dissmissViewControllerAnimated()
     }
     

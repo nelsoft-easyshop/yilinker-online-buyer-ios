@@ -54,6 +54,9 @@ class ProductReviewViewController: UIViewController {
         tap.addTarget(self, action: "dimViewAction:")
         self.dimView.addGestureRecognizer(tap)
         self.dimView.backgroundColor = .clearColor()
+        
+        rateLabel.backgroundColor = Constants.Colors.productReviewGreen
+        
     }
 
     // MARK: - Table View Data Source
@@ -67,10 +70,15 @@ class ProductReviewViewController: UIViewController {
         
         cell.selectionStyle = UITableViewCellSelectionStyle.None
         
-        cell.setName(model.reviews[indexPath.row].name)
-        cell.setDisplayPicture(model.reviews[indexPath.row].imageUrl)
-        cell.setMessage(model.reviews[indexPath.row].message)
+        cell.nameLabel.text = model.reviews[indexPath.row].fullName
+        cell.setDisplayPicture(model.reviews[indexPath.row].profileImageUrl)
         cell.setRating(model.reviews[indexPath.row].rating)
+        cell.messageLabel.text = model.reviews[indexPath.row].review
+        
+//        cell.setName(model.reviews[indexPath.row].name)
+//        cell.setDisplayPicture(model.reviews[indexPath.row].imageUrl)
+//        cell.setMessage(model.reviews[indexPath.row].message)
+//        cell.setRating(model.reviews[indexPath.row].rating)
         
         return cell
     }
@@ -85,13 +93,14 @@ class ProductReviewViewController: UIViewController {
     func passModel(model: ProductReviewModel) {
         self.model = model
         
-        setRating(model.rating)
+        setRating(model.ratingAverage)
+        
         var font = [NSFontAttributeName : UIFont.boldSystemFontOfSize(35.0)]
-        var rater = NSMutableAttributedString(string: String(format: "%.f", model.rating), attributes: font)
+        var rater = NSMutableAttributedString(string: String(model.ratingAverage), attributes: font)
         var textToAppend = NSMutableAttributedString(string: rateLabel.text!)
         rater.appendAttributedString(textToAppend)
         
-        rateLabel.text = String(format: "%.f/5", model.rating)
+        rateLabel.text = String(format: "%.f/5", model.ratingAverage)
         rateLabel.attributedText = rater
         
         font = [NSFontAttributeName : UIFont.boldSystemFontOfSize(14.0)]
@@ -106,7 +115,7 @@ class ProductReviewViewController: UIViewController {
         cancelAction(nil)
     }
     
-    func setRating(rate: Float) {
+    func setRating(rate: Int) {
         
         if rate > 4 {
             rateImage(rate5)

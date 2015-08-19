@@ -14,7 +14,7 @@ struct APIEnvironment {
     
     static func baseUrl() -> String {
         if development {
-            return "http://demo9190076.mockable.io/"
+            return "http://online.api.easydeal.ph/api/v1"
         } else if staging {
             return ""
         } else  {
@@ -25,9 +25,10 @@ struct APIEnvironment {
 
 struct APIAtlas {
     
-    static let loginUrl = "v1/login"
-    static let registerUrl = "v1/register"
-    static let homeUrl = "v1/home"
+    static let loginUrl = "login"
+    static let registerUrl = "user/register"
+    static let getUserInfoUrl = "auth/user/getUser"
+    static let homeUrl = "home/getData"
     static let cartUrl = "v1/cart"
     static let wishlistUrl = "v1/cart"
     static let getSellerUrl = "v1/get-seller"

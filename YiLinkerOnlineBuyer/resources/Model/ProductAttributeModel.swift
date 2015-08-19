@@ -10,9 +10,9 @@ import Foundation
 
 class ProductAttributeModel {
     
-    var attributeId: Int = 0
+    var attributeId: String = ""
     var attributeName: String = ""
-    var valueId: [Int] = []
+    var valueId: [String] = []
     var valueName: [String] = []
     
     class func parseAttribute(attributes: NSDictionary) -> ProductAttributeModel {
@@ -21,11 +21,11 @@ class ProductAttributeModel {
         
         if attributes.isKindOfClass(NSDictionary) {
             
-            model.attributeId = attributes["id"] as! Int
-            model.attributeName = attributes["name"] as! String
-
+            model.attributeId = attributes["id"] as! String
+            model.attributeName = attributes["groupName"] as! String
+            
             for value in attributes["items"] as! NSArray {
-                model.valueId.append(value["id"] as! Int)
+                model.valueId.append(value["id"] as! String)
                 model.valueName.append(value["name"] as! String)
             }
         }

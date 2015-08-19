@@ -30,6 +30,7 @@ class HiddenViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.contentViewFrame = contentView.bounds
     }
     
     override func viewDidLayoutSubviews() {
@@ -56,7 +57,11 @@ class HiddenViewController: UIViewController {
         } else if index == 5 {
             
         } else if index == 6 {
-            
+            var titleLabel = UILabel(frame: CGRectZero)
+            titleLabel.text = "Category Page"
+            titleLabel.textColor = .whiteColor()
+            titleLabel.sizeToFit()
+            self.navigationItem.titleView = titleLabel
         }
         
     }

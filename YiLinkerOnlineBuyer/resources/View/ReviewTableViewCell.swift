@@ -35,25 +35,27 @@ class ReviewTableViewCell: UITableViewCell {
         nameLabel.text = text
     }
     
-    func setRating(rate: Float) {
+    func setRating(rate: String) {
         
-        if rate > 4 {
+        var r: Int = NSString(string: rate).integerValue
+        
+        if r > 4 {
             rateImage(rateImageView5)
         }
         
-        if rate > 3 {
+        if r > 3 {
             rateImage(rateImageView4)
         }
         
-        if rate > 2 {
+        if r > 2 {
             rateImage(rateImageView3)
         }
         
-        if rate > 1  {
+        if r > 1  {
             rateImage(rateImageView2)
         }
         
-        if rate > 0 {
+        if r > 0 {
             rateImage(rateImageView1)
         }
     }
@@ -65,5 +67,5 @@ class ReviewTableViewCell: UITableViewCell {
     func setMessage(text: String) {
         self.messageLabel.text = text
     }
-    
+
 }

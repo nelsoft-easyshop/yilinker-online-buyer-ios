@@ -12,6 +12,7 @@ protocol CartTableViewCellDelegate{
     func deleteButtonActionForIndex(sender: AnyObject)
     func editButtonActionForIndex(sender: AnyObject)
     func checkBoxButtonActionForIndex(sender: AnyObject, state: Bool)
+    func swipeViewDidScroll(sender: AnyObject)
 }
 
 class CartTableViewCell: UITableViewCell, UIScrollViewDelegate {
@@ -144,6 +145,7 @@ class CartTableViewCell: UITableViewCell, UIScrollViewDelegate {
     }
     
     func scrollViewWillEndDragging(scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        delegate?.swipeViewDidScroll(self)
         if scrollView.contentOffset.x > buttonViewWidth {
             Float(targetContentOffset.memory.x) == Float(buttonViewWidth)
             if !isSwipeViewOpen {

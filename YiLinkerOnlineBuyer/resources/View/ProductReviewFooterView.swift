@@ -19,12 +19,12 @@ class ProductReviewFooterView: UIView {
     var delegate: ProductReviewFooterViewDelegate?
     
     override func awakeFromNib() {
-        
+
         var tap = UITapGestureRecognizer()
         tap.numberOfTapsRequired = 1
         tap.addTarget(self, action: "seeMoreAction:")
         
-        self.seeMoreView.addGestureRecognizer(tap)
+        self.addGestureRecognizer(tap)
     }
 
     func seeMoreAction(gesture: UIGestureRecognizer) {

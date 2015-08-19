@@ -24,4 +24,9 @@ class CategoriesTableViewCell: UITableViewCell {
         self.pictureImageView.sd_setImageWithURL(NSURL(string: text), placeholderImage: UIImage(named: "dummy-placeholder"))
     }
     
+    override func layoutMarginsDidChange() {
+        super.layoutMarginsDidChange()
+        
+    }
+    
 }
