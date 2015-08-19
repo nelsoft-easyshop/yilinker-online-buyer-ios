@@ -46,6 +46,13 @@ extension UITextField {
         return passwordTest.evaluateWithObject(self.text)
     }
     
+    func isValidName() -> Bool {
+        let nameRegex = "^[a-zA-Z ]*$"
+        let nameTest = NSPredicate(format: "SELF MATCHES %@", nameRegex)
+        
+        return nameTest.evaluateWithObject(self.text)
+    }
+    
     func isGreaterThanEightCharacters() -> Bool {
         var result: Bool = false
         if count(self.text) >= 8 {
@@ -103,10 +110,27 @@ extension UIAlertController {
 
 
 extension UIView {
-    class func loadFromNibNamed(nibNamed: String, bundle : NSBundle? = nil) -> UIView? {
+    class func loadFromNibNamed(nibNamed: String, bundle: NSBundle? = nil) -> UIView? {
         return UINib(
             nibName: nibNamed,
             bundle: bundle
             ).instantiateWithOwner(nil, options: nil)[0] as? UIView
+    }
+}
+
+
+extension CAGradientLayer {
+    func gradient() -> CAGradientLayer {
+        let topColor = UIColor.clearColor()
+        let bottomColor = UIColor.blackColor()
+        
+        let gradientColors: [CGColor] = [topColor.CGColor, bottomColor.CGColor]
+        let gradientLocations: [Float] = [0.0, 1.0]
+        
+        let gradientLayer: CAGradientLayer = CAGradientLayer()
+        gradientLayer.colors = gradientColors
+        gradientLayer.locations = gradientLocations
+        
+        return gradientLayer
     }
 }

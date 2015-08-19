@@ -50,11 +50,9 @@ class FollowedSellerViewController: UIViewController, EmptyViewDelegate {
     // MARK: - Table View Delegate
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let alertController = UIAlertController(title: followedSellerModel.names[indexPath.row],
-            message: String("Specialty: ") + followedSellerModel.specialty[indexPath.row], preferredStyle: .Alert)
-        let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
-        alertController.addAction(defaultAction)
-        presentViewController(alertController, animated: true, completion: nil)
+        let seller = SellerViewController(nibName: "SellerViewController", bundle: nil)
+//        self.presentViewController(vc, animated: true, completion: nil)
+        self.navigationController?.pushViewController(seller, animated: true)
     }
     
     // MARK: - Request

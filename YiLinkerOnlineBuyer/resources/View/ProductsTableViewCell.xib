@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ProductsTableViewCell" rowHeight="174" id="KGk-i7-Jjw" customClass="ProductsTableViewCell" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="424" height="174"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Products" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GZt-mW-fWT">
+                        <rect key="frame" x="15" y="5" width="224" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="KpU-9z-UJ8"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3vW-GC-bIL">
+                        <rect key="frame" x="0.0" y="34" width="529" height="1"/>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="1" id="rAB-qJ-c9l"/>
+                        </constraints>
+                    </view>
+                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="SuZ-lJ-btM">
+                        <rect key="frame" x="8" y="43" width="408" height="72"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="72" id="Bft-OR-eOj"/>
+                        </constraints>
+                        <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="JTl-Cs-H7f">
+                            <size key="itemSize" width="80" height="60"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="5" minY="5" maxX="5" maxY="5"/>
+                        </collectionViewFlowLayout>
+                        <connections>
+                            <outlet property="dataSource" destination="KGk-i7-Jjw" id="uzJ-yM-Ogu"/>
+                            <outlet property="delegate" destination="KGk-i7-Jjw" id="3Q7-TE-cU9"/>
+                        </connections>
+                    </collectionView>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tZz-fV-a3O" customClass="DynamicRoundedButton" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
+                        <rect key="frame" x="8" y="123" width="408" height="42"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="42" id="A3I-6w-s0j"/>
+                        </constraints>
+                        <state key="normal" title="MORE SELLER'S PRODUCT">
+                            <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                <real key="value" value="10"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                <color key="value" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                <real key="value" value="1"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                        <connections>
+                            <action selector="moreSellerProduct:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="LPj-dL-iHX"/>
+                        </connections>
+                    </button>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="3vW-GC-bIL" secondAttribute="trailing" constant="-105" id="9Dy-My-1h4"/>
+                    <constraint firstItem="SuZ-lJ-btM" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="EoT-1O-KlN"/>
+                    <constraint firstItem="3vW-GC-bIL" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="FTV-7G-thC"/>
+                    <constraint firstItem="3vW-GC-bIL" firstAttribute="top" secondItem="GZt-mW-fWT" secondAttribute="bottom" constant="8" id="G9Z-rs-0rh"/>
+                    <constraint firstItem="tZz-fV-a3O" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="IBU-ok-3jz"/>
+                    <constraint firstItem="GZt-mW-fWT" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="MM1-gY-atQ"/>
+                    <constraint firstItem="SuZ-lJ-btM" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="Ns6-UC-nh0"/>
+                    <constraint firstAttribute="trailing" secondItem="GZt-mW-fWT" secondAttribute="trailing" constant="185" id="PDl-7Y-1Zk"/>
+                    <constraint firstItem="GZt-mW-fWT" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="UH8-Yp-M1e"/>
+                    <constraint firstItem="tZz-fV-a3O" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="abr-KA-Ycb"/>
+                    <constraint firstItem="tZz-fV-a3O" firstAttribute="bottom" secondItem="H2p-sc-9uM" secondAttribute="bottomMargin" id="h46-c0-z8E"/>
+                    <constraint firstItem="tZz-fV-a3O" firstAttribute="top" secondItem="SuZ-lJ-btM" secondAttribute="bottom" constant="8" id="rop-WX-vgy"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="collectionView" destination="SuZ-lJ-btM" id="AFJ-qO-Kyd"/>
+            </connections>
+            <point key="canvasLocation" x="405" y="407"/>
+        </tableViewCell>
+    </objects>
+</document>

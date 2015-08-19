@@ -510,52 +510,59 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
             let fullImageCollectionViewCell: FullImageCollectionViewCell = self.collectionView!.cellForItemAtIndexPath(indexPath) as! FullImageCollectionViewCell
             println("Target: \(fullImageCollectionViewCell.target)")
             println("Target type: \(fullImageCollectionViewCell.targetType)")
+            self.redirectToProductpageWithProductID("1")
         } else if cell.isKindOfClass(HalfVerticalImageCollectionViewCell) {
             let halfVerticalImageCollectionViewCell: HalfVerticalImageCollectionViewCell = self.collectionView!.cellForItemAtIndexPath(indexPath) as! HalfVerticalImageCollectionViewCell
             println("Target: \(halfVerticalImageCollectionViewCell.target)")
             println("Target type: \(halfVerticalImageCollectionViewCell.targetType)")
-            
+            self.redirectToProductpageWithProductID("1")
         } else if cell.isKindOfClass(ProductItemWithVerticalDisplayCollectionViewCell) {
             let productItemWithVerticalDisplayCollectionViewCell: ProductItemWithVerticalDisplayCollectionViewCell = cell as! ProductItemWithVerticalDisplayCollectionViewCell
             println("Target: \(productItemWithVerticalDisplayCollectionViewCell.target)")
             println("Target type: \(productItemWithVerticalDisplayCollectionViewCell.targetType)")
-            
+            self.redirectToProductpageWithProductID("1")
         } else if cell.isKindOfClass(ProductWithCenterNameCollectionViewCell) {
             let productWithCenterNameCollectionViewCell: ProductWithCenterNameCollectionViewCell = cell as! ProductWithCenterNameCollectionViewCell
             println("Target: \(productWithCenterNameCollectionViewCell.target)")
             println("Target type: \(productWithCenterNameCollectionViewCell.targetType)")
-            
+            self.redirectToProductpageWithProductID("1")
         } else if cell.isKindOfClass(TwoColumnGridCollectionViewCell) {
             let twoColumnGridCollectionViewCell: TwoColumnGridCollectionViewCell = cell as! TwoColumnGridCollectionViewCell
             println("Target: \(twoColumnGridCollectionViewCell.target)")
             println("Target type: \(twoColumnGridCollectionViewCell.targetType)")
-            
+            self.redirectToProductpageWithProductID("1")
         } else if cell.isKindOfClass(VerticalImageCollectionViewCell) {
             let verticalImageCollectionViewCell: VerticalImageCollectionViewCell = cell as! VerticalImageCollectionViewCell
             println("Target: \(verticalImageCollectionViewCell.target)")
             println("Target type: \(verticalImageCollectionViewCell.targetType)")
+            self.redirectToProductpageWithProductID("1")
         } else if cell.isKindOfClass(SellerCollectionViewCell) {
             let sellerCollectionViewCell: SellerCollectionViewCell = cell as! SellerCollectionViewCell
             println("Target: \(sellerCollectionViewCell.target)")
             println("Target type: \(sellerCollectionViewCell.targetType)")
+            self.redirectToSellerWithID("sellerID")
         }
-        
-        self.redirectToProductpageWithProductID("1")
+    
     }
     
     func didSelectectCellWithTarget(target: String, targetType: String) {
         println("target: \(target) \ntarget type:\(targetType)")
-        self.redirectToProductpageWithProductID("1")
+        self.redirectToResultView("target")
     }
     
     func didSelectSellerCellWithTarget(target: String, targetType: String) {
         println("target: \(target) \ntarget type:\(targetType)")
-        self.redirectToProductpageWithProductID("1")
+        self.redirectToSellerWithID("asdasdas3w")
     }
     
     func didSelectViewMoreWithtarget(target: String, targetType: String) {
         println("target: \(target) \ntarget type:\(targetType)")
-        self.redirectToProductpageWithProductID("1")
+        self.redirectToResultView("target")
+    }
+    
+    func redirectToResultView(target: String) {
+        let resultViewController: ResultViewController = ResultViewController(nibName: "ResultViewController", bundle: nil)
+        self.navigationController!.pushViewController(resultViewController, animated: true)
     }
     
     func didSelectProductWithTarget(target: String, targetType: String) {
@@ -566,5 +573,10 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
     func redirectToProductpageWithProductID(productID: String) {
         let productViewController: ProductViewController = ProductViewController(nibName: "ProductViewController", bundle: nil)
         self.navigationController?.pushViewController(productViewController, animated: true)
+    }
+    
+    func redirectToSellerWithID(sellerID: String) {
+        let sellerViewController: SellerViewController = SellerViewController(nibName: "SellerViewController", bundle: nil)
+        self.navigationController!.pushViewController(sellerViewController, animated: true)
     }
 }

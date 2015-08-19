@@ -30,6 +30,7 @@ class HiddenViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.contentViewFrame = contentView.bounds
     }
     
     override func viewDidLayoutSubviews() {

@@ -65,5 +65,5 @@ class ReviewTableViewCell: UITableViewCell {
     func setMessage(text: String) {
         self.messageLabel.text = text
     }
-    
+
 }
