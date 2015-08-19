@@ -109,10 +109,8 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     // Mark: - UITableViewDelegate methods
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        var tempModel: SearchSuggestionModel = tableData[indexPath.row]
-        println(tempModel.suggestion)
-        println(tempModel.imageURL)
-
+        var resultController = ResultViewController(nibName: "ResultViewController", bundle: nil)
+        self.navigationController?.pushViewController(resultController, animated:true);
     }
 
 }
