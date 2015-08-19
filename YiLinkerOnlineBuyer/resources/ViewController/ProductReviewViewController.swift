@@ -54,6 +54,9 @@ class ProductReviewViewController: UIViewController {
         tap.addTarget(self, action: "dimViewAction:")
         self.dimView.addGestureRecognizer(tap)
         self.dimView.backgroundColor = .clearColor()
+        
+        rateLabel.textColor = Constants.Colors.productReviewGreen
+        
     }
 
     // MARK: - Table View Data Source

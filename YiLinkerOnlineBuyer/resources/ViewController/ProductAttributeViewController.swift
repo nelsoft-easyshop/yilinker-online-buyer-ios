@@ -9,7 +9,7 @@
 import UIKit
 
 protocol ProductAttributeViewControllerDelegate {
-    func pressedCancelAttribute(controller: ProductAttributeViewController)
+    func dissmissAttributeViewController(controller: ProductAttributeViewController, type: String)
 }
 
 class ProductAttributeViewController: UIViewController, UITableViewDelegate, ProductAttributeTableViewCellDelegate {
@@ -25,7 +25,9 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var addToCartButton: UIButton!
     @IBOutlet weak var buyItNowView: UIView!
-    @IBOutlet weak var cartCheckoutButton: UIButton!
+    @IBOutlet weak var checkoutButton: UIButton!
+    @IBOutlet weak var doneButton: UIButton!
+    @IBOutlet weak var buyItNowLabel: UILabel!
     
     var delegate: ProductAttributeViewControllerDelegate?
     
@@ -38,6 +40,16 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
     var availableCombinations: [ProductAvailableAttributeCombinationModel] = []
     var selectedValue: [String] = []
     var selectedCombination: [Int] = []
+    
+    var screenWidth: CGFloat = 0.0
+    var seeMoreLabel = UILabel()
+    var setTitle: String = ""
+    
+    var tabController = CustomTabBarController()
+    
+    var accessToken = ""
+    var quantity: Int = 1
+    var unitId: [String] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -57,11 +69,48 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
         
         setBorderOf(view: addToCartButton, width: 1, color: .grayColor(), radius: 3)
         setBorderOf(view: buyItNowView, width: 1, color: .grayColor(), radius: 3)
-        setBorderOf(view: cartCheckoutButton, width: 1, color: .grayColor(), radius: 3)
+        setBorderOf(view: checkoutButton, width: 1, color: .grayColor(), radius: 3)
         
         buyItNowView.addGestureRecognizer(tapGesture("buyItNowAction:"))
+        
+        priceLabel.textColor = Constants.Colors.productPrice
     }
 
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+//        if setTitle == "cart" {
+//            
+//            seeMoreLabel = UILabel(frame: CGRectMake(0, 0, buyItNowView.frame.size.width, buyItNowView.frame.size.height))
+//            seeMoreLabel.text = "PROCEED TO\nCHECKOUT"
+//        } else if setTitle == "buy" {
+//            self.checkoutButton.hidden = false
+//        } else {
+//            seeMoreLabel = UILabel(frame: CGRectMake((buyItNowView.frame.size.width / 2) - 60, 0, 90, buyItNowView.frame.size.height))
+//            seeMoreLabel.frame.origin.x = 0
+//            seeMoreLabel.frame.size.width = buyItNowView.frame.size.width
+//            seeMoreLabel.text = "BUY IT NOW"
+//            
+//            var seeMoreImageView = UIImageView(frame: CGRectMake(seeMoreLabel.frame.size.width, (seeMoreLabel.frame.size.height / 2) - 6, 13, 13))
+//            seeMoreImageView.image = UIImage(named: "buy")
+//            //            seeMoreLabel.addSubview(seeMoreImageView)
+//        }
+//        
+//        seeMoreLabel.numberOfLines = 2
+//        seeMoreLabel.textColor = .whiteColor()
+//        seeMoreLabel.textAlignment = .Center
+//        seeMoreLabel.font = UIFont.boldSystemFontOfSize(13.0)
+//        self.buyItNowView.addSubview(seeMoreLabel)
+        
+        if setTitle == "cart" {
+            buyItNowLabel.text = "PROCEED TO\n CHECKOUT"
+        } else if setTitle == "buy" {
+            checkoutButton.hidden = false
+        } else {
+            
+        }
+    }
+    
     // MARK: - Table View Data Source
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -73,9 +122,8 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
         
         cell.delegate = self
         cell.passAvailableCombination(availableCombinations)
-        
         cell.tag = indexPath.row
-        cell.setAttribute(name: attributes[indexPath.row].attributeName, values: attributes[indexPath.row].valueName, id: attributes[indexPath.row].valueId, selectedValue: selectedValue)
+        cell.setAttribute(name: attributes[indexPath.row].attributeName, values: attributes[indexPath.row].valueName, id: attributes[indexPath.row].valueId, selectedValue: selectedValue, width: screenWidth)
         
         return cell
     }
@@ -97,10 +145,7 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
     }
     
     @IBAction func cancelAction(sender: AnyObject!) {
-        self.dismissViewControllerAnimated(true, completion: nil)
-        if let delegate = self.delegate {
-            delegate.pressedCancelAttribute(self)
-        }
+        hideSelf("cancel")
     }
     
     // MARK: - Methods
@@ -167,13 +212,12 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
         } else if stocks == maximumStock {
             stocksLabel.alpha = 1.0
             disableButton(increaseButton)
-            enableButton(decreaseButton)
         } else if stocks == minimumStock {
             stocksLabel.alpha = 1.0
             disableButton(decreaseButton)
+        } else if stocks > 0 || stocks < maximumStock {
             enableButton(increaseButton)
-        } else {
-            println("----ProductAttributeViewController")
+            enableButton(decreaseButton)
         }
     }
     
@@ -194,7 +238,7 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
         button.alpha = 1
     }
     
-    func dismissPresentedController(controller: ProductViewController) {
+    func pressedDimViewFromProductPage(controller: ProductViewController) {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
@@ -203,9 +247,21 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
     }
     
     @IBAction func addToCartAction(sender: AnyObject) {
+        
+        let url: String = "api/v1/auth/cart/updateCartItem"
+        
+        let params: NSDictionary = ["accessToken": "access token here",
+                                         "unitId": "unit id here",
+                                  "combinationId": "combination id here",
+                                       "quantity": "quantity here"]
+        
+        println(params)
+        
+        requestAddCartItem(APIAtlas.productPageUrl, params: nil)
     }
     
-    @IBAction func cartCheckoutAction(sender: AnyObject) {
+    @IBAction func checkoutAction(sender: AnyObject) {
+        println("CHECKOUT")
     }
     
     func tapGesture(action: Selector) -> UITapGestureRecognizer {
@@ -225,9 +281,42 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
         view.layer.borderColor = color.CGColor
         view.layer.cornerRadius = radius
     }
-    
-    func showCartCheckout(bool: Bool, title: String) {
-        cartCheckoutButton.hidden = bool
-        cartCheckoutButton.setTitle(title, forState: .Normal)
+
+    @IBAction func doneAction(sender: AnyObject) {
+        println(selectedValue)
+        hideSelf("done")
     }
+
+    func requestAddCartItem(url: String, params: NSDictionary!) {
+        SVProgressHUD.show()
+        let manager = APIManager.sharedInstance
+        
+        manager.GET(APIAtlas.productPageUrl, parameters: params, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            
+            SVProgressHUD.dismiss()
+            println("product success")
+            
+            if let badgeValue = (self.tabController.tabBar.items![4] as! UITabBarItem).badgeValue?.toInt() {
+                (self.tabController.tabBar.items![4] as! UITabBarItem).badgeValue = String(badgeValue + 1)
+            } else {
+                (self.tabController.tabBar.items![4] as! UITabBarItem).badgeValue = "1"
+            }
+            
+            self.hideSelf("cart")
+            
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                SVProgressHUD.dismiss()
+                println("product failed")
+        })
+    }
+    
+    func hideSelf(action: String) {
+        self.dismissViewControllerAnimated(true, completion: nil)
+        if let delegate = self.delegate {
+            delegate.dissmissAttributeViewController(self, type: action)
+        }
+    }
+    
 }

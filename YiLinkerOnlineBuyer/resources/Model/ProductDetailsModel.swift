@@ -32,6 +32,7 @@ class ProductDetailsModel {
         self.discount = discount
         self.shortDescription = shortDescription
         self.fullDescription = fullDescription
+        self.details = details as! [String]
         self.sellerId = sellerId
         self.attributes = attributes as! [ProductAttributeModel]
         self.combinations = combinations as! [ProductAvailableAttributeCombinationModel]
@@ -110,6 +111,9 @@ class ProductDetailsModel {
                     combinations.append(model)
                 }
                 
+                if let tempVar = value["details"] as? NSArray {
+                    details = tempVar as! [String]
+                }
             }
         } // end if dictionary
         

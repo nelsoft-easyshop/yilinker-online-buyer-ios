@@ -8,13 +8,11 @@
 
 import UIKit
 
-class HomeContainerViewController: UIViewController, UITabBarControllerDelegate {
+class HomeContainerViewController: UIViewController, UITabBarControllerDelegate, EmptyViewDelegate {
     
     @IBOutlet weak var contentView: UIView!
     
     let viewControllerIndex = 0
-    
-    var homePageCollectionViewController: HomePageCollectionViewController?
     var searchViewContoller: SearchViewController?
     var circularMenuViewController: CircularMenuViewController?
     var wishlisViewController: WishlistViewController?
@@ -32,16 +30,31 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate 
     
     var curentCollectionViewController: Int = 0
     
-    var featuredViewLoadData: Bool = false
+    var emptyView: EmptyView?
+    
+    var customTabBarController: CustomTabBarController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        circularDraweView()
+        //set customTabbar
+        self.customTabBarController = self.tabBarController as? CustomTabBarController
+        self.customTabBarController?.isValidToSwitchToMenuTabBarItems = false
+        self.circularDraweView()
         self.tabBarController!.delegate = self
-        
-        let productPage = ProductViewController(nibName: "ProductViewController", bundle: nil)
-        self.navigationController?.pushViewController(productPage, animated: true)
+        self.addSuHeaderScrollView()
+        if Reachability.isConnectedToNetwork() {
+            self.fireGetHomePageData()
+        } else {
+            self.addEmptyView()
+        }
     }
+    
+    func addEmptyView() {
+        self.emptyView = UIView.loadFromNibNamed("EmptyView", bundle: nil) as? EmptyView
+        self.emptyView!.delegate = self
+        self.view.addSubview(self.emptyView!)
+    }
+    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -50,16 +63,13 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate 
     
     override func viewDidLayoutSubviews() {
         contentViewFrame = contentView.bounds
-        if self.viewControllers.count == 0 {
-            addSuHeaderScrollView()
-            self.fireGetHomePageData()
-        }
+       
     }
     
     func tabBarController(tabBarController: UITabBarController, shouldSelectViewController viewController: UIViewController) -> Bool {
         if self != viewController && viewController != tabBarController.viewControllers![2] as! UIViewController {
             return true
-        } else {
+        } else if self.customTabBarController?.isValidToSwitchToMenuTabBarItems != true {
             let storyBoard: UIStoryboard = UIStoryboard(name: "HomeStoryBoard", bundle: nil)
             var animatedViewController: CircularMenuViewController?
             animatedViewController  = storyBoard.instantiateViewControllerWithIdentifier("CircularMenuViewController") as? CircularMenuViewController
@@ -67,10 +77,30 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate 
             animatedViewController!.providesPresentationContextTransitionStyle = true
             animatedViewController!.definesPresentationContext = true
             animatedViewController!.view.backgroundColor = UIColor.clearColor()
-            //self.presentViewController(animatedViewController!, animated: false, completion: nil)
-            self.tabBarController?.presentViewController(animatedViewController!, animated: false, completion: nil)
             
+            if SessionManager.accessToken() != "" {
+                var buttonImages: [String] = ["help", "following", "message", "customize-shopping", "promo", "category", SessionManager.profileImageStringUrl()]
+                var buttonTitles: [String] = ["HELP", "FOLLOWED SELLER", "MESSAGING", "CUSTOMIZE SHOPPING", "TODAY'S PROMO", "CATEGORIES", "LOGOUT"]
+                var buttonRightText: [String] = ["", "", "You have 1 unread message", "", "", "", "Jessica Joe \nMetro Manila, City"]
+                
+                animatedViewController?.buttonImages = buttonImages
+                animatedViewController?.buttonTitles = buttonTitles
+                animatedViewController?.buttonRightText = buttonRightText
+            } else {
+                var buttonImages: [String] = ["help", "register", "sign_in", "message","customize-shopping", "promo", "category"]
+                var buttonTitles: [String] = ["HELP", "REGISTER", "SIGN IN", "MESSAGING", "CUSTOMIZE SHOPPING", "TODAYS PROMO", "CATEGORIES"]
+                var buttonRightText: [String] = ["", "", "Must be Sign in", "Must be Sign in", "", "", ""]
+                
+                animatedViewController?.buttonImages = buttonImages
+                animatedViewController?.buttonTitles = buttonTitles
+                animatedViewController?.buttonRightText = buttonRightText
+            }
+            animatedViewController?.customTabBarController = self.customTabBarController!
+            self.tabBarController?.presentViewController(animatedViewController!, animated: false, completion: nil)
             return false
+        } else {
+            
+            return true
         }
         
     }
@@ -118,7 +148,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate 
         var xPosition: CGFloat = 10
         var counter = 0
         for title in titles {
-            let button: UIButton = UIButton(frame: CGRectMake(xPosition, 5, 80, 30))
+            let button: UIButton = UIButton(frame: CGRectMake(xPosition, 5, 90, 30))
             button.setTitle(title, forState: UIControlState.Normal)
             button.titleLabel!.font =  UIFont(name: "HelveticaNeue", size: 10)
             button.layer.cornerRadius = 15
@@ -137,7 +167,10 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate 
             counter++
         }
         scrollView.showsHorizontalScrollIndicator = false
-        self.navigationController?.navigationBar.addSubview(scrollView)
+        let navigationSpacer: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
+        navigationSpacer.width = -20
+        
+        self.navigationItem.leftBarButtonItems = [navigationSpacer, UIBarButtonItem(customView: scrollView)]
     }
     
     @IBAction func clickSubCategories(sender: UIButton) {
@@ -175,13 +208,17 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate 
     }
     
     func fireGetHomePageData() {
+        SVProgressHUD.show()
+        SVProgressHUD.setBackgroundColor(UIColor.whiteColor())
         let manager = APIManager.sharedInstance
-        manager.GET("http://online.api.easydeal.ph/content/home/mobile?access_token=MTc3YTA0YmY0YjUxMGVkY2I3Y2VhOGE3YTU0NDU3YzJkMWVmNmJjZTQ0MTkzMDlmMmU4MGIxNTI0NDJlNGFmZg", parameters: nil, success: {
+        manager.GET(APIAtlas.homeUrl, parameters: nil, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
                 self.populateHomePageWithDictionary(responseObject as! NSDictionary)
+            SVProgressHUD.dismiss()
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                
+                SVProgressHUD.dismiss()
+                self.addEmptyView()
         })
 
     }
@@ -238,5 +275,10 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate 
         viewControllers.append(sellersCollectionViewController!)
         
         setSelectedViewControllerWithIndex(self.curentCollectionViewController)
+    }
+    
+    func didTapReload() {
+        self.fireGetHomePageData()
+        self.emptyView?.removeFromSuperview()
     }
 }

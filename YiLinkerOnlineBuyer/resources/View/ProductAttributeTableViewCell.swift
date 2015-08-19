@@ -36,7 +36,7 @@ class ProductAttributeTableViewCell: UITableViewCell {
     
     // MARK: - Methods
     
-    func setAttribute(#name: String, values: NSArray, id: NSArray, selectedValue: NSArray) {
+    func setAttribute(#name: String, values: NSArray, id: NSArray, selectedValue: NSArray, width: CGFloat) {
         attributeLabel.text = "Select \(name)"
         
         self.attributesId = []
@@ -44,16 +44,15 @@ class ProductAttributeTableViewCell: UITableViewCell {
         self.attributesName = []
         self.attributesName = values as! [String]
         
-        addScrollViewWithAttributes(values, selectedValue: selectedValue)
+        addScrollViewWithAttributes(values, selectedValue: selectedValue, width: width)
     }
     
     func passAvailableCombination(model: NSArray) {
         combination = model as! [ProductAvailableAttributeCombinationModel]
     }
     
-    func addScrollViewWithAttributes(attributes: NSArray, selectedValue: NSArray) {
-        scroll = UIScrollView(frame: CGRectMake(0, self.frame.size.height - 70, self.frame.size.width, 70))
-
+    func addScrollViewWithAttributes(attributes: NSArray, selectedValue: NSArray, width: CGFloat) {
+        scroll = UIScrollView(frame: CGRectMake(0, self.frame.size.height - 70, width, 70))
         var spacingX: CGFloat = 0.0
         
         for i in 0..<attributes.count {

@@ -19,7 +19,7 @@
                         <color key="backgroundColor" red="0.7019608021" green="0.7019608021" blue="0.7019608021" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select Texture" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vHZ-s4-Iqt">
-                        <rect key="frame" x="8" y="10" width="109" height="21"/>
+                        <rect key="frame" x="8" y="10" width="359" height="21"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="21" id="li4-AH-RYg"/>
                         </constraints>
@@ -29,7 +29,7 @@
                     </label>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="trailingMargin" secondItem="vHZ-s4-Iqt" secondAttribute="trailing" constant="250" id="Kv4-JL-7Oe"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="vHZ-s4-Iqt" secondAttribute="trailing" id="Kv4-JL-7Oe"/>
                     <constraint firstItem="vHZ-s4-Iqt" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="VEV-xB-xX4"/>
                     <constraint firstItem="vHZ-s4-Iqt" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="2" id="jXa-VX-nP0"/>
                 </constraints>

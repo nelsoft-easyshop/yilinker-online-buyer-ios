@@ -20,4 +20,20 @@ struct Constants {
         static let layoutTenKey = "layout10"
     }
     
+    struct Colors {
+        static let appTheme: UIColor = HexaColor.colorWithHexa(0x5A1F75)
+        static let productDetails: UIColor = HexaColor.colorWithHexa(0xd52371)
+        static let productPrice: UIColor = HexaColor.colorWithHexa(0x75348a)
+        static let productReviewGreen: UIColor = HexaColor.colorWithHexa(0xb3b233)
+    }
+    
+    struct Facebook {
+        static let userNameKey = "name"
+        static let userIDKey = "id"
+        static let userEmail = "email"
+        
+        static let userPermissionEmailKey = "email"
+        static let userPermissionPublicProfileKey = "public_profile"
+        static let userPermissionFriendsKey = "user_friends"
+    }
 }
