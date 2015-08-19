@@ -198,6 +198,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     func productstableViewCellDidTapMoreProductWithTarget(target: String) {
         println("Target: \(target)")
+        self.redirectToResultView("target")
     }
     
     func productstableViewCellDidTapProductWithTarget(target: String, type: String) {
@@ -207,5 +208,10 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
     func redirectToProductpageWithProductID(productID: String) {
         let productViewController: ProductViewController = ProductViewController(nibName: "ProductViewController", bundle: nil)
         self.navigationController?.pushViewController(productViewController, animated: true)
+    }
+    
+    func redirectToResultView(target: String) {
+        let resultViewController: ResultViewController = ResultViewController(nibName: "ResultViewController", bundle: nil)
+        self.navigationController!.pushViewController(resultViewController, animated: true)
     }
 }
