@@ -11,7 +11,7 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="P86-8c-g7K">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="P86-8c-g7K">
                     <rect key="frame" x="0.0" y="136" width="320" height="296"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="osN-jX-Tg8" userLabel="Reload Button">
@@ -45,17 +45,16 @@
                             <nil key="highlightedColor"/>
                         </label>
                     </subviews>
-                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="296" id="GAs-sY-Lgo"/>
-                        <constraint firstAttribute="width" constant="320" id="eKI-m2-Msb"/>
+                        <constraint firstAttribute="height" constant="296" id="rWD-7s-zel"/>
+                        <constraint firstAttribute="width" constant="320" id="s10-yo-SOX"/>
                     </constraints>
                 </view>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstAttribute="centerX" relation="greaterThanOrEqual" secondItem="P86-8c-g7K" secondAttribute="centerX" id="RrB-zs-TeC"/>
-                <constraint firstAttribute="centerY" relation="greaterThanOrEqual" secondItem="P86-8c-g7K" secondAttribute="centerY" id="nZu-QA-Q7l"/>
+                <constraint firstAttribute="centerY" secondItem="P86-8c-g7K" secondAttribute="centerY" id="Fnc-X1-YBN"/>
+                <constraint firstAttribute="centerX" secondItem="P86-8c-g7K" secondAttribute="centerX" id="XWE-PJ-gEW"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
