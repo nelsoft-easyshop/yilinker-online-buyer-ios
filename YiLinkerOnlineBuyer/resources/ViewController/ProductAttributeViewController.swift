@@ -37,7 +37,8 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
     
     var productDetailsModel: ProductDetailsModel!
     var attributes: [ProductAttributeModel] = []
-    var availableCombinations: [ProductAvailableAttributeCombinationModel] = []
+    
+    var availableCombination: [String] = []
     var selectedValue: [String] = []
     var selectedId: [String] = []
     
@@ -138,10 +139,11 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
         let cell: ProductAttributeTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("AttributeTableCell") as! ProductAttributeTableViewCell
         
         cell.delegate = self
-        cell.passAvailableCombination(availableCombinations)
+        cell.passProductDetailModel(self.productDetailsModel)
         cell.tag = indexPath.row
         println(selectedValue)
-        cell.setAttribute(self.productDetailsModel.attributes[indexPath.row], selectedValue: selectedValue, selectedId: selectedId, width: self.view.frame.size.width)
+        listAvailableCombinations()
+        cell.setAttribute(self.productDetailsModel.attributes[indexPath.row], availableCombination: self.availableCombination, selectedValue: self.selectedValue, selectedId: self.selectedId, width: self.view.frame.size.width)
         
         return cell
     }
@@ -202,6 +204,7 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
         self.availabilityStocksLabel.text = "Available stocks : " + String(maximumStock)
 
         listAvailableCombinations()
+        println(self.availableCombination)
         
         if self.maximumStock != 0 {
             stocks = 1
@@ -214,7 +217,7 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
     }
     
     func listAvailableCombinations() {
-        println(selectedCombination)
+        self.availableCombination = []
         let not = "[^,]*"
         var regex: String = ""
         
@@ -233,15 +236,23 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
             }
         }
         
-//        for i in 0..<self.attributes.count {
-//            println(self.attributes[i].attributeName)
-//            for j in 0..<self.attributes[i].valueId.count {
-//                println("\(self.attributes[i].valueId[j]) - \(self.attributes[i].valueName[j])")
-//            }
-//        }
-        
         regex += ")"
         println(regex)
+        
+        let re = NSRegularExpression(pattern: regex, options: nil, error: nil)!
+        let matches = re.matchesInString(combinationString, options: nil, range: NSRange(location: 0, length: count(combinationString.utf16)))
+        
+        println("number of matches: \(matches.count)")
+        
+        for match in matches as! [NSTextCheckingResult] {
+            let substring = (combinationString as NSString).substringWithRange(match.rangeAtIndex(1))
+            if substring != "" {
+                self.availableCombination.append(substring)
+                // compare
+                // get the id
+            }
+        }
+        
     }
     
     func availableStock(combination: NSArray) -> Int {

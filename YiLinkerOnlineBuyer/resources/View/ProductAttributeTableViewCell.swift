@@ -29,7 +29,7 @@ class ProductAttributeTableViewCell: UITableViewCell {
     
     var delegate: ProductAttributeTableViewCellDelegate?
     
-    var combination: [ProductAvailableAttributeCombinationModel] = []
+    var productDetailModel: ProductDetailsModel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -37,7 +37,7 @@ class ProductAttributeTableViewCell: UITableViewCell {
     
     // MARK: - Methods
 
-    func setAttribute(model: ProductAttributeModel, selectedValue: NSArray, selectedId: NSArray, width: CGFloat) {
+    func setAttribute( model: ProductAttributeModel, availableCombination: NSArray, selectedValue: NSArray, selectedId: NSArray, width: CGFloat) {
         attributeLabel.text = "Select \(model.attributeName)"
         
         self.attributesId = []
@@ -45,25 +45,14 @@ class ProductAttributeTableViewCell: UITableViewCell {
         self.attributesName = []
         self.attributesName = model.valueName
         
-        addScrollViewWithAttributes(model.valueName, selectedValue: selectedValue, selectedId: selectedId, width: width)
+        addScrollViewWithAttributes(model.valueName, availableCombination: availableCombination, selectedValue: selectedValue, selectedId: selectedId, width: width)
     }
     
-//    func setAttribute(#name: String, values: NSArray, id: NSArray, selectedValue: NSArray, width: CGFloat) {
-//        attributeLabel.text = "Select \(name)"
-//        
-//        self.attributesId = []
-//        self.attributesId = id as! [String]
-//        self.attributesName = []
-//        self.attributesName = values as! [String]
-//        
-//        addScrollViewWithAttributes(values, selectedValue: selectedValue, width: width)
-//    }
-    
-    func passAvailableCombination(model: NSArray) {
-        combination = model as! [ProductAvailableAttributeCombinationModel]
+    func passProductDetailModel(model: ProductDetailsModel) {
+        self.productDetailModel = model
     }
     
-    func addScrollViewWithAttributes(attributes: NSArray, selectedValue: NSArray, selectedId: NSArray, width: CGFloat) {
+    func addScrollViewWithAttributes(attributes: NSArray, availableCombination: NSArray, selectedValue: NSArray, selectedId: NSArray, width: CGFloat) {
         scroll = UIScrollView(frame: CGRectMake(0, self.frame.size.height - 70, width, 70))
         var spacingX: CGFloat = 0.0
         
@@ -88,8 +77,19 @@ class ProductAttributeTableViewCell: UITableViewCell {
 //            spacingX += 10.0
 //            button.frame.origin.x += CGFloat(spacingX)
 //            //<<<<
-            for v in 0..<selectedId.count {
-                if attributesId[i] == selectedId[v] as! String {
+
+            for ac in 0..<availableCombination.count {
+                for c in 0..<self.productDetailModel.productUnits.count {
+                    var comString =
+                    println(">> \(availableCombination[ac]) - \(self.productDetailModel.productUnits[c].combination)")
+//                    if availableCombination[ac] == self.productDetailModel.productUnits[c].combination {
+//                        println("benga")
+//                    }
+                }
+            }
+            
+            for a in 0..<selectedId.count {
+                if attributesId[i] == selectedId[a] as! String {
                     button.selected = true
                     button.layer.borderColor = UIColor.purpleColor().CGColor
                     button.backgroundColor = UIColor.purpleColor()
@@ -137,5 +137,15 @@ class ProductAttributeTableViewCell: UITableViewCell {
             delegate.selectedAttribute(self, attributeIndex: self.tag, attributeValue: button.titleLabel?.text!, attributeId: button.tag)
         }
         
+    }
+    
+    func enableButton(button: UIButton) {
+        button.alpha = 1.0
+        button.userInteractionEnabled = true
+    }
+    
+    func disableButton(button: UIButton) {
+        button.alpha = 0.3
+        button.userInteractionEnabled = false
     }
 }
