@@ -6,31 +6,33 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CategoriesViewController" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
             <connections>
+                <outlet property="tableView" destination="Y89-Pe-zpq" id="loF-cf-JGo"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+        <view clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Categories" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G1o-Ud-pGs">
-                    <rect key="frame" x="0.0" y="253" width="320" height="61"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="320" id="dnx-ik-vWt"/>
-                        <constraint firstAttribute="height" constant="61" id="irc-Nr-gXf"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="26"/>
-                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                    <nil key="highlightedColor"/>
-                </label>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="55" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Y89-Pe-zpq">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="fec-Bf-GsR"/>
+                        <outlet property="delegate" destination="-1" id="Z2W-zK-qsd"/>
+                    </connections>
+                </tableView>
             </subviews>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <color key="backgroundColor" red="0.93146306820000002" green="0.51890868700000004" blue="0.18877391690000001" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
-                <constraint firstAttribute="centerX" secondItem="G1o-Ud-pGs" secondAttribute="centerX" id="BMC-np-J3a"/>
-                <constraint firstAttribute="centerY" secondItem="G1o-Ud-pGs" secondAttribute="centerY" id="qVz-r3-Mrz"/>
+                <constraint firstAttribute="trailing" secondItem="Y89-Pe-zpq" secondAttribute="trailing" id="Ebn-NE-pRA"/>
+                <constraint firstItem="Y89-Pe-zpq" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="FVd-Ei-N2Q"/>
+                <constraint firstAttribute="bottom" secondItem="Y89-Pe-zpq" secondAttribute="bottom" id="H4T-Zy-etP"/>
+                <constraint firstItem="Y89-Pe-zpq" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="aJC-KG-dCb"/>
             </constraints>
-            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+            <point key="canvasLocation" x="314.5" y="240.5"/>
         </view>
     </objects>
 </document>
