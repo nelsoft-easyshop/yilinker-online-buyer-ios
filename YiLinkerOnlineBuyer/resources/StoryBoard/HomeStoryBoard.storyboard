@@ -130,13 +130,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="baG-73-DIM">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
                         </subviews>
                         <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="baG-73-DIM" firstAttribute="top" secondItem="a66-Cj-ZsM" secondAttribute="top" id="44d-Nf-H4K"/>
+                            <constraint firstItem="baG-73-DIM" firstAttribute="top" secondItem="a66-Cj-ZsM" secondAttribute="top" constant="64" id="44d-Nf-H4K"/>
                             <constraint firstItem="baG-73-DIM" firstAttribute="leading" secondItem="a66-Cj-ZsM" secondAttribute="leading" id="vRY-d6-AcU"/>
                             <constraint firstAttribute="bottom" secondItem="baG-73-DIM" secondAttribute="bottom" id="xSF-hG-D32"/>
                             <constraint firstAttribute="trailing" secondItem="baG-73-DIM" secondAttribute="trailing" id="yNH-ZA-PDN"/>
