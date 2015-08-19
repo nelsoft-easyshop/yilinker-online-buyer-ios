@@ -490,6 +490,11 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
 
     }
     
+    func gotoCheckoutFromAttributes(controller: ProductAttributeViewController) {
+        let checkout = CheckoutContainerViewController(nibName: "CheckoutContainerViewController", bundle: nil)
+        self.navigationController?.pushViewController(checkout, animated: true)
+    }
+    
     func pressedCancelReview(controller: ProductReviewViewController) {
         UIView.animateWithDuration(0.3, animations: {
             self.view.transform = CGAffineTransformMakeTranslation(1, 1)

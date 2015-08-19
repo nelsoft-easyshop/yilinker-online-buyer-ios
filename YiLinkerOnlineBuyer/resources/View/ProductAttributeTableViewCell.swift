@@ -80,7 +80,6 @@ class ProductAttributeTableViewCell: UITableViewCell {
 
             for ac in 0..<availableCombination.count {
                 for c in 0..<self.productDetailModel.productUnits.count {
-                    var comString =
                     println(">> \(availableCombination[ac]) - \(self.productDetailModel.productUnits[c].combination)")
 //                    if availableCombination[ac] == self.productDetailModel.productUnits[c].combination {
 //                        println("benga")
