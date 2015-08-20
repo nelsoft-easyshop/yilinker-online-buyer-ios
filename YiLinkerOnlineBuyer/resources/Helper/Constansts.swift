@@ -36,4 +36,11 @@ struct Constants {
         static let userPermissionPublicProfileKey = "public_profile"
         static let userPermissionFriendsKey = "user_friends"
     }
+    
+    struct Credentials {
+        static let client_id = "1_167rxzqvid8g8swggwokcoswococscocc8ck44wo0g88owgkcc"
+        static let cliend_secret = "317eq8nohry84ooc0o8woo8000c0k844c4cggws84g80scwwog"
+        static let grantRefresh = "refresh_token"
+        static let grantBuyer = "http://yilinker-online.com/grant/buyer"
+    }
 }

@@ -48,6 +48,18 @@ class SessionManager {
         return returnValue!
     }
     
+    class func refreshToken() -> String {
+        var returnValue : String?
+        
+        returnValue = NSUserDefaults.standardUserDefaults().objectForKey("refreshToken") as? String
+        
+        if returnValue == nil {
+            returnValue = ""
+        }
+        
+        return returnValue!
+    }
+    
     class func isLoggedIn() -> Bool {
         if self.accessToken() != "" {
             return true

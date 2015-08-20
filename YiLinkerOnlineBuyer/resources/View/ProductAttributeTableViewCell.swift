@@ -27,6 +27,8 @@ class ProductAttributeTableViewCell: UITableViewCell {
     var selectedValue: [String] = []
     var selectedAttributes: [String] = []
     
+    var availableCombinationString: String = ""
+    
     var delegate: ProductAttributeTableViewCellDelegate?
     
     var productDetailModel: ProductDetailsModel!
@@ -45,6 +47,11 @@ class ProductAttributeTableViewCell: UITableViewCell {
         self.attributesName = []
         self.attributesName = model.valueName
         
+        availableCombinationString = ""
+        for i in 0..<availableCombination.count {
+            availableCombinationString += availableCombination[i] as! String
+        }
+        
         addScrollViewWithAttributes(model.valueName, availableCombination: availableCombination, selectedValue: selectedValue, selectedId: selectedId, width: width)
     }
     
@@ -53,8 +60,17 @@ class ProductAttributeTableViewCell: UITableViewCell {
     }
     
     func addScrollViewWithAttributes(attributes: NSArray, availableCombination: NSArray, selectedValue: NSArray, selectedId: NSArray, width: CGFloat) {
+        
+        for view in self.subviews {
+            if view.isKindOfClass(UIScrollView) {
+                view.removeFromSuperview()
+            }
+        }
+        
         scroll = UIScrollView(frame: CGRectMake(0, self.frame.size.height - 70, width, 70))
         var spacingX: CGFloat = 0.0
+        
+        println(availableCombinationString)
         
         for i in 0..<attributes.count {
             
@@ -78,14 +94,8 @@ class ProductAttributeTableViewCell: UITableViewCell {
 //            button.frame.origin.x += CGFloat(spacingX)
 //            //<<<<
 
-            for ac in 0..<availableCombination.count {
-                for c in 0..<self.productDetailModel.productUnits.count {
-                    var comString =
-                    println(">> \(availableCombination[ac]) - \(self.productDetailModel.productUnits[c].combination)")
-//                    if availableCombination[ac] == self.productDetailModel.productUnits[c].combination {
-//                        println("benga")
-//                    }
-                }
+            if availableCombinationString.rangeOfString(attributesId[i]) == nil {
+                self.disableButton(button)
             }
             
             for a in 0..<selectedId.count {
@@ -94,6 +104,11 @@ class ProductAttributeTableViewCell: UITableViewCell {
                     button.layer.borderColor = UIColor.purpleColor().CGColor
                     button.backgroundColor = UIColor.purpleColor()
                     button.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+                    
+                    var tempy: CGFloat = scroll.frame.size.height
+                    var tempx: CGFloat = scroll.frame.size.width
+                    var zoomRect: CGRect = CGRectMake((tempx/2)-160, (tempy/2)-240, scroll.frame.size.width, scroll.frame.size.height)
+                    scroll.scrollRectToVisible(zoomRect, animated: false)
                 }
             }
             
@@ -104,7 +119,22 @@ class ProductAttributeTableViewCell: UITableViewCell {
         self.addSubview(scroll)
     }
     
+    func formatCombination(combinations: NSArray) -> String {
+        var formatCombination = ""
+        
+        for i in 0..<combinations.count {
+            formatCombination += combinations[i] as! String
+            if i != combinations.count - 1 {
+                formatCombination += "_"
+            }
+        }
+        
+        return formatCombination
+    }
+    
     func clickedAttriubte(sender: UIButton!) {
+        println("button id: \(sender.tag)")
+        
         if sender.selected { // Unselect
             DeselectButton(sender)
             if let delegate = self.delegate {

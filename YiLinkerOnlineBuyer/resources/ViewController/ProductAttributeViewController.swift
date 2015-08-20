@@ -10,6 +10,7 @@ import UIKit
 
 protocol ProductAttributeViewControllerDelegate {
     func dissmissAttributeViewController(controller: ProductAttributeViewController, type: String)
+    func doneActionPassDetailsToProductView(controller: ProductAttributeViewController, unitId: String, quantity: Int, selectedId: NSArray)
 }
 
 class ProductAttributeViewController: UIViewController, UITableViewDelegate, ProductAttributeTableViewCellDelegate {
@@ -53,7 +54,7 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
     
     var accessToken = ""
     var quantity: Int = 1
-    var unitId: [String] = []
+    var unitId: String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -170,17 +171,21 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
     
     // MARK: - Methods
     
-    func passModel(#productDetailsModel: ProductDetailsModel, selectedValue: NSArray, selectedId: NSArray) {
-        setDetail("http://shop.bench.com.ph/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/Y/W/YWH0089BU4.jpg", title: productDetailsModel.title, price: productDetailsModel.productUnits[0].price)
+//    change 0 (zeros) to unitId
+//    enabling first combination only, make it dynamic
+    
+    func passModel(#productDetailsModel: ProductDetailsModel, selectedValue: NSArray, selectedId: NSArray, unitId: Int) {
+        let index: Int = unitId - 1
+        setDetail("http://shop.bench.com.ph/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/Y/W/YWH0089BU4.jpg", title: productDetailsModel.title, price: productDetailsModel.productUnits[index].price)
         self.productDetailsModel = productDetailsModel
         self.attributes = productDetailsModel.attributes as [ProductAttributeModel]
         self.selectedId = selectedId as! [String]
         self.selectedValue = selectedValue as! [String]
+        self.unitId = String(index)
+        self.selectedCombination = productDetailsModel.productUnits[index].combination
         
-        self.selectedCombination = productDetailsModel.productUnits[0].combination
-        
-        self.maximumStock = productDetailsModel.productUnits[0].quantity
-        self.availabilityStocksLabel.text = "Available stocks : \(productDetailsModel.productUnits[0].quantity)"
+        self.maximumStock = productDetailsModel.productUnits[index].quantity
+        self.availabilityStocksLabel.text = "Available stocks : \(productDetailsModel.productUnits[index].quantity)"
         
         convertCombinationToString()
         println(combinationString)
@@ -200,11 +205,18 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
         self.selectedValue[attributeIndex] = String(attributeValue)
         self.selectedCombination[attributeIndex] = String(attributeId)
 
+        for i in 0..<self.productDetailsModel.productUnits.count {
+            if self.productDetailsModel.productUnits[i].combination == selectedId {
+                unitId = self.productDetailsModel.productUnits[i].productUnitId
+            }
+        }
+        
         maximumStock = availableStock(selectedCombination)
         self.availabilityStocksLabel.text = "Available stocks : " + String(maximumStock)
 
         listAvailableCombinations()
         println(self.availableCombination)
+        self.tableView.reloadData()
         
         if self.maximumStock != 0 {
             stocks = 1
@@ -320,8 +332,23 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
     }
     
     @IBAction func doneAction(sender: AnyObject) {
-        println(selectedValue)
-        hideSelf("done")
+        var selectionComplete: Bool = true
+        
+        for i in 0..<self.selectedId.count {
+            if selectedId[i] == "-1" {
+                selectionComplete = false
+            }
+        }
+        
+        if selectionComplete {
+            hideSelf("done")
+            if let delegate = self.delegate {
+                delegate.doneActionPassDetailsToProductView(self, unitId: unitId, quantity: quantity, selectedId: selectedId)
+            }
+        } else {
+            hideSelf("cancel")
+        }
+        
     }
     
     @IBAction func checkoutAction(sender: AnyObject) {
@@ -331,11 +358,12 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
     @IBAction func addToCartAction(sender: AnyObject) {
         
         let url: String = "http://online.api.easydeal.ph/api/v1/auth/cart/updateCartItem"
-        let quantity = stocksLabel.text?.toInt()
-        let params: NSDictionary = ["access_token": "NDEwMDZkYmQ2ZmU5YmVjMTRkNmM1NjI4NWMyMTM2MTcwMmRmZGM5OWExNTQ2YTAwNjU1ZGE5NTcyYmNjZTNjZQ",
-                                       "productId": "1",
-                                          "unitId": "1",
-                                        "quantity": "10"]
+        let quantity: String = String(stringInterpolationSegment: stocksLabel.text?.toInt())
+        
+        let params: NSDictionary = ["access_token": SessionManager.accessToken(),
+                                       "productId": self.productDetailsModel.id,
+                                          "unitId": String(unitId.toInt()! + 1),
+                                        "quantity": quantity]
         
         println(params)
         
@@ -345,7 +373,6 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
     func requestAddCartItem(url: String, params: NSDictionary!) {
         SVProgressHUD.show()
         let manager = APIManager.sharedInstance
-        
         manager.POST(url, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
@@ -359,7 +386,68 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
                         self.addBadge()
                     } else {
                         if let tempVar = responseObject["message"] as? String {
-                            println(tempVar)
+                            let alertController = UIAlertController(title: "Error", message: tempVar, preferredStyle: .Alert)
+                            let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+                            alertController.addAction(defaultAction)
+                            self.presentViewController(alertController, animated: true, completion: nil)
+                        }
+                    }
+                }
+            }
+            
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                
+                
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                
+                if task.statusCode == 401 {
+                    self.requestRefreshToken()
+                } else {
+                    SVProgressHUD.dismiss()
+                }
+                
+                let alertController = UIAlertController(title: "Something Went Wrong", message: nil, preferredStyle: .Alert)
+                let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+                alertController.addAction(defaultAction)
+                self.presentViewController(alertController, animated: true, completion: nil)
+        })
+    }
+    
+    func requestRefreshToken() {
+        let url: String = "http://online.api.easydeal.ph/api/v1/login"
+        let params: NSDictionary = ["client_id": Constants.Credentials.client_id,
+            "client_secret": Constants.Credentials.cliend_secret,
+            "grant_type": Constants.Credentials.grantRefresh,
+            "refresh_token": SessionManager.refreshToken()]
+        
+        let manager = APIManager.sharedInstance
+        manager.POST(url, parameters: params, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            
+            SVProgressHUD.dismiss()
+            
+            if responseObject.isKindOfClass(NSDictionary) {
+                
+                if let tempVar = responseObject["isSuccessful"] as? Bool {
+                    if tempVar {
+                        SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+                        
+                        let url: String = "http://online.api.easydeal.ph/api/v1/auth/cart/updateCartItem"
+                        let quantity: String = String(stringInterpolationSegment: self.stocksLabel.text?.toInt())
+                        
+                        let params: NSDictionary = ["access_token": SessionManager.accessToken(),
+                            "productId": self.productDetailsModel.id,
+                            "unitId": String(self.unitId.toInt()! + 1),
+                            "quantity": quantity]
+                        self.requestAddCartItem(url, params: params)
+                    } else {
+                        SVProgressHUD.dismiss()
+                        if let tempVar = responseObject["message"] as? String {
+                            let alertController = UIAlertController(title: "Error", message: tempVar, preferredStyle: .Alert)
+                            let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+                            alertController.addAction(defaultAction)
+                            self.presentViewController(alertController, animated: true, completion: nil)
                         }
                     }
                 }
@@ -368,12 +456,14 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 SVProgressHUD.dismiss()
-                
+                SVProgressHUD.dismiss()
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                println(task.statusCode)
                 
-                println("update cart failed")
-                println(error)
+                let alertController = UIAlertController(title: "Something Went Wrong", message: nil, preferredStyle: .Alert)
+                let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+                alertController.addAction(defaultAction)
+                self.presentViewController(alertController, animated: true, completion: nil)
+                
         })
     }
     
