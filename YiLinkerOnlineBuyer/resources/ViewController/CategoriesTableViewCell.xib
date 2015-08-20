@@ -29,11 +29,10 @@
                         <color key="textColor" red="0.29803922770000002" green="0.29803922770000002" blue="0.29803922770000002" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="right" translatesAutoresizingMaskIntoConstraints="NO" id="Mx4-ah-9yt">
-                        <rect key="frame" x="352" y="16" width="15" height="28"/>
-                        <color key="backgroundColor" red="0.80000001190000003" green="0.80000001190000003" blue="0.80000001190000003" alpha="1" colorSpace="calibratedRGB"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="right-gray" translatesAutoresizingMaskIntoConstraints="NO" id="Mx4-ah-9yt">
+                        <rect key="frame" x="352" y="16" width="13" height="25"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="15" id="nKs-iD-akU"/>
+                            <constraint firstAttribute="width" constant="13" id="nKs-iD-akU"/>
                         </constraints>
                     </imageView>
                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dummy-placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="WzY-LK-4IL">
@@ -48,13 +47,13 @@
                     <constraint firstItem="NbS-u2-dNh" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="19" id="AiX-GD-UuB"/>
                     <constraint firstItem="Mx4-ah-9yt" firstAttribute="leading" secondItem="NbS-u2-dNh" secondAttribute="trailing" constant="8" id="IJh-tC-J0p"/>
                     <constraint firstItem="cZi-9J-KTL" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="JVt-sY-VGm"/>
-                    <constraint firstItem="cZi-9J-KTL" firstAttribute="top" secondItem="Mx4-ah-9yt" secondAttribute="bottom" constant="14" id="MvB-Q2-me7"/>
+                    <constraint firstItem="cZi-9J-KTL" firstAttribute="top" secondItem="Mx4-ah-9yt" secondAttribute="bottom" constant="17" id="MvB-Q2-me7"/>
                     <constraint firstItem="WzY-LK-4IL" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="Twz-ta-79k"/>
                     <constraint firstItem="Mx4-ah-9yt" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="16" id="XPf-2l-CEi"/>
                     <constraint firstItem="cZi-9J-KTL" firstAttribute="top" secondItem="WzY-LK-4IL" secondAttribute="bottom" id="abt-yz-X3N"/>
                     <constraint firstItem="WzY-LK-4IL" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="gfn-7V-bnV"/>
                     <constraint firstAttribute="bottom" secondItem="cZi-9J-KTL" secondAttribute="bottom" id="nVT-sM-2i2"/>
-                    <constraint firstAttribute="trailing" secondItem="Mx4-ah-9yt" secondAttribute="trailing" constant="8" id="nbC-Wl-htW"/>
+                    <constraint firstAttribute="trailing" secondItem="Mx4-ah-9yt" secondAttribute="trailing" constant="10" id="nbC-Wl-htW"/>
                     <constraint firstItem="NbS-u2-dNh" firstAttribute="leading" secondItem="WzY-LK-4IL" secondAttribute="trailing" constant="17" id="vk1-VD-0wD"/>
                 </constraints>
             </tableViewCellContentView>
@@ -67,6 +66,6 @@
     </objects>
     <resources>
         <image name="dummy-placeholder" width="1280" height="800"/>
-        <image name="right" width="97" height="200"/>
+        <image name="right-gray" width="97" height="200"/>
     </resources>
 </document>

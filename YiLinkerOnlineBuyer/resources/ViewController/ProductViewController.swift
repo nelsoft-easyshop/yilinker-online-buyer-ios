@@ -275,7 +275,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
             titleLabel.addGestureRecognizer(tap)
             
             var arrowImageView = UIImageView(frame: CGRectMake(self.productAttributeView.frame.size.width - 20, 11.5, 9, 17))
-            arrowImageView.image = UIImage(named: "right")
+            arrowImageView.image = UIImage(named: "right-gray")
             
             var separatorView = UIView(frame: CGRectMake(0, 41, self.view.frame.size.width, 1))
             separatorView.backgroundColor = .lightGrayColor()
