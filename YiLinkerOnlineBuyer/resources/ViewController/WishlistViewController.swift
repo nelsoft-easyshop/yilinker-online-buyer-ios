@@ -18,7 +18,7 @@ class WishlistViewController: UIViewController, UITableViewDelegate, UITableView
     
     let viewControllerIndex = 2
     
-    var tableData: [CartModel] = []
+    var tableData: [WishlistModel] = []
     
     //formatter of Text to remove trailing decimal
     let formatter = NSNumberFormatter()
@@ -47,6 +47,7 @@ class WishlistViewController: UIViewController, UITableViewDelegate, UITableView
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(true)
+    NSNotificationCenter.defaultCenter().postNotificationName("SwipeForOptionsCellEnclosingTableViewDidBeginScrollingNotification", object: self)
         populateWishListTableView()
     }
     
@@ -88,8 +89,8 @@ class WishlistViewController: UIViewController, UITableViewDelegate, UITableView
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             if let value: AnyObject = responseObject["data"] {
                 for subValue in value["cartItems"] as! NSArray {
-                    
-                    let model: CartModel = CartModel.parseDataWithDictionary(subValue as! NSDictionary)
+                    println(subValue)
+                    let model: WishlistModel = WishlistModel.parseDataWithDictionary(subValue as! NSDictionary)
                     
                     self.tableData.append(model)
                 }
@@ -101,6 +102,7 @@ class WishlistViewController: UIViewController, UITableViewDelegate, UITableView
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 println("failed: \(error)")
+                self.updateCounterLabel()
                 self.dismissLoader()
         })
     }
@@ -119,7 +121,9 @@ class WishlistViewController: UIViewController, UITableViewDelegate, UITableView
     // MARK: Methods Updating Values
     func populateWishListTableView () {
         tableData = []
-        requestProductDetails(APIAtlas.wishlistUrl, params: nil)
+        //requestProductDetails(APIAtlas.wishlistUrl, params: NSDictionary(dictionary: ["access_token": SessionManager.accessToken(), "wishlist": "true"]))
+        
+        requestProductDetails("http://demo3526363.mockable.io/api/v1/auth/cart/getCart", params: nil)
     }
     
     func updateCounterLabel() {
@@ -140,31 +144,38 @@ class WishlistViewController: UIViewController, UITableViewDelegate, UITableView
         var cell:WishlistTableViewCell = self.wishlistTableView.dequeueReusableCellWithIdentifier("WishlistTableViewCell") as! WishlistTableViewCell
         
         //Set cell data
-        var tempModel: CartModel = tableData[indexPath.row]
-        cell.productNameLabel.text = tempModel.productDetails.title
-        cell.productItemImageView.sd_setImageWithURL(tempModel.productDetails.image, placeholderImage: UIImage(named: "dummy-placeholder"))  //no image yet in API
-        var tempAttributesText: String = ""
-        var tempAttributeId: [Int] = []
-        var tempAttributeName: [String] = []
+        var tempModel: WishlistModel = tableData[indexPath.row]
         
-//        for tempAttribute in tempModel.productDetails.attributes {
-//            tempAttributeId += tempAttribute.valueId
-//            tempAttributeName += tempAttribute.valueName
-//        }
-        
-        for tempId in tempModel.selectedAttributes {
-            if let index = find(tempAttributeId, tempId) {
-                if tempAttributesText.isEmpty {
-                    tempAttributesText = tempAttributeName[index]
-                } else {
-                    tempAttributesText += " | " + tempAttributeName[index]
+        for selectedProductUnit in tempModel.selectedAttributes {
+            for tempProductUnit in tempModel.productDetails.productUnits {
+                if selectedProductUnit == tempProductUnit.productUnitId.toInt() {
+                    if tempProductUnit.imageIds.count == 0 {
+                        cell.productItemImageView.sd_setImageWithURL(NSURL(string: tempModel.productDetails.image), placeholderImage: UIImage(named: "dummy-placeholder"))
+                    } else {
+                        cell.productItemImageView.sd_setImageWithURL(NSURL(string: tempProductUnit.imageIds[0]), placeholderImage: UIImage(named: "dummy-placeholder"))
+                    }
+                    
+                    var tempAttributesText: String = ""
+                    for tempId in tempProductUnit.combination {
+                        for tempAttributes in tempModel.productDetails.attributes {
+                            if let index = find(tempAttributes.valueId, tempId) {
+                                if tempAttributesText.isEmpty {
+                                    tempAttributesText = tempAttributes.valueName[index]
+                                } else {
+                                    tempAttributesText += " | " + tempAttributes.valueName[index]
+                                }
+                            }
+                        }
+                    }
+                    cell.productDetailsLabel?.text = tempAttributesText
+                    
+                    
+                    cell.productPriceLabel.text = "P" + tempProductUnit.discountedPrice + " x\(tempModel.quantity)"
                 }
-                
             }
         }
-        cell.productDetailsLabel?.text = tempAttributesText
         
-        cell.productPriceLabel.text = "P\(formatter.stringFromNumber(tempModel.productDetails.newPrice)!) x\(tempModel.quantity)"
+        cell.productNameLabel.text = tempModel.productDetails.title
         
         cell.delegate = self
         return cell
