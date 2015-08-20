@@ -2,35 +2,38 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SummaryViewController" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
             <connections>
+                <outlet property="tableView" destination="VvR-1d-JL7" id="otC-UD-nIF"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+        <view clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Summary View" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WVc-LP-q1a">
-                    <rect key="frame" x="34" y="273" width="252" height="21"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="21" id="98f-Tn-kMe"/>
-                        <constraint firstAttribute="width" constant="252" id="fJr-g8-O5d"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                    <nil key="highlightedColor"/>
-                </label>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="VvR-1d-JL7">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="m2Z-1L-5sg"/>
+                        <outlet property="delegate" destination="-1" id="Cuv-ZO-5L4"/>
+                    </connections>
+                </tableView>
             </subviews>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
-                <constraint firstAttribute="centerX" secondItem="WVc-LP-q1a" secondAttribute="centerX" id="DbT-xu-88q"/>
-                <constraint firstAttribute="centerY" secondItem="WVc-LP-q1a" secondAttribute="centerY" id="Phk-i3-4eB"/>
+                <constraint firstItem="VvR-1d-JL7" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leadingMargin" constant="-8" id="3Vj-E8-c0t"/>
+                <constraint firstAttribute="trailingMargin" secondItem="VvR-1d-JL7" secondAttribute="trailing" constant="-8" id="If2-Ik-4Gc"/>
+                <constraint firstItem="VvR-1d-JL7" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="topMargin" constant="-8" id="trW-2J-vYw"/>
+                <constraint firstAttribute="bottomMargin" secondItem="VvR-1d-JL7" secondAttribute="bottom" constant="-8" id="zgI-tv-rEK"/>
             </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+            <point key="canvasLocation" x="-16" y="74"/>
         </view>
     </objects>
 </document>
