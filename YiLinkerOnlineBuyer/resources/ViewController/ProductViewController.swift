@@ -43,6 +43,8 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     var selectedName: [String] = []
     var selectedValue: [String] = []
     var selectedId: [String] = []
+
+    var unitId: String = "1"
     
     var newFrame: CGRect!
     var visibility = 0.0
@@ -189,14 +191,11 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         let rate = UIBarButtonItem(image: UIImage(named: "rating"), style: .Plain, target: self, action: "barRateAction")
         let message = UIBarButtonItem(image: UIImage(named: "msg"), style: .Plain, target: self, action: "barMessageAction")
         let share = UIBarButtonItem(image: UIImage(named: "share"), style: .Plain, target: self, action: "barShareAction")
-        var betweenSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Action, target: nil, action: nil)
-        
-        wishlist.imageInsets = UIEdgeInsetsMake(0, 0, 0, -75)
-        rate.imageInsets = UIEdgeInsetsMake(0, 0, 0, -50)
-        message.imageInsets = UIEdgeInsetsMake(0, 0, 0, -25)
+        let negativeSpacer = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
+        negativeSpacer.width = -10
         
         self.navigationItem.setLeftBarButtonItem(close, animated: false)
-        self.navigationItem.setRightBarButtonItems([share, message, rate, wishlist], animated: true)
+        self.navigationItem.setRightBarButtonItems([share, negativeSpacer, message, negativeSpacer, rate, negativeSpacer, wishlist], animated: true)
     }
     
     // MARK: - Table View Data Source
@@ -276,7 +275,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
             titleLabel.addGestureRecognizer(tap)
             
             var arrowImageView = UIImageView(frame: CGRectMake(self.productAttributeView.frame.size.width - 20, 11.5, 9, 17))
-            arrowImageView.image = UIImage(named: "right")
+            arrowImageView.image = UIImage(named: "right-gray")
             
             var separatorView = UIView(frame: CGRectMake(0, 41, self.view.frame.size.width, 1))
             separatorView.backgroundColor = .lightGrayColor()
@@ -408,7 +407,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         attributeModal.definesPresentationContext = true
         attributeModal.view.backgroundColor = UIColor.clearColor()
         attributeModal.view.frame.origin.y = attributeModal.view.frame.size.height
-        attributeModal.passModel(productDetailsModel: productDetailsModel, selectedValue: selectedValue, selectedId: selectedId)
+        attributeModal.passModel(productDetailsModel: productDetailsModel, selectedValue: selectedValue, selectedId: selectedId, unitId: unitId.toInt()!)
         attributeModal.setTitle = title
         attributeModal.tabController = self.tabController
         attributeModal.screenWidth = self.view.frame.width
@@ -448,7 +447,8 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     }
     
     func seeMoreSeller(controller: ProductSellerView) {
-        showAlert("Go to Seller Page!")
+        let seller = SellerViewController(nibName: "SellerViewController", bundle: nil)
+        self.navigationController?.pushViewController(seller, animated: true)
     }
     
     func share(controller: ProductImagesView) {
@@ -483,12 +483,18 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
                 if type == "cart" {
                     self.showAlert("This item has been added to your cart.")
                 } else if type == "done" {
-                    self.showAlert(type)
+//                    self.showAlert(type)
                 }
             })
 
     }
     
+    func doneActionPassDetailsToProductView(controller: ProductAttributeViewController, unitId: String, quantity: Int, selectedId: NSArray) {
+        self.unitId = unitId
+        self.selectedId = selectedId as! [String]
+        self.setAttributes(self.productDetailsModel.attributes, productUnits: self.productDetailsModel.productUnits, unitId: unitId, quantity: quantity)
+    }
+
     func gotoCheckoutFromAttributes(controller: ProductAttributeViewController) {
         let checkout = CheckoutContainerViewController(nibName: "CheckoutContainerViewController", bundle: nil)
         self.navigationController?.pushViewController(checkout, animated: true)
@@ -536,7 +542,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         
         self.productImagesView.setDetails(self.productDetailsModel, width: self.view.frame.size.width)
 //        self.setDetails(productDetailsModel.details)
-        self.setAttributes(self.productDetailsModel.attributes, productUnit: self.productDetailsModel.productUnits)
+        self.setAttributes(self.productDetailsModel.attributes, productUnits: self.productDetailsModel.productUnits, unitId: "1", quantity: 0)
         self.productDescriptionView.setDescription(productDetailsModel.shortDescription, full: productDetailsModel.fullDescription)
         
         self.productReviewHeaderView.setRating(self.productReviewModel.ratingAverage)
@@ -580,13 +586,16 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         self.productDetailsView.frame = newFrame
     }
     
-    func setAttributes(attributes: [ProductAttributeModel], productUnit: [ProductUnitsModel]) {
+    func setAttributes(attributes: [ProductAttributeModel], productUnits: [ProductUnitsModel], unitId: String, quantity: Int) {
         
-        var topMargin: CGFloat = 0
-        var leftMargin: CGFloat = 0
-        var reseter: Int = 0
-        var counter: Int = 1
-        var labelWidth = (self.view.frame.size.width / 3)
+        for view in self.productAttributeView.subviews {
+            if view is UILabel {
+                let label: UILabel = view as! UILabel
+                if label.text != "Details" {
+                    view.removeFromSuperview()
+                }
+            }
+        }
         
         selectedName = []
         selectedValue = []
@@ -594,9 +603,11 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
 //        selectedName.append("Quantity")
 //        selectedValue.append(String(combinationModel[0].quantity) + "x")
         
+        let index: Int = unitId.toInt()! - 1
+        println(index)
         for i in 0..<attributes.count {
             for j in 0..<attributes[i].valueId.count {
-                if productUnit[0].combination[i] == attributes[i].valueId[j] {
+                if productUnits[index].combination[i] == attributes[i].valueId[j] {
                     selectedName.append(attributes[i].attributeName)
                     selectedId.append(attributes[i].valueId[j])
                     selectedValue.append(attributes[i].valueName[j])
@@ -604,7 +615,32 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
             }
         }
         
-        for i in 0..<selectedName.count {
+        var tempSelectedName: [String] = ["Quantity"]
+        var tempSelectedValue: [String] = [String(quantity) + "x"]
+        var tempSelectedId: [String] = [""]
+        
+        for i in 0..<self.selectedName.count {
+            tempSelectedName.append(selectedName[i])
+            tempSelectedValue.append(selectedValue[i])
+        }
+        
+        if quantity == 0 {
+            createAttributesLabel(selectedName.count, name: selectedName, value: selectedValue)
+        } else if quantity > 0 {
+            createAttributesLabel(selectedName.count + 1, name: tempSelectedName, value: tempSelectedValue)
+        } else {
+            println("ProductViewController - setAttributes")
+        }
+    }
+    
+    func createAttributesLabel(numberOfAttributes: Int, name: NSArray, value: NSArray) {
+        var topMargin: CGFloat = 0
+        var leftMargin: CGFloat = 0
+        var reseter: Int = 0
+        var counter: Int = 1
+        var labelWidth = (self.view.frame.size.width / 3)
+        
+        for i in 0..<numberOfAttributes {
             if i % 3 == 0 && i != 0 {
                 topMargin += 23
                 reseter = 0
@@ -618,9 +654,9 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
             attributesLabel.font = UIFont.systemFontOfSize(14.0)
             attributesLabel.textColor = .grayColor()
             
-            var attributedCategory = NSMutableAttributedString(string: "\(selectedName[i]): ")
+            var attributedCategory = NSMutableAttributedString(string: "\(name[i]): ")
             var font = [NSFontAttributeName : UIFont.boldSystemFontOfSize(14.0)]
-            var attributeItem = NSMutableAttributedString(string: selectedValue[i], attributes: font)
+            var attributeItem = NSMutableAttributedString(string: value[i] as! String, attributes: font)
             attributedCategory.appendAttributedString(attributeItem)
             
             attributesLabel.attributedText = attributedCategory
@@ -631,6 +667,8 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         newFrame = self.productAttributeView.frame
         newFrame.size.height = CGFloat(counter * 23) + 60 //60 = height of header + 10 for bottom margin
         self.productAttributeView.frame = newFrame
+        
+        setUpViews()
     }
     
     // MARK: Actions
@@ -728,38 +766,43 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     }
 
     func barWishlistAction() {
-//        showAlert("This item has been added to your Wishlist")
+//        var imageToAnimate = UIImageView()
+//        imageToAnimate.frame = self.productImagesView.collectionView.frame
+//        
+//        for subView in self.productImagesView.collectionView.subviews as! [UIView] {
+//            for views in subView.subviews as! [UIView] {
+//                for imageView in views.subviews as! [UIImageView] {
+//                    if imageView.isKindOfClass(UIImageView) {
+//                        imageToAnimate.image = imageView.image
+//                    }
+//                }
+//            }
+//        }
+//        
+//        self.view.addSubview(imageToAnimate)
+//        UIView.animateWithDuration(0.3, animations: {
+//            imageToAnimate.transform = CGAffineTransformMakeScale(0.1, 0.1)
+//            }, completion: { finished in //after scaling
+//                UIView.animateWithDuration(0.3, animations: { //after animating
+//                    imageToAnimate.center = CGPointMake(250, self.tabController.tabBar.frame.origin.y - (self.tabController.tabBar.frame.size.height / 2))
+//                    imageToAnimate.alpha = 0.0
+//                    }, completion: { finished in
+//                        if let badgeValue = (self.tabController.tabBar.items![3] as! UITabBarItem).badgeValue?.toInt() {
+//                            (self.tabController.tabBar.items![3] as! UITabBarItem).badgeValue = String(badgeValue + 1)
+//                        } else {
+//                            (self.tabController.tabBar.items![3] as! UITabBarItem).badgeValue = "1"
+//                        }
+//                })
+//        })
         
-//        SVProgressHUD.show()
+        showAlert("This item has been added to your wishlist")
         
-        var imageToAnimate = UIImageView()
-        imageToAnimate.frame = self.productImagesView.collectionView.frame
-        
-        for subView in self.productImagesView.collectionView.subviews as! [UIView] {
-            for views in subView.subviews as! [UIView] {
-                for imageView in views.subviews as! [UIImageView] {
-                    if imageView.isKindOfClass(UIImageView) {
-                        imageToAnimate.image = imageView.image
-                    }
-                }
-            }
+        if let badgeValue = (self.tabController.tabBar.items![3] as! UITabBarItem).badgeValue?.toInt() {
+            (self.tabController.tabBar.items![3] as! UITabBarItem).badgeValue = String(badgeValue + 1)
+        } else {
+            (self.tabController.tabBar.items![3] as! UITabBarItem).badgeValue = "1"
         }
         
-        self.view.addSubview(imageToAnimate)
-        UIView.animateWithDuration(0.3, animations: {
-            imageToAnimate.transform = CGAffineTransformMakeScale(0.1, 0.1)
-            }, completion: { finished in //after scaling
-                UIView.animateWithDuration(0.3, animations: { //after animating
-                    imageToAnimate.center = CGPointMake(250, self.tabController.tabBar.frame.origin.y - (self.tabController.tabBar.frame.size.height / 2))
-                    imageToAnimate.alpha = 0.0
-                    }, completion: { finished in
-                        if let badgeValue = (self.tabController.tabBar.items![3] as! UITabBarItem).badgeValue?.toInt() {
-                            (self.tabController.tabBar.items![3] as! UITabBarItem).badgeValue = String(badgeValue + 1)
-                        } else {
-                            (self.tabController.tabBar.items![3] as! UITabBarItem).badgeValue = "1"
-                        }
-                })
-        })
         
 //        SVProgressHUD.dismiss()
     }
@@ -773,7 +816,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     }
 
     func barShareAction() {
-        showAlert("Share")
+        shareTextImageAndURL(sharingText: "Sample Text", sharingImage: UIImage(named: "s61"), sharingURL: NSURL(fileURLWithPath: "http://www.Easyshop.ph"))
     }
     
 }

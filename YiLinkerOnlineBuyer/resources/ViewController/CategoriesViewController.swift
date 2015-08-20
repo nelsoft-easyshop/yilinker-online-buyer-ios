@@ -100,8 +100,7 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
             categoryLabel.sizeToFit()
             categoryLabel.frame.size.height = containerView.frame.size.height
             var arrowImageView = UIImageView(frame: CGRectMake(categoryLabel.frame.size.width + 5, (categoryLabel.frame.size.height / 2) - (20 / 2), 12, 20))
-            arrowImageView.image = UIImage(named: "right")
-            arrowImageView.backgroundColor = .lightGrayColor()
+            arrowImageView.image = UIImage(named: "right-gray")
             containerView.addSubview(arrowImageView)
         }
         
