@@ -71,5 +71,28 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>LSApplicationCategoryType</key>
+	<string></string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Black Italic.otf</string>
+		<string>Panton Black.otf</string>
+		<string>Panton Bold Italic.otf</string>
+		<string>Panton Bold.otf</string>
+		<string>Panton ExtraBold Italic.otf</string>
+		<string>Panton ExtraBold.otf</string>
+		<string>Panton ExtraLight Italic.otf</string>
+		<string>Panton ExtraLight.otf</string>
+		<string>Panton Heavy Italic.otf</string>
+		<string>Panton Heavy.otf</string>
+		<string>Panton Light Italic.otf</string>
+		<string>Panton Light.otf</string>
+		<string>Panton Regular Italic.otf</string>
+		<string>Panton SemiBold Italic.otf</string>
+		<string>Panton SemiBold.otf</string>
+		<string>Panton Thin Italic.otf</string>
+		<string>Panton Thin.otf</string>
+		<string>Panton.otf</string>
+	</array>
 </dict>
 </plist>

@@ -15,6 +15,30 @@
 		0C2F44AA1B848B5400021F45 /* PaymentViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C2F44A81B848B5400021F45 /* PaymentViewController.xib */; };
 		0C2F44AD1B848B7E00021F45 /* OverViewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C2F44AB1B848B7E00021F45 /* OverViewViewController.swift */; };
 		0C2F44AE1B848B7E00021F45 /* OverViewViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C2F44AC1B848B7E00021F45 /* OverViewViewController.xib */; };
+		0C2F44C31B8576FE00021F45 /* Black Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0C2F44B11B8576FE00021F45 /* Black Italic.otf */; };
+		0C2F44C41B8576FE00021F45 /* Panton Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0C2F44B21B8576FE00021F45 /* Panton Black.otf */; };
+		0C2F44C51B8576FE00021F45 /* Panton Bold Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0C2F44B31B8576FE00021F45 /* Panton Bold Italic.otf */; };
+		0C2F44C61B8576FE00021F45 /* Panton Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0C2F44B41B8576FE00021F45 /* Panton Bold.otf */; };
+		0C2F44C71B8576FE00021F45 /* Panton ExtraBold Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0C2F44B51B8576FE00021F45 /* Panton ExtraBold Italic.otf */; };
+		0C2F44C81B8576FE00021F45 /* Panton ExtraBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0C2F44B61B8576FE00021F45 /* Panton ExtraBold.otf */; };
+		0C2F44C91B8576FE00021F45 /* Panton ExtraLight Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0C2F44B71B8576FE00021F45 /* Panton ExtraLight Italic.otf */; };
+		0C2F44CA1B8576FE00021F45 /* Panton ExtraLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0C2F44B81B8576FE00021F45 /* Panton ExtraLight.otf */; };
+		0C2F44CB1B8576FE00021F45 /* Panton Heavy Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0C2F44B91B8576FE00021F45 /* Panton Heavy Italic.otf */; };
+		0C2F44CC1B8576FE00021F45 /* Panton Heavy.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0C2F44BA1B8576FE00021F45 /* Panton Heavy.otf */; };
+		0C2F44CD1B8576FE00021F45 /* Panton Light Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0C2F44BB1B8576FE00021F45 /* Panton Light Italic.otf */; };
+		0C2F44CE1B8576FE00021F45 /* Panton Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0C2F44BC1B8576FE00021F45 /* Panton Light.otf */; };
+		0C2F44CF1B8576FE00021F45 /* Panton Regular Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0C2F44BD1B8576FE00021F45 /* Panton Regular Italic.otf */; };
+		0C2F44D01B8576FE00021F45 /* Panton SemiBold Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0C2F44BE1B8576FE00021F45 /* Panton SemiBold Italic.otf */; };
+		0C2F44D11B8576FE00021F45 /* Panton SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0C2F44BF1B8576FE00021F45 /* Panton SemiBold.otf */; };
+		0C2F44D21B8576FE00021F45 /* Panton Thin Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0C2F44C01B8576FE00021F45 /* Panton Thin Italic.otf */; };
+		0C2F44D31B8576FE00021F45 /* Panton Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0C2F44C11B8576FE00021F45 /* Panton Thin.otf */; };
+		0C2F44D41B8576FE00021F45 /* Panton.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0C2F44C21B8576FE00021F45 /* Panton.otf */; };
+		0C2F44D71B857F0000021F45 /* OrderSummaryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C2F44D51B857F0000021F45 /* OrderSummaryTableViewCell.swift */; };
+		0C2F44D81B857F0000021F45 /* OrderSummaryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C2F44D61B857F0000021F45 /* OrderSummaryTableViewCell.xib */; };
+		0C2F44DC1B8583EF00021F45 /* CheckoutViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C2F44DB1B8583EF00021F45 /* CheckoutViews.swift */; };
+		0C2F44DE1B85840F00021F45 /* CheckoutViews.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C2F44DD1B85840F00021F45 /* CheckoutViews.xib */; };
+		0C2F44E11B85A0AA00021F45 /* ShipToTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C2F44DF1B85A0AA00021F45 /* ShipToTableViewCell.swift */; };
+		0C2F44E21B85A0AA00021F45 /* ShipToTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C2F44E01B85A0AA00021F45 /* ShipToTableViewCell.xib */; };
 		0C329E731B7B2A71005BE2B6 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C329E721B7B2A71005BE2B6 /* Reachability.swift */; };
 		0C329E751B7B2D32005BE2B6 /* RegisterModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C329E741B7B2D32005BE2B6 /* RegisterModel.swift */; };
 		0C329E771B7B47DC005BE2B6 /* EmptyView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C329E761B7B47DC005BE2B6 /* EmptyView.xib */; };
@@ -197,6 +221,30 @@
 		0C2F44A81B848B5400021F45 /* PaymentViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PaymentViewController.xib; path = ../ViewController/PaymentViewController.xib; sourceTree = "<group>"; };
 		0C2F44AB1B848B7E00021F45 /* OverViewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OverViewViewController.swift; sourceTree = "<group>"; };
 		0C2F44AC1B848B7E00021F45 /* OverViewViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = OverViewViewController.xib; path = ../ViewController/OverViewViewController.xib; sourceTree = "<group>"; };
+		0C2F44B11B8576FE00021F45 /* Black Italic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Black Italic.otf"; sourceTree = "<group>"; };
+		0C2F44B21B8576FE00021F45 /* Panton Black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Panton Black.otf"; sourceTree = "<group>"; };
+		0C2F44B31B8576FE00021F45 /* Panton Bold Italic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Panton Bold Italic.otf"; sourceTree = "<group>"; };
+		0C2F44B41B8576FE00021F45 /* Panton Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Panton Bold.otf"; sourceTree = "<group>"; };
+		0C2F44B51B8576FE00021F45 /* Panton ExtraBold Italic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Panton ExtraBold Italic.otf"; sourceTree = "<group>"; };
+		0C2F44B61B8576FE00021F45 /* Panton ExtraBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Panton ExtraBold.otf"; sourceTree = "<group>"; };
+		0C2F44B71B8576FE00021F45 /* Panton ExtraLight Italic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Panton ExtraLight Italic.otf"; sourceTree = "<group>"; };
+		0C2F44B81B8576FE00021F45 /* Panton ExtraLight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Panton ExtraLight.otf"; sourceTree = "<group>"; };
+		0C2F44B91B8576FE00021F45 /* Panton Heavy Italic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Panton Heavy Italic.otf"; sourceTree = "<group>"; };
+		0C2F44BA1B8576FE00021F45 /* Panton Heavy.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Panton Heavy.otf"; sourceTree = "<group>"; };
+		0C2F44BB1B8576FE00021F45 /* Panton Light Italic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Panton Light Italic.otf"; sourceTree = "<group>"; };
+		0C2F44BC1B8576FE00021F45 /* Panton Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Panton Light.otf"; sourceTree = "<group>"; };
+		0C2F44BD1B8576FE00021F45 /* Panton Regular Italic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Panton Regular Italic.otf"; sourceTree = "<group>"; };
+		0C2F44BE1B8576FE00021F45 /* Panton SemiBold Italic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Panton SemiBold Italic.otf"; sourceTree = "<group>"; };
+		0C2F44BF1B8576FE00021F45 /* Panton SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Panton SemiBold.otf"; sourceTree = "<group>"; };
+		0C2F44C01B8576FE00021F45 /* Panton Thin Italic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Panton Thin Italic.otf"; sourceTree = "<group>"; };
+		0C2F44C11B8576FE00021F45 /* Panton Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Panton Thin.otf"; sourceTree = "<group>"; };
+		0C2F44C21B8576FE00021F45 /* Panton.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Panton.otf; sourceTree = "<group>"; };
+		0C2F44D51B857F0000021F45 /* OrderSummaryTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderSummaryTableViewCell.swift; sourceTree = "<group>"; };
+		0C2F44D61B857F0000021F45 /* OrderSummaryTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = OrderSummaryTableViewCell.xib; path = ../View/OrderSummaryTableViewCell.xib; sourceTree = "<group>"; };
+		0C2F44DB1B8583EF00021F45 /* CheckoutViews.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckoutViews.swift; sourceTree = "<group>"; };
+		0C2F44DD1B85840F00021F45 /* CheckoutViews.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CheckoutViews.xib; sourceTree = "<group>"; };
+		0C2F44DF1B85A0AA00021F45 /* ShipToTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShipToTableViewCell.swift; sourceTree = "<group>"; };
+		0C2F44E01B85A0AA00021F45 /* ShipToTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ShipToTableViewCell.xib; path = ../View/ShipToTableViewCell.xib; sourceTree = "<group>"; };
 		0C329E721B7B2A71005BE2B6 /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		0C329E741B7B2D32005BE2B6 /* RegisterModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterModel.swift; sourceTree = "<group>"; };
 		0C329E761B7B47DC005BE2B6 /* EmptyView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EmptyView.xib; sourceTree = "<group>"; };
@@ -222,9 +270,9 @@
 		0C5111DF1B8207C7002F0001 /* ProductsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductsTableViewCell.swift; sourceTree = "<group>"; };
 		0C5111E01B8207C7002F0001 /* ProductsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProductsTableViewCell.xib; path = ../View/ProductsTableViewCell.xib; sourceTree = "<group>"; };
 		0C5111E31B8211B6002F0001 /* GeneralRatingTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneralRatingTableViewCell.swift; sourceTree = "<group>"; };
-		0C5111E41B8211B6002F0001 /* GeneralRatingTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GeneralRatingTableViewCell.xib; sourceTree = "<group>"; };
+		0C5111E41B8211B6002F0001 /* GeneralRatingTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = GeneralRatingTableViewCell.xib; path = ../View/GeneralRatingTableViewCell.xib; sourceTree = "<group>"; };
 		0C5111E71B821D6F002F0001 /* SeeMoreTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeeMoreTableViewCell.swift; sourceTree = "<group>"; };
-		0C5111E81B821D6F002F0001 /* SeeMoreTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SeeMoreTableViewCell.xib; sourceTree = "<group>"; };
+		0C5111E81B821D6F002F0001 /* SeeMoreTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SeeMoreTableViewCell.xib; path = ../View/SeeMoreTableViewCell.xib; sourceTree = "<group>"; };
 		0C5925FF1B8327BA0021EA76 /* ResultViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultViewController.swift; sourceTree = "<group>"; };
 		0C5926001B8327BA0021EA76 /* ResultViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ResultViewController.xib; path = ../ViewController/ResultViewController.xib; sourceTree = "<group>"; };
 		0C5926031B836C670021EA76 /* ProfileModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileModel.swift; sourceTree = "<group>"; };
@@ -382,6 +430,39 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0C2F44AF1B8576FE00021F45 /* Font */ = {
+			isa = PBXGroup;
+			children = (
+				0C2F44B01B8576FE00021F45 /* Panton */,
+			);
+			path = Font;
+			sourceTree = "<group>";
+		};
+		0C2F44B01B8576FE00021F45 /* Panton */ = {
+			isa = PBXGroup;
+			children = (
+				0C2F44B11B8576FE00021F45 /* Black Italic.otf */,
+				0C2F44B21B8576FE00021F45 /* Panton Black.otf */,
+				0C2F44B31B8576FE00021F45 /* Panton Bold Italic.otf */,
+				0C2F44B41B8576FE00021F45 /* Panton Bold.otf */,
+				0C2F44B51B8576FE00021F45 /* Panton ExtraBold Italic.otf */,
+				0C2F44B61B8576FE00021F45 /* Panton ExtraBold.otf */,
+				0C2F44B71B8576FE00021F45 /* Panton ExtraLight Italic.otf */,
+				0C2F44B81B8576FE00021F45 /* Panton ExtraLight.otf */,
+				0C2F44B91B8576FE00021F45 /* Panton Heavy Italic.otf */,
+				0C2F44BA1B8576FE00021F45 /* Panton Heavy.otf */,
+				0C2F44BB1B8576FE00021F45 /* Panton Light Italic.otf */,
+				0C2F44BC1B8576FE00021F45 /* Panton Light.otf */,
+				0C2F44BD1B8576FE00021F45 /* Panton Regular Italic.otf */,
+				0C2F44BE1B8576FE00021F45 /* Panton SemiBold Italic.otf */,
+				0C2F44BF1B8576FE00021F45 /* Panton SemiBold.otf */,
+				0C2F44C01B8576FE00021F45 /* Panton Thin Italic.otf */,
+				0C2F44C11B8576FE00021F45 /* Panton Thin.otf */,
+				0C2F44C21B8576FE00021F45 /* Panton.otf */,
+			);
+			path = Panton;
+			sourceTree = "<group>";
+		};
 		0C8A7C651B6772670039F013 = {
 			isa = PBXGroup;
 			children = (
@@ -455,6 +536,7 @@
 		0C9936FB1B750583000D6074 /* External */ = {
 			isa = PBXGroup;
 			children = (
+				0C2F44AF1B8576FE00021F45 /* Font */,
 				0C2670CC1B77290200394E29 /* GoogleService-Info.plist */,
 				0C9936FC1B750583000D6074 /* dummyHome.json */,
 			);
@@ -557,12 +639,13 @@
 				0C5111DB1B81F21A002F0001 /* AboutSellerTableViewCell.swift */,
 				0C5111DF1B8207C7002F0001 /* ProductsTableViewCell.swift */,
 				0C5111E31B8211B6002F0001 /* GeneralRatingTableViewCell.swift */,
-				0C5111E41B8211B6002F0001 /* GeneralRatingTableViewCell.xib */,
 				0C5111E71B821D6F002F0001 /* SeeMoreTableViewCell.swift */,
-				0C5111E81B821D6F002F0001 /* SeeMoreTableViewCell.xib */,
 				79A1C6F41B8357BA0043AA36 /* ProductResultListCollectionViewCell.swift */,
 				79A1C6F81B835BB50043AA36 /* ProductResultGridCollectionViewCell.swift */,
 				79A1C6FC1B8385310043AA36 /* SellerResultCollectionViewCell.swift */,
+				0C2F44D51B857F0000021F45 /* OrderSummaryTableViewCell.swift */,
+				0C2F44DB1B8583EF00021F45 /* CheckoutViews.swift */,
+				0C2F44DF1B85A0AA00021F45 /* ShipToTableViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -610,6 +693,11 @@
 		0C9937291B750583000D6074 /* Xib */ = {
 			isa = PBXGroup;
 			children = (
+				0C2F44E01B85A0AA00021F45 /* ShipToTableViewCell.xib */,
+				0C5111E41B8211B6002F0001 /* GeneralRatingTableViewCell.xib */,
+				0C5111E81B821D6F002F0001 /* SeeMoreTableViewCell.xib */,
+				0C2F44DD1B85840F00021F45 /* CheckoutViews.xib */,
+				0C2F44D61B857F0000021F45 /* OrderSummaryTableViewCell.xib */,
 				0C2F44AC1B848B7E00021F45 /* OverViewViewController.xib */,
 				0C2F44A81B848B5400021F45 /* PaymentViewController.xib */,
 				0C2F44A41B848B3A00021F45 /* SummaryViewController.xib */,
@@ -776,30 +864,42 @@
 				0C329E8D1B7B73B7005BE2B6 /* CategoriesViewController.xib in Resources */,
 				7987F31A1B7B746000B02DF4 /* WishlistTableViewCell.xib in Resources */,
 				0C99376D1B750583000D6074 /* VerticalImageCollectionViewCell.xib in Resources */,
+				0C2F44D31B8576FE00021F45 /* Panton Thin.otf in Resources */,
 				0C99376C1B750583000D6074 /* TwoColumnGridCollectionViewCell.xib in Resources */,
 				0C329E771B7B47DC005BE2B6 /* EmptyView.xib in Resources */,
 				0C9937621B750583000D6074 /* HalfVerticalImageCollectionViewCell.xib in Resources */,
 				0C5111EA1B821D6F002F0001 /* SeeMoreTableViewCell.xib in Resources */,
+				0C2F44C81B8576FE00021F45 /* Panton ExtraBold.otf in Resources */,
 				0C329E891B7B73A4005BE2B6 /* TodaysPromoViewController.xib in Resources */,
 				0C9937651B750583000D6074 /* NewSellerCollectionViewCell.xib in Resources */,
+				0C2F44CD1B8576FE00021F45 /* Panton Light Italic.otf in Resources */,
 				0C8A7C7B1B6772670039F013 /* Images.xcassets in Resources */,
+				0C2F44C41B8576FE00021F45 /* Panton Black.otf in Resources */,
+				0C2F44D21B8576FE00021F45 /* Panton Thin Italic.otf in Resources */,
+				0C2F44C31B8576FE00021F45 /* Black Italic.otf in Resources */,
 				0CB9DB071B6A1E6600F2CA13 /* StartPageStoryBoard.storyboard in Resources */,
 				0C5111D61B81CD69002F0001 /* SellerViewController.xib in Resources */,
 				0C5111DA1B81CEFE002F0001 /* SellerTableHeaderView.xib in Resources */,
 				79A1C6F31B83574A0043AA36 /* ProductResultListCollectionViewCell.xib in Resources */,
 				0C329E811B7B7376005BE2B6 /* MessagingViewController.xib in Resources */,
 				26AFB3CA1B79DE5C00E50926 /* ProductAttributeCollectionViewCell.xib in Resources */,
+				0C2F44C91B8576FE00021F45 /* Panton ExtraLight Italic.otf in Resources */,
 				26AFB3C91B79DE5C00E50926 /* ProductAttributeTableViewCell.xib in Resources */,
 				0CC8A63C1B7B9BBF00C91425 /* FollowedSellerViewController.xib in Resources */,
 				0C9937631B750583000D6074 /* LaunchScreen.xib in Resources */,
 				0C2F44A61B848B3A00021F45 /* SummaryViewController.xib in Resources */,
 				26AFB3BF1B79DE5600E50926 /* ProductViewController.xib in Resources */,
 				0C99376A1B750583000D6074 /* SectionBackground.xib in Resources */,
+				0C2F44D81B857F0000021F45 /* OrderSummaryTableViewCell.xib in Resources */,
 				0C9937611B750583000D6074 /* FullImageCollectionViewCell.xib in Resources */,
+				0C2F44C71B8576FE00021F45 /* Panton ExtraBold Italic.otf in Resources */,
 				0C99376E1B750583000D6074 /* ViewMoreFooterCollectionViewCell.xib in Resources */,
 				0C2670CD1B77290200394E29 /* GoogleService-Info.plist in Resources */,
+				0C2F44D11B8576FE00021F45 /* Panton SemiBold.otf in Resources */,
 				0C9937641B750583000D6074 /* LayoutHeaderCollectionViewCell.xib in Resources */,
+				0C2F44CF1B8576FE00021F45 /* Panton Regular Italic.otf in Resources */,
 				0C5926021B8327BA0021EA76 /* ResultViewController.xib in Resources */,
+				0C2F44D41B8576FE00021F45 /* Panton.otf in Resources */,
 				0C5111E21B8207C7002F0001 /* ProductsTableViewCell.xib in Resources */,
 				26AFB3C21B79DE5600E50926 /* ProductAttributeViewController.xib in Resources */,
 				0C9937691B750583000D6074 /* ScrollableCollectionViewCell.xib in Resources */,
@@ -809,23 +909,32 @@
 				0C9937391B750583000D6074 /* dummyHome.json in Resources */,
 				797D49111B7A50BA00617F6B /* CartTableViewCell.xib in Resources */,
 				79F417771B7C3ADB0047D02D /* CartProductAttributeViewController.xib in Resources */,
+				0C2F44D01B8576FE00021F45 /* Panton SemiBold Italic.otf in Resources */,
+				0C2F44C51B8576FE00021F45 /* Panton Bold Italic.otf in Resources */,
+				0C2F44CC1B8576FE00021F45 /* Panton Heavy.otf in Resources */,
 				0C99376B1B750583000D6074 /* SellerCollectionViewCell.xib in Resources */,
 				79A1C6F71B835A090043AA36 /* ProductResultGridCollectionViewCell.xib in Resources */,
 				0C9937671B750583000D6074 /* ProductItemWithVerticalDisplayCollectionViewCell.xib in Resources */,
+				0C2F44CE1B8576FE00021F45 /* Panton Light.otf in Resources */,
 				0C329E851B7B738E005BE2B6 /* CustomizeShoppingViewController.xib in Resources */,
 				26EC361B1B7EE9DA0012B2B8 /* ProductImagesViewCollectionViewCell.xib in Resources */,
 				26AFB3C31B79DE5600E50926 /* ProductDescriptionViewController.xib in Resources */,
 				26AFB3CB1B79DE5C00E50926 /* ProductSellerViewCollectionViewCell.xib in Resources */,
+				0C2F44C61B8576FE00021F45 /* Panton Bold.otf in Resources */,
 				0C329E7D1B7B7353005BE2B6 /* HelpViewController.xib in Resources */,
 				0C5111DE1B81F21A002F0001 /* AboutSellerTableViewCell.xib in Resources */,
 				79A1C6F11B8329490043AA36 /* SearchSuggestionTableViewCell.xib in Resources */,
 				0C5111E61B8211B6002F0001 /* GeneralRatingTableViewCell.xib in Resources */,
 				0C2F44AE1B848B7E00021F45 /* OverViewViewController.xib in Resources */,
+				0C2F44CA1B8576FE00021F45 /* Panton ExtraLight.otf in Resources */,
 				26AFB3C81B79DE5C00E50926 /* ReviewTableViewCell.xib in Resources */,
 				0C9937681B750583000D6074 /* ProductWithCenterNameCollectionViewCell.xib in Resources */,
+				0C2F44E21B85A0AA00021F45 /* ShipToTableViewCell.xib in Resources */,
 				2689FBF81B80412D007BEA68 /* CategoriesTableViewCell.xib in Resources */,
 				2632F5221B7F8690006931E4 /* FollowedSellerTableViewCell.xib in Resources */,
+				0C2F44DE1B85840F00021F45 /* CheckoutViews.xib in Resources */,
 				79A1C6FB1B83787B0043AA36 /* SellerResultCollectionViewCell.xib in Resources */,
+				0C2F44CB1B8576FE00021F45 /* Panton Heavy Italic.otf in Resources */,
 				0C2F44AA1B848B5400021F45 /* PaymentViewController.xib in Resources */,
 				0C9937661B750583000D6074 /* NewSellerScrollableCollectionViewCell.xib in Resources */,
 			);
@@ -888,6 +997,7 @@
 				0C9937501B750583000D6074 /* ProductitemWithVerticalDisplayCollectionViewCell.swift in Sources */,
 				0C9937711B75063B000D6074 /* AppDelegate.swift in Sources */,
 				0CC8A63F1B7B9BF600C91425 /* ProfileViewController.swift in Sources */,
+				0C2F44DC1B8583EF00021F45 /* CheckoutViews.swift in Sources */,
 				0C9937541B750583000D6074 /* RoundedLabel.swift in Sources */,
 				0C5111E91B821D6F002F0001 /* SeeMoreTableViewCell.swift in Sources */,
 				0C2670CF1B772E4B00394E29 /* Enums.swift in Sources */,
@@ -937,6 +1047,7 @@
 				0C99374E1B750583000D6074 /* NewSellerScrollableCollectionViewCell.swift in Sources */,
 				0C2F44AD1B848B7E00021F45 /* OverViewViewController.swift in Sources */,
 				0CE35EB81B76711400AAA8F1 /* RegisterViewController.swift in Sources */,
+				0C2F44D71B857F0000021F45 /* OrderSummaryTableViewCell.swift in Sources */,
 				26AFB3B51B79DE3800E50926 /* ProductViewController.swift in Sources */,
 				79F0DD9E1B7B24CB00EB8053 /* CartProductDetailsModel.swift in Sources */,
 				0CC8A63B1B7B9BBF00C91425 /* FollowedSellerViewController.swift in Sources */,
@@ -970,6 +1081,7 @@
 				26AFB39F1B79DDEA00E50926 /* ProductSellerModel.swift in Sources */,
 				79A1C6FD1B8385310043AA36 /* SellerResultCollectionViewCell.swift in Sources */,
 				26AFB3A81B79DE2900E50926 /* ProductImagesView.swift in Sources */,
+				0C2F44E11B85A0AA00021F45 /* ShipToTableViewCell.swift in Sources */,
 				0C99373C1B750583000D6074 /* HexaColor.swift in Sources */,
 				0C6490761B7781E400F88F92 /* Category.swift in Sources */,
 				0C99375D1B750583000D6074 /* HomeContainerViewController.swift in Sources */,

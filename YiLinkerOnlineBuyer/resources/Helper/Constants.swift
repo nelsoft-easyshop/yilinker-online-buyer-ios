@@ -46,4 +46,9 @@ struct Constants {
         static let reviewNibName = "ReviewTableViewCell"
         static let seeMoreTableViewCellNibNameAndIdentifier = "SeeMoreTableViewCell"
     }
+    
+    struct Checkout {
+        static let orderSummaryTableViewCellNibNameAndIdentifier = "OrderSummaryTableViewCell"
+        static let shipToTableViewCellNibNameAndIdentifier = "ShipToTableViewCell"
+    }
 }
