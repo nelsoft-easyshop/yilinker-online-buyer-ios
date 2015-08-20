@@ -29,11 +29,21 @@ class TransactionViewController: UIViewController {
     @IBOutlet weak var forFeedbackLabel: UILabel!
     @IBOutlet weak var supportLabel: UILabel!
     
+    var viewsInArray: [UIView] = []
+    var imagesInArray: [UIImageView] = []
+    var labelsInArray: [UILabel] = []
+    var deselectedImages: [String] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         let nib = UINib(nibName: "TransactionTableViewCell", bundle: nil)
         self.tableView.registerNib(nib, forCellReuseIdentifier: "TransactionIdentifier")
+        
+        viewsInArray = [allView, pendingView, onDeliveryView, forFeedbackView, supportView]
+        imagesInArray = [allImageView, pendingImageView, onDeliveryImageView, forFeedbackImageView, supportImageView]
+        labelsInArray = [allLabel, pendingLabel, onDeliveryLabel, forFeedbackLabel, supportLabel]
+        deselectedImages = ["all", "pending", "onDelivery", "forFeedback", "support"]
         
         addViewsActions()
     }
@@ -53,42 +63,37 @@ class TransactionViewController: UIViewController {
     // Actions
     
     func allAction(gesture: UIGestureRecognizer) {
-        if allView.tag == 1 {
-            deselectView(allView, label: allLabel, imageView: allImageView, imageName: "all")
-        } else {
+        if allView.tag == 0 {
             selectView(allView, label: allLabel, imageView: allImageView, imageName: "all2")
+            deselectOtherViews(allView)
         }
     }
     
     func pendingAction(gesture: UIGestureRecognizer) {
-        if pendingView.tag == 1 {
-            deselectView(pendingView, label: pendingLabel, imageView: pendingImageView, imageName: "pending")
-        } else {
+        if pendingView.tag == 0 {
             selectView(pendingView, label: pendingLabel, imageView: pendingImageView, imageName: "time")
+            deselectOtherViews(pendingView)
         }
     }
     
     func onDeliveryAction(gesture: UIGestureRecognizer) {
-        if onDeliveryView.tag == 1 {
-            deselectView(onDeliveryView, label: onDeliveryLabel, imageView: onDeliveryImageView, imageName: "onDelivery")
-        } else {
+        if onDeliveryView.tag == 0 {
             selectView(onDeliveryView, label: onDeliveryLabel, imageView: onDeliveryImageView, imageName: "onDelivery2")
+            deselectOtherViews(onDeliveryView)
         }
     }
     
     func forFeedbackAction(gesture: UIGestureRecognizer) {
-        if forFeedbackView.tag == 1 {
-            deselectView(forFeedbackView, label: forFeedbackLabel, imageView: forFeedbackImageView, imageName: "forFeedback")
-        } else {
+        if forFeedbackView.tag == 0 {
             selectView(forFeedbackView, label: forFeedbackLabel, imageView: forFeedbackImageView, imageName: "forFeedback2")
+            deselectOtherViews(forFeedbackView)
         }
     }
     
     func supportAction(gesture: UIGestureRecognizer) {
-        if supportView.tag == 1 {
-            deselectView(supportView, label: supportLabel, imageView: supportImageView, imageName: "support")
-        } else {
+        if supportView.tag == 0 {
             selectView(supportView, label: supportLabel, imageView: supportImageView, imageName: "support2")
+            deselectOtherViews(supportView)
         }
     }
     
@@ -116,11 +121,14 @@ class TransactionViewController: UIViewController {
         view.tag = 1
     }
     
-    func deselectView(view: UIView, label: UILabel, imageView: UIImageView, imageName: String) {
-        view.backgroundColor = Constants.Colors.appTheme
-        label.textColor = .whiteColor()
-        imageView.image = UIImage(named: imageName)
-        view.tag = 0
+    func deselectOtherViews(view: UIView) {
+        for i in 0..<self.viewsInArray.count {
+            if view != self.viewsInArray[i] {
+                viewsInArray[i].backgroundColor = Constants.Colors.appTheme
+                labelsInArray[i].textColor = .whiteColor()
+                imagesInArray[i].image = UIImage(named: deselectedImages[i])
+                viewsInArray[i].tag = 0
+            }
+        }
     }
-    
 }
