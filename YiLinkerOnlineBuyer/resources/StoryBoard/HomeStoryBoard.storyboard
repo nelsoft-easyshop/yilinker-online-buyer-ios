@@ -120,7 +120,7 @@
         <!--Hidden View Controller-->
         <scene sceneID="ZFY-xj-sOF">
             <objects>
-                <viewController id="bFy-Zg-Ywq" customClass="HiddenViewController" customModule="YiLinkerOnlineBuyer" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="bFy-Zg-Ywq" customClass="HiddenViewController" customModule="YiLinkerOnlineBuyer" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="M8v-fe-xRD"/>
                         <viewControllerLayoutGuide type="bottom" id="Zsi-fO-TMG"/>
@@ -520,6 +520,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="0.35294117650000001" green="0.1215686275" blue="0.45882352939999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>

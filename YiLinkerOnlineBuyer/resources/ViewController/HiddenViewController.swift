@@ -57,7 +57,11 @@ class HiddenViewController: UIViewController {
         } else if index == 5 {
             
         } else if index == 6 {
-            
+            var titleLabel = UILabel(frame: CGRectZero)
+            titleLabel.text = "Category Page"
+            titleLabel.textColor = .whiteColor()
+            titleLabel.sizeToFit()
+            self.navigationItem.titleView = titleLabel
         }
         
     }
