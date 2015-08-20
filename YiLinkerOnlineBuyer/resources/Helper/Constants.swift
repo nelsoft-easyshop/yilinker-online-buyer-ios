@@ -25,6 +25,7 @@ struct Constants {
         static let productDetails: UIColor = HexaColor.colorWithHexa(0xd52371)
         static let productPrice: UIColor = HexaColor.colorWithHexa(0x75348a)
         static let productReviewGreen: UIColor = HexaColor.colorWithHexa(0xb3b233)
+        static let grayLine: UIColor = HexaColor.colorWithHexa(0x606060)
     }
     
     struct Facebook {
@@ -37,10 +38,20 @@ struct Constants {
         static let userPermissionFriendsKey = "user_friends"
     }
     
+
     struct Credentials {
         static let client_id = "1_167rxzqvid8g8swggwokcoswococscocc8ck44wo0g88owgkcc"
         static let cliend_secret = "317eq8nohry84ooc0o8woo8000c0k844c4cggws84g80scwwog"
         static let grantRefresh = "refresh_token"
         static let grantBuyer = "http://yilinker-online.com/grant/buyer"
+    }
+
+    struct Seller {
+        static let aboutSellerTableViewCellNibNameAndIdentifier = "AboutSellerTableViewCell"
+        static let productsTableViewCellNibNameAndIdentifier = "ProductsTableViewCell"
+        static let generalRatingTableViewCellNibNameAndIndentifier = "GeneralRatingTableViewCell"
+        static let reviewIdentifier = "reviewIdentifier"
+        static let reviewNibName = "ReviewTableViewCell"
+        static let seeMoreTableViewCellNibNameAndIdentifier = "SeeMoreTableViewCell"
     }
 }

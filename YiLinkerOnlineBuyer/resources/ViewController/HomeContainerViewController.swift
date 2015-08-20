@@ -37,22 +37,33 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     override func viewDidLoad() {
         super.viewDidLoad()
         //set customTabbar
+        self.view.layoutIfNeeded()
+        self.contentViewFrame = self.view.frame
         self.customTabBarController = self.tabBarController as? CustomTabBarController
         self.customTabBarController?.isValidToSwitchToMenuTabBarItems = false
         self.circularDraweView()
         self.tabBarController!.delegate = self
         self.addSuHeaderScrollView()
         if Reachability.isConnectedToNetwork() {
+            if SessionManager.isLoggedIn() {
+                self.fireGetUserInfo()
+            }
             self.fireGetHomePageData()
         } else {
             self.addEmptyView()
         }
+        
     }
     
     func addEmptyView() {
-        self.emptyView = UIView.loadFromNibNamed("EmptyView", bundle: nil) as? EmptyView
-        self.emptyView!.delegate = self
-        self.view.addSubview(self.emptyView!)
+        if self.emptyView == nil {
+            self.emptyView = UIView.loadFromNibNamed("EmptyView", bundle: nil) as? EmptyView
+            self.emptyView?.frame = self.contentViewFrame!
+            self.emptyView!.delegate = self
+            self.view.addSubview(self.emptyView!)
+        } else {
+            self.emptyView!.hidden = false
+        }
     }
     
     
@@ -279,6 +290,34 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     
     func didTapReload() {
         self.fireGetHomePageData()
-        self.emptyView?.removeFromSuperview()
+        self.emptyView?.hidden = true
     }
+    
+    func fireGetUserInfo() {
+        let manager: APIManager = APIManager.sharedInstance
+        //seller@easyshop.ph
+        //password
+        let parameters: NSDictionary = ["access_token": SessionManager.accessToken()]
+        
+        manager.POST(APIAtlas.getUserInfoUrl, parameters: parameters, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            SVProgressHUD.dismiss()
+            let profileModel: ProfileModel = ProfileModel.pareseDataFromResponseObject(responseObject as! NSDictionary)
+            println(profileModel.name)
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                
+                if task.statusCode == 401 {
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Mismatch username and password", title: "Login Failed")
+                } else {
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+                }
+                
+                SVProgressHUD.dismiss()
+        })
+        
+    }
+    
+
 }

@@ -15,6 +15,8 @@ protocol CartProductAttributeViewControllerDelegate {
 
 class CartProductAttributeViewController: UIViewController, UITableViewDelegate, ProductAttributeTableViewCellDelegate {
     
+    var manager = APIManager()
+    
     @IBOutlet weak var dimView: UIView!
     @IBOutlet weak var productImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
@@ -33,6 +35,7 @@ class CartProductAttributeViewController: UIViewController, UITableViewDelegate,
     var maximumStock = 1
     var stocks: Int = 0
     
+    var cartModel : CartModel?
     var productDetailModel: CartProductDetailsModel?
     var attributes: [ProductAttributeModel] = []
     var availableCombinations: [ProductAvailableAttributeCombinationModel] = []
@@ -55,6 +58,32 @@ class CartProductAttributeViewController: UIViewController, UITableViewDelegate,
         self.dimView.addGestureRecognizer(tap)
         self.dimView.backgroundColor = .clearColor()
     }
+    
+    func fireEditCartItem(url: String, quantity: Int!) {
+        
+        var params = Dictionary<String, String>()
+        
+        params["access_token"] = "access_token"
+        params["productId"] = "\(cartModel?.productDetails.id)"
+        params["unitId"] = "\(cartModel?.unitId)"
+        params["quantity"] = "\(quantity)"
+        
+        showLoader()
+        manager.GET(url, parameters: params, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+                self.dismissLoader()
+                println(params)
+                self.dismissViewControllerAnimated(true, completion: nil)
+                if let delegate = self.delegate {
+                    delegate.pressedDoneAttribute(self)
+                }
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                println("failed: \(error)")
+                self.dismissLoader()
+        })
+    }
+    
     
     // MARK: - Table View Data Source
     
@@ -100,17 +129,15 @@ class CartProductAttributeViewController: UIViewController, UITableViewDelegate,
     }
     
     @IBAction func doneAction(sender: AnyObject!) {
-        self.dismissViewControllerAnimated(true, completion: nil)
-        if let delegate = self.delegate {
-            delegate.pressedDoneAttribute(self)
-        }
+        fireEditCartItem("https://demo3526363.mockable.io/api/v1/auth/cart/updateCartItem", quantity: stocks)
     }
     
     // MARK: - Methods
     
-    func passModel(#productDetailsModel: CartProductDetailsModel, combinationModel: [ProductAvailableAttributeCombinationModel], selectedValue: NSArray, quantity: Int) {
-        setDetail("\(productDetailsModel.image)", title: productDetailsModel.title, price: productDetailsModel.newPrice)
-        self.attributes = productDetailsModel.attributes as [ProductAttributeModel]
+    func passModel(#cartModel: CartModel, combinationModel: [ProductAvailableAttributeCombinationModel], selectedValue: NSArray, quantity: Int) {
+        setDetail("\(cartModel.productDetails.image)", title: cartModel.productDetails.title, price: cartModel.productDetails.newPrice)
+        self.cartModel = cartModel
+        self.attributes = cartModel.productDetails.attributes as [ProductAttributeModel]
         self.availableCombinations = combinationModel
         self.selectedValue = selectedValue as! [String]
         self.selectedCombination = combinationModel[0].combination
@@ -119,33 +146,18 @@ class CartProductAttributeViewController: UIViewController, UITableViewDelegate,
         stocks = quantity
         
         checkStock(stocks)
-        /*
-        if self.maximumStock != 0 {
-            stocks = 1
-            checkStock(stocks)
-        } else if self.maximumStock == 0 {
-            checkStock(0)
-        } else {
-            checkStock(stocks)
-            println("----ProductAttributeViewController")
-        }*/
     }
     
     func selectedAttribute(controller: ProductAttributeTableViewCell, attributeIndex: Int, attributeValue: String!, attributeId: Int) {
+        stocks = 0
+        checkStock(stocks)
         self.selectedValue[attributeIndex + 1] = String(attributeValue)
 //        self.selectedCombination[attributeIndex] = attributeId
         
         maximumStock = availableStock(selectedCombination)
         self.availabilityStocksLabel.text = "Available stocks : " + String(availableStock(selectedCombination))
         
-        if self.maximumStock != 0 {
-            stocks = 1
-            checkStock(stocks)
-        } else if self.maximumStock == 0 {
-            checkStock(0)
-        } else {
-            println("----ProductAttributeViewController")
-        }
+        checkStock(stocks)
     }
     
     func availableStock(combination: NSArray) -> Int {
@@ -168,20 +180,22 @@ class CartProductAttributeViewController: UIViewController, UITableViewDelegate,
             stocksLabel.text = String(stringInterpolationSegment: stocks)
         }
         
-        if stocks == 0 {
-            disableButton(increaseButton)
+        if stocks == 0  && maximumStock != 0 {
+            enableButton(increaseButton)
             disableButton(decreaseButton)
+            stocksLabel.alpha = 1.0
+        } else if stocks == 0  && maximumStock == 0{
             stocksLabel.alpha = 0.3
+            disableButton(increaseButton)
         } else if stocks == maximumStock {
             stocksLabel.alpha = 1.0
             disableButton(increaseButton)
-            enableButton(decreaseButton)
         } else if stocks == minimumStock {
             stocksLabel.alpha = 1.0
             disableButton(decreaseButton)
+        } else if stocks > 0 || stocks < maximumStock {
             enableButton(increaseButton)
-        } else {
-            println("----ProductAttributeViewController")
+            enableButton(decreaseButton)
         }
     }
     
@@ -210,5 +224,13 @@ class CartProductAttributeViewController: UIViewController, UITableViewDelegate,
         cancelAction(nil)
     }
     
-
+    //Loader function
+    func showLoader() {
+        SVProgressHUD.show()
+        SVProgressHUD.setBackgroundColor(UIColor.whiteColor())
+    }
+    
+    func dismissLoader() {
+        SVProgressHUD.dismiss()
+    }
 }

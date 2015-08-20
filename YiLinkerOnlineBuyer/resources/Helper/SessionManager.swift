@@ -60,6 +60,12 @@ class SessionManager {
         return returnValue!
     }
     
+    class func logout() {
+        NSUserDefaults.standardUserDefaults().setObject("", forKey: "accessToken")
+        NSUserDefaults.standardUserDefaults().setObject("", forKey: "refreshToken")
+        NSUserDefaults.standardUserDefaults().synchronize()
+    }
+    
     class func isLoggedIn() -> Bool {
         if self.accessToken() != "" {
             return true

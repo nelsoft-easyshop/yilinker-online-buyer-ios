@@ -11,6 +11,7 @@ import UIKit
 protocol ProductAttributeViewControllerDelegate {
     func dissmissAttributeViewController(controller: ProductAttributeViewController, type: String)
     func doneActionPassDetailsToProductView(controller: ProductAttributeViewController, unitId: String, quantity: Int, selectedId: NSArray)
+    func gotoCheckoutFromAttributes(controller: ProductAttributeViewController)
 }
 
 class ProductAttributeViewController: UIViewController, UITableViewDelegate, ProductAttributeTableViewCellDelegate {
@@ -352,7 +353,10 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
     }
     
     @IBAction func checkoutAction(sender: AnyObject) {
-        println("CHECKOUT")
+        hideSelf("buy")
+        if let delegate = self.delegate {
+            delegate.gotoCheckoutFromAttributes(self)
+        }
     }
     
     @IBAction func addToCartAction(sender: AnyObject) {
@@ -491,7 +495,10 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
     }
     
     func buyItNowAction(gesture: UIGestureRecognizer) {
-        println("checkout")
+        hideSelf("buy")
+        if let delegate = self.delegate {
+            delegate.gotoCheckoutFromAttributes(self)
+        }
     }
     
     func setBorderOf(#view: AnyObject, width: CGFloat, color: UIColor, radius: CGFloat) {
