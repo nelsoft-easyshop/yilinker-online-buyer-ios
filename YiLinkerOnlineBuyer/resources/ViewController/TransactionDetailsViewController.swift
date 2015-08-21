@@ -31,7 +31,6 @@ class TransactionDetailsViewController: UIViewController {
         
     }
     
-    
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -53,6 +52,13 @@ class TransactionDetailsViewController: UIViewController {
         cell.textLabel?.textColor = .darkGrayColor()
         
         return cell
+    }
+    
+    // MARK: - Table View Delegate
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let productDetails = TransactionProductDetailsViewController(nibName: "TransactionProductDetailsViewController", bundle: nil)
+        self.navigationController?.pushViewController(productDetails, animated: true)
     }
     
     // MARK: - Init Views
