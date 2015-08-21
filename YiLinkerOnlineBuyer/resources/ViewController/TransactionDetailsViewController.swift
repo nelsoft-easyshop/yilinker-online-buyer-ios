@@ -61,14 +61,14 @@ class TransactionDetailsViewController: UIViewController {
         if self.headerView == nil {
             self.headerView = UIView(frame: CGRectZero)
             self.headerView.autoresizesSubviews = false
-            self.headerView.backgroundColor = .lightGrayColor()
+            self.headerView.backgroundColor = Constants.Colors.backgroundGray
         }
         return self.headerView
     }
     
     func getTransactionIdView() -> TransactionIdView {
         if self.transactionIdView == nil {
-            self.transactionIdView = XibHelper.puffViewWithNibName("TransactionDetailViewsViewController", index: 0) as! TransactionIdView
+            self.transactionIdView = XibHelper.puffViewWithNibName("TransactionViews", index: 0) as! TransactionIdView
             self.transactionIdView.frame.size.width = self.view.frame.size.width
         }
         return self.transactionIdView
@@ -76,7 +76,7 @@ class TransactionDetailsViewController: UIViewController {
 
     func getTransactionDetailsView() -> TransactionDetailsView {
         if self.transactionDetailsView == nil {
-            self.transactionDetailsView = XibHelper.puffViewWithNibName("TransactionDetailViewsViewController", index: 1) as! TransactionDetailsView
+            self.transactionDetailsView = XibHelper.puffViewWithNibName("TransactionViews", index: 1) as! TransactionDetailsView
             self.transactionDetailsView.frame.size.width = self.view.frame.size.width
         }
         return self.transactionDetailsView
@@ -102,14 +102,14 @@ class TransactionDetailsViewController: UIViewController {
         if self.footerView == nil {
             self.footerView = UIView(frame: CGRectZero)
             self.footerView.autoresizesSubviews = false
-            self.footerView.backgroundColor = .lightGrayColor()
+            self.footerView.backgroundColor = Constants.Colors.backgroundGray
         }
         return self.footerView
     }
     
     func getTransactionSellerView() -> TransactionSellerView {
         if self.transactionSellerView == nil {
-            self.transactionSellerView = XibHelper.puffViewWithNibName("TransactionDetailViewsViewController", index: 2) as! TransactionSellerView
+            self.transactionSellerView = XibHelper.puffViewWithNibName("TransactionViews", index: 2) as! TransactionSellerView
             self.transactionSellerView.frame.size.width = self.view.frame.size.width
         }
         return self.transactionSellerView
@@ -117,7 +117,7 @@ class TransactionDetailsViewController: UIViewController {
     
     func getTransactionDeliveryStatusView() -> TransactionDeliveryStatusView {
         if self.transactionDeliveryStatusView == nil {
-            self.transactionDeliveryStatusView = XibHelper.puffViewWithNibName("TransactionDetailViewsViewController", index: 3) as! TransactionDeliveryStatusView
+            self.transactionDeliveryStatusView = XibHelper.puffViewWithNibName("TransactionViews", index: 3) as! TransactionDeliveryStatusView
             self.transactionDeliveryStatusView.frame.size.width = self.view.frame.size.width
         }
         return self.transactionDeliveryStatusView
@@ -174,7 +174,7 @@ class TransactionDetailsViewController: UIViewController {
         
         // footer
         var footerGrayColor = UIView(frame: self.view.frame)
-        footerGrayColor.backgroundColor = UIColor.lightGrayColor()
+        footerGrayColor.backgroundColor = Constants.Colors.backgroundGray
         self.getFooterView().addSubview(footerGrayColor)
         
         self.setPosition(self.transactionDeliveryStatusView, from: self.transactionSellerView)
