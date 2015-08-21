@@ -60,6 +60,13 @@ class TransactionViewController: UIViewController {
         return cell
     }
 
+    // MARK: - Table View Delegate
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let transactionDetails = TransactionDetailsViewController(nibName: "TransactionDetailsViewController", bundle: nil)
+        self.navigationController?.pushViewController(transactionDetails, animated: true)
+    }
+    
     // Actions
     
     func allAction(gesture: UIGestureRecognizer) {

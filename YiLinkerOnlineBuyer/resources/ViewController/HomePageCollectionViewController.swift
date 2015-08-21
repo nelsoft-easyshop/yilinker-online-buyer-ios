@@ -577,12 +577,7 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
     func redirectToProductpageWithProductID(productID: String) {
         let productViewController: ProductViewController = ProductViewController(nibName: "ProductViewController", bundle: nil)
         productViewController.tabController = self.tabBarController as! CustomTabBarController
-//        self.navigationController?.pushViewController(productViewController, animated: true)
-        
-        let transaction = TransactionViewController(nibName: "TransactionViewController", bundle: nil)
-        transaction.edgesForExtendedLayout = UIRectEdge.None
-        self.navigationController?.pushViewController(transaction, animated: true)
-        
+        self.navigationController?.pushViewController(productViewController, animated: true)
     }
     
     func redirectToSellerWithID(sellerID: String) {

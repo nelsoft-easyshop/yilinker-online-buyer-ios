@@ -157,6 +157,7 @@
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <connections>
                         <outlet property="dataSource" destination="-1" id="Hkf-0a-BYE"/>
+                        <outlet property="delegate" destination="-1" id="VA8-7u-RVf"/>
                     </connections>
                 </tableView>
             </subviews>
