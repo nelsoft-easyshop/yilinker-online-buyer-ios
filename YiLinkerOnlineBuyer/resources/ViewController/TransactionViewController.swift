@@ -37,6 +37,8 @@ class TransactionViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.title = "Transaction"
+        
         let nib = UINib(nibName: "TransactionTableViewCell", bundle: nil)
         self.tableView.registerNib(nib, forCellReuseIdentifier: "TransactionIdentifier")
         
