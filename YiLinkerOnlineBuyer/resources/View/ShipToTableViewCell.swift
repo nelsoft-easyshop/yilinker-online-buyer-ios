@@ -8,17 +8,38 @@
 
 import UIKit
 
+protocol ShipToTableViewCellDelegate {
+    func shipToTableViewCell(didTap shipToTableViewCell: ShipToTableViewCell)
+}
+
 class ShipToTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var changeAddressLabel: UILabel!
+    @IBOutlet weak var defaultAddressLabel: UILabel!
+    @IBOutlet weak var fakeContainerView: UIView!
+    
+    var delegate: ShipToTableViewCellDelegate?
+    
+    @IBOutlet weak var arrowImageView: UIButton!
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        self.changeAddressLabel.userInteractionEnabled = false
+        self.defaultAddressLabel.userInteractionEnabled = false
+        
+        let touchRecognizer: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "tap")
+        self.userInteractionEnabled = true
+        self.addGestureRecognizer(touchRecognizer)
     }
-
+    
+    func tap() {
+        self.delegate!.shipToTableViewCell(didTap: self)
+    }
+    
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+        
     }
     
 }
