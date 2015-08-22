@@ -8,12 +8,27 @@
 
 import UIKit
 
-class PaymentViewController: UIViewController {
+class PaymentViewController: UIViewController, PaymentTableViewCellDelegate {
 
+    @IBOutlet weak var tableView: UITableView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        
+        if IphoneType.isIphone4() || IphoneType.isIphone5() {
+            let paymentHeader: PaymentTableViewCell = XibHelper.puffViewWithNibName("PaymentTableViewCell", index: 1) as! PaymentTableViewCell
+            paymentHeader.delegate = self
+            self.tableView.tableHeaderView = paymentHeader
+            paymentHeader.selectPaymentType(Constants.Checkout.Payment.touchabelTagCOD)
+        } else {
+            let paymentHeader: PaymentTableViewCell = XibHelper.puffViewWithNibName("PaymentTableViewCell", index: 0) as! PaymentTableViewCell
+            paymentHeader.delegate = self
+            self.tableView.tableHeaderView = paymentHeader
+            paymentHeader.selectPaymentType(Constants.Checkout.Payment.touchabelTagCOD)
+        }
+        
+        let paymentFooterView: DeliverToTableViewCell = XibHelper.puffViewWithNibName("DeliverToTableViewCell", index: 0) as! DeliverToTableViewCell
+        self.tableView.tableFooterView = paymentFooterView
     }
 
     override func didReceiveMemoryWarning() {
@@ -21,7 +36,17 @@ class PaymentViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 0
+    }
+    
+    func paymentTableViewCell(didChoosePaymentType paymentType: PaymentType) {
+        println(paymentType)
+    }
+    
+    func paymentTableViewCell(rememberPaymentType result: Bool) {
+        println(result)
+    }
     /*
     // MARK: - Navigation
 
