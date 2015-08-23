@@ -61,6 +61,9 @@ class FollowedSellerViewController: UIViewController, EmptyViewDelegate {
         SVProgressHUD.show()
         
         let manager = APIManager.sharedInstance
+        let url = "http://online.api.easydeal.ph/" + "api/v1/auth/getFollowedSellers?access_token=" + "NTY1YzQxYjAzZWQ4NDEwNWYyYjFjMWZkMjIzZGY1NTZlNGM3ZTMxZjAyY2QxM2YzYzEyZTYxYzkzYzUxZTgyYQ"
+        let params = ["page": "1", "limit": "10", "keyword": ""]
+        
         manager.GET("https://demo3526363.mockable.io/follwedSeller", parameters: nil, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             

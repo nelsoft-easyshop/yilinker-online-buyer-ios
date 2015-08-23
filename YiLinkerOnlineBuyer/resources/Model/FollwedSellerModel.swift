@@ -9,13 +9,15 @@
 import Foundation
 
 class FollowedSellerModel {
+    var message: String = ""
+    var isSuccessful: Bool = false
     
     var names: [String] = []
     var specialty: [String] = []
     var images: [String] = []
     var ratings: [Int] = []
     
-    init(names: NSArray, specialty: NSArray, images: NSArray, ratings: NSArray) {
+    init(message: String, isSuccessful: Bool, names: NSArray, specialty: NSArray, images: NSArray, ratings: NSArray) {
         self.names = names as! [String]
         self.specialty = specialty as! [String]
         self.images = images as! [String]
@@ -23,12 +25,26 @@ class FollowedSellerModel {
     }
     
     class func parseDataWithDictionary(dictionary: AnyObject) -> FollowedSellerModel {
+        var message: String = ""
+        var isSuccessful: Bool = false
         
         var names: [String] = []
         var specialty: [String] = []
         var images: [String] = []
         var ratings: [Int] = []
         
+        if let tempVar = dictionary["message"] as? String {
+            message = tempVar
+        }
+        
+        if let tempVar = dictionary["isSuccessful"] as? Bool {
+            isSuccessful = tempVar
+        }
+        
+        if let value: AnyObject = dictionary["data"] {
+            //data here
+        }
+            
         for value in dictionary["sellers"] as! NSArray {
             
             if let tempVar = value["name"] as? String {
@@ -50,7 +66,7 @@ class FollowedSellerModel {
         }
         
         
-        return FollowedSellerModel(names: names, specialty: specialty, images: images, ratings: ratings)
+        return FollowedSellerModel(message: message, isSuccessful: isSuccessful, names: names, specialty: specialty, images: images, ratings: ratings)
     }
     
 }
