@@ -10,12 +10,12 @@ import UIKit
 
 class TransactionPurchaseDetailsView: UIView {
 
-    /*
-    // Only override drawRect: if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func drawRect(rect: CGRect) {
-        // Drawing code
+    @IBOutlet weak var quantityLabel: UILabel!
+    @IBOutlet weak var priceLabel: UILabel!
+    @IBOutlet weak var totalCostLabel: UILabel!
+    
+    override func awakeFromNib() {
+        
     }
-    */
 
 }
