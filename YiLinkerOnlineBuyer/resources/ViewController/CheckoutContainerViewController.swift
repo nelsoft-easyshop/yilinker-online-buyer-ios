@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CheckoutContainerViewController: UIViewController {
+class CheckoutContainerViewController: UIViewController, PaymentWebViewViewControllerDelegate {
     
     var summaryViewController: SummaryViewController?
     var paymentViewController: PaymentViewController?
@@ -21,6 +21,7 @@ class CheckoutContainerViewController: UIViewController {
     var selectedIndex: Int = 0
     
     @IBOutlet weak var contentView: UIView!
+    @IBOutlet weak var continueButton: UIButton!
     
     
     @IBOutlet weak var firstCircleLabel: DynamicRoundedLabel!
@@ -34,6 +35,9 @@ class CheckoutContainerViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.titleView()
+        
         if self.respondsToSelector("edgesForExtendedLayout") {
             self.edgesForExtendedLayout = UIRectEdge.None
         }
@@ -43,6 +47,10 @@ class CheckoutContainerViewController: UIViewController {
         self.backButton()
     }
 
+    func titleView() {
+        self.navigationController!.navigationBar.topItem!.title = "Checkout"
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -50,21 +58,26 @@ class CheckoutContainerViewController: UIViewController {
     
     // This function is for executing child view logic code
     func setSelectedViewControllerWithIndex(index: Int) {
-        if self.viewControllers.count != 0 {
-            let viewController: UIViewController = viewControllers[index]
-            setSelectedViewController(viewController)
-        }
-            
         if index == 0 {
             self.firsCircle()
+            self.continueButton("Save and Continue")
+            let viewController: UIViewController = viewControllers[index]
+            setSelectedViewController(viewController)
         } else if index == 1 {
             self.secondCircle()
+            self.continueButton("Save and Go to Payment")
+            let viewController: UIViewController = viewControllers[index]
+            setSelectedViewController(viewController)
         } else if index == 2 {
-            self.thirdCircle()
+            self.redirectToPaymentWebViewWithUrl("http://www.dragonpay.ph")
         }
     }
     
     func firsCircle() {
+        for imageView in self.firstCircleLabel.subviews {
+            imageView.removeFromSuperview()
+        }
+        
         self.firstCircleLabel.backgroundColor = Constants.Colors.appTheme
         self.secondCircleLabel.backgroundColor = UIColor.clearColor()
         self.thirdCircleLabel.backgroundColor = UIColor.clearColor()
@@ -80,7 +93,17 @@ class CheckoutContainerViewController: UIViewController {
     
     func secondCircle() {
         self.firstCircleLabel.backgroundColor = Constants.Colors.appTheme
-        self.secondCircleLabel.backgroundColor = Constants.Colors.appTheme
+        
+        let checkImageView: UIImageView = UIImageView(frame: CGRectMake(3, 4, 20, 20))
+        checkImageView.image = UIImage(named: "check-white")
+        checkImageView.contentMode = UIViewContentMode.ScaleAspectFit
+        
+        self.firstCircleLabel.addSubview(checkImageView)
+        self.firstCircleLabel.text = ""
+        
+        self.secondCircleLabel.backgroundColor = UIColor.clearColor()
+        self.secondCircleLabel.textColor = Constants.Colors.appTheme
+        
         self.thirdCircleLabel.backgroundColor = UIColor.clearColor()
         
         self.secondCircleLabel.text = "2"
@@ -93,15 +116,32 @@ class CheckoutContainerViewController: UIViewController {
     
     func thirdCircle() {
         self.firstCircleLabel.backgroundColor = Constants.Colors.appTheme
-        self.secondCircleLabel.backgroundColor = Constants.Colors.appTheme
-        self.thirdCircleLabel.backgroundColor = Constants.Colors.appTheme
         
-        self.secondCircleLabel.text = "2"
+        let checkImageView: UIImageView = UIImageView(frame: CGRectMake(3, 4, 20, 20))
+        checkImageView.image = UIImage(named: "check-white")
+        checkImageView.contentMode = UIViewContentMode.ScaleAspectFit
+        
+        let checkImageView2: UIImageView = UIImageView(frame: CGRectMake(3, 4, 20, 20))
+        checkImageView2.image = UIImage(named: "check-white")
+        checkImageView2.contentMode = UIViewContentMode.ScaleAspectFit
+        
+        self.firstCircleLabel.addSubview(checkImageView)
+        self.firstCircleLabel.text = ""
+        
+        self.secondCircleLabel.backgroundColor = UIColor.clearColor()
+        
+        self.thirdCircleLabel.backgroundColor = UIColor.clearColor()
+        
+        self.secondCircleLabel.text = ""
+        self.secondCircleLabel.addSubview(checkImageView2)
+        self.secondCircleLabel.backgroundColor = Constants.Colors.appTheme
+        
         self.thirdCircleLabel.text = "3"
+        self.thirdCircleLabel.textColor = Constants.Colors.appTheme
         
         self.summaryLabel.textColor = UIColor.lightGrayColor()
-        self.paymentLabel.textColor = UIColor.lightGrayColor()
-        self.overViewLabel.textColor = UIColor.whiteColor()
+        self.paymentLabel.textColor = UIColor.whiteColor()
+        self.overViewLabel.textColor = UIColor.lightGrayColor()
     }
     
     override func viewDidLayoutSubviews() {
@@ -153,14 +193,51 @@ class CheckoutContainerViewController: UIViewController {
             self.selectedIndex--
             self.setSelectedViewControllerWithIndex(self.selectedIndex)
         } else {
-            self.navigationController?.popViewControllerAnimated(true)
+            self.dismissViewControllerAnimated(true, completion: nil)
         }
     }
     
     @IBAction func saveAndContinue(sender: AnyObject) {
-        if selectedIndex != self.viewControllers.count - 1 {
+        if selectedIndex != self.viewControllers.count {
             self.selectedIndex++
         }
-        self.setSelectedViewControllerWithIndex(self.selectedIndex)
+        
+        if self.selectedIndex == 3 {
+            self.dismissViewControllerAnimated(true, completion: nil)
+        } else {
+            self.setSelectedViewControllerWithIndex(self.selectedIndex)
+        }
+
     }
+    
+    func continueButton(title: String) {
+        self.continueButton.setTitle(title, forState: UIControlState.Normal)
+    }
+    
+    func redirectToPaymentWebViewWithUrl(url: String) {
+        let paymentWebViewController = PaymentWebViewViewController(nibName: "PaymentWebViewViewController", bundle: nil)
+        paymentWebViewController.url = NSURL(string: url)!
+        paymentWebViewController.delegate = self
+        let navigationController: UINavigationController = UINavigationController(rootViewController: paymentWebViewController)
+        navigationController.navigationBar.barTintColor = Constants.Colors.appTheme
+        self.presentViewController(navigationController, animated: true, completion: nil)
+    }
+    
+    func paymentWebViewController(paymentDidCancel paymentWebViewController: PaymentWebViewViewController) {
+        self.selectedIndex--
+    }
+    
+    func paymentWebViewController(paymentDidSucceed paymentWebViewController: PaymentWebViewViewController) {
+        self.selectedIndex++
+        let viewController: UIViewController = viewControllers[2]
+        setSelectedViewController(viewController)
+        self.navigationItem.leftBarButtonItems = []
+        self.navigationItem.rightBarButtonItems = []
+        self.continueButton("Continue Shopping")
+        self.thirdCircle()
+    }
+    
+    func paymentWebViewController(paymentDidNotSucceed paymentWebViewController: PaymentWebViewViewController) {
+        self.selectedIndex--
+    }   
 }

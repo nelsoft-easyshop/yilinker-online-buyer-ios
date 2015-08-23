@@ -15,7 +15,7 @@ class HiddenViewController: UIViewController {
     var loginViewController: LoginViewController?
     var messagingViewController: MessagingViewController?
     var customizeShoppingViewController: CustomizeShoppingViewController?
-    var todaysPromoViewController: TodaysPromoViewController?
+    var resultViewController: ResultViewController?
     var categoriesViewController: CategoriesViewController?
     
     var followedSellerViewController: FollowedSellerViewController?
@@ -89,7 +89,7 @@ class HiddenViewController: UIViewController {
             self.followedSellerViewController = FollowedSellerViewController(nibName: "FollowedSellerViewController", bundle: nil)
             self.messagingViewController = MessagingViewController(nibName: "MessagingViewController", bundle: nil)
             self.customizeShoppingViewController = CustomizeShoppingViewController(nibName: "CustomizeShoppingViewController", bundle: nil)
-            self.todaysPromoViewController = TodaysPromoViewController(nibName: "TodaysPromoViewController", bundle: nil)
+            self.resultViewController = ResultViewController(nibName: "ResultViewController", bundle: nil)
             self.categoriesViewController = CategoriesViewController(nibName: "CategoriesViewController", bundle: nil)
             self.profileViewController = ProfileViewController(nibName: "ProfileViewController", bundle: nil)
             
@@ -97,7 +97,7 @@ class HiddenViewController: UIViewController {
             self.viewControllers.append(self.followedSellerViewController!)
             self.viewControllers.append(self.messagingViewController!)
             self.viewControllers.append(self.customizeShoppingViewController!)
-            self.viewControllers.append(self.todaysPromoViewController!)
+            self.viewControllers.append(self.resultViewController!)
             self.viewControllers.append(self.categoriesViewController!)
             self.viewControllers.append(self.profileViewController!)
         } else {
@@ -111,7 +111,7 @@ class HiddenViewController: UIViewController {
             
             self.messagingViewController = MessagingViewController(nibName: "MessagingViewController", bundle: nil)
             self.customizeShoppingViewController = CustomizeShoppingViewController(nibName: "CustomizeShoppingViewController", bundle: nil)
-            self.todaysPromoViewController = TodaysPromoViewController(nibName: "TodaysPromoViewController", bundle: nil)
+            self.resultViewController = ResultViewController(nibName: "ResultViewController", bundle: nil)
             self.categoriesViewController = CategoriesViewController(nibName: "CategoriesViewController", bundle: nil)
             
             self.viewControllers.append(self.helpViewController!)
@@ -119,7 +119,7 @@ class HiddenViewController: UIViewController {
             self.viewControllers.append(self.loginViewController!)
             self.viewControllers.append(self.messagingViewController!)
             self.viewControllers.append(self.customizeShoppingViewController!)
-            self.viewControllers.append(self.todaysPromoViewController!)
+            self.viewControllers.append(self.resultViewController!)
             self.viewControllers.append(self.categoriesViewController!)
         }
     }
