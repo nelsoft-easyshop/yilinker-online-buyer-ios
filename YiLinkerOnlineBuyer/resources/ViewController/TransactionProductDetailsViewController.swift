@@ -191,7 +191,10 @@ class TransactionProductDetailsViewController: UIViewController {
     // MARK: - Actions
     
     func leaveFeedback() {
-        println("leave a feedback")
+        let feedbackView = TransactionLeaveFeedbackViewController(nibName: "TransactionLeaveFeedbackViewController", bundle: nil)
+        feedbackView.edgesForExtendedLayout = UIRectEdge.None
+        self.navigationController?.pushViewController(feedbackView, animated: true)
+//self.navigationController?.presentViewController(feedbackView, animated: true, completion: nil)
     }
 
 }
