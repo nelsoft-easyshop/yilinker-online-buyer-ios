@@ -2,10 +2,12 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ProfileViewController" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
             <connections>
+                <outlet property="tableView" destination="eb9-dS-g6h" id="FGh-Hh-fgs"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -14,21 +16,21 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Profile Page" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nap-mL-nhc">
-                    <rect key="frame" x="-8" y="-7" width="320" height="61"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="320" id="9Pn-9z-WXD"/>
-                        <constraint firstAttribute="height" constant="61" id="yoD-uS-Tgo"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="26"/>
-                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                    <nil key="highlightedColor"/>
-                </label>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="eb9-dS-g6h">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="fSR-QG-xvc"/>
+                        <outlet property="delegate" destination="-1" id="9Pb-kR-AP8"/>
+                    </connections>
+                </tableView>
             </subviews>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
-                <constraint firstAttribute="centerX" secondItem="Nap-mL-nhc" secondAttribute="centerX" constant="8" id="GCo-zD-7db"/>
-                <constraint firstAttribute="centerY" secondItem="Nap-mL-nhc" secondAttribute="centerY" constant="260.5" id="nOt-jC-bww"/>
+                <constraint firstItem="eb9-dS-g6h" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leadingMargin" constant="-8" id="MSz-uq-XAn"/>
+                <constraint firstAttribute="trailingMargin" secondItem="eb9-dS-g6h" secondAttribute="trailing" constant="-8" id="VJP-Lb-wvT"/>
+                <constraint firstAttribute="bottomMargin" secondItem="eb9-dS-g6h" secondAttribute="bottom" constant="-8" id="jCM-mu-N6S"/>
+                <constraint firstItem="eb9-dS-g6h" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="topMargin" constant="-8" id="yYb-w9-NfM"/>
             </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
             <point key="canvasLocation" x="276" y="220"/>
