@@ -15,7 +15,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Profile Page" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nap-mL-nhc">
-                    <rect key="frame" x="0.0" y="253" width="320" height="61"/>
+                    <rect key="frame" x="-8" y="-7" width="320" height="61"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="320" id="9Pn-9z-WXD"/>
                         <constraint firstAttribute="height" constant="61" id="yoD-uS-Tgo"/>
@@ -27,10 +27,11 @@
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstAttribute="centerX" secondItem="Nap-mL-nhc" secondAttribute="centerX" id="GCo-zD-7db"/>
-                <constraint firstAttribute="centerY" secondItem="Nap-mL-nhc" secondAttribute="centerY" id="nOt-jC-bww"/>
+                <constraint firstAttribute="centerX" secondItem="Nap-mL-nhc" secondAttribute="centerX" constant="8" id="GCo-zD-7db"/>
+                <constraint firstAttribute="centerY" secondItem="Nap-mL-nhc" secondAttribute="centerY" constant="260.5" id="nOt-jC-bww"/>
             </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+            <point key="canvasLocation" x="276" y="220"/>
         </view>
     </objects>
 </document>
