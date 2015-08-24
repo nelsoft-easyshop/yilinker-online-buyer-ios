@@ -9,15 +9,15 @@
 import UIKit
 
 class CartModel: NSObject {
-   
+    
     var selected: Bool = false
     var unitId: Int = 0
-    var productDetails: CartProductDetailsModel!
+    var productDetails: WishlistProductDetailsModel!
     var selectedAttributes: [Int] = []
     var quantity: Int = 0
     
     
-    init(unitId: Int, productDetails: CartProductDetailsModel!, selectedAttributes: [Int], quantity: Int, selected: Bool){
+    init(unitId: Int, productDetails: WishlistProductDetailsModel!, selectedAttributes: [Int], quantity: Int, selected: Bool){
         self.unitId = unitId
         self.productDetails = productDetails
         self.selectedAttributes = selectedAttributes
@@ -27,7 +27,7 @@ class CartModel: NSObject {
     
     class func parseDataWithDictionary(dictionary: AnyObject) -> CartModel {
         var unitId: Int = 0
-        var productDetails: CartProductDetailsModel?
+        var productDetails: WishlistProductDetailsModel?
         var selectedAttributes: [Int] = []
         var quantity: Int = 0
         
@@ -37,7 +37,7 @@ class CartModel: NSObject {
             }
             
             if let tempVar = dictionary["product"] as? NSDictionary {
-                productDetails = CartProductDetailsModel.parseDataWithDictionary(tempVar)
+                productDetails = WishlistProductDetailsModel.parseDataWithDictionary(tempVar)
             }
             
             if let tempVar = dictionary["selectedAttributes"] as? NSArray {

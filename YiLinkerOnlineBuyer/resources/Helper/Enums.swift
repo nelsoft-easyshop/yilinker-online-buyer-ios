@@ -13,3 +13,8 @@ enum LoginType {
     case GoogleLogin
     case DirectLogin
 }
+
+enum PaymentType {
+    case COD
+    case CreditCard
+}

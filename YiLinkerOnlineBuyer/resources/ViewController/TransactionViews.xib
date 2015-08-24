@@ -857,37 +857,38 @@ Phiippines</string>
                     <color key="textColor" red="0.29803922770000002" green="0.29803922770000002" blue="0.29803922770000002" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Igm-SQ-z6s">
-                    <rect key="frame" x="0.0" y="81" width="375" height="35"/>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oLe-L9-EGC">
+                    <rect key="frame" x="83" y="81" width="209" height="35"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="SEE MORE" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jsQ-aI-8bJ">
+                            <rect key="frame" x="55" y="0.0" width="90" height="35"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                            <color key="textColor" red="0.50122048590000001" green="0.0" blue="0.7202493687" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="seeMoreViolet" translatesAutoresizingMaskIntoConstraints="NO" id="uzo-mT-LWg">
+                            <rect key="frame" x="144" y="10" width="10" height="15"/>
+                        </imageView>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="35" id="xnX-Sc-LR3"/>
+                        <constraint firstAttribute="height" constant="35" id="EsC-kW-Wtp"/>
+                        <constraint firstAttribute="width" constant="209" id="dTe-XL-6jD"/>
                     </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                    <inset key="titleEdgeInsets" minX="-120" minY="0.0" maxX="0.0" maxY="0.0"/>
-                    <inset key="imageEdgeInsets" minX="225" minY="10" maxX="140" maxY="10"/>
-                    <state key="normal" title="SEE MORE" image="seeMoreViolet">
-                        <color key="titleColor" red="0.50122048590000001" green="0.0" blue="0.7202493687" alpha="1" colorSpace="calibratedRGB"/>
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                    <connections>
-                        <action selector="seeMoreAction:" destination="CIA-nt-QAA" eventType="touchUpInside" id="AlN-ym-j0X"/>
-                    </connections>
-                </button>
+                </view>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="R0O-Uw-d5G" firstAttribute="leading" secondItem="CIA-nt-QAA" secondAttribute="leading" constant="10" id="15D-iS-7re"/>
                 <constraint firstItem="N8e-iL-fXN" firstAttribute="top" secondItem="CIA-nt-QAA" secondAttribute="top" id="Ase-Lm-dsd"/>
                 <constraint firstAttribute="trailing" secondItem="XwX-un-xTz" secondAttribute="trailing" id="Dzf-rK-nF5"/>
+                <constraint firstAttribute="centerX" secondItem="oLe-L9-EGC" secondAttribute="centerX" id="NOh-Nj-WzS"/>
                 <constraint firstItem="XwX-un-xTz" firstAttribute="top" secondItem="CIA-nt-QAA" secondAttribute="top" constant="41" id="PIP-Vn-XZf"/>
                 <constraint firstItem="XwX-un-xTz" firstAttribute="leading" secondItem="CIA-nt-QAA" secondAttribute="leading" id="Pao-o2-0d4"/>
                 <constraint firstAttribute="trailing" secondItem="R0O-Uw-d5G" secondAttribute="trailing" constant="8" id="Vmy-7q-RZt"/>
                 <constraint firstItem="N8e-iL-fXN" firstAttribute="leading" secondItem="CIA-nt-QAA" secondAttribute="leading" constant="8" id="YKi-xb-tFQ"/>
                 <constraint firstItem="R0O-Uw-d5G" firstAttribute="top" secondItem="XwX-un-xTz" secondAttribute="bottom" constant="15" id="a8A-eN-Vh1"/>
-                <constraint firstItem="Igm-SQ-z6s" firstAttribute="leading" secondItem="CIA-nt-QAA" secondAttribute="leading" id="gCS-Ik-Te3"/>
-                <constraint firstItem="Igm-SQ-z6s" firstAttribute="top" secondItem="R0O-Uw-d5G" secondAttribute="bottom" constant="8" id="hEH-RK-0Zt"/>
-                <constraint firstAttribute="trailing" secondItem="Igm-SQ-z6s" secondAttribute="trailing" id="kaJ-17-qvY"/>
-                <constraint firstAttribute="bottom" secondItem="Igm-SQ-z6s" secondAttribute="bottom" id="p3b-ZF-faY"/>
+                <constraint firstAttribute="bottom" secondItem="oLe-L9-EGC" secondAttribute="bottom" id="bOu-EB-o23"/>
                 <constraint firstAttribute="trailing" secondItem="N8e-iL-fXN" secondAttribute="trailing" constant="8" id="yOe-4a-BYy"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
