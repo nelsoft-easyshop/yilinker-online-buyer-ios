@@ -139,7 +139,9 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     }
     
     func myPointsTapAction(){
-        
+
+        var myPointsViewController = MyPointsTableViewController(nibName: "MyPointsTableViewController", bundle: nil)
+        self.navigationController?.pushViewController(myPointsViewController, animated:true)
     }
     
     func settingsTapAction(){
