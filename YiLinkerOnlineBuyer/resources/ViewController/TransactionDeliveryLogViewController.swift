@@ -18,15 +18,11 @@ class TransactionDeliveryLogViewController: UIViewController, UITableViewDelegat
 
         self.title = "Delivery Log"
         
-//        self.tableView.rowHeight = UITableViewAutomaticDimension
-//        self.tableView.estimatedRowHeight = 210
-        
         self.tableView.backgroundColor = Constants.Colors.backgroundGray
         let nib = UINib(nibName: "TransactionDeliveryLogTableViewCell", bundle: nil)
         self.tableView.registerNib(nib, forCellReuseIdentifier: "DeliveryLogIdentifier")
         let nib2 = UINib(nibName: "TransactionDeliveryLog2TableViewCell", bundle: nil)
         self.tableView.registerNib(nib2, forCellReuseIdentifier: "DeliveryLog2Identifier")
-        
     }
 
     // MARK: - Table View Data Source
@@ -83,10 +79,10 @@ class TransactionDeliveryLogViewController: UIViewController, UITableViewDelegat
         dateLabel.textAlignment = .Center
         dateLabel.font = UIFont.systemFontOfSize(12.0)
         dateLabel.textColor = .grayColor()
-        dateLabel.text = "  JUNE 23, 2014  "
+        dateLabel.text = "SEPTEMBER 23, 2014"
         dateLabel.sizeToFit()
         dateLabel.backgroundColor = Constants.Colors.backgroundGray
-//        dateLabel.frame.size.height = sectionHeaderView.frame.size.height
+        dateLabel.frame.size.width = dateLabel.frame.size.width + 10
         dateLabel.center.x = sectionHeaderView.center.x
         dateLabel.center.y = sectionHeaderView.center.y + (15 / 2)
         
