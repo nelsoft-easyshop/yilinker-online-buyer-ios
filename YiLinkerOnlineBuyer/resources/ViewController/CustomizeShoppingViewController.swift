@@ -8,28 +8,126 @@
 
 import UIKit
 
-class CustomizeShoppingViewController: UIViewController {
+class CustomizeShoppingViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, CustomizeShoppingCollectionViewLayoutDelegate, UICollectionViewDataSource, UICollectionViewDelegate, CustomizeSelectedCollectionViewCellDelegate {
+    
+    @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var tableView: UITableView!
 
+    var cellCount: Int = 20
+    var titles: [String] = ["Category 1", "Category 2", "Category 3", "Category 4", "Category 5", "Category 6", "Category 7", "Category 8", "Category 9", "Category 10", "Category 11", "Category 12", "Category 13", "Category 14", "Category 15", "Category 16", "Category 17", "Category 18", "Category 19", "Category 20"]
+    var selectedCollectionViewCell: CustomizeSelectedCollectionViewCell = CustomizeSelectedCollectionViewCell()
+    var customizeLayout: CustomizeShoppingCollectionViewLayout?
+    
+    var selectedCategoryTitle: String = ""
+    var firstIndexPath: NSIndexPath?
+    var addedTitle: String = ""
+    var isAddingCell: Bool = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        if self.respondsToSelector("edgesForExtendedLayout") {
+            self.edgesForExtendedLayout = UIRectEdge.None
+        }
+        
+        //var timer = NSTimer.scheduledTimerWithTimeInterval(3.0, target: self, selector: Selector("sample"), userInfo: nil, repeats: true)
+        
+        self.customizeLayout = self.collectionView.collectionViewLayout as? CustomizeShoppingCollectionViewLayout
+        self.customizeLayout!.delegate = self
+        self.collectionView.layer.zPosition = 0
+        self.tableView.layer.zPosition = 100
+        
+        let footerView: UIView = UIView(frame: CGRectZero)
+        self.tableView.tableFooterView = footerView
+        
+        self.selectedCollectionViewCell.layer.zPosition = 10
+        selectedCollectionViewCell = XibHelper.puffViewWithNibName(Constants.CustomizeShopping.customizeSelectedNibNameAndIdentifier, index: 0) as! CustomizeSelectedCollectionViewCell
+        selectedCollectionViewCell.delegate = self
+        self.tableView.tableHeaderView = selectedCollectionViewCell
+        self.registerCell()
+    }
+    
+    
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 0
+    }
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return self.view.frame.size.height - 110
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell: CustomizeShoppingTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(Constants.CustomizeShopping.customizeShoppingTableViewCellNibNameAndIdentifier) as! CustomizeShoppingTableViewCell
+        
+        return cell
+    }
+    
+    func registerCell() {
+        let nib: UINib = UINib(nibName: Constants.CustomizeShopping.customizeShoppingTableViewCellNibNameAndIdentifier, bundle: nil)
+        self.tableView.registerNib(nib, forCellReuseIdentifier: Constants.CustomizeShopping.customizeShoppingTableViewCellNibNameAndIdentifier)
+        
+        let nib2: UINib = UINib(nibName: Constants.CustomizeShopping.customizeShoppingNibNameAndIdentifier, bundle: nil)
+        self.collectionView.registerNib(nib2, forCellWithReuseIdentifier: Constants.CustomizeShopping.customizeShoppingNibNameAndIdentifier)
+    }
+    
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return self.titles.count
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        let cell: CustomizeShoppingCollectionViewCell = self.collectionView.dequeueReusableCellWithReuseIdentifier(Constants.CustomizeShopping.customizeShoppingNibNameAndIdentifier, forIndexPath: indexPath) as! CustomizeShoppingCollectionViewCell
+        cell.layer.cornerRadius = cell.frame.size.width / 2
+        cell.categoryTitleLabel.text = self.titles[indexPath.row]
+        
+        return cell
+    }
+    
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        if self.isAddingCell {
+            self.collectionView.performBatchUpdates({ () -> Void in
+                self.isAddingCell = false
+                self.addCell(self.addedTitle)
+                }, completion: { (Bool) -> Void in
+            })
+        } else {
+            let cell: CustomizeShoppingCollectionViewCell = self.collectionView.cellForItemAtIndexPath(indexPath) as! CustomizeShoppingCollectionViewCell
+            self.customizeLayout!.selectedIndexPath = indexPath
+            self.deleteCellInIndexPath(indexPath)
+        }
+
+    }
+    
+    func deleteCellInIndexPath(indexPath: NSIndexPath) {
+        self.collectionView.performBatchUpdates({ () -> Void in
+            self.selectedCategoryTitle = self.titles[indexPath.row]
+            self.titles.removeAtIndex(indexPath.row)
+            self.collectionView!.deleteItemsAtIndexPaths([NSIndexPath(forItem: indexPath.row, inSection: indexPath.section)])
+        }, completion: { (Bool) -> Void in
+            self.customizeLayout!.invalidateLayout()
+        })
+    }
+    
+    func customizeShoppingCollectionViewLayout(didAddItemWithAttribute attribute: UICollectionViewLayoutAttributes) {
+        selectedCollectionViewCell.addItemWithAttributes(attribute, title: self.selectedCategoryTitle)
+    }
+    
+    func customizeSelectedCollectionViewCell(deselectCategoryWithTitle title: String, attribute: UICollectionViewLayoutAttributes) {
+        self.addedTitle = title
+        self.customizeLayout!.addedAttribute = attribute
+        self.customizeLayout!.showAddAnimation = true
+        var timer = NSTimer.scheduledTimerWithTimeInterval(0.0, target: self, selector: Selector("sample"), userInfo: nil, repeats: false)
+        self.isAddingCell = true
+    }
+    
+    func addCell(title: String) {
+        let indexPath: NSIndexPath = NSIndexPath(forItem: 0, inSection: 0)
+        self.titles.insert(title, atIndex: 0)
+        self.collectionView.insertItemsAtIndexPaths([indexPath])
     }
     
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    func sample() {
+        let indexPath: NSIndexPath = NSIndexPath(forItem: 0, inSection: 0)
+        self.collectionView.delegate!.collectionView!(self.collectionView!, didSelectItemAtIndexPath: indexPath)
     }
-    */
-
 }

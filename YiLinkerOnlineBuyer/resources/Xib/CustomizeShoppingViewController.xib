@@ -6,31 +6,60 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CustomizeShoppingViewController" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
             <connections>
+                <outlet property="collectionView" destination="ZPR-dM-Yee" id="SW6-r7-j0o"/>
+                <outlet property="tableView" destination="lfr-fE-JqF" id="Bdg-b6-dGq"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Customize Shopping" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1KC-Tg-bvB">
-                    <rect key="frame" x="0.0" y="253" width="320" height="61"/>
+                <tableView contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="lfr-fE-JqF">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="142"/>
+                    <color key="backgroundColor" red="0.37647058820000001" green="0.1215686275" blue="0.46666666670000001" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="61" id="Nhw-DT-eG5"/>
-                        <constraint firstAttribute="width" constant="320" id="pI0-2Y-hJL"/>
+                        <constraint firstAttribute="height" constant="142" id="IB6-UX-YBD"/>
                     </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="26"/>
-                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                    <nil key="highlightedColor"/>
-                </label>
+                    <color key="sectionIndexBackgroundColor" red="0.37647058820000001" green="0.1215686275" blue="0.46666666670000001" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="Ik1-qy-Iag"/>
+                        <outlet property="delegate" destination="-1" id="2d2-gw-NQd"/>
+                    </connections>
+                </tableView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yhi-tG-dxK">
+                    <rect key="frame" x="0.0" y="602" width="375" height="65"/>
+                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="65" id="xUR-CZ-dkJ"/>
+                    </constraints>
+                </view>
+                <collectionView multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="ZPR-dM-Yee">
+                    <rect key="frame" x="0.0" y="145" width="375" height="456"/>
+                    <color key="backgroundColor" red="0.37647058820000001" green="0.1215686275" blue="0.46666666670000001" alpha="1" colorSpace="calibratedRGB"/>
+                    <collectionViewLayout key="collectionViewLayout" id="FeE-qz-13d" customClass="CustomizeShoppingCollectionViewLayout" customModule="YiLinkerOnlineBuyer" customModuleProvider="target"/>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="wcc-PZ-HQ9"/>
+                        <outlet property="delegate" destination="-1" id="VNm-u8-NsD"/>
+                    </connections>
+                </collectionView>
             </subviews>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <color key="backgroundColor" red="0.37647058820000001" green="0.1215686275" blue="0.46666666670000001" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
-                <constraint firstAttribute="centerX" secondItem="1KC-Tg-bvB" secondAttribute="centerX" id="Dor-1D-A5k"/>
-                <constraint firstAttribute="centerY" secondItem="1KC-Tg-bvB" secondAttribute="centerY" id="jOm-Ho-s6n"/>
+                <constraint firstItem="lfr-fE-JqF" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="38q-EF-4vs"/>
+                <constraint firstItem="ZPR-dM-Yee" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="4ra-hg-v8y"/>
+                <constraint firstItem="ZPR-dM-Yee" firstAttribute="top" secondItem="lfr-fE-JqF" secondAttribute="bottom" constant="3" id="CAw-G8-qHc"/>
+                <constraint firstItem="yhi-tG-dxK" firstAttribute="top" secondItem="ZPR-dM-Yee" secondAttribute="bottom" constant="1" id="KB4-vs-0QX"/>
+                <constraint firstItem="lfr-fE-JqF" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="U09-A1-4Tf"/>
+                <constraint firstAttribute="bottom" secondItem="yhi-tG-dxK" secondAttribute="bottom" id="VdE-0n-7px"/>
+                <constraint firstItem="yhi-tG-dxK" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="XNF-Gw-gZK"/>
+                <constraint firstAttribute="trailing" secondItem="yhi-tG-dxK" secondAttribute="trailing" id="d3c-7l-fxR"/>
+                <constraint firstAttribute="trailing" secondItem="lfr-fE-JqF" secondAttribute="trailing" id="ovZ-Tl-Mnc"/>
+                <constraint firstAttribute="trailing" secondItem="ZPR-dM-Yee" secondAttribute="trailing" id="r7J-f3-QHr"/>
             </constraints>
-            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+            <point key="canvasLocation" x="471.5" y="361.5"/>
         </view>
     </objects>
 </document>
