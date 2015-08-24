@@ -391,7 +391,7 @@
                     <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9eV-P8-MMr">
+                <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9eV-P8-MMr">
                     <rect key="frame" x="353" y="13" width="9" height="17"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="9" id="QmJ-zb-3JN"/>
@@ -400,9 +400,6 @@
                     <state key="normal" title="Button" image="right-gray">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
-                    <connections>
-                        <action selector="sellerAction:" destination="b5m-Sg-d34" eventType="touchUpInside" id="mrI-Fc-bxw"/>
-                    </connections>
                 </button>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QSa-up-KMN" userLabel="Separator">
                     <rect key="frame" x="0.0" y="41" width="375" height="1"/>

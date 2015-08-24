@@ -438,7 +438,6 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     }
     
     func seeMoreSeller(controller: ProductSellerView) {
-        println("goto seller")
         let seller = SellerViewController(nibName: "SellerViewController", bundle: nil)
         self.navigationController?.pushViewController(seller, animated: true)
     }
