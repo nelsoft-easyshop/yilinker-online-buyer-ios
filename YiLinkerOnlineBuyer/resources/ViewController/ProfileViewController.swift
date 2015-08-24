@@ -126,7 +126,8 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
 
     // MARK: - Profile Table View cell Delegate
     func editProfileTapAction() {
-        
+        var editViewController = EditProfileTableViewController(nibName: "EditProfileTableViewController", bundle: nil)
+        self.navigationController?.pushViewController(editViewController, animated:true)
     }
     
     func transactionsTapAction() {

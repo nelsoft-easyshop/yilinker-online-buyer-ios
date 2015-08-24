@@ -236,6 +236,16 @@
 		79E68B9D1B8B4270008626E4 /* ProfileSettingsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79E68B9C1B8B4270008626E4 /* ProfileSettingsTableViewCell.xib */; };
 		79E68BA01B8B428B008626E4 /* ProfileSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79E68B9E1B8B428B008626E4 /* ProfileSettingsViewController.swift */; };
 		79E68BA11B8B428B008626E4 /* ProfileSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79E68B9F1B8B428B008626E4 /* ProfileSettingsViewController.xib */; };
+		79E68BA41B8B4376008626E4 /* EditProfileTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79E68BA21B8B4376008626E4 /* EditProfileTableViewController.swift */; };
+		79E68BA51B8B4376008626E4 /* EditProfileTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79E68BA31B8B4376008626E4 /* EditProfileTableViewController.xib */; };
+		79E68BA71B8B4572008626E4 /* EditProfileAddPhotoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79E68BA61B8B4572008626E4 /* EditProfileAddPhotoTableViewCell.xib */; };
+		79E68BA91B8B4780008626E4 /* EditProfileAddPhotoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79E68BA81B8B4780008626E4 /* EditProfileAddPhotoTableViewCell.swift */; };
+		79E68BAB1B8B4EB9008626E4 /* EditProfilePersonalInformationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79E68BAA1B8B4EB9008626E4 /* EditProfilePersonalInformationTableViewCell.xib */; };
+		79E68BAD1B8B5081008626E4 /* EditProfilePersonalInformationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79E68BAC1B8B5081008626E4 /* EditProfilePersonalInformationTableViewCell.swift */; };
+		79E68BAF1B8B5306008626E4 /* EditProfileAddressTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79E68BAE1B8B5306008626E4 /* EditProfileAddressTableViewCell.xib */; };
+		79E68BB31B8B5862008626E4 /* EditProfileAddressTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79E68BB21B8B5862008626E4 /* EditProfileAddressTableViewCell.swift */; };
+		79E68BB51B8B5ADE008626E4 /* EditProfileAccountInformationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79E68BB41B8B5ADE008626E4 /* EditProfileAccountInformationTableViewCell.xib */; };
+		79E68BB71B8B5C58008626E4 /* EditProfileAccountInformationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79E68BB61B8B5C58008626E4 /* EditProfileAccountInformationTableViewCell.swift */; };
 		79E85FBB1B89DC1500428AA1 /* ProfileHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79E85FB91B89DC1500428AA1 /* ProfileHeaderTableViewCell.swift */; };
 		79E85FBC1B89DC1500428AA1 /* ProfileHeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79E85FBA1B89DC1500428AA1 /* ProfileHeaderTableViewCell.xib */; };
 		79E85FBF1B89DE1C00428AA1 /* ProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79E85FBD1B89DE1C00428AA1 /* ProfileTableViewCell.swift */; };
@@ -502,6 +512,16 @@
 		79E68B9C1B8B4270008626E4 /* ProfileSettingsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileSettingsTableViewCell.xib; sourceTree = "<group>"; };
 		79E68B9E1B8B428B008626E4 /* ProfileSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileSettingsViewController.swift; sourceTree = "<group>"; };
 		79E68B9F1B8B428B008626E4 /* ProfileSettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProfileSettingsViewController.xib; path = ../ViewController/ProfileSettingsViewController.xib; sourceTree = "<group>"; };
+		79E68BA21B8B4376008626E4 /* EditProfileTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EditProfileTableViewController.swift; path = YiLinkerOnlineBuyer/resources/ViewController/EditProfileTableViewController.swift; sourceTree = SOURCE_ROOT; };
+		79E68BA31B8B4376008626E4 /* EditProfileTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EditProfileTableViewController.xib; path = YiLinkerOnlineBuyer/resources/ViewController/EditProfileTableViewController.xib; sourceTree = SOURCE_ROOT; };
+		79E68BA61B8B4572008626E4 /* EditProfileAddPhotoTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditProfileAddPhotoTableViewCell.xib; sourceTree = "<group>"; };
+		79E68BA81B8B4780008626E4 /* EditProfileAddPhotoTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EditProfileAddPhotoTableViewCell.swift; path = YiLinkerOnlineBuyer/resources/View/EditProfileAddPhotoTableViewCell.swift; sourceTree = SOURCE_ROOT; };
+		79E68BAA1B8B4EB9008626E4 /* EditProfilePersonalInformationTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditProfilePersonalInformationTableViewCell.xib; sourceTree = "<group>"; };
+		79E68BAC1B8B5081008626E4 /* EditProfilePersonalInformationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EditProfilePersonalInformationTableViewCell.swift; path = YiLinkerOnlineBuyer/resources/View/EditProfilePersonalInformationTableViewCell.swift; sourceTree = SOURCE_ROOT; };
+		79E68BAE1B8B5306008626E4 /* EditProfileAddressTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditProfileAddressTableViewCell.xib; sourceTree = "<group>"; };
+		79E68BB21B8B5862008626E4 /* EditProfileAddressTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EditProfileAddressTableViewCell.swift; path = YiLinkerOnlineBuyer/resources/View/EditProfileAddressTableViewCell.swift; sourceTree = SOURCE_ROOT; };
+		79E68BB41B8B5ADE008626E4 /* EditProfileAccountInformationTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditProfileAccountInformationTableViewCell.xib; sourceTree = "<group>"; };
+		79E68BB61B8B5C58008626E4 /* EditProfileAccountInformationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EditProfileAccountInformationTableViewCell.swift; path = YiLinkerOnlineBuyer/resources/View/EditProfileAccountInformationTableViewCell.swift; sourceTree = SOURCE_ROOT; };
 		79E85FB91B89DC1500428AA1 /* ProfileHeaderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProfileHeaderTableViewCell.swift; path = YiLinkerOnlineBuyer/resources/View/ProfileHeaderTableViewCell.swift; sourceTree = SOURCE_ROOT; };
 		79E85FBA1B89DC1500428AA1 /* ProfileHeaderTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProfileHeaderTableViewCell.xib; path = YiLinkerOnlineBuyer/resources/View/ProfileHeaderTableViewCell.xib; sourceTree = SOURCE_ROOT; };
 		79E85FBD1B89DE1C00428AA1 /* ProfileTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProfileTableViewCell.swift; path = YiLinkerOnlineBuyer/resources/View/ProfileTableViewCell.swift; sourceTree = SOURCE_ROOT; };
@@ -780,6 +800,10 @@
 				0C9937201B750583000D6074 /* VerticalImageCollectionViewCell.swift */,
 				0C9937211B750583000D6074 /* ViewMoreFooterCollectionViewCell.swift */,
 				7987F3171B7B744A00B02DF4 /* WishlistTableViewCell.swift */,
+				79E68BA81B8B4780008626E4 /* EditProfileAddPhotoTableViewCell.swift */,
+				79E68BAC1B8B5081008626E4 /* EditProfilePersonalInformationTableViewCell.swift */,
+				79E68BB21B8B5862008626E4 /* EditProfileAddressTableViewCell.swift */,
+				79E68BB61B8B5C58008626E4 /* EditProfileAccountInformationTableViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -827,6 +851,7 @@
 				0C2F44A31B848B3A00021F45 /* SummaryViewController.swift */,
 				0C329E861B7B73A4005BE2B6 /* TodaysPromoViewController.swift */,
 				0C9937281B750583000D6074 /* WishlistViewController.swift */,
+				79E68BA21B8B4376008626E4 /* EditProfileTableViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -834,6 +859,7 @@
 		0C9937291B750583000D6074 /* Xib */ = {
 			isa = PBXGroup;
 			children = (
+				79E68BA31B8B4376008626E4 /* EditProfileTableViewController.xib */,
 				79E68B9F1B8B428B008626E4 /* ProfileSettingsViewController.xib */,
 				79E68B9C1B8B4270008626E4 /* ProfileSettingsTableViewCell.xib */,
 				0C374F251B88E3790050AE1D /* AboutSellerTableViewCell.xib */,
@@ -914,6 +940,10 @@
 				0C9937361B750583000D6074 /* VerticalImageCollectionViewCell.xib */,
 				0C9937371B750583000D6074 /* ViewMoreFooterCollectionViewCell.xib */,
 				7987F3191B7B746000B02DF4 /* WishlistTableViewCell.xib */,
+				79E68BA61B8B4572008626E4 /* EditProfileAddPhotoTableViewCell.xib */,
+				79E68BAA1B8B4EB9008626E4 /* EditProfilePersonalInformationTableViewCell.xib */,
+				79E68BAE1B8B5306008626E4 /* EditProfileAddressTableViewCell.xib */,
+				79E68BB41B8B5ADE008626E4 /* EditProfileAccountInformationTableViewCell.xib */,
 			);
 			path = Xib;
 			sourceTree = "<group>";
@@ -1033,6 +1063,7 @@
 				26AFB3C11B79DE5600E50926 /* ProductReviewViewController.xib in Resources */,
 				7987F31A1B7B746000B02DF4 /* WishlistTableViewCell.xib in Resources */,
 				0C99376D1B750583000D6074 /* VerticalImageCollectionViewCell.xib in Resources */,
+				79E68BB51B8B5ADE008626E4 /* EditProfileAccountInformationTableViewCell.xib in Resources */,
 				0C2F44D31B8576FE00021F45 /* Panton Thin.otf in Resources */,
 				0C99376C1B750583000D6074 /* TwoColumnGridCollectionViewCell.xib in Resources */,
 				0C329E771B7B47DC005BE2B6 /* EmptyView.xib in Resources */,
@@ -1083,6 +1114,7 @@
 				7971F73F1B861ABE00322861 /* FilterTableViewCell.xib in Resources */,
 				0C2F44CF1B8576FE00021F45 /* Panton Regular Italic.otf in Resources */,
 				0C2F44D41B8576FE00021F45 /* Panton.otf in Resources */,
+				79E68BAF1B8B5306008626E4 /* EditProfileAddressTableViewCell.xib in Resources */,
 				26AFB3C21B79DE5600E50926 /* ProductAttributeViewController.xib in Resources */,
 				0C9937691B750583000D6074 /* ScrollableCollectionViewCell.xib in Resources */,
 				26AFB3C01B79DE5600E50926 /* ProductViewsViewController.xib in Resources */,
@@ -1109,6 +1141,7 @@
 				0C374F391B88E3790050AE1D /* ShipToTableViewCell.xib in Resources */,
 				0C2F44C61B8576FE00021F45 /* Panton Bold.otf in Resources */,
 				0C374F2E1B88E3790050AE1D /* PlainTableViewCell.xib in Resources */,
+				79E68BAB1B8B4EB9008626E4 /* EditProfilePersonalInformationTableViewCell.xib in Resources */,
 				79A1C6F11B8329490043AA36 /* SearchSuggestionTableViewCell.xib in Resources */,
 				0C2F44CA1B8576FE00021F45 /* Panton ExtraLight.otf in Resources */,
 				0C374F351B88E3790050AE1D /* SummaryViewController.xib in Resources */,
@@ -1118,7 +1151,9 @@
 				0C374F331B88E3790050AE1D /* DeliverToTableViewCell.xib in Resources */,
 				0C374F3A1B88E3790050AE1D /* ProductsTableViewCell.xib in Resources */,
 				0C9937681B750583000D6074 /* ProductWithCenterNameCollectionViewCell.xib in Resources */,
+				79E68BA51B8B4376008626E4 /* EditProfileTableViewController.xib in Resources */,
 				0C374F321B88E3790050AE1D /* ProfileViewController.xib in Resources */,
+				79E68BA71B8B4572008626E4 /* EditProfileAddPhotoTableViewCell.xib in Resources */,
 				0C2F44DE1B85840F00021F45 /* CheckoutViews.xib in Resources */,
 				79A1C6FB1B83787B0043AA36 /* SellerResultCollectionViewCell.xib in Resources */,
 				0C374F441B88E3790050AE1D /* ResultViewController.xib in Resources */,
@@ -1194,6 +1229,7 @@
 				79E68B911B8B0AE9008626E4 /* PointModel.swift in Sources */,
 				0C5111E91B821D6F002F0001 /* SeeMoreTableViewCell.swift in Sources */,
 				0C2670CF1B772E4B00394E29 /* Enums.swift in Sources */,
+				79E68BAD1B8B5081008626E4 /* EditProfilePersonalInformationTableViewCell.swift in Sources */,
 				0C329E731B7B2A71005BE2B6 /* Reachability.swift in Sources */,
 				0C329E951B7B7C5B005BE2B6 /* CustomTabBarController.swift in Sources */,
 				7987F3181B7B744A00B02DF4 /* WishlistTableViewCell.swift in Sources */,
@@ -1239,12 +1275,15 @@
 				0C99375A1B750583000D6074 /* ViewMoreFooterCollectionViewCell.swift in Sources */,
 				79A1C6ED1B8329200043AA36 /* SearchSuggestionModel.swift in Sources */,
 				0C9937561B750583000D6074 /* SellerCollectionViewCell.swift in Sources */,
+				79E68BB31B8B5862008626E4 /* EditProfileAddressTableViewCell.swift in Sources */,
 				26AFB3B61B79DE3800E50926 /* ProductViewsViewController.swift in Sources */,
 				0C9937471B750583000D6074 /* DynamicRoundedLabel.swift in Sources */,
 				0C5007691B861B1600BC0445 /* ChangeAddressFooterCollectionViewCell.swift in Sources */,
 				0C374F081B88DC440050AE1D /* TotalTableViewCell.swift in Sources */,
 				2632F5211B7F8690006931E4 /* FollowedSellerTableViewCell.swift in Sources */,
+				79E68BA91B8B4780008626E4 /* EditProfileAddPhotoTableViewCell.swift in Sources */,
 				0C99374E1B750583000D6074 /* NewSellerScrollableCollectionViewCell.swift in Sources */,
+				79E68BA41B8B4376008626E4 /* EditProfileTableViewController.swift in Sources */,
 				0C2F44AD1B848B7E00021F45 /* OverViewViewController.swift in Sources */,
 				0CE35EB81B76711400AAA8F1 /* RegisterViewController.swift in Sources */,
 				0C2F44D71B857F0000021F45 /* OrderSummaryTableViewCell.swift in Sources */,
@@ -1270,6 +1309,7 @@
 				0C329E751B7B2D32005BE2B6 /* RegisterModel.swift in Sources */,
 				0C99374B1B750583000D6074 /* HomePageCollectionViewLayout.swift in Sources */,
 				79E68B9B1B8B4239008626E4 /* ProfileSettingsTableViewCell.swift in Sources */,
+				79E68BB71B8B5C58008626E4 /* EditProfileAccountInformationTableViewCell.swift in Sources */,
 				0C9937451B750583000D6074 /* DiscountLabel.swift in Sources */,
 				0C329E881B7B73A4005BE2B6 /* TodaysPromoViewController.swift in Sources */,
 				0C5111D81B81CEE7002F0001 /* SellerTableHeaderView.swift in Sources */,
