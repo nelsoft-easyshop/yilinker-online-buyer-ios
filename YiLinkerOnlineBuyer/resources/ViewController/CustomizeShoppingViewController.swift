@@ -13,7 +13,13 @@ class CustomizeShoppingViewController: UIViewController, UITableViewDelegate, UI
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var tableViewHeightConstraint: NSLayoutConstraint!
-
+    
+    @IBOutlet weak var menuRoundedView: DynamicRoundedView!
+    @IBOutlet weak var categoriesButton: DynamicRoundedButton!
+    @IBOutlet weak var sellerButton: DynamicRoundedButton!
+    @IBOutlet weak var promosButton: DynamicRoundedButton!
+    @IBOutlet weak var OthersButton: DynamicRoundedButton!
+    
     var cellCount: Int = 20
     var titles: [String] = ["Category 1", "Category 2", "Category 3", "Category 4", "Category 5", "Category 6", "Category 7", "Category 8", "Category 9", "Category 10", "Category 11", "Category 12", "Category 13", "Category 14", "Category 15", "Category 16", "Category 17", "Category 18", "Category 19", "Category 20"]
     var selectedCollectionViewCell: CustomizeSelectedCollectionViewCell = CustomizeSelectedCollectionViewCell()
@@ -126,10 +132,21 @@ class CustomizeShoppingViewController: UIViewController, UITableViewDelegate, UI
         self.titles.insert(title, atIndex: 0)
         self.collectionView.insertItemsAtIndexPaths([indexPath])
     }
-    
 
     func sample() {
         let indexPath: NSIndexPath = NSIndexPath(forItem: 0, inSection: 0)
         self.collectionView.delegate!.collectionView!(self.collectionView!, didSelectItemAtIndexPath: indexPath)
     }
+    
+    
+    @IBAction func clickCategory(sender: UIButton) {
+        sender.backgroundColor = Constants.Colors.selectedGreenColor
+        
+        for button in self.menuRoundedView.subviews as! [UIButton] {
+            if !button.isEqual(sender) {
+                button.backgroundColor = UIColor.clearColor()
+            }
+        }
+    }
+    
 }
