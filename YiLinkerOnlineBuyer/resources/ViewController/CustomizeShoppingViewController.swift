@@ -98,7 +98,7 @@ class CustomizeShoppingViewController: UIViewController, UITableViewDelegate, UI
         } else if self.customizeShopingType == CustomizeShoppingType.Promos {
             return self.promoTitles.count
         } else {
-            return self.promoTitles.count
+            return self.otherTitles.count
         }
     }
 
@@ -150,7 +150,6 @@ class CustomizeShoppingViewController: UIViewController, UITableViewDelegate, UI
                 self.selectedCategoryTitle = self.otherTitles[indexPath.row]
                 self.otherTitles.removeAtIndex(indexPath.row)
             }
-            
             self.collectionView!.deleteItemsAtIndexPaths([NSIndexPath(forItem: indexPath.row, inSection: indexPath.section)])
         }, completion: { (Bool) -> Void in
             self.customizeLayout!.invalidateLayout()

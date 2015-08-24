@@ -135,7 +135,7 @@ class CartProductAttributeViewController: UIViewController, UITableViewDelegate,
     // MARK: - Methods
     
     func passModel(#cartModel: CartModel, combinationModel: [ProductAvailableAttributeCombinationModel], selectedValue: NSArray, quantity: Int) {
-        setDetail("\(cartModel.productDetails.image)", title: cartModel.productDetails.title, price: cartModel.productDetails.newPrice)
+        //setDetail("\(cartModel.productDetails.image)", title: cartModel.productDetails.title, price: cartModel.productDetails.newPrice)
         self.cartModel = cartModel
         self.attributes = cartModel.productDetails.attributes as [ProductAttributeModel]
         self.availableCombinations = combinationModel

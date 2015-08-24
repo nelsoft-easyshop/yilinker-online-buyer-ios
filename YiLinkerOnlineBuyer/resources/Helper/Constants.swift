@@ -26,6 +26,7 @@ struct Constants {
         static let productPrice: UIColor = HexaColor.colorWithHexa(0x75348a)
         static let productReviewGreen: UIColor = HexaColor.colorWithHexa(0xb3b233)
         static let grayLine: UIColor = HexaColor.colorWithHexa(0x606060)
+        static let backgroundGray: UIColor = HexaColor.colorWithHexa(0xE7E7E7)
         static let selectedGreenColor: UIColor = HexaColor.colorWithHexa(0x44A491)
         static let selectedCellColor: UIColor = HexaColor.colorWithHexa(0xE1E1E1)
     }
