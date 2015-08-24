@@ -143,6 +143,8 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     }
     
     func settingsTapAction(){
+        var settingsViewController = ProfileSettingsViewController(nibName: "ProfileSettingsViewController", bundle: nil)
+        self.navigationController?.pushViewController(settingsViewController, animated:true)
     }
 
 }
