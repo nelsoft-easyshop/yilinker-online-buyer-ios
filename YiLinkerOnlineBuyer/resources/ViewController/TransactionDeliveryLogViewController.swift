@@ -83,10 +83,10 @@ class TransactionDeliveryLogViewController: UIViewController, UITableViewDelegat
         dateLabel.textAlignment = .Center
         dateLabel.font = UIFont.systemFontOfSize(12.0)
         dateLabel.textColor = .grayColor()
-        dateLabel.text = "  JUNE 23, 2014  "
+        dateLabel.text = "SEPTEMBER 23, 2014"
         dateLabel.sizeToFit()
         dateLabel.backgroundColor = Constants.Colors.backgroundGray
-//        dateLabel.frame.size.height = sectionHeaderView.frame.size.height
+        dateLabel.frame.size.width = dateLabel.frame.size.width + 10
         dateLabel.center.x = sectionHeaderView.center.x
         dateLabel.center.y = sectionHeaderView.center.y + (15 / 2)
         
