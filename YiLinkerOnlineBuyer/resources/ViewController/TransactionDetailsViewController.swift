@@ -29,13 +29,15 @@ class TransactionDetailsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.title = "Transaction Details"
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        self.title = "Transaction Details"
         
-        loadViewsWithDetails()
+        if headerView == nil {
+            loadViewsWithDetails()
+        }
     }
     
     // MARK: - Table View Data Souce
@@ -47,6 +49,7 @@ class TransactionDetailsViewController: UIViewController {
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .Default, reuseIdentifier: "identifier")
         
+        cell.selectionStyle = .None
         cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
         cell.textLabel?.text = list[indexPath.row]
         cell.textLabel?.font = UIFont.systemFontOfSize(15.0)
@@ -206,7 +209,9 @@ class TransactionDetailsViewController: UIViewController {
     // MARK: - Actions
     
     func leaveFeedback() {
-        println("leave a feedback")
+        let feedbackView = TransactionLeaveFeedbackViewController(nibName: "TransactionLeaveFeedbackViewController", bundle: nil)
+        feedbackView.edgesForExtendedLayout = UIRectEdge.None
+        self.navigationController?.pushViewController(feedbackView, animated: true)
     }
 
 }

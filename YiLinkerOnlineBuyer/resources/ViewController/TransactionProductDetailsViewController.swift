@@ -28,6 +28,7 @@ class TransactionProductDetailsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.title = "Product Details"
         
         let nib = UINib(nibName: "TransactionProductDetailsTableViewCell", bundle: nil)
         self.tableView.registerNib(nib, forCellReuseIdentifier: "TransactionProductDetailsIdentifier")
@@ -35,9 +36,10 @@ class TransactionProductDetailsViewController: UIViewController {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        self.title = "Product Details"
         
-        loadViewsWithDetails()
+        if headerView == nil {
+            loadViewsWithDetails()
+        }
     }
     
     // MARK: - Table View Data Souce
@@ -48,7 +50,8 @@ class TransactionProductDetailsViewController: UIViewController {
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell: TransactionProductDetailsTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("TransactionProductDetailsIdentifier") as! TransactionProductDetailsTableViewCell
-        
+
+        cell.selectionStyle = .None
         cell.attributeNameLabel.text = name[indexPath.row]
         cell.attributeValueLabel.text = value[indexPath.row]
         
@@ -194,7 +197,6 @@ class TransactionProductDetailsViewController: UIViewController {
         let feedbackView = TransactionLeaveFeedbackViewController(nibName: "TransactionLeaveFeedbackViewController", bundle: nil)
         feedbackView.edgesForExtendedLayout = UIRectEdge.None
         self.navigationController?.pushViewController(feedbackView, animated: true)
-//self.navigationController?.presentViewController(feedbackView, animated: true, completion: nil)
     }
 
 }
