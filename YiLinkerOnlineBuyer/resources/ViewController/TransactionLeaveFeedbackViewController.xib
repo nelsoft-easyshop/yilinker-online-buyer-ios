@@ -8,6 +8,8 @@
             <connections>
                 <outlet property="cameraView" destination="ecm-iw-HfW" id="eYU-70-qam"/>
                 <outlet property="inputTextField" destination="NiO-sp-IY5" id="uMV-Xk-ZkN"/>
+                <outlet property="messageLabel" destination="wxw-8Z-baA" id="57q-w1-kx9"/>
+                <outlet property="rateThisLabel" destination="ExW-we-xYG" id="8m2-Lb-83O"/>
                 <outlet property="star1Button" destination="KR1-Oo-xsx" id="lVH-av-eDO"/>
                 <outlet property="star2Button" destination="NEI-oS-8CA" id="CXb-zx-Sko"/>
                 <outlet property="star3Button" destination="bnh-B8-6LD" id="kCc-Gw-Z8e"/>

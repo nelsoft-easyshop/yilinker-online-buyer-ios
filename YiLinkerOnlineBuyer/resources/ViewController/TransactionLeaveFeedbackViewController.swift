@@ -16,12 +16,15 @@ class TransactionLeaveFeedbackViewController: UIViewController {
     @IBOutlet weak var star4Button: UIButton!
     @IBOutlet weak var star5Button: UIButton!
     
+    @IBOutlet weak var messageLabel: UILabel!
+    @IBOutlet weak var rateThisLabel: UILabel!
     @IBOutlet weak var typingAreaView: UIView!
     @IBOutlet weak var cameraView: UIView!
     @IBOutlet weak var inputTextField: UITextField!
     
     var rateButtons: [UIButton] = []
     var rate: Int = 0
+    var rateSeller = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,6 +36,15 @@ class TransactionLeaveFeedbackViewController: UIViewController {
         self.typingAreaView.layer.borderWidth = 1.0
         self.typingAreaView.layer.borderColor = UIColor.lightGrayColor().CGColor
         self.inputTextField.becomeFirstResponder()
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if rateSeller {
+            self.messageLabel.text = "We'd love to know how we can make\nYilinker even better - and would really\nappreciate if you left a review on this\nseller."
+            self.rateThisLabel.text = "Rate this seller"
+        }
     }
     
     // MARK: - Actions
@@ -65,6 +77,11 @@ class TransactionLeaveFeedbackViewController: UIViewController {
         } else {
             navigationController?.popViewControllerAnimated(true)
 //            showAlert(String(rate), message: self.inputTextField.text)
+            if rateSeller {
+                println("Seller")
+            } else {
+                println("Product")
+            }
         }
         
     }
@@ -93,4 +110,5 @@ class TransactionLeaveFeedbackViewController: UIViewController {
             self.rateButtons[i].frame.size = CGSize(width: 35, height: 30)
         }
     }
+    
 }

@@ -126,7 +126,7 @@ class TransactionProductDetailsViewController: UIViewController {
             
             var feedbackButton: UIButton = UIButton(frame: CGRectZero)
             feedbackButton.addTarget(self, action: "leaveFeedback", forControlEvents: .TouchUpInside)
-            feedbackButton.setTitle("LEAVE FEEDBACK FOR SELLER", forState: .Normal)
+            feedbackButton.setTitle("LEAVE FEEDBACK FOR PRODUCT", forState: .Normal)
             feedbackButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
             feedbackButton.backgroundColor = Constants.Colors.productPrice
             feedbackButton.titleLabel?.font = UIFont.boldSystemFontOfSize(10.0)

@@ -211,6 +211,7 @@ class TransactionDetailsViewController: UIViewController {
     func leaveFeedback() {
         let feedbackView = TransactionLeaveFeedbackViewController(nibName: "TransactionLeaveFeedbackViewController", bundle: nil)
         feedbackView.edgesForExtendedLayout = UIRectEdge.None
+        feedbackView.rateSeller = true
         self.navigationController?.pushViewController(feedbackView, animated: true)
     }
 
