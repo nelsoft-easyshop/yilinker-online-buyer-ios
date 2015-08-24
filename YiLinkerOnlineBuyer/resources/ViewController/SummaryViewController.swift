@@ -8,17 +8,24 @@
 
 import UIKit
 
-class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, ShipToTableViewCellDelegate {
 
     @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         self.registerNib()
+        
         self.tableView.estimatedRowHeight = 71
         self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(0, 0, 0, -5)
         self.tableView.rowHeight = UITableViewAutomaticDimension
+        self.tableView.layoutIfNeeded()
+        self.tableView.tableFooterView = self.tableFooterView()
+        self.tableView.tableFooterView!.frame = CGRectMake(0, 0, 0, self.tableView.tableFooterView!.frame.size.height)
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
     }
     
     func registerNib() {
@@ -43,6 +50,14 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
         return 41
     }
     
+    func tableFooterView() -> UIView {
+        let shipToTableViewCell: ShipToTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(Constants.Checkout.shipToTableViewCellNibNameAndIdentifier) as! ShipToTableViewCell
+        shipToTableViewCell.frame = CGRectMake(0, 0, self.tableView.frame.size.width, shipToTableViewCell.frame.size.height)
+        shipToTableViewCell.delegate = self
+        
+        return shipToTableViewCell
+    }
+    
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         var headerView: CheckoutViews
         if section == 0 {
@@ -64,43 +79,45 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        if indexPath.section == 0 {
-            let orderSummaryCell: OrderSummaryTableViewCell = tableView.dequeueReusableCellWithIdentifier(Constants.Checkout.orderSummaryTableViewCellNibNameAndIdentifier) as! OrderSummaryTableViewCell
-            
-            return orderSummaryCell
-        } else {
-            let shipToTableViewCell: ShipToTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(Constants.Checkout.shipToTableViewCellNibNameAndIdentifier) as! ShipToTableViewCell
-            shipToTableViewCell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
-            return shipToTableViewCell
-        }
+        let orderSummaryCell: OrderSummaryTableViewCell = tableView.dequeueReusableCellWithIdentifier(Constants.Checkout.orderSummaryTableViewCellNibNameAndIdentifier) as! OrderSummaryTableViewCell
         
+        return orderSummaryCell
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 0 {
-            return 3
-        } else {
-            return 1
-        }
+        return 3
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 2
+        return 1
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if indexPath.section == 0 {
             return 71
         } else {
-            return UITableViewAutomaticDimension
+            return 105
         }
     }
     
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        if indexPath.section == 1 {
-            
-        }
+        
+    }
+    
+    func shipToTableViewCell(didTap shipToTableViewCell: ShipToTableViewCell) {
+        shipToTableViewCell.fakeContainerView.backgroundColor = Constants.Colors.selectedCellColor
+        
+        let seconds = 0.5
+        let delay = seconds * Double(NSEC_PER_SEC)  // nanoseconds per seconds
+        var dispatchTime = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
+        
+        dispatch_after(dispatchTime, dispatch_get_main_queue(), {
+            shipToTableViewCell.fakeContainerView.backgroundColor = UIColor.whiteColor()
+        })
+        
+        let changeAddressViewController: ChangeAddressViewController = ChangeAddressViewController(nibName: "ChangeAddressViewController", bundle: nil)
+        self.navigationController!.pushViewController(changeAddressViewController, animated: true)
     }
 }

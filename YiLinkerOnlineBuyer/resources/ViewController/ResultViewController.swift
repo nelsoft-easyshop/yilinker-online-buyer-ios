@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ResultViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
+class ResultViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UITableViewDelegate, UITableViewDataSource {
     
     let grid:String = "GRID"
     let list:String = "LIST"
@@ -19,6 +19,8 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
     let reuseIdentifierSeller: String = "SellerResultCollectionViewCell"
     var type: String = "GRID"
     
+    @IBOutlet weak var sortPickerTableView: UITableView!
+    @IBOutlet weak var dimView: UIView!
     @IBOutlet weak var resultCollectionView: UICollectionView!
     
     @IBOutlet weak var sortView: UIView!
@@ -26,7 +28,7 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
     @IBOutlet weak var viewTypeView: UIView!
     
     var collectionViewData: [String] = ["Item 1", "Item 3", "Item 3", "Item 1", "Item 3", "Item 3"]
-    
+    var sortData: [String] = ["Old to new", "New to old", "A to Z", "Z to A"]
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -40,6 +42,10 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
     }
 
     func initializeViews() {
+        
+        var nib = UINib(nibName: "SortTableViewCell", bundle: nil)
+        sortPickerTableView.registerNib(nib, forCellReuseIdentifier: "SortTableViewCell")
+        
         //Add Nav Bar
         if self.respondsToSelector("edgesForExtendedLayout") {
             self.edgesForExtendedLayout = UIRectEdge.None
@@ -57,6 +63,9 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
         var viewType = UITapGestureRecognizer(target:self, action:"tapViewTypeViewAction")
         viewTypeView.addGestureRecognizer(viewType)
         
+        //hide dimview
+        dimView.alpha = 0
+        dimView.hidden = true
     }
     
     func registerNibs() {
@@ -85,10 +94,29 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
     // Tap Gesture Action
     func tapSortViewAction() {
         println("Sort Tapped!")
+        if dimView.hidden {
+            UIView.animateWithDuration(0.3, animations: {
+                self.dimView.hidden = false
+                self.dimView.alpha = 1.0
+            })
+        } else {
+            UIView.animateWithDuration(0.3, animations: {
+                 self.dimView.alpha = 0
+                }, completion: { finished in
+                    self.dimView.hidden = true
+            })
+        }
     }
     
     func tapFilterViewAction() {
         println("Filter Tapped!")
+        var attributeModal = FilterViewController(nibName: "FilterViewController", bundle: nil)
+        attributeModal.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
+        attributeModal.providesPresentationContextTransitionStyle = true
+        attributeModal.definesPresentationContext = true
+        self.tabBarController?.presentViewController(attributeModal, animated: true, completion: nil)
+        
+
     }
     
     func tapViewTypeViewAction() {
@@ -139,6 +167,73 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
     
     func collectionView(collectionView: UICollectionView, didDeselectItemAtIndexPath indexPath: NSIndexPath) {
     }
+
+    
+    // MARK: - Table view data source
+    
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        // #warning Potentially incomplete method implementation.
+        // Return the number of sections.
+        return 1
+    }
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        // #warning Incomplete method implementation.
+        // Return the number of rows in the section.
+        return sortData.count
+    }
+
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier("SortTableViewCell", forIndexPath: indexPath) as! SortTableViewCell
+    
+    // Configure the cell...
+        cell.detailsLabel?.text = sortData[indexPath.row]
+    
+        return cell
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        UIView.animateWithDuration(0.3, animations: {
+            self.dimView.alpha = 0
+            }, completion: { finished in
+                self.dimView.hidden = true
+        })
+    }
+    
+    /*
+    // Override to support conditional editing of the table view.
+    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+    // Return NO if you do not want the specified item to be editable.
+    return true
+    }
+    */
+    
+    /*
+    // Override to support editing the table view.
+    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+    if editingStyle == .Delete {
+    // Delete the row from the data source
+    tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+    } else if editingStyle == .Insert {
+    // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+    }
+    }
+    */
+    
+    /*
+    // Override to support rearranging the table view.
+    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
+    
+    }
+    */
+    
+    /*
+    // Override to support conditional rearranging of the table view.
+    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+    // Return NO if you do not want the item to be re-orderable.
+    return true
+    }
+    */
 
 
     /*

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="PointsBreakdownTableViewCell" id="nuo-Y4-en1" customClass="PointsBreakdownTableViewCell" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="40"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="nuo-Y4-en1" id="Y40-EP-d8o">
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Eh3-wR-byw" customClass="SemiRoundedButton" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
+                        <rect key="frame" x="86" y="5" width="202" height="30"/>
+                        <color key="backgroundColor" red="0.2666666667" green="0.64313725489999995" blue="0.56862745100000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="202" id="2Uo-ND-bCY"/>
+                            <constraint firstAttribute="height" constant="30" id="3Zo-Rm-WvF"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="12"/>
+                        <state key="normal" title="HOW TO EARN MORE POINTS">
+                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                <real key="value" value="3"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                        <connections>
+                            <action selector="buttonAction:" destination="nuo-Y4-en1" eventType="touchUpInside" id="lXG-dK-uog"/>
+                        </connections>
+                    </button>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HCJ-Gy-cJF" userLabel="Breakdown View">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="39"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Breakdown" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Evp-Mv-lvu">
+                                <rect key="frame" x="16" y="9" width="351" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="8rL-0a-NVd"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="Evp-Mv-lvu" firstAttribute="trailing" secondItem="HCJ-Gy-cJF" secondAttribute="trailingMargin" id="1s7-it-Fkn"/>
+                            <constraint firstItem="Evp-Mv-lvu" firstAttribute="leading" secondItem="HCJ-Gy-cJF" secondAttribute="leadingMargin" constant="8" id="OlF-3a-0Q5"/>
+                            <constraint firstAttribute="bottomMargin" secondItem="Evp-Mv-lvu" secondAttribute="bottom" constant="1" id="QKT-kw-FZ2"/>
+                            <constraint firstItem="Evp-Mv-lvu" firstAttribute="top" secondItem="HCJ-Gy-cJF" secondAttribute="topMargin" constant="1" id="mES-Nm-scD"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="HCJ-Gy-cJF" secondAttribute="trailing" id="8vY-nn-b99"/>
+                    <constraint firstItem="HCJ-Gy-cJF" firstAttribute="leading" secondItem="Y40-EP-d8o" secondAttribute="leading" id="E5x-fu-Rc1"/>
+                    <constraint firstItem="HCJ-Gy-cJF" firstAttribute="top" secondItem="Y40-EP-d8o" secondAttribute="top" id="FNg-og-HFE"/>
+                    <constraint firstAttribute="bottom" secondItem="HCJ-Gy-cJF" secondAttribute="bottom" id="Plq-yJ-CuI"/>
+                    <constraint firstAttribute="centerX" secondItem="Eh3-wR-byw" secondAttribute="centerX" id="b5B-Q9-aD4"/>
+                    <constraint firstAttribute="centerY" secondItem="Eh3-wR-byw" secondAttribute="centerY" id="rZ5-XX-FqC"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="breakDownView" destination="HCJ-Gy-cJF" id="SHP-E0-IKi"/>
+                <outlet property="howToButton" destination="Eh3-wR-byw" id="QFr-Wq-mdc"/>
+            </connections>
+            <point key="canvasLocation" x="265.5" y="245"/>
+        </tableViewCell>
+    </objects>
+</document>
