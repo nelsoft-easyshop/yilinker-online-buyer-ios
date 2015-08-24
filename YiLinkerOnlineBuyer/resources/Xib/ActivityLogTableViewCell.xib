@@ -34,12 +34,12 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="bottom" secondItem="j8F-KR-Hus" secondAttribute="bottom" constant="16" id="9N2-gk-iBc"/>
-                            <constraint firstItem="j8F-KR-Hus" firstAttribute="leading" secondItem="d8B-VH-4az" secondAttribute="trailing" constant="8" id="9WH-2g-NEE"/>
+                            <constraint firstItem="j8F-KR-Hus" firstAttribute="leading" secondItem="d8B-VH-4az" secondAttribute="trailing" constant="8" id="BMX-K7-063"/>
                             <constraint firstItem="d8B-VH-4az" firstAttribute="leading" secondItem="CoI-Wo-FvJ" secondAttribute="leading" id="HfO-BB-b3F"/>
-                            <constraint firstItem="j8F-KR-Hus" firstAttribute="top" secondItem="CoI-Wo-FvJ" secondAttribute="top" constant="16" id="Kqp-WM-9t0"/>
                             <constraint firstItem="d8B-VH-4az" firstAttribute="top" secondItem="CoI-Wo-FvJ" secondAttribute="top" constant="10" id="Tt5-c0-VQs"/>
-                            <constraint firstAttribute="trailing" secondItem="j8F-KR-Hus" secondAttribute="trailing" constant="8" id="pqZ-eB-2sV"/>
+                            <constraint firstItem="j8F-KR-Hus" firstAttribute="top" secondItem="CoI-Wo-FvJ" secondAttribute="top" constant="16" id="haP-ra-KKv"/>
+                            <constraint firstAttribute="trailing" secondItem="j8F-KR-Hus" secondAttribute="trailing" constant="8" id="mUw-vm-vMb"/>
+                            <constraint firstAttribute="bottom" secondItem="j8F-KR-Hus" secondAttribute="bottom" constant="16" id="z92-zf-LoN"/>
                         </constraints>
                     </view>
                 </subviews>

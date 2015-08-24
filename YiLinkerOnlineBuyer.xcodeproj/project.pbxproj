@@ -225,6 +225,17 @@
 		79E68B791B8AD2DC008626E4 /* ProfileSettingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79E68B781B8AD2DC008626E4 /* ProfileSettingsTableViewCell.swift */; };
 		79E68B7C1B8AD2EC008626E4 /* ProfileSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79E68B7A1B8AD2EC008626E4 /* ProfileSettingsViewController.swift */; };
 		79E68B7D1B8AD2EC008626E4 /* ProfileSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79E68B7B1B8AD2EC008626E4 /* ProfileSettingsViewController.xib */; };
+		79E68B801B8AEC00008626E4 /* MyPointsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79E68B7E1B8AEC00008626E4 /* MyPointsTableViewController.swift */; };
+		79E68B811B8AEC00008626E4 /* MyPointsTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79E68B7F1B8AEC00008626E4 /* MyPointsTableViewController.xib */; };
+		79E68B831B8AEC85008626E4 /* PointsEarnedTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79E68B821B8AEC85008626E4 /* PointsEarnedTableViewCell.xib */; };
+		79E68B851B8AF4D0008626E4 /* PointsEarnedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79E68B841B8AF4D0008626E4 /* PointsEarnedTableViewCell.swift */; };
+		79E68B871B8AFD22008626E4 /* PointsDetailsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79E68B861B8AFD22008626E4 /* PointsDetailsTableViewCell.xib */; };
+		79E68B891B8AFE99008626E4 /* PointsDetailsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79E68B881B8AFE99008626E4 /* PointsDetailsTableViewCell.swift */; };
+		79E68B8B1B8B02C0008626E4 /* PointsBreakdownTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79E68B8A1B8B02C0008626E4 /* PointsBreakdownTableViewCell.xib */; };
+		79E68B8D1B8B0431008626E4 /* PointsBreakdownTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79E68B8C1B8B0431008626E4 /* PointsBreakdownTableViewCell.swift */; };
+		79E68B8F1B8B0717008626E4 /* PointsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79E68B8E1B8B0717008626E4 /* PointsTableViewCell.xib */; };
+		79E68B911B8B0AE9008626E4 /* PointModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79E68B901B8B0AE9008626E4 /* PointModel.swift */; };
+		79E68B931B8B0B8D008626E4 /* PointsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79E68B921B8B0B8D008626E4 /* PointsTableViewCell.swift */; };
 		79E85FB81B89D91300428AA1 /* ProductImagesViewCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79E85FB71B89D91300428AA1 /* ProductImagesViewCollectionViewCell.xib */; };
 		79E85FBB1B89DC1500428AA1 /* ProfileHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79E85FB91B89DC1500428AA1 /* ProfileHeaderTableViewCell.swift */; };
 		79E85FBC1B89DC1500428AA1 /* ProfileHeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79E85FBA1B89DC1500428AA1 /* ProfileHeaderTableViewCell.xib */; };
@@ -481,6 +492,17 @@
 		79E68B781B8AD2DC008626E4 /* ProfileSettingsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProfileSettingsTableViewCell.swift; path = "../../../../../../Backup/New 08-24/yilinker-online-buyer-ios/YiLinkerOnlineBuyer/resources/View/ProfileSettingsTableViewCell.swift"; sourceTree = "<group>"; };
 		79E68B7A1B8AD2EC008626E4 /* ProfileSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProfileSettingsViewController.swift; path = "../../../../../../Backup/New 08-24/yilinker-online-buyer-ios/YiLinkerOnlineBuyer/resources/ViewController/ProfileSettingsViewController.swift"; sourceTree = "<group>"; };
 		79E68B7B1B8AD2EC008626E4 /* ProfileSettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProfileSettingsViewController.xib; path = "../../../../../../Backup/New 08-24/yilinker-online-buyer-ios/YiLinkerOnlineBuyer/resources/ViewController/ProfileSettingsViewController.xib"; sourceTree = "<group>"; };
+		79E68B7E1B8AEC00008626E4 /* MyPointsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MyPointsTableViewController.swift; path = YiLinkerOnlineBuyer/resources/ViewController/MyPointsTableViewController.swift; sourceTree = SOURCE_ROOT; };
+		79E68B7F1B8AEC00008626E4 /* MyPointsTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MyPointsTableViewController.xib; path = YiLinkerOnlineBuyer/resources/ViewController/MyPointsTableViewController.xib; sourceTree = SOURCE_ROOT; };
+		79E68B821B8AEC85008626E4 /* PointsEarnedTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PointsEarnedTableViewCell.xib; sourceTree = "<group>"; };
+		79E68B841B8AF4D0008626E4 /* PointsEarnedTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PointsEarnedTableViewCell.swift; path = YiLinkerOnlineBuyer/resources/View/PointsEarnedTableViewCell.swift; sourceTree = SOURCE_ROOT; };
+		79E68B861B8AFD22008626E4 /* PointsDetailsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PointsDetailsTableViewCell.xib; sourceTree = "<group>"; };
+		79E68B881B8AFE99008626E4 /* PointsDetailsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PointsDetailsTableViewCell.swift; path = YiLinkerOnlineBuyer/resources/View/PointsDetailsTableViewCell.swift; sourceTree = SOURCE_ROOT; };
+		79E68B8A1B8B02C0008626E4 /* PointsBreakdownTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PointsBreakdownTableViewCell.xib; sourceTree = "<group>"; };
+		79E68B8C1B8B0431008626E4 /* PointsBreakdownTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PointsBreakdownTableViewCell.swift; path = YiLinkerOnlineBuyer/resources/View/PointsBreakdownTableViewCell.swift; sourceTree = SOURCE_ROOT; };
+		79E68B8E1B8B0717008626E4 /* PointsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PointsTableViewCell.xib; sourceTree = "<group>"; };
+		79E68B901B8B0AE9008626E4 /* PointModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PointModel.swift; path = YiLinkerOnlineBuyer/resources/Model/PointModel.swift; sourceTree = SOURCE_ROOT; };
+		79E68B921B8B0B8D008626E4 /* PointsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PointsTableViewCell.swift; path = YiLinkerOnlineBuyer/resources/View/PointsTableViewCell.swift; sourceTree = SOURCE_ROOT; };
 		79E85FB71B89D91300428AA1 /* ProductImagesViewCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProductImagesViewCollectionViewCell.xib; path = "../../../../../../Backup/Search New/Search/yilinker-online-buyer-ios/YiLinkerOnlineBuyer/resources/View/ProductImagesViewCollectionViewCell.xib"; sourceTree = "<group>"; };
 		79E85FB91B89DC1500428AA1 /* ProfileHeaderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProfileHeaderTableViewCell.swift; path = YiLinkerOnlineBuyer/resources/View/ProfileHeaderTableViewCell.swift; sourceTree = SOURCE_ROOT; };
 		79E85FBA1B89DC1500428AA1 /* ProfileHeaderTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProfileHeaderTableViewCell.xib; path = YiLinkerOnlineBuyer/resources/View/ProfileHeaderTableViewCell.xib; sourceTree = SOURCE_ROOT; };
@@ -676,6 +698,7 @@
 				7971F73C1B86189100322861 /* FilterAttributeModel.swift */,
 				79E85FCD1B8A1F5800428AA1 /* ActivityLogModel.swift */,
 				79E85FCF1B8A1FBD00428AA1 /* ActivityModel.swift */,
+				79E68B901B8B0AE9008626E4 /* PointModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -755,6 +778,10 @@
 				79E85FB91B89DC1500428AA1 /* ProfileHeaderTableViewCell.swift */,
 				79E85FBD1B89DE1C00428AA1 /* ProfileTableViewCell.swift */,
 				79E68B741B8AC390008626E4 /* ActivityLogTableViewCell.swift */,
+				79E68B841B8AF4D0008626E4 /* PointsEarnedTableViewCell.swift */,
+				79E68B881B8AFE99008626E4 /* PointsDetailsTableViewCell.swift */,
+				79E68B8C1B8B0431008626E4 /* PointsBreakdownTableViewCell.swift */,
+				79E68B921B8B0B8D008626E4 /* PointsTableViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -762,7 +789,6 @@
 		0C9937221B750583000D6074 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
-				79E68B7A1B8AD2EC008626E4 /* ProfileSettingsViewController.swift */,
 				79E85FC91B8A1E0800428AA1 /* ActivityLogTableViewController.swift */,
 				0C1003F61B87690300CAA17A /* AddAddressTableViewController.swift */,
 				79F417741B7C3ADB0047D02D /* CartProductAttributeViewController.swift */,
@@ -783,6 +809,7 @@
 				0CDA117B1B764015007B5DED /* LoginAndRegisterContentViewController.swift */,
 				0CDA11791B760E1A007B5DED /* LoginViewController.swift */,
 				0C329E7E1B7B7376005BE2B6 /* MessagingViewController.swift */,
+				79E68B7E1B8AEC00008626E4 /* MyPointsTableViewController.swift */,
 				0C2F44AB1B848B7E00021F45 /* OverViewViewController.swift */,
 				0C2F44A71B848B5300021F45 /* PaymentViewController.swift */,
 				0C374EF61B88552E0050AE1D /* PaymentWebViewViewController.swift */,
@@ -791,6 +818,7 @@
 				26AFB3B31B79DE3800E50926 /* ProductReviewViewController.swift */,
 				26AFB3B01B79DE3800E50926 /* ProductViewController.swift */,
 				26AFB3B11B79DE3800E50926 /* ProductViewsViewController.swift */,
+				79E68B7A1B8AD2EC008626E4 /* ProfileSettingsViewController.swift */,
 				0CC8A63D1B7B9BF600C91425 /* ProfileViewController.swift */,
 				0CE35EB71B76711400AAA8F1 /* RegisterViewController.swift */,
 				0C5925FF1B8327BA0021EA76 /* ResultViewController.swift */,
@@ -808,8 +836,6 @@
 		0C9937291B750583000D6074 /* Xib */ = {
 			isa = PBXGroup;
 			children = (
-				79E68B7B1B8AD2EC008626E4 /* ProfileSettingsViewController.xib */,
-				79E68B761B8AD2CF008626E4 /* ProfileSettingsTableViewCell.xib */,
 				0C374F251B88E3790050AE1D /* AboutSellerTableViewCell.xib */,
 				79E85FD11B8A230500428AA1 /* ActivityLogHeaderTableViewCell.xib */,
 				79E68B721B8AB900008626E4 /* ActivityLogTableViewCell.xib */,
@@ -838,6 +864,7 @@
 				0C99372C1B750583000D6074 /* LaunchScreen.xib */,
 				0C99372D1B750583000D6074 /* LayoutHeaderCollectionViewCell.xib */,
 				0C374F281B88E3790050AE1D /* MessagingViewController.xib */,
+				79E68B7F1B8AEC00008626E4 /* MyPointsTableViewController.xib */,
 				0C374F141B88E3790050AE1D /* NewAddressTableViewCell.xib */,
 				0C99372E1B750583000D6074 /* NewSellerCollectionViewCell.xib */,
 				0C99372F1B750583000D6074 /* NewSellerScrollableCollectionViewCell.xib */,
@@ -847,6 +874,10 @@
 				0C374F171B88E3790050AE1D /* PaymentViewController.xib */,
 				0C374F181B88E3790050AE1D /* PaymentWebViewViewController.xib */,
 				0C374F0E1B88E3790050AE1D /* PlainTableViewCell.xib */,
+				79E68B8A1B8B02C0008626E4 /* PointsBreakdownTableViewCell.xib */,
+				79E68B861B8AFD22008626E4 /* PointsDetailsTableViewCell.xib */,
+				79E68B821B8AEC85008626E4 /* PointsEarnedTableViewCell.xib */,
+				79E68B8E1B8B0717008626E4 /* PointsTableViewCell.xib */,
 				26AFB3C61B79DE5C00E50926 /* ProductAttributeCollectionViewCell.xib */,
 				26AFB3C51B79DE5C00E50926 /* ProductAttributeTableViewCell.xib */,
 				26AFB3BD1B79DE5600E50926 /* ProductAttributeViewController.xib */,
@@ -862,6 +893,8 @@
 				26AFB3BB1B79DE5600E50926 /* ProductViewsViewController.xib */,
 				0C9937311B750583000D6074 /* ProductWithCenterNameCollectionViewCell.xib */,
 				79E85FBA1B89DC1500428AA1 /* ProfileHeaderTableViewCell.xib */,
+				79E68B761B8AD2CF008626E4 /* ProfileSettingsTableViewCell.xib */,
+				79E68B7B1B8AD2EC008626E4 /* ProfileSettingsViewController.xib */,
 				79E85FBE1B89DE1C00428AA1 /* ProfileTableViewCell.xib */,
 				0C374F121B88E3790050AE1D /* ProfileViewController.xib */,
 				0C374F241B88E3790050AE1D /* ResultViewController.xib */,
@@ -1010,6 +1043,7 @@
 				0C374F2B1B88E3790050AE1D /* ChangeAddressViewController.xib in Resources */,
 				0C9937621B750583000D6074 /* HalfVerticalImageCollectionViewCell.xib in Resources */,
 				0C2F44C81B8576FE00021F45 /* Panton ExtraBold.otf in Resources */,
+				79E68B871B8AFD22008626E4 /* PointsDetailsTableViewCell.xib in Resources */,
 				0C9937651B750583000D6074 /* NewSellerCollectionViewCell.xib in Resources */,
 				0C2F44CD1B8576FE00021F45 /* Panton Light Italic.otf in Resources */,
 				0C8A7C7B1B6772670039F013 /* Images.xcassets in Resources */,
@@ -1039,6 +1073,7 @@
 				0C374F471B88E3790050AE1D /* HelpViewController.xib in Resources */,
 				79E85FCC1B8A1E0800428AA1 /* ActivityLogTableViewController.xib in Resources */,
 				79E68B771B8AD2CF008626E4 /* ProfileSettingsTableViewCell.xib in Resources */,
+				79E68B8B1B8B02C0008626E4 /* PointsBreakdownTableViewCell.xib in Resources */,
 				0C374F381B88E3790050AE1D /* PaymentWebViewViewController.xib in Resources */,
 				0C9937611B750583000D6074 /* FullImageCollectionViewCell.xib in Resources */,
 				0C374F3B1B88E3790050AE1D /* GeneralRatingTableViewCell.xib in Resources */,
@@ -1048,6 +1083,8 @@
 				0C2670CD1B77290200394E29 /* GoogleService-Info.plist in Resources */,
 				0C2F44D11B8576FE00021F45 /* Panton SemiBold.otf in Resources */,
 				0C9937641B750583000D6074 /* LayoutHeaderCollectionViewCell.xib in Resources */,
+				79E68B831B8AEC85008626E4 /* PointsEarnedTableViewCell.xib in Resources */,
+				79E68B8F1B8B0717008626E4 /* PointsTableViewCell.xib in Resources */,
 				7971F73F1B861ABE00322861 /* FilterTableViewCell.xib in Resources */,
 				0C2F44CF1B8576FE00021F45 /* Panton Regular Italic.otf in Resources */,
 				0C2F44D41B8576FE00021F45 /* Panton.otf in Resources */,
@@ -1065,6 +1102,7 @@
 				79A1C6F71B835A090043AA36 /* ProductResultGridCollectionViewCell.xib in Resources */,
 				0C374F3F1B88E3790050AE1D /* CategoriesTableViewCell.xib in Resources */,
 				0C374F361B88E3790050AE1D /* SeeMoreTableViewCell.xib in Resources */,
+				79E68B811B8AEC00008626E4 /* MyPointsTableViewController.xib in Resources */,
 				0C9937671B750583000D6074 /* ProductItemWithVerticalDisplayCollectionViewCell.xib in Resources */,
 				0C2F44CE1B8576FE00021F45 /* Panton Light.otf in Resources */,
 				0C374F421B88E3790050AE1D /* FollowedSellerViewController.xib in Resources */,
@@ -1158,6 +1196,7 @@
 				0C2F44DC1B8583EF00021F45 /* CheckoutViews.swift in Sources */,
 				0C9937541B750583000D6074 /* RoundedLabel.swift in Sources */,
 				0C1003F41B87629400CAA17A /* NewAddressTableViewCell.swift in Sources */,
+				79E68B911B8B0AE9008626E4 /* PointModel.swift in Sources */,
 				0C5111E91B821D6F002F0001 /* SeeMoreTableViewCell.swift in Sources */,
 				0C2670CF1B772E4B00394E29 /* Enums.swift in Sources */,
 				0C329E731B7B2A71005BE2B6 /* Reachability.swift in Sources */,
@@ -1230,6 +1269,7 @@
 				0C99373D1B750583000D6074 /* IPhoneType.swift in Sources */,
 				0C9937511B750583000D6074 /* ProductWithCenterNameCollectionViewCell.swift in Sources */,
 				0C9937401B750583000D6074 /* HomePageProductModel.swift in Sources */,
+				79E68B891B8AFE99008626E4 /* PointsDetailsTableViewCell.swift in Sources */,
 				26AFB3B71B79DE3800E50926 /* ProductAttributeViewController.swift in Sources */,
 				26AFB3AD1B79DE2900E50926 /* ReviewTableViewCell.swift in Sources */,
 				0C329E751B7B2D32005BE2B6 /* RegisterModel.swift in Sources */,
@@ -1259,13 +1299,17 @@
 				0C99373C1B750583000D6074 /* HexaColor.swift in Sources */,
 				7971F73D1B86189100322861 /* FilterAttributeModel.swift in Sources */,
 				0C6490761B7781E400F88F92 /* Category.swift in Sources */,
+				79E68B851B8AF4D0008626E4 /* PointsEarnedTableViewCell.swift in Sources */,
 				0C99375D1B750583000D6074 /* HomeContainerViewController.swift in Sources */,
 				79E85FCE1B8A1F5800428AA1 /* ActivityLogModel.swift in Sources */,
 				0C2F45291B85E95D00021F45 /* ChangeAddressCollectionViewCell.swift in Sources */,
+				79E68B931B8B0B8D008626E4 /* PointsTableViewCell.swift in Sources */,
+				79E68B8D1B8B0431008626E4 /* PointsBreakdownTableViewCell.swift in Sources */,
 				0C5111D51B81CD69002F0001 /* SellerViewController.swift in Sources */,
 				0C9937521B750583000D6074 /* RoundedButton.swift in Sources */,
 				0C374EFB1B8862E10050AE1D /* SuccessTableHeaderViewCell.swift in Sources */,
 				0C9937411B750583000D6074 /* ProductModel.swift in Sources */,
+				79E68B801B8AEC00008626E4 /* MyPointsTableViewController.swift in Sources */,
 				79F0DD9C1B7B17D500EB8053 /* CartModel.swift in Sources */,
 				0C99375E1B750583000D6074 /* HomePageCollectionViewController.swift in Sources */,
 				0C374EF81B88552E0050AE1D /* PaymentWebViewViewController.swift in Sources */,
