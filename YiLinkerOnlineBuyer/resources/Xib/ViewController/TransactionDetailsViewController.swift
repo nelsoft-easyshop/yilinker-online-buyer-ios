@@ -33,7 +33,6 @@ class TransactionDetailsViewController: UIViewController {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        self.title = "Transaction Details"
         
         loadViewsWithDetails()
     }

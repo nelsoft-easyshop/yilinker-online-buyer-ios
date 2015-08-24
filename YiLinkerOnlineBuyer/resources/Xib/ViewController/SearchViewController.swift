@@ -21,10 +21,10 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         super.viewDidLoad()
 
         self.initializeViews()
-
-        let vc = TransactionProductDetailsViewController(nibName: "TransactionProductDetailsViewController", bundle: nil)
-        vc.edgesForExtendedLayout = UIRectEdge.None
-        self.navigationController?.pushViewController(vc, animated: true)
+        
+        let transaction = TransactionViewController(nibName: "TransactionViewController", bundle: nil)
+        transaction.edgesForExtendedLayout = UIRectEdge.None
+        self.navigationController?.pushViewController(transaction, animated: true)
     }
 
     override func didReceiveMemoryWarning() {
