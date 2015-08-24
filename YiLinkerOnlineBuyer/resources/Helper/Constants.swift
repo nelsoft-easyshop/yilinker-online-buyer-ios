@@ -78,4 +78,10 @@ struct Constants {
             static let totalTableViewCellNibNameAndIdentifier = "TotalTableViewCell"
         }
     }
+    
+    struct CustomizeShopping {
+        static let customizeShoppingNibNameAndIdentifier = "CustomizeShoppingCollectionViewCell"
+        static let customizeSelectedNibNameAndIdentifier = "CustomizeSelectedCollectionViewCell"
+        static let customizeShoppingTableViewCellNibNameAndIdentifier = "CustomizeShoppingTableViewCell"
+    }
 }
