@@ -226,10 +226,7 @@
 		79E85FBC1B89DC1500428AA1 /* ProfileHeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79E85FBA1B89DC1500428AA1 /* ProfileHeaderTableViewCell.xib */; };
 		79E85FBF1B89DE1C00428AA1 /* ProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79E85FBD1B89DE1C00428AA1 /* ProfileTableViewCell.swift */; };
 		79E85FC01B89DE1C00428AA1 /* ProfileTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79E85FBE1B89DE1C00428AA1 /* ProfileTableViewCell.xib */; };
-		79E85FC31B8A13F700428AA1 /* ProfileSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79E85FC11B8A13F700428AA1 /* ProfileSettingsViewController.swift */; };
-		79E85FC41B8A13F700428AA1 /* ProfileSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79E85FC21B8A13F700428AA1 /* ProfileSettingsViewController.xib */; };
 		79E85FC61B8A164800428AA1 /* ProfileSettingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79E85FC51B8A164800428AA1 /* ProfileSettingsTableViewCell.swift */; };
-		79E85FC81B8A16B200428AA1 /* ProfileSettingsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79E85FC71B8A16B200428AA1 /* ProfileSettingsTableViewCell.xib */; };
 		79E85FCB1B8A1E0800428AA1 /* ActivityLogTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79E85FC91B8A1E0800428AA1 /* ActivityLogTableViewController.swift */; };
 		79E85FCC1B8A1E0800428AA1 /* ActivityLogTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79E85FCA1B8A1E0800428AA1 /* ActivityLogTableViewController.xib */; };
 		79E85FCE1B8A1F5800428AA1 /* ActivityLogModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79E85FCD1B8A1F5800428AA1 /* ActivityLogModel.swift */; };
@@ -482,10 +479,7 @@
 		79E85FBA1B89DC1500428AA1 /* ProfileHeaderTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProfileHeaderTableViewCell.xib; path = YiLinkerOnlineBuyer/resources/View/ProfileHeaderTableViewCell.xib; sourceTree = SOURCE_ROOT; };
 		79E85FBD1B89DE1C00428AA1 /* ProfileTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProfileTableViewCell.swift; path = YiLinkerOnlineBuyer/resources/View/ProfileTableViewCell.swift; sourceTree = SOURCE_ROOT; };
 		79E85FBE1B89DE1C00428AA1 /* ProfileTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProfileTableViewCell.xib; path = YiLinkerOnlineBuyer/resources/View/ProfileTableViewCell.xib; sourceTree = SOURCE_ROOT; };
-		79E85FC11B8A13F700428AA1 /* ProfileSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProfileSettingsViewController.swift; path = YiLinkerOnlineBuyer/resources/ViewController/ProfileSettingsViewController.swift; sourceTree = SOURCE_ROOT; };
-		79E85FC21B8A13F700428AA1 /* ProfileSettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProfileSettingsViewController.xib; path = YiLinkerOnlineBuyer/resources/ViewController/ProfileSettingsViewController.xib; sourceTree = SOURCE_ROOT; };
 		79E85FC51B8A164800428AA1 /* ProfileSettingsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProfileSettingsTableViewCell.swift; path = YiLinkerOnlineBuyer/resources/View/ProfileSettingsTableViewCell.swift; sourceTree = SOURCE_ROOT; };
-		79E85FC71B8A16B200428AA1 /* ProfileSettingsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileSettingsTableViewCell.xib; sourceTree = "<group>"; };
 		79E85FC91B8A1E0800428AA1 /* ActivityLogTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ActivityLogTableViewController.swift; path = YiLinkerOnlineBuyer/resources/ViewController/ActivityLogTableViewController.swift; sourceTree = SOURCE_ROOT; };
 		79E85FCA1B8A1E0800428AA1 /* ActivityLogTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ActivityLogTableViewController.xib; path = YiLinkerOnlineBuyer/resources/ViewController/ActivityLogTableViewController.xib; sourceTree = SOURCE_ROOT; };
 		79E85FCD1B8A1F5800428AA1 /* ActivityLogModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ActivityLogModel.swift; path = YiLinkerOnlineBuyer/resources/Model/ActivityLogModel.swift; sourceTree = SOURCE_ROOT; };
@@ -790,7 +784,6 @@
 				26AFB3B31B79DE3800E50926 /* ProductReviewViewController.swift */,
 				26AFB3B01B79DE3800E50926 /* ProductViewController.swift */,
 				26AFB3B11B79DE3800E50926 /* ProductViewsViewController.swift */,
-				79E85FC11B8A13F700428AA1 /* ProfileSettingsViewController.swift */,
 				0CC8A63D1B7B9BF600C91425 /* ProfileViewController.swift */,
 				0CE35EB71B76711400AAA8F1 /* RegisterViewController.swift */,
 				0C5925FF1B8327BA0021EA76 /* ResultViewController.swift */,
@@ -860,8 +853,6 @@
 				26AFB3BB1B79DE5600E50926 /* ProductViewsViewController.xib */,
 				0C9937311B750583000D6074 /* ProductWithCenterNameCollectionViewCell.xib */,
 				79E85FBA1B89DC1500428AA1 /* ProfileHeaderTableViewCell.xib */,
-				79E85FC71B8A16B200428AA1 /* ProfileSettingsTableViewCell.xib */,
-				79E85FC21B8A13F700428AA1 /* ProfileSettingsViewController.xib */,
 				79E85FBE1B89DE1C00428AA1 /* ProfileTableViewCell.xib */,
 				0C374F121B88E3790050AE1D /* ProfileViewController.xib */,
 				0C374F241B88E3790050AE1D /* ResultViewController.xib */,
@@ -1060,7 +1051,6 @@
 				0C2F44C51B8576FE00021F45 /* Panton Bold Italic.otf in Resources */,
 				0C2F44CC1B8576FE00021F45 /* Panton Heavy.otf in Resources */,
 				0C99376B1B750583000D6074 /* SellerCollectionViewCell.xib in Resources */,
-				79E85FC41B8A13F700428AA1 /* ProfileSettingsViewController.xib in Resources */,
 				79A1C6F71B835A090043AA36 /* ProductResultGridCollectionViewCell.xib in Resources */,
 				0C374F3F1B88E3790050AE1D /* CategoriesTableViewCell.xib in Resources */,
 				0C374F361B88E3790050AE1D /* SeeMoreTableViewCell.xib in Resources */,
@@ -1074,7 +1064,6 @@
 				0C374EFD1B8862F50050AE1D /* SuccessTableHeaderViewCell.xib in Resources */,
 				0C374F391B88E3790050AE1D /* ShipToTableViewCell.xib in Resources */,
 				0C2F44C61B8576FE00021F45 /* Panton Bold.otf in Resources */,
-				79E85FC81B8A16B200428AA1 /* ProfileSettingsTableViewCell.xib in Resources */,
 				0C374F2E1B88E3790050AE1D /* PlainTableViewCell.xib in Resources */,
 				79A1C6F11B8329490043AA36 /* SearchSuggestionTableViewCell.xib in Resources */,
 				0C2F44CA1B8576FE00021F45 /* Panton ExtraLight.otf in Resources */,
@@ -1161,7 +1150,6 @@
 				0C2670CF1B772E4B00394E29 /* Enums.swift in Sources */,
 				0C329E731B7B2A71005BE2B6 /* Reachability.swift in Sources */,
 				0C329E951B7B7C5B005BE2B6 /* CustomTabBarController.swift in Sources */,
-				79E85FC31B8A13F700428AA1 /* ProfileSettingsViewController.swift in Sources */,
 				7987F3181B7B744A00B02DF4 /* WishlistTableViewCell.swift in Sources */,
 				0C9937551B750583000D6074 /* ScrollableCollectionViewCell.swift in Sources */,
 				26AFB3B81B79DE3800E50926 /* ProductReviewViewController.swift in Sources */,

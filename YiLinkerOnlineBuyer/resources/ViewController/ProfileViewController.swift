@@ -136,7 +136,6 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     func activityLogTapAction() {
         var activityViewController = ActivityLogTableViewController(nibName: "ActivityLogTableViewController", bundle: nil)
         self.navigationController?.pushViewController(activityViewController, animated:true)
-        
     }
     
     func myPointsTapAction(){
@@ -144,8 +143,6 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     }
     
     func settingsTapAction(){
-        var settingsViewController = ProfileSettingsViewController(nibName: "ProfileSettingsViewController", bundle: nil)
-        self.navigationController?.pushViewController(settingsViewController, animated:true);
     }
 
 }

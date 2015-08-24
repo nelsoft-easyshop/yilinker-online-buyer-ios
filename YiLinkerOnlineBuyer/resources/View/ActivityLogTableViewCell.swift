@@ -10,15 +10,18 @@ import UIKit
 
 class ActivityLogTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var cellView: UIView!
+    @IBOutlet weak var timeLabel: UILabel!
+    @IBOutlet weak var detailsLabel: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        initializeViews()
     }
 
-    override func setSelected(selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+    func initializeViews() {
+        cellView.layer.cornerRadius = 8
     }
 
 }

@@ -9,5 +9,11 @@
 import UIKit
 
 class ActivityModel: NSObject {
-   
+    var time: String = ""
+    var details: String = ""
+    
+    init(time: String, details: String) {
+        self.time = time
+        self.details = details
+    }
 }

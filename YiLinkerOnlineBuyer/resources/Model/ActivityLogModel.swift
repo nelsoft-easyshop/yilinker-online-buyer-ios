@@ -9,5 +9,11 @@
 import UIKit
 
 class ActivityLogModel: NSObject {
-   
+    var date: String = ""
+    var activities: [ActivityModel] = []
+    
+    init(date: String, activities: [ActivityModel]) {
+        self.date = date
+        self.activities = activities
+    }
 }

@@ -8,17 +8,23 @@
 
 import UIKit
 
+protocol ProfileSettingsTableViewCellDelegate{
+    func settingsSwitchAction(sender: AnyObject, value: Bool)
+}
+
 class ProfileSettingsTableViewCell: UITableViewCell {
+    
+    var delegate: ProfileSettingsTableViewCellDelegate?
+    
+    @IBOutlet weak var settingsLabel: UILabel!
+    @IBOutlet weak var settingsSwitch: UISwitch!
 
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
 
-    override func setSelected(selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+    @IBAction func switchAction(sender: AnyObject) {
+        delegate?.settingsSwitchAction(self, value: (sender as! UISwitch).on)
     }
-
 }
