@@ -36,13 +36,14 @@ class CustomizeShoppingViewController: UIViewController, UITableViewDelegate, UI
             self.edgesForExtendedLayout = UIRectEdge.None
         }
         
+        self.title = "Customize Shopping"
+        
         if IphoneType.isIphone4() {
             selectedCollectionViewCell = XibHelper.puffViewWithNibName(Constants.CustomizeShopping.customizeSelectedNibNameAndIdentifier, index: 1) as! CustomizeSelectedCollectionViewCell
             self.tableViewHeightConstraint.constant = 40
         } else {
             selectedCollectionViewCell = XibHelper.puffViewWithNibName(Constants.CustomizeShopping.customizeSelectedNibNameAndIdentifier, index: 0) as! CustomizeSelectedCollectionViewCell
         }
-        //var timer = NSTimer.scheduledTimerWithTimeInterval(3.0, target: self, selector: Selector("sample"), userInfo: nil, repeats: true)
         
         self.customizeLayout = self.collectionView.collectionViewLayout as? CustomizeShoppingCollectionViewLayout
         self.customizeLayout!.delegate = self
