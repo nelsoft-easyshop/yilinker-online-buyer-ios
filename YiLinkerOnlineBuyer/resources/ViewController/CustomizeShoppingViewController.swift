@@ -12,6 +12,7 @@ class CustomizeShoppingViewController: UIViewController, UITableViewDelegate, UI
     
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var tableViewHeightConstraint: NSLayoutConstraint!
 
     var cellCount: Int = 20
     var titles: [String] = ["Category 1", "Category 2", "Category 3", "Category 4", "Category 5", "Category 6", "Category 7", "Category 8", "Category 9", "Category 10", "Category 11", "Category 12", "Category 13", "Category 14", "Category 15", "Category 16", "Category 17", "Category 18", "Category 19", "Category 20"]
@@ -29,6 +30,12 @@ class CustomizeShoppingViewController: UIViewController, UITableViewDelegate, UI
             self.edgesForExtendedLayout = UIRectEdge.None
         }
         
+        if IphoneType.isIphone4() {
+            selectedCollectionViewCell = XibHelper.puffViewWithNibName(Constants.CustomizeShopping.customizeSelectedNibNameAndIdentifier, index: 1) as! CustomizeSelectedCollectionViewCell
+            self.tableViewHeightConstraint.constant = 40
+        } else {
+            selectedCollectionViewCell = XibHelper.puffViewWithNibName(Constants.CustomizeShopping.customizeSelectedNibNameAndIdentifier, index: 0) as! CustomizeSelectedCollectionViewCell
+        }
         //var timer = NSTimer.scheduledTimerWithTimeInterval(3.0, target: self, selector: Selector("sample"), userInfo: nil, repeats: true)
         
         self.customizeLayout = self.collectionView.collectionViewLayout as? CustomizeShoppingCollectionViewLayout
@@ -40,7 +47,6 @@ class CustomizeShoppingViewController: UIViewController, UITableViewDelegate, UI
         self.tableView.tableFooterView = footerView
         
         self.selectedCollectionViewCell.layer.zPosition = 10
-        selectedCollectionViewCell = XibHelper.puffViewWithNibName(Constants.CustomizeShopping.customizeSelectedNibNameAndIdentifier, index: 0) as! CustomizeSelectedCollectionViewCell
         selectedCollectionViewCell.delegate = self
         self.tableView.tableHeaderView = selectedCollectionViewCell
         self.registerCell()
@@ -50,10 +56,6 @@ class CustomizeShoppingViewController: UIViewController, UITableViewDelegate, UI
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 0
-    }
-    
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return self.view.frame.size.height - 110
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {

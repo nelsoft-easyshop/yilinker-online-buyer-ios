@@ -65,11 +65,14 @@ class CustomizeSelectedCollectionViewCell: UICollectionViewCell, UICollectionVie
     }
     
     func addCellInIndexPath(indexPath: NSIndexPath) {
-        self.collectionView.insertItemsAtIndexPaths([NSIndexPath(forItem: indexPath.row, inSection: indexPath.section)])
+        self.collectionView.performBatchUpdates({ () -> Void in
+            self.collectionView.insertItemsAtIndexPaths([NSIndexPath(forItem: indexPath.row, inSection: indexPath.section)])
+            }, completion: { (Bool) -> Void in
+                self.collectionView.scrollToItemAtIndexPath(indexPath, atScrollPosition: UICollectionViewScrollPosition.Bottom, animated: true)
+        })
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        //self.delegate!.deselectCategoryWithTitle(self.selectedCategoryTitle, attribute: <#String#>)
         self.selectedCategoryTitle = self.titles[indexPath.row]
         self.titles.removeAtIndex(indexPath.row)
         self.flowLayout.deletedIndexPath = indexPath

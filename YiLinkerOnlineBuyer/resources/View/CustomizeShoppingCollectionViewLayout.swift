@@ -21,8 +21,8 @@ class CustomizeShoppingCollectionViewLayout: UICollectionViewLayout {
     var screenRect: CGRect?
     var numberOfSections: Int?
     
-    let cellHeight: CGFloat = 90
-    let cellWidth: CGFloat = 90
+    var cellHeight: CGFloat = 90
+    var cellWidth: CGFloat = 90
     
     let smallCellHeight: CGFloat = 45
     let smallCellWidth: CGFloat = 45
@@ -56,7 +56,22 @@ class CustomizeShoppingCollectionViewLayout: UICollectionViewLayout {
             
             var xPosition: CGFloat = 0
             var yPosition: CGFloat = 0
-            let firstVerticalRowYPosition: CGFloat = 100
+        
+            var firstVerticalRowYPosition: CGFloat = 100
+        
+        if IphoneType.isIphone6Plus() {
+            firstVerticalRowYPosition = 100.00
+        } else if IphoneType.isIphone6() {
+            firstVerticalRowYPosition = 30.00
+        } else if IphoneType.isIphone5() {
+            firstVerticalRowYPosition = 30.00
+            cellHeight = 55
+            cellWidth = 55
+        } else if IphoneType.isIphone4() {
+            firstVerticalRowYPosition = 60.00
+            cellHeight = 50
+            cellWidth = 50
+        }
             
             for var item = 0 ; item < numberOfItems; item++ {
                 let indexPath: NSIndexPath = NSIndexPath(forItem: item, inSection: 0)

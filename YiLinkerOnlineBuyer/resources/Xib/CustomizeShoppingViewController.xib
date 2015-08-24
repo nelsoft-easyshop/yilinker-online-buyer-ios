@@ -8,6 +8,7 @@
             <connections>
                 <outlet property="collectionView" destination="ZPR-dM-Yee" id="SW6-r7-j0o"/>
                 <outlet property="tableView" destination="lfr-fE-JqF" id="Bdg-b6-dGq"/>
+                <outlet property="tableViewHeightConstraint" destination="IB6-UX-YBD" id="Kx9-e5-tqc"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -48,15 +49,15 @@
             <color key="backgroundColor" red="0.37647058820000001" green="0.1215686275" blue="0.46666666670000001" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
                 <constraint firstItem="lfr-fE-JqF" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="38q-EF-4vs"/>
-                <constraint firstItem="ZPR-dM-Yee" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="4ra-hg-v8y"/>
-                <constraint firstItem="ZPR-dM-Yee" firstAttribute="top" secondItem="lfr-fE-JqF" secondAttribute="bottom" constant="3" id="CAw-G8-qHc"/>
-                <constraint firstItem="yhi-tG-dxK" firstAttribute="top" secondItem="ZPR-dM-Yee" secondAttribute="bottom" constant="1" id="KB4-vs-0QX"/>
+                <constraint firstItem="ZPR-dM-Yee" firstAttribute="top" secondItem="lfr-fE-JqF" secondAttribute="bottom" constant="3" id="82g-6Z-EDK"/>
+                <constraint firstAttribute="trailing" secondItem="ZPR-dM-Yee" secondAttribute="trailing" id="A2X-kD-Kh1"/>
+                <constraint firstItem="ZPR-dM-Yee" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Ggd-3O-AqS"/>
+                <constraint firstItem="yhi-tG-dxK" firstAttribute="top" secondItem="ZPR-dM-Yee" secondAttribute="bottom" constant="1" id="Oyf-FQ-Pvb"/>
                 <constraint firstItem="lfr-fE-JqF" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="U09-A1-4Tf"/>
                 <constraint firstAttribute="bottom" secondItem="yhi-tG-dxK" secondAttribute="bottom" id="VdE-0n-7px"/>
                 <constraint firstItem="yhi-tG-dxK" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="XNF-Gw-gZK"/>
                 <constraint firstAttribute="trailing" secondItem="yhi-tG-dxK" secondAttribute="trailing" id="d3c-7l-fxR"/>
                 <constraint firstAttribute="trailing" secondItem="lfr-fE-JqF" secondAttribute="trailing" id="ovZ-Tl-Mnc"/>
-                <constraint firstAttribute="trailing" secondItem="ZPR-dM-Yee" secondAttribute="trailing" id="r7J-f3-QHr"/>
             </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
             <point key="canvasLocation" x="471.5" y="361.5"/>
