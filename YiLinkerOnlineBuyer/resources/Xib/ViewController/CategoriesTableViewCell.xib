@@ -29,7 +29,7 @@
                         <color key="textColor" red="0.29803922770000002" green="0.29803922770000002" blue="0.29803922770000002" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="right-1" translatesAutoresizingMaskIntoConstraints="NO" id="Mx4-ah-9yt">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="right-gray" translatesAutoresizingMaskIntoConstraints="NO" id="Mx4-ah-9yt">
                         <rect key="frame" x="352" y="19" width="10" height="22"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="10" id="nKs-iD-akU"/>
@@ -67,6 +67,6 @@
     </objects>
     <resources>
         <image name="dummy-placeholder" width="1280" height="800"/>
-        <image name="right-1" width="97" height="200"/>
+        <image name="right-gray" width="97" height="200"/>
     </resources>
 </document>

@@ -126,9 +126,9 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
             categoryLabel.text! += parentText
             categoryLabel.sizeToFit()
             categoryLabel.frame.size.height = containerView.frame.size.height
+            
             var arrowImageView = UIImageView(frame: CGRectMake(categoryLabel.frame.size.width + 5, (categoryLabel.frame.size.height / 2) - (16 / 2), 10, 16))
-            arrowImageView.image = UIImage(named: "right-1")
-
+            arrowImageView.image = UIImage(named: "right-gray")
             containerView.addSubview(arrowImageView)
         }
         

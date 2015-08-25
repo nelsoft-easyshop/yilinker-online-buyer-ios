@@ -52,7 +52,6 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         } else {
             self.addEmptyView()
         }
-        
     }
     
     func addEmptyView() {
