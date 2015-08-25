@@ -859,9 +859,6 @@
 		0C9937291B750583000D6074 /* Xib */ = {
 			isa = PBXGroup;
 			children = (
-				79E68BA31B8B4376008626E4 /* EditProfileTableViewController.xib */,
-				79E68B9F1B8B428B008626E4 /* ProfileSettingsViewController.xib */,
-				79E68B9C1B8B4270008626E4 /* ProfileSettingsTableViewCell.xib */,
 				0C374F251B88E3790050AE1D /* AboutSellerTableViewCell.xib */,
 				79E85FD11B8A230500428AA1 /* ActivityLogHeaderTableViewCell.xib */,
 				79E68B721B8AB900008626E4 /* ActivityLogTableViewCell.xib */,
@@ -878,6 +875,11 @@
 				0C2F44DD1B85840F00021F45 /* CheckoutViews.xib */,
 				0C374F261B88E3790050AE1D /* CustomizeShoppingViewController.xib */,
 				0C374F131B88E3790050AE1D /* DeliverToTableViewCell.xib */,
+				79E68BB41B8B5ADE008626E4 /* EditProfileAccountInformationTableViewCell.xib */,
+				79E68BA61B8B4572008626E4 /* EditProfileAddPhotoTableViewCell.xib */,
+				79E68BAE1B8B5306008626E4 /* EditProfileAddressTableViewCell.xib */,
+				79E68BAA1B8B4EB9008626E4 /* EditProfilePersonalInformationTableViewCell.xib */,
+				79E68BA31B8B4376008626E4 /* EditProfileTableViewController.xib */,
 				0C329E761B7B47DC005BE2B6 /* EmptyView.xib */,
 				7971F73E1B861ABE00322861 /* FilterTableViewCell.xib */,
 				79F2F55A1B85FD9D00F57E4B /* FilterViewController.xib */,
@@ -918,6 +920,8 @@
 				26AFB3BB1B79DE5600E50926 /* ProductViewsViewController.xib */,
 				0C9937311B750583000D6074 /* ProductWithCenterNameCollectionViewCell.xib */,
 				79E85FBA1B89DC1500428AA1 /* ProfileHeaderTableViewCell.xib */,
+				79E68B9C1B8B4270008626E4 /* ProfileSettingsTableViewCell.xib */,
+				79E68B9F1B8B428B008626E4 /* ProfileSettingsViewController.xib */,
 				79E85FBE1B89DE1C00428AA1 /* ProfileTableViewCell.xib */,
 				0C374F121B88E3790050AE1D /* ProfileViewController.xib */,
 				0C374F241B88E3790050AE1D /* ResultViewController.xib */,
@@ -940,10 +944,6 @@
 				0C9937361B750583000D6074 /* VerticalImageCollectionViewCell.xib */,
 				0C9937371B750583000D6074 /* ViewMoreFooterCollectionViewCell.xib */,
 				7987F3191B7B746000B02DF4 /* WishlistTableViewCell.xib */,
-				79E68BA61B8B4572008626E4 /* EditProfileAddPhotoTableViewCell.xib */,
-				79E68BAA1B8B4EB9008626E4 /* EditProfilePersonalInformationTableViewCell.xib */,
-				79E68BAE1B8B5306008626E4 /* EditProfileAddressTableViewCell.xib */,
-				79E68BB41B8B5ADE008626E4 /* EditProfileAccountInformationTableViewCell.xib */,
 			);
 			path = Xib;
 			sourceTree = "<group>";
