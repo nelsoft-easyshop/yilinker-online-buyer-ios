@@ -88,21 +88,12 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     }
     
     override func viewWillAppear(animated: Bool) {
-        configureNavigationBar()
-        
-        var seeMoreLabel = UILabel(frame: CGRectMake((buyItNowView.frame.size.width / 2) - 60, 0, 90, buyItNowView.frame.size.height))
-        seeMoreLabel.frame.origin.x = 0
-        seeMoreLabel.frame.size.width = addToCartButton.frame.size.width
-        seeMoreLabel.text = "BUY IT NOW"
-        seeMoreLabel.textAlignment = .Center
-        seeMoreLabel.textColor = .whiteColor()
-        seeMoreLabel.backgroundColor = .redColor()
-        seeMoreLabel.font = UIFont.boldSystemFontOfSize(13.0)
-        
-        var seeMoreImageView = UIImageView(frame: CGRectMake(seeMoreLabel.frame.size.width, (seeMoreLabel.frame.size.height / 2) - 6, 13, 13))
-        seeMoreImageView.image = UIImage(named: "buy")
-//        seeMoreLabel.addSubview(seeMoreImageView)
-//        self.buyItNowView.addSubview(seeMoreLabel)
+        UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.Default
+        self.navigationController?.navigationBar.barTintColor = .whiteColor()
+        self.navigationController?.navigationBar.tintColor = .grayColor()
+        if self.productDetailsModel == nil {
+            configureNavigationBar()
+        }
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -528,6 +519,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     
     func loadViewsWithDetails() {
         
+        self.tableView.hidden = false
         self.buttonsContainer.hidden = false
         
         self.getHeaderView().addSubview(self.getProductImagesView())

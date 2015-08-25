@@ -182,7 +182,7 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
         self.attributes = productDetailsModel.attributes as [ProductAttributeModel]
         self.selectedId = selectedId as! [String]
         self.selectedValue = selectedValue as! [String]
-        self.unitId = String(index)
+        self.unitId = String(unitId)
         self.selectedCombination = productDetailsModel.productUnits[index].combination
         
         self.maximumStock = productDetailsModel.productUnits[index].quantity
