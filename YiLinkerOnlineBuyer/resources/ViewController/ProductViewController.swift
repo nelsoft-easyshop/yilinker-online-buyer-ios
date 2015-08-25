@@ -62,8 +62,9 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     
     var emptyView: EmptyView?
     
-    let productUrl = "https://demo1928934.mockable.io/yi/getproductDetails?productId=1000"
-    let reviewUrl = "https://demo5885209.mockable.io/api/v1/product/getReviews?productId=1000"
+    let productUrl = "http://online.api.easydeal.ph/api/v1/product/getProductDetail?productId=1"
+    let reviewUrl = "http://online.api.easydeal.ph/api/v1/product/getProductReviews"
+    let sellerUrl = "http://online.api.easydeal.ph/api/v1/user/getStoreInfo"
     
     var tabController = CustomTabBarController()
     
@@ -81,8 +82,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         setBorderOf(view: buyItNowView, width: 1, color: .grayColor(), radius: 3)
         
         requestProductDetails(productUrl, params: nil)
-//        requestReviewDetails(reviewUrl, params: nil)
-        requestReviewDetails("http://online.api.easydeal.ph/api/v1/product/getProductReviews", params: ["productId": "1"])
+        requestReviewDetails(reviewUrl, params: ["productId": "1"])
         
         buyItNowView.addGestureRecognizer(tapGesture("buyItNowAction:"))
     }
@@ -118,7 +118,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         SVProgressHUD.show()
         SVProgressHUD.setBackgroundColor(UIColor.clearColor())
         
-        manager.GET("http://online.api.easydeal.ph/api/v1/product/getProductDetail?productId=1", parameters: params, success: {
+        manager.GET(self.productUrl, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
             self.productDetailsModel = ProductDetailsModel.parseDataWithDictionary(responseObject)
@@ -126,8 +126,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
 //            self.combinations = self.productDetailsModel.combinations
             self.populateDetails()
             
-            let seller = "https://demo5885209.mockable.io/api/v1/seller/getDetails?sellerId=111"
-            self.requestSellerDetails(seller, params: nil)
+            self.requestSellerDetails(self.sellerUrl, params: ["userId": "1"])
             
             self.productRequest = true
             self.productSuccess = true
@@ -143,7 +142,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     }
     
     func requestReviewDetails(url: String, params: NSDictionary!) {
-        manager.POST(url, parameters: params, success: {
+        manager.POST(self.reviewUrl, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
             self.productReviewModel = ProductReviewModel.parseDataWithDictionary(responseObject)
@@ -162,7 +161,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     
     func requestSellerDetails(url: String, params: NSDictionary!) {
         
-        manager.GET("https://demo3526363.mockable.io/productSeller", parameters: nil, success: {
+        manager.POST(self.sellerUrl, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
             self.productSellerModel = ProductSellerModel.parseDataWithDictionary(responseObject)
