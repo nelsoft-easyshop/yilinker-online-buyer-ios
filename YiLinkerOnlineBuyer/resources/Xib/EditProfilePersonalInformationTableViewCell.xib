@@ -145,6 +145,11 @@
                     <constraint firstItem="E6M-FD-Jpv" firstAttribute="top" secondItem="Tgb-o1-qLm" secondAttribute="bottom" id="xtF-2W-KMR"/>
                 </constraints>
             </tableViewCellContentView>
+            <connections>
+                <outlet property="firstNameTextField" destination="D8k-hJ-wVA" id="YyI-3N-JZN"/>
+                <outlet property="lastNameTextField" destination="pNa-IP-8ln" id="Nfe-3T-rLe"/>
+                <outlet property="mobilePhoneTextField" destination="E6M-FD-Jpv" id="AaI-0W-SIY"/>
+            </connections>
             <point key="canvasLocation" x="253.5" y="174.5"/>
         </tableViewCell>
     </objects>

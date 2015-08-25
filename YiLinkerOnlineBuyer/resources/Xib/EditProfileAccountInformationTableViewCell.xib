@@ -42,7 +42,7 @@
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="email@email.com" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fmb-Z0-W7z">
+                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="email@email.com" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fmb-Z0-W7z">
                         <rect key="frame" x="8" y="64" width="359" height="30"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="30" id="JcP-al-12W"/>
@@ -67,13 +67,13 @@
                         </attributedString>
                         <nil key="highlightedColor"/>
                     </label>
-                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Yey-oc-Fe4">
+                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="password" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Yey-oc-Fe4">
                         <rect key="frame" x="8" y="123" width="359" height="30"/>
                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                     </textField>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZTk-YW-n6h" customClass="SemiRoundedButton" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZTk-YW-n6h">
                         <rect key="frame" x="292" y="65" width="75" height="28"/>
                         <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -90,26 +90,11 @@
                                 <real key="value" value="5"/>
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
+                        <connections>
+                            <action selector="changeAction:" destination="TL5-8r-TIu" eventType="touchUpInside" id="aWE-FW-DWo"/>
+                        </connections>
                     </button>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FHa-In-V1Z" customClass="SemiRoundedButton" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
-                        <rect key="frame" x="292" y="124" width="75" height="28"/>
-                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="28" id="08N-3l-kDW"/>
-                            <constraint firstAttribute="width" constant="75" id="RPF-MH-9IL"/>
-                        </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
-                        <state key="normal" title="CHANGE">
-                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                        </state>
-                        <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                <real key="value" value="5"/>
-                            </userDefinedRuntimeAttribute>
-                        </userDefinedRuntimeAttributes>
-                    </button>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lS9-Fq-0QH" customClass="SemiRoundedButton" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lS9-Fq-0QH">
                         <rect key="frame" x="8" y="201" width="359" height="60"/>
                         <color key="backgroundColor" red="0.2666666667" green="0.64313725489999995" blue="0.56862745100000001" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -126,7 +111,28 @@
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                         <connections>
-                            <action selector="saveAction:" destination="TL5-8r-TIu" eventType="touchUpInside" id="GMZ-NL-bcS"/>
+                            <action selector="saveAction:" destination="TL5-8r-TIu" eventType="touchUpInside" id="Tcl-Yy-oUx"/>
+                        </connections>
+                    </button>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FHa-In-V1Z">
+                        <rect key="frame" x="292" y="124" width="75" height="28"/>
+                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="28" id="GPz-09-5gU"/>
+                            <constraint firstAttribute="width" constant="75" id="bTe-Sj-IOV"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                        <state key="normal" title="CHANGE">
+                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                <real key="value" value="5"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                        <connections>
+                            <action selector="changeAction:" destination="TL5-8r-TIu" eventType="touchUpInside" id="TjL-VC-1I7"/>
                         </connections>
                     </button>
                 </subviews>
@@ -138,20 +144,20 @@
                     <constraint firstItem="lS9-Fq-0QH" firstAttribute="leading" secondItem="84s-od-zh4" secondAttribute="leading" constant="8" id="8Cc-XB-dZu"/>
                     <constraint firstAttribute="trailing" secondItem="o56-Wr-f7u" secondAttribute="trailing" constant="8" id="8gI-x0-KHX"/>
                     <constraint firstItem="fmb-Z0-W7z" firstAttribute="top" secondItem="GIu-xB-hJx" secondAttribute="bottom" id="97g-fv-CR3"/>
-                    <constraint firstItem="FHa-In-V1Z" firstAttribute="top" secondItem="o56-Wr-f7u" secondAttribute="bottom" constant="1" id="Eab-JG-AlW"/>
                     <constraint firstAttribute="bottom" secondItem="lS9-Fq-0QH" secondAttribute="bottom" constant="8" id="JPy-eu-Kmk"/>
                     <constraint firstAttribute="trailing" secondItem="lS9-Fq-0QH" secondAttribute="trailing" constant="8" id="JRK-fn-7sC"/>
                     <constraint firstItem="fmb-Z0-W7z" firstAttribute="leading" secondItem="84s-od-zh4" secondAttribute="leading" constant="8" id="L7b-rZ-tg5"/>
                     <constraint firstItem="cPj-dB-fdw" firstAttribute="leading" secondItem="84s-od-zh4" secondAttribute="leading" id="Rgp-Vp-94m"/>
                     <constraint firstItem="Yey-oc-Fe4" firstAttribute="top" secondItem="o56-Wr-f7u" secondAttribute="bottom" id="TND-PH-Z0v"/>
-                    <constraint firstItem="FHa-In-V1Z" firstAttribute="trailing" secondItem="84s-od-zh4" secondAttribute="trailingMargin" id="Vhm-tQ-PjZ"/>
                     <constraint firstItem="GIu-xB-hJx" firstAttribute="top" secondItem="cPj-dB-fdw" secondAttribute="bottom" constant="8" id="Y9G-uY-keu"/>
                     <constraint firstItem="cPj-dB-fdw" firstAttribute="top" secondItem="84s-od-zh4" secondAttribute="top" id="Yvm-Ye-AJQ"/>
                     <constraint firstAttribute="trailing" secondItem="GIu-xB-hJx" secondAttribute="trailing" constant="8" id="ZMr-1g-kcg"/>
+                    <constraint firstItem="FHa-In-V1Z" firstAttribute="trailing" secondItem="84s-od-zh4" secondAttribute="trailingMargin" id="aBM-w8-7ll"/>
                     <constraint firstItem="GIu-xB-hJx" firstAttribute="leading" secondItem="84s-od-zh4" secondAttribute="leading" constant="8" id="bP8-l3-kpL"/>
                     <constraint firstAttribute="trailing" secondItem="ZTk-YW-n6h" secondAttribute="trailing" constant="8" id="bZE-lG-kst"/>
                     <constraint firstItem="o56-Wr-f7u" firstAttribute="top" secondItem="fmb-Z0-W7z" secondAttribute="bottom" constant="8" id="fWp-0m-2wz"/>
                     <constraint firstItem="ZTk-YW-n6h" firstAttribute="top" secondItem="GIu-xB-hJx" secondAttribute="bottom" constant="1" id="gL7-hn-f09"/>
+                    <constraint firstItem="FHa-In-V1Z" firstAttribute="top" secondItem="o56-Wr-f7u" secondAttribute="bottom" constant="1" id="i2t-aa-Myk"/>
                     <constraint firstItem="o56-Wr-f7u" firstAttribute="leading" secondItem="84s-od-zh4" secondAttribute="leading" constant="8" id="oNB-rj-vNH"/>
                     <constraint firstItem="Yey-oc-Fe4" firstAttribute="leading" secondItem="84s-od-zh4" secondAttribute="leadingMargin" id="pia-p0-rmG"/>
                     <constraint firstItem="cPj-dB-fdw" firstAttribute="leading" secondItem="84s-od-zh4" secondAttribute="leading" id="teR-XO-x1T"/>
@@ -160,8 +166,11 @@
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="changeEmailButton" destination="ZTk-YW-n6h" id="Jyt-71-07f"/>
+                <outlet property="changePasswordButton" destination="FHa-In-V1Z" id="4bX-H0-3cj"/>
                 <outlet property="emailAddressTextField" destination="fmb-Z0-W7z" id="Jtp-Rh-q5Y"/>
                 <outlet property="passwordTextField" destination="Yey-oc-Fe4" id="OFb-Gq-TLA"/>
+                <outlet property="saveButton" destination="lS9-Fq-0QH" id="BqF-EK-k7K"/>
             </connections>
             <point key="canvasLocation" x="253.5" y="164"/>
         </tableViewCell>

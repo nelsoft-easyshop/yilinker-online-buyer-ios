@@ -28,6 +28,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     
     func initializViews() {
         tableView.tableFooterView = UIView(frame: CGRectZero)
+        self.title = "Profile Page"
     }
 
     func registerNibs() {

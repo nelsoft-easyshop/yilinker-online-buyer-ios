@@ -8,14 +8,22 @@
 
 import UIKit
 
-class EditProfileTableViewController: UITableViewController, UINavigationControllerDelegate, EditProfileAddPhotoTableViewCellDelegate, EditProfileAddressTableViewCellDelegate, UIImagePickerControllerDelegate, UIActionSheetDelegate  {
+class EditProfileTableViewController: UITableViewController, UINavigationControllerDelegate, EditProfileAddPhotoTableViewCellDelegate, EditProfileAddressTableViewCellDelegate, EditProfileAccountInformationTableViewCellDelegate, UIImagePickerControllerDelegate, UIActionSheetDelegate  {
     
-    let addPhotoCell: String = "EditProfileAddPhotoTableViewCell"
-    let personalInfoCell: String = "EditProfilePersonalInformationTableViewCell"
-    let addressCell: String = "EditProfileAddressTableViewCell"
-    let accountCell: String = "EditProfileAccountInformationTableViewCell"
+    let addPhotoCellIndetifier: String = "EditProfileAddPhotoTableViewCell"
+    let personalInfoCellIdentifier: String = "EditProfilePersonalInformationTableViewCell"
+    let addressCellIdentifier: String = "EditProfileAddressTableViewCell"
+    let accountCellIdentifier: String = "EditProfileAccountInformationTableViewCell"
+    
+    var addPhotoCell: EditProfileAddPhotoTableViewCell?
+    var personalInfoCell: EditProfilePersonalInformationTableViewCell?
+    var addressCell: EditProfileAddressTableViewCell?
+    var accountCell: EditProfileAccountInformationTableViewCell?
     
     var photoIndexPath: NSIndexPath?
+    var personalIndexPath: NSIndexPath?
+    var addressIndexPath: NSIndexPath?
+    var accountIndexPath: NSIndexPath?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -65,17 +73,17 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
 
     
     func registerNibs() {
-        var nibPhoto = UINib(nibName: addPhotoCell, bundle: nil)
-        self.tableView.registerNib(nibPhoto, forCellReuseIdentifier: addPhotoCell)
+        var nibPhoto = UINib(nibName: addPhotoCellIndetifier, bundle: nil)
+        self.tableView.registerNib(nibPhoto, forCellReuseIdentifier: addPhotoCellIndetifier)
         
-        var nibPersonal = UINib(nibName: personalInfoCell, bundle: nil)
-        self.tableView.registerNib(nibPersonal, forCellReuseIdentifier: personalInfoCell)
+        var nibPersonal = UINib(nibName: personalInfoCellIdentifier, bundle: nil)
+        self.tableView.registerNib(nibPersonal, forCellReuseIdentifier: personalInfoCellIdentifier)
         
-        var nibAddress = UINib(nibName: addressCell, bundle: nil)
-        self.tableView.registerNib(nibAddress, forCellReuseIdentifier: addressCell)
+        var nibAddress = UINib(nibName: addressCellIdentifier, bundle: nil)
+        self.tableView.registerNib(nibAddress, forCellReuseIdentifier: addressCellIdentifier)
         
-        var nibAccount = UINib(nibName: accountCell, bundle: nil)
-        self.tableView.registerNib(nibAccount, forCellReuseIdentifier: accountCell)
+        var nibAccount = UINib(nibName: accountCellIdentifier, bundle: nil)
+        self.tableView.registerNib(nibAccount, forCellReuseIdentifier: accountCellIdentifier)
     }
     // MARK: - Table view data source
     
@@ -95,21 +103,29 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         if indexPath.row == 0 {
-            let cell = tableView.dequeueReusableCellWithIdentifier(addPhotoCell, forIndexPath: indexPath) as! EditProfileAddPhotoTableViewCell
+            let cell = tableView.dequeueReusableCellWithIdentifier(addPhotoCellIndetifier, forIndexPath: indexPath) as! EditProfileAddPhotoTableViewCell
             cell.delegate = self
             
             photoIndexPath = indexPath
             
             return cell
         } else if indexPath.row == 1 {
-            let cell = tableView.dequeueReusableCellWithIdentifier(personalInfoCell, forIndexPath: indexPath) as! EditProfilePersonalInformationTableViewCell
+            let cell = tableView.dequeueReusableCellWithIdentifier(personalInfoCellIdentifier, forIndexPath: indexPath) as! EditProfilePersonalInformationTableViewCell
+            
+            personalIndexPath = indexPath
+            
             return cell
         } else if indexPath.row == 2 {
-            let cell = tableView.dequeueReusableCellWithIdentifier(addressCell, forIndexPath: indexPath) as! EditProfileAddressTableViewCell
+            let cell = tableView.dequeueReusableCellWithIdentifier(addressCellIdentifier, forIndexPath: indexPath) as! EditProfileAddressTableViewCell
             cell.delegate = self
+            
+            addressIndexPath = indexPath
+            
             return cell
         } else {
-            let cell = tableView.dequeueReusableCellWithIdentifier(accountCell, forIndexPath: indexPath) as! EditProfileAccountInformationTableViewCell
+            let cell = tableView.dequeueReusableCellWithIdentifier(accountCellIdentifier, forIndexPath: indexPath) as! EditProfileAccountInformationTableViewCell
+            cell.delegate = self
+            accountIndexPath = indexPath
             
             return cell
         }
@@ -191,6 +207,7 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
         }
     }
     
+    //Method for
     func handleIOS8(){
         let imageController = UIImagePickerController()
         imageController.editing = false
@@ -226,11 +243,11 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
     func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage!, editingInfo: [NSObject : AnyObject]!) {
         self.dismissViewControllerAnimated(true, completion: nil)
         
-        let cell:EditProfileAddPhotoTableViewCell = self.tableView.cellForRowAtIndexPath(photoIndexPath!) as! EditProfileAddPhotoTableViewCell
+        addPhotoCell = self.tableView.cellForRowAtIndexPath(photoIndexPath!) as? EditProfileAddPhotoTableViewCell
         
-        cell.profileImageView.hidden = false
-        cell.profileImageView.image = image
-        cell.addPhotoLabel.text = "Edit Photo"
+        addPhotoCell!.profileImageView.hidden = false
+        addPhotoCell!.profileImageView.image = image
+        addPhotoCell!.addPhotoLabel.text = "Edit Photo"
     }
     
     func actionSheet(actionSheet: UIActionSheet, clickedButtonAtIndex buttonIndex: Int) {
@@ -239,9 +256,9 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
         let imageController = UIImagePickerController()
         imageController.editing = false
         imageController.delegate = self;
-        if( buttonIndex == 1){
+        if buttonIndex == 1 {
             imageController.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
-        } else if(buttonIndex == 2){
+        } else if buttonIndex == 2 {
             imageController.sourceType = UIImagePickerControllerSourceType.Camera
         } else {
             
@@ -270,4 +287,43 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
         self.view.endEditing(true)
     }
     
+    // MARK: - EditProfileAccountInformationTableViewCellDelegate
+    func saveAction(sender: AnyObject) {
+        println("saveAction")
+        
+        var errorMessage: String = ""
+        
+        addPhotoCell = self.tableView.cellForRowAtIndexPath(photoIndexPath!) as? EditProfileAddPhotoTableViewCell
+        personalInfoCell = self.tableView.cellForRowAtIndexPath(personalIndexPath!) as? EditProfilePersonalInformationTableViewCell
+        addressCell = self.tableView.cellForRowAtIndexPath(addressIndexPath!) as? EditProfileAddressTableViewCell
+        accountCell = self.tableView.cellForRowAtIndexPath(accountIndexPath!) as? EditProfileAccountInformationTableViewCell
+        
+        let firstName = personalInfoCell?.firstNameTextField.text
+        let lastName = personalInfoCell?.lastNameTextField.text
+        let mobileNumber = personalInfoCell?.mobilePhoneTextField.text
+        let emailAddress = accountCell?.emailAddressTextField.text
+        let password = accountCell?.passwordTextField.text
+        
+        if !firstName!.isNotEmpty() {
+            errorMessage = "First name is required."
+        } else if !firstName!.isValidName() {
+            errorMessage = "First name contains illegal characters. It can only contain letters, numbers and underscores."
+        } else if !lastName!.isNotEmpty() {
+            errorMessage = "Last name is required."
+        } else if !lastName!.isValidName() {
+            errorMessage = "Last name contains illegal characters. It can only contain letters, numbers and underscores."
+        } else if !emailAddress!.isNotEmpty() {
+            errorMessage = "Email is required."
+        } else if !emailAddress!.isValidEmail() {
+            errorMessage = "The email address you enter is not a valid email address."
+        } else if !password!.isNotEmpty() {
+            errorMessage = "Password is required."
+        } else if !password!.isAlphaNumeric() {
+            errorMessage = "Password contains illegal characters. It can only contain letters, numbers and underscores."
+        }
+        
+        if errorMessage != "" {
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorMessage)
+        }
+    }
 }

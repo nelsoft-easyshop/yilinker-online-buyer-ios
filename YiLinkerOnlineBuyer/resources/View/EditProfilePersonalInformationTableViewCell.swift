@@ -10,6 +10,10 @@ import UIKit
 
 class EditProfilePersonalInformationTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var firstNameTextField: UITextField!
+    @IBOutlet weak var lastNameTextField: UITextField!
+    @IBOutlet weak var mobilePhoneTextField: UITextField!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

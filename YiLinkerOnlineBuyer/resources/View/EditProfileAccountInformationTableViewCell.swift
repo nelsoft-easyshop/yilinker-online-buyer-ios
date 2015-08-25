@@ -18,13 +18,28 @@ class EditProfileAccountInformationTableViewCell: UITableViewCell {
     
     @IBOutlet weak var emailAddressTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
+    @IBOutlet weak var saveButton: UIButton!
+    
+    @IBOutlet weak var changeEmailButton: UIButton!
+    @IBOutlet weak var changePasswordButton: UIButton!
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        
+        initializeViews()
+    }
+    
+    func initializeViews() {
+        saveButton.layer.cornerRadius = 8
+        changeEmailButton.layer.cornerRadius = 8
+        changePasswordButton.layer.cornerRadius = 8
     }
     
     @IBAction func saveAction(sender: AnyObject) {
         delegate?.saveAction(self)
+    }
+    
+    @IBAction func changeAction(sender: AnyObject) {
     }
 
 }
