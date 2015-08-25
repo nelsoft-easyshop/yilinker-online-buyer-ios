@@ -69,9 +69,11 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
         let cell: CategoriesTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("CategoryIdentifier") as! CategoriesTableViewCell
         
         cell.selectionStyle = .None
+        cell.categoryLabel.text = self.categoryModel!.name[indexPath.row]
         
-        cell.categoryLabel.text = self.categoryModel!.name[indexPath.row]  
-//        cell.setPicture(self.categoryModel!.image[indexPath.row])
+        if self.categoryModel!.image.count != 0 {
+            cell.setPicture(self.categoryModel!.image[indexPath.row])
+        }
         
         return cell
     }
