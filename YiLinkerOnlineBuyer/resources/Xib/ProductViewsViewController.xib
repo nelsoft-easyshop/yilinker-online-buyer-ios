@@ -351,9 +351,12 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="41"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EN7-di-dBw" userLabel="separator">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="2"/>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EN7-di-dBw" userLabel="separator">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="1"/>
                     <color key="backgroundColor" red="0.7019608021" green="0.7019608021" blue="0.7019608021" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="l9Z-EZ-pda"/>
+                    </constraints>
                 </view>
                 <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="SEE MORE   " textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gFV-Rw-zmE">
                     <rect key="frame" x="0.0" y="0.0" width="222" height="41"/>
@@ -367,6 +370,11 @@
                 </imageView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="EN7-di-dBw" firstAttribute="top" secondItem="TvZ-9r-jaQ" secondAttribute="top" id="BJf-3V-MSM"/>
+                <constraint firstItem="EN7-di-dBw" firstAttribute="leading" secondItem="TvZ-9r-jaQ" secondAttribute="leading" id="pVJ-MR-unm"/>
+                <constraint firstAttribute="trailing" secondItem="EN7-di-dBw" secondAttribute="trailing" id="sva-fl-mfv"/>
+            </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <point key="canvasLocation" x="364.5" y="1155.5"/>
         </view>
@@ -383,7 +391,7 @@
                     <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9eV-P8-MMr">
+                <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9eV-P8-MMr">
                     <rect key="frame" x="353" y="13" width="9" height="17"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="9" id="QmJ-zb-3JN"/>
@@ -392,9 +400,6 @@
                     <state key="normal" title="Button" image="right-gray">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
-                    <connections>
-                        <action selector="sellerAction:" destination="b5m-Sg-d34" eventType="touchUpInside" id="mrI-Fc-bxw"/>
-                    </connections>
                 </button>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QSa-up-KMN" userLabel="Separator">
                     <rect key="frame" x="0.0" y="41" width="375" height="1"/>
