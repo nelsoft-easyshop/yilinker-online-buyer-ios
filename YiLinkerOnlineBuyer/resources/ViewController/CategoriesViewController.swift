@@ -19,6 +19,9 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.title = "Category Page"
+        configureNavigationBar()
+        
         let nib = UINib(nibName: "CategoriesTableViewCell", bundle: nil)
         self.tableView.registerNib(nib, forCellReuseIdentifier: "CategoryIdentifier")
         
@@ -29,6 +32,24 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
         super.viewWillAppear(animated)
         
         self.navigationController?.navigationBarHidden = false
+    }
+    
+    func configureNavigationBar() {
+
+        var backButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
+        backButton.frame = CGRectMake(0, 0, 40, 40)
+        backButton.addTarget(self, action: "back", forControlEvents: UIControlEvents.TouchUpInside)
+        backButton.setImage(UIImage(named: "back-white"), forState: UIControlState.Normal)
+        var customBackButton:UIBarButtonItem = UIBarButtonItem(customView: backButton)
+        
+        let navigationSpacer: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
+        navigationSpacer.width = -20
+        
+        self.navigationItem.leftBarButtonItems = [navigationSpacer, customBackButton]
+    }
+    
+    func back() {
+        self.navigationController?.popViewControllerAnimated(true)
     }
     
     // MARK: - Table View Data Source
@@ -99,9 +120,9 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
             categoryLabel.text! += parentText
             categoryLabel.sizeToFit()
             categoryLabel.frame.size.height = containerView.frame.size.height
-            var arrowImageView = UIImageView(frame: CGRectMake(categoryLabel.frame.size.width + 5, (categoryLabel.frame.size.height / 2) - (20 / 2), 12, 20))
-            arrowImageView.image = UIImage(named: "right")
-            arrowImageView.backgroundColor = .lightGrayColor()
+            var arrowImageView = UIImageView(frame: CGRectMake(categoryLabel.frame.size.width + 5, (categoryLabel.frame.size.height / 2) - (16 / 2), 10, 16))
+            arrowImageView.image = UIImage(named: "right-1")
+
             containerView.addSubview(arrowImageView)
         }
         
