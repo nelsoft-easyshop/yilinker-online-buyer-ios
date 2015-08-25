@@ -402,19 +402,14 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 
-                
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                 
                 if task.statusCode == 401 {
                     self.requestRefreshToken()
                 } else {
+                    println(error)
                     SVProgressHUD.dismiss()
                 }
-                
-                let alertController = UIAlertController(title: "Something Went Wrong", message: nil, preferredStyle: .Alert)
-                let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
-                alertController.addAction(defaultAction)
-                self.presentViewController(alertController, animated: true, completion: nil)
         })
     }
     
@@ -459,7 +454,6 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
             
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                SVProgressHUD.dismiss()
                 SVProgressHUD.dismiss()
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                 

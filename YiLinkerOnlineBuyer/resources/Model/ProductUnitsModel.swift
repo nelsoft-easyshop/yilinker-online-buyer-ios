@@ -14,6 +14,7 @@ class ProductUnitsModel {
     var sku: String = ""
     var price: String = ""
     var discountedPrice: String = ""
+    var discount: Int = 0
     
     var createdDate: String = ""
     var createdTimzeZoneType: Int = 0
@@ -47,6 +48,10 @@ class ProductUnitsModel {
             
             if let tempVar = dictionary["price"] as? String {
                 model.price = tempVar
+            }
+            
+            if let tempVar = dictionary["discount"] as? Int {
+                model.discount = tempVar
             }
             
             if let tempVar = dictionary["discountedPrice"] as? String {

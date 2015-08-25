@@ -472,6 +472,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
             }, completion: { finished in
                 if type == "cart" {
                     self.showAlert("This item has been added to your cart.")
+                    self.loadViewsWithDetails()
                 } else if type == "done" {
 //                    self.showAlert(type)
                 }

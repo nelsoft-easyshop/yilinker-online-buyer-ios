@@ -130,8 +130,14 @@ class ProductImagesView: UIView, UICollectionViewDataSource, UICollectionViewDel
         
         self.nameLabel.text = model.title
         self.nameLabel.sizeToFit()
-        self.originalPrice.text = "P" + model.productUnits[unitId].price
-        self.priceLabel.text = "P" + model.productUnits[unitId].discountedPrice
+        if model.productUnits[unitId].discount == 0 {
+            self.originalPrice.hidden = true
+            self.priceLabel.text = "P" + model.productUnits[unitId].price
+        } else {
+            self.originalPrice.text = "P" + model.productUnits[unitId].price
+            self.priceLabel.text = "P" + model.productUnits[unitId].discountedPrice
+        }
+        
         self.width = width
         
         self.images = model.productUnits[unitId].imageIds
