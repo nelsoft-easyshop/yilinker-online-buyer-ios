@@ -60,6 +60,7 @@
             <connections>
                 <outlet property="categoryLabel" destination="NbS-u2-dNh" id="wrP-oq-SPG"/>
                 <outlet property="pictureImageView" destination="WzY-LK-4IL" id="46s-nC-i9S"/>
+                <outlet property="separatorView" destination="cZi-9J-KTL" id="FOJ-0f-jSP"/>
             </connections>
             <point key="canvasLocation" x="317.5" y="341"/>
         </tableViewCell>

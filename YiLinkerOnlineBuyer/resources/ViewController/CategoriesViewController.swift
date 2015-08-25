@@ -13,8 +13,8 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
     @IBOutlet weak var tableView: UITableView!
 
     var categoryModel: CategoryModel!
-    
     var parentText: String = ""
+    var firstLoad: Bool = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,8 +24,11 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
         
         let nib = UINib(nibName: "CategoriesTableViewCell", bundle: nil)
         self.tableView.registerNib(nib, forCellReuseIdentifier: "CategoryIdentifier")
-        
-        requestCategories(parentId: "")
+
+        if firstLoad {
+            requestCategories(parentId: 1)
+            firstLoad = false
+        }
     }
 
     override func viewWillAppear(animated: Bool) {
@@ -68,7 +71,7 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
         cell.selectionStyle = .None
         
         cell.categoryLabel.text = self.categoryModel!.name[indexPath.row]  
-        cell.setPicture(self.categoryModel!.image[indexPath.row])
+//        cell.setPicture(self.categoryModel!.image[indexPath.row])
         
         return cell
     }
@@ -85,9 +88,10 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if categoryModel.isParent[indexPath.row] {
+        if categoryModel.hasChildren[indexPath.row] {
             let categories = CategoriesViewController(nibName: "CategoriesViewController", bundle: nil)
             categories.parentText = categoryModel.name[indexPath.row]
+            categories.firstLoad = firstLoad
             categories.requestCategories(parentId: categoryModel.id[indexPath.row])
             self.navigationController?.pushViewController(categories, animated: true)
         } else {
@@ -142,11 +146,11 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
     
     // MARK: - Request
     
-    func requestCategories(#parentId: String) {
+    func requestCategories(#parentId: Int) {
         SVProgressHUD.show()
-
+        println(parentId)
         let manager = APIManager.sharedInstance
-        let categoryUrl = "https://demo3526363.mockable.io/getCategories?parentId=1"
+        let categoryUrl = "http://online.api.easydeal.ph/api/v1/product/getCategories?parentId=" + String(parentId)
         
         manager.GET(categoryUrl, parameters: nil, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
