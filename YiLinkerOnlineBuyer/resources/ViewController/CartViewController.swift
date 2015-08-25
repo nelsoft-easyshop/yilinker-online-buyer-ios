@@ -124,7 +124,7 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
         var tempModel: CartModel = tableData[index]
         
         selectedValue = []
-        selectedValue.append(String(tempModel.productDetails.combinations[0].quantity) + "x")
+        //selectedValue.append(String(tempModel.productDetails.combinations[0].quantity) + "x")
         
         var tempAttributeId: [Int] = []
         var tempAttributeName: [String] = []
@@ -149,7 +149,7 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
         attributeModal.definesPresentationContext = true
         attributeModal.view.backgroundColor = UIColor.clearColor()
         attributeModal.view.frame.origin.y = attributeModal.view.frame.size.height
-        attributeModal.passModel(cartModel: tableData[index], combinationModel: tempModel.productDetails.combinations, selectedValue: selectedValue, quantity: tempModel.quantity)
+       // attributeModal.passModel(cartModel: tableData[index], combinationModel: tempModel.productDetails.combinations, selectedValue: selectedValue, quantity: tempModel.quantity)
         //        self.navigationController?.presentViewController(attributeModal, animated: true, completion: nil)
         self.tabBarController?.presentViewController(attributeModal, animated: true, completion: nil)
         
@@ -174,7 +174,8 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
     // MARK: Methods Updating Values
     func populateWishListTableView () {
         tableData = []
-        requestProductDetails(APIAtlas.cartUrl, params: nil)
+        //requestProductDetails(APIAtlas.cartUrl, params: nil)
+        requestProductDetails("http://demo3526363.mockable.io/api/v1/auth/cart/getCart", params: nil)
     }
     
     func updateCounterLabel() {
@@ -189,7 +190,7 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
         var totalPrice: Double = 0.0
         for tempModel in tableData {
             if tempModel.selected {
-                totalPrice += (Double(tempModel.productDetails.newPrice) * Double(tempModel.quantity))
+                //totalPrice += (Double(tempModel.productDetails.newPrice) * Double(tempModel.quantity))
             }
         }
         totalPriceLabel.text = "P \(formatter.stringFromNumber(totalPrice)!)"
@@ -203,33 +204,40 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell 	{
         var cell:CartTableViewCell = self.cartTableView.dequeueReusableCellWithIdentifier("CartTableViewCell") as! CartTableViewCell
         
+        
         //Set cell data
         var tempModel: CartModel = tableData[indexPath.row]
-        cell.productNameLabel.text = tempModel.productDetails.title
-        cell.productItemImageView.sd_setImageWithURL(tempModel.productDetails.image, placeholderImage: UIImage(named: "dummy-placeholder"))   //no image yet in API
-        println("\(tempModel.productDetails.image)")
-        var tempAttributesText: String = ""
-        var tempAttributeId: [Int] = []
-        var tempAttributeName: [String] = []
         
-//        for tempAttribute in tempModel.productDetails.attributes{
-//            tempAttributeId += tempAttribute.valueId
-//            tempAttributeName += tempAttribute.valueName
-//        }
-        
-        for tempId in tempModel.selectedAttributes {
-            if let index = find(tempAttributeId, tempId) {
-                if tempAttributesText.isEmpty {
-                    tempAttributesText = tempAttributeName[index]
-                } else {
-                    tempAttributesText += " | " + tempAttributeName[index]
+        for selectedProductUnit in tempModel.selectedAttributes {
+            for tempProductUnit in tempModel.productDetails.productUnits {
+                if selectedProductUnit == tempProductUnit.productUnitId.toInt() {
+                    if tempProductUnit.imageIds.count == 0 {
+                        cell.productItemImageView.sd_setImageWithURL(NSURL(string: tempModel.productDetails.image), placeholderImage: UIImage(named: "dummy-placeholder"))
+                    } else {
+                        cell.productItemImageView.sd_setImageWithURL(NSURL(string: tempProductUnit.imageIds[0]), placeholderImage: UIImage(named: "dummy-placeholder"))
+                    }
+                    
+                    var tempAttributesText: String = ""
+                    for tempId in tempProductUnit.combination {
+                        for tempAttributes in tempModel.productDetails.attributes {
+                            if let index = find(tempAttributes.valueId, tempId) {
+                                if tempAttributesText.isEmpty {
+                                    tempAttributesText = tempAttributes.valueName[index]
+                                } else {
+                                    tempAttributesText += " | " + tempAttributes.valueName[index]
+                                }
+                            }
+                        }
+                    }
+                    cell.productDetailsLabel?.text = tempAttributesText
+                    
+                    
+                    cell.productPriceLabel.text = "P" + tempProductUnit.discountedPrice + " x\(tempModel.quantity)"
                 }
-                
             }
         }
-        cell.productDetailsLabel?.text = tempAttributesText
         
-        cell.productPriceLabel.text = "P\(formatter.stringFromNumber(tempModel.productDetails.newPrice)!) x\(tempModel.quantity)"
+        cell.productNameLabel.text = tempModel.productDetails.title
         
         cell.delegate = self
         return cell

@@ -488,7 +488,10 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
 
     func gotoCheckoutFromAttributes(controller: ProductAttributeViewController) {
         let checkout = CheckoutContainerViewController(nibName: "CheckoutContainerViewController", bundle: nil)
-        self.navigationController?.pushViewController(checkout, animated: true)
+        //self.navigationController?.pushViewController(checkout, animated: true)
+        let navigationController: UINavigationController = UINavigationController(rootViewController: checkout)
+        navigationController.navigationBar.barTintColor = Constants.Colors.appTheme
+        self.tabBarController?.presentViewController(navigationController, animated: true, completion: nil)
     }
     
     func pressedCancelReview(controller: ProductReviewViewController) {
