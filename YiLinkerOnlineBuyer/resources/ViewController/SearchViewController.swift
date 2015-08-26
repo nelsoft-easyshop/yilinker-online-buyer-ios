@@ -21,6 +21,10 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         super.viewDidLoad()
 
         self.initializeViews()
+        
+        let vc = FollowedSellerViewController(nibName: "FollowedSellerViewController", bundle: nil)
+        vc.edgesForExtendedLayout = UIRectEdge.None
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 
     override func didReceiveMemoryWarning() {

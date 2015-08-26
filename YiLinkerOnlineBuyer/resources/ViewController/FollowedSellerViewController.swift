@@ -22,13 +22,21 @@ class FollowedSellerViewController: UIViewController, EmptyViewDelegate {
         self.tableView.registerNib(nib, forCellReuseIdentifier: "FollowedSellerIdentifier")
         
         requestReviewDetails()
+        
+//        self.navigationItem.setLeftBarButtonItem(UIBarButtonItem(image: UIImage(named: "back-white"), style: UIBarButtonItemStyle.Plain, target: self, action: "back-Action"), animated: true)
+    }
+    
+    // MARK: - Methods
+    
+    func backAction() {
+        self.navigationController?.popViewControllerAnimated(true)
     }
     
     // MARK: - Table View Data Source
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if followedSellerModel != nil {
-            return followedSellerModel.names.count
+            return followedSellerModel.fullName.count
         } else {
             return 0
         }
@@ -39,10 +47,10 @@ class FollowedSellerViewController: UIViewController, EmptyViewDelegate {
         
         cell.selectionStyle = .None
         
-        cell.nameLabel.text = followedSellerModel.names[indexPath.row]
+        cell.nameLabel.text = followedSellerModel.fullName[indexPath.row]
         cell.specialtyLabel.text = String("Specialty: ") + followedSellerModel.specialty[indexPath.row]
-        cell.setPicture(followedSellerModel.images[indexPath.row])
-        cell.setRating(followedSellerModel.ratings[indexPath.row])
+        cell.setPicture(followedSellerModel.profileImageUrl[indexPath.row])
+//        cell.setRating(followedSellerModel.ratings[indexPath.row])
         
         return cell
     }
@@ -51,7 +59,6 @@ class FollowedSellerViewController: UIViewController, EmptyViewDelegate {
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let seller = SellerViewController(nibName: "SellerViewController", bundle: nil)
-//        self.presentViewController(vc, animated: true, completion: nil)
         self.navigationController?.pushViewController(seller, animated: true)
     }
     
@@ -61,10 +68,10 @@ class FollowedSellerViewController: UIViewController, EmptyViewDelegate {
         SVProgressHUD.show()
         
         let manager = APIManager.sharedInstance
-        let url = "http://online.api.easydeal.ph/" + "api/v1/auth/getFollowedSellers?access_token=" + "NTY1YzQxYjAzZWQ4NDEwNWYyYjFjMWZkMjIzZGY1NTZlNGM3ZTMxZjAyY2QxM2YzYzEyZTYxYzkzYzUxZTgyYQ"
-        let params = ["page": "1", "limit": "10", "keyword": ""]
+        let url = "http://online.api.easydeal.ph/api/v1/auth/getFollowedSellers"
+        let params = ["page": "1", "limit": "99", "access_token": "MDVkZTBmNjRmYmI3YTJjMTE0MDIzZDM0NmU4MzBiZmNmNDQ0YmZhMDU1ZTNmMjc5NGU0NDg3ZGZiZDgzOWYxMg"]
         
-        manager.GET("https://demo3526363.mockable.io/follwedSeller", parameters: nil, success: {
+        manager.POST(url, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
             self.followedSellerModel = FollowedSellerModel.parseDataWithDictionary(responseObject)
