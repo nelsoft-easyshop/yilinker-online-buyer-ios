@@ -22,6 +22,25 @@ class FollowedSellerViewController: UIViewController, EmptyViewDelegate {
         self.tableView.registerNib(nib, forCellReuseIdentifier: "FollowedSellerIdentifier")
         
         requestReviewDetails()
+        
+        customizedNavigationBar()
+    }
+    
+    // MARK: - Methods
+    
+    func customizedNavigationBar() {
+        
+        self.title = "Followed Seller"
+        
+        let backButton: UIBarButtonItem = UIBarButtonItem(image: UIImage(named: "back-white"), style: UIBarButtonItemStyle.Plain, target: self, action: "back-Action")
+        let navigationSpacer: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
+        navigationSpacer.width = -10
+        self.navigationItem.leftBarButtonItems = [navigationSpacer, backButton]
+        self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
+    }
+    
+    func backAction() {
+        self.navigationController?.popViewControllerAnimated(true)
     }
     
     // MARK: - Table View Data Source
