@@ -28,7 +28,7 @@ class FollowedSellerViewController: UIViewController, EmptyViewDelegate {
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if followedSellerModel != nil {
-            return followedSellerModel.names.count
+            return followedSellerModel.id.count
         } else {
             return 0
         }
@@ -39,10 +39,10 @@ class FollowedSellerViewController: UIViewController, EmptyViewDelegate {
         
         cell.selectionStyle = .None
         
-        cell.nameLabel.text = followedSellerModel.names[indexPath.row]
+        cell.nameLabel.text = followedSellerModel.fullName[indexPath.row]
         cell.specialtyLabel.text = String("Specialty: ") + followedSellerModel.specialty[indexPath.row]
-        cell.setPicture(followedSellerModel.images[indexPath.row])
-        cell.setRating(followedSellerModel.ratings[indexPath.row])
+        cell.setPicture(followedSellerModel.profileImageUrl[indexPath.row])
+//        cell.setRating(followedSellerModel.ratings[indexPath.row])
         
         return cell
     }
@@ -61,7 +61,11 @@ class FollowedSellerViewController: UIViewController, EmptyViewDelegate {
         SVProgressHUD.show()
         
         let manager = APIManager.sharedInstance
-        manager.GET("https://demo3526363.mockable.io/follwedSeller", parameters: nil, success: {
+        let url = "http://online.api.easydeal.ph/api/v1/auth/getFollowedSellers"
+        let params = ["access_token": "MDNlMTE2M2ExMzBiNWZlMDliZDVhOGQ5MWYxZjE0ODFiMGVkYWM0NDhlMDkwNzBmOWEzMWJjNTYzMGQ3NDIzZQ",
+            "page": "1", "limit": "99"]
+        
+        manager.POST(url, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
             self.followedSellerModel = FollowedSellerModel.parseDataWithDictionary(responseObject)
@@ -79,6 +83,7 @@ class FollowedSellerViewController: UIViewController, EmptyViewDelegate {
     
     func addEmptyView() {
         self.emptyView = UIView.loadFromNibNamed("EmptyView", bundle: nil) as? EmptyView
+        self.emptyView?.frame = self.view.frame
         self.emptyView!.delegate = self
         self.view.addSubview(self.emptyView!)
     }
