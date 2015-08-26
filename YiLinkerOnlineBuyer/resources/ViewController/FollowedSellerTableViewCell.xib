@@ -2,7 +2,6 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -17,14 +16,13 @@
                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dummy-placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="Bai-hr-oIn">
                         <rect key="frame" x="8" y="8" width="50" height="50"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="50" id="9Oq-nB-g2q"/>
-                            <constraint firstAttribute="height" constant="50" id="tcK-5Z-yp0"/>
+                            <constraint firstAttribute="width" constant="50" id="iHe-Nw-IqX"/>
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Beats Audio Store" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qCO-Ob-hFw">
                         <rect key="frame" x="71" y="12" width="178" height="21"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="21" id="VrH-MA-0DM"/>
+                            <constraint firstAttribute="height" constant="21" id="YGD-55-qj5"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
@@ -33,7 +31,7 @@
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Specialty: Music, Headphones" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pe1-bn-VbE">
                         <rect key="frame" x="71" y="33" width="181" height="21"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="21" id="pLG-oM-ugO"/>
+                            <constraint firstAttribute="height" constant="21" id="2Gi-rl-c77"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="11"/>
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
@@ -43,33 +41,32 @@
                         <rect key="frame" x="0.0" y="66" width="375" height="1"/>
                         <color key="backgroundColor" red="0.80000001190000003" green="0.80000001190000003" blue="0.80000001190000003" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="1" id="CPq-dw-i6N"/>
+                            <constraint firstAttribute="height" constant="1" id="p8s-ll-F0C"/>
                         </constraints>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mXp-A3-IVL" userLabel="ratings">
                         <rect key="frame" x="257" y="23" width="110" height="20"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="110" id="A9y-x2-iaR"/>
-                            <constraint firstAttribute="height" constant="20" id="yu2-8R-iUp"/>
+                            <constraint firstAttribute="width" constant="110" id="eEO-p8-y6e"/>
                         </constraints>
                     </view>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="mXp-A3-IVL" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="15" id="3HO-39-vJ6"/>
-                    <constraint firstItem="qCO-Ob-hFw" firstAttribute="leading" secondItem="Bai-hr-oIn" secondAttribute="trailing" constant="13" id="7qC-2J-hfv"/>
-                    <constraint firstItem="pe1-bn-VbE" firstAttribute="leading" secondItem="Bai-hr-oIn" secondAttribute="trailing" constant="13" id="EnS-YG-3n4"/>
-                    <constraint firstItem="Bai-hr-oIn" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="Ixt-OB-iS9"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="mjT-7W-XOX" secondAttribute="bottom" constant="-9" id="N68-EQ-nFS"/>
-                    <constraint firstItem="pe1-bn-VbE" firstAttribute="top" secondItem="qCO-Ob-hFw" secondAttribute="bottom" id="UbE-vn-BWT"/>
-                    <constraint firstItem="mXp-A3-IVL" firstAttribute="leading" secondItem="qCO-Ob-hFw" secondAttribute="trailing" constant="8" id="YnC-nq-tUD"/>
-                    <constraint firstItem="mjT-7W-XOX" firstAttribute="top" secondItem="pe1-bn-VbE" secondAttribute="bottom" constant="12" id="eX0-UJ-VPF"/>
-                    <constraint firstItem="Bai-hr-oIn" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="fBh-bR-BDD"/>
-                    <constraint firstItem="mjT-7W-XOX" firstAttribute="top" secondItem="mXp-A3-IVL" secondAttribute="bottom" constant="23" id="gmV-fz-Nhi"/>
-                    <constraint firstItem="mjT-7W-XOX" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="-8" id="ipx-fx-cIV"/>
-                    <constraint firstItem="mjT-7W-XOX" firstAttribute="top" secondItem="Bai-hr-oIn" secondAttribute="bottom" constant="8" id="jan-g8-qQS"/>
-                    <constraint firstItem="mXp-A3-IVL" firstAttribute="leading" secondItem="pe1-bn-VbE" secondAttribute="trailing" constant="5" id="sk2-Vf-AJh"/>
-                    <constraint firstItem="mXp-A3-IVL" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="v7P-0p-0u3"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="mjT-7W-XOX" secondAttribute="trailing" constant="-8" id="vX3-bW-Ah9"/>
+                    <constraint firstItem="mjT-7W-XOX" firstAttribute="top" secondItem="Bai-hr-oIn" secondAttribute="bottom" constant="8" id="8fw-F9-GJu"/>
+                    <constraint firstItem="mjT-7W-XOX" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="97m-YE-3XP"/>
+                    <constraint firstAttribute="trailing" secondItem="mjT-7W-XOX" secondAttribute="trailing" id="ETO-Nz-k3z"/>
+                    <constraint firstItem="qCO-Ob-hFw" firstAttribute="leading" secondItem="Bai-hr-oIn" secondAttribute="trailing" constant="13" id="I2W-4y-kwZ"/>
+                    <constraint firstAttribute="trailing" secondItem="mXp-A3-IVL" secondAttribute="trailing" constant="8" id="LuG-IS-wDp"/>
+                    <constraint firstItem="Bai-hr-oIn" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="MKb-Ci-Bck"/>
+                    <constraint firstItem="pe1-bn-VbE" firstAttribute="top" secondItem="qCO-Ob-hFw" secondAttribute="bottom" id="NRh-gh-fjL"/>
+                    <constraint firstItem="pe1-bn-VbE" firstAttribute="leading" secondItem="Bai-hr-oIn" secondAttribute="trailing" constant="13" id="OQA-uO-hsX"/>
+                    <constraint firstItem="qCO-Ob-hFw" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="12" id="Yk7-G5-wLg"/>
+                    <constraint firstItem="Bai-hr-oIn" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="Yvd-7H-QN7"/>
+                    <constraint firstItem="mXp-A3-IVL" firstAttribute="leading" secondItem="pe1-bn-VbE" secondAttribute="trailing" constant="5" id="Zab-LK-yso"/>
+                    <constraint firstAttribute="bottom" secondItem="mjT-7W-XOX" secondAttribute="bottom" constant="-1" id="a1l-uV-Mqn"/>
+                    <constraint firstItem="mXp-A3-IVL" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="23" id="iLp-St-EDA"/>
+                    <constraint firstItem="mjT-7W-XOX" firstAttribute="top" secondItem="mXp-A3-IVL" secondAttribute="bottom" constant="23" id="oxb-dg-sFR"/>
+                    <constraint firstItem="mXp-A3-IVL" firstAttribute="leading" secondItem="qCO-Ob-hFw" secondAttribute="trailing" constant="8" id="tRb-aC-aoK"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
