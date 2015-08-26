@@ -62,8 +62,9 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     
     var emptyView: EmptyView?
     
-    let productUrl = "https://demo1928934.mockable.io/yi/getproductDetails?productId=1000"
-    let reviewUrl = "https://demo5885209.mockable.io/api/v1/product/getReviews?productId=1000"
+    let productUrl = "http://online.api.easydeal.ph/api/v1/product/getProductDetail?productId=1"
+    let reviewUrl = "http://online.api.easydeal.ph/api/v1/product/getProductReviews"
+    let sellerUrl = "http://online.api.easydeal.ph/api/v1/user/getStoreInfo"
     
     var tabController = CustomTabBarController()
     
@@ -81,28 +82,18 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         setBorderOf(view: buyItNowView, width: 1, color: .grayColor(), radius: 3)
         
         requestProductDetails(productUrl, params: nil)
-//        requestReviewDetails(reviewUrl, params: nil)
-        requestReviewDetails("http://online.api.easydeal.ph/api/v1/product/getProductReviews", params: ["productId": "1"])
+        requestReviewDetails(reviewUrl, params: ["productId": "1"])
         
         buyItNowView.addGestureRecognizer(tapGesture("buyItNowAction:"))
     }
     
     override func viewWillAppear(animated: Bool) {
-        configureNavigationBar()
-        
-        var seeMoreLabel = UILabel(frame: CGRectMake((buyItNowView.frame.size.width / 2) - 60, 0, 90, buyItNowView.frame.size.height))
-        seeMoreLabel.frame.origin.x = 0
-        seeMoreLabel.frame.size.width = addToCartButton.frame.size.width
-        seeMoreLabel.text = "BUY IT NOW"
-        seeMoreLabel.textAlignment = .Center
-        seeMoreLabel.textColor = .whiteColor()
-        seeMoreLabel.backgroundColor = .redColor()
-        seeMoreLabel.font = UIFont.boldSystemFontOfSize(13.0)
-        
-        var seeMoreImageView = UIImageView(frame: CGRectMake(seeMoreLabel.frame.size.width, (seeMoreLabel.frame.size.height / 2) - 6, 13, 13))
-        seeMoreImageView.image = UIImage(named: "buy")
-//        seeMoreLabel.addSubview(seeMoreImageView)
-//        self.buyItNowView.addSubview(seeMoreLabel)
+        UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.Default
+        self.navigationController?.navigationBar.barTintColor = .whiteColor()
+        self.navigationController?.navigationBar.tintColor = .grayColor()
+        if self.productDetailsModel == nil {
+            configureNavigationBar()
+        }
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -118,7 +109,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         SVProgressHUD.show()
         SVProgressHUD.setBackgroundColor(UIColor.clearColor())
         
-        manager.GET("http://online.api.easydeal.ph/api/v1/product/getProductDetail?productId=1", parameters: params, success: {
+        manager.GET(self.productUrl, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
             self.productDetailsModel = ProductDetailsModel.parseDataWithDictionary(responseObject)
@@ -126,8 +117,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
 //            self.combinations = self.productDetailsModel.combinations
             self.populateDetails()
             
-            let seller = "https://demo5885209.mockable.io/api/v1/seller/getDetails?sellerId=111"
-            self.requestSellerDetails(seller, params: nil)
+            self.requestSellerDetails(self.sellerUrl, params: ["userId": "1"])
             
             self.productRequest = true
             self.productSuccess = true
@@ -143,7 +133,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     }
     
     func requestReviewDetails(url: String, params: NSDictionary!) {
-        manager.POST(url, parameters: params, success: {
+        manager.POST(self.reviewUrl, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
             self.productReviewModel = ProductReviewModel.parseDataWithDictionary(responseObject)
@@ -162,7 +152,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     
     func requestSellerDetails(url: String, params: NSDictionary!) {
         
-        manager.GET("https://demo3526363.mockable.io/productSeller", parameters: nil, success: {
+        manager.POST(self.sellerUrl, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
             self.productSellerModel = ProductSellerModel.parseDataWithDictionary(responseObject)
@@ -482,6 +472,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
             }, completion: { finished in
                 if type == "cart" {
                     self.showAlert("This item has been added to your cart.")
+                    self.loadViewsWithDetails()
                 } else if type == "done" {
 //                    self.showAlert(type)
                 }
@@ -532,6 +523,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     
     func loadViewsWithDetails() {
         
+        self.tableView.hidden = false
         self.buttonsContainer.hidden = false
         
         self.getHeaderView().addSubview(self.getProductImagesView())
@@ -543,7 +535,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         self.getFooterView().addSubview(self.getProductReviewFooterView())
         self.getFooterView().addSubview(self.getProductSellerView())
         
-        self.productImagesView.setDetails(self.productDetailsModel, width: self.view.frame.size.width)
+        self.productImagesView.setDetails(self.productDetailsModel, unitId: unitId.toInt()!, width: self.view.frame.size.width)
 //        self.setDetails(productDetailsModel.details)
         self.setAttributes(self.productDetailsModel.attributes, productUnits: self.productDetailsModel.productUnits, unitId: "1", quantity: 0)
         self.productDescriptionView.setDescription(productDetailsModel.shortDescription, full: productDetailsModel.fullDescription)

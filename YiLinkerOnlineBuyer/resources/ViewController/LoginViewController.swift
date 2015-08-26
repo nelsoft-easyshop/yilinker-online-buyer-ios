@@ -237,7 +237,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, GIDSignIn
         let manager: APIManager = APIManager.sharedInstance
         //seller@easyshop.ph
         //password
-        let parameters: NSDictionary = ["email": self.emailAddressTextField.text,"password": self.passwordTextField.text, "client_id": "1_167rxzqvid8g8swggwokcoswococscocc8ck44wo0g88owgkcc", "client_secret": "317eq8nohry84ooc0o8woo8000c0k844c4cggws84g80scwwog", "grant_type": "http://yilinker-online.com/grant/buyer"]
+        let parameters: NSDictionary = ["email": self.emailAddressTextField.text,"password": self.passwordTextField.text, "client_id": Constants.Credentials.clientID, "client_secret": Constants.Credentials.clientSecret, "grant_type": Constants.Credentials.grantBuyer]
         
         manager.POST(APIAtlas.loginUrl, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in

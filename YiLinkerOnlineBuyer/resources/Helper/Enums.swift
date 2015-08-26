@@ -18,3 +18,10 @@ enum PaymentType {
     case COD
     case CreditCard
 }
+
+enum CustomizeShoppingType {
+    case Categories
+    case Seller
+    case Promos
+    case Others
+}

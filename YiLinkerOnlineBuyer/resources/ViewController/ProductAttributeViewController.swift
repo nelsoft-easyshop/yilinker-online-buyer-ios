@@ -182,7 +182,7 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
         self.attributes = productDetailsModel.attributes as [ProductAttributeModel]
         self.selectedId = selectedId as! [String]
         self.selectedValue = selectedValue as! [String]
-        self.unitId = String(index)
+        self.unitId = String(unitId)
         self.selectedCombination = productDetailsModel.productUnits[index].combination
         
         self.maximumStock = productDetailsModel.productUnits[index].quantity
@@ -402,26 +402,21 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 
-                
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                 
                 if task.statusCode == 401 {
                     self.requestRefreshToken()
                 } else {
+                    println(error)
                     SVProgressHUD.dismiss()
                 }
-                
-                let alertController = UIAlertController(title: "Something Went Wrong", message: nil, preferredStyle: .Alert)
-                let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
-                alertController.addAction(defaultAction)
-                self.presentViewController(alertController, animated: true, completion: nil)
         })
     }
     
     func requestRefreshToken() {
         let url: String = "http://online.api.easydeal.ph/api/v1/login"
-        let params: NSDictionary = ["client_id": Constants.Credentials.client_id,
-            "client_secret": Constants.Credentials.cliend_secret,
+        let params: NSDictionary = ["client_id": Constants.Credentials.clientID,
+            "client_secret": Constants.Credentials.clientSecret,
             "grant_type": Constants.Credentials.grantRefresh,
             "refresh_token": SessionManager.refreshToken()]
         
@@ -459,7 +454,6 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
             
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                SVProgressHUD.dismiss()
                 SVProgressHUD.dismiss()
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                 
