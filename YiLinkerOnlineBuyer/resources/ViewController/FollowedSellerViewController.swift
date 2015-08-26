@@ -32,7 +32,7 @@ class FollowedSellerViewController: UIViewController, EmptyViewDelegate {
         
         self.title = "Followed Seller"
         
-        let backButton: UIBarButtonItem = UIBarButtonItem(image: UIImage(named: "back-white"), style: UIBarButtonItemStyle.Plain, target: self, action: "back-Action")
+        let backButton: UIBarButtonItem = UIBarButtonItem(image: UIImage(named: "back-white"), style: UIBarButtonItemStyle.Plain, target: self, action: "backAction")
         let navigationSpacer: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
         navigationSpacer.width = -10
         self.navigationItem.leftBarButtonItems = [navigationSpacer, backButton]
