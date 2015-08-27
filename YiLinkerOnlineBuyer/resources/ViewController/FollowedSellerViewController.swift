@@ -21,7 +21,7 @@ class FollowedSellerViewController: UIViewController, EmptyViewDelegate {
         let nib = UINib(nibName: "FollowedSellerTableViewCell", bundle: nil)
         self.tableView.registerNib(nib, forCellReuseIdentifier: "FollowedSellerIdentifier")
         
-        requestReviewDetails()
+        requestFollowedSelers()
         
         customizedNavigationBar()
     }
@@ -70,18 +70,17 @@ class FollowedSellerViewController: UIViewController, EmptyViewDelegate {
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let seller = SellerViewController(nibName: "SellerViewController", bundle: nil)
-//        self.presentViewController(vc, animated: true, completion: nil)
         self.navigationController?.pushViewController(seller, animated: true)
     }
     
     // MARK: - Request
     
-    func requestReviewDetails() {
+    func requestFollowedSelers() {
         SVProgressHUD.show()
         
         let manager = APIManager.sharedInstance
         let url = "http://online.api.easydeal.ph/api/v1/auth/getFollowedSellers"
-        let params = ["access_token": "MDNlMTE2M2ExMzBiNWZlMDliZDVhOGQ5MWYxZjE0ODFiMGVkYWM0NDhlMDkwNzBmOWEzMWJjNTYzMGQ3NDIzZQ",
+        let params = ["access_token": "MzFiNWY1ZDI3ZTkxM2IwMDdjNjMwNzVjYzk0ZTgxYzZmNWI1OWEwYjFjZDk5Y2FhMTM1OGU0MTFiNmU3MzZmYQ",
             "page": "1", "limit": "99"]
         
         manager.POST(url, parameters: params, success: {
@@ -108,7 +107,7 @@ class FollowedSellerViewController: UIViewController, EmptyViewDelegate {
     }
     
     func didTapReload() {
-        requestReviewDetails()
+        requestFollowedSelers()
         self.emptyView?.removeFromSuperview()
     }
     
