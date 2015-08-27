@@ -436,23 +436,6 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         view.layer.cornerRadius = radius
     }
     
-    func shareTextImageAndURL(#sharingText: String?, sharingImage: UIImage?, sharingURL: NSURL?) {
-        var sharingItems = [AnyObject]()
-        
-        if let text = sharingText {
-            sharingItems.append(text)
-        }
-        if let image = sharingImage {
-            sharingItems.append(image)
-        }
-        if let url = sharingURL {
-            sharingItems.append(url)
-        }
-        
-        let activityViewController = UIActivityViewController(activityItems: sharingItems, applicationActivities: nil)
-        self.presentViewController(activityViewController, animated: true, completion: nil)
-    }
-    
     func loadViewsWithDetails() {
         
         self.tableView.hidden = false
@@ -615,6 +598,14 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         self.emptyView = UIView.loadFromNibNamed("EmptyView", bundle: nil) as? EmptyView
         self.emptyView!.delegate = self
         self.view.addSubview(self.emptyView!)
+    }
+    
+    func addWishlistBadge() {
+        if let badgeValue = (self.tabController.tabBar.items![3] as! UITabBarItem).badgeValue?.toInt() {
+            (self.tabController.tabBar.items![3] as! UITabBarItem).badgeValue = String(badgeValue + 1)
+        } else {
+            (self.tabController.tabBar.items![3] as! UITabBarItem).badgeValue = "1"
+        }
     }
 
     // MARK: - Product View Delegate
@@ -825,45 +816,12 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     }
 
     func barShareAction() {
-
-//        var imageToAnimate = UIImageView()
-//        imageToAnimate.frame = self.productImagesView.collectionView.frame
-//
-//        for subView in self.productImagesView.collectionView.subviews as! [UIView] {
-//            for views in subView.subviews as! [UIView] {
-//                for imageView in views.subviews as! [UIImageView] {
-//                    if imageView.isKindOfClass(UIImageView) {
-//                        imageToAnimate.image = imageView.image
-//                    }
-//                }
-//            }
-//        }
-//
-//        self.view.addSubview(imageToAnimate)
-//        UIView.animateWithDuration(0.3, animations: {
-//            imageToAnimate.transform = CGAffineTransformMakeScale(0.1, 0.1)
-//            }, completion: { finished in //after scaling
-//                UIView.animateWithDuration(0.3, animations: { //after animating
-//                    imageToAnimate.center = CGPointMake(250, self.tabController.tabBar.frame.origin.y - (self.tabController.tabBar.frame.size.height / 2))
-//                    imageToAnimate.alpha = 0.0
-//                    }, completion: { finished in
-//                        if let badgeValue = (self.tabController.tabBar.items![3] as! UITabBarItem).badgeValue?.toInt() {
-//                            (self.tabController.tabBar.items![3] as! UITabBarItem).badgeValue = String(badgeValue + 1)
-//                        } else {
-//                            (self.tabController.tabBar.items![3] as! UITabBarItem).badgeValue = "1"
-//                        }
-//                })
-//        })
-
-        shareTextImageAndURL(sharingText: "Sample Text", sharingImage: UIImage(named: "s61"), sharingURL: NSURL(fileURLWithPath: "http://www.Easyshop.ph"))
-    }
-    
-    func addWishlistBadge() {
-        if let badgeValue = (self.tabController.tabBar.items![3] as! UITabBarItem).badgeValue?.toInt() {
-            (self.tabController.tabBar.items![3] as! UITabBarItem).badgeValue = String(badgeValue + 1)
-        } else {
-            (self.tabController.tabBar.items![3] as! UITabBarItem).badgeValue = "1"
-        }
+        var sharingItems = [AnyObject]()
+        sharingItems.append("Sample Caption" + "\n")
+        sharingItems.append(NSURL(string: "http://online.api.easydeal.ph/")!)
+        
+        let shareViewController = UIActivityViewController(activityItems: sharingItems, applicationActivities: nil)
+        self.presentViewController(shareViewController, animated: true, completion: nil)
     }
     
 }
