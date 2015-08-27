@@ -12,23 +12,23 @@ class WishlistModel: NSObject {
     
     var selected: Bool = false
     var unitId: Int = 0
+    var itemId: Int = 0
     var productDetails: WishlistProductDetailsModel!
-    var selectedAttributes: [Int] = []
     var quantity: Int = 0
     
     
-    init(unitId: Int, productDetails: WishlistProductDetailsModel!, selectedAttributes: [Int], quantity: Int, selected: Bool){
+    init(unitId: Int, itemId: Int, productDetails: WishlistProductDetailsModel!, quantity: Int, selected: Bool){
         self.unitId = unitId
+        self.itemId = itemId
         self.productDetails = productDetails
-        self.selectedAttributes = selectedAttributes
         self.quantity = quantity
         self.selected = selected
     }
     
     class func parseDataWithDictionary(dictionary: AnyObject) -> WishlistModel {
         var unitId: Int = 0
+        var itemId: Int = 0
         var productDetails: WishlistProductDetailsModel?
-        var selectedAttributes: [Int] = []
         var quantity: Int = 0
         
         if dictionary.isKindOfClass(NSDictionary) {
@@ -36,12 +36,12 @@ class WishlistModel: NSObject {
                 unitId = tempVar
             }
             
-            if let tempVar = dictionary["product"] as? NSDictionary {
-                productDetails = WishlistProductDetailsModel.parseDataWithDictionary(tempVar)
+            if let tempVar = dictionary["itemId"] as? Int {
+                itemId = tempVar
             }
             
-            if let tempVar = dictionary["selectedAttributes"] as? NSArray {
-                selectedAttributes = tempVar as! [Int]
+            if let tempVar = dictionary["product"] as? NSDictionary {
+                productDetails = WishlistProductDetailsModel.parseDataWithDictionary(tempVar)
             }
             
             if let tempVar = dictionary["quantity"] as? Int {
@@ -49,6 +49,6 @@ class WishlistModel: NSObject {
             }
         }
         
-        return WishlistModel(unitId: unitId, productDetails: productDetails!, selectedAttributes: selectedAttributes, quantity: quantity, selected: false)
+        return WishlistModel(unitId: unitId, itemId: itemId, productDetails: productDetails!, quantity: quantity, selected: false)
     }
 }

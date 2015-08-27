@@ -22,10 +22,14 @@ class WishlistProductDetailsModel {
     var attributes: [ProductAttributeModel] = [] //done
     var productUnits: [ProductUnitsModel] = []
     
+    var unitId: String = ""
+    var itemId: Int = 0
+    var quantity: Int = 0
+    
     //DETAILS ???
     //BADGES  ???
     
-    init(id: String, title: String, slug: String, image: String, images: NSArray, shortDescription: String, fullDescription: String, sellerId: Int, attributes: NSArray, productUnits: NSArray) {
+    init(id: String, title: String, slug: String, image: String, images: NSArray, shortDescription: String, fullDescription: String, sellerId: Int, attributes: NSArray, productUnits: NSArray, unitId: String, itemId: Int, quantity: Int) {
         
         self.id = id
         self.title = title
@@ -38,6 +42,10 @@ class WishlistProductDetailsModel {
         
         self.attributes = attributes as! [ProductAttributeModel]
         self.productUnits = productUnits as! [ProductUnitsModel]
+        
+        self.unitId = unitId
+        self.itemId = itemId
+        self.quantity = quantity
     }
     
     class func parseDataWithDictionary(dictionary: AnyObject) -> WishlistProductDetailsModel {
@@ -53,6 +61,10 @@ class WishlistProductDetailsModel {
         
         var attributes: [ProductAttributeModel] = [] //done
         var productUnits: [ProductUnitsModel] = []
+        
+        var unitId: String = ""
+        var itemId: Int = 0
+        var quantity: Int = 0
         
         //DETAILS ???
         //BADGES  ???
@@ -103,7 +115,21 @@ class WishlistProductDetailsModel {
             for subValue in dictionary["productUnits"] as! NSArray {
                 let model: ProductUnitsModel = ProductUnitsModel.parseProductUnits(subValue as! NSDictionary)
                 productUnits.append(model)
-            } // data
+            }
+            
+            if let tempVar = dictionary["unitId"] as? String {
+                unitId = tempVar
+            }
+            
+            if let tempVar = dictionary["itemId"] as? Int {
+                itemId = tempVar
+            }
+            
+            if let tempVar = dictionary["quantity"] as? Int {
+                quantity = tempVar
+            }
+            
+            // data
         } // dictionary
         
         return WishlistProductDetailsModel(
@@ -116,7 +142,10 @@ class WishlistProductDetailsModel {
             fullDescription: fullDescription,
             sellerId: sellerId,
             attributes: attributes,
-            productUnits: productUnits)
+            productUnits: productUnits,
+            unitId: unitId,
+            itemId: itemId,
+            quantity: quantity)
         
         
     } // parseDataWithDictionary
