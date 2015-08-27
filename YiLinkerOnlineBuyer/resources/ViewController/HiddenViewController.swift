@@ -53,11 +53,26 @@ class HiddenViewController: UIViewController {
         } else if index == 3 {
             
         } else if index == 4 {
-            
+            if !SessionManager.isLoggedIn() {
+                var titleLabel = UILabel(frame: CGRectZero)
+                titleLabel.font = UIFont(name: "Panton-Regular", size: 20)
+                titleLabel.text = "Customize Shopping"
+                titleLabel.textColor = .whiteColor()
+                titleLabel.sizeToFit()
+                self.navigationItem.titleView = titleLabel
+            }
         } else if index == 5 {
-            
+            if SessionManager.isLoggedIn() {
+                var titleLabel = UILabel(frame: CGRectZero)
+                titleLabel.text = "Customize Shopping"
+                titleLabel.font = UIFont(name: "Panton-Regular", size: 20)
+                titleLabel.textColor = .whiteColor()
+                titleLabel.sizeToFit()
+                self.navigationItem.titleView = titleLabel
+            }
         } else if index == 6 {
             var titleLabel = UILabel(frame: CGRectZero)
+            titleLabel.font = UIFont(name: "Panton-Regular", size: 20)
             titleLabel.text = "Category Page"
             titleLabel.textColor = .whiteColor()
             titleLabel.sizeToFit()

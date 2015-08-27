@@ -12,6 +12,7 @@ class CategoriesTableViewCell: UITableViewCell {
 
     @IBOutlet weak var pictureImageView: UIImageView!
     @IBOutlet weak var categoryLabel: UILabel!
+    @IBOutlet weak var separatorView: UIView!
     
     override func awakeFromNib() {
         super.awakeFromNib()

@@ -415,8 +415,8 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
     
     func requestRefreshToken() {
         let url: String = "http://online.api.easydeal.ph/api/v1/login"
-        let params: NSDictionary = ["client_id": Constants.Credentials.client_id,
-            "client_secret": Constants.Credentials.cliend_secret,
+        let params: NSDictionary = ["client_id": Constants.Credentials.clientID,
+            "client_secret": Constants.Credentials.clientSecret,
             "grant_type": Constants.Credentials.grantRefresh,
             "refresh_token": SessionManager.refreshToken()]
         

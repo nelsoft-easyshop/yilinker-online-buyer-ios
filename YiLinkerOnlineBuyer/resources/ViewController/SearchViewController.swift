@@ -22,7 +22,7 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
 
         self.initializeViews()
         
-        let vc = TransactionDeliveryLogViewController(nibName: "TransactionDeliveryLogViewController", bundle: nil)
+        let vc = FollowedSellerViewController(nibName: "FollowedSellerViewController", bundle: nil)
         vc.edgesForExtendedLayout = UIRectEdge.None
         self.navigationController?.pushViewController(vc, animated: true)
     }

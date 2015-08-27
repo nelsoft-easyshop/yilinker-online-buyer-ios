@@ -10,47 +10,78 @@ import Foundation
 
 class FollowedSellerModel {
     
-    var names: [String] = []
-    var specialty: [String] = []
-    var images: [String] = []
-    var ratings: [Int] = []
+    var message: String = ""
+    var isSuccessful: Bool = false
     
-    init(names: NSArray, specialty: NSArray, images: NSArray, ratings: NSArray) {
-        self.names = names as! [String]
+    var id: [Int] = []
+    var fullName: [String] = []
+    var storeName: [String] = []
+    var profileImageUrl: [String] = []
+    var specialty: [String] = []
+    
+    init(message: String, isSuccessful: Bool, id: NSArray, fullName: NSArray, storeName: NSArray, profileImageUrl: NSArray, specialty: NSArray) {
+        
+        self.message = message
+        self.isSuccessful = isSuccessful
+        
+        self.id = id as! [Int]
+        self.fullName = fullName as! [String]
+        self.storeName = storeName as! [String]
+        self.profileImageUrl = profileImageUrl as! [String]
         self.specialty = specialty as! [String]
-        self.images = images as! [String]
-        self.ratings = ratings as! [Int]
     }
     
     class func parseDataWithDictionary(dictionary: AnyObject) -> FollowedSellerModel {
         
-        var names: [String] = []
+        var message: String = ""
+        var isSuccessful: Bool = false
+        
+        var id: [Int] = []
+        var fullName: [String] = []
+        var storeName: [String] = []
+        var profileImageUrl: [String] = []
         var specialty: [String] = []
-        var images: [String] = []
-        var ratings: [Int] = []
         
-        for value in dictionary["sellers"] as! NSArray {
+        if dictionary.isKindOfClass(NSDictionary) {
             
-            if let tempVar = value["name"] as? String {
-                names.append(tempVar)
+            if let tempVar = dictionary["message"] as? String {
+                message = tempVar
             }
             
-            if let tempVar = value["specialty"] as? String {
-                specialty.append(tempVar)
+            if let tempVar = dictionary["isSuccessful"] as? Bool {
+                isSuccessful = tempVar
             }
             
-            if let tempVar = value["imageUrl"] as? String {
-                images.append(tempVar)
+            if let categories: AnyObject = dictionary["data"] {
+                
+                for category in categories as! NSArray {
+                    if let tempVar = category["sellerId"] as? Int {
+                        id.append(tempVar)
+                    }
+                    
+                    if let tempVar = category["fullName"] as? String {
+                        fullName.append(tempVar)
+                    }
+                    
+                    if let tempVar = category["storeName"] as? String {
+                        storeName.append(tempVar)
+                    }
+                    
+                    if let tempVar = category["profileImageUrl"] as? String {
+                        profileImageUrl.append(tempVar)
+                    }
+                    
+                    if let tempVar = category["specialty"] as? String {
+                        specialty.append(tempVar)
+                    }
+                }
+                
             }
             
-            if let tempVar = value["rating"] as? Int {
-                ratings.append(tempVar)
-            }
-
-        }
+        } // dictionary
         
         
-        return FollowedSellerModel(names: names, specialty: specialty, images: images, ratings: ratings)
+        return FollowedSellerModel(message: message, isSuccessful: isSuccessful, id: id, fullName: fullName, storeName: storeName, profileImageUrl: profileImageUrl, specialty: specialty)
     }
     
 }
