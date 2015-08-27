@@ -32,7 +32,7 @@ class FollowedSellerViewController: UIViewController, EmptyViewDelegate {
         
         self.title = "Followed Seller"
         
-        let backButton: UIBarButtonItem = UIBarButtonItem(image: UIImage(named: "back-white"), style: UIBarButtonItemStyle.Plain, target: self, action: "back-Action")
+        let backButton: UIBarButtonItem = UIBarButtonItem(image: UIImage(named: "back-white"), style: UIBarButtonItemStyle.Plain, target: self, action: "backAction")
         let navigationSpacer: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
         navigationSpacer.width = -10
         self.navigationItem.leftBarButtonItems = [navigationSpacer, backButton]
@@ -92,8 +92,45 @@ class FollowedSellerViewController: UIViewController, EmptyViewDelegate {
             
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                self.addEmptyView()
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                if task.statusCode == 401 {
+                    self.requestRefreshToken()
+                } else {
+                    self.addEmptyView()
+                    SVProgressHUD.dismiss()
+                }
+        })
+    }
+    
+    func requestRefreshToken() {
+        let url: String = "http://online.api.easydeal.ph/api/v1/login"
+        let params: NSDictionary = ["client_id": Constants.Credentials.clientID,
+            "client_secret": Constants.Credentials.clientSecret,
+            "grant_type": Constants.Credentials.grantRefresh,
+            "refresh_token": SessionManager.refreshToken()]
+        
+        let manager = APIManager.sharedInstance
+        manager.POST(url, parameters: params, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            
+            if (responseObject["isSuccessful"] as! Bool) {
+                SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+                self.requestFollowedSelers()
+            } else {
                 SVProgressHUD.dismiss()
+                let alertController = UIAlertController(title: "Error", message: "message", preferredStyle: .Alert)
+                let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+                alertController.addAction(defaultAction)
+                self.presentViewController(alertController, animated: true, completion: nil)
+            }
+            
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                SVProgressHUD.dismiss()
+                let alertController = UIAlertController(title: "Something went wrong", message: "", preferredStyle: .Alert)
+                let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+                alertController.addAction(defaultAction)
+                self.presentViewController(alertController, animated: true, completion: nil)
         })
     }
     
