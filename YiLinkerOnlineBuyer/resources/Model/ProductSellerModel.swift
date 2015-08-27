@@ -13,25 +13,44 @@ class ProductSellerModel {
     var message: String = ""
     var isSuccessful: Bool = false
     
-    var id: String = ""
-    var name: String = ""
+    var userId: Int = 0
+    var fullName: String = ""
+    var email: String = ""
+    var gender: String = ""
+    var nickname: String = ""
+    var contactNumber: String = ""
     var specialty: String = ""
-    var logoUrl: String = ""
-    var images: NSArray = []
-    var description: String = ""
-    var contactNo: String = ""
+    var birthdate: String = ""
+    var storeName: String = ""
+    var storeDescription: String = ""
     
-    init(message: String, isSuccessful: Bool, id: String, name: String, specialty: String, logoUrl: String, images: NSArray, description: String, contactNo: String) {
+    var profilePhoto: String = ""
+    var coverPhoto: String = ""
+    var images: NSArray = []
+    
+    var isFollowed: Bool = false
+    
+    init(message: String, isSuccessful: Bool, userId: Int, fullName: String, email: String, gender: String, nickname: String, contactNumber: String, specialty: String, birthdate: String, storeName: String, storeDescription: String, profilePhoto: String, coverPhoto: String, images: NSArray, isFollowed: Bool) {
+        
         self.message = message
         self.isSuccessful = isSuccessful
         
-        self.id = id
-        self.name = name
+        self.userId = userId
+        self.fullName = fullName
+        self.email = email
+        self.gender = gender
+        self.nickname = nickname
+        self.contactNumber = contactNumber
         self.specialty = specialty
-        self.logoUrl = logoUrl
+        self.birthdate = birthdate
+        self.storeName = storeName
+        self.storeDescription = storeDescription
+        
+        self.profilePhoto = profilePhoto
+        self.coverPhoto = coverPhoto
         self.images = images
-        self.description = description
-        self.contactNo = contactNo
+        
+        self.isFollowed = isFollowed
     }
     
     class func parseDataWithDictionary(dictionary: AnyObject) -> ProductSellerModel! {
@@ -39,13 +58,22 @@ class ProductSellerModel {
         var message: String = ""
         var isSuccessful: Bool = false
         
-        var id: String = ""
-        var name: String = ""
+        var userId: Int = 0
+        var fullName: String = ""
+        var email: String = ""
+        var gender: String = ""
+        var nickname: String = ""
+        var contactNumber: String = ""
         var specialty: String = ""
-        var logoUrl: String = ""
+        var birthdate: String = ""
+        var storeName: String = ""
+        var storeDescription: String = ""
+        
+        var profilePhoto: String = ""
+        var coverPhoto: String = ""
         var images: NSArray = []
-        var description: String = ""
-        var contactNo: String = ""
+        
+        var isFollowed: Bool = false
         
         if dictionary.isKindOfClass(NSDictionary) {
             
@@ -59,39 +87,66 @@ class ProductSellerModel {
             
             if let value: AnyObject = dictionary["data"] {
                 
-                if let tempVar = value["id"] as? String {
-                    id = tempVar
+                if let tempVar = value["id"] as? Int {
+                    userId = tempVar
                 }
                 
-                if let tempVar = value["name"] as? String {
-                    name = tempVar
+                if let tempVar = value["fullName"] as? String {
+                    fullName = tempVar
+                }
+                
+                if let tempVar = value["email"] as? String {
+                    email = tempVar
+                }
+                
+                if let tempVar = value["gender"] as? String {
+                    gender = tempVar
+                }
+                
+                if let tempVar = value["nickname"] as? String {
+                    nickname = tempVar
+                }
+                
+                if let tempVar = value["contactNumber"] as? String {
+                    contactNumber = tempVar
                 }
                 
                 if let tempVar = value["specialty"] as? String {
                     specialty = tempVar
                 }
                 
-                if let tempVar = value["logoUrl"] as? String {
-                    logoUrl = tempVar
+                if let tempVar = value["birthdate"] as? String {
+                    birthdate = tempVar
+                }
+                
+                if let tempVar = value["storeName"] as? String {
+                    storeName = tempVar
+                }
+                
+                if let tempVar = value["storeDescription"] as? String {
+                    storeDescription = tempVar
+                }
+                
+                if let tempVar = value["profilePhoto"] as? String {
+                    profilePhoto = tempVar
+                }
+                
+                if let tempVar = value["coverPhoto"] as? String {
+                    coverPhoto = tempVar
+                }
+                
+                if let tempVar = value["isFollowed"] as? Bool {
+                    isFollowed = tempVar
                 }
                 
                 if let tempVar = value["images"] as? NSArray {
                     images = tempVar
                 }
                 
-                if let tempVar = value["description"] as? String {
-                    description = tempVar
-                }
-                
-                if let tempVar = value["contactNo"] as? String {
-                    contactNo = tempVar
-                }
-                
             }
             
-            return ProductSellerModel(message: message, isSuccessful: isSuccessful, id: id, name: name, specialty: specialty, logoUrl: logoUrl, images: images, description: description, contactNo: contactNo)
-        } else {
-            return ProductSellerModel(message: "", isSuccessful: false, id: "", name: "", specialty: "", logoUrl: "", images: [], description: "", contactNo: "")
         }
+        
+        return ProductSellerModel(message: message, isSuccessful: isSuccessful, userId: userId, fullName: fullName, email: email, gender: gender, nickname: nickname, contactNumber: contactNumber, specialty: specialty, birthdate: birthdate, storeName: storeName, storeDescription: storeDescription, profilePhoto: profilePhoto, coverPhoto: coverPhoto, images: images, isFollowed: isFollowed)
     }
 }

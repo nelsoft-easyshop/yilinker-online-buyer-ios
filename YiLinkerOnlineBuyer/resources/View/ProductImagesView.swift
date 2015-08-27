@@ -48,8 +48,8 @@ class ProductImagesView: UIView, UICollectionViewDataSource, UICollectionViewDel
         
         self.collectionView.dataSource = self
         self.collectionView.delegate = self
-        var nib = UINib(nibName: "ProductImagesViewCollectionViewCell", bundle:nil)
-        self.collectionView.registerNib(nib, forCellWithReuseIdentifier: "ImagesViewIdentifier")
+        var nib = UINib(nibName: "ProductSellerViewCollectionViewCell", bundle:nil)
+        self.collectionView.registerNib(nib, forCellWithReuseIdentifier: "productSellerIdentifier")
         
         addTapTo(self.closeContainerView, action: "closeAction:")
         addTapTo(self.wishlistContainerView, action: "wishlistAction:")
@@ -74,7 +74,7 @@ class ProductImagesView: UIView, UICollectionViewDataSource, UICollectionViewDel
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell: ProductImagesViewCollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier("ImagesViewIdentifier", forIndexPath: indexPath) as! ProductImagesViewCollectionViewCell
+        let cell: ProductSellerViewCollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier("productSellerIdentifier", forIndexPath: indexPath) as! ProductSellerViewCollectionViewCell
         
         cell.setImage(self.images[indexPath.row] as! String)
         
@@ -126,23 +126,25 @@ class ProductImagesView: UIView, UICollectionViewDataSource, UICollectionViewDel
     
     // Functions
     
-    func setDetails(model: ProductDetailsModel, width: CGFloat) {
+    func setDetails(model: ProductDetailsModel, unitId: Int, width: CGFloat) {
         
         self.nameLabel.text = model.title
         self.nameLabel.sizeToFit()
-        self.originalPrice.text = "P" + model.productUnits[0].price
-        self.priceLabel.text = "P" + model.productUnits[0].discountedPrice
+        if model.productUnits[unitId].discount == 0 {
+            self.originalPrice.hidden = true
+            self.priceLabel.text = "P" + model.productUnits[unitId].price
+        } else {
+            self.originalPrice.text = "P" + model.productUnits[unitId].price
+            self.priceLabel.text = "P" + model.productUnits[unitId].discountedPrice
+        }
+        
         self.width = width
         
-        self.images = model.productUnits[0].imageIds
+        self.images = model.productUnits[unitId].imageIds
         if self.images.count == 0 {
-            self.images = ["http://shop.bench.com.ph/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/Y/W/YWH0089BU4.jpg",
-                "http://shop.bench.com.ph/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/Y/W/YWH0089BU4_F.jpg",
-                "http://shop.bench.com.ph/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/Y/W/YWH0089BU4_S.jpg",
-                "http://shop.bench.com.ph/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/Y/W/YWH0089BU4_B.jpg",
-                "http://shop.bench.com.ph/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/Y/W/YWH0089BU4_45.jpg"]
+            self.images = ["", "", "", "", ""]
         }
-         self.pageControl.numberOfPages = self.images.count
+        self.pageControl.numberOfPages = self.images.count
         self.collectionView.reloadData()
     }
     

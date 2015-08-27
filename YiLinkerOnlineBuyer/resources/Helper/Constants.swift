@@ -26,6 +26,7 @@ struct Constants {
         static let productPrice: UIColor = HexaColor.colorWithHexa(0x75348a)
         static let productReviewGreen: UIColor = HexaColor.colorWithHexa(0xb3b233)
         static let grayLine: UIColor = HexaColor.colorWithHexa(0x606060)
+        static let backgroundGray: UIColor = HexaColor.colorWithHexa(0xE7E7E7)
         static let selectedGreenColor: UIColor = HexaColor.colorWithHexa(0x44A491)
         static let selectedCellColor: UIColor = HexaColor.colorWithHexa(0xE1E1E1)
     }
@@ -42,9 +43,9 @@ struct Constants {
     
 
     struct Credentials {
-        static let client_id = "1_167rxzqvid8g8swggwokcoswococscocc8ck44wo0g88owgkcc"
-        static let cliend_secret = "317eq8nohry84ooc0o8woo8000c0k844c4cggws84g80scwwog"
-        static let grantRefresh = "refresh_token"
+        static let clientID = "1_167rxzqvid8g8swggwokcoswococscocc8ck44wo0g88owgkcc"
+        static let clientSecret = "317eq8nohry84ooc0o8woo8000c0k844c4cggws84g80scwwog"
+        static let grantRefreshToken = "refresh_token"
         static let grantBuyer = "http://yilinker-online.com/grant/buyer"
     }
 
@@ -76,5 +77,11 @@ struct Constants {
             static let plainTableViewCellNibNameAndIdentifier = "PlainTableViewCell"
             static let totalTableViewCellNibNameAndIdentifier = "TotalTableViewCell"
         }
+    }
+    
+    struct CustomizeShopping {
+        static let customizeShoppingNibNameAndIdentifier = "CustomizeShoppingCollectionViewCell"
+        static let customizeSelectedNibNameAndIdentifier = "CustomizeSelectedCollectionViewCell"
+        static let customizeShoppingTableViewCellNibNameAndIdentifier = "CustomizeShoppingTableViewCell"
     }
 }
