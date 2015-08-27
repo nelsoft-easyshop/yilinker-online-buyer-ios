@@ -45,6 +45,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     var selectedId: [String] = []
 
     var unitId: String = "1"
+    var productId: String = "0"
     
     var newFrame: CGRect!
     var visibility = 0.0
