@@ -82,6 +82,7 @@
             </constraints>
             <size key="customSize" width="381" height="79"/>
             <connections>
+                <outlet property="addressLabel" destination="Sx5-GY-uj9" id="xty-1D-EG7"/>
                 <outlet property="checkBoxButton" destination="q5N-SS-ZY2" id="yaM-Vz-NDo"/>
                 <outlet property="deleteButton" destination="q7d-g0-zfw" id="GAb-UF-GPw"/>
             </connections>

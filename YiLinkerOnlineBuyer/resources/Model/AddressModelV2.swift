@@ -32,6 +32,8 @@ class AddressModelV2 {
     var latitude: String = ""
     var isDefault: Bool = false
     
+    var subdivision: String = ""
+    
     class func parseAddressFromDictionary(reviews: NSDictionary) -> AddressModelV2 {
         
         var model = AddressModelV2()
@@ -158,7 +160,6 @@ class AddressModelV2 {
                 if value as! NSObject != NSNull() {
                     model.latitude = value as! String
                 }
-                
             }
             
             if let value: AnyObject = reviews["landline"] {
@@ -172,6 +173,13 @@ class AddressModelV2 {
                 if value as! NSObject != NSNull() {
                     model.isDefault = value as! Bool
                 }
+            }
+            
+            if let value: AnyObject = reviews["subdivision"] {
+                if value as! NSObject != NSNull() {
+                    model.subdivision = value as! String
+                }
+                
             }
         }
         

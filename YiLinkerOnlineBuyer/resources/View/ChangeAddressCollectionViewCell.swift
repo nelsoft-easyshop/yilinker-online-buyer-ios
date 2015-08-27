@@ -18,6 +18,8 @@ class ChangeAddressCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var deleteButton: UIButton!
     var delegate: ChangeAddressCollectionViewCellDelegate?
 
+    @IBOutlet weak var addressLabel: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

@@ -15,7 +15,7 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
     var cellCount: Int = 3
     var selectedIndex: Int = 0
     
-    
+    var getAddressModel: GetAddressesModel!
     var emptyView: EmptyView?
     
     override func viewDidLoad() {
@@ -84,6 +84,8 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell : ChangeAddressCollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier(Constants.Checkout.changeAddressCollectionViewCellNibNameAndIdentifier, forIndexPath: indexPath) as! ChangeAddressCollectionViewCell
+        
+        cell.addressLabel.text = ""
         
         if indexPath.row == self.selectedIndex {
             cell.layer.borderWidth = 1
@@ -187,7 +189,7 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
         manager.POST(url, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
-            GetAddressesModel.parseDataWithDictionary(responseObject)
+            self.getAddressModel = GetAddressesModel.parseDataWithDictionary(responseObject)
 
             SVProgressHUD.dismiss()
             
