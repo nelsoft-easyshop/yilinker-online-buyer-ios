@@ -8,7 +8,7 @@
 
 import UIKit
 
-class WishlistViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, WishlistTableViewCellDelegate {
+class WishlistViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, WishlistTableViewCellDelegate, EmptyViewDelegate {
     
     let manager = APIManager.sharedInstance
     
@@ -18,10 +18,12 @@ class WishlistViewController: UIViewController, UITableViewDelegate, UITableView
     
     let viewControllerIndex = 2
     
-    var tableData: [WishlistModel] = []
+    var tableData: [WishlistProductDetailsModel] = []
     
     //formatter of Text to remove trailing decimal
     let formatter = NSNumberFormatter()
+    
+    var emptyView: EmptyView?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,37 +49,58 @@ class WishlistViewController: UIViewController, UITableViewDelegate, UITableView
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(true)
-    NSNotificationCenter.defaultCenter().postNotificationName("SwipeForOptionsCellEnclosingTableViewDidBeginScrollingNotification", object: self)
-        populateWishListTableView()
+        
+        if emptyView != nil {
+            emptyView?.hidden = true
+        }
+        NSNotificationCenter.defaultCenter().postNotificationName("SwipeForOptionsCellEnclosingTableViewDidBeginScrollingNotification", object: self)
+        
+        getWishlistData()
     }
     
     //REST API request
     //
+    
+    func getWishlistData() {
+        tableData = []
+        wishlistTableView.reloadData()
+        wishListCounterLabel.text = ""
+        
+        if Reachability.isConnectedToNetwork() {
+            requestProductDetails(APIAtlas.wishlistUrl, params: NSDictionary(dictionary: ["access_token": SessionManager.accessToken(), "wishlist": "true"]))
+        } else {
+            addEmptyView()
+        }
+    }
+    
     func fireDeleteCartItem(url: String, params: NSDictionary!) {
         showLoader()
-        manager.DELETE(url, parameters: params, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            print(responseObject as! NSDictionary)
-            self.updateCounterLabel()
-            self.dismissLoader()
+        manager.POST(url, parameters: params, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in print(responseObject as! NSDictionary)
+            if responseObject.objectForKey("error") != nil {
+                self.requestRefreshToken("getWishlist", url: url, params: params)
+            } else {
+                self.populateTableView(responseObject)
+            }
+            
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                println("failed: \(error)")
+                self.showAlert("Error", message: "Something went wrong. . .")
                 self.dismissLoader()
         })
     }
     
     func fireAddToCartItem(url: String, params: NSDictionary!) {
         showLoader()
-        manager.DELETE(url, parameters: params, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            print(responseObject as! NSDictionary)
-            self.updateCounterLabel()
+        manager.POST(url, parameters: params, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in print(responseObject as! NSDictionary)
+            if responseObject.objectForKey("error") != nil {
+                self.requestRefreshToken("addToCart", url: url, params: params)
+            }
             self.dismissLoader()
-            
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                println("failed: \(error)")
+                self.showAlert("Error", message: "Something went wrong. . .")
                 self.dismissLoader()
         })
     }
@@ -86,22 +109,15 @@ class WishlistViewController: UIViewController, UITableViewDelegate, UITableView
         showLoader()
         
         manager.GET(url, parameters: params, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            if let value: AnyObject = responseObject["data"] {
-                for subValue in value["cartItems"] as! NSArray {
-                    println(subValue)
-                    let model: WishlistModel = WishlistModel.parseDataWithDictionary(subValue as! NSDictionary)
-                    
-                    self.tableData.append(model)
-                }
-                self.wishlistTableView.reloadData()
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in print(responseObject as! NSDictionary)
+            if responseObject.objectForKey("error") != nil {
+                self.requestRefreshToken("getWishlist", url: url, params: params)
+            } else {
+                self.populateTableView(responseObject)
             }
-            self.updateCounterLabel()
-            self.dismissLoader()
-            
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                println("failed: \(error)")
+                self.showAlert("Error", message: "Something went wrong. . .")
                 self.updateCounterLabel()
                 self.dismissLoader()
         })
@@ -119,11 +135,20 @@ class WishlistViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     // MARK: Methods Updating Values
-    func populateWishListTableView () {
-        tableData = []
-        //requestProductDetails(APIAtlas.wishlistUrl, params: NSDictionary(dictionary: ["access_token": SessionManager.accessToken(), "wishlist": "true"]))
-        
-        requestProductDetails("http://demo3526363.mockable.io/api/v1/auth/cart/getCart", params: nil)
+    
+    func populateTableView(responseObject: AnyObject) {
+        tableData.removeAll(keepCapacity: false)
+        if let value: AnyObject = responseObject["data"] {
+            for subValue in value["items"] as! NSArray {
+                println(subValue)
+                let model: WishlistProductDetailsModel = WishlistProductDetailsModel.parseDataWithDictionary(subValue as! NSDictionary)
+                
+                self.tableData.append(model)
+            }
+            self.wishlistTableView.reloadData()
+        }
+        self.updateCounterLabel()
+        self.dismissLoader()
     }
     
     func updateCounterLabel() {
@@ -144,38 +169,34 @@ class WishlistViewController: UIViewController, UITableViewDelegate, UITableView
         var cell:WishlistTableViewCell = self.wishlistTableView.dequeueReusableCellWithIdentifier("WishlistTableViewCell") as! WishlistTableViewCell
         
         //Set cell data
-        var tempModel: WishlistModel = tableData[indexPath.row]
+        var tempModel: WishlistProductDetailsModel = tableData[indexPath.row]
         
-        for selectedProductUnit in tempModel.selectedAttributes {
-            for tempProductUnit in tempModel.productDetails.productUnits {
-                if selectedProductUnit == tempProductUnit.productUnitId.toInt() {
-                    if tempProductUnit.imageIds.count == 0 {
-                        cell.productItemImageView.sd_setImageWithURL(NSURL(string: tempModel.productDetails.image), placeholderImage: UIImage(named: "dummy-placeholder"))
-                    } else {
-                        cell.productItemImageView.sd_setImageWithURL(NSURL(string: tempProductUnit.imageIds[0]), placeholderImage: UIImage(named: "dummy-placeholder"))
-                    }
-                    
-                    var tempAttributesText: String = ""
-                    for tempId in tempProductUnit.combination {
-                        for tempAttributes in tempModel.productDetails.attributes {
-                            if let index = find(tempAttributes.valueId, tempId) {
-                                if tempAttributesText.isEmpty {
-                                    tempAttributesText = tempAttributes.valueName[index]
-                                } else {
-                                    tempAttributesText += " | " + tempAttributes.valueName[index]
-                                }
+        for tempProductUnit in tempModel.productUnits {
+            if tempModel.unitId == tempProductUnit.productUnitId {
+                if tempProductUnit.imageIds.count == 0 {
+                    cell.productItemImageView.sd_setImageWithURL(NSURL(string: tempModel.image), placeholderImage: UIImage(named: "dummy-placeholder"))
+                } else {
+                    cell.productItemImageView.sd_setImageWithURL(NSURL(string: tempProductUnit.imageIds[0]), placeholderImage: UIImage(named: "dummy-placeholder"))
+                }
+                
+                var tempAttributesText: String = ""
+                for tempId in tempProductUnit.combination {
+                    for tempAttributes in tempModel.attributes {
+                        if let index = find(tempAttributes.valueId, tempId) {
+                            if tempAttributesText.isEmpty {
+                                tempAttributesText = tempAttributes.valueName[index]
+                            } else {
+                                tempAttributesText += " | " + tempAttributes.valueName[index]
                             }
                         }
                     }
-                    cell.productDetailsLabel?.text = tempAttributesText
-                    
-                    
-                    cell.productPriceLabel.text = "P" + tempProductUnit.discountedPrice + " x\(tempModel.quantity)"
                 }
+                cell.productDetailsLabel?.text = tempAttributesText
+                cell.productPriceLabel.text = "P " + tempProductUnit.discountedPrice + " x \(tempModel.quantity)"
             }
         }
         
-        cell.productNameLabel.text = tempModel.productDetails.title
+        cell.productNameLabel.text = tempModel.title
         
         cell.delegate = self
         return cell
@@ -196,31 +217,116 @@ class WishlistViewController: UIViewController, UITableViewDelegate, UITableView
     
     // MARK: - Wishlist Table View Delegate
     func deleteButtonActionForIndex(sender: AnyObject){
-        var pathOfTheCell: NSIndexPath = wishlistTableView.indexPathForCell(sender as! UITableViewCell)!
-        var rowOfTheCell: Int = pathOfTheCell.row
-        tableData.removeAtIndex(pathOfTheCell.row);
-        wishlistTableView.deleteRowsAtIndexPaths([pathOfTheCell], withRowAnimation: UITableViewRowAnimation.Fade)
-        NSLog("rowofthecell %d", rowOfTheCell);
-        updateCounterLabel()
-        
-        //No API yet
-        //fireDeleteCartItem(<#url: String#>, params: <#NSDictionary!#>)
+        if Reachability.isConnectedToNetwork() {
+            var pathOfTheCell: NSIndexPath = wishlistTableView.indexPathForCell(sender as! UITableViewCell)!
+            var rowOfTheCell: Int = pathOfTheCell.row
+            
+            let tempModel: WishlistProductDetailsModel = tableData[rowOfTheCell]
+            
+            var params: NSDictionary = ["access_token": SessionManager.accessToken(),
+                "wishlist": "true",
+                "productId": tempModel.id,
+                "unitId": tempModel.unitId,
+                "quantity": 0,
+                "wishlist": "true"
+            ]
+            fireDeleteCartItem(APIAtlas.updateWishlistUrl, params: params)
+        } else {
+            showAlert("Connection Unreachable", message: "Cannot retrieve data. Please check your internet connection.")
+        }
     }
     
     func addToCartButtonActionForIndex(sender: AnyObject){
-        var pathOfTheCell: NSIndexPath = wishlistTableView.indexPathForCell(sender as! UITableViewCell)!
-        var rowOfTheCell: Int = pathOfTheCell.row
-        tableData.removeAtIndex(pathOfTheCell.row);
-        wishlistTableView.deleteRowsAtIndexPaths([pathOfTheCell], withRowAnimation: UITableViewRowAnimation.Fade)
-        NSLog("rowofthecell %d", rowOfTheCell);
-        updateCounterLabel()
-        
-        //No API yet
-        //fireAddToßCartItem(<#url: String#>, params: <#NSDictionary!#>)
+        if Reachability.isConnectedToNetwork() {
+            var pathOfTheCell: NSIndexPath = wishlistTableView.indexPathForCell(sender as! UITableViewCell)!
+            var rowOfTheCell: Int = pathOfTheCell.row
+            
+            let tempModel: WishlistProductDetailsModel = tableData[rowOfTheCell]
+            
+            var params: NSDictionary = ["access_token": SessionManager.accessToken(),
+                "wishlist": "true",
+                "productId": tempModel.id,
+                "unitId": tempModel.unitId,
+                "quantity": tempModel.quantity
+            ]
+            
+            fireAddToCartItem(APIAtlas.updateWishlistUrl, params: params)
+        } else {
+            showAlert("Connection Unreachable", message: "Cannot retrieve data. Please check your internet connection.")
+        }
     }
     
     func swipeViewDidScroll(sender: AnyObject) {
         NSNotificationCenter.defaultCenter().postNotificationName("SwipeForOptionsCellEnclosingTableViewDidBeginScrollingNotification", object: self)
     }
     
+    func didTapReload() {
+        emptyView?.hidden = true
+        getWishlistData()
+    }
+    
+    func addEmptyView() {
+        if self.emptyView == nil {
+            self.emptyView = UIView.loadFromNibNamed("EmptyView", bundle: nil) as? EmptyView
+            self.emptyView?.frame = self.view.frame
+            self.emptyView!.delegate = self
+            self.view.addSubview(self.emptyView!)
+        } else {
+            self.emptyView!.hidden = false
+        }
+    }
+    
+    func showAlert(title: String, message: String) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+        
+        let OKAction = UIAlertAction(title: "OK", style: .Default) { (action) in
+            alertController.dismissViewControllerAnimated(true, completion: nil)
+            
+            let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+            appDelegate.changeRootToHomeView()
+        }
+        
+        alertController.addAction(OKAction)
+        
+        self.presentViewController(alertController, animated: true) {
+            
+        }
+    }
+    
+    func requestRefreshToken(type: String, url: String, params: NSDictionary!) {
+        let url: String = "http://online.api.easydeal.ph/api/v1/login"
+        let params: NSDictionary = ["client_id": Constants.Credentials.clientID,
+            "client_secret": Constants.Credentials.clientSecret,
+            "grant_type": Constants.Credentials.grantRefreshToken,
+            "refresh_token": SessionManager.refreshToken()]
+        
+        let manager = APIManager.sharedInstance
+        manager.POST(url, parameters: params, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            
+            SVProgressHUD.dismiss()
+            
+            if (responseObject["isSuccessful"] as! Bool) {
+                SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+                
+                if type == "getWishlist" {
+                    self.requestProductDetails(url, params: params)
+                } else if type == "addToCart" {
+                    self.fireAddToCartItem(url, params: params)
+                } else if type == "deleteWishlist" {
+                    self.fireDeleteCartItem(url, params: params)
+                }
+            } else {
+                self.showAlert("Error", message: responseObject["message"] as! String)
+            }
+            
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                SVProgressHUD.dismiss()
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                
+                self.showAlert("Something went wrong", message: "")
+                
+        })
+    }
 }

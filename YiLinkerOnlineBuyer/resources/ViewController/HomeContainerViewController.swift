@@ -308,14 +308,35 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                 
                 if task.statusCode == 401 {
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Mismatch username and password", title: "Login Failed")
+                    self.fireRefreshToken()
                 } else {
                     UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
                 }
                 
                 SVProgressHUD.dismiss()
         })
-        
+    }
+    
+    func fireRefreshToken() {
+        let manager: APIManager = APIManager.sharedInstance
+        //seller@easyshop.ph
+        //password
+        let parameters: NSDictionary = ["client_id": Constants.Credentials.clientID, "client_secret": Constants.Credentials.clientSecret, "grant_type": Constants.Credentials.grantRefreshToken, "refresh_token":  SessionManager.refreshToken()]
+        SVProgressHUD.show()
+        manager.POST(APIAtlas.refreshTokenUrl, parameters: parameters, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            SVProgressHUD.dismiss()
+            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+            self.fireGetUserInfo()
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+            
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+                
+                SVProgressHUD.dismiss()
+        })
+
     }
     
 
