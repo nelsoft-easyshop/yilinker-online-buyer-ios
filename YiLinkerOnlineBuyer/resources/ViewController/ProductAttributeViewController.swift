@@ -170,64 +170,74 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
         hideSelf("cancel")
     }
     
-    // MARK: - Methods
-    
-//    change 0 (zeros) to unitId
-//    enabling first combination only, make it dynamic
-    
-    func passModel(#productDetailsModel: ProductDetailsModel, selectedValue: NSArray, selectedId: NSArray, unitId: Int) {
-        let index: Int = unitId - 1
-        setDetail("http://shop.bench.com.ph/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/Y/W/YWH0089BU4.jpg", title: productDetailsModel.title, price: productDetailsModel.productUnits[index].price)
-        self.productDetailsModel = productDetailsModel
-        self.attributes = productDetailsModel.attributes as [ProductAttributeModel]
-        self.selectedId = selectedId as! [String]
-        self.selectedValue = selectedValue as! [String]
-        self.unitId = String(unitId)
-        self.selectedCombination = productDetailsModel.productUnits[index].combination
+    @IBAction func doneAction(sender: AnyObject) {
+        var selectionComplete: Bool = true
         
-        self.maximumStock = productDetailsModel.productUnits[index].quantity
-        self.availabilityStocksLabel.text = "Available stocks : \(productDetailsModel.productUnits[index].quantity)"
-        
-        convertCombinationToString()
-        println(combinationString)
-        
-        if self.maximumStock != 0 {
-            stocks = 1
-            checkStock(stocks)
-        } else if self.maximumStock == 0 {
-            checkStock(0)
-        } else {
-            println("----ProductAttributeViewController")
-        }
-    }
-    
-    func selectedAttribute(controller: ProductAttributeTableViewCell, attributeIndex: Int, attributeValue: String!, attributeId: Int) {
-        self.selectedId[attributeIndex] = String(attributeId)
-        self.selectedValue[attributeIndex] = String(attributeValue)
-        self.selectedCombination[attributeIndex] = String(attributeId)
-
-        for i in 0..<self.productDetailsModel.productUnits.count {
-            if self.productDetailsModel.productUnits[i].combination == selectedId {
-                unitId = self.productDetailsModel.productUnits[i].productUnitId
+        for i in 0..<self.selectedId.count {
+            if selectedId[i] == "-1" {
+                selectionComplete = false
             }
         }
         
-        maximumStock = availableStock(selectedCombination)
-        self.availabilityStocksLabel.text = "Available stocks : " + String(maximumStock)
-
-        listAvailableCombinations()
-        println(self.availableCombination)
-        self.tableView.reloadData()
-        
-        if self.maximumStock != 0 {
-            stocks = 1
-            checkStock(stocks)
-        } else if self.maximumStock == 0 {
-            checkStock(0)
+        if selectionComplete {
+            hideSelf("done")
+            if let delegate = self.delegate {
+                delegate.doneActionPassDetailsToProductView(self, unitId: unitId, quantity: quantity, selectedId: selectedId)
+            }
         } else {
-            println("----ProductAttributeViewController")
+            hideSelf("cancel")
+        }
+        
+    }
+    
+    @IBAction func checkoutAction(sender: AnyObject) {
+        hideSelf("buy")
+        if let delegate = self.delegate {
+            delegate.gotoCheckoutFromAttributes(self)
         }
     }
+    
+    @IBAction func addToCartAction(sender: AnyObject) {
+        if SessionManager.isLoggedIn() {
+            let url: String = "http://online.api.easydeal.ph/api/v1/auth/cart/updateCartItem"
+            let quantity: String = String(stringInterpolationSegment: stocksLabel.text?.toInt())
+            
+            let params: NSDictionary = ["access_token": SessionManager.accessToken(),
+                "productId": self.productDetailsModel.id,
+                "unitId": String(unitId.toInt()! + 1),
+                "quantity": quantity]
+            
+            println(params)
+            
+            requestAddCartItem(url, params: params)
+        } else {
+            let alertController = UIAlertController(title: "Failed", message: "Please logged-in to add item in your cart.", preferredStyle: .Alert)
+            let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+            alertController.addAction(defaultAction)
+            self.presentViewController(alertController, animated: true, completion: nil)
+        }
+    }
+
+    func dimViewAction(gesture: UIGestureRecognizer) {
+        cancelAction(nil)
+    }
+    
+    func buyItNowAction(gesture: UIGestureRecognizer) {
+        hideSelf("buy")
+        if let delegate = self.delegate {
+            delegate.gotoCheckoutFromAttributes(self)
+        }
+    }
+    
+    func addBadge() {
+        if let badgeValue = (self.tabController.tabBar.items![4] as! UITabBarItem).badgeValue?.toInt() {
+            (self.tabController.tabBar.items![4] as! UITabBarItem).badgeValue = String(badgeValue + 1)
+        } else {
+            (self.tabController.tabBar.items![4] as! UITabBarItem).badgeValue = "1"
+        }
+    }
+    
+    // MARK: - Methods
     
     func listAvailableCombinations() {
         self.availableCombination = []
@@ -324,55 +334,28 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
         button.alpha = 1
     }
     
-    func pressedDimViewFromProductPage(controller: ProductViewController) {
+    func hideSelf(action: String) {
         self.dismissViewControllerAnimated(true, completion: nil)
-    }
-    
-    func dimViewAction(gesture: UIGestureRecognizer) {
-        cancelAction(nil)
-    }
-    
-    @IBAction func doneAction(sender: AnyObject) {
-        var selectionComplete: Bool = true
-        
-        for i in 0..<self.selectedId.count {
-            if selectedId[i] == "-1" {
-                selectionComplete = false
-            }
-        }
-        
-        if selectionComplete {
-            hideSelf("done")
-            if let delegate = self.delegate {
-                delegate.doneActionPassDetailsToProductView(self, unitId: unitId, quantity: quantity, selectedId: selectedId)
-            }
-        } else {
-            hideSelf("cancel")
-        }
-        
-    }
-    
-    @IBAction func checkoutAction(sender: AnyObject) {
-        hideSelf("buy")
         if let delegate = self.delegate {
-            delegate.gotoCheckoutFromAttributes(self)
+            delegate.dissmissAttributeViewController(self, type: action)
         }
     }
     
-    @IBAction func addToCartAction(sender: AnyObject) {
+    func tapGesture(action: Selector) -> UITapGestureRecognizer {
+        var tap = UITapGestureRecognizer()
+        tap.numberOfTapsRequired = 1
+        tap.addTarget(self, action: action)
         
-        let url: String = "http://online.api.easydeal.ph/api/v1/auth/cart/updateCartItem"
-        let quantity: String = String(stringInterpolationSegment: stocksLabel.text?.toInt())
-        
-        let params: NSDictionary = ["access_token": SessionManager.accessToken(),
-                                       "productId": self.productDetailsModel.id,
-                                          "unitId": String(unitId.toInt()! + 1),
-                                        "quantity": quantity]
-        
-        println(params)
-        
-        requestAddCartItem(url, params: params)
+        return tap
     }
+    
+    func setBorderOf(#view: AnyObject, width: CGFloat, color: UIColor, radius: CGFloat) {
+        view.layer.borderWidth = width
+        view.layer.borderColor = color.CGColor
+        view.layer.cornerRadius = radius
+    }
+    
+    // MARK: - Requests
     
     func requestAddCartItem(url: String, params: NSDictionary!) {
         SVProgressHUD.show()
@@ -464,41 +447,65 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
                 
         })
     }
+
+    // MARK: - Delegates
     
-    func hideSelf(action: String) {
-        self.dismissViewControllerAnimated(true, completion: nil)
-        if let delegate = self.delegate {
-            delegate.dissmissAttributeViewController(self, type: action)
-        }
-    }
-    
-    func addBadge() {
-        if let badgeValue = (self.tabController.tabBar.items![4] as! UITabBarItem).badgeValue?.toInt() {
-            (self.tabController.tabBar.items![4] as! UITabBarItem).badgeValue = String(badgeValue + 1)
-        } else {
-            (self.tabController.tabBar.items![4] as! UITabBarItem).badgeValue = "1"
-        }
-    }
-    
-    func tapGesture(action: Selector) -> UITapGestureRecognizer {
-        var tap = UITapGestureRecognizer()
-        tap.numberOfTapsRequired = 1
-        tap.addTarget(self, action: action)
+    func passModel(#productDetailsModel: ProductDetailsModel, selectedValue: NSArray, selectedId: NSArray, unitId: Int) {
+        let index: Int = unitId - 1
+        setDetail("", title: productDetailsModel.title, price: productDetailsModel.productUnits[index].price)
+        self.productDetailsModel = productDetailsModel
+        self.attributes = productDetailsModel.attributes as [ProductAttributeModel]
+        self.selectedId = selectedId as! [String]
+        self.selectedValue = selectedValue as! [String]
+        self.unitId = String(unitId)
+        self.selectedCombination = productDetailsModel.productUnits[index].combination
         
-        return tap
-    }
-    
-    func buyItNowAction(gesture: UIGestureRecognizer) {
-        hideSelf("buy")
-        if let delegate = self.delegate {
-            delegate.gotoCheckoutFromAttributes(self)
+        self.maximumStock = productDetailsModel.productUnits[index].quantity
+        self.availabilityStocksLabel.text = "Available stocks : \(productDetailsModel.productUnits[index].quantity)"
+        
+        convertCombinationToString()
+        println(combinationString)
+        
+        if self.maximumStock != 0 {
+            stocks = 1
+            checkStock(stocks)
+        } else if self.maximumStock == 0 {
+            checkStock(0)
+        } else {
+            println("----ProductAttributeViewController")
         }
     }
     
-    func setBorderOf(#view: AnyObject, width: CGFloat, color: UIColor, radius: CGFloat) {
-        view.layer.borderWidth = width
-        view.layer.borderColor = color.CGColor
-        view.layer.cornerRadius = radius
+    func pressedDimViewFromProductPage(controller: ProductViewController) {
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func selectedAttribute(controller: ProductAttributeTableViewCell, attributeIndex: Int, attributeValue: String!, attributeId: Int) {
+        self.selectedId[attributeIndex] = String(attributeId)
+        self.selectedValue[attributeIndex] = String(attributeValue)
+        self.selectedCombination[attributeIndex] = String(attributeId)
+        
+        for i in 0..<self.productDetailsModel.productUnits.count {
+            if self.productDetailsModel.productUnits[i].combination == selectedId {
+                unitId = self.productDetailsModel.productUnits[i].productUnitId
+            }
+        }
+        
+        maximumStock = availableStock(selectedCombination)
+        self.availabilityStocksLabel.text = "Available stocks : " + String(maximumStock)
+        
+        listAvailableCombinations()
+        println(self.availableCombination)
+        self.tableView.reloadData()
+        
+        if self.maximumStock != 0 {
+            stocks = 1
+            checkStock(stocks)
+        } else if self.maximumStock == 0 {
+            checkStock(0)
+        } else {
+            println("----ProductAttributeViewController")
+        }
     }
     
 }
