@@ -12,11 +12,13 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
 
     @IBOutlet weak var collectionView: UICollectionView!
    
-    var cellCount: Int = 3
+    var cellCount: Int = 0
     var selectedIndex: Int = 0
     
     var getAddressModel: GetAddressesModel!
     var emptyView: EmptyView?
+    
+    let manager = APIManager.sharedInstance
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -78,6 +80,8 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
         self.collectionView.registerNib(collectionViewFooterNib, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: Constants.Checkout.changeAddressFooterCollectionViewCellNibNameAndIdentifier)
     }
 
+    // MARK: - Collection View Data Source and Delegates
+    
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return cellCount
     }
@@ -85,7 +89,7 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell : ChangeAddressCollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier(Constants.Checkout.changeAddressCollectionViewCellNibNameAndIdentifier, forIndexPath: indexPath) as! ChangeAddressCollectionViewCell
         
-        cell.addressLabel.text = ""
+        cell.addressLabel.text = self.getAddressModel.listOfAddress[indexPath.row].streetName
         
         if indexPath.row == self.selectedIndex {
             cell.layer.borderWidth = 1
@@ -117,29 +121,6 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
         self.collectionView.reloadData()
     }
     
-    func addCellInIndexPath(indexPath: NSIndexPath) {
-        self.cellCount++
-        self.collectionView.insertItemsAtIndexPaths([NSIndexPath(forItem: indexPath.row, inSection: indexPath.section)])
-    }
-    
-    func deleteCellInIndexPath(indexPath: NSIndexPath) {
-        if cellCount != 0 {
-            self.cellCount = self.cellCount - 1
-        }
-   
-        self.collectionView.deleteItemsAtIndexPaths([NSIndexPath(forItem: indexPath.row, inSection: indexPath.section)])
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    func changeAddressCollectionViewCell(deleteAddressWithCell cell: ChangeAddressCollectionViewCell) {
-        let indexPath: NSIndexPath = self.collectionView.indexPathForCell(cell)!
-        self.deleteCellInIndexPath(indexPath)
-    }
-
     func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
         let footerView: ChangeAddressFooterCollectionViewCell = self.collectionView?.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: Constants.Checkout.changeAddressFooterCollectionViewCellNibNameAndIdentifier, forIndexPath: indexPath) as! ChangeAddressFooterCollectionViewCell
         
@@ -148,7 +129,13 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
         return footerView
     }
     
+    // MARK: - Other Delegates
     
+    func changeAddressCollectionViewCell(deleteAddressWithCell cell: ChangeAddressCollectionViewCell) {
+        let indexPath: NSIndexPath = self.collectionView.indexPathForCell(cell)!
+        requestDeleteAddress(self.getAddressModel.listOfAddress[indexPath.row].userAddressId, index: indexPath)
+    }
+
     func changeAddressFooterCollectionViewCell(didSelecteAddAddress cell: ChangeAddressFooterCollectionViewCell) {
         /*let indexPath: NSIndexPath = NSIndexPath(forItem: self.cellCount, inSection: 0)
         self.addCellInIndexPath(indexPath)*/
@@ -163,7 +150,29 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
         self.addCellInIndexPath(indexPath)
     }
     
-    // MARK: - Empty View
+    // MARK: - Actions
+    
+    func addCellInIndexPath(indexPath: NSIndexPath) {
+        self.cellCount++
+        self.collectionView.insertItemsAtIndexPaths([NSIndexPath(forItem: indexPath.row, inSection: indexPath.section)])
+    }
+    
+    func deleteCellInIndexPath(indexPath: NSIndexPath) {
+        if cellCount != 0 {
+            self.cellCount = self.cellCount - 1
+        }
+        
+        self.collectionView.deleteItemsAtIndexPaths([NSIndexPath(forItem: indexPath.row, inSection: indexPath.section)])
+    }
+    
+    // MARK: - Methods
+    
+    func showAlert(#title: String!, message: String!) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+        let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+        alertController.addAction(defaultAction)
+        presentViewController(alertController, animated: true, completion: nil)
+    }
     
     func addEmptyView() {
         self.emptyView = UIView.loadFromNibNamed("EmptyView", bundle: nil) as? EmptyView
@@ -182,22 +191,22 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
     func requestGetAddressess() {
         SVProgressHUD.show()
         
-        let manager = APIManager.sharedInstance
         let url = "http://online.api.easydeal.ph/api/v1/auth/address/getUserAddresses"
-        let params = ["access_token": "ZGJiNjU5ZGQ0ZjVlOTFkYjRhMGJiYTExZjYxMDY1Mjg3YTFkNjllZDdmYjY2OWQwODNlYTI5MjhiYjE0YmViOA"]
+        let params = ["access_token": "YTI0MTRmOGE1YjcxYzY1MDg2OTAwNjUyNjY5M2RjYmFmYmI1MGRhMGVjZDM1MTlmNTkyNjU4NTExOTdlMTE2Mw"]
         
         manager.POST(url, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
             self.getAddressModel = GetAddressesModel.parseDataWithDictionary(responseObject)
-
+            self.cellCount = self.getAddressModel.listOfAddress.count
+            self.collectionView.reloadData()
             SVProgressHUD.dismiss()
             
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                 if task.statusCode == 401 {
-                    self.requestRefreshToken()
+                    self.requestRefreshToken("get", deleteId: nil, deleteIndex: nil)
                 } else {
                     self.addEmptyView()
                     SVProgressHUD.dismiss()
@@ -205,7 +214,37 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
         })
     }
     
-    func requestRefreshToken() {
+    func requestDeleteAddress(addressId: Int, index: NSIndexPath) {
+        SVProgressHUD.show()
+        
+        let url = "http://online.api.easydeal.ph/api/v1/auth/address/deleteUserAddress"
+        let params = ["access_token": "YTI0MTRmOGE1YjcxYzY1MDg2OTAwNjUyNjY5M2RjYmFmYmI1MGRhMGVjZDM1MTlmNTkyNjU4NTExOTdlMTE2Mw",
+        "userAddressId": String(addressId)]
+        
+        manager.POST(url, parameters: params, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            
+            if (responseObject["isSuccessful"] as! Bool) {
+                self.showAlert(title: "Address successfully deleted.", message: nil)
+                self.deleteCellInIndexPath(index)
+            } else {
+                self.showAlert(title: responseObject["message"] as! String, message: nil)
+            }
+            
+            SVProgressHUD.dismiss()
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                if task.statusCode == 401 {
+                    self.requestRefreshToken("delete", deleteId: addressId, deleteIndex: index)
+                } else {
+                    self.addEmptyView()
+                    SVProgressHUD.dismiss()
+                }
+        })
+    }
+    
+    func requestRefreshToken(type: String, deleteId: Int!, deleteIndex: NSIndexPath!) {
         let url: String = "http://online.api.easydeal.ph/api/v1/login"
         let params: NSDictionary = ["client_id": Constants.Credentials.clientID,
             "client_secret": Constants.Credentials.clientSecret,
@@ -216,7 +255,11 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
         manager.POST(url, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
-            self.requestGetAddressess()
+            if type == "get" {
+                self.requestGetAddressess()
+            } else if type == "delete" {
+                self.requestDeleteAddress(deleteId, index: deleteIndex)
+            }
             
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
