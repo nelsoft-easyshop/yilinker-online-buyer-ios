@@ -131,6 +131,36 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         return cell
     }
     
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        
+        if self.lastContentOffset > scrollView.contentOffset.y && scrollView.contentOffset.y <= 140.0 { // hide
+            if visibility >= 0.0 && visibility <= 1.0 {
+                visibility -= Double(scrollView.contentOffset.y / 14) * 0.005
+            }
+        } else if self.lastContentOffset < scrollView.contentOffset.y && scrollView.contentOffset.y >= 140.0 { // show
+            if  visibility <= 1.0 && visibility >= 0.0 {
+                visibility += Double(scrollView.contentOffset.y / 14) * 0.005
+            }
+        }
+        
+        if visibility > 1.0 {
+            visibility = 1.0
+        } else if visibility < 0.0 {
+            visibility = 0.0
+        }
+        
+        // reached top or bottom
+        
+        if scrollView.contentOffset.y <= 0.0 {
+            visibility = 0.0
+        } else if scrollView.contentOffset.y + scrollView.frame.size.height == scrollView.contentSize.height {
+            visibility = 1.0
+        }
+        
+        self.navigationController?.navigationBar.alpha = CGFloat(visibility)
+        self.lastContentOffset = scrollView.contentOffset.y
+    }
+    
     // MARK: - Init Views
     
     func getHeaderView() -> UIView {
@@ -687,11 +717,15 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     }
 
     func gotoCheckoutFromAttributes(controller: ProductAttributeViewController) {
-        let checkout = CheckoutContainerViewController(nibName: "CheckoutContainerViewController", bundle: nil)
-        //self.navigationController?.pushViewController(checkout, animated: true)
-        let navigationController: UINavigationController = UINavigationController(rootViewController: checkout)
-        navigationController.navigationBar.barTintColor = Constants.Colors.appTheme
-        self.tabBarController?.presentViewController(navigationController, animated: true, completion: nil)
+        if SessionManager.isLoggedIn() {
+            let checkout = CheckoutContainerViewController(nibName: "CheckoutContainerViewController", bundle: nil)
+            //self.navigationController?.pushViewController(checkout, animated: true)
+            let navigationController: UINavigationController = UINavigationController(rootViewController: checkout)
+            navigationController.navigationBar.barTintColor = Constants.Colors.appTheme
+            self.tabBarController?.presentViewController(navigationController, animated: true, completion: nil)
+        } else {
+            showAlert(title: "Goto Guest Checkout", message: nil)
+        }
     }
     
     // MARK: - Product Review Delegate
@@ -742,36 +776,6 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         seeMoreAttribute("buy")
     }
     
-    func scrollViewDidScroll(scrollView: UIScrollView) {
-        
-        if self.lastContentOffset > scrollView.contentOffset.y && scrollView.contentOffset.y <= 140.0 { // hide
-            if visibility >= 0.0 && visibility <= 1.0 {
-                visibility -= Double(scrollView.contentOffset.y / 14) * 0.005
-            }
-        } else if self.lastContentOffset < scrollView.contentOffset.y && scrollView.contentOffset.y >= 140.0 { // show
-            if  visibility <= 1.0 && visibility >= 0.0 {
-                visibility += Double(scrollView.contentOffset.y / 14) * 0.005
-            }
-        }
-        
-        if visibility > 1.0 {
-            visibility = 1.0
-        } else if visibility < 0.0 {
-            visibility = 0.0
-        }
-        
-        // reached top or bottom
-        
-        if scrollView.contentOffset.y <= 0.0 {
-             visibility = 0.0
-        } else if scrollView.contentOffset.y + scrollView.frame.size.height == scrollView.contentSize.height {
-            visibility = 1.0
-        }
-        
-        self.navigationController?.navigationBar.alpha = CGFloat(visibility)
-        self.lastContentOffset = scrollView.contentOffset.y
-    }
-    
     func showAlert(#title: String!, message: String!) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
         let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
@@ -804,7 +808,11 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     }
 
     func barWishlistAction() {
-        requestUpdateWishlistItem()
+        if SessionManager.isLoggedIn() {
+            requestUpdateWishlistItem()
+        } else {
+            showAlert(title: "Failed", message: "Please logged-in to add item in your wishlist.")
+        }
     }
 
     func barRateAction() {
