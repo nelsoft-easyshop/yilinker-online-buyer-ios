@@ -225,6 +225,8 @@
 		26AFB3CA1B79DE5C00E50926 /* ProductAttributeCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26AFB3C61B79DE5C00E50926 /* ProductAttributeCollectionViewCell.xib */; };
 		26AFB3CB1B79DE5C00E50926 /* ProductSellerViewCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26AFB3C71B79DE5C00E50926 /* ProductSellerViewCollectionViewCell.xib */; };
 		26B1B8A01B86D4BD006405CE /* TransactionDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26B1B89F1B86D4BD006405CE /* TransactionDetailsView.swift */; };
+		26C285421B8FAA48005EBD3A /* GetAddressesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26C285411B8FAA48005EBD3A /* GetAddressesModel.swift */; };
+		26C285441B8FADE3005EBD3A /* AddressModelV2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26C285431B8FADE3005EBD3A /* AddressModelV2.swift */; };
 		26D54FDF1B860CF400522398 /* TransactionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26D54FDD1B860CF400522398 /* TransactionViewController.swift */; };
 		26D54FE01B860CF400522398 /* TransactionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26D54FDE1B860CF400522398 /* TransactionViewController.xib */; };
 		26D54FE71B86136300522398 /* TransactionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26D54FE51B86136300522398 /* TransactionTableViewCell.swift */; };
@@ -525,6 +527,8 @@
 		26AFB3C61B79DE5C00E50926 /* ProductAttributeCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProductAttributeCollectionViewCell.xib; sourceTree = "<group>"; };
 		26AFB3C71B79DE5C00E50926 /* ProductSellerViewCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProductSellerViewCollectionViewCell.xib; sourceTree = "<group>"; };
 		26B1B89F1B86D4BD006405CE /* TransactionDetailsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TransactionDetailsView.swift; path = YiLinkerOnlineBuyer/resources/View/TransactionDetailsView.swift; sourceTree = SOURCE_ROOT; };
+		26C285411B8FAA48005EBD3A /* GetAddressesModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GetAddressesModel.swift; path = YiLinkerOnlineBuyer/resources/Model/GetAddressesModel.swift; sourceTree = SOURCE_ROOT; };
+		26C285431B8FADE3005EBD3A /* AddressModelV2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AddressModelV2.swift; path = YiLinkerOnlineBuyer/resources/Model/AddressModelV2.swift; sourceTree = SOURCE_ROOT; };
 		26D54FDD1B860CF400522398 /* TransactionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TransactionViewController.swift; path = YiLinkerOnlineBuyer/resources/ViewController/TransactionViewController.swift; sourceTree = SOURCE_ROOT; };
 		26D54FDE1B860CF400522398 /* TransactionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TransactionViewController.xib; path = YiLinkerOnlineBuyer/resources/ViewController/TransactionViewController.xib; sourceTree = SOURCE_ROOT; };
 		26D54FE51B86136300522398 /* TransactionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TransactionTableViewCell.swift; path = YiLinkerOnlineBuyer/resources/ViewController/TransactionTableViewCell.swift; sourceTree = SOURCE_ROOT; };
@@ -767,6 +771,8 @@
 				79E85FCD1B8A1F5800428AA1 /* ActivityLogModel.swift */,
 				79E85FCF1B8A1FBD00428AA1 /* ActivityModel.swift */,
 				79E68B901B8B0AE9008626E4 /* PointModel.swift */,
+				26C285411B8FAA48005EBD3A /* GetAddressesModel.swift */,
+				26C285431B8FADE3005EBD3A /* AddressModelV2.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1394,6 +1400,7 @@
 				0C374F001B889D9A0050AE1D /* PlainTableViewCell.swift in Sources */,
 				26AFB3A91B79DE2900E50926 /* ProductDescriptionView.swift in Sources */,
 				0C99373E1B750583000D6074 /* ParseLocalJSON.swift in Sources */,
+				26C285441B8FADE3005EBD3A /* AddressModelV2.swift in Sources */,
 				26DFF6371B87B0AA005D8EDE /* TransactionProductImagesView.swift in Sources */,
 				0C99374D1B750583000D6074 /* NewSellerCollectionViewCell.swift in Sources */,
 				26AFB39B1B79DDEA00E50926 /* ProductAttributeModel.swift in Sources */,
@@ -1436,6 +1443,7 @@
 				79E68B851B8AF4D0008626E4 /* PointsEarnedTableViewCell.swift in Sources */,
 				0C99375D1B750583000D6074 /* HomeContainerViewController.swift in Sources */,
 				79E85FCE1B8A1F5800428AA1 /* ActivityLogModel.swift in Sources */,
+				26C285421B8FAA48005EBD3A /* GetAddressesModel.swift in Sources */,
 				0C2F45291B85E95D00021F45 /* ChangeAddressCollectionViewCell.swift in Sources */,
 				79E68B931B8B0B8D008626E4 /* PointsTableViewCell.swift in Sources */,
 				79E68B8D1B8B0431008626E4 /* PointsBreakdownTableViewCell.swift in Sources */,
