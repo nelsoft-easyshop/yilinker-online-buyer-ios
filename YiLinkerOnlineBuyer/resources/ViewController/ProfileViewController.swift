@@ -150,5 +150,15 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         var settingsViewController = ProfileSettingsViewController(nibName: "ProfileSettingsViewController", bundle: nil)
         self.navigationController?.pushViewController(settingsViewController, animated:true)
     }
+    
+    //Loader function
+    func showLoader() {
+        SVProgressHUD.show()
+        SVProgressHUD.setBackgroundColor(UIColor.whiteColor())
+    }
+    
+    func dismissLoader() {
+        SVProgressHUD.dismiss()
+    }
 
 }
