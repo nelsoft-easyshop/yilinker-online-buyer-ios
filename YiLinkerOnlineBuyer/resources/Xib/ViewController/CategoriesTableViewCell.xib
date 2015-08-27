@@ -30,9 +30,9 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="right-gray" translatesAutoresizingMaskIntoConstraints="NO" id="Mx4-ah-9yt">
-                        <rect key="frame" x="352" y="16" width="13" height="25"/>
+                        <rect key="frame" x="352" y="19" width="10" height="22"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="13" id="nKs-iD-akU"/>
+                            <constraint firstAttribute="width" constant="10" id="nKs-iD-akU"/>
                         </constraints>
                     </imageView>
                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dummy-placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="WzY-LK-4IL">
@@ -49,17 +49,18 @@
                     <constraint firstItem="cZi-9J-KTL" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="JVt-sY-VGm"/>
                     <constraint firstItem="cZi-9J-KTL" firstAttribute="top" secondItem="Mx4-ah-9yt" secondAttribute="bottom" constant="17" id="MvB-Q2-me7"/>
                     <constraint firstItem="WzY-LK-4IL" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="Twz-ta-79k"/>
-                    <constraint firstItem="Mx4-ah-9yt" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="16" id="XPf-2l-CEi"/>
+                    <constraint firstItem="Mx4-ah-9yt" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="19" id="XPf-2l-CEi"/>
                     <constraint firstItem="cZi-9J-KTL" firstAttribute="top" secondItem="WzY-LK-4IL" secondAttribute="bottom" id="abt-yz-X3N"/>
                     <constraint firstItem="WzY-LK-4IL" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="gfn-7V-bnV"/>
                     <constraint firstAttribute="bottom" secondItem="cZi-9J-KTL" secondAttribute="bottom" id="nVT-sM-2i2"/>
-                    <constraint firstAttribute="trailing" secondItem="Mx4-ah-9yt" secondAttribute="trailing" constant="10" id="nbC-Wl-htW"/>
+                    <constraint firstAttribute="trailing" secondItem="Mx4-ah-9yt" secondAttribute="trailing" constant="13" id="nbC-Wl-htW"/>
                     <constraint firstItem="NbS-u2-dNh" firstAttribute="leading" secondItem="WzY-LK-4IL" secondAttribute="trailing" constant="17" id="vk1-VD-0wD"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
                 <outlet property="categoryLabel" destination="NbS-u2-dNh" id="wrP-oq-SPG"/>
                 <outlet property="pictureImageView" destination="WzY-LK-4IL" id="46s-nC-i9S"/>
+                <outlet property="separatorView" destination="cZi-9J-KTL" id="FOJ-0f-jSP"/>
             </connections>
             <point key="canvasLocation" x="317.5" y="341"/>
         </tableViewCell>

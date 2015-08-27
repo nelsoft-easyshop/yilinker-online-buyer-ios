@@ -13,21 +13,19 @@ class CategoryModel {
     var message: String = ""
     var isSuccessful: String = ""
     
-    var id: [String] = []
+    var id: [Int] = []
     var name: [String] = []
-    var slug: [String] = []
     var image: [String] = []
-    var isParent: [Bool] = []
+    var hasChildren: [Bool] = []
     
-    init(message: String, isSuccessful: String, id: NSArray, name: NSArray, slug: NSArray, image: NSArray, isParent: NSArray) {
+    init(message: String, isSuccessful: String, id: NSArray, name: NSArray, image: NSArray, hasChildren: NSArray) {
         self.message = message
         self.isSuccessful = isSuccessful
         
-        self.id = id as! [String]
+        self.id = id as! [Int]
         self.name = name as! [String]
-        self.slug = slug as! [String]
         self.image = image as! [String]
-        self.isParent = isParent as! [Bool]
+        self.hasChildren = hasChildren as! [Bool]
     }
     
     class func parseCategories(dictionary: AnyObject) -> CategoryModel {
@@ -35,11 +33,10 @@ class CategoryModel {
         var message: String = ""
         var isSuccessful: String = ""
         
-        var id: [String] = []
+        var id: [Int] = []
         var name: [String] = []
-        var slug: [String] = []
         var image: [String] = []
-        var isParent: [Bool] = []
+        var hasChildren: [Bool] = []
         
         if dictionary.isKindOfClass(NSDictionary) {
             
@@ -51,10 +48,10 @@ class CategoryModel {
                 isSuccessful = tempVar
             }
             
-            if let categories: AnyObject = dictionary["categories"] {
+            if let categories: AnyObject = dictionary["data"] {
                 
                 for category in categories as! NSArray {
-                    if let tempVar = category["id"] as? String {
+                    if let tempVar = category["productCategoryId"] as? Int {
                         id.append(tempVar)
                     }
                     
@@ -62,16 +59,13 @@ class CategoryModel {
                         name.append(tempVar)
                     }
                     
-                    if let tempVar = category["slug"] as? String {
-                        slug.append(tempVar)
-                    }
-                    
                     if let tempVar = category["imageUrl"] as? String {
                         image.append(tempVar)
                     }
                     
-                    if let tempVar = category["isParent"] as? Bool {
-                        isParent.append(tempVar)
+                    if let tempVar = category["hasChildren"] as? String {
+                        let stringToBool = NSString(string: tempVar)
+                        hasChildren.append(stringToBool.boolValue)
                     }
                 }
                 
@@ -79,6 +73,6 @@ class CategoryModel {
             
         } // dictionary
         
-        return CategoryModel(message: message, isSuccessful: isSuccessful, id: id, name: name, slug: slug, image: image, isParent: isParent)
+        return CategoryModel(message: message, isSuccessful: isSuccessful, id: id, name: name, image: image, hasChildren: hasChildren)
     } // parse
 }

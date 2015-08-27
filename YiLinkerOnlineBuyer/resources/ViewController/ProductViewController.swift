@@ -45,6 +45,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     var selectedId: [String] = []
 
     var unitId: String = "1"
+    var productId: String = "0"
     
     var newFrame: CGRect!
     var visibility = 0.0
@@ -240,7 +241,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         return self.productImagesView
     }
     
-    func getProductDetailsView(list: NSArray!) -> UIView {
+    func getProductDetailsView() -> UIView {
         if self.productDetailsView == nil {
             self.productDetailsView = UIView(frame: CGRectMake(0, 0, self.view.frame.size.width, 25))
             self.productDetailsView.backgroundColor = UIColor.whiteColor()
@@ -527,7 +528,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         self.buttonsContainer.hidden = false
         
         self.getHeaderView().addSubview(self.getProductImagesView())
-        self.getHeaderView().addSubview(self.getProductDetailsView([]))
+        self.getHeaderView().addSubview(self.getProductDetailsView())
         self.getHeaderView().addSubview(self.getProductAttributeView())
         self.getHeaderView().addSubview(self.getProductDescriptionView())
         self.getHeaderView().addSubview(self.getProductReviewHeaderView())
@@ -537,6 +538,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         
         self.productImagesView.setDetails(self.productDetailsModel, unitId: unitId.toInt()!, width: self.view.frame.size.width)
 //        self.setDetails(productDetailsModel.details)
+        self.setDetails(["Free Shipping"])
         self.setAttributes(self.productDetailsModel.attributes, productUnits: self.productDetailsModel.productUnits, unitId: "1", quantity: 0)
         self.productDescriptionView.setDescription(productDetailsModel.shortDescription, full: productDetailsModel.fullDescription)
         
