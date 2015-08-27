@@ -384,18 +384,21 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
             sellerCollectionView.sellerSubTitleLabel.text = sellerModel.specialty
             sellerCollectionView.sellerProfileImageView.sd_setImageWithURL(sellerModel.avatar, placeholderImage: UIImage(named: "dummy-placeholder"))
             
-            sellerCollectionView.productOneImageView.sd_setImageWithURL(sellerModel.products[0].imageURL, placeholderImage: UIImage(named: "dummy-placeholder"))
-            sellerCollectionView.productTwoImageView.sd_setImageWithURL(sellerModel.products[1].imageURL, placeholderImage: UIImage(named: "dummy-placeholder"))
-            sellerCollectionView.productThreeImageView.sd_setImageWithURL(sellerModel.products[2].imageURL, placeholderImage: UIImage(named: "dummy-placeholder"))
-            
-            sellerCollectionView.productOneImageView.target = sellerModel.products[0].target
-            sellerCollectionView.productOneImageView.targetType = sellerModel.products[0].targetType
-            
-            sellerCollectionView.productTwoImageView.target = sellerModel.products[1].target
-            sellerCollectionView.productTwoImageView.targetType = sellerModel.products[1].targetType
+            if sellerModel.products.count == 3 {
+                sellerCollectionView.productOneImageView.sd_setImageWithURL(sellerModel.products[0].imageURL, placeholderImage: UIImage(named: "dummy-placeholder"))
+                sellerCollectionView.productTwoImageView.sd_setImageWithURL(sellerModel.products[1].imageURL, placeholderImage: UIImage(named: "dummy-placeholder"))
+                sellerCollectionView.productThreeImageView.sd_setImageWithURL(sellerModel.products[2].imageURL, placeholderImage: UIImage(named: "dummy-placeholder"))
+                
+                sellerCollectionView.productOneImageView.target = sellerModel.products[0].target
+                sellerCollectionView.productOneImageView.targetType = sellerModel.products[0].targetType
+                
+                sellerCollectionView.productTwoImageView.target = sellerModel.products[1].target
+                sellerCollectionView.productTwoImageView.targetType = sellerModel.products[1].targetType
+                
+                sellerCollectionView.productThreeImageView.target = sellerModel.products[2].target
+                sellerCollectionView.productThreeImageView.targetType = sellerModel.products[2].targetType
+            }
 
-            sellerCollectionView.productThreeImageView.target = sellerModel.products[2].target
-            sellerCollectionView.productThreeImageView.targetType = sellerModel.products[2].targetType
             
             sellerCollectionView.delegate = self
             
