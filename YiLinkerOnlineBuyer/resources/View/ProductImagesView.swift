@@ -48,8 +48,8 @@ class ProductImagesView: UIView, UICollectionViewDataSource, UICollectionViewDel
         
         self.collectionView.dataSource = self
         self.collectionView.delegate = self
-        var nib = UINib(nibName: "ProductImagesViewCollectionViewCell", bundle:nil)
-        self.collectionView.registerNib(nib, forCellWithReuseIdentifier: "ImagesViewIdentifier")
+        var nib = UINib(nibName: "ProductSellerViewCollectionViewCell", bundle:nil)
+        self.collectionView.registerNib(nib, forCellWithReuseIdentifier: "productSellerIdentifier")
         
         addTapTo(self.closeContainerView, action: "closeAction:")
         addTapTo(self.wishlistContainerView, action: "wishlistAction:")
@@ -74,7 +74,7 @@ class ProductImagesView: UIView, UICollectionViewDataSource, UICollectionViewDel
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell: ProductImagesViewCollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier("ImagesViewIdentifier", forIndexPath: indexPath) as! ProductImagesViewCollectionViewCell
+        let cell: ProductSellerViewCollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier("productSellerIdentifier", forIndexPath: indexPath) as! ProductSellerViewCollectionViewCell
         
         cell.setImage(self.images[indexPath.row] as! String)
         
