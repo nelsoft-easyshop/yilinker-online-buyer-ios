@@ -356,7 +356,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         let url: String = "http://online.api.easydeal.ph/api/v1/login"
         let params: NSDictionary = ["client_id": Constants.Credentials.clientID,
             "client_secret": Constants.Credentials.clientSecret,
-            "grant_type": Constants.Credentials.grantRefresh,
+            "grant_type": Constants.Credentials.grantRefreshToken,
             "refresh_token": SessionManager.refreshToken()]
         
         let manager = APIManager.sharedInstance
