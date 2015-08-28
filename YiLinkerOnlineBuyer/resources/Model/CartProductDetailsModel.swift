@@ -1,65 +1,83 @@
 //
-//  CartProductDetailsModel.swift
+//  ProductDetailsModel.swift
 //  YiLinkerOnlineBuyer
 //
-//  Created by John Paul Chan on 8/12/15.
+//  Created by Rj Constantino on 8/7/15.
 //  Copyright (c) 2015 yiLinker-online-buyer. All rights reserved.
 //
 
-import UIKit
+import Foundation
 
-class CartProductDetailsModel: NSObject {
+class CartProductDetailsModel {
     
-    var id: Int = 0
+    var selected: Bool = false
+    
+    var id: String = ""
     var title: String = ""
-    var image: NSURL = NSURL(string: "")!
+    var slug: String = ""
+    var image: String = ""
+    var images: [String] = []
     var shortDescription: String = ""
     var fullDescription: String = ""
     var sellerId: Int = 0
-    var originalPrice: Float = 0
-    var newPrice: Float = 0
-    var discount: Float = 0
-    var details: [String] = []
     
-    var attributes: [ProductAttributeModel] = []
-    var combinations: [ProductAvailableAttributeCombinationModel] = []
+    var attributes: [ProductAttributeModel] = [] //done
+    var productUnits: [ProductUnitsModel] = []
     
-    init(id: Int, title: String, image: NSURL, originalPrice: Float, newPrice: Float, discount: Float, shortDescription: String, fullDescription: String, sellerId: Int, details: NSArray, attributes: NSArray, combinations: NSArray) {
-        
+    var unitId: String = ""
+    var itemId: Int = 0
+    var quantity: Int = 0
+    
+    //DETAILS ???
+    //BADGES  ???
+    
+    init(selected: Bool, id: String, title: String, slug: String, image: String, images: NSArray, shortDescription: String, fullDescription: String, sellerId: Int, attributes: NSArray, productUnits: NSArray, unitId: String, itemId: Int, quantity: Int) {
+        self.selected = selected
         self.id = id
         self.title = title
+        self.slug = slug
         self.image = image
-        self.originalPrice = originalPrice
-        self.newPrice = newPrice
-        self.discount = discount
+        self.images = images as! [String]
         self.shortDescription = shortDescription
         self.fullDescription = fullDescription
         self.sellerId = sellerId
+        
         self.attributes = attributes as! [ProductAttributeModel]
-        self.combinations = combinations as! [ProductAvailableAttributeCombinationModel]
+        self.productUnits = productUnits as! [ProductUnitsModel]
+        
+        self.unitId = unitId
+        self.itemId = itemId
+        self.quantity = quantity
     }
     
     class func parseDataWithDictionary(dictionary: AnyObject) -> CartProductDetailsModel {
         
-        var message: String = ""
-        var isSuccessful: String = ""
-        
-        var id: Int = 0
+        var selected: Bool = false
+        var id: String = ""
         var title: String = ""
-        var image: NSURL = NSURL(string: "")!
+        var slug: String = ""
+        var image: String = ""
+        var images: [String] = []
         var shortDescription: String = ""
         var fullDescription: String = ""
         var sellerId: Int = 0
-        var originalPrice: Float = 0
-        var newPrice: Float = 0
-        var discount: Float = 0
-        var details: [String] = []
         
-        var attributes: [ProductAttributeModel] = []
+        var attributes: [ProductAttributeModel] = [] //done
+        var productUnits: [ProductUnitsModel] = []
+        
+        var unitId: String = ""
+        var itemId: Int = 0
+        var quantity: Int = 0
+        
+        //DETAILS ???
+        //BADGES  ???
+        
+        // ----
         var combinations: [ProductAvailableAttributeCombinationModel] = []
         
         if dictionary.isKindOfClass(NSDictionary) {
-            if let tempVar = dictionary["id"] as? Int {
+            
+            if let tempVar = dictionary["id"] as? String {
                 id = tempVar
             }
             
@@ -67,8 +85,17 @@ class CartProductDetailsModel: NSObject {
                 title = tempVar
             }
             
+            if let tempVar = dictionary["slug"] as? String {
+                slug = tempVar
+            }
+            
+            
             if let tempVar = dictionary["image"] as? String {
-                image = NSURL(string: tempVar)!
+                image = tempVar
+            }
+            
+            if let tempVar = dictionary["images"] as? NSArray {
+                images = tempVar as! [String]
             }
             
             if let tempVar = dictionary["shortDescription"] as? String {
@@ -83,45 +110,48 @@ class CartProductDetailsModel: NSObject {
                 sellerId = tempVar
             }
             
-            if let tempVar = dictionary["originalPrice"] as? Float {
-                originalPrice = tempVar
-            }
-            
-            if let tempVar = dictionary["newPrice"] as? Float {
-                newPrice = tempVar
-            }
-            
-            if let tempVar = dictionary["discount"] as? Float {
-                discount = tempVar
-            }
-            
             for subValue in dictionary["attributes"] as! NSArray {
                 let model: ProductAttributeModel = ProductAttributeModel.parseAttribute(subValue as! NSDictionary)
                 attributes.append(model)
             }
             
-            for subValue in dictionary["availableAttributeCombi"] as! NSArray {
-                let model: ProductAvailableAttributeCombinationModel = ProductAvailableAttributeCombinationModel.parseCombination(subValue as! NSDictionary)
-                
-                combinations.append(model)
-                
-                
+            for subValue in dictionary["productUnits"] as! NSArray {
+                let model: ProductUnitsModel = ProductUnitsModel.parseProductUnits(subValue as! NSDictionary)
+                productUnits.append(model)
             }
-        } // end if dictionary
+            
+            if let tempVar = dictionary["unitId"] as? String {
+                unitId = tempVar
+            }
+            
+            if let tempVar = dictionary["itemId"] as? Int {
+                itemId = tempVar
+            }
+            
+            if let tempVar = dictionary["quantity"] as? Int {
+                quantity = tempVar
+            }
+            
+            // data
+        } // dictionary
         
-        return  CartProductDetailsModel(id: id,
-            title: title, image: image,
-            originalPrice: originalPrice,
-            newPrice: newPrice,
-            discount: discount,
+        return CartProductDetailsModel(
+            selected: selected,
+            id: id,
+            title: title,
+            slug: slug,
+            image: image,
+            images: images,
             shortDescription: shortDescription,
             fullDescription: fullDescription,
             sellerId: sellerId,
-            details: details,
             attributes: attributes,
-            combinations: combinations)
+            productUnits: productUnits,
+            unitId: unitId,
+            itemId: itemId,
+            quantity: quantity)
         
         
-    }// parseDataWithDictionary
+    } // parseDataWithDictionary
     
 }
