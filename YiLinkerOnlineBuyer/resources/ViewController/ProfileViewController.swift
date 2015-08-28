@@ -172,6 +172,9 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     
     func transactionsTapAction() {
         var transactionViewController = TransactionViewController(nibName: "TransactionViewController", bundle: nil)
+        if transactionViewController.respondsToSelector("edgesForExtendedLayout") {
+            transactionViewController.edgesForExtendedLayout = UIRectEdge.None
+        }
         self.navigationController?.pushViewController(transactionViewController, animated:true)
     }
     
