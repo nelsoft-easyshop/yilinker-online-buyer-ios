@@ -37,7 +37,7 @@ class ProductReviewsModel {
             }
             
             if let val: AnyObject = reviews["rating"] {
-                if let tempRating = reviews["ratins"] as? String {
+                if let tempRating = reviews["rating"] as? String {
                     model.rating = reviews["rating"] as! String
                 }
             } else {
@@ -59,8 +59,12 @@ class ProductReviewsModel {
             if let val: AnyObject = reviews["review"] {
                 model.review = reviews["review"] as! String
             }
+            
+            if let val: AnyObject = reviews["message"] {
+                model.review = reviews["message"] as! String
+            }
         }
-
+        
         return model
     }
     
