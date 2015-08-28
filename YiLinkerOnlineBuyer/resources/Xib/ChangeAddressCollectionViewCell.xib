@@ -85,6 +85,7 @@
                 <outlet property="addressLabel" destination="Sx5-GY-uj9" id="xty-1D-EG7"/>
                 <outlet property="checkBoxButton" destination="q5N-SS-ZY2" id="yaM-Vz-NDo"/>
                 <outlet property="deleteButton" destination="q7d-g0-zfw" id="GAb-UF-GPw"/>
+                <outlet property="titleLabel" destination="BKG-VE-yR0" id="30R-Dz-v3L"/>
             </connections>
             <point key="canvasLocation" x="314.5" y="286.5"/>
         </collectionViewCell>

@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol ChangeAddressViewControllerDelegate {
+    func changeAddressViewController(didSelectAddress address: String)
+}
+
 class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UICollectionViewDelegate, ChangeAddressCollectionViewCellDelegate, ChangeAddressFooterCollectionViewCellDelegate, AddAddressTableViewControllerDelegate, EmptyViewDelegate {
 
     @IBOutlet weak var collectionView: UICollectionView!
@@ -20,12 +24,15 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
     
     let manager = APIManager.sharedInstance
     
+    var delegate: ChangeAddressViewControllerDelegate?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         requestGetAddressess()
         
         self.titleView()
         self.backButton()
+
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         layout.itemSize = CGSize(width: self.view.frame.size.width - 20, height: 79)
         layout.minimumLineSpacing = 20
@@ -68,6 +75,8 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
     }
     
     func done() {
+        let cell: ChangeAddressCollectionViewCell = self.collectionView.cellForItemAtIndexPath(NSIndexPath(forItem: self.selectedIndex, inSection: 0)) as! ChangeAddressCollectionViewCell
+        self.delegate!.changeAddressViewController(didSelectAddress: cell.addressLabel.text!)
         self.navigationController!.popViewControllerAnimated(true)
     }
     
@@ -89,8 +98,9 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell : ChangeAddressCollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier(Constants.Checkout.changeAddressCollectionViewCellNibNameAndIdentifier, forIndexPath: indexPath) as! ChangeAddressCollectionViewCell
         
+        cell.titleLabel.text = self.getAddressModel.listOfAddress[indexPath.row].title
         cell.addressLabel.text = self.getAddressModel.listOfAddress[indexPath.row].streetName
-        
+
         if indexPath.row == self.selectedIndex {
             cell.layer.borderWidth = 1
             cell.layer.borderColor = Constants.Colors.selectedGreenColor.CGColor
@@ -192,7 +202,7 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
         SVProgressHUD.show()
         
         let url = "http://online.api.easydeal.ph/api/v1/auth/address/getUserAddresses"
-        let params = ["access_token": "YTI0MTRmOGE1YjcxYzY1MDg2OTAwNjUyNjY5M2RjYmFmYmI1MGRhMGVjZDM1MTlmNTkyNjU4NTExOTdlMTE2Mw"]
+        let params = ["access_token": SessionManager.accessToken()]
         
         manager.POST(url, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
@@ -218,7 +228,7 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
         SVProgressHUD.show()
         
         let url = "http://online.api.easydeal.ph/api/v1/auth/address/deleteUserAddress"
-        let params = ["access_token": "YTI0MTRmOGE1YjcxYzY1MDg2OTAwNjUyNjY5M2RjYmFmYmI1MGRhMGVjZDM1MTlmNTkyNjU4NTExOTdlMTE2Mw",
+        let params = ["access_token": SessionManager.accessToken(),
         "userAddressId": String(addressId)]
         
         manager.POST(url, parameters: params, success: {
