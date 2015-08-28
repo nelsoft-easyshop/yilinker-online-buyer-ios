@@ -113,16 +113,8 @@ class FollowedSellerViewController: UIViewController, EmptyViewDelegate {
         manager.POST(url, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
-            if (responseObject["isSuccessful"] as! Bool) {
                 SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
                 self.requestFollowedSelers()
-            } else {
-                SVProgressHUD.dismiss()
-                let alertController = UIAlertController(title: "Error", message: "message", preferredStyle: .Alert)
-                let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
-                alertController.addAction(defaultAction)
-                self.presentViewController(alertController, animated: true, completion: nil)
-            }
             
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
