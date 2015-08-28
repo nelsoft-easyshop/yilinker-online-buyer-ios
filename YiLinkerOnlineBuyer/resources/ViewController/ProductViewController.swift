@@ -294,9 +294,10 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
             self.productDetailsModel = ProductDetailsModel.parseDataWithDictionary(responseObject)
+            self.productId = self.productDetailsModel.id
+
             self.attributes = self.productDetailsModel.attributes
-            
-            self.requestSellerDetails(self.sellerUrl, params: ["userId": "1"])
+            self.requestSellerDetails(self.sellerUrl, params: ["userId": self.productDetailsModel.sellerId])
             
             self.productRequest = true
             self.productSuccess = true
@@ -349,6 +350,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     }
     
     func requestUpdateWishlistItem() {
+        
         SVProgressHUD.show()
         let manager = APIManager.sharedInstance
         let params = ["access_token": SessionManager.accessToken(),
@@ -356,12 +358,15 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
             "unitId": self.unitId,
             "quantity": "1",
             "wishlist": "true"]
-        
-        manager.GET("http://online.api.easydeal.ph/api/v1/auth/cart/getCart", parameters: params, success: {
+
+        manager.POST("http://online.api.easydeal.ph/api/v1/auth/cart/updateCartItem", parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
+            var data: NSDictionary = responseObject["data"] as! NSDictionary
+            var items: NSArray = data["items"] as! NSArray
+            
             if (responseObject["isSuccessful"] as! Bool) {
-                self.addWishlistBadge()
+                self.addWishlistBadge(items.count)
                 self.showAlert(title: nil, message: "This item has been added to your wishlist")
             } else {
                 self.showAlert(title: "Error", message: responseObject["message"] as! String)
@@ -625,12 +630,9 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         self.view.addSubview(self.emptyView!)
     }
     
-    func addWishlistBadge() {
-        if let badgeValue = (self.tabController.tabBar.items![3] as! UITabBarItem).badgeValue?.toInt() {
-            (self.tabController.tabBar.items![3] as! UITabBarItem).badgeValue = String(badgeValue + 1)
-        } else {
-            (self.tabController.tabBar.items![3] as! UITabBarItem).badgeValue = "1"
-        }
+    func addWishlistBadge(items: Int) {
+        let badgeValue = (self.tabController.tabBar.items![3] as! UITabBarItem).badgeValue?.toInt()
+        (self.tabController.tabBar.items![3] as! UITabBarItem).badgeValue = String(items)
     }
 
     // MARK: - Product View Delegate
