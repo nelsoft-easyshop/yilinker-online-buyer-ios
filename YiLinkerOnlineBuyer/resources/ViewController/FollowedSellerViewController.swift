@@ -80,7 +80,7 @@ class FollowedSellerViewController: UIViewController, EmptyViewDelegate {
         
         let manager = APIManager.sharedInstance
         let url = "http://online.api.easydeal.ph/api/v1/auth/getFollowedSellers"
-        let params = ["access_token": "MzFiNWY1ZDI3ZTkxM2IwMDdjNjMwNzVjYzk0ZTgxYzZmNWI1OWEwYjFjZDk5Y2FhMTM1OGU0MTFiNmU3MzZmYQ",
+        let params = ["access_token": SessionManager.accessToken(),
             "page": "1", "limit": "99"]
         
         manager.POST(url, parameters: params, success: {
@@ -113,17 +113,9 @@ class FollowedSellerViewController: UIViewController, EmptyViewDelegate {
         manager.POST(url, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
-            if (responseObject["isSuccessful"] as! Bool) {
-                SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
-                self.requestFollowedSelers()
-            } else {
-                SVProgressHUD.dismiss()
-                let alertController = UIAlertController(title: "Error", message: "message", preferredStyle: .Alert)
-                let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
-                alertController.addAction(defaultAction)
-                self.presentViewController(alertController, animated: true, completion: nil)
-            }
-            
+            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+            self.requestFollowedSelers()
+
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 SVProgressHUD.dismiss()
