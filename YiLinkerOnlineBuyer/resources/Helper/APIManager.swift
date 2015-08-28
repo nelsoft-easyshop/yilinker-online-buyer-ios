@@ -39,6 +39,7 @@ struct APIAtlas {
     static let productPageUrl = "v1/get-product"
     static let searchUrl = "product/getSearchKeywords"
     static let profileUrl = "auth/user/getUser"
+    static let editProfileUrl = "auth/user/editProfile"
     static let baseUrl = APIEnvironment.baseUrl()
 }
 
