@@ -9,7 +9,7 @@
 import UIKit
 
 class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, SellerTableHeaderViewDelegate, ProductsTableViewCellDelegate {
-
+    
     @IBOutlet weak var tableView: UITableView!
     
     var sellerModel: SellerModel?
@@ -20,7 +20,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.tableView.estimatedRowHeight = 112.0
         self.tableView.rowHeight = UITableViewAutomaticDimension
         self.registerNib()
-      
+        
         self.titleView()
         self.fireSeller()
         
@@ -54,7 +54,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         sellerTableHeaderView.delegate = self
         
         sellerTableHeaderView.coverPhotoImageView.sd_setImageWithURL(self.sellerModel!.coverPhoto, placeholderImage: UIImage(named: "dummy-placeholder"))
-       
+        
         let imageView: UIImageView = UIImageView(frame: CGRectMake(0, 0, sellerTableHeaderView.profileImageView.frame.width, sellerTableHeaderView.profileImageView.frame.height))
         imageView.sd_setImageWithURL(self.sellerModel!.avatar, placeholderImage: UIImage(named: "dummy-placeholder"))
         
@@ -87,15 +87,18 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         SVProgressHUD.show()
         SVProgressHUD.setBackgroundColor(UIColor.whiteColor())
         let manager = APIManager.sharedInstance
-        manager.GET("http://demo9190076.mockable.io/v1/seller", parameters: nil, success: {
+        
+        //Need to change static value for userId
+        let parameters: NSDictionary = ["userId": "1"]
+        manager.POST(APIAtlas.getSellerInfo, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-                self.sellerModel = SellerModel.parseDataFromDictionary(responseObject as! NSDictionary)
-                self.populateData()
-                SVProgressHUD.dismiss()
+            self.sellerModel = SellerModel.parseSellerDataFromDictionary(responseObject as! NSDictionary)
+            self.populateData()
+            SVProgressHUD.dismiss()
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 SVProgressHUD.dismiss()
-
+                
         })
     }
     
@@ -115,7 +118,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
     func back() {
         self.navigationController!.popViewControllerAnimated(true)
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -132,12 +135,19 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
             let aboutSellerTableViewCell: AboutSellerTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(Constants.Seller.aboutSellerTableViewCellNibNameAndIdentifier) as! AboutSellerTableViewCell
+            if !self.sellerModel!.sellerAbout.isEmpty {
                 aboutSellerTableViewCell.aboutLabel.text = self.sellerModel!.sellerAbout
+            } else {
+                //Static contents for about seller
+                aboutSellerTableViewCell.aboutLabel.text = "I'm Kevin baisas, 25 year old from Makati City. I sell different stuff for phone accessories like jelly cases for iPhones and Android devices, earphones, flip cases, screen protectors etc. FREE DELIVERY when you purchase Php 500 worth of phone accessories. For any inquiry feel free to contact us at 546-2342. Thank you and Happy online shopping!"
+            }
+            
             return aboutSellerTableViewCell
         } else if indexPath.section == 1 {
             let productsTableViewCell: ProductsTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(Constants.Seller.productsTableViewCellNibNameAndIdentifier) as! ProductsTableViewCell
-                productsTableViewCell.productModels = sellerModel!.products
-                productsTableViewCell.delegate = self
+            productsTableViewCell.productModels = sellerModel!.products
+            print(sellerModel!.products)
+            productsTableViewCell.delegate = self
             return productsTableViewCell
         } else if indexPath.section == 2 {
             let generalRatingTableViewCell: GeneralRatingTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(Constants.Seller.generalRatingTableViewCellNibNameAndIndentifier) as! GeneralRatingTableViewCell
@@ -149,9 +159,9 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
             let reviewCell: ReviewTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(Constants.Seller.reviewIdentifier) as! ReviewTableViewCell
             
             let reviewModel: ProductReviewsModel = self.sellerModel!.reviews[index]
-//            reviewCell.displayPictureImageView.sd_setImageWithURL(NSURL(string: reviewModel.imageUrl)!, placeholderImage: UIImage(named: "dummy-placeholder"))
-//            reviewCell.messageLabel.text = reviewModel.message
-//            reviewCell.nameLabel.text = reviewModel.name
+            //            reviewCell.displayPictureImageView.sd_setImageWithURL(NSURL(string: reviewModel.imageUrl)!, placeholderImage: UIImage(named: "dummy-placeholder"))
+            reviewCell.messageLabel.text = reviewModel.review
+            reviewCell.nameLabel.text = reviewModel.fullName
             reviewCell.setRating(reviewModel.rating)
             return reviewCell
         }
