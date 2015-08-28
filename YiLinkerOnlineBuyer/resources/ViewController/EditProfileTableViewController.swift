@@ -25,6 +25,8 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
     var addressIndexPath: NSIndexPath?
     var accountIndexPath: NSIndexPath?
     
+    var profileUserDetailsModel: ProfileUserDetailsModel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -49,6 +51,10 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
         
         var tapTableView = UITapGestureRecognizer(target:self, action:"hideKeyboard")
         self.tableView.addGestureRecognizer(tapTableView)
+    }
+    
+    func passModel(profileModel: ProfileUserDetailsModel){
+        profileUserDetailsModel = profileModel
     }
     
     func titleView() {
@@ -111,6 +117,9 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
             return cell
         } else if indexPath.row == 1 {
             let cell = tableView.dequeueReusableCellWithIdentifier(personalInfoCellIdentifier, forIndexPath: indexPath) as! EditProfilePersonalInformationTableViewCell
+            cell.firstNameTextField.text = profileUserDetailsModel.firstName
+            cell.lastNameTextField.text = profileUserDetailsModel.lastName
+            cell.mobilePhoneTextField.text = profileUserDetailsModel.contactNumber
             
             personalIndexPath = indexPath
             
@@ -126,7 +135,7 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
             let cell = tableView.dequeueReusableCellWithIdentifier(accountCellIdentifier, forIndexPath: indexPath) as! EditProfileAccountInformationTableViewCell
             cell.delegate = self
             accountIndexPath = indexPath
-            
+            cell.emailAddressTextField.text = profileUserDetailsModel.email
             return cell
         }
     }
