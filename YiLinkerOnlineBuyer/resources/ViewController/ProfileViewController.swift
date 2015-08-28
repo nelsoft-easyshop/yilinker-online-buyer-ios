@@ -12,13 +12,19 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     let cellHeaderIdentifier: String = "ProfileHeaderTableViewCell"
     let cellContentIdentifier: String = "ProfileTableViewCell"
     
+    let manager = APIManager.sharedInstance
+    
     @IBOutlet weak var tableView: UITableView!
 
+    var profileDetails: ProfileUserDetailsModel?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        initializViews()
+        initializeViews()
         registerNibs()
+        
+        requestProfileDetails(APIAtlas.profileUrl, params: NSDictionary(dictionary: ["access_token": SessionManager.accessToken()]), showLoader: true)
     }
 
     override func didReceiveMemoryWarning() {
@@ -26,7 +32,12 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         // Dispose of any resources that can be recreated.
     }
     
-    func initializViews() {
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        requestProfileDetails(APIAtlas.profileUrl, params: NSDictionary(dictionary: ["access_token": SessionManager.accessToken()]), showLoader: false)
+    }
+    
+    func initializeViews() {
         tableView.tableFooterView = UIView(frame: CGRectZero)
         self.title = "Profile Page"
     }
@@ -37,6 +48,29 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         
         var nibContent = UINib(nibName: cellContentIdentifier, bundle: nil)
         tableView.registerNib(nibContent, forCellReuseIdentifier: cellContentIdentifier)
+    }
+    
+    func requestProfileDetails(url: String, params: NSDictionary!, showLoader: Bool) {
+        if showLoader {
+            self.showLoader()
+        }
+        
+        manager.GET(url, parameters: params, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in print(responseObject as! NSDictionary)
+            if responseObject.objectForKey("error") != nil {
+                self.requestRefreshToken("getWishlist", url: url, params: params, showLoader: showLoader)
+            } else {
+                if let value: AnyObject = responseObject["data"] {
+                    self.profileDetails = ProfileUserDetailsModel.parseDataWithDictionary(value as! NSDictionary)
+                }
+                self.tableView.reloadData()
+                self.dismissLoader()
+            }
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                self.showAlert("Error", message: "Something went wrong. . .")
+                self.dismissLoader()
+        })
     }
     
     /*
@@ -67,7 +101,11 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         
         if indexPath.row == 0 {
             let cell = tableView.dequeueReusableCellWithIdentifier(cellHeaderIdentifier, forIndexPath: indexPath) as! ProfileHeaderTableViewCell
-            
+            if profileDetails != nil {
+                cell.profileImageView.sd_setImageWithURL(NSURL(string: profileDetails!.profileImageUrl), placeholderImage: UIImage(named: "dummy-placeholder"))
+                cell.profileNameLabel.text = profileDetails?.fullName
+                cell.profileAddressLabel.text = profileDetails!.address?.streetName
+            }
             return cell
         } else {
             let cell = tableView.dequeueReusableCellWithIdentifier(cellContentIdentifier, forIndexPath: indexPath) as! ProfileTableViewCell
@@ -128,11 +166,13 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     // MARK: - Profile Table View cell Delegate
     func editProfileTapAction() {
         var editViewController = EditProfileTableViewController(nibName: "EditProfileTableViewController", bundle: nil)
+        editViewController.passModel(profileDetails!)
         self.navigationController?.pushViewController(editViewController, animated:true)
     }
     
     func transactionsTapAction() {
-        
+        var transactionViewController = TransactionViewController(nibName: "TransactionViewController", bundle: nil)
+        self.navigationController?.pushViewController(transactionViewController, animated:true)
     }
     
     func activityLogTapAction() {
@@ -150,5 +190,61 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         var settingsViewController = ProfileSettingsViewController(nibName: "ProfileSettingsViewController", bundle: nil)
         self.navigationController?.pushViewController(settingsViewController, animated:true)
     }
+    
+    //Loader function
+    func showLoader() {
+        SVProgressHUD.show()
+        SVProgressHUD.setBackgroundColor(UIColor.whiteColor())
+    }
+    
+    func dismissLoader() {
+        SVProgressHUD.dismiss()
+    }
 
+    func requestRefreshToken(type: String, url: String, params: NSDictionary!, showLoader: Bool) {
+        let url: String = "http://online.api.easydeal.ph/api/v1/login"
+        let params: NSDictionary = ["client_id": Constants.Credentials.clientID,
+            "client_secret": Constants.Credentials.clientSecret,
+            "grant_type": Constants.Credentials.grantRefreshToken,
+            "refresh_token": SessionManager.refreshToken()]
+        
+        let manager = APIManager.sharedInstance
+        manager.POST(url, parameters: params, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            
+            SVProgressHUD.dismiss()
+            
+            if (responseObject["isSuccessful"] as! Bool) {
+                SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+                self.requestProfileDetails(url, params: params, showLoader: showLoader)
+            } else {
+                self.showAlert("Error", message: responseObject["message"] as! String)
+            }
+            
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                SVProgressHUD.dismiss()
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                
+                self.showAlert("Something went wrong", message: "")
+                
+        })
+    }
+    
+    func showAlert(title: String, message: String) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+        
+        let OKAction = UIAlertAction(title: "OK", style: .Default) { (action) in
+            alertController.dismissViewControllerAnimated(true, completion: nil)
+            
+            let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+            appDelegate.changeRootToHomeView()
+        }
+        
+        alertController.addAction(OKAction)
+        
+        self.presentViewController(alertController, animated: true) {
+            
+        }
+    }
 }
