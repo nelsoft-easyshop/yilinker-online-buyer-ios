@@ -8,9 +8,10 @@
 
 import UIKit
 
-class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, ShipToTableViewCellDelegate {
+class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, ShipToTableViewCellDelegate, ChangeAddressViewControllerDelegate {
 
     @IBOutlet weak var tableView: UITableView!
+    var shipToTableViewCell: ShipToTableViewCell = ShipToTableViewCell()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,7 +21,7 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
         self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(0, 0, 0, -5)
         self.tableView.rowHeight = UITableViewAutomaticDimension
         self.tableView.layoutIfNeeded()
-        self.tableView.tableFooterView = self.tableFooterView()
+        self.tableView.tableFooterView = self.tableFooterView("Lorem psum")
         self.tableView.tableFooterView!.frame = CGRectMake(0, 0, 0, self.tableView.tableFooterView!.frame.size.height)
     }
     
@@ -50,12 +51,16 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
         return 41
     }
     
-    func tableFooterView() -> UIView {
-        let shipToTableViewCell: ShipToTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(Constants.Checkout.shipToTableViewCellNibNameAndIdentifier) as! ShipToTableViewCell
+    func tableFooterView(address: String) -> UIView {
+        self.shipToTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(Constants.Checkout.shipToTableViewCellNibNameAndIdentifier) as! ShipToTableViewCell
         shipToTableViewCell.frame = CGRectMake(0, 0, self.tableView.frame.size.width, shipToTableViewCell.frame.size.height)
         shipToTableViewCell.delegate = self
-        
+        shipToTableViewCell.addressLabel.text = address
         return shipToTableViewCell
+    }
+    
+    func changeAddressViewController(didSelectAddress address: String) {
+        self.tableView.tableFooterView = self.tableFooterView(address)
     }
     
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -118,6 +123,7 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
         })
         
         let changeAddressViewController: ChangeAddressViewController = ChangeAddressViewController(nibName: "ChangeAddressViewController", bundle: nil)
+        changeAddressViewController.delegate = self
         self.navigationController!.pushViewController(changeAddressViewController, animated: true)
     }
 }

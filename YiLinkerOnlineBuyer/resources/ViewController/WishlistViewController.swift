@@ -224,7 +224,6 @@ class WishlistViewController: UIViewController, UITableViewDelegate, UITableView
             let tempModel: WishlistProductDetailsModel = tableData[rowOfTheCell]
             
             var params: NSDictionary = ["access_token": SessionManager.accessToken(),
-                "wishlist": "true",
                 "productId": tempModel.id,
                 "unitId": tempModel.unitId,
                 "quantity": 0,
@@ -244,7 +243,6 @@ class WishlistViewController: UIViewController, UITableViewDelegate, UITableView
             let tempModel: WishlistProductDetailsModel = tableData[rowOfTheCell]
             
             var params: NSDictionary = ["access_token": SessionManager.accessToken(),
-                "wishlist": "true",
                 "productId": tempModel.id,
                 "unitId": tempModel.unitId,
                 "quantity": tempModel.quantity

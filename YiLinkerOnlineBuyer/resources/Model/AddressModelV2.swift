@@ -158,7 +158,6 @@ class AddressModelV2 {
                 if value as! NSObject != NSNull() {
                     model.latitude = value as! String
                 }
-                
             }
             
             if let value: AnyObject = reviews["landline"] {

@@ -227,6 +227,9 @@
 		26B1B8A01B86D4BD006405CE /* TransactionDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26B1B89F1B86D4BD006405CE /* TransactionDetailsView.swift */; };
 		26C285421B8FAA48005EBD3A /* GetAddressesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26C285411B8FAA48005EBD3A /* GetAddressesModel.swift */; };
 		26C285441B8FADE3005EBD3A /* AddressModelV2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26C285431B8FADE3005EBD3A /* AddressModelV2.swift */; };
+		26C285461B8FEE42005EBD3A /* ProvinceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26C285451B8FEE42005EBD3A /* ProvinceModel.swift */; };
+		26C285481B8FF546005EBD3A /* CityModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26C285471B8FF546005EBD3A /* CityModel.swift */; };
+		26C2854A1B8FF555005EBD3A /* BarangayModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26C285491B8FF555005EBD3A /* BarangayModel.swift */; };
 		26D54FDF1B860CF400522398 /* TransactionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26D54FDD1B860CF400522398 /* TransactionViewController.swift */; };
 		26D54FE01B860CF400522398 /* TransactionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26D54FDE1B860CF400522398 /* TransactionViewController.xib */; };
 		26D54FE71B86136300522398 /* TransactionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26D54FE51B86136300522398 /* TransactionTableViewCell.swift */; };
@@ -546,6 +549,9 @@
 		26B1B89F1B86D4BD006405CE /* TransactionDetailsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TransactionDetailsView.swift; path = YiLinkerOnlineBuyer/resources/View/TransactionDetailsView.swift; sourceTree = SOURCE_ROOT; };
 		26C285411B8FAA48005EBD3A /* GetAddressesModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GetAddressesModel.swift; path = YiLinkerOnlineBuyer/resources/Model/GetAddressesModel.swift; sourceTree = SOURCE_ROOT; };
 		26C285431B8FADE3005EBD3A /* AddressModelV2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AddressModelV2.swift; path = YiLinkerOnlineBuyer/resources/Model/AddressModelV2.swift; sourceTree = SOURCE_ROOT; };
+		26C285451B8FEE42005EBD3A /* ProvinceModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProvinceModel.swift; path = YiLinkerOnlineBuyer/resources/Model/ProvinceModel.swift; sourceTree = SOURCE_ROOT; };
+		26C285471B8FF546005EBD3A /* CityModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CityModel.swift; path = YiLinkerOnlineBuyer/resources/Model/CityModel.swift; sourceTree = SOURCE_ROOT; };
+		26C285491B8FF555005EBD3A /* BarangayModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BarangayModel.swift; path = YiLinkerOnlineBuyer/resources/Model/BarangayModel.swift; sourceTree = SOURCE_ROOT; };
 		26D54FDD1B860CF400522398 /* TransactionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TransactionViewController.swift; path = YiLinkerOnlineBuyer/resources/ViewController/TransactionViewController.swift; sourceTree = SOURCE_ROOT; };
 		26D54FDE1B860CF400522398 /* TransactionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TransactionViewController.xib; path = YiLinkerOnlineBuyer/resources/ViewController/TransactionViewController.xib; sourceTree = SOURCE_ROOT; };
 		26D54FE51B86136300522398 /* TransactionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TransactionTableViewCell.swift; path = YiLinkerOnlineBuyer/resources/ViewController/TransactionTableViewCell.swift; sourceTree = SOURCE_ROOT; };
@@ -808,6 +814,9 @@
 				79E68B901B8B0AE9008626E4 /* PointModel.swift */,
 				26C285411B8FAA48005EBD3A /* GetAddressesModel.swift */,
 				26C285431B8FADE3005EBD3A /* AddressModelV2.swift */,
+				26C285451B8FEE42005EBD3A /* ProvinceModel.swift */,
+				26C285471B8FF546005EBD3A /* CityModel.swift */,
+				26C285491B8FF555005EBD3A /* BarangayModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1381,6 +1390,7 @@
 				79E68B911B8B0AE9008626E4 /* PointModel.swift in Sources */,
 				0C5111E91B821D6F002F0001 /* SeeMoreTableViewCell.swift in Sources */,
 				0C2670CF1B772E4B00394E29 /* Enums.swift in Sources */,
+				26C285481B8FF546005EBD3A /* CityModel.swift in Sources */,
 				79E68BAD1B8B5081008626E4 /* EditProfilePersonalInformationTableViewCell.swift in Sources */,
 				0C329E731B7B2A71005BE2B6 /* Reachability.swift in Sources */,
 				0C329E951B7B7C5B005BE2B6 /* CustomTabBarController.swift in Sources */,
@@ -1472,6 +1482,7 @@
 				0C99373D1B750583000D6074 /* IPhoneType.swift in Sources */,
 				0C9937511B750583000D6074 /* ProductWithCenterNameCollectionViewCell.swift in Sources */,
 				0C9937401B750583000D6074 /* HomePageProductModel.swift in Sources */,
+				26C285461B8FEE42005EBD3A /* ProvinceModel.swift in Sources */,
 				79E68B891B8AFE99008626E4 /* PointsDetailsTableViewCell.swift in Sources */,
 				26AFB3B71B79DE3800E50926 /* ProductAttributeViewController.swift in Sources */,
 				26AFB3AD1B79DE2900E50926 /* ReviewTableViewCell.swift in Sources */,
@@ -1509,6 +1520,7 @@
 				7971F73D1B86189100322861 /* FilterAttributeModel.swift in Sources */,
 				0C6490761B7781E400F88F92 /* Category.swift in Sources */,
 				79E68B851B8AF4D0008626E4 /* PointsEarnedTableViewCell.swift in Sources */,
+				26C2854A1B8FF555005EBD3A /* BarangayModel.swift in Sources */,
 				0C99375D1B750583000D6074 /* HomeContainerViewController.swift in Sources */,
 				79E85FCE1B8A1F5800428AA1 /* ActivityLogModel.swift in Sources */,
 				26C285421B8FAA48005EBD3A /* GetAddressesModel.swift in Sources */,
