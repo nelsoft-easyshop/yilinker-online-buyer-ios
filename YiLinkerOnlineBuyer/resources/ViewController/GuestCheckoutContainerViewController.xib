@@ -6,7 +6,7 @@
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CheckoutContainerViewController" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="GuestCheckoutContainerViewController" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
             <connections>
                 <outlet property="contentView" destination="gGV-to-MNJ" id="fyt-nm-Hap"/>
                 <outlet property="continueButton" destination="sNv-RQ-xgI" id="uKk-FG-c4h"/>

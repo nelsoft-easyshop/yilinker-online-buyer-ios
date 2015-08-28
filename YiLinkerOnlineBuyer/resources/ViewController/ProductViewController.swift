@@ -488,7 +488,8 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     }
 
     func gotoCheckoutFromAttributes(controller: ProductAttributeViewController) {
-        let checkout = CheckoutContainerViewController(nibName: "CheckoutContainerViewController", bundle: nil)
+//        let checkout = CheckoutContainerViewController(nibName: "CheckoutContainerViewController", bundle: nil)
+        let checkout = GuestCheckoutContainerViewController(nibName: "GuestCheckoutContainerViewController", bundle: nil)
         //self.navigationController?.pushViewController(checkout, animated: true)
         let navigationController: UINavigationController = UINavigationController(rootViewController: checkout)
         navigationController.navigationBar.barTintColor = Constants.Colors.appTheme

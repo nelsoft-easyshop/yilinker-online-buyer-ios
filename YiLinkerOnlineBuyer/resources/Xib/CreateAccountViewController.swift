@@ -9,7 +9,10 @@
 import UIKit
 
 class CreateAccountViewController: UIViewController {
-
+    
+    @IBOutlet weak var passwordTextField: UITextField!
+    @IBOutlet weak var retypePasswordTextField: UITextField!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 

@@ -8,17 +8,29 @@
 
 import UIKit
 
-class GuestCheckoutTableViewCell: UITableViewCell {
+protocol GuestCheckoutTableViewCellDelegate {
+    
+}
 
+
+class GuestCheckoutTableViewCell: UITableViewCell {
+  
+    @IBOutlet weak var fakeContainerView: UIView!
+    
+    var delegate: GuestCheckoutTableViewCellDelegate?
+    
+    @IBOutlet weak var arrowImageView: UIButton!
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
     }
-
+    
+   
+    
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+        
     }
     
 }
