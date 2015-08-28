@@ -394,13 +394,8 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
             SVProgressHUD.dismiss()
-            
-            if (responseObject["isSuccessful"] as! Bool) {
-                SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
-                self.requestUpdateWishlistItem()
-            } else {
-                self.showAlert(title: "Error", message: responseObject["message"] as! String)
-            }
+            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+            self.requestUpdateWishlistItem()
             
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
