@@ -8,15 +8,19 @@
 
 import UIKit
 
-class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UICollectionViewDelegate, ChangeAddressCollectionViewCellDelegate, ChangeAddressFooterCollectionViewCellDelegate, AddAddressTableViewControllerDelegate {
+class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UICollectionViewDelegate, ChangeAddressCollectionViewCellDelegate, ChangeAddressFooterCollectionViewCellDelegate, AddAddressTableViewControllerDelegate, EmptyViewDelegate {
 
     @IBOutlet weak var collectionView: UICollectionView!
    
     var cellCount: Int = 3
     var selectedIndex: Int = 0
     
+    
+    var emptyView: EmptyView?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        requestGetAddressess()
         
         self.titleView()
         self.backButton()
@@ -155,5 +159,70 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
     func addAddressTableViewController(didAddAddressSucceed addAddressTableViewController: AddAddressTableViewController) {
         let indexPath: NSIndexPath = NSIndexPath(forItem: self.cellCount, inSection: 0)
         self.addCellInIndexPath(indexPath)
+    }
+    
+    // MARK: - Empty View
+    
+    func addEmptyView() {
+        self.emptyView = UIView.loadFromNibNamed("EmptyView", bundle: nil) as? EmptyView
+        self.emptyView?.frame = self.view.frame
+        self.emptyView!.delegate = self
+        self.view.addSubview(self.emptyView!)
+    }
+    
+    func didTapReload() {
+        requestGetAddressess()
+        self.emptyView?.removeFromSuperview()
+    }
+    
+    // MARK: - Requests
+    
+    func requestGetAddressess() {
+        SVProgressHUD.show()
+        
+        let manager = APIManager.sharedInstance
+        let url = "http://online.api.easydeal.ph/api/v1/auth/address/getUserAddresses"
+        let params = ["access_token": "ZGJiNjU5ZGQ0ZjVlOTFkYjRhMGJiYTExZjYxMDY1Mjg3YTFkNjllZDdmYjY2OWQwODNlYTI5MjhiYjE0YmViOA"]
+        
+        manager.POST(url, parameters: params, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            
+            GetAddressesModel.parseDataWithDictionary(responseObject)
+
+            SVProgressHUD.dismiss()
+            
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                if task.statusCode == 401 {
+                    self.requestRefreshToken()
+                } else {
+                    self.addEmptyView()
+                    SVProgressHUD.dismiss()
+                }
+        })
+    }
+    
+    func requestRefreshToken() {
+        let url: String = "http://online.api.easydeal.ph/api/v1/login"
+        let params: NSDictionary = ["client_id": Constants.Credentials.clientID,
+            "client_secret": Constants.Credentials.clientSecret,
+            "grant_type": Constants.Credentials.grantRefreshToken,
+            "refresh_token": SessionManager.refreshToken()]
+        
+        let manager = APIManager.sharedInstance
+        manager.POST(url, parameters: params, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            
+            self.requestGetAddressess()
+            
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                SVProgressHUD.dismiss()
+                let alertController = UIAlertController(title: "Something went wrong", message: "", preferredStyle: .Alert)
+                let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+                alertController.addAction(defaultAction)
+                self.presentViewController(alertController, animated: true, completion: nil)
+        })
     }
 }
