@@ -113,8 +113,8 @@ class FollowedSellerViewController: UIViewController, EmptyViewDelegate {
         manager.POST(url, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
-            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
-            self.requestFollowedSelers()
+                SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+                self.requestFollowedSelers()
 
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in

@@ -47,7 +47,14 @@ class HiddenViewController: UIViewController {
         if index == 0 {
             
         } else if index == 1 {
-            
+            if SessionManager.isLoggedIn() {
+                var titleLabel = UILabel(frame: CGRectZero)
+                titleLabel.font = UIFont(name: "Panton-Regular", size: 20)
+                titleLabel.text = "Followed Sellers"
+                titleLabel.textColor = .whiteColor()
+                titleLabel.sizeToFit()
+                self.navigationItem.titleView = titleLabel
+            }
         } else if index == 2 {
             
         } else if index == 3 {
@@ -62,21 +69,30 @@ class HiddenViewController: UIViewController {
                 self.navigationItem.titleView = titleLabel
             }
         } else if index == 5 {
-            if SessionManager.isLoggedIn() {
+            if !SessionManager.isLoggedIn() {
                 var titleLabel = UILabel(frame: CGRectZero)
                 titleLabel.text = "Customize Shopping"
                 titleLabel.font = UIFont(name: "Panton-Regular", size: 20)
                 titleLabel.textColor = .whiteColor()
                 titleLabel.sizeToFit()
                 self.navigationItem.titleView = titleLabel
+            } else if SessionManager.isLoggedIn() {
+                var titleLabel = UILabel(frame: CGRectZero)
+                titleLabel.font = UIFont(name: "Panton-Regular", size: 20)
+                titleLabel.text = "Category Page"
+                titleLabel.textColor = .whiteColor()
+                titleLabel.sizeToFit()
+                self.navigationItem.titleView = titleLabel
             }
         } else if index == 6 {
-            var titleLabel = UILabel(frame: CGRectZero)
-            titleLabel.font = UIFont(name: "Panton-Regular", size: 20)
-            titleLabel.text = "Category Page"
-            titleLabel.textColor = .whiteColor()
-            titleLabel.sizeToFit()
-            self.navigationItem.titleView = titleLabel
+            if !SessionManager.isLoggedIn() {
+                var titleLabel = UILabel(frame: CGRectZero)
+                titleLabel.font = UIFont(name: "Panton-Regular", size: 20)
+                titleLabel.text = "Category Page"
+                titleLabel.textColor = .whiteColor()
+                titleLabel.sizeToFit()
+                self.navigationItem.titleView = titleLabel
+            }
         }
         
     }
