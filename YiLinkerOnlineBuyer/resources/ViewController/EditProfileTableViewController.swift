@@ -10,6 +10,8 @@ import UIKit
 
 class EditProfileTableViewController: UITableViewController, UINavigationControllerDelegate, EditProfileAddPhotoTableViewCellDelegate, EditProfileAddressTableViewCellDelegate, EditProfileAccountInformationTableViewCellDelegate, UIImagePickerControllerDelegate, UIActionSheetDelegate  {
     
+    let manager = APIManager.sharedInstance
+    
     let addPhotoCellIndetifier: String = "EditProfileAddPhotoTableViewCell"
     let personalInfoCellIdentifier: String = "EditProfilePersonalInformationTableViewCell"
     let addressCellIdentifier: String = "EditProfileAddressTableViewCell"
@@ -127,7 +129,6 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
         } else if indexPath.row == 2 {
             let cell = tableView.dequeueReusableCellWithIdentifier(addressCellIdentifier, forIndexPath: indexPath) as! EditProfileAddressTableViewCell
             cell.delegate = self
-            
             addressIndexPath = indexPath
             
             return cell
@@ -333,6 +334,93 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
         
         if errorMessage != "" {
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorMessage)
+        } else {
+            if Reachability.isConnectedToNetwork(){
+                var params: NSDictionary = [
+                    "firstName": firstName! as String,
+                    "lastName": lastName! as String,
+                    "contactNumber": mobileNumber! as String,
+                    "access_token": SessionManager.accessToken()]
+                
+                fireUpdateProfile(APIAtlas.editProfileUrl, params: params)
+            }
+            else {
+                showAlert("Connection Unreachable", message: "Cannot retrieve data. Please check your internet connection.")
+            }
+        }
+            
+    }
+    
+    
+    func fireUpdateProfile(url: String, params: NSDictionary!) {
+        showLoader()
+        manager.POST(url, parameters: params, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in print(responseObject as! NSDictionary)
+            if responseObject.objectForKey("error") != nil {
+                self.requestRefreshToken("updateProfile", url: url, params: params)
+            }
+            self.dismissLoader()
+            self.showAlert("Success", message: "Successfully updated profile!")
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                self.showAlert("Error", message: "Something went wrong. . .")
+                self.dismissLoader()
+        })
+    }
+    
+    //Loader function
+    func showLoader() {
+        SVProgressHUD.show()
+        SVProgressHUD.setBackgroundColor(UIColor.whiteColor())
+    }
+    
+    func dismissLoader() {
+        SVProgressHUD.dismiss()
+    }
+    
+    func requestRefreshToken(type: String, url: String, params: NSDictionary!) {
+        let url: String = "http://online.api.easydeal.ph/api/v1/login"
+        let params: NSDictionary = ["client_id": Constants.Credentials.clientID,
+            "client_secret": Constants.Credentials.clientSecret,
+            "grant_type": Constants.Credentials.grantRefreshToken,
+            "refresh_token": SessionManager.refreshToken()]
+        
+        let manager = APIManager.sharedInstance
+            manager.POST(url, parameters: params, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            
+            SVProgressHUD.dismiss()
+            
+            if (responseObject["isSuccessful"] as! Bool) {
+                SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+                    self.fireUpdateProfile(url, params: params)
+                
+            } else {
+                self.showAlert("Error", message: responseObject["message"] as! String)
+            }
+            
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                SVProgressHUD.dismiss()
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                
+                self.showAlert("Something went wrong", message: "")
+                
+        })
+    }
+    
+    func showAlert(title: String, message: String) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+        
+        let OKAction = UIAlertAction(title: "OK", style: .Default) { (action) in
+            alertController.dismissViewControllerAnimated(true, completion: nil)
+        }
+        
+        alertController.addAction(OKAction)
+        
+        self.presentViewController(alertController, animated: true) {
+            
         }
     }
+
 }
