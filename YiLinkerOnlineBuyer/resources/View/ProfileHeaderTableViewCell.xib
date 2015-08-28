@@ -17,10 +17,8 @@
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dummy-placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="YxS-Ec-ogK" userLabel="Image">
                         <rect key="frame" x="137" y="23" width="100" height="100"/>
                         <constraints>
-                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="AJ6-yr-u9F"/>
-                            <constraint firstAttribute="width" constant="100" id="YLQ-2j-r1g"/>
-                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="100" id="hUB-c9-qeN"/>
-                            <constraint firstAttribute="height" constant="100" id="i9u-Cu-i7S"/>
+                            <constraint firstAttribute="width" constant="100" id="Ta3-gK-VVf"/>
+                            <constraint firstAttribute="height" constant="100" id="zQE-BT-jzS"/>
                         </constraints>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -28,16 +26,7 @@
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Van Dalism" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dmm-Px-9s3" userLabel="Name">
-                        <rect key="frame" x="8" y="131" width="359" height="20"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="20" id="jzl-gp-2Pf"/>
-                        </constraints>
-                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
-                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                        <nil key="highlightedColor"/>
-                    </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ortigas, Pasig City" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="miu-nT-oet" userLabel="Address">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="miu-nT-oet" userLabel="Address">
                         <rect key="frame" x="8" y="151" width="359" height="15"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="15" id="IrK-YZ-50i"/>
@@ -46,20 +35,26 @@
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dmm-Px-9s3" userLabel="Name">
+                        <rect key="frame" x="8" y="131" width="359" height="20"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="20" id="jzl-gp-2Pf"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <constraints>
                     <constraint firstItem="miu-nT-oet" firstAttribute="top" secondItem="Dmm-Px-9s3" secondAttribute="bottom" id="04V-4C-nwm"/>
-                    <constraint firstAttribute="centerX" secondItem="YxS-Ec-ogK" secondAttribute="centerX" id="3ln-wO-8ef"/>
                     <constraint firstItem="miu-nT-oet" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="5PU-Gc-vzd"/>
-                    <constraint firstItem="YxS-Ec-ogK" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="15" id="LLf-K4-jiR"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="YxS-Ec-ogK" secondAttribute="trailing" constant="130" id="Lse-pn-7bq"/>
                     <constraint firstAttribute="bottomMargin" secondItem="miu-nT-oet" secondAttribute="bottom" constant="25" id="NAn-rH-H7T"/>
                     <constraint firstItem="miu-nT-oet" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="Qyz-YX-jvk"/>
-                    <constraint firstItem="Dmm-Px-9s3" firstAttribute="top" secondItem="YxS-Ec-ogK" secondAttribute="bottom" constant="8" id="dPS-WD-EFT"/>
-                    <constraint firstItem="YxS-Ec-ogK" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="129" id="ey4-xB-oqj"/>
+                    <constraint firstAttribute="centerX" secondItem="YxS-Ec-ogK" secondAttribute="centerX" id="d5q-jP-8XS"/>
                     <constraint firstItem="Dmm-Px-9s3" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="fDe-lE-UJv"/>
                     <constraint firstItem="Dmm-Px-9s3" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="fc8-rm-bt4"/>
-                    <constraint firstItem="Dmm-Px-9s3" firstAttribute="top" secondItem="YxS-Ec-ogK" secondAttribute="bottom" constant="8" id="ihj-2X-7k9"/>
+                    <constraint firstItem="Dmm-Px-9s3" firstAttribute="top" secondItem="YxS-Ec-ogK" secondAttribute="bottom" constant="8" id="oGq-Ks-Gty"/>
+                    <constraint firstItem="YxS-Ec-ogK" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="15" id="rP9-fc-p7m"/>
                     <constraint firstItem="miu-nT-oet" firstAttribute="top" secondItem="Dmm-Px-9s3" secondAttribute="bottom" id="w8H-yR-bME"/>
                 </constraints>
             </tableViewCellContentView>
