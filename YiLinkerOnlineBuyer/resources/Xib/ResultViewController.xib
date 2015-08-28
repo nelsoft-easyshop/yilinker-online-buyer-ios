@@ -8,6 +8,7 @@
             <connections>
                 <outlet property="dimView" destination="rI2-hy-mMb" id="Js4-ik-wzp"/>
                 <outlet property="filterView" destination="hXh-Ex-xcS" id="xu4-Nc-i66"/>
+                <outlet property="noResultLabel" destination="VbX-l4-1Ju" id="F7o-kc-cGc"/>
                 <outlet property="resultCollectionView" destination="LgG-iv-oKa" id="RdW-iY-6SE"/>
                 <outlet property="sortPickerTableView" destination="Mkh-ce-Sbp" id="BV0-Gm-2OM"/>
                 <outlet property="sortView" destination="kDF-aw-IfE" id="5ql-O6-eg7"/>
@@ -178,6 +179,12 @@
                         <outlet property="delegate" destination="-1" id="3VA-t4-v2H"/>
                     </connections>
                 </collectionView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No results found." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VbX-l4-1Ju">
+                    <rect key="frame" x="132" y="325" width="111" height="17"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rI2-hy-mMb" userLabel="Dim">
                     <rect key="frame" x="0.0" y="36" width="375" height="631"/>
                     <subviews>
@@ -239,8 +246,10 @@
                 <constraint firstItem="LgG-iv-oKa" firstAttribute="top" secondItem="RTW-vQ-k8z" secondAttribute="bottom" id="Ve1-jb-cXt"/>
                 <constraint firstAttribute="trailing" secondItem="LgG-iv-oKa" secondAttribute="trailing" id="WgL-4Y-c2s"/>
                 <constraint firstItem="RTW-vQ-k8z" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Yf4-jv-cDM"/>
+                <constraint firstAttribute="centerX" secondItem="VbX-l4-1Ju" secondAttribute="centerX" id="blL-uz-3Zg"/>
                 <constraint firstItem="rI2-hy-mMb" firstAttribute="top" secondItem="RTW-vQ-k8z" secondAttribute="bottom" id="gdA-zU-AVk"/>
                 <constraint firstAttribute="trailing" secondItem="Uyb-VK-Thh" secondAttribute="trailing" id="grP-MA-heG"/>
+                <constraint firstAttribute="centerY" secondItem="VbX-l4-1Ju" secondAttribute="centerY" id="wLN-qk-k3r"/>
                 <constraint firstItem="RTW-vQ-k8z" firstAttribute="top" secondItem="Uyb-VK-Thh" secondAttribute="bottom" id="xGa-gh-NDK"/>
                 <constraint firstAttribute="bottom" secondItem="rI2-hy-mMb" secondAttribute="bottom" id="xGx-gi-ehU"/>
             </constraints>

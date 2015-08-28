@@ -302,6 +302,7 @@
 		79E85FD01B8A1FBD00428AA1 /* ActivityModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79E85FCF1B8A1FBD00428AA1 /* ActivityModel.swift */; };
 		79E85FD21B8A230500428AA1 /* ActivityLogHeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79E85FD11B8A230500428AA1 /* ActivityLogHeaderTableViewCell.xib */; };
 		79E8F1511B8FC1B8009CE450 /* ProfileUserDetailsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79E8F1501B8FC1B8009CE450 /* ProfileUserDetailsModel.swift */; };
+		79E8F1531B9035D9009CE450 /* SearchResultModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79E8F1521B9035D9009CE450 /* SearchResultModel.swift */; };
 		79F0DD9C1B7B17D500EB8053 /* CartModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F0DD9B1B7B17D500EB8053 /* CartModel.swift */; };
 		79F0DD9E1B7B24CB00EB8053 /* CartProductDetailsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F0DD9D1B7B24CB00EB8053 /* CartProductDetailsModel.swift */; };
 		79F2F5521B85795C00F57E4B /* WishlistModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F2F5511B85795C00F57E4B /* WishlistModel.swift */; };
@@ -625,6 +626,7 @@
 		79E85FCF1B8A1FBD00428AA1 /* ActivityModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ActivityModel.swift; path = YiLinkerOnlineBuyer/resources/Model/ActivityModel.swift; sourceTree = SOURCE_ROOT; };
 		79E85FD11B8A230500428AA1 /* ActivityLogHeaderTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ActivityLogHeaderTableViewCell.xib; sourceTree = "<group>"; };
 		79E8F1501B8FC1B8009CE450 /* ProfileUserDetailsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProfileUserDetailsModel.swift; path = YiLinkerOnlineBuyer/resources/Model/ProfileUserDetailsModel.swift; sourceTree = SOURCE_ROOT; };
+		79E8F1521B9035D9009CE450 /* SearchResultModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SearchResultModel.swift; path = YiLinkerOnlineBuyer/resources/Model/SearchResultModel.swift; sourceTree = SOURCE_ROOT; };
 		79F0DD9B1B7B17D500EB8053 /* CartModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CartModel.swift; path = YiLinkerOnlineBuyer/resources/Model/CartModel.swift; sourceTree = SOURCE_ROOT; };
 		79F0DD9D1B7B24CB00EB8053 /* CartProductDetailsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CartProductDetailsModel.swift; path = YiLinkerOnlineBuyer/resources/Model/CartProductDetailsModel.swift; sourceTree = SOURCE_ROOT; };
 		79F2F5511B85795C00F57E4B /* WishlistModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WishlistModel.swift; path = YiLinkerOnlineBuyer/resources/Model/WishlistModel.swift; sourceTree = SOURCE_ROOT; };
@@ -817,6 +819,7 @@
 				26C285451B8FEE42005EBD3A /* ProvinceModel.swift */,
 				26C285471B8FF546005EBD3A /* CityModel.swift */,
 				26C285491B8FF555005EBD3A /* BarangayModel.swift */,
+				79E8F1521B9035D9009CE450 /* SearchResultModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1382,6 +1385,7 @@
 				0C9937501B750583000D6074 /* ProductitemWithVerticalDisplayCollectionViewCell.swift in Sources */,
 				0C9937711B75063B000D6074 /* AppDelegate.swift in Sources */,
 				0C374F521B89EC4D0050AE1D /* CustomizeSelectedCollectionViewCell.swift in Sources */,
+				79E8F1531B9035D9009CE450 /* SearchResultModel.swift in Sources */,
 				0CC8A63F1B7B9BF600C91425 /* ProfileViewController.swift in Sources */,
 				26D54FE71B86136300522398 /* TransactionTableViewCell.swift in Sources */,
 				0C2F44DC1B8583EF00021F45 /* CheckoutViews.swift in Sources */,

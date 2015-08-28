@@ -55,6 +55,7 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func requestSearch(url: String, params: NSDictionary!) {
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         manager.operationQueue.cancelAllOperations()
         manager.GET(url, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in print(responseObject as! NSDictionary)
@@ -62,10 +63,12 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
             } else {
                 self.populateTableView(responseObject)
             }
+            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 println(error)
                 self.showAlert("Error", message: "Something went wrong. . .")
+                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
         })
     }
     
@@ -106,7 +109,13 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         if count(searchText) > 2 {
             if Reachability.isConnectedToNetwork(){
                 requestSearch(APIAtlas.searchUrl, params: NSDictionary(dictionary: ["queryString" : searchText]))
+            }  else {
+                showAlert("Connection Unreachable", message: "Cannot retrieve data. Please check your internet connection.")
             }
+        } else {
+            tableData.removeAll(keepCapacity: false)
+            addBrowseCategory()
+            searchResultTableView.reloadData()
         }
     }
     
@@ -153,6 +162,7 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     // Mark: - UITableViewDelegate methods
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         var resultController = ResultViewController(nibName: "ResultViewController", bundle: nil)
+        resultController.passModel(tableData[indexPath.row])
         self.navigationController?.pushViewController(resultController, animated:true);
     }
     
