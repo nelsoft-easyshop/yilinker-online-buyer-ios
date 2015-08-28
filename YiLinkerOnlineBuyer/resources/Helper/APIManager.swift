@@ -14,7 +14,7 @@ struct APIEnvironment {
     
     static func baseUrl() -> String {
         if development {
-            return "http://"
+            return "http://online.api.easydeal.ph/api/v1"
         } else if staging {
             return ""
         } else  {
@@ -25,9 +25,21 @@ struct APIEnvironment {
 
 struct APIAtlas {
     
-    static let loginUrl = ""
+    static let loginUrl = "login"
+    static let refreshTokenUrl = "login"
+    static let registerUrl = "user/register"
+    static let getUserInfoUrl = "auth/user/getUser"
+    static let homeUrl = "home/getData"
+    static let cartUrl = "auth/cart/getCart"
+    static let wishlistUrl = "auth/cart/getCart"
+    static let updateWishlistUrl = "auth/cart/updateCartItem"
+    static let updateCartUrl = "auth/cart/updateCartItem"
+    static let getSellerUrl = "v1/get-seller"
+    static let productReviewUrl = "v1/product-review"
+    static let productPageUrl = "v1/get-product"
+    static let searchUrl = "product/getSearchKeywords"
+    static let profileUrl = "auth/user/getUser"
     static let baseUrl = APIEnvironment.baseUrl()
-    static let productPageUrl = ""
 }
 
 class APIManager: AFHTTPSessionManager {
