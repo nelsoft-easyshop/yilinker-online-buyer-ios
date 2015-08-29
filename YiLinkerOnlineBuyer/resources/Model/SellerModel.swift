@@ -163,10 +163,14 @@ class SellerModel: NSObject {
             }
             
             var myArrayOfDictProducts: NSArray = [
+
                 ["name": "Nike",
                     "image": "http://www.dividend.com/assets/dividend/nke/nike-shoes-bb098f57129e558e1cdf393c308987bf.jpg",
                     "target": "nike1",
                     "targetType": ""]
+                ,
+                ["name": "Nike", "image": "http://www.dividend.com/assets/dividend/nke/nike-shoes-bb098f57129e558e1cdf393c308987bf.jpg", "target": "nike1", "targetType": ""]
+
                 , ["name": "vans shoes",
                     "image": "http://content.nike.com/content/dam/one-nike/en_us/season-2013-ho/Shop/NIKEiD/NIKEiD_P2_Basketball_20131112_FILT.jpg.transform/full-screen/image.jpg",
                     "target": "",
@@ -208,6 +212,7 @@ class SellerModel: NSObject {
                     "imageUrl": "https://c2.staticflickr.com/4/3382/3545724212_986ae8f5f9.jpg",
                     "rating": 2,
                     "message": "The item is damaged!"]
+
             ]
             
             var dictReviews:NSDictionary = ["reviews" : myArrayOfDictRatings]
