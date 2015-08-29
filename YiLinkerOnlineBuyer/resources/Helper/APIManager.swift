@@ -37,8 +37,8 @@ struct APIAtlas {
     static let productReviewUrl = "v1/product-review"
     static let productPageUrl = "v1/get-product"
     static let getSellerInfo = "user/getStoreInfo"
-    static let setFollowSeller = "auth/followSeller"
-    static let setUnfollowSeller = "auth/unfollowSeller"
+    static let followSeller = "auth/followSeller"
+    static let unfollowSeller = "auth/unfollowSeller"
     static let baseUrl = APIEnvironment.baseUrl()
 }
 
@@ -54,8 +54,10 @@ class APIManager: AFHTTPSessionManager {
             let url: NSURL! = NSURL(string: APIAtlas.baseUrl)
             Static.instance = APIManager(baseURL: url)
             Static.instance?.securityPolicy.allowInvalidCertificates = true
+            Static.instance?.responseSerializer = JSONResponseSerializer()
         }
         
         return Static.instance!
     }
+
 }

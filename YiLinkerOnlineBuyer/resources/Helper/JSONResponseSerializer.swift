@@ -19,7 +19,7 @@ class JSONResponseSerializer: AFJSONResponseSerializer {
             var copy: NSMutableDictionary = userInfo.mutableCopy() as! NSMutableDictionary
             copy["data"] = json
             
-            error.memory = NSError(domain: errorValue.domain, code: errorValue.code, userInfo: copy as [NSObject : AnyObject])
+            error.memory = NSError(domain: errorValue.domain, code: errorValue.code, userInfo: json as [NSObject : AnyObject])
             
         }
         
