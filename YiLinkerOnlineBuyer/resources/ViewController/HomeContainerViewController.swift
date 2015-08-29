@@ -77,7 +77,14 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     }
     
     func tabBarController(tabBarController: UITabBarController, shouldSelectViewController viewController: UIViewController) -> Bool {
-        if self != viewController && viewController != tabBarController.viewControllers![2] as! UIViewController {
+        if viewController == tabBarController.viewControllers![4] as! UIViewController {
+            if SessionManager.isLoggedIn() {
+                return true
+            } else {
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Please log in to view your cart", title: "Error")
+                return false
+            }
+        } else if self != viewController && viewController != tabBarController.viewControllers![2] as! UIViewController {
             return true
         } else if self.customTabBarController?.isValidToSwitchToMenuTabBarItems != true {
             let storyBoard: UIStoryboard = UIStoryboard(name: "HomeStoryBoard", bundle: nil)
@@ -109,9 +116,9 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             self.tabBarController?.presentViewController(animatedViewController!, animated: false, completion: nil)
             return false
         } else {
-            
             return true
         }
+        
         
     }
     

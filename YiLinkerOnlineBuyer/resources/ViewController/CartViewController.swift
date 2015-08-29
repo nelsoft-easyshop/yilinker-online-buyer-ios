@@ -56,8 +56,8 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
             emptyView?.hidden = true
         }
         NSNotificationCenter.defaultCenter().postNotificationName("SwipeForOptionsCellEnclosingTableViewDidBeginScrollingNotification", object: self)
-        
         getCartData()
+        
     }
     
     @IBAction func buttonClicked(sender: AnyObject) {
@@ -90,7 +90,7 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
             
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                self.showAlert("Error", message: "Something went wrong. . .")
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong. . .", title: "Error")
                 self.dismissLoader()
         })
     }
@@ -105,7 +105,7 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
             self.dismissLoader()
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                self.showAlert("Error", message: "Something went wrong. . .")
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong. . .", title: "Error")
                 self.dismissLoader()
         })
     }
@@ -122,7 +122,7 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
             }
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                self.showAlert("Error", message: "Something went wrong. . .")
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong. . .", title: "Error")
                 self.updateCounterLabel()
                 self.dismissLoader()
         })
@@ -142,6 +142,13 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
         self.updateCounterLabel()
         self.calculateTotalPrice()
         self.dismissLoader()
+        
+        if tableData.count != 0 {
+            let badgeValue = (self.tabBarController!.tabBar.items![4] as! UITabBarItem).badgeValue?.toInt()
+            (self.tabBarController!.tabBar.items![4] as! UITabBarItem).badgeValue = String(tableData.count)
+        } else {
+            (self.tabBarController!.tabBar.items![4] as! UITabBarItem).badgeValue = nil
+        }
     }
     
     func updateCounterLabel() {
@@ -251,7 +258,7 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
             ]
             fireDeleteCartItem(APIAtlas.updateCartUrl, params: params)
         } else {
-            showAlert("Connection Unreachable", message: "Cannot retrieve data. Please check your internet connection.")
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Cannot retrieve data. Please check your internet connection.", title: "Connection Unreachable")
         }
     }
     
@@ -408,7 +415,7 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
                 SVProgressHUD.dismiss()
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                 
-                self.showAlert("Something went wrong", message: "")
+               "Cannot retrieve data. Please check your internet connection."
                 
         })
     }
