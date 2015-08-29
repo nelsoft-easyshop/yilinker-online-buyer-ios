@@ -142,6 +142,7 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
         self.updateCounterLabel()
         self.calculateTotalPrice()
         self.dismissLoader()
+       
     }
     
     func updateCounterLabel() {

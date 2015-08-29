@@ -94,8 +94,10 @@ class CartProductDetailsModel {
                 image = tempVar
             }
             
-            if let tempVar = dictionary["images"] as? NSArray {
-                images = tempVar as! [String]
+            for tempVar in dictionary["images"] as! NSArray {
+                if let temp = tempVar["imageLocation"] as? String {
+                    images.append(temp)
+                }
             }
             
             if let tempVar = dictionary["shortDescription"] as? String {
