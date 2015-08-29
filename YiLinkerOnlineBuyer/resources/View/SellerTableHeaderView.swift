@@ -55,22 +55,6 @@ class SellerTableHeaderView: UIView {
     }
     
     @IBAction func follow(sender: AnyObject) {
-        if self.followButton.selected {
-            self.followButton.selected = false
-            self.followButton.backgroundColor = Constants.Colors.appTheme
-            self.followButton.borderColor = UIColor.clearColor()
-            self.followButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
-            self.followButton.setTitle("FOLLOWING", forState: UIControlState.Normal)
-            println(self.followButton.titleLabel?.text)
-        } else {
-            self.followButton.selected = true
-            self.followButton.layer.borderColor = Constants.Colors.grayLine.CGColor
-            self.followButton.setTitleColor(Constants.Colors.grayLine, forState: UIControlState.Normal)
-            self.followButton.backgroundColor = UIColor.clearColor()
-            self.followButton.setTitle("UNFOLLOW", forState: UIControlState.Normal)
-            println(self.followButton.titleLabel?.text)
-        }
-       
         self.delegate?.sellerTableHeaderViewDidFollow()
     }
     

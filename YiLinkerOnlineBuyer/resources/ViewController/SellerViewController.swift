@@ -15,6 +15,8 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
     var sellerModel: SellerModel?
     var followSellerModel: FollowedSellerModel?
     let sellerTableHeaderView: SellerTableHeaderView = SellerTableHeaderView.loadFromNibNamed("SellerTableHeaderView", bundle: nil) as! SellerTableHeaderView
+    var is_successful: Bool = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.backButton()
@@ -55,7 +57,19 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         sellerTableHeaderView.delegate = self
         
         sellerTableHeaderView.coverPhotoImageView.sd_setImageWithURL(self.sellerModel!.coverPhoto, placeholderImage: UIImage(named: "dummy-placeholder"))
-       
+        
+        if self.is_successful && self.sellerTableHeaderView.followButton.selected {
+            self.sellerTableHeaderView.followButton.backgroundColor = Constants.Colors.appTheme
+            self.sellerTableHeaderView.followButton.borderColor = UIColor.clearColor()
+            self.sellerTableHeaderView.followButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+            self.sellerTableHeaderView.followButton.setTitle("FOLLOWING", forState: UIControlState.Normal)
+        } else if !(self.is_successful && self.sellerTableHeaderView.followButton.selected){
+            self.sellerTableHeaderView.followButton.layer.borderColor = Constants.Colors.grayLine.CGColor
+            self.sellerTableHeaderView.followButton.setTitleColor(Constants.Colors.grayLine, forState: UIControlState.Normal)
+            self.sellerTableHeaderView.followButton.backgroundColor = UIColor.clearColor()
+            self.sellerTableHeaderView.followButton.setTitle("FOLLOW", forState: UIControlState.Normal)
+        }
+        
         let imageView: UIImageView = UIImageView(frame: CGRectMake(0, 0, sellerTableHeaderView.profileImageView.frame.width, sellerTableHeaderView.profileImageView.frame.height))
         imageView.sd_setImageWithURL(self.sellerModel!.avatar, placeholderImage: UIImage(named: "dummy-placeholder"))
         
@@ -93,11 +107,12 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
                 self.sellerModel = SellerModel.parseSellerDataFromDictionary(responseObject as! NSDictionary)
                 self.populateData()
-            print(self.sellerModel?.name)
+                self.is_successful == self.sellerModel?.is_allowed
                 SVProgressHUD.dismiss()
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 SVProgressHUD.dismiss()
+                self.is_successful == self.sellerModel?.is_allowed
 
         })
     }
@@ -106,35 +121,73 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         SVProgressHUD.show()
         SVProgressHUD.setBackgroundColor(UIColor.whiteColor())
         let manager = APIManager.sharedInstance
-        let parameters: NSDictionary = ["sellerId" : "1", "access_token" : "MzdmZjg1NWQ3ZTllMjAwOTQxOWRlYjEwYjk3YzNmMDUxYzIwNWMzNTg4ZDNlOWUxNGU3ZTE4MjRmNDZkZGEwZg"];
-        manager.POST(APIAtlas.setFollowSeller, parameters: parameters, success: {
+        let parameters: NSDictionary = ["sellerId" : 1, "access_token" : SessionManager.accessToken()];
+        manager.POST(APIAtlas.followSeller, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             self.followSellerModel = FollowedSellerModel.parseFollowSellerDataWithDictionary(responseObject as! NSDictionary)
             //self.populateData()
-            print(self.followSellerModel?.error_description)
-            SVProgressHUD.dismiss()
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                SVProgressHUD.dismiss()
-        })
-    }
-    
-    func fireUnfollowSeller() {
-        SVProgressHUD.show()
-        SVProgressHUD.setBackgroundColor(UIColor.whiteColor())
-        let manager = APIManager.sharedInstance
-        let parameters: NSDictionary = ["sellerId" : "1", "access_token" : "MzdmZjg1NWQ3ZTllMjAwOTQxOWRlYjEwYjk3YzNmMDUxYzIwNWMzNTg4ZDNlOWUxNGU3ZTE4MjRmNDZkZGEwZg"];
-        println(parameters.count)
-        manager.POST(APIAtlas.setUnfollowSeller, parameters: parameters, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            self.followSellerModel = FollowedSellerModel.parseFollowSellerDataWithDictionary(responseObject as! NSDictionary)
-            //self.populateData()
-            print(self.followSellerModel?.error_description)
+            self.is_successful = true
+            self.sellerTableHeaderView.followButton.selected = true
+            println("result after ff: \(self.is_successful)")
+            println("button after ff: \(self.sellerTableHeaderView.followButton.selected)")
+            println(self.followSellerModel?.message)
+            
             SVProgressHUD.dismiss()
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 SVProgressHUD.dismiss()
                 
+                //let dictionary: NSDictionary =(data, options: nil, error: nil)
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                if task.statusCode == 400 {
+                    let data = error.userInfo as! Dictionary<String, AnyObject>
+                    self.followSellerModel = FollowedSellerModel.parseFollowSellerDataWithDictionary(error.userInfo as! Dictionary<String, AnyObject>)
+                    println(self.followSellerModel?.message)
+                    self.is_successful = true
+                    self.sellerTableHeaderView.followButton.selected = true
+                    println("result after ff error block: \(self.is_successful)")
+                    println("button after ff error block: \(self.sellerTableHeaderView.followButton.selected)")
+                } else {
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+                    self.is_successful = false
+                    self.sellerTableHeaderView.followButton.selected = false
+                }
+        })
+       
+    }
+    
+    func fireUnfollowSeller() {
+        
+        SVProgressHUD.show()
+        SVProgressHUD.setBackgroundColor(UIColor.whiteColor())
+        let manager = APIManager.sharedInstance
+        let parameters: NSDictionary = ["sellerId" : "1", "access_token" : SessionManager.accessToken()];
+        
+        manager.POST(APIAtlas.unfollowSeller, parameters: parameters, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+                self.followSellerModel = FollowedSellerModel.parseFollowSellerDataWithDictionary(responseObject as! NSDictionary)
+                //self.populateData()
+                print(self.followSellerModel?.error_description)
+                SVProgressHUD.dismiss()
+                self.is_successful = false
+                self.sellerTableHeaderView.followButton.selected = false
+                println("result after uff: \(self.is_successful)")
+                println("button after uff: \(self.sellerTableHeaderView.followButton.selected)")
+                println(self.followSellerModel?.isSuccessful)
+            }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
+                SVProgressHUD.dismiss()
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                if task.statusCode == 400 {
+                    let data = error.userInfo as! Dictionary<String, AnyObject>
+                    self.followSellerModel = FollowedSellerModel.parseFollowSellerDataWithDictionary(error.userInfo as! Dictionary<String, AnyObject>)
+                    print(self.followSellerModel?.message)
+                    self.is_successful = false
+                    self.sellerTableHeaderView.followButton.selected = false
+                } else {
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+                    self.is_successful = false
+                    self.sellerTableHeaderView.followButton.selected = false
+                }
         })
     }
     
@@ -195,7 +248,6 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
             reviewCell.messageLabel.text = reviewModel.review
             reviewCell.nameLabel.text = reviewModel.fullName
             reviewCell.setRating(reviewModel.rating)
-            print(reviewModel.fullName)
             return reviewCell
         }
     }
@@ -231,11 +283,22 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         //println("follow")
         
         sellerTableHeaderView.delegate = self
-        
-        if sellerTableHeaderView.followButton.selected {
-            self.fireFollowSeller();
+        println("result: \(self.is_successful)")
+        println("button: \(self.sellerTableHeaderView.followButton.selected)")
+        if self.is_successful && self.sellerTableHeaderView.followButton.selected {
+            self.sellerTableHeaderView.followButton.selected = false
+            self.sellerTableHeaderView.followButton.layer.borderColor = Constants.Colors.grayLine.CGColor
+            self.sellerTableHeaderView.followButton.setTitleColor(Constants.Colors.grayLine, forState: UIControlState.Normal)
+            self.sellerTableHeaderView.followButton.backgroundColor = UIColor.clearColor()
+            self.sellerTableHeaderView.followButton.setTitle("FOLLOW", forState: UIControlState.Normal)
+            fireUnfollowSeller()
         } else {
-            self.fireUnfollowSeller();
+            self.sellerTableHeaderView.followButton.selected = true
+            self.sellerTableHeaderView.followButton.backgroundColor = Constants.Colors.appTheme
+            self.sellerTableHeaderView.followButton.borderColor = UIColor.clearColor()
+            self.sellerTableHeaderView.followButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+            self.sellerTableHeaderView.followButton.setTitle("FOLLOWING", forState: UIControlState.Normal)
+            fireFollowSeller()
         }
         
     }
