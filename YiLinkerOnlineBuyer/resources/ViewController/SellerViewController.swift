@@ -87,10 +87,12 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         SVProgressHUD.show()
         SVProgressHUD.setBackgroundColor(UIColor.whiteColor())
         let manager = APIManager.sharedInstance
-        manager.GET("http://demo9190076.mockable.io/v1/seller", parameters: nil, success: {
+        let parameters: NSDictionary = ["userId" : "1"];
+        manager.POST(APIAtlas.getSellerInfo, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-                self.sellerModel = SellerModel.parseDataFromDictionary(responseObject as! NSDictionary)
+                self.sellerModel = SellerModel.parseSellerDataFromDictionary(responseObject as! NSDictionary)
                 self.populateData()
+            print(self.sellerModel?.name)
                 SVProgressHUD.dismiss()
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
@@ -132,7 +134,8 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
             let aboutSellerTableViewCell: AboutSellerTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(Constants.Seller.aboutSellerTableViewCellNibNameAndIdentifier) as! AboutSellerTableViewCell
-                aboutSellerTableViewCell.aboutLabel.text = self.sellerModel!.sellerAbout
+//                aboutSellerTableViewCell.aboutLabel.text = self.sellerModel!.sellerAbout
+                aboutSellerTableViewCell.aboutLabel.text = "I'm Kevin Baisas, 25 years old. I sell phone accessories for iPhones and Android Devices like screen protector, flip covers, jelly cases, etc. Happy online shopping!"
             return aboutSellerTableViewCell
         } else if indexPath.section == 1 {
             let productsTableViewCell: ProductsTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(Constants.Seller.productsTableViewCellNibNameAndIdentifier) as! ProductsTableViewCell
@@ -152,7 +155,10 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
 //            reviewCell.displayPictureImageView.sd_setImageWithURL(NSURL(string: reviewModel.imageUrl)!, placeholderImage: UIImage(named: "dummy-placeholder"))
 //            reviewCell.messageLabel.text = reviewModel.message
 //            reviewCell.nameLabel.text = reviewModel.name
+            reviewCell.messageLabel.text = reviewModel.review
+            reviewCell.nameLabel.text = reviewModel.fullName
             reviewCell.setRating(reviewModel.rating)
+            print(reviewModel.fullName)
             return reviewCell
         }
     }

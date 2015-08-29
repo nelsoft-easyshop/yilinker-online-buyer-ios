@@ -142,6 +142,10 @@
                 <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gGV-to-MNJ">
                     <rect key="frame" x="0.0" y="105" width="375" height="503"/>
                     <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="503" id="4bx-k9-iRW"/>
+                        <constraint firstAttribute="width" constant="375" id="XhA-wV-ZBa"/>
+                    </constraints>
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sNv-RQ-xgI">
                     <rect key="frame" x="0.0" y="608" width="375" height="59"/>
@@ -166,14 +170,17 @@
                 <constraint firstItem="1oI-tI-jhe" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="5i4-yZ-e0D"/>
                 <constraint firstAttribute="trailing" secondItem="dXs-e6-m70" secondAttribute="trailing" constant="42" id="8OE-is-CNZ"/>
                 <constraint firstItem="1GJ-ux-GGX" firstAttribute="top" secondItem="1oI-tI-jhe" secondAttribute="bottom" constant="12" id="ASq-s4-jxv"/>
+                <constraint firstItem="gGV-to-MNJ" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="105" id="CsT-g9-OQV"/>
                 <constraint firstAttribute="trailing" secondItem="1oI-tI-jhe" secondAttribute="trailing" id="Dzi-wr-Fbd"/>
                 <constraint firstItem="sNv-RQ-xgI" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="GPe-Yg-fgs"/>
                 <constraint firstItem="h9F-Um-AEZ" firstAttribute="leading" secondItem="uJy-WJ-8t1" secondAttribute="trailing" id="NU0-jk-0ud"/>
+                <constraint firstAttribute="trailing" secondItem="gGV-to-MNJ" secondAttribute="trailing" id="O2k-V6-AgV"/>
                 <constraint firstAttribute="trailingMargin" secondItem="gGV-to-MNJ" secondAttribute="trailing" constant="-8" id="QNC-nh-jNr"/>
                 <constraint firstItem="h9F-Um-AEZ" firstAttribute="top" secondItem="1oI-tI-jhe" secondAttribute="bottom" constant="26" id="RqU-7g-mtR"/>
                 <constraint firstAttribute="bottom" secondItem="sNv-RQ-xgI" secondAttribute="bottom" id="W1J-0b-xEU"/>
                 <constraint firstItem="uJy-WJ-8t1" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="40" id="Ws0-WL-QEV"/>
                 <constraint firstItem="7lD-Zo-5ZB" firstAttribute="top" secondItem="1oI-tI-jhe" secondAttribute="bottom" constant="26" id="Yrk-AK-VOM"/>
+                <constraint firstItem="gGV-to-MNJ" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="eWU-Kk-dD6"/>
                 <constraint firstItem="7lD-Zo-5ZB" firstAttribute="leading" secondItem="1GJ-ux-GGX" secondAttribute="trailing" id="fli-nA-7Rd"/>
                 <constraint firstAttribute="centerX" secondItem="1GJ-ux-GGX" secondAttribute="centerX" id="ggH-mv-Eo1"/>
                 <constraint firstItem="sNv-RQ-xgI" firstAttribute="top" secondItem="gGV-to-MNJ" secondAttribute="bottom" id="iA2-zE-Qtf"/>
@@ -181,6 +188,7 @@
                 <constraint firstItem="gGV-to-MNJ" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leadingMargin" constant="-8" id="ocV-0m-rNi"/>
                 <constraint firstItem="dXs-e6-m70" firstAttribute="top" secondItem="1oI-tI-jhe" secondAttribute="bottom" constant="12" id="pK9-TJ-gNM"/>
                 <constraint firstItem="dXs-e6-m70" firstAttribute="leading" secondItem="7lD-Zo-5ZB" secondAttribute="trailing" constant="-1" id="wC4-Vo-paH"/>
+                <constraint firstAttribute="bottom" secondItem="gGV-to-MNJ" secondAttribute="bottom" constant="59" id="ydy-DS-5dB"/>
                 <constraint firstItem="1oI-tI-jhe" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="zR6-1v-Jcb"/>
             </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>

@@ -291,12 +291,12 @@
 		F740F08E1B90CBC900D23A34 /* CreateAccountViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F740F08C1B90CBC900D23A34 /* CreateAccountViewController.xib */; };
 		F740F0901B90D1D800D23A34 /* address.png in Resources */ = {isa = PBXBuildFile; fileRef = F740F08F1B90D1D800D23A34 /* address.png */; };
 		F740F0921B90D1E200D23A34 /* close2.png in Resources */ = {isa = PBXBuildFile; fileRef = F740F0911B90D1E200D23A34 /* close2.png */; };
+		F746BD8E1B91918C00CDFDE9 /* GuestCheckoutTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F746BD8D1B91918C00CDFDE9 /* GuestCheckoutTableViewCell.xib */; };
 		F7B279F11B90B38C003CEE5E /* GuestCheckoutContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7B279F01B90B38C003CEE5E /* GuestCheckoutContainerViewController.swift */; };
 		F7B279F31B90B3BE003CEE5E /* GuestCheckoutContainerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7B279F21B90B3BE003CEE5E /* GuestCheckoutContainerViewController.xib */; };
 		F7B279F61B90B568003CEE5E /* GuestCheckoutSummaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7B279F41B90B568003CEE5E /* GuestCheckoutSummaryViewController.swift */; };
 		F7B279F71B90B568003CEE5E /* GuestCheckoutSummaryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7B279F51B90B568003CEE5E /* GuestCheckoutSummaryViewController.xib */; };
 		F7DEF9BD1B90939100993F33 /* GuestCheckoutTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7DEF9BB1B90939100993F33 /* GuestCheckoutTableViewCell.swift */; };
-		F7DEF9BE1B90939100993F33 /* GuestCheckoutTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7DEF9BC1B90939100993F33 /* GuestCheckoutTableViewCell.xib */; };
 		F7DEF9C11B90941500993F33 /* GuestCheckoutHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7DEF9BF1B90941500993F33 /* GuestCheckoutHeaderTableViewCell.swift */; };
 		F7DEF9C21B90941500993F33 /* GuestCheckoutHeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7DEF9C01B90941500993F33 /* GuestCheckoutHeaderTableViewCell.xib */; };
 /* End PBXBuildFile section */
@@ -603,12 +603,12 @@
 		F740F08C1B90CBC900D23A34 /* CreateAccountViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CreateAccountViewController.xib; path = YiLinkerOnlineBuyer/resources/Xib/CreateAccountViewController.xib; sourceTree = SOURCE_ROOT; };
 		F740F08F1B90D1D800D23A34 /* address.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = address.png; sourceTree = "<group>"; };
 		F740F0911B90D1E200D23A34 /* close2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = close2.png; sourceTree = "<group>"; };
+		F746BD8D1B91918C00CDFDE9 /* GuestCheckoutTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GuestCheckoutTableViewCell.xib; sourceTree = "<group>"; };
 		F7B279F01B90B38C003CEE5E /* GuestCheckoutContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuestCheckoutContainerViewController.swift; sourceTree = "<group>"; };
 		F7B279F21B90B3BE003CEE5E /* GuestCheckoutContainerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = GuestCheckoutContainerViewController.xib; path = ../ViewController/GuestCheckoutContainerViewController.xib; sourceTree = "<group>"; };
 		F7B279F41B90B568003CEE5E /* GuestCheckoutSummaryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GuestCheckoutSummaryViewController.swift; path = YiLinkerOnlineBuyer/resources/Xib/GuestCheckoutSummaryViewController.swift; sourceTree = SOURCE_ROOT; };
 		F7B279F51B90B568003CEE5E /* GuestCheckoutSummaryViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = GuestCheckoutSummaryViewController.xib; path = YiLinkerOnlineBuyer/resources/Xib/GuestCheckoutSummaryViewController.xib; sourceTree = SOURCE_ROOT; };
 		F7DEF9BB1B90939100993F33 /* GuestCheckoutTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GuestCheckoutTableViewCell.swift; path = YiLinkerOnlineBuyer/resources/View/GuestCheckoutTableViewCell.swift; sourceTree = SOURCE_ROOT; };
-		F7DEF9BC1B90939100993F33 /* GuestCheckoutTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = GuestCheckoutTableViewCell.xib; path = YiLinkerOnlineBuyer/resources/View/GuestCheckoutTableViewCell.xib; sourceTree = SOURCE_ROOT; };
 		F7DEF9BF1B90941500993F33 /* GuestCheckoutHeaderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GuestCheckoutHeaderTableViewCell.swift; path = YiLinkerOnlineBuyer/resources/Xib/GuestCheckoutHeaderTableViewCell.swift; sourceTree = SOURCE_ROOT; };
 		F7DEF9C01B90941500993F33 /* GuestCheckoutHeaderTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = GuestCheckoutHeaderTableViewCell.xib; path = YiLinkerOnlineBuyer/resources/Xib/GuestCheckoutHeaderTableViewCell.xib; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
@@ -959,12 +959,12 @@
 		0C9937291B750583000D6074 /* Xib */ = {
 			isa = PBXGroup;
 			children = (
+				F746BD8D1B91918C00CDFDE9 /* GuestCheckoutTableViewCell.xib */,
 				F7B279F21B90B3BE003CEE5E /* GuestCheckoutContainerViewController.xib */,
 				F740F08B1B90CBC900D23A34 /* CreateAccountViewController.swift */,
 				F740F08C1B90CBC900D23A34 /* CreateAccountViewController.xib */,
 				F7B279F41B90B568003CEE5E /* GuestCheckoutSummaryViewController.swift */,
 				F7B279F51B90B568003CEE5E /* GuestCheckoutSummaryViewController.xib */,
-				F7DEF9BC1B90939100993F33 /* GuestCheckoutTableViewCell.xib */,
 				F7DEF9C01B90941500993F33 /* GuestCheckoutHeaderTableViewCell.xib */,
 				0C374F511B89EC4D0050AE1D /* CustomizeSelectedCollectionViewCell.xib */,
 				0C374F4B1B8998F30050AE1D /* CustomizeShoppingCollectionViewCell.xib */,
@@ -1247,7 +1247,6 @@
 				0C374F3F1B88E3790050AE1D /* CategoriesTableViewCell.xib in Resources */,
 				0C374F361B88E3790050AE1D /* SeeMoreTableViewCell.xib in Resources */,
 				79E68B811B8AEC00008626E4 /* MyPointsTableViewController.xib in Resources */,
-				F7DEF9BE1B90939100993F33 /* GuestCheckoutTableViewCell.xib in Resources */,
 				0C9937671B750583000D6074 /* ProductItemWithVerticalDisplayCollectionViewCell.xib in Resources */,
 				0C2F44CE1B8576FE00021F45 /* Panton Light.otf in Resources */,
 				0C374F421B88E3790050AE1D /* FollowedSellerViewController.xib in Resources */,
@@ -1276,6 +1275,7 @@
 				0C374F3A1B88E3790050AE1D /* ProductsTableViewCell.xib in Resources */,
 				0C9937681B750583000D6074 /* ProductWithCenterNameCollectionViewCell.xib in Resources */,
 				0C374F321B88E3790050AE1D /* ProfileViewController.xib in Resources */,
+				F746BD8E1B91918C00CDFDE9 /* GuestCheckoutTableViewCell.xib in Resources */,
 				0C2F44DE1B85840F00021F45 /* CheckoutViews.xib in Resources */,
 				79A1C6FB1B83787B0043AA36 /* SellerResultCollectionViewCell.xib in Resources */,
 				0C374F441B88E3790050AE1D /* ResultViewController.xib in Resources */,

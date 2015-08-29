@@ -46,7 +46,7 @@ class SellerTableHeaderView: UIView {
         self.followButton.layer.borderColor = Constants.Colors.grayLine.CGColor
         self.followButton.setTitleColor(Constants.Colors.grayLine, forState: UIControlState.Normal)
         self.followButton.backgroundColor = UIColor.clearColor()
-        self.followButton.setTitle("FOLLOW", forState: UIControlState.Normal)
+        self.followButton.setTitle("UNFOLLOW", forState: UIControlState.Normal)
         
         self.delegate?.sellerTableHeaderViewDidViewFeedBack()
     }
