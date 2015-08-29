@@ -13,7 +13,8 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
     @IBOutlet weak var tableView: UITableView!
     
     var sellerModel: SellerModel?
-    
+    var followSellerModel: FollowedSellerModel?
+    let sellerTableHeaderView: SellerTableHeaderView = SellerTableHeaderView.loadFromNibNamed("SellerTableHeaderView", bundle: nil) as! SellerTableHeaderView
     override func viewDidLoad() {
         super.viewDidLoad()
         self.backButton()
@@ -50,7 +51,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func headerView() {
-        let sellerTableHeaderView: SellerTableHeaderView = SellerTableHeaderView.loadFromNibNamed("SellerTableHeaderView", bundle: nil) as! SellerTableHeaderView
+        
         sellerTableHeaderView.delegate = self
         
         sellerTableHeaderView.coverPhotoImageView.sd_setImageWithURL(self.sellerModel!.coverPhoto, placeholderImage: UIImage(named: "dummy-placeholder"))
@@ -98,6 +99,42 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 SVProgressHUD.dismiss()
 
+        })
+    }
+    
+    func fireFollowSeller() {
+        SVProgressHUD.show()
+        SVProgressHUD.setBackgroundColor(UIColor.whiteColor())
+        let manager = APIManager.sharedInstance
+        let parameters: NSDictionary = ["sellerId" : "1", "access_token" : "MzdmZjg1NWQ3ZTllMjAwOTQxOWRlYjEwYjk3YzNmMDUxYzIwNWMzNTg4ZDNlOWUxNGU3ZTE4MjRmNDZkZGEwZg"];
+        manager.POST(APIAtlas.setFollowSeller, parameters: parameters, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            self.followSellerModel = FollowedSellerModel.parseFollowSellerDataWithDictionary(responseObject as! NSDictionary)
+            //self.populateData()
+            print(self.followSellerModel?.error_description)
+            SVProgressHUD.dismiss()
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                SVProgressHUD.dismiss()
+        })
+    }
+    
+    func fireUnfollowSeller() {
+        SVProgressHUD.show()
+        SVProgressHUD.setBackgroundColor(UIColor.whiteColor())
+        let manager = APIManager.sharedInstance
+        let parameters: NSDictionary = ["sellerId" : "1", "access_token" : "MzdmZjg1NWQ3ZTllMjAwOTQxOWRlYjEwYjk3YzNmMDUxYzIwNWMzNTg4ZDNlOWUxNGU3ZTE4MjRmNDZkZGEwZg"];
+        println(parameters.count)
+        manager.POST(APIAtlas.setUnfollowSeller, parameters: parameters, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            self.followSellerModel = FollowedSellerModel.parseFollowSellerDataWithDictionary(responseObject as! NSDictionary)
+            //self.populateData()
+            print(self.followSellerModel?.error_description)
+            SVProgressHUD.dismiss()
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                SVProgressHUD.dismiss()
+                
         })
     }
     
@@ -191,7 +228,16 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func sellerTableHeaderViewDidFollow() {
-        println("follow")
+        //println("follow")
+        
+        sellerTableHeaderView.delegate = self
+        
+        if sellerTableHeaderView.followButton.selected {
+            self.fireFollowSeller();
+        } else {
+            self.fireUnfollowSeller();
+        }
+        
     }
     
     func sellerTableHeaderViewDidMessage() {
