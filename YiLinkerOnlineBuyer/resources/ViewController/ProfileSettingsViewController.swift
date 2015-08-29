@@ -1,23 +1,28 @@
 //
-//  ProfileViewController.swift
+//  ProfileSettingsViewController.swift
 //  YiLinkerOnlineBuyer
 //
-//  Created by Alvin John Tandoc on 8/12/15.
+//  Created by John Paul Chan on 8/23/15.
 //  Copyright (c) 2015 yiLinker-online-buyer. All rights reserved.
 //
 
 import UIKit
 
-class ProfileViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, ProfileTableViewCellDelegate {
-    let cellHeaderIdentifier: String = "ProfileHeaderTableViewCell"
-    let cellContentIdentifier: String = "ProfileTableViewCell"
+class ProfileSettingsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, ProfileSettingsTableViewCellDelegate {
+
+    let profileSettingsIdentifier: String = "ProfileSettingsTableViewCell"
     
     @IBOutlet weak var tableView: UITableView!
-
+    
+    var tableData: [String] = ["Receive Notifications via SMS?", "Receive Notifications via Email?", "Deactivate My Account?"]
+    var tableDataStatus: [Bool] = [true, false, false]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        initializViews()
+        initializeViews()
+        titleView()
+        backButton()
         registerNibs()
     }
 
@@ -26,26 +31,47 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         // Dispose of any resources that can be recreated.
     }
     
-    func initializViews() {
-        tableView.tableFooterView = UIView(frame: CGRectZero)
-        self.title = "Profile Page"
-    }
-
-    func registerNibs() {
-        var nibHeader = UINib(nibName: cellHeaderIdentifier, bundle: nil)
-        tableView.registerNib(nibHeader, forCellReuseIdentifier: cellHeaderIdentifier)
+    func initializeViews() {
+        //Add Nav Bar
+        if self.respondsToSelector("edgesForExtendedLayout") {
+            self.edgesForExtendedLayout = UIRectEdge.None
+        }
         
-        var nibContent = UINib(nibName: cellContentIdentifier, bundle: nil)
-        tableView.registerNib(nibContent, forCellReuseIdentifier: cellContentIdentifier)
+        tableView.tableFooterView = UIView(frame: CGRectZero)
+    }
+    
+    func titleView() {
+        self.title = "Settings"
+    }
+    
+    func backButton() {
+        var backButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
+        backButton.frame = CGRectMake(0, 0, 40, 40)
+        backButton.addTarget(self, action: "back", forControlEvents: UIControlEvents.TouchUpInside)
+        backButton.setImage(UIImage(named: "back-white"), forState: UIControlState.Normal)
+        var customBackButton:UIBarButtonItem = UIBarButtonItem(customView: backButton)
+        
+        let navigationSpacer: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
+        navigationSpacer.width = -20
+        self.navigationItem.leftBarButtonItems = [navigationSpacer, customBackButton]
+    }
+    
+    func back() {
+        self.navigationController!.popViewControllerAnimated(true)
+    }
+    
+    func registerNibs() {
+        var nib = UINib(nibName: profileSettingsIdentifier, bundle: nil)
+        tableView.registerNib(nib, forCellReuseIdentifier: profileSettingsIdentifier)
     }
     
     /*
     // MARK: - Navigation
-
+    
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    // Get the new view controller using segue.destinationViewController.
+    // Pass the selected object to the new view controller.
     }
     */
     
@@ -60,34 +86,26 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete method implementation.
         // Return the number of rows in the section.
-        return 2
+        return tableData.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier(profileSettingsIdentifier, forIndexPath: indexPath) as! ProfileSettingsTableViewCell
         
-        if indexPath.row == 0 {
-            let cell = tableView.dequeueReusableCellWithIdentifier(cellHeaderIdentifier, forIndexPath: indexPath) as! ProfileHeaderTableViewCell
-            
-            return cell
-        } else {
-            let cell = tableView.dequeueReusableCellWithIdentifier(cellContentIdentifier, forIndexPath: indexPath) as! ProfileTableViewCell
-            cell.delegate = self
-            return cell
-        }
+        cell.delegate = self
+        cell.settingsLabel.text = tableData[indexPath.row]
+        cell.settingsSwitch.setOn(tableDataStatus[indexPath.row], animated: true)
         
+        return cell
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        if indexPath.row == 0 {
-            return 200
-        } else {
-            return 400
-        }
+        return 50
     }
     
     /*
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-
+    
     }*/
     
     /*
@@ -125,30 +143,19 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     }
     */
 
-    // MARK: - Profile Table View cell Delegate
-    func editProfileTapAction() {
-        var editViewController = EditProfileTableViewController(nibName: "EditProfileTableViewController", bundle: nil)
-        self.navigationController?.pushViewController(editViewController, animated:true)
+
+    /*
+    // MARK: - Navigation
+
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        // Get the new view controller using segue.destinationViewController.
+        // Pass the selected object to the new view controller.
     }
-    
-    func transactionsTapAction() {
+    */
+
+    // MARK: - ProfileSettingsTableViewCellDelegate
+    func settingsSwitchAction(sender: AnyObject, value: Bool) {
         
     }
-    
-    func activityLogTapAction() {
-        var activityViewController = ActivityLogTableViewController(nibName: "ActivityLogTableViewController", bundle: nil)
-        self.navigationController?.pushViewController(activityViewController, animated:true)
-    }
-    
-    func myPointsTapAction(){
-
-        var myPointsViewController = MyPointsTableViewController(nibName: "MyPointsTableViewController", bundle: nil)
-        self.navigationController?.pushViewController(myPointsViewController, animated:true)
-    }
-    
-    func settingsTapAction(){
-        var settingsViewController = ProfileSettingsViewController(nibName: "ProfileSettingsViewController", bundle: nil)
-        self.navigationController?.pushViewController(settingsViewController, animated:true)
-    }
-
 }
