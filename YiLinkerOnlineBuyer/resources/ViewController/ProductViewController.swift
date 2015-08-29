@@ -106,89 +106,6 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         super.viewWillDisappear(animated)
     }
     
-    func requestProductDetails(url: String, params: NSDictionary!) {
-        SVProgressHUD.show()
-        SVProgressHUD.setBackgroundColor(UIColor.clearColor())
-        
-        manager.GET(self.productUrl, parameters: params, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            
-            self.productDetailsModel = ProductDetailsModel.parseDataWithDictionary(responseObject)
-            self.attributes = self.productDetailsModel.attributes
-//            self.combinations = self.productDetailsModel.combinations
-            self.populateDetails()
-            
-            self.requestSellerDetails(self.sellerUrl, params: ["userId": "1"])
-            
-            self.productRequest = true
-            self.productSuccess = true
-            self.checkRequests()
-            
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                println("product failed")
-                self.productRequest = true
-                self.productSuccess = false
-                self.checkRequests()
-        })
-    }
-    
-    func requestReviewDetails(url: String, params: NSDictionary!) {
-        manager.POST(self.reviewUrl, parameters: params, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            
-            self.productReviewModel = ProductReviewModel.parseDataWithDictionary(responseObject)
-            self.reviewRequest = true
-            self.reviewSuccess = true
-            self.checkRequests()
-            
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                println("review failed")
-                self.reviewRequest = true
-                self.reviewSuccess = false
-                self.checkRequests()
-        })
-    }
-    
-    func requestSellerDetails(url: String, params: NSDictionary!) {
-        
-        manager.POST(self.sellerUrl, parameters: params, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            
-            self.productSellerModel = ProductSellerModel.parseDataWithDictionary(responseObject)
-            self.sellerRequest = true
-            self.sellerSuccess = true
-            self.checkRequests()
-            
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                println("seller failed")
-                self.sellerRequest = true
-                self.sellerSuccess = false
-                self.checkRequests()
-        })
-    }
-    
-    func configureNavigationBar() {
-        self.navigationController?.navigationBar.alpha = 0
-        UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.Default
-        self.navigationController?.navigationBar.barTintColor = .whiteColor()
-        self.navigationController?.navigationBar.tintColor = .grayColor()
-        
-//        let close = UIBarButtonItem(image: img.image, style: .Plain, target: self, action: "barCloseAction")
-        let close = UIBarButtonItem(barButtonSystemItem: .Stop, target: self, action: "barCloseAction")
-        let wishlist = UIBarButtonItem(image: UIImage(named: "wishlist"), style: .Plain, target: self, action: "barWishlistAction")
-        let rate = UIBarButtonItem(image: UIImage(named: "rating"), style: .Plain, target: self, action: "barRateAction")
-        let message = UIBarButtonItem(image: UIImage(named: "msg"), style: .Plain, target: self, action: "barMessageAction")
-        let share = UIBarButtonItem(image: UIImage(named: "share"), style: .Plain, target: self, action: "barShareAction")
-        let negativeSpacer = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
-        negativeSpacer.width = -10
-        
-        self.navigationItem.setLeftBarButtonItem(close, animated: false)
-        self.navigationItem.setRightBarButtonItems([share, negativeSpacer, message, negativeSpacer, rate, negativeSpacer, wishlist], animated: true)
-    }
-    
     // MARK: - Table View Data Source
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -212,6 +129,36 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         cell.messageLabel.text = productReviewModel.reviews[indexPath.row].review
         
         return cell
+    }
+    
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        
+        if self.lastContentOffset > scrollView.contentOffset.y && scrollView.contentOffset.y <= 140.0 { // hide
+            if visibility >= 0.0 && visibility <= 1.0 {
+                visibility -= Double(scrollView.contentOffset.y / 14) * 0.005
+            }
+        } else if self.lastContentOffset < scrollView.contentOffset.y && scrollView.contentOffset.y >= 140.0 { // show
+            if  visibility <= 1.0 && visibility >= 0.0 {
+                visibility += Double(scrollView.contentOffset.y / 14) * 0.005
+            }
+        }
+        
+        if visibility > 1.0 {
+            visibility = 1.0
+        } else if visibility < 0.0 {
+            visibility = 0.0
+        }
+        
+        // reached top or bottom
+        
+        if scrollView.contentOffset.y <= 0.0 {
+            visibility = 0.0
+        } else if scrollView.contentOffset.y + scrollView.frame.size.height == scrollView.contentSize.height {
+            visibility = 1.0
+        }
+        
+        self.navigationController?.navigationBar.alpha = CGFloat(visibility)
+        self.lastContentOffset = scrollView.contentOffset.y
     }
     
     // MARK: - Init Views
@@ -337,7 +284,154 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         return self.productSellerView
     }
     
-    // MARK: - Functions
+    // MARK: - Requests
+    
+    func requestProductDetails(url: String, params: NSDictionary!) {
+        SVProgressHUD.show()
+        SVProgressHUD.setBackgroundColor(UIColor.clearColor())
+        
+        manager.GET(self.productUrl, parameters: params, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            
+            self.productDetailsModel = ProductDetailsModel.parseDataWithDictionary(responseObject)
+            self.attributes = self.productDetailsModel.attributes
+            
+            self.requestSellerDetails(self.sellerUrl, params: ["userId": "1"])
+            
+            self.productRequest = true
+            self.productSuccess = true
+            self.checkRequests()
+            
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                println("product failed")
+                self.productRequest = true
+                self.productSuccess = false
+                self.checkRequests()
+        })
+    }
+    
+    func requestReviewDetails(url: String, params: NSDictionary!) {
+        manager.POST(self.reviewUrl, parameters: params, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            
+            self.productReviewModel = ProductReviewModel.parseDataWithDictionary(responseObject)
+            self.reviewRequest = true
+            self.reviewSuccess = true
+            self.checkRequests()
+            
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                println("review failed")
+                self.reviewRequest = true
+                self.reviewSuccess = false
+                self.checkRequests()
+        })
+    }
+    
+    func requestSellerDetails(url: String, params: NSDictionary!) {
+        
+        manager.POST(self.sellerUrl, parameters: params, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            
+            self.productSellerModel = ProductSellerModel.parseDataWithDictionary(responseObject)
+            self.sellerRequest = true
+            self.sellerSuccess = true
+            self.checkRequests()
+            
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                println("seller failed")
+                self.sellerRequest = true
+                self.sellerSuccess = false
+                self.checkRequests()
+        })
+    }
+    
+    func requestUpdateWishlistItem() {
+        SVProgressHUD.show()
+        let manager = APIManager.sharedInstance
+        let params = ["access_token": SessionManager.accessToken(),
+            "productId": self.productId,
+            "unitId": self.unitId,
+            "quantity": "1",
+            "wishlist": "true"]
+        
+        manager.GET("http://online.api.easydeal.ph/api/v1/auth/cart/getCart", parameters: params, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            
+            if (responseObject["isSuccessful"] as! Bool) {
+                self.addWishlistBadge()
+                self.showAlert(title: nil, message: "This item has been added to your wishlist")
+            } else {
+                self.showAlert(title: "Error", message: responseObject["message"] as! String)
+            }
+            
+            SVProgressHUD.dismiss()
+            
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                
+                if task.statusCode == 401 {
+                    self.requestRefreshToken()
+                } else {
+                    println(error)
+                    SVProgressHUD.dismiss()
+                }
+        })
+    }
+    
+    func requestRefreshToken() {
+        let url: String = "http://online.api.easydeal.ph/api/v1/login"
+        let params: NSDictionary = ["client_id": Constants.Credentials.clientID,
+            "client_secret": Constants.Credentials.clientSecret,
+            "grant_type": Constants.Credentials.grantRefreshToken,
+            "refresh_token": SessionManager.refreshToken()]
+        
+        let manager = APIManager.sharedInstance
+        manager.POST(url, parameters: params, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            
+            SVProgressHUD.dismiss()
+            
+            if (responseObject["isSuccessful"] as! Bool) {
+                SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+                self.requestUpdateWishlistItem()
+            } else {
+                self.showAlert(title: "Error", message: responseObject["message"] as! String)
+            }
+            
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                SVProgressHUD.dismiss()
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                
+                self.showAlert(title: "Something went wrong", message: nil)
+                
+        })
+    }
+    
+    // MARK: - Methods
+    
+    func configureNavigationBar() {
+        self.navigationController?.navigationBar.alpha = 0
+        UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.Default
+        self.navigationController?.navigationBar.barTintColor = .whiteColor()
+        self.navigationController?.navigationBar.tintColor = .grayColor()
+        
+        //        let close = UIBarButtonItem(image: img.image, style: .Plain, target: self, action: "barCloseAction")
+        let close = UIBarButtonItem(barButtonSystemItem: .Stop, target: self, action: "barCloseAction")
+        let wishlist = UIBarButtonItem(image: UIImage(named: "wishlist"), style: .Plain, target: self, action: "barWishlistAction")
+        let rate = UIBarButtonItem(image: UIImage(named: "rating"), style: .Plain, target: self, action: "barRateAction")
+        let message = UIBarButtonItem(image: UIImage(named: "msg"), style: .Plain, target: self, action: "barMessageAction")
+        let share = UIBarButtonItem(image: UIImage(named: "share"), style: .Plain, target: self, action: "barShareAction")
+        let negativeSpacer = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
+        negativeSpacer.width = -10
+        
+        self.navigationItem.setLeftBarButtonItem(close, animated: false)
+        self.navigationItem.setRightBarButtonItems([share, negativeSpacer, message, negativeSpacer, rate, negativeSpacer, wishlist], animated: true)
+    }
     
     func setUpViews() {
         self.setPosition(self.productDetailsView, from: self.productImagesView)
@@ -372,157 +466,6 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         view.layer.cornerRadius = radius
     }
     
-    // MARK: - Product View Delegates
-    
-    func close(controller: ProductImagesView) {
-        self.navigationController?.popToRootViewControllerAnimated(true)
-    }
-    
-    func wishlist(controller: ProductImagesView) {
-        barWishlistAction()
-    }
-    
-    func rate(controller: ProductImagesView) {
-        showAlert("Rate")
-    }
-    
-    func message(controller: ProductImagesView) {
-        showAlert("Message")
-    }
-    
-    func seeMoreAttribute(title: String) {
-        var attributeModal = ProductAttributeViewController(nibName: "ProductAttributeViewController", bundle: nil)
-        attributeModal.delegate = self
-        attributeModal.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
-        attributeModal.providesPresentationContextTransitionStyle = true
-        attributeModal.definesPresentationContext = true
-        attributeModal.view.backgroundColor = UIColor.clearColor()
-        attributeModal.view.frame.origin.y = attributeModal.view.frame.size.height
-        attributeModal.passModel(productDetailsModel: productDetailsModel, selectedValue: selectedValue, selectedId: selectedId, unitId: unitId.toInt()!)
-        attributeModal.setTitle = title
-        attributeModal.tabController = self.tabController
-        attributeModal.screenWidth = self.view.frame.width
-        self.tabBarController?.presentViewController(attributeModal, animated: true, completion: nil)
-        
-        UIView.animateWithDuration(0.3, animations: {
-            self.dimView.alpha = 0.5
-            self.dimView.layer.zPosition = 2
-            self.view.transform = CGAffineTransformMakeScale(0.92, 0.95)
-            self.navigationController?.navigationBar.alpha = 0.0
-        })
-    }
-    
-    func seeMoreDescription(controller: ProductDescriptionView) {
-        let description = ProductDescriptionViewController(nibName: "ProductDescriptionViewController", bundle: nil)
-        description.url = self.productDetailsModel.fullDescription
-        self.tabBarController?.presentViewController(description, animated: true, completion: nil)
-    }
-    
-    func seeMoreReview(controller: ProductReviewFooterView) {
-        var reviewModal = ProductReviewViewController(nibName: "ProductReviewViewController", bundle: nil)
-        reviewModal.delegate = self
-        reviewModal.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
-        reviewModal.providesPresentationContextTransitionStyle = true
-        reviewModal.definesPresentationContext = true
-        reviewModal.view.backgroundColor = UIColor.clearColor()
-        reviewModal.view.frame.origin.y = reviewModal.view.frame.size.height
-        reviewModal.passModel(self.productReviewModel)
-        self.tabBarController?.presentViewController(reviewModal, animated: true, completion: nil)
-        
-        UIView.animateWithDuration(0.3, animations: {
-            self.dimView.alpha = 0.5
-            self.dimView.layer.zPosition = 2
-            self.view.transform = CGAffineTransformMakeScale(0.92, 0.93)
-            self.navigationController?.navigationBar.alpha = 0.0
-        })
-    }
-    
-    func seeMoreSeller(controller: ProductSellerView) {
-        let seller = SellerViewController(nibName: "SellerViewController", bundle: nil)
-        self.navigationController?.pushViewController(seller, animated: true)
-    }
-    
-    func share(controller: ProductImagesView) {
-        shareTextImageAndURL(sharingText: "Sample Text", sharingImage: UIImage(named: "s61"), sharingURL: NSURL(fileURLWithPath: "http://www.Easyshop.ph"))
-    }
-    
-    func shareTextImageAndURL(#sharingText: String?, sharingImage: UIImage?, sharingURL: NSURL?) {
-        var sharingItems = [AnyObject]()
-        
-        if let text = sharingText {
-            sharingItems.append(text)
-        }
-        if let image = sharingImage {
-            sharingItems.append(image)
-        }
-        if let url = sharingURL {
-            sharingItems.append(url)
-        }
-        
-        let activityViewController = UIActivityViewController(activityItems: sharingItems, applicationActivities: nil)
-        self.presentViewController(activityViewController, animated: true, completion: nil)
-    }
-    
-    func dissmissAttributeViewController(controller: ProductAttributeViewController, type: String) {
-        
-        UIView.animateWithDuration(0.3, animations: {
-            self.view.transform = CGAffineTransformMakeTranslation(1, 1)
-            self.dimView.alpha = 0
-            self.dimView.layer.zPosition = -1
-            self.navigationController?.navigationBar.alpha = CGFloat(self.visibility)
-            }, completion: { finished in
-                if type == "cart" {
-                    self.showAlert("This item has been added to your cart.")
-                    self.loadViewsWithDetails()
-                } else if type == "done" {
-//                    self.showAlert(type)
-                }
-            })
-
-    }
-    
-    func doneActionPassDetailsToProductView(controller: ProductAttributeViewController, unitId: String, quantity: Int, selectedId: NSArray) {
-        self.unitId = unitId
-        self.selectedId = selectedId as! [String]
-        self.setAttributes(self.productDetailsModel.attributes, productUnits: self.productDetailsModel.productUnits, unitId: unitId, quantity: quantity)
-    }
-
-    func gotoCheckoutFromAttributes(controller: ProductAttributeViewController) {
-//        let checkout = CheckoutContainerViewController(nibName: "CheckoutContainerViewController", bundle: nil)
-        let checkout = GuestCheckoutContainerViewController(nibName: "GuestCheckoutContainerViewController", bundle: nil)
-        //self.navigationController?.pushViewController(checkout, animated: true)
-        let navigationController: UINavigationController = UINavigationController(rootViewController: checkout)
-        navigationController.navigationBar.barTintColor = Constants.Colors.appTheme
-        self.tabBarController?.presentViewController(navigationController, animated: true, completion: nil)
-    }
-    
-    func pressedCancelReview(controller: ProductReviewViewController) {
-        UIView.animateWithDuration(0.3, animations: {
-            self.view.transform = CGAffineTransformMakeTranslation(1, 1)
-            self.dimView.alpha = 0
-            self.dimView.layer.zPosition = -1
-            self.navigationController?.navigationBar.alpha = CGFloat(self.visibility)
-        })
-    }
-    
-    func populateDetails() {
-//        self.productImagesView.setDetails(productDetailsModel.title, price: productDetailsModel.newPrice, images: images)
-//        self.setDetails(productDetailsModel.details)
-//        self.setAttributes(productDetailsModel.attributes, combinationModel: productDetailsModel.combinations)
-//        self.productDescriptionView.setDescription(productDetailsModel.shortDescription, full: productDetailsModel.fullDescription)
-    }
-    
-    func populateReviews() {
-//        println("POPULATING PRODUCT REVIEWS")
-//        self.productReviewHeaderView.setRating(self.productReviewModel.rating)
-//        self.tableView.reloadData()
-    }
-    
-    func populateSeller() {
-        println("POPULATING DETAILS")
-        
-    }
-    
     func loadViewsWithDetails() {
         
         self.tableView.hidden = false
@@ -538,7 +481,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         self.getFooterView().addSubview(self.getProductSellerView())
         
         self.productImagesView.setDetails(self.productDetailsModel, unitId: unitId.toInt()!, width: self.view.frame.size.width)
-//        self.setDetails(productDetailsModel.details)
+        //        self.setDetails(productDetailsModel.details)
         self.setDetails(["Free Shipping"])
         self.setAttributes(self.productDetailsModel.attributes, productUnits: self.productDetailsModel.productUnits, unitId: "1", quantity: 0)
         self.productDescriptionView.setDescription(productDetailsModel.shortDescription, full: productDetailsModel.fullDescription)
@@ -598,8 +541,8 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         selectedName = []
         selectedValue = []
         selectedId = []
-//        selectedName.append("Quantity")
-//        selectedValue.append(String(combinationModel[0].quantity) + "x")
+        //        selectedName.append("Quantity")
+        //        selectedValue.append(String(combinationModel[0].quantity) + "x")
         
         let index: Int = unitId.toInt()! - 1
         println(index)
@@ -669,73 +612,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         setUpViews()
     }
     
-    // MARK: Actions
-    
-    @IBAction func addToCartAction(sender: AnyObject) {
-        seeMoreAttribute("cart")
-        
-    }
-    
-    func buyItNowAction(gesture: UIGestureRecognizer) {
-        seeMoreAttribute("buy")
-    }
-    
-    func scrollViewDidScroll(scrollView: UIScrollView) {
-        
-        if self.lastContentOffset > scrollView.contentOffset.y && scrollView.contentOffset.y <= 140.0 { // hide
-            if visibility >= 0.0 && visibility <= 1.0 {
-                visibility -= Double(scrollView.contentOffset.y / 14) * 0.005
-            }
-        } else if self.lastContentOffset < scrollView.contentOffset.y && scrollView.contentOffset.y >= 140.0 { // show
-            if  visibility <= 1.0 && visibility >= 0.0 {
-                visibility += Double(scrollView.contentOffset.y / 14) * 0.005
-            }
-        }
-        
-        if visibility > 1.0 {
-            visibility = 1.0
-        } else if visibility < 0.0 {
-            visibility = 0.0
-        }
-        
-        // reached top or bottom
-        
-        if scrollView.contentOffset.y <= 0.0 {
-             visibility = 0.0
-        } else if scrollView.contentOffset.y + scrollView.frame.size.height == scrollView.contentSize.height {
-            visibility = 1.0
-        }
-        
-        self.navigationController?.navigationBar.alpha = CGFloat(visibility)
-        self.lastContentOffset = scrollView.contentOffset.y
-    }
-    
-    func showAlert(text: String) {
-        let alertController = UIAlertController(title: "YiLinker", message: text, preferredStyle: .Alert)
-        let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
-        alertController.addAction(defaultAction)
-        presentViewController(alertController, animated: true, completion: nil)
-    }
-    
-    func tapGesture(action: Selector) -> UITapGestureRecognizer {
-        var tap = UITapGestureRecognizer()
-        tap.numberOfTapsRequired = 1
-        tap.addTarget(self, action: action)
-        
-        return tap
-    }
-    
-    // Navigation Bar Actions
-    
-    func gotoAttributes(gesture: UIGestureRecognizer) {
-        seeMoreAttribute("")
-    }
-    
     func checkRequests() {
-        
-//        println("Request Product Details Successful: " + String(stringInterpolationSegment: productSuccess))
-//        println("Request Review  Details Successful: " + String(stringInterpolationSegment: reviewSuccess))
-//        println("Request Seller  Details Successful: " + String(stringInterpolationSegment: sellerSuccess))
         
         if productSuccess && reviewSuccess && sellerSuccess {
             self.loadViewsWithDetails()
@@ -753,68 +630,209 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         self.view.addSubview(self.emptyView!)
     }
     
+    func addWishlistBadge() {
+        if let badgeValue = (self.tabController.tabBar.items![3] as! UITabBarItem).badgeValue?.toInt() {
+            (self.tabController.tabBar.items![3] as! UITabBarItem).badgeValue = String(badgeValue + 1)
+        } else {
+            (self.tabController.tabBar.items![3] as! UITabBarItem).badgeValue = "1"
+        }
+    }
+
+    // MARK: - Product View Delegate
+    
+    func close(controller: ProductImagesView) {
+        self.barCloseAction()
+    }
+    
+    func wishlist(controller: ProductImagesView) {
+        self.barWishlistAction()
+    }
+    
+    func rate(controller: ProductImagesView) {
+        self.barRateAction()
+    }
+    
+    func message(controller: ProductImagesView) {
+        self.barMessageAction()
+    }
+    
+    func share(controller: ProductImagesView) {
+        self.barShareAction()
+    }
+    
+    func seeMoreAttribute(title: String) {
+        var attributeModal = ProductAttributeViewController(nibName: "ProductAttributeViewController", bundle: nil)
+        attributeModal.delegate = self
+        attributeModal.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
+        attributeModal.providesPresentationContextTransitionStyle = true
+        attributeModal.definesPresentationContext = true
+        attributeModal.view.backgroundColor = UIColor.clearColor()
+        attributeModal.view.frame.origin.y = attributeModal.view.frame.size.height
+        attributeModal.passModel(productDetailsModel: productDetailsModel, selectedValue: selectedValue, selectedId: selectedId, unitId: unitId.toInt()!)
+        attributeModal.setTitle = title
+        attributeModal.tabController = self.tabController
+        attributeModal.screenWidth = self.view.frame.width
+        self.tabBarController?.presentViewController(attributeModal, animated: true, completion: nil)
+        
+        UIView.animateWithDuration(0.3, animations: {
+            self.dimView.alpha = 0.5
+            self.dimView.layer.zPosition = 2
+            self.view.transform = CGAffineTransformMakeScale(0.92, 0.95)
+            self.navigationController?.navigationBar.alpha = 0.0
+        })
+    }
+    
+    // MARK: - Product Description Delegate
+    
+    func seeMoreDescription(controller: ProductDescriptionView) {
+        let description = ProductDescriptionViewController(nibName: "ProductDescriptionViewController", bundle: nil)
+        description.url = self.productDetailsModel.fullDescription
+        self.tabBarController?.presentViewController(description, animated: true, completion: nil)
+    }
+    
+    // MARK: - Product Attribute Delegate
+    
+    func dissmissAttributeViewController(controller: ProductAttributeViewController, type: String) {
+        
+        UIView.animateWithDuration(0.3, animations: {
+            self.view.transform = CGAffineTransformMakeTranslation(1, 1)
+            self.dimView.alpha = 0
+            self.dimView.layer.zPosition = -1
+            self.navigationController?.navigationBar.alpha = CGFloat(self.visibility)
+            }, completion: { finished in
+                if type == "cart" {
+                    self.showAlert(title: nil, message: "This item has been added to your cart.")
+                    self.loadViewsWithDetails()
+                } else if type == "done" {
+//                    self.showAlert(type)
+                }
+            })
+
+    }
+    
+    func doneActionPassDetailsToProductView(controller: ProductAttributeViewController, unitId: String, quantity: Int, selectedId: NSArray) {
+        self.unitId = unitId
+        self.selectedId = selectedId as! [String]
+        self.setAttributes(self.productDetailsModel.attributes, productUnits: self.productDetailsModel.productUnits, unitId: unitId, quantity: quantity)
+    }
+
+    func gotoCheckoutFromAttributes(controller: ProductAttributeViewController) {
+        if SessionManager.isLoggedIn() {
+            let checkout = CheckoutContainerViewController(nibName: "CheckoutContainerViewController", bundle: nil)
+            let navigationController: UINavigationController = UINavigationController(rootViewController: checkout)
+            navigationController.navigationBar.barTintColor = Constants.Colors.appTheme
+            self.tabBarController?.presentViewController(navigationController, animated: true, completion: nil)
+        } else {
+            let checkout = GuestCheckoutContainerViewController(nibName: "GuestCheckoutContainerViewController", bundle: nil)
+            //self.navigationController?.pushViewController(checkout, animated: true)
+            let navigationController: UINavigationController = UINavigationController(rootViewController: checkout)
+            navigationController.navigationBar.barTintColor = Constants.Colors.appTheme
+            self.tabBarController?.presentViewController(navigationController, animated: true, completion: nil)
+        }
+    }
+    
+    // MARK: - Product Review Delegate
+    
+    func pressedCancelReview(controller: ProductReviewViewController) {
+        UIView.animateWithDuration(0.3, animations: {
+            self.view.transform = CGAffineTransformMakeTranslation(1, 1)
+            self.dimView.alpha = 0
+            self.dimView.layer.zPosition = -1
+            self.navigationController?.navigationBar.alpha = CGFloat(self.visibility)
+        })
+    }
+    
+    func seeMoreReview(controller: ProductReviewFooterView) {
+        var reviewModal = ProductReviewViewController(nibName: "ProductReviewViewController", bundle: nil)
+        reviewModal.delegate = self
+        reviewModal.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
+        reviewModal.providesPresentationContextTransitionStyle = true
+        reviewModal.definesPresentationContext = true
+        reviewModal.view.backgroundColor = UIColor.clearColor()
+        reviewModal.view.frame.origin.y = reviewModal.view.frame.size.height
+        reviewModal.passModel(self.productReviewModel)
+        self.tabBarController?.presentViewController(reviewModal, animated: true, completion: nil)
+        
+        UIView.animateWithDuration(0.3, animations: {
+            self.dimView.alpha = 0.5
+            self.dimView.layer.zPosition = 2
+            self.view.transform = CGAffineTransformMakeScale(0.92, 0.93)
+            self.navigationController?.navigationBar.alpha = 0.0
+        })
+    }
+    
+    // MARK: - Product Seller Delegate
+    
+    func seeMoreSeller(controller: ProductSellerView) {
+        let seller = SellerViewController(nibName: "SellerViewController", bundle: nil)
+        self.navigationController?.pushViewController(seller, animated: true)
+    }
+    
+    // MARK: Actions
+    
+    @IBAction func addToCartAction(sender: AnyObject) {
+        seeMoreAttribute("cart")
+        
+    }
+    
+    func buyItNowAction(gesture: UIGestureRecognizer) {
+        seeMoreAttribute("buy")
+    }
+    
+    func showAlert(#title: String!, message: String!) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+        let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+        alertController.addAction(defaultAction)
+        presentViewController(alertController, animated: true, completion: nil)
+    }
+    
+    func tapGesture(action: Selector) -> UITapGestureRecognizer {
+        var tap = UITapGestureRecognizer()
+        tap.numberOfTapsRequired = 1
+        tap.addTarget(self, action: action)
+        
+        return tap
+    }
+    
+    func gotoAttributes(gesture: UIGestureRecognizer) {
+        seeMoreAttribute("")
+    }
+    
     func didTapReload() {
         self.requestProductDetails(productUrl, params: nil)
         self.requestReviewDetails(reviewUrl, params: nil)
         self.emptyView?.removeFromSuperview()
     }
+    
+    // MARK: - Navigation Bar Actions
 
     func barCloseAction() {
         self.navigationController?.popToRootViewControllerAnimated(true)
     }
 
     func barWishlistAction() {
-//        var imageToAnimate = UIImageView()
-//        imageToAnimate.frame = self.productImagesView.collectionView.frame
-//        
-//        for subView in self.productImagesView.collectionView.subviews as! [UIView] {
-//            for views in subView.subviews as! [UIView] {
-//                for imageView in views.subviews as! [UIImageView] {
-//                    if imageView.isKindOfClass(UIImageView) {
-//                        imageToAnimate.image = imageView.image
-//                    }
-//                }
-//            }
-//        }
-//        
-//        self.view.addSubview(imageToAnimate)
-//        UIView.animateWithDuration(0.3, animations: {
-//            imageToAnimate.transform = CGAffineTransformMakeScale(0.1, 0.1)
-//            }, completion: { finished in //after scaling
-//                UIView.animateWithDuration(0.3, animations: { //after animating
-//                    imageToAnimate.center = CGPointMake(250, self.tabController.tabBar.frame.origin.y - (self.tabController.tabBar.frame.size.height / 2))
-//                    imageToAnimate.alpha = 0.0
-//                    }, completion: { finished in
-//                        if let badgeValue = (self.tabController.tabBar.items![3] as! UITabBarItem).badgeValue?.toInt() {
-//                            (self.tabController.tabBar.items![3] as! UITabBarItem).badgeValue = String(badgeValue + 1)
-//                        } else {
-//                            (self.tabController.tabBar.items![3] as! UITabBarItem).badgeValue = "1"
-//                        }
-//                })
-//        })
-        
-        showAlert("This item has been added to your wishlist")
-        
-        if let badgeValue = (self.tabController.tabBar.items![3] as! UITabBarItem).badgeValue?.toInt() {
-            (self.tabController.tabBar.items![3] as! UITabBarItem).badgeValue = String(badgeValue + 1)
+        if SessionManager.isLoggedIn() {
+            requestUpdateWishlistItem()
         } else {
-            (self.tabController.tabBar.items![3] as! UITabBarItem).badgeValue = "1"
+            showAlert(title: "Failed", message: "Please logged-in to add item in your wishlist.")
         }
-        
-        
-//        SVProgressHUD.dismiss()
     }
 
     func barRateAction() {
-        showAlert("Rate")
+        showAlert(title: "Coming Soon", message: nil)
     }
 
     func barMessageAction() {
-        showAlert("Message")
+        showAlert(title: "Go to Messaging", message: nil)
     }
 
     func barShareAction() {
-        shareTextImageAndURL(sharingText: "Sample Text", sharingImage: UIImage(named: "s61"), sharingURL: NSURL(fileURLWithPath: "http://www.Easyshop.ph"))
+        var sharingItems = [AnyObject]()
+        sharingItems.append("Sample Caption" + "\n")
+        sharingItems.append(NSURL(string: "http://online.api.easydeal.ph/")!)
+        
+        let shareViewController = UIActivityViewController(activityItems: sharingItems, applicationActivities: nil)
+        self.presentViewController(shareViewController, animated: true, completion: nil)
     }
     
 }

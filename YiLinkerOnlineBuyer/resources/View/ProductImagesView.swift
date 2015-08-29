@@ -142,13 +142,9 @@ class ProductImagesView: UIView, UICollectionViewDataSource, UICollectionViewDel
         
         self.images = model.productUnits[unitId].imageIds
         if self.images.count == 0 {
-            self.images = ["http://shop.bench.com.ph/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/Y/W/YWH0089BU4.jpg",
-                "http://shop.bench.com.ph/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/Y/W/YWH0089BU4_F.jpg",
-                "http://shop.bench.com.ph/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/Y/W/YWH0089BU4_S.jpg",
-                "http://shop.bench.com.ph/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/Y/W/YWH0089BU4_B.jpg",
-                "http://shop.bench.com.ph/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/Y/W/YWH0089BU4_45.jpg"]
+            self.images = ["", "", "", "", ""]
         }
-         self.pageControl.numberOfPages = self.images.count
+        self.pageControl.numberOfPages = self.images.count
         self.collectionView.reloadData()
     }
     
