@@ -1,0 +1,146 @@
+//
+//  W_Messages.swift
+//  Messaging
+//
+//  Created by Dennis Nora on 8/2/15.
+//  Copyright (c) 2015 Dennis Nora. All rights reserved.
+//
+
+import UIKit
+import CoreData
+
+extension NSDate
+{
+    convenience
+    init(dateString:String) {
+        let dateStringFormatter = NSDateFormatter()
+        dateStringFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        dateStringFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
+        let d = dateStringFormatter.dateFromString(dateString)!
+        self.init(timeInterval:0, sinceDate:d)
+    }
+}
+
+class W_Messages: NSObject {
+    
+    var message_id  : NSNumber
+    var senderId   : String
+    var recipientId: String
+    var message     : String
+    var isImage    : NSNumber
+    var timeSent   : NSDate
+    var isSeen   : NSNumber
+    var timeSeen   : NSDate
+    
+    init(
+        message_id : NSNumber,
+        senderId : String,
+        recipientId : String,
+        message : String,
+        isImage : NSNumber,
+        timeSent: NSDate,
+        isSeen : NSNumber,
+        timeSeen: NSDate)
+    {
+        self.message_id = message_id
+        self.senderId = senderId
+        self.recipientId = recipientId
+        self.message = message
+        self.isImage = isImage
+        self.timeSent = timeSent
+        self.isSeen = isSeen
+        self.timeSeen = timeSeen
+    }
+    
+    override init()
+    {
+        self.message_id = 0
+        self.senderId = "0"
+        self.recipientId = "0"
+        self.message = "No message"
+        self.isImage = 0
+        self.timeSent = NSDate(dateString: "2015-07-24 07:17:00")
+        self.isSeen = 1
+        self.timeSeen = NSDate(dateString: "2015-07-24 07:17:00")
+    }
+    
+    
+    class func parseMessages(dictionary: AnyObject) -> Array<W_Messages> {
+        
+        var parsedMessages : Array<W_Messages> = []
+        if dictionary.isKindOfClass(NSDictionary) {
+            
+            
+            if let contacts: AnyObject = dictionary["data"] {
+                
+                
+                for contact in contacts as! NSArray {
+                    var message_id  : Int = 0
+                    var senderId    : String = ""
+                    var recipientId : String = ""
+                    var lastMessage : String = ""
+                    var isImage     : Int = 0
+                    var timeSent    : String = ""
+                    var isSeen      : Int = 0
+                    var timeSeen    : String = ""
+                    
+                    if let tempVar = contact["message_id"] as? Int {
+                        message_id = tempVar
+                    }
+                    
+                    if let tempVar = contact["senderId"] as? String {
+                        senderId = tempVar
+                    }
+                    
+                    if let tempVar = contact["recipientId"] as? String {
+                        recipientId = tempVar
+                    }
+                    
+                    if let tempVar = contact["message"] as? String {
+                        lastMessage = tempVar
+                    }
+                    
+                    if let tempVar = contact["isImage"] as? Int {
+                        isImage = tempVar
+                    }
+                    
+                    if let tempVar = contact["timeSent"] as? String {
+                        timeSent = tempVar
+                    }
+                    
+                    if let tempVar = contact["isSeen"] as? Int {
+                        isSeen = tempVar
+                    }
+                    
+                    if let tempVar = contact["timeSeen"] as? String {
+                        timeSeen = tempVar
+                    }
+                    
+                    parsedMessages.append(W_Messages(message_id: message_id, senderId: senderId, recipientId: recipientId, message: lastMessage, isImage: isImage, timeSent: NSDate(dateString: timeSent), isSeen: isSeen, timeSeen: NSDate(dateString: timeSeen)))
+                    
+                }
+                
+            }
+            
+        } // dictionary
+        
+        return parsedMessages
+    } // parse
+    
+
+    
+    func testData() -> Array<W_Messages>
+    {
+        return [
+            W_Messages(message_id: 1001, senderId: "101", recipientId: "201", message: "Hi!", isImage: 1, timeSent: NSDate(dateString: "2015-07-24 07:17:00"), isSeen: 0, timeSeen: NSDate(dateString: "2015-07-24 07:17:00")),
+            W_Messages(message_id: 1000, senderId: "101", recipientId: "201", message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras venenatis ipsum sed nisi hendrerit ornare. Nulla sit amet quam vel risus imperdiet sodales nec quis nulla. Praesent tortor enim, malesuada at augue vel, mattis mattis turpis. Ut mauris odio, consectetur lacinia mauris et, aliquet efficitur neque. Donec consectetur dignissim libero ac feugiat. Donec id dui quis nunc pretium pellentesque commodo non ex. Aliquam viverra turpis suscipit lacus fringilla tempor. Sed dignissim cursus libero eu eleifend. Quisque hendrerit sapien nec eros convallis elementum. Nullam laoreet accumsan lacinia. Ut tincidunt purus suscipit, gravida eros quis, tincidunt nulla.", isImage: 0, timeSent: NSDate(dateString: "2015-07-24 07:17:00"), isSeen: 0, timeSeen: NSDate(dateString: "2015-07-24 07:17:00")),
+            W_Messages(message_id: 1001, senderId: "101", recipientId: "201", message: "Hi!", isImage: 0, timeSent: NSDate(dateString: "2015-07-24 07:17:00"), isSeen: 0, timeSeen: NSDate(dateString: "2015-07-24 07:17:00")),
+            W_Messages(message_id: 1002, senderId: "201", recipientId: "101", message: "Hello!", isImage: 0, timeSent: NSDate(dateString: "2015-07-24 07:17:01"), isSeen: 0, timeSeen: NSDate(dateString: "2015-07-24 07:17:01")),
+            W_Messages(message_id: 1003, senderId: "101", recipientId: "201", message: "How are you?", isImage: 0, timeSent: NSDate(dateString: "2015-07-24 07:17:02"), isSeen: 0, timeSeen: NSDate(dateString: "2015-07-24 07:17:02")),
+            W_Messages(message_id: 1004, senderId: "101", recipientId: "201", message: "It's been a long time!", isImage: 0, timeSent: NSDate(dateString: "2015-07-24 07:17:03"), isSeen : 0, timeSeen: NSDate(dateString: "2015-07-24 07:17:03")),
+            W_Messages(message_id: 1005, senderId: "201", recipientId: "101", message: "Yeah!!! I'm doing okay. You?", isImage: 0, timeSent: NSDate(dateString: "2015-07-24 07:17:04"), isSeen: 0, timeSeen: NSDate(dateString: "2015-07-24 07:17:04"))
+        ]
+    
+    }
+    
+}

@@ -81,13 +81,14 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             return true
         } else if self.customTabBarController?.isValidToSwitchToMenuTabBarItems != true {
             let storyBoard: UIStoryboard = UIStoryboard(name: "HomeStoryBoard", bundle: nil)
-            var animatedViewController: CircularMenuViewController?
-            animatedViewController  = storyBoard.instantiateViewControllerWithIdentifier("CircularMenuViewController") as? CircularMenuViewController
+            var animatedViewController: ConversationVC?
+            animatedViewController  = storyBoard.instantiateViewControllerWithIdentifier("ConversationVC") as? ConversationVC
             animatedViewController!.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
             animatedViewController!.providesPresentationContextTransitionStyle = true
             animatedViewController!.definesPresentationContext = true
             animatedViewController!.view.backgroundColor = UIColor.clearColor()
             
+            /*
             if SessionManager.accessToken() != "" {
                 var buttonImages: [String] = ["help", "following", "message", "customize-shopping", "promo", "category", SessionManager.profileImageStringUrl()]
                 var buttonTitles: [String] = ["HELP", "FOLLOWED SELLER", "MESSAGING", "CUSTOMIZE SHOPPING", "TODAY'S PROMO", "CATEGORIES", "LOGOUT"]
@@ -106,6 +107,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                 animatedViewController?.buttonRightText = buttonRightText
             }
             animatedViewController?.customTabBarController = self.customTabBarController!
+            */
             self.tabBarController?.presentViewController(animatedViewController!, animated: false, completion: nil)
             return false
         } else {

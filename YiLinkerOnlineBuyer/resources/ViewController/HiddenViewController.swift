@@ -13,7 +13,9 @@ class HiddenViewController: UIViewController {
     var helpViewController: HelpViewController?
     var registerViewController: RegisterViewController?
     var loginViewController: LoginViewController?
-    var messagingViewController: MessagingViewController?
+    //var messagingViewController: MessagingViewController?
+    var conversationVC : ConversationVC?
+    
     var customizeShoppingViewController: CustomizeShoppingViewController?
     var resultViewController: ResultViewController?
     var categoriesViewController: CategoriesViewController?
@@ -117,8 +119,10 @@ class HiddenViewController: UIViewController {
     func initViews() {
         if SessionManager.isLoggedIn() {
             self.helpViewController = HelpViewController(nibName: "HelpViewController", bundle: nil)
+            
             self.followedSellerViewController = FollowedSellerViewController(nibName: "FollowedSellerViewController", bundle: nil)
-            self.messagingViewController = MessagingViewController(nibName: "MessagingViewController", bundle: nil)
+            //self.messagingViewController = MessagingViewController(nibName: "MessagingViewController", bundle: nil)
+            self.conversationVC = ConversationVC()
             self.customizeShoppingViewController = CustomizeShoppingViewController(nibName: "CustomizeShoppingViewController", bundle: nil)
             self.resultViewController = ResultViewController(nibName: "ResultViewController", bundle: nil)
             self.categoriesViewController = CategoriesViewController(nibName: "CategoriesViewController", bundle: nil)
@@ -126,7 +130,8 @@ class HiddenViewController: UIViewController {
             
             self.viewControllers.append(self.helpViewController!)
             self.viewControllers.append(self.followedSellerViewController!)
-            self.viewControllers.append(self.messagingViewController!)
+            //self.viewControllers.append(self.messagingViewController!)
+            self.viewControllers.append(self.conversationVC!)
             self.viewControllers.append(self.customizeShoppingViewController!)
             self.viewControllers.append(self.resultViewController!)
             self.viewControllers.append(self.categoriesViewController!)
@@ -140,7 +145,8 @@ class HiddenViewController: UIViewController {
             
             self.loginViewController =  storyBoard.instantiateViewControllerWithIdentifier("LoginViewController") as? LoginViewController
             
-            self.messagingViewController = MessagingViewController(nibName: "MessagingViewController", bundle: nil)
+            //self.messagingViewController = MessagingViewController(nibName: "MessagingViewController", bundle: nil)
+            self.conversationVC = storyBoard.instantiateViewControllerWithIdentifier("ConversationVC") as? ConversationVC
             self.customizeShoppingViewController = CustomizeShoppingViewController(nibName: "CustomizeShoppingViewController", bundle: nil)
             self.resultViewController = ResultViewController(nibName: "ResultViewController", bundle: nil)
             self.categoriesViewController = CategoriesViewController(nibName: "CategoriesViewController", bundle: nil)
@@ -148,7 +154,8 @@ class HiddenViewController: UIViewController {
             self.viewControllers.append(self.helpViewController!)
             self.viewControllers.append(self.registerViewController!)
             self.viewControllers.append(self.loginViewController!)
-            self.viewControllers.append(self.messagingViewController!)
+            //self.viewControllers.append(self.messagingViewController!)
+            self.viewControllers.append(self.conversationVC!)
             self.viewControllers.append(self.customizeShoppingViewController!)
             self.viewControllers.append(self.resultViewController!)
             self.viewControllers.append(self.categoriesViewController!)

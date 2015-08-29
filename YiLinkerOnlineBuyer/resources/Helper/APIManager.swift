@@ -26,21 +26,32 @@ struct APIEnvironment {
 struct APIAtlas {
     
     static let loginUrl = "login"
-    static let refreshTokenUrl = "login"
     static let registerUrl = "user/register"
     static let getUserInfoUrl = "auth/user/getUser"
     static let homeUrl = "home/getData"
-    static let cartUrl = "auth/cart/getCart"
-    static let wishlistUrl = "auth/cart/getCart"
-    static let updateWishlistUrl = "auth/cart/updateCartItem"
-    static let updateCartUrl = "auth/cart/updateCartItem"
+    static let cartUrl = "v1/cart"
+    static let wishlistUrl = "v1/cart"
     static let getSellerUrl = "v1/get-seller"
     static let productReviewUrl = "v1/product-review"
     static let productPageUrl = "v1/get-product"
-    static let searchUrl = "product/getSearchKeywords"
-    static let profileUrl = "auth/user/getUser"
-    static let editProfileUrl = "auth/user/editProfile"
+    static let updateWishlistUrl = ""
+    static let searchUrl = ""
+    static let refreshTokenUrl = ""
+    static let updateCartUrl = ""
+    static let editProfileUrl = ""
     static let baseUrl = APIEnvironment.baseUrl()
+    
+    /* MESSAGING CONSTANTS */
+    static let ACTION_SEND_MESSAGE          = "/message/sendMessage"
+    static let ACTION_GET_CONVERSATION_HEAD = "/message/getConversationHead"
+    static let ACTION_GET_CONTACTS          = "/message/getContacts"
+    static let ACTION_GET_CONVERSATION_MESSAGES = "/message/getConversationMessages"
+    static let ACTION_SET_AS_READ           = "/message/setConversationAsRead"
+    static let ACTION_IMAGE_ATTACH          = "/message/imageAttach"
+    static let ACTION_GCM_CREATE            = "/auth/device/addRegistrationId"
+    static let ACTION_GCM_DELETE            = "/auth/device/deleteRegistrationId"
+    static let ACTION_GCM_UPDATE            = "/device/auth/updateRegistrationId"
+    static let uploadFileType = "jpeg"
 }
 
 class APIManager: AFHTTPSessionManager {

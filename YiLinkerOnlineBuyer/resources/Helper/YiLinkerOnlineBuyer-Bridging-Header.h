@@ -9,3 +9,4 @@
 #import <GoogleSignIn/GoogleSignIn.h>
 #import <SVProgressHUD/SVProgressHUD.h>
 #import <TTRangeSlider/TTRangeSlider.h>
+#import <Google/CloudMessaging.h>

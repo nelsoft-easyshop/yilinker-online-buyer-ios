@@ -248,7 +248,7 @@ class WishlistViewController: UIViewController, UITableViewDelegate, UITableView
                 "quantity": tempModel.quantity
             ]
             
-            fireAddToCartItem(APIAtlas.updateWishlistUrl, params: params)
+            //fireAddToCartItem(APIAtlas.updateWishlistUrl, params: params)
         } else {
             showAlert("Connection Unreachable", message: "Cannot retrieve data. Please check your internet connection.")
         }
