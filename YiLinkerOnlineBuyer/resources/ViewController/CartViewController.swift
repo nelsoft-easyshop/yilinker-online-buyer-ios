@@ -142,7 +142,11 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
         self.updateCounterLabel()
         self.calculateTotalPrice()
         self.dismissLoader()
-       
+        
+        if tableData.count != 0 {
+            let badgeValue = (self.tabBarController!.tabBar.items![4] as! UITabBarItem).badgeValue?.toInt()
+            (self.tabBarController!.tabBar.items![4] as! UITabBarItem).badgeValue = String(tableData.count)
+        }
     }
     
     func updateCounterLabel() {
