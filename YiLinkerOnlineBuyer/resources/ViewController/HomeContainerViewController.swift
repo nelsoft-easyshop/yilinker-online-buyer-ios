@@ -81,7 +81,14 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             if SessionManager.isLoggedIn() {
                 return true
             } else {
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Please log in to view your cart", title: "Error")
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Please log in to view your Cart.", title: "Error")
+                return false
+            }
+        } else if viewController == tabBarController.viewControllers![3] as! UIViewController {
+            if SessionManager.isLoggedIn() {
+                return true
+            } else {
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Please log in to view your Wishlist.", title: "Error")
                 return false
             }
         } else if self != viewController && viewController != tabBarController.viewControllers![2] as! UIViewController {
