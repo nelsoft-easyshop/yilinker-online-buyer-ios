@@ -39,28 +39,38 @@ class SellerTableHeaderView: UIView {
     }
     
     @IBAction func feedBack(sender: AnyObject) {
-        self.viewFeedbackButton.backgroundColor = Constants.Colors.appTheme
-        self.viewFeedbackButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
-        self.viewFeedbackButton.borderColor = UIColor.clearColor()
-        
-        self.followButton.layer.borderColor = Constants.Colors.grayLine.CGColor
-        self.followButton.setTitleColor(Constants.Colors.grayLine, forState: UIControlState.Normal)
-        self.followButton.backgroundColor = UIColor.clearColor()
-        self.followButton.setTitle("UNFOLLOW", forState: UIControlState.Normal)
+        if self.viewFeedbackButton.selected {
+            self.viewFeedbackButton.selected = false
+            self.viewFeedbackButton.backgroundColor = Constants.Colors.appTheme
+            self.viewFeedbackButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+            self.viewFeedbackButton.borderColor = UIColor.clearColor()
+        } else {
+            self.viewFeedbackButton.selected = true
+            self.viewFeedbackButton.layer.borderColor = Constants.Colors.grayLine.CGColor
+            self.viewFeedbackButton.setTitleColor(Constants.Colors.grayLine, forState: UIControlState.Normal)
+            self.viewFeedbackButton.backgroundColor = UIColor.clearColor()
+        }
         
         self.delegate?.sellerTableHeaderViewDidViewFeedBack()
     }
     
     @IBAction func follow(sender: AnyObject) {
-        self.followButton.backgroundColor = Constants.Colors.appTheme
-        self.followButton.borderColor = UIColor.clearColor()
-        self.followButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
-        self.followButton.setTitle("FOLLOWING", forState: UIControlState.Normal)
-        
-        self.viewFeedbackButton.layer.borderColor = Constants.Colors.grayLine.CGColor
-        self.viewFeedbackButton.setTitleColor(Constants.Colors.grayLine, forState: UIControlState.Normal)
-        self.viewFeedbackButton.backgroundColor = UIColor.clearColor()
-        
+        if self.followButton.selected {
+            self.followButton.selected = false
+            self.followButton.backgroundColor = Constants.Colors.appTheme
+            self.followButton.borderColor = UIColor.clearColor()
+            self.followButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+            self.followButton.setTitle("UNFOLLOW", forState: UIControlState.Normal)
+            println("following")
+        } else {
+            self.followButton.selected = true
+            self.followButton.layer.borderColor = Constants.Colors.grayLine.CGColor
+            self.followButton.setTitleColor(Constants.Colors.grayLine, forState: UIControlState.Normal)
+            self.followButton.backgroundColor = UIColor.clearColor()
+            self.followButton.setTitle("FOLLOWING", forState: UIControlState.Disabled)
+            println("unfollow")
+        }
+       
         self.delegate?.sellerTableHeaderViewDidFollow()
     }
     
