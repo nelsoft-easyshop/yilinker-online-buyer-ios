@@ -21,7 +21,10 @@ class ViewFeedBackViewController: UIViewController, UITableViewDelegate, UITable
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        self.ratingView.layer.cornerRadius = self.ratingView.frame.width/2
+        self.ratingView.clipsToBounds = true
+        
         self.ratingAndReviewsTableView.delegate = self
         self.ratingAndReviewsTableView.dataSource = self
         self.registerNibs();
@@ -33,6 +36,9 @@ class ViewFeedBackViewController: UIViewController, UITableViewDelegate, UITable
         // Dispose of any resources that can be recreated.
     }
     
+    @IBAction func closeAction() {
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
     func registerNibs() {
         let ratingAndReview: UINib = UINib(nibName: "ReviewTableViewCell", bundle: nil)
         self.ratingAndReviewsTableView.registerNib(ratingAndReview, forCellReuseIdentifier: reviewTableViewCellIdentifier)
