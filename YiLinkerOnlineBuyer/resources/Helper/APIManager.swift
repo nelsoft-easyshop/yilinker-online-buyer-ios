@@ -38,6 +38,7 @@ struct APIAtlas {
     static let getSellerInfo = "user/getStoreInfo"
     static let followSeller = "auth/followSeller"
     static let unfollowSeller = "auth/unfollowSeller"
+    static let sellerReview = "seller/getReviews"
     static let baseUrl = APIEnvironment.baseUrl()
 }
 

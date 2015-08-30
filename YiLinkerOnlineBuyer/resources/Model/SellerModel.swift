@@ -31,6 +31,12 @@ class SellerModel: NSObject {
     var store_description = ""
     var is_allowed: Bool = false
     
+    //For feed back seller reviews
+    var rating: String = ""
+    var image_url: NSURL = NSURL(string: "")!
+    var user_rating: String = ""
+    var message: String = ""
+    
     init(name: String, avatar: NSURL, specialty: String, target: String, products: [HomePageProductModel]) {
         self.name = name
         self.avatar = avatar
@@ -69,6 +75,11 @@ class SellerModel: NSObject {
         self.is_allowed = is_allowed
         self.products = products
         self.reviews = reviews
+    }
+    
+    init(rating : String, product_reviews: [ProductReviewsModel]){
+        self.reviews = product_reviews
+        self.rating = rating
     }
     
     class func parseSellerDataFromDictionary(dictionary: NSDictionary) -> SellerModel {
@@ -330,5 +341,31 @@ class SellerModel: NSObject {
             let sellerModel: SellerModel = SellerModel(name: name, avatar: avatar, specialty: specialty, target: target, products: homePageProductModels)
             return sellerModel
         }
+    }
+    
+    class func parseSellerReviewsDataFromDictionary(dictionary: NSDictionary) -> SellerModel {
+        
+        var rating: String = ""
+         var productReviews: [ProductReviewsModel] = [ProductReviewsModel]()
+        
+        if let tempRating = dictionary["rating"] as? String {
+            rating = tempRating
+        }
+        
+        var dictReviews:NSDictionary = ["reviews" : dictionary]
+        
+        if let val: AnyObject = dictReviews["reviews"] {
+            var reviewArray: NSArray = dictReviews["reviews"] as! NSArray
+            
+            for (index, review) in enumerate(reviewArray) {
+                let reviewDictionary: NSDictionary = review as! NSDictionary
+                let productReviewModel: ProductReviewsModel = ProductReviewsModel.parseProductReviesModel(reviewDictionary)
+                productReviews.append(productReviewModel)
+            }
+        }
+        
+        let sellerModel: SellerModel = SellerModel(rating: rating, product_reviews: productReviews)
+        return sellerModel
+        
     }
 }
