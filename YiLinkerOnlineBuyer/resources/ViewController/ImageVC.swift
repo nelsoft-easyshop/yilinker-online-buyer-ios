@@ -17,6 +17,9 @@ class ImageVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
     @IBOutlet weak var imageView: UIImageView!
     var newMedia : Bool?
     
+    var sender : W_Contact?
+    var recipient : W_Contact?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         takePhoto()
@@ -56,19 +59,47 @@ class ImageVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
         manager.POST(url, parameters: parameters, constructingBodyWithBlock: { (data: AFMultipartFormData) -> Void in
                 data.appendPartWithFormData(imageData, name: "image")
             }, success: { (task : NSURLSessionDataTask!, responseObject: AnyObject!) -> Void in
-            //do something
+            SVProgressHUD.dismiss()
             }) { (task : NSURLSessionDataTask!, error: NSError!) -> Void in
-            //do something
+            SVProgressHUD.dismiss()
         }
+        
+        
+    }
+    
+    func sendMessage(url : String){
+        SVProgressHUD.show()
+        
+        let manager: APIManager = APIManager.sharedInstance
+        manager.requestSerializer = AFHTTPRequestSerializer()
+        
+        var recipientId = recipient?.userId ?? ""
+        
+        let parameters: NSDictionary = [
+            "message"       : "\(url)",
+            "recipientId"  : "\(recipientId)",
+            "is_image"      : "0",
+            "access_token"  : SessionManager.accessToken()
+            ]   as Dictionary<String, String>
+        
+        println(parameters)
+        
+        let url = APIAtlas.baseUrl + APIAtlas.ACTION_SEND_MESSAGE
         
         manager.POST(url, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
+            println(responseObject)
+            SVProgressHUD.dismiss()
+            
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 
+                println(error.description)
+                
                 SVProgressHUD.dismiss()
         })
+
     }
 
     func takePhoto(){

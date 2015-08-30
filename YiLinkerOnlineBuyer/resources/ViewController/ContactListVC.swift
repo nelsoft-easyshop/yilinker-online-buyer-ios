@@ -26,9 +26,15 @@ class ContactListVC: UIViewController {
     var selectedContact : W_Contact?
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        println(sender)
         if (segue.identifier == messageThreadSegueIdentifier){
+            println("PREPARE FOR SEGUE CONTACT")
             var messageThreadVC = segue.destinationViewController as! MessageThreadVC
-            messageThreadVC.sender = W_Contact(fullName: "Jan Dennis Nora", userRegistrationIds: "", userIdleRegistrationIds: "", userId: "2", profileImageUrl: "http://online.api.easydeal.ph/assets/images/uploads/users/4292229bce95d32748bf08b642f0a070a70bc194.png?", isOnline: "1")
+            
+            let indexPath = contactTableView.indexPathForCell(sender as! ContactListTVC)
+            selectedContact = contacts[indexPath!.row]
+
+            messageThreadVC.sender = W_Contact(fullName: "Jan Dennis Nora", userRegistrationIds: "", userIdleRegistrationIds: "", userId: "5", profileImageUrl: "http://online.api.easydeal.ph/assets/images/uploads/users/4292229bce95d32748bf08b642f0a070a70bc194.png?", isOnline: "1")
             messageThreadVC.recipient = selectedContact
             
         }
@@ -129,7 +135,6 @@ extension ContactListVC : UITableViewDataSource, UITableViewDelegate{
     
     func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        selectedContact = contacts[indexPath.row]
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {

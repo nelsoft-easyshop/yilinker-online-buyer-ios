@@ -50,6 +50,20 @@ class MessageThreadVC: UIViewController {
     let receiverImageIndentifier = "MessageBubbleImageReceiver"
     let senderImageIndentifier = "MessageBubbleImageSender"
     
+    let uploadImageSegueIdentifier = "upload_image"
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        println(sender)
+        if (segue.identifier == uploadImageSegueIdentifier){
+            println("PREPARE FOR SEGUE CONTACT")
+            var messageThreadVC = segue.destinationViewController as! MessageThreadVC
+
+            messageThreadVC.sender = self.sender
+            messageThreadVC.recipient = self.recipient
+            
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         var ref = W_Messages()
@@ -209,7 +223,7 @@ class MessageThreadVC: UIViewController {
         }
     }
     
-    @IBAction func onSend(sender: UIButton) {
+    @IBAction func onSend(senderButton: UIButton) {
         SVProgressHUD.show()
         
         let manager: APIManager = APIManager.sharedInstance
@@ -219,26 +233,37 @@ class MessageThreadVC: UIViewController {
         var lastMessage = composeTextView.text
         
         let parameters: NSDictionary = [
-            "message"       : lastMessage,
-            "recipient_id"  : recipientId,
+            "message"       : "\(lastMessage)",
+            "recipientId"  : "\(recipientId)",
             "is_image"      : "0",
             "access_token"  : SessionManager.accessToken()
             ]   as Dictionary<String, String>
+        
+        println(parameters)
         
         let url = APIAtlas.baseUrl + APIAtlas.ACTION_SEND_MESSAGE
         
         manager.POST(url, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
+            var senderId = self.sender?.userId ?? ""
+            var dateSeen : NSDate? = NSDate()
+            
+            self.messages.append(W_Messages(message_id: 0, senderId: senderId, recipientId: recipientId, message: lastMessage, isImage: 0, timeSent: NSDate(), isSeen: 0, timeSeen: dateSeen!))
+            
+            self.threadTableView.reloadData()
+            
+            println(responseObject)
+            SVProgressHUD.dismiss()
+            
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
+                
+                println(error.description)
                 
                 SVProgressHUD.dismiss()
         })
         
-        var senderId = sender?.userId ?? ""
-        
-        messages.append(W_Messages(message_id: "0", senderId: senderId, recipientId: recipientId, message: temp, isImage: "0", timeSent: NSDate(), isSeen: "0", timeSeen: nil))
     }
     
     func getMessagesFromEndpoint(
@@ -253,12 +278,13 @@ class MessageThreadVC: UIViewController {
             let parameters: NSDictionary = [
                 "page"          : "\(page)",
                 "limit"         : "\(limit)",
-                "userId"        : "", //get user id from somewhere
+                "userId"        : "\(userId)", //get user id from somewhere
                 "access_token"  : SessionManager.accessToken()
                 ]   as Dictionary<String, String>
             
             let url = APIAtlas.baseUrl + APIAtlas.ACTION_GET_CONVERSATION_MESSAGES
-            
+            println(url)
+            println(parameters)
             manager.POST(url, parameters: parameters, success: {
                 (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
                 self.messages = W_Messages.parseMessages(responseObject as! NSDictionary)
@@ -268,6 +294,7 @@ class MessageThreadVC: UIViewController {
                     (task: NSURLSessionDataTask!, error: NSError!) in
                     let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                     
+                    println("ERROR \(error.description)")
                     if !Reachability.isConnectedToNetwork() {
                         UIAlertController.displayNoInternetConnectionError(self)
                     } else {

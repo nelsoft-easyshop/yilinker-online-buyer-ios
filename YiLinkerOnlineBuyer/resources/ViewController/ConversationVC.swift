@@ -23,10 +23,26 @@ class ConversationVC: UIViewController {
     var offlineColor = UIColor(red: 218/255, green: 32/255, blue: 43/255, alpha: 1.0)
     var onlineColor = UIColor(red: 84/255, green: 182/255, blue: 167/255, alpha: 1.0)
     
+    var selectedContact : W_Contact?
+    let messageThreadSegueIdentifier = "message_thread"
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        println(sender)
+        if (segue.identifier == messageThreadSegueIdentifier){
+            var messageThreadVC = segue.destinationViewController as! MessageThreadVC
+            let indexPath = conversationTableView.indexPathForCell(sender as! ConversationTVC)
+            selectedContact = conversations[indexPath!.row].contact
+
+            messageThreadVC.sender = W_Contact(fullName: "Jan Dennis Nora", userRegistrationIds: "", userIdleRegistrationIds: "", userId: "5", profileImageUrl: "http://online.api.easydeal.ph/assets/images/uploads/users/4292229bce95d32748bf08b642f0a070a70bc194.png?", isOnline: "1")
+            messageThreadVC.recipient = selectedContact
+            
+        }
+    }
+    
     override func viewDidLoad() {
         var test = W_Conversation()
-        //conversations = test.testData()
-        //self.fireLogin()
+        conversations = test.testData()
+        self.fireLogin()
         self.getConversationsFromEndpoint("1", limit: "10")
         
         conversationTableView.tableFooterView = UIView(frame: CGRectZero)
@@ -141,6 +157,10 @@ class ConversationVC: UIViewController {
 
 extension ConversationVC : UITableViewDataSource{
     
+    func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+            }
+    
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1;
     }
@@ -179,7 +199,7 @@ extension ConversationVC : UITableViewDataSource{
             convoCell.user_thumbnail.layer.cornerRadius = convoCell.user_thumbnail.frame.width/2
             convoCell.user_thumbnail.layer.masksToBounds = true
             
-            convoCell.user_online.layer.borderWidth = 2.0
+            convoCell.user_online.layer.borderWidth = 1.0
             convoCell.user_online.layer.borderColor = UIColor.whiteColor().CGColor
             convoCell.user_online.layer.masksToBounds = true
             if (conversations[indexPath.row].contact.isOnline == "1"){

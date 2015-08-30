@@ -623,7 +623,7 @@
                                             <outlet property="user_name" destination="heX-7a-5AO" id="lyy-Nt-Q92"/>
                                             <outlet property="user_online" destination="PB6-Kx-Y4t" id="1bg-M1-OyM"/>
                                             <outlet property="user_thumbnail" destination="ovV-Va-vIg" id="k19-A7-44F"/>
-                                            <segue destination="ifm-Kz-QEU" kind="show" id="SXz-db-G0n"/>
+                                            <segue destination="ifm-Kz-QEU" kind="show" identifier="message_thread" id="SXz-db-G0n"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -1147,7 +1147,7 @@
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <segue destination="GvQ-Uw-TVR" kind="show" id="yZh-fo-qwz"/>
+                                            <segue destination="GvQ-Uw-TVR" kind="show" identifier="upload_image" id="yZh-fo-qwz"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -1422,6 +1422,6 @@
         <image name="wishlist" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Sa7-5j-xQc"/>
+        <segue reference="SXz-db-G0n"/>
     </inferredMetricsTieBreakers>
 </document>

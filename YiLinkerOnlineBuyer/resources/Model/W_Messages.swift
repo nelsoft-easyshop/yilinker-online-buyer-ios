@@ -30,7 +30,7 @@ class W_Messages: NSObject {
     var isImage    : NSNumber
     var timeSent   : NSDate
     var isSeen   : NSNumber
-    var timeSeen   : NSDate
+    var timeSeen   : NSDate?
     
     init(
         message_id : NSNumber,
@@ -82,7 +82,7 @@ class W_Messages: NSObject {
                     var isImage     : Int = 0
                     var timeSent    : String = ""
                     var isSeen      : Int = 0
-                    var timeSeen    : String = ""
+                    var timeSeen    : String = "2015-07-24 07:17:00"
                     
                     if let tempVar = contact["message_id"] as? Int {
                         message_id = tempVar
