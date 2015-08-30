@@ -66,6 +66,9 @@
                                     <color key="value" red="0.37647058820000001" green="0.37647058820000001" blue="0.37647058820000001" alpha="1" colorSpace="calibratedRGB"/>
                                 </userDefinedRuntimeAttribute>
                             </userDefinedRuntimeAttributes>
+                            <connections>
+                                <action selector="asBuyer" destination="-1" eventType="touchUpInside" id="9PY-tl-Zuf"/>
+                            </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M6I-Pp-8uE" customClass="DynamicRoundedButton" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
                             <rect key="frame" x="49" y="54" width="120" height="30"/>
@@ -87,6 +90,9 @@
                                     <real key="value" value="1"/>
                                 </userDefinedRuntimeAttribute>
                             </userDefinedRuntimeAttributes>
+                            <connections>
+                                <action selector="asSeller" destination="-1" eventType="touchUpInside" id="3pF-ZJ-Iwg"/>
+                            </connections>
                         </button>
                         <tableView contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="U8v-F3-mgJ">
                             <rect key="frame" x="0.0" y="240" width="375" height="177"/>
@@ -252,6 +258,7 @@
                                     </constraints>
                                 </view>
                             </subviews>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstItem="FiL-TI-0MD" firstAttribute="leading" secondItem="duf-5x-53L" secondAttribute="trailing" constant="8" id="1ZL-BG-6OS"/>
                                 <constraint firstAttribute="bottom" secondItem="FiL-TI-0MD" secondAttribute="bottom" constant="27" id="Bdd-iu-tuW"/>

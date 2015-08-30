@@ -39,6 +39,27 @@ class ViewFeedBackViewController: UIViewController, UITableViewDelegate, UITable
     @IBAction func closeAction() {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
+    
+    @IBAction func asSeller(){
+        asSellerButton.backgroundColor = Constants.Colors.appTheme
+        asSellerButton.borderColor = UIColor.clearColor()
+        asSellerButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+        
+        asBuyerButton.layer.borderColor = Constants.Colors.grayLine.CGColor
+        asBuyerButton.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
+        asBuyerButton.backgroundColor = UIColor.clearColor()
+    }
+    
+    @IBAction func asBuyer(){
+        asBuyerButton.backgroundColor = Constants.Colors.appTheme
+        asBuyerButton.borderColor = UIColor.clearColor()
+        asBuyerButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+
+        asSellerButton.layer.borderColor = Constants.Colors.grayLine.CGColor
+        asSellerButton.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
+        asSellerButton.backgroundColor = UIColor.clearColor()
+        
+    }
     func registerNibs() {
         let ratingAndReview: UINib = UINib(nibName: "ReviewTableViewCell", bundle: nil)
         self.ratingAndReviewsTableView.registerNib(ratingAndReview, forCellReuseIdentifier: reviewTableViewCellIdentifier)
