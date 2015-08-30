@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol ReviewTableViewCellDelegate{
+    
+}
+
 class ReviewTableViewCell: UITableViewCell {
 
     @IBOutlet weak var displayPictureImageView: UIImageView!
@@ -18,6 +22,8 @@ class ReviewTableViewCell: UITableViewCell {
     @IBOutlet weak var rateImageView3: UIImageView!
     @IBOutlet weak var rateImageView4: UIImageView!
     @IBOutlet weak var rateImageView5: UIImageView!
+    
+    var delegate: ReviewTableViewCellDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()

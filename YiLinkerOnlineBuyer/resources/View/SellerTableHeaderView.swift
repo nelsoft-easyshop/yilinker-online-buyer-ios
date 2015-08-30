@@ -39,17 +39,6 @@ class SellerTableHeaderView: UIView {
     }
     
     @IBAction func feedBack(sender: AnyObject) {
-        if self.viewFeedbackButton.selected {
-            self.viewFeedbackButton.selected = false
-            self.viewFeedbackButton.backgroundColor = Constants.Colors.appTheme
-            self.viewFeedbackButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
-            self.viewFeedbackButton.borderColor = UIColor.clearColor()
-        } else {
-            self.viewFeedbackButton.selected = true
-            self.viewFeedbackButton.layer.borderColor = Constants.Colors.grayLine.CGColor
-            self.viewFeedbackButton.setTitleColor(Constants.Colors.grayLine, forState: UIControlState.Normal)
-            self.viewFeedbackButton.backgroundColor = UIColor.clearColor()
-        }
         
         self.delegate?.sellerTableHeaderViewDidViewFeedBack()
     }
