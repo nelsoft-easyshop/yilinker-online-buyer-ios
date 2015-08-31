@@ -15,7 +15,7 @@ class AddressModelV2 {
     var title: String = ""
     var unitNumber: String = ""
     var buildingName: String = ""
-    var streetNumber: Int = 0
+    var streetNumber: String = ""
     var streetName: String = ""
     var subdivision: String = ""
     var zipCode: String = ""
@@ -70,7 +70,7 @@ class AddressModelV2 {
             
             if let value: AnyObject = reviews["streetNumber"] {
                 if value as! NSObject != NSNull() {
-                    model.streetNumber = value as! Int
+                    model.streetNumber = value as! String
                 }
             }
             
