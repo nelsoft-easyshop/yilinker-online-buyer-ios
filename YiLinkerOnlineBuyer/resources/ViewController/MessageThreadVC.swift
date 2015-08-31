@@ -56,10 +56,10 @@ class MessageThreadVC: UIViewController {
         println(sender)
         if (segue.identifier == uploadImageSegueIdentifier){
             println("PREPARE FOR SEGUE CONTACT")
-            var messageThreadVC = segue.destinationViewController as! MessageThreadVC
+            var imageVC = segue.destinationViewController as! ImageVC
 
-            messageThreadVC.sender = self.sender
-            messageThreadVC.recipient = self.recipient
+            imageVC.sender = self.sender
+            imageVC.recipient = self.recipient
             
         }
     }

@@ -46,21 +46,24 @@ class ImageVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
     
     func sendImageByFile(){
         let manager: APIManager = APIManager.sharedInstance
-        manager.requestSerializer = AFHTTPRequestSerializer()
-        
+        //manager.requestSerializer = AFHTTPRequestSerializer()
+        /*
         let parameters: NSDictionary = [
             "access_token"  : SessionManager.accessToken()
             ]   as Dictionary<String, String>
-        
-        let url = APIAtlas.baseUrl + APIAtlas.ACTION_SEND_MESSAGE
+        */
+        let url = APIAtlas.baseUrl + APIAtlas.ACTION_IMAGE_ATTACH + "?access_token=\(SessionManager.accessToken())"
         
         var imageData : NSData = UIImageJPEGRepresentation(imageView.image, 0.5)
         
-        manager.POST(url, parameters: parameters, constructingBodyWithBlock: { (data: AFMultipartFormData) -> Void in
+        //println(parameters)
+        manager.POST(url, parameters: nil, constructingBodyWithBlock: { (data: AFMultipartFormData) -> Void in
                 data.appendPartWithFormData(imageData, name: "image")
             }, success: { (task : NSURLSessionDataTask!, responseObject: AnyObject!) -> Void in
+                println(responseObject)
             SVProgressHUD.dismiss()
             }) { (task : NSURLSessionDataTask!, error: NSError!) -> Void in
+                println(error.description)
             SVProgressHUD.dismiss()
         }
         

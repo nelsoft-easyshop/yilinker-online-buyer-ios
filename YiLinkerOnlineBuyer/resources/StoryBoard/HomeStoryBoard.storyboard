@@ -665,7 +665,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0pa-Of-jeR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2955" y="-975"/>
+            <point key="canvasLocation" x="-4021" y="-996"/>
         </scene>
         <!--Message ThreadVC-->
         <scene sceneID="aFQ-GK-T59">
@@ -1115,7 +1115,7 @@
                                             <action selector="onSend:" destination="ifm-Kz-QEU" eventType="touchUpInside" id="Fn4-ba-sID"/>
                                         </connections>
                                     </button>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="top" text="Type Your Message" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="54Z-Wb-E1y">
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="top" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="54Z-Wb-E1y">
                                         <rect key="frame" x="56" y="8" width="441" height="34"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
@@ -1147,7 +1147,7 @@
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <segue destination="GvQ-Uw-TVR" kind="show" identifier="upload_image" id="yZh-fo-qwz"/>
+                                            <segue destination="GvQ-Uw-TVR" kind="show" identifier="" id="yZh-fo-qwz"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -1196,7 +1196,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UYT-Ji-JKd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2039" y="-975"/>
+            <point key="canvasLocation" x="-3105" y="-996"/>
         </scene>
         <!--ImageVC-->
         <scene sceneID="sxO-zA-qQK">
@@ -1259,12 +1259,23 @@
                                     <constraint firstItem="Ajk-yh-O9i" firstAttribute="leading" secondItem="Gqj-1H-KFY" secondAttribute="leading" constant="8" id="xzj-j1-X0z"/>
                                 </constraints>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7KA-jH-qaw">
+                                <rect key="frame" x="548" y="28" width="36" height="30"/>
+                                <state key="normal" title="Send">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="sendImage:" destination="GvQ-Uw-TVR" eventType="touchUpInside" id="OzE-D7-394"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="Gqj-1H-KFY" firstAttribute="leading" secondItem="qEz-lx-UR4" secondAttribute="leading" id="0xr-C1-YaB"/>
+                            <constraint firstItem="7KA-jH-qaw" firstAttribute="trailing" secondItem="qEz-lx-UR4" secondAttribute="trailingMargin" id="fXF-zN-Gma"/>
                             <constraint firstItem="20h-2i-hut" firstAttribute="leading" secondItem="Gqj-1H-KFY" secondAttribute="leading" id="hBn-hi-0K6"/>
                             <constraint firstItem="WIR-GJ-KKU" firstAttribute="top" secondItem="Gqj-1H-KFY" secondAttribute="bottom" id="iY2-lF-Bkb"/>
+                            <constraint firstItem="7KA-jH-qaw" firstAttribute="top" secondItem="JwQ-RB-7Nf" secondAttribute="bottom" constant="8" id="oTM-L8-w5M"/>
                             <constraint firstAttribute="trailing" secondItem="Gqj-1H-KFY" secondAttribute="trailing" id="onY-M5-Weq"/>
                             <constraint firstItem="20h-2i-hut" firstAttribute="trailing" secondItem="Gqj-1H-KFY" secondAttribute="trailing" id="vv6-5d-WDY"/>
                             <constraint firstItem="WIR-GJ-KKU" firstAttribute="top" secondItem="20h-2i-hut" secondAttribute="bottom" constant="49" id="yGd-vW-iou"/>
@@ -1278,7 +1289,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EkG-so-3g2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2039" y="-233"/>
+            <point key="canvasLocation" x="-3105" y="-254"/>
         </scene>
         <!--Contact ListVC-->
         <scene sceneID="XKI-8M-tX6">
@@ -1409,7 +1420,7 @@
                     </connections>
                 </searchDisplayController>
             </objects>
-            <point key="canvasLocation" x="-2963" y="-233"/>
+            <point key="canvasLocation" x="-4029" y="-254"/>
         </scene>
     </scenes>
     <resources>
@@ -1422,6 +1433,6 @@
         <image name="wishlist" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="SXz-db-G0n"/>
+        <segue reference="Sa7-5j-xQc"/>
     </inferredMetricsTieBreakers>
 </document>

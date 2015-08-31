@@ -41,7 +41,7 @@ class ConversationVC: UIViewController {
     
     override func viewDidLoad() {
         var test = W_Conversation()
-        conversations = test.testData()
+        //conversations = test.testData()
         self.fireLogin()
         self.getConversationsFromEndpoint("1", limit: "10")
         
