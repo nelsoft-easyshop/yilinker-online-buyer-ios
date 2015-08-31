@@ -44,6 +44,7 @@ class ConversationVC: UIViewController {
         //conversations = test.testData()
         self.fireLogin()
         self.getConversationsFromEndpoint("1", limit: "10")
+        self.placeCustomBackImage()
         
         conversationTableView.tableFooterView = UIView(frame: CGRectZero)
         
@@ -76,7 +77,24 @@ class ConversationVC: UIViewController {
 
         
     }
-
+    
+    func placeCustomBackImage(){
+        var backImage = UIImage(named: "left.png")
+        UIGraphicsBeginImageContextWithOptions(CGSize(width: 12.0, height: 24.0), false, 0.0)
+        backImage?.drawInRect(CGRectMake(0, 0, 12, 24))
+        
+        var tempImage : UIImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        var backItem = UIBarButtonItem(image: tempImage, style: UIBarButtonItemStyle.Plain, target: self, action: Selector("goBack"))
+        
+        self.navigationItem.setLeftBarButtonItem(backItem, animated: true)
+    }
+    
+    func goBack(){
+        self.navigationController?.popViewControllerAnimated(true)
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
