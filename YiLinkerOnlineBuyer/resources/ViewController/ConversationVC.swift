@@ -92,7 +92,7 @@ class ConversationVC: UIViewController {
     }
     
     func goBack(){
-        self.navigationController?.popViewControllerAnimated(true)
+        self.navigationController?.dismissViewControllerAnimated(true, completion: nil)
     }
     
     override func didReceiveMemoryWarning() {
