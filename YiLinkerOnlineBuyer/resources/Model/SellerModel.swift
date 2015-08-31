@@ -31,6 +31,12 @@ class SellerModel: NSObject {
     var store_description = ""
     var is_allowed: Bool = false
     
+    //For feed back seller reviews
+    var rating: String = ""
+    var image_url: NSURL = NSURL(string: "")!
+    var user_rating: String = ""
+    var message: String = ""
+    
     init(name: String, avatar: NSURL, specialty: String, target: String, products: [HomePageProductModel]) {
         self.name = name
         self.avatar = avatar
@@ -69,6 +75,11 @@ class SellerModel: NSObject {
         self.is_allowed = is_allowed
         self.products = products
         self.reviews = reviews
+    }
+    
+    init(rating : String, product_reviews: [ProductReviewsModel]){
+        self.reviews = product_reviews
+        self.rating = rating
     }
     
     class func parseSellerDataFromDictionary(dictionary: NSDictionary) -> SellerModel {
@@ -163,10 +174,14 @@ class SellerModel: NSObject {
             }
             
             var myArrayOfDictProducts: NSArray = [
+
                 ["name": "Nike",
                     "image": "http://www.dividend.com/assets/dividend/nke/nike-shoes-bb098f57129e558e1cdf393c308987bf.jpg",
                     "target": "nike1",
                     "targetType": ""]
+                ,
+                ["name": "Nike", "image": "http://www.dividend.com/assets/dividend/nke/nike-shoes-bb098f57129e558e1cdf393c308987bf.jpg", "target": "nike1", "targetType": ""]
+
                 , ["name": "vans shoes",
                     "image": "http://content.nike.com/content/dam/one-nike/en_us/season-2013-ho/Shop/NIKEiD/NIKEiD_P2_Basketball_20131112_FILT.jpg.transform/full-screen/image.jpg",
                     "target": "",
@@ -208,6 +223,7 @@ class SellerModel: NSObject {
                     "imageUrl": "https://c2.staticflickr.com/4/3382/3545724212_986ae8f5f9.jpg",
                     "rating": 2,
                     "message": "The item is damaged!"]
+
             ]
             
             var dictReviews:NSDictionary = ["reviews" : myArrayOfDictRatings]
@@ -325,5 +341,31 @@ class SellerModel: NSObject {
             let sellerModel: SellerModel = SellerModel(name: name, avatar: avatar, specialty: specialty, target: target, products: homePageProductModels)
             return sellerModel
         }
+    }
+    
+    class func parseSellerReviewsDataFromDictionary(dictionary: NSDictionary) -> SellerModel {
+        
+        var rating: String = ""
+         var productReviews: [ProductReviewsModel] = [ProductReviewsModel]()
+        
+        if let tempRating = dictionary["rating"] as? String {
+            rating = tempRating
+        }
+        
+        var dictReviews:NSDictionary = ["reviews" : dictionary]
+        
+        if let val: AnyObject = dictReviews["reviews"] {
+            var reviewArray: NSArray = dictReviews["reviews"] as! NSArray
+            
+            for (index, review) in enumerate(reviewArray) {
+                let reviewDictionary: NSDictionary = review as! NSDictionary
+                let productReviewModel: ProductReviewsModel = ProductReviewsModel.parseProductReviesModel(reviewDictionary)
+                productReviews.append(productReviewModel)
+            }
+        }
+        
+        let sellerModel: SellerModel = SellerModel(rating: rating, product_reviews: productReviews)
+        return sellerModel
+        
     }
 }

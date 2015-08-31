@@ -39,28 +39,11 @@ class SellerTableHeaderView: UIView {
     }
     
     @IBAction func feedBack(sender: AnyObject) {
-        self.viewFeedbackButton.backgroundColor = Constants.Colors.appTheme
-        self.viewFeedbackButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
-        self.viewFeedbackButton.borderColor = UIColor.clearColor()
-        
-        self.followButton.layer.borderColor = Constants.Colors.grayLine.CGColor
-        self.followButton.setTitleColor(Constants.Colors.grayLine, forState: UIControlState.Normal)
-        self.followButton.backgroundColor = UIColor.clearColor()
-        self.followButton.setTitle("FOLLOW", forState: UIControlState.Normal)
         
         self.delegate?.sellerTableHeaderViewDidViewFeedBack()
     }
     
     @IBAction func follow(sender: AnyObject) {
-        self.followButton.backgroundColor = Constants.Colors.appTheme
-        self.followButton.borderColor = UIColor.clearColor()
-        self.followButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
-        self.followButton.setTitle("FOLLOWING", forState: UIControlState.Normal)
-        
-        self.viewFeedbackButton.layer.borderColor = Constants.Colors.grayLine.CGColor
-        self.viewFeedbackButton.setTitleColor(Constants.Colors.grayLine, forState: UIControlState.Normal)
-        self.viewFeedbackButton.backgroundColor = UIColor.clearColor()
-        
         self.delegate?.sellerTableHeaderViewDidFollow()
     }
     

@@ -716,12 +716,15 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     func gotoCheckoutFromAttributes(controller: ProductAttributeViewController) {
         if SessionManager.isLoggedIn() {
             let checkout = CheckoutContainerViewController(nibName: "CheckoutContainerViewController", bundle: nil)
-            //self.navigationController?.pushViewController(checkout, animated: true)
             let navigationController: UINavigationController = UINavigationController(rootViewController: checkout)
             navigationController.navigationBar.barTintColor = Constants.Colors.appTheme
             self.tabBarController?.presentViewController(navigationController, animated: true, completion: nil)
         } else {
-            showAlert(title: "Goto Guest Checkout", message: nil)
+            let checkout = GuestCheckoutContainerViewController(nibName: "GuestCheckoutContainerViewController", bundle: nil)
+            //self.navigationController?.pushViewController(checkout, animated: true)
+            let navigationController: UINavigationController = UINavigationController(rootViewController: checkout)
+            navigationController.navigationBar.barTintColor = Constants.Colors.appTheme
+            self.tabBarController?.presentViewController(navigationController, animated: true, completion: nil)
         }
     }
     

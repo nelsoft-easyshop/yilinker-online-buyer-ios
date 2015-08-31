@@ -24,9 +24,8 @@ struct APIEnvironment {
 }
 
 struct APIAtlas {
-    
-    static let loginUrl = "login"
     static let refreshTokenUrl = "login"
+    static let loginUrl = "login"
     static let registerUrl = "user/register"
     static let getUserInfoUrl = "auth/user/getUser"
     static let homeUrl = "home/getData"
@@ -38,6 +37,9 @@ struct APIAtlas {
     static let productReviewUrl = "v1/product-review"
     static let productPageUrl = "v1/get-product"
     static let getSellerInfo = "user/getStoreInfo"
+    static let followSeller = "auth/followSeller"
+    static let unfollowSeller = "auth/unfollowSeller"
+    static let sellerReview = "seller/getReviews"
     static let searchUrl = "product/getSearchKeywords"
     static let profileUrl = "auth/user/getUser"
     static let editProfileUrl = "auth/user/editProfile"
@@ -61,4 +63,5 @@ class APIManager: AFHTTPSessionManager {
         
         return Static.instance!
     }
+
 }
