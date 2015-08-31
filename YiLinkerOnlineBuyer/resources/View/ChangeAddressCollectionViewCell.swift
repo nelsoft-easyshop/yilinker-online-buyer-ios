@@ -14,10 +14,13 @@ protocol ChangeAddressCollectionViewCellDelegate {
 
 class ChangeAddressCollectionViewCell: UICollectionViewCell {
 
+    @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var checkBoxButton: SemiRoundedButton!
     @IBOutlet weak var deleteButton: UIButton!
     var delegate: ChangeAddressCollectionViewCellDelegate?
 
+    @IBOutlet weak var addressLabel: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

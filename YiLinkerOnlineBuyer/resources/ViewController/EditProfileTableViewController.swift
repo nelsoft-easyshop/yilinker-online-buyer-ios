@@ -8,7 +8,9 @@
 
 import UIKit
 
-class EditProfileTableViewController: UITableViewController, UINavigationControllerDelegate, EditProfileAddPhotoTableViewCellDelegate, EditProfileAddressTableViewCellDelegate, EditProfileAccountInformationTableViewCellDelegate, UIImagePickerControllerDelegate, UIActionSheetDelegate  {
+class EditProfileTableViewController: UITableViewController, UINavigationControllerDelegate, EditProfileAddPhotoTableViewCellDelegate, EditProfileAddressTableViewCellDelegate, EditProfileAccountInformationTableViewCellDelegate, UIImagePickerControllerDelegate, UIActionSheetDelegate, EditProfilePersonalInformationTableViewCellDelegate  {
+    
+    let manager = APIManager.sharedInstance
     
     let addPhotoCellIndetifier: String = "EditProfileAddPhotoTableViewCell"
     let personalInfoCellIdentifier: String = "EditProfilePersonalInformationTableViewCell"
@@ -24,6 +26,16 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
     var personalIndexPath: NSIndexPath?
     var addressIndexPath: NSIndexPath?
     var accountIndexPath: NSIndexPath?
+    
+    var profileUserDetailsModel: ProfileUserDetailsModel!
+    
+    var firstName: String = ""
+    var lastName: String = ""
+    var mobileNumber: String = ""
+    var emailAddress: String = ""
+    var password: String = ""
+    
+    var imageData: NSData?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,6 +61,14 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
         
         var tapTableView = UITapGestureRecognizer(target:self, action:"hideKeyboard")
         self.tableView.addGestureRecognizer(tapTableView)
+    }
+    
+    func passModel(profileModel: ProfileUserDetailsModel){
+        profileUserDetailsModel = profileModel
+        firstName = profileModel.firstName
+        lastName = profileModel.lastName
+        mobileNumber = profileModel.contactNumber
+        emailAddress = profileModel.email
     }
     
     func titleView() {
@@ -106,19 +126,28 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
             let cell = tableView.dequeueReusableCellWithIdentifier(addPhotoCellIndetifier, forIndexPath: indexPath) as! EditProfileAddPhotoTableViewCell
             cell.delegate = self
             
+            cell.profileImageView.sd_setImageWithURL(NSURL(string: profileUserDetailsModel.profileImageUrl), placeholderImage: UIImage(named: "dummy-placeholder"))
+            
+            if profileUserDetailsModel.profileImageUrl.isNotEmpty() {
+                cell.profileImageView.hidden = false
+                cell.addPhotoLabel.text = "Edit Photo"
+            }
+            
             photoIndexPath = indexPath
             
             return cell
         } else if indexPath.row == 1 {
             let cell = tableView.dequeueReusableCellWithIdentifier(personalInfoCellIdentifier, forIndexPath: indexPath) as! EditProfilePersonalInformationTableViewCell
-            
+            cell.firstNameTextField.text = profileUserDetailsModel.firstName
+            cell.lastNameTextField.text = profileUserDetailsModel.lastName
+            cell.mobilePhoneTextField.text = profileUserDetailsModel.contactNumber
+            cell.delegate = self
             personalIndexPath = indexPath
             
             return cell
         } else if indexPath.row == 2 {
             let cell = tableView.dequeueReusableCellWithIdentifier(addressCellIdentifier, forIndexPath: indexPath) as! EditProfileAddressTableViewCell
             cell.delegate = self
-            
             addressIndexPath = indexPath
             
             return cell
@@ -126,7 +155,7 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
             let cell = tableView.dequeueReusableCellWithIdentifier(accountCellIdentifier, forIndexPath: indexPath) as! EditProfileAccountInformationTableViewCell
             cell.delegate = self
             accountIndexPath = indexPath
-            
+            cell.emailAddressTextField.text = profileUserDetailsModel.email
             return cell
         }
     }
@@ -248,6 +277,8 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
         addPhotoCell!.profileImageView.hidden = false
         addPhotoCell!.profileImageView.image = image
         addPhotoCell!.addPhotoLabel.text = "Edit Photo"
+        
+        imageData = UIImagePNGRepresentation(image)
     }
     
     func actionSheet(actionSheet: UIActionSheet, clickedButtonAtIndex buttonIndex: Int) {
@@ -287,43 +318,161 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
         self.view.endEditing(true)
     }
     
+    // MARK: - EditProfilePersonalInformationTableViewCellDelegate
+    func passPersonalInformation(firstName: String, lastName: String, mobileNumber: String) {
+        self.firstName = firstName
+        self.lastName = lastName
+        self.mobileNumber = mobileNumber
+    }
+    
     // MARK: - EditProfileAccountInformationTableViewCellDelegate
     func saveAction(sender: AnyObject) {
         println("saveAction")
         
         var errorMessage: String = ""
         
-        addPhotoCell = self.tableView.cellForRowAtIndexPath(photoIndexPath!) as? EditProfileAddPhotoTableViewCell
-        personalInfoCell = self.tableView.cellForRowAtIndexPath(personalIndexPath!) as? EditProfilePersonalInformationTableViewCell
-        addressCell = self.tableView.cellForRowAtIndexPath(addressIndexPath!) as? EditProfileAddressTableViewCell
-        accountCell = self.tableView.cellForRowAtIndexPath(accountIndexPath!) as? EditProfileAccountInformationTableViewCell
-        
-        let firstName = personalInfoCell?.firstNameTextField.text
-        let lastName = personalInfoCell?.lastNameTextField.text
-        let mobileNumber = personalInfoCell?.mobilePhoneTextField.text
-        let emailAddress = accountCell?.emailAddressTextField.text
-        let password = accountCell?.passwordTextField.text
-        
-        if !firstName!.isNotEmpty() {
+        /*
+        if firstName.isEmpty {
             errorMessage = "First name is required."
-        } else if !firstName!.isValidName() {
+        } else if firstName.isValidName() {
             errorMessage = "First name contains illegal characters. It can only contain letters, numbers and underscores."
-        } else if !lastName!.isNotEmpty() {
+        } else if lastName.isNotEmpty() {
             errorMessage = "Last name is required."
-        } else if !lastName!.isValidName() {
+        } else if lastName.isValidName() {
             errorMessage = "Last name contains illegal characters. It can only contain letters, numbers and underscores."
-        } else if !emailAddress!.isNotEmpty() {
+        } else if emailAddress.isNotEmpty() {
             errorMessage = "Email is required."
-        } else if !emailAddress!.isValidEmail() {
+        } else if emailAddress.isValidEmail() {
             errorMessage = "The email address you enter is not a valid email address."
-        } else if !password!.isNotEmpty() {
+        } else if password.isNotEmpty() {
             errorMessage = "Password is required."
-        } else if !password!.isAlphaNumeric() {
+        } else if password.isAlphaNumeric() {
             errorMessage = "Password contains illegal characters. It can only contain letters, numbers and underscores."
-        }
+        }*/
         
         if errorMessage != "" {
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorMessage)
+        } else {
+            if Reachability.isConnectedToNetwork(){
+                if imageData != nil{
+                    var params: NSDictionary = [
+                        "firstName": firstName as String,
+                        "lastName": lastName as String,
+                        "contactNumber": mobileNumber as String,
+                        "access_token": SessionManager.accessToken()]
+                    
+                    fireUpdateProfile(APIAtlas.editProfileUrl, params: params, withImage: true)
+                } else {
+                    var params: NSDictionary = [
+                        "firstName": firstName as String,
+                        "lastName": lastName as String,
+                        "profilePhoto": profileUserDetailsModel.profileImageUrl as String,
+                        "contactNumber": mobileNumber as String,
+                        "access_token": SessionManager.accessToken()]
+                    
+                    fireUpdateProfile(APIAtlas.editProfileUrl, params: params, withImage: false)
+                }
+                
+            }
+            else {
+                showAlert("Connection Unreachable", message: "Cannot retrieve data. Please check your internet connection.")
+            }
+        }
+            
+    }
+    
+    
+    func fireUpdateProfile(url: String, params: NSDictionary!, withImage: Bool) {
+        showLoader()
+        if withImage {
+            manager.POST(url, parameters: params, constructingBodyWithBlock: { (data: AFMultipartFormData!) in
+                println("")
+                data.appendPartWithFileData(self.imageData!, name: "profilePhoto", fileName: "photo", mimeType: "")
+                }, success: {
+                    (task: NSURLSessionDataTask!, responseObject: AnyObject!) in print(responseObject as! NSDictionary)
+                    if responseObject.objectForKey("error") != nil {
+                        self.requestRefreshToken("updateProfile", url: url, params: params, withImage: withImage)
+                    }
+                    self.dismissLoader()
+                    self.showAlert("Success", message: "Successfully updated profile!")
+                }, failure: {
+                    (task: NSURLSessionDataTask!, error: NSError!) in
+                    self.showAlert("Error", message: "Something went wrong. . .")
+                    self.dismissLoader()
+                    println(error)
+            })
+        } else {
+            manager.POST(url, parameters: params, success: {
+                    (task: NSURLSessionDataTask!, responseObject: AnyObject!) in print(responseObject as! NSDictionary)
+                    if responseObject.objectForKey("error") != nil {
+                        self.requestRefreshToken("updateProfile", url: url, params: params, withImage: withImage)
+                    }
+                    self.dismissLoader()
+                    self.showAlert("Success", message: "Successfully updated profile!")
+                    println(responseObject)
+                }, failure: {
+                    (task: NSURLSessionDataTask!, error: NSError!) in
+                    self.showAlert("Error", message: "Something went wrong. . .")
+                    self.dismissLoader()
+                    println(error)
+            })
+        }
+        
+    }
+    
+    //Loader function
+    func showLoader() {
+        SVProgressHUD.show()
+        SVProgressHUD.setBackgroundColor(UIColor.whiteColor())
+    }
+    
+    func dismissLoader() {
+        SVProgressHUD.dismiss()
+    }
+    
+    func requestRefreshToken(type: String, url: String, params: NSDictionary!, withImage: Bool) {
+        let url: String = "http://online.api.easydeal.ph/api/v1/login"
+        let params: NSDictionary = ["client_id": Constants.Credentials.clientID,
+            "client_secret": Constants.Credentials.clientSecret,
+            "grant_type": Constants.Credentials.grantRefreshToken,
+            "refresh_token": SessionManager.refreshToken()]
+        
+        let manager = APIManager.sharedInstance
+            manager.POST(url, parameters: params, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            
+            SVProgressHUD.dismiss()
+            
+            if (responseObject["isSuccessful"] as! Bool) {
+                SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+                self.fireUpdateProfile(url, params: params, withImage: withImage)
+                
+            } else {
+                self.showAlert("Error", message: responseObject["message"] as! String)
+            }
+            
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                SVProgressHUD.dismiss()
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                
+                self.showAlert("Something went wrong", message: "")
+                
+        })
+    }
+    
+    func showAlert(title: String, message: String) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+        
+        let OKAction = UIAlertAction(title: "OK", style: .Default) { (action) in
+            alertController.dismissViewControllerAnimated(true, completion: nil)
+        }
+        
+        alertController.addAction(OKAction)
+        
+        self.presentViewController(alertController, animated: true) {
+            
         }
     }
+
 }

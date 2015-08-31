@@ -229,12 +229,9 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
         }
     }
     
-    func addBadge() {
-        if let badgeValue = (self.tabController.tabBar.items![4] as! UITabBarItem).badgeValue?.toInt() {
-            (self.tabController.tabBar.items![4] as! UITabBarItem).badgeValue = String(badgeValue + 1)
-        } else {
-            (self.tabController.tabBar.items![4] as! UITabBarItem).badgeValue = "1"
-        }
+    func addBadge(items: Int) {
+        let badgeValue = (self.tabController.tabBar.items![4] as! UITabBarItem).badgeValue?.toInt()
+        (self.tabController.tabBar.items![4] as! UITabBarItem).badgeValue = String(items)
     }
     
     // MARK: - Methods
@@ -369,8 +366,10 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
                 
                 if let tempVar = responseObject["isSuccessful"] as? Bool {
                     if tempVar {
+                        var data: NSDictionary = responseObject["data"] as! NSDictionary
+                        var items: NSArray = data["items"] as! NSArray
                         self.hideSelf("cart")
-                        self.addBadge()
+                        self.addBadge(items.count)
                     } else {
                         if let tempVar = responseObject["message"] as? String {
                             let alertController = UIAlertController(title: "Error", message: tempVar, preferredStyle: .Alert)

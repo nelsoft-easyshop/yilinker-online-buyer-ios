@@ -32,6 +32,7 @@ struct APIAtlas {
     static let cartUrl = "auth/cart/getCart"
     static let wishlistUrl = "auth/cart/getCart"
     static let updateWishlistUrl = "auth/cart/updateCartItem"
+    static let updateCartUrl = "auth/cart/updateCartItem"
     static let getSellerUrl = "v1/get-seller"
     static let productReviewUrl = "v1/product-review"
     static let productPageUrl = "v1/get-product"
@@ -39,6 +40,9 @@ struct APIAtlas {
     static let followSeller = "auth/followSeller"
     static let unfollowSeller = "auth/unfollowSeller"
     static let sellerReview = "seller/getReviews"
+    static let searchUrl = "product/getSearchKeywords"
+    static let profileUrl = "auth/user/getUser"
+    static let editProfileUrl = "auth/user/editProfile"
     static let baseUrl = APIEnvironment.baseUrl()
 }
 

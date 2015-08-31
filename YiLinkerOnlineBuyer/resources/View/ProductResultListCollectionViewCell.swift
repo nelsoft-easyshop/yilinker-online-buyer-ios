@@ -21,4 +21,24 @@ class ProductResultListCollectionViewCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
     }
+    
+    func setDiscount(text: String) {
+        discountLabel.text = text + "% OFF"
+    }
+    
+    func setProductName(text: String) {
+        productNameLabel.text = text
+    }
+    
+    func setOriginalPrice(text: String) {
+        originalPriceLabel.text = text
+    }
+    
+    func setNewPrice(text: String) {
+        newPriceLabel.text = text
+    }
+    
+    func setProductImage(text: String) {
+        productImageView.sd_setImageWithURL(NSURL(string: text), placeholderImage: UIImage(named: "dummy-placeholder"))
+    }
 }

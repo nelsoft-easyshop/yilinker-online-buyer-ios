@@ -248,6 +248,13 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, GIDSignIn
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                 
+                if error.userInfo != nil {
+                    if let jsonResult = error.userInfo as? Dictionary<String, AnyObject> {
+                        let errorDescription: String = jsonResult["error_description"] as! String
+                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorDescription)
+                    }
+                }
+                
                 if task.statusCode == 401 {
                     UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Mismatch username and password", title: "Login Failed")
                 } else {
