@@ -1,0 +1,32 @@
+From d539ba0d6890be3e3ffb27bf884dfab2655b43cc Mon Sep 17 00:00:00 2001
+From: jpChan15 <john.chan@easyshop.ph>
+Date: Sat, 29 Aug 2015 20:53:48 +0800
+Subject: [PATCH 21/27] Added valdation in wishlist if user is guest.
+
+---
+ .../resources/ViewController/HomeContainerViewController.swift   | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
+
+diff --git a/YiLinkerOnlineBuyer/resources/ViewController/HomeContainerViewController.swift b/YiLinkerOnlineBuyer/resources/ViewController/HomeContainerViewController.swift
+index 606c2a3..29887c8 100644
+--- a/YiLinkerOnlineBuyer/resources/ViewController/HomeContainerViewController.swift
++++ b/YiLinkerOnlineBuyer/resources/ViewController/HomeContainerViewController.swift
+@@ -81,7 +81,14 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
+             if SessionManager.isLoggedIn() {
+                 return true
+             } else {
+-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Please log in to view your cart", title: "Error")
++                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Please log in to view your Cart.", title: "Error")
++                return false
++            }
++        } else if viewController == tabBarController.viewControllers![3] as! UIViewController {
++            if SessionManager.isLoggedIn() {
++                return true
++            } else {
++                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Please log in to view your Wishlist.", title: "Error")
+                 return false
+             }
+         } else if self != viewController && viewController != tabBarController.viewControllers![2] as! UIViewController {
+-- 
+2.3.2 (Apple Git-55)
+

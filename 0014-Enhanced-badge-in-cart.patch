@@ -1,0 +1,44 @@
+From ba76fd2ea88e979315a6b80566a5443ef4556b7c Mon Sep 17 00:00:00 2001
+From: Rj <rj.constantino@easyshop.ph>
+Date: Sat, 29 Aug 2015 00:06:49 +0800
+Subject: [PATCH 14/27] Enhanced badge in cart.
+
+---
+ .../ViewController/ProductAttributeViewController.swift     | 13 ++++++-------
+ 1 file changed, 6 insertions(+), 7 deletions(-)
+
+diff --git a/YiLinkerOnlineBuyer/resources/ViewController/ProductAttributeViewController.swift b/YiLinkerOnlineBuyer/resources/ViewController/ProductAttributeViewController.swift
+index 9e78c01..07c5db9 100644
+--- a/YiLinkerOnlineBuyer/resources/ViewController/ProductAttributeViewController.swift
++++ b/YiLinkerOnlineBuyer/resources/ViewController/ProductAttributeViewController.swift
+@@ -229,12 +229,9 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
+         }
+     }
+     
+-    func addBadge() {
+-        if let badgeValue = (self.tabController.tabBar.items![4] as! UITabBarItem).badgeValue?.toInt() {
+-            (self.tabController.tabBar.items![4] as! UITabBarItem).badgeValue = String(badgeValue + 1)
+-        } else {
+-            (self.tabController.tabBar.items![4] as! UITabBarItem).badgeValue = "1"
+-        }
++    func addBadge(items: Int) {
++        let badgeValue = (self.tabController.tabBar.items![4] as! UITabBarItem).badgeValue?.toInt()
++        (self.tabController.tabBar.items![4] as! UITabBarItem).badgeValue = String(items)
+     }
+     
+     // MARK: - Methods
+@@ -369,8 +366,10 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
+                 
+                 if let tempVar = responseObject["isSuccessful"] as? Bool {
+                     if tempVar {
++                        var data: NSDictionary = responseObject["data"] as! NSDictionary
++                        var items: NSArray = data["items"] as! NSArray
+                         self.hideSelf("cart")
+-                        self.addBadge()
++                        self.addBadge(items.count)
+                     } else {
+                         if let tempVar = responseObject["message"] as? String {
+                             let alertController = UIAlertController(title: "Error", message: tempVar, preferredStyle: .Alert)
+-- 
+2.3.2 (Apple Git-55)
+

@@ -1,0 +1,24 @@
+From 221cf9f84073a100c07a721c1d87884f6769a510 Mon Sep 17 00:00:00 2001
+From: jpChan15 <john.chan@easyshop.ph>
+Date: Fri, 28 Aug 2015 14:08:30 +0800
+Subject: [PATCH 09/27] Fixed error in adding cart item from wishlist.
+
+---
+ .../resources/ViewController/WishlistViewController.swift                | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/YiLinkerOnlineBuyer/resources/ViewController/WishlistViewController.swift b/YiLinkerOnlineBuyer/resources/ViewController/WishlistViewController.swift
+index f76d373..3e116f1 100644
+--- a/YiLinkerOnlineBuyer/resources/ViewController/WishlistViewController.swift
++++ b/YiLinkerOnlineBuyer/resources/ViewController/WishlistViewController.swift
+@@ -243,7 +243,6 @@ class WishlistViewController: UIViewController, UITableViewDelegate, UITableView
+             let tempModel: WishlistProductDetailsModel = tableData[rowOfTheCell]
+             
+             var params: NSDictionary = ["access_token": SessionManager.accessToken(),
+-                "wishlist": "true",
+                 "productId": tempModel.id,
+                 "unitId": tempModel.unitId,
+                 "quantity": tempModel.quantity
+-- 
+2.3.2 (Apple Git-55)
+

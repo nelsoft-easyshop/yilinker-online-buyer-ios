@@ -1,0 +1,43 @@
+From 7c642ad21b5a8fcd06f4739778ff082a31a97cb6 Mon Sep 17 00:00:00 2001
+From: jpChan15 <john.chan@easyshop.ph>
+Date: Sat, 29 Aug 2015 14:02:27 +0800
+Subject: [PATCH 16/27] Resolved app crashes when retrieving cart data from
+ web.
+
+---
+ YiLinkerOnlineBuyer/resources/Model/CartProductDetailsModel.swift   | 6 ++++--
+ .../resources/ViewController/CartViewController.swift               | 1 +
+ 2 files changed, 5 insertions(+), 2 deletions(-)
+
+diff --git a/YiLinkerOnlineBuyer/resources/Model/CartProductDetailsModel.swift b/YiLinkerOnlineBuyer/resources/Model/CartProductDetailsModel.swift
+index 7096119..c6a186b 100644
+--- a/YiLinkerOnlineBuyer/resources/Model/CartProductDetailsModel.swift
++++ b/YiLinkerOnlineBuyer/resources/Model/CartProductDetailsModel.swift
+@@ -94,8 +94,10 @@ class CartProductDetailsModel {
+                 image = tempVar
+             }
+             
+-            if let tempVar = dictionary["images"] as? NSArray {
+-                images = tempVar as! [String]
++            for tempVar in dictionary["images"] as! NSArray {
++                if let temp = tempVar["imageLocation"] as? String {
++                    images.append(temp)
++                }
+             }
+             
+             if let tempVar = dictionary["shortDescription"] as? String {
+diff --git a/YiLinkerOnlineBuyer/resources/ViewController/CartViewController.swift b/YiLinkerOnlineBuyer/resources/ViewController/CartViewController.swift
+index 3580014..20a27bd 100644
+--- a/YiLinkerOnlineBuyer/resources/ViewController/CartViewController.swift
++++ b/YiLinkerOnlineBuyer/resources/ViewController/CartViewController.swift
+@@ -142,6 +142,7 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
+         self.updateCounterLabel()
+         self.calculateTotalPrice()
+         self.dismissLoader()
++       
+     }
+     
+     func updateCounterLabel() {
+-- 
+2.3.2 (Apple Git-55)
+

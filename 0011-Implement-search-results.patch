@@ -1,0 +1,479 @@
+From 6e74835de4f17be11748c959f053acb80d03f92f Mon Sep 17 00:00:00 2001
+From: jpChan15 <john.chan@easyshop.ph>
+Date: Fri, 28 Aug 2015 22:13:06 +0800
+Subject: [PATCH 11/27] Implement search results.
+
+---
+ YiLinkerOnlineBuyer.xcodeproj/project.pbxproj      |   4 +
+ .../resources/Model/SearchResultModel.swift        |  85 ++++++++++++++
+ .../resources/StoryBoard/HomeStoryBoard.storyboard |   2 +-
+ .../View/ProductResultGridCollectionViewCell.swift |  19 ++++
+ .../View/ProductResultListCollectionViewCell.swift |  20 ++++
+ .../ViewController/ResultViewController.swift      | 123 ++++++++++++++++++++-
+ .../ViewController/SearchViewController.swift      |  10 ++
+ .../resources/Xib/ResultViewController.xib         |   9 ++
+ 8 files changed, 270 insertions(+), 2 deletions(-)
+ create mode 100644 YiLinkerOnlineBuyer/resources/Model/SearchResultModel.swift
+
+diff --git a/YiLinkerOnlineBuyer.xcodeproj/project.pbxproj b/YiLinkerOnlineBuyer.xcodeproj/project.pbxproj
+index ba7fad8..74419da 100644
+--- a/YiLinkerOnlineBuyer.xcodeproj/project.pbxproj
++++ b/YiLinkerOnlineBuyer.xcodeproj/project.pbxproj
+@@ -302,6 +302,7 @@
+ 		79E85FD01B8A1FBD00428AA1 /* ActivityModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79E85FCF1B8A1FBD00428AA1 /* ActivityModel.swift */; };
+ 		79E85FD21B8A230500428AA1 /* ActivityLogHeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79E85FD11B8A230500428AA1 /* ActivityLogHeaderTableViewCell.xib */; };
+ 		79E8F1511B8FC1B8009CE450 /* ProfileUserDetailsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79E8F1501B8FC1B8009CE450 /* ProfileUserDetailsModel.swift */; };
++		79E8F1531B9035D9009CE450 /* SearchResultModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79E8F1521B9035D9009CE450 /* SearchResultModel.swift */; };
+ 		79F0DD9C1B7B17D500EB8053 /* CartModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F0DD9B1B7B17D500EB8053 /* CartModel.swift */; };
+ 		79F0DD9E1B7B24CB00EB8053 /* CartProductDetailsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F0DD9D1B7B24CB00EB8053 /* CartProductDetailsModel.swift */; };
+ 		79F2F5521B85795C00F57E4B /* WishlistModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F2F5511B85795C00F57E4B /* WishlistModel.swift */; };
+@@ -625,6 +626,7 @@
+ 		79E85FCF1B8A1FBD00428AA1 /* ActivityModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ActivityModel.swift; path = YiLinkerOnlineBuyer/resources/Model/ActivityModel.swift; sourceTree = SOURCE_ROOT; };
+ 		79E85FD11B8A230500428AA1 /* ActivityLogHeaderTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ActivityLogHeaderTableViewCell.xib; sourceTree = "<group>"; };
+ 		79E8F1501B8FC1B8009CE450 /* ProfileUserDetailsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProfileUserDetailsModel.swift; path = YiLinkerOnlineBuyer/resources/Model/ProfileUserDetailsModel.swift; sourceTree = SOURCE_ROOT; };
++		79E8F1521B9035D9009CE450 /* SearchResultModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SearchResultModel.swift; path = YiLinkerOnlineBuyer/resources/Model/SearchResultModel.swift; sourceTree = SOURCE_ROOT; };
+ 		79F0DD9B1B7B17D500EB8053 /* CartModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CartModel.swift; path = YiLinkerOnlineBuyer/resources/Model/CartModel.swift; sourceTree = SOURCE_ROOT; };
+ 		79F0DD9D1B7B24CB00EB8053 /* CartProductDetailsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CartProductDetailsModel.swift; path = YiLinkerOnlineBuyer/resources/Model/CartProductDetailsModel.swift; sourceTree = SOURCE_ROOT; };
+ 		79F2F5511B85795C00F57E4B /* WishlistModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WishlistModel.swift; path = YiLinkerOnlineBuyer/resources/Model/WishlistModel.swift; sourceTree = SOURCE_ROOT; };
+@@ -817,6 +819,7 @@
+ 				26C285451B8FEE42005EBD3A /* ProvinceModel.swift */,
+ 				26C285471B8FF546005EBD3A /* CityModel.swift */,
+ 				26C285491B8FF555005EBD3A /* BarangayModel.swift */,
++				79E8F1521B9035D9009CE450 /* SearchResultModel.swift */,
+ 			);
+ 			path = Model;
+ 			sourceTree = "<group>";
+@@ -1382,6 +1385,7 @@
+ 				0C9937501B750583000D6074 /* ProductitemWithVerticalDisplayCollectionViewCell.swift in Sources */,
+ 				0C9937711B75063B000D6074 /* AppDelegate.swift in Sources */,
+ 				0C374F521B89EC4D0050AE1D /* CustomizeSelectedCollectionViewCell.swift in Sources */,
++				79E8F1531B9035D9009CE450 /* SearchResultModel.swift in Sources */,
+ 				0CC8A63F1B7B9BF600C91425 /* ProfileViewController.swift in Sources */,
+ 				26D54FE71B86136300522398 /* TransactionTableViewCell.swift in Sources */,
+ 				0C2F44DC1B8583EF00021F45 /* CheckoutViews.swift in Sources */,
+diff --git a/YiLinkerOnlineBuyer/resources/Model/SearchResultModel.swift b/YiLinkerOnlineBuyer/resources/Model/SearchResultModel.swift
+new file mode 100644
+index 0000000..3a0e67e
+--- /dev/null
++++ b/YiLinkerOnlineBuyer/resources/Model/SearchResultModel.swift
+@@ -0,0 +1,85 @@
++//
++//  SearchResultModel.swift
++//  YiLinkerOnlineBuyer
++//
++//  Created by John Paul Chan on 8/28/15.
++//  Copyright (c) 2015 yiLinker-online-buyer. All rights reserved.
++//
++
++import UIKit
++
++class SearchResultModel: NSObject {
++   
++    var id: String = ""
++    var productName: String = ""
++    var originalPrice: String = ""
++    var newPrice: String = ""
++    var imageUrl: String = ""
++    var discount: Int = 0
++    var slug: String = ""
++    
++    init(id: String, productName: String, originalPrice: String, newPrice: String, imageUrl: String,discount: Int, slug: String){
++        self.id = id
++        self.productName = productName
++        self.originalPrice = originalPrice
++        self.newPrice = newPrice
++        self.imageUrl = imageUrl
++        self.discount = discount
++        self.slug = slug
++    }
++    
++    class func parseDataWithDictionary(dictionary: AnyObject) -> SearchResultModel {
++        var id: String = ""
++        var productName: String = ""
++        var originalPrice: String = ""
++        var newPrice: String = ""
++        var imageUrl: String = ""
++        var discount: Int = 0
++        var slug: String = ""
++        
++        if let value: AnyObject = dictionary["id"] {
++            if value as! NSObject != NSNull() {
++                id = value as! String
++            }
++        }
++        
++        if let value: AnyObject = dictionary["productName"] {
++            if value as! NSObject != NSNull() {
++                productName = value as! String
++            }
++        }
++        
++        if let value: AnyObject = dictionary["originalPrice"] {
++            if value as! NSObject != NSNull() {
++                originalPrice = value as! String
++            }
++        }
++        
++        if let value: AnyObject = dictionary["newPrice"] {
++            if value as! NSObject != NSNull() {
++                newPrice = value as! String
++            }
++        }
++        
++        if let value: AnyObject = dictionary["imageUrl"] {
++            if value as! NSObject != NSNull() {
++                imageUrl = value as! String
++            }
++        }
++        
++        if let value: AnyObject = dictionary["discount"] {
++            if value as! NSObject != NSNull() {
++                discount = value as! Int
++            }
++        }
++        
++        if let value: AnyObject = dictionary["slug"] {
++            if value as! NSObject != NSNull() {
++                slug = value as! String
++            }
++        }
++        
++        return SearchResultModel(id: id, productName: productName, originalPrice: originalPrice, newPrice: newPrice, imageUrl: imageUrl, discount: discount, slug: slug)
++    }
++
++}
+diff --git a/YiLinkerOnlineBuyer/resources/StoryBoard/HomeStoryBoard.storyboard b/YiLinkerOnlineBuyer/resources/StoryBoard/HomeStoryBoard.storyboard
+index 954d6d1..952e44a 100644
+--- a/YiLinkerOnlineBuyer/resources/StoryBoard/HomeStoryBoard.storyboard
++++ b/YiLinkerOnlineBuyer/resources/StoryBoard/HomeStoryBoard.storyboard
+@@ -282,7 +282,7 @@
+                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DP3-44-XbQ" userLabel="Counter View">
+                                 <rect key="frame" x="0.0" y="64" width="375" height="35"/>
+                                 <subviews>
+-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PGR-Y7-dO2">
++                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text=" " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PGR-Y7-dO2">
+                                         <rect key="frame" x="8" y="7" width="359" height="21"/>
+                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+diff --git a/YiLinkerOnlineBuyer/resources/View/ProductResultGridCollectionViewCell.swift b/YiLinkerOnlineBuyer/resources/View/ProductResultGridCollectionViewCell.swift
+index 86c51bd..13dd636 100644
+--- a/YiLinkerOnlineBuyer/resources/View/ProductResultGridCollectionViewCell.swift
++++ b/YiLinkerOnlineBuyer/resources/View/ProductResultGridCollectionViewCell.swift
+@@ -21,4 +21,23 @@ class ProductResultGridCollectionViewCell: UICollectionViewCell {
+         super.awakeFromNib()
+     }
+     
++    func setDiscount(text: String) {
++        discountLabel.text = text + "% OFF"
++    }
++    
++    func setProductName(text: String) {
++        productNameLabel.text = text
++    }
++    
++    func setOriginalPrice(text: String) {
++        originalPriceLabel.text = text
++    }
++    
++    func setNewPrice(text: String) {
++        newPriceLabel.text = text
++    }
++    
++    func setProductImage(text: String) {
++        productImageView.sd_setImageWithURL(NSURL(string: text), placeholderImage: UIImage(named: "dummy-placeholder"))
++    }
+ }
+diff --git a/YiLinkerOnlineBuyer/resources/View/ProductResultListCollectionViewCell.swift b/YiLinkerOnlineBuyer/resources/View/ProductResultListCollectionViewCell.swift
+index 8bbe0cd..07e3ead 100644
+--- a/YiLinkerOnlineBuyer/resources/View/ProductResultListCollectionViewCell.swift
++++ b/YiLinkerOnlineBuyer/resources/View/ProductResultListCollectionViewCell.swift
+@@ -21,4 +21,24 @@ class ProductResultListCollectionViewCell: UICollectionViewCell {
+     override func awakeFromNib() {
+         super.awakeFromNib()
+     }
++    
++    func setDiscount(text: String) {
++        discountLabel.text = text + "% OFF"
++    }
++    
++    func setProductName(text: String) {
++        productNameLabel.text = text
++    }
++    
++    func setOriginalPrice(text: String) {
++        originalPriceLabel.text = text
++    }
++    
++    func setNewPrice(text: String) {
++        newPriceLabel.text = text
++    }
++    
++    func setProductImage(text: String) {
++        productImageView.sd_setImageWithURL(NSURL(string: text), placeholderImage: UIImage(named: "dummy-placeholder"))
++    }
+ }
+diff --git a/YiLinkerOnlineBuyer/resources/ViewController/ResultViewController.swift b/YiLinkerOnlineBuyer/resources/ViewController/ResultViewController.swift
+index cbf064e..dcdb4bf 100644
+--- a/YiLinkerOnlineBuyer/resources/ViewController/ResultViewController.swift
++++ b/YiLinkerOnlineBuyer/resources/ViewController/ResultViewController.swift
+@@ -10,6 +10,8 @@ import UIKit
+ 
+ class ResultViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UITableViewDelegate, UITableViewDataSource {
+     
++    let manager = APIManager.sharedInstance
++    
+     let grid:String = "GRID"
+     let list:String = "LIST"
+     let seller:String = "SELLER"
+@@ -19,6 +21,7 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
+     let reuseIdentifierSeller: String = "SellerResultCollectionViewCell"
+     var type: String = "GRID"
+     
++    @IBOutlet weak var noResultLabel: UILabel!
+     @IBOutlet weak var sortPickerTableView: UITableView!
+     @IBOutlet weak var dimView: UIView!
+     @IBOutlet weak var resultCollectionView: UICollectionView!
+@@ -27,8 +30,11 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
+     @IBOutlet weak var filterView: UIView!
+     @IBOutlet weak var viewTypeView: UIView!
+     
+-    var collectionViewData: [String] = ["Item 1", "Item 3", "Item 3", "Item 1", "Item 3", "Item 3"]
++    var collectionViewData: [SearchResultModel] = []
+     var sortData: [String] = ["Old to new", "New to old", "A to Z", "Z to A"]
++
++    var searchSuggestion: SearchSuggestionModel!
++    
+     override func viewDidLoad() {
+         super.viewDidLoad()
+ 
+@@ -66,6 +72,8 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
+         //hide dimview
+         dimView.alpha = 0
+         dimView.hidden = true
++        
++        noResultLabel.hidden = true
+     }
+     
+     func registerNibs() {
+@@ -79,6 +87,64 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
+         self.resultCollectionView?.registerNib(cellNib, forCellWithReuseIdentifier: reuseIdentifierSeller)
+     }
+     
++    func passModel(searchSuggestion: SearchSuggestionModel) {
++        self.searchSuggestion = searchSuggestion
++        
++        if Reachability.isConnectedToNetwork() {
++           requestSearchDetails(searchSuggestion.searchUrl, params: nil)
++        } else {
++            showAlert("Connection Unreachable", message: "Cannot retrieve data. Please check your internet connection.")
++        }
++    }
++    
++    func requestSearchDetails(url: String, params: NSDictionary!) {
++        showLoader()
++        
++        manager.GET(url, parameters: params, success: {
++            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in print(responseObject as! NSDictionary)
++            if responseObject.objectForKey("error") != nil {
++                self.requestRefreshToken(url, params: params)
++            } else {
++                self.populateTableView(responseObject)
++            }
++            }, failure: {
++                (task: NSURLSessionDataTask!, error: NSError!) in
++                self.showAlert("Error", message: "Something went wrong. . .")
++                self.dismissLoader()
++        })
++    }
++    
++    // MARK: Methods Updating Values
++    
++    func populateTableView(responseObject: AnyObject) {
++        collectionViewData.removeAll(keepCapacity: false)
++        if let value: AnyObject = responseObject["data"] {
++            for subValue in value["products"] as! NSArray {
++                println(subValue)
++                let model: SearchResultModel = SearchResultModel.parseDataWithDictionary(subValue as! NSDictionary)
++                
++                self.collectionViewData.append(model)
++            }
++            self.resultCollectionView.reloadData()
++        }
++        self.dismissLoader()
++        
++        if self.collectionViewData.count == 0 {
++            noResultLabel.hidden = false
++        }
++    }
++
++    
++    
++    //Loader function
++    func showLoader() {
++        SVProgressHUD.show()
++        SVProgressHUD.setBackgroundColor(UIColor.whiteColor())
++    }
++    
++    func dismissLoader() {
++        SVProgressHUD.dismiss()
++    }
+ 
+     func changeViewType() {
+         if type == grid {
+@@ -141,9 +207,19 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
+     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+         if type == grid {
+             let cell: ProductResultGridCollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifierGrid, forIndexPath: indexPath) as! ProductResultGridCollectionViewCell
++            var tempModel: SearchResultModel = collectionViewData[indexPath.row]
++            cell.setProductImage(tempModel.imageUrl)
++            cell.setProductName(tempModel.productName)
++            cell.setOriginalPrice(tempModel.originalPrice)
++            cell.setNewPrice(tempModel.newPrice)
+             return cell
+         } else if type == list {
+             let cell: ProductResultListCollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifierList, forIndexPath: indexPath) as! ProductResultListCollectionViewCell
++            var tempModel: SearchResultModel = collectionViewData[indexPath.row]
++            cell.setProductImage(tempModel.imageUrl)
++            cell.setProductName(tempModel.productName)
++            cell.setOriginalPrice(tempModel.originalPrice)
++            cell.setNewPrice(tempModel.newPrice)
+             return cell
+         } else{
+             let cell: SellerResultCollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifierSeller, forIndexPath: indexPath) as! SellerResultCollectionViewCell
+@@ -245,5 +321,50 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
+         // Pass the selected object to the new view controller.
+     }
+     */
++    
++    func showAlert(title: String, message: String) {
++        let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
++        
++        let OKAction = UIAlertAction(title: "OK", style: .Default) { (action) in
++            alertController.dismissViewControllerAnimated(true, completion: nil)
++        }
++        
++        alertController.addAction(OKAction)
++        
++        self.presentViewController(alertController, animated: true) {
++            
++        }
++    }
++    
++    func requestRefreshToken(url: String, params: NSDictionary!) {
++        let url: String = "http://online.api.easydeal.ph/api/v1/login"
++        let params: NSDictionary = ["client_id": Constants.Credentials.clientID,
++            "client_secret": Constants.Credentials.clientSecret,
++            "grant_type": Constants.Credentials.grantRefreshToken,
++            "refresh_token": SessionManager.refreshToken()]
++        
++        let manager = APIManager.sharedInstance
++        manager.POST(url, parameters: params, success: {
++            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
++            
++            SVProgressHUD.dismiss()
++            
++            if (responseObject["isSuccessful"] as! Bool) {
++                SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
++                self.requestSearchDetails(url, params: params)
++            } else {
++                self.showAlert("Error", message: responseObject["message"] as! String)
++            }
++            
++            }, failure: {
++                (task: NSURLSessionDataTask!, error: NSError!) in
++                SVProgressHUD.dismiss()
++                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
++                
++                self.showAlert("Something went wrong", message: "")
++                
++        })
++    }
++
+ 
+ }
+diff --git a/YiLinkerOnlineBuyer/resources/ViewController/SearchViewController.swift b/YiLinkerOnlineBuyer/resources/ViewController/SearchViewController.swift
+index 3294f42..4d002c9 100644
+--- a/YiLinkerOnlineBuyer/resources/ViewController/SearchViewController.swift
++++ b/YiLinkerOnlineBuyer/resources/ViewController/SearchViewController.swift
+@@ -55,6 +55,7 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
+     }
+     
+     func requestSearch(url: String, params: NSDictionary!) {
++        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+         manager.operationQueue.cancelAllOperations()
+         manager.GET(url, parameters: params, success: {
+             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in print(responseObject as! NSDictionary)
+@@ -62,10 +63,12 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
+             } else {
+                 self.populateTableView(responseObject)
+             }
++            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+             }, failure: {
+                 (task: NSURLSessionDataTask!, error: NSError!) in
+                 println(error)
+                 self.showAlert("Error", message: "Something went wrong. . .")
++                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+         })
+     }
+     
+@@ -106,7 +109,13 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
+         if count(searchText) > 2 {
+             if Reachability.isConnectedToNetwork(){
+                 requestSearch(APIAtlas.searchUrl, params: NSDictionary(dictionary: ["queryString" : searchText]))
++            }  else {
++                showAlert("Connection Unreachable", message: "Cannot retrieve data. Please check your internet connection.")
+             }
++        } else {
++            tableData.removeAll(keepCapacity: false)
++            addBrowseCategory()
++            searchResultTableView.reloadData()
+         }
+     }
+     
+@@ -153,6 +162,7 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
+     // Mark: - UITableViewDelegate methods
+     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+         var resultController = ResultViewController(nibName: "ResultViewController", bundle: nil)
++        resultController.passModel(tableData[indexPath.row])
+         self.navigationController?.pushViewController(resultController, animated:true);
+     }
+     
+diff --git a/YiLinkerOnlineBuyer/resources/Xib/ResultViewController.xib b/YiLinkerOnlineBuyer/resources/Xib/ResultViewController.xib
+index 0d0b77a..cd34b97 100644
+--- a/YiLinkerOnlineBuyer/resources/Xib/ResultViewController.xib
++++ b/YiLinkerOnlineBuyer/resources/Xib/ResultViewController.xib
+@@ -8,6 +8,7 @@
+             <connections>
+                 <outlet property="dimView" destination="rI2-hy-mMb" id="Js4-ik-wzp"/>
+                 <outlet property="filterView" destination="hXh-Ex-xcS" id="xu4-Nc-i66"/>
++                <outlet property="noResultLabel" destination="VbX-l4-1Ju" id="F7o-kc-cGc"/>
+                 <outlet property="resultCollectionView" destination="LgG-iv-oKa" id="RdW-iY-6SE"/>
+                 <outlet property="sortPickerTableView" destination="Mkh-ce-Sbp" id="BV0-Gm-2OM"/>
+                 <outlet property="sortView" destination="kDF-aw-IfE" id="5ql-O6-eg7"/>
+@@ -178,6 +179,12 @@
+                         <outlet property="delegate" destination="-1" id="3VA-t4-v2H"/>
+                     </connections>
+                 </collectionView>
++                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No results found." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VbX-l4-1Ju">
++                    <rect key="frame" x="132" y="325" width="111" height="17"/>
++                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
++                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
++                    <nil key="highlightedColor"/>
++                </label>
+                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rI2-hy-mMb" userLabel="Dim">
+                     <rect key="frame" x="0.0" y="36" width="375" height="631"/>
+                     <subviews>
+@@ -239,8 +246,10 @@
+                 <constraint firstItem="LgG-iv-oKa" firstAttribute="top" secondItem="RTW-vQ-k8z" secondAttribute="bottom" id="Ve1-jb-cXt"/>
+                 <constraint firstAttribute="trailing" secondItem="LgG-iv-oKa" secondAttribute="trailing" id="WgL-4Y-c2s"/>
+                 <constraint firstItem="RTW-vQ-k8z" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Yf4-jv-cDM"/>
++                <constraint firstAttribute="centerX" secondItem="VbX-l4-1Ju" secondAttribute="centerX" id="blL-uz-3Zg"/>
+                 <constraint firstItem="rI2-hy-mMb" firstAttribute="top" secondItem="RTW-vQ-k8z" secondAttribute="bottom" id="gdA-zU-AVk"/>
+                 <constraint firstAttribute="trailing" secondItem="Uyb-VK-Thh" secondAttribute="trailing" id="grP-MA-heG"/>
++                <constraint firstAttribute="centerY" secondItem="VbX-l4-1Ju" secondAttribute="centerY" id="wLN-qk-k3r"/>
+                 <constraint firstItem="RTW-vQ-k8z" firstAttribute="top" secondItem="Uyb-VK-Thh" secondAttribute="bottom" id="xGa-gh-NDK"/>
+                 <constraint firstAttribute="bottom" secondItem="rI2-hy-mMb" secondAttribute="bottom" id="xGx-gi-ehU"/>
+             </constraints>
+-- 
+2.3.2 (Apple Git-55)
+

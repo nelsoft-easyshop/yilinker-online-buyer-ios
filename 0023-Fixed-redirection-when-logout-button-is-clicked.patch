@@ -1,0 +1,25 @@
+From d960c82fb2206f873ef811f692d58e267424fa3d Mon Sep 17 00:00:00 2001
+From: jpChan15 <john.chan@easyshop.ph>
+Date: Mon, 31 Aug 2015 11:06:49 +0800
+Subject: [PATCH 23/27] Fixed redirection when logout button is clicked.
+
+---
+ .../resources/ViewController/CircularMenuViewController.swift           | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/YiLinkerOnlineBuyer/resources/ViewController/CircularMenuViewController.swift b/YiLinkerOnlineBuyer/resources/ViewController/CircularMenuViewController.swift
+index dbd38f4..13110e1 100644
+--- a/YiLinkerOnlineBuyer/resources/ViewController/CircularMenuViewController.swift
++++ b/YiLinkerOnlineBuyer/resources/ViewController/CircularMenuViewController.swift
+@@ -395,6 +395,8 @@ class CircularMenuViewController: UIViewController {
+     func logout() {
+         SessionManager.logout()
+         self.dissmissViewControllerAnimated()
++        let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
++        appDelegate.changeRootToHomeView()
+     }
+     
+ }
+-- 
+2.3.2 (Apple Git-55)
+
