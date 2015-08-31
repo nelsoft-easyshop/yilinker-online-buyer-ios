@@ -27,8 +27,34 @@ class ImageVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
         
         cameraRollButton.layer.cornerRadius = 5.0
         cameraButton.layer.cornerRadius = 5.0
+        self.placeCustomBackImage()
+        self.placeSendButton()
         
+    }
+    
+    func goBack(){
+        self.navigationController?.popViewControllerAnimated(true)
+    }
+    
+    func placeSendButton(){
+        var sendItem = UIBarButtonItem(title : "Send", style: UIBarButtonItemStyle.Plain, target: self, action: Selector("sendImageByFile"))
         
+        sendItem.tintColor = UIColor.whiteColor()
+    
+        self.navigationItem.setRightBarButtonItem(sendItem, animated: true)
+    }
+    
+    func placeCustomBackImage(){
+        var backImage = UIImage(named: "left.png")
+        UIGraphicsBeginImageContextWithOptions(CGSize(width: 12.0, height: 24.0), false, 0.0)
+        backImage?.drawInRect(CGRectMake(0, 0, 12, 24))
+        
+        var tempImage : UIImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        var backItem = UIBarButtonItem(image: tempImage, style: UIBarButtonItemStyle.Plain, target: self, action: Selector("goBack"))
+        
+        self.navigationItem.setLeftBarButtonItem(backItem, animated: true)
     }
 
     override func didReceiveMemoryWarning() {
@@ -40,31 +66,39 @@ class ImageVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
         takePhoto()
     }
     
-    @IBAction func sendImage(sender: UIButton) {
-        self.sendImageByFile()
-    }
-    
     func sendImageByFile(){
-        let manager: APIManager = APIManager.sharedInstance
-        //manager.requestSerializer = AFHTTPRequestSerializer()
-        /*
-        let parameters: NSDictionary = [
-            "access_token"  : SessionManager.accessToken()
-            ]   as Dictionary<String, String>
-        */
-        let url = APIAtlas.baseUrl + APIAtlas.ACTION_IMAGE_ATTACH + "?access_token=\(SessionManager.accessToken())"
-        
-        var imageData : NSData = UIImageJPEGRepresentation(imageView.image, 0.5)
-        
-        //println(parameters)
-        manager.POST(url, parameters: nil, constructingBodyWithBlock: { (data: AFMultipartFormData) -> Void in
+        if (imageView.image != nil){
+            SVProgressHUD.show()
+            
+            let manager: APIManager = APIManager.sharedInstance
+            manager.requestSerializer = AFHTTPRequestSerializer()
+            
+            let parameters: NSDictionary = [
+                "access_token"  : SessionManager.accessToken()
+                ]   as Dictionary<String, String>
+            
+            let url = APIAtlas.baseUrl + APIAtlas.ACTION_IMAGE_ATTACH //+ "?access_token=\(SessionManager.accessToken())"
+            
+            var imageData : NSData = UIImageJPEGRepresentation(imageView.image, 0.5)
+            
+            //println(parameters)
+            manager.POST(url, parameters: nil, constructingBodyWithBlock: { (data: AFMultipartFormData) -> Void in
                 data.appendPartWithFormData(imageData, name: "image")
-            }, success: { (task : NSURLSessionDataTask!, responseObject: AnyObject!) -> Void in
-                println(responseObject)
-            SVProgressHUD.dismiss()
-            }) { (task : NSURLSessionDataTask!, error: NSError!) -> Void in
-                println(error.description)
-            SVProgressHUD.dismiss()
+                }, success: { (task : NSURLSessionDataTask!, responseObject: AnyObject!) -> Void in
+                    println(responseObject)
+                    SVProgressHUD.dismiss()
+                }) { (task : NSURLSessionDataTask!, error: NSError!) -> Void in
+                    if !Reachability.isConnectedToNetwork() {
+                        UIAlertController.displayNoInternetConnectionError(self)
+                    } else {
+                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+                    }
+                    println(error.description)
+                    SVProgressHUD.dismiss()
+            }
+
+        } else {
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Please pick or upload an image first.", title: "Error")
         }
         
         

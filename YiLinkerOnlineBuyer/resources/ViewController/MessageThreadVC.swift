@@ -26,7 +26,7 @@ class MessageThreadVC: UIViewController {
     var recipient : W_Contact?
     
     var profileImageView: UIImageView!
-    var onlineImageView: UIImageView!
+    var onlineView: RoundedView!
     var profileNameLabel: UILabel!
     var onlineLabel: UILabel!
     
@@ -76,7 +76,7 @@ class MessageThreadVC: UIViewController {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWasHidden:"), name:UIKeyboardWillHideNotification, object: nil);
 
         self.placeCustomBackImage()
-        //self.placeRightNavigationControllerDetails()
+        self.placeRightNavigationControllerDetails()
         
         composeTextView.becomeFirstResponder()
         
@@ -135,8 +135,11 @@ class MessageThreadVC: UIViewController {
         profileImageView.layer.cornerRadius = profileImageView.frame.width/2
         profileImageView.layer.masksToBounds = true
         
-        var onlineView = UIView(frame: CGRectMake(navBarWidth-profileImageDimension - rightPadding - onlineLabel.frame.width - rightPadding2 - 10 - rightPadding3, 8, 10, 10))
+        onlineView = RoundedView(frame: CGRectMake(navBarWidth-profileImageDimension - rightPadding - onlineLabel.frame.width - rightPadding2 - 10 - rightPadding3, 8, 10, 10))
         onlineView.backgroundColor = onlineColor
+        
+        onlineView.layer.cornerRadius = onlineView.frame.height/2
+        onlineView.layer.masksToBounds = true
         
         self.navigationController?.navigationBar.addSubview(profileImageView)
         self.navigationController?.navigationBar.addSubview(profileNameLabel)
@@ -162,12 +165,21 @@ class MessageThreadVC: UIViewController {
         self.navigationItem.setLeftBarButtonItem(backItem, animated: true)
     }
     
+    
+    @IBAction func onCamera(sender: UIButton) {
+        self.clearProfileView()
+    }
+    
     func goBack(){
+        self.clearProfileView()
+        self.navigationController?.popViewControllerAnimated(true)
+    }
+    
+    func clearProfileView(){
         profileImageView.removeFromSuperview()
-        onlineImageView.removeFromSuperview()
+        onlineView.removeFromSuperview()
         profileNameLabel.removeFromSuperview()
         onlineLabel.removeFromSuperview()
-        self.navigationController?.popViewControllerAnimated(true)
     }
 
     override func didReceiveMemoryWarning() {
@@ -290,6 +302,7 @@ class MessageThreadVC: UIViewController {
                 self.messages = W_Messages.parseMessages(responseObject as! NSDictionary)
                 self.threadTableView.reloadData()
                 
+                SVProgressHUD.dismiss()
                 }, failure: {
                     (task: NSURLSessionDataTask!, error: NSError!) in
                     let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse

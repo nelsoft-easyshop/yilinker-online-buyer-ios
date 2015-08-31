@@ -533,6 +533,22 @@
             </objects>
             <point key="canvasLocation" x="-547" y="605"/>
         </scene>
+        <!--Dummy Navigation Controller-->
+        <scene sceneID="X2f-ef-u0y">
+            <objects>
+                <navigationController storyboardIdentifier="DummyNavigationController" id="cxg-0K-AKb" customClass="DummyNavigationController" customModule="YiLinkerOnlineBuyer" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="VMI-mI-R7E">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="eRN-2f-3IJ" kind="relationship" relationship="rootViewController" id="VE4-Mq-T5P"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="di3-JF-TEE" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-4807" y="-990"/>
+        </scene>
         <!--Message-->
         <scene sceneID="ZaE-n0-Pf3">
             <objects>
@@ -1147,7 +1163,8 @@
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <segue destination="GvQ-Uw-TVR" kind="show" identifier="" id="yZh-fo-qwz"/>
+                                            <action selector="onCamera:" destination="ifm-Kz-QEU" eventType="touchUpInside" id="6Fr-0g-hzF"/>
+                                            <segue destination="GvQ-Uw-TVR" kind="show" id="Nz4-49-J9K"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -1259,23 +1276,12 @@
                                     <constraint firstItem="Ajk-yh-O9i" firstAttribute="leading" secondItem="Gqj-1H-KFY" secondAttribute="leading" constant="8" id="xzj-j1-X0z"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7KA-jH-qaw">
-                                <rect key="frame" x="548" y="28" width="36" height="30"/>
-                                <state key="normal" title="Send">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="sendImage:" destination="GvQ-Uw-TVR" eventType="touchUpInside" id="OzE-D7-394"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="Gqj-1H-KFY" firstAttribute="leading" secondItem="qEz-lx-UR4" secondAttribute="leading" id="0xr-C1-YaB"/>
-                            <constraint firstItem="7KA-jH-qaw" firstAttribute="trailing" secondItem="qEz-lx-UR4" secondAttribute="trailingMargin" id="fXF-zN-Gma"/>
                             <constraint firstItem="20h-2i-hut" firstAttribute="leading" secondItem="Gqj-1H-KFY" secondAttribute="leading" id="hBn-hi-0K6"/>
                             <constraint firstItem="WIR-GJ-KKU" firstAttribute="top" secondItem="Gqj-1H-KFY" secondAttribute="bottom" id="iY2-lF-Bkb"/>
-                            <constraint firstItem="7KA-jH-qaw" firstAttribute="top" secondItem="JwQ-RB-7Nf" secondAttribute="bottom" constant="8" id="oTM-L8-w5M"/>
                             <constraint firstAttribute="trailing" secondItem="Gqj-1H-KFY" secondAttribute="trailing" id="onY-M5-Weq"/>
                             <constraint firstItem="20h-2i-hut" firstAttribute="trailing" secondItem="Gqj-1H-KFY" secondAttribute="trailing" id="vv6-5d-WDY"/>
                             <constraint firstItem="WIR-GJ-KKU" firstAttribute="top" secondItem="20h-2i-hut" secondAttribute="bottom" constant="49" id="yGd-vW-iou"/>

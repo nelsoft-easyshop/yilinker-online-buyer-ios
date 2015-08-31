@@ -81,8 +81,8 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             return true
         } else if self.customTabBarController?.isValidToSwitchToMenuTabBarItems != true {
             let storyBoard: UIStoryboard = UIStoryboard(name: "HomeStoryBoard", bundle: nil)
-            var animatedViewController: ConversationVC?
-            animatedViewController  = storyBoard.instantiateViewControllerWithIdentifier("ConversationVC") as? ConversationVC
+            var animatedViewController: DummyNavigationController?
+            animatedViewController  = storyBoard.instantiateViewControllerWithIdentifier("DummyNavigationController") as? DummyNavigationController
             animatedViewController!.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
             animatedViewController!.providesPresentationContextTransitionStyle = true
             animatedViewController!.definesPresentationContext = true

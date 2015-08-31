@@ -308,6 +308,7 @@
 		79F2F55B1B85FD9D00F57E4B /* FilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F2F5591B85FD9D00F57E4B /* FilterViewController.swift */; };
 		79F2F55C1B85FD9D00F57E4B /* FilterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79F2F55A1B85FD9D00F57E4B /* FilterViewController.xib */; };
 		79F417761B7C3ADB0047D02D /* CartProductAttributeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F417741B7C3ADB0047D02D /* CartProductAttributeViewController.swift */; };
+		B7170D6E1B93E27800855CF9 /* DummyNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7170D6D1B93E27800855CF9 /* DummyNavigationController.swift */; };
 		B747A64B1B916C910002CBA7 /* W_Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = B747A6481B916C910002CBA7 /* W_Contact.swift */; };
 		B747A64C1B916C910002CBA7 /* W_Conversation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B747A6491B916C910002CBA7 /* W_Conversation.swift */; };
 		B747A64D1B916C910002CBA7 /* W_Messages.swift in Sources */ = {isa = PBXBuildFile; fileRef = B747A64A1B916C910002CBA7 /* W_Messages.swift */; };
@@ -646,6 +647,7 @@
 		79F2F55A1B85FD9D00F57E4B /* FilterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = FilterViewController.xib; path = YiLinkerOnlineBuyer/resources/ViewController/FilterViewController.xib; sourceTree = SOURCE_ROOT; };
 		79F417741B7C3ADB0047D02D /* CartProductAttributeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CartProductAttributeViewController.swift; path = YiLinkerOnlineBuyer/resources/ViewController/CartProductAttributeViewController.swift; sourceTree = SOURCE_ROOT; };
 		9140515446F9D97EC8790C7B /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		B7170D6D1B93E27800855CF9 /* DummyNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DummyNavigationController.swift; path = YiLinkerOnlineBuyer/resources/ViewController/DummyNavigationController.swift; sourceTree = SOURCE_ROOT; };
 		B747A6481B916C910002CBA7 /* W_Contact.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = W_Contact.swift; sourceTree = "<group>"; };
 		B747A6491B916C910002CBA7 /* W_Conversation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = W_Conversation.swift; sourceTree = "<group>"; };
 		B747A64A1B916C910002CBA7 /* W_Messages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = W_Messages.swift; sourceTree = "<group>"; };
@@ -1168,6 +1170,7 @@
 				B747A6531B916CBA0002CBA7 /* MessageThreadImageTVC.swift */,
 				B747A6541B916CBA0002CBA7 /* MessageThreadTVC.swift */,
 				B747A6551B916CBA0002CBA7 /* MessageThreadVC.swift */,
+				B7170D6D1B93E27800855CF9 /* DummyNavigationController.swift */,
 			);
 			name = Messaging;
 			sourceTree = "<group>";
@@ -1535,6 +1538,7 @@
 				7971F7411B861AC900322861 /* FilterTableViewCell.swift in Sources */,
 				0CC8A63B1B7B9BBF00C91425 /* FollowedSellerViewController.swift in Sources */,
 				0C9937421B750583000D6074 /* SellerModel.swift in Sources */,
+				B7170D6E1B93E27800855CF9 /* DummyNavigationController.swift in Sources */,
 				0C9937531B750583000D6074 /* RoundedImageView.swift in Sources */,
 				79E85FD01B8A1FBD00428AA1 /* ActivityModel.swift in Sources */,
 				2689FBF71B80412D007BEA68 /* CategoriesTableViewCell.swift in Sources */,
