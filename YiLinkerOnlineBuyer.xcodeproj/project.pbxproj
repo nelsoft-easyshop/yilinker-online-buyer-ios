@@ -310,7 +310,7 @@
 		79F2F55B1B85FD9D00F57E4B /* FilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F2F5591B85FD9D00F57E4B /* FilterViewController.swift */; };
 		79F2F55C1B85FD9D00F57E4B /* FilterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79F2F55A1B85FD9D00F57E4B /* FilterViewController.xib */; };
 		79F417761B7C3ADB0047D02D /* CartProductAttributeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F417741B7C3ADB0047D02D /* CartProductAttributeViewController.swift */; };
-		C6A432EAC74EF7DD977AFF7B /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D038C18A7712E626564D2D3 /* libPods.a */; };
+		BE00C15B75D7E76D254AAEC1 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D038C18A7712E626564D2D3 /* libPods.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -635,6 +635,7 @@
 		79F2F55A1B85FD9D00F57E4B /* FilterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = FilterViewController.xib; path = YiLinkerOnlineBuyer/resources/ViewController/FilterViewController.xib; sourceTree = SOURCE_ROOT; };
 		79F417741B7C3ADB0047D02D /* CartProductAttributeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CartProductAttributeViewController.swift; path = YiLinkerOnlineBuyer/resources/ViewController/CartProductAttributeViewController.swift; sourceTree = SOURCE_ROOT; };
 		9140515446F9D97EC8790C7B /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		F7CCDA451B940268000F5AD4 /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = "Pods/../build/Debug-iphoneos/libPods.a"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -642,7 +643,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C6A432EAC74EF7DD977AFF7B /* libPods.a in Frameworks */,
+				BE00C15B75D7E76D254AAEC1 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1112,6 +1113,7 @@
 		6E2C7023C2EB23DC920F908B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F7CCDA451B940268000F5AD4 /* libPods.a */,
 				5D038C18A7712E626564D2D3 /* libPods.a */,
 			);
 			name = Frameworks;
@@ -1665,6 +1667,10 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = YiLinkerOnlineBuyer/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "YiLinkerOnlineBuyer/Resources/Helper/YiLinkerOnlineBuyer-Bridging-Header.h";
@@ -1682,6 +1688,10 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = YiLinkerOnlineBuyer/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "YiLinkerOnlineBuyer/Resources/Helper/YiLinkerOnlineBuyer-Bridging-Header.h";
