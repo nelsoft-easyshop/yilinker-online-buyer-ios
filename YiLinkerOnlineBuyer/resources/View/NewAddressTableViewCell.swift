@@ -11,9 +11,11 @@ import UIKit
 protocol NewAddressTableViewCellDelegate {
     func newAddressTableViewCell(didClickNext newAddressTableViewCell: NewAddressTableViewCell)
     func newAddressTableViewCell(didClickPrevious newAddressTableViewCell: NewAddressTableViewCell)
+    
+    func newAddressTableViewCell(didBeginEditing newAddressTableViewCell: NewAddressTableViewCell, index: Int)
 }
 
-class NewAddressTableViewCell: UITableViewCell {
+class NewAddressTableViewCell: UITableViewCell, UITextFieldDelegate {
    
     @IBOutlet weak var rowTitleLabel: UILabel!
     @IBOutlet weak var rowTextField: UITextField!
@@ -23,7 +25,10 @@ class NewAddressTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        self.rowTextField.addToolBarWithTarget(self, next: "next", previous: "previous", done: "done")
+        
+        self.rowTextField.delegate = self
+        
+//        self.rowTextField.addToolBarWithTarget(self, next: "next", previous: "previous", done: "done")
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
@@ -31,17 +36,21 @@ class NewAddressTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-    
-    func next() {
-        self.delegate!.newAddressTableViewCell(didClickNext: self)
+
+    func textFieldDidBeginEditing(textField: UITextField) {
+        delegate?.newAddressTableViewCell(didBeginEditing: self, index: self.tag)
     }
     
-    func previous() {
-        self.delegate!.newAddressTableViewCell(didClickPrevious: self)
-    }
-    
-    func done() {
-        self.endEditing(true)
-    }
+//    func next() {
+//        self.delegate!.newAddressTableViewCell(didClickNext: self)
+//    }
+//    
+//    func previous() {
+//        self.delegate!.newAddressTableViewCell(didClickPrevious: self)
+//    }
+//    
+//    func done() {
+//        self.endEditing(true)
+//    }
     
 }

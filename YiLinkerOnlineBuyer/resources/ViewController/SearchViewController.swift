@@ -9,6 +9,8 @@
 import UIKit
 
 class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
+    
+    let manager = APIManager.sharedInstance
 
     let viewControllerIndex = 1
     
@@ -21,10 +23,6 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         super.viewDidLoad()
 
         self.initializeViews()
-        
-        let vc = FollowedSellerViewController(nibName: "FollowedSellerViewController", bundle: nil)
-        vc.edgesForExtendedLayout = UIRectEdge.None
-        self.navigationController?.pushViewController(vc, animated: true)
     }
 
     override func didReceiveMemoryWarning() {
@@ -53,13 +51,48 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         var nib = UINib(nibName: "SearchSuggestionTableViewCell", bundle: nil)
         searchResultTableView.registerNib(nib, forCellReuseIdentifier: "SearchSuggestionTableViewCell")
         
+        addBrowseCategory()
+    }
+    
+    func requestSearch(url: String, params: NSDictionary!) {
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+        manager.operationQueue.cancelAllOperations()
+        manager.GET(url, parameters: params, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in print(responseObject as! NSDictionary)
+            if responseObject.objectForKey("error") != nil {
+            } else {
+                self.populateTableView(responseObject)
+            }
+            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                println(error)
+                self.showAlert("Error", message: "Something went wrong. . .")
+                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+        })
+    }
+    
+    func populateTableView(responseObject: AnyObject) {
+        tableData.removeAll(keepCapacity: false)
+        if let value: AnyObject = responseObject["data"] {
+            for subValue in value as! NSArray {
+                let model: SearchSuggestionModel = SearchSuggestionModel.parseDataFromDictionary(subValue as! NSDictionary)
+                
+                self.tableData.append(model)
+            }
+            self.searchResultTableView.reloadData()
+        }
+        
+        addBrowseCategory()
+    }
+    
+    func addBrowseCategory() {
         if(self.tableData.isEmpty) {
-            var temp: SearchSuggestionModel = SearchSuggestionModel(suggestion: "Browse by Category", imageURL: "SearchBrowseCategory") as SearchSuggestionModel
+            var temp: SearchSuggestionModel = SearchSuggestionModel(suggestion: "Browse by Category", imageURL: "SearchBrowseCategory", searchUrl: "") as SearchSuggestionModel
             
             tableData.append(temp)
             self.searchResultTableView.reloadData()
         }
-
     }
     
     // Mark: - UISearchBarDelegate
@@ -72,6 +105,20 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         return true
     }
     
+    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+        if count(searchText) > 2 {
+            if Reachability.isConnectedToNetwork(){
+                requestSearch(APIAtlas.searchUrl, params: NSDictionary(dictionary: ["queryString" : searchText]))
+            }  else {
+                showAlert("Connection Unreachable", message: "Cannot retrieve data. Please check your internet connection.")
+            }
+        } else {
+            tableData.removeAll(keepCapacity: false)
+            addBrowseCategory()
+            searchResultTableView.reloadData()
+        }
+    }
+    
     func searchBarShouldEndEditing(searchBar: UISearchBar) -> Bool {
         self.searchBar.showsScopeBar = false
         self.searchBar.sizeToFit()
@@ -79,12 +126,13 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         return true
     }
     
-    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
-        self.searchBar.resignFirstResponder()
+    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+        var resultController = ResultViewController(nibName: "ResultViewController", bundle: nil)
+        self.navigationController?.pushViewController(resultController, animated:true);
     }
     
-    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
-        self.searchResultTableView.reloadData()
+    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+        self.searchBar.resignFirstResponder()
     }
     
     // Mark: - UITableViewDataSource methods
@@ -114,7 +162,22 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     // Mark: - UITableViewDelegate methods
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         var resultController = ResultViewController(nibName: "ResultViewController", bundle: nil)
+        resultController.passModel(tableData[indexPath.row])
         self.navigationController?.pushViewController(resultController, animated:true);
+    }
+    
+    func showAlert(title: String, message: String) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+        
+        let OKAction = UIAlertAction(title: "OK", style: .Default) { (action) in
+            alertController.dismissViewControllerAnimated(true, completion: nil)
+        }
+        
+        alertController.addAction(OKAction)
+        
+        self.presentViewController(alertController, animated: true) {
+            
+        }
     }
 
 }

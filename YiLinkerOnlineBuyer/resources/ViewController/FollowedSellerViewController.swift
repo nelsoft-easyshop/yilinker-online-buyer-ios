@@ -21,7 +21,7 @@ class FollowedSellerViewController: UIViewController, EmptyViewDelegate {
         let nib = UINib(nibName: "FollowedSellerTableViewCell", bundle: nil)
         self.tableView.registerNib(nib, forCellReuseIdentifier: "FollowedSellerIdentifier")
         
-        requestReviewDetails()
+        requestFollowedSelers()
         
         customizedNavigationBar()
     }
@@ -70,18 +70,17 @@ class FollowedSellerViewController: UIViewController, EmptyViewDelegate {
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let seller = SellerViewController(nibName: "SellerViewController", bundle: nil)
-//        self.presentViewController(vc, animated: true, completion: nil)
         self.navigationController?.pushViewController(seller, animated: true)
     }
     
     // MARK: - Request
     
-    func requestReviewDetails() {
+    func requestFollowedSelers() {
         SVProgressHUD.show()
         
         let manager = APIManager.sharedInstance
         let url = "http://online.api.easydeal.ph/api/v1/auth/getFollowedSellers"
-        let params = ["access_token": "MDNlMTE2M2ExMzBiNWZlMDliZDVhOGQ5MWYxZjE0ODFiMGVkYWM0NDhlMDkwNzBmOWEzMWJjNTYzMGQ3NDIzZQ",
+        let params = ["access_token": SessionManager.accessToken(),
             "page": "1", "limit": "99"]
         
         manager.POST(url, parameters: params, success: {
@@ -93,8 +92,37 @@ class FollowedSellerViewController: UIViewController, EmptyViewDelegate {
             
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                self.addEmptyView()
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                if task.statusCode == 401 {
+                    self.requestRefreshToken()
+                } else {
+                    self.addEmptyView()
+                    SVProgressHUD.dismiss()
+                }
+        })
+    }
+    
+    func requestRefreshToken() {
+        let url: String = "http://online.api.easydeal.ph/api/v1/login"
+        let params: NSDictionary = ["client_id": Constants.Credentials.clientID,
+            "client_secret": Constants.Credentials.clientSecret,
+            "grant_type": Constants.Credentials.grantRefreshToken,
+            "refresh_token": SessionManager.refreshToken()]
+        
+        let manager = APIManager.sharedInstance
+        manager.POST(url, parameters: params, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            
+                SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+                self.requestFollowedSelers()
+
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
                 SVProgressHUD.dismiss()
+                let alertController = UIAlertController(title: "Something went wrong", message: "", preferredStyle: .Alert)
+                let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+                alertController.addAction(defaultAction)
+                self.presentViewController(alertController, animated: true, completion: nil)
         })
     }
     
@@ -108,7 +136,7 @@ class FollowedSellerViewController: UIViewController, EmptyViewDelegate {
     }
     
     func didTapReload() {
-        requestReviewDetails()
+        requestFollowedSelers()
         self.emptyView?.removeFromSuperview()
     }
     

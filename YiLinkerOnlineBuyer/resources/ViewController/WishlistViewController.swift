@@ -149,6 +149,13 @@ class WishlistViewController: UIViewController, UITableViewDelegate, UITableView
         }
         self.updateCounterLabel()
         self.dismissLoader()
+        
+        if tableData.count != 0 {
+            let badgeValue = (self.tabBarController!.tabBar.items![3] as! UITabBarItem).badgeValue?.toInt()
+            (self.tabBarController!.tabBar.items![3] as! UITabBarItem).badgeValue = String(tableData.count)
+        } else {
+            (self.tabBarController!.tabBar.items![3] as! UITabBarItem).badgeValue = nil
+        }
     }
     
     func updateCounterLabel() {
@@ -224,7 +231,6 @@ class WishlistViewController: UIViewController, UITableViewDelegate, UITableView
             let tempModel: WishlistProductDetailsModel = tableData[rowOfTheCell]
             
             var params: NSDictionary = ["access_token": SessionManager.accessToken(),
-                "wishlist": "true",
                 "productId": tempModel.id,
                 "unitId": tempModel.unitId,
                 "quantity": 0,
@@ -244,7 +250,6 @@ class WishlistViewController: UIViewController, UITableViewDelegate, UITableView
             let tempModel: WishlistProductDetailsModel = tableData[rowOfTheCell]
             
             var params: NSDictionary = ["access_token": SessionManager.accessToken(),
-                "wishlist": "true",
                 "productId": tempModel.id,
                 "unitId": tempModel.unitId,
                 "quantity": tempModel.quantity

@@ -13,7 +13,7 @@ protocol CartProductAttributeViewControllerDelegate {
     func pressedDoneAttribute(controller: CartProductAttributeViewController)
 }
 
-class CartProductAttributeViewController: UIViewController, UITableViewDelegate, ProductAttributeTableViewCellDelegate {
+class CartProductAttributeViewController: UIViewController, UITableViewDelegate, CartProductAttributeTableViewCellDelegate {
     
     var manager = APIManager()
     
@@ -35,12 +35,14 @@ class CartProductAttributeViewController: UIViewController, UITableViewDelegate,
     var maximumStock = 1
     var stocks: Int = 0
     
-    var cartModel : CartModel?
     var productDetailModel: CartProductDetailsModel?
-    var attributes: [ProductAttributeModel] = []
-    var availableCombinations: [ProductAvailableAttributeCombinationModel] = []
-    var selectedValue: [String] = []
-    var selectedCombination: [Int] = []
+    var selectedProductUnit: ProductUnitsModel!
+    
+    var availableCombinations = [String: [String]]()
+    
+    var selectedCombinations: [String] = []
+    
+    var unitIDs: [String] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,8 +51,8 @@ class CartProductAttributeViewController: UIViewController, UITableViewDelegate,
         stocksLabel.layer.borderColor = UIColor.grayColor().CGColor
         stocksLabel.layer.cornerRadius = 5
         
-        let nib = UINib(nibName: "ProductAttributeTableViewCell", bundle: nil)
-        self.tableView.registerNib(nib, forCellReuseIdentifier: "AttributeTableCell")
+        let nib = UINib(nibName: "CartProductAttributeTableViewCell", bundle: nil)
+        self.tableView.registerNib(nib, forCellReuseIdentifier: "CartProductAttributeTableViewCell")
         
         let tap = UITapGestureRecognizer()
         tap.numberOfTapsRequired = 1
@@ -63,10 +65,10 @@ class CartProductAttributeViewController: UIViewController, UITableViewDelegate,
         
         var params = Dictionary<String, String>()
         
-        params["access_token"] = "access_token"
-        params["productId"] = "\(cartModel?.productDetails.id)"
-        params["unitId"] = "\(cartModel?.unitId)"
-        params["quantity"] = "\(quantity)"
+        params["access_token"] = SessionManager.accessToken()
+        params["productId"] = "\(productDetailModel?.id)"
+        params["unitId"] = "\(productDetailModel?.unitId)"
+        params["quantity"] = "\(productDetailModel?.quantity)"
         
         showLoader()
         manager.GET(url, parameters: params, success: {
@@ -88,18 +90,15 @@ class CartProductAttributeViewController: UIViewController, UITableViewDelegate,
     // MARK: - Table View Data Source
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return attributes.count
+        return productDetailModel!.attributes.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell: ProductAttributeTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("AttributeTableCell") as! ProductAttributeTableViewCell
+        let cell: CartProductAttributeTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("CartProductAttributeTableViewCell") as! CartProductAttributeTableViewCell
         
-//        cell.delegate = self
-//        cell.passAvailableCombination(availableCombinations)
-        
-//        cell.tag = indexPath.row
-//        cell.setAttribute(name: attributes[indexPath.row].attributeName, values: attributes[indexPath.row].valueName, id: attributes[indexPath.row].valueId, selectedValue: selectedValue)
-        
+        var productAttribute: ProductAttributeModel = productDetailModel!.attributes[indexPath.row]
+        cell.delegate = self
+        cell.passModel(productAttribute, selectedProductUnit: selectedProductUnit, availableCombination: availableCombinations, unitID: unitIDs)
         return cell
     }
     
@@ -121,8 +120,6 @@ class CartProductAttributeViewController: UIViewController, UITableViewDelegate,
     
     @IBAction func cancelAction(sender: AnyObject!) {
         self.dismissViewControllerAnimated(true, completion: nil)
-        println(attributes.count)
-        println(availableCombinations.count)
         if let delegate = self.delegate {
             delegate.pressedCancelAttribute(self)
         }
@@ -134,42 +131,79 @@ class CartProductAttributeViewController: UIViewController, UITableViewDelegate,
     
     // MARK: - Methods
     
-    func passModel(#cartModel: CartModel, combinationModel: [ProductAvailableAttributeCombinationModel], selectedValue: NSArray, quantity: Int) {
-        //setDetail("\(cartModel.productDetails.image)", title: cartModel.productDetails.title, price: cartModel.productDetails.newPrice)
-        self.cartModel = cartModel
-        self.attributes = cartModel.productDetails.attributes as [ProductAttributeModel]
-        self.availableCombinations = combinationModel
-        self.selectedValue = selectedValue as! [String]
-        self.selectedCombination = combinationModel[0].combination
-        self.maximumStock = combinationModel[0].quantity
-        
-        stocks = quantity
-        
+    func passModel(#cartModel: CartProductDetailsModel, selectedProductUnits: ProductUnitsModel) {
+        productDetailModel = cartModel
+        setDetail(productDetailModel!.image, title: productDetailModel!.title, price: selectedProductUnits.discountedPrice)
+        self.maximumStock = selectedProductUnits.quantity
+        stocks = cartModel.quantity
         checkStock(stocks)
+        selectedProductUnit = selectedProductUnits
+        self.availabilityStocksLabel.text = "Available stocks : " + String(maximumStock)
+        
+        selectedCombinations = selectedProductUnit.combination
+        
+        getAvailableCombinations()
     }
     
-    func selectedAttribute(controller: ProductAttributeTableViewCell, attributeIndex: Int, attributeValue: String!, attributeId: Int) {
-        stocks = 0
-        checkStock(stocks)
-        self.selectedValue[attributeIndex + 1] = String(attributeValue)
-//        self.selectedCombination[attributeIndex] = attributeId
-        
-        maximumStock = availableStock(selectedCombination)
-        self.availabilityStocksLabel.text = "Available stocks : " + String(availableStock(selectedCombination))
-        
-        checkStock(stocks)
+    func selectedAttribute(attributeId: String){
+        println(selectedCombinations)
+        if !contains(selectedCombinations, attributeId) {
+            selectedCombinations.append(attributeId)
+            println(checkSelectedIfAvailable(selectedCombinations))
+            updateDetails(checkSelectedIfAvailable(selectedCombinations))
+        }
+        println(selectedCombinations)
     }
     
-    func availableStock(combination: NSArray) -> Int {
-        
-        for i in 0..<availableCombinations.count {
-            println(selectedCombination)
-            if availableCombinations[i].combination == selectedCombination {
-                println("benga! > \(availableCombinations[i].quantity)")
-                return availableCombinations[i].quantity
+    func deselectedAttribute(attributeId: String) {
+        println(selectedCombinations)
+        for var i = 0; i < selectedCombinations.count; i++ {
+            if selectedCombinations[i] == attributeId {
+                selectedCombinations.removeAtIndex(i)
+                break
             }
         }
-        return 0
+        updateDetails(checkSelectedIfAvailable(selectedCombinations))
+        println(selectedCombinations)
+    }
+    
+    func getAvailableCombinations() {
+        for var i = 0; i < productDetailModel!.productUnits.count; i++ {
+            unitIDs.append(productDetailModel!.productUnits[i].productUnitId)
+            availableCombinations[productDetailModel!.productUnits[i].productUnitId] = productDetailModel!.productUnits[i].combination
+        }
+    }
+    
+    func checkSelectedIfAvailable(selectedValues: [String]) -> String {
+        var checker: [Bool] = []
+        for var i = 0; i < availableCombinations.count; i++ {
+            let tempProductUnitId: String = self.productDetailModel!.productUnits[i].productUnitId
+            if sorted(selectedValues, <) == sorted(availableCombinations[tempProductUnitId]!, <) {
+                return tempProductUnitId
+            }
+        }
+        return ""
+    }
+    
+    func updateDetails(unitId: String) {
+        if !unitId.isEmpty {
+            for tempProductUnit in productDetailModel!.productUnits {
+                if unitId == tempProductUnit.productUnitId {
+                    selectedProductUnit = tempProductUnit
+                }
+            }
+            
+            self.maximumStock = selectedProductUnit.quantity
+            stocks = productDetailModel!.quantity
+            checkStock(stocks)
+            self.availabilityStocksLabel.text = "Available stocks : " + String(maximumStock)
+        } else {
+            self.maximumStock = 0
+            stocks = 0
+            checkStock(stocks)
+            self.availabilityStocksLabel.text = "Available stocks : " + String(0)
+        }
+        
     }
     
     func checkStock(stocks: Int) {
@@ -180,11 +214,11 @@ class CartProductAttributeViewController: UIViewController, UITableViewDelegate,
             stocksLabel.text = String(stringInterpolationSegment: stocks)
         }
         
-        if stocks == 0  && maximumStock != 0 {
+        if stocks == 1  && maximumStock != 0 {
             enableButton(increaseButton)
             disableButton(decreaseButton)
             stocksLabel.alpha = 1.0
-        } else if stocks == 0  && maximumStock == 0{
+        } else if stocks == 1  && maximumStock == 0{
             stocksLabel.alpha = 0.3
             disableButton(increaseButton)
         } else if stocks == maximumStock {
@@ -199,11 +233,11 @@ class CartProductAttributeViewController: UIViewController, UITableViewDelegate,
         }
     }
     
-    func setDetail(image: String, title: String, price: Float) {
+    func setDetail(image: String, title: String, price: String) {
         
         productImageView.sd_setImageWithURL(NSURL(string: image), placeholderImage: UIImage(named: "dummy-placeholder"))
         nameLabel.text = title
-        priceLabel.text = String(format: "P %.2f", price)
+        priceLabel.text = price
     }
     
     func disableButton(button: UIButton) {

@@ -14,6 +14,7 @@ protocol ShipToTableViewCellDelegate {
 
 class ShipToTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var addressLabel: UILabel!
     @IBOutlet weak var changeAddressLabel: UILabel!
     @IBOutlet weak var defaultAddressLabel: UILabel!
     @IBOutlet weak var fakeContainerView: UIView!
