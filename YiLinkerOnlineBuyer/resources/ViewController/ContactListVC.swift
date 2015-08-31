@@ -197,7 +197,7 @@ extension ContactListVC : UISearchResultsUpdating{
     func updateSearchResultsForSearchController(searchController: UISearchController) {
         filteredContacts.removeAll(keepCapacity: false)
         
-        let searchPredicate = NSPredicate(format: "SELF.full_name CONTAINS[c] %@", searchController.searchBar.text)
+        let searchPredicate = NSPredicate(format: "SELF.fullName CONTAINS[c] %@", searchController.searchBar.text)
         
         let array = (contacts as NSArray).filteredArrayUsingPredicate(searchPredicate)
         filteredContacts = array as! [W_Contact]
