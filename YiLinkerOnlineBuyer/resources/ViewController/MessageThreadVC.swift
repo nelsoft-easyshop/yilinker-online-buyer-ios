@@ -72,8 +72,8 @@ class MessageThreadVC: UIViewController {
         self.getMessagesFromEndpoint("1", limit: "30", userId: temp)
         configureTableView()
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWasShown:"), name:UIKeyboardWillShowNotification, object: nil);
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWasHidden:"), name:UIKeyboardWillHideNotification, object: nil);
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWasShown:"), name:UIKeyboardDidShowNotification, object: nil);
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWasHidden:"), name:UIKeyboardDidHideNotification, object: nil);
 
         self.placeCustomBackImage()
         self.placeRightNavigationControllerDetails()
@@ -196,16 +196,17 @@ class MessageThreadVC: UIViewController {
             keyboardIsShown = false
             var info = notification.userInfo!
             var keyBoardEndFrame : CGRect = (info [UIKeyboardFrameEndUserInfoKey])!.CGRectValue()
-            var keyBoardBeginFrame : CGRect = (info [UIKeyboardFrameBeginUserInfoKey])!.CGRectValue()
-
+            
             var newFrame : CGRect = self.composeView.frame
             var keyboardFrameEnd : CGRect = self.composeView.convertRect(keyBoardEndFrame, toView: nil)
-            var keyboardFrameBegin : CGRect = self.composeView.convertRect(keyBoardBeginFrame, toView: nil)
-
-            newFrame.origin.y += (keyboardFrameBegin.origin.y - keyboardFrameEnd.origin.y)
+            
+            println(keyBoardEndFrame)
+            println("BEGIN = \(keyboardFrameEnd.height)")
+            newFrame.origin.y += keyboardFrameEnd.height
             self.composeView.frame = newFrame
-        
+            
             println("keyboardWasHidden")
+            
         }
     }
     
@@ -214,23 +215,15 @@ class MessageThreadVC: UIViewController {
             keyboardIsShown = true
             var info = notification.userInfo!
             var keyBoardEndFrame : CGRect = (info [UIKeyboardFrameEndUserInfoKey])!.CGRectValue()
-            var keyBoardBeginFrame : CGRect = (info [UIKeyboardFrameBeginUserInfoKey])!.CGRectValue()
-        
-        
-        //var animationCurve : UIViewAnimationCurve = (info [UIKeyboardAnimationCurveUserInfoKey])!.integerValue
-        //var animationDuration : NSTimeInterval = (info [UIKeyboardAnimationDurationUserInfoKey])?.integerValue
-
-        //UIView.beginAnimations(nil, context: nil)
-        //UIView.setAnimationDuration(animationDuration)
-        //UIView.setAnimationCurve(animationCurve)
-        
+            
             var newFrame : CGRect = self.composeView.frame
             var keyboardFrameEnd : CGRect = self.composeView.convertRect(keyBoardEndFrame, toView: nil)
-            var keyboardFrameBegin : CGRect = self.composeView.convertRect(keyBoardBeginFrame, toView: nil)
-        
-            newFrame.origin.y -= (keyboardFrameBegin.origin.y - keyboardFrameEnd.origin.y)
+            
+            println(keyBoardEndFrame)
+            println("BEGIN = \(keyboardFrameEnd.height)")
+            newFrame.origin.y -= keyboardFrameEnd.height
             self.composeView.frame = newFrame
-        
+            
             println("keyboardWasShown")
         }
     }
