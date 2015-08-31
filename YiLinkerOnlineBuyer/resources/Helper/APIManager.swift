@@ -56,6 +56,7 @@ class APIManager: AFHTTPSessionManager {
             let url: NSURL! = NSURL(string: APIAtlas.baseUrl)
             Static.instance = APIManager(baseURL: url)
             Static.instance?.securityPolicy.allowInvalidCertificates = true
+            Static.instance?.responseSerializer = JSONResponseSerializer()
         }
         
         return Static.instance!
