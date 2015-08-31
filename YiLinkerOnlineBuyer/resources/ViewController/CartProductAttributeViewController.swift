@@ -212,7 +212,11 @@ class CartProductAttributeViewController: UIViewController, UITableViewDelegate,
             stocksLabel.text = String(stringInterpolationSegment: stocks)
         }
         
-        if stocks == 1  && maximumStock != 0 {
+        if stocks == 0 && maximumStock == 0 {
+            disableButton(increaseButton)
+            disableButton(decreaseButton)
+            stocksLabel.alpha = 0.3
+        } else if stocks == 1  && maximumStock != 0 {
             enableButton(increaseButton)
             disableButton(decreaseButton)
             stocksLabel.alpha = 1.0
@@ -228,6 +232,7 @@ class CartProductAttributeViewController: UIViewController, UITableViewDelegate,
         } else if stocks > 0 || stocks < maximumStock {
             enableButton(increaseButton)
             enableButton(decreaseButton)
+        } else {
         }
     }
     
