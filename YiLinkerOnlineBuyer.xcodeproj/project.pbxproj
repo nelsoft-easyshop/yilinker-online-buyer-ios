@@ -11,6 +11,7 @@
 		0C1003F81B87690300CAA17A /* AddAddressTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C1003F61B87690300CAA17A /* AddAddressTableViewController.swift */; };
 		0C10042D1B877F8400CAA17A /* AddAddressTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C10042C1B877F8400CAA17A /* AddAddressTableViewController.xib */; };
 		0C1004301B87AB9100CAA17A /* PaymentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C10042E1B87AB9100CAA17A /* PaymentTableViewCell.swift */; };
+		0C1C3A851B9406BD00E6180D /* JSONResponseSerializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C1C3A841B9406BD00E6180D /* JSONResponseSerializer.swift */; };
 		0C2670CD1B77290200394E29 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0C2670CC1B77290200394E29 /* GoogleService-Info.plist */; };
 		0C2670CF1B772E4B00394E29 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C2670CE1B772E4B00394E29 /* Enums.swift */; };
 		0C2F44A51B848B3A00021F45 /* SummaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C2F44A31B848B3A00021F45 /* SummaryViewController.swift */; };
@@ -329,6 +330,7 @@
 		0C1003F61B87690300CAA17A /* AddAddressTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddAddressTableViewController.swift; sourceTree = "<group>"; };
 		0C10042C1B877F8400CAA17A /* AddAddressTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddAddressTableViewController.xib; sourceTree = "<group>"; };
 		0C10042E1B87AB9100CAA17A /* PaymentTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentTableViewCell.swift; sourceTree = "<group>"; };
+		0C1C3A841B9406BD00E6180D /* JSONResponseSerializer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONResponseSerializer.swift; sourceTree = "<group>"; };
 		0C25D94D1B76F81A00E9EFA6 /* YiLinkerOnlineBuyer-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "YiLinkerOnlineBuyer-Bridging-Header.h"; sourceTree = "<group>"; };
 		0C2670CC1B77290200394E29 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		0C2670CE1B772E4B00394E29 /* Enums.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
@@ -782,6 +784,7 @@
 				0C2670CE1B772E4B00394E29 /* Enums.swift */,
 				26AFB3921B79DD9100E50926 /* XibHelper.swift */,
 				0C329E721B7B2A71005BE2B6 /* Reachability.swift */,
+				0C1C3A841B9406BD00E6180D /* JSONResponseSerializer.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -1499,6 +1502,7 @@
 				79AA08331B8F4DCF00AF3AA4 /* CartProductAttributeTableViewCell.swift in Sources */,
 				0C374F5D1B8A2DBF0050AE1D /* CustomizeShoppingFlowLayout.swift in Sources */,
 				0C329E881B7B73A4005BE2B6 /* TodaysPromoViewController.swift in Sources */,
+				0C1C3A851B9406BD00E6180D /* JSONResponseSerializer.swift in Sources */,
 				0C5111D81B81CEE7002F0001 /* SellerTableHeaderView.swift in Sources */,
 				0C1004301B87AB9100CAA17A /* PaymentTableViewCell.swift in Sources */,
 				79A1C6F51B8357BA0043AA36 /* ProductResultListCollectionViewCell.swift in Sources */,
