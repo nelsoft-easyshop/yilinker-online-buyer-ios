@@ -73,12 +73,12 @@ class CartProductAttributeViewController: UIViewController, UITableViewDelegate,
         showLoader()
         manager.GET(url, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-                self.dismissLoader()
-                println(params)
-                self.dismissViewControllerAnimated(true, completion: nil)
-                if let delegate = self.delegate {
-                    delegate.pressedDoneAttribute(self)
-                }
+            self.dismissLoader()
+            println(params)
+            self.dismissViewControllerAnimated(true, completion: nil)
+            if let delegate = self.delegate {
+                delegate.pressedDoneAttribute(self)
+            }
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 println("failed: \(error)")
@@ -98,7 +98,7 @@ class CartProductAttributeViewController: UIViewController, UITableViewDelegate,
         
         var productAttribute: ProductAttributeModel = productDetailModel!.attributes[indexPath.row]
         cell.delegate = self
-        cell.passModel(productAttribute, selectedProductUnit: selectedProductUnit, availableCombination: availableCombinations, unitID: unitIDs)
+        cell.passModel(productAttribute, availableCombination: availableCombinations, unitID: unitIDs, selectedAttributes: selectedCombinations)
         return cell
     }
     
@@ -146,17 +146,15 @@ class CartProductAttributeViewController: UIViewController, UITableViewDelegate,
     }
     
     func selectedAttribute(attributeId: String){
-        println(selectedCombinations)
         if !contains(selectedCombinations, attributeId) {
             selectedCombinations.append(attributeId)
             println(checkSelectedIfAvailable(selectedCombinations))
             updateDetails(checkSelectedIfAvailable(selectedCombinations))
         }
-        println(selectedCombinations)
+        tableView.reloadData()
     }
     
     func deselectedAttribute(attributeId: String) {
-        println(selectedCombinations)
         for var i = 0; i < selectedCombinations.count; i++ {
             if selectedCombinations[i] == attributeId {
                 selectedCombinations.removeAtIndex(i)
@@ -164,7 +162,7 @@ class CartProductAttributeViewController: UIViewController, UITableViewDelegate,
             }
         }
         updateDetails(checkSelectedIfAvailable(selectedCombinations))
-        println(selectedCombinations)
+        tableView.reloadData()
     }
     
     func getAvailableCombinations() {
