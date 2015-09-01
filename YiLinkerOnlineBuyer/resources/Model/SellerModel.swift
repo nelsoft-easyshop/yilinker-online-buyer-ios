@@ -30,6 +30,7 @@ class SellerModel: NSObject {
     var store_name: String = ""
     var store_description = ""
     var is_allowed: Bool = false
+    var store_address: String = ""
     
     //For feed back seller reviews
     var rating: String = ""
@@ -60,7 +61,7 @@ class SellerModel: NSObject {
             self.reviews = reviews
     }
     
-    init(name : String, email : String, gender : String, nickname : String, contact_number : String, specialty : String, birthdate : String, store_name : String, store_description : String, avatar : NSURL, cover_photo : NSURL, is_allowed : Bool, products : [HomePageProductModel], reviews : [ProductReviewsModel]) {
+    init(name : String, email : String, gender : String, nickname : String, contact_number : String, specialty : String, birthdate : String, store_name : String, store_description : String, avatar : NSURL, cover_photo : NSURL, is_allowed : Bool, store_address: String, products : [HomePageProductModel], reviews : [ProductReviewsModel]) {
         self.name = name
         self.email = email
         self.gender = gender
@@ -75,6 +76,7 @@ class SellerModel: NSObject {
         self.is_allowed = is_allowed
         self.products = products
         self.reviews = reviews
+        self.store_address = store_address
     }
     
     init(rating : String, product_reviews: [ProductReviewsModel]){
@@ -98,7 +100,7 @@ class SellerModel: NSObject {
         var is_followed: Bool = false
         var sellerProductModel: [HomePageProductModel] = [HomePageProductModel]()
         var productReviews: [ProductReviewsModel] = [ProductReviewsModel]()
-        
+        var store_address: String = ""
         if let value: AnyObject = dictionary["data"] {
             
             if let sellerName = value["fullName"] as? String {
@@ -238,9 +240,45 @@ class SellerModel: NSObject {
                 }
             }
             
+            if let val: AnyObject = value["storeAddress"] {
+               // var reviewArray: NSDictionary = dictReviews["storeAddress"] as! NSDictionary
+                var unitNumber: String = ""
+                var bldgName: String = ""
+                var streetNumber: String = ""
+                var streetName: String = ""
+                var subdivision: String = ""
+                var zipCode: String = ""
+                /*var streetAddress: String = ""
+                var province: String = ""
+                var city: String = ""
+                var municipality: String = ""
+                var barangay: String = ""*/
+                if let temUnitNo = val["unitNumber"] as? String {
+                    unitNumber = temUnitNo
+                }
+                
+                if let temBldgNo = val["buildingName"] as? String {
+                    bldgName = temBldgNo
+                }
+                
+                if let temStreetNo = val["streetNumber"] as? String {
+                    streetNumber = temStreetNo
+                }
+                
+                if let temSubdivision = val["subdivision"] as? String {
+                    subdivision = temSubdivision
+                }
+                
+                if let temZipCode = val["zipCode"] as? String {
+                    zipCode = temZipCode
+                }
+                
+                store_address = unitNumber + " " + bldgName + ", " + streetName + ", " + subdivision + ", " + zipCode
+            }
+            
         }
         
-        let sellerModel: SellerModel = SellerModel(name: name, email: email, gender: gender, nickname: nickname, contact_number: contact_number, specialty: contact_number, birthdate: birthdate, store_name: store_name, store_description: store_description, avatar: avatar, cover_photo: cover_photo, is_allowed: is_followed, products:sellerProductModel, reviews: productReviews)
+        let sellerModel: SellerModel = SellerModel(name: name, email: email, gender: gender, nickname: nickname, contact_number: contact_number, specialty: contact_number, birthdate: birthdate, store_name: store_name, store_description: store_description, avatar: avatar, cover_photo: cover_photo, is_allowed: is_followed, store_address: store_address, products:sellerProductModel, reviews: productReviews)
         
         return sellerModel
     }
