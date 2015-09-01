@@ -74,8 +74,8 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         imageView.sd_setImageWithURL(self.sellerModel!.avatar, placeholderImage: UIImage(named: "dummy-placeholder"))
         
         sellerTableHeaderView.profileImageView.addSubview(imageView)
-        sellerTableHeaderView.sellernameLabel.text = sellerModel!.name
-        sellerTableHeaderView.addressLabel.text = sellerModel!.address
+        sellerTableHeaderView.sellernameLabel.text = sellerModel!.store_name
+        sellerTableHeaderView.addressLabel.text = sellerModel!.store_address
         
         self.tableView.tableHeaderView = sellerTableHeaderView
         self.tableView.reloadData()
@@ -225,7 +225,8 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         if indexPath.section == 0 {
             let aboutSellerTableViewCell: AboutSellerTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(Constants.Seller.aboutSellerTableViewCellNibNameAndIdentifier) as! AboutSellerTableViewCell
 //                aboutSellerTableViewCell.aboutLabel.text = self.sellerModel!.sellerAbout
-                aboutSellerTableViewCell.aboutLabel.text = "I'm Kevin Baisas, 25 years old. I sell phone accessories for iPhones and Android Devices like screen protector, flip covers, jelly cases, etc. Happy online shopping!"
+            aboutSellerTableViewCell.aboutLabel.text = self.sellerModel?.store_description
+            
             return aboutSellerTableViewCell
         } else if indexPath.section == 1 {
             let productsTableViewCell: ProductsTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(Constants.Seller.productsTableViewCellNibNameAndIdentifier) as! ProductsTableViewCell
