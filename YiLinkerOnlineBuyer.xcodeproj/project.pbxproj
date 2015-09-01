@@ -304,6 +304,8 @@
 		79E85FD21B8A230500428AA1 /* ActivityLogHeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79E85FD11B8A230500428AA1 /* ActivityLogHeaderTableViewCell.xib */; };
 		79E8F1511B8FC1B8009CE450 /* ProfileUserDetailsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79E8F1501B8FC1B8009CE450 /* ProfileUserDetailsModel.swift */; };
 		79E8F1531B9035D9009CE450 /* SearchResultModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79E8F1521B9035D9009CE450 /* SearchResultModel.swift */; };
+		79EBE8851B95F50700434B42 /* ChangePasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79EBE8831B95F50700434B42 /* ChangePasswordViewController.swift */; };
+		79EBE8861B95F50700434B42 /* ChangePasswordViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79EBE8841B95F50700434B42 /* ChangePasswordViewController.xib */; };
 		79F0DD9C1B7B17D500EB8053 /* CartModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F0DD9B1B7B17D500EB8053 /* CartModel.swift */; };
 		79F0DD9E1B7B24CB00EB8053 /* CartProductDetailsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F0DD9D1B7B24CB00EB8053 /* CartProductDetailsModel.swift */; };
 		79F2F5521B85795C00F57E4B /* WishlistModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F2F5511B85795C00F57E4B /* WishlistModel.swift */; };
@@ -629,6 +631,8 @@
 		79E85FD11B8A230500428AA1 /* ActivityLogHeaderTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ActivityLogHeaderTableViewCell.xib; sourceTree = "<group>"; };
 		79E8F1501B8FC1B8009CE450 /* ProfileUserDetailsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProfileUserDetailsModel.swift; path = YiLinkerOnlineBuyer/resources/Model/ProfileUserDetailsModel.swift; sourceTree = SOURCE_ROOT; };
 		79E8F1521B9035D9009CE450 /* SearchResultModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SearchResultModel.swift; path = YiLinkerOnlineBuyer/resources/Model/SearchResultModel.swift; sourceTree = SOURCE_ROOT; };
+		79EBE8831B95F50700434B42 /* ChangePasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChangePasswordViewController.swift; path = YiLinkerOnlineBuyer/resources/ViewController/ChangePasswordViewController.swift; sourceTree = SOURCE_ROOT; };
+		79EBE8841B95F50700434B42 /* ChangePasswordViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ChangePasswordViewController.xib; path = YiLinkerOnlineBuyer/resources/ViewController/ChangePasswordViewController.xib; sourceTree = SOURCE_ROOT; };
 		79F0DD9B1B7B17D500EB8053 /* CartModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CartModel.swift; path = YiLinkerOnlineBuyer/resources/Model/CartModel.swift; sourceTree = SOURCE_ROOT; };
 		79F0DD9D1B7B24CB00EB8053 /* CartProductDetailsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CartProductDetailsModel.swift; path = YiLinkerOnlineBuyer/resources/Model/CartProductDetailsModel.swift; sourceTree = SOURCE_ROOT; };
 		79F2F5511B85795C00F57E4B /* WishlistModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WishlistModel.swift; path = YiLinkerOnlineBuyer/resources/Model/WishlistModel.swift; sourceTree = SOURCE_ROOT; };
@@ -990,6 +994,7 @@
 				26D54FDD1B860CF400522398 /* TransactionViewController.swift */,
 				26DFF6321B8791B5005D8EDE /* TransactionViews.swift */,
 				0C9937281B750583000D6074 /* WishlistViewController.swift */,
+				79EBE8831B95F50700434B42 /* ChangePasswordViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -997,6 +1002,7 @@
 		0C9937291B750583000D6074 /* Xib */ = {
 			isa = PBXGroup;
 			children = (
+				79EBE8841B95F50700434B42 /* ChangePasswordViewController.xib */,
 				0C8D7F891B8ED95B00B3FA4E /* CheckoutContainerViewController.xib */,
 				0C374F511B89EC4D0050AE1D /* CustomizeSelectedCollectionViewCell.xib */,
 				0C374F4B1B8998F30050AE1D /* CustomizeShoppingCollectionViewCell.xib */,
@@ -1303,6 +1309,7 @@
 				0C2F44C61B8576FE00021F45 /* Panton Bold.otf in Resources */,
 				0C374F2E1B88E3790050AE1D /* PlainTableViewCell.xib in Resources */,
 				79E68BAB1B8B4EB9008626E4 /* EditProfilePersonalInformationTableViewCell.xib in Resources */,
+				79EBE8861B95F50700434B42 /* ChangePasswordViewController.xib in Resources */,
 				79A1C6F11B8329490043AA36 /* SearchSuggestionTableViewCell.xib in Resources */,
 				0C2F44CA1B8576FE00021F45 /* Panton ExtraLight.otf in Resources */,
 				0C374F351B88E3790050AE1D /* SummaryViewController.xib in Resources */,
@@ -1407,6 +1414,7 @@
 				0C9937551B750583000D6074 /* ScrollableCollectionViewCell.swift in Sources */,
 				26DFF63D1B87B0E9005D8EDE /* TransactionDescriptionView.swift in Sources */,
 				26AFB3B81B79DE3800E50926 /* ProductReviewViewController.swift in Sources */,
+				79EBE8851B95F50700434B42 /* ChangePasswordViewController.swift in Sources */,
 				26B1B8A01B86D4BD006405CE /* TransactionDetailsView.swift in Sources */,
 				0C329E801B7B7376005BE2B6 /* MessagingViewController.swift in Sources */,
 				2689FBFA1B8044CF007BEA68 /* CategoryModel.swift in Sources */,
