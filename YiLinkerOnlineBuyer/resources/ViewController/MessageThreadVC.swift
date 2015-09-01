@@ -88,6 +88,14 @@ class MessageThreadVC: UIViewController {
         
         //self.goToBottomTableView()
         
+        var tap = UITapGestureRecognizer (target: self, action: Selector("tableTapped:"))
+        self.threadTableView.addGestureRecognizer(tap)
+    }
+    
+    func tableTapped(tap : UITapGestureRecognizer){
+        var location = tap.locationInView(self.threadTableView)
+        println(location)
+        self.composeTextView.resignFirstResponder()
         
     }
     
@@ -197,14 +205,22 @@ class MessageThreadVC: UIViewController {
             var info = notification.userInfo!
             var keyBoardEndFrame : CGRect = (info [UIKeyboardFrameEndUserInfoKey])!.CGRectValue()
             
-            var newFrame : CGRect = self.composeView.frame
-            var keyboardFrameEnd : CGRect = self.composeView.convertRect(keyBoardEndFrame, toView: nil)
+            var newFrameTV : CGRect = self.composeView.frame
+            var keyboardFrameEndTV : CGRect = self.composeView.convertRect(keyBoardEndFrame, toView: nil)
+            
+            var newFrame : CGRect = self.threadTableView.frame
+            var keyboardFrameEnd : CGRect = self.threadTableView.convertRect(keyBoardEndFrame, toView: nil)
             
             UIView.animateWithDuration(0.7, delay: 0.5, options: .CurveEaseOut , animations: {
                 println(keyBoardEndFrame)
                 println("BEGIN = \(keyboardFrameEnd.height)")
-                newFrame.origin.y += keyboardFrameEnd.height
-                self.composeView.frame = newFrame
+                //newFrame = CGSize(width: newFrame.width, height: newFrame.height + keyboardFrameEnd.height)
+                var newHeight = newFrame.height + keyboardFrameEnd.height
+                newFrame = CGRectMake(0, 0, newFrame.width, newHeight)
+                self.threadTableView.frame = newFrame
+                
+                newFrameTV.origin.y += keyboardFrameEndTV.height
+                self.composeView.frame = newFrameTV
                 
                 }, completion: { finished in
                     println("keyboardWasShown")
@@ -220,13 +236,21 @@ class MessageThreadVC: UIViewController {
             var info = notification.userInfo!
             var keyBoardEndFrame : CGRect = (info [UIKeyboardFrameEndUserInfoKey])!.CGRectValue()
             
-            var newFrame : CGRect = self.composeView.frame
-            var keyboardFrameEnd : CGRect = self.composeView.convertRect(keyBoardEndFrame, toView: nil)
+            var newFrameTV : CGRect = self.composeView.frame
+            var keyboardFrameEndTV : CGRect = self.composeView.convertRect(keyBoardEndFrame, toView: nil)
+            var newFrame : CGRect = self.threadTableView.frame
+            var keyboardFrameEnd : CGRect = self.threadTableView.convertRect(keyBoardEndFrame, toView: nil)
+            
             UIView.animateWithDuration(0.7, delay: 0.5, options: .CurveEaseOut , animations: {
                     println(keyBoardEndFrame)
-                    println("BEGIN = \(keyboardFrameEnd.height)")
-                    newFrame.origin.y -= keyboardFrameEnd.height
-                    self.composeView.frame = newFrame
+                println("BEGIN = \(keyboardFrameEnd.height)")
+                //newFrame = CGSize(width: newFrame.width, height: newFrame.height - keyboardFrameEnd.height)
+                var newHeight = newFrame.height - keyboardFrameEnd.height
+                newFrame = CGRectMake(0, 0, newFrame.width, newHeight)
+                    self.threadTableView.frame = newFrame
+                
+                    newFrameTV.origin.y -= keyboardFrameEndTV.height
+                    self.composeView.frame = newFrameTV
                 
                 }, completion: { finished in
                     println("keyboardWasShown")
@@ -265,6 +289,8 @@ class MessageThreadVC: UIViewController {
             self.messages.append(W_Messages(message_id: 0, senderId: senderId, recipientId: recipientId, message: lastMessage, isImage: 0, timeSent: NSDate(), isSeen: 0, timeSeen: dateSeen!))
             
             self.threadTableView.reloadData()
+            
+            self.composeTextView.text = ""
             
             println(responseObject)
             SVProgressHUD.dismiss()
@@ -363,11 +389,11 @@ extension MessageThreadVC : UITextViewDelegate{
         }
     }
     
+    
     func textViewDidChange(textView: UITextView) {
         
         if (maximumXComposeTextView > textView.contentSize.height){
-            textView.scrollEnabled = false
-            println("TV \(textView.contentSize.height) \(composeTVConstraint.constant) \(threadTableView.frame.size) \(textView.superview?.frame.origin)")
+            //println("TV \(textView.contentSize.height) \(composeTVConstraint.constant) \(threadTableView.frame.size) \(textView.superview?.frame.origin)")
             let fixedWidth = textView.frame.size.width
             var deltaSize = textView.contentSize.height - composeTVConstraint.constant
         
@@ -378,7 +404,7 @@ extension MessageThreadVC : UITextViewDelegate{
             textView.frame = newFrame
 
             composeTVConstraint.constant = textView.contentSize.height
-        
+            
             if (deltaSize != 0) {
                 /* UIView Resize */
                 let fixedViewWidth = textView.superview?.frame.size.width
@@ -399,14 +425,14 @@ extension MessageThreadVC : UITextViewDelegate{
             
                 //self.goToBottomTableView()
             }
-        } else {
-            textView.scrollEnabled = true
         }
     }
+    
 
 }
 
-extension MessageThreadVC : UITableViewDataSource{
+extension MessageThreadVC : UITableViewDataSource, UITableViewDelegate{
+    
     
     func goToBottomTableView(){
         if(threadTableView.numberOfRowsInSection(0) > 0) {
