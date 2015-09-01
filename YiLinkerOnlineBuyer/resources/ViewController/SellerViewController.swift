@@ -58,12 +58,12 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         sellerTableHeaderView.coverPhotoImageView.sd_setImageWithURL(self.sellerModel!.coverPhoto, placeholderImage: UIImage(named: "dummy-placeholder"))
         
-        if self.is_successful && self.sellerTableHeaderView.followButton.highlighted {
+        if self.is_successful {
             self.sellerTableHeaderView.followButton.layer.borderColor = Constants.Colors.grayLine.CGColor
             self.sellerTableHeaderView.followButton.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
             self.sellerTableHeaderView.followButton.backgroundColor = UIColor.clearColor()
             self.sellerTableHeaderView.followButton.setTitle("FOLLOWING", forState: UIControlState.Normal)
-        } else if !(self.is_successful && self.sellerTableHeaderView.followButton.highlighted){
+        } else if !(self.is_successful){
             self.sellerTableHeaderView.followButton.backgroundColor = Constants.Colors.appTheme
             self.sellerTableHeaderView.followButton.borderColor = UIColor.clearColor()
             self.sellerTableHeaderView.followButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
@@ -127,7 +127,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
             self.followSellerModel = FollowedSellerModel.parseFollowSellerDataWithDictionary(responseObject as! NSDictionary)
             //self.populateData()
             self.is_successful = true
-            self.sellerTableHeaderView.followButton.highlighted = true
+            self.sellerTableHeaderView.followButton.tag = 1
             println("result after ff: \(self.is_successful)")
             println("button after ff: \(self.sellerTableHeaderView.followButton.selected)")
             println(self.followSellerModel?.message)
@@ -144,13 +144,13 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
                     self.followSellerModel = FollowedSellerModel.parseFollowSellerDataWithDictionary(error.userInfo as! Dictionary<String, AnyObject>)
                     println(self.followSellerModel?.message)
                     self.is_successful = true
-                    self.sellerTableHeaderView.followButton.highlighted = true
+                    self.sellerTableHeaderView.followButton.tag = 1
                     println("result after ff error block: \(self.is_successful)")
                     println("button after ff error block: \(self.sellerTableHeaderView.followButton.highlighted)")
                 } else {
                     UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
                     self.is_successful = false
-                    self.sellerTableHeaderView.followButton.highlighted = false
+                    self.sellerTableHeaderView.followButton.tag = 2
                 }
         })
        
@@ -170,7 +170,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 print(self.followSellerModel?.error_description)
                 SVProgressHUD.dismiss()
                 self.is_successful = false
-                self.sellerTableHeaderView.followButton.highlighted = false
+                self.sellerTableHeaderView.followButton.tag = 2
                 println("result after uff: \(self.is_successful)")
                 println("button after uff: \(self.sellerTableHeaderView.followButton.highlighted)")
                 println(self.followSellerModel?.isSuccessful)
@@ -182,11 +182,11 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
                     self.followSellerModel = FollowedSellerModel.parseFollowSellerDataWithDictionary(error.userInfo as! Dictionary<String, AnyObject>)
                     print(self.followSellerModel?.message)
                     self.is_successful = false
-                    self.sellerTableHeaderView.followButton.highlighted = false
+                    self.sellerTableHeaderView.followButton.tag = 2
                 } else {
                     UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
                     self.is_successful = false
-                    self.sellerTableHeaderView.followButton.highlighted = false
+                    self.sellerTableHeaderView.followButton.tag = 2
                 }
         })
     }
@@ -291,9 +291,13 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         sellerTableHeaderView.delegate = self
         println("result: \(self.is_successful)")
         println("button: \(self.sellerTableHeaderView.followButton.selected)")
-        if self.is_successful && self.sellerTableHeaderView.followButton.highlighted {
-            
-            self.sellerTableHeaderView.followButton.highlighted = false
+        if self.is_successful {
+            self.sellerTableHeaderView.followButton.tag = 1
+        } else {
+            self.sellerTableHeaderView.followButton.tag = 2
+        }
+        if self.sellerTableHeaderView.followButton.tag == 1 {
+            self.sellerTableHeaderView.followButton.tag = 2
             self.sellerTableHeaderView.followButton.backgroundColor = Constants.Colors.appTheme
             self.sellerTableHeaderView.followButton.borderColor = UIColor.clearColor()
             self.sellerTableHeaderView.followButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
@@ -301,10 +305,9 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
              self.sellerTableHeaderView.followButton.setTitle("FOLLOW", forState: UIControlState.Normal)
             fireUnfollowSeller()
         } else {
-            //self.sellerTableHeaderView.followButton.selected = true
-            self.sellerTableHeaderView.followButton.highlighted = true
+            self.sellerTableHeaderView.followButton.tag = 1
             self.sellerTableHeaderView.followButton.layer.borderColor = Constants.Colors.grayLine.CGColor
-            self.sellerTableHeaderView.followButton.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
+            self.sellerTableHeaderView.followButton.setTitleColor(UIColor.grayColor(), forState: UIControlState.Normal)
             self.sellerTableHeaderView.followButton.backgroundColor = UIColor.clearColor()
 
             self.sellerTableHeaderView.followButton.setTitle("FOLLOWING", forState: UIControlState.Normal)
