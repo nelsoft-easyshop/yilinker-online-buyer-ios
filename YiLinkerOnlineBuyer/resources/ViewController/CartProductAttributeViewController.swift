@@ -10,7 +10,7 @@ import UIKit
 
 protocol CartProductAttributeViewControllerDelegate {
     func pressedCancelAttribute(controller: CartProductAttributeViewController)
-    func pressedDoneAttribute(controller: CartProductAttributeViewController)
+    func pressedDoneAttribute(controller: CartProductAttributeViewController, productID: Int, unitID: Int, itemID: Int, quantity: Int)
 }
 
 class CartProductAttributeViewController: UIViewController, UITableViewDelegate, CartProductAttributeTableViewCellDelegate {
@@ -61,32 +61,6 @@ class CartProductAttributeViewController: UIViewController, UITableViewDelegate,
         self.dimView.backgroundColor = .clearColor()
     }
     
-    func fireEditCartItem(url: String, quantity: Int!) {
-        
-        var params = Dictionary<String, String>()
-        
-        params["access_token"] = SessionManager.accessToken()
-        params["productId"] = "\(productDetailModel?.id)"
-        params["unitId"] = "\(productDetailModel?.unitId)"
-        params["quantity"] = "\(productDetailModel?.quantity)"
-        
-        showLoader()
-        manager.GET(url, parameters: params, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            self.dismissLoader()
-            println(params)
-            self.dismissViewControllerAnimated(true, completion: nil)
-            if let delegate = self.delegate {
-                delegate.pressedDoneAttribute(self)
-            }
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                println("failed: \(error)")
-                self.dismissLoader()
-        })
-    }
-    
-    
     // MARK: - Table View Data Source
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -126,7 +100,10 @@ class CartProductAttributeViewController: UIViewController, UITableViewDelegate,
     }
     
     @IBAction func doneAction(sender: AnyObject!) {
-        fireEditCartItem("https://demo3526363.mockable.io/api/v1/auth/cart/updateCartItem", quantity: stocks)
+        self.dismissViewControllerAnimated(true, completion: nil)
+        var productID = productDetailModel?.id.toInt()!
+        var itemID = productDetailModel?.itemId
+        delegate?.pressedDoneAttribute(self, productID: productID!, unitID: selectedProductUnit.productUnitId.toInt()!, itemID: itemID!, quantity: stocks)
     }
     
     // MARK: - Methods
@@ -232,6 +209,7 @@ class CartProductAttributeViewController: UIViewController, UITableViewDelegate,
         } else if stocks > 0 || stocks < maximumStock {
             enableButton(increaseButton)
             enableButton(decreaseButton)
+            stocksLabel.alpha = 1.0
         } else {
         }
     }
