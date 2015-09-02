@@ -9,3 +9,7 @@
 #import <GoogleSignIn/GoogleSignIn.h>
 #import <SVProgressHUD/SVProgressHUD.h>
 #import <TTRangeSlider/TTRangeSlider.h>
+
+#define MR_SHORTHAND
+
+#import <CoreData+MagicalRecord.h>

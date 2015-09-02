@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 class WishlistViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, WishlistTableViewCellDelegate, EmptyViewDelegate {
     
@@ -138,12 +139,35 @@ class WishlistViewController: UIViewController, UITableViewDelegate, UITableView
     
     func populateTableView(responseObject: AnyObject) {
         tableData.removeAll(keepCapacity: false)
+        
+        var context = NSManagedObjectContext.defaultContext()
+        
+        var fetchRequest = NSFetchRequest(entityName: "Wishlist")
+        
+        
         if let value: AnyObject = responseObject["data"] {
             for subValue in value["items"] as! NSArray {
                 println(subValue)
                 let model: WishlistProductDetailsModel = WishlistProductDetailsModel.parseDataWithDictionary(subValue as! NSDictionary)
                 
                 self.tableData.append(model)
+                
+                fetchRequest.predicate = NSPredicate(format: "productId = %@", model.id)
+                
+                if let fetchResults = context.executeFetchRequest(fetchRequest, error: nil) as? [NSManagedObject] {
+                    if fetchResults.count != 0{
+                        
+                        var managedObject = fetchResults[0]
+                        managedObject.setValue("\(subValue)", forKey: "item")
+                        
+                        context.save(nil)
+                    } else {
+                        let wishlist: Wishlist = Wishlist.createEntity() as! Wishlist
+                        wishlist.productId = Int32(model.id.toInt()!)
+                        wishlist.item = "\(subValue)"
+                        NSManagedObjectContext.defaultContext().saveToPersistentStoreAndWait()
+                    }
+                }
             }
             self.wishlistTableView.reloadData()
         }
@@ -156,6 +180,9 @@ class WishlistViewController: UIViewController, UITableViewDelegate, UITableView
         } else {
             (self.tabBarController!.tabBar.items![3] as! UITabBarItem).badgeValue = nil
         }
+        
+        var wishlists: [Wishlist] = Wishlist.findAll() as! [Wishlist]
+        println("Number of wishlist: \(wishlists.count)")
     }
     
     func updateCounterLabel() {
