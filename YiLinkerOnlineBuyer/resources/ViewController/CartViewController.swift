@@ -28,6 +28,8 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
     
      var emptyView: EmptyView?
     
+    var selectedItemIDs: [Int] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         manager = APIManager.sharedInstance
@@ -52,6 +54,7 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(true)
+        selectedItemIDs = []
         if emptyView != nil {
             emptyView?.hidden = true
         }
@@ -61,6 +64,13 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     @IBAction func buttonClicked(sender: AnyObject) {
+        if sender as! UIButton == checkoutButton {
+            if selectedItemIDs.count == 0 {
+                showAlert("Error", message: "Choose item from your cart.", redirectToHome: false)
+            } else {
+                firePassCartItem(APIAtlas.updateCheckout, params: NSDictionary(dictionary: ["cart": selectedItemIDs, "access_token": SessionManager.accessToken()]))
+            }
+        }
     }
     
     //REST API request
@@ -76,6 +86,27 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
         } else {
             addEmptyView()
         }
+    }
+    
+    func firePassCartItem(url: String, params: NSDictionary!) {
+        showLoader()
+        manager.POST(url, parameters: params, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in print(responseObject as! NSDictionary)
+            if responseObject.objectForKey("error") != nil {
+                self.requestRefreshToken("passCart", url: url, params: params)
+            } else {
+                let checkout = CheckoutContainerViewController(nibName: "CheckoutContainerViewController", bundle: nil)
+                let navigationController: UINavigationController = UINavigationController(rootViewController: checkout)
+                navigationController.navigationBar.barTintColor = Constants.Colors.appTheme
+                self.tabBarController?.presentViewController(navigationController, animated: true, completion: nil)
+                self.dismissLoader()
+            }
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                println(error)
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong. . .", title: "Error")
+                self.dismissLoader()
+        })
     }
     
     func fireDeleteCartItem(url: String, params: NSDictionary!) {
@@ -328,6 +359,15 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         tableData[rowOfTheCell].selected = state
 
+        let tempItemId = tableData[rowOfTheCell].itemId
+        if state {
+            selectedItemIDs.append(tempItemId)
+        } else {
+            selectedItemIDs = selectedItemIDs.filter({$0 != tempItemId})
+        }
+        
+        println("selectedItemIDs  \(selectedItemIDs)")
+        
         calculateTotalPrice()
     }
     
@@ -358,7 +398,7 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
             
             fireAddToCartItem(APIAtlas.updateCartUrl, params: params)
         } else {
-            showAlert("Connection Unreachable", message: "Cannot retrieve data. Please check your internet connection.")
+            showAlert("Connection Unreachable", message: "Cannot retrieve data. Please check your internet connection.", redirectToHome: false)
         }
         
         UIView.animateWithDuration(0.3, animations: {
@@ -384,14 +424,16 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
     }
     
-    func showAlert(title: String, message: String) {
+    func showAlert(title: String, message: String, redirectToHome: Bool) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
         
         let OKAction = UIAlertAction(title: "OK", style: .Default) { (action) in
             alertController.dismissViewControllerAnimated(true, completion: nil)
             
-            let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-            appDelegate.changeRootToHomeView()
+            if redirectToHome {
+                let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+                appDelegate.changeRootToHomeView()
+            }
         }
         
         alertController.addAction(OKAction)
@@ -423,9 +465,11 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
                     self.fireAddToCartItem(url, params: params)
                 } else if type == "deleteWishlist" {
                     self.fireDeleteCartItem(url, params: params)
+                } else if type == "passCart" {
+                    self.firePassCartItem(url, params: params)
                 }
             } else {
-                self.showAlert("Error", message: responseObject["message"] as! String)
+                self.showAlert("Error", message: responseObject["message"] as! String, redirectToHome: true)
             }
             
             }, failure: {
