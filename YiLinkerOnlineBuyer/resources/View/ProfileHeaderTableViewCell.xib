@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -17,8 +17,8 @@
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dummy-placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="YxS-Ec-ogK" userLabel="Image">
                         <rect key="frame" x="137" y="23" width="100" height="100"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="100" id="Ta3-gK-VVf"/>
-                            <constraint firstAttribute="height" constant="100" id="zQE-BT-jzS"/>
+                            <constraint firstAttribute="width" constant="100" id="Hxy-UZ-VcU"/>
+                            <constraint firstAttribute="height" constant="100" id="Tnt-7t-fpj"/>
                         </constraints>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -29,7 +29,7 @@
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="miu-nT-oet" userLabel="Address">
                         <rect key="frame" x="8" y="151" width="359" height="15"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="15" id="IrK-YZ-50i"/>
+                            <constraint firstAttribute="height" constant="15" id="e7N-py-yFz"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
@@ -38,7 +38,7 @@
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dmm-Px-9s3" userLabel="Name">
                         <rect key="frame" x="8" y="131" width="359" height="20"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="20" id="jzl-gp-2Pf"/>
+                            <constraint firstAttribute="height" constant="20" id="pKm-U4-QM0"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
@@ -46,16 +46,14 @@
                     </label>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="miu-nT-oet" firstAttribute="top" secondItem="Dmm-Px-9s3" secondAttribute="bottom" id="04V-4C-nwm"/>
-                    <constraint firstItem="miu-nT-oet" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="5PU-Gc-vzd"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="miu-nT-oet" secondAttribute="bottom" constant="25" id="NAn-rH-H7T"/>
-                    <constraint firstItem="miu-nT-oet" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="Qyz-YX-jvk"/>
-                    <constraint firstAttribute="centerX" secondItem="YxS-Ec-ogK" secondAttribute="centerX" id="d5q-jP-8XS"/>
-                    <constraint firstItem="Dmm-Px-9s3" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="fDe-lE-UJv"/>
-                    <constraint firstItem="Dmm-Px-9s3" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="fc8-rm-bt4"/>
-                    <constraint firstItem="Dmm-Px-9s3" firstAttribute="top" secondItem="YxS-Ec-ogK" secondAttribute="bottom" constant="8" id="oGq-Ks-Gty"/>
-                    <constraint firstItem="YxS-Ec-ogK" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="15" id="rP9-fc-p7m"/>
-                    <constraint firstItem="miu-nT-oet" firstAttribute="top" secondItem="Dmm-Px-9s3" secondAttribute="bottom" id="w8H-yR-bME"/>
+                    <constraint firstItem="Dmm-Px-9s3" firstAttribute="top" secondItem="YxS-Ec-ogK" secondAttribute="bottom" constant="8" id="19Q-dw-t6V"/>
+                    <constraint firstItem="miu-nT-oet" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="2b9-No-rdE"/>
+                    <constraint firstItem="Dmm-Px-9s3" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="Ben-p4-yCo"/>
+                    <constraint firstItem="Dmm-Px-9s3" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="KMh-x1-JK5"/>
+                    <constraint firstItem="miu-nT-oet" firstAttribute="top" secondItem="Dmm-Px-9s3" secondAttribute="bottom" id="PSc-ab-Mf8"/>
+                    <constraint firstItem="miu-nT-oet" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="gzd-Gr-hqa"/>
+                    <constraint firstItem="YxS-Ec-ogK" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="15" id="nPZ-LR-DlD"/>
+                    <constraint firstAttribute="centerX" secondItem="YxS-Ec-ogK" secondAttribute="centerX" id="us0-rM-CvY"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>

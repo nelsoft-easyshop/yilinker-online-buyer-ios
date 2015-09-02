@@ -189,6 +189,10 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         self.navigationController?.pushViewController(myPointsViewController, animated:true)
     }
     
+    func resolutionTapAction() {
+        
+    }
+    
     func settingsTapAction(){
         var settingsViewController = ProfileSettingsViewController(nibName: "ProfileSettingsViewController", bundle: nil)
         self.navigationController?.pushViewController(settingsViewController, animated:true)
