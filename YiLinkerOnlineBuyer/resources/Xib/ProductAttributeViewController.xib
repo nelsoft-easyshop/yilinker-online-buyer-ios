@@ -335,7 +335,7 @@
         </view>
     </objects>
     <resources>
-        <image name="dummy-placeholder" width="1280" height="800"/>
+        <image name="dummy-placeholder" width="300" height="188"/>
         <image name="minus" width="200" height="200"/>
         <image name="plus" width="200" height="200"/>
     </resources>

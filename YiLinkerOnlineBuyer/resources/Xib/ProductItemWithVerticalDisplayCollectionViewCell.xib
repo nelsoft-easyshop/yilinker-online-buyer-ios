@@ -15,7 +15,7 @@
                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dummy-placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="zZw-Ck-UbU">
                         <rect key="frame" x="0.0" y="0.0" width="233" height="168"/>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="P 2,500" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QPJ-Yi-w7v" customClass="DynamicRoundedLabel" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="P 2,500" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="6" translatesAutoresizingMaskIntoConstraints="NO" id="QPJ-Yi-w7v" customClass="DynamicRoundedLabel" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
                         <rect key="frame" x="8" y="197" width="76" height="18"/>
                         <color key="backgroundColor" red="0.35294117650000001" green="0.1215686275" blue="0.45882352939999999" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -31,7 +31,7 @@
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="P 3,000" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BGN-cG-IEZ" customClass="DiscountLabel" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="P 3,000" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="6" translatesAutoresizingMaskIntoConstraints="NO" id="BGN-cG-IEZ" customClass="DiscountLabel" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
                         <rect key="frame" x="97" y="196" width="147" height="21"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="147" id="cQV-yv-Dha"/>
@@ -41,7 +41,7 @@
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="F-Stop Watch" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nh6-uz-CLV">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="F-Stop Watch" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="6" translatesAutoresizingMaskIntoConstraints="NO" id="nh6-uz-CLV">
                         <rect key="frame" x="8" y="173" width="217" height="21"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="21" id="He5-x4-Lzp"/>
@@ -50,7 +50,7 @@
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10 % OFF" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BZ1-g8-7Td" customClass="DynamicRoundedLabel" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10 % OFF" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="6" translatesAutoresizingMaskIntoConstraints="NO" id="BZ1-g8-7Td" customClass="DynamicRoundedLabel" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
                         <rect key="frame" x="9" y="12" width="75" height="21"/>
                         <color key="backgroundColor" red="0.89631470960000004" green="0.029226388759999999" blue="0.12704667019999999" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -96,6 +96,6 @@
         </collectionViewCell>
     </objects>
     <resources>
-        <image name="dummy-placeholder" width="1280" height="800"/>
+        <image name="dummy-placeholder" width="300" height="188"/>
     </resources>
 </document>

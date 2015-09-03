@@ -43,9 +43,10 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     var selectedName: [String] = []
     var selectedValue: [String] = []
     var selectedId: [String] = []
-
+    
     var unitId: String = "1"
     var productId: String = "0"
+    var quantity: Int = 1
     
     var newFrame: CGRect!
     var visibility = 0.0
@@ -553,8 +554,12 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         selectedName = []
         selectedValue = []
         selectedId = []
-        //        selectedName.append("Quantity")
-        //        selectedValue.append(String(combinationModel[0].quantity) + "x")
+        selectedName.append("Quantity")
+        if quantity == 0 {
+            selectedValue.append(String(self.quantity) + "x")
+        } else {
+            selectedValue.append(String(quantity) + "x")
+        }
         
         let index: Int = unitId.toInt()! - 1
         println(index)
@@ -567,23 +572,25 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
                 }
             }
         }
+
+        createAttributesLabel(selectedName.count, name: selectedName, value: selectedValue)
         
-        var tempSelectedName: [String] = ["Quantity"]
-        var tempSelectedValue: [String] = [String(quantity) + "x"]
-        var tempSelectedId: [String] = [""]
-        
-        for i in 0..<self.selectedName.count {
-            tempSelectedName.append(selectedName[i])
-            tempSelectedValue.append(selectedValue[i])
-        }
-        
-        if quantity == 0 {
-            createAttributesLabel(selectedName.count, name: selectedName, value: selectedValue)
-        } else if quantity > 0 {
-            createAttributesLabel(selectedName.count + 1, name: tempSelectedName, value: tempSelectedValue)
-        } else {
-            println("ProductViewController - setAttributes")
-        }
+//        var tempSelectedName: [String] = ["Quantity"]
+//        var tempSelectedValue: [String] = [String(quantity) + "x"]
+//        var tempSelectedId: [String] = [""]
+//        
+//        for i in 0..<self.selectedName.count {
+//            tempSelectedName.append(selectedName[i])
+//            tempSelectedValue.append(selectedValue[i])
+//        }
+//        
+//        if quantity == 0 {
+//            createAttributesLabel(selectedName.count, name: selectedName, value: selectedValue)
+//        } else if quantity > 0 {
+//            createAttributesLabel(selectedName.count + 1, name: tempSelectedName, value: tempSelectedValue)
+//        } else {
+//            println("ProductViewController - setAttributes")
+//        }
     }
     
     func createAttributesLabel(numberOfAttributes: Int, name: NSArray, value: NSArray) {
@@ -677,7 +684,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         attributeModal.definesPresentationContext = true
         attributeModal.view.backgroundColor = UIColor.clearColor()
         attributeModal.view.frame.origin.y = attributeModal.view.frame.size.height
-        attributeModal.passModel(productDetailsModel: productDetailsModel, selectedValue: selectedValue, selectedId: selectedId, unitId: unitId.toInt()!)
+        attributeModal.passModel(productDetailsModel: productDetailsModel, selectedValue: selectedValue, selectedId: selectedId, unitId: unitId.toInt()!, quantity: self.quantity)
         attributeModal.setTitle = title
         attributeModal.tabController = self.tabController
         attributeModal.screenWidth = self.view.frame.width
@@ -722,6 +729,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     func doneActionPassDetailsToProductView(controller: ProductAttributeViewController, unitId: String, quantity: Int, selectedId: NSArray) {
         self.unitId = unitId
         self.selectedId = selectedId as! [String]
+        self.quantity = quantity
         self.setAttributes(self.productDetailsModel.attributes, productUnits: self.productDetailsModel.productUnits, unitId: unitId, quantity: quantity)
     }
 

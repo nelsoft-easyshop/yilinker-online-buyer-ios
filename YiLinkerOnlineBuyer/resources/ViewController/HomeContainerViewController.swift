@@ -31,7 +31,8 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     var curentCollectionViewController: Int = 0
     
     var emptyView: EmptyView?
-    
+    var hud: MBProgressHUD?
+    var profileModel: ProfileUserDetailsModel = ProfileUserDetailsModel()
     var customTabBarController: CustomTabBarController?
     
     override func viewDidLoad() {
@@ -45,9 +46,6 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         self.tabBarController!.delegate = self
         self.addSuHeaderScrollView()
         if Reachability.isConnectedToNetwork() {
-            if SessionManager.isLoggedIn() {
-                self.fireGetUserInfo()
-            }
             self.fireGetHomePageData()
         } else {
             self.addEmptyView()
@@ -103,9 +101,9 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             animatedViewController!.view.backgroundColor = UIColor.clearColor()
             
             if SessionManager.accessToken() != "" {
-                var buttonImages: [String] = ["help", "following", "message", "customize-shopping", "promo", "category", SessionManager.profileImageStringUrl()]
+                var buttonImages: [String] = ["help", "following", "message", "customize-shopping", "promo", "category", self.profileModel.profileImageUrl]
                 var buttonTitles: [String] = ["HELP", "FOLLOWED SELLER", "MESSAGING", "CUSTOMIZE SHOPPING", "TODAY'S PROMO", "CATEGORIES", "LOGOUT"]
-                var buttonRightText: [String] = ["", "", "You have 1 unread message", "", "", "", "Jessica Joe \nMetro Manila, City"]
+                var buttonRightText: [String] = ["", "", "You have 1 unread message", "", "", "", "\(self.profileModel.firstName) \(self.profileModel.lastName) \n\(self.profileModel.address.streetAddress) \(self.profileModel.address.subdivision)"]
                 
                 animatedViewController?.buttonImages = buttonImages
                 animatedViewController?.buttonTitles = buttonTitles
@@ -232,16 +230,19 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     }
     
     func fireGetHomePageData() {
-        SVProgressHUD.show()
-        SVProgressHUD.setBackgroundColor(UIColor.whiteColor())
+        self.showHUD()
         let manager = APIManager.sharedInstance
         manager.GET(APIAtlas.homeUrl, parameters: nil, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
                 self.populateHomePageWithDictionary(responseObject as! NSDictionary)
-            SVProgressHUD.dismiss()
+                self.hud?.hide(true)
+                //get user info
+                if SessionManager.isLoggedIn() {
+                    self.fireGetUserInfo()
+                }
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                SVProgressHUD.dismiss()
+                self.hud?.hide(true)
                 self.addEmptyView()
         })
 
@@ -311,12 +312,13 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         //seller@easyshop.ph
         //password
         let parameters: NSDictionary = ["access_token": SessionManager.accessToken()]
-        
+        self.showHUD()
         manager.POST(APIAtlas.getUserInfoUrl, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             SVProgressHUD.dismiss()
-            let profileModel: ProfileModel = ProfileModel.pareseDataFromResponseObject(responseObject as! NSDictionary)
-            println(profileModel.name)
+            let dictionary: NSDictionary = responseObject as! NSDictionary
+            self.profileModel = ProfileUserDetailsModel.parseDataWithDictionary(dictionary["data"]!)
+            self.hud?.hide(true)
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
@@ -327,7 +329,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                     UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
                 }
                 
-                SVProgressHUD.dismiss()
+                self.hud?.hide(true)
         })
     }
     
@@ -353,5 +355,17 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
 
     }
     
-
+    //Show HUD
+    func showHUD() {
+        if self.hud != nil {
+            self.hud!.hide(true)
+            self.hud = nil
+        }
+        
+        self.hud = MBProgressHUD(view: self.view)
+        self.hud?.removeFromSuperViewOnHide = true
+        self.hud?.dimBackground = false
+        self.view.addSubview(self.hud!)
+        self.hud?.show(true)
+    }
 }
