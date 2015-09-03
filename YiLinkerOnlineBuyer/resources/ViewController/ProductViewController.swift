@@ -63,7 +63,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     
     var emptyView: EmptyView?
     
-    let productUrl = "http://online.api.easydeal.ph/api/v1/product/getProductDetail?productId=1"
+    let productUrl = "http://online.api.easydeal.ph/api/v1/product/getProductDetail?productId=12"
     let reviewUrl = "http://online.api.easydeal.ph/api/v1/product/getProductReviews"
     let sellerUrl = "http://online.api.easydeal.ph/api/v1/user/getStoreInfo"
     

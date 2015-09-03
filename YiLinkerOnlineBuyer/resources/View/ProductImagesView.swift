@@ -30,7 +30,7 @@ class ProductImagesView: UIView, UICollectionViewDataSource, UICollectionViewDel
     @IBOutlet weak var priceLabel: UILabel!
     @IBOutlet weak var originalPrice: UILabel!
     
-    var images: NSArray = []
+    var images: [String] = []
     var width: CGFloat = 0
     
     var delegate: ProductImagesViewDelegate?
@@ -76,7 +76,7 @@ class ProductImagesView: UIView, UICollectionViewDataSource, UICollectionViewDel
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell: ProductSellerViewCollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier("productSellerIdentifier", forIndexPath: indexPath) as! ProductSellerViewCollectionViewCell
         
-        cell.setImage(self.images[indexPath.row] as! String)
+        cell.setImage(self.images[indexPath.row] as String)
         
         return cell
     }
@@ -140,7 +140,8 @@ class ProductImagesView: UIView, UICollectionViewDataSource, UICollectionViewDel
         
         self.width = width
         
-        self.images = model.productUnits[unitId].imageIds
+        self.images.append(model.images[0].imageLocation)//model.productUnits[unitId].imageIds
+    
         if self.images.count == 0 {
             self.images = ["", "", "", "", ""]
         }
