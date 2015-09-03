@@ -230,6 +230,7 @@
 		26D54FE01B860CF400522398 /* TransactionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26D54FDE1B860CF400522398 /* TransactionViewController.xib */; };
 		26D54FE71B86136300522398 /* TransactionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26D54FE51B86136300522398 /* TransactionTableViewCell.swift */; };
 		26D54FE81B86136300522398 /* TransactionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26D54FE61B86136300522398 /* TransactionTableViewCell.xib */; };
+		26DB062E1B981CF300D38EA8 /* ProductImagesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26DB062D1B981CF300D38EA8 /* ProductImagesModel.swift */; };
 		26DFF6301B879126005D8EDE /* TransactionProductDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26DFF62E1B879126005D8EDE /* TransactionProductDetailsViewController.swift */; };
 		26DFF6311B879126005D8EDE /* TransactionProductDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26DFF62F1B879126005D8EDE /* TransactionProductDetailsViewController.xib */; };
 		26DFF6341B8791B5005D8EDE /* TransactionViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26DFF6321B8791B5005D8EDE /* TransactionViews.swift */; };
@@ -583,6 +584,7 @@
 		26D54FDE1B860CF400522398 /* TransactionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TransactionViewController.xib; path = YiLinkerOnlineBuyer/resources/ViewController/TransactionViewController.xib; sourceTree = SOURCE_ROOT; };
 		26D54FE51B86136300522398 /* TransactionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TransactionTableViewCell.swift; path = YiLinkerOnlineBuyer/resources/ViewController/TransactionTableViewCell.swift; sourceTree = SOURCE_ROOT; };
 		26D54FE61B86136300522398 /* TransactionTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TransactionTableViewCell.xib; path = YiLinkerOnlineBuyer/resources/ViewController/TransactionTableViewCell.xib; sourceTree = SOURCE_ROOT; };
+		26DB062D1B981CF300D38EA8 /* ProductImagesModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProductImagesModel.swift; path = YiLinkerOnlineBuyer/resources/Model/ProductImagesModel.swift; sourceTree = SOURCE_ROOT; };
 		26DFF62E1B879126005D8EDE /* TransactionProductDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TransactionProductDetailsViewController.swift; path = YiLinkerOnlineBuyer/resources/ViewController/TransactionProductDetailsViewController.swift; sourceTree = SOURCE_ROOT; };
 		26DFF62F1B879126005D8EDE /* TransactionProductDetailsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TransactionProductDetailsViewController.xib; path = YiLinkerOnlineBuyer/resources/ViewController/TransactionProductDetailsViewController.xib; sourceTree = SOURCE_ROOT; };
 		26DFF6321B8791B5005D8EDE /* TransactionViews.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TransactionViews.swift; path = YiLinkerOnlineBuyer/resources/ViewController/TransactionViews.swift; sourceTree = SOURCE_ROOT; };
@@ -884,6 +886,7 @@
 				26C285471B8FF546005EBD3A /* CityModel.swift */,
 				26C285491B8FF555005EBD3A /* BarangayModel.swift */,
 				79E8F1521B9035D9009CE450 /* SearchResultModel.swift */,
+				26DB062D1B981CF300D38EA8 /* ProductImagesModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1662,6 +1665,7 @@
 				F7CCDAA11B943CF7000F5AD4 /* ProductResultListCollectionViewCell.swift in Sources */,
 				0C99375E1B750583000D6074 /* HomePageCollectionViewController.swift in Sources */,
 				0C374EF81B88552E0050AE1D /* PaymentWebViewViewController.swift in Sources */,
+				26DB062E1B981CF300D38EA8 /* ProductImagesModel.swift in Sources */,
 				79E68B751B8AC390008626E4 /* ActivityLogTableViewCell.swift in Sources */,
 				F7CCDAA51B943CF7000F5AD4 /* ProductImagesViewCollectionViewCell.swift in Sources */,
 				0C1003F81B87690300CAA17A /* AddAddressTableViewController.swift in Sources */,
