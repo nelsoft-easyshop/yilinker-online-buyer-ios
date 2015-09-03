@@ -11,7 +11,9 @@ import UIKit
 class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
     
     let manager = APIManager.sharedInstance
-
+    
+    var searchTask: NSURLSessionDataTask?
+    
     let viewControllerIndex = 1
     
     @IBOutlet weak var searchBar: UISearchBar!
@@ -21,10 +23,10 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         self.initializeViews()
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -55,9 +57,15 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func requestSearch(url: String, params: NSDictionary!) {
+        
+        if (self.searchTask != nil) {
+            searchTask?.cancel()
+            searchTask = nil
+            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+        }
+        
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
-        manager.operationQueue.cancelAllOperations()
-        manager.GET(url, parameters: params, success: {
+        searchTask = manager.GET(url, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in print(responseObject as! NSDictionary)
             if responseObject.objectForKey("error") != nil {
             } else {
@@ -67,10 +75,41 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 println(error)
-                self.showAlert("Error", message: "Something went wrong. . .")
-                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                
+                if (task.response as? NSHTTPURLResponse != nil) {
+                    let response: NSHTTPURLResponse  = task.response as! NSHTTPURLResponse
+                    
+                    let statusCode: Int = response.statusCode
+                    println("STATUS CODE \(statusCode)")
+                    if(statusCode != -999) {
+                        self.showAlert("Error", message: "Something went wrong. . .")
+                        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                    } else {
+                        self.requestSearch(url, params: params)
+                    }
+                }
         })
+        
+        
     }
+    
+    //        func requestSearch(url: String, params: NSDictionary!) {
+    //            UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+    //            manager.operationQueue.cancelAllOperations()
+    //            manager.GET(url, parameters: params, success: {
+    //                (task: NSURLSessionDataTask!, responseObject: AnyObject!) in print(responseObject as! NSDictionary)
+    //                if responseObject.objectForKey("error") != nil {
+    //                } else {
+    //                    self.populateTableView(responseObject)
+    //                }
+    //                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+    //                }, failure: {
+    //                    (task: NSURLSessionDataTask!, error: NSError!) in
+    //                    println(error)
+    //                    self.showAlert("Error", message: "Something went wrong. . .")
+    //                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+    //            })
+    //        }
     
     func populateTableView(responseObject: AnyObject) {
         tableData.removeAll(keepCapacity: false)
@@ -83,16 +122,18 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
             self.searchResultTableView.reloadData()
         }
         
+        if tableData.count == 0 {
+            showAlert("Search", message: "No result found.")
+        }
+        
         addBrowseCategory()
     }
     
     func addBrowseCategory() {
-        if(self.tableData.isEmpty) {
-            var temp: SearchSuggestionModel = SearchSuggestionModel(suggestion: "Browse by Category", imageURL: "SearchBrowseCategory", searchUrl: "") as SearchSuggestionModel
-            
-            tableData.append(temp)
-            self.searchResultTableView.reloadData()
-        }
+        var temp: SearchSuggestionModel = SearchSuggestionModel(suggestion: "Browse by Category", imageURL: "SearchBrowseCategory", searchUrl: "") as SearchSuggestionModel
+        
+        tableData.append(temp)
+        self.searchResultTableView.reloadData()
     }
     
     // Mark: - UISearchBarDelegate
@@ -106,7 +147,7 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
-        if count(searchText) > 2 {
+        if count(searchText) > 1 {
             if Reachability.isConnectedToNetwork(){
                 requestSearch(APIAtlas.searchUrl, params: NSDictionary(dictionary: ["queryString" : searchText]))
             }  else {
@@ -179,5 +220,5 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
             
         }
     }
-
+    
 }

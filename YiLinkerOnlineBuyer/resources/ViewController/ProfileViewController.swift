@@ -119,7 +119,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         if indexPath.row == 0 {
             return 200
         } else {
-            return 400
+            return 375
         }
     }
     
