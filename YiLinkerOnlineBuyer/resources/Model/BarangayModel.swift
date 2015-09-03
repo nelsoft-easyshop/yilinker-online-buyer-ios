@@ -43,8 +43,8 @@ class BarangayModel {
             
             if let value: AnyObject = dictionary["data"] {
                 for subValue in value as! NSArray {
-//                    barangayId.append(subValue["barangay"] as! Int)
-//                    location.append(subValue["location"] as! String)
+                    barangayId.append(subValue["barangayId"] as! Int)
+                    location.append(subValue["location"] as! String)
                 }
             }
         } // dictionary
