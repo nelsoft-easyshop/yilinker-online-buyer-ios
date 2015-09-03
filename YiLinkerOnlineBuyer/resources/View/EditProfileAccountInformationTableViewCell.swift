@@ -10,6 +10,7 @@ import UIKit
 
 protocol EditProfileAccountInformationTableViewCellDelegate{
     func saveAction(sender: AnyObject)
+    func editPasswordAction()
 }
 
 class EditProfileAccountInformationTableViewCell: UITableViewCell {
@@ -40,6 +41,7 @@ class EditProfileAccountInformationTableViewCell: UITableViewCell {
     }
     
     @IBAction func changeAction(sender: AnyObject) {
+        self.delegate?.editPasswordAction()
     }
 
 }

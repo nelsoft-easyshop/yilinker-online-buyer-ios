@@ -25,6 +25,8 @@ class WishlistViewController: UIViewController, UITableViewDelegate, UITableView
     
     var emptyView: EmptyView?
     
+    var hud: MBProgressHUD?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -62,9 +64,6 @@ class WishlistViewController: UIViewController, UITableViewDelegate, UITableView
     //
     
     func getWishlistData() {
-        tableData = []
-        wishlistTableView.reloadData()
-        wishListCounterLabel.text = ""
         
         if Reachability.isConnectedToNetwork() {
             requestProductDetails(APIAtlas.wishlistUrl, params: NSDictionary(dictionary: ["access_token": SessionManager.accessToken(), "wishlist": "true"]))
@@ -126,18 +125,28 @@ class WishlistViewController: UIViewController, UITableViewDelegate, UITableView
     
     //Loader function
     func showLoader() {
-        SVProgressHUD.show()
-        SVProgressHUD.setBackgroundColor(UIColor.whiteColor())
+        if self.hud != nil {
+            self.hud!.hide(true)
+            self.hud = nil
+        }
+        
+        self.hud = MBProgressHUD(view: self.view)
+        self.hud?.removeFromSuperViewOnHide = true
+        self.hud?.dimBackground = false
+        self.view.addSubview(self.hud!)
+        self.hud?.show(true)
     }
     
     func dismissLoader() {
-        SVProgressHUD.dismiss()
+        self.hud?.hide(true)
     }
     
     // MARK: Methods Updating Values
     
     func populateTableView(responseObject: AnyObject) {
         tableData.removeAll(keepCapacity: false)
+        wishlistTableView.reloadData()
+        wishListCounterLabel.text = ""
         if let value: AnyObject = responseObject["data"] {
             for subValue in value["items"] as! NSArray {
                 println(subValue)

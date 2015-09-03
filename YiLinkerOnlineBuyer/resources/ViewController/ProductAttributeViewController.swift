@@ -182,6 +182,7 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
         if selectionComplete {
             hideSelf("done")
             if let delegate = self.delegate {
+                let quantity: Int = stocksLabel.text!.toInt()!
                 delegate.doneActionPassDetailsToProductView(self, unitId: unitId, quantity: quantity, selectedId: selectedId)
             }
         } else {
@@ -200,12 +201,12 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
     @IBAction func addToCartAction(sender: AnyObject) {
         if SessionManager.isLoggedIn() {
             let url: String = "http://online.api.easydeal.ph/api/v1/auth/cart/updateCartItem"
-            let quantity: String = String(stringInterpolationSegment: stocksLabel.text?.toInt())
+            let quantity: Int = stocksLabel.text!.toInt()!
             
             let params: NSDictionary = ["access_token": SessionManager.accessToken(),
                 "productId": self.productDetailsModel.id,
                 "unitId": String(unitId.toInt()! + 1),
-                "quantity": quantity]
+                "quantity": String(quantity)]
             
             println(params)
             
@@ -449,7 +450,7 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
 
     // MARK: - Delegates
     
-    func passModel(#productDetailsModel: ProductDetailsModel, selectedValue: NSArray, selectedId: NSArray, unitId: Int) {
+    func passModel(#productDetailsModel: ProductDetailsModel, selectedValue: NSArray, selectedId: NSArray, unitId: Int, quantity: Int) {
         let index: Int = unitId - 1
         setDetail("", title: productDetailsModel.title, price: productDetailsModel.productUnits[index].price)
         self.productDetailsModel = productDetailsModel
@@ -466,7 +467,7 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
         println(combinationString)
         
         if self.maximumStock != 0 {
-            stocks = 1
+            stocks = quantity
             checkStock(stocks)
         } else if self.maximumStock == 0 {
             checkStock(0)

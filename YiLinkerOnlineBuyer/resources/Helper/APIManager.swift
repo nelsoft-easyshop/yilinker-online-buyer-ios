@@ -50,6 +50,8 @@ struct APIAtlas {
     static let citiesUrl = "location/getChildCities"
     static let barangay = "location/getBarangaysByCity"
     static let addAddressUrl = "auth/address/addNewAddress"
+    static let updateCheckout = "auth/cart/cartToCheckout"
+    static let updateGuestCheckout = "cart/cartToCheckout"
     static let baseUrl = APIEnvironment.baseUrl()
 }
 
