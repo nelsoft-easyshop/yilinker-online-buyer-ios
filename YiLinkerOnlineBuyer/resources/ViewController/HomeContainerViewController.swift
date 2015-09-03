@@ -32,7 +32,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     
     var emptyView: EmptyView?
     var hud: MBProgressHUD?
-    
+    var profileModel: ProfileUserDetailsModel = ProfileUserDetailsModel()
     var customTabBarController: CustomTabBarController?
     
     override func viewDidLoad() {
@@ -101,9 +101,9 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             animatedViewController!.view.backgroundColor = UIColor.clearColor()
             
             if SessionManager.accessToken() != "" {
-                var buttonImages: [String] = ["help", "following", "message", "customize-shopping", "promo", "category", SessionManager.profileImageStringUrl()]
+                var buttonImages: [String] = ["help", "following", "message", "customize-shopping", "promo", "category", self.profileModel.profileImageUrl]
                 var buttonTitles: [String] = ["HELP", "FOLLOWED SELLER", "MESSAGING", "CUSTOMIZE SHOPPING", "TODAY'S PROMO", "CATEGORIES", "LOGOUT"]
-                var buttonRightText: [String] = ["", "", "You have 1 unread message", "", "", "", "Jessica Joe \nMetro Manila, City"]
+                var buttonRightText: [String] = ["", "", "You have 1 unread message", "", "", "", "\(self.profileModel.firstName) \(self.profileModel.lastName) \n\(self.profileModel.address.streetAddress) \(self.profileModel.address.subdivision)"]
                 
                 animatedViewController?.buttonImages = buttonImages
                 animatedViewController?.buttonTitles = buttonTitles
@@ -316,9 +316,9 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         manager.POST(APIAtlas.getUserInfoUrl, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             SVProgressHUD.dismiss()
-            let profileModel: ProfileModel = ProfileModel.pareseDataFromResponseObject(responseObject as! NSDictionary)
+            let dictionary: NSDictionary = responseObject as! NSDictionary
+            self.profileModel = ProfileUserDetailsModel.parseDataWithDictionary(dictionary["data"]!)
             self.hud?.hide(true)
-            println(profileModel.name)
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
