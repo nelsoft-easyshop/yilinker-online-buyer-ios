@@ -129,7 +129,7 @@ class ProductImagesView: UIView, UICollectionViewDataSource, UICollectionViewDel
     func setDetails(model: ProductDetailsModel, unitId: Int, width: CGFloat) {
         
         self.nameLabel.text = model.title
-        self.nameLabel.sizeToFit()
+//        self.nameLabel.sizeToFit()
         if model.productUnits[unitId].discount == 0 {
             self.originalPrice.hidden = true
             self.priceLabel.text = "P" + model.productUnits[unitId].price
@@ -140,7 +140,8 @@ class ProductImagesView: UIView, UICollectionViewDataSource, UICollectionViewDel
         
         self.width = width
         
-        self.images.append(model.images[0].imageLocation)//model.productUnits[unitId].imageIds
+        self.images = []
+        self.images.append(model.image)//model.productUnits[unitId].imageIds
     
         if self.images.count == 0 {
             self.images = ["", "", "", "", ""]
