@@ -76,9 +76,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         sellerTableHeaderView.profileImageView.addSubview(imageView)
         sellerTableHeaderView.sellernameLabel.text = sellerModel!.store_name
         sellerTableHeaderView.addressLabel.text = sellerModel!.store_address
-        
-        self.tableView.tableHeaderView = sellerTableHeaderView
-        self.tableView.reloadData()
+    
     }
     
     func registerNib() {
