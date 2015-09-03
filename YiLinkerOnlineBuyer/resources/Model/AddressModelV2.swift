@@ -32,6 +32,7 @@ class AddressModelV2 {
     var latitude: String = ""
     var isDefault: Bool = false
     var additionalInfo: String = ""
+    var fullLocation: String = ""
     
     //For creating address
     var barangayId: Int = 0
@@ -178,6 +179,31 @@ class AddressModelV2 {
                     model.isDefault = value.boolValue
                 }
             }
+            
+            if let value: AnyObject = reviews["provinceId"] {
+                if value as! NSObject != NSNull() {
+                    model.provinceId = value as! Int
+                }
+            }
+            
+            if let value: AnyObject = reviews["cityId"] {
+                if value as! NSObject != NSNull() {
+                    model.cityId = value as! Int
+                }
+            }
+            
+            if let value: AnyObject = reviews["barangayId"] {
+                if value as! NSObject != NSNull() {
+                    model.barangayId = value as! Int
+                }
+            }
+            
+            if let value: AnyObject = reviews["fullLocation"] {
+                if value as! NSObject != NSNull() {
+                    model.fullLocation = value as! String
+                }
+            }
+
         }
         
         return model

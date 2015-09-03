@@ -142,12 +142,14 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        //self.selectedIndex = indexPath.row
-        //self.collectionView.reloadData()
+        let addAddressTableViewController: AddAddressTableViewController = AddAddressTableViewController(nibName: "AddAddressTableViewController", bundle: nil)
+        addAddressTableViewController.delegate = self
+        addAddressTableViewController.addressModel = self.getAddressModel.listOfAddress[indexPath.row]
+        addAddressTableViewController.isEdit = true
+        self.navigationController!.pushViewController(addAddressTableViewController, animated: true)
     }
     
     //Set Default Address
-    
     func changeAddressCollectionViewCell(didSelectDefaultAtCell cell: ChangeAddressCollectionViewCell) {
         let indexPath: NSIndexPath = self.collectionView.indexPathForCell(cell)!
         let addressId: String = "\(self.getAddressModel.listOfAddress[indexPath.row].userAddressId))"
@@ -175,6 +177,7 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
         
         let addAddressTableViewController: AddAddressTableViewController = AddAddressTableViewController(nibName: "AddAddressTableViewController", bundle: nil)
         addAddressTableViewController.delegate = self
+        addAddressTableViewController.isEdit = false
         self.navigationController!.pushViewController(addAddressTableViewController, animated: true)
     }
     

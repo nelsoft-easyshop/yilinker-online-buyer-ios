@@ -19,9 +19,9 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
     var delegate: AddAddressTableViewControllerDelegate?
     
     let manager = APIManager.sharedInstance
-    var provinceModel: ProvinceModel!
-    var cityModel: CityModel!
-    var barangayModel: BarangayModel!
+    var provinceModel: ProvinceModel = ProvinceModel()
+    var cityModel: CityModel = CityModel()
+    var barangayModel: BarangayModel = BarangayModel()
     
     var selectedProvince: String = ""
     var selectedCity: String = ""
@@ -35,13 +35,23 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
     var cityRow: Int = 0
     var provinceRow: Int = 0
     
+    var isEdit: Bool = true
+    
+    var pickerView: UIPickerView = UIPickerView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.registerNib()
         self.backButton()
         self.tableView.separatorStyle = UITableViewCellSeparatorStyle.None
-        
         self.requestGetProvince()
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillAppear"), name: UIKeyboardDidShowNotification, object: nil)
+    }
+    
+    func keyboardWillAppear() {
+        self.pickerView.selectRow(2, inComponent: 0, animated: true)
+        self.pickerView.hidden = true
     }
     
     //Show HUD
@@ -71,23 +81,76 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
         cell.delegate = self
         cell.rowTextField.addToolBarWithTarget(self, next: "next", previous: "previous", done: "done")
         cell.selectionStyle = UITableViewCellSelectionStyle.None
+      
+        if self.isEdit {
+            if indexPath.row == 0 {
+                cell.rowTextField.text = self.addressModel.title
+            } else if indexPath.row == 1 {
+                cell.rowTextField.text = self.addressModel.unitNumber
+            } else if indexPath.row == 2 {
+                cell.rowTextField.text == self.addressModel.buildingName
+            } else if indexPath.row == 3 {
+                cell.rowTextField.text = self.addressModel.streetName
+            } else if indexPath.row == 4 {
+                cell.rowTextField.text = self.addressModel.subdivision
+            } else if indexPath.row == 5 {
+                cell.rowTextField.text = self.addressModel.province
+            } else if indexPath.row == 6 {
+                cell.rowTextField.text = self.addressModel.city
+            } else if indexPath.row == 7 {
+                cell.rowTextField.text = self.addressModel.barangay
+            } else if indexPath.row == 8 {
+                cell.rowTextField.text == self.addressModel.zipCode
+            } else {
+                cell.rowTextField.text = self.addressModel.additionalInfo
+                isEdit = false
+            }
+        }
+        
         
         if indexPath.row == 6 || indexPath.row == 7 || indexPath.row == 8 {
             let screenSize: CGRect = UIScreen.mainScreen().bounds
-            let pickerView: UIPickerView = UIPickerView(frame:CGRectMake(0, 0, screenSize.width, 225))
+            pickerView = UIPickerView(frame:CGRectMake(0, 0, screenSize.width, 225))
             pickerView.delegate = self
             pickerView.dataSource = self
             cell.rowTextField.inputView = pickerView
             
             if indexPath.row == 6 {
                 cell.rowTextField.text = self.addressModel.province
-                pickerView.selectRow(self.provinceRow, inComponent: 0, animated: false)
+                
+                if self.provinceModel.location.count != 0 {
+                    for (index, uid) in enumerate(self.provinceModel.provinceId) {
+                        if uid == self.addressModel.provinceId {
+                            pickerView.selectRow(index, inComponent: 0, animated: true)
+                            pickerView.reloadAllComponents()
+                        }
+                    }
+                }
+                
+                
             } else if indexPath.row == 7 {
                 cell.rowTextField.text = self.addressModel.city
-                pickerView.selectRow(self.cityRow, inComponent: 0, animated: false)
+                
+                if self.cityModel.location.count != 0 {
+                    for (index, uid) in enumerate(self.cityModel.cityId) {
+                        if uid == self.addressModel.cityId {
+                            pickerView.selectRow(index, inComponent: 0, animated: false)
+                            pickerView.reloadAllComponents()
+                        }
+                    }
+                }
+                
             } else {
                 cell.rowTextField.text = self.addressModel.barangay
-                pickerView.selectRow(self.barangayRow, inComponent: 0, animated: false)
+                
+                if self.barangayModel.location.count != 0 {
+                    for (index, uid) in enumerate(self.barangayModel.barangayId) {
+                        if uid == self.addressModel.barangayId {
+                            pickerView.selectRow(index, inComponent: 0, animated: false)
+                            pickerView.reloadAllComponents()
+                        }
+                    }
+                }
             }
         }
         
@@ -133,14 +196,6 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
     
     func newAddressTableViewCell(didBeginEditing newAddressTableViewCell: NewAddressTableViewCell, index: Int) {
         activeTextField = index
-        
-       /* if index == 6 && self.provinceModel != nil {
-            setTextAtIndex(6, text: self.provinceModel.location[0])
-        } else if index == 7 && self.cityModel != nil {
-            setTextAtIndex(7, text: self.cityModel.location[0])
-        } else if index == 8 && self.barangayModel != nil {
-            setTextAtIndex(8, text: self.barangayModel.location[0])
-        } */
     }
     
     func backButton() {
@@ -283,11 +338,18 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             self.hud?.hide(true)
             self.provinceModel = ProvinceModel.parseDataWithDictionary(responseObject)
-            if self.provinceModel.location.count != 0 {
+            if self.provinceModel.location.count != 0 && self.addressModel.title == "" {
                 self.addressModel.province = self.provinceModel.location[0]
                 self.addressModel.provinceId = self.provinceModel.provinceId[0]
                 self.requestGetCities(self.provinceModel.provinceId[0])
                 self.provinceRow = 0
+            } else {
+                if self.addressModel.provinceId != 0 {
+                    self.requestGetCities(self.addressModel.provinceId)
+                } else {
+                    self.requestGetCities(self.provinceModel.provinceId[0])
+                }
+                
             }
             
             }, failure: {
@@ -308,13 +370,19 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
             self.cityModel = CityModel.parseDataWithDictionary(responseObject)
             self.hud?.hide(true)
                 //get all cities and assign get the id and title of the first city
-                if self.cityModel.cityId.count != 0 {
+                if self.cityModel.cityId.count != 0 && self.addressModel.title == "" {
                     self.addressModel.city = self.cityModel.location[0]
                     self.addressModel.cityId = self.cityModel.cityId[0]
                     self.requestGetBarangay(self.addressModel.cityId)
                     self.addressModel.barangay = ""
                     self.cityRow = 0
                     self.barangayRow = 0
+                } else {
+                    if self.addressModel.cityId != 0 {
+                        self.requestGetBarangay(self.addressModel.cityId)
+                    } else {
+                        self.requestGetBarangay(self.cityModel.cityId[0])
+                    }
                 }
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
@@ -331,9 +399,10 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
                 self.hud?.hide(true)
                 self.barangayModel = BarangayModel.parseDataWithDictionary(responseObject)
-                self.addressModel.barangayId = self.barangayModel.barangayId[0]
-                self.addressModel.barangay = self.barangayModel.location[0]
-                self.barangayRow = 0
+                if self.addressModel.title == "" {
+                    self.addressModel.barangayId = self.barangayModel.barangayId[0]
+                    self.addressModel.barangay = self.barangayModel.location[0]
+                }
                 self.tableView.reloadData()
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
@@ -374,6 +443,7 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
             self.cityRow = row
             self.barangayRow = 0
         } else if activeTextField == 8 {
+            self.setTextAtIndex(activeTextField, text: self.barangayModel.location[row])
             self.addressModel.barangay = self.barangayModel.location[row]
             self.addressModel.barangayId = self.barangayModel.barangayId[row]
             self.barangayRow = row
@@ -385,11 +455,11 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
     }
     
     func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        if activeTextField == 6 && self.provinceModel != nil {
+        if activeTextField == 6 {
             return self.provinceModel.location.count
-        } else if activeTextField == 7 && self.cityModel != nil {
+        } else if activeTextField == 7 {
             return self.cityModel.location.count
-        } else if activeTextField == 8 && self.barangayModel != nil  {
+        } else if activeTextField == 8 {
             return self.barangayModel.location.count
         }
         

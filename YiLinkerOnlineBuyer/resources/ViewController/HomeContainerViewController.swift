@@ -50,11 +50,6 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         } else {
             self.addEmptyView()
         }
-        
-        let checkout = CheckoutContainerViewController(nibName: "CheckoutContainerViewController", bundle: nil)
-        let navigationController: UINavigationController = UINavigationController(rootViewController: checkout)
-        navigationController.navigationBar.barTintColor = Constants.Colors.appTheme
-        self.tabBarController?.presentViewController(navigationController, animated: true, completion: nil)
     }
     
     func addEmptyView() {
