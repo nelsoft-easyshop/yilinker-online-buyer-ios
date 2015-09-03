@@ -13,6 +13,7 @@ protocol ProfileTableViewCellDelegate{
     func transactionsTapAction()
     func activityLogTapAction()
     func myPointsTapAction()
+    func resolutionTapAction()
     func settingsTapAction()
 }
 
@@ -27,12 +28,14 @@ class ProfileTableViewCell: UITableViewCell {
     @IBOutlet weak var transactionsView: UIView!
     @IBOutlet weak var activityLogView: UIView!
     @IBOutlet weak var myPointsView: UIView!
+    @IBOutlet weak var resolutionView: UIView!
     @IBOutlet weak var settingsView: UIView!
     
     @IBOutlet weak var editProfileButton: UIButton!
     @IBOutlet weak var transactionsButton: UIButton!
     @IBOutlet weak var activityLogButton: UIButton!
     @IBOutlet weak var myPointsButton: UIButton!
+    @IBOutlet weak var resolutionButton: UIButton!
     @IBOutlet weak var settingsButton: UIButton!
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -47,6 +50,7 @@ class ProfileTableViewCell: UITableViewCell {
         transactionsButton.layer.cornerRadius = transactionsButton.frame.height / 2
         activityLogButton.layer.cornerRadius = activityLogButton.frame.height / 2
         myPointsButton.layer.cornerRadius = myPointsButton.frame.height / 2
+        resolutionButton.layer.cornerRadius = resolutionButton.frame.height / 2
         settingsButton.layer.cornerRadius = settingsButton.frame.height / 2
     }
     
@@ -62,6 +66,9 @@ class ProfileTableViewCell: UITableViewCell {
         
         var myPoints = UITapGestureRecognizer(target:self, action:"tapMyPointsViewAction")
         myPointsView.addGestureRecognizer(myPoints)
+        
+        var resolution = UITapGestureRecognizer(target:self, action:"tapResolutionViewAction")
+        resolutionView.addGestureRecognizer(resolution)
         
         var settings = UITapGestureRecognizer(target:self, action:"tapSettingsViewAction")
         settingsView.addGestureRecognizer(settings)
@@ -88,5 +95,8 @@ class ProfileTableViewCell: UITableViewCell {
         delegate?.settingsTapAction()
     }
     
+    @IBAction func tapResolutionViewAction() {
+        delegate?.resolutionTapAction()
+    }
     
 }

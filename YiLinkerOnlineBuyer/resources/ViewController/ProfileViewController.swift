@@ -119,7 +119,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         if indexPath.row == 0 {
             return 200
         } else {
-            return 400
+            return 375
         }
     }
     
@@ -187,6 +187,10 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
 
         var myPointsViewController = MyPointsTableViewController(nibName: "MyPointsTableViewController", bundle: nil)
         self.navigationController?.pushViewController(myPointsViewController, animated:true)
+    }
+    
+    func resolutionTapAction() {
+        
     }
     
     func settingsTapAction(){

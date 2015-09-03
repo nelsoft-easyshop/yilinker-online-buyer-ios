@@ -22,10 +22,12 @@ class CartProductAttributeTableViewCell: UITableViewCell {
     
     var filter: FilterAttributeModel!
     var productAttribute: ProductAttributeModel!
-    var productUnit: ProductUnitsModel!
     
     var attributeIDs: [String] = []
+    var selectedAttributes: [String] = []
     var unitIDs: [String] = []
+    var selectedAttributeID: String = ""
+    var selectedAttributeIDIndex: Int = 0
     
     var availableCombinations = [String: [String]]()
     
@@ -34,14 +36,26 @@ class CartProductAttributeTableViewCell: UITableViewCell {
     }
     
     
-    func passModel(model: ProductAttributeModel, selectedProductUnit: ProductUnitsModel, availableCombination: [String: [String]], unitID: [String]){
+    func passModel(model: ProductAttributeModel, availableCombination: [String: [String]], unitID: [String], selectedAttributes: [String]){
         productAttribute = model
         filter = FilterAttributeModel(title: model.attributeName, attributes: model.valueName)
-        productUnit = selectedProductUnit
         
         attributeIDs = productAttribute.valueId
         
+        availableCombinations = availableCombination
+        
         unitIDs = unitID
+        self.selectedAttributes = selectedAttributes
+        
+        for var i = 0; i < selectedAttributes.count; i++ {
+            
+            for var j = 0; j < attributeIDs.count; j++ {
+                if selectedAttributes[i] == attributeIDs[j] {
+                    selectedAttributeIDIndex = j
+                }
+            }
+        }
+        
         initializeScrollView()
     }
     
@@ -51,6 +65,12 @@ class CartProductAttributeTableViewCell: UITableViewCell {
         var x: Int = 0
         var contentWidth = 0
         println(filter.attributes.count)
+        
+        let subviews = self.scrollView.subviews
+        for subview in subviews{
+            subview.removeFromSuperview()
+        }
+        
         for var i = 0; i < filter.attributes.count; i++ {
             var width = (count(filter.attributes[i]) * 10) + 20
             
@@ -67,10 +87,37 @@ class CartProductAttributeTableViewCell: UITableViewCell {
             
             x += width + 10
             
-            if contains(productUnit.combination, attributeIDs[i]){
+            if contains(selectedAttributes, attributeIDs[i]){
                 SelectButton(button)
+                enableButton(button)
+            } else {
+                var tempSelectedAttributes = selectedAttributes
+                println("Original selected \(tempSelectedAttributes)")
+                if selectedAttributes.count == 0 {
+                    enableButton(button)
+                } else {
+                    if selectedAttributes.count < 2 {
+                        tempSelectedAttributes.append(attributeIDs[i])
+                    } else {
+                        tempSelectedAttributes[selectedAttributeIDIndex] = attributeIDs[i]
+                    }
+                    println("Combination count \(availableCombinations.count)")
+                    println("unitIDs \(unitIDs)")
+                    for var j = 0; j < availableCombinations.count; j++ {
+                        println("unitIDs \(unitIDs[j])")
+                        println("Available \(availableCombinations[unitIDs[j]])")
+                        println("Selected \(tempSelectedAttributes)")
+                        if sorted(tempSelectedAttributes, <) == sorted(availableCombinations[unitIDs[j]]!, <) {
+                            println("Found \(tempSelectedAttributes)")
+                            enableButton(button)
+                            break
+                        } else {
+                            disableButton(button)
+                            println("Disabled \(attributeIDs[i])")
+                        }
+                    }
+                }
             }
-            
             scrollView.addSubview(button)
         }
         
@@ -109,15 +156,15 @@ class CartProductAttributeTableViewCell: UITableViewCell {
         button.backgroundColor = UIColor.purpleColor()
         button.setTitleColor(UIColor.whiteColor(), forState: .Normal)
     }
-
+    
     func enableButton(button: UIButton) {
         button.alpha = 1.0
-        button.enabled = true
+        button.userInteractionEnabled = true
     }
     
     func disableButton(button: UIButton) {
-        button.alpha = 0.3
-        button.enabled = false
+        button.alpha = 0.25
+        button.userInteractionEnabled = false
     }
     
 }

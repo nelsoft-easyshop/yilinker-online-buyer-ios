@@ -101,6 +101,8 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in print(responseObject as! NSDictionary)
             if responseObject.objectForKey("error") != nil {
                 self.requestRefreshToken("editToCart", url: url, params: params)
+            } else {
+                self.getCartData()
             }
             self.dismissLoader()
             }, failure: {
@@ -342,7 +344,23 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
         })
     }
     
-    func pressedDoneAttribute(controller: CartProductAttributeViewController) {
+    func pressedDoneAttribute(controller: CartProductAttributeViewController, productID: Int, unitID: Int, itemID: Int, quantity: Int) {
+        
+        if Reachability.isConnectedToNetwork() {
+            var params: NSDictionary = ["access_token": SessionManager.accessToken(),
+                "productId": "\(productID)",
+                "unitId": "\(unitID)",
+                "itemId": "\(itemID)",
+                "quantity": "\(quantity)"
+            ]
+            
+            println("PARAMS\n\(params)")
+            
+            fireAddToCartItem(APIAtlas.updateCartUrl, params: params)
+        } else {
+            showAlert("Connection Unreachable", message: "Cannot retrieve data. Please check your internet connection.")
+        }
+        
         UIView.animateWithDuration(0.3, animations: {
             self.view.transform = CGAffineTransformMakeTranslation(1, 1)
             self.dimView.alpha = 0

@@ -10,7 +10,7 @@ import UIKit
 
 protocol CartProductAttributeViewControllerDelegate {
     func pressedCancelAttribute(controller: CartProductAttributeViewController)
-    func pressedDoneAttribute(controller: CartProductAttributeViewController)
+    func pressedDoneAttribute(controller: CartProductAttributeViewController, productID: Int, unitID: Int, itemID: Int, quantity: Int)
 }
 
 class CartProductAttributeViewController: UIViewController, UITableViewDelegate, CartProductAttributeTableViewCellDelegate {
@@ -61,32 +61,6 @@ class CartProductAttributeViewController: UIViewController, UITableViewDelegate,
         self.dimView.backgroundColor = .clearColor()
     }
     
-    func fireEditCartItem(url: String, quantity: Int!) {
-        
-        var params = Dictionary<String, String>()
-        
-        params["access_token"] = SessionManager.accessToken()
-        params["productId"] = "\(productDetailModel?.id)"
-        params["unitId"] = "\(productDetailModel?.unitId)"
-        params["quantity"] = "\(productDetailModel?.quantity)"
-        
-        showLoader()
-        manager.GET(url, parameters: params, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-                self.dismissLoader()
-                println(params)
-                self.dismissViewControllerAnimated(true, completion: nil)
-                if let delegate = self.delegate {
-                    delegate.pressedDoneAttribute(self)
-                }
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                println("failed: \(error)")
-                self.dismissLoader()
-        })
-    }
-    
-    
     // MARK: - Table View Data Source
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -98,7 +72,7 @@ class CartProductAttributeViewController: UIViewController, UITableViewDelegate,
         
         var productAttribute: ProductAttributeModel = productDetailModel!.attributes[indexPath.row]
         cell.delegate = self
-        cell.passModel(productAttribute, selectedProductUnit: selectedProductUnit, availableCombination: availableCombinations, unitID: unitIDs)
+        cell.passModel(productAttribute, availableCombination: availableCombinations, unitID: unitIDs, selectedAttributes: selectedCombinations)
         return cell
     }
     
@@ -126,7 +100,10 @@ class CartProductAttributeViewController: UIViewController, UITableViewDelegate,
     }
     
     @IBAction func doneAction(sender: AnyObject!) {
-        fireEditCartItem("https://demo3526363.mockable.io/api/v1/auth/cart/updateCartItem", quantity: stocks)
+        self.dismissViewControllerAnimated(true, completion: nil)
+        var productID = productDetailModel?.id.toInt()!
+        var itemID = productDetailModel?.itemId
+        delegate?.pressedDoneAttribute(self, productID: productID!, unitID: selectedProductUnit.productUnitId.toInt()!, itemID: itemID!, quantity: stocks)
     }
     
     // MARK: - Methods
@@ -146,17 +123,15 @@ class CartProductAttributeViewController: UIViewController, UITableViewDelegate,
     }
     
     func selectedAttribute(attributeId: String){
-        println(selectedCombinations)
         if !contains(selectedCombinations, attributeId) {
             selectedCombinations.append(attributeId)
             println(checkSelectedIfAvailable(selectedCombinations))
             updateDetails(checkSelectedIfAvailable(selectedCombinations))
         }
-        println(selectedCombinations)
+        tableView.reloadData()
     }
     
     func deselectedAttribute(attributeId: String) {
-        println(selectedCombinations)
         for var i = 0; i < selectedCombinations.count; i++ {
             if selectedCombinations[i] == attributeId {
                 selectedCombinations.removeAtIndex(i)
@@ -164,7 +139,7 @@ class CartProductAttributeViewController: UIViewController, UITableViewDelegate,
             }
         }
         updateDetails(checkSelectedIfAvailable(selectedCombinations))
-        println(selectedCombinations)
+        tableView.reloadData()
     }
     
     func getAvailableCombinations() {
@@ -214,7 +189,11 @@ class CartProductAttributeViewController: UIViewController, UITableViewDelegate,
             stocksLabel.text = String(stringInterpolationSegment: stocks)
         }
         
-        if stocks == 1  && maximumStock != 0 {
+        if stocks == 0 && maximumStock == 0 {
+            disableButton(increaseButton)
+            disableButton(decreaseButton)
+            stocksLabel.alpha = 0.3
+        } else if stocks == 1  && maximumStock != 0 {
             enableButton(increaseButton)
             disableButton(decreaseButton)
             stocksLabel.alpha = 1.0
@@ -230,6 +209,8 @@ class CartProductAttributeViewController: UIViewController, UITableViewDelegate,
         } else if stocks > 0 || stocks < maximumStock {
             enableButton(increaseButton)
             enableButton(decreaseButton)
+            stocksLabel.alpha = 1.0
+        } else {
         }
     }
     
