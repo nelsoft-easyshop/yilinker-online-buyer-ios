@@ -31,6 +31,12 @@ class AddressModelV2 {
     var landline: String = ""
     var latitude: String = ""
     var isDefault: Bool = false
+    var additionalInfo: String = ""
+    
+    //For creating address
+    var barangayId: Int = 0
+    var cityId: Int = 0
+    var provinceId: Int = 0
     
     class func parseAddressFromDictionary(reviews: NSDictionary) -> AddressModelV2 {
         
@@ -169,7 +175,7 @@ class AddressModelV2 {
             
             if let value: AnyObject = reviews["isDefault"] {
                 if value as! NSObject != NSNull() {
-                    model.isDefault = value as! Bool
+                    model.isDefault = value.boolValue
                 }
             }
         }

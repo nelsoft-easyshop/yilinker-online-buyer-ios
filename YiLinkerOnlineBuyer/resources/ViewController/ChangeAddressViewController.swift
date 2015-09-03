@@ -26,6 +26,8 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
     
     var delegate: ChangeAddressViewControllerDelegate?
     
+    var hud: MBProgressHUD?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         requestGetAddressess()
@@ -41,6 +43,20 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
         collectionView.dataSource = self
         collectionView.delegate = self
         self.regsiterNib()
+    }
+    
+    //Show HUD
+    func showHUD() {
+        if self.hud != nil {
+            self.hud!.hide(true)
+            self.hud = nil
+        }
+        
+        self.hud = MBProgressHUD(view: self.view)
+        self.hud?.removeFromSuperViewOnHide = true
+        self.hud?.dimBackground = false
+        self.view.addSubview(self.hud!)
+        self.hud?.show(true)
     }
     
     func titleView() {
@@ -97,11 +113,10 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell : ChangeAddressCollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier(Constants.Checkout.changeAddressCollectionViewCellNibNameAndIdentifier, forIndexPath: indexPath) as! ChangeAddressCollectionViewCell
-        
         cell.titleLabel.text = self.getAddressModel.listOfAddress[indexPath.row].title
         cell.addressLabel.text = self.getAddressModel.listOfAddress[indexPath.row].streetName
 
-        if indexPath.row == self.selectedIndex {
+        if  indexPath.row == self.selectedIndex {
             cell.layer.borderWidth = 1
             cell.layer.borderColor = Constants.Colors.selectedGreenColor.CGColor
             cell.checkBoxButton.setImage(UIImage(named: "checkBox"), forState: UIControlState.Normal)
@@ -127,8 +142,16 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        self.selectedIndex = indexPath.row
-        self.collectionView.reloadData()
+        //self.selectedIndex = indexPath.row
+        //self.collectionView.reloadData()
+    }
+    
+    //Set Default Address
+    
+    func changeAddressCollectionViewCell(didSelectDefaultAtCell cell: ChangeAddressCollectionViewCell) {
+        let indexPath: NSIndexPath = self.collectionView.indexPathForCell(cell)!
+        let addressId: String = "\(self.getAddressModel.listOfAddress[indexPath.row].userAddressId))"
+        self.fireSetDefaultAddressWithAddressId(addressId, indexPath: indexPath)
     }
     
     func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
@@ -156,8 +179,7 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
     }
     
     func addAddressTableViewController(didAddAddressSucceed addAddressTableViewController: AddAddressTableViewController) {
-        let indexPath: NSIndexPath = NSIndexPath(forItem: self.cellCount, inSection: 0)
-        self.addCellInIndexPath(indexPath)
+        self.requestGetAddressess()
     }
     
     // MARK: - Actions
@@ -199,76 +221,92 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
     // MARK: - Requests
     
     func requestGetAddressess() {
-        SVProgressHUD.show()
+        self.showHUD()
         
-        let url = "http://online.api.easydeal.ph/api/v1/auth/address/getUserAddresses"
         let params = ["access_token": SessionManager.accessToken()]
         
-        manager.POST(url, parameters: params, success: {
+        manager.POST(APIAtlas.addressesUrl, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
             self.getAddressModel = GetAddressesModel.parseDataWithDictionary(responseObject)
             self.cellCount = self.getAddressModel.listOfAddress.count
-            self.collectionView.reloadData()
-            SVProgressHUD.dismiss()
             
+            for (index, address) in enumerate(self.getAddressModel.listOfAddress) {
+                if address.isDefault {
+                    self.selectedIndex = index
+                }
+            }
+            
+            self.collectionView.reloadData()
+            self.hud?.hide(true)
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                 if task.statusCode == 401 {
-                    self.requestRefreshToken("get", deleteId: nil, deleteIndex: nil)
+                    self.requestRefreshToken(AddressRefreshType.Get, uid: 0, indexPath: nil)
+                }  else if error.userInfo != nil {
+                    let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: errorModel.title)
                 } else {
                     self.addEmptyView()
-                    SVProgressHUD.dismiss()
                 }
+                
+                self.hud?.hide(true)
         })
     }
     
     func requestDeleteAddress(addressId: Int, index: NSIndexPath) {
-        SVProgressHUD.show()
+        self.showHUD()
         
-        let url = "http://online.api.easydeal.ph/api/v1/auth/address/deleteUserAddress"
         let params = ["access_token": SessionManager.accessToken(),
         "userAddressId": String(addressId)]
         
-        manager.POST(url, parameters: params, success: {
+        manager.POST(APIAtlas.deleteAddressUrl, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
             if (responseObject["isSuccessful"] as! Bool) {
-                self.showAlert(title: "Address successfully deleted.", message: nil)
                 self.deleteCellInIndexPath(index)
             } else {
                 self.showAlert(title: responseObject["message"] as! String, message: nil)
             }
             
-            SVProgressHUD.dismiss()
+            self.hud?.hide(true)
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                
                 if task.statusCode == 401 {
-                    self.requestRefreshToken("delete", deleteId: addressId, deleteIndex: index)
+                    self.requestRefreshToken(AddressRefreshType.Delete, uid:addressId, indexPath: index)
+                } else if error.userInfo != nil {
+                    let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: errorModel.title)
                 } else {
                     self.addEmptyView()
-                    SVProgressHUD.dismiss()
                 }
+                
+                self.hud?.hide(true)
         })
     }
     
-    func requestRefreshToken(type: String, deleteId: Int!, deleteIndex: NSIndexPath!) {
+    func requestRefreshToken(type: AddressRefreshType, uid: Int, indexPath: NSIndexPath!) {
         let url: String = "http://online.api.easydeal.ph/api/v1/login"
         let params: NSDictionary = ["client_id": Constants.Credentials.clientID,
             "client_secret": Constants.Credentials.clientSecret,
             "grant_type": Constants.Credentials.grantRefreshToken,
             "refresh_token": SessionManager.refreshToken()]
-        
+            println(SessionManager.refreshToken())
         let manager = APIManager.sharedInstance
         manager.POST(url, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
-            if type == "get" {
+            if type == AddressRefreshType.Get {
                 self.requestGetAddressess()
-            } else if type == "delete" {
-                self.requestDeleteAddress(deleteId, index: deleteIndex)
+            } else if type == AddressRefreshType.Delete {
+                self.requestDeleteAddress(uid, index: indexPath)
+            } else if type == AddressRefreshType.SetDefault {
+                self.fireSetDefaultAddressWithAddressId("\(uid)", indexPath: indexPath)
             }
             
             }, failure: {
@@ -279,5 +317,41 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
                 alertController.addAction(defaultAction)
                 self.presentViewController(alertController, animated: true, completion: nil)
         })
+    }
+    
+    func fireSetDefaultAddressWithAddressId(addressId: String, indexPath: NSIndexPath) {
+        self.showHUD()
+        let params = ["access_token": SessionManager.accessToken(),
+            "userAddressId": addressId]
+        
+        manager.POST(APIAtlas.setDefaultAddressUrl, parameters: params, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            
+            if (responseObject["isSuccessful"] as! Bool) {
+                self.selectedIndex = indexPath.row
+                self.collectionView.reloadData()
+            } else {
+                self.showAlert(title: responseObject["message"] as! String, message: nil)
+            }
+            
+            self.hud?.hide(true)
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                self.hud?.hide(true)
+                
+                if task.statusCode == 401 {
+                    self.requestRefreshToken(AddressRefreshType.SetDefault, uid:addressId.toInt()!, indexPath: nil)
+                }  else if error.userInfo != nil {
+                    let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: errorModel.title)
+                } else {
+                    self.addEmptyView()
+                }
+                
+                self.hud?.hide(true)
+        })
+        
     }
 }

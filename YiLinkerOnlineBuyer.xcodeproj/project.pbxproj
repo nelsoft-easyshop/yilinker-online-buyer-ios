@@ -171,6 +171,7 @@
 		0CDA117C1B764015007B5DED /* LoginAndRegisterContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CDA117B1B764015007B5DED /* LoginAndRegisterContentViewController.swift */; };
 		0CDA117E1B764B79007B5DED /* DynamicRoundedTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CDA117D1B764B79007B5DED /* DynamicRoundedTextField.swift */; };
 		0CE35EB81B76711400AAA8F1 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CE35EB71B76711400AAA8F1 /* RegisterViewController.swift */; };
+		0CFF5EA71B98590200F13699 /* ErrorModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CFF5EA61B98590200F13699 /* ErrorModel.swift */; };
 		2614E6401B885BFA00EE8B35 /* TransactionDeliveryLogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2614E63E1B885BFA00EE8B35 /* TransactionDeliveryLogViewController.swift */; };
 		2614E6411B885BFA00EE8B35 /* TransactionDeliveryLogViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2614E63F1B885BFA00EE8B35 /* TransactionDeliveryLogViewController.xib */; };
 		2614E64A1B886D3800EE8B35 /* TransactionDeliveryLogTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2614E6481B886D3800EE8B35 /* TransactionDeliveryLogTableViewCell.swift */; };
@@ -524,6 +525,7 @@
 		0CDA117B1B764015007B5DED /* LoginAndRegisterContentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginAndRegisterContentViewController.swift; sourceTree = "<group>"; };
 		0CDA117D1B764B79007B5DED /* DynamicRoundedTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DynamicRoundedTextField.swift; sourceTree = "<group>"; };
 		0CE35EB71B76711400AAA8F1 /* RegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
+		0CFF5EA61B98590200F13699 /* ErrorModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorModel.swift; sourceTree = "<group>"; };
 		2614E63E1B885BFA00EE8B35 /* TransactionDeliveryLogViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TransactionDeliveryLogViewController.swift; path = YiLinkerOnlineBuyer/resources/ViewController/TransactionDeliveryLogViewController.swift; sourceTree = SOURCE_ROOT; };
 		2614E63F1B885BFA00EE8B35 /* TransactionDeliveryLogViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TransactionDeliveryLogViewController.xib; path = YiLinkerOnlineBuyer/resources/ViewController/TransactionDeliveryLogViewController.xib; sourceTree = SOURCE_ROOT; };
 		2614E6481B886D3800EE8B35 /* TransactionDeliveryLogTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TransactionDeliveryLogTableViewCell.swift; path = YiLinkerOnlineBuyer/resources/View/TransactionDeliveryLogTableViewCell.swift; sourceTree = SOURCE_ROOT; };
@@ -884,6 +886,7 @@
 				26C285471B8FF546005EBD3A /* CityModel.swift */,
 				26C285491B8FF555005EBD3A /* BarangayModel.swift */,
 				79E8F1521B9035D9009CE450 /* SearchResultModel.swift */,
+				0CFF5EA61B98590200F13699 /* ErrorModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1624,6 +1627,7 @@
 				0C329E881B7B73A4005BE2B6 /* TodaysPromoViewController.swift in Sources */,
 				0C1C3A851B9406BD00E6180D /* JSONResponseSerializer.swift in Sources */,
 				0C1004301B87AB9100CAA17A /* PaymentTableViewCell.swift in Sources */,
+				0CFF5EA71B98590200F13699 /* ErrorModel.swift in Sources */,
 				26AFB3AB1B79DE2900E50926 /* ProductReviewFooterView.swift in Sources */,
 				0C99373B1B750583000D6074 /* Constants.swift in Sources */,
 				0C374EF41B8851C00050AE1D /* DeliverToTableViewCell.swift in Sources */,
