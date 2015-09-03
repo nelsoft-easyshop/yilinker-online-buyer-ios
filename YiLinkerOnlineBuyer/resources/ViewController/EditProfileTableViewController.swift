@@ -69,6 +69,7 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
         self.navigationController?.view.addSubview(dimView!)
         //self.view.addSubview(dimView!)
         dimView?.hidden = true
+        dimView?.alpha = 0
     
     }
     

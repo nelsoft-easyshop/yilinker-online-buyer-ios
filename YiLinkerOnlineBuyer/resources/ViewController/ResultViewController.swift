@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ResultViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UITableViewDelegate, UITableViewDataSource {
+class ResultViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UITableViewDelegate, UITableViewDataSource, FilterViewControllerDelegate {
     
     let manager = APIManager.sharedInstance
     
@@ -34,6 +34,8 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
     var sortData: [String] = ["Old to new", "New to old", "A to Z", "Z to A"]
 
     var searchSuggestion: SearchSuggestionModel!
+    
+    var fullDimView: UIView?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -72,6 +74,14 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
         //hide dimview
         dimView.alpha = 0
         dimView.hidden = true
+        
+        fullDimView = UIView(frame: self.view.bounds)
+        fullDimView?.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
+        self.navigationController?.view.addSubview(fullDimView!)
+        //self.view.addSubview(dimView!)
+        fullDimView?.hidden = true
+        fullDimView?.alpha = 0
+
         
         noResultLabel.hidden = true
     }
@@ -157,6 +167,14 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
         self.resultCollectionView?.reloadData()
     }
     
+    func hideDimView() {
+        UIView.animateWithDuration(0.3, animations: {
+            self.fullDimView!.alpha = 0
+            }, completion: { finished in
+                self.fullDimView!.hidden = true
+        })
+    }
+    
     // Tap Gesture Action
     func tapSortViewAction() {
         println("Sort Tapped!")
@@ -180,8 +198,14 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
         attributeModal.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
         attributeModal.providesPresentationContextTransitionStyle = true
         attributeModal.definesPresentationContext = true
+        attributeModal.delegate = self
         self.tabBarController?.presentViewController(attributeModal, animated: true, completion: nil)
         
+        self.fullDimView!.hidden = false
+        UIView.animateWithDuration(0.3, animations: {
+            self.fullDimView!.alpha = 1
+            }, completion: { finished in
+        })
 
     }
     
@@ -321,6 +345,15 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
         // Pass the selected object to the new view controller.
     }
     */
+    
+    // MARK: - FilterViewControllerDelegate
+    func resetFilterViewControllerAction() {
+        
+    }
+    
+    func cancelFilterViewControllerAction() {
+        hideDimView()
+    }
     
     func showAlert(title: String, message: String) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
