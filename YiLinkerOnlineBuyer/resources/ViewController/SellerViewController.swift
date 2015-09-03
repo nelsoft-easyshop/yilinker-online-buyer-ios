@@ -78,7 +78,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         sellerTableHeaderView.addressLabel.text = sellerModel!.store_address
         
         self.tableView.tableHeaderView = sellerTableHeaderView
-    
+        self.tableView.reloadData()
     }
     
     func registerNib() {
