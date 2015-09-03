@@ -8,7 +8,7 @@
 
 import UIKit
 
-class EditProfileTableViewController: UITableViewController, UINavigationControllerDelegate, EditProfileAddPhotoTableViewCellDelegate, EditProfileAddressTableViewCellDelegate, EditProfileAccountInformationTableViewCellDelegate, UIImagePickerControllerDelegate, UIActionSheetDelegate, EditProfilePersonalInformationTableViewCellDelegate  {
+class EditProfileTableViewController: UITableViewController, UINavigationControllerDelegate, EditProfileAddPhotoTableViewCellDelegate, EditProfileAddressTableViewCellDelegate, EditProfileAccountInformationTableViewCellDelegate, UIImagePickerControllerDelegate, UIActionSheetDelegate, EditProfilePersonalInformationTableViewCellDelegate, ChangePasswordViewControllerDelegate  {
     
     let manager = APIManager.sharedInstance
     
@@ -37,6 +37,8 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
     
     var imageData: NSData?
     
+    var dimView: UIView?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -61,6 +63,13 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
         
         var tapTableView = UITapGestureRecognizer(target:self, action:"hideKeyboard")
         self.tableView.addGestureRecognizer(tapTableView)
+        
+        dimView = UIView(frame: self.view.bounds)
+        dimView?.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
+        self.navigationController?.view.addSubview(dimView!)
+        //self.view.addSubview(dimView!)
+        dimView?.hidden = true
+    
     }
     
     func passModel(profileModel: ProfileUserDetailsModel){
@@ -90,7 +99,6 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
     func back() {
         self.navigationController!.popViewControllerAnimated(true)
     }
-
     
     func registerNibs() {
         var nibPhoto = UINib(nibName: addPhotoCellIndetifier, bundle: nil)
@@ -325,6 +333,24 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
         self.mobileNumber = mobileNumber
     }
     
+    
+    // MARK: - ChangePasswordViewControllerDelegate
+    func closeChangePasswordViewController(){
+        hideDimView()
+    }
+    
+    func submitChangePasswordViewController(){
+        hideDimView()
+    }
+    
+    func hideDimView() {
+        UIView.animateWithDuration(0.3, animations: {
+            self.dimView!.alpha = 0
+            }, completion: { finished in
+                self.dimView!.hidden = true
+        })
+    }
+    
     // MARK: - EditProfileAccountInformationTableViewCellDelegate
     func saveAction(sender: AnyObject) {
         println("saveAction")
@@ -377,6 +403,23 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
             }
         }
             
+    }
+    
+    func editPasswordAction() {
+        var editPasswordModal = ChangePasswordViewController(nibName: "ChangePasswordViewController", bundle: nil)
+        editPasswordModal.delegate = self
+        editPasswordModal.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
+        editPasswordModal.providesPresentationContextTransitionStyle = true
+        editPasswordModal.definesPresentationContext = true
+        editPasswordModal.view.backgroundColor = UIColor.clearColor()
+        editPasswordModal.view.frame.origin.y = 0
+        self.tabBarController?.presentViewController(editPasswordModal, animated: true, completion: nil)
+        
+        self.dimView!.hidden = false
+        UIView.animateWithDuration(0.3, animations: {
+            self.dimView!.alpha = 1
+            }, completion: { finished in
+        })
     }
     
     
