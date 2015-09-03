@@ -201,12 +201,12 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
     @IBAction func addToCartAction(sender: AnyObject) {
         if SessionManager.isLoggedIn() {
             let url: String = "http://online.api.easydeal.ph/api/v1/auth/cart/updateCartItem"
-            let quantity: String = String(stringInterpolationSegment: stocksLabel.text?.toInt())
+            let quantity: Int = stocksLabel.text!.toInt()!
             
             let params: NSDictionary = ["access_token": SessionManager.accessToken(),
                 "productId": self.productDetailsModel.id,
                 "unitId": String(unitId.toInt()! + 1),
-                "quantity": quantity]
+                "quantity": String(quantity)]
             
             println(params)
             
