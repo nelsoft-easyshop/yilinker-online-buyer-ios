@@ -358,19 +358,17 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
                     var params: NSDictionary = [
                         "firstName": firstName as String,
                         "lastName": lastName as String,
-                        "contactNumber": mobileNumber as String,
-                        "access_token": SessionManager.accessToken()]
+                        "contactNumber": mobileNumber as String]
                     
-                    fireUpdateProfile(APIAtlas.editProfileUrl, params: params, withImage: true)
+                    fireUpdateProfile(APIAtlas.editProfileUrl + "?access_token=" + SessionManager.accessToken(), params: params, withImage: true)
                 } else {
                     var params: NSDictionary = [
                         "firstName": firstName as String,
                         "lastName": lastName as String,
                         "profilePhoto": profileUserDetailsModel.profileImageUrl as String,
-                        "contactNumber": mobileNumber as String,
-                        "access_token": SessionManager.accessToken()]
+                        "contactNumber": mobileNumber as String]
                     
-                    fireUpdateProfile(APIAtlas.editProfileUrl, params: params, withImage: false)
+                    fireUpdateProfile(APIAtlas.editProfileUrl + "?access_token=" + SessionManager.accessToken(), params: params, withImage: false)
                 }
                 
             }
@@ -387,7 +385,7 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
         if withImage {
             manager.POST(url, parameters: params, constructingBodyWithBlock: { (data: AFMultipartFormData!) in
                 println("")
-                data.appendPartWithFileData(self.imageData!, name: "profilePhoto", fileName: "photo", mimeType: "")
+                data.appendPartWithFileData(self.imageData!, name: "profilePhoto", fileName: "photo", mimeType: "image/jpeg")
                 }, success: {
                     (task: NSURLSessionDataTask!, responseObject: AnyObject!) in print(responseObject as! NSDictionary)
                     if responseObject.objectForKey("error") != nil {
