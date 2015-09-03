@@ -83,7 +83,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         setBorderOf(view: buyItNowView, width: 1, color: .grayColor(), radius: 3)
         
         requestProductDetails(productUrl, params: nil)
-        requestReviewDetails(reviewUrl, params: ["productId": "1"])
+        requestReviewDetails(reviewUrl, params: ["productId": "12"])
         
         buyItNowView.addGestureRecognizer(tapGesture("buyItNowAction:"))
     }
@@ -106,7 +106,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         super.viewWillDisappear(animated)
     }
     
-    // MARK: - Table View Data Source
+    // MARK: - Table View Data Source and Delegates
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if productReviewModel != nil && productReviewModel.reviews.count > 1 {
@@ -129,6 +129,18 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         cell.messageLabel.text = productReviewModel.reviews[indexPath.row].review
         
         return cell
+    }
+    
+    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        if cell.respondsToSelector("setSeparatorInset:") {
+            cell.separatorInset = UIEdgeInsetsZero
+        }
+        if cell.respondsToSelector("setLayoutMargins:") {
+            cell.layoutMargins = UIEdgeInsetsZero
+        }
+        if cell.respondsToSelector("setPreservesSuperviewLayoutMargins:") {
+            cell.preservesSuperviewLayoutMargins = false
+        }
     }
     
     func scrollViewDidScroll(scrollView: UIScrollView) {

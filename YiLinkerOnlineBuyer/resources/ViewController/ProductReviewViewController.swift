@@ -48,14 +48,13 @@ class ProductReviewViewController: UIViewController {
         
         rateLabel.layer.cornerRadius = rateLabel.frame.size.width / 2
         rateLabel.clipsToBounds = true
+        rateLabel.backgroundColor = Constants.Colors.productReviewGreen
         
         let tap = UITapGestureRecognizer()
         tap.numberOfTapsRequired = 1
         tap.addTarget(self, action: "dimViewAction:")
         self.dimView.addGestureRecognizer(tap)
         self.dimView.backgroundColor = .clearColor()
-        
-        rateLabel.backgroundColor = Constants.Colors.productReviewGreen
         
     }
 
@@ -81,6 +80,18 @@ class ProductReviewViewController: UIViewController {
 //        cell.setRating(model.reviews[indexPath.row].rating)
         
         return cell
+    }
+    
+    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        if cell.respondsToSelector("setSeparatorInset:") {
+            cell.separatorInset = UIEdgeInsetsZero
+        }
+        if cell.respondsToSelector("setLayoutMargins:") {
+            cell.layoutMargins = UIEdgeInsetsZero
+        }
+        if cell.respondsToSelector("setPreservesSuperviewLayoutMargins:") {
+            cell.preservesSuperviewLayoutMargins = false
+        }
     }
     
     @IBAction func cancelAction(sender: AnyObject!) {

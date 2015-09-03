@@ -33,7 +33,7 @@ class ReviewTableViewCell: UITableViewCell {
     }
 
     func setDisplayPicture(text: String) {
-        let imageUrl: NSURL = NSURL(string: "http://p1.i.ntere.st/a438be228da13ca14d1a84feffdbf816_480.jpg")!
+        let imageUrl: NSURL = NSURL(string: text)!
         displayPictureImageView.sd_setImageWithURL(imageUrl, placeholderImage: UIImage(named: "dummy-placeholder"))
     }
     
