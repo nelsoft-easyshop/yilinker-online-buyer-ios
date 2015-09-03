@@ -104,7 +104,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
             if profileDetails != nil {
                 cell.profileImageView.sd_setImageWithURL(NSURL(string: profileDetails!.profileImageUrl), placeholderImage: UIImage(named: "dummy-placeholder"))
                 cell.profileNameLabel.text = profileDetails?.fullName
-                cell.profileAddressLabel.text = profileDetails!.address?.streetName
+                cell.profileAddressLabel.text = profileDetails!.address.streetName
             }
             return cell
         } else {
