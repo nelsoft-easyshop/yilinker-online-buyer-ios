@@ -50,11 +50,11 @@
             <point key="canvasLocation" x="218.5" y="105.5"/>
         </view>
         <view clipsSubviews="YES" contentMode="scaleToFill" id="6LZ-z1-pbw" customClass="CheckoutViews" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="323" height="58"/>
+            <rect key="frame" x="0.0" y="1" width="323" height="57"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Delivery" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ajg-vt-4gA">
-                    <rect key="frame" x="18" y="8" width="103" height="21"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Delivery" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ajg-vt-4gA">
+                    <rect key="frame" x="18" y="7" width="103" height="21"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="103" id="mD5-JG-Jeg"/>
                         <constraint firstAttribute="height" constant="21" id="nAm-Mf-A4n"/>
@@ -63,8 +63,8 @@
                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Total" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bmh-IF-NYL">
-                    <rect key="frame" x="18" y="31" width="35" height="21"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Total" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bmh-IF-NYL">
+                    <rect key="frame" x="18" y="30" width="35" height="21"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="35" id="A9G-pK-rS2"/>
                         <constraint firstAttribute="height" constant="21" id="fXP-5n-EcE"/>
@@ -73,15 +73,15 @@
                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LZc-zD-hfl">
-                    <rect key="frame" x="18" y="1" width="320" height="1"/>
+                <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LZc-zD-hfl">
+                    <rect key="frame" x="18" y="0.0" width="320" height="1"/>
                     <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="1" id="1uW-EZ-dxX"/>
                     </constraints>
                 </view>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="P 4,500" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hji-3a-1LN">
-                    <rect key="frame" x="205" y="26" width="110" height="21"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="P 4,500" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hji-3a-1LN">
+                    <rect key="frame" x="205" y="25" width="110" height="21"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="21" id="KWG-Dm-QgQ"/>
                         <constraint firstAttribute="width" constant="110" id="Mi1-Mu-5eU"/>
@@ -90,8 +90,8 @@
                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="FREE" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S6c-8a-doC">
-                    <rect key="frame" x="271" y="8" width="44" height="21"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="FREE" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S6c-8a-doC">
+                    <rect key="frame" x="271" y="7" width="44" height="21"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="44" id="TUJ-Kl-Z7B"/>
                         <constraint firstAttribute="height" constant="21" id="ZG4-oH-3TD"/>
@@ -116,13 +116,20 @@
                 <constraint firstAttribute="trailing" secondItem="S6c-8a-doC" secondAttribute="trailing" constant="8" id="wWq-u2-UpY"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <point key="canvasLocation" x="218.5" y="219"/>
+            <point key="canvasLocation" x="218.5" y="209.5"/>
         </view>
         <view clipsSubviews="YES" contentMode="scaleToFill" id="h91-C2-3J8" customClass="CheckoutViews" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="323" height="41"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ship to" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GKF-YI-ICf">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cqC-ZC-EQF">
+                    <rect key="frame" x="18" y="37" width="320" height="1"/>
+                    <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="ehg-3t-x85"/>
+                    </constraints>
+                </view>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Shipping address" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GKF-YI-ICf">
                     <rect key="frame" x="18" y="8" width="103" height="21"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="103" id="Zzv-GC-MbX"/>
@@ -132,13 +139,6 @@
                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cqC-ZC-EQF">
-                    <rect key="frame" x="18" y="37" width="320" height="1"/>
-                    <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="1" id="ehg-3t-x85"/>
-                    </constraints>
-                </view>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <constraints>
@@ -149,7 +149,7 @@
                 <constraint firstAttribute="bottom" secondItem="cqC-ZC-EQF" secondAttribute="bottom" constant="3" id="rXb-ah-NHP"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <point key="canvasLocation" x="218.5" y="323.5"/>
+            <point key="canvasLocation" x="218.5" y="312.5"/>
         </view>
     </objects>
 </document>

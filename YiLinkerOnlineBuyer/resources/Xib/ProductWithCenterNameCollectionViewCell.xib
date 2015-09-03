@@ -51,6 +51,6 @@
         </collectionViewCell>
     </objects>
     <resources>
-        <image name="dummy-placeholder" width="1280" height="800"/>
+        <image name="dummy-placeholder" width="300" height="188"/>
     </resources>
 </document>

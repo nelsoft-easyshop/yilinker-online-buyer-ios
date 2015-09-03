@@ -115,7 +115,7 @@
                 <outlet property="defaultAddressLabel" destination="jzk-DI-tsJ" id="uf2-iG-JUD"/>
                 <outlet property="fakeContainerView" destination="yz9-Nf-Uuz" id="fhq-1U-5hb"/>
             </connections>
-            <point key="canvasLocation" x="530.5" y="393"/>
+            <point key="canvasLocation" x="606.5" y="343"/>
         </tableViewCell>
     </objects>
     <resources>

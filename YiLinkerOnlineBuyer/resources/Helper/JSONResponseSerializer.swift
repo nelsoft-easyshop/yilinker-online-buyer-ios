@@ -18,8 +18,12 @@ import UIKit
 
 class JSONResponseSerializer: AFJSONResponseSerializer {
     override func responseObjectForResponse(response: NSURLResponse?, data: NSData?, error: NSErrorPointer) -> AnyObject? {
+
+        var json: NSMutableDictionary = NSMutableDictionary()
         
-        var json: NSMutableDictionary = super.responseObjectForResponse(response, data: data, error: error) as! NSMutableDictionary
+        if let val =  super.responseObjectForResponse(response, data: data, error: error) as? NSMutableDictionary {
+            json = val
+        }
         
         if (error.memory != nil) {
             var errorValue = error.memory!

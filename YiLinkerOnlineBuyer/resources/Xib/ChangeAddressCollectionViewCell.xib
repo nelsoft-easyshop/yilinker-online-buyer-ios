@@ -43,7 +43,7 @@
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text="LG. Sta Lucia East Grand Mall, Marcos HighWay Corner Felix Avenue . Ortigas Pasig City" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sx5-GY-uj9">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" misplaced="YES" text="LG. Sta Lucia East Grand Mall, Marcos HighWay Corner Felix Avenue . Ortigas Pasig City" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sx5-GY-uj9">
                         <rect key="frame" x="46" y="30" width="234" height="44"/>
                         <constraints>
                             <constraint firstAttribute="height" priority="500" constant="42" id="RAw-Fb-yqd"/>

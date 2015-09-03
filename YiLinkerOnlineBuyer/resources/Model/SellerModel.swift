@@ -30,6 +30,13 @@ class SellerModel: NSObject {
     var store_name: String = ""
     var store_description = ""
     var is_allowed: Bool = false
+    var store_address: String = ""
+    
+    //For feed back seller reviews
+    var rating: String = ""
+    var image_url: NSURL = NSURL(string: "")!
+    var user_rating: String = ""
+    var message: String = ""
     
     init(name: String, avatar: NSURL, specialty: String, target: String, products: [HomePageProductModel]) {
         self.name = name
@@ -54,7 +61,7 @@ class SellerModel: NSObject {
             self.reviews = reviews
     }
     
-    init(name : String, email : String, gender : String, nickname : String, contact_number : String, specialty : String, birthdate : String, store_name : String, store_description : String, avatar : NSURL, cover_photo : NSURL, is_allowed : Bool, products : [HomePageProductModel], reviews : [ProductReviewsModel]) {
+    init(name : String, email : String, gender : String, nickname : String, contact_number : String, specialty : String, birthdate : String, store_name : String, store_description : String, avatar : NSURL, cover_photo : NSURL, is_allowed : Bool, store_address: String, products : [HomePageProductModel], reviews : [ProductReviewsModel]) {
         self.name = name
         self.email = email
         self.gender = gender
@@ -69,6 +76,12 @@ class SellerModel: NSObject {
         self.is_allowed = is_allowed
         self.products = products
         self.reviews = reviews
+        self.store_address = store_address
+    }
+    
+    init(rating : String, product_reviews: [ProductReviewsModel]){
+        self.reviews = product_reviews
+        self.rating = rating
     }
     
     class func parseSellerDataFromDictionary(dictionary: NSDictionary) -> SellerModel {
@@ -87,7 +100,7 @@ class SellerModel: NSObject {
         var is_followed: Bool = false
         var sellerProductModel: [HomePageProductModel] = [HomePageProductModel]()
         var productReviews: [ProductReviewsModel] = [ProductReviewsModel]()
-        
+        var store_address: String = ""
         if let value: AnyObject = dictionary["data"] {
             
             if let sellerName = value["fullName"] as? String {
@@ -163,10 +176,14 @@ class SellerModel: NSObject {
             }
             
             var myArrayOfDictProducts: NSArray = [
+
                 ["name": "Nike",
                     "image": "http://www.dividend.com/assets/dividend/nke/nike-shoes-bb098f57129e558e1cdf393c308987bf.jpg",
                     "target": "nike1",
                     "targetType": ""]
+                ,
+                ["name": "Nike", "image": "http://www.dividend.com/assets/dividend/nke/nike-shoes-bb098f57129e558e1cdf393c308987bf.jpg", "target": "nike1", "targetType": ""]
+
                 , ["name": "vans shoes",
                     "image": "http://content.nike.com/content/dam/one-nike/en_us/season-2013-ho/Shop/NIKEiD/NIKEiD_P2_Basketball_20131112_FILT.jpg.transform/full-screen/image.jpg",
                     "target": "",
@@ -208,6 +225,7 @@ class SellerModel: NSObject {
                     "imageUrl": "https://c2.staticflickr.com/4/3382/3545724212_986ae8f5f9.jpg",
                     "rating": 2,
                     "message": "The item is damaged!"]
+
             ]
             
             var dictReviews:NSDictionary = ["reviews" : myArrayOfDictRatings]
@@ -222,9 +240,45 @@ class SellerModel: NSObject {
                 }
             }
             
+            if let val: AnyObject = value["storeAddress"] {
+               // var reviewArray: NSDictionary = dictReviews["storeAddress"] as! NSDictionary
+                var unitNumber: String = ""
+                var bldgName: String = ""
+                var streetNumber: String = ""
+                var streetName: String = ""
+                var subdivision: String = ""
+                var zipCode: String = ""
+                /*var streetAddress: String = ""
+                var province: String = ""
+                var city: String = ""
+                var municipality: String = ""
+                var barangay: String = ""*/
+                if let temUnitNo = val["unitNumber"] as? String {
+                    unitNumber = temUnitNo
+                }
+                
+                if let temBldgNo = val["buildingName"] as? String {
+                    bldgName = temBldgNo
+                }
+                
+                if let temStreetNo = val["streetNumber"] as? String {
+                    streetNumber = temStreetNo
+                }
+                
+                if let temSubdivision = val["subdivision"] as? String {
+                    subdivision = temSubdivision
+                }
+                
+                if let temZipCode = val["zipCode"] as? String {
+                    zipCode = temZipCode
+                }
+                
+                store_address = unitNumber + " " + bldgName + ", " + streetName + ", " + subdivision + ", " + zipCode
+            }
+            
         }
         
-        let sellerModel: SellerModel = SellerModel(name: name, email: email, gender: gender, nickname: nickname, contact_number: contact_number, specialty: contact_number, birthdate: birthdate, store_name: store_name, store_description: store_description, avatar: avatar, cover_photo: cover_photo, is_allowed: is_followed, products:sellerProductModel, reviews: productReviews)
+        let sellerModel: SellerModel = SellerModel(name: name, email: email, gender: gender, nickname: nickname, contact_number: contact_number, specialty: contact_number, birthdate: birthdate, store_name: store_name, store_description: store_description, avatar: avatar, cover_photo: cover_photo, is_allowed: is_followed, store_address: store_address, products:sellerProductModel, reviews: productReviews)
         
         return sellerModel
     }
@@ -325,5 +379,31 @@ class SellerModel: NSObject {
             let sellerModel: SellerModel = SellerModel(name: name, avatar: avatar, specialty: specialty, target: target, products: homePageProductModels)
             return sellerModel
         }
+    }
+    
+    class func parseSellerReviewsDataFromDictionary(dictionary: NSDictionary) -> SellerModel {
+        
+        var rating: String = ""
+         var productReviews: [ProductReviewsModel] = [ProductReviewsModel]()
+        
+        if let tempRating = dictionary["rating"] as? String {
+            rating = tempRating
+        }
+        
+        var dictReviews:NSDictionary = ["reviews" : dictionary]
+        
+        if let val: AnyObject = dictReviews["reviews"] {
+            var reviewArray: NSArray = dictReviews["reviews"] as! NSArray
+            
+            for (index, review) in enumerate(reviewArray) {
+                let reviewDictionary: NSDictionary = review as! NSDictionary
+                let productReviewModel: ProductReviewsModel = ProductReviewsModel.parseProductReviesModel(reviewDictionary)
+                productReviews.append(productReviewModel)
+            }
+        }
+        
+        let sellerModel: SellerModel = SellerModel(rating: rating, product_reviews: productReviews)
+        return sellerModel
+        
     }
 }
