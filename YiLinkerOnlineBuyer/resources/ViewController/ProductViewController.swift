@@ -646,6 +646,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     func addEmptyView() {
         self.emptyView = UIView.loadFromNibNamed("EmptyView", bundle: nil) as? EmptyView
         self.emptyView!.delegate = self
+        self.emptyView!.frame = self.view.bounds
         self.view.addSubview(self.emptyView!)
     }
     
