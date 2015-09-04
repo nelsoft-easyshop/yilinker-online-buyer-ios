@@ -61,7 +61,7 @@ class FollowedSellerViewController: UIViewController, EmptyViewDelegate {
         cell.nameLabel.text = followedSellerModel.fullName[indexPath.row]
         cell.specialtyLabel.text = String("Specialty: ") + followedSellerModel.specialty[indexPath.row]
         cell.setPicture(followedSellerModel.profileImageUrl[indexPath.row])
-//        cell.setRating(followedSellerModel.ratings[indexPath.row])
+        cell.setRating(followedSellerModel.rating[indexPath.row])
         
         return cell
     }
