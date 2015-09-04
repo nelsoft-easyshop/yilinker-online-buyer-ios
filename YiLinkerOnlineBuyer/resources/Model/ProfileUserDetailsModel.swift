@@ -20,7 +20,7 @@ class ProfileUserDetailsModel: NSObject {
     var gender: String = ""
     var birthdate: String = ""
     
-    var address: AddressModelV2?
+    var address: AddressModelV2 = AddressModelV2()
     
     init(fullName: String, firstName: String, lastName: String, email: String, contactNumber: String, profileImageUrl: String, coverPhoto: String, gender: String, birthdate: String, address: AddressModelV2){
         self.fullName = fullName
@@ -35,6 +35,10 @@ class ProfileUserDetailsModel: NSObject {
         self.address = address
     }
     
+    override init() {
+        
+    }
+    
     class func parseDataWithDictionary(dictionary: AnyObject) -> ProfileUserDetailsModel {
         var fullName: String = ""
         var firstName: String = ""
@@ -45,8 +49,8 @@ class ProfileUserDetailsModel: NSObject {
         var coverPhoto: String = ""
         var gender: String = ""
         var birthdate: String = ""
-        
-        var address: AddressModelV2?
+
+        var address: AddressModelV2 = AddressModelV2()
     
         if let value: AnyObject = dictionary["fullName"] {
             if value as! NSObject != NSNull() {
@@ -118,7 +122,7 @@ class ProfileUserDetailsModel: NSObject {
             coverPhoto: coverPhoto,
             gender: gender,
             birthdate: birthdate,
-            address: address!)
+            address: address)
     }
     
 

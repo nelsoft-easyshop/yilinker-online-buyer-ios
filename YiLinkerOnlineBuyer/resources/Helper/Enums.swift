@@ -25,3 +25,11 @@ enum CustomizeShoppingType {
     case Promos
     case Others
 }
+
+enum AddressRefreshType {
+    case Edit
+    case Delete
+    case Create
+    case SetDefault
+    case Get
+}

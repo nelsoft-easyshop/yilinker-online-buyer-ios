@@ -28,6 +28,8 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
     
      var emptyView: EmptyView?
     
+    var selectedItemIDs: [Int] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         manager = APIManager.sharedInstance
@@ -52,15 +54,23 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(true)
+        selectedItemIDs = []
         if emptyView != nil {
             emptyView?.hidden = true
         }
         NSNotificationCenter.defaultCenter().postNotificationName("SwipeForOptionsCellEnclosingTableViewDidBeginScrollingNotification", object: self)
-        
         getCartData()
+        
     }
     
     @IBAction func buttonClicked(sender: AnyObject) {
+        if sender as! UIButton == checkoutButton {
+            if selectedItemIDs.count == 0 {
+                showAlert("Error", message: "Choose item from your cart.", redirectToHome: false)
+            } else {
+                firePassCartItem(APIAtlas.updateCheckout, params: NSDictionary(dictionary: ["cart": selectedItemIDs, "access_token": SessionManager.accessToken()]))
+            }
+        }
     }
     
     //REST API request
@@ -78,6 +88,27 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
     }
     
+    func firePassCartItem(url: String, params: NSDictionary!) {
+        showLoader()
+        manager.POST(url, parameters: params, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in print(responseObject as! NSDictionary)
+            if responseObject.objectForKey("error") != nil {
+                self.requestRefreshToken("passCart", url: url, params: params)
+            } else {
+                let checkout = CheckoutContainerViewController(nibName: "CheckoutContainerViewController", bundle: nil)
+                let navigationController: UINavigationController = UINavigationController(rootViewController: checkout)
+                navigationController.navigationBar.barTintColor = Constants.Colors.appTheme
+                self.tabBarController?.presentViewController(navigationController, animated: true, completion: nil)
+                self.dismissLoader()
+            }
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                println(error)
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong. . .", title: "Error")
+                self.dismissLoader()
+        })
+    }
+    
     func fireDeleteCartItem(url: String, params: NSDictionary!) {
         showLoader()
         manager.POST(url, parameters: params, success: {
@@ -90,7 +121,7 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
             
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                self.showAlert("Error", message: "Something went wrong. . .")
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong. . .", title: "Error")
                 self.dismissLoader()
         })
     }
@@ -101,11 +132,13 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in print(responseObject as! NSDictionary)
             if responseObject.objectForKey("error") != nil {
                 self.requestRefreshToken("editToCart", url: url, params: params)
+            } else {
+                self.getCartData()
             }
             self.dismissLoader()
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                self.showAlert("Error", message: "Something went wrong. . .")
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong. . .", title: "Error")
                 self.dismissLoader()
         })
     }
@@ -122,7 +155,7 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
             }
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                self.showAlert("Error", message: "Something went wrong. . .")
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong. . .", title: "Error")
                 self.updateCounterLabel()
                 self.dismissLoader()
         })
@@ -142,6 +175,13 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
         self.updateCounterLabel()
         self.calculateTotalPrice()
         self.dismissLoader()
+        
+        if tableData.count != 0 {
+            let badgeValue = (self.tabBarController!.tabBar.items![4] as! UITabBarItem).badgeValue?.toInt()
+            (self.tabBarController!.tabBar.items![4] as! UITabBarItem).badgeValue = String(tableData.count)
+        } else {
+            (self.tabBarController!.tabBar.items![4] as! UITabBarItem).badgeValue = nil
+        }
     }
     
     func updateCounterLabel() {
@@ -251,7 +291,7 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
             ]
             fireDeleteCartItem(APIAtlas.updateCartUrl, params: params)
         } else {
-            showAlert("Connection Unreachable", message: "Cannot retrieve data. Please check your internet connection.")
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Cannot retrieve data. Please check your internet connection.", title: "Connection Unreachable")
         }
     }
     
@@ -319,6 +359,15 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         tableData[rowOfTheCell].selected = state
 
+        let tempItemId = tableData[rowOfTheCell].itemId
+        if state {
+            selectedItemIDs.append(tempItemId)
+        } else {
+            selectedItemIDs = selectedItemIDs.filter({$0 != tempItemId})
+        }
+        
+        println("selectedItemIDs  \(selectedItemIDs)")
+        
         calculateTotalPrice()
     }
     
@@ -335,7 +384,23 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
         })
     }
     
-    func pressedDoneAttribute(controller: CartProductAttributeViewController) {
+    func pressedDoneAttribute(controller: CartProductAttributeViewController, productID: Int, unitID: Int, itemID: Int, quantity: Int) {
+        
+        if Reachability.isConnectedToNetwork() {
+            var params: NSDictionary = ["access_token": SessionManager.accessToken(),
+                "productId": "\(productID)",
+                "unitId": "\(unitID)",
+                "itemId": "\(itemID)",
+                "quantity": "\(quantity)"
+            ]
+            
+            println("PARAMS\n\(params)")
+            
+            fireAddToCartItem(APIAtlas.updateCartUrl, params: params)
+        } else {
+            showAlert("Connection Unreachable", message: "Cannot retrieve data. Please check your internet connection.", redirectToHome: false)
+        }
+        
         UIView.animateWithDuration(0.3, animations: {
             self.view.transform = CGAffineTransformMakeTranslation(1, 1)
             self.dimView.alpha = 0
@@ -359,14 +424,16 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
     }
     
-    func showAlert(title: String, message: String) {
+    func showAlert(title: String, message: String, redirectToHome: Bool) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
         
         let OKAction = UIAlertAction(title: "OK", style: .Default) { (action) in
             alertController.dismissViewControllerAnimated(true, completion: nil)
             
-            let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-            appDelegate.changeRootToHomeView()
+            if redirectToHome {
+                let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+                appDelegate.changeRootToHomeView()
+            }
         }
         
         alertController.addAction(OKAction)
@@ -398,9 +465,11 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
                     self.fireAddToCartItem(url, params: params)
                 } else if type == "deleteWishlist" {
                     self.fireDeleteCartItem(url, params: params)
+                } else if type == "passCart" {
+                    self.firePassCartItem(url, params: params)
                 }
             } else {
-                self.showAlert("Error", message: responseObject["message"] as! String)
+                self.showAlert("Error", message: responseObject["message"] as! String, redirectToHome: true)
             }
             
             }, failure: {
@@ -408,7 +477,7 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
                 SVProgressHUD.dismiss()
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                 
-                self.showAlert("Something went wrong", message: "")
+               "Cannot retrieve data. Please check your internet connection."
                 
         })
     }

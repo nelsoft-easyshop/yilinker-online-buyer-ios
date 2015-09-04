@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol ReviewTableViewCellDelegate{
+    
+}
+
 class ReviewTableViewCell: UITableViewCell {
 
     @IBOutlet weak var displayPictureImageView: UIImageView!
@@ -19,6 +23,8 @@ class ReviewTableViewCell: UITableViewCell {
     @IBOutlet weak var rateImageView4: UIImageView!
     @IBOutlet weak var rateImageView5: UIImageView!
     
+    var delegate: ReviewTableViewCellDelegate?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
 
@@ -27,7 +33,7 @@ class ReviewTableViewCell: UITableViewCell {
     }
 
     func setDisplayPicture(text: String) {
-        let imageUrl: NSURL = NSURL(string: "http://p1.i.ntere.st/a438be228da13ca14d1a84feffdbf816_480.jpg")!
+        let imageUrl: NSURL = NSURL(string: text)!
         displayPictureImageView.sd_setImageWithURL(imageUrl, placeholderImage: UIImage(named: "dummy-placeholder"))
     }
     

@@ -104,7 +104,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
             if profileDetails != nil {
                 cell.profileImageView.sd_setImageWithURL(NSURL(string: profileDetails!.profileImageUrl), placeholderImage: UIImage(named: "dummy-placeholder"))
                 cell.profileNameLabel.text = profileDetails?.fullName
-                cell.profileAddressLabel.text = profileDetails!.address?.streetName
+                cell.profileAddressLabel.text = profileDetails!.address.streetName
             }
             return cell
         } else {
@@ -119,7 +119,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         if indexPath.row == 0 {
             return 200
         } else {
-            return 400
+            return 375
         }
     }
     
@@ -172,6 +172,9 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     
     func transactionsTapAction() {
         var transactionViewController = TransactionViewController(nibName: "TransactionViewController", bundle: nil)
+        if transactionViewController.respondsToSelector("edgesForExtendedLayout") {
+            transactionViewController.edgesForExtendedLayout = UIRectEdge.None
+        }
         self.navigationController?.pushViewController(transactionViewController, animated:true)
     }
     
@@ -184,6 +187,10 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
 
         var myPointsViewController = MyPointsTableViewController(nibName: "MyPointsTableViewController", bundle: nil)
         self.navigationController?.pushViewController(myPointsViewController, animated:true)
+    }
+    
+    func resolutionTapAction() {
+        
     }
     
     func settingsTapAction(){

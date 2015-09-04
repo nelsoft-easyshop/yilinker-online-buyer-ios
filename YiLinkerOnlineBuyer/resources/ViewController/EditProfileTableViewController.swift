@@ -8,7 +8,7 @@
 
 import UIKit
 
-class EditProfileTableViewController: UITableViewController, UINavigationControllerDelegate, EditProfileAddPhotoTableViewCellDelegate, EditProfileAddressTableViewCellDelegate, EditProfileAccountInformationTableViewCellDelegate, UIImagePickerControllerDelegate, UIActionSheetDelegate  {
+class EditProfileTableViewController: UITableViewController, UINavigationControllerDelegate, EditProfileAddPhotoTableViewCellDelegate, EditProfileAddressTableViewCellDelegate, EditProfileAccountInformationTableViewCellDelegate, UIImagePickerControllerDelegate, UIActionSheetDelegate, EditProfilePersonalInformationTableViewCellDelegate, ChangePasswordViewControllerDelegate  {
     
     let manager = APIManager.sharedInstance
     
@@ -28,6 +28,16 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
     var accountIndexPath: NSIndexPath?
     
     var profileUserDetailsModel: ProfileUserDetailsModel!
+    
+    var firstName: String = ""
+    var lastName: String = ""
+    var mobileNumber: String = ""
+    var emailAddress: String = ""
+    var password: String = ""
+    
+    var imageData: NSData?
+    
+    var dimView: UIView?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,10 +63,22 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
         
         var tapTableView = UITapGestureRecognizer(target:self, action:"hideKeyboard")
         self.tableView.addGestureRecognizer(tapTableView)
+        
+        dimView = UIView(frame: self.view.bounds)
+        dimView?.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
+        self.navigationController?.view.addSubview(dimView!)
+        //self.view.addSubview(dimView!)
+        dimView?.hidden = true
+        dimView?.alpha = 0
+    
     }
     
     func passModel(profileModel: ProfileUserDetailsModel){
         profileUserDetailsModel = profileModel
+        firstName = profileModel.firstName
+        lastName = profileModel.lastName
+        mobileNumber = profileModel.contactNumber
+        emailAddress = profileModel.email
     }
     
     func titleView() {
@@ -78,7 +100,6 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
     func back() {
         self.navigationController!.popViewControllerAnimated(true)
     }
-
     
     func registerNibs() {
         var nibPhoto = UINib(nibName: addPhotoCellIndetifier, bundle: nil)
@@ -114,6 +135,13 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
             let cell = tableView.dequeueReusableCellWithIdentifier(addPhotoCellIndetifier, forIndexPath: indexPath) as! EditProfileAddPhotoTableViewCell
             cell.delegate = self
             
+            cell.profileImageView.sd_setImageWithURL(NSURL(string: profileUserDetailsModel.profileImageUrl), placeholderImage: UIImage(named: "dummy-placeholder"))
+            
+            if profileUserDetailsModel.profileImageUrl.isNotEmpty() {
+                cell.profileImageView.hidden = false
+                cell.addPhotoLabel.text = "Edit Photo"
+            }
+            
             photoIndexPath = indexPath
             
             return cell
@@ -122,7 +150,7 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
             cell.firstNameTextField.text = profileUserDetailsModel.firstName
             cell.lastNameTextField.text = profileUserDetailsModel.lastName
             cell.mobilePhoneTextField.text = profileUserDetailsModel.contactNumber
-            
+            cell.delegate = self
             personalIndexPath = indexPath
             
             return cell
@@ -258,6 +286,8 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
         addPhotoCell!.profileImageView.hidden = false
         addPhotoCell!.profileImageView.image = image
         addPhotoCell!.addPhotoLabel.text = "Edit Photo"
+        
+        imageData = UIImagePNGRepresentation(image)
     }
     
     func actionSheet(actionSheet: UIActionSheet, clickedButtonAtIndex buttonIndex: Int) {
@@ -297,52 +327,77 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
         self.view.endEditing(true)
     }
     
+    // MARK: - EditProfilePersonalInformationTableViewCellDelegate
+    func passPersonalInformation(firstName: String, lastName: String, mobileNumber: String) {
+        self.firstName = firstName
+        self.lastName = lastName
+        self.mobileNumber = mobileNumber
+    }
+    
+    
+    // MARK: - ChangePasswordViewControllerDelegate
+    func closeChangePasswordViewController(){
+        hideDimView()
+    }
+    
+    func submitChangePasswordViewController(){
+        hideDimView()
+    }
+    
+    func hideDimView() {
+        UIView.animateWithDuration(0.3, animations: {
+            self.dimView!.alpha = 0
+            }, completion: { finished in
+                self.dimView!.hidden = true
+        })
+    }
+    
     // MARK: - EditProfileAccountInformationTableViewCellDelegate
     func saveAction(sender: AnyObject) {
         println("saveAction")
         
         var errorMessage: String = ""
         
-        addPhotoCell = self.tableView.cellForRowAtIndexPath(photoIndexPath!) as? EditProfileAddPhotoTableViewCell
-        personalInfoCell = self.tableView.cellForRowAtIndexPath(personalIndexPath!) as? EditProfilePersonalInformationTableViewCell
-        addressCell = self.tableView.cellForRowAtIndexPath(addressIndexPath!) as? EditProfileAddressTableViewCell
-        accountCell = self.tableView.cellForRowAtIndexPath(accountIndexPath!) as? EditProfileAccountInformationTableViewCell
-        
-        let firstName = personalInfoCell?.firstNameTextField.text
-        let lastName = personalInfoCell?.lastNameTextField.text
-        let mobileNumber = personalInfoCell?.mobilePhoneTextField.text
-        let emailAddress = accountCell?.emailAddressTextField.text
-        let password = accountCell?.passwordTextField.text
-        
-        if !firstName!.isNotEmpty() {
+        /*
+        if firstName.isEmpty {
             errorMessage = "First name is required."
-        } else if !firstName!.isValidName() {
+        } else if firstName.isValidName() {
             errorMessage = "First name contains illegal characters. It can only contain letters, numbers and underscores."
-        } else if !lastName!.isNotEmpty() {
+        } else if lastName.isNotEmpty() {
             errorMessage = "Last name is required."
-        } else if !lastName!.isValidName() {
+        } else if lastName.isValidName() {
             errorMessage = "Last name contains illegal characters. It can only contain letters, numbers and underscores."
-        } else if !emailAddress!.isNotEmpty() {
+        } else if emailAddress.isNotEmpty() {
             errorMessage = "Email is required."
-        } else if !emailAddress!.isValidEmail() {
+        } else if emailAddress.isValidEmail() {
             errorMessage = "The email address you enter is not a valid email address."
-        } else if !password!.isNotEmpty() {
+        } else if password.isNotEmpty() {
             errorMessage = "Password is required."
-        } else if !password!.isAlphaNumeric() {
+        } else if password.isAlphaNumeric() {
             errorMessage = "Password contains illegal characters. It can only contain letters, numbers and underscores."
-        }
+        }*/
         
         if errorMessage != "" {
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorMessage)
         } else {
             if Reachability.isConnectedToNetwork(){
-                var params: NSDictionary = [
-                    "firstName": firstName! as String,
-                    "lastName": lastName! as String,
-                    "contactNumber": mobileNumber! as String,
-                    "access_token": SessionManager.accessToken()]
+                if imageData != nil{
+                    var params: NSDictionary = [
+                        "firstName": firstName as String,
+                        "lastName": lastName as String,
+                        "contactNumber": mobileNumber as String]
+                    
+                    fireUpdateProfile(APIAtlas.editProfileUrl + "?access_token=" + SessionManager.accessToken(), params: params, withImage: true)
+                } else {
+                    var params: NSDictionary = [
+                        "firstName": firstName as String,
+                        "lastName": lastName as String,
+                        "profilePhoto": profileUserDetailsModel.profileImageUrl as String,
+                        "contactNumber": mobileNumber as String]
+                    
+                    fireUpdateProfile(APIAtlas.editProfileUrl + "?access_token=" + SessionManager.accessToken(), params: params, withImage: false)
+                }
                 
-                fireUpdateProfile(APIAtlas.editProfileUrl, params: params)
             }
             else {
                 showAlert("Connection Unreachable", message: "Cannot retrieve data. Please check your internet connection.")
@@ -351,21 +406,60 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
             
     }
     
-    
-    func fireUpdateProfile(url: String, params: NSDictionary!) {
-        showLoader()
-        manager.POST(url, parameters: params, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in print(responseObject as! NSDictionary)
-            if responseObject.objectForKey("error") != nil {
-                self.requestRefreshToken("updateProfile", url: url, params: params)
-            }
-            self.dismissLoader()
-            self.showAlert("Success", message: "Successfully updated profile!")
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                self.showAlert("Error", message: "Something went wrong. . .")
-                self.dismissLoader()
+    func editPasswordAction() {
+        var editPasswordModal = ChangePasswordViewController(nibName: "ChangePasswordViewController", bundle: nil)
+        editPasswordModal.delegate = self
+        editPasswordModal.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
+        editPasswordModal.providesPresentationContextTransitionStyle = true
+        editPasswordModal.definesPresentationContext = true
+        editPasswordModal.view.backgroundColor = UIColor.clearColor()
+        editPasswordModal.view.frame.origin.y = 0
+        self.tabBarController?.presentViewController(editPasswordModal, animated: true, completion: nil)
+        
+        self.dimView!.hidden = false
+        UIView.animateWithDuration(0.3, animations: {
+            self.dimView!.alpha = 1
+            }, completion: { finished in
         })
+    }
+    
+    
+    func fireUpdateProfile(url: String, params: NSDictionary!, withImage: Bool) {
+        showLoader()
+        if withImage {
+            manager.POST(url, parameters: params, constructingBodyWithBlock: { (data: AFMultipartFormData!) in
+                println("")
+                data.appendPartWithFileData(self.imageData!, name: "profilePhoto", fileName: "photo", mimeType: "image/jpeg")
+                }, success: {
+                    (task: NSURLSessionDataTask!, responseObject: AnyObject!) in print(responseObject as! NSDictionary)
+                    if responseObject.objectForKey("error") != nil {
+                        self.requestRefreshToken("updateProfile", url: url, params: params, withImage: withImage)
+                    }
+                    self.dismissLoader()
+                    self.showAlert("Success", message: "Successfully updated profile!")
+                }, failure: {
+                    (task: NSURLSessionDataTask!, error: NSError!) in
+                    self.showAlert("Error", message: "Something went wrong. . .")
+                    self.dismissLoader()
+                    println(error)
+            })
+        } else {
+            manager.POST(url, parameters: params, success: {
+                    (task: NSURLSessionDataTask!, responseObject: AnyObject!) in print(responseObject as! NSDictionary)
+                    if responseObject.objectForKey("error") != nil {
+                        self.requestRefreshToken("updateProfile", url: url, params: params, withImage: withImage)
+                    }
+                    self.dismissLoader()
+                    self.showAlert("Success", message: "Successfully updated profile!")
+                    println(responseObject)
+                }, failure: {
+                    (task: NSURLSessionDataTask!, error: NSError!) in
+                    self.showAlert("Error", message: "Something went wrong. . .")
+                    self.dismissLoader()
+                    println(error)
+            })
+        }
+        
     }
     
     //Loader function
@@ -378,7 +472,7 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
         SVProgressHUD.dismiss()
     }
     
-    func requestRefreshToken(type: String, url: String, params: NSDictionary!) {
+    func requestRefreshToken(type: String, url: String, params: NSDictionary!, withImage: Bool) {
         let url: String = "http://online.api.easydeal.ph/api/v1/login"
         let params: NSDictionary = ["client_id": Constants.Credentials.clientID,
             "client_secret": Constants.Credentials.clientSecret,
@@ -393,7 +487,7 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
             
             if (responseObject["isSuccessful"] as! Bool) {
                 SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
-                    self.fireUpdateProfile(url, params: params)
+                self.fireUpdateProfile(url, params: params, withImage: withImage)
                 
             } else {
                 self.showAlert("Error", message: responseObject["message"] as! String)

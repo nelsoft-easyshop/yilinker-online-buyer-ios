@@ -17,7 +17,7 @@ class ProductDetailsModel {
     var title: String = ""
     var slug: String = ""
     var image: String = ""
-    var images: [String] = []
+    var images: [ProductImagesModel] = []
     var shortDescription: String = ""
     var fullDescription: String = ""
     var sellerId: Int = 0
@@ -37,7 +37,7 @@ class ProductDetailsModel {
         self.title = title
         self.slug = slug
         self.image = image
-        self.images = images as! [String]
+        self.images = images as! [ProductImagesModel]
         self.shortDescription = shortDescription
         self.fullDescription = fullDescription
         self.sellerId = sellerId
@@ -55,7 +55,7 @@ class ProductDetailsModel {
         var title: String = ""
         var slug: String = ""
         var image: String = ""
-        var images: [String] = []
+        var images: [ProductImagesModel] = []
         var shortDescription: String = ""
         var fullDescription: String = ""
         var sellerId: Int = 0
@@ -70,7 +70,7 @@ class ProductDetailsModel {
         var combinations: [ProductAvailableAttributeCombinationModel] = []
         
         if dictionary.isKindOfClass(NSDictionary) {
-            
+
             if let tempVar = dictionary["message"] as? String {
                 message = tempVar
             }
@@ -93,13 +93,13 @@ class ProductDetailsModel {
                     slug = tempVar
                 }
                 
-                
                 if let tempVar = value["image"] as? String {
                     image = tempVar
                 }
-                
-                if let tempVar = value["images"] as? NSArray {
-                    images = tempVar as! [String]
+
+                for subValue in value["images"] as! NSArray {
+                    let model: ProductImagesModel = ProductImagesModel.parseProductImagesModel(subValue as! NSDictionary)
+                    images.append(model)
                 }
                 
                 if let tempVar = value["shortDescription"] as? String {

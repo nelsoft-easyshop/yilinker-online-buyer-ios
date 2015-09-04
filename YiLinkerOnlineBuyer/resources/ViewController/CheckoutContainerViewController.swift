@@ -211,7 +211,9 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
     }
     
     func continueButton(title: String) {
-        self.continueButton.setTitle(title, forState: UIControlState.Normal)
+        if self.continueButton != nil {
+            self.continueButton.setTitle(title, forState: UIControlState.Normal)
+        }
     }
     
     func redirectToPaymentWebViewWithUrl(url: String) {

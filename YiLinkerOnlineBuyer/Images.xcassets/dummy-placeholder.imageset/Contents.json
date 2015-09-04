@@ -3,15 +3,17 @@
     {
       "idiom" : "universal",
       "scale" : "1x",
-      "filename" : "dummy-placeholder.jpg"
+      "filename" : "dummy-placeholder.jpeg"
     },
     {
       "idiom" : "universal",
-      "scale" : "2x"
+      "scale" : "2x",
+      "filename" : "dummy-placeholder@2x.jpeg"
     },
     {
       "idiom" : "universal",
-      "scale" : "3x"
+      "scale" : "3x",
+      "filename" : "dummy-placeholder@3x.jpg"
     }
   ],
   "info" : {

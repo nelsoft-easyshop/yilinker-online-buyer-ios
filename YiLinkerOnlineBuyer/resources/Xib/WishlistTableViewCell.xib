@@ -128,7 +128,7 @@
     <resources>
         <image name="cart-1" width="200" height="143"/>
         <image name="delete" width="149" height="200"/>
-        <image name="dummy-placeholder" width="1280" height="800"/>
+        <image name="dummy-placeholder" width="300" height="188"/>
         <image name="left" width="97" height="200"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

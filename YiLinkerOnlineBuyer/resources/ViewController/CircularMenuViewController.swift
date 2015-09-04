@@ -395,6 +395,8 @@ class CircularMenuViewController: UIViewController {
     func logout() {
         SessionManager.logout()
         self.dissmissViewControllerAnimated()
+        let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        appDelegate.changeRootToHomeView()
     }
     
 }
