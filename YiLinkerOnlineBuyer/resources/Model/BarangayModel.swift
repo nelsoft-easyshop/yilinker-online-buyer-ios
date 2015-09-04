@@ -23,6 +23,10 @@ class BarangayModel {
         self.location = location as! [String]
     }
     
+    init() {
+        
+    }
+    
     class func parseDataWithDictionary(dictionary: AnyObject) -> BarangayModel! {
         
         var message: String = ""
