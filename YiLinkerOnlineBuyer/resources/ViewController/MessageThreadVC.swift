@@ -16,14 +16,22 @@ class MessageThreadVC: UIViewController {
     var captureDevice : AVCaptureDevice?
     var previewLayer : AVCaptureVideoPreviewLayer?
     
+    @IBOutlet weak var threadTableViewConstraint: NSLayoutConstraint!
     @IBOutlet weak var threadTableView: UITableView!
     
+    @IBOutlet weak var composeViewBottomLayout: NSLayoutConstraint!
     @IBOutlet weak var composeView: UIView!
-    @IBOutlet weak var composeTextView: UITextView!
+    @IBOutlet weak var composeViewHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var composeTextView: TextViewAutoHeight!
     @IBOutlet weak var composeTVConstraint: NSLayoutConstraint!
+    
+    let composeViewHeight : CGFloat = 50.0
     
     var sender : W_Contact?
     var recipient : W_Contact?
+    
+    var screenWidth : CGFloat?
+    var screenHeight: CGFloat?
     
     var profileImageView: UIImageView!
     var onlineView: RoundedView!
@@ -43,7 +51,7 @@ class MessageThreadVC: UIViewController {
     var messages = [W_Messages()]
     
     var onlineColor = UIColor(red: 84/255, green: 182/255, blue: 167/255, alpha: 1.0)
-
+    
     let receiverIdentifier = "MessageBubbleReceiver"
     let senderIdentifier = "MessageBubbleSender"
     
@@ -57,7 +65,7 @@ class MessageThreadVC: UIViewController {
         if (segue.identifier == uploadImageSegueIdentifier){
             println("PREPARE FOR SEGUE CONTACT")
             var imageVC = segue.destinationViewController as! ImageVC
-
+            
             imageVC.sender = self.sender
             imageVC.recipient = self.recipient
             
@@ -72,26 +80,53 @@ class MessageThreadVC: UIViewController {
         self.getMessagesFromEndpoint("1", limit: "30", userId: temp)
         configureTableView()
         
-
+        
         self.placeCustomBackImage()
         self.placeRightNavigationControllerDetails()
         
         //composeTextView.becomeFirstResponder()
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWasShown:"), name:UIKeyboardDidShowNotification, object: nil);
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWasHidden:"), name:UIKeyboardDidHideNotification, object: nil);
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWasShown:"), name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWasHidden:"), name: UIKeyboardWillHideNotification, object: nil)
         
         minimumYComposeView = composeView.frame.origin.y
         maximumXComposeTextView = composeTextView.contentSize.height * 3
         
-        //composeTextView.sizeToFit()
-        //composeTextView.layoutIfNeeded()
+        screenWidth = UIScreen.mainScreen().bounds.size.width
+        screenHeight = UIScreen.mainScreen().bounds.size.height
         
+        
+        var tableFrame : CGRect = self.threadTableView.frame
+        tableFrame = CGRectMake(0.0, 0.0, screenWidth!, screenHeight! - composeViewHeight)
+        self.threadTableView.frame = tableFrame
+        self.threadTableViewConstraint.constant = tableFrame.height
+        
+        
+        self.threadTableView.layoutIfNeeded()
+        self.threadTableView.layoutMarginsDidChange()
+        
+        
+        var composeFrame : CGRect = self.composeView.frame
+        composeFrame = CGRectMake(0.0, tableFrame.height, screenWidth!, composeViewHeight)
+        self.composeView.frame = composeFrame
+        self.composeViewHeightConstraint.constant = composeViewHeight
+        self.composeViewBottomLayout.constant = 0
+        
+        self.composeView.layoutIfNeeded()
+        self.composeView.layoutMarginsDidChange()
+        
+        self.composeTextView.maxHeight = 60.0
+        self.composeTextView.heightConstraint = self.composeTVConstraint
+        self.composeTextView.containerConstraint = self.composeViewHeightConstraint
+        self.composeTextView.tableContentInset = self.threadTableView.contentInset
         
         var tap = UITapGestureRecognizer (target: self, action: Selector("tableTapped:"))
         self.threadTableView.addGestureRecognizer(tap)
     }
     
     override func viewDidAppear(animated: Bool) {
+        
+        self.composeTextView.becomeFirstResponder()
         self.goToBottomTableView()
     }
     
@@ -102,8 +137,14 @@ class MessageThreadVC: UIViewController {
         
     }
     
-    override func viewDidDisappear(animated: Bool) {
+    override func viewWillDisappear(animated: Bool) {
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
         
+    }
+    
+    override func viewDidDisappear(animated: Bool) {
+        //self.findAndResignFirstResponder()
     }
     
     func placeRightNavigationControllerDetails(){
@@ -156,7 +197,7 @@ class MessageThreadVC: UIViewController {
         self.navigationController?.navigationBar.addSubview(profileNameLabel)
         self.navigationController?.navigationBar.addSubview(onlineLabel)
         self.navigationController?.navigationBar.addSubview(onlineView)
-
+        
     }
     
     func getMidpoint(temp : CGFloat) -> CGFloat{
@@ -191,7 +232,7 @@ class MessageThreadVC: UIViewController {
         profileNameLabel.removeFromSuperview()
         onlineLabel.removeFromSuperview()
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
@@ -207,27 +248,26 @@ class MessageThreadVC: UIViewController {
             var info = notification.userInfo!
             var keyBoardEndFrame : CGRect = (info [UIKeyboardFrameEndUserInfoKey])!.CGRectValue()
             
-            var newFrameTV : CGRect = self.composeView.frame
-            var keyboardFrameEndTV : CGRect = self.composeView.convertRect(keyBoardEndFrame, toView: nil)
+            var keyFrame : CGRect = (info [UIKeyboardFrameEndUserInfoKey])!.CGRectValue()
             
-            var newFrame : CGRect = self.threadTableView.frame
-            var keyboardFrameEnd : CGRect = self.threadTableView.convertRect(keyBoardEndFrame, toView: nil)
+            var newFrame : CGRect = self.composeView.frame
+            newFrame.origin.y += keyFrame.size.height
             
-            UIView.animateWithDuration(0.7, delay: 0.5, options: .CurveEaseOut , animations: {
-                println(keyBoardEndFrame)
-                println("BEGIN = \(keyboardFrameEnd.height)")
-                //newFrame = CGSize(width: newFrame.width, height: newFrame.height + keyboardFrameEnd.height)
-                var newHeight = newFrame.height + keyboardFrameEnd.height
-                newFrame = CGRectMake(0, 0, newFrame.width, newHeight)
-                self.threadTableView.frame = newFrame
+            var newTableFrame : CGRect = self.threadTableView.frame
+            
+            UIView.animateWithDuration(0.25, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+                //self.threadTableView.setContentOffset(UIEdgeInsetsZero, animated: true)
+                self.threadTableView.contentInset = UIEdgeInsetsMake(60, 0, 0, 0)
                 
-                newFrameTV.origin.y += keyboardFrameEndTV.height
-                self.composeView.frame = newFrameTV
+                self.composeView.frame = newFrame
+                self.composeViewBottomLayout.constant -= keyFrame.size.height
                 
-                }, completion: { finished in
-                    println("keyboardWasShown")
-                }
-            )
+                /*
+                self.threadTableView.frame = CGRectMake(0, 0, newTableFrame.height + keyFrame.size.height, newTableFrame.width)
+                self.threadTableViewConstraint.constant = newTableFrame.height + keyFrame.size.height
+                */
+                self.goToBottomTableView()
+                }, completion: nil)
             
         }
     }
@@ -238,27 +278,24 @@ class MessageThreadVC: UIViewController {
             var info = notification.userInfo!
             var keyBoardEndFrame : CGRect = (info [UIKeyboardFrameEndUserInfoKey])!.CGRectValue()
             
-            var newFrameTV : CGRect = self.composeView.frame
-            var keyboardFrameEndTV : CGRect = self.composeView.convertRect(keyBoardEndFrame, toView: nil)
-            var newFrame : CGRect = self.threadTableView.frame
-            var keyboardFrameEnd : CGRect = self.threadTableView.convertRect(keyBoardEndFrame, toView: nil)
+            var keyFrame : CGRect = (info [UIKeyboardFrameEndUserInfoKey])!.CGRectValue()
             
-            UIView.animateWithDuration(0.7, delay: 0.5, options: .CurveEaseOut , animations: {
-                    println(keyBoardEndFrame)
-                println("BEGIN = \(keyboardFrameEnd.height)")
-                //newFrame = CGSize(width: newFrame.width, height: newFrame.height - keyboardFrameEnd.height)
-                var newHeight = newFrame.height - keyboardFrameEnd.height
-                newFrame = CGRectMake(0, 0, newFrame.width, newHeight)
-                    self.threadTableView.frame = newFrame
+            var newFrame : CGRect = self.composeView.frame
+            var newTableFrame : CGRect = self.threadTableView.frame
+            
+            UIView.animateWithDuration(0.25, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+                self.composeView.frame = CGRectMake(newFrame.origin.x, newFrame.origin.y - keyFrame.size.height, newFrame.width, newFrame.height)
+                self.composeViewBottomLayout.constant += keyFrame.size.height
+                self.threadTableView.contentInset = UIEdgeInsetsMake(60, 0, keyFrame.size.height, 0)
+                /*self.threadTableView.frame = CGRectMake(0, 0, newTableFrame.height - keyFrame.size.height, newTableFrame.width)
+                self.threadTableViewConstraint.constant = newTableFrame.height - keyFrame.size.height
+                self.view.setNeedsLayout()
+                self.view.setNeedsUpdateConstraints()
+                */
+                self.goToBottomTableView()
                 
-                    newFrameTV.origin.y -= keyboardFrameEndTV.height
-                    self.composeView.frame = newFrameTV
                 
-                }, completion: { finished in
-                    println("keyboardWasShown")
-                }
-            )
-           
+                }, completion: nil)
         }
     }
     
@@ -296,6 +333,7 @@ class MessageThreadVC: UIViewController {
             
             println(responseObject)
             SVProgressHUD.dismiss()
+            
             self.goToBottomTableView()
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
@@ -390,49 +428,6 @@ extension MessageThreadVC : UITextViewDelegate{
             }
         }
     }
-    
-    /*
-    func textViewDidChange(textView: UITextView) {
-        
-        if (maximumXComposeTextView > textView.contentSize.height){
-            //println("TV \(textView.contentSize.height) \(composeTVConstraint.constant) \(threadTableView.frame.size) \(textView.superview?.frame.origin)")
-            
-            let fixedWidth = textView.frame.size.width
-            var deltaSize = textView.contentSize.height - composeTVConstraint.constant
-        
-            var newSize =   textView.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.max))
-            
-            var newFrame = textView.frame
-            newFrame.size = CGSize(width: fixedWidth, height: newSize.height)
-            textView.frame = newFrame
-
-            composeTVConstraint.constant = textView.contentSize.height
-            
-            if (deltaSize != 0) {
-                /* UIView Resize */
-                let fixedViewWidth = textView.superview?.frame.size.width
-                var position = textView.superview?.frame.origin.y
-                position = position! - deltaSize
-        
-                var currentSize = textView.superview?.frame.height
-                currentSize = currentSize! + deltaSize
-        
-                var newViewFrame = textView.superview?.frame
-                newViewFrame? = CGRectMake(0, position!, fixedViewWidth!, currentSize!)
-                textView.superview?.frame = newViewFrame!
-            
-                var newTableFrame = threadTableView.frame
-                newTableFrame = CGRectMake(0, 0, threadTableView.frame.size.width, threadTableView.frame.size.height-deltaSize)
-                threadTableView.frame = newTableFrame
-                threadTableView.setNeedsDisplay()
-            
-                //self.goToBottomTableView()
-            }
-        }
-    }
-    
-    */
-
 }
 
 extension MessageThreadVC : UITableViewDataSource, UITableViewDelegate{
@@ -441,7 +436,7 @@ extension MessageThreadVC : UITableViewDataSource, UITableViewDelegate{
     func goToBottomTableView(){
         if(threadTableView.numberOfRowsInSection(0) > 0) {
             var lastIndexPath : NSIndexPath = getLastIndexPath(threadTableView)
-            threadTableView.scrollToRowAtIndexPath(lastIndexPath, atScrollPosition: UITableViewScrollPosition.Bottom, animated: true)
+            threadTableView.scrollToRowAtIndexPath(lastIndexPath, atScrollPosition: UITableViewScrollPosition.Bottom, animated: false)
         }
     }
     
@@ -470,10 +465,15 @@ extension MessageThreadVC : UITableViewDataSource, UITableViewDelegate{
         
         if (!prevIsSame){
             imagePlaced = false
+        } else {
+            imagePlaced = true
         }
         
-        if (messages[indexPath.row].isImage == 1){
-            if (sender?.userId == messages[indexPath.row].senderId){
+        var index : Int = indexPath.row
+        //index = (messages.count - indexPath.row) - 1
+        
+        if (messages[index].isImage == 1){
+            if (sender?.userId == messages[index].senderId){
                 let cell = tableView.dequeueReusableCellWithIdentifier(senderImageIndentifier) as! MessageThreadImageTVC
                 
                 if(!imagePlaced){
@@ -488,7 +488,7 @@ extension MessageThreadVC : UITableViewDataSource, UITableViewDelegate{
                 }
                 cell.timestamp_label.text = DateUtility.convertDateToString(NSDate()) as String
                 
-                let url = NSURL(string: messages[indexPath.row].message)
+                let url = NSURL(string: messages[index].message)
                 cell.message_image.sd_setImageWithURL(url)
                 if (cell.message_image.image == nil){
                     cell.message_image.image = UIImage()
@@ -515,8 +515,8 @@ extension MessageThreadVC : UITableViewDataSource, UITableViewDelegate{
                     imagePlaced = true
                 }
                 cell.timestamp_label.text = DateUtility.convertDateToString(NSDate()) as String
-
-                let url = NSURL(string: messages[indexPath.row].message)
+                
+                let url = NSURL(string: messages[index].message)
                 cell.message_image.sd_setImageWithURL(url)
                 if (cell.message_image.image == nil){
                     cell.message_image.image = UIImage()
@@ -531,10 +531,10 @@ extension MessageThreadVC : UITableViewDataSource, UITableViewDelegate{
                 return cell
             }
         } else {
-            if (sender?.userId == messages[indexPath.row].senderId){
+            if (sender?.userId == messages[index].senderId){
                 let cell = tableView.dequeueReusableCellWithIdentifier(senderIdentifier) as! MessageThreadTVC
                 
-                cell.message_label.text = messages[indexPath.row].message as String
+                cell.message_label.text = messages[index].message as String
                 
                 if(!imagePlaced){
                     
@@ -555,17 +555,17 @@ extension MessageThreadVC : UITableViewDataSource, UITableViewDelegate{
                 cell.message_label.superview?.layer.shadowColor = UIColor.blackColor().CGColor
                 cell.message_label.superview?.layer.shadowOpacity = 0.4
                 cell.message_label.superview?.layer.shadowOffset = CGSizeMake(1, 1)
-                //println("Index: \(indexPath.row)  H:\(cell.message_label.frame.height) W:\(cell.message_label.frame.width)")
-                //println("Index: \(indexPath.row) H:\(cell.message_label.superview?.frame.height) W:\(cell.message_label.superview?.frame.width) LENGTH: \(count(cell.message_label.text!))")
+                //println("Index: \(index)  H:\(cell.message_label.frame.height) W:\(cell.message_label.frame.width)")
+                //println("Index: \(index) H:\(cell.message_label.superview?.frame.height) W:\(cell.message_label.superview?.frame.width) LENGTH: \(count(cell.message_label.text!))")
                 
-                if (messages[indexPath.row].isSeen == 0) {
+                if (messages[index].isSeen == 0) {
                     cell.setSeenOff("sender")
                 }
                 return cell
             } else {
                 let cell = tableView.dequeueReusableCellWithIdentifier(receiverIdentifier) as! MessageThreadTVC
                 
-                cell.message_label.text = messages[indexPath.row].message as String
+                cell.message_label.text = messages[index].message as String
                 if(!imagePlaced){
                     var temp = recipient?.profileImageUrl ?? ""
                     let url = NSURL(string: temp)
@@ -583,17 +583,17 @@ extension MessageThreadVC : UITableViewDataSource, UITableViewDelegate{
                 cell.message_label.superview?.layer.shadowColor = UIColor.blackColor().CGColor
                 cell.message_label.superview?.layer.shadowOpacity = 0.4
                 cell.message_label.superview?.layer.shadowOffset = CGSizeMake(1, 1)
-                //println("Index: \(indexPath.row)  H:\(cell.message_label.frame.height) W:\(cell.message_label.frame.width)")
-                //println("Index: \(indexPath.row) H:\(cell.message_label.superview?.frame.height) W:\(cell.message_label.superview?.frame.width) LENGTH \(count(cell.message_label.text!))")
+                //println("Index: \(index)  H:\(cell.message_label.frame.height) W:\(cell.message_label.frame.width)")
+                //println("Index: \(index) H:\(cell.message_label.superview?.frame.height) W:\(cell.message_label.superview?.frame.width) LENGTH \(count(cell.message_label.text!))")
                 
-                if (messages[indexPath.row].isSeen == 0) {
+                if (messages[index].isSeen == 0) {
                     cell.setSeenOff("receiver")
                 }
                 return cell
             }
-                
+            
         }
         
     }
-
+    
 }

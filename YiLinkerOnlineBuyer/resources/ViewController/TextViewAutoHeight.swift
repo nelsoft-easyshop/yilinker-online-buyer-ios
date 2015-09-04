@@ -9,11 +9,13 @@
 import UIKit
 
 class TextViewAutoHeight: UITextView {
-
+    
     //MARK: attributes
     
     var  maxHeight:CGFloat?
     var  heightConstraint:NSLayoutConstraint?
+    var  containerConstraint:NSLayoutConstraint?
+    var  tableContentInset:UIEdgeInsets?
     
     //MARK: initialize
     
@@ -64,6 +66,9 @@ class TextViewAutoHeight: UITextView {
             customContentSize.height = min(customContentSize.height, CGFloat(maxHeight))
             
             self.heightConstraint?.constant = customContentSize.height;
+            self.containerConstraint?.constant = customContentSize.height + 9
+            self.tableContentInset? = UIEdgeInsetsMake(self.tableContentInset!.top, 0, self.tableContentInset!.bottom - (customContentSize.height
+                + 9), 0)
             
             if finalContentSize.height <= CGRectGetHeight(self.frame) {
                 let textViewHeight = (CGRectGetHeight(self.frame) - self.contentSize.height * self.zoomScale)/2.0

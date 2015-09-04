@@ -124,7 +124,7 @@ class W_Messages: NSObject {
             
         } // dictionary
         
-        return parsedMessages
+        return parsedMessages.reverse()
     } // parse
     
 
