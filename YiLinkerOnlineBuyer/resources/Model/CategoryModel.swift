@@ -59,7 +59,7 @@ class CategoryModel {
                         name.append(tempVar)
                     }
                     
-                    if let tempVar = category["imageUrl"] as? String {
+                    if let tempVar = category["image"] as? String {
                         image.append(tempVar)
                     }
                     
