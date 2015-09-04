@@ -86,7 +86,7 @@ extension UITextField {
 extension UIAlertController {
     
     class func displayErrorMessageWithTarget(target: AnyObject, errorMessage: String) {
-        let alert = UIAlertController(title: "Ooops", message: errorMessage, preferredStyle: UIAlertControllerStyle.Alert)
+        let alert = UIAlertController(title: "Something went wrong", message: errorMessage, preferredStyle: UIAlertControllerStyle.Alert)
         let OKAction = UIAlertAction(title: "OK", style: .Default) { (action) in }
         alert.addAction(OKAction)
         target.presentViewController(alert, animated: true, completion: nil)

@@ -142,12 +142,15 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        //self.selectedIndex = indexPath.row
-        //self.collectionView.reloadData()
+        let addAddressTableViewController: AddAddressTableViewController = AddAddressTableViewController(nibName: "AddAddressTableViewController", bundle: nil)
+        addAddressTableViewController.delegate = self
+        addAddressTableViewController.addressModel = self.getAddressModel.listOfAddress[indexPath.row]
+        addAddressTableViewController.isEdit = true
+        addAddressTableViewController.isEdit2 = true
+        self.navigationController!.pushViewController(addAddressTableViewController, animated: true)
     }
     
     //Set Default Address
-    
     func changeAddressCollectionViewCell(didSelectDefaultAtCell cell: ChangeAddressCollectionViewCell) {
         let indexPath: NSIndexPath = self.collectionView.indexPathForCell(cell)!
         let addressId: String = "\(self.getAddressModel.listOfAddress[indexPath.row].userAddressId))"
@@ -170,11 +173,10 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
     }
 
     func changeAddressFooterCollectionViewCell(didSelecteAddAddress cell: ChangeAddressFooterCollectionViewCell) {
-        /*let indexPath: NSIndexPath = NSIndexPath(forItem: self.cellCount, inSection: 0)
-        self.addCellInIndexPath(indexPath)*/
-        
         let addAddressTableViewController: AddAddressTableViewController = AddAddressTableViewController(nibName: "AddAddressTableViewController", bundle: nil)
         addAddressTableViewController.delegate = self
+        addAddressTableViewController.isEdit = false
+        addAddressTableViewController.isEdit2 = false
         self.navigationController!.pushViewController(addAddressTableViewController, animated: true)
     }
     
@@ -296,7 +298,6 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
             "client_secret": Constants.Credentials.clientSecret,
             "grant_type": Constants.Credentials.grantRefreshToken,
             "refresh_token": SessionManager.refreshToken()]
-            println(SessionManager.refreshToken())
         let manager = APIManager.sharedInstance
         manager.POST(url, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
