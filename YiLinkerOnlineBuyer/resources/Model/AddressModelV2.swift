@@ -135,7 +135,7 @@ class AddressModelV2 {
             
             if let value: AnyObject = reviews["city"] {
                 if value as! NSObject != NSNull() {
-                    model.city = value as! String
+                    //model.city = value as! String
                 }
                 
             }
@@ -149,7 +149,7 @@ class AddressModelV2 {
             
             if let value: AnyObject = reviews["barangay"] {
                 if value as! NSObject != NSNull() {
-                    model.barangay = value as! String
+                    //model.barangay = value as! String
                 }
                 
             }
