@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SellerCollectionViewCell" id="gTV-IL-0wX" customClass="SellerCollectionViewCell" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="221" height="287"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="221" height="287"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dummy-placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="RCB-co-n67" customClass="RoundedImageView" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
+                        <rect key="frame" x="8" y="8" width="47" height="47"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="47" id="a8r-TA-OlR"/>
+                            <constraint firstAttribute="width" constant="47" id="u9j-hG-TvB"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                <real key="value" value="1"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Beats Audio Store" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="7" translatesAutoresizingMaskIntoConstraints="NO" id="uc1-1p-Quo">
+                        <rect key="frame" x="62" y="12" width="151" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="QS0-Of-uSC"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
+                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Specialty: Music, Headphones" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="5" translatesAutoresizingMaskIntoConstraints="NO" id="zPX-iG-aKl">
+                        <rect key="frame" x="62" y="27" width="151" height="25"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="25" id="dkV-Sp-I9k"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="9"/>
+                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" tag="1" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dummy-placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="cSJ-E4-XpF" customClass="ProductImageView" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
+                        <rect key="frame" x="8" y="64" width="205" height="132"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="132" id="xe0-AR-G6E"/>
+                        </constraints>
+                    </imageView>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" tag="2" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dummy-placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="COi-1W-g4z" customClass="ProductImageView" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
+                        <rect key="frame" x="8" y="198" width="102" height="74"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="74" id="x0V-bW-PBx"/>
+                        </constraints>
+                    </imageView>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="A1l-cx-tha">
+                        <rect key="frame" x="110" y="201" width="1" height="70"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="70" id="IAR-is-TbX"/>
+                            <constraint firstAttribute="width" constant="1" id="cze-vO-JCz"/>
+                        </constraints>
+                    </view>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" tag="3" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dummy-placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="jVL-Ps-RHo" customClass="ProductImageView" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
+                        <rect key="frame" x="112" y="198" width="102" height="74"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="74" id="rC2-h3-b29"/>
+                        </constraints>
+                    </imageView>
+                </subviews>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            </view>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="jVL-Ps-RHo" firstAttribute="leading" secondItem="A1l-cx-tha" secondAttribute="trailing" constant="1" id="7lT-3Q-owt"/>
+                <constraint firstItem="cSJ-E4-XpF" firstAttribute="top" secondItem="RCB-co-n67" secondAttribute="bottom" constant="9" id="9rn-qN-IYZ"/>
+                <constraint firstItem="A1l-cx-tha" firstAttribute="leading" secondItem="COi-1W-g4z" secondAttribute="trailing" id="Joq-Ca-z1H"/>
+                <constraint firstItem="uc1-1p-Quo" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="12" id="K5T-Py-rUZ"/>
+                <constraint firstAttribute="centerX" secondItem="A1l-cx-tha" secondAttribute="centerX" id="MBj-kC-9SP"/>
+                <constraint firstAttribute="trailing" secondItem="jVL-Ps-RHo" secondAttribute="trailing" constant="7" id="OOp-rf-fFV"/>
+                <constraint firstAttribute="trailing" secondItem="zPX-iG-aKl" secondAttribute="trailing" constant="8" id="Ujp-Jc-gbM"/>
+                <constraint firstItem="cSJ-E4-XpF" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="8" id="Vch-4H-CkU"/>
+                <constraint firstItem="RCB-co-n67" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="8" id="W2h-At-26Y"/>
+                <constraint firstAttribute="bottom" secondItem="A1l-cx-tha" secondAttribute="bottom" constant="16" id="YEt-xV-m8t"/>
+                <constraint firstItem="zPX-iG-aKl" firstAttribute="leading" secondItem="RCB-co-n67" secondAttribute="trailing" constant="7" id="d0Y-MU-uf0"/>
+                <constraint firstItem="RCB-co-n67" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="8" id="fKN-Hj-8gm"/>
+                <constraint firstAttribute="trailing" secondItem="cSJ-E4-XpF" secondAttribute="trailing" constant="8" id="iec-BE-Ehh"/>
+                <constraint firstAttribute="trailing" secondItem="uc1-1p-Quo" secondAttribute="trailing" constant="8" id="lvP-Qp-ehZ"/>
+                <constraint firstAttribute="bottom" secondItem="COi-1W-g4z" secondAttribute="bottom" constant="15" id="myQ-7H-9DC"/>
+                <constraint firstItem="uc1-1p-Quo" firstAttribute="leading" secondItem="RCB-co-n67" secondAttribute="trailing" constant="7" id="puQ-26-NT2"/>
+                <constraint firstAttribute="bottom" secondItem="jVL-Ps-RHo" secondAttribute="bottom" constant="15" id="q6E-4J-Hr3"/>
+                <constraint firstItem="COi-1W-g4z" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="8" id="r7A-Qz-dVe"/>
+                <constraint firstItem="zPX-iG-aKl" firstAttribute="top" secondItem="uc1-1p-Quo" secondAttribute="bottom" constant="-6" id="vXo-ri-ICV"/>
+            </constraints>
+            <size key="customSize" width="221" height="287"/>
+            <connections>
+                <outlet property="productOneImageView" destination="cSJ-E4-XpF" id="Vix-zs-FjV"/>
+                <outlet property="productThreeImageView" destination="jVL-Ps-RHo" id="ocx-pH-Owy"/>
+                <outlet property="productTwoImageView" destination="COi-1W-g4z" id="47k-9W-Xpz"/>
+                <outlet property="sellerProfileImageView" destination="RCB-co-n67" id="vXZ-Qa-2aC"/>
+                <outlet property="sellerSubTitleLabel" destination="zPX-iG-aKl" id="U51-EB-Qsg"/>
+                <outlet property="sellerTitleLabel" destination="uc1-1p-Quo" id="iXW-3s-Fn6"/>
+            </connections>
+            <point key="canvasLocation" x="325.5" y="336.5"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="dummy-placeholder" width="300" height="188"/>
+    </resources>
+</document>

@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Panton Bold.otf">
+            <string>Panton-Bold</string>
+            <string>Panton-Bold</string>
+            <string>Panton-Bold</string>
+            <string>Panton-Bold</string>
+            <string>Panton-Bold</string>
+            <string>Panton-Bold</string>
+            <string>Panton-Bold</string>
+            <string>Panton-Bold</string>
+            <string>Panton-Bold</string>
+        </mutableArray>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="DisputeViewController" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
+            <connections>
+                <outlet property="disputeTitle" destination="b2Y-Dz-oZd" id="ae1-dH-4Yf"/>
+                <outlet property="modalView" destination="9J9-Ai-3QY" id="yLY-ns-sYb"/>
+                <outlet property="remarks" destination="Gwf-ux-sZJ" id="Tlh-u8-rjA"/>
+                <outlet property="submitButton" destination="aVw-hQ-F8J" id="46O-PO-O4N"/>
+                <outlet property="titleView" destination="A9S-oM-o3Y" id="qaN-3T-3FS"/>
+                <outlet property="transactionNumber" destination="wG2-2Y-nTH" id="D4A-8m-q2x"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9J9-Ai-3QY" userLabel="ModalWindow">
+                    <rect key="frame" x="14" y="106" width="292" height="356"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="A9S-oM-o3Y" userLabel="TitleView">
+                            <rect key="frame" x="0.0" y="0.0" width="292" height="81"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your Case ID: " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mq8-1a-x3G">
+                                    <rect key="frame" x="47" y="12" width="102" height="21"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="21" id="0uc-fZ-ram"/>
+                                        <constraint firstAttribute="width" constant="102" id="ySh-Ax-TDB"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="17"/>
+                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qeC-KR-umM">
+                                    <rect key="frame" x="8" y="11" width="20" height="22"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="20" id="NNS-5B-SUq"/>
+                                        <constraint firstAttribute="height" constant="22" id="xhB-IG-dyj"/>
+                                    </constraints>
+                                    <state key="normal" image="dialog-close">
+                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="closeButtonPressed:" destination="-1" eventType="touchUpInside" id="dN3-q5-P7e"/>
+                                    </connections>
+                                </button>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="236475860" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hv1-al-bLM">
+                                    <rect key="frame" x="149" y="12" width="104" height="21"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="104" id="6Qo-2c-NJx"/>
+                                        <constraint firstAttribute="width" constant="104" id="F0s-Yo-aoJ"/>
+                                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="21" id="XhO-ez-nA0"/>
+                                        <constraint firstAttribute="height" constant="21" id="g2u-rQ-lBQ"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="17"/>
+                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="292" id="1yf-4H-nrL"/>
+                                <constraint firstAttribute="height" constant="81" id="9gA-by-Po9"/>
+                                <constraint firstItem="qeC-KR-umM" firstAttribute="top" secondItem="A9S-oM-o3Y" secondAttribute="topMargin" constant="3" id="NCT-gJ-hMV"/>
+                                <constraint firstItem="mq8-1a-x3G" firstAttribute="centerY" secondItem="hv1-al-bLM" secondAttribute="centerY" id="Um2-1p-ceT"/>
+                                <constraint firstItem="mq8-1a-x3G" firstAttribute="centerY" secondItem="qeC-KR-umM" secondAttribute="centerY" id="ZyS-2j-Vqc"/>
+                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="81" id="fEY-ed-jee"/>
+                                <constraint firstItem="qeC-KR-umM" firstAttribute="leading" secondItem="A9S-oM-o3Y" secondAttribute="leadingMargin" id="htb-SU-bG3"/>
+                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="292" id="pDr-bn-DIY"/>
+                                <constraint firstItem="hv1-al-bLM" firstAttribute="leading" secondItem="mq8-1a-x3G" secondAttribute="trailing" id="rEn-sU-ISF"/>
+                                <constraint firstItem="mq8-1a-x3G" firstAttribute="leading" secondItem="qeC-KR-umM" secondAttribute="trailing" constant="19" id="tvv-uu-iFQ"/>
+                            </constraints>
+                        </view>
+                        <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vrB-hD-167" userLabel="WidgetContainer">
+                            <rect key="frame" x="0.0" y="50" width="292" height="298"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Dispute Title*" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F7Q-xZ-A03" userLabel="WindowTitle">
+                                    <rect key="frame" x="8" y="8" width="96" height="21"/>
+                                    <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="13"/>
+                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="b2Y-Dz-oZd">
+                                    <rect key="frame" x="8" y="29" width="276" height="30"/>
+                                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="14"/>
+                                    <textInputTraits key="textInputTraits"/>
+                                </textField>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Transaction No. (optional)" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fRa-v4-gZ7">
+                                    <rect key="frame" x="8" y="67" width="196" height="21"/>
+                                    <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="13"/>
+                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter transaction number here" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wG2-2Y-nTH">
+                                    <rect key="frame" x="8" y="88" width="276" height="30"/>
+                                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="13"/>
+                                    <textInputTraits key="textInputTraits"/>
+                                </textField>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Remarks" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K1y-6V-qWb">
+                                    <rect key="frame" x="8" y="126" width="68" height="21"/>
+                                    <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="13"/>
+                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aVw-hQ-F8J">
+                                    <rect key="frame" x="177" y="250" width="107" height="40"/>
+                                    <color key="backgroundColor" red="0.27450980392156865" green="0.66274509803921566" blue="0.59215686274509804" alpha="1" colorSpace="calibratedRGB"/>
+                                    <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="16"/>
+                                    <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    <state key="normal" title="SUBMIT">
+                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="submitButtonPressed:" destination="-1" eventType="touchUpInside" id="JEN-GJ-Z7m"/>
+                                    </connections>
+                                </button>
+                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Gwf-ux-sZJ">
+                                    <rect key="frame" x="8" y="145" width="276" height="83"/>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="13"/>
+                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                </textView>
+                            </subviews>
+                            <color key="backgroundColor" red="0.88235294117647056" green="0.88235294117647056" blue="0.88235294117647056" alpha="1" colorSpace="calibratedRGB"/>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" red="0.88235294117647056" green="0.88235294117647056" blue="0.88235294117647056" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="292" id="SPz-TR-c2Y"/>
+                        <constraint firstAttribute="trailing" secondItem="A9S-oM-o3Y" secondAttribute="trailing" id="Sta-SW-thQ"/>
+                        <constraint firstAttribute="height" constant="356" id="bnU-PR-rTV"/>
+                        <constraint firstItem="A9S-oM-o3Y" firstAttribute="leading" secondItem="9J9-Ai-3QY" secondAttribute="leading" id="kHY-8I-1r0"/>
+                        <constraint firstItem="A9S-oM-o3Y" firstAttribute="top" secondItem="9J9-Ai-3QY" secondAttribute="top" id="xEh-lP-rAi"/>
+                    </constraints>
+                </view>
+                <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3pB-Bf-E7d" userLabel="Background">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                </view>
+            </subviews>
+            <constraints>
+                <constraint firstItem="3pB-Bf-E7d" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="TOx-eT-c5A"/>
+                <constraint firstAttribute="trailing" secondItem="3pB-Bf-E7d" secondAttribute="trailing" id="XpM-Uo-bms"/>
+                <constraint firstItem="3pB-Bf-E7d" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="fTI-4c-MrD"/>
+                <constraint firstAttribute="centerX" secondItem="9J9-Ai-3QY" secondAttribute="centerX" id="hUi-fl-vp7"/>
+                <constraint firstAttribute="bottom" secondItem="3pB-Bf-E7d" secondAttribute="bottom" id="nGQ-t6-6Ju"/>
+                <constraint firstAttribute="centerY" secondItem="9J9-Ai-3QY" secondAttribute="centerY" id="yX3-IP-Gk0"/>
+            </constraints>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+            <point key="canvasLocation" x="281" y="377"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="dialog-close" width="20" height="20"/>
+    </resources>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
+    </simulatedMetricsContainer>
+</document>

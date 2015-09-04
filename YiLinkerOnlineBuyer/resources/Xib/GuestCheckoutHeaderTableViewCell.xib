@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
+        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Panton SemiBold.otf">
+            <string>Panton-SemiBold</string>
+            <string>Panton-SemiBold</string>
+            <string>Panton-SemiBold</string>
+            <string>Panton-SemiBold</string>
+            <string>Panton-SemiBold</string>
+            <string>Panton-SemiBold</string>
+        </mutableArray>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="41" id="KGk-i7-Jjw" customClass="GuestCheckoutHeaderTableViewCell" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="323" height="41"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Order Summary" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ijX-Lf-kIy">
+                        <rect key="frame" x="18" y="8" width="104" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="Vhe-n8-QQs"/>
+                            <constraint firstAttribute="width" constant="104" id="iPj-1V-jfs"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="13"/>
+                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9e3-eG-gKu">
+                        <rect key="frame" x="18" y="37" width="327" height="1"/>
+                        <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="1" id="K6f-5i-yxD"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="9e3-eG-gKu" firstAttribute="leading" secondItem="ijX-Lf-kIy" secondAttribute="leading" id="UE0-7Y-mBl"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="9e3-eG-gKu" secondAttribute="trailing" constant="-30" id="avk-yw-8Ud"/>
+                    <constraint firstItem="ijX-Lf-kIy" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="10" id="p7e-GZ-PjW"/>
+                    <constraint firstItem="ijX-Lf-kIy" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="vzd-gm-U3s"/>
+                    <constraint firstItem="9e3-eG-gKu" firstAttribute="top" secondItem="ijX-Lf-kIy" secondAttribute="bottom" constant="8" symbolic="YES" id="wq7-EV-i3n"/>
+                </constraints>
+            </tableViewCellContentView>
+            <point key="canvasLocation" x="359" y="273.5"/>
+        </tableViewCell>
+        <view contentMode="scaleToFill" id="bXo-c9-u3l">
+            <rect key="frame" x="0.0" y="0.0" width="323" height="58"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Total" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qit-Zl-LFf">
+                    <rect key="frame" x="18" y="31" width="35" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="35" id="5xH-cv-7XB"/>
+                        <constraint firstAttribute="height" constant="21" id="fHy-m0-VdM"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="13"/>
+                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="FREE" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kvC-ic-ORa">
+                    <rect key="frame" x="271" y="8" width="44" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="21" id="1gZ-dN-Vrq"/>
+                        <constraint firstAttribute="width" constant="44" id="AL8-f7-T89"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="13"/>
+                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="P 4,500" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AFP-tN-DqJ">
+                    <rect key="frame" x="205" y="26" width="110" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="110" id="jFW-Jz-ln9"/>
+                        <constraint firstAttribute="height" constant="21" id="zSO-gn-rMv"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="13"/>
+                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Delivery" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XYa-6d-Rcl">
+                    <rect key="frame" x="18" y="8" width="103" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="21" id="Sal-hT-cLe"/>
+                        <constraint firstAttribute="width" constant="103" id="eaF-fQ-qoE"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="13"/>
+                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="Qit-Zl-LFf" firstAttribute="leading" secondItem="XYa-6d-Rcl" secondAttribute="leading" id="15z-Ve-hly"/>
+                <constraint firstAttribute="bottom" secondItem="Qit-Zl-LFf" secondAttribute="bottom" constant="6" id="85H-vB-FIJ"/>
+                <constraint firstItem="Qit-Zl-LFf" firstAttribute="firstBaseline" secondItem="AFP-tN-DqJ" secondAttribute="baseline" id="AXc-Wn-raw"/>
+                <constraint firstItem="Qit-Zl-LFf" firstAttribute="leading" secondItem="bXo-c9-u3l" secondAttribute="leading" constant="18" id="ctM-zw-OSY"/>
+                <constraint firstAttribute="trailing" secondItem="kvC-ic-ORa" secondAttribute="trailing" constant="8" id="fCs-UW-MIp"/>
+                <constraint firstItem="Qit-Zl-LFf" firstAttribute="top" secondItem="XYa-6d-Rcl" secondAttribute="bottom" constant="2" id="mPe-YA-bM6"/>
+                <constraint firstItem="kvC-ic-ORa" firstAttribute="baseline" secondItem="XYa-6d-Rcl" secondAttribute="baseline" id="rPO-bR-9e6"/>
+                <constraint firstItem="kvC-ic-ORa" firstAttribute="trailing" secondItem="AFP-tN-DqJ" secondAttribute="trailing" id="rfz-ir-hPh"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="358.5" y="388"/>
+        </view>
+        <view contentMode="scaleToFill" id="Z1k-Yd-hPh">
+            <rect key="frame" x="0.0" y="0.0" width="323" height="41"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Shipping Address" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iyw-pQ-1wV">
+                    <rect key="frame" x="18" y="8" width="103" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="21" id="jfR-j2-YcB"/>
+                        <constraint firstAttribute="width" constant="103" id="oFn-Dz-iAw"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="13"/>
+                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="S5a-tb-aaM">
+                    <rect key="frame" x="18" y="37" width="320" height="1"/>
+                    <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="yOM-qJ-gn6"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="S5a-tb-aaM" firstAttribute="top" secondItem="iyw-pQ-1wV" secondAttribute="bottom" constant="8" symbolic="YES" id="1JE-dL-Lj2"/>
+                <constraint firstAttribute="bottom" secondItem="S5a-tb-aaM" secondAttribute="bottom" constant="3" id="3NA-jR-JGI"/>
+                <constraint firstItem="S5a-tb-aaM" firstAttribute="leading" secondItem="Z1k-Yd-hPh" secondAttribute="leading" constant="18" id="gCl-EK-xnf"/>
+                <constraint firstAttribute="trailing" secondItem="S5a-tb-aaM" secondAttribute="trailing" constant="-15" id="hi6-dN-vLZ"/>
+                <constraint firstItem="S5a-tb-aaM" firstAttribute="leading" secondItem="iyw-pQ-1wV" secondAttribute="leading" id="tU1-w1-EEU"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="358.5" y="507.5"/>
+        </view>
+    </objects>
+</document>

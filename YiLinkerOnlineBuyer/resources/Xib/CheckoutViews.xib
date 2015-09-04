@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Panton SemiBold.otf">
+            <string>Panton-SemiBold</string>
+            <string>Panton-SemiBold</string>
+            <string>Panton-SemiBold</string>
+            <string>Panton-SemiBold</string>
+            <string>Panton-SemiBold</string>
+            <string>Panton-SemiBold</string>
+        </mutableArray>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clipsSubviews="YES" contentMode="scaleToFill" id="iN0-l3-epB" customClass="CheckoutViews" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="323" height="41"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Order Summary" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WBH-yt-2WA">
+                    <rect key="frame" x="18" y="8" width="103" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="103" id="NRh-bI-TG5"/>
+                        <constraint firstAttribute="height" constant="21" id="f3s-Ac-3rS"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="13"/>
+                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2dV-42-z64">
+                    <rect key="frame" x="18" y="37" width="320" height="1"/>
+                    <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="bVy-Tt-R0l"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="2dV-42-z64" secondAttribute="bottom" constant="3" id="Gwu-ZD-fD0"/>
+                <constraint firstItem="WBH-yt-2WA" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="8" id="KiC-wG-dky"/>
+                <constraint firstItem="2dV-42-z64" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="18" id="fv7-dj-8hj"/>
+                <constraint firstAttribute="trailing" secondItem="2dV-42-z64" secondAttribute="trailing" constant="-15" id="hQe-hS-Ml7"/>
+                <constraint firstItem="WBH-yt-2WA" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="18" id="jgK-Sm-xJc"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="218.5" y="105.5"/>
+        </view>
+        <view clipsSubviews="YES" contentMode="scaleToFill" id="6LZ-z1-pbw" customClass="CheckoutViews" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="1" width="323" height="57"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Delivery" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ajg-vt-4gA">
+                    <rect key="frame" x="18" y="7" width="103" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="103" id="mD5-JG-Jeg"/>
+                        <constraint firstAttribute="height" constant="21" id="nAm-Mf-A4n"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="13"/>
+                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Total" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bmh-IF-NYL">
+                    <rect key="frame" x="18" y="30" width="35" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="35" id="A9G-pK-rS2"/>
+                        <constraint firstAttribute="height" constant="21" id="fXP-5n-EcE"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="13"/>
+                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LZc-zD-hfl">
+                    <rect key="frame" x="18" y="0.0" width="320" height="1"/>
+                    <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="1uW-EZ-dxX"/>
+                    </constraints>
+                </view>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="P 4,500" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hji-3a-1LN">
+                    <rect key="frame" x="205" y="25" width="110" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="21" id="KWG-Dm-QgQ"/>
+                        <constraint firstAttribute="width" constant="110" id="Mi1-Mu-5eU"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="13"/>
+                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="FREE" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S6c-8a-doC">
+                    <rect key="frame" x="271" y="7" width="44" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="44" id="TUJ-Kl-Z7B"/>
+                        <constraint firstAttribute="height" constant="21" id="ZG4-oH-3TD"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="13"/>
+                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="ajg-vt-4gA" firstAttribute="leading" secondItem="6LZ-z1-pbw" secondAttribute="leading" constant="18" id="0DZ-ZD-z6Z"/>
+                <constraint firstItem="bmh-IF-NYL" firstAttribute="top" secondItem="ajg-vt-4gA" secondAttribute="bottom" constant="2" id="3ol-Cs-3WP"/>
+                <constraint firstItem="hji-3a-1LN" firstAttribute="top" secondItem="LZc-zD-hfl" secondAttribute="bottom" constant="24" id="EEf-wK-vW3"/>
+                <constraint firstItem="bmh-IF-NYL" firstAttribute="leading" secondItem="6LZ-z1-pbw" secondAttribute="leading" constant="18" id="F6O-bc-ah0"/>
+                <constraint firstItem="LZc-zD-hfl" firstAttribute="leading" secondItem="6LZ-z1-pbw" secondAttribute="leading" constant="18" id="GUZ-Sd-A31"/>
+                <constraint firstItem="S6c-8a-doC" firstAttribute="top" secondItem="LZc-zD-hfl" secondAttribute="bottom" constant="6" id="enc-aO-Ad6"/>
+                <constraint firstAttribute="trailing" secondItem="LZc-zD-hfl" secondAttribute="trailing" constant="-15" id="eq2-u0-oIo"/>
+                <constraint firstItem="LZc-zD-hfl" firstAttribute="top" secondItem="6LZ-z1-pbw" secondAttribute="top" constant="1" id="h7h-HG-beJ"/>
+                <constraint firstAttribute="trailing" secondItem="hji-3a-1LN" secondAttribute="trailing" constant="8" id="mdP-03-JAa"/>
+                <constraint firstItem="ajg-vt-4gA" firstAttribute="top" secondItem="LZc-zD-hfl" secondAttribute="bottom" constant="6" id="pOR-a7-VvW"/>
+                <constraint firstAttribute="trailing" secondItem="S6c-8a-doC" secondAttribute="trailing" constant="8" id="wWq-u2-UpY"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="218.5" y="209.5"/>
+        </view>
+        <view clipsSubviews="YES" contentMode="scaleToFill" id="h91-C2-3J8" customClass="CheckoutViews" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="323" height="41"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cqC-ZC-EQF">
+                    <rect key="frame" x="18" y="37" width="320" height="1"/>
+                    <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="ehg-3t-x85"/>
+                    </constraints>
+                </view>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Shipping address" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GKF-YI-ICf">
+                    <rect key="frame" x="18" y="8" width="103" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="103" id="Zzv-GC-MbX"/>
+                        <constraint firstAttribute="height" constant="21" id="tjA-bF-ksf"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="13"/>
+                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="GKF-YI-ICf" firstAttribute="top" secondItem="h91-C2-3J8" secondAttribute="top" constant="8" id="MOJ-fg-HAr"/>
+                <constraint firstAttribute="trailing" secondItem="cqC-ZC-EQF" secondAttribute="trailing" constant="-15" id="UQG-72-pau"/>
+                <constraint firstItem="GKF-YI-ICf" firstAttribute="leading" secondItem="h91-C2-3J8" secondAttribute="leading" constant="18" id="Uy6-cG-OW0"/>
+                <constraint firstItem="cqC-ZC-EQF" firstAttribute="leading" secondItem="h91-C2-3J8" secondAttribute="leading" constant="18" id="irp-UE-YSd"/>
+                <constraint firstAttribute="bottom" secondItem="cqC-ZC-EQF" secondAttribute="bottom" constant="3" id="rXb-ah-NHP"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="218.5" y="312.5"/>
+        </view>
+    </objects>
+</document>

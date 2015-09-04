@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="TransactionIdentifier" id="KGk-i7-Jjw" customClass="TransactionTableViewCell" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="100"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TID-203-553-918" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BG9-ai-ps2">
+                        <rect key="frame" x="8" y="12" width="334" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="0AC-Qm-C1R"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                        <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="P4,500" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VHu-cT-2FF">
+                        <rect key="frame" x="8" y="66" width="98" height="21"/>
+                        <color key="backgroundColor" red="0.43529411759999997" green="0.20392156859999999" blue="0.52156862749999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="e3z-72-K8Y" userLabel="arrow view">
+                        <rect key="frame" x="350" y="0.0" width="25" height="99"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="right-gray" translatesAutoresizingMaskIntoConstraints="NO" id="YAh-Y9-TIp">
+                                <rect key="frame" x="0.0" y="40" width="10" height="20"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="25" id="8is-fU-ixZ"/>
+                            <constraint firstAttribute="height" constant="99" id="L5m-ex-7Q9"/>
+                        </constraints>
+                    </view>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="I89-8h-WuF" userLabel="separator">
+                        <rect key="frame" x="0.0" y="99" width="375" height="1"/>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="1" id="DO9-CG-nAr"/>
+                        </constraints>
+                    </view>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="5 products     January 21, 2014" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KID-Y2-zv8">
+                        <rect key="frame" x="8" y="35" width="334" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="4zh-36-Dfb"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="16"/>
+                        <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="KID-Y2-zv8" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="16S-oe-gv1"/>
+                    <constraint firstAttribute="trailing" secondItem="I89-8h-WuF" secondAttribute="trailing" id="1Bs-t4-b5P"/>
+                    <constraint firstItem="e3z-72-K8Y" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="1lg-es-AlZ"/>
+                    <constraint firstItem="e3z-72-K8Y" firstAttribute="leading" secondItem="BG9-ai-ps2" secondAttribute="trailing" constant="8" id="CLi-Wf-Mwd"/>
+                    <constraint firstAttribute="trailing" secondItem="e3z-72-K8Y" secondAttribute="trailing" id="Km8-5S-CAx"/>
+                    <constraint firstItem="e3z-72-K8Y" firstAttribute="leading" secondItem="KID-Y2-zv8" secondAttribute="trailing" constant="8" id="U3w-Ut-49c"/>
+                    <constraint firstItem="BG9-ai-ps2" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="12" id="gmj-Lj-cyJ"/>
+                    <constraint firstItem="I89-8h-WuF" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="jjI-oz-3K5"/>
+                    <constraint firstItem="BG9-ai-ps2" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="txd-PU-dzi"/>
+                    <constraint firstAttribute="bottom" secondItem="I89-8h-WuF" secondAttribute="bottom" constant="-1" id="xo5-AY-Se7"/>
+                    <constraint firstItem="KID-Y2-zv8" firstAttribute="top" secondItem="BG9-ai-ps2" secondAttribute="bottom" constant="2" id="yDQ-S9-tFU"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="numberAndDateLabel" destination="KID-Y2-zv8" id="EuX-Ev-Co4"/>
+                <outlet property="priceLabel" destination="VHu-cT-2FF" id="P4i-DA-KVj"/>
+                <outlet property="transactionIdLabel" destination="BG9-ai-ps2" id="wGC-CB-Qhz"/>
+            </connections>
+            <point key="canvasLocation" x="340.5" y="346"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="right-gray" width="97" height="200"/>
+    </resources>
+</document>

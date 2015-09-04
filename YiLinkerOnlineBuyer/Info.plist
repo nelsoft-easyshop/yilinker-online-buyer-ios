@@ -12,22 +12,51 @@
 	<string>6.0</string>
 	<key>CFBundleName</key>
 	<string>$(PRODUCT_NAME)</string>
-	<key>UIViewControllerBasedStatusBarAppearance</key>
-	<false/>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>None</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>fb397537620440336</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.googleusercontent.apps.613594712632-q9iak1vgc6ua44fkc9kg5tut0s5vuo5m</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.easyshop.YiLinkerOnlineBuyer</string>
+			</array>
+		</dict>
+	</array>
 	<key>CFBundleVersion</key>
 	<string>1</string>
+	<key>FacebookAppID</key>
+	<string>397537620440336</string>
+	<key>FacebookDisplayName</key>
+	<string>YiLinker</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
-	<string>Main</string>
+	<string>HomeStoryBoard</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>
@@ -39,6 +68,31 @@
 		<string>UIInterfaceOrientationPortrait</string>
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
+	<key>UIViewControllerBasedStatusBarAppearance</key>
+	<false/>
+	<key>LSApplicationCategoryType</key>
+	<string></string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Black Italic.otf</string>
+		<string>Panton Black.otf</string>
+		<string>Panton Bold Italic.otf</string>
+		<string>Panton Bold.otf</string>
+		<string>Panton ExtraBold Italic.otf</string>
+		<string>Panton ExtraBold.otf</string>
+		<string>Panton ExtraLight Italic.otf</string>
+		<string>Panton ExtraLight.otf</string>
+		<string>Panton Heavy Italic.otf</string>
+		<string>Panton Heavy.otf</string>
+		<string>Panton Light Italic.otf</string>
+		<string>Panton Light.otf</string>
+		<string>Panton Regular Italic.otf</string>
+		<string>Panton SemiBold Italic.otf</string>
+		<string>Panton SemiBold.otf</string>
+		<string>Panton Thin Italic.otf</string>
+		<string>Panton Thin.otf</string>
+		<string>Panton.otf</string>
 	</array>
 </dict>
 </plist>
