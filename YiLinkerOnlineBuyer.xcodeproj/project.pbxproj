@@ -324,6 +324,7 @@
 		B747A6621B916D880002CBA7 /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B747A6611B916D880002CBA7 /* APIManager.swift */; };
 		B747A6661B91B2D80002CBA7 /* DateUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = B747A6651B91B2D80002CBA7 /* DateUtility.swift */; };
 		B747A6681B91B5200002CBA7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B747A6671B91B5200002CBA7 /* GoogleService-Info.plist */; };
+		B7856EAC1B97F70000FC86DA /* TextViewAutoHeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7856EAB1B97F70000FC86DA /* TextViewAutoHeight.swift */; };
 		C6A432EAC74EF7DD977AFF7B /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D038C18A7712E626564D2D3 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -663,6 +664,7 @@
 		B747A6611B916D880002CBA7 /* APIManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
 		B747A6651B91B2D80002CBA7 /* DateUtility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateUtility.swift; sourceTree = "<group>"; };
 		B747A6671B91B5200002CBA7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../GoogleService-Info.plist"; sourceTree = "<group>"; };
+		B7856EAB1B97F70000FC86DA /* TextViewAutoHeight.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TextViewAutoHeight.swift; path = YiLinkerOnlineBuyer/resources/ViewController/TextViewAutoHeight.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1171,6 +1173,7 @@
 				B747A6541B916CBA0002CBA7 /* MessageThreadTVC.swift */,
 				B747A6551B916CBA0002CBA7 /* MessageThreadVC.swift */,
 				B7170D6D1B93E27800855CF9 /* DummyNavigationController.swift */,
+				B7856EAB1B97F70000FC86DA /* TextViewAutoHeight.swift */,
 			);
 			name = Messaging;
 			sourceTree = "<group>";
@@ -1560,6 +1563,7 @@
 				0C329E751B7B2D32005BE2B6 /* RegisterModel.swift in Sources */,
 				0C99374B1B750583000D6074 /* HomePageCollectionViewLayout.swift in Sources */,
 				79E68B9B1B8B4239008626E4 /* ProfileSettingsTableViewCell.swift in Sources */,
+				B7856EAC1B97F70000FC86DA /* TextViewAutoHeight.swift in Sources */,
 				79E68BB71B8B5C58008626E4 /* EditProfileAccountInformationTableViewCell.swift in Sources */,
 				0CD103EC1B8B4769002E15F4 /* DynamicRoundedView.swift in Sources */,
 				0C9937451B750583000D6074 /* DiscountLabel.swift in Sources */,

@@ -1113,10 +1113,10 @@
                                 </connections>
                             </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ylI-B0-rEf">
-                                <rect key="frame" x="0.0" y="551" width="600" height="50"/>
+                                <rect key="frame" x="0.0" y="551" width="600" height="49"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tFL-qg-bKP">
-                                        <rect key="frame" x="500" y="-1" width="100" height="50"/>
+                                        <rect key="frame" x="500" y="-2" width="100" height="50"/>
                                         <color key="backgroundColor" red="0.45882352939999999" green="0.20392156859999999" blue="0.54117647059999996" alpha="1" colorSpace="deviceRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="0tR-B0-kph"/>
@@ -1193,7 +1193,7 @@
                             <constraint firstAttribute="centerY" secondItem="JUc-hB-KE6" secondAttribute="centerY" constant="25" id="9Ti-4J-QxC"/>
                             <constraint firstAttribute="centerX" secondItem="JUc-hB-KE6" secondAttribute="centerX" id="Egq-TR-ctD"/>
                             <constraint firstItem="ylI-B0-rEf" firstAttribute="leading" secondItem="OYC-PT-LhE" secondAttribute="leading" id="PKj-4a-nsn"/>
-                            <constraint firstItem="obF-qp-izO" firstAttribute="top" secondItem="ylI-B0-rEf" secondAttribute="bottom" constant="-1" id="gEz-DV-4Qa"/>
+                            <constraint firstItem="obF-qp-izO" firstAttribute="top" secondItem="ylI-B0-rEf" secondAttribute="bottom" id="gEz-DV-4Qa"/>
                             <constraint firstItem="JUc-hB-KE6" firstAttribute="top" secondItem="OYC-PT-LhE" secondAttribute="top" id="jAn-9U-iXG"/>
                             <constraint firstAttribute="centerX" secondItem="ylI-B0-rEf" secondAttribute="centerX" id="n0o-Zj-Qlp"/>
                             <constraint firstAttribute="trailing" secondItem="ylI-B0-rEf" secondAttribute="trailing" id="skx-1L-wwB"/>
@@ -1201,6 +1201,11 @@
                             <constraint firstItem="ylI-B0-rEf" firstAttribute="top" secondItem="JUc-hB-KE6" secondAttribute="bottom" id="wQd-zx-fOd"/>
                             <constraint firstItem="JUc-hB-KE6" firstAttribute="leading" secondItem="OYC-PT-LhE" secondAttribute="leading" id="yUs-1K-8a5"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="n0o-Zj-Qlp"/>
+                            </mask>
+                        </variation>
                     </view>
                     <connections>
                         <outlet property="bottomLayoutConstraint" destination="gEz-DV-4Qa" id="zzh-5H-Xrb"/>

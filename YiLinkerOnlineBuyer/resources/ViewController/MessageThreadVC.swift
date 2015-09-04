@@ -86,10 +86,13 @@ class MessageThreadVC: UIViewController {
         //composeTextView.sizeToFit()
         //composeTextView.layoutIfNeeded()
         
-        //self.goToBottomTableView()
         
         var tap = UITapGestureRecognizer (target: self, action: Selector("tableTapped:"))
         self.threadTableView.addGestureRecognizer(tap)
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        self.goToBottomTableView()
     }
     
     func tableTapped(tap : UITapGestureRecognizer){
@@ -122,7 +125,7 @@ class MessageThreadVC: UIViewController {
         onlineLabel.frame = onlineLabelFrame
         
         profileNameLabel = UILabel()
-        profileNameLabel.text = sender?.fullName
+        profileNameLabel.text = recipient?.fullName
         profileNameLabel.font = UIFont(name: profileNameLabel.font.fontName, size: 15.0)
         profileNameLabel.textColor = UIColor.whiteColor()
         profileNameLabel.sizeToFit()
@@ -133,7 +136,7 @@ class MessageThreadVC: UIViewController {
         
         profileImageView = UIImageView(frame: CGRectMake(navBarWidth-profileImageDimension - rightPadding, 0,profileImageDimension, profileImageDimension))
         ///profileImageView.image = UIImage(named: sender?.profileImageUrl)
-        var temp = sender!.profileImageUrl ?? ""
+        var temp = recipient!.profileImageUrl ?? ""
         let url = NSURL(string: temp)
         profileImageView.sd_setImageWithURL(url)
         if (profileImageView.image == nil){
@@ -172,7 +175,6 @@ class MessageThreadVC: UIViewController {
         
         self.navigationItem.setLeftBarButtonItem(backItem, animated: true)
     }
-    
     
     @IBAction func onCamera(sender: UIButton) {
         self.clearProfileView()
@@ -294,7 +296,7 @@ class MessageThreadVC: UIViewController {
             
             println(responseObject)
             SVProgressHUD.dismiss()
-            
+            self.goToBottomTableView()
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 
@@ -389,16 +391,17 @@ extension MessageThreadVC : UITextViewDelegate{
         }
     }
     
-    
+    /*
     func textViewDidChange(textView: UITextView) {
         
         if (maximumXComposeTextView > textView.contentSize.height){
             //println("TV \(textView.contentSize.height) \(composeTVConstraint.constant) \(threadTableView.frame.size) \(textView.superview?.frame.origin)")
+            
             let fixedWidth = textView.frame.size.width
             var deltaSize = textView.contentSize.height - composeTVConstraint.constant
         
             var newSize =   textView.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.max))
-        
+            
             var newFrame = textView.frame
             newFrame.size = CGSize(width: fixedWidth, height: newSize.height)
             textView.frame = newFrame
@@ -428,6 +431,7 @@ extension MessageThreadVC : UITextViewDelegate{
         }
     }
     
+    */
 
 }
 
@@ -437,7 +441,6 @@ extension MessageThreadVC : UITableViewDataSource, UITableViewDelegate{
     func goToBottomTableView(){
         if(threadTableView.numberOfRowsInSection(0) > 0) {
             var lastIndexPath : NSIndexPath = getLastIndexPath(threadTableView)
-            threadTableView.reloadData()
             threadTableView.scrollToRowAtIndexPath(lastIndexPath, atScrollPosition: UITableViewScrollPosition.Bottom, animated: true)
         }
     }
