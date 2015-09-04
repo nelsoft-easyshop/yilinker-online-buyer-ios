@@ -8,7 +8,9 @@
 
 import UIKit
 
-class ResultViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UITableViewDelegate, UITableViewDataSource {
+class ResultViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UITableViewDelegate, UITableViewDataSource, FilterViewControllerDelegate {
+    
+    let manager = APIManager.sharedInstance
     
     let grid:String = "GRID"
     let list:String = "LIST"
@@ -19,6 +21,7 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
     let reuseIdentifierSeller: String = "SellerResultCollectionViewCell"
     var type: String = "GRID"
     
+    @IBOutlet weak var noResultLabel: UILabel!
     @IBOutlet weak var sortPickerTableView: UITableView!
     @IBOutlet weak var dimView: UIView!
     @IBOutlet weak var resultCollectionView: UICollectionView!
@@ -27,8 +30,13 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
     @IBOutlet weak var filterView: UIView!
     @IBOutlet weak var viewTypeView: UIView!
     
-    var collectionViewData: [String] = ["Item 1", "Item 3", "Item 3", "Item 1", "Item 3", "Item 3"]
+    var collectionViewData: [SearchResultModel] = []
     var sortData: [String] = ["Old to new", "New to old", "A to Z", "Z to A"]
+
+    var searchSuggestion: SearchSuggestionModel!
+    
+    var fullDimView: UIView?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -66,6 +74,16 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
         //hide dimview
         dimView.alpha = 0
         dimView.hidden = true
+        
+        fullDimView = UIView(frame: self.view.bounds)
+        fullDimView?.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
+        self.navigationController?.view.addSubview(fullDimView!)
+        //self.view.addSubview(dimView!)
+        fullDimView?.hidden = true
+        fullDimView?.alpha = 0
+
+        
+        noResultLabel.hidden = true
     }
     
     func registerNibs() {
@@ -79,6 +97,64 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
         self.resultCollectionView?.registerNib(cellNib, forCellWithReuseIdentifier: reuseIdentifierSeller)
     }
     
+    func passModel(searchSuggestion: SearchSuggestionModel) {
+        self.searchSuggestion = searchSuggestion
+        
+        if Reachability.isConnectedToNetwork() {
+           requestSearchDetails(searchSuggestion.searchUrl, params: nil)
+        } else {
+            showAlert("Connection Unreachable", message: "Cannot retrieve data. Please check your internet connection.")
+        }
+    }
+    
+    func requestSearchDetails(url: String, params: NSDictionary!) {
+        showLoader()
+        
+        manager.GET(url, parameters: params, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in print(responseObject as! NSDictionary)
+            if responseObject.objectForKey("error") != nil {
+                self.requestRefreshToken(url, params: params)
+            } else {
+                self.populateTableView(responseObject)
+            }
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                self.showAlert("Error", message: "Something went wrong. . .")
+                self.dismissLoader()
+        })
+    }
+    
+    // MARK: Methods Updating Values
+    
+    func populateTableView(responseObject: AnyObject) {
+        collectionViewData.removeAll(keepCapacity: false)
+        if let value: AnyObject = responseObject["data"] {
+            for subValue in value["products"] as! NSArray {
+                println(subValue)
+                let model: SearchResultModel = SearchResultModel.parseDataWithDictionary(subValue as! NSDictionary)
+                
+                self.collectionViewData.append(model)
+            }
+            self.resultCollectionView.reloadData()
+        }
+        self.dismissLoader()
+        
+        if self.collectionViewData.count == 0 {
+            noResultLabel.hidden = false
+        }
+    }
+
+    
+    
+    //Loader function
+    func showLoader() {
+        SVProgressHUD.show()
+        SVProgressHUD.setBackgroundColor(UIColor.whiteColor())
+    }
+    
+    func dismissLoader() {
+        SVProgressHUD.dismiss()
+    }
 
     func changeViewType() {
         if type == grid {
@@ -89,6 +165,14 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
             type = grid
         }
         self.resultCollectionView?.reloadData()
+    }
+    
+    func hideDimView() {
+        UIView.animateWithDuration(0.3, animations: {
+            self.fullDimView!.alpha = 0
+            }, completion: { finished in
+                self.fullDimView!.hidden = true
+        })
     }
     
     // Tap Gesture Action
@@ -114,8 +198,14 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
         attributeModal.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
         attributeModal.providesPresentationContextTransitionStyle = true
         attributeModal.definesPresentationContext = true
+        attributeModal.delegate = self
         self.tabBarController?.presentViewController(attributeModal, animated: true, completion: nil)
         
+        self.fullDimView!.hidden = false
+        UIView.animateWithDuration(0.3, animations: {
+            self.fullDimView!.alpha = 1
+            }, completion: { finished in
+        })
 
     }
     
@@ -141,9 +231,19 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         if type == grid {
             let cell: ProductResultGridCollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifierGrid, forIndexPath: indexPath) as! ProductResultGridCollectionViewCell
+            var tempModel: SearchResultModel = collectionViewData[indexPath.row]
+            cell.setProductImage(tempModel.imageUrl)
+            cell.setProductName(tempModel.productName)
+            cell.setOriginalPrice(tempModel.originalPrice)
+            cell.setNewPrice(tempModel.newPrice)
             return cell
         } else if type == list {
             let cell: ProductResultListCollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifierList, forIndexPath: indexPath) as! ProductResultListCollectionViewCell
+            var tempModel: SearchResultModel = collectionViewData[indexPath.row]
+            cell.setProductImage(tempModel.imageUrl)
+            cell.setProductName(tempModel.productName)
+            cell.setOriginalPrice(tempModel.originalPrice)
+            cell.setNewPrice(tempModel.newPrice)
             return cell
         } else{
             let cell: SellerResultCollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifierSeller, forIndexPath: indexPath) as! SellerResultCollectionViewCell
@@ -245,5 +345,59 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
         // Pass the selected object to the new view controller.
     }
     */
+    
+    // MARK: - FilterViewControllerDelegate
+    func resetFilterViewControllerAction() {
+        
+    }
+    
+    func cancelFilterViewControllerAction() {
+        hideDimView()
+    }
+    
+    func showAlert(title: String, message: String) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+        
+        let OKAction = UIAlertAction(title: "OK", style: .Default) { (action) in
+            alertController.dismissViewControllerAnimated(true, completion: nil)
+        }
+        
+        alertController.addAction(OKAction)
+        
+        self.presentViewController(alertController, animated: true) {
+            
+        }
+    }
+    
+    func requestRefreshToken(url: String, params: NSDictionary!) {
+        let url: String = "http://online.api.easydeal.ph/api/v1/login"
+        let params: NSDictionary = ["client_id": Constants.Credentials.clientID,
+            "client_secret": Constants.Credentials.clientSecret,
+            "grant_type": Constants.Credentials.grantRefreshToken,
+            "refresh_token": SessionManager.refreshToken()]
+        
+        let manager = APIManager.sharedInstance
+        manager.POST(url, parameters: params, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            
+            SVProgressHUD.dismiss()
+            
+            if (responseObject["isSuccessful"] as! Bool) {
+                SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+                self.requestSearchDetails(url, params: params)
+            } else {
+                self.showAlert("Error", message: responseObject["message"] as! String)
+            }
+            
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                SVProgressHUD.dismiss()
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                
+                self.showAlert("Something went wrong", message: "")
+                
+        })
+    }
+
 
 }

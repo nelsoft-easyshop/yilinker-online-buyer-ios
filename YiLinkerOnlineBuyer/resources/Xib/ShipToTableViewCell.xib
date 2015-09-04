@@ -109,12 +109,13 @@
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="addressLabel" destination="tC8-Yd-occ" id="s39-3x-oyK"/>
                 <outlet property="arrowImageView" destination="G2W-GT-co0" id="vt7-tA-cYY"/>
                 <outlet property="changeAddressLabel" destination="SrV-Sm-muB" id="JPC-wT-o17"/>
                 <outlet property="defaultAddressLabel" destination="jzk-DI-tsJ" id="uf2-iG-JUD"/>
                 <outlet property="fakeContainerView" destination="yz9-Nf-Uuz" id="fhq-1U-5hb"/>
             </connections>
-            <point key="canvasLocation" x="530.5" y="393"/>
+            <point key="canvasLocation" x="606.5" y="343"/>
         </tableViewCell>
     </objects>
     <resources>

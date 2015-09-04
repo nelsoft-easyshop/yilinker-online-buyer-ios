@@ -19,6 +19,8 @@ class ActivityLogTableViewController: UITableViewController {
         super.viewDidLoad()
 
         initializeViews()
+        titleView()
+        backButton()
         registerNibs()
     }
 
@@ -37,6 +39,27 @@ class ActivityLogTableViewController: UITableViewController {
         self.tableView.rowHeight = UITableViewAutomaticDimension
         self.tableView.estimatedRowHeight = 75.0
     }
+    
+    func titleView() {
+        self.title = "Activity Log"
+    }
+    
+    func backButton() {
+        var backButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
+        backButton.frame = CGRectMake(0, 0, 40, 40)
+        backButton.addTarget(self, action: "back", forControlEvents: UIControlEvents.TouchUpInside)
+        backButton.setImage(UIImage(named: "back-white"), forState: UIControlState.Normal)
+        var customBackButton:UIBarButtonItem = UIBarButtonItem(customView: backButton)
+        
+        let navigationSpacer: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
+        navigationSpacer.width = -20
+        self.navigationItem.leftBarButtonItems = [navigationSpacer, customBackButton]
+    }
+    
+    func back() {
+        self.navigationController!.popViewControllerAnimated(true)
+    }
+
     
     func registerNibs() {
         var nib = UINib(nibName: "ActivityLogTableViewCell", bundle: nil)

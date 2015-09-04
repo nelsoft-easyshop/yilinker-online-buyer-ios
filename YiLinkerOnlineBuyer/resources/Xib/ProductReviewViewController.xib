@@ -159,6 +159,7 @@
                     <color key="sectionIndexBackgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <connections>
                         <outlet property="dataSource" destination="-1" id="fqf-Ut-eh7"/>
+                        <outlet property="delegate" destination="-1" id="sFz-Wm-yYl"/>
                     </connections>
                 </tableView>
             </subviews>

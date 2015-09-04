@@ -24,7 +24,7 @@
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Beats Audio Store" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uc1-1p-Quo">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Beats Audio Store" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="7" translatesAutoresizingMaskIntoConstraints="NO" id="uc1-1p-Quo">
                         <rect key="frame" x="62" y="12" width="151" height="21"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="21" id="QS0-Of-uSC"/>
@@ -33,7 +33,7 @@
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Specialty: Music, Headphones" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zPX-iG-aKl">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Specialty: Music, Headphones" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="5" translatesAutoresizingMaskIntoConstraints="NO" id="zPX-iG-aKl">
                         <rect key="frame" x="62" y="27" width="151" height="25"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="25" id="dkV-Sp-I9k"/>
@@ -106,6 +106,6 @@
         </collectionViewCell>
     </objects>
     <resources>
-        <image name="dummy-placeholder" width="1280" height="800"/>
+        <image name="dummy-placeholder" width="300" height="188"/>
     </resources>
 </document>
