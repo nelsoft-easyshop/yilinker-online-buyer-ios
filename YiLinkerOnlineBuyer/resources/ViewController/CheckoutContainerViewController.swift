@@ -19,6 +19,7 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
     
     var contentViewFrame: CGRect?
     var selectedIndex: Int = 0
+    var totalPrice: String = ""
     
     @IBOutlet weak var contentView: UIView!
     @IBOutlet weak var continueButton: UIButton!
@@ -32,6 +33,9 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
     @IBOutlet weak var paymentLabel: UILabel!
     @IBOutlet weak var overViewLabel: UILabel!
     
+    var hud: MBProgressHUD?
+
+    var carItems: [CartProductDetailsModel] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,6 +49,19 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
         self.initViewController()
         self.setSelectedViewControllerWithIndex(self.selectedIndex)
         self.backButton()
+    }
+    
+    func showHUD() {
+        if self.hud != nil {
+            self.hud!.hide(true)
+            self.hud = nil
+        }
+        
+        self.hud = MBProgressHUD(view: self.view)
+        self.hud?.removeFromSuperViewOnHide = true
+        self.hud?.dimBackground = false
+        self.view.addSubview(self.hud!)
+        self.hud?.show(true)
     }
 
     func titleView() {
@@ -169,6 +186,8 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
         summaryViewController = SummaryViewController(nibName: "SummaryViewController", bundle: nil)
         paymentViewController = PaymentViewController(nibName: "PaymentViewController", bundle: nil)
         overViewViewController = OverViewViewController(nibName: "OverViewViewController", bundle: nil)
+        summaryViewController!.totalPrice = self.totalPrice
+        summaryViewController!.cartItems = self.carItems
         
         self.viewControllers.append(summaryViewController!)
         self.viewControllers.append(paymentViewController!)
@@ -202,12 +221,43 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
             self.selectedIndex++
         }
         
-        if self.selectedIndex == 3 {
+        if self.selectedIndex == 1 {
+            if summaryViewController!.isValidToSelectPayment {
+                self.setSelectedViewControllerWithIndex(self.selectedIndex)
+            } else {
+                self.selectedIndex--
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Server Error", title: "Something went wrong")
+            }
+        } else if self.selectedIndex == 2 {
+            if self.paymentViewController!.paymentType == PaymentType.COD {
+                self.fireCOD()
+            }
+        } else if self.selectedIndex == 3 {
             self.dismissViewControllerAnimated(true, completion: nil)
         } else {
             self.setSelectedViewControllerWithIndex(self.selectedIndex)
         }
 
+    }
+    
+    func fireCOD() {
+        self.showHUD()
+        let manager: APIManager = APIManager.sharedInstance
+        let parameters: NSDictionary = ["access_token": SessionManager.accessToken()]
+            manager.POST(APIAtlas.cashOnDeliveryUrl, parameters: parameters, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            self.hud?.hide(true)
+                let paymentSuccessModel: PaymentSuccessModel = PaymentSuccessModel.parseDataWithDictionary(responseObject as! NSDictionary)
+                if paymentSuccessModel.isSuccessful {
+                    self.redirectToSuccessPage(paymentSuccessModel)
+                }
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+                self.hud?.hide(true)
+        })
     }
     
     func continueButton(title: String) {
@@ -230,7 +280,12 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
     }
     
     func paymentWebViewController(paymentDidSucceed paymentWebViewController: PaymentWebViewViewController) {
+        self.redirectToSuccessPage(PaymentSuccessModel())
+    }
+    
+    func redirectToSuccessPage(paymentSuccessModel: PaymentSuccessModel) {
         self.selectedIndex++
+        self.overViewViewController?.paymentSuccessModel = paymentSuccessModel
         let viewController: UIViewController = viewControllers[2]
         setSelectedViewController(viewController)
         self.navigationItem.leftBarButtonItems = []

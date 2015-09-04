@@ -27,6 +27,47 @@ class SessionManager {
         NSUserDefaults.standardUserDefaults().synchronize()
     }
     
+    class func setUserFullName(userFullName: String) {
+        NSUserDefaults.standardUserDefaults().setObject(userFullName, forKey: "userFullName")
+        NSUserDefaults.standardUserDefaults().synchronize()
+    }
+    
+    class func setFullAddress(userAddress: String) {
+        NSUserDefaults.standardUserDefaults().setObject(userAddress, forKey: "userAddress")
+        NSUserDefaults.standardUserDefaults().synchronize()
+    }
+    
+    class func setAddressId(addressId: Int) {
+        NSUserDefaults.standardUserDefaults().setObject("\(addressId)", forKey: "addressId")
+        NSUserDefaults.standardUserDefaults().synchronize()
+    }
+    
+    class func addressId() -> Int {
+        var result: String = ""
+        if let val: AnyObject = NSUserDefaults.standardUserDefaults().objectForKey("addressId") as? String {
+            result = val as! String
+        }
+        return result.toInt()!
+    }
+    
+    class func userFullName() -> String {
+        var result: String = ""
+        if let val: AnyObject = NSUserDefaults.standardUserDefaults().objectForKey("userFullName") as? String {
+            result = val as! String
+        }
+        
+        return result
+    }
+    
+    class func userFullAddress() -> String {
+        var result: String = ""
+        if let val: AnyObject = NSUserDefaults.standardUserDefaults().objectForKey("userAddress") as? String {
+            result = val as! String
+        }
+        
+        return result
+    }
+    
     class func profileImageStringUrl() -> String {
         var result: String = ""
         if let val: AnyObject = NSUserDefaults.standardUserDefaults().objectForKey("profileImageUrlString") as? String {
