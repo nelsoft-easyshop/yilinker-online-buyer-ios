@@ -10,6 +10,7 @@ import UIKit
 
 class TotalTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var priceLabel: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

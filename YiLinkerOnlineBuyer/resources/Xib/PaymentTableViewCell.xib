@@ -63,7 +63,7 @@
                     <view clipsSubviews="YES" tag="11" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="b5J-5D-3zJ">
                         <rect key="frame" x="176" y="48" width="159" height="147"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="W4n-Sp-Rev" customClass="SemiRoundedButton" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
+                            <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="W4n-Sp-Rev" customClass="SemiRoundedButton" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
                                 <rect key="frame" x="18" y="35" width="25" height="25"/>
                                 <color key="backgroundColor" red="0.2666666667" green="0.64313725489999995" blue="0.56862745100000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -78,13 +78,6 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pesopay" translatesAutoresizingMaskIntoConstraints="NO" id="5Ks-Yw-TV1">
-                                <rect key="frame" x="73" y="87" width="72" height="32"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="72" id="cwF-uG-dp7"/>
-                                    <constraint firstAttribute="height" constant="32" id="gEd-vb-E75"/>
-                                </constraints>
-                            </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Creditcard" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LPM-0K-pJV">
                                 <rect key="frame" x="57" y="37" width="94" height="23"/>
                                 <constraints>
@@ -95,31 +88,27 @@
                                 <color key="textColor" white="0.27000000000000002" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dragonpay" translatesAutoresizingMaskIntoConstraints="NO" id="t5M-nd-vuZ">
-                                <rect key="frame" x="8" y="74" width="70" height="58"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="58" id="ESU-W9-6Eu"/>
-                                    <constraint firstAttribute="width" constant="70" id="NXt-Hf-xNW"/>
-                                </constraints>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pesopay" translatesAutoresizingMaskIntoConstraints="NO" id="5Ks-Yw-TV1">
+                                <rect key="frame" x="21" y="74" width="130" height="40"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="LPM-0K-pJV" firstAttribute="leading" secondItem="W4n-Sp-Rev" secondAttribute="trailing" constant="14" id="06O-dV-sTE"/>
                             <constraint firstItem="W4n-Sp-Rev" firstAttribute="leading" secondItem="b5J-5D-3zJ" secondAttribute="leading" constant="18" id="3yn-i7-Flx"/>
-                            <constraint firstAttribute="trailing" secondItem="5Ks-Yw-TV1" secondAttribute="trailing" constant="14" id="DAj-Jq-6fl"/>
-                            <constraint firstItem="t5M-nd-vuZ" firstAttribute="leading" secondItem="b5J-5D-3zJ" secondAttribute="leading" constant="8" id="GTQ-1y-lQA"/>
+                            <constraint firstAttribute="bottom" secondItem="5Ks-Yw-TV1" secondAttribute="bottom" constant="33" id="ETq-Ld-LYr"/>
                             <constraint firstItem="LPM-0K-pJV" firstAttribute="top" secondItem="b5J-5D-3zJ" secondAttribute="top" constant="37" id="IyD-4h-54p"/>
-                            <constraint firstItem="5Ks-Yw-TV1" firstAttribute="top" secondItem="LPM-0K-pJV" secondAttribute="bottom" constant="27" id="JzP-cc-hFc"/>
                             <constraint firstAttribute="height" constant="147" id="K5O-CO-EOK"/>
-                            <constraint firstItem="t5M-nd-vuZ" firstAttribute="top" secondItem="LPM-0K-pJV" secondAttribute="bottom" constant="14" id="STU-nv-Fcy"/>
+                            <constraint firstItem="5Ks-Yw-TV1" firstAttribute="top" secondItem="LPM-0K-pJV" secondAttribute="bottom" constant="14" id="YRd-mq-8ti"/>
+                            <constraint firstAttribute="trailing" secondItem="5Ks-Yw-TV1" secondAttribute="trailing" constant="8" id="nZn-e5-8oT"/>
+                            <constraint firstItem="5Ks-Yw-TV1" firstAttribute="leading" secondItem="b5J-5D-3zJ" secondAttribute="leading" constant="21" id="rCO-W2-YRt"/>
                             <constraint firstItem="W4n-Sp-Rev" firstAttribute="top" secondItem="b5J-5D-3zJ" secondAttribute="top" constant="35" id="xjP-xZ-oNj"/>
                         </constraints>
                     </view>
                     <view clipsSubviews="YES" tag="10" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GGo-2p-Uf4">
                         <rect key="frame" x="12" y="48" width="159" height="147"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="A5S-Z4-E1A" customClass="SemiRoundedButton" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
+                            <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="A5S-Z4-E1A" customClass="SemiRoundedButton" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
                                 <rect key="frame" x="22" y="36" width="25" height="25"/>
                                 <color key="backgroundColor" red="0.2666666667" green="0.64313725489999995" blue="0.56862745100000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -198,6 +187,7 @@
             </tableViewCellContentView>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <connections>
+                <outlet property="cellSwitch" destination="1Qc-Y5-5bI" id="swz-Fe-4BC"/>
                 <outlet property="codCheckBoxButton" destination="A5S-Z4-E1A" id="2TZ-uh-EsN"/>
                 <outlet property="codView" destination="GGo-2p-Uf4" id="zVy-JC-gnn"/>
                 <outlet property="creditCardCheckBoxbutton" destination="W4n-Sp-Rev" id="OcO-xJ-Gna"/>
@@ -251,19 +241,13 @@
                     <view clipsSubviews="YES" tag="11" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4ib-d9-hJp">
                         <rect key="frame" x="156" y="48" width="136" height="124"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="dragonpay" translatesAutoresizingMaskIntoConstraints="NO" id="bkH-u8-FVD">
-                                <rect key="frame" x="6" y="57" width="77" height="64"/>
-                            </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="pesopay" translatesAutoresizingMaskIntoConstraints="NO" id="eo2-mh-uxO">
-                                <rect key="frame" x="61" y="71" width="71" height="31"/>
-                            </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Creditcard" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ET9-zM-Un0">
                                 <rect key="frame" x="45" y="18" width="94" height="23"/>
                                 <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="16"/>
                                 <color key="textColor" white="0.27000000000000002" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rq3-le-FDD" customClass="SemiRoundedButton" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
+                            <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rq3-le-FDD" customClass="SemiRoundedButton" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
                                 <rect key="frame" x="12" y="18" width="25" height="25"/>
                                 <color key="backgroundColor" red="0.2666666667" green="0.64313725489999995" blue="0.56862745100000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <inset key="contentEdgeInsets" minX="6" minY="6" maxX="6" maxY="6"/>
@@ -274,16 +258,23 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="pesopay" translatesAutoresizingMaskIntoConstraints="NO" id="eo2-mh-uxO">
+                                <rect key="frame" x="23" y="60" width="90" height="46"/>
+                            </imageView>
                         </subviews>
                         <constraints>
                             <constraint firstAttribute="height" constant="124" id="AuG-Im-Dtl"/>
+                            <constraint firstItem="eo2-mh-uxO" firstAttribute="top" secondItem="Rq3-le-FDD" secondAttribute="bottom" constant="17" id="Dse-HD-EGG"/>
+                            <constraint firstItem="eo2-mh-uxO" firstAttribute="leading" secondItem="4ib-d9-hJp" secondAttribute="leading" constant="23" id="Pld-kb-lIz"/>
+                            <constraint firstAttribute="bottom" secondItem="eo2-mh-uxO" secondAttribute="bottom" constant="18" id="TR7-in-RwT"/>
+                            <constraint firstAttribute="trailing" secondItem="eo2-mh-uxO" secondAttribute="trailing" constant="23" id="e50-kn-gLa"/>
                             <constraint firstAttribute="width" constant="136" id="fbx-nc-EFt"/>
                         </constraints>
                     </view>
                     <view clipsSubviews="YES" tag="10" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Pw7-s3-ViR">
                         <rect key="frame" x="11" y="48" width="136" height="124"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gBn-nf-yql" customClass="SemiRoundedButton" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
+                            <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gBn-nf-yql" customClass="SemiRoundedButton" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
                                 <rect key="frame" x="22" y="17" width="25" height="25"/>
                                 <color key="backgroundColor" red="0.2666666667" green="0.64313725489999995" blue="0.56862745100000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <inset key="contentEdgeInsets" minX="6" minY="6" maxX="6" maxY="6"/>
@@ -339,6 +330,7 @@
             </tableViewCellContentView>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <connections>
+                <outlet property="cellSwitch" destination="txJ-HB-GOc" id="VRg-ku-PGu"/>
                 <outlet property="codCheckBoxButton" destination="gBn-nf-yql" id="LUO-d4-0Qk"/>
                 <outlet property="codView" destination="Pw7-s3-ViR" id="0Qk-ck-ifS"/>
                 <outlet property="creditCardCheckBoxbutton" destination="Rq3-le-FDD" id="Vgh-np-k8g"/>
@@ -350,7 +342,6 @@
     <resources>
         <image name="checkBox" width="200" height="140"/>
         <image name="cod" width="300" height="125"/>
-        <image name="dragonpay" width="200" height="146"/>
         <image name="pesopay" width="200" height="75"/>
     </resources>
 </document>

@@ -329,6 +329,11 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
             if (responseObject["isSuccessful"] as! Bool) {
+                let addressModel: AddressModelV2 = AddressModelV2.parseAddressFromDictionary(responseObject["data"] as! NSDictionary)
+                
+                SessionManager.setAddressId(addressModel.userAddressId)
+                SessionManager.setFullAddress(addressModel.fullLocation)
+                
                 self.selectedIndex = indexPath.row
                 self.collectionView.reloadData()
             } else {
