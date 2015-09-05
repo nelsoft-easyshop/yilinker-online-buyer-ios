@@ -741,11 +741,11 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
             navigationController.navigationBar.barTintColor = Constants.Colors.appTheme
             self.tabBarController?.presentViewController(navigationController, animated: true, completion: nil)
         } else {
-            let checkout = GuestCheckoutContainerViewController(nibName: "GuestCheckoutContainerViewController", bundle: nil)
+            /*let checkout = GuestCheckoutContainerViewController(nibName: "GuestCheckoutContainerViewController", bundle: nil)
             //self.navigationController?.pushViewController(checkout, animated: true)
             let navigationController: UINavigationController = UINavigationController(rootViewController: checkout)
             navigationController.navigationBar.barTintColor = Constants.Colors.appTheme
-            self.tabBarController?.presentViewController(navigationController, animated: true, completion: nil)
+            self.tabBarController?.presentViewController(navigationController, animated: true, completion: nil)*/
         }
     }
     

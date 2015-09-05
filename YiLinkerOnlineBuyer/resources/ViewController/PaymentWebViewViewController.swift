@@ -9,24 +9,26 @@
 import UIKit
 
 protocol PaymentWebViewViewControllerDelegate {
-    func paymentWebViewController(paymentDidSucceed paymentWebViewController: PaymentWebViewViewController)
+    func paymentWebViewController(paymentDidSucceed paymentWebViewController: PaymentWebViewViewController, paymentSuccessModel: PaymentSuccessModel)
     func paymentWebViewController(paymentDidNotSucceed paymentWebViewController: PaymentWebViewViewController)
     func paymentWebViewController(paymentDidCancel paymentWebViewController: PaymentWebViewViewController)
 }
 
 
-class PaymentWebViewViewController: UIViewController {
+class PaymentWebViewViewController: UIViewController, UIWebViewDelegate {
 
     @IBOutlet weak var webView: UIWebView!
     
-    var url: NSURL = NSURL(string: "")!
+    var pesoPayModel: PesoPayModel!
     var delegate: PaymentWebViewViewControllerDelegate?
-    
+    var hud: MBProgressHUD?
     override func viewDidLoad() {
         super.viewDidLoad()
         self.backButton()
-        let request = NSURLRequest(URL: url)
+        let request = NSURLRequest(URL: self.pesoPayModel.paymentUrl)
         self.webView.loadRequest(request)
+        self.webView.delegate = self
+        self.webView.scalesPageToFit = true
     }
 
     override func didReceiveMemoryWarning() {
@@ -44,17 +46,19 @@ class PaymentWebViewViewController: UIViewController {
         let navigationSpacer: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
         navigationSpacer.width = -20
         self.navigationItem.leftBarButtonItems = [navigationSpacer, customBackButton]
+    }
+    
+    func showHUD() {
+        if self.hud != nil {
+            self.hud!.hide(true)
+            self.hud = nil
+        }
         
-        var checkButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
-        checkButton.frame = CGRectMake(0, 0, 25, 25)
-        checkButton.addTarget(self, action: "done", forControlEvents: UIControlEvents.TouchUpInside)
-        checkButton.setImage(UIImage(named: "check-white"), forState: UIControlState.Normal)
-        var customCheckButton:UIBarButtonItem = UIBarButtonItem(customView: checkButton)
-        
-        let navigationSpacer2: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
-        navigationSpacer2.width = -10
-        
-        self.navigationItem.rightBarButtonItems = [navigationSpacer2, customCheckButton]
+        self.hud = MBProgressHUD(view: self.view)
+        self.hud?.removeFromSuperViewOnHide = true
+        self.hud?.dimBackground = false
+        self.view.addSubview(self.hud!)
+        self.hud?.show(true)
     }
     
     func back() {
@@ -62,8 +66,79 @@ class PaymentWebViewViewController: UIViewController {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
-    func done() {
-        self.delegate!.paymentWebViewController(paymentDidSucceed: self)
-        self.dismissViewControllerAnimated(true, completion: nil)
+    func done(referenceNumber: String) {
+        self.fireOverView(referenceNumber)
     }
+    
+    //MARK: Webview Delegate
+    
+    func webView(webView: UIWebView, shouldStartLoadWithRequest request: NSURLRequest, navigationType: UIWebViewNavigationType) -> Bool {
+        var isContinue: Bool = true
+        var url: NSURL = request.mainDocumentURL!
+        if "\(url)".contains("checkout/overview?Ref=") && "\(url)" != "\(self.pesoPayModel.paymentUrl)" {
+            var stringUrl: String = "\(url)"
+            let array: [String] = stringUrl.componentsSeparatedByString("Ref=")
+            
+            let referenceNumber: String = array[1]
+            self.done(referenceNumber)
+            isContinue = false
+        } else if url == self.pesoPayModel.cancelUrl {
+            self.dismissViewControllerAnimated(true, completion: nil)
+            isContinue = false
+        } else if url == self.pesoPayModel.failUrl {
+            self.dismissViewControllerAnimated(true, completion: nil)
+            isContinue = false
+        }
+        
+        return isContinue
+    }
+    
+    func fireOverView(transactionId: String) {
+        self.showHUD()
+        let manager: APIManager = APIManager.sharedInstance
+        let parameters: NSDictionary = ["access_token": SessionManager.accessToken(), "transactionId": transactionId]
+        manager.POST(APIAtlas.overViewUrl, parameters: parameters, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            self.hud?.hide(true)
+            println(responseObject)
+            let paymentSuccessModel: PaymentSuccessModel = PaymentSuccessModel.parseDataWithDictionary(responseObject as! NSDictionary)
+            if paymentSuccessModel.isSuccessful {
+                self.delegate?.paymentWebViewController(paymentDidSucceed: self, paymentSuccessModel: paymentSuccessModel)
+                self.dismissViewControllerAnimated(true, completion: nil)
+            }
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                
+                if task.statusCode == 401 {
+                    self.fireRefreshToken(transactionId)
+                }
+                
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+                self.hud?.hide(true)
+        })
+    }
+    
+    func fireRefreshToken(transactionId: String) {
+        self.showHUD()
+        let url: String = "http://online.api.easydeal.ph/api/v1/login"
+        let params: NSDictionary = ["client_id": Constants.Credentials.clientID,
+            "client_secret": Constants.Credentials.clientSecret,
+            "grant_type": Constants.Credentials.grantRefreshToken,
+            "refresh_token": SessionManager.refreshToken()]
+        let manager = APIManager.sharedInstance
+        manager.POST(url, parameters: params, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+                SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+                self.fireOverView(transactionId)
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                let alertController = UIAlertController(title: "Something went wrong", message: "", preferredStyle: .Alert)
+                let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+                alertController.addAction(defaultAction)
+                self.presentViewController(alertController, animated: true, completion: nil)
+                self.hud?.hide(true)
+        })
+    }
+
 }

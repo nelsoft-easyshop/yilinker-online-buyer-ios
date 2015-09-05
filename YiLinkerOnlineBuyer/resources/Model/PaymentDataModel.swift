@@ -11,10 +11,10 @@ import UIKit
 class PaymentDataModel: NSObject {
     var orderId: Int = 0
     var invoiceNumber: String = ""
-    var totalPrice: Int = 0
+    var totalPrice: String = ""
     var orderedProductsModel: [OrderedProductsModel] = []
     
-    init (orderId: Int, invoiceNumber: String, totalPrice: Int, orderedProductsModel: [OrderedProductsModel]) {
+    init (orderId: Int, invoiceNumber: String, totalPrice: String, orderedProductsModel: [OrderedProductsModel]) {
         self.orderId = orderId
         self.invoiceNumber = invoiceNumber
         self.totalPrice = totalPrice
@@ -28,8 +28,8 @@ class PaymentDataModel: NSObject {
     class func parseDataFromDictionary(dictionary: NSDictionary) -> PaymentDataModel {
         var orderId: Int = 0
         var invoiceNumber: String = ""
-        var totalPrice: Int = 0
         var orderedProductsModel: [OrderedProductsModel] = []
+        var totalPriceString: String = ""
         
         if let val: AnyObject = dictionary["orderId"] {
             if let tempOrderId = dictionary["orderId"] as? Int {
@@ -45,7 +45,13 @@ class PaymentDataModel: NSObject {
         
         if let val: AnyObject = dictionary["totalPrice"] {
             if let tempVal = dictionary["totalPrice"] as? Int {
-                totalPrice = tempVal
+                totalPriceString = ("\(tempVal)")
+            }
+        }
+        
+        if let val: AnyObject = dictionary["totalPrice"] {
+            if let tempVal = dictionary["totalPrice"] as? String {
+                totalPriceString = tempVal
             }
         }
         
@@ -55,6 +61,6 @@ class PaymentDataModel: NSObject {
             orderedProductsModel.append(OrderedProductsModel.parseDataWithDictionary(productDictionary))
         }
         
-        return PaymentDataModel(orderId: orderId, invoiceNumber: invoiceNumber, totalPrice: totalPrice, orderedProductsModel: orderedProductsModel)
+        return PaymentDataModel(orderId: orderId, invoiceNumber: invoiceNumber, totalPrice: totalPriceString, orderedProductsModel: orderedProductsModel)
     }
 }

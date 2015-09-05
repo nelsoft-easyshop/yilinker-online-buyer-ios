@@ -318,7 +318,6 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             SVProgressHUD.dismiss()
             let dictionary: NSDictionary = responseObject as! NSDictionary
             self.profileModel = ProfileUserDetailsModel.parseDataWithDictionary(dictionary["data"]!)
-            println(dictionary["data"])
             //Insert Data to Session Manager
             SessionManager.setFullAddress("\(self.profileModel.address.barangay) \(self.profileModel.address.unitNumber) \(self.profileModel.address.subdivision) \(self.profileModel.address.streetNumber) \(self.profileModel.address.streetAddress) \(self.profileModel.address.streetName) \(self.profileModel.address.buildingName)")
             SessionManager.setUserFullName(self.profileModel.fullName)

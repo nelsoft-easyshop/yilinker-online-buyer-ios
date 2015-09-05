@@ -86,7 +86,7 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
             let viewController: UIViewController = viewControllers[index]
             setSelectedViewController(viewController)
         } else if index == 2 {
-            self.redirectToPaymentWebViewWithUrl("http://www.dragonpay.ph")
+            
         }
     }
     
@@ -231,9 +231,12 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
         } else if self.selectedIndex == 2 {
             if self.paymentViewController!.paymentType == PaymentType.COD {
                 self.fireCOD()
+            } else {
+                self.firePesoPay()
             }
         } else if self.selectedIndex == 3 {
-            self.dismissViewControllerAnimated(true, completion: nil)
+            let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+            appDelegate.changeRootToHomeView()
         } else {
             self.setSelectedViewControllerWithIndex(self.selectedIndex)
         }
@@ -254,6 +257,32 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                if task.statusCode == 401 {
+                    self.fireRefreshToken(CheckoutRefreshType.COD)
+                }
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+                self.hud?.hide(true)
+        })
+    }
+    
+    func firePesoPay() {
+        self.showHUD()
+        let manager: APIManager = APIManager.sharedInstance
+        let parameters: NSDictionary = ["access_token": SessionManager.accessToken()]
+        manager.POST(APIAtlas.pesoPayUrl, parameters: parameters, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            self.hud?.hide(true)
+                let pesoPayModel: PesoPayModel = PesoPayModel.parseDataWithDictionary(responseObject as! NSDictionary)
+                if pesoPayModel.isSuccessful {
+                    self.redirectToPaymentWebViewWithUrl(pesoPayModel)
+                }
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                
+                if task.statusCode == 401 {
+                    self.fireRefreshToken(CheckoutRefreshType.Credit)
+                }
                 
                 UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
                 self.hud?.hide(true)
@@ -266,9 +295,9 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
         }
     }
     
-    func redirectToPaymentWebViewWithUrl(url: String) {
+    func redirectToPaymentWebViewWithUrl(pesoPayModel: PesoPayModel) {
         let paymentWebViewController = PaymentWebViewViewController(nibName: "PaymentWebViewViewController", bundle: nil)
-        paymentWebViewController.url = NSURL(string: url)!
+        paymentWebViewController.pesoPayModel = pesoPayModel
         paymentWebViewController.delegate = self
         let navigationController: UINavigationController = UINavigationController(rootViewController: paymentWebViewController)
         navigationController.navigationBar.barTintColor = Constants.Colors.appTheme
@@ -279,8 +308,8 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
         self.selectedIndex--
     }
     
-    func paymentWebViewController(paymentDidSucceed paymentWebViewController: PaymentWebViewViewController) {
-        self.redirectToSuccessPage(PaymentSuccessModel())
+    func paymentWebViewController(paymentDidSucceed paymentWebViewController: PaymentWebViewViewController, paymentSuccessModel: PaymentSuccessModel) {
+        self.redirectToSuccessPage(paymentSuccessModel)
     }
     
     func redirectToSuccessPage(paymentSuccessModel: PaymentSuccessModel) {
@@ -296,5 +325,33 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
     
     func paymentWebViewController(paymentDidNotSucceed paymentWebViewController: PaymentWebViewViewController) {
         self.selectedIndex--
-    }   
+    }
+    
+    func fireRefreshToken(refreshType: CheckoutRefreshType) {
+        self.showHUD()
+        let url: String = "http://online.api.easydeal.ph/api/v1/login"
+        let params: NSDictionary = ["client_id": Constants.Credentials.clientID,
+            "client_secret": Constants.Credentials.clientSecret,
+            "grant_type": Constants.Credentials.grantRefreshToken,
+            "refresh_token": SessionManager.refreshToken()]
+        let manager = APIManager.sharedInstance
+        manager.POST(url, parameters: params, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+                if refreshType == CheckoutRefreshType.COD {
+                    self.fireCOD()
+                } else if refreshType == CheckoutRefreshType.Credit {
+                    self.firePesoPay()
+                }
+            
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                let alertController = UIAlertController(title: "Something went wrong", message: "", preferredStyle: .Alert)
+                let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+                alertController.addAction(defaultAction)
+                self.presentViewController(alertController, animated: true, completion: nil)
+                self.hud?.hide(true)
+        })
+    }
+
 }
