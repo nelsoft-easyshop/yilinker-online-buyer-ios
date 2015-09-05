@@ -666,9 +666,9 @@
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
-                                <exclude reference="wd6-q4-XJ4"/>
                                 <exclude reference="Srq-eV-PnW"/>
                                 <exclude reference="kqE-pO-iew"/>
+                                <exclude reference="wd6-q4-XJ4"/>
                                 <exclude reference="eFv-9w-MX5"/>
                                 <exclude reference="oIB-5Z-cPg"/>
                             </mask>
@@ -769,6 +769,23 @@
                                                     <color key="textColor" red="0.49803921579999999" green="0.49803921579999999" blue="0.49803921579999999" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vjN-RF-Yc5" customClass="RoundedButton" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
+                                                    <rect key="frame" x="8" y="35" width="25" height="25"/>
+                                                    <color key="backgroundColor" red="0.90429991483688354" green="0.41363269788610402" blue="0.39315816192794606" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="25" id="9Gk-wx-Mw1"/>
+                                                        <constraint firstAttribute="height" constant="25" id="D5S-P7-0ZB"/>
+                                                    </constraints>
+                                                    <inset key="contentEdgeInsets" minX="2" minY="2" maxX="2" maxY="2"/>
+                                                    <state key="normal" title="Button" image="resend">
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                            <real key="value" value="0.0"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
+                                                </button>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="MV3-Bj-SrF" firstAttribute="leading" secondItem="pUq-cf-nOp" secondAttribute="trailing" constant="3" id="3M2-nb-WB8"/>
@@ -777,6 +794,7 @@
                                                 <constraint firstItem="odT-2Y-oT4" firstAttribute="top" secondItem="8zR-uD-j28" secondAttribute="topMargin" constant="15" id="GtF-co-COv"/>
                                                 <constraint firstItem="JdN-eW-TsT" firstAttribute="top" secondItem="8zR-uD-j28" secondAttribute="top" constant="25" id="Mb0-zG-df5"/>
                                                 <constraint firstItem="pUq-cf-nOp" firstAttribute="top" secondItem="JdN-eW-TsT" secondAttribute="bottom" constant="7" id="NRC-oT-W0C"/>
+                                                <constraint firstItem="vjN-RF-Yc5" firstAttribute="top" secondItem="8zR-uD-j28" secondAttribute="topMargin" constant="27" id="RoQ-qg-JOX"/>
                                                 <constraint firstItem="odT-2Y-oT4" firstAttribute="leading" secondItem="JdN-eW-TsT" secondAttribute="trailing" constant="12" id="Tmx-WN-X7s"/>
                                                 <constraint firstItem="d5f-3s-RSO" firstAttribute="bottom" secondItem="8zR-uD-j28" secondAttribute="bottomMargin" constant="1" id="UTX-cR-F4M"/>
                                                 <constraint firstItem="JdN-eW-TsT" firstAttribute="trailing" secondItem="d5f-3s-RSO" secondAttribute="trailing" constant="10" id="Ygb-k1-JmM"/>
@@ -785,6 +803,7 @@
                                                 <constraint firstItem="pUq-cf-nOp" firstAttribute="bottom" secondItem="JdN-eW-TsT" secondAttribute="bottom" constant="7" id="cKT-NZ-P9J"/>
                                                 <constraint firstItem="d5f-3s-RSO" firstAttribute="top" secondItem="JdN-eW-TsT" secondAttribute="bottom" constant="2" id="hDW-ty-gJN"/>
                                                 <constraint firstItem="MV3-Bj-SrF" firstAttribute="top" secondItem="JdN-eW-TsT" secondAttribute="bottom" constant="2" id="jTx-wQ-X0u"/>
+                                                <constraint firstItem="vjN-RF-Yc5" firstAttribute="leading" secondItem="8zR-uD-j28" secondAttribute="leadingMargin" id="wTH-no-Usy"/>
                                                 <constraint firstItem="JdN-eW-TsT" firstAttribute="trailing" secondItem="d5f-3s-RSO" secondAttribute="trailing" constant="58" id="wTN-5F-sUH"/>
                                                 <constraint firstItem="pUq-cf-nOp" firstAttribute="leading" secondItem="d5f-3s-RSO" secondAttribute="trailing" constant="5" id="xaa-ky-g1D"/>
                                             </constraints>
@@ -800,9 +819,11 @@
                                             <outlet property="contact_image" destination="odT-2Y-oT4" id="X2V-HI-LCX"/>
                                             <outlet property="messageContainerView" destination="JdN-eW-TsT" id="vON-Rm-ZeN"/>
                                             <outlet property="message_label" destination="MbD-fn-v8R" id="BK9-vJ-0I0"/>
+                                            <outlet property="resendButton" destination="vjN-RF-Yc5" id="FDn-dG-86N"/>
                                             <outlet property="seen_image" destination="pUq-cf-nOp" id="gCZ-9E-ZMJ"/>
                                             <outlet property="seen_label" destination="MV3-Bj-SrF" id="CJS-SD-5vl"/>
                                             <outlet property="timestampLabelTrailingContraint" destination="wTN-5F-sUH" id="XFr-M1-bh2"/>
+                                            <outlet property="timestamp_image" destination="TpA-pI-5Rq" id="wsq-NX-UPY"/>
                                             <outlet property="timestamp_label" destination="d5f-3s-RSO" id="dxJ-6w-UZh"/>
                                             <outlet property="trailingSpaceToSeen" destination="xaa-ky-g1D" id="QPx-x2-8Qa"/>
                                         </connections>
@@ -968,6 +989,23 @@
                                                     <color key="textColor" red="0.49803921579999999" green="0.49803921579999999" blue="0.49803921579999999" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FQm-om-d4i" customClass="RoundedButton" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
+                                                    <rect key="frame" x="8" y="35" width="25" height="25"/>
+                                                    <color key="backgroundColor" red="0.90429991480000005" green="0.41363269790000001" blue="0.39315816190000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="25" id="GGe-tf-tXd"/>
+                                                        <constraint firstAttribute="width" constant="25" id="GZy-LQ-uf5"/>
+                                                    </constraints>
+                                                    <inset key="contentEdgeInsets" minX="2" minY="2" maxX="2" maxY="2"/>
+                                                    <state key="normal" image="resend">
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                            <real key="value" value="0.0"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
+                                                </button>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="r40-56-Yfc" firstAttribute="bottom" secondItem="D3d-Rf-SNY" secondAttribute="bottom" constant="17" id="17S-cF-FKR"/>
@@ -979,6 +1017,7 @@
                                                 <constraint firstItem="H3s-3j-Jr7" firstAttribute="top" secondItem="rfP-Cq-RjP" secondAttribute="topMargin" id="UQV-Gl-viy"/>
                                                 <constraint firstItem="D3d-Rf-SNY" firstAttribute="top" secondItem="rfP-Cq-RjP" secondAttribute="top" constant="11" id="WSO-Ks-rnB"/>
                                                 <constraint firstItem="H3s-3j-Jr7" firstAttribute="trailing" secondItem="rfP-Cq-RjP" secondAttribute="trailingMargin" id="aXw-m9-sRs"/>
+                                                <constraint firstItem="FQm-om-d4i" firstAttribute="top" secondItem="rfP-Cq-RjP" secondAttribute="topMargin" constant="27" id="cf6-cS-oeL"/>
                                                 <constraint firstItem="FYo-VW-c9B" firstAttribute="leading" secondItem="r40-56-Yfc" secondAttribute="trailing" constant="3" id="fON-St-6aK"/>
                                                 <constraint firstItem="yzJ-b7-XRS" firstAttribute="leading" secondItem="D3d-Rf-SNY" secondAttribute="leading" constant="10" id="iNN-Z7-qLx"/>
                                                 <constraint firstItem="FYo-VW-c9B" firstAttribute="top" secondItem="D3d-Rf-SNY" secondAttribute="bottom" constant="2" id="jt0-Xx-YaH"/>
@@ -988,6 +1027,7 @@
                                                 <constraint firstAttribute="bottomMargin" secondItem="D3d-Rf-SNY" secondAttribute="bottom" constant="26" id="tBq-ue-Sh4"/>
                                                 <constraint firstItem="FYo-VW-c9B" firstAttribute="leading" secondItem="r40-56-Yfc" secondAttribute="trailing" constant="3" id="tkR-hk-GHj"/>
                                                 <constraint firstItem="yzJ-b7-XRS" firstAttribute="top" secondItem="D3d-Rf-SNY" secondAttribute="bottom" constant="7" id="vGg-n7-Lfi"/>
+                                                <constraint firstItem="FQm-om-d4i" firstAttribute="leading" secondItem="rfP-Cq-RjP" secondAttribute="leadingMargin" id="wkA-TJ-TMy"/>
                                             </constraints>
                                             <variation key="default">
                                                 <mask key="constraints">
@@ -1003,8 +1043,10 @@
                                         <connections>
                                             <outlet property="contact_image" destination="H3s-3j-Jr7" id="vKF-0J-dx2"/>
                                             <outlet property="message_image" destination="E4O-Vf-nfZ" id="EnC-p9-VQt"/>
+                                            <outlet property="resendButton" destination="FQm-om-d4i" id="e9s-OD-t5M"/>
                                             <outlet property="seen_image" destination="r40-56-Yfc" id="8fH-aS-u7X"/>
                                             <outlet property="seen_label" destination="FYo-VW-c9B" id="027-iU-T6Y"/>
+                                            <outlet property="timestamp_image" destination="yzJ-b7-XRS" id="J3l-V6-acm"/>
                                             <outlet property="timestamp_label" destination="EQU-7J-fSH" id="pvI-tw-X49"/>
                                         </connections>
                                     </tableViewCell>
@@ -1094,10 +1136,10 @@
                                             </constraints>
                                             <variation key="default">
                                                 <mask key="constraints">
-                                                    <exclude reference="eao-9k-wCi"/>
                                                     <exclude reference="7WZ-d4-2Aq"/>
                                                     <exclude reference="AgN-hJ-JiN"/>
                                                     <exclude reference="M31-9l-i9L"/>
+                                                    <exclude reference="eao-9k-wCi"/>
                                                 </mask>
                                             </variation>
                                         </tableViewCellContentView>
@@ -1149,8 +1191,8 @@
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                         <variation key="default">
                                             <mask key="constraints">
-                                                <exclude reference="DI0-pG-6cm"/>
                                                 <exclude reference="4cx-np-ZnG"/>
+                                                <exclude reference="DI0-pG-6cm"/>
                                             </mask>
                                         </variation>
                                         <connections>
@@ -1168,7 +1210,7 @@
                                         </state>
                                         <connections>
                                             <action selector="onCamera:" destination="1fv-Tn-eWV" eventType="touchUpInside" id="qI6-eJ-q6V"/>
-                                            <segue destination="fj2-Ia-VQl" kind="show" id="zv4-Mt-9k5"/>
+                                            <segue destination="fj2-Ia-VQl" kind="show" identifier="upload_image" id="zv4-Mt-9k5"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -1191,8 +1233,8 @@
                                     <mask key="constraints">
                                         <exclude reference="Ran-PA-Uvv"/>
                                         <exclude reference="U87-Po-odG"/>
-                                        <exclude reference="ZTW-5d-H1D"/>
                                         <exclude reference="JyG-h0-MiQ"/>
+                                        <exclude reference="ZTW-5d-H1D"/>
                                     </mask>
                                 </variation>
                             </view>
@@ -1217,10 +1259,10 @@
                         <variation key="default">
                             <mask key="constraints">
                                 <exclude reference="Iep-ZY-V27"/>
-                                <exclude reference="z6t-c6-4Nf"/>
-                                <exclude reference="Yx6-J7-Joc"/>
                                 <exclude reference="1lK-Vl-6fO"/>
                                 <exclude reference="FMs-Q6-zkz"/>
+                                <exclude reference="Yx6-J7-Joc"/>
+                                <exclude reference="z6t-c6-4Nf"/>
                                 <exclude reference="4OO-21-VpX"/>
                                 <exclude reference="s5A-9N-Jqm"/>
                             </mask>
@@ -1398,10 +1440,10 @@
                                             </constraints>
                                             <variation key="default">
                                                 <mask key="constraints">
-                                                    <exclude reference="leM-Nh-ZhT"/>
-                                                    <exclude reference="joK-ac-UKY"/>
                                                     <exclude reference="72F-3n-Mzj"/>
                                                     <exclude reference="D4s-wc-ncE"/>
+                                                    <exclude reference="joK-ac-UKY"/>
+                                                    <exclude reference="leM-Nh-ZhT"/>
                                                     <exclude reference="hY5-5e-gi6"/>
                                                 </mask>
                                             </variation>
@@ -1461,11 +1503,12 @@
         <image name="close" width="22" height="22"/>
         <image name="home" width="25" height="25"/>
         <image name="picture" width="200" height="159"/>
+        <image name="resend" width="100" height="100"/>
         <image name="seen" width="193" height="200"/>
         <image name="time" width="200" height="200"/>
         <image name="wishlist" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="SKE-Zk-O21"/>
+        <segue reference="fkN-8I-m3K"/>
     </inferredMetricsTieBreakers>
 </document>

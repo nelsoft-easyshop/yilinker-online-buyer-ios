@@ -26,7 +26,7 @@ class ContactListVC: UIViewController {
     var selectedContact : W_Contact?
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        println(sender)
+        println(segue.identifier)
         if (segue.identifier == messageThreadSegueIdentifier){
             println("PREPARE FOR SEGUE CONTACT")
             var messageThreadVC = segue.destinationViewController as! MessageThreadVC

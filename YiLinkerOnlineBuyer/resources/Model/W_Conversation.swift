@@ -18,12 +18,15 @@ class W_Conversation: NSObject {
     var sender : NSString
     var hasUnreadMessage : NSString
 
-    init(contact : W_Contact, lastMessage : NSString, lastMessageDt: NSDate, lastLoginDate : NSDate, sender : NSString, hasUnreadMessage : NSString)
+    init(contact : W_Contact, lastMessage : NSString, lastMessageDt: NSDate, lastLoginDate : NSDate?, sender : NSString, hasUnreadMessage : NSString)
     {
         self.contact = contact
         self.lastMessage = lastMessage
         self.lastMessageDt = lastMessageDt
-        self.lastLoginDate = lastLoginDate
+        
+        if let t = lastLoginDate {
+            self.lastLoginDate = lastLoginDate
+        }
         self.sender = sender
         self.hasUnreadMessage = hasUnreadMessage
     }
@@ -58,7 +61,7 @@ class W_Conversation: NSObject {
                     var isOnline                : String = "0"
                     var lastMessage             : String = ""
                     var lastMessageDt           : String = ""
-                    var lastLoginDate           : String = "2015-08-29 23:55:19"
+                    var lastLoginDate           : String = ""
                     var sender                  : String = ""
                     var hasUnreadMessage        : String = ""
                     
@@ -100,7 +103,12 @@ class W_Conversation: NSObject {
                         hasUnreadMessage = tempVar
                     }
                     
-                    parsedConversations.append(W_Conversation(contact: W_Contact(fullName: fullName, userRegistrationIds: userRegistrationIds, userIdleRegistrationIds: userIdleRegistrationIds, userId: userId, profileImageUrl: profileImageUrl, isOnline: isOnline), lastMessage: lastMessage, lastMessageDt: NSDate(dateString: lastMessageDt), lastLoginDate: NSDate(dateString: lastLoginDate), sender: sender, hasUnreadMessage: hasUnreadMessage))
+                    var temp : NSDate? = nil
+                    if (lastLoginDate != ""){
+                        temp = NSDate(dateString: lastLoginDate)
+                    }
+                    
+                    parsedConversations.append(W_Conversation(contact: W_Contact(fullName: fullName, userRegistrationIds: userRegistrationIds, userIdleRegistrationIds: userIdleRegistrationIds, userId: userId, profileImageUrl: profileImageUrl, isOnline: isOnline), lastMessage: lastMessage, lastMessageDt: NSDate(dateString: lastMessageDt), lastLoginDate: temp, sender: sender, hasUnreadMessage: hasUnreadMessage))
                     
                 }
                 

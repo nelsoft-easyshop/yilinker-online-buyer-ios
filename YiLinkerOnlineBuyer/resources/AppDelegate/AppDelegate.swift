@@ -29,11 +29,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         //Google Sign In
         // Initialize sign-in
-        /*var configureError: NSError?
-        GGLContext.sharedInstance().configureWithError(&configureError)
+        var configureError: NSError?
+        /*GGLContext.sharedInstance().configureWithError(&configureError)
         assert(configureError == nil, "Error configuring Google services: \(configureError)")
         GIDSignIn.sharedInstance().clientID = "613594712632-q9iak1vgc6ua44fkc9kg5tut0s5vuo5m.apps.googleusercontent.com"
-    */
+        */
         if let font = UIFont(name: "Panton-Regular", size: 20) {
             UINavigationBar.appearance().titleTextAttributes = [NSFontAttributeName: font, NSForegroundColorAttributeName: UIColor.whiteColor()]
         }
@@ -44,6 +44,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         application.registerUserNotificationSettings(settings)
         application.registerForRemoteNotifications()
+        
+        var instanceIDConfig = GGLInstanceIDConfig.defaultConfig()
+        //instanceIDConfig.delegate = self
+        
+        //GGLInstanceID.sharedInstance().startWithConfig(instanceIDConfig)
+        //registrationOptions = [kGGLInstanceIDRegisterAPNSOption:deviceToken, kGGLInstanceIDAPNSServerTypeSandboxOption : true]
+        
+        //GGLInstanceID.sharedInstance().tokenWithAuthorizedEntity(gcmSenderID, scope: kGGLInstanceIDScopeGCM, options: registrationOptions, handler: registrationHandler)
         
         return FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
     }
@@ -64,6 +72,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             openURL: url,
             sourceApplication: sourceApplication,
             annotation: annotation)
+    }
+    
+    func onTokenRefresh(){
+        //DENNIS
+       // GGLInstanceID.sharedInstance().tokenWithAuthorizedEntity(gcmSenderID, scope: kGGLInstanceIDScopeGCM, options: registrationOptions, handler: registrationHandler)
+    }
+    
+    func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
+        
+        //DENNIS
     }
     
     func signIn(signIn: GIDSignIn!, didDisconnectWithUser user:GIDGoogleUser!,

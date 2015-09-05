@@ -61,30 +61,25 @@ class MessageThreadVC: UIViewController {
     let uploadImageSegueIdentifier = "upload_image"
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        println(sender)
         if (segue.identifier == uploadImageSegueIdentifier){
-            println("PREPARE FOR SEGUE CONTACT")
+            println("PREPARE FOR SEGUE IMAGE")
             var imageVC = segue.destinationViewController as! ImageVC
             
             imageVC.sender = self.sender
             imageVC.recipient = self.recipient
+            imageVC.imageVCDelegate = self
             
         }
     }
     
     override func viewDidLoad() {
+        println("viewDidLoad")
         super.viewDidLoad()
         var ref = W_Messages()
         //messages = ref.testData()
         var temp = recipient?.userId ?? ""
         self.getMessagesFromEndpoint("1", limit: "30", userId: temp)
         configureTableView()
-        
-        
-        self.placeCustomBackImage()
-        self.placeRightNavigationControllerDetails()
-        
-        //composeTextView.becomeFirstResponder()
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWasShown:"), name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWasHidden:"), name: UIKeyboardWillHideNotification, object: nil)
@@ -125,19 +120,20 @@ class MessageThreadVC: UIViewController {
     }
     
     override func viewDidAppear(animated: Bool) {
+        println("viewDidAppear")
+        self.placeCustomBackImage()
+        self.placeRightNavigationControllerDetails()
         
         self.composeTextView.becomeFirstResponder()
-        self.goToBottomTableView()
     }
     
     func tableTapped(tap : UITapGestureRecognizer){
         var location = tap.locationInView(self.threadTableView)
-        println(location)
         self.composeTextView.resignFirstResponder()
-        
     }
     
     override func viewWillDisappear(animated: Bool) {
+        println("viewWillDisappear")
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
         
@@ -145,6 +141,8 @@ class MessageThreadVC: UIViewController {
     
     override func viewDidDisappear(animated: Bool) {
         //self.findAndResignFirstResponder()
+        println("viewDidDisappear")
+
     }
     
     func placeRightNavigationControllerDetails(){
@@ -179,10 +177,7 @@ class MessageThreadVC: UIViewController {
         ///profileImageView.image = UIImage(named: sender?.profileImageUrl)
         var temp = recipient!.profileImageUrl ?? ""
         let url = NSURL(string: temp)
-        profileImageView.sd_setImageWithURL(url)
-        if (profileImageView.image == nil){
-            profileImageView.image = UIImage(named: "Male-50.png")
-        }
+        profileImageView.sd_setImageWithURL(url, placeholderImage: UIImage(named: "Male-50.png"))
         
         profileImageView.layer.cornerRadius = profileImageView.frame.width/2
         profileImageView.layer.masksToBounds = true
@@ -300,49 +295,48 @@ class MessageThreadVC: UIViewController {
     }
     
     @IBAction func onSend(senderButton: UIButton) {
-        SVProgressHUD.show()
+        var lastMessage = composeTextView.text
+        self.createMessage(lastMessage, isImage: "0")
+    }
+    
+    func createMessage(lastMessage: String, isImage : String){
+        var dateSeen : NSDate? = nil
         
+        var recipientId = recipient?.userId ?? ""
+        var senderId = self.sender?.userId ?? ""
+        
+        self.messages.append(W_Messages(message_id: 0, senderId: senderId, recipientId: recipientId, message: lastMessage, isImage: 0, timeSent: NSDate(), isSeen: 0, timeSeen: dateSeen, isSent : 0))
+        
+        self.threadTableView.reloadData()
+        self.goToBottomTableView()
+        self.sendMessageToEndpoint(lastMessage, recipientId: recipientId, isImage: isImage)
+    }
+    
+    func sendMessageToEndpoint(lastMessage : String, recipientId : String, isImage : String){
         let manager: APIManager = APIManager.sharedInstance
         manager.requestSerializer = AFHTTPRequestSerializer()
         
-        var recipientId = recipient?.userId ?? ""
-        var lastMessage = composeTextView.text
         
         let parameters: NSDictionary = [
             "message"       : "\(lastMessage)",
             "recipientId"  : "\(recipientId)",
-            "is_image"      : "0",
+            "is_image"      : "\(isImage)",
             "access_token"  : SessionManager.accessToken()
             ]   as Dictionary<String, String>
         
-        println(parameters)
-        
-        let url = APIAtlas.baseUrl + APIAtlas.ACTION_SEND_MESSAGE
+        let url = APIAtlas.baseUrl + APIAtlas.ACTION_SEND_MESSAGE + "a"
         
         manager.POST(url, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            
-            var senderId = self.sender?.userId ?? ""
-            var dateSeen : NSDate? = NSDate()
-            
-            self.messages.append(W_Messages(message_id: 0, senderId: senderId, recipientId: recipientId, message: lastMessage, isImage: 0, timeSent: NSDate(), isSeen: 0, timeSeen: dateSeen!))
-            
-            self.threadTableView.reloadData()
-            
-            self.composeTextView.text = ""
-            
-            println(responseObject)
-            SVProgressHUD.dismiss()
-            
-            self.goToBottomTableView()
+                self.messages[self.messages.count-1].isSent = 1
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                
+                self.messages[self.messages.count-1].isSent = 0
                 println(error.description)
                 
-                SVProgressHUD.dismiss()
         })
-        
+        self.composeTextView.text = ""
+        self.threadTableView.reloadData()
     }
     
     func getMessagesFromEndpoint(
@@ -362,8 +356,7 @@ class MessageThreadVC: UIViewController {
                 ]   as Dictionary<String, String>
             
             let url = APIAtlas.baseUrl + APIAtlas.ACTION_GET_CONVERSATION_MESSAGES
-            println(url)
-            println(parameters)
+            
             manager.POST(url, parameters: parameters, success: {
                 (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
                 self.messages = W_Messages.parseMessages(responseObject as! NSDictionary)
@@ -432,6 +425,19 @@ extension MessageThreadVC : UITextViewDelegate{
 
 extension MessageThreadVC : UITableViewDataSource, UITableViewDelegate{
     
+    func resendButtonTapped(sender: UIButton, event : UIEvent!){
+        var touches : NSSet = event.allTouches()!
+        var touch : UITouch = touches.anyObject() as! UITouch
+        
+        var currentTouchPosition : CGPoint = touch.locationInView(self.threadTableView)
+        var indexPath : NSIndexPath = self.threadTableView.indexPathForRowAtPoint(currentTouchPosition)!
+        if (!indexPath.isEqual(nil)) {
+            if (messages[indexPath.row].isImage == 0) {
+                let cell = self.threadTableView.cellForRowAtIndexPath(indexPath) as! MessageThreadTVC
+                self.sendMessageToEndpoint(cell.message_label.text!, recipientId: messages[indexPath.row].recipientId, isImage: "0")
+            }
+        }
+    }
     
     func goToBottomTableView(){
         if(threadTableView.numberOfRowsInSection(0) > 0) {
@@ -443,8 +449,6 @@ extension MessageThreadVC : UITableViewDataSource, UITableViewDelegate{
     func getLastIndexPath(param : UITableView) -> NSIndexPath{
         var lastSectionIndex : NSInteger = max(0, param.numberOfSections() - 1)
         var lastRowIndex : NSInteger = max(0, param.numberOfRowsInSection(lastSectionIndex) - 1)
-        
-        println("lastRowIndex \(lastRowIndex)")
         
         return NSIndexPath(forRow: lastRowIndex, inSection: lastSectionIndex)
     }
@@ -480,19 +484,12 @@ extension MessageThreadVC : UITableViewDataSource, UITableViewDelegate{
                     
                     var temp = recipient!.profileImageUrl ?? ""
                     let url = NSURL(string: temp)
-                    cell.contact_image.sd_setImageWithURL(url)
-                    if (cell.contact_image.image == nil){
-                        cell.contact_image.image = UIImage(named: "Male-50.png")
-                    }
+                    cell.contact_image.sd_setImageWithURL(url, placeholderImage: UIImage(named: "Male-50.png"))
                     imagePlaced = true
                 }
-                cell.timestamp_label.text = DateUtility.convertDateToString(NSDate()) as String
                 
                 let url = NSURL(string: messages[index].message)
-                cell.message_image.sd_setImageWithURL(url)
-                if (cell.message_image.image == nil){
-                    cell.message_image.image = UIImage()
-                }
+                cell.message_image.sd_setImageWithURL(url, placeholderImage: nil)
                 
                 cell.message_image.superview?.layer.cornerRadius = 5.0
                 cell.message_image.superview?.layer.shadowRadius = 1.0
@@ -500,6 +497,21 @@ extension MessageThreadVC : UITableViewDataSource, UITableViewDelegate{
                 cell.message_image.superview?.layer.shadowOpacity = 0.4
                 cell.message_image.superview?.layer.shadowOffset = CGSizeMake(1, 1)
                 
+                if (messages[index].isSent == 1) {
+                    cell.timestamp_label.text = DateUtility.convertDateToString(NSDate()) as String
+                    cell.resendButton.hidden = true
+                    cell.timestamp_label.hidden = false
+                    cell.timestamp_image.hidden = false
+                } else {
+                    cell.resendButton.hidden = false
+                    cell.timestamp_label.hidden = true
+                    cell.timestamp_image.hidden = true
+                }
+                cell.resendButton.addTarget(self, action: Selector("resendButtonTapped:event:"), forControlEvents: UIControlEvents.TouchUpInside)
+                
+                if (messages[index].isSeen == 0) {
+                    cell.setSeenOff("sender")
+                }
                 return cell
             } else {
                 let cell = tableView.dequeueReusableCellWithIdentifier(receiverImageIndentifier) as! MessageThreadImageTVC
@@ -508,19 +520,13 @@ extension MessageThreadVC : UITableViewDataSource, UITableViewDelegate{
                     
                     var temp = recipient!.profileImageUrl ?? ""
                     let url = NSURL(string: temp)
-                    cell.contact_image.sd_setImageWithURL(url)
-                    if (cell.contact_image.image == nil){
-                        cell.contact_image.image = UIImage(named: "Male-50.png")
-                    }
+                    cell.contact_image.sd_setImageWithURL(url, placeholderImage: UIImage(named: "Male-50.png"))
                     imagePlaced = true
                 }
                 cell.timestamp_label.text = DateUtility.convertDateToString(NSDate()) as String
                 
                 let url = NSURL(string: messages[index].message)
-                cell.message_image.sd_setImageWithURL(url)
-                if (cell.message_image.image == nil){
-                    cell.message_image.image = UIImage()
-                }
+                cell.message_image.sd_setImageWithURL(url, placeholderImage: nil)
                 
                 cell.message_image.superview?.layer.cornerRadius = 5.0
                 cell.message_image.superview?.layer.shadowRadius = 1.0
@@ -528,6 +534,9 @@ extension MessageThreadVC : UITableViewDataSource, UITableViewDelegate{
                 cell.message_image.superview?.layer.shadowOpacity = 0.4
                 cell.message_image.superview?.layer.shadowOffset = CGSizeMake(1, 1)
                 
+                if (messages[index].isSeen == 0) {
+                    cell.setSeenOff("sender")
+                }
                 return cell
             }
         } else {
@@ -540,14 +549,9 @@ extension MessageThreadVC : UITableViewDataSource, UITableViewDelegate{
                     
                     var temp = recipient!.profileImageUrl ?? ""
                     let url = NSURL(string: temp)
-                    cell.contact_image.sd_setImageWithURL(url)
-                    if (cell.contact_image.image == nil){
-                        cell.contact_image.image = UIImage(named: "Male-50.png")
-                    }
+                    cell.contact_image.sd_setImageWithURL(url, placeholderImage: UIImage(named: "Male-50.png"))
                     imagePlaced = true
                 }
-                
-                cell.timestamp_label.text = DateUtility.convertDateToString(NSDate()) as String
                 
                 cell.message_label.superview?.layer.cornerRadius = 5.0
                 
@@ -555,8 +559,19 @@ extension MessageThreadVC : UITableViewDataSource, UITableViewDelegate{
                 cell.message_label.superview?.layer.shadowColor = UIColor.blackColor().CGColor
                 cell.message_label.superview?.layer.shadowOpacity = 0.4
                 cell.message_label.superview?.layer.shadowOffset = CGSizeMake(1, 1)
-                //println("Index: \(index)  H:\(cell.message_label.frame.height) W:\(cell.message_label.frame.width)")
-                //println("Index: \(index) H:\(cell.message_label.superview?.frame.height) W:\(cell.message_label.superview?.frame.width) LENGTH: \(count(cell.message_label.text!))")
+                
+                if (messages[index].isSent == 1) {
+                    cell.timestamp_label.text = DateUtility.convertDateToString(NSDate()) as String
+                    cell.resendButton.hidden = true
+                    cell.timestamp_label.hidden = false
+                    cell.timestamp_image.hidden = false
+                } else {
+                    cell.resendButton.hidden = false
+                    cell.timestamp_label.hidden = true
+                    cell.timestamp_image.hidden = true
+                    
+                }
+                cell.resendButton.addTarget(self, action: Selector("resendButtonTapped:event:"), forControlEvents: UIControlEvents.TouchUpInside)
                 
                 if (messages[index].isSeen == 0) {
                     cell.setSeenOff("sender")
@@ -569,10 +584,7 @@ extension MessageThreadVC : UITableViewDataSource, UITableViewDelegate{
                 if(!imagePlaced){
                     var temp = recipient?.profileImageUrl ?? ""
                     let url = NSURL(string: temp)
-                    cell.contact_image.sd_setImageWithURL(url)
-                    if (cell.contact_image.image == nil){
-                        cell.contact_image.image = UIImage(named: "Male-50.png")
-                    }
+                    cell.contact_image.sd_setImageWithURL(url, placeholderImage: UIImage(named: "Male-50.png"))
                 }
                 
                 cell.timestamp_label.text = DateUtility.convertDateToString(NSDate()) as String
@@ -583,8 +595,6 @@ extension MessageThreadVC : UITableViewDataSource, UITableViewDelegate{
                 cell.message_label.superview?.layer.shadowColor = UIColor.blackColor().CGColor
                 cell.message_label.superview?.layer.shadowOpacity = 0.4
                 cell.message_label.superview?.layer.shadowOffset = CGSizeMake(1, 1)
-                //println("Index: \(index)  H:\(cell.message_label.frame.height) W:\(cell.message_label.frame.width)")
-                //println("Index: \(index) H:\(cell.message_label.superview?.frame.height) W:\(cell.message_label.superview?.frame.width) LENGTH \(count(cell.message_label.text!))")
                 
                 if (messages[index].isSeen == 0) {
                     cell.setSeenOff("receiver")
@@ -596,4 +606,11 @@ extension MessageThreadVC : UITableViewDataSource, UITableViewDelegate{
         
     }
     
+}
+
+extension MessageThreadVC : ImageVCDelegate{
+
+    func sendMessage(url : String){
+        self.createMessage(url, isImage: "1")
+    }
 }

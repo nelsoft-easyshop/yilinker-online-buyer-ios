@@ -9,6 +9,10 @@
 import UIKit
 import MobileCoreServices
 
+protocol ImageVCDelegate{
+    func sendMessage(url : String)
+}
+
 class ImageVC: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     @IBOutlet weak var cameraRollButton: UIButton!
@@ -19,6 +23,8 @@ class ImageVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
     
     var sender : W_Contact?
     var recipient : W_Contact?
+    
+    var imageVCDelegate : ImageVCDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -77,16 +83,17 @@ class ImageVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
                 "access_token"  : SessionManager.accessToken()
                 ]   as Dictionary<String, String>
             
-            let url = APIAtlas.baseUrl + APIAtlas.ACTION_IMAGE_ATTACH //+ "?access_token=\(SessionManager.accessToken())"
+            let url = APIAtlas.baseUrl + APIAtlas.ACTION_IMAGE_ATTACH + "?access_token=\(SessionManager.accessToken())"
             
-            var imageData : NSData = UIImageJPEGRepresentation(imageView.image, 0.5)
-            
+            var imageData : NSData = UIImageJPEGRepresentation(imageView.image, 1)
+            var sequence = DateUtility.convertDateToString(NSDate())
             //println(parameters)
-            manager.POST(url, parameters: nil, constructingBodyWithBlock: { (data: AFMultipartFormData) -> Void in
-                data.appendPartWithFormData(imageData, name: "image")
+            manager.POST(url, parameters: parameters, constructingBodyWithBlock: { (data: AFMultipartFormData) -> Void in
+                    data.appendPartWithFileData(imageData, name: "image", fileName: "image_\(self.recipient?.userId)_\(self.sender?.userId)_\(sequence)", mimeType: "image/JPEG")
                 }, success: { (task : NSURLSessionDataTask!, responseObject: AnyObject!) -> Void in
-                    println(responseObject)
+                    self.imageVCDelegate?.sendMessage(W_Messages.parseUploadImageResponse(responseObject))
                     SVProgressHUD.dismiss()
+                    self.goBack()
                 }) { (task : NSURLSessionDataTask!, error: NSError!) -> Void in
                     if !Reachability.isConnectedToNetwork() {
                         UIAlertController.displayNoInternetConnectionError(self)
@@ -101,42 +108,6 @@ class ImageVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Please pick or upload an image first.", title: "Error")
         }
         
-        
-    }
-    
-    func sendMessage(url : String){
-        SVProgressHUD.show()
-        
-        let manager: APIManager = APIManager.sharedInstance
-        manager.requestSerializer = AFHTTPRequestSerializer()
-        
-        var recipientId = recipient?.userId ?? ""
-        
-        let parameters: NSDictionary = [
-            "message"       : "\(url)",
-            "recipientId"  : "\(recipientId)",
-            "is_image"      : "0",
-            "access_token"  : SessionManager.accessToken()
-            ]   as Dictionary<String, String>
-        
-        println(parameters)
-        
-        let url = APIAtlas.baseUrl + APIAtlas.ACTION_SEND_MESSAGE
-        
-        manager.POST(url, parameters: parameters, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            
-            println(responseObject)
-            SVProgressHUD.dismiss()
-            
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                
-                println(error.description)
-                
-                SVProgressHUD.dismiss()
-        })
-
     }
 
     func takePhoto(){

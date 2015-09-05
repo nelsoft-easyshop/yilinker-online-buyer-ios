@@ -15,9 +15,11 @@ class MessageThreadTVC: UITableViewCell {
 
     @IBOutlet weak var trailingSpaceToSeen: NSLayoutConstraint!
     
+    @IBOutlet weak var timestamp_image: UIImageView!
     @IBOutlet weak var timestamp_label: UILabel!
     @IBOutlet weak var contact_image: UIImageView!
     
+    @IBOutlet weak var resendButton: RoundedButton!
     @IBOutlet weak var seen_image: UIImageView!
     @IBOutlet weak var seen_label: UILabel!
     @IBOutlet weak var timestampLabelTrailingContraint: NSLayoutConstraint!
@@ -56,5 +58,7 @@ class MessageThreadTVC: UITableViewCell {
         }
 
     }
+    
+    
     
 }

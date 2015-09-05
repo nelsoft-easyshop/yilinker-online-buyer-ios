@@ -27,15 +27,13 @@ class ConversationVC: UIViewController {
     let messageThreadSegueIdentifier = "message_thread"
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        println(sender)
         if (segue.identifier == messageThreadSegueIdentifier){
             var messageThreadVC = segue.destinationViewController as! MessageThreadVC
             let indexPath = conversationTableView.indexPathForCell(sender as! ConversationTVC)
             selectedContact = conversations[indexPath!.row].contact
 
             messageThreadVC.sender = W_Contact(fullName: "Jan Dennis Nora", userRegistrationIds: "", userIdleRegistrationIds: "", userId: "5", profileImageUrl: "http://online.api.easydeal.ph/assets/images/uploads/users/4292229bce95d32748bf08b642f0a070a70bc194.png?", isOnline: "1")
-            messageThreadVC.recipient = selectedContact
-            
+            messageThreadVC.recipient = selectedContact            
         }
     }
     
@@ -146,8 +144,6 @@ class ConversationVC: UIViewController {
                 ]   as Dictionary<String, String>
             
             let url = APIAtlas.baseUrl + APIAtlas.ACTION_GET_CONVERSATION_HEAD
-            println(url)
-            println(parameters)
             manager.POST(url, parameters: parameters, success: {
                 (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
                 self.conversations = W_Conversation.parseConversations(responseObject as! NSDictionary)
@@ -184,7 +180,6 @@ extension ConversationVC : UITableViewDataSource{
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        println(conversations.count)
         return conversations.count
     }
     
