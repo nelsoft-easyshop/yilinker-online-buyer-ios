@@ -29,6 +29,8 @@ class PaymentWebViewViewController: UIViewController, UIWebViewDelegate {
         self.webView.loadRequest(request)
         self.webView.delegate = self
         self.webView.scalesPageToFit = true
+
+        self.title = "Credit Card"
     }
 
     override func didReceiveMemoryWarning() {
