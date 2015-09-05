@@ -17,6 +17,7 @@ class ViewMoreFooterCollectionViewCell: UICollectionViewCell {
     var target: String = ""
     var targetType: String = ""
     var delegate: ViewMoreFooterCollectionViewCellDelegate?
+    @IBOutlet weak var cellButton: DynamicRoundedButton!
     
     override func awakeFromNib() {
         super.awakeFromNib()

@@ -47,6 +47,9 @@
                 <constraint firstAttribute="centerX" secondItem="XdU-vI-PkG" secondAttribute="centerX" id="ROs-yJ-fIw"/>
             </constraints>
             <size key="customSize" width="396" height="51"/>
+            <connections>
+                <outlet property="cellButton" destination="XdU-vI-PkG" id="0wE-jZ-Mp3"/>
+            </connections>
             <point key="canvasLocation" x="286" y="344.5"/>
         </collectionViewCell>
     </objects>

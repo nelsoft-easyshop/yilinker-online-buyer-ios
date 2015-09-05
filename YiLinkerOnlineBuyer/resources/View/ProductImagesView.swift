@@ -30,7 +30,7 @@ class ProductImagesView: UIView, UICollectionViewDataSource, UICollectionViewDel
     @IBOutlet weak var priceLabel: UILabel!
     @IBOutlet weak var originalPrice: UILabel!
     
-    var images: NSArray = []
+    var images: [String] = []
     var width: CGFloat = 0
     
     var delegate: ProductImagesViewDelegate?
@@ -76,7 +76,7 @@ class ProductImagesView: UIView, UICollectionViewDataSource, UICollectionViewDel
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell: ProductSellerViewCollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier("productSellerIdentifier", forIndexPath: indexPath) as! ProductSellerViewCollectionViewCell
         
-        cell.setImage(self.images[indexPath.row] as! String)
+        cell.setImage(self.images[indexPath.row] as String)
         
         return cell
     }
@@ -129,7 +129,7 @@ class ProductImagesView: UIView, UICollectionViewDataSource, UICollectionViewDel
     func setDetails(model: ProductDetailsModel, unitId: Int, width: CGFloat) {
         
         self.nameLabel.text = model.title
-        self.nameLabel.sizeToFit()
+//        self.nameLabel.sizeToFit()
         if model.productUnits[unitId].discount == 0 {
             self.originalPrice.hidden = true
             self.priceLabel.text = "P" + model.productUnits[unitId].price
@@ -140,7 +140,9 @@ class ProductImagesView: UIView, UICollectionViewDataSource, UICollectionViewDel
         
         self.width = width
         
-        self.images = model.productUnits[unitId].imageIds
+        self.images = []
+        self.images.append(model.image)//model.productUnits[unitId].imageIds
+    
         if self.images.count == 0 {
             self.images = ["", "", "", "", ""]
         }

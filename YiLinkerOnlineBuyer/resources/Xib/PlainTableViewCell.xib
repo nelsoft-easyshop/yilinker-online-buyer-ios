@@ -48,6 +48,10 @@
                     <constraint firstItem="clV-Jo-fb8" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="ytE-ys-iKf"/>
                 </constraints>
             </tableViewCellContentView>
+            <connections>
+                <outlet property="productNameLabel" destination="ZQR-zu-37c" id="TMG-jr-fkV"/>
+                <outlet property="productQuantityLabel" destination="clV-Jo-fb8" id="xJe-nR-7Sw"/>
+            </connections>
         </tableViewCell>
     </objects>
 </document>

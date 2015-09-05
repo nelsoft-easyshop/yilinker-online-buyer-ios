@@ -44,7 +44,7 @@ class ProductReviewModel {
                 if let tempVar = value["ratingAverage"] as? Int {
                     ratingAverage = tempVar
                 }
-                
+  
                 for subValue in value["reviews"] as! NSArray {
                     let model: ProductReviewsModel = ProductReviewsModel.parseProductReviesModel(subValue as! NSDictionary)
                     reviews.append(model)

@@ -43,6 +43,20 @@ struct APIAtlas {
     static let searchUrl = "product/getSearchKeywords"
     static let profileUrl = "auth/user/getUser"
     static let editProfileUrl = "auth/user/editProfile"
+    static let addressesUrl = "auth/address/getUserAddresses"
+    static let deleteAddressUrl = "auth/address/deleteUserAddress"
+    static let setDefaultAddressUrl = "auth/address/setDefaultAddress"
+    static let provinceUrl = "location/getAllProvinces"
+    static let citiesUrl = "location/getChildCities"
+    static let barangay = "location/getBarangaysByCity"
+    static let addAddressUrl = "auth/address/addNewAddress"
+    static let updateCheckout = "auth/cart/cartToCheckout"
+    static let updateGuestCheckout = "cart/cartToCheckout"
+    static let editAddress = "auth/address/editUserAddress"
+    static let setCheckoutAddressUrl = "auth/user/setAddress"
+    static let cashOnDeliveryUrl = "auth/payment/doPaymentCod"
+    static let pesoPayUrl = "auth/payment/doPesoPay"
+    static let overViewUrl = "auth/payment/checkoutOverview"
     static let baseUrl = APIEnvironment.baseUrl()
 }
 

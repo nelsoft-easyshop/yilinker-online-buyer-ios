@@ -86,7 +86,7 @@ extension UITextField {
 extension UIAlertController {
     
     class func displayErrorMessageWithTarget(target: AnyObject, errorMessage: String) {
-        let alert = UIAlertController(title: "Ooops", message: errorMessage, preferredStyle: UIAlertControllerStyle.Alert)
+        let alert = UIAlertController(title: "Something went wrong", message: errorMessage, preferredStyle: UIAlertControllerStyle.Alert)
         let OKAction = UIAlertAction(title: "OK", style: .Default) { (action) in }
         alert.addAction(OKAction)
         target.presentViewController(alert, animated: true, completion: nil)
@@ -183,5 +183,35 @@ extension String {
         }
         return true
     }
+    
+    func contains(find: String) -> Bool{
+        return self.rangeOfString(find) != nil
+    }
+
 }
 
+extension NSURL {
+    func getKeyVals() -> Dictionary<String, String>? {
+        var results = [String:String]()
+        var keyValues = self.query?.componentsSeparatedByString("&")
+        if keyValues?.count > 0 {
+            for pair in keyValues! {
+                let kv = pair.componentsSeparatedByString("=")
+                if kv.count > 1 {
+                    results.updateValue(kv[1], forKey: kv[0])
+                }
+            }
+            
+        }
+        return results
+    }
+    
+    class func convertFromStringLiteral(value: String) -> Self {
+        return self(string: value)!
+    }
+    
+    class func convertFromExtendedGraphemeClusterLiteral(value: String) -> Self {
+        return self(string: value)!
+    }
+    
+}

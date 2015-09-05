@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
@@ -47,13 +47,16 @@
                 <constraint firstItem="WBH-yt-2WA" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="18" id="jgK-Sm-xJc"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="totalPricelabel" destination="WBH-yt-2WA" id="ieu-Da-xwy"/>
+            </connections>
             <point key="canvasLocation" x="218.5" y="105.5"/>
         </view>
         <view clipsSubviews="YES" contentMode="scaleToFill" id="6LZ-z1-pbw" customClass="CheckoutViews" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
             <rect key="frame" x="0.0" y="1" width="323" height="57"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Delivery" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ajg-vt-4gA">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Delivery" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ajg-vt-4gA">
                     <rect key="frame" x="18" y="7" width="103" height="21"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="103" id="mD5-JG-Jeg"/>
@@ -63,7 +66,7 @@
                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Total" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bmh-IF-NYL">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Total" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bmh-IF-NYL">
                     <rect key="frame" x="18" y="30" width="35" height="21"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="35" id="A9G-pK-rS2"/>
@@ -73,14 +76,14 @@
                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LZc-zD-hfl">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LZc-zD-hfl">
                     <rect key="frame" x="18" y="0.0" width="320" height="1"/>
                     <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="1" id="1uW-EZ-dxX"/>
                     </constraints>
                 </view>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="P 4,500" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hji-3a-1LN">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="P 4,500" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hji-3a-1LN">
                     <rect key="frame" x="205" y="25" width="110" height="21"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="21" id="KWG-Dm-QgQ"/>
@@ -90,7 +93,7 @@
                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="FREE" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S6c-8a-doC">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="FREE" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S6c-8a-doC">
                     <rect key="frame" x="271" y="7" width="44" height="21"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="44" id="TUJ-Kl-Z7B"/>
@@ -110,12 +113,15 @@
                 <constraint firstItem="LZc-zD-hfl" firstAttribute="leading" secondItem="6LZ-z1-pbw" secondAttribute="leading" constant="18" id="GUZ-Sd-A31"/>
                 <constraint firstItem="S6c-8a-doC" firstAttribute="top" secondItem="LZc-zD-hfl" secondAttribute="bottom" constant="6" id="enc-aO-Ad6"/>
                 <constraint firstAttribute="trailing" secondItem="LZc-zD-hfl" secondAttribute="trailing" constant="-15" id="eq2-u0-oIo"/>
-                <constraint firstItem="LZc-zD-hfl" firstAttribute="top" secondItem="6LZ-z1-pbw" secondAttribute="top" constant="1" id="h7h-HG-beJ"/>
+                <constraint firstItem="LZc-zD-hfl" firstAttribute="top" secondItem="6LZ-z1-pbw" secondAttribute="top" id="h7h-HG-beJ"/>
                 <constraint firstAttribute="trailing" secondItem="hji-3a-1LN" secondAttribute="trailing" constant="8" id="mdP-03-JAa"/>
                 <constraint firstItem="ajg-vt-4gA" firstAttribute="top" secondItem="LZc-zD-hfl" secondAttribute="bottom" constant="6" id="pOR-a7-VvW"/>
                 <constraint firstAttribute="trailing" secondItem="S6c-8a-doC" secondAttribute="trailing" constant="8" id="wWq-u2-UpY"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="totalPricelabel" destination="hji-3a-1LN" id="VPP-jy-IHC"/>
+            </connections>
             <point key="canvasLocation" x="218.5" y="209.5"/>
         </view>
         <view clipsSubviews="YES" contentMode="scaleToFill" id="h91-C2-3J8" customClass="CheckoutViews" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
@@ -149,6 +155,9 @@
                 <constraint firstAttribute="bottom" secondItem="cqC-ZC-EQF" secondAttribute="bottom" constant="3" id="rXb-ah-NHP"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="totalPricelabel" destination="GKF-YI-ICf" id="OE2-Id-O5T"/>
+            </connections>
             <point key="canvasLocation" x="218.5" y="312.5"/>
         </view>
     </objects>

@@ -8,7 +8,15 @@
 
 import UIKit
 
+protocol FilterViewControllerDelegate {
+    func resetFilterViewControllerAction()
+    func cancelFilterViewControllerAction()
+}
+
 class FilterViewController: UIViewController {
+    
+    var delegate: FilterViewControllerDelegate?
+    
     @IBOutlet weak var cancelButton: UIButton!
     @IBOutlet weak var resetButton: UIButton!
     @IBOutlet weak var rangeBar: TTRangeSlider!
@@ -34,10 +42,12 @@ class FilterViewController: UIViewController {
     }
     
     @IBAction func cancelAction(sender: AnyObject) {
+        delegate?.cancelFilterViewControllerAction()
         self.dismissViewControllerAnimated(true, completion: nil)
     }
 
     @IBAction func resetAction(sender: AnyObject) {
+        delegate?.resetFilterViewControllerAction()
     }
     
     @IBAction func applyFilterAction(sender: AnyObject) {

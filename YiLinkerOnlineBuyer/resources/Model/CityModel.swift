@@ -23,6 +23,10 @@ class CityModel {
         self.location = location as! [String]
     }
     
+    init() {
+        
+    }
+    
     class func parseDataWithDictionary(dictionary: AnyObject) -> CityModel {
         
         var message: String = ""
