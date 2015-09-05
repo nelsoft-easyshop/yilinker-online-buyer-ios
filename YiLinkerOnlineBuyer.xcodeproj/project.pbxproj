@@ -310,6 +310,15 @@
 		79F2F55B1B85FD9D00F57E4B /* FilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F2F5591B85FD9D00F57E4B /* FilterViewController.swift */; };
 		79F2F55C1B85FD9D00F57E4B /* FilterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79F2F55A1B85FD9D00F57E4B /* FilterViewController.xib */; };
 		79F417761B7C3ADB0047D02D /* CartProductAttributeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F417741B7C3ADB0047D02D /* CartProductAttributeViewController.swift */; };
+		961BE59C1B9948C100E8631A /* DisputeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 961BE59B1B9948C100E8631A /* DisputeViewController.xib */; };
+		961BE59E1B994B2900E8631A /* ResolutionCenterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961BE59D1B994B2900E8631A /* ResolutionCenterViewController.swift */; };
+		961BE5A01B994B7D00E8631A /* DisputeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961BE59F1B994B7D00E8631A /* DisputeViewController.swift */; };
+		961BE5A21B994B9500E8631A /* CaseDetailsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961BE5A11B994B9500E8631A /* CaseDetailsTableViewController.swift */; };
+		961BE5A41B994BB600E8631A /* ResolutionFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961BE5A31B994BB600E8631A /* ResolutionFilterViewController.swift */; };
+		961BE5A61B994BF000E8631A /* ResolutionCenterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961BE5A51B994BF000E8631A /* ResolutionCenterCell.swift */; };
+		961BE5A81B994C1000E8631A /* ButtonToTabBehaviorizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961BE5A71B994C1000E8631A /* ButtonToTabBehaviorizer.swift */; };
+		961BE5AA1B994C4D00E8631A /* ResolutionCenterCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 961BE5A91B994C4D00E8631A /* ResolutionCenterCell.xib */; };
+		961BE5AC1B9958BC00E8631A /* CheckBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961BE5AB1B9958BC00E8631A /* CheckBox.swift */; };
 		BE00C15B75D7E76D254AAEC1 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D038C18A7712E626564D2D3 /* libPods.a */; };
 		F740F08D1B90CBC900D23A34 /* CreateAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F740F08B1B90CBC900D23A34 /* CreateAccountViewController.swift */; };
 		F740F08E1B90CBC900D23A34 /* CreateAccountViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F740F08C1B90CBC900D23A34 /* CreateAccountViewController.xib */; };
@@ -672,6 +681,15 @@
 		79F2F55A1B85FD9D00F57E4B /* FilterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = FilterViewController.xib; path = YiLinkerOnlineBuyer/resources/ViewController/FilterViewController.xib; sourceTree = SOURCE_ROOT; };
 		79F417741B7C3ADB0047D02D /* CartProductAttributeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CartProductAttributeViewController.swift; path = YiLinkerOnlineBuyer/resources/ViewController/CartProductAttributeViewController.swift; sourceTree = SOURCE_ROOT; };
 		9140515446F9D97EC8790C7B /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		961BE59B1B9948C100E8631A /* DisputeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DisputeViewController.xib; sourceTree = "<group>"; };
+		961BE59D1B994B2900E8631A /* ResolutionCenterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResolutionCenterViewController.swift; sourceTree = "<group>"; };
+		961BE59F1B994B7D00E8631A /* DisputeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisputeViewController.swift; sourceTree = "<group>"; };
+		961BE5A11B994B9500E8631A /* CaseDetailsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CaseDetailsTableViewController.swift; sourceTree = "<group>"; };
+		961BE5A31B994BB600E8631A /* ResolutionFilterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResolutionFilterViewController.swift; sourceTree = "<group>"; };
+		961BE5A51B994BF000E8631A /* ResolutionCenterCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResolutionCenterCell.swift; sourceTree = "<group>"; };
+		961BE5A71B994C1000E8631A /* ButtonToTabBehaviorizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonToTabBehaviorizer.swift; sourceTree = "<group>"; };
+		961BE5A91B994C4D00E8631A /* ResolutionCenterCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ResolutionCenterCell.xib; sourceTree = "<group>"; };
+		961BE5AB1B9958BC00E8631A /* CheckBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckBox.swift; sourceTree = "<group>"; };
 		F740F08B1B90CBC900D23A34 /* CreateAccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CreateAccountViewController.swift; path = YiLinkerOnlineBuyer/resources/Xib/CreateAccountViewController.swift; sourceTree = SOURCE_ROOT; };
 		F740F08C1B90CBC900D23A34 /* CreateAccountViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CreateAccountViewController.xib; path = YiLinkerOnlineBuyer/resources/Xib/CreateAccountViewController.xib; sourceTree = SOURCE_ROOT; };
 		F740F08F1B90D1D800D23A34 /* address.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = address.png; sourceTree = "<group>"; };
@@ -849,6 +867,8 @@
 		0C9936FD1B750583000D6074 /* Helper */ = {
 			isa = PBXGroup;
 			children = (
+				961BE5AB1B9958BC00E8631A /* CheckBox.swift */,
+				961BE5A71B994C1000E8631A /* ButtonToTabBehaviorizer.swift */,
 				0C25D94D1B76F81A00E9EFA6 /* YiLinkerOnlineBuyer-Bridging-Header.h */,
 				0C9936FE1B750583000D6074 /* APIManager.swift */,
 				0C9936FF1B750583000D6074 /* Constants.swift */,
@@ -920,6 +940,7 @@
 		0C99370B1B750583000D6074 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				961BE5A51B994BF000E8631A /* ResolutionCenterCell.swift */,
 				F7CCDA981B943CF7000F5AD4 /* ProductResultGridCollectionViewCell.swift */,
 				F7CCDA991B943CF7000F5AD4 /* ProductResultListCollectionViewCell.swift */,
 				F7CCDA9A1B943CF7000F5AD4 /* SellerResultCollectionViewCell.swift */,
@@ -1024,6 +1045,11 @@
 			isa = PBXGroup;
 			children = (
 				F7B279F01B90B38C003CEE5E /* _GuestCheckoutContainerViewController.swift */,
+				961BE59D1B994B2900E8631A /* ResolutionCenterViewController.swift */,
+				961BE59F1B994B7D00E8631A /* DisputeViewController.swift */,
+				961BE5A11B994B9500E8631A /* CaseDetailsTableViewController.swift */,
+				961BE5A31B994BB600E8631A /* ResolutionFilterViewController.swift */,
+				F7B279F01B90B38C003CEE5E /* GuestCheckoutContainerViewController.swift */,
 				79E85FC91B8A1E0800428AA1 /* ActivityLogTableViewController.swift */,
 				0C1003F61B87690300CAA17A /* AddAddressTableViewController.swift */,
 				79F417741B7C3ADB0047D02D /* CartProductAttributeViewController.swift */,
@@ -1081,6 +1107,8 @@
 		0C9937291B750583000D6074 /* Xib */ = {
 			isa = PBXGroup;
 			children = (
+				961BE59B1B9948C100E8631A /* DisputeViewController.xib */,
+				961BE5A91B994C4D00E8631A /* ResolutionCenterCell.xib */,
 				79EBE8841B95F50700434B42 /* ChangePasswordViewController.xib */,
 				F7D37C9F1B92B09100FA7B16 /* ViewFeedBackViewController.swift */,
 				F7D37CA01B92B09100FA7B16 /* ViewFeedBackViewController.xib */,
@@ -1332,6 +1360,7 @@
 				0C9937621B750583000D6074 /* HalfVerticalImageCollectionViewCell.xib in Resources */,
 				2614E64B1B886D3800EE8B35 /* TransactionDeliveryLogTableViewCell.xib in Resources */,
 				2614E6531B89051B00EE8B35 /* TransactionLeaveFeedbackViewController.xib in Resources */,
+				961BE59C1B9948C100E8631A /* DisputeViewController.xib in Resources */,
 				0C2F44C81B8576FE00021F45 /* Panton ExtraBold.otf in Resources */,
 				79E68B871B8AFD22008626E4 /* PointsDetailsTableViewCell.xib in Resources */,
 				0C9937651B750583000D6074 /* NewSellerCollectionViewCell.xib in Resources */,
@@ -1433,6 +1462,7 @@
 				0C374F351B88E3790050AE1D /* SummaryViewController.xib in Resources */,
 				26AFB3C81B79DE5C00E50926 /* ReviewTableViewCell.xib in Resources */,
 				26D54FE81B86136300522398 /* TransactionTableViewCell.xib in Resources */,
+				961BE5AA1B994C4D00E8631A /* ResolutionCenterCell.xib in Resources */,
 				2614E64F1B88FC5C00EE8B35 /* TransactionDeliveryLog2TableViewCell.xib in Resources */,
 				F7CCDA8B1B943CBB000F5AD4 /* CheckoutContainerViewController.xib in Resources */,
 				0C374F2F1B88E3790050AE1D /* TotalTableViewCell.xib in Resources */,
@@ -1544,6 +1574,7 @@
 				26AFB3B81B79DE3800E50926 /* ProductReviewViewController.swift in Sources */,
 				79EBE8851B95F50700434B42 /* ChangePasswordViewController.swift in Sources */,
 				26B1B8A01B86D4BD006405CE /* TransactionDetailsView.swift in Sources */,
+				961BE5A81B994C1000E8631A /* ButtonToTabBehaviorizer.swift in Sources */,
 				0C329E801B7B7376005BE2B6 /* MessagingViewController.swift in Sources */,
 				2689FBFA1B8044CF007BEA68 /* CategoryModel.swift in Sources */,
 				0C329E8C1B7B73B7005BE2B6 /* CategoriesViewController.swift in Sources */,
@@ -1620,6 +1651,7 @@
 				7971F7411B861AC900322861 /* FilterTableViewCell.swift in Sources */,
 				0CC8A63B1B7B9BBF00C91425 /* FollowedSellerViewController.swift in Sources */,
 				0C9937421B750583000D6074 /* SellerModel.swift in Sources */,
+				961BE59E1B994B2900E8631A /* ResolutionCenterViewController.swift in Sources */,
 				0C9937531B750583000D6074 /* RoundedImageView.swift in Sources */,
 				79E85FD01B8A1FBD00428AA1 /* ActivityModel.swift in Sources */,
 				2689FBF71B80412D007BEA68 /* CategoriesTableViewCell.swift in Sources */,
@@ -1628,6 +1660,7 @@
 				0C99373E1B750583000D6074 /* ParseLocalJSON.swift in Sources */,
 				26C285441B8FADE3005EBD3A /* AddressModelV2.swift in Sources */,
 				26DFF6371B87B0AA005D8EDE /* TransactionProductImagesView.swift in Sources */,
+				961BE5A61B994BF000E8631A /* ResolutionCenterCell.swift in Sources */,
 				0C99374D1B750583000D6074 /* NewSellerCollectionViewCell.swift in Sources */,
 				26AFB39B1B79DDEA00E50926 /* ProductAttributeModel.swift in Sources */,
 				0C99373D1B750583000D6074 /* IPhoneType.swift in Sources */,
@@ -1646,10 +1679,12 @@
 				0CD103EC1B8B4769002E15F4 /* DynamicRoundedView.swift in Sources */,
 				0C9937451B750583000D6074 /* DiscountLabel.swift in Sources */,
 				79AA08331B8F4DCF00AF3AA4 /* CartProductAttributeTableViewCell.swift in Sources */,
+				961BE5AC1B9958BC00E8631A /* CheckBox.swift in Sources */,
 				0C374F5D1B8A2DBF0050AE1D /* CustomizeShoppingFlowLayout.swift in Sources */,
 				0C329E881B7B73A4005BE2B6 /* TodaysPromoViewController.swift in Sources */,
 				0C1C3A851B9406BD00E6180D /* JSONResponseSerializer.swift in Sources */,
 				0C1004301B87AB9100CAA17A /* PaymentTableViewCell.swift in Sources */,
+				961BE5A01B994B7D00E8631A /* DisputeViewController.swift in Sources */,
 				0CFF5EA71B98590200F13699 /* ErrorModel.swift in Sources */,
 				26AFB3AB1B79DE2900E50926 /* ProductReviewFooterView.swift in Sources */,
 				0C99373B1B750583000D6074 /* Constants.swift in Sources */,
@@ -1679,6 +1714,7 @@
 				79E68B931B8B0B8D008626E4 /* PointsTableViewCell.swift in Sources */,
 				79E68B8D1B8B0431008626E4 /* PointsBreakdownTableViewCell.swift in Sources */,
 				0C5111D51B81CD69002F0001 /* SellerViewController.swift in Sources */,
+				961BE5A21B994B9500E8631A /* CaseDetailsTableViewController.swift in Sources */,
 				268C1BBB1B865B13009FA106 /* TransactionButtons.swift in Sources */,
 				0C9937521B750583000D6074 /* RoundedButton.swift in Sources */,
 				0C374EFB1B8862E10050AE1D /* SuccessTableHeaderViewCell.swift in Sources */,
@@ -1693,6 +1729,7 @@
 				79E68B751B8AC390008626E4 /* ActivityLogTableViewCell.swift in Sources */,
 				F7CCDAA51B943CF7000F5AD4 /* ProductImagesViewCollectionViewCell.swift in Sources */,
 				0C1003F81B87690300CAA17A /* AddAddressTableViewController.swift in Sources */,
+				961BE5A41B994BB600E8631A /* ResolutionFilterViewController.swift in Sources */,
 				F7CCDAA31B943CF7000F5AD4 /* SellerTableHeaderView.swift in Sources */,
 				0C99375B1B750583000D6074 /* CartViewController.swift in Sources */,
 				79F2F55B1B85FD9D00F57E4B /* FilterViewController.swift in Sources */,
