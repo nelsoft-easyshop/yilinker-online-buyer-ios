@@ -24,6 +24,7 @@ class PaymentWebViewViewController: UIViewController, UIWebViewDelegate {
     var hud: MBProgressHUD?
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.showHUD()
         self.backButton()
         let request = NSURLRequest(URL: self.pesoPayModel.paymentUrl)
         self.webView.loadRequest(request)
@@ -90,10 +91,13 @@ class PaymentWebViewViewController: UIViewController, UIWebViewDelegate {
         } else if url == self.pesoPayModel.failUrl {
             self.dismissViewControllerAnimated(true, completion: nil)
             isContinue = false
+        } else {
+            self.showHUD()
         }
         
         return isContinue
     }
+    
     
     func fireOverView(transactionId: String) {
         self.showHUD()
@@ -142,5 +146,8 @@ class PaymentWebViewViewController: UIViewController, UIWebViewDelegate {
                 self.hud?.hide(true)
         })
     }
-
+    
+    func webViewDidFinishLoad(webView: UIWebView) {
+        self.hud?.hide(true)
+    }
 }
