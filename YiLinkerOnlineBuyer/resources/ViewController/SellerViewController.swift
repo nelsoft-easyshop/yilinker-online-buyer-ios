@@ -16,6 +16,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
     var followSellerModel: FollowedSellerModel?
     let sellerTableHeaderView: SellerTableHeaderView = SellerTableHeaderView.loadFromNibNamed("SellerTableHeaderView", bundle: nil) as! SellerTableHeaderView
     var is_successful: Bool = false
+    var hud: MBProgressHUD?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -99,8 +100,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func fireSeller() {
-        SVProgressHUD.show()
-        SVProgressHUD.setBackgroundColor(UIColor.whiteColor())
+        self.showHUD()
         let manager = APIManager.sharedInstance
         let parameters: NSDictionary = ["userId" : "1"];
         manager.POST(APIAtlas.getSellerInfo, parameters: parameters, success: {
@@ -108,18 +108,17 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 self.sellerModel = SellerModel.parseSellerDataFromDictionary(responseObject as! NSDictionary)
                 self.populateData()
                 self.is_successful == self.sellerModel?.is_allowed
-                SVProgressHUD.dismiss()
+                self.hud?.hide(true)
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                SVProgressHUD.dismiss()
+                self.hud?.hide(true)
                 self.is_successful == self.sellerModel?.is_allowed
 
         })
     }
     
     func fireFollowSeller() {
-        SVProgressHUD.show()
-        SVProgressHUD.setBackgroundColor(UIColor.whiteColor())
+        self.showHUD()
         let manager = APIManager.sharedInstance
         let parameters: NSDictionary = ["sellerId" : 1, "access_token" : SessionManager.accessToken()];
         manager.POST(APIAtlas.followSeller, parameters: parameters, success: {
@@ -132,10 +131,11 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
             println("button after ff: \(self.sellerTableHeaderView.followButton.selected)")
             println(self.followSellerModel?.message)
             
-            SVProgressHUD.dismiss()
+            self.hud?.hide(true)
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                SVProgressHUD.dismiss()
+                
+                self.hud?.hide(true)
                 
                 //let dictionary: NSDictionary =(data, options: nil, error: nil)
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
@@ -158,8 +158,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     func fireUnfollowSeller() {
         
-        SVProgressHUD.show()
-        SVProgressHUD.setBackgroundColor(UIColor.whiteColor())
+        self.showHUD()
         let manager = APIManager.sharedInstance
         let parameters: NSDictionary = ["sellerId" : "1", "access_token" : SessionManager.accessToken()];
         
@@ -168,14 +167,14 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 self.followSellerModel = FollowedSellerModel.parseFollowSellerDataWithDictionary(responseObject as! NSDictionary)
                 //self.populateData()
                 print(self.followSellerModel?.error_description)
-                SVProgressHUD.dismiss()
+                self.hud?.hide(true)
                 self.is_successful = false
                 self.sellerTableHeaderView.followButton.tag = 2
                 println("result after uff: \(self.is_successful)")
                 println("button after uff: \(self.sellerTableHeaderView.followButton.highlighted)")
                 println(self.followSellerModel?.isSuccessful)
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
-                SVProgressHUD.dismiss()
+                self.hud?.hide(true)
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                 if task.statusCode == 400 {
                     let data = error.userInfo as! Dictionary<String, AnyObject>
@@ -342,4 +341,18 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         let resultViewController: ResultViewController = ResultViewController(nibName: "ResultViewController", bundle: nil)
         self.navigationController!.pushViewController(resultViewController, animated: true)
     }
+    
+    func showHUD() {
+        if self.hud != nil {
+            self.hud!.hide(true)
+            self.hud = nil
+        }
+        
+        self.hud = MBProgressHUD(view: self.view)
+        self.hud?.removeFromSuperViewOnHide = true
+        self.hud?.dimBackground = false
+        self.navigationController?.view.addSubview(self.hud!)
+        self.hud?.show(true)
+    }
+
 }
