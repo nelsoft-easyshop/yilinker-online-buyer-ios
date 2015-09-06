@@ -161,7 +161,8 @@ class ConversationVC: UIViewController, EmptyViewDelegate{
                 "access_token"  : SessionManager.accessToken()
                 ]   as Dictionary<String, String>
             
-            let url = APIAtlas.baseUrl + APIAtlas.ACTION_GET_CONVERSATION_HEAD + "a"
+            /* uncomment + "a" to test retry sending */
+            let url = APIAtlas.baseUrl + APIAtlas.ACTION_GET_CONVERSATION_HEAD //+ "a"
             manager.POST(url, parameters: parameters, success: {
                 (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
                 self.conversations = W_Conversation.parseConversations(responseObject as! NSDictionary)

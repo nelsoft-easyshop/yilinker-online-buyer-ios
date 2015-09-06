@@ -325,7 +325,9 @@ class MessageThreadVC: UIViewController {
             "access_token"  : SessionManager.accessToken()
             ]   as Dictionary<String, String>
         
-        let url = APIAtlas.baseUrl + APIAtlas.ACTION_SEND_MESSAGE + "a"
+        
+        /* uncomment + "a" to test retry sending */
+        let url = APIAtlas.baseUrl + APIAtlas.ACTION_SEND_MESSAGE //+ "a"
         
         manager.POST(url, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
