@@ -374,7 +374,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     func showView(){
         UIView.animateWithDuration(0.3, animations: {
-            self.dimView.hidden = true
+            self.dimView.hidden = false
             self.dimView.alpha = 0.5
             self.dimView.layer.zPosition = 2
             self.view.transform = CGAffineTransformMakeScale(0.92, 0.93)
@@ -383,7 +383,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     func dismissDimView() {
         UIView.animateWithDuration(0.3, animations: {
-            self.dimView.hidden = false
+            self.dimView.hidden = true
             self.view.transform = CGAffineTransformMakeTranslation(1, 1)
             self.dimView.alpha = 0
             self.dimView.layer.zPosition = -1
