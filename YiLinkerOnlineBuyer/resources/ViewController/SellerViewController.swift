@@ -378,7 +378,6 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
             self.dimView.alpha = 0.5
             self.dimView.layer.zPosition = 2
             self.view.transform = CGAffineTransformMakeScale(0.92, 0.93)
-            self.navigationController?.navigationBar.alpha = 0.0
         })
     }
     
