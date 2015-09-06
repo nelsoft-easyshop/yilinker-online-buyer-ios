@@ -114,7 +114,7 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell : ChangeAddressCollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier(Constants.Checkout.changeAddressCollectionViewCellNibNameAndIdentifier, forIndexPath: indexPath) as! ChangeAddressCollectionViewCell
         cell.titleLabel.text = self.getAddressModel.listOfAddress[indexPath.row].title
-        cell.addressLabel.text = self.getAddressModel.listOfAddress[indexPath.row].streetName
+        cell.addressLabel.text = self.getAddressModel.listOfAddress[indexPath.row].fullLocation
 
         if  indexPath.row == self.selectedIndex {
             cell.layer.borderWidth = 1
