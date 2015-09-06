@@ -235,7 +235,7 @@ class SellerModel: NSObject {
                 
                 for (index, review) in enumerate(reviewArray) {
                     let reviewDictionary: NSDictionary = review as! NSDictionary
-                    let productReviewModel: ProductReviewsModel = ProductReviewsModel.parseProductReviesModel(reviewDictionary)
+                    let productReviewModel: ProductReviewsModel = ProductReviewsModel.parseSellerProductReviesModel(reviewDictionary)
                     productReviews.append(productReviewModel)
                 }
             }

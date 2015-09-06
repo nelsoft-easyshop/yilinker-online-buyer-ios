@@ -185,7 +185,7 @@
                 <outlet property="sellernameLabel" destination="PUQ-0I-66E" id="WYm-MO-LTd"/>
                 <outlet property="viewFeedbackButton" destination="A7W-DK-e0C" id="md0-od-vfZ"/>
             </connections>
-            <point key="canvasLocation" x="430.5" y="222.5"/>
+            <point key="canvasLocation" x="411.5" y="210.5"/>
         </view>
     </objects>
     <resources>
