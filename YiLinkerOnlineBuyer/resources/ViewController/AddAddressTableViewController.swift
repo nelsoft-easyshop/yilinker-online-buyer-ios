@@ -46,6 +46,12 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
         self.backButton()
         self.tableView.separatorStyle = UITableViewCellSeparatorStyle.None
         self.requestGetProvince()
+       
+        if self.isEdit {
+            self.title = "Edit Address"
+        } else {
+            self.title = "Add Address"
+        }
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillAppear"), name: UIKeyboardDidShowNotification, object: nil)
     }
