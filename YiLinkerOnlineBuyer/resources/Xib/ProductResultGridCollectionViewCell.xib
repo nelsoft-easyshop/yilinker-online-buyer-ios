@@ -13,15 +13,9 @@
                 <rect key="frame" x="0.0" y="0.0" width="188" height="185"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4Ep-DE-ASv">
+                    <view clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4Ep-DE-ASv">
                         <rect key="frame" x="0.0" y="0.0" width="188" height="185"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dummy-placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="8fa-lz-9aG" userLabel="Product Image">
-                                <rect key="frame" x="0.0" y="0.0" width="188" height="120"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="120" id="QYZ-cX-qZP"/>
-                                </constraints>
-                            </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="99% OFF" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="6" translatesAutoresizingMaskIntoConstraints="NO" id="d6R-6K-jsf" customClass="DynamicRoundedLabel" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
                                 <rect key="frame" x="8" y="8" width="71" height="21"/>
                                 <color key="backgroundColor" red="0.77647058820000003" green="0.0" blue="0.3803921569" alpha="1" colorSpace="calibratedRGB"/>
@@ -92,6 +86,12 @@
                                     <constraint firstAttribute="trailing" secondItem="VT6-dz-gHV" secondAttribute="trailing" constant="8" id="yPq-pU-GLI"/>
                                 </constraints>
                             </view>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dummy-placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="8fa-lz-9aG" userLabel="Product Image">
+                                <rect key="frame" x="0.0" y="0.0" width="188" height="120"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="120" id="QYZ-cX-qZP"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>

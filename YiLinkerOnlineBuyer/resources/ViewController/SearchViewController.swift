@@ -27,6 +27,13 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.initializeViews()
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.navigationBar.alpha = 1
+        self.navigationController?.navigationBar.barTintColor = Constants.Colors.appTheme
+        self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -75,41 +82,29 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 println(error)
-                
+                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                 if (task.response as? NSHTTPURLResponse != nil) {
                     let response: NSHTTPURLResponse  = task.response as! NSHTTPURLResponse
-                    
                     let statusCode: Int = response.statusCode
                     println("STATUS CODE \(statusCode)")
-                    if(statusCode != -999) {
+                    if statusCode == -1009 {
+                        if !Reachability.isConnectedToNetwork() {
+                            self.showAlert("Error", message: "Check your intenet connection.")
+                        }
+                    }else if(statusCode != -999) {
                         self.showAlert("Error", message: "Something went wrong. . .")
-                        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                     } else {
                         self.requestSearch(url, params: params)
+                    }
+                } else {
+                    if !Reachability.isConnectedToNetwork() {
+                        self.showAlert("Error", message: "Check your intenet connection.")
                     }
                 }
         })
         
         
     }
-    
-    //        func requestSearch(url: String, params: NSDictionary!) {
-    //            UIApplication.sharedApplication().networkActivityIndicatorVisible = true
-    //            manager.operationQueue.cancelAllOperations()
-    //            manager.GET(url, parameters: params, success: {
-    //                (task: NSURLSessionDataTask!, responseObject: AnyObject!) in print(responseObject as! NSDictionary)
-    //                if responseObject.objectForKey("error") != nil {
-    //                } else {
-    //                    self.populateTableView(responseObject)
-    //                }
-    //                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-    //                }, failure: {
-    //                    (task: NSURLSessionDataTask!, error: NSError!) in
-    //                    println(error)
-    //                    self.showAlert("Error", message: "Something went wrong. . .")
-    //                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-    //            })
-    //        }
     
     func populateTableView(responseObject: AnyObject) {
         tableData.removeAll(keepCapacity: false)
@@ -148,11 +143,9 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
         if count(searchText) > 1 {
-            if Reachability.isConnectedToNetwork(){
+            //if Reachability.isConnectedToNetwork(){
                 requestSearch(APIAtlas.searchUrl, params: NSDictionary(dictionary: ["queryString" : searchText]))
-            }  else {
-                showAlert("Connection Unreachable", message: "Cannot retrieve data. Please check your internet connection.")
-            }
+
         } else {
             tableData.removeAll(keepCapacity: false)
             addBrowseCategory()
@@ -168,8 +161,7 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
-        var resultController = ResultViewController(nibName: "ResultViewController", bundle: nil)
-        self.navigationController?.pushViewController(resultController, animated:true);
+        self.searchBar.resignFirstResponder()
     }
     
     func searchBarCancelButtonClicked(searchBar: UISearchBar) {
@@ -191,7 +183,7 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         var tempModel: SearchSuggestionModel = tableData[indexPath.row]
         
         cell.suggestionTextLabel?.text = tempModel.suggestion
-        if tempModel.imageURL == "SearchBrowseCategory" {
+        if tempModel.suggestion.contains("Browse by Category") {
             cell.suggestionImageView.image = UIImage(named: "SearchBrowseCategory")
         } else {
             cell.suggestionImageView.sd_setImageWithURL(NSURL(string: tempModel.imageURL), placeholderImage: UIImage(named: "dummy-placeholder"))
@@ -202,9 +194,23 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     // Mark: - UITableViewDelegate methods
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        var resultController = ResultViewController(nibName: "ResultViewController", bundle: nil)
-        resultController.passModel(tableData[indexPath.row])
-        self.navigationController?.pushViewController(resultController, animated:true);
+        var tempModel: SearchSuggestionModel = tableData[indexPath.row]
+        
+        if tempModel.suggestion.contains("Browse by Category") {
+            let categoryViewController = CategoriesViewController(nibName: "CategoriesViewController", bundle: nil)
+            self.navigationController?.pushViewController(categoryViewController, animated: true)
+        } else {
+            var resultController = ResultViewController(nibName: "ResultViewController", bundle: nil)
+            resultController.passModel(tableData[indexPath.row])
+            self.navigationController?.pushViewController(resultController, animated:true);
+        }
+        
+        searchBar.resignFirstResponder()
+        
+    }
+    
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        searchBar.resignFirstResponder()
     }
     
     func showAlert(title: String, message: String) {
