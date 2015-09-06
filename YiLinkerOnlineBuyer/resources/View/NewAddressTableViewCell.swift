@@ -70,16 +70,8 @@ class NewAddressTableViewCell: UITableViewCell, UITextFieldDelegate, UIPickerVie
         self.delegate?.newAddressTableViewCell(didSelectRow: row, cell: self)
     }
     
-//    func next() {
-//        self.delegate!.newAddressTableViewCell(didClickNext: self)
-//    }
-//    
-//    func previous() {
-//        self.delegate!.newAddressTableViewCell(didClickPrevious: self)
-//    }
-//    
-//    func done() {
-//        self.endEditing(true)
-//    }
-    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        self.delegate?.newAddressTableViewCell(didClickNext: self)
+        return true
+    }
 }
