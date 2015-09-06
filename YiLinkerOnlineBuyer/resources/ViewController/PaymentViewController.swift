@@ -12,44 +12,62 @@ class PaymentViewController: UIViewController, PaymentTableViewCellDelegate {
 
     @IBOutlet weak var tableView: UITableView!
     var paymentType: PaymentType?
+    var paymentHeader: PaymentTableViewCell?
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        if self.tableView != nil {
+            if SessionManager.rememberPaymentType() {
+                self.paymentHeader!.cellSwitch.setOn(true, animated: false)
+            } else {
+                self.paymentHeader!.cellSwitch.setOn(false, animated: false)
+                SessionManager.setPaymentType(PaymentType.COD)
+            }
+            
+            if SessionManager.paymentType() == PaymentType.COD {
+                self.paymentHeader!.selectPaymentType(Constants.Checkout.Payment.touchabelTagCOD)
+            } else {
+                self.paymentHeader!.selectPaymentType(Constants.Checkout.Payment.touchabelTagCreditCard)
+            }
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         if IphoneType.isIphone4() || IphoneType.isIphone5() {
-            let paymentHeader: PaymentTableViewCell = XibHelper.puffViewWithNibName("PaymentTableViewCell", index: 1) as! PaymentTableViewCell
-            paymentHeader.delegate = self
-            self.tableView.tableHeaderView = paymentHeader
+            self.paymentHeader = XibHelper.puffViewWithNibName("PaymentTableViewCell", index: 1) as? PaymentTableViewCell
+            self.paymentHeader!.delegate = self
+            self.tableView.tableHeaderView = self.paymentHeader
             
             if SessionManager.rememberPaymentType() {
-                paymentHeader.cellSwitch.setOn(true, animated: false)
+                self.paymentHeader!.cellSwitch.setOn(true, animated: false)
             } else {
-                paymentHeader.cellSwitch.setOn(false, animated: false)
+                self.paymentHeader!.cellSwitch.setOn(false, animated: false)
                 SessionManager.setPaymentType(PaymentType.COD)
             }
             
             if SessionManager.paymentType() == PaymentType.COD {
-                 paymentHeader.selectPaymentType(Constants.Checkout.Payment.touchabelTagCOD)
+                 self.paymentHeader!.selectPaymentType(Constants.Checkout.Payment.touchabelTagCOD)
             } else {
-                 paymentHeader.selectPaymentType(Constants.Checkout.Payment.touchabelTagCreditCard)
+                 self.paymentHeader!.selectPaymentType(Constants.Checkout.Payment.touchabelTagCreditCard)
             }
             
         } else {
-            let paymentHeader: PaymentTableViewCell = XibHelper.puffViewWithNibName("PaymentTableViewCell", index: 0) as! PaymentTableViewCell
-            paymentHeader.delegate = self
+            self.paymentHeader = XibHelper.puffViewWithNibName("PaymentTableViewCell", index: 0) as? PaymentTableViewCell
+            self.paymentHeader!.delegate = self
             self.tableView.tableHeaderView = paymentHeader
-            paymentHeader.selectPaymentType(Constants.Checkout.Payment.touchabelTagCOD)
             
             if SessionManager.rememberPaymentType() {
-                paymentHeader.cellSwitch.setOn(true, animated: false)
+                self.paymentHeader!.cellSwitch.setOn(true, animated: false)
             } else {
-                paymentHeader.cellSwitch.setOn(false, animated: false)
+                self.paymentHeader!.cellSwitch.setOn(false, animated: false)
             }
             
             if SessionManager.paymentType() == PaymentType.COD {
-                paymentHeader.selectPaymentType(Constants.Checkout.Payment.touchabelTagCOD)
+                self.paymentHeader!.selectPaymentType(Constants.Checkout.Payment.touchabelTagCOD)
             } else {
-                paymentHeader.selectPaymentType(Constants.Checkout.Payment.touchabelTagCreditCard)
+                self.paymentHeader!.selectPaymentType(Constants.Checkout.Payment.touchabelTagCreditCard)
             }
         }
         
