@@ -646,6 +646,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     func addEmptyView() {
         self.emptyView = UIView.loadFromNibNamed("EmptyView", bundle: nil) as? EmptyView
         self.emptyView!.delegate = self
+        self.emptyView!.frame = self.view.bounds
         self.view.addSubview(self.emptyView!)
     }
     
@@ -740,11 +741,11 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
             navigationController.navigationBar.barTintColor = Constants.Colors.appTheme
             self.tabBarController?.presentViewController(navigationController, animated: true, completion: nil)
         } else {
-            let checkout = GuestCheckoutContainerViewController(nibName: "GuestCheckoutContainerViewController", bundle: nil)
+            /*let checkout = GuestCheckoutContainerViewController(nibName: "GuestCheckoutContainerViewController", bundle: nil)
             //self.navigationController?.pushViewController(checkout, animated: true)
             let navigationController: UINavigationController = UINavigationController(rootViewController: checkout)
             navigationController.navigationBar.barTintColor = Constants.Colors.appTheme
-            self.tabBarController?.presentViewController(navigationController, animated: true, completion: nil)
+            self.tabBarController?.presentViewController(navigationController, animated: true, completion: nil)*/
         }
     }
     

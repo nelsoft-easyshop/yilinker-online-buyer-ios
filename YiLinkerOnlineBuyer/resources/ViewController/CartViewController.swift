@@ -90,19 +90,31 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
     func firePassCartItem(url: String, params: NSDictionary!) {
         showLoader()
         manager.POST(url, parameters: params, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in print(responseObject as! NSDictionary)
-            if responseObject.objectForKey("error") != nil {
-                self.requestRefreshToken("passCart", url: url, params: params)
-            } else {
-                let checkout = CheckoutContainerViewController(nibName: "CheckoutContainerViewController", bundle: nil)
-                let navigationController: UINavigationController = UINavigationController(rootViewController: checkout)
-                navigationController.navigationBar.barTintColor = Constants.Colors.appTheme
-                self.tabBarController?.presentViewController(navigationController, animated: true, completion: nil)
-                self.dismissLoader()
-            }
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!)in
+                var array: [CartProductDetailsModel] = []
+                //println(responseObject)
+                if let value: AnyObject = responseObject["data"] {
+                    for subValue in responseObject["data"] as! NSArray {
+                        //println(subValue)
+                        let model: CartProductDetailsModel = CartProductDetailsModel.parseDataWithDictionary(subValue as! NSDictionary)
+                        array.append(model)
+                    }
+                }
+                
+                if responseObject.objectForKey("error") != nil {
+                    self.requestRefreshToken("passCart", url: url, params: params)
+                } else {
+                    let checkout = CheckoutContainerViewController(nibName: "CheckoutContainerViewController", bundle: nil)
+                    checkout.carItems = array
+                    checkout.totalPrice = self.totalPriceLabel.text!
+                    let navigationController: UINavigationController = UINavigationController(rootViewController: checkout)
+                    navigationController.navigationBar.barTintColor = Constants.Colors.appTheme
+                    self.tabBarController?.presentViewController(navigationController, animated: true, completion: nil)
+                    self.dismissLoader()
+                }
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                println(error)
+                //println(error)
                 UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong. . .", title: "Error")
                 self.dismissLoader()
         })
@@ -167,7 +179,7 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
         cartCounterLabel.text = ""
         if let value: AnyObject = responseObject["data"] {
             for subValue in value["items"] as! NSArray {
-                println(subValue)
+                //println(subValue)
                 let model: CartProductDetailsModel = CartProductDetailsModel.parseDataWithDictionary(subValue as! NSDictionary)
                 
                 model.selected = true
@@ -319,7 +331,7 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
         
         
-        println(selectedValue)
+        //println(selectedValue)
         
         var attributeModal = CartProductAttributeViewController(nibName: "CartProductAttributeViewController", bundle: nil)
         attributeModal.delegate = self
@@ -406,7 +418,7 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
                 "quantity": "\(quantity)"
             ]
             
-            println("PARAMS\n\(params)")
+            //println("PARAMS\n\(params)")
             
             fireAddToCartItem(APIAtlas.updateCartUrl, params: params)
         } else {

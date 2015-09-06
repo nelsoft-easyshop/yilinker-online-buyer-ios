@@ -23,6 +23,10 @@ class ProvinceModel {
         self.location = location as! [String]
     }
     
+    init() {
+        
+    }
+    
     class func parseDataWithDictionary(dictionary: AnyObject) -> ProvinceModel! {
         
         var message: String = ""

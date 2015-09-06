@@ -10,6 +10,8 @@ import UIKit
 
 class CheckoutViews: UIView {
 
+    @IBOutlet weak var totalPricelabel: UILabel!
+    
     /*
     // Only override drawRect: if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.

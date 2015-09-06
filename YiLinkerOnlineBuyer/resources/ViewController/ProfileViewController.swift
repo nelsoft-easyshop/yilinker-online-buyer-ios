@@ -190,6 +190,11 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     }
     
     func resolutionTapAction() {
+        let storyboard = UIStoryboard(name: "HomeStoryBoard", bundle: nil)
+        let resolutionCenter = storyboard.instantiateViewControllerWithIdentifier("ResolutionCenterViewController")
+            as! ResolutionCenterViewController
+        resolutionCenter.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(resolutionCenter, animated:true)
         
     }
     

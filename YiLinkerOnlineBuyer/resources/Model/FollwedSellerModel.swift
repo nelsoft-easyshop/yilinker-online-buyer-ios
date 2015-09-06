@@ -19,8 +19,9 @@ class FollowedSellerModel {
     var storeName: [String] = []
     var profileImageUrl: [String] = []
     var specialty: [String] = []
+    var rating: [Int] = []
     
-    init(message: String, isSuccessful: Bool, id: NSArray, fullName: NSArray, storeName: NSArray, profileImageUrl: NSArray, specialty: NSArray) {
+    init(message: String, isSuccessful: Bool, id: NSArray, fullName: NSArray, storeName: NSArray, profileImageUrl: NSArray, specialty: NSArray, rating: NSArray) {
         
         self.message = message
         self.isSuccessful = isSuccessful
@@ -30,6 +31,7 @@ class FollowedSellerModel {
         self.storeName = storeName as! [String]
         self.profileImageUrl = profileImageUrl as! [String]
         self.specialty = specialty as! [String]
+        self.rating = rating as! [Int]
     }
     
     init(message: String, isSuccessful: Bool, error_description: String) {
@@ -49,6 +51,7 @@ class FollowedSellerModel {
         var storeName: [String] = []
         var profileImageUrl: [String] = []
         var specialty: [String] = []
+        var rating: [Int] = []
         
         if dictionary.isKindOfClass(NSDictionary) {
             
@@ -82,6 +85,10 @@ class FollowedSellerModel {
                     if let tempVar = category["specialty"] as? String {
                         specialty.append(tempVar)
                     }
+                    
+                    if let tempVar = category["rating"] as? Int {
+                        rating.append(tempVar)
+                    }
                 }
                 
             }
@@ -89,7 +96,7 @@ class FollowedSellerModel {
         } // dictionary
         
         
-        return FollowedSellerModel(message: message, isSuccessful: isSuccessful, id: id, fullName: fullName, storeName: storeName, profileImageUrl: profileImageUrl, specialty: specialty)
+        return FollowedSellerModel(message: message, isSuccessful: isSuccessful, id: id, fullName: fullName, storeName: storeName, profileImageUrl: profileImageUrl, specialty: specialty, rating: rating)
     }
     
     class func parseFollowSellerDataWithDictionary(dictionary: AnyObject) -> FollowedSellerModel {
