@@ -499,7 +499,11 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         self.setAttributes(self.productDetailsModel.attributes, productUnits: self.productDetailsModel.productUnits, unitId: "1", quantity: 0)
         self.productDescriptionView.setDescription(productDetailsModel.shortDescription, full: productDetailsModel.fullDescription)
         
-        self.productReviewHeaderView.setRating(self.productReviewModel.ratingAverage)
+        
+        if self.productReviewModel != nil {
+            self.productReviewHeaderView.setRating(self.productReviewModel.ratingAverage)
+        }
+        
         self.tableView.reloadData()
         
         self.productSellerView.setSellerDetails(self.productSellerModel)
@@ -633,14 +637,23 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     
     func checkRequests() {
         
-        if productSuccess && reviewSuccess && sellerSuccess {
-            self.loadViewsWithDetails()
-        } else if productRequest && reviewRequest && sellerRequest {
-            if productSuccess == false || reviewSuccess == false || sellerSuccess == false {
+        if productRequest && reviewRequest && sellerRequest {
+            if productSuccess {//&& sellerSuccess {
+                self.loadViewsWithDetails()
+            } else {
                 addEmptyView()
                 SVProgressHUD.dismiss()
             }
         }
+        
+//        if productSuccess && reviewSuccess && sellerSuccess {
+//            self.loadViewsWithDetails()
+//        } else if productRequest && reviewRequest && sellerRequest {
+//            if productSuccess == false || reviewSuccess == false || sellerSuccess == false {
+//                addEmptyView()
+//                SVProgressHUD.dismiss()
+//            }
+//        }
     }
     
     func addEmptyView() {
@@ -761,22 +774,24 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     }
     
     func seeMoreReview(controller: ProductReviewFooterView) {
-        var reviewModal = ProductReviewViewController(nibName: "ProductReviewViewController", bundle: nil)
-        reviewModal.delegate = self
-        reviewModal.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
-        reviewModal.providesPresentationContextTransitionStyle = true
-        reviewModal.definesPresentationContext = true
-        reviewModal.view.backgroundColor = UIColor.clearColor()
-        reviewModal.view.frame.origin.y = reviewModal.view.frame.size.height
-        reviewModal.passModel(self.productReviewModel)
-        self.tabBarController?.presentViewController(reviewModal, animated: true, completion: nil)
-        
-        UIView.animateWithDuration(0.3, animations: {
-            self.dimView.alpha = 0.5
-            self.dimView.layer.zPosition = 2
-            self.view.transform = CGAffineTransformMakeScale(0.92, 0.93)
-            self.navigationController?.navigationBar.alpha = 0.0
-        })
+        if self.productReviewModel != nil {
+            var reviewModal = ProductReviewViewController(nibName: "ProductReviewViewController", bundle: nil)
+            reviewModal.delegate = self
+            reviewModal.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
+            reviewModal.providesPresentationContextTransitionStyle = true
+            reviewModal.definesPresentationContext = true
+            reviewModal.view.backgroundColor = UIColor.clearColor()
+            reviewModal.view.frame.origin.y = reviewModal.view.frame.size.height
+            reviewModal.passModel(self.productReviewModel)
+            self.tabBarController?.presentViewController(reviewModal, animated: true, completion: nil)
+            
+            UIView.animateWithDuration(0.3, animations: {
+                self.dimView.alpha = 0.5
+                self.dimView.layer.zPosition = 2
+                self.view.transform = CGAffineTransformMakeScale(0.92, 0.93)
+                self.navigationController?.navigationBar.alpha = 0.0
+            })
+        }
     }
     
     // MARK: - Product Seller Delegate
