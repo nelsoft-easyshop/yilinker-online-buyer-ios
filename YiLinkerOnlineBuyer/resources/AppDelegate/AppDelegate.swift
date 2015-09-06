@@ -38,6 +38,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             UINavigationBar.appearance().titleTextAttributes = [NSFontAttributeName: font, NSForegroundColorAttributeName: UIColor.whiteColor()]
         }
         
+        var types : UIUserNotificationType = UIUserNotificationType.Badge | UIUserNotificationType.Alert | UIUserNotificationType.Sound
+        var settings : UIUserNotificationSettings = UIUserNotificationSettings(forTypes: types, categories: nil)
+        
+        application.registerUserNotificationSettings(settings)
+        application.registerForRemoteNotifications()
+        //instanceIDConfig.delegate = self
+        
+        //GGLInstanceID.sharedInstance().startWithConfig(instanceIDConfig)
+        //registrationOptions = [kGGLInstanceIDRegisterAPNSOption:deviceToken, kGGLInstanceIDAPNSServerTypeSandboxOption : true]
+        
+        //GGLInstanceID.sharedInstance().tokenWithAuthorizedEntity(gcmSenderID, scope: kGGLInstanceIDScopeGCM, options: registrationOptions, handler: registrationHandler)
+        
+        var instanceIDConfig = GGLInstanceIDConfig.defaultConfig()
+        
         return FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
     }
     
@@ -59,6 +73,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             annotation: annotation)
     }
     
+    func onTokenRefresh(){
+        // for messaging
+        // GGLInstanceID.sharedInstance().tokenWithAuthorizedEntity(gcmSenderID, scope: kGGLInstanceIDScopeGCM, options: registrationOptions, handler: registrationHandler)
+    }
+    
+    func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
+        //for messaging
+    }
+
     func signIn(signIn: GIDSignIn!, didDisconnectWithUser user:GIDGoogleUser!,
         withError error: NSError!) {
             // Perform any operations when the user disconnects from app here.
