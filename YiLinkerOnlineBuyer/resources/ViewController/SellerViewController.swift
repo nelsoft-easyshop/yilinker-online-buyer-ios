@@ -388,7 +388,6 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
             self.view.transform = CGAffineTransformMakeTranslation(1, 1)
             self.dimView.alpha = 0
             self.dimView.layer.zPosition = -1
-            self.navigationController?.navigationBar.alpha = CGFloat(self.visibility)
         })
     }
 
