@@ -64,18 +64,7 @@ class CartTableViewCell: UITableViewCell, UIScrollViewDelegate {
         } else if(sender as! NSObject == swipeIndicatorButton) {
             updateSwipeViewStatus()
         } else if(sender as! NSObject == checkBox) {
-            if checkBox.selected {
-                checkBox.selected = false
-                checkBox.backgroundColor = UIColor.whiteColor()
-                checkBox.layer.borderWidth = 1
-                checkBox.layer.borderColor = UIColor.darkGrayColor().CGColor
-            } else {
-                checkBox.selected = true
-                checkBox.backgroundColor = UIColor(red: 68/255.0, green: 164/255.0, blue: 145/255.0, alpha: 1.0)
-                checkBox.layer.borderWidth = 0
-                checkBox.layer.borderColor = UIColor.whiteColor().CGColor
-            }
-            delegate?.checkBoxButtonActionForIndex(self, state: checkBox.selected)
+            contentTapAction()
         } else {
             println("Unknown button was clicked!")
         }
@@ -106,7 +95,25 @@ class CartTableViewCell: UITableViewCell, UIScrollViewDelegate {
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "enclosingTableViewDidScroll", name: swipeForOptionsCellEnclosingTableViewDidBeginScrollingNotification, object: nil)
 
+        var contentTap = UITapGestureRecognizer(target:self, action:"contentTapAction")
+        contentView.addGestureRecognizer(contentTap)
     }
+    
+    func contentTapAction() {
+        if checkBox.selected {
+            checkBox.selected = false
+            checkBox.backgroundColor = UIColor.whiteColor()
+            checkBox.layer.borderWidth = 1
+            checkBox.layer.borderColor = UIColor.darkGrayColor().CGColor
+        } else {
+            checkBox.selected = true
+            checkBox.backgroundColor = UIColor(red: 68/255.0, green: 164/255.0, blue: 145/255.0, alpha: 1.0)
+            checkBox.layer.borderWidth = 0
+            checkBox.layer.borderColor = UIColor.whiteColor().CGColor
+        }
+        delegate?.checkBoxButtonActionForIndex(self, state: checkBox.selected)
+    }
+    
     
     func updateSwipeViewStatus(){
         if isSwipeViewOpen {

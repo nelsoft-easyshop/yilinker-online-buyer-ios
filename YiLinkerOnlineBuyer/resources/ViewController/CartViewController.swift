@@ -26,9 +26,11 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
     //formatter of Text to remove trailing decimal
     let formatter = NSNumberFormatter()
     
-     var emptyView: EmptyView?
+    var emptyView: EmptyView?
     
     var selectedItemIDs: [Int] = []
+    
+    var hud: MBProgressHUD?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,7 +47,7 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         formatter.minimumFractionDigits = 0
         formatter.maximumFractionDigits = 2
-    
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -77,9 +79,6 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
     //
     
     func getCartData() {
-        tableData = []
-        cartTableView.reloadData()
-        cartCounterLabel.text = ""
         
         if Reachability.isConnectedToNetwork() {
             requestProductDetails(APIAtlas.cartUrl, params: NSDictionary(dictionary: ["access_token": SessionManager.accessToken()]))
@@ -164,6 +163,7 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
                 self.requestRefreshToken("getCart", url: url, params: params)
             } else {
                 self.populateTableView(responseObject)
+                
             }
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
@@ -175,11 +175,14 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     func populateTableView(responseObject: AnyObject) {
         tableData.removeAll(keepCapacity: false)
+        cartTableView.reloadData()
+        cartCounterLabel.text = ""
         if let value: AnyObject = responseObject["data"] {
             for subValue in value["items"] as! NSArray {
                 //println(subValue)
                 let model: CartProductDetailsModel = CartProductDetailsModel.parseDataWithDictionary(subValue as! NSDictionary)
                 
+                model.selected = true
                 self.tableData.append(model)
             }
             self.cartTableView.reloadData()
@@ -206,13 +209,22 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     
     //Loader function
+    //Loader function
     func showLoader() {
-        SVProgressHUD.show()
-        SVProgressHUD.setBackgroundColor(UIColor.whiteColor())
+        if self.hud != nil {
+            self.hud!.hide(true)
+            self.hud = nil
+        }
+        
+        self.hud = MBProgressHUD(view: self.view)
+        self.hud?.removeFromSuperViewOnHide = true
+        self.hud?.dimBackground = false
+        self.view.addSubview(self.hud!)
+        self.hud?.show(true)
     }
     
     func dismissLoader() {
-        SVProgressHUD.dismiss()
+        self.hud?.hide(true)
     }
     
     func calculateTotalPrice() {
@@ -220,7 +232,7 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
         for tempModel in tableData {
             if tempModel.selected {
                 for tempProductUnit in tempModel.productUnits {
-                     if tempModel.unitId == tempProductUnit.productUnitId {
+                    if tempModel.unitId == tempProductUnit.productUnitId {
                         let discountedPrice = (tempProductUnit.discountedPrice as NSString).doubleValue
                         let quantity = Double(tempModel.quantity)
                         totalPrice = totalPrice + (quantity * discountedPrice)
@@ -232,7 +244,7 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     
-
+    
     // MARK: - Table View Delegate
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.tableData.count
@@ -243,10 +255,10 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
         //Set cell data
         var tempModel: CartProductDetailsModel = tableData[indexPath.row]
         
-        cell.checkBox.selected = false
-        cell.checkBox.backgroundColor = UIColor.whiteColor()
-        cell.checkBox.layer.borderWidth = 1
-        cell.checkBox.layer.borderColor = UIColor.darkGrayColor().CGColor
+        cell.checkBox.selected = true
+        cell.checkBox.backgroundColor = UIColor(red: 68/255.0, green: 164/255.0, blue: 145/255.0, alpha: 1.0)
+        cell.checkBox.layer.borderWidth = 0
+        cell.checkBox.layer.borderColor = UIColor.whiteColor().CGColor
         
         for tempProductUnit in tempModel.productUnits {
             if tempModel.unitId == tempProductUnit.productUnitId {
@@ -317,7 +329,7 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
                 selectedProductUnits = tempProductUnit
             }
         }
-
+        
         
         //println(selectedValue)
         
@@ -342,26 +354,26 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
     func editButtonActionForIndex(sender: AnyObject){
         /*
         if Reachability.isConnectedToNetwork() {
-            var pathOfTheCell: NSIndexPath = cartTableView.indexPathForCell(sender as! UITableViewCell)!
-            var rowOfTheCell: Int = pathOfTheCell.row
-            
-            let tempModel: CartProductDetailsModel = tableData[rowOfTheCell]
-            
-            var params: NSDictionary = ["access_token": SessionManager.accessToken(),
-                "wishlist": "true",
-                "productId": tempModel.id,
-                "unitId": tempModel.unitId,
-                "quantity": tempModel.quantity
-            ]
-            
-            fireAddToCartItem(APIAtlas.updateCartUrl, params: params)
+        var pathOfTheCell: NSIndexPath = cartTableView.indexPathForCell(sender as! UITableViewCell)!
+        var rowOfTheCell: Int = pathOfTheCell.row
+        
+        let tempModel: CartProductDetailsModel = tableData[rowOfTheCell]
+        
+        var params: NSDictionary = ["access_token": SessionManager.accessToken(),
+        "wishlist": "true",
+        "productId": tempModel.id,
+        "unitId": tempModel.unitId,
+        "quantity": tempModel.quantity
+        ]
+        
+        fireAddToCartItem(APIAtlas.updateCartUrl, params: params)
         } else {
-            showAlert("Connection Unreachable", message: "Cannot retrieve data. Please check your internet connection.")
+        showAlert("Connection Unreachable", message: "Cannot retrieve data. Please check your internet connection.")
         }*/
         
         var pathOfTheCell: NSIndexPath = cartTableView.indexPathForCell(sender as! UITableViewCell)!
         var rowOfTheCell: Int = pathOfTheCell.row
-
+        
         seeMoreAttribute(rowOfTheCell)
     }
     
@@ -370,7 +382,7 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
         var rowOfTheCell: Int = pathOfTheCell.row
         
         tableData[rowOfTheCell].selected = state
-
+        
         let tempItemId = tableData[rowOfTheCell].itemId
         if state {
             selectedItemIDs.append(tempItemId)
@@ -427,6 +439,8 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     func addEmptyView() {
         if self.emptyView == nil {
+            tableData.removeAll(keepCapacity: false)
+            cartTableView.reloadData()
             self.emptyView = UIView.loadFromNibNamed("EmptyView", bundle: nil) as? EmptyView
             self.emptyView?.frame = self.view.frame
             self.emptyView!.delegate = self
@@ -489,11 +503,11 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
                 SVProgressHUD.dismiss()
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                 
-               "Cannot retrieve data. Please check your internet connection."
+                "Cannot retrieve data. Please check your internet connection."
                 
         })
     }
-
+    
     
     /*
     // MARK: - Navigation
