@@ -8,18 +8,25 @@
 
 import UIKit
 
+protocol ViewFeedBackViewControllerDelegate {
+    func dismissDimView()
+}
+
 class ViewFeedBackViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, ReviewTableViewCellDelegate {
     
     @IBOutlet weak var ratingView: UIView!
     @IBOutlet weak var ratingAndReviewsTableView: UITableView!
-    @IBOutlet weak var feedFackTectField: UITextField!
-    @IBOutlet weak var sendButton: UIButton!
     
     let reviewTableViewCellIdentifier: String = "reviewIdentifier"
     
     var productReviewModel: ProductReviewModel?
     
+    var screenWidth: CGFloat = 0.0
+    
+    var tabController = CustomTabBarController()
+    
     var hud: MBProgressHUD?
+    var delegate: ViewFeedBackViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,8 +47,9 @@ class ViewFeedBackViewController: UIViewController, UITableViewDelegate, UITable
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func closeAction() {
+    @IBAction func closeAction(sender: AnyObject) {
         self.dismissViewControllerAnimated(true, completion: nil)
+        self.delegate?.dismissDimView()
     }
     
     func registerNibs() {
