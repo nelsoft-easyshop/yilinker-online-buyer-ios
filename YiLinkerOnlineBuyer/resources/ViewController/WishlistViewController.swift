@@ -281,6 +281,8 @@ class WishlistViewController: UIViewController, UITableViewDelegate, UITableView
     
     func addEmptyView() {
         if self.emptyView == nil {
+            tableData.removeAll(keepCapacity: false)
+            wishlistTableView.reloadData()
             self.emptyView = UIView.loadFromNibNamed("EmptyView", bundle: nil) as? EmptyView
             self.emptyView?.frame = self.view.frame
             self.emptyView!.delegate = self
