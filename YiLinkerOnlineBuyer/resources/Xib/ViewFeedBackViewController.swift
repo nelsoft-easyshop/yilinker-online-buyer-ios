@@ -9,15 +9,17 @@
 import UIKit
 
 class ViewFeedBackViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, ReviewTableViewCellDelegate {
-
-    @IBOutlet weak var asBuyerButton: DynamicRoundedButton!
-    @IBOutlet weak var asSellerButton: DynamicRoundedButton!
+    
     @IBOutlet weak var ratingView: UIView!
     @IBOutlet weak var ratingAndReviewsTableView: UITableView!
     @IBOutlet weak var feedFackTectField: UITextField!
     @IBOutlet weak var sendButton: UIButton!
     
     let reviewTableViewCellIdentifier: String = "reviewIdentifier"
+    
+    var productReviewModel: ProductReviewModel?
+    
+    var hud: MBProgressHUD?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,7 +29,9 @@ class ViewFeedBackViewController: UIViewController, UITableViewDelegate, UITable
         
         self.ratingAndReviewsTableView.delegate = self
         self.ratingAndReviewsTableView.dataSource = self
-        self.registerNibs();
+        self.registerNibs()
+        
+        self.fireSellerFeedback()
         // Do any additional setup after loading the view.
     }
 
@@ -40,26 +44,6 @@ class ViewFeedBackViewController: UIViewController, UITableViewDelegate, UITable
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
-    @IBAction func asSeller(){
-        asSellerButton.backgroundColor = Constants.Colors.appTheme
-        asSellerButton.borderColor = UIColor.clearColor()
-        asSellerButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
-        
-        asBuyerButton.layer.borderColor = Constants.Colors.grayLine.CGColor
-        asBuyerButton.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
-        asBuyerButton.backgroundColor = UIColor.clearColor()
-    }
-    
-    @IBAction func asBuyer(){
-        asBuyerButton.backgroundColor = Constants.Colors.appTheme
-        asBuyerButton.borderColor = UIColor.clearColor()
-        asBuyerButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
-
-        asSellerButton.layer.borderColor = Constants.Colors.grayLine.CGColor
-        asSellerButton.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
-        asSellerButton.backgroundColor = UIColor.clearColor()
-        
-    }
     func registerNibs() {
         let ratingAndReview: UINib = UINib(nibName: "ReviewTableViewCell", bundle: nil)
         self.ratingAndReviewsTableView.registerNib(ratingAndReview, forCellReuseIdentifier: reviewTableViewCellIdentifier)
@@ -68,6 +52,15 @@ class ViewFeedBackViewController: UIViewController, UITableViewDelegate, UITable
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let cell: ReviewTableViewCell = self.ratingAndReviewsTableView.dequeueReusableCellWithIdentifier(reviewTableViewCellIdentifier, forIndexPath: indexPath) as! ReviewTableViewCell
+        
+        if(self.productReviewModel != nil) {
+            cell.messageLabel.text = self.productReviewModel?.reviews[indexPath.row].review
+            cell.nameLabel.text = self.productReviewModel?.reviews[indexPath.row].fullName
+            var strImageUrl = self.productReviewModel?.reviews[indexPath.row].profileImageUrl
+            var strRate = self.productReviewModel?.reviews[indexPath.row].rating
+            cell.setRating(strRate!)
+            cell.setDisplayPicture(strImageUrl!)
+        }
         
         cell.delegate = self
         
@@ -88,6 +81,36 @@ class ViewFeedBackViewController: UIViewController, UITableViewDelegate, UITable
         return 3
     }
     
+    
+    func fireSellerFeedback() {
+        self.showHUD()
+        let manager = APIManager.sharedInstance
+        let parameters: NSDictionary = ["access_token" : SessionManager.accessToken(), "sellerId" : "1"]
+        manager.POST(APIAtlas.buyerSellerFeedbacks, parameters: parameters, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            self.productReviewModel = ProductReviewModel.parseDataWithDictionary(responseObject as! NSDictionary)
+            self.hud?.hide(true)
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                println(error.userInfo)
+                self.hud?.hide(true)
+        })
+        self.ratingAndReviewsTableView.reloadData()
+
+    }
+    
+    func showHUD() {
+        if self.hud != nil {
+            self.hud!.hide(true)
+            self.hud = nil
+        }
+        
+        self.hud = MBProgressHUD(view: self.view)
+        self.hud?.removeFromSuperViewOnHide = true
+        self.hud?.dimBackground = false
+        self.navigationController?.view.addSubview(self.hud!)
+        self.hud?.show(true)
+    }
 
     /*
     // MARK: - Navigation
