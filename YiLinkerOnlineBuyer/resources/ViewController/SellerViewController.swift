@@ -16,6 +16,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
     var followSellerModel: FollowedSellerModel?
     let sellerTableHeaderView: SellerTableHeaderView = SellerTableHeaderView.loadFromNibNamed("SellerTableHeaderView", bundle: nil) as! SellerTableHeaderView
     var is_successful: Bool = false
+    var sellerId: Int = 0
     var hud: MBProgressHUD?
     
     var dimView: UIView = UIView()
@@ -117,7 +118,8 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
     func fireSeller() {
         self.showHUD()
         let manager = APIManager.sharedInstance
-        let parameters: NSDictionary = ["userId" : "1"];
+        //let parameters: NSDictionary = ["userId" : self.sellerId];
+        let parameters: NSDictionary = ["userId" : "1"]
         manager.POST(APIAtlas.getSellerInfo, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
                 self.sellerModel = SellerModel.parseSellerDataFromDictionary(responseObject as! NSDictionary)
