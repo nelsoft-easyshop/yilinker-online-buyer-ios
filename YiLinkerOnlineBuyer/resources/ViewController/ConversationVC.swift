@@ -78,13 +78,16 @@ class ConversationVC: UIViewController, EmptyViewDelegate{
         self.contentViewFrame = self.view.frame
         
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        /*
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "onRegistration:",
             name: appDelegate.registrationKey, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "receivedMessage:",
             name: appDelegate.messageKey, object: nil)
+        */
         
     }
     
+    /*
     func onRegistration(notification: NSNotification){
         if let info = notification.userInfo as? Dictionary<String,String> {
             if let error = info["error"] {
@@ -108,6 +111,7 @@ class ConversationVC: UIViewController, EmptyViewDelegate{
     func receivedMessage(notification : NSNotification){
         //action here to open messaging
     }
+    */
     
     override func viewWillAppear(animated: Bool) {
         self.fireLogin()
