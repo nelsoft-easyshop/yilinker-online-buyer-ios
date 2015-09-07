@@ -68,6 +68,12 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         sellerTableHeaderView.coverPhotoImageView.sd_setImageWithURL(self.sellerModel!.coverPhoto, placeholderImage: UIImage(named: "dummy-placeholder"))
         
+        if SessionManager.isLoggedIn() {
+            self.sellerTableHeaderView.followButton.enabled = true
+        } else {
+             self.sellerTableHeaderView.followButton.enabled = false
+        }
+        
         if self.is_successful {
             self.sellerTableHeaderView.followButton.layer.borderColor = Constants.Colors.grayLine.CGColor
             self.sellerTableHeaderView.followButton.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
@@ -127,6 +133,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func fireFollowSeller() {
+        
         self.showHUD()
         let manager = APIManager.sharedInstance
         let parameters: NSDictionary = ["sellerId" : 1, "access_token" : SessionManager.accessToken()];
