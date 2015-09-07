@@ -26,6 +26,8 @@ class ImageVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
     
     var imageVCDelegate : ImageVCDelegate?
     
+    var hud : MBProgressHUD?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         takePhoto()
@@ -74,7 +76,8 @@ class ImageVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
     
     func sendImageByFile(){
         if (imageView.image != nil){
-            SVProgressHUD.show()
+            //SVProgressHUD.show()
+            self.showHUD()
             
             let manager: APIManager = APIManager.sharedInstance
             manager.requestSerializer = AFHTTPRequestSerializer()
@@ -92,7 +95,8 @@ class ImageVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
                 data.appendPartWithFileData(imageData, name: "image", fileName: "image_\(self.recipient?.userId)_\(self.sender?.userId)_\(sequence)", mimeType: "image/JPEG")
                 }, success: { (task : NSURLSessionDataTask!, responseObject: AnyObject!) -> Void in
                     self.imageVCDelegate?.sendMessage(W_Messages.parseUploadImageResponse(responseObject))
-                    SVProgressHUD.dismiss()
+                    self.hud?.hide(true)
+                    //SVProgressHUD.dismiss()
                     self.goBack()
                 }) { (task : NSURLSessionDataTask!, error: NSError!) -> Void in
                     if !Reachability.isConnectedToNetwork() {
@@ -101,7 +105,8 @@ class ImageVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
                         UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
                     }
                     println(error.description)
-                    SVProgressHUD.dismiss()
+                    self.hud?.hide(true)
+                    //SVProgressHUD.dismiss()
             }
             
         } else {
@@ -183,14 +188,18 @@ class ImageVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
-    /*
-    // MARK: - Navigation
-    
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-    // Get the new view controller using segue.destinationViewController.
-    // Pass the selected object to the new view controller.
+    //Show HUD
+    func showHUD() {
+        if self.hud != nil {
+            self.hud!.hide(true)
+            self.hud = nil
+        }
+        
+        self.hud = MBProgressHUD(view: self.view)
+        self.hud?.removeFromSuperViewOnHide = true
+        self.hud?.dimBackground = false
+        self.view.addSubview(self.hud!)
+        self.hud?.show(true)
     }
-    */
     
 }

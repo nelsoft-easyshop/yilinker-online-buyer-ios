@@ -29,12 +29,6 @@ class ConversationVC: UIViewController, EmptyViewDelegate{
     var emptyView : EmptyView?
     var contentViewFrame: CGRect?
     var hud: MBProgressHUD?
-
-    /*to showHUD
-    self.showHUD*/
-    
-    /*to hide HUD
-    self.hud?.hide(true)*/
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if (segue.identifier == messageThreadSegueIdentifier){
@@ -132,8 +126,9 @@ class ConversationVC: UIViewController, EmptyViewDelegate{
     }
     
     func fireLogin() {
-        SVProgressHUD.show()
-        SVProgressHUD.setBackgroundColor(UIColor.whiteColor())
+        
+        self.showHUD()
+        
         let manager: APIManager = APIManager.sharedInstance
         //seller@easyshop.ph
         //password
@@ -142,13 +137,15 @@ class ConversationVC: UIViewController, EmptyViewDelegate{
         manager.POST(APIAtlas.loginUrl, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
-            SVProgressHUD.dismiss()
+            //SVProgressHUD.dismiss()
+            self.hud?.hide(true)
             //self.showSuccessMessage()
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                 
-                SVProgressHUD.dismiss()
+                //SVProgressHUD.dismiss()
+                self.hud?.hide(true)
                 self.addEmptyView()
         })
     }
@@ -156,7 +153,8 @@ class ConversationVC: UIViewController, EmptyViewDelegate{
     func getConversationsFromEndpoint(
         page : String,
         limit : String){
-            SVProgressHUD.show()
+            self.showHUD()
+            //SVProgressHUD.show()
             
             let manager: APIManager = APIManager.sharedInstance
             manager.requestSerializer = AFHTTPRequestSerializer()
@@ -174,7 +172,8 @@ class ConversationVC: UIViewController, EmptyViewDelegate{
                 self.conversations = W_Conversation.parseConversations(responseObject as! NSDictionary)
                 self.conversationTableView.reloadData()
                 
-                SVProgressHUD.dismiss()
+                self.hud?.hide(true)
+                //SVProgressHUD.dismiss()
                 }, failure: {
                     (task: NSURLSessionDataTask!, error: NSError!) in
                     let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
@@ -182,7 +181,8 @@ class ConversationVC: UIViewController, EmptyViewDelegate{
                     self.conversations = Array<W_Conversation>()
                     self.conversationTableView.reloadData()
                     
-                    SVProgressHUD.dismiss()
+                    self.hud?.hide(true)
+                    //SVProgressHUD.dismiss()
                     
                     self.addEmptyView()
             })

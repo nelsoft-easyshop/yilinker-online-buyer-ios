@@ -32,6 +32,7 @@ class MessageThreadVC: UIViewController {
     
     var screenWidth : CGFloat?
     var screenHeight: CGFloat?
+    var tabBarHeight: CGFloat = 49.0
     
     var profileImageView: UIImageView!
     var onlineView: RoundedView!
@@ -59,6 +60,8 @@ class MessageThreadVC: UIViewController {
     let senderImageIndentifier = "MessageBubbleImageSender"
     
     let uploadImageSegueIdentifier = "upload_image"
+    
+    var hud: MBProgressHUD?
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if (segue.identifier == uploadImageSegueIdentifier){
@@ -253,10 +256,10 @@ class MessageThreadVC: UIViewController {
             
             UIView.animateWithDuration(0.25, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
                 //self.threadTableView.setContentOffset(UIEdgeInsetsZero, animated: true)
-                self.threadTableView.contentInset = UIEdgeInsetsMake(60, 0, 0, 0)
+                self.threadTableView.contentInset = UIEdgeInsetsMake(60, 0, self.tabBarHeight, 0)
                 
                 self.composeView.frame = newFrame
-                self.composeViewBottomLayout.constant -= keyFrame.size.height
+                self.composeViewBottomLayout.constant -= (keyFrame.size.height - self.tabBarHeight)
                 
                 /*
                 self.threadTableView.frame = CGRectMake(0, 0, newTableFrame.height + keyFrame.size.height, newTableFrame.width)
@@ -281,7 +284,7 @@ class MessageThreadVC: UIViewController {
             
             UIView.animateWithDuration(0.25, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
                 self.composeView.frame = CGRectMake(newFrame.origin.x, newFrame.origin.y - keyFrame.size.height, newFrame.width, newFrame.height)
-                self.composeViewBottomLayout.constant += keyFrame.size.height
+                self.composeViewBottomLayout.constant += (keyFrame.size.height - self.tabBarHeight)
                 self.threadTableView.contentInset = UIEdgeInsetsMake(60, 0, keyFrame.size.height, 0)
                 /*self.threadTableView.frame = CGRectMake(0, 0, newTableFrame.height - keyFrame.size.height, newTableFrame.width)
                 self.threadTableViewConstraint.constant = newTableFrame.height - keyFrame.size.height
@@ -346,7 +349,8 @@ class MessageThreadVC: UIViewController {
         page : String,
         limit : String,
         userId: String){
-            SVProgressHUD.show()
+            //SVProgressHUD.show()
+            self.showHUD()
             
             let manager: APIManager = APIManager.sharedInstance
             manager.requestSerializer = AFHTTPRequestSerializer()
@@ -365,7 +369,8 @@ class MessageThreadVC: UIViewController {
                 self.messages = W_Messages.parseMessages(responseObject as! NSDictionary)
                 self.threadTableView.reloadData()
                 
-                SVProgressHUD.dismiss()
+                self.hud?.hide(true)
+                //SVProgressHUD.dismiss()
                 }, failure: {
                     (task: NSURLSessionDataTask!, error: NSError!) in
                     let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
@@ -379,10 +384,25 @@ class MessageThreadVC: UIViewController {
                     self.messages = Array<W_Messages>()
                     self.threadTableView.reloadData()
                     
-                    SVProgressHUD.dismiss()
+                    self.hud?.hide(true)
+                    //SVProgressHUD.dismiss()
             })
             
             self.goToBottomTableView()
+    }
+    
+    //Show HUD
+    func showHUD() {
+        if self.hud != nil {
+            self.hud!.hide(true)
+            self.hud = nil
+        }
+        
+        self.hud = MBProgressHUD(view: self.view)
+        self.hud?.removeFromSuperViewOnHide = true
+        self.hud?.dimBackground = false
+        self.view.addSubview(self.hud!)
+        self.hud?.show(true)
     }
     
 }

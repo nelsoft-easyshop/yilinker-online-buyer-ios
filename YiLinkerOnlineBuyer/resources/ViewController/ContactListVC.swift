@@ -25,6 +25,8 @@ class ContactListVC: UIViewController {
     
     var selectedContact : W_Contact?
     
+    var hud: MBProgressHUD?
+    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         println(segue.identifier)
         if (segue.identifier == messageThreadSegueIdentifier){
@@ -91,7 +93,8 @@ class ContactListVC: UIViewController {
         page : String,
         limit : String,
         keyword: String){
-            SVProgressHUD.show()
+            //SVProgressHUD.show()
+            self.showHUD()
             
             let manager: APIManager = APIManager.sharedInstance
             manager.requestSerializer = AFHTTPRequestSerializer()
@@ -110,7 +113,8 @@ class ContactListVC: UIViewController {
                 self.contacts = W_Contact.parseContacts(responseObject as! NSDictionary)
                 self.contactTableView.reloadData()
                 
-                SVProgressHUD.dismiss()
+                //SVProgressHUD.dismiss()
+                self.hud?.hide(true)
                 }, failure: {
                     (task: NSURLSessionDataTask!, error: NSError!) in
                     let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
@@ -123,8 +127,23 @@ class ContactListVC: UIViewController {
                     self.contacts = Array<W_Contact>()
                     self.contactTableView.reloadData()
                     
-                    SVProgressHUD.dismiss()
+                    //SVProgressHUD.dismiss()
+                    self.hud?.hide(true)
             })
+    }
+    
+    //Show HUD
+    func showHUD() {
+        if self.hud != nil {
+            self.hud!.hide(true)
+            self.hud = nil
+        }
+        
+        self.hud = MBProgressHUD(view: self.view)
+        self.hud?.removeFromSuperViewOnHide = true
+        self.hud?.dimBackground = false
+        self.view.addSubview(self.hud!)
+        self.hud?.show(true)
     }
 }
 
