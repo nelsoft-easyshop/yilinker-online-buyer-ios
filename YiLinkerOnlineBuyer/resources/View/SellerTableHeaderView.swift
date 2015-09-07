@@ -29,6 +29,12 @@ class SellerTableHeaderView: UIView {
     
     override func awakeFromNib() {
       self.gradient()
+        
+        if IphoneType.isIphone4() || IphoneType.isIphone5(){
+            followButton.titleLabel?.font = UIFont(name: "HelveticaNeue", size: 11)
+            viewFeedbackButton.titleLabel?.font = UIFont(name: "HelveticaNeue", size: 11)
+            
+        } 
     }
     
     func gradient() {
