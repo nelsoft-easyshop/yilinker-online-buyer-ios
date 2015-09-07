@@ -127,7 +127,7 @@ class ProductImagesView: UIView, UICollectionViewDataSource, UICollectionViewDel
     // Functions
     
     func setDetails(model: ProductDetailsModel, unitId: Int, width: CGFloat) {
-        
+        println(unitId)
         self.nameLabel.text = model.title
 //        self.nameLabel.sizeToFit()
         if model.productUnits[unitId].discount == 0 {
