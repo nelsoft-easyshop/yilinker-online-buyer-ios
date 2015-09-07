@@ -487,7 +487,7 @@ extension MessageThreadVC : UITableViewDataSource, UITableViewDelegate{
                 
                 if(!imagePlaced){
                     
-                    var temp = recipient!.profileImageUrl ?? ""
+                    var temp = sender!.profileImageUrl ?? ""
                     let url = NSURL(string: temp)
                     cell.contact_image.sd_setImageWithURL(url, placeholderImage: UIImage(named: "Male-50.png"))
                     imagePlaced = true
@@ -552,7 +552,7 @@ extension MessageThreadVC : UITableViewDataSource, UITableViewDelegate{
                 
                 if(!imagePlaced){
                     
-                    var temp = recipient!.profileImageUrl ?? ""
+                    var temp = sender!.profileImageUrl ?? ""
                     let url = NSURL(string: temp)
                     cell.contact_image.sd_setImageWithURL(url, placeholderImage: UIImage(named: "Male-50.png"))
                     imagePlaced = true
