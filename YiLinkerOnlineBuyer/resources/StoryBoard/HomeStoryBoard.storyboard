@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="tG5-US-oYc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="tG5-US-oYc">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
@@ -1283,8 +1283,8 @@
                                             </constraints>
                                             <variation key="default">
                                                 <mask key="constraints">
-                                                    <exclude reference="dtw-we-xGz"/>
                                                     <exclude reference="CpB-ea-zNn"/>
+                                                    <exclude reference="dtw-we-xGz"/>
                                                 </mask>
                                             </variation>
                                         </tableViewCellContentView>
@@ -1791,8 +1791,8 @@
                                             <variation key="default">
                                                 <mask key="constraints">
                                                     <exclude reference="3so-VX-umU"/>
-                                                    <exclude reference="eRh-IP-0Gr"/>
                                                     <exclude reference="cwe-Rt-oKf"/>
+                                                    <exclude reference="eRh-IP-0Gr"/>
                                                     <exclude reference="y1H-4p-waS"/>
                                                 </mask>
                                             </variation>
@@ -1845,8 +1845,8 @@
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                         <variation key="default">
                                             <mask key="constraints">
-                                                <exclude reference="m2a-JJ-rFe"/>
                                                 <exclude reference="StM-qc-MVO"/>
+                                                <exclude reference="m2a-JJ-rFe"/>
                                             </mask>
                                         </variation>
                                         <connections>
@@ -1887,8 +1887,8 @@
                                     <mask key="constraints">
                                         <exclude reference="wWh-3m-yjc"/>
                                         <exclude reference="Pcj-MA-JKr"/>
-                                        <exclude reference="P9d-lF-LWn"/>
                                         <exclude reference="9QH-Mr-VLI"/>
+                                        <exclude reference="P9d-lF-LWn"/>
                                     </mask>
                                 </variation>
                             </view>
@@ -1913,10 +1913,10 @@
                         <variation key="default">
                             <mask key="constraints">
                                 <exclude reference="25O-m9-Xsu"/>
+                                <exclude reference="Mlp-3b-Ti2"/>
+                                <exclude reference="NO4-N1-PId"/>
                                 <exclude reference="Q88-JQ-hHd"/>
                                 <exclude reference="uMl-K6-m39"/>
-                                <exclude reference="NO4-N1-PId"/>
-                                <exclude reference="Mlp-3b-Ti2"/>
                                 <exclude reference="Xe4-iy-AJd"/>
                                 <exclude reference="hEm-lL-bsF"/>
                             </mask>
@@ -2094,9 +2094,9 @@
                                             </constraints>
                                             <variation key="default">
                                                 <mask key="constraints">
-                                                    <exclude reference="hYG-CZ-NN8"/>
                                                     <exclude reference="14C-Zs-d4h"/>
                                                     <exclude reference="ZEz-hu-zJv"/>
+                                                    <exclude reference="hYG-CZ-NN8"/>
                                                     <exclude reference="uNi-8y-wqb"/>
                                                     <exclude reference="tCH-3Z-uOO"/>
                                                 </mask>
@@ -2170,6 +2170,6 @@
         <image name="wishlist" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="K0t-Jm-PtB"/>
+        <segue reference="TtW-PK-dtI"/>
     </inferredMetricsTieBreakers>
 </document>
