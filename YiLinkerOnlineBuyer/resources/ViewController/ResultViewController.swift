@@ -51,6 +51,11 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
         self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
     }
 
+    func passSearchKey(key: String) {
+        
+
+    }
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

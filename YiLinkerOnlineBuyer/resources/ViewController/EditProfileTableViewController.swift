@@ -8,7 +8,7 @@
 
 import UIKit
 
-class EditProfileTableViewController: UITableViewController, UINavigationControllerDelegate, EditProfileAddPhotoTableViewCellDelegate, EditProfileAddressTableViewCellDelegate, EditProfileAccountInformationTableViewCellDelegate, UIImagePickerControllerDelegate, UIActionSheetDelegate, EditProfilePersonalInformationTableViewCellDelegate, ChangePasswordViewControllerDelegate  {
+class EditProfileTableViewController: UITableViewController, UINavigationControllerDelegate, EditProfileAddPhotoTableViewCellDelegate, EditProfileAddressTableViewCellDelegate, EditProfileAccountInformationTableViewCellDelegate, UIImagePickerControllerDelegate, UIActionSheetDelegate, EditProfilePersonalInformationTableViewCellDelegate, ChangePasswordViewControllerDelegate, ChangeAddressViewControllerDelegate  {
     
     let manager = APIManager.sharedInstance
     
@@ -38,6 +38,8 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
     var imageData: NSData?
     
     var dimView: UIView?
+    
+    var hud: MBProgressHUD?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -158,7 +160,7 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
             let cell = tableView.dequeueReusableCellWithIdentifier(addressCellIdentifier, forIndexPath: indexPath) as! EditProfileAddressTableViewCell
             cell.delegate = self
             addressIndexPath = indexPath
-            
+            cell.addressLabel.text = profileUserDetailsModel.address.fullLocation
             return cell
         } else {
             let cell = tableView.dequeueReusableCellWithIdentifier(accountCellIdentifier, forIndexPath: indexPath) as! EditProfileAccountInformationTableViewCell
@@ -319,8 +321,18 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
     func changeAddressAction(sender: AnyObject){
         println("changeAddressAction")
         let changeAddressViewController: ChangeAddressViewController = ChangeAddressViewController(nibName: "ChangeAddressViewController", bundle: nil)
+        changeAddressViewController.delegate = self
         self.navigationController!.pushViewController(changeAddressViewController, animated: true)
     }
+    
+    // MARK: ChangeAddressViewControllerDelegate
+    func changeAddressViewController(didSelectAddress address: String) {
+        profileUserDetailsModel.address.fullLocation = address
+
+        var indexPath = NSIndexPath(forRow: 2, inSection: 0)
+        self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Top)
+    }
+    
     
     // Hide Keyboard
     func hideKeyboard() {
@@ -332,6 +344,10 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
         self.firstName = firstName
         self.lastName = lastName
         self.mobileNumber = mobileNumber
+        
+        profileUserDetailsModel.firstName = firstName
+        profileUserDetailsModel.lastName = lastName
+        profileUserDetailsModel.contactNumber = mobileNumber
     }
     
     
@@ -397,7 +413,6 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
                     
                     fireUpdateProfile(APIAtlas.editProfileUrl + "?access_token=" + SessionManager.accessToken(), params: params, withImage: false)
                 }
-                
             }
             else {
                 showAlert("Connection Unreachable", message: "Cannot retrieve data. Please check your internet connection.")
@@ -464,12 +479,20 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
     
     //Loader function
     func showLoader() {
-        SVProgressHUD.show()
-        SVProgressHUD.setBackgroundColor(UIColor.whiteColor())
+        if self.hud != nil {
+            self.hud!.hide(true)
+            self.hud = nil
+        }
+        
+        self.hud = MBProgressHUD(view: self.view)
+        self.hud?.removeFromSuperViewOnHide = true
+        self.hud?.dimBackground = false
+        self.view.addSubview(self.hud!)
+        self.hud?.show(true)
     }
     
     func dismissLoader() {
-        SVProgressHUD.dismiss()
+        self.hud?.hide(true)
     }
     
     func requestRefreshToken(type: String, url: String, params: NSDictionary!, withImage: Bool) {
@@ -487,7 +510,10 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
             
             if (responseObject["isSuccessful"] as! Bool) {
                 SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
-                self.fireUpdateProfile(url, params: params, withImage: withImage)
+                if type == "updateProfile" {
+                    self.fireUpdateProfile(url, params: params, withImage: withImage)
+                }
+                
                 
             } else {
                 self.showAlert("Error", message: responseObject["message"] as! String)

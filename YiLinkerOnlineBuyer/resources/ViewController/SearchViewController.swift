@@ -162,6 +162,12 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
         self.searchBar.resignFirstResponder()
+        let newString = searchBar.text.stringByReplacingOccurrencesOfString(" ", withString: "+")
+        
+        var resultController = ResultViewController(nibName: "ResultViewController", bundle: nil)
+        resultController.passModel(SearchSuggestionModel(suggestion: searchBar.text, imageURL: "", searchUrl: "http://online.api.easydeal.ph/api/v1/product/getProductList?query=\(newString)"))
+        self.navigationController?.pushViewController(resultController, animated:true);
+
     }
     
     func searchBarCancelButtonClicked(searchBar: UISearchBar) {
