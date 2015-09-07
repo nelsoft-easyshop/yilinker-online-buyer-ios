@@ -83,8 +83,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         setBorderOf(view: addToCartButton, width: 1, color: .grayColor(), radius: 3)
         setBorderOf(view: buyItNowView, width: 1, color: .grayColor(), radius: 3)
         
-        requestProductDetails(productUrl, params: nil)
-        requestReviewDetails(reviewUrl, params: ["productId": "12"])
+        requestProductDetails()
         
         buyItNowView.addGestureRecognizer(tapGesture("buyItNowAction:"))
     }
@@ -299,18 +298,24 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     
     // MARK: - Requests
     
-    func requestProductDetails(url: String, params: NSDictionary!) {
+    func requestProductDetails() {
         SVProgressHUD.show()
         SVProgressHUD.setBackgroundColor(UIColor.clearColor())
         
-        manager.GET(self.productUrl, parameters: params, success: {
+        println(">>> " + productId)
+        
+        manager.GET(APIAtlas.productDetails + productId, parameters: nil, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            
-            self.productDetailsModel = ProductDetailsModel.parseDataWithDictionary(responseObject)
-            self.productId = self.productDetailsModel.id
-
-            self.attributes = self.productDetailsModel.attributes
-            self.requestSellerDetails(self.sellerUrl, params: ["userId": self.productDetailsModel.sellerId])
+            println(responseObject)
+            if responseObject["isSuccessful"] as! Bool {
+                self.productDetailsModel = ProductDetailsModel.parseDataWithDictionary(responseObject)
+                self.productId = self.productDetailsModel.id
+                
+                self.attributes = self.productDetailsModel.attributes
+                self.requestSellerDetails()
+            } else {
+                self.showAlert(title: "Error", message: responseObject["message"] as! String)
+            }
             
             self.productRequest = true
             self.productSuccess = true
@@ -325,8 +330,11 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         })
     }
     
-    func requestReviewDetails(url: String, params: NSDictionary!) {
-        manager.POST(self.reviewUrl, parameters: params, success: {
+    func requestReviewDetails() {
+
+        let params: NSDictionary = ["productId": self.productDetailsModel.id]
+        
+        manager.POST(APIAtlas.productReviews, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
             self.productReviewModel = ProductReviewModel.parseDataWithDictionary(responseObject)
@@ -343,9 +351,11 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         })
     }
     
-    func requestSellerDetails(url: String, params: NSDictionary!) {
+    func requestSellerDetails() {
         
-        manager.POST(self.sellerUrl, parameters: params, success: {
+        let params: NSDictionary = ["userId": self.productDetailsModel.sellerId]
+        
+        manager.POST(APIAtlas.getSellerInfo, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
             self.productSellerModel = ProductSellerModel.parseDataWithDictionary(responseObject)
@@ -372,7 +382,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
             "quantity": "1",
             "wishlist": "true"]
 
-        manager.POST("http://online.api.easydeal.ph/api/v1/auth/cart/updateCartItem", parameters: params, success: {
+        manager.POST(APIAtlas.updateCartUrl, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
             var data: NSDictionary = responseObject["data"] as! NSDictionary
@@ -401,14 +411,14 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     }
     
     func requestRefreshToken() {
-        let url: String = "http://online.api.easydeal.ph/api/v1/login"
+
         let params: NSDictionary = ["client_id": Constants.Credentials.clientID,
             "client_secret": Constants.Credentials.clientSecret,
             "grant_type": Constants.Credentials.grantRefreshToken,
             "refresh_token": SessionManager.refreshToken()]
         
         let manager = APIManager.sharedInstance
-        manager.POST(url, parameters: params, success: {
+        manager.POST(APIAtlas.loginUrl, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
             SVProgressHUD.dismiss()
@@ -832,8 +842,8 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     }
     
     func didTapReload() {
-        self.requestProductDetails(productUrl, params: nil)
-        self.requestReviewDetails(reviewUrl, params: nil)
+        self.requestProductDetails()
+        self.requestReviewDetails()
         self.emptyView?.removeFromSuperview()
     }
     
