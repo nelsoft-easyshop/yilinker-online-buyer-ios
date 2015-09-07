@@ -43,6 +43,10 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
         self.initializeViews()
         self.registerNibs()
     }
+    
+    func passSearchKey(key: String) {
+        
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
