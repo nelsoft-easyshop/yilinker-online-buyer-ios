@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, SellerTableHeaderViewDelegate, ProductsTableViewCellDelegate {
+class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, SellerTableHeaderViewDelegate, ProductsTableViewCellDelegate, ViewFeedBackViewControllerDelegate {
 
     @IBOutlet weak var tableView: UITableView!
     
@@ -18,8 +18,17 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
     var is_successful: Bool = false
     var hud: MBProgressHUD?
     
+    var dimView: UIView = UIView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        dimView = UIView(frame: UIScreen.mainScreen().bounds)
+        dimView.backgroundColor=UIColor.blackColor()
+        dimView.alpha = 0.5
+        self.navigationController?.view.addSubview(dimView)
+        dimView.hidden = true
+        
         self.backButton()
         self.tableView.estimatedRowHeight = 112.0
         self.tableView.rowHeight = UITableViewAutomaticDimension
@@ -277,11 +286,15 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
     //Seller View Delegate
     func sellerTableHeaderViewDidViewFeedBack() {
         println("view feedback")
+        self.showView()
         var attributeModal = ViewFeedBackViewController(nibName: "ViewFeedBackViewController", bundle: nil)
+        attributeModal.delegate = self
         attributeModal.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
         attributeModal.providesPresentationContextTransitionStyle = true
         attributeModal.definesPresentationContext = true
+        attributeModal.screenWidth = self.view.frame.width
         self.tabBarController?.presentViewController(attributeModal, animated: true, completion: nil)
+        
     }
     
     func sellerTableHeaderViewDidFollow() {
@@ -342,6 +355,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.navigationController!.pushViewController(resultViewController, animated: true)
     }
     
+    //MARK: Show HUD
     func showHUD() {
         if self.hud != nil {
             self.hud!.hide(true)
@@ -353,6 +367,27 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.hud?.dimBackground = false
         self.navigationController?.view.addSubview(self.hud!)
         self.hud?.show(true)
+    }
+    
+  
+    //MARK: Show and hide dim view
+    
+    func showView(){
+        UIView.animateWithDuration(0.3, animations: {
+            self.dimView.hidden = false
+            self.dimView.alpha = 0.5
+            self.dimView.layer.zPosition = 2
+            self.view.transform = CGAffineTransformMakeScale(0.92, 0.93)
+        })
+    }
+    
+    func dismissDimView() {
+        UIView.animateWithDuration(0.3, animations: {
+            self.dimView.hidden = true
+            self.view.transform = CGAffineTransformMakeTranslation(1, 1)
+            self.dimView.alpha = 0
+            self.dimView.layer.zPosition = -1
+        })
     }
 
 }
