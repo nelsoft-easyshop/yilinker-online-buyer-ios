@@ -18,6 +18,8 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
 
     var profileDetails: ProfileUserDetailsModel?
     
+    var hud: MBProgressHUD?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -104,7 +106,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
             if profileDetails != nil {
                 cell.profileImageView.sd_setImageWithURL(NSURL(string: profileDetails!.profileImageUrl), placeholderImage: UIImage(named: "dummy-placeholder"))
                 cell.profileNameLabel.text = profileDetails?.fullName
-                cell.profileAddressLabel.text = profileDetails!.address.streetName
+                cell.profileAddressLabel.text = profileDetails!.address.fullLocation
             }
             return cell
         } else {
@@ -205,12 +207,20 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     
     //Loader function
     func showLoader() {
-        SVProgressHUD.show()
-        SVProgressHUD.setBackgroundColor(UIColor.whiteColor())
+        if self.hud != nil {
+            self.hud!.hide(true)
+            self.hud = nil
+        }
+        
+        self.hud = MBProgressHUD(view: self.view)
+        self.hud?.removeFromSuperViewOnHide = true
+        self.hud?.dimBackground = false
+        self.view.addSubview(self.hud!)
+        self.hud?.show(true)
     }
     
     func dismissLoader() {
-        SVProgressHUD.dismiss()
+        self.hud?.hide(true)
     }
 
     func requestRefreshToken(type: String, url: String, params: NSDictionary!, showLoader: Bool) {
