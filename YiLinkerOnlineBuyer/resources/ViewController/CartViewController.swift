@@ -183,6 +183,13 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
                 let model: CartProductDetailsModel = CartProductDetailsModel.parseDataWithDictionary(subValue as! NSDictionary)
                 
                 model.selected = true
+                
+                let tempItemId = model.itemId
+                if model.selected {
+                    selectedItemIDs.append(tempItemId)
+                } else {
+                    selectedItemIDs = selectedItemIDs.filter({$0 != tempItemId})
+                }
                 self.tableData.append(model)
             }
             self.cartTableView.reloadData()
