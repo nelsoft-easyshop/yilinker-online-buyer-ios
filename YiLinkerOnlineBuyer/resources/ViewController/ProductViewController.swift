@@ -63,10 +63,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     var delegate: ProductViewControllerDelegate?
     
     var emptyView: EmptyView?
-    
-    let productUrl = "http://online.api.easydeal.ph/api/v1/product/getProductDetail?productId=1"
-    let reviewUrl = "http://online.api.easydeal.ph/api/v1/product/getProductReviews"
-    let sellerUrl = "http://online.api.easydeal.ph/api/v1/user/getStoreInfo"
+    var hud: MBProgressHUD?
     
     var tabController = CustomTabBarController()
     
@@ -100,9 +97,8 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     override func viewWillDisappear(animated: Bool) {
         self.navigationController?.navigationBar.alpha = 1.0
         self.navigationController?.navigationBar.barTintColor = Constants.Colors.appTheme
-        UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.LightContent        
-        SVProgressHUD.dismiss()
-        
+        UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.LightContent
+        self.hud?.hide(true)
         super.viewWillDisappear(animated)
     }
     
@@ -299,10 +295,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     // MARK: - Requests
     
     func requestProductDetails() {
-        SVProgressHUD.show()
-        SVProgressHUD.setBackgroundColor(UIColor.clearColor())
-        
-        println(">>> " + productId)
+        self.showHUD()
         
         manager.GET(APIAtlas.productDetails + productId, parameters: nil, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
@@ -315,6 +308,8 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
                 self.requestSellerDetails()
             } else {
                 self.showAlert(title: "Error", message: responseObject["message"] as! String)
+                self.hud?.hide(true)
+                self.addEmptyView()
             }
             
             self.productRequest = true
@@ -374,7 +369,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     
     func requestUpdateWishlistItem() {
         
-        SVProgressHUD.show()
+        self.showHUD()
         let manager = APIManager.sharedInstance
         let params = ["access_token": SessionManager.accessToken(),
             "productId": self.productId,
@@ -395,7 +390,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
                 self.showAlert(title: "Error", message: responseObject["message"] as! String)
             }
             
-            SVProgressHUD.dismiss()
+            self.hud?.hide(true)
             
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
@@ -405,7 +400,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
                     self.requestRefreshToken()
                 } else {
                     println(error)
-                    SVProgressHUD.dismiss()
+                    self.hud?.hide(true)
                 }
         })
     }
@@ -421,13 +416,13 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         manager.POST(APIAtlas.loginUrl, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
-            SVProgressHUD.dismiss()
+            self.hud?.hide(true)
             SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
             self.requestUpdateWishlistItem()
             
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                SVProgressHUD.dismiss()
+                self.hud?.hide(true)
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                 
                 self.showAlert(title: "Something went wrong", message: nil)
@@ -525,7 +520,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         self.productReviewFooterView.delegate = self
         self.productSellerView.delegate = self
         
-        SVProgressHUD.dismiss()
+        self.hud?.hide(true)
     }
     
     func setDetails(list: NSArray) {
@@ -652,7 +647,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
                 self.loadViewsWithDetails()
             } else {
                 addEmptyView()
-                SVProgressHUD.dismiss()
+                self.hud?.hide(true)
             }
         }
         
@@ -661,7 +656,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
 //        } else if productRequest && reviewRequest && sellerRequest {
 //            if productSuccess == false || reviewSuccess == false || sellerSuccess == false {
 //                addEmptyView()
-//                SVProgressHUD.dismiss()
+//                self.hud?.hide(true)
 //            }
 //        }
     }
@@ -678,6 +673,19 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         (self.tabController.tabBar.items![3] as! UITabBarItem).badgeValue = String(items)
     }
 
+    func showHUD() {
+        if self.hud != nil {
+            self.hud!.hide(true)
+            self.hud = nil
+        }
+        
+        self.hud = MBProgressHUD(view: self.view)
+        self.hud?.removeFromSuperViewOnHide = true
+        self.hud?.dimBackground = false
+        self.view.addSubview(self.hud!)
+        self.hud?.show(true)
+    }
+    
     // MARK: - Product View Delegate
     
     func close(controller: ProductImagesView) {
