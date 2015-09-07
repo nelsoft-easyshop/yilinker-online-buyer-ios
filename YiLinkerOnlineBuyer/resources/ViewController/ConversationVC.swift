@@ -97,6 +97,14 @@ class ConversationVC: UIViewController, EmptyViewDelegate{
         }
     }
     
+    func showAlert(title:String, message:String) {
+        let alert = UIAlertController(title: title,
+            message: message, preferredStyle: .Alert)
+        let dismissAction = UIAlertAction(title: "Dismiss", style: .Destructive, handler: nil)
+        alert.addAction(dismissAction)
+        self.presentViewController(alert, animated: true, completion: nil)
+    }
+    
     func receivedMessage(notification : NSNotification){
         //action here to open messaging
     }

@@ -80,8 +80,9 @@ class MessageThreadVC: UIViewController {
         super.viewDidLoad()
         var ref = W_Messages()
         //messages = ref.testData()
-        var temp = recipient?.userId ?? ""
-        self.getMessagesFromEndpoint("1", limit: "30", userId: temp)
+        var r_temp = recipient?.userId ?? ""
+        self.getMessagesFromEndpoint("1", limit: "30", userId: r_temp)
+        //self.setConversationAsReadFromEndpoint(r_temp)
         configureTableView()
         
         minimumYComposeView = composeView.frame.origin.y
@@ -429,6 +430,27 @@ class MessageThreadVC: UIViewController {
                 UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
         })
         
+    }
+    
+    func setConversationAsReadFromEndpoint(userId : String){
+        
+        let manager: APIManager = APIManager.sharedInstance
+        manager.requestSerializer = AFHTTPRequestSerializer()
+        
+        let parameters: NSDictionary = [
+            "userId"        : "\(userId)", //get user id from somewhere
+            "access_token"  : SessionManager.accessToken()
+            ]   as Dictionary<String, String>
+        
+        let url = APIAtlas.baseUrl + APIAtlas.ACTION_SET_AS_READ
+        
+        manager.POST(url, parameters: parameters, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+        })
+
     }
     
 }
