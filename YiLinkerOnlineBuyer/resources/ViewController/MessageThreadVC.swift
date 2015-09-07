@@ -337,6 +337,14 @@ class MessageThreadVC: UIViewController {
             self.messages[self.messages.count-1].isSent = 1
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                
+                if task.statusCode == 401 {
+                    self.fireRefreshToken()
+                } else {
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+                }
+                
                 self.messages[self.messages.count-1].isSent = 0
                 println(error.description)
                 
@@ -375,12 +383,12 @@ class MessageThreadVC: UIViewController {
                     (task: NSURLSessionDataTask!, error: NSError!) in
                     let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                     
-                    println("ERROR \(error.description)")
-                    if !Reachability.isConnectedToNetwork() {
-                        UIAlertController.displayNoInternetConnectionError(self)
+                    if task.statusCode == 401 {
+                        self.fireRefreshToken()
                     } else {
                         UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
                     }
+                    
                     self.messages = Array<W_Messages>()
                     self.threadTableView.reloadData()
                     
@@ -403,6 +411,24 @@ class MessageThreadVC: UIViewController {
         self.hud?.dimBackground = false
         self.view.addSubview(self.hud!)
         self.hud?.show(true)
+    }
+    
+    func fireRefreshToken() {
+        let manager: APIManager = APIManager.sharedInstance
+        //seller@easyshop.ph
+        //password
+        let parameters: NSDictionary = ["client_id": Constants.Credentials.clientID, "client_secret": Constants.Credentials.clientSecret, "grant_type": Constants.Credentials.grantRefreshToken, "refresh_token":  SessionManager.refreshToken()]
+        manager.POST(APIAtlas.refreshTokenUrl, parameters: parameters, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            SVProgressHUD.dismiss()
+            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+        })
+        
     }
     
 }

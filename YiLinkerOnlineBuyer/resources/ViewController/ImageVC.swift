@@ -99,11 +99,14 @@ class ImageVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
                     //SVProgressHUD.dismiss()
                     self.goBack()
                 }) { (task : NSURLSessionDataTask!, error: NSError!) -> Void in
-                    if !Reachability.isConnectedToNetwork() {
-                        UIAlertController.displayNoInternetConnectionError(self)
+                    let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                    
+                    if task.statusCode == 401 {
+                        self.fireRefreshToken()
                     } else {
                         UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
                     }
+                    
                     println(error.description)
                     self.hud?.hide(true)
                     //SVProgressHUD.dismiss()
@@ -112,6 +115,24 @@ class ImageVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
         } else {
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Please pick or upload an image first.", title: "Error")
         }
+        
+    }
+    
+    func fireRefreshToken() {
+        let manager: APIManager = APIManager.sharedInstance
+        //seller@easyshop.ph
+        //password
+        let parameters: NSDictionary = ["client_id": Constants.Credentials.clientID, "client_secret": Constants.Credentials.clientSecret, "grant_type": Constants.Credentials.grantRefreshToken, "refresh_token":  SessionManager.refreshToken()]
+        manager.POST(APIAtlas.refreshTokenUrl, parameters: parameters, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            SVProgressHUD.dismiss()
+            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+        })
         
     }
     

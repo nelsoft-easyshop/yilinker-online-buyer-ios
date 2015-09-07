@@ -43,14 +43,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         application.registerUserNotificationSettings(settings)
         application.registerForRemoteNotifications()
-        //instanceIDConfig.delegate = self
         
         //GGLInstanceID.sharedInstance().startWithConfig(instanceIDConfig)
         //registrationOptions = [kGGLInstanceIDRegisterAPNSOption:deviceToken, kGGLInstanceIDAPNSServerTypeSandboxOption : true]
         
         //GGLInstanceID.sharedInstance().tokenWithAuthorizedEntity(gcmSenderID, scope: kGGLInstanceIDScopeGCM, options: registrationOptions, handler: registrationHandler)
         
-        //var instanceIDConfig = GGLInstanceIDConfig.defaultConfig()
+        var instanceIDConfig = GGLInstanceIDConfig.defaultConfig()
+        //instanceIDConfig.delegate = self
         
         return FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
     }
