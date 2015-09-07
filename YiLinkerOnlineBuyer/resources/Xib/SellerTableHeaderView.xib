@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
@@ -7,7 +7,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="SellerTableHeaderView" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="457" height="243"/>
+            <rect key="frame" x="0.0" y="0.0" width="457" height="261"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dummy_cover_photo" translatesAutoresizingMaskIntoConstraints="NO" id="b4p-tQ-XcN">
@@ -40,32 +40,10 @@
                         <action selector="call:" destination="iN0-l3-epB" eventType="touchUpInside" id="lgp-Pt-sZW"/>
                     </connections>
                 </button>
-                <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M7F-7d-VWr" customClass="RoundedButton" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
-                    <rect key="frame" x="8" y="128" width="96" height="96"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="96" id="R0S-3v-NwV"/>
-                        <constraint firstAttribute="height" constant="96" id="Wte-aC-Por"/>
-                    </constraints>
-                    <state key="normal" backgroundImage="dummy-profile-image">
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                    <userDefinedRuntimeAttributes>
-                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                            <real key="value" value="1"/>
-                        </userDefinedRuntimeAttribute>
-                        <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                            <real key="value" value="3"/>
-                        </userDefinedRuntimeAttribute>
-                        <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                            <color key="value" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
-                        </userDefinedRuntimeAttribute>
-                    </userDefinedRuntimeAttributes>
-                </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="A7W-DK-e0C" customClass="DynamicRoundedButton" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
-                    <rect key="frame" x="329" y="193" width="120" height="30"/>
+                    <rect key="frame" x="329" y="213" width="120" height="27"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="120" id="eq4-1E-h0u"/>
-                        <constraint firstAttribute="height" constant="30" id="wDI-0v-TMb"/>
+                        <constraint firstAttribute="width" constant="120" id="Rm9-Cm-2gc"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="12"/>
                     <state key="normal" title="VIEW FEEDBACK">
@@ -112,7 +90,7 @@
                     </connections>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tech Hub Store" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PUQ-0I-66E">
-                    <rect key="frame" x="112" y="140" width="231" height="21"/>
+                    <rect key="frame" x="96" y="140" width="247" height="21"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="21" id="V5a-zC-0Px"/>
                     </constraints>
@@ -121,7 +99,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ayala Ave. Makati City" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JAF-ug-Wnz">
-                    <rect key="frame" x="112" y="158" width="209" height="21"/>
+                    <rect key="frame" x="96" y="158" width="225" height="21"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="21" id="g7a-0k-1Gj"/>
                     </constraints>
@@ -130,11 +108,10 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FVH-bQ-Krq" customClass="DynamicRoundedButton" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
-                    <rect key="frame" x="201" y="193" width="120" height="30"/>
+                    <rect key="frame" x="201" y="213" width="120" height="28"/>
                     <color key="backgroundColor" red="0.35294117650000001" green="0.1215686275" blue="0.45882352939999999" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="30" id="ZEs-dz-Xco"/>
-                        <constraint firstAttribute="width" constant="120" id="fwt-cE-Pu7"/>
+                        <constraint firstAttribute="width" constant="120" id="VAc-Yd-xkU"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="13"/>
                     <state key="normal" title="FOLLOWING">
@@ -153,28 +130,49 @@
                         <action selector="follow:" destination="iN0-l3-epB" eventType="touchUpInside" id="7CR-eJ-jeH"/>
                     </connections>
                 </button>
+                <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M7F-7d-VWr" customClass="RoundedButton" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
+                    <rect key="frame" x="8" y="139" width="80" height="80"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="80" id="R0S-3v-NwV"/>
+                        <constraint firstAttribute="height" constant="80" id="Wte-aC-Por"/>
+                    </constraints>
+                    <state key="normal" backgroundImage="dummy-profile-image">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                            <real key="value" value="1"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                            <real key="value" value="3"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                            <color key="value" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </button>
             </subviews>
             <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
-                <constraint firstItem="A7W-DK-e0C" firstAttribute="top" secondItem="b4p-tQ-XcN" secondAttribute="bottom" constant="8" id="02o-lq-RpV"/>
-                <constraint firstItem="PUQ-0I-66E" firstAttribute="leading" secondItem="M7F-7d-VWr" secondAttribute="trailing" constant="8" id="07T-R6-Zrx"/>
+                <constraint firstItem="A7W-DK-e0C" firstAttribute="top" secondItem="b4p-tQ-XcN" secondAttribute="bottom" constant="28" id="02o-lq-RpV"/>
                 <constraint firstItem="d0d-dF-wyT" firstAttribute="leading" secondItem="PUQ-0I-66E" secondAttribute="trailing" constant="8" id="0o6-Ws-L6Z"/>
-                <constraint firstItem="M7F-7d-VWr" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="128" id="DUg-5b-QIS"/>
+                <constraint firstItem="M7F-7d-VWr" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="139" id="2re-7b-yn3"/>
                 <constraint firstAttribute="trailing" secondItem="A7W-DK-e0C" secondAttribute="trailing" constant="8" id="FJR-cb-gvF"/>
-                <constraint firstItem="JAF-ug-Wnz" firstAttribute="leading" secondItem="M7F-7d-VWr" secondAttribute="trailing" constant="8" id="G8Z-LZ-Yzv"/>
+                <constraint firstItem="PUQ-0I-66E" firstAttribute="leading" secondItem="M7F-7d-VWr" secondAttribute="trailing" constant="8" id="FaR-tq-daH"/>
+                <constraint firstItem="JAF-ug-Wnz" firstAttribute="leading" secondItem="M7F-7d-VWr" secondAttribute="trailing" constant="8" id="IMP-wB-ndx"/>
                 <constraint firstAttribute="trailing" secondItem="b4p-tQ-XcN" secondAttribute="trailing" id="N8o-al-jXq"/>
-                <constraint firstItem="A7W-DK-e0C" firstAttribute="top" secondItem="j46-sZ-G8t" secondAttribute="bottom" constant="14" id="NZq-4h-PVA"/>
-                <constraint firstItem="FVH-bQ-Krq" firstAttribute="top" secondItem="PUQ-0I-66E" secondAttribute="bottom" constant="32" id="RUy-Wh-H3M"/>
+                <constraint firstItem="A7W-DK-e0C" firstAttribute="top" secondItem="j46-sZ-G8t" secondAttribute="bottom" constant="34" id="NZq-4h-PVA"/>
+                <constraint firstItem="FVH-bQ-Krq" firstAttribute="top" secondItem="PUQ-0I-66E" secondAttribute="bottom" constant="52" id="RUy-Wh-H3M"/>
                 <constraint firstItem="b4p-tQ-XcN" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="Vme-cS-Bgz"/>
-                <constraint firstItem="A7W-DK-e0C" firstAttribute="top" secondItem="d0d-dF-wyT" secondAttribute="bottom" constant="14" id="cUf-ZG-qyq"/>
+                <constraint firstItem="M7F-7d-VWr" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="8" id="ZQ5-nd-HSp"/>
+                <constraint firstItem="A7W-DK-e0C" firstAttribute="top" secondItem="d0d-dF-wyT" secondAttribute="bottom" constant="34" id="cUf-ZG-qyq"/>
                 <constraint firstItem="d0d-dF-wyT" firstAttribute="leading" secondItem="JAF-ug-Wnz" secondAttribute="trailing" constant="30" id="gxb-A8-KF9"/>
                 <constraint firstItem="j46-sZ-G8t" firstAttribute="leading" secondItem="d0d-dF-wyT" secondAttribute="trailing" constant="14" id="jWp-tI-mGT"/>
-                <constraint firstItem="FVH-bQ-Krq" firstAttribute="top" secondItem="b4p-tQ-XcN" secondAttribute="bottom" constant="8" id="kjN-kv-5w0"/>
+                <constraint firstItem="FVH-bQ-Krq" firstAttribute="top" secondItem="b4p-tQ-XcN" secondAttribute="bottom" constant="28" id="kjN-kv-5w0"/>
                 <constraint firstItem="b4p-tQ-XcN" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="rhl-KG-sof"/>
                 <constraint firstItem="A7W-DK-e0C" firstAttribute="leading" secondItem="FVH-bQ-Krq" secondAttribute="trailing" constant="8" id="tVB-QM-xw2"/>
                 <constraint firstAttribute="trailing" secondItem="j46-sZ-G8t" secondAttribute="trailing" constant="12" id="tVO-wV-z4q"/>
-                <constraint firstItem="FVH-bQ-Krq" firstAttribute="top" secondItem="JAF-ug-Wnz" secondAttribute="bottom" constant="14" id="u0W-S6-CGe"/>
-                <constraint firstItem="M7F-7d-VWr" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="8" id="uoK-MS-wsh"/>
+                <constraint firstItem="FVH-bQ-Krq" firstAttribute="top" secondItem="JAF-ug-Wnz" secondAttribute="bottom" constant="34" id="u0W-S6-CGe"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
@@ -185,7 +183,7 @@
                 <outlet property="sellernameLabel" destination="PUQ-0I-66E" id="WYm-MO-LTd"/>
                 <outlet property="viewFeedbackButton" destination="A7W-DK-e0C" id="md0-od-vfZ"/>
             </connections>
-            <point key="canvasLocation" x="411.5" y="210.5"/>
+            <point key="canvasLocation" x="411.5" y="219.5"/>
         </view>
     </objects>
     <resources>
