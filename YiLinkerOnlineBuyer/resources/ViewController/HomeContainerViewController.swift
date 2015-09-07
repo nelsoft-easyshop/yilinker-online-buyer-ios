@@ -368,4 +368,6 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         self.view.addSubview(self.hud!)
         self.hud?.show(true)
     }
+    
+    
 }

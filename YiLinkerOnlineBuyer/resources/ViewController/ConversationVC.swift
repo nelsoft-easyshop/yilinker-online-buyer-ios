@@ -28,7 +28,13 @@ class ConversationVC: UIViewController, EmptyViewDelegate{
     
     var emptyView : EmptyView?
     var contentViewFrame: CGRect?
+    var hud: MBProgressHUD?
+
+    /*to showHUD
+    self.showHUD*/
     
+    /*to hide HUD
+    self.hud?.hide(true)*/
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if (segue.identifier == messageThreadSegueIdentifier){
@@ -240,4 +246,17 @@ extension ConversationVC : UITableViewDataSource{
         }
     }
     
+    //Show HUD
+    func showHUD() {
+        if self.hud != nil {
+            self.hud!.hide(true)
+            self.hud = nil
+        }
+        
+        self.hud = MBProgressHUD(view: self.view)
+        self.hud?.removeFromSuperViewOnHide = true
+        self.hud?.dimBackground = false
+        self.view.addSubview(self.hud!)
+        self.hud?.show(true)
+    }
 }
