@@ -420,6 +420,8 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
             "unitId": self.unitId,
             "quantity": quantity]
         
+        println(params)
+
         manager.POST(APIAtlas.updateCartUrl, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
