@@ -76,6 +76,29 @@ class ConversationVC: UIViewController, EmptyViewDelegate{
         self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
         
         self.contentViewFrame = self.view.frame
+        
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "onRegistration:",
+            name: appDelegate.registrationKey, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "receivedMessage:",
+            name: appDelegate.messageKey, object: nil)
+        
+    }
+    
+    func onRegistration(notification: NSNotification){
+        if let info = notification.userInfo as? Dictionary<String,String> {
+            if let error = info["error"] {
+                showAlert("Error registering with GCM", message: error)
+            } else if let registrationToken = info["registrationToken"] {
+                let message = "Check the xcode debug console for the registration token for the server to send notifications to your device"
+                self.fireCreateRegistration(registrationToken)
+                showAlert("Registration Successful!", message: message)
+            }
+        }
+    }
+    
+    func receivedMessage(notification : NSNotification){
+        //action here to open messaging
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -123,6 +146,42 @@ class ConversationVC: UIViewController, EmptyViewDelegate{
     
     func createMessage(sender: UIButton!){
         self.performSegueWithIdentifier("show_contacts", sender: self)
+    }
+    
+    func fireCreateRegistration(registrationID : String) {
+        
+        self.showHUD()
+        
+        let manager: APIManager = APIManager.sharedInstance
+        //seller@easyshop.ph
+        //password
+        let parameters: NSDictionary = [
+            "registrationId": "\(registrationID)",
+            "access_token"  : SessionManager.accessToken()
+            ]   as Dictionary<String, String>
+        
+        let url = APIAtlas.baseUrl + APIAtlas.ACTION_GCM_CREATE
+        
+        manager.POST(url, parameters: parameters, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+            //SVProgressHUD.dismiss()
+            self.hud?.hide(true)
+            //self.showSuccessMessage()
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                
+                if task.statusCode == 401 {
+                    self.fireRefreshToken()
+                } else {
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+                }
+                
+                //SVProgressHUD.dismiss()
+                self.hud?.hide(true)
+                self.addEmptyView()
+        })
     }
     
     func fireLogin() {
