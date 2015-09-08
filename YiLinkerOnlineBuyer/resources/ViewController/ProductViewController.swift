@@ -419,34 +419,53 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         })
     }
     
-    func requestAddCartItem() {
+    func requestAddCartItem(type: String) {
         self.showHUD()
 
         let params: NSDictionary = ["access_token": SessionManager.accessToken(),
             "productId": self.productDetailsModel.id,
             "unitId": self.unitId,
             "quantity": quantity]
-        
-        println(params)
 
         manager.POST(APIAtlas.updateCartUrl, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
-            self.hud?.hide(true)
-            
             if responseObject.isKindOfClass(NSDictionary) {
-                
+
                 if let tempVar = responseObject["isSuccessful"] as? Bool {
-                    if tempVar {
-                        var data: NSDictionary = responseObject["data"] as! NSDictionary
-                        var items: NSArray = data["items"] as! NSArray
+                    var data: NSDictionary = responseObject["data"] as! NSDictionary
+
+                    var items: NSArray = data["items"] as! NSArray
+                    
+                    if type == "buyitnow" {
+                        var itemProductId: String = ""
+                        var itemUnitId: String = ""
+                        
+                        for i in 0..<items.count {
+                            let item: NSDictionary = items[i] as! NSDictionary
+                            itemProductId = item["id"] as! String
+                            
+                            let productUnits: NSArray = item["productUnits"] as! NSArray
+                            for i in 0..<productUnits.count {
+                                let productUnit: NSDictionary = productUnits[i] as! NSDictionary
+                                itemUnitId = productUnit["productUnitId"] as! String
+
+                                if self.productId == itemProductId && self.unitId == itemUnitId {
+                                    self.requestCartToCheckout(item["itemId"] as! Int, totalAmount: data["totalAmount"] as! String)
+                                    break
+                                }
+                            
+                            } // loop for product unit
+                        } // loop for items
+                    } else {
                         self.showAlert(title: nil, message: "This item has been added to your cart")
                         self.addBadge(items.count)
-                    } else {
-                        if let tempVar = responseObject["message"] as? String {
-                            self.showAlert(title: "Error", message: tempVar)
-                        }
+                        self.hud?.hide(true)
                     }
+                    
+                } else {
+                    self.showAlert(title: "Error", message: responseObject["message"] as! String)
+                    self.hud?.hide(true)
                 }
             }
             
@@ -464,6 +483,39 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         })
     }
     
+    func requestCartToCheckout(id: Int, totalAmount: String) {
+        
+        let item: [Int] = [id]
+        let params: NSDictionary = ["access_token": SessionManager.accessToken(), "cart": item]
+        
+        manager.POST(APIAtlas.updateCheckout, parameters: params, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!)in
+
+            var cartProductModel: [CartProductDetailsModel] = []
+
+            if let value: AnyObject = responseObject["data"] {
+                for subValue in responseObject["data"] as! NSArray {
+                    let model: CartProductDetailsModel = CartProductDetailsModel.parseDataWithDictionary(subValue as! NSDictionary)
+                    cartProductModel.append(model)
+                }
+            }
+            
+            let checkout = CheckoutContainerViewController(nibName: "CheckoutContainerViewController", bundle: nil)
+            checkout.carItems = cartProductModel
+            checkout.totalPrice = totalAmount
+            let navigationController: UINavigationController = UINavigationController(rootViewController: checkout)
+            navigationController.navigationBar.barTintColor = Constants.Colors.appTheme
+            self.tabBarController?.presentViewController(navigationController, animated: true, completion: nil)
+            
+            self.hud?.hide(true)
+            
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong. . .", title: "Error")
+                self.hud?.hide(true)
+        })
+    }
+    
     func requestRefreshToken(type: String) {
 
         let params: NSDictionary = ["client_id": Constants.Credentials.clientID,
@@ -478,7 +530,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
             self.hud?.hide(true)
             SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
             if type == "cart" {
-                self.requestAddCartItem()
+                self.requestAddCartItem("")
             } else if type == "wishlist" {
                 self.requestUpdateWishlistItem()
             } else {
@@ -750,6 +802,10 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         (self.tabController.tabBar.items![4] as! UITabBarItem).badgeValue = String(items)
     }
     
+    func getThisProductFromCart() {
+        
+    }
+    
     // MARK: - Product View Delegate
     
     func close(controller: ProductImagesView) {
@@ -888,7 +944,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     @IBAction func addToCartAction(sender: AnyObject) {
         
         if SessionManager.isLoggedIn() {
-            requestAddCartItem()
+            requestAddCartItem("cart")
         } else {
             showAlert(title: "Failed", message: "Please logged-in to add item in your wishlist.")
         }
@@ -897,10 +953,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     
     func buyItNowAction(gesture: UIGestureRecognizer) {
         if SessionManager.isLoggedIn() {
-            let checkout = CheckoutContainerViewController(nibName: "CheckoutContainerViewController", bundle: nil)
-            let navigationController: UINavigationController = UINavigationController(rootViewController: checkout)
-            navigationController.navigationBar.barTintColor = Constants.Colors.appTheme
-            self.tabBarController?.presentViewController(navigationController, animated: true, completion: nil)
+            requestAddCartItem("buyitnow")
         } else {
             showAlert(title: "Failed", message: "Please logged-in to buy this item.")
             /*let checkout = GuestCheckoutContainerViewController(nibName: "GuestCheckoutContainerViewController", bundle: nil)
