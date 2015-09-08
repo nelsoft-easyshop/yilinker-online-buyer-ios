@@ -22,7 +22,13 @@ class ProfileUserDetailsModel: NSObject {
     
     var address: AddressModelV2 = AddressModelV2()
     
-    init(fullName: String, firstName: String, lastName: String, email: String, contactNumber: String, profileImageUrl: String, coverPhoto: String, gender: String, birthdate: String, address: AddressModelV2){
+    var transactionCount: Int = 0
+    var wishlistCount: Int = 0
+    var cartCount: Int = 0
+    var messageCount: Int = 0
+    var followingCount: Int = 0
+    
+    init(fullName: String, firstName: String, lastName: String, email: String, contactNumber: String, profileImageUrl: String, coverPhoto: String, gender: String, birthdate: String, address: AddressModelV2, transactionCount: Int, wishlistCount: Int, cartCount: Int, messageCount: Int, followingCount: Int){
         self.fullName = fullName
         self.firstName = firstName
         self.lastName = lastName
@@ -33,6 +39,11 @@ class ProfileUserDetailsModel: NSObject {
         self.gender = gender
         self.birthdate = birthdate
         self.address = address
+        self.transactionCount = transactionCount
+        self.wishlistCount = wishlistCount
+        self.cartCount = cartCount
+        self.messageCount = messageCount
+        self.followingCount = followingCount
     }
     
     override init() {
@@ -51,6 +62,12 @@ class ProfileUserDetailsModel: NSObject {
         var birthdate: String = ""
 
         var address: AddressModelV2 = AddressModelV2()
+        
+        var transactionCount: Int = 0
+        var wishlistCount: Int = 0
+        var cartCount: Int = 0
+        var messageCount: Int = 0
+        var followingCount: Int = 0
     
         if let value: AnyObject = dictionary["fullName"] {
             if value as! NSObject != NSNull() {
@@ -113,6 +130,36 @@ class ProfileUserDetailsModel: NSObject {
             }
         }
         
+        if let value: AnyObject = dictionary["transactionCount"] {
+            if value as! NSObject != NSNull() {
+                transactionCount = value as! Int
+            }
+        }
+        
+        if let value: AnyObject = dictionary["wishlistCount"] {
+            if value as! NSObject != NSNull() {
+                wishlistCount = value as! Int
+            }
+        }
+        
+        if let value: AnyObject = dictionary["cartCount"] {
+            if value as! NSObject != NSNull() {
+                cartCount = value as! Int
+            }
+        }
+        
+        if let value: AnyObject = dictionary["messageCount"] {
+            if value as! NSObject != NSNull() {
+                messageCount = value as! Int
+            }
+        }
+        
+        if let value: AnyObject = dictionary["followingCount"] {
+            if value as! NSObject != NSNull() {
+                followingCount = value as! Int
+            }
+        }
+        
         return ProfileUserDetailsModel(fullName: fullName,
             firstName: firstName,
             lastName: lastName,
@@ -122,7 +169,12 @@ class ProfileUserDetailsModel: NSObject {
             coverPhoto: coverPhoto,
             gender: gender,
             birthdate: birthdate,
-            address: address)
+            address: address,
+            transactionCount: transactionCount,
+            wishlistCount: wishlistCount,
+            cartCount: cartCount,
+            messageCount: messageCount,
+            followingCount: followingCount)
     }
     
 

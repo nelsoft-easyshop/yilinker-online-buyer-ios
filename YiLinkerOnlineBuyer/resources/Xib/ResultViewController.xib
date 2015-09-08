@@ -13,6 +13,8 @@
                 <outlet property="sortPickerTableView" destination="Mkh-ce-Sbp" id="BV0-Gm-2OM"/>
                 <outlet property="sortView" destination="kDF-aw-IfE" id="5ql-O6-eg7"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+                <outlet property="viewTypeImageView" destination="LQg-Th-BqY" id="ua4-v0-WEB"/>
+                <outlet property="viewTypeLabel" destination="tRo-Hp-AyU" id="fz2-KG-DlF"/>
                 <outlet property="viewTypeView" destination="ZPP-O9-wIk" id="qsp-Ny-0xy"/>
             </connections>
         </placeholder>

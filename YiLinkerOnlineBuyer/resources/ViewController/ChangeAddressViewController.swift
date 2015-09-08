@@ -34,9 +34,8 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
         
         self.titleView()
         self.backButton()
-
+        //self.view.layoutIfNeeded()
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-        layout.itemSize = CGSize(width: self.view.frame.size.width - 20, height: 79)
         layout.minimumLineSpacing = 20
         layout.footerReferenceSize = CGSizeMake(self.collectionView.frame.size.width, 41)
         collectionView.collectionViewLayout = layout
@@ -360,5 +359,9 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
                 self.hud?.hide(true)
         })
         
+    }
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+        return CGSize(width: self.view.frame.size.width - 20, height: 90)
     }
 }
