@@ -356,6 +356,9 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             SessionManager.setFullAddress("\(self.profileModel.address.barangay) \(self.profileModel.address.unitNumber) \(self.profileModel.address.subdivision) \(self.profileModel.address.streetNumber) \(self.profileModel.address.streetAddress) \(self.profileModel.address.streetName) \(self.profileModel.address.buildingName)")
             SessionManager.setUserFullName(self.profileModel.fullName)
             SessionManager.setAddressId(self.profileModel.address.userAddressId)
+            SessionManager.setCartCount(self.profileModel.cartCount)
+            SessionManager.setWishlistCount(self.profileModel.wishlistCount)
+            self.updateTabBarBadge()
                 
             self.hud?.hide(true)
             }, failure: {
@@ -370,6 +373,22 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                 
                 self.hud?.hide(true)
         })
+    }
+    
+    func updateTabBarBadge() {
+        if SessionManager.wishlistCount() != 0 {
+            let badgeValue = (self.tabBarController!.tabBar.items![3] as! UITabBarItem).badgeValue?.toInt()
+            (self.tabBarController!.tabBar.items![3] as! UITabBarItem).badgeValue = "\(SessionManager.wishlistCount())"
+        } else {
+            (self.tabBarController!.tabBar.items![3] as! UITabBarItem).badgeValue = nil
+        }
+        
+        if SessionManager.cartCount() != 0 {
+            let badgeValue = (self.tabBarController!.tabBar.items![4] as! UITabBarItem).badgeValue?.toInt()
+            (self.tabBarController!.tabBar.items![4] as! UITabBarItem).badgeValue = "\(SessionManager.cartCount())"
+        } else {
+            (self.tabBarController!.tabBar.items![4] as! UITabBarItem).badgeValue = nil
+        }
     }
     
     func fireRefreshToken() {
