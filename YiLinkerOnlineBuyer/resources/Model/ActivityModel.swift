@@ -16,4 +16,32 @@ class ActivityModel: NSObject {
         self.time = time
         self.details = details
     }
+    
+    init(time: String) {
+        self.time = time
+    }
+    
+    class func parsaDataFromDictionary(dictionary: AnyObject) -> ActivityModel! {
+        
+        var time: String = ""
+        var details: String = ""
+        if dictionary.isKindOfClass(NSDictionary){
+            let date: NSDictionary = dictionary["date"] as! NSDictionary
+            if let value = date["date"] as? String {
+                time = value
+            }
+            
+            if let text = dictionary["text"] as? String {
+                details = text
+            }
+            
+//            println("date \(time) details \(details)")
+            
+        }
+        
+        let activityModel = ActivityModel(time: time, details: details)
+        
+        return activityModel
+        
+    }
 }
