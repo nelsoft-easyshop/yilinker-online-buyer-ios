@@ -355,7 +355,6 @@
 		F7CCDA901B943CBB000F5AD4 /* MessagingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7CCDA801B943CBB000F5AD4 /* MessagingViewController.xib */; };
 		F7CCDA921B943CBB000F5AD4 /* PaymentViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7CCDA821B943CBB000F5AD4 /* PaymentViewController.xib */; };
 		F7CCDA931B943CBB000F5AD4 /* ProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7CCDA831B943CBB000F5AD4 /* ProfileViewController.xib */; };
-		F7CCDA941B943CBB000F5AD4 /* ResultViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7CCDA841B943CBB000F5AD4 /* ResultViewController.xib */; };
 		F7CCDA951B943CBB000F5AD4 /* SellerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7CCDA851B943CBB000F5AD4 /* SellerViewController.xib */; };
 		F7CCDA961B943CBB000F5AD4 /* SummaryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7CCDA861B943CBB000F5AD4 /* SummaryViewController.xib */; };
 		F7CCDA971B943CBB000F5AD4 /* TodaysPromoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7CCDA871B943CBB000F5AD4 /* TodaysPromoViewController.xib */; };
@@ -741,7 +740,6 @@
 		F7CCDA801B943CBB000F5AD4 /* MessagingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MessagingViewController.xib; path = YiLinkerOnlineBuyer/resources/ViewController/MessagingViewController.xib; sourceTree = SOURCE_ROOT; };
 		F7CCDA821B943CBB000F5AD4 /* PaymentViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PaymentViewController.xib; path = YiLinkerOnlineBuyer/resources/ViewController/PaymentViewController.xib; sourceTree = SOURCE_ROOT; };
 		F7CCDA831B943CBB000F5AD4 /* ProfileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProfileViewController.xib; path = YiLinkerOnlineBuyer/resources/ViewController/ProfileViewController.xib; sourceTree = SOURCE_ROOT; };
-		F7CCDA841B943CBB000F5AD4 /* ResultViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ResultViewController.xib; path = YiLinkerOnlineBuyer/resources/ViewController/ResultViewController.xib; sourceTree = SOURCE_ROOT; };
 		F7CCDA851B943CBB000F5AD4 /* SellerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SellerViewController.xib; path = YiLinkerOnlineBuyer/resources/ViewController/SellerViewController.xib; sourceTree = SOURCE_ROOT; };
 		F7CCDA861B943CBB000F5AD4 /* SummaryViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SummaryViewController.xib; path = YiLinkerOnlineBuyer/resources/ViewController/SummaryViewController.xib; sourceTree = SOURCE_ROOT; };
 		F7CCDA871B943CBB000F5AD4 /* TodaysPromoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TodaysPromoViewController.xib; path = YiLinkerOnlineBuyer/resources/ViewController/TodaysPromoViewController.xib; sourceTree = SOURCE_ROOT; };
@@ -1004,8 +1002,6 @@
 				0C99370F1B750583000D6074 /* FullImageCollectionViewCell.swift */,
 				F7CCDA9C1B943CF7000F5AD4 /* GeneralRatingTableViewCell.swift */,
 				0C9937101B750583000D6074 /* GenericCollectionViewCell.swift */,
-				F7DEF9BF1B90941500993F33 /* GuestCheckoutHeaderTableViewCell.swift */,
-				F7DEF9BB1B90939100993F33 /* GuestCheckoutTableViewCell.swift */,
 				0C9937111B750583000D6074 /* HalfVerticalImageCollectionViewCell.swift */,
 				0C9937121B750583000D6074 /* HomePageCollectionViewLayout.swift */,
 				0C9937131B750583000D6074 /* LayoutHeaderCollectionViewCell.swift */,
@@ -1080,12 +1076,11 @@
 			isa = PBXGroup;
 			children = (
 				B77B8DBD1B9B539D0002C513 /* Messaging */,
-				F7B279F01B90B38C003CEE5E /* _GuestCheckoutContainerViewController.swift */,
 				961BE59D1B994B2900E8631A /* ResolutionCenterViewController.swift */,
 				961BE59F1B994B7D00E8631A /* DisputeViewController.swift */,
 				961BE5A11B994B9500E8631A /* CaseDetailsTableViewController.swift */,
 				961BE5A31B994BB600E8631A /* ResolutionFilterViewController.swift */,
-				F7B279F01B90B38C003CEE5E /* GuestCheckoutContainerViewController.swift */,
+				F7B279F01B90B38C003CEE5E /* _GuestCheckoutContainerViewController.swift */,
 				79E85FC91B8A1E0800428AA1 /* ActivityLogTableViewController.swift */,
 				0C1003F61B87690300CAA17A /* AddAddressTableViewController.swift */,
 				79F417741B7C3ADB0047D02D /* CartProductAttributeViewController.swift */,
@@ -1160,7 +1155,6 @@
 				F7CCDA801B943CBB000F5AD4 /* MessagingViewController.xib */,
 				F7CCDA821B943CBB000F5AD4 /* PaymentViewController.xib */,
 				F7CCDA831B943CBB000F5AD4 /* ProfileViewController.xib */,
-				F7CCDA841B943CBB000F5AD4 /* ResultViewController.xib */,
 				F7CCDA851B943CBB000F5AD4 /* SellerViewController.xib */,
 				F7CCDA861B943CBB000F5AD4 /* SummaryViewController.xib */,
 				F7CCDA871B943CBB000F5AD4 /* TodaysPromoViewController.xib */,
@@ -1541,7 +1535,6 @@
 				F7CCDA8A1B943CBB000F5AD4 /* CategoriesViewController.xib in Resources */,
 				F7CCDA921B943CBB000F5AD4 /* PaymentViewController.xib in Resources */,
 				0C374F331B88E3790050AE1D /* DeliverToTableViewCell.xib in Resources */,
-				F7CCDA941B943CBB000F5AD4 /* ResultViewController.xib in Resources */,
 				0C374F3A1B88E3790050AE1D /* ProductsTableViewCell.xib in Resources */,
 				79AA08351B8F4E6300AF3AA4 /* CartProductAttributeTableViewCell.xib in Resources */,
 				0C9937681B750583000D6074 /* ProductWithCenterNameCollectionViewCell.xib in Resources */,
