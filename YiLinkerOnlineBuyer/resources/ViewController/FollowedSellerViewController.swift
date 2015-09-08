@@ -58,7 +58,7 @@ class FollowedSellerViewController: UIViewController, EmptyViewDelegate {
         
         cell.selectionStyle = .None
         
-        cell.nameLabel.text = followedSellerModel.fullName[indexPath.row]
+        cell.nameLabel.text = followedSellerModel.storeName[indexPath.row]
         cell.specialtyLabel.text = String("Specialty: ") + followedSellerModel.specialty[indexPath.row]
         cell.setPicture(followedSellerModel.profileImageUrl[indexPath.row])
         cell.setRating(followedSellerModel.rating[indexPath.row])
@@ -70,6 +70,7 @@ class FollowedSellerViewController: UIViewController, EmptyViewDelegate {
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let seller = SellerViewController(nibName: "SellerViewController", bundle: nil)
+        seller.sellerId = self.followedSellerModel.id[indexPath.row]
         self.navigationController?.pushViewController(seller, animated: true)
     }
     
