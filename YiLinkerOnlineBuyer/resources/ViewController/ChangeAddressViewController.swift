@@ -299,6 +299,7 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
             "grant_type": Constants.Credentials.grantRefreshToken,
             "refresh_token": SessionManager.refreshToken()]
         let manager = APIManager.sharedInstance
+        self.showHUD()
         manager.POST(url, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
@@ -312,7 +313,7 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
             
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                SVProgressHUD.dismiss()
+                self.hud?.hide(true)
                 let alertController = UIAlertController(title: "Something went wrong", message: "", preferredStyle: .Alert)
                 let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
                 alertController.addAction(defaultAction)

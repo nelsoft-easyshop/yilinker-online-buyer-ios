@@ -17,7 +17,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var registerButton: DynamicRoundedButton!
     
     var currentTextFieldTag: Int = 1
-    
+    var hud: MBProgressHUD?
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
@@ -36,6 +36,20 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         self.view.layoutIfNeeded()
         self.setUpTextFields()
         self.registerButton.addTarget(self, action: "register", forControlEvents: UIControlEvents.TouchUpInside)
+    }
+    
+    //Show HUD
+    func showHUD() {
+        if self.hud != nil {
+            self.hud!.hide(true)
+            self.hud = nil
+        }
+        
+        self.hud = MBProgressHUD(view: self.view)
+        self.hud?.removeFromSuperViewOnHide = true
+        self.hud?.dimBackground = false
+        self.view.addSubview(self.hud!)
+        self.hud?.show(true)
     }
     
     override func viewDidLayoutSubviews() {
@@ -213,8 +227,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
     }
     
     func fireRegister() {
-        SVProgressHUD.show()
-        SVProgressHUD.setBackgroundColor(UIColor.whiteColor())
+        self.showHUD()
         let manager: APIManager = APIManager.sharedInstance
 
         let parameters: NSDictionary = ["email": self.emailAddressTextField.text,"password": self.passwordTextField.text, "firstName": self.firstNameTextField.text, "lastName": self.lastNameTextField.text]
@@ -226,7 +239,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
                     self.fireLogin(self.emailAddressTextField.text, password: self.passwordTextField.text, firstName: self.firstNameTextField.text, lastName: self.lastNameTextField.text)
                 } else {
                     UIAlertController.displayErrorMessageWithTarget(self, errorMessage: registerModel.message, title: "Error")
-                     SVProgressHUD.dismiss()
+                     self.hud?.hide(true)
                 }
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
@@ -238,7 +251,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
                     UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
                 }
                 
-                SVProgressHUD.dismiss()
+                self.hud?.hide(true)
         })
     }
     
@@ -247,12 +260,12 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         //seller@easyshop.ph
         //password
         let parameters: NSDictionary = ["email": self.emailAddressTextField.text,"password": self.passwordTextField.text, "client_id": Constants.Credentials.clientID, "client_secret": Constants.Credentials.clientSecret, "grant_type": Constants.Credentials.grantBuyer]
-        
+        self.showHUD()
         manager.POST(APIAtlas.loginUrl, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
-            SVProgressHUD.dismiss()
             self.showSuccessMessage()
+            self.hud?.hide(true)
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
@@ -263,7 +276,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
                     UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
                 }
                 
-                SVProgressHUD.dismiss()
+                self.hud?.hide(true)
         })
     }
     

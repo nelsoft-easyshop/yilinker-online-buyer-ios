@@ -387,7 +387,7 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
             "client_secret": Constants.Credentials.clientSecret,
             "grant_type": Constants.Credentials.grantRefreshToken,
             "refresh_token": SessionManager.refreshToken()]
-        
+        self.showHUD()
         let manager = APIManager.sharedInstance
         manager.POST(APIAtlas.loginUrl, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
@@ -400,7 +400,7 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
             
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                SVProgressHUD.dismiss()
+                self.hud?.hide(true)
                 let alertController = UIAlertController(title: "Something went wrong", message: "", preferredStyle: .Alert)
                 let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
                 alertController.addAction(defaultAction)
