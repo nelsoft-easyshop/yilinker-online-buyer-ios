@@ -12,6 +12,7 @@ class FollowedSellerViewController: UIViewController, EmptyViewDelegate {
 
     @IBOutlet weak var tableView: UITableView!
 
+    var hud: MBProgressHUD?
     var emptyView: EmptyView?
     var followedSellerModel: FollowedSellerModel!
     
@@ -41,6 +42,19 @@ class FollowedSellerViewController: UIViewController, EmptyViewDelegate {
     
     func backAction() {
         self.navigationController?.popViewControllerAnimated(true)
+    }
+    
+    func showHUD() {
+        if self.hud != nil {
+            self.hud!.hide(true)
+            self.hud = nil
+        }
+        
+        self.hud = MBProgressHUD(view: self.view)
+        self.hud?.removeFromSuperViewOnHide = true
+        self.hud?.dimBackground = false
+        self.view.addSubview(self.hud!)
+        self.hud?.show(true)
     }
     
     // MARK: - Table View Data Source
@@ -77,7 +91,7 @@ class FollowedSellerViewController: UIViewController, EmptyViewDelegate {
     // MARK: - Request
     
     func requestFollowedSelers() {
-        SVProgressHUD.show()
+        self.showHUD()
         
         let manager = APIManager.sharedInstance
         let url = "http://online.api.easydeal.ph/api/v1/auth/getFollowedSellers"
@@ -89,7 +103,7 @@ class FollowedSellerViewController: UIViewController, EmptyViewDelegate {
             
             self.followedSellerModel = FollowedSellerModel.parseDataWithDictionary(responseObject)
             self.tableView.reloadData()
-            SVProgressHUD.dismiss()
+            self.hud?.hide(true)
             
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
@@ -98,7 +112,7 @@ class FollowedSellerViewController: UIViewController, EmptyViewDelegate {
                     self.requestRefreshToken()
                 } else {
                     self.addEmptyView()
-                    SVProgressHUD.dismiss()
+                    self.hud?.hide(true)
                 }
         })
     }
@@ -119,7 +133,7 @@ class FollowedSellerViewController: UIViewController, EmptyViewDelegate {
 
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                SVProgressHUD.dismiss()
+                self.hud?.hide(true)
                 let alertController = UIAlertController(title: "Something went wrong", message: "", preferredStyle: .Alert)
                 let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
                 alertController.addAction(defaultAction)
