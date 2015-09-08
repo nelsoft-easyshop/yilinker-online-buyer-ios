@@ -185,6 +185,7 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
             hideSelf("done")
             if let delegate = self.delegate {
                 let quantity: Int = stocksLabel.text!.toInt()!
+                println(unitId)
                 delegate.doneActionPassDetailsToProductView(self, unitId: unitId, quantity: quantity, selectedId: selectedId)
             }
         } else {
@@ -496,18 +497,18 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
 
     // MARK: - Delegates
     
-    func passModel(#productDetailsModel: ProductDetailsModel, selectedValue: NSArray, selectedId: NSArray, unitId: Int, quantity: Int) {
-        let index: Int = unitId - 1
-        setDetail("", title: productDetailsModel.title, price: productDetailsModel.productUnits[index].price)
+    func passModel(#productDetailsModel: ProductDetailsModel, selectedValue: NSArray, selectedId: NSArray, unitIdIndex: Int, quantity: Int) {
+
+        setDetail("", title: productDetailsModel.title, price: productDetailsModel.productUnits[unitIdIndex].price)
         self.productDetailsModel = productDetailsModel
         self.attributes = productDetailsModel.attributes as [ProductAttributeModel]
         self.selectedId = selectedId as! [String]
         self.selectedValue = selectedValue as! [String]
-        self.unitId = String(unitId)
-        self.selectedCombination = productDetailsModel.productUnits[index].combination
+        self.unitId = productDetailsModel.productUnits[unitIdIndex].productUnitId
+        self.selectedCombination = productDetailsModel.productUnits[unitIdIndex].combination
         
-        self.maximumStock = productDetailsModel.productUnits[index].quantity
-        self.availabilityStocksLabel.text = "Available stocks : \(productDetailsModel.productUnits[index].quantity)"
+        self.maximumStock = productDetailsModel.productUnits[unitIdIndex].quantity
+        self.availabilityStocksLabel.text = "Available stocks : \(productDetailsModel.productUnits[unitIdIndex].quantity)"
         
         convertCombinationToString()
         println(combinationString)
