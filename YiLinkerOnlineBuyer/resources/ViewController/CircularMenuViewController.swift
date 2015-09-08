@@ -371,6 +371,8 @@ class CircularMenuViewController: UIViewController {
     
     @IBAction func menuClick(sender: UIButton) {
         let index: Int = sender.tag - 1
+        
+    
         self.customTabBarController?.isValidToSwitchToMenuTabBarItems = true
         if SessionManager.isLoggedIn() {
             
@@ -379,15 +381,22 @@ class CircularMenuViewController: UIViewController {
                 
             }
         }
-        println(index)
-        self.customTabBarController?.selectedIndex = 2
         
-        let navigationController: UINavigationController = self.customTabBarController!.viewControllers![2] as! UINavigationController
-        let hiddenViewController: HiddenViewController = navigationController.viewControllers[0] as! HiddenViewController
-        hiddenViewController.selectViewControllerAtIndex(index)
+        if !SessionManager.isLoggedIn() && index == 3 {
+            self.customTabBarController?.isValidToSwitchToMenuTabBarItems = false
+            self.dissmissViewControllerAnimated()
+        } else {
+            println(index)
+            self.customTabBarController?.selectedIndex = 2
+            
+            let navigationController: UINavigationController = self.customTabBarController!.viewControllers![2] as! UINavigationController
+            let hiddenViewController: HiddenViewController = navigationController.viewControllers[0] as! HiddenViewController
+            hiddenViewController.selectViewControllerAtIndex(index)
+            
+            self.customTabBarController?.isValidToSwitchToMenuTabBarItems = false
+            self.dissmissViewControllerAnimated()
+        }
         
-        self.customTabBarController?.isValidToSwitchToMenuTabBarItems = false
-        self.dissmissViewControllerAnimated()
     }
     
     //logout
