@@ -106,8 +106,15 @@ class HomePageProductModel: ProductModel {
                     imageURL = NSURL(string: "")!
                 }
             }
+           
             
-            if let val: AnyObject = dictionary["target"] {
+            if let val: AnyObject = dictionary["productId"] {
+                if let tempTarget = dictionary["productId"] as? String {
+                    target = tempTarget
+                } else {
+                    target = ""
+                }
+            } else if let val: AnyObject = dictionary["target"] {
                 if let tempTarget = dictionary["target"] as? String {
                     target = tempTarget
                 } else {
@@ -190,7 +197,13 @@ class HomePageProductModel: ProductModel {
                 }
             }
             
-            if let val: AnyObject = dictionary["target"] {
+            if let val: AnyObject = dictionary["productId"] {
+                if let tempTarget = dictionary["productId"] as? String {
+                    target = tempTarget
+                } else {
+                    target = ""
+                }
+            } else if let val: AnyObject = dictionary["target"] {
                 if let tempTarget = dictionary["target"] as? String {
                     target = tempTarget
                 } else {
