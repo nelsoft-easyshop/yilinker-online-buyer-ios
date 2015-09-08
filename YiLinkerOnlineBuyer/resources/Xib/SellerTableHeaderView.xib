@@ -27,7 +27,10 @@
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="A7W-DK-e0C" customClass="DynamicRoundedButton" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
                             <rect key="frame" x="248" y="13" width="99" height="30"/>
-                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="12"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="99" id="p0v-nH-TX5"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="10"/>
                             <state key="normal" title="VIEW FEEDBACK">
                                 <color key="titleColor" red="0.37647058820000001" green="0.37647058820000001" blue="0.37647058820000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -52,8 +55,9 @@
                             <color key="backgroundColor" red="0.35294117650000001" green="0.1215686275" blue="0.45882352939999999" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="30" id="GaB-cL-b2j"/>
+                                <constraint firstAttribute="width" constant="99" id="VdW-6E-vWk"/>
                             </constraints>
-                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="13"/>
+                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="10"/>
                             <state key="normal" title="FOLLOW">
                                 <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -77,7 +81,6 @@
                         <constraint firstItem="FVH-bQ-Krq" firstAttribute="top" secondItem="ZNJ-PV-8GZ" secondAttribute="top" constant="13" id="MDB-w3-rtW"/>
                         <constraint firstAttribute="bottom" secondItem="A7W-DK-e0C" secondAttribute="bottom" constant="13" id="MlY-GY-fXm"/>
                         <constraint firstAttribute="bottom" secondItem="FVH-bQ-Krq" secondAttribute="bottom" constant="13" id="Mlp-e9-SeB"/>
-                        <constraint firstItem="A7W-DK-e0C" firstAttribute="width" secondItem="FVH-bQ-Krq" secondAttribute="width" id="fkp-zZ-erq"/>
                         <constraint firstAttribute="trailing" secondItem="A7W-DK-e0C" secondAttribute="trailing" constant="8" id="gsh-7R-BHN"/>
                         <constraint firstItem="A7W-DK-e0C" firstAttribute="top" secondItem="ZNJ-PV-8GZ" secondAttribute="top" constant="13" id="vTn-RM-nY2"/>
                     </constraints>
