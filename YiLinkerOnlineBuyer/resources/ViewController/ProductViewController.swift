@@ -33,7 +33,6 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     var productSellerView: ProductSellerView!
     
     let manager = APIManager.sharedInstance
-    
     var productDetailsModel: ProductDetailsModel!
     var attributes: [ProductAttributeModel] = []
     var combinations: [ProductAvailableAttributeCombinationModel] = []
@@ -44,13 +43,11 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     var selectedValue: [String] = []
     var selectedId: [String] = []
     
-    var unitId: String = "1"
-    var productId: String = "0"
-    var quantity: Int = 1
-    
     var newFrame: CGRect!
     var visibility = 0.0
     var lastContentOffset: CGFloat = 0.0
+    
+    // MARK: Request Checker
     
     var productRequest = false
     var reviewRequest = false
@@ -66,6 +63,14 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     var hud: MBProgressHUD?
     
     var tabController = CustomTabBarController()
+    
+    var unitIdIndex: Int = 0
+    
+    // MARK: Parameters
+    
+    var unitId: String = "0"
+    var productId: String = "0"
+    var quantity: Int = 1
     
     // MARK: - View Life Cycle
     
@@ -304,6 +309,9 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
             if responseObject["isSuccessful"] as! Bool {
                 self.productDetailsModel = ProductDetailsModel.parseDataWithDictionary(responseObject)
                 self.productId = self.productDetailsModel.id
+                self.unitId = self.productDetailsModel.productUnits[0].productUnitId
+                
+                self.getUnitIdIndexFrom()
                 
                 self.attributes = self.productDetailsModel.attributes
                 self.requestSellerDetails()
@@ -615,10 +623,11 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         self.getFooterView().addSubview(self.getProductReviewFooterView())
         self.getFooterView().addSubview(self.getProductSellerView())
         
-        self.productImagesView.setDetails(self.productDetailsModel, unitId: unitId.toInt()!, width: self.view.frame.size.width)
+        self.productImagesView.setDetails(self.productDetailsModel, unitId: unitIdIndex, width: self.view.frame.size.width)
         //        self.setDetails(productDetailsModel.details)
         self.setDetails(["Free Shipping"])
-        self.setAttributes(self.productDetailsModel.attributes, productUnits: self.productDetailsModel.productUnits, unitId: "1", quantity: 0)
+        
+        self.setAttributes(self.productDetailsModel.attributes, productUnits: self.productDetailsModel.productUnits, unitId: self.unitId, quantity: 1)
         self.productDescriptionView.setDescription(productDetailsModel.shortDescription, full: productDetailsModel.fullDescription)
         
         
@@ -669,6 +678,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     }
     
     func setAttributes(attributes: [ProductAttributeModel], productUnits: [ProductUnitsModel], unitId: String, quantity: Int) {
+        println("unit id >>> \(unitId)")
         
         for view in self.productAttributeView.subviews {
             if view is UILabel {
@@ -689,11 +699,10 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
             selectedValue.append(String(quantity) + "x")
         }
         
-        let index: Int = unitId.toInt()! - 1
-        println(index)
+        self.getUnitIdIndexFrom()
         for i in 0..<attributes.count {
             for j in 0..<attributes[i].valueId.count {
-                if productUnits[index].combination[i] == attributes[i].valueId[j] {
+                if productUnits[self.unitIdIndex].combination[i] == attributes[i].valueId[j] {
                     selectedName.append(attributes[i].attributeName)
                     selectedId.append(attributes[i].valueId[j])
                     selectedValue.append(attributes[i].valueName[j])
@@ -702,23 +711,6 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         }
 
         createAttributesLabel(selectedName.count, name: selectedName, value: selectedValue)
-        
-//        var tempSelectedName: [String] = ["Quantity"]
-//        var tempSelectedValue: [String] = [String(quantity) + "x"]
-//        var tempSelectedId: [String] = [""]
-//        
-//        for i in 0..<self.selectedName.count {
-//            tempSelectedName.append(selectedName[i])
-//            tempSelectedValue.append(selectedValue[i])
-//        }
-//        
-//        if quantity == 0 {
-//            createAttributesLabel(selectedName.count, name: selectedName, value: selectedValue)
-//        } else if quantity > 0 {
-//            createAttributesLabel(selectedName.count + 1, name: tempSelectedName, value: tempSelectedValue)
-//        } else {
-//            println("ProductViewController - setAttributes")
-//        }
     }
     
     func createAttributesLabel(numberOfAttributes: Int, name: NSArray, value: NSArray) {
@@ -802,8 +794,14 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         (self.tabController.tabBar.items![4] as! UITabBarItem).badgeValue = String(items)
     }
     
-    func getThisProductFromCart() {
+    func getUnitIdIndexFrom() {
         
+        for i in 0..<self.productDetailsModel.productUnits.count {
+            if self.unitId == self.productDetailsModel.productUnits[i].productUnitId {
+                self.unitIdIndex = i
+                break
+            }
+        }
     }
     
     // MARK: - Product View Delegate
@@ -836,7 +834,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         attributeModal.definesPresentationContext = true
         attributeModal.view.backgroundColor = UIColor.clearColor()
         attributeModal.view.frame.origin.y = attributeModal.view.frame.size.height
-        attributeModal.passModel(productDetailsModel: productDetailsModel, selectedValue: selectedValue, selectedId: selectedId, unitId: unitId.toInt()!, quantity: self.quantity)
+        attributeModal.passModel(productDetailsModel: productDetailsModel, selectedValue: selectedValue, selectedId: selectedId, unitIdIndex: unitIdIndex, quantity: self.quantity)
         attributeModal.setTitle = title
         attributeModal.tabController = self.tabController
         attributeModal.screenWidth = self.view.frame.width
@@ -886,18 +884,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     }
 
     func gotoCheckoutFromAttributes(controller: ProductAttributeViewController) {
-        if SessionManager.isLoggedIn() {
-            let checkout = CheckoutContainerViewController(nibName: "CheckoutContainerViewController", bundle: nil)
-            let navigationController: UINavigationController = UINavigationController(rootViewController: checkout)
-            navigationController.navigationBar.barTintColor = Constants.Colors.appTheme
-            self.tabBarController?.presentViewController(navigationController, animated: true, completion: nil)
-        } else {
-            /*let checkout = GuestCheckoutContainerViewController(nibName: "GuestCheckoutContainerViewController", bundle: nil)
-            //self.navigationController?.pushViewController(checkout, animated: true)
-            let navigationController: UINavigationController = UINavigationController(rootViewController: checkout)
-            navigationController.navigationBar.barTintColor = Constants.Colors.appTheme
-            self.tabBarController?.presentViewController(navigationController, animated: true, completion: nil)*/
-        }
+        self.buyItNowAction(UIGestureRecognizer())
     }
     
     // MARK: - Product Review Delegate
