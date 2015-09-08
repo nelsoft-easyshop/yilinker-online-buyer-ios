@@ -315,7 +315,6 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         self.showHUD()
         manager.POST(APIAtlas.getUserInfoUrl, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            SVProgressHUD.dismiss()
             let dictionary: NSDictionary = responseObject as! NSDictionary
             self.profileModel = ProfileUserDetailsModel.parseDataWithDictionary(dictionary["data"]!)
             //Insert Data to Session Manager
@@ -343,19 +342,18 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         //seller@easyshop.ph
         //password
         let parameters: NSDictionary = ["client_id": Constants.Credentials.clientID, "client_secret": Constants.Credentials.clientSecret, "grant_type": Constants.Credentials.grantRefreshToken, "refresh_token":  SessionManager.refreshToken()]
-        SVProgressHUD.show()
+        self.showHUD()
         manager.POST(APIAtlas.refreshTokenUrl, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            SVProgressHUD.dismiss()
             SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
-            self.fireGetUserInfo()
+            self.hud?.hide(true)
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
             
                 UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
                 
-                SVProgressHUD.dismiss()
+                self.hud?.hide(true)
         })
 
     }
