@@ -15,6 +15,7 @@ class NewSellerCollectionViewCell: UICollectionViewCell {
     
     var target: String = ""
     var targetType: String = ""
+    var userId: Int = 0
     
     var productModel: HomePageProductModel?
     

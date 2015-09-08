@@ -20,6 +20,7 @@ class SellerModel: NSObject {
     var sellerAbout: String = ""
     var moreSellertarget: String = ""
     var reviews: [ProductReviewsModel] = [ProductReviewsModel]()
+    var userId: Int = 0
     
     //For seller
     var email: String = ""
@@ -44,6 +45,15 @@ class SellerModel: NSObject {
         self.specialty = specialty
         self.target = target
         self.products = products
+    }
+    
+    init(name: String, avatar: NSURL, specialty: String, target: String, products: [HomePageProductModel], userId: Int) {
+        self.name = name
+        self.avatar = avatar
+        self.specialty = specialty
+        self.target = target
+        self.products = products
+        self.userId = userId
     }
     
     init(name: String, avatar: NSURL, specialty: String, target: String, products: [HomePageProductModel], address: String, coverPhoto: NSURL, ratingAndFeedback: Int,
@@ -296,7 +306,7 @@ class SellerModel: NSObject {
         var sellerAbout: String = ""
         var moreSellertarget: String = ""
         var reviews: [ProductReviewsModel] = [ProductReviewsModel]()
-        
+        var userId: Int = 0
         
         if let tempSellerAvatar = dictionary["image"] as? String {
             avatar = NSURL(string: tempSellerAvatar)!
@@ -362,6 +372,12 @@ class SellerModel: NSObject {
             }
         }
         
+        if let val: AnyObject = dictionary["userId"] {
+            if let tempUserId = dictionary["userId"] as? Int {
+                userId = tempUserId
+            }
+        }
+        
         if let val: AnyObject = dictionary["reviews"] {
             var reviewArray: NSArray = dictionary["reviews"] as! NSArray
             
@@ -376,7 +392,7 @@ class SellerModel: NSObject {
             let sellerModel: SellerModel = SellerModel(name: name, avatar: avatar, specialty: specialty, target: target, products: homePageProductModels, address: address, coverPhoto: sellerCoverPhoto, ratingAndFeedback: ratingAndFeedback, sellerAbout: sellerAbout, moreSellertarget: moreSellertarget, reviews: reviews)
             return sellerModel
         } else {
-            let sellerModel: SellerModel = SellerModel(name: name, avatar: avatar, specialty: specialty, target: target, products: homePageProductModels)
+            let sellerModel: SellerModel = SellerModel(name: name, avatar: avatar, specialty: specialty, target: target, products: homePageProductModels, userId: userId)
             return sellerModel
         }
     }

@@ -359,18 +359,17 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
         } else if layouts[indexPath.section] == Constants.HomePage.layoutNineKey {
             let scrollableCell: NewSellerScrollableCollectionViewCell = self.collectionView?.dequeueReusableCellWithReuseIdentifier("NewSellerScrollableCollectionViewCell", forIndexPath: indexPath) as! NewSellerScrollableCollectionViewCell
             
-            var productHomeModels: [HomePageProductModel] = [HomePageProductModel]()
-            let products: NSArray = self.dictionary["newSellers"] as! NSArray
+            var sellerModels: [SellerModel] = [SellerModel]()
+            let sellers: NSArray = self.dictionary["newSellers"] as! NSArray
             
-            for (index, product) in enumerate(products) {
-                let productDictionary: NSDictionary = product as! NSDictionary
-                let productModel = HomePageProductModel.parseDataWithDictionary(productDictionary)
-                productHomeModels.append(productModel)
+            for (index, seller) in enumerate(sellers) {
+                let sellerDictionary: NSDictionary = seller as! NSDictionary
+                let sellerModel = SellerModel.parseDataFromDictionary(sellerDictionary)
+                sellerModels.append(sellerModel)
             }
             
             scrollableCell.delegate = self
-            scrollableCell.productModels = productHomeModels
-            
+            scrollableCell.sellerModels = sellerModels
             return scrollableCell
         } else if layouts[indexPath.section] == Constants.HomePage.layoutTenKey {
             let sellerCollectionView: SellerCollectionViewCell = self.collectionView?.dequeueReusableCellWithReuseIdentifier("SellerCollectionViewCell", forIndexPath: indexPath) as! SellerCollectionViewCell
@@ -398,8 +397,7 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
                 sellerCollectionView.productThreeImageView.target = sellerModel.products[2].target
                 sellerCollectionView.productThreeImageView.targetType = sellerModel.products[2].targetType
             }
-
-            
+            sellerCollectionView.userId = sellerModel.userId
             sellerCollectionView.delegate = self
             
             sellerCollectionView.targetType = "Go to Seller!"
@@ -556,18 +554,15 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
             let sellerCollectionViewCell: SellerCollectionViewCell = cell as! SellerCollectionViewCell
             println("Target: \(sellerCollectionViewCell.target)")
             println("Target type: \(sellerCollectionViewCell.targetType)")
-            self.redirectToSellerWithID(sellerCollectionViewCell.target)
         }
-    
     }
     
     func didSelectectCellWithTarget(target: String, targetType: String) {
         self.redirectToResultView(target, targetType: TargetType.CategoryViewMoreItems)
     }
     
-    func didSelectSellerCellWithTarget(target: String, targetType: String) {
-        println("target: \(target) \ntarget type:\(targetType)")
-        self.redirectToSellerWithID("asdasdas3w")
+    func didSelectSellerCellWithTarget(target: String, targetType: String, userId: Int) {
+        self.redirectToSellerWithID(userId)
     }
     
     func didSelectViewMoreWithtarget(target: String, targetType: TargetType) {
@@ -593,8 +588,9 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
         self.navigationController?.pushViewController(productViewController, animated: true)
     }
     
-    func redirectToSellerWithID(sellerID: String) {
+    func redirectToSellerWithID(sellerID: Int) {
         let sellerViewController: SellerViewController = SellerViewController(nibName: "SellerViewController", bundle: nil)
+        sellerViewController.sellerId = sellerID
         self.navigationController!.pushViewController(sellerViewController, animated: true)
     }
 }
