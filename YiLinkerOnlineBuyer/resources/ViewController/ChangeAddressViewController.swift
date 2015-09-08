@@ -362,6 +362,6 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        return CGSize(width: self.view.frame.size.width - 20, height: 79)
+        return CGSize(width: self.view.frame.size.width - 20, height: 90)
     }
 }
