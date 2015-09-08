@@ -50,7 +50,42 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         } else {
             self.addEmptyView()
         }
+        
+        /*
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "onRegistration:",
+            name: appDelegate.registrationKey, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "receivedMessage:",
+            name: appDelegate.messageKey, object: nil)
+        */
     }
+    
+    /*
+    
+    func onRegistration(notification: NSNotification){
+        if let info = notification.userInfo as? Dictionary<String,String> {
+            if let error = info["error"] {
+                showAlert("Error registering with GCM", message: error)
+            } else if let registrationToken = info["registrationToken"] {
+                let message = "Check the xcode debug console for the registration token for the server to send notifications to your device"
+                self.fireCreateRegistration(registrationToken)
+                showAlert("Registration Successful!", message: message)
+            }
+        }
+    }
+    
+    func showAlert(title:String, message:String) {
+        let alert = UIAlertController(title: title,
+            message: message, preferredStyle: .Alert)
+        let dismissAction = UIAlertAction(title: "Dismiss", style: .Destructive, handler: nil)
+        alert.addAction(dismissAction)
+        self.presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    func receivedMessage(notification : NSNotification){
+        //action here to open messaging
+    }
+
+    */
     
     func addEmptyView() {
         if self.emptyView == nil {
@@ -371,4 +406,6 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         self.view.addSubview(self.hud!)
         self.hud?.show(true)
     }
+    
+    
 }

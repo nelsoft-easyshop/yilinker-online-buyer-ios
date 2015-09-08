@@ -13,7 +13,7 @@ class HiddenViewController: UIViewController {
     var helpViewController: HelpViewController?
     var registerViewController: RegisterViewController?
     var loginViewController: LoginViewController?
-    var messagingViewController: MessagingViewController?
+    var messagingViewController: ConversationVC?
     var customizeShoppingViewController: CustomizeShoppingViewController?
     var resultViewController: ResultViewController?
     var categoriesViewController: CategoriesViewController?
@@ -118,11 +118,14 @@ class HiddenViewController: UIViewController {
         if SessionManager.isLoggedIn() {
             self.helpViewController = HelpViewController(nibName: "HelpViewController", bundle: nil)
             self.followedSellerViewController = FollowedSellerViewController(nibName: "FollowedSellerViewController", bundle: nil)
-            self.messagingViewController = MessagingViewController(nibName: "MessagingViewController", bundle: nil)
+
+            let storyBoard: UIStoryboard = UIStoryboard(name: "HomeStoryBoard", bundle: nil)
+            self.messagingViewController = storyBoard.instantiateViewControllerWithIdentifier("ConversationVC") as? ConversationVC
             self.customizeShoppingViewController = CustomizeShoppingViewController(nibName: "CustomizeShoppingViewController", bundle: nil)
             self.resultViewController = ResultViewController(nibName: "ResultViewController", bundle: nil)
             self.categoriesViewController = CategoriesViewController(nibName: "CategoriesViewController", bundle: nil)
             self.profileViewController = ProfileViewController(nibName: "ProfileViewController", bundle: nil)
+            //ConversationVC
             
             self.viewControllers.append(self.helpViewController!)
             self.viewControllers.append(self.followedSellerViewController!)
@@ -140,7 +143,8 @@ class HiddenViewController: UIViewController {
             
             self.loginViewController =  storyBoard.instantiateViewControllerWithIdentifier("LoginViewController") as? LoginViewController
             
-            self.messagingViewController = MessagingViewController(nibName: "MessagingViewController", bundle: nil)
+            let storyBoard1: UIStoryboard = UIStoryboard(name: "HomeStoryBoard", bundle: nil)
+            self.messagingViewController = storyBoard1.instantiateViewControllerWithIdentifier("ConversationVC") as? ConversationVC
             self.customizeShoppingViewController = CustomizeShoppingViewController(nibName: "CustomizeShoppingViewController", bundle: nil)
             self.resultViewController = ResultViewController(nibName: "ResultViewController", bundle: nil)
             self.categoriesViewController = CategoriesViewController(nibName: "CategoriesViewController", bundle: nil)
