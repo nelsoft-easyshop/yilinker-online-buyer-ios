@@ -10,6 +10,7 @@
                 <outlet property="resultCollectionView" destination="LgG-iv-oKa" id="RdW-iY-6SE"/>
                 <outlet property="sortView" destination="kDF-aw-IfE" id="5ql-O6-eg7"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+                <outlet property="viewTypeImageView" destination="LQg-Th-BqY" id="GK5-po-h4g"/>
                 <outlet property="viewTypeView" destination="ZPP-O9-wIk" id="qsp-Ny-0xy"/>
             </connections>
         </placeholder>
