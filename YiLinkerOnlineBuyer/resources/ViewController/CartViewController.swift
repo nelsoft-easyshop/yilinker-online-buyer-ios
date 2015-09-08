@@ -26,9 +26,11 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
     //formatter of Text to remove trailing decimal
     let formatter = NSNumberFormatter()
     
-     var emptyView: EmptyView?
+    var emptyView: EmptyView?
     
     var selectedItemIDs: [Int] = []
+    
+    var hud: MBProgressHUD?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,7 +47,7 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         formatter.minimumFractionDigits = 0
         formatter.maximumFractionDigits = 2
-    
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -77,9 +79,6 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
     //
     
     func getCartData() {
-        tableData = []
-        cartTableView.reloadData()
-        cartCounterLabel.text = ""
         
         if Reachability.isConnectedToNetwork() {
             requestProductDetails(APIAtlas.cartUrl, params: NSDictionary(dictionary: ["access_token": SessionManager.accessToken()]))
@@ -91,19 +90,31 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
     func firePassCartItem(url: String, params: NSDictionary!) {
         showLoader()
         manager.POST(url, parameters: params, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in print(responseObject as! NSDictionary)
-            if responseObject.objectForKey("error") != nil {
-                self.requestRefreshToken("passCart", url: url, params: params)
-            } else {
-                let checkout = CheckoutContainerViewController(nibName: "CheckoutContainerViewController", bundle: nil)
-                let navigationController: UINavigationController = UINavigationController(rootViewController: checkout)
-                navigationController.navigationBar.barTintColor = Constants.Colors.appTheme
-                self.tabBarController?.presentViewController(navigationController, animated: true, completion: nil)
-                self.dismissLoader()
-            }
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!)in
+                var array: [CartProductDetailsModel] = []
+                //println(responseObject)
+                if let value: AnyObject = responseObject["data"] {
+                    for subValue in responseObject["data"] as! NSArray {
+                        //println(subValue)
+                        let model: CartProductDetailsModel = CartProductDetailsModel.parseDataWithDictionary(subValue as! NSDictionary)
+                        array.append(model)
+                    }
+                }
+                
+                if responseObject.objectForKey("error") != nil {
+                    self.requestRefreshToken("passCart", url: url, params: params)
+                } else {
+                    let checkout = CheckoutContainerViewController(nibName: "CheckoutContainerViewController", bundle: nil)
+                    checkout.carItems = array
+                    checkout.totalPrice = self.totalPriceLabel.text!
+                    let navigationController: UINavigationController = UINavigationController(rootViewController: checkout)
+                    navigationController.navigationBar.barTintColor = Constants.Colors.appTheme
+                    self.tabBarController?.presentViewController(navigationController, animated: true, completion: nil)
+                    self.dismissLoader()
+                }
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                println(error)
+                //println(error)
                 UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong. . .", title: "Error")
                 self.dismissLoader()
         })
@@ -152,6 +163,7 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
                 self.requestRefreshToken("getCart", url: url, params: params)
             } else {
                 self.populateTableView(responseObject)
+                
             }
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
@@ -163,11 +175,21 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     func populateTableView(responseObject: AnyObject) {
         tableData.removeAll(keepCapacity: false)
+        cartTableView.reloadData()
+        cartCounterLabel.text = ""
         if let value: AnyObject = responseObject["data"] {
             for subValue in value["items"] as! NSArray {
-                println(subValue)
+                //println(subValue)
                 let model: CartProductDetailsModel = CartProductDetailsModel.parseDataWithDictionary(subValue as! NSDictionary)
                 
+                model.selected = true
+                
+                let tempItemId = model.itemId
+                if model.selected {
+                    selectedItemIDs.append(tempItemId)
+                } else {
+                    selectedItemIDs = selectedItemIDs.filter({$0 != tempItemId})
+                }
                 self.tableData.append(model)
             }
             self.cartTableView.reloadData()
@@ -194,13 +216,22 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     
     //Loader function
+    //Loader function
     func showLoader() {
-        SVProgressHUD.show()
-        SVProgressHUD.setBackgroundColor(UIColor.whiteColor())
+        if self.hud != nil {
+            self.hud!.hide(true)
+            self.hud = nil
+        }
+        
+        self.hud = MBProgressHUD(view: self.view)
+        self.hud?.removeFromSuperViewOnHide = true
+        self.hud?.dimBackground = false
+        self.view.addSubview(self.hud!)
+        self.hud?.show(true)
     }
     
     func dismissLoader() {
-        SVProgressHUD.dismiss()
+        self.hud?.hide(true)
     }
     
     func calculateTotalPrice() {
@@ -208,7 +239,7 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
         for tempModel in tableData {
             if tempModel.selected {
                 for tempProductUnit in tempModel.productUnits {
-                     if tempModel.unitId == tempProductUnit.productUnitId {
+                    if tempModel.unitId == tempProductUnit.productUnitId {
                         let discountedPrice = (tempProductUnit.discountedPrice as NSString).doubleValue
                         let quantity = Double(tempModel.quantity)
                         totalPrice = totalPrice + (quantity * discountedPrice)
@@ -220,7 +251,7 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     
-
+    
     // MARK: - Table View Delegate
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.tableData.count
@@ -231,10 +262,10 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
         //Set cell data
         var tempModel: CartProductDetailsModel = tableData[indexPath.row]
         
-        cell.checkBox.selected = false
-        cell.checkBox.backgroundColor = UIColor.whiteColor()
-        cell.checkBox.layer.borderWidth = 1
-        cell.checkBox.layer.borderColor = UIColor.darkGrayColor().CGColor
+        cell.checkBox.selected = true
+        cell.checkBox.backgroundColor = UIColor(red: 68/255.0, green: 164/255.0, blue: 145/255.0, alpha: 1.0)
+        cell.checkBox.layer.borderWidth = 0
+        cell.checkBox.layer.borderColor = UIColor.whiteColor().CGColor
         
         for tempProductUnit in tempModel.productUnits {
             if tempModel.unitId == tempProductUnit.productUnitId {
@@ -305,9 +336,9 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
                 selectedProductUnits = tempProductUnit
             }
         }
-
         
-        println(selectedValue)
+        
+        //println(selectedValue)
         
         var attributeModal = CartProductAttributeViewController(nibName: "CartProductAttributeViewController", bundle: nil)
         attributeModal.delegate = self
@@ -330,26 +361,26 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
     func editButtonActionForIndex(sender: AnyObject){
         /*
         if Reachability.isConnectedToNetwork() {
-            var pathOfTheCell: NSIndexPath = cartTableView.indexPathForCell(sender as! UITableViewCell)!
-            var rowOfTheCell: Int = pathOfTheCell.row
-            
-            let tempModel: CartProductDetailsModel = tableData[rowOfTheCell]
-            
-            var params: NSDictionary = ["access_token": SessionManager.accessToken(),
-                "wishlist": "true",
-                "productId": tempModel.id,
-                "unitId": tempModel.unitId,
-                "quantity": tempModel.quantity
-            ]
-            
-            fireAddToCartItem(APIAtlas.updateCartUrl, params: params)
+        var pathOfTheCell: NSIndexPath = cartTableView.indexPathForCell(sender as! UITableViewCell)!
+        var rowOfTheCell: Int = pathOfTheCell.row
+        
+        let tempModel: CartProductDetailsModel = tableData[rowOfTheCell]
+        
+        var params: NSDictionary = ["access_token": SessionManager.accessToken(),
+        "wishlist": "true",
+        "productId": tempModel.id,
+        "unitId": tempModel.unitId,
+        "quantity": tempModel.quantity
+        ]
+        
+        fireAddToCartItem(APIAtlas.updateCartUrl, params: params)
         } else {
-            showAlert("Connection Unreachable", message: "Cannot retrieve data. Please check your internet connection.")
+        showAlert("Connection Unreachable", message: "Cannot retrieve data. Please check your internet connection.")
         }*/
         
         var pathOfTheCell: NSIndexPath = cartTableView.indexPathForCell(sender as! UITableViewCell)!
         var rowOfTheCell: Int = pathOfTheCell.row
-
+        
         seeMoreAttribute(rowOfTheCell)
     }
     
@@ -358,7 +389,7 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
         var rowOfTheCell: Int = pathOfTheCell.row
         
         tableData[rowOfTheCell].selected = state
-
+        
         let tempItemId = tableData[rowOfTheCell].itemId
         if state {
             selectedItemIDs.append(tempItemId)
@@ -394,7 +425,7 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
                 "quantity": "\(quantity)"
             ]
             
-            println("PARAMS\n\(params)")
+            //println("PARAMS\n\(params)")
             
             fireAddToCartItem(APIAtlas.updateCartUrl, params: params)
         } else {
@@ -415,6 +446,8 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     func addEmptyView() {
         if self.emptyView == nil {
+            tableData.removeAll(keepCapacity: false)
+            cartTableView.reloadData()
             self.emptyView = UIView.loadFromNibNamed("EmptyView", bundle: nil) as? EmptyView
             self.emptyView?.frame = self.view.frame
             self.emptyView!.delegate = self
@@ -477,11 +510,11 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
                 SVProgressHUD.dismiss()
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                 
-               "Cannot retrieve data. Please check your internet connection."
+                "Cannot retrieve data. Please check your internet connection."
                 
         })
     }
-
+    
     
     /*
     // MARK: - Navigation

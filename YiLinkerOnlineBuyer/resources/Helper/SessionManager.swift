@@ -27,6 +27,47 @@ class SessionManager {
         NSUserDefaults.standardUserDefaults().synchronize()
     }
     
+    class func setUserFullName(userFullName: String) {
+        NSUserDefaults.standardUserDefaults().setObject(userFullName, forKey: "userFullName")
+        NSUserDefaults.standardUserDefaults().synchronize()
+    }
+    
+    class func setFullAddress(userAddress: String) {
+        NSUserDefaults.standardUserDefaults().setObject(userAddress, forKey: "userAddress")
+        NSUserDefaults.standardUserDefaults().synchronize()
+    }
+    
+    class func setAddressId(addressId: Int) {
+        NSUserDefaults.standardUserDefaults().setObject("\(addressId)", forKey: "addressId")
+        NSUserDefaults.standardUserDefaults().synchronize()
+    }
+    
+    class func addressId() -> Int {
+        var result: String = ""
+        if let val: AnyObject = NSUserDefaults.standardUserDefaults().objectForKey("addressId") as? String {
+            result = val as! String
+        }
+        return result.toInt()!
+    }
+    
+    class func userFullName() -> String {
+        var result: String = ""
+        if let val: AnyObject = NSUserDefaults.standardUserDefaults().objectForKey("userFullName") as? String {
+            result = val as! String
+        }
+        
+        return result
+    }
+    
+    class func userFullAddress() -> String {
+        var result: String = ""
+        if let val: AnyObject = NSUserDefaults.standardUserDefaults().objectForKey("userAddress") as? String {
+            result = val as! String
+        }
+        
+        return result
+    }
+    
     class func profileImageStringUrl() -> String {
         var result: String = ""
         if let val: AnyObject = NSUserDefaults.standardUserDefaults().objectForKey("profileImageUrlString") as? String {
@@ -95,5 +136,60 @@ class SessionManager {
             self.setRefreshToken(refreshToken)
             self.setProfileImage("http://besthqimages.mobi/wp-content/uploads/default-profile-picture-png-pictures-2.png")  
         }
+    }
+    
+    class func setPaymentType(paymentType: PaymentType) {
+        if paymentType == PaymentType.COD {
+            NSUserDefaults.standardUserDefaults().setObject("cod", forKey: "paymentType")
+        } else {
+            NSUserDefaults.standardUserDefaults().setObject("creditcard", forKey: "paymentType")
+        }
+        
+        NSUserDefaults.standardUserDefaults().synchronize()
+    }
+    
+    class func paymentType() -> PaymentType {
+        var result: String = ""
+        if let val: AnyObject = NSUserDefaults.standardUserDefaults().objectForKey("paymentType") as? String {
+            result = val as! String
+        } else {
+            self.setPaymentType(PaymentType.COD)
+        }
+        
+        if result == "cod" {
+            return PaymentType.COD
+        } else {
+            return PaymentType.CreditCard
+        }
+    }
+    
+    class func setRememberPaymentType(value: Bool) {
+        var string: String = ""
+        if value {
+            string = "1"
+        } else {
+            string = "0"
+        }
+        
+        NSUserDefaults.standardUserDefaults().setObject(string, forKey: "setRememberPaymentType")
+        NSUserDefaults.standardUserDefaults().synchronize()
+    }
+    
+    class func rememberPaymentType() -> Bool {
+        var result: String = ""
+        var returnValue: Bool = false
+        if let val: AnyObject = NSUserDefaults.standardUserDefaults().objectForKey("setRememberPaymentType") as? String {
+            result = val as! String
+        } else {
+            self.setRememberPaymentType(true)
+            returnValue = true
+        }
+    
+        if result == "1" {
+            returnValue = true
+        } else {
+            returnValue = false
+        }
+        return returnValue
     }
 }

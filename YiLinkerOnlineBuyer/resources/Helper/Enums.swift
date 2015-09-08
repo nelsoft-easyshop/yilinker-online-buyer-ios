@@ -33,3 +33,9 @@ enum AddressRefreshType {
     case SetDefault
     case Get
 }
+
+enum CheckoutRefreshType {
+    case COD
+    case Credit
+    case OverView
+}

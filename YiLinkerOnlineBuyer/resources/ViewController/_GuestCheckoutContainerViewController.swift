@@ -8,7 +8,7 @@
 
 import UIKit
 
-class GuestCheckoutContainerViewController: UIViewController, PaymentWebViewViewControllerDelegate {
+class GuestCheckoutContainerViewController: UIViewController {
     
     var guestCheckoutSummaryViewController: GuestCheckoutSummaryViewController?
     var paymentViewController: PaymentViewController?
@@ -216,8 +216,6 @@ class GuestCheckoutContainerViewController: UIViewController, PaymentWebViewView
     
     func redirectToPaymentWebViewWithUrl(url: String) {
         let paymentWebViewController = PaymentWebViewViewController(nibName: "PaymentWebViewViewController", bundle: nil)
-        paymentWebViewController.url = NSURL(string: url)!
-        paymentWebViewController.delegate = self
         let navigationController: UINavigationController = UINavigationController(rootViewController: paymentWebViewController)
         navigationController.navigationBar.barTintColor = Constants.Colors.appTheme
         self.presentViewController(navigationController, animated: true, completion: nil)

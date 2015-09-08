@@ -10,6 +10,9 @@ import UIKit
 
 class PlainTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var productQuantityLabel: UILabel!
+    @IBOutlet weak var productNameLabel: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

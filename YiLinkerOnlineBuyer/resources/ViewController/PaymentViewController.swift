@@ -11,23 +11,70 @@ import UIKit
 class PaymentViewController: UIViewController, PaymentTableViewCellDelegate {
 
     @IBOutlet weak var tableView: UITableView!
+    var paymentType: PaymentType?
+    var paymentHeader: PaymentTableViewCell?
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        if self.tableView != nil {
+            if SessionManager.rememberPaymentType() {
+                self.paymentHeader!.cellSwitch.setOn(true, animated: false)
+            } else {
+                self.paymentHeader!.cellSwitch.setOn(false, animated: false)
+                SessionManager.setPaymentType(PaymentType.COD)
+            }
+            
+            if SessionManager.paymentType() == PaymentType.COD {
+                self.paymentHeader!.selectPaymentType(Constants.Checkout.Payment.touchabelTagCOD)
+            } else {
+                self.paymentHeader!.selectPaymentType(Constants.Checkout.Payment.touchabelTagCreditCard)
+            }
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         if IphoneType.isIphone4() || IphoneType.isIphone5() {
-            let paymentHeader: PaymentTableViewCell = XibHelper.puffViewWithNibName("PaymentTableViewCell", index: 1) as! PaymentTableViewCell
-            paymentHeader.delegate = self
-            self.tableView.tableHeaderView = paymentHeader
-            paymentHeader.selectPaymentType(Constants.Checkout.Payment.touchabelTagCOD)
+            self.paymentHeader = XibHelper.puffViewWithNibName("PaymentTableViewCell", index: 1) as? PaymentTableViewCell
+            self.paymentHeader!.delegate = self
+            self.tableView.tableHeaderView = self.paymentHeader
+            
+            if SessionManager.rememberPaymentType() {
+                self.paymentHeader!.cellSwitch.setOn(true, animated: false)
+            } else {
+                self.paymentHeader!.cellSwitch.setOn(false, animated: false)
+                SessionManager.setPaymentType(PaymentType.COD)
+            }
+            
+            if SessionManager.paymentType() == PaymentType.COD {
+                 self.paymentHeader!.selectPaymentType(Constants.Checkout.Payment.touchabelTagCOD)
+            } else {
+                 self.paymentHeader!.selectPaymentType(Constants.Checkout.Payment.touchabelTagCreditCard)
+            }
+            
         } else {
-            let paymentHeader: PaymentTableViewCell = XibHelper.puffViewWithNibName("PaymentTableViewCell", index: 0) as! PaymentTableViewCell
-            paymentHeader.delegate = self
+            self.paymentHeader = XibHelper.puffViewWithNibName("PaymentTableViewCell", index: 0) as? PaymentTableViewCell
+            self.paymentHeader!.delegate = self
             self.tableView.tableHeaderView = paymentHeader
-            paymentHeader.selectPaymentType(Constants.Checkout.Payment.touchabelTagCOD)
+            
+            if SessionManager.rememberPaymentType() {
+                self.paymentHeader!.cellSwitch.setOn(true, animated: false)
+            } else {
+                self.paymentHeader!.cellSwitch.setOn(false, animated: false)
+            }
+            
+            if SessionManager.paymentType() == PaymentType.COD {
+                self.paymentHeader!.selectPaymentType(Constants.Checkout.Payment.touchabelTagCOD)
+            } else {
+                self.paymentHeader!.selectPaymentType(Constants.Checkout.Payment.touchabelTagCreditCard)
+            }
         }
         
         let paymentFooterView: DeliverToTableViewCell = XibHelper.puffViewWithNibName("DeliverToTableViewCell", index: 0) as! DeliverToTableViewCell
+        paymentFooterView.userNameLabel.text = SessionManager.userFullName()
+        paymentFooterView.addressLabel.text = SessionManager.userFullAddress()
+        
         self.tableView.tableFooterView = paymentFooterView
     }
 
@@ -41,11 +88,12 @@ class PaymentViewController: UIViewController, PaymentTableViewCellDelegate {
     }
     
     func paymentTableViewCell(didChoosePaymentType paymentType: PaymentType) {
-        println(paymentType)
+        self.paymentType = paymentType
+        SessionManager.setPaymentType(paymentType)
     }
     
     func paymentTableViewCell(rememberPaymentType result: Bool) {
-        println(result)
+        SessionManager.setRememberPaymentType(result)
     }
     /*
     // MARK: - Navigation

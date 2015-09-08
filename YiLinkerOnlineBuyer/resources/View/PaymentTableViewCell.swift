@@ -15,6 +15,8 @@ protocol PaymentTableViewCellDelegate {
 
 class PaymentTableViewCell: UITableViewCell {
 
+   
+    @IBOutlet weak var cellSwitch: UISwitch!
     @IBOutlet weak var codView: UIView!
     @IBOutlet weak var creditCardView: UIView!
     @IBOutlet weak var codCheckBoxButton: SemiRoundedButton!

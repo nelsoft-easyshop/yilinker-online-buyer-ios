@@ -433,6 +433,7 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
                 if let val: AnyObject = self.dictionary["popularCategories"] {
                     footerView.target = "View More Popular Categories!"
                     footerView.targetType = "Go to list!"
+                    footerView.cellButton.setTitle("VIEW MORE CATEGORIES", forState: UIControlState.Normal)
                 }
             } else if self.layouts[indexPath.section] == Constants.HomePage.layoutFourKey {
                 
@@ -579,6 +580,7 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
     
     func redirectToProductpageWithProductID(productID: String) {
         let productViewController: ProductViewController = ProductViewController(nibName: "ProductViewController", bundle: nil)
+        productViewController.productId = productID
         productViewController.tabController = self.tabBarController as! CustomTabBarController
         self.navigationController?.pushViewController(productViewController, animated: true)
     }
