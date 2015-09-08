@@ -43,6 +43,18 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
         self.initializeViews()
         self.registerNibs()
     }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        self.navigationController?.navigationBar.alpha = 1
+        self.navigationController?.navigationBar.barTintColor = Constants.Colors.appTheme
+        self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
+    }
+
+    func passSearchKey(key: String) {
+        
+
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -135,7 +147,7 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
                 
                 self.collectionViewData.append(model)
             }
-            self.resultCollectionView.reloadData()
+            self.resultCollectionView.reloadSections(NSIndexSet(index: 0))
         }
         self.dismissLoader()
         
@@ -265,7 +277,10 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
     }
     // MARK: UICollectionViewDelegate
     
-    func collectionView(collectionView: UICollectionView, didDeselectItemAtIndexPath indexPath: NSIndexPath) {
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        let productViewController: ProductViewController = ProductViewController(nibName: "ProductViewController", bundle: nil)
+        productViewController.tabController = self.tabBarController as! CustomTabBarController
+        self.navigationController?.pushViewController(productViewController, animated: true)
     }
 
     

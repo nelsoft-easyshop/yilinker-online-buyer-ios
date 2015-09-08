@@ -114,7 +114,7 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell : ChangeAddressCollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier(Constants.Checkout.changeAddressCollectionViewCellNibNameAndIdentifier, forIndexPath: indexPath) as! ChangeAddressCollectionViewCell
         cell.titleLabel.text = self.getAddressModel.listOfAddress[indexPath.row].title
-        cell.addressLabel.text = self.getAddressModel.listOfAddress[indexPath.row].streetName
+        cell.addressLabel.text = self.getAddressModel.listOfAddress[indexPath.row].fullLocation
 
         if  indexPath.row == self.selectedIndex {
             cell.layer.borderWidth = 1
@@ -299,6 +299,7 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
             "grant_type": Constants.Credentials.grantRefreshToken,
             "refresh_token": SessionManager.refreshToken()]
         let manager = APIManager.sharedInstance
+        self.showHUD()
         manager.POST(url, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
@@ -312,7 +313,7 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
             
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                SVProgressHUD.dismiss()
+                self.hud?.hide(true)
                 let alertController = UIAlertController(title: "Something went wrong", message: "", preferredStyle: .Alert)
                 let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
                 alertController.addAction(defaultAction)
@@ -329,6 +330,11 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
             if (responseObject["isSuccessful"] as! Bool) {
+                let addressModel: AddressModelV2 = AddressModelV2.parseAddressFromDictionary(responseObject["data"] as! NSDictionary)
+                
+                SessionManager.setAddressId(addressModel.userAddressId)
+                SessionManager.setFullAddress(addressModel.fullLocation)
+                
                 self.selectedIndex = indexPath.row
                 self.collectionView.reloadData()
             } else {

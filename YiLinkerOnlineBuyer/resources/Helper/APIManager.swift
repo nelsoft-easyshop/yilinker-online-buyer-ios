@@ -34,8 +34,10 @@ struct APIAtlas {
     static let updateWishlistUrl = "auth/cart/updateCartItem"
     static let updateCartUrl = "auth/cart/updateCartItem"
     static let getSellerUrl = "v1/get-seller"
-    static let productReviewUrl = "v1/product-review"
-    static let productPageUrl = "v1/get-product"
+    static let buyerSellerFeedbacks = "v1/feedback/getUserFeedbacks"
+    static let productDetails = "product/getProductDetail"
+    static let productReviews = "product/getProductReviews"
+    static let productSellerDetails = "v1/get-product"
     static let getSellerInfo = "user/getStoreInfo"
     static let followSeller = "auth/followSeller"
     static let unfollowSeller = "auth/unfollowSeller"
@@ -53,6 +55,11 @@ struct APIAtlas {
     static let updateCheckout = "auth/cart/cartToCheckout"
     static let updateGuestCheckout = "cart/cartToCheckout"
     static let editAddress = "auth/address/editUserAddress"
+    static let setCheckoutAddressUrl = "auth/user/setAddress"
+    static let cashOnDeliveryUrl = "auth/payment/doPaymentCod"
+    static let pesoPayUrl = "auth/payment/doPesoPay"
+    static let overViewUrl = "auth/payment/checkoutOverview"
+    static let activityLogs = "auth/user/activityLog?access_token="
     static let baseUrl = APIEnvironment.baseUrl()
     
     /* MESSAGING CONSTANTS */

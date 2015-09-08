@@ -50,6 +50,9 @@
                 </constraints>
             </tableViewCellContentView>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <connections>
+                <outlet property="priceLabel" destination="ozq-rH-Chv" id="UbH-io-4No"/>
+            </connections>
         </tableViewCell>
     </objects>
 </document>
