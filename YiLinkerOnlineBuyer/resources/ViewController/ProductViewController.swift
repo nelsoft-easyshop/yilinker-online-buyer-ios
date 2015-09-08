@@ -300,7 +300,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
 
         manager.GET(APIAtlas.productDetails + id, parameters: nil, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            println(responseObject)
+
             if responseObject["isSuccessful"] as! Bool {
                 self.productDetailsModel = ProductDetailsModel.parseDataWithDictionary(responseObject)
                 self.productId = self.productDetailsModel.id
@@ -349,19 +349,26 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     
     func requestSellerDetails() {
         
-        let params: NSDictionary = ["userId": self.productDetailsModel.sellerId]
-        
+        let params = ["userId": "1"/*self.productDetailsModel.sellerId*/]
+        println(params)
         manager.POST(APIAtlas.getSellerInfo, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
-            self.productSellerModel = ProductSellerModel.parseDataWithDictionary(responseObject)
-            self.sellerRequest = true
-            self.sellerSuccess = true
-            self.checkRequests()
+            if responseObject["isSuccessful"] as! Bool {
+                self.productSellerModel = ProductSellerModel.parseDataWithDictionary(responseObject)
+                self.sellerRequest = true
+                self.sellerSuccess = true
+                self.checkRequests()
+            } else {
+                self.showAlert(title: "Error", message: responseObject["message"] as! String)
+                self.hud?.hide(true)
+                self.addEmptyView()
+            }
             
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 println("seller failed")
+                println(error)
                 self.sellerRequest = true
                 self.sellerSuccess = false
                 self.checkRequests()
@@ -702,21 +709,15 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     
     func checkRequests() {
         
-        if productSuccess {//&& sellerSuccess {
-            self.loadViewsWithDetails()
-        } else {
-            addEmptyView()
-            self.hud?.hide(true)
+        if productRequest && sellerRequest {
+            if productSuccess {
+                self.loadViewsWithDetails()
+            } else {
+                addEmptyView()
+                self.hud?.hide(true)
+            }
         }
         
-//        if productSuccess && reviewSuccess && sellerSuccess {
-//            self.loadViewsWithDetails()
-//        } else if productRequest && reviewRequest && sellerRequest {
-//            if productSuccess == false || reviewSuccess == false || sellerSuccess == false {
-//                addEmptyView()
-//                self.hud?.hide(true)
-//            }
-//        }
     }
     
     func addEmptyView() {
@@ -931,7 +932,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     
     func didTapReload() {
         self.requestProductDetails()
-        self.requestReviewDetails()
+//        self.requestReviewDetails()
         self.emptyView?.removeFromSuperview()
     }
     

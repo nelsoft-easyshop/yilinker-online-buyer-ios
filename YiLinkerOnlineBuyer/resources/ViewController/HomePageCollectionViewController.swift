@@ -580,7 +580,6 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
     
     func redirectToProductpageWithProductID(productID: String) {
         let productViewController: ProductViewController = ProductViewController(nibName: "ProductViewController", bundle: nil)
-        productViewController.productId = productID
         productViewController.tabController = self.tabBarController as! CustomTabBarController
         self.navigationController?.pushViewController(productViewController, animated: true)
     }
