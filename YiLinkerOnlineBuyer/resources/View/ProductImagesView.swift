@@ -73,7 +73,7 @@ class ProductImagesView: UIView, UICollectionViewDataSource, UICollectionViewDel
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if self.imagesModel != nil {
-            return self.images.count
+            return self.imagesModel.count
         }
         return 0
     }
@@ -146,13 +146,7 @@ class ProductImagesView: UIView, UICollectionViewDataSource, UICollectionViewDel
         self.width = width
         
         self.imagesModel = model.images
-        
-//        self.images = []
-//        self.images.append(model.images)//model.productUnits[unitId].imageIds
-    
-//        if self.images.count == 0 {
-//            self.images = ["", "", "", "", ""]
-//        }
+
         self.pageControl.numberOfPages = self.imagesModel.count
         self.collectionView.reloadData()
     }
