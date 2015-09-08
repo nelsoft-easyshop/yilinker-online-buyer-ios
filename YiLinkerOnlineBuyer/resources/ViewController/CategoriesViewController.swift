@@ -15,6 +15,7 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
     var categoryModel: CategoryModel!
     var parentText: String = ""
     var firstLoad: Bool = true
+    var categoryId: Int = 1
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,7 +31,7 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
         self.tableView.registerNib(nib, forCellReuseIdentifier: "CategoryIdentifier")
 
         if firstLoad {
-            requestCategories(parentId: 1)
+            requestCategories(parentId: categoryId)
             firstLoad = false
         }
     }
@@ -101,7 +102,7 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
             categories.requestCategories(parentId: categoryModel.id[indexPath.row])
             self.navigationController?.pushViewController(categories, animated: true)
         } else {
-            gotoSearch(categoryModel.id[indexPath.row])
+            gotoSearch()
         }
     }
     
@@ -144,9 +145,13 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
         return containerView
     }
     
-    func gotoSearch(id: Int) {
+    func gotoList(gesture: UIGestureRecognizer) {
+        gotoSearch()
+    }
+    
+    func gotoSearch() {
         let resultList = ResultViewController(nibName: "ResultViewController", bundle: nil)
-        //call search function here
+        //call search function here - categoryId
         self.navigationController?.pushViewController(resultList, animated: true)
     }
     
