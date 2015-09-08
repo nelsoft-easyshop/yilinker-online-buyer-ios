@@ -1001,7 +1001,12 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     }
 
     func barMessageAction() {
-        showAlert(title: "Go to Messaging", message: nil)
+//        let messaging = ConversationVC(nibName: "MessagingViewController", bundle: nil)
+//        self.navigationController?.pushViewController(messaging, animated: true)
+
+        let storyBoard: UIStoryboard = UIStoryboard(name: "HomeStoryBoard", bundle: nil)
+        let messagingViewController: ConversationVC = (storyBoard.instantiateViewControllerWithIdentifier("ConversationVC") as? ConversationVC)!
+        self.navigationController?.pushViewController(messagingViewController, animated: true)
     }
 
     func barShareAction() {
