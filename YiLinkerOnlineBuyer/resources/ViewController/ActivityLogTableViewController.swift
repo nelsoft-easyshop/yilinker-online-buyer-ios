@@ -17,9 +17,14 @@ class ActivityLogTableViewController: UITableViewController {
     
     var activityModel: ActivityModel?
     var activityLogsModel: ActivityLogModel!
+    
+    var table: [ActivityLogModel] = []
+    var tableSection: ActivityLogModel!
+    var tableSectionContents: ActivityModel!
+    
     var cellCount: Int = 0
     var cellSection: Int = 0
-    
+    var logsDictionary = Dictionary<String, String>()
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -97,27 +102,12 @@ class ActivityLogTableViewController: UITableViewController {
         //let dateComponents = NSDateComponents()
       
         if(self.activityLogsModel != nil){
-            //var dates = self.activityLogsModel.date_array[indexPath.row] as NSString
-            //dateComponents.year = dates.substringWithRange(NSRange(location: 0, length: 4)).toInt()!
-            //dateComponents.month = dates.substringWithRange(NSRange(location: 5, length: 2)).toInt()!
-            //dateComponents.day = dates.substringWithRange(NSRange(location: 8, length: 2)).toInt()!
-            //dateComponents.hour = dates.substringWithRange(NSRange(location: 11, length: 2)).toInt()!
-            //dateComponents.minute = dates.substringWithRange(NSRange(location: 14, length: 2)).toInt()!
-            //dateComponents.second = dates.substringWithRange(NSRange(location: 17, length: 2)).toInt()!
-            //let formatter = NSDateFormatter()
-            //formatter.dateStyle = NSDateFormatterStyle.LongStyle
-            //formatter.timeStyle = .MediumStyle
-            //let date = NSCalendar.currentCalendar().dateFromComponents(dateComponents)!
-            //let dateString = formatter.stringFromDate(date)
-            //println("year \(dateComponents.year)")
-            
             cell.detailsLabel?.text = self.activityLogsModel.text_array[indexPath.row]
-            //var trimDate = dateString.stringByReplacingOccurrencesOfString("January 1, 1 at ", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
             cell.timeLabel?.text = self.activityLogsModel.date_array[indexPath.row]
-            //println(trimDate.stringByReplacingOccurrencesOfString(":00", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil))
+            //println("SAMPLE \(self.table[indexPath.section].activities[indexPath.row].details)")
         }
        
-        //println(tableData[indexPath.section].activities[indexPath.row].time)
+        
         //println(tableData[indexPath.section].activities[indexPath.row].details)
         
         return cell
@@ -144,8 +134,25 @@ class ActivityLogTableViewController: UITableViewController {
                 self.activityLogsModel = ActivityLogModel.parsaActivityLogsDataFromDictionary(responseObject as! NSDictionary)
                 self.cellCount = self.activityLogsModel!.text_array.count
                 self.cellSection = self.activityLogsModel!.date_section_array.count
+  
+            for var a = 0; a < self.activityLogsModel.date_section_array.count; a++ {
+                for var b = 0; b < self.activityLogsModel.text_array.count; b++ {
+                    if self.activityLogsModel!.date_section_array[a] == self.activityLogsModel!.all_date_section_array[b] {
+                        // for var j = 0; j < self.activityLogsModel!.text_array.count; j++ {
+                        //   if self.activityLogsModel!.date_section_array[i] == self.activityLogsModel!.all_date_section_array[j] {
+                        //self.tableSection = ActivityLogModel(text: self.activityLogsModel!.date_section_array[0], activities: [self.tableSectionContents])
+                        //self.table.append(self.tableSection)
+                         self.tableSectionContents = ActivityModel(time: self.activityLogsModel!.all_date_section_array[a], details: self.activityLogsModel!.text_array[b])
+                        
+                        println("a: \(a) b: \(b) date in section: \(self.activityLogsModel!.date_section_array[a]) logs in section \(a): \(self.activityLogsModel!.text_array[b]) time: \(self.activityLogsModel!.date_array[b])" )
+                        
+                        //   }
+                        //println("sample \(self.tableSectionContents.details.count)")
+                        // }
+                    }
+                }
+            }
             
-                println("count \(self.cellSection)")
                 self.tableView.reloadData()
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
