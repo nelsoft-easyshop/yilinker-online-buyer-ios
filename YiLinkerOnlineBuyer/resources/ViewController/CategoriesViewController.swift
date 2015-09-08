@@ -117,7 +117,6 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
         categoryLabel.text = "    "
      
         if parentText == "" {
-            self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 49, 0)
             categoryLabel.text! += "Select Category"
             categoryLabel.sizeToFit()
             categoryLabel.frame.size.height = containerView.frame.size.height
