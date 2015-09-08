@@ -41,7 +41,11 @@ class HiddenViewController: UIViewController {
     func setSelectedViewControllerWithIndex(index: Int) {
         if self.viewControllers.count != 0 {
             let viewController: UIViewController = viewControllers[index]
-            setSelectedViewController(viewController)
+            if !SessionManager.isLoggedIn() && index == 3 {
+                
+            } else {
+                setSelectedViewController(viewController)
+            }
         }
         
         if index == 0 {
