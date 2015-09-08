@@ -41,6 +41,8 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
     
     var hud: MBProgressHUD?
     
+    var profileImage: UIImage?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -142,6 +144,10 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
             if profileUserDetailsModel.profileImageUrl.isNotEmpty() {
                 cell.profileImageView.hidden = false
                 cell.addPhotoLabel.text = "Edit Photo"
+            }
+            
+            if profileImage != nil {
+                cell.profileImageView.image = profileImage
             }
             
             photoIndexPath = indexPath
@@ -288,6 +294,8 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
         addPhotoCell!.profileImageView.hidden = false
         addPhotoCell!.profileImageView.image = image
         addPhotoCell!.addPhotoLabel.text = "Edit Photo"
+        
+        profileImage = image
         
         imageData = UIImagePNGRepresentation(image)
     }
@@ -447,15 +455,20 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
                 data.appendPartWithFileData(self.imageData!, name: "profilePhoto", fileName: "photo", mimeType: "image/jpeg")
                 }, success: {
                     (task: NSURLSessionDataTask!, responseObject: AnyObject!) in print(responseObject as! NSDictionary)
+                    
+                    println(responseObject)
+                    
                     if responseObject.objectForKey("error") != nil {
                         self.requestRefreshToken("updateProfile", url: url, params: params, withImage: withImage)
                     }
                     self.dismissLoader()
                     self.showAlert("Success", message: "Successfully updated profile!")
+                    self.imageData = nil
+                    self.profileImage = nil
                 }, failure: {
                     (task: NSURLSessionDataTask!, error: NSError!) in
-                    self.showAlert("Error", message: "Something went wrong. . .")
                     self.dismissLoader()
+                    self.showAlert("Error", message: "Something went wrong. . .")
                     println(error)
             })
         } else {
@@ -487,7 +500,7 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
         self.hud = MBProgressHUD(view: self.view)
         self.hud?.removeFromSuperViewOnHide = true
         self.hud?.dimBackground = false
-        self.view.addSubview(self.hud!)
+        self.navigationController?.view.addSubview(self.hud!)
         self.hud?.show(true)
     }
     
