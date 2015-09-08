@@ -34,9 +34,6 @@ class ActivityModel: NSObject {
             if let text = dictionary["text"] as? String {
                 details = text
             }
-            
-//            println("date \(time) details \(details)")
-            
         }
         
         let activityModel = ActivityModel(time: time, details: details)
