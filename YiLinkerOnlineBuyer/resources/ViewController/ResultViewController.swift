@@ -31,6 +31,7 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
     @IBOutlet weak var viewTypeView: UIView!
     @IBOutlet weak var viewTypeImageView: UIImageView!
     
+    @IBOutlet weak var viewTypeLabel: UILabel!
     var collectionViewData: [SearchResultModel] = []
     var sortData: [String] = ["Old to new", "New to old", "A to Z", "Z to A"]
 
@@ -202,9 +203,11 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
         if type == grid {
             type = list
             viewTypeImageView.image = UIImage(named: "grid")
+            viewTypeLabel.text = "Grid"
         } else if type == list {
             type = grid
             viewTypeImageView.image = UIImage(named: "list")
+            viewTypeLabel.text = "List"
         } else {
             type = grid
         }
