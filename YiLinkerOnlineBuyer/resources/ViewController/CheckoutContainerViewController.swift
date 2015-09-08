@@ -253,6 +253,8 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
                 let paymentSuccessModel: PaymentSuccessModel = PaymentSuccessModel.parseDataWithDictionary(responseObject as! NSDictionary)
                 if paymentSuccessModel.isSuccessful {
                     self.redirectToSuccessPage(paymentSuccessModel)
+                } else {
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: paymentSuccessModel.message, title: "Something went wrong")
                 }
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
@@ -275,6 +277,8 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
                 let pesoPayModel: PesoPayModel = PesoPayModel.parseDataWithDictionary(responseObject as! NSDictionary)
                 if pesoPayModel.isSuccessful {
                     self.redirectToPaymentWebViewWithUrl(pesoPayModel)
+                } else {
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: pesoPayModel.message, title: "Something went wrong")
                 }
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in

@@ -582,6 +582,7 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
         println("product id: \(productID)")
         let productViewController: ProductViewController = ProductViewController(nibName: "ProductViewController", bundle: nil)
         productViewController.tabController = self.tabBarController as! CustomTabBarController
+        productViewController.productId = productID
         self.navigationController?.pushViewController(productViewController, animated: true)
     }
     

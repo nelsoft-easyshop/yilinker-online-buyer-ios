@@ -61,6 +61,7 @@ struct APIAtlas {
     static let overViewUrl = "auth/payment/checkoutOverview"
     static let activityLogs = "auth/user/activityLog?access_token="
     static let getCategories = "product/getCategories?parentId="
+    static let productList = "product/getProductList"
     static let baseUrl = APIEnvironment.baseUrl()
     
     /* MESSAGING CONSTANTS */
