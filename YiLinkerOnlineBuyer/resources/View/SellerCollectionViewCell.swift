@@ -26,6 +26,7 @@ class SellerCollectionViewCell: UICollectionViewCell {
     
     var target: String = ""
     var targetType: String = ""
+    var userId = 0
     
     override func awakeFromNib() {
         super.awakeFromNib()
