@@ -16,8 +16,9 @@ class ActivityLogTableViewController: UITableViewController {
     ]
     
     var activityModel: ActivityModel?
-    var activityLogsModel: ActivityLogModel?
-    var count: Int = 0
+    var activityLogsModel: ActivityLogModel!
+    var cellCount: Int = 0
+    var cellSection: Int = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -76,25 +77,44 @@ class ActivityLogTableViewController: UITableViewController {
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Potentially incomplete method implementation.
         // Return the number of sections.
+        //return self.cellSection
         return 1
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete method implementation.
         // Return the number of rows in the section.
-        return 10
+        if self.cellCount != 0 {
+            return self.cellCount
+        } else {
+            return 0
+        }
     }
-
-    
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("ActivityLogTableViewCell", forIndexPath: indexPath) as! ActivityLogTableViewCell
 
+        //let dateComponents = NSDateComponents()
+      
         if(self.activityLogsModel != nil){
-            println("\(self.activityLogsModel?.activities[indexPath.row].details)")
-            println("\(self.activityLogsModel?.activities[indexPath.row].details)")
-            cell.detailsLabel?.text = self.activityLogsModel?.activities[indexPath.row].details
-            cell.timeLabel?.text = self.activityLogsModel?.activities[indexPath.row].time
+            //var dates = self.activityLogsModel.date_array[indexPath.row] as NSString
+            //dateComponents.year = dates.substringWithRange(NSRange(location: 0, length: 4)).toInt()!
+            //dateComponents.month = dates.substringWithRange(NSRange(location: 5, length: 2)).toInt()!
+            //dateComponents.day = dates.substringWithRange(NSRange(location: 8, length: 2)).toInt()!
+            //dateComponents.hour = dates.substringWithRange(NSRange(location: 11, length: 2)).toInt()!
+            //dateComponents.minute = dates.substringWithRange(NSRange(location: 14, length: 2)).toInt()!
+            //dateComponents.second = dates.substringWithRange(NSRange(location: 17, length: 2)).toInt()!
+            //let formatter = NSDateFormatter()
+            //formatter.dateStyle = NSDateFormatterStyle.LongStyle
+            //formatter.timeStyle = .MediumStyle
+            //let date = NSCalendar.currentCalendar().dateFromComponents(dateComponents)!
+            //let dateString = formatter.stringFromDate(date)
+            //println("year \(dateComponents.year)")
+            
+            cell.detailsLabel?.text = self.activityLogsModel.text_array[indexPath.row]
+            //var trimDate = dateString.stringByReplacingOccurrencesOfString("January 1, 1 at ", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
+            cell.timeLabel?.text = self.activityLogsModel.date_array[indexPath.row]
+            //println(trimDate.stringByReplacingOccurrencesOfString(":00", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil))
         }
        
         //println(tableData[indexPath.section].activities[indexPath.row].time)
@@ -104,7 +124,11 @@ class ActivityLogTableViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        return setSectionHeader(tableData[section].text)
+        if self.cellSection != 0 {
+            return setSectionHeader(self.activityLogsModel.date_section_array[section])
+        } else {
+            return setSectionHeader(tableData[section].text)
+        }
     }
     
     override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -117,7 +141,11 @@ class ActivityLogTableViewController: UITableViewController {
         
         manager.GET(APIAtlas.activityLogs+"\(SessionManager.accessToken())", parameters: nil, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-                self.activityLogsModel = ActivityLogModel.parsaDataFromDictionary(responseObject as! NSDictionary)
+                self.activityLogsModel = ActivityLogModel.parsaActivityLogsDataFromDictionary(responseObject as! NSDictionary)
+                self.cellCount = self.activityLogsModel!.text_array.count
+                self.cellSection = self.activityLogsModel!.date_section_array.count
+            
+                println("count \(self.cellSection)")
                 self.tableView.reloadData()
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in

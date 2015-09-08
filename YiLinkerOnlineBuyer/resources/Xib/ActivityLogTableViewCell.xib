@@ -16,16 +16,16 @@
                         <rect key="frame" x="16" y="9" width="343" height="60"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="j8F-KR-Hus">
-                                <rect key="frame" x="58" y="16" width="277" height="28"/>
+                                <rect key="frame" x="62" y="16" width="273" height="28"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <color key="textColor" red="0.68235294117647061" green="0.68235294117647061" blue="0.68235294117647061" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1:20 AM" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d8B-VH-4az">
-                                <rect key="frame" x="0.0" y="10" width="50" height="30"/>
+                                <rect key="frame" x="0.0" y="8" width="54" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="mWD-y6-Usj"/>
-                                    <constraint firstAttribute="width" constant="50" id="vKL-Tc-m2o"/>
+                                    <constraint firstAttribute="width" constant="54" id="vKL-Tc-m2o"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="9"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
@@ -36,7 +36,7 @@
                         <constraints>
                             <constraint firstItem="j8F-KR-Hus" firstAttribute="leading" secondItem="d8B-VH-4az" secondAttribute="trailing" constant="8" id="BMX-K7-063"/>
                             <constraint firstItem="d8B-VH-4az" firstAttribute="leading" secondItem="CoI-Wo-FvJ" secondAttribute="leading" id="HfO-BB-b3F"/>
-                            <constraint firstItem="d8B-VH-4az" firstAttribute="top" secondItem="CoI-Wo-FvJ" secondAttribute="top" constant="10" id="Tt5-c0-VQs"/>
+                            <constraint firstItem="d8B-VH-4az" firstAttribute="top" secondItem="CoI-Wo-FvJ" secondAttribute="top" constant="8" id="Tt5-c0-VQs"/>
                             <constraint firstItem="j8F-KR-Hus" firstAttribute="top" secondItem="CoI-Wo-FvJ" secondAttribute="top" constant="16" id="haP-ra-KKv"/>
                             <constraint firstAttribute="trailing" secondItem="j8F-KR-Hus" secondAttribute="trailing" constant="8" id="mUw-vm-vMb"/>
                             <constraint firstAttribute="bottom" secondItem="j8F-KR-Hus" secondAttribute="bottom" constant="16" id="z92-zf-LoN"/>
