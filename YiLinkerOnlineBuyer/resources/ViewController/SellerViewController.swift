@@ -133,7 +133,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
     func fireFollowSeller() {
         self.showHUD()
         let manager = APIManager.sharedInstance
-        let parameters: NSDictionary = ["sellerId" : 1, "access_token" : SessionManager.accessToken()];
+        let parameters: NSDictionary = ["sellerId" : sellerId, "access_token" : SessionManager.accessToken()];
         manager.POST(APIAtlas.followSeller, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             self.followSellerModel = FollowedSellerModel.parseFollowSellerDataWithDictionary(responseObject as! NSDictionary)
@@ -173,7 +173,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         self.showHUD()
         let manager = APIManager.sharedInstance
-        let parameters: NSDictionary = ["sellerId" : "1", "access_token" : SessionManager.accessToken()];
+        let parameters: NSDictionary = ["sellerId" : sellerId, "access_token" : SessionManager.accessToken()];
         
         manager.POST(APIAtlas.unfollowSeller, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
