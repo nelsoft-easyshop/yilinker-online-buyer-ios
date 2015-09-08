@@ -296,7 +296,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     
     func requestProductDetails() {
         self.showHUD()
-        let id: String = "?productId=" + productId
+        let id: String = "?productId=" + "3"
 
         manager.GET(APIAtlas.productDetails + id, parameters: nil, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
