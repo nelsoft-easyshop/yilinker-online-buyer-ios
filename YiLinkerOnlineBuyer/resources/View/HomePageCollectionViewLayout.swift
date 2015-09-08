@@ -43,7 +43,7 @@ class HomePageCollectionViewLayout: UICollectionViewLayout {
             } else if layout == Constants.HomePage.layoutFourKey {
                 self.fourImageLayout(index)
             } else if layout == Constants.HomePage.layoutFiveKey {
-                self.sixImageLayout(index)
+                self.sixImageLayout(index, hasFooter: false)
             } else if layout == Constants.HomePage.layoutSixKey {
                 self.twoColumnGridLayout(index)
             } else if layout == Constants.HomePage.layoutSevenKey {
@@ -54,6 +54,10 @@ class HomePageCollectionViewLayout: UICollectionViewLayout {
                 self.newSellerScrollableImageLayout(index)
             } else if layout == Constants.HomePage.layoutTenKey {
                 self.sellerLayout(index)
+            } else if layout == Constants.HomePage.layoutFiveKeyWithFooter {
+                self.sixImageLayout(index, hasFooter: true)
+            } else if layout == Constants.HomePage.layoutFiveKey2 {
+                self.sixImageLayout2(index, hasFooter: true)
             }
         }
        
@@ -155,7 +159,8 @@ class HomePageCollectionViewLayout: UICollectionViewLayout {
         self.contentSize = CGSizeMake(screenRect!.width, self.currentScreenHeigth)
     }
     
-    func sixImageLayout(section: Int) {
+    func sixImageLayout(section: Int, hasFooter: Bool) {
+        //add true or false
         var defaultYPosition = self.currentScreenHeigth
         
         let path = NSIndexPath(forItem: 0, inSection: section)
@@ -228,14 +233,23 @@ class HomePageCollectionViewLayout: UICollectionViewLayout {
             self.layoutAttributes[key] = attribute
         }
         
-        yPosition = yPosition + itemSize.height + self.horizontalInset + self.sectionVeticalInset + self.headerViewHeight
+        yPosition = yPosition + itemSize.height + self.horizontalInset + self.headerViewHeight
         
         
-        self.currentScreenHeigth = yPosition
+        if hasFooter {
+            let footerView: (attribute: UICollectionViewLayoutAttributes, key: String) = footerViewWithYPosition(yPosition, path: path)
+            self.layoutAttributes[footerView.key] = footerView.attribute
+            
+            let height: CGFloat = yPosition + self.footerHeight
+            self.currentScreenHeigth = height
+        } else {
+            self.currentScreenHeigth = yPosition
+        }
+        
         self.contentSize = CGSizeMake(screenRect!.width, self.currentScreenHeigth)
     }
     
-    func sixImageLayout2(section: Int) {
+    func sixImageLayout2(section: Int, hasFooter: Bool) {
         var defaultYPosition = self.currentScreenHeigth
         
         let path = NSIndexPath(forItem: 0, inSection: section)
@@ -310,15 +324,19 @@ class HomePageCollectionViewLayout: UICollectionViewLayout {
             self.layoutAttributes[key] = attribute
         }
         
-        yPosition = yPosition + itemSize.height + self.horizontalInset + self.sectionHeight
+        yPosition = yPosition + itemSize.height + self.horizontalInset + self.headerViewHeight
         
-        //Add Footer View
-        let footerView: (attribute: UICollectionViewLayoutAttributes, key: String) = footerViewWithYPosition(yPosition, path: path)
-        self.layoutAttributes[footerView.key] = footerView.attribute
         
-        let height: CGFloat = yPosition + self.footerHeight
+        if hasFooter {
+            let footerView: (attribute: UICollectionViewLayoutAttributes, key: String) = footerViewWithYPosition(yPosition, path: path)
+            self.layoutAttributes[footerView.key] = footerView.attribute
+            
+            let height: CGFloat = yPosition + self.footerHeight
+            self.currentScreenHeigth = height
+        } else {
+            self.currentScreenHeigth = yPosition
+        }
         
-        self.currentScreenHeigth = height
         self.contentSize = CGSizeMake(screenRect!.width, self.currentScreenHeigth)
     }
     

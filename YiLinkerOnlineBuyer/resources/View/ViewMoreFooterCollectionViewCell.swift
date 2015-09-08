@@ -9,13 +9,14 @@
 import UIKit
 
 protocol ViewMoreFooterCollectionViewCellDelegate {
-    func didSelectViewMoreWithtarget(target: String, targetType: String)
+    func didSelectViewMoreWithtarget(target: String, targetType: TargetType)
 }
 
 class ViewMoreFooterCollectionViewCell: UICollectionViewCell {
     
     var target: String = ""
-    var targetType: String = ""
+    var targetType: TargetType = TargetType.ProductPage
+    
     var delegate: ViewMoreFooterCollectionViewCellDelegate?
     @IBOutlet weak var cellButton: DynamicRoundedButton!
     

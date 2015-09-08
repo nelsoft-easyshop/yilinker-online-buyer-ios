@@ -39,3 +39,12 @@ enum CheckoutRefreshType {
     case Credit
     case OverView
 }
+
+enum TargetType {
+    case TodaysPromo
+    case CategoryViewMoreItems
+    case Category
+    case ProductPage
+    case Seller
+    case SellerList
+}
