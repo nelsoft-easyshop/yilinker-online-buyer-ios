@@ -303,10 +303,12 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         
         for (index, category) in enumerate(categories) {
             let categoryDictionary: NSDictionary = category as! NSDictionary
-            let layoutId: String = categoryDictionary["layoutId"] as! String
+            let layoutId: Int = categoryDictionary["categoryId"] as! Int
             var layout: String = ""
-            if layoutId == "1" {
-                layout = Constants.HomePage.layoutFiveKey
+            if layoutId == 1 {
+                layout = Constants.HomePage.layoutFiveKeyWithFooter
+            } else {
+                layout = Constants.HomePage.layoutFiveKey2
             }
             
             hotItemLayouts.append(layout)

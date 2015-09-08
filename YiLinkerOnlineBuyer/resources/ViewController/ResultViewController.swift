@@ -21,6 +21,9 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
     let reuseIdentifierSeller: String = "SellerResultCollectionViewCell"
     var type: String = "GRID"
     
+    //Variable for determining what kind of result will be shown
+    var targetType: TargetType?
+    
     @IBOutlet weak var noResultLabel: UILabel!
     @IBOutlet weak var sortPickerTableView: UITableView!
     @IBOutlet weak var dimView: UIView!
