@@ -264,11 +264,6 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
         }
     }
     
-    func addBadge(items: Int) {
-        let badgeValue = (self.tabController.tabBar.items![4] as! UITabBarItem).badgeValue?.toInt()
-        (self.tabController.tabBar.items![4] as! UITabBarItem).badgeValue = String(items)
-    }
-    
     // MARK: - Methods
     
     func listAvailableCombinations() {
@@ -416,8 +411,10 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
                     if tempVar {
                         var data: NSDictionary = responseObject["data"] as! NSDictionary
                         var items: NSArray = data["items"] as! NSArray
+                        SessionManager.setCartCount(items.count)
+                        (self.tabController.tabBar.items![4] as! UITabBarItem).badgeValue = String(SessionManager.cartCount())
                         self.hideSelf("cart")
-                        self.addBadge(items.count)
+                        
                     } else {
                         if let tempVar = responseObject["message"] as? String {
                             let alertController = UIAlertController(title: "Error", message: tempVar, preferredStyle: .Alert)

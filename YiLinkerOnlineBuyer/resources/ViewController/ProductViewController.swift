@@ -402,8 +402,9 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
                     if tempVar {
                         var data: NSDictionary = responseObject["data"] as! NSDictionary
                         var items: NSArray = data["items"] as! NSArray
-                        self.showAlert(title: nil, message: "This item has been added to your cart")
-                        self.addBadge(items.count)
+                        SessionManager.setWishlistCount(items.count)
+                        self.showAlert(title: nil, message: "This item has been added to your wishlist")
+                        self.addBadge("wishlist")
                     } else {
                         if let tempVar = responseObject["message"] as? String {
                             self.showAlert(title: "Error", message: tempVar)
@@ -467,7 +468,9 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
                         } // loop for items
                     } else {
                         self.showAlert(title: nil, message: "This item has been added to your cart")
-                        self.addBadge(items.count)
+                        println(items.count)
+                        SessionManager.setCartCount(items.count)
+                        self.addBadge("cart")
                         self.hud?.hide(true)
                     }
                     
@@ -789,9 +792,12 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         self.hud?.show(true)
     }
     
-    func addBadge(items: Int) {
-        let badgeValue = (self.tabController.tabBar.items![4] as! UITabBarItem).badgeValue?.toInt()
-        (self.tabController.tabBar.items![4] as! UITabBarItem).badgeValue = String(items)
+    func addBadge(type: String) {
+        if type == "cart" {
+            (self.tabController.tabBar.items![4] as! UITabBarItem).badgeValue = String(SessionManager.cartCount())
+        } else if type == "wishlist" {
+            (self.tabController.tabBar.items![3] as! UITabBarItem).badgeValue = String(SessionManager.wishlistCount())
+        }
     }
     
     func getUnitIdIndexFrom() {
