@@ -259,15 +259,37 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
     }
     
     func check() {
-        //self.endEditing(true)
-        var filledUpAllFields: Bool = true
+        var index: Int = 0
         for i in 0..<10 {
-            if getTextAtIndex(i) == "" {
-                filledUpAllFields = false
+            if getTextAtIndex(i) == "" && i != 1 && i != 2 && i != 10 && i != 5 {
+                index = i
+                break
             }
         }
         
-        if filledUpAllFields {
+        if index == 3 {
+            self.activeTextField = index - 1
+            self.next()
+            showAlert(title: "Error", message: "Street number is required.")
+        } else if index == 4 {
+            self.activeTextField = index - 1
+            self.next()
+            showAlert(title: "Error", message: "Street name is required.")
+        } else if index == 9 {
+            self.activeTextField = index - 1
+            self.next()
+            showAlert(title: "Error", message: "Zip code is required.")
+        }
+        //If index is zero all required fields are filled up
+        if index == 0 {
+            if self.isEdit2 {
+                self.fireEditAddress()
+            } else {
+                requestAddAddress()
+            }
+        }
+        
+        /*if filledUpAllFields {
             if self.isEdit2 {
                 self.fireEditAddress()
             } else {
@@ -276,7 +298,7 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
             
         } else {
             showAlert(title: "Error", message: "All text fields must be filled up.")
-        }
+        }*/
 
     }
     
