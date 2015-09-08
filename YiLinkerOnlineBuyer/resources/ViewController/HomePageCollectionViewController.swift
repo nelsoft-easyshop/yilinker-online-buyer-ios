@@ -518,37 +518,37 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
             let fullImageCollectionViewCell: FullImageCollectionViewCell = self.collectionView!.cellForItemAtIndexPath(indexPath) as! FullImageCollectionViewCell
             println("Target: \(fullImageCollectionViewCell.target)")
             println("Target type: \(fullImageCollectionViewCell.targetType)")
-            self.redirectToProductpageWithProductID("1")
+            self.redirectToProductpageWithProductID(fullImageCollectionViewCell.target)
         } else if cell.isKindOfClass(HalfVerticalImageCollectionViewCell) {
             let halfVerticalImageCollectionViewCell: HalfVerticalImageCollectionViewCell = self.collectionView!.cellForItemAtIndexPath(indexPath) as! HalfVerticalImageCollectionViewCell
             println("Target: \(halfVerticalImageCollectionViewCell.target)")
             println("Target type: \(halfVerticalImageCollectionViewCell.targetType)")
-            self.redirectToProductpageWithProductID("1")
+            self.redirectToProductpageWithProductID(halfVerticalImageCollectionViewCell.target)
         } else if cell.isKindOfClass(ProductItemWithVerticalDisplayCollectionViewCell) {
             let productItemWithVerticalDisplayCollectionViewCell: ProductItemWithVerticalDisplayCollectionViewCell = cell as! ProductItemWithVerticalDisplayCollectionViewCell
             println("Target: \(productItemWithVerticalDisplayCollectionViewCell.target)")
             println("Target type: \(productItemWithVerticalDisplayCollectionViewCell.targetType)")
-            self.redirectToProductpageWithProductID("1")
+            self.redirectToProductpageWithProductID(productItemWithVerticalDisplayCollectionViewCell.target)
         } else if cell.isKindOfClass(ProductWithCenterNameCollectionViewCell) {
             let productWithCenterNameCollectionViewCell: ProductWithCenterNameCollectionViewCell = cell as! ProductWithCenterNameCollectionViewCell
             println("Target: \(productWithCenterNameCollectionViewCell.target)")
             println("Target type: \(productWithCenterNameCollectionViewCell.targetType)")
-            self.redirectToProductpageWithProductID("1")
+            self.redirectToProductpageWithProductID(productWithCenterNameCollectionViewCell.target)
         } else if cell.isKindOfClass(TwoColumnGridCollectionViewCell) {
             let twoColumnGridCollectionViewCell: TwoColumnGridCollectionViewCell = cell as! TwoColumnGridCollectionViewCell
             println("Target: \(twoColumnGridCollectionViewCell.target)")
             println("Target type: \(twoColumnGridCollectionViewCell.targetType)")
-            self.redirectToProductpageWithProductID("1")
+            self.redirectToProductpageWithProductID(twoColumnGridCollectionViewCell.target)
         } else if cell.isKindOfClass(VerticalImageCollectionViewCell) {
             let verticalImageCollectionViewCell: VerticalImageCollectionViewCell = cell as! VerticalImageCollectionViewCell
             println("Target: \(verticalImageCollectionViewCell.target)")
             println("Target type: \(verticalImageCollectionViewCell.targetType)")
-            self.redirectToProductpageWithProductID("1")
+            self.redirectToProductpageWithProductID(verticalImageCollectionViewCell.target)
         } else if cell.isKindOfClass(SellerCollectionViewCell) {
             let sellerCollectionViewCell: SellerCollectionViewCell = cell as! SellerCollectionViewCell
             println("Target: \(sellerCollectionViewCell.target)")
             println("Target type: \(sellerCollectionViewCell.targetType)")
-            self.redirectToSellerWithID("sellerID")
+            self.redirectToSellerWithID(sellerCollectionViewCell.target)
         }
     
     }
@@ -579,6 +579,7 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
     }
     
     func redirectToProductpageWithProductID(productID: String) {
+        println("product id: \(productID)")
         let productViewController: ProductViewController = ProductViewController(nibName: "ProductViewController", bundle: nil)
         productViewController.productId = productID
         productViewController.tabController = self.tabBarController as! CustomTabBarController
