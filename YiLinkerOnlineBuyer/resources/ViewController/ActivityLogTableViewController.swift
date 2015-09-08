@@ -25,6 +25,9 @@ class ActivityLogTableViewController: UITableViewController {
     var cellCount: Int = 0
     var cellSection: Int = 0
     var logsDictionary = Dictionary<String, String>()
+    
+    var array = [ActivityModel]()
+    var array2 = [ActivityLogModel]()
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -82,15 +85,15 @@ class ActivityLogTableViewController: UITableViewController {
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Potentially incomplete method implementation.
         // Return the number of sections.
-        //return self.cellSection
-        return 1
+        return self.table.count
+        //return 1
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete method implementation.
         // Return the number of rows in the section.
         if self.cellCount != 0 {
-            return self.cellCount
+            return self.table[section].activities.count
         } else {
             return 0
         }
@@ -98,24 +101,18 @@ class ActivityLogTableViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("ActivityLogTableViewCell", forIndexPath: indexPath) as! ActivityLogTableViewCell
-
-        //let dateComponents = NSDateComponents()
       
         if(self.activityLogsModel != nil){
-            cell.detailsLabel?.text = self.activityLogsModel.text_array[indexPath.row]
-            cell.timeLabel?.text = self.activityLogsModel.date_array[indexPath.row]
-            //println("SAMPLE \(self.table[indexPath.section].activities[indexPath.row].details)")
+            cell.detailsLabel?.text = self.table[indexPath.section].activities[indexPath.row].details
+            cell.timeLabel?.text =  self.table[indexPath.section].activities[indexPath.row].time
         }
        
-        
-        //println(tableData[indexPath.section].activities[indexPath.row].details)
-        
         return cell
     }
     
     override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         if self.cellSection != 0 {
-            return setSectionHeader(self.activityLogsModel.date_section_array[section])
+            return setSectionHeader(self.table[section].text)
         } else {
             return setSectionHeader(tableData[section].text)
         }
@@ -135,23 +132,17 @@ class ActivityLogTableViewController: UITableViewController {
                 self.cellCount = self.activityLogsModel!.text_array.count
                 self.cellSection = self.activityLogsModel!.date_section_array.count
   
-            for var a = 0; a < self.activityLogsModel.date_section_array.count; a++ {
-                for var b = 0; b < self.activityLogsModel.text_array.count; b++ {
-                    if self.activityLogsModel!.date_section_array[a] == self.activityLogsModel!.all_date_section_array[b] {
-                        // for var j = 0; j < self.activityLogsModel!.text_array.count; j++ {
-                        //   if self.activityLogsModel!.date_section_array[i] == self.activityLogsModel!.all_date_section_array[j] {
-                        //self.tableSection = ActivityLogModel(text: self.activityLogsModel!.date_section_array[0], activities: [self.tableSectionContents])
-                        //self.table.append(self.tableSection)
-                         self.tableSectionContents = ActivityModel(time: self.activityLogsModel!.all_date_section_array[a], details: self.activityLogsModel!.text_array[b])
-                        
-                        println("a: \(a) b: \(b) date in section: \(self.activityLogsModel!.date_section_array[a]) logs in section \(a): \(self.activityLogsModel!.text_array[b]) time: \(self.activityLogsModel!.date_array[b])" )
-                        
-                        //   }
-                        //println("sample \(self.tableSectionContents.details.count)")
-                        // }
+           
+                for var a = 0; a < self.activityLogsModel.date_section_array.count; a++ {
+                    var arr = [ActivityModel]()
+                    for var b = 0; b < self.activityLogsModel.text_array.count; b++ {
+                        if self.activityLogsModel!.date_section_array[a] == self.activityLogsModel!.all_date_section_array[b] {
+                            self.tableSectionContents = ActivityModel(time: self.activityLogsModel!.date_array[b], details: self.activityLogsModel!.text_array[b])
+                            arr.append(self.tableSectionContents)
+                        }
                     }
+                    self.table.append(ActivityLogModel(text: self.activityLogsModel!.date_section_array[a], activities: arr))
                 }
-            }
             
                 self.tableView.reloadData()
             }, failure: {
