@@ -151,7 +151,7 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
     
     func gotoSearch() {
         let resultList = ResultViewController(nibName: "ResultViewController", bundle: nil)
-        //call search function here - categoryId
+        resultList.passCategoryID(categoryId)
         self.navigationController?.pushViewController(resultList, animated: true)
     }
     
