@@ -101,7 +101,7 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
             categories.requestCategories(parentId: categoryModel.id[indexPath.row])
             self.navigationController?.pushViewController(categories, animated: true)
         } else {
-            gotoList(UIGestureRecognizer())
+            gotoSearch(categoryModel.id[indexPath.row])
         }
     }
     
@@ -145,8 +145,10 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
         return containerView
     }
     
-    func gotoList(gesture: UIGestureRecognizer) {
+    func gotoSearch(id: Int) {
         let resultList = ResultViewController(nibName: "ResultViewController", bundle: nil)
+        println(">>> \(id)")
+        //call search function here
         self.navigationController?.pushViewController(resultList, animated: true)
     }
     
@@ -154,12 +156,13 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
     
     func requestCategories(#parentId: Int) {
         SVProgressHUD.show()
-        println(parentId)
+
         let manager = APIManager.sharedInstance
         let categoryUrl = "http://online.api.easydeal.ph/api/v1/product/getCategories?parentId=" + String(parentId)
         
         manager.GET(categoryUrl, parameters: nil, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            println(responseObject)
             SVProgressHUD.dismiss()
             self.categoryModel = CategoryModel.parseCategories(responseObject)
             
