@@ -42,6 +42,32 @@ class SessionManager {
         NSUserDefaults.standardUserDefaults().synchronize()
     }
     
+    class func setWishlistCount(wishlistCount: Int) {
+        NSUserDefaults.standardUserDefaults().setObject("\(wishlistCount)", forKey: "wishlistCount")
+        NSUserDefaults.standardUserDefaults().synchronize()
+    }
+    
+    class func setCartCount(cartCount: Int) {
+        NSUserDefaults.standardUserDefaults().setObject("\(cartCount)", forKey: "cartCount")
+        NSUserDefaults.standardUserDefaults().synchronize()
+    }
+    
+    class func cartCount() -> Int {
+        var result: String = ""
+        if let val: AnyObject = NSUserDefaults.standardUserDefaults().objectForKey("cartCount") as? String {
+            result = val as! String
+        }
+        return result.toInt()!
+    }
+    
+    class func wishlistCount() -> Int {
+        var result: String = ""
+        if let val: AnyObject = NSUserDefaults.standardUserDefaults().objectForKey("wishlistCount") as? String {
+            result = val as! String
+        }
+        return result.toInt()!
+    }
+    
     class func addressId() -> Int {
         var result: String = ""
         if let val: AnyObject = NSUserDefaults.standardUserDefaults().objectForKey("addressId") as? String {

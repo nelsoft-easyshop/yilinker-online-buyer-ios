@@ -30,6 +30,8 @@ class ProductImagesView: UIView, UICollectionViewDataSource, UICollectionViewDel
     @IBOutlet weak var priceLabel: UILabel!
     @IBOutlet weak var originalPrice: UILabel!
     
+    var imagesModel: [ProductImagesModel]!
+    
     var images: [String] = []
     var width: CGFloat = 0
     
@@ -70,13 +72,16 @@ class ProductImagesView: UIView, UICollectionViewDataSource, UICollectionViewDel
     // MARK: - Collection View Data Source
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.images.count
+        if self.imagesModel != nil {
+            return self.imagesModel.count
+        }
+        return 0
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell: ProductSellerViewCollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier("productSellerIdentifier", forIndexPath: indexPath) as! ProductSellerViewCollectionViewCell
         
-        cell.setImage(self.images[indexPath.row] as String)
+        cell.setImage(self.imagesModel[indexPath.row].imageLocation)
         
         return cell
     }
@@ -127,9 +132,9 @@ class ProductImagesView: UIView, UICollectionViewDataSource, UICollectionViewDel
     // Functions
     
     func setDetails(model: ProductDetailsModel, unitId: Int, width: CGFloat) {
-        println(unitId)
+
         self.nameLabel.text = model.title
-//        self.nameLabel.sizeToFit()
+
         if model.productUnits[unitId].discount == 0 {
             self.originalPrice.hidden = true
             self.priceLabel.text = "P" + model.productUnits[unitId].price
@@ -140,13 +145,9 @@ class ProductImagesView: UIView, UICollectionViewDataSource, UICollectionViewDel
         
         self.width = width
         
-        self.images = []
-        self.images.append(model.image)//model.productUnits[unitId].imageIds
-    
-        if self.images.count == 0 {
-            self.images = ["", "", "", "", ""]
-        }
-        self.pageControl.numberOfPages = self.images.count
+        self.imagesModel = model.images
+
+        self.pageControl.numberOfPages = self.imagesModel.count
         self.collectionView.reloadData()
     }
     

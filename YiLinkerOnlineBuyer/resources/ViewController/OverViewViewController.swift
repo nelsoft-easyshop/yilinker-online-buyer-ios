@@ -15,8 +15,7 @@ class OverViewViewController: UIViewController, UITableViewDelegate, UITableView
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.registerNib()
-        self.tableView.layoutIfNeeded()
+    
         let successHeaderView: SuccessTableHeaderViewCell = XibHelper.puffViewWithNibName("SuccessTableHeaderViewCell", index: 0) as! SuccessTableHeaderViewCell
         self.tableView.tableHeaderView = successHeaderView
         
@@ -24,6 +23,7 @@ class OverViewViewController: UIViewController, UITableViewDelegate, UITableView
         totalTableViewCell.priceLabel.text = "\(self.paymentSuccessModel.data.totalPrice)"
             
         self.tableView.tableFooterView = totalTableViewCell
+        self.registerNib()
     }
     
     func registerNib() {

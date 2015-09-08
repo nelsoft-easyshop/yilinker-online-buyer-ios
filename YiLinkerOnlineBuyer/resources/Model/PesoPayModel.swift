@@ -69,12 +69,13 @@ class PesoPayModel: NSObject {
             }
         }
         
-        
-        let url: NSURL = NSURL(string: paymentUrl)!
-        let dictionary: NSDictionary = url.getKeyVals()!
-        successUrl = NSURL(string: dictionary["successUrl"] as! String)!
-        cancelUrl = NSURL(string: dictionary["cancelUrl"] as! String)!
-        failUrl = NSURL(string: dictionary["failUrl"] as! String)!
+        if isSuccessful {
+            let url: NSURL = NSURL(string: paymentUrl)!
+            let dictionary: NSDictionary = url.getKeyVals()!
+            successUrl = NSURL(string: dictionary["successUrl"] as! String)!
+            cancelUrl = NSURL(string: dictionary["cancelUrl"] as! String)!
+            failUrl = NSURL(string: dictionary["failUrl"] as! String)!
+        }
         
         return PesoPayModel(isSuccessful: isSuccessful, paymentUrl: paymentUrl2, successUrl: successUrl, cancelUrl: cancelUrl, failUrl: failUrl, message: message)
     }

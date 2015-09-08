@@ -18,6 +18,8 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
     var is_successful: Bool = false
     var hud: MBProgressHUD?
     
+    var sellerId: Int = 0
+    
     var dimView: UIView = UIView()
     
     override func viewDidLoad() {
@@ -112,7 +114,8 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
     func fireSeller() {
         self.showHUD()
         let manager = APIManager.sharedInstance
-        let parameters: NSDictionary = ["userId" : "1"];
+        println(sellerId)
+        let parameters: NSDictionary = ["userId" : sellerId];
         manager.POST(APIAtlas.getSellerInfo, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
                 self.sellerModel = SellerModel.parseSellerDataFromDictionary(responseObject as! NSDictionary)

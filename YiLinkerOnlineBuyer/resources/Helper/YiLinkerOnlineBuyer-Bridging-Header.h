@@ -10,3 +10,4 @@
 #import <SVProgressHUD/SVProgressHUD.h>
 #import <TTRangeSlider/TTRangeSlider.h>
 #import <MBProgressHUD.h>
+#import <Google/CloudMessaging.h>

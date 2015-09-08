@@ -15,6 +15,7 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
     var categoryModel: CategoryModel!
     var parentText: String = ""
     var firstLoad: Bool = true
+    var categoryId: Int = 1
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,7 +31,7 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
         self.tableView.registerNib(nib, forCellReuseIdentifier: "CategoryIdentifier")
 
         if firstLoad {
-            requestCategories(parentId: 1)
+            requestCategories(parentId: categoryId)
             firstLoad = false
         }
     }
@@ -101,7 +102,7 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
             categories.requestCategories(parentId: categoryModel.id[indexPath.row])
             self.navigationController?.pushViewController(categories, animated: true)
         } else {
-            gotoList(UIGestureRecognizer())
+            gotoSearch()
         }
     }
     
@@ -117,7 +118,6 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
         categoryLabel.text = "    "
      
         if parentText == "" {
-            self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 49, 0)
             categoryLabel.text! += "Select Category"
             categoryLabel.sizeToFit()
             categoryLabel.frame.size.height = containerView.frame.size.height
@@ -146,7 +146,12 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
     }
     
     func gotoList(gesture: UIGestureRecognizer) {
+        gotoSearch()
+    }
+    
+    func gotoSearch() {
         let resultList = ResultViewController(nibName: "ResultViewController", bundle: nil)
+        resultList.passCategoryID(categoryId)
         self.navigationController?.pushViewController(resultList, animated: true)
     }
     
@@ -154,12 +159,12 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
     
     func requestCategories(#parentId: Int) {
         SVProgressHUD.show()
-        println(parentId)
+
         let manager = APIManager.sharedInstance
-        let categoryUrl = "http://online.api.easydeal.ph/api/v1/product/getCategories?parentId=" + String(parentId)
         
-        manager.GET(categoryUrl, parameters: nil, success: {
+        manager.GET(APIAtlas.getCategories + String(parentId), parameters: nil, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            println(responseObject)
             SVProgressHUD.dismiss()
             self.categoryModel = CategoryModel.parseCategories(responseObject)
             

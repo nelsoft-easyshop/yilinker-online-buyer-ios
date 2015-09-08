@@ -34,9 +34,8 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
         
         self.titleView()
         self.backButton()
-
+        //self.view.layoutIfNeeded()
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-        layout.itemSize = CGSize(width: self.view.frame.size.width - 20, height: 79)
         layout.minimumLineSpacing = 20
         layout.footerReferenceSize = CGSizeMake(self.collectionView.frame.size.width, 41)
         collectionView.collectionViewLayout = layout
@@ -299,6 +298,7 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
             "grant_type": Constants.Credentials.grantRefreshToken,
             "refresh_token": SessionManager.refreshToken()]
         let manager = APIManager.sharedInstance
+        self.showHUD()
         manager.POST(url, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
@@ -312,7 +312,7 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
             
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                SVProgressHUD.dismiss()
+                self.hud?.hide(true)
                 let alertController = UIAlertController(title: "Something went wrong", message: "", preferredStyle: .Alert)
                 let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
                 alertController.addAction(defaultAction)
@@ -359,5 +359,9 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
                 self.hud?.hide(true)
         })
         
+    }
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+        return CGSize(width: self.view.frame.size.width - 20, height: 90)
     }
 }
