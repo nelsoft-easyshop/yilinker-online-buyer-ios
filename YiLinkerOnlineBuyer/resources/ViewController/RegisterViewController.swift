@@ -48,7 +48,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         self.hud = MBProgressHUD(view: self.view)
         self.hud?.removeFromSuperViewOnHide = true
         self.hud?.dimBackground = false
-        self.view.addSubview(self.hud!)
+        self.navigationController?.view.addSubview(self.hud!)
         self.hud?.show(true)
     }
     

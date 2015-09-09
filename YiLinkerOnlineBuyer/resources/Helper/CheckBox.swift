@@ -37,6 +37,16 @@ class CheckBox: UIButton {
     func didTouchUpInside() {
         toggleChecked()
     }
+    
+    func setUnchecked() {
+        self.checked = false
+        self.setImage(UIImage(named: uncheckedImage), forState: .Normal)
+    }
+    
+    func setChecked() {
+        self.checked = true
+        self.setImage(UIImage(named: checkedImage), forState: .Normal)
+    }
 
     private func toggleChecked() {
         self.checked = !self.checked
@@ -47,5 +57,4 @@ class CheckBox: UIButton {
             self.setImage(UIImage(named: uncheckedImage), forState: .Normal)
         }
     }
-    
 }

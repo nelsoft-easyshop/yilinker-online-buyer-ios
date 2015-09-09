@@ -18,12 +18,14 @@ class ResolutionCenterViewController
     var dimView: UIView? = nil
     
     @IBOutlet weak var resolutionTableView: UITableView!
-    var dummyData : [(id:String, status: String, date: String, type: String)] =
-    [   ("7889360001", "Open", "December 12, 2015", "Seller")
-        ,("7889360002", "Closed", "January 2, 2016", "Buyer")
-        ,("7889360003", "Open", "February 4, 2016", "Seller")
-        ,("2345647856", "Open", "January 21, 2016", "Seller")
-        ,("2345647856", "Closed", "January 21, 2016", "Seller")]
+    var tableData : [(ResolutionCenterData)] =
+    [ ("7889360001", "Open"  , "December 12, 2015", "Seller", "Not Happy", "It's okay")
+      ,("7889360002","Closed", "January 2, 2016"  , "Buyer" , "Yo wassup", "Go voltron!")
+      ,("7889360003","Open"  , "February 4, 2016" , "Seller", "hmm...", "hack'd'planet")
+      ,("2345647856","Open"  , "January 21, 2016" , "Seller", "Numbers game", "13")
+      ,("2345647856","Closed", "January 21, 2016" , "Buyer" , "On-start", "What's goin on")]
+    
+    var currentSelectedFilter = SelectedFilters(time:.Total,status:.Both)
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -69,7 +71,7 @@ class ResolutionCenterViewController
             as! CaseDetailsTableViewController
         
         // PASS DATA
-        //caseDetails.passModel(tableData[indexPath.row])
+        caseDetails.passData(self.tableData[indexPath.row])
         
         self.navigationController?.pushViewController(caseDetails, animated:true);
     
@@ -78,7 +80,7 @@ class ResolutionCenterViewController
     
     // MARK: UITableViewDataSource
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return dummyData.count
+        return tableData.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -86,7 +88,7 @@ class ResolutionCenterViewController
         let cell = resolutionTableView.dequeueReusableCellWithIdentifier("RcCell") as! ResolutionCenterCell
         
         // put values here
-        let currentDataId:(String, status:String, date:String, type:String) = dummyData[indexPath.item]
+        let currentDataId:(ResolutionCenterData) = tableData[indexPath.item]
         cell.setData(currentDataId)
         //cell.setData(currentData.id, status:currentData.status, date:currentData.date, type:currentData.type )
         
@@ -171,11 +173,13 @@ class ResolutionCenterViewController
     }
     
     func goFilterButton() {
-        let filtration =
+        let filtrationNav =
             self.storyboard?.instantiateViewControllerWithIdentifier("FilterNavigationController")
                 as! UINavigationController
+        let filtrationView = filtrationNav.viewControllers[0] as! ResolutionFilterViewController
+        filtrationView.currentFilter = self.currentSelectedFilter
 
-        self.navigationController?.presentViewController(filtration, animated: true, completion: nil)
+        self.navigationController?.presentViewController(filtrationNav, animated: true, completion: nil)
             //completion: (() -> Void)?
     }
 

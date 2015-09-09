@@ -20,12 +20,14 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="DisputeViewController" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
             <connections>
+                <outlet property="caseId" destination="hv1-al-bLM" id="UaA-tA-wfm"/>
                 <outlet property="disputeTitle" destination="b2Y-Dz-oZd" id="ae1-dH-4Yf"/>
                 <outlet property="modalView" destination="9J9-Ai-3QY" id="yLY-ns-sYb"/>
                 <outlet property="remarks" destination="Gwf-ux-sZJ" id="Tlh-u8-rjA"/>
                 <outlet property="submitButton" destination="aVw-hQ-F8J" id="46O-PO-O4N"/>
                 <outlet property="titleView" destination="A9S-oM-o3Y" id="qaN-3T-3FS"/>
                 <outlet property="transactionNumber" destination="wG2-2Y-nTH" id="D4A-8m-q2x"/>
+                <outlet property="verticalSpaceInset" destination="L4T-e0-ew5" id="tF4-n7-ih4"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -160,12 +162,12 @@
                 </view>
             </subviews>
             <constraints>
+                <constraint firstItem="9J9-Ai-3QY" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="106" id="L4T-e0-ew5" userLabel="verticalSpaceInset"/>
                 <constraint firstItem="3pB-Bf-E7d" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="TOx-eT-c5A"/>
                 <constraint firstAttribute="trailing" secondItem="3pB-Bf-E7d" secondAttribute="trailing" id="XpM-Uo-bms"/>
                 <constraint firstItem="3pB-Bf-E7d" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="fTI-4c-MrD"/>
                 <constraint firstAttribute="centerX" secondItem="9J9-Ai-3QY" secondAttribute="centerX" id="hUi-fl-vp7"/>
                 <constraint firstAttribute="bottom" secondItem="3pB-Bf-E7d" secondAttribute="bottom" id="nGQ-t6-6Ju"/>
-                <constraint firstAttribute="centerY" secondItem="9J9-Ai-3QY" secondAttribute="centerY" id="yX3-IP-Gk0"/>
             </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
             <point key="canvasLocation" x="281" y="377"/>
