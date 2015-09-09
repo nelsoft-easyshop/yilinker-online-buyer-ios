@@ -246,6 +246,12 @@
 		26DFF63D1B87B0E9005D8EDE /* TransactionDescriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26DFF63C1B87B0E9005D8EDE /* TransactionDescriptionView.swift */; };
 		26DFF6461B87BBE3005D8EDE /* TransactionProductDetailsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26DFF6441B87BBE3005D8EDE /* TransactionProductDetailsTableViewCell.swift */; };
 		26DFF6471B87BBE3005D8EDE /* TransactionProductDetailsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26DFF6451B87BBE3005D8EDE /* TransactionProductDetailsTableViewCell.xib */; };
+		793A89961B9FFFD80030FDC7 /* ChangeMobileNumberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 793A89941B9FFFD80030FDC7 /* ChangeMobileNumberViewController.swift */; };
+		793A89971B9FFFD80030FDC7 /* ChangeMobileNumberViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 793A89951B9FFFD80030FDC7 /* ChangeMobileNumberViewController.xib */; };
+		793A899A1BA001AE0030FDC7 /* VerifyMobileNumberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 793A89981BA001AE0030FDC7 /* VerifyMobileNumberViewController.swift */; };
+		793A899B1BA001AE0030FDC7 /* VerifyMobileNumberViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 793A89991BA001AE0030FDC7 /* VerifyMobileNumberViewController.xib */; };
+		793A899E1BA004550030FDC7 /* VerifyMobileNumberStatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 793A899C1BA004550030FDC7 /* VerifyMobileNumberStatusViewController.swift */; };
+		793A899F1BA004550030FDC7 /* VerifyMobileNumberStatusViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 793A899D1BA004550030FDC7 /* VerifyMobileNumberStatusViewController.xib */; };
 		7971F73D1B86189100322861 /* FilterAttributeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7971F73C1B86189100322861 /* FilterAttributeModel.swift */; };
 		7971F73F1B861ABE00322861 /* FilterTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7971F73E1B861ABE00322861 /* FilterTableViewCell.xib */; };
 		7971F7411B861AC900322861 /* FilterTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7971F7401B861AC900322861 /* FilterTableViewCell.swift */; };
@@ -630,6 +636,12 @@
 		26DFF6441B87BBE3005D8EDE /* TransactionProductDetailsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TransactionProductDetailsTableViewCell.swift; path = YiLinkerOnlineBuyer/resources/View/TransactionProductDetailsTableViewCell.swift; sourceTree = SOURCE_ROOT; };
 		26DFF6451B87BBE3005D8EDE /* TransactionProductDetailsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TransactionProductDetailsTableViewCell.xib; path = YiLinkerOnlineBuyer/resources/View/TransactionProductDetailsTableViewCell.xib; sourceTree = SOURCE_ROOT; };
 		5D038C18A7712E626564D2D3 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		793A89941B9FFFD80030FDC7 /* ChangeMobileNumberViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChangeMobileNumberViewController.swift; path = YiLinkerOnlineBuyer/resources/ViewController/ChangeMobileNumberViewController.swift; sourceTree = SOURCE_ROOT; };
+		793A89951B9FFFD80030FDC7 /* ChangeMobileNumberViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ChangeMobileNumberViewController.xib; path = YiLinkerOnlineBuyer/resources/ViewController/ChangeMobileNumberViewController.xib; sourceTree = SOURCE_ROOT; };
+		793A89981BA001AE0030FDC7 /* VerifyMobileNumberViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VerifyMobileNumberViewController.swift; path = YiLinkerOnlineBuyer/resources/ViewController/VerifyMobileNumberViewController.swift; sourceTree = SOURCE_ROOT; };
+		793A89991BA001AE0030FDC7 /* VerifyMobileNumberViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = VerifyMobileNumberViewController.xib; path = YiLinkerOnlineBuyer/resources/ViewController/VerifyMobileNumberViewController.xib; sourceTree = SOURCE_ROOT; };
+		793A899C1BA004550030FDC7 /* VerifyMobileNumberStatusViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VerifyMobileNumberStatusViewController.swift; path = YiLinkerOnlineBuyer/resources/ViewController/VerifyMobileNumberStatusViewController.swift; sourceTree = SOURCE_ROOT; };
+		793A899D1BA004550030FDC7 /* VerifyMobileNumberStatusViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = VerifyMobileNumberStatusViewController.xib; path = YiLinkerOnlineBuyer/resources/ViewController/VerifyMobileNumberStatusViewController.xib; sourceTree = SOURCE_ROOT; };
 		7971F73C1B86189100322861 /* FilterAttributeModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FilterAttributeModel.swift; path = YiLinkerOnlineBuyer/resources/Model/FilterAttributeModel.swift; sourceTree = SOURCE_ROOT; };
 		7971F73E1B861ABE00322861 /* FilterTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = FilterTableViewCell.xib; path = YiLinkerOnlineBuyer/resources/Xib/FilterTableViewCell.xib; sourceTree = SOURCE_ROOT; };
 		7971F7401B861AC900322861 /* FilterTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FilterTableViewCell.swift; path = YiLinkerOnlineBuyer/resources/View/FilterTableViewCell.swift; sourceTree = SOURCE_ROOT; };
@@ -1131,6 +1143,9 @@
 				26DFF6321B8791B5005D8EDE /* TransactionViews.swift */,
 				0C9937281B750583000D6074 /* WishlistViewController.swift */,
 				79EBE8831B95F50700434B42 /* ChangePasswordViewController.swift */,
+				793A89941B9FFFD80030FDC7 /* ChangeMobileNumberViewController.swift */,
+				793A89981BA001AE0030FDC7 /* VerifyMobileNumberViewController.swift */,
+				793A899C1BA004550030FDC7 /* VerifyMobileNumberStatusViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -1138,56 +1153,40 @@
 		0C9937291B750583000D6074 /* Xib */ = {
 			isa = PBXGroup;
 			children = (
-				961BE59B1B9948C100E8631A /* DisputeViewController.xib */,
-				961BE5A91B994C4D00E8631A /* ResolutionCenterCell.xib */,
-				79EBE8841B95F50700434B42 /* ChangePasswordViewController.xib */,
-				F7D37C9F1B92B09100FA7B16 /* ViewFeedBackViewController.swift */,
-				F7D37CA01B92B09100FA7B16 /* ViewFeedBackViewController.xib */,
-				F746BD8D1B91918C00CDFDE9 /* _GuestCheckoutTableViewCell.xib */,
-				F7CCDA781B943CBB000F5AD4 /* CartProductAttributeViewController.xib */,
-				F7CCDA791B943CBB000F5AD4 /* CategoriesTableViewCell.xib */,
-				F7CCDA7A1B943CBB000F5AD4 /* CategoriesViewController.xib */,
-				F7CCDA7B1B943CBB000F5AD4 /* CheckoutContainerViewController.xib */,
-				F7CCDA7C1B943CBB000F5AD4 /* CustomizeShoppingViewController.xib */,
-				F7CCDA7D1B943CBB000F5AD4 /* FollowedSellerTableViewCell.xib */,
-				F7CCDA7E1B943CBB000F5AD4 /* FollowedSellerViewController.xib */,
-				F7CCDA7F1B943CBB000F5AD4 /* HelpViewController.xib */,
-				F7CCDA801B943CBB000F5AD4 /* MessagingViewController.xib */,
-				F7CCDA821B943CBB000F5AD4 /* PaymentViewController.xib */,
-				F7CCDA831B943CBB000F5AD4 /* ProfileViewController.xib */,
-				F7CCDA851B943CBB000F5AD4 /* SellerViewController.xib */,
-				F7CCDA861B943CBB000F5AD4 /* SummaryViewController.xib */,
-				F7CCDA871B943CBB000F5AD4 /* TodaysPromoViewController.xib */,
 				F7B279F21B90B3BE003CEE5E /* _GuestCheckoutContainerViewController.xib */,
-				F740F08B1B90CBC900D23A34 /* CreateAccountViewController.swift */,
-				F740F08C1B90CBC900D23A34 /* CreateAccountViewController.xib */,
+				F7DEF9C01B90941500993F33 /* _GuestCheckoutHeaderTableViewCell.xib */,
 				F7B279F41B90B568003CEE5E /* _GuestCheckoutSummaryViewController.swift */,
 				F7B279F51B90B568003CEE5E /* _GuestCheckoutSummaryViewController.xib */,
-				F7DEF9C01B90941500993F33 /* _GuestCheckoutHeaderTableViewCell.xib */,
-				0C374F511B89EC4D0050AE1D /* CustomizeSelectedCollectionViewCell.xib */,
-				0C374F4B1B8998F30050AE1D /* CustomizeShoppingCollectionViewCell.xib */,
-				26DFF6451B87BBE3005D8EDE /* TransactionProductDetailsTableViewCell.xib */,
-				26DFF62F1B879126005D8EDE /* TransactionProductDetailsViewController.xib */,
-				26DFF6331B8791B5005D8EDE /* TransactionViews.xib */,
-				268C1BAB1B864D8B009FA106 /* TransactionDetailsViewController.xib */,
-				26D54FE61B86136300522398 /* TransactionTableViewCell.xib */,
-				26D54FDE1B860CF400522398 /* TransactionViewController.xib */,
+				F746BD8D1B91918C00CDFDE9 /* _GuestCheckoutTableViewCell.xib */,
 				0C374F251B88E3790050AE1D /* AboutSellerTableViewCell.xib */,
 				79E85FD11B8A230500428AA1 /* ActivityLogHeaderTableViewCell.xib */,
 				79E68B721B8AB900008626E4 /* ActivityLogTableViewCell.xib */,
 				79E85FCA1B8A1E0800428AA1 /* ActivityLogTableViewController.xib */,
 				0C10042C1B877F8400CAA17A /* AddAddressTableViewController.xib */,
+				79AA08341B8F4E6300AF3AA4 /* CartProductAttributeTableViewCell.xib */,
+				F7CCDA781B943CBB000F5AD4 /* CartProductAttributeViewController.xib */,
 				0C374F1C1B88E3790050AE1D /* CartProductAttributeViewController.xib */,
 				797D49101B7A50BA00617F6B /* CartTableViewCell.xib */,
+				F7CCDA791B943CBB000F5AD4 /* CategoriesTableViewCell.xib */,
 				0C374F1F1B88E3790050AE1D /* CategoriesTableViewCell.xib */,
+				F7CCDA7A1B943CBB000F5AD4 /* CategoriesViewController.xib */,
 				0C374F201B88E3790050AE1D /* CategoriesViewController.xib */,
 				0C374F0A1B88E3790050AE1D /* ChangeAddressCollectionViewCell.xib */,
 				0C374F1E1B88E3790050AE1D /* ChangeAddressFooterCollectionViewCell.xib */,
 				0C374F0B1B88E3790050AE1D /* ChangeAddressViewController.xib */,
+				793A89951B9FFFD80030FDC7 /* ChangeMobileNumberViewController.xib */,
+				79EBE8841B95F50700434B42 /* ChangePasswordViewController.xib */,
+				F7CCDA7B1B943CBB000F5AD4 /* CheckoutContainerViewController.xib */,
 				0C374F0C1B88E3790050AE1D /* CheckoutContainerViewController.xib */,
 				0C2F44DD1B85840F00021F45 /* CheckoutViews.xib */,
+				F740F08B1B90CBC900D23A34 /* CreateAccountViewController.swift */,
+				F740F08C1B90CBC900D23A34 /* CreateAccountViewController.xib */,
+				0C374F511B89EC4D0050AE1D /* CustomizeSelectedCollectionViewCell.xib */,
+				0C374F4B1B8998F30050AE1D /* CustomizeShoppingCollectionViewCell.xib */,
+				F7CCDA7C1B943CBB000F5AD4 /* CustomizeShoppingViewController.xib */,
 				0C374F261B88E3790050AE1D /* CustomizeShoppingViewController.xib */,
 				0C374F131B88E3790050AE1D /* DeliverToTableViewCell.xib */,
+				961BE59B1B9948C100E8631A /* DisputeViewController.xib */,
 				79E68BB41B8B5ADE008626E4 /* EditProfileAccountInformationTableViewCell.xib */,
 				79E68BA61B8B4572008626E4 /* EditProfileAddPhotoTableViewCell.xib */,
 				79E68BAE1B8B5306008626E4 /* EditProfileAddressTableViewCell.xib */,
@@ -1196,14 +1195,18 @@
 				0C329E761B7B47DC005BE2B6 /* EmptyView.xib */,
 				7971F73E1B861ABE00322861 /* FilterTableViewCell.xib */,
 				79F2F55A1B85FD9D00F57E4B /* FilterViewController.xib */,
+				F7CCDA7D1B943CBB000F5AD4 /* FollowedSellerTableViewCell.xib */,
 				0C374F211B88E3790050AE1D /* FollowedSellerTableViewCell.xib */,
+				F7CCDA7E1B943CBB000F5AD4 /* FollowedSellerViewController.xib */,
 				0C374F221B88E3790050AE1D /* FollowedSellerViewController.xib */,
 				0C99372A1B750583000D6074 /* FullImageCollectionViewCell.xib */,
 				0C374F1B1B88E3790050AE1D /* GeneralRatingTableViewCell.xib */,
 				0C99372B1B750583000D6074 /* HalfVerticalImageCollectionViewCell.xib */,
+				F7CCDA7F1B943CBB000F5AD4 /* HelpViewController.xib */,
 				0C374F271B88E3790050AE1D /* HelpViewController.xib */,
 				0C99372C1B750583000D6074 /* LaunchScreen.xib */,
 				0C99372D1B750583000D6074 /* LayoutHeaderCollectionViewCell.xib */,
+				F7CCDA801B943CBB000F5AD4 /* MessagingViewController.xib */,
 				0C374F281B88E3790050AE1D /* MessagingViewController.xib */,
 				79E68B7F1B8AEC00008626E4 /* MyPointsTableViewController.xib */,
 				0C374F141B88E3790050AE1D /* NewAddressTableViewCell.xib */,
@@ -1212,6 +1215,7 @@
 				0C374F111B88E3790050AE1D /* OrderSummaryTableViewCell.xib */,
 				0C374F101B88E3790050AE1D /* OverViewViewController.xib */,
 				0C374F0D1B88E3790050AE1D /* PaymentTableViewCell.xib */,
+				F7CCDA821B943CBB000F5AD4 /* PaymentViewController.xib */,
 				0C374F171B88E3790050AE1D /* PaymentViewController.xib */,
 				0C374F181B88E3790050AE1D /* PaymentWebViewViewController.xib */,
 				0C374F0E1B88E3790050AE1D /* PlainTableViewCell.xib */,
@@ -1236,7 +1240,9 @@
 				79E68B9C1B8B4270008626E4 /* ProfileSettingsTableViewCell.xib */,
 				79E68B9F1B8B428B008626E4 /* ProfileSettingsViewController.xib */,
 				79E85FBE1B89DE1C00428AA1 /* ProfileTableViewCell.xib */,
+				F7CCDA831B943CBB000F5AD4 /* ProfileViewController.xib */,
 				0C374F121B88E3790050AE1D /* ProfileViewController.xib */,
+				961BE5A91B994C4D00E8631A /* ResolutionCenterCell.xib */,
 				0C374F241B88E3790050AE1D /* ResultViewController.xib */,
 				26AFB3C41B79DE5C00E50926 /* ReviewTableViewCell.xib */,
 				0C9937321B750583000D6074 /* ScrollableCollectionViewCell.xib */,
@@ -1246,18 +1252,30 @@
 				0C9937341B750583000D6074 /* SellerCollectionViewCell.xib */,
 				79A1C6FA1B83787B0043AA36 /* SellerResultCollectionViewCell.xib */,
 				0C5111D91B81CEFE002F0001 /* SellerTableHeaderView.xib */,
+				F7CCDA851B943CBB000F5AD4 /* SellerViewController.xib */,
 				0C374F1D1B88E3790050AE1D /* SellerViewController.xib */,
 				0C374F191B88E3790050AE1D /* ShipToTableViewCell.xib */,
 				7971F7461B862D3A00322861 /* SortTableViewCell.xib */,
 				0C374EFC1B8862F50050AE1D /* SuccessTableHeaderViewCell.xib */,
+				F7CCDA861B943CBB000F5AD4 /* SummaryViewController.xib */,
 				0C374F151B88E3790050AE1D /* SummaryViewController.xib */,
+				F7CCDA871B943CBB000F5AD4 /* TodaysPromoViewController.xib */,
 				0C374F291B88E3790050AE1D /* TodaysPromoViewController.xib */,
 				0C374F0F1B88E3790050AE1D /* TotalTableViewCell.xib */,
+				268C1BAB1B864D8B009FA106 /* TransactionDetailsViewController.xib */,
+				26DFF6451B87BBE3005D8EDE /* TransactionProductDetailsTableViewCell.xib */,
+				26DFF62F1B879126005D8EDE /* TransactionProductDetailsViewController.xib */,
+				26D54FE61B86136300522398 /* TransactionTableViewCell.xib */,
+				26D54FDE1B860CF400522398 /* TransactionViewController.xib */,
+				26DFF6331B8791B5005D8EDE /* TransactionViews.xib */,
 				0C9937351B750583000D6074 /* TwoColumnGridCollectionViewCell.xib */,
+				793A899D1BA004550030FDC7 /* VerifyMobileNumberStatusViewController.xib */,
+				793A89991BA001AE0030FDC7 /* VerifyMobileNumberViewController.xib */,
 				0C9937361B750583000D6074 /* VerticalImageCollectionViewCell.xib */,
+				F7D37C9F1B92B09100FA7B16 /* ViewFeedBackViewController.swift */,
+				F7D37CA01B92B09100FA7B16 /* ViewFeedBackViewController.xib */,
 				0C9937371B750583000D6074 /* ViewMoreFooterCollectionViewCell.xib */,
 				7987F3191B7B746000B02DF4 /* WishlistTableViewCell.xib */,
-				79AA08341B8F4E6300AF3AA4 /* CartProductAttributeTableViewCell.xib */,
 			);
 			path = Xib;
 			sourceTree = "<group>";
@@ -1461,6 +1479,7 @@
 				0C374F481B88E3790050AE1D /* MessagingViewController.xib in Resources */,
 				0C99376A1B750583000D6074 /* SectionBackground.xib in Resources */,
 				F7CCDA8E1B943CBB000F5AD4 /* FollowedSellerViewController.xib in Resources */,
+				793A89971B9FFFD80030FDC7 /* ChangeMobileNumberViewController.xib in Resources */,
 				0C374F461B88E3790050AE1D /* CustomizeShoppingViewController.xib in Resources */,
 				0C374F471B88E3790050AE1D /* HelpViewController.xib in Resources */,
 				79E85FCC1B8A1E0800428AA1 /* ActivityLogTableViewController.xib in Resources */,
@@ -1494,6 +1513,7 @@
 				0C2F44D01B8576FE00021F45 /* Panton SemiBold Italic.otf in Resources */,
 				0C2F44C51B8576FE00021F45 /* Panton Bold Italic.otf in Resources */,
 				0C2F44CC1B8576FE00021F45 /* Panton Heavy.otf in Resources */,
+				793A899B1BA001AE0030FDC7 /* VerifyMobileNumberViewController.xib in Resources */,
 				0C374F531B89EC4D0050AE1D /* CustomizeSelectedCollectionViewCell.xib in Resources */,
 				0C99376B1B750583000D6074 /* SellerCollectionViewCell.xib in Resources */,
 				79A1C6F71B835A090043AA36 /* ProductResultGridCollectionViewCell.xib in Resources */,
@@ -1542,6 +1562,7 @@
 				0C374F321B88E3790050AE1D /* ProfileViewController.xib in Resources */,
 				F746BD8E1B91918C00CDFDE9 /* _GuestCheckoutTableViewCell.xib in Resources */,
 				79E68BA71B8B4572008626E4 /* EditProfileAddPhotoTableViewCell.xib in Resources */,
+				793A899F1BA004550030FDC7 /* VerifyMobileNumberStatusViewController.xib in Resources */,
 				0C2F44DE1B85840F00021F45 /* CheckoutViews.xib in Resources */,
 				79A1C6FB1B83787B0043AA36 /* SellerResultCollectionViewCell.xib in Resources */,
 				0C374F441B88E3790050AE1D /* ResultViewController.xib in Resources */,
@@ -1634,8 +1655,10 @@
 				0C2E8A271B9AA3EE00D50455 /* PesoPayModel.swift in Sources */,
 				0C329E951B7B7C5B005BE2B6 /* CustomTabBarController.swift in Sources */,
 				7987F3181B7B744A00B02DF4 /* WishlistTableViewCell.swift in Sources */,
+				793A89961B9FFFD80030FDC7 /* ChangeMobileNumberViewController.swift in Sources */,
 				0C9937551B750583000D6074 /* ScrollableCollectionViewCell.swift in Sources */,
 				F7D37CA11B92B09100FA7B16 /* ViewFeedBackViewController.swift in Sources */,
+				793A899A1BA001AE0030FDC7 /* VerifyMobileNumberViewController.swift in Sources */,
 				26DFF63D1B87B0E9005D8EDE /* TransactionDescriptionView.swift in Sources */,
 				26AFB3B81B79DE3800E50926 /* ProductReviewViewController.swift in Sources */,
 				79EBE8851B95F50700434B42 /* ChangePasswordViewController.swift in Sources */,
@@ -1723,6 +1746,7 @@
 				7971F7411B861AC900322861 /* FilterTableViewCell.swift in Sources */,
 				0CC8A63B1B7B9BBF00C91425 /* FollowedSellerViewController.swift in Sources */,
 				0C9937421B750583000D6074 /* SellerModel.swift in Sources */,
+				793A899E1BA004550030FDC7 /* VerifyMobileNumberStatusViewController.swift in Sources */,
 				961BE59E1B994B2900E8631A /* ResolutionCenterViewController.swift in Sources */,
 				0C9937531B750583000D6074 /* RoundedImageView.swift in Sources */,
 				79E85FD01B8A1FBD00428AA1 /* ActivityModel.swift in Sources */,
