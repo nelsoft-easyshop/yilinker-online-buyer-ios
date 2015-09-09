@@ -32,6 +32,8 @@ class ChangePasswordViewController: UIViewController {
     
     var screenHeight: CGFloat?
     
+    var mobileNumber: String = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -92,11 +94,22 @@ class ChangePasswordViewController: UIViewController {
             self.dismissViewControllerAnimated(true, completion: nil)
             self.delegate?.closeChangePasswordViewController()
         } else if sender as! UIButton == submitButton {
-            self.dismissViewControllerAnimated(true, completion: nil)
-            self.delegate?.submitChangePasswordViewController()
+            if oldPasswordTextField.text.isEmpty ||  newPasswordTextField.text.isEmpty || confirmPasswordTextField.text.isEmpty {
+                showAlert(title: "Error", message: "Complete necessary fields!")
+            } else if newPasswordTextField.text != confirmPasswordTextField.text {
+                showAlert(title: "Error", message: "Password does not match!")
+            } else {
+                self.dismissViewControllerAnimated(true, completion: nil)
+                self.delegate?.submitChangePasswordViewController()
+            }
         }
     }
     
-    
+    func showAlert(#title: String!, message: String!) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+        let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+        alertController.addAction(defaultAction)
+        presentViewController(alertController, animated: true, completion: nil)
+    }
 
 }
