@@ -319,6 +319,7 @@
 		961BE5A81B994C1000E8631A /* ButtonToTabBehaviorizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961BE5A71B994C1000E8631A /* ButtonToTabBehaviorizer.swift */; };
 		961BE5AA1B994C4D00E8631A /* ResolutionCenterCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 961BE5A91B994C4D00E8631A /* ResolutionCenterCell.xib */; };
 		961BE5AC1B9958BC00E8631A /* CheckBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961BE5AB1B9958BC00E8631A /* CheckBox.swift */; };
+		96DEBC6D1B9F2731000ACFE7 /* ResolutionCenterModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96DEBC6C1B9F2731000ACFE7 /* ResolutionCenterModel.swift */; };
 		B77B8DC21B9B54B40002C513 /* W_Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = B77B8DBF1B9B54B40002C513 /* W_Contact.swift */; };
 		B77B8DC31B9B54B40002C513 /* W_Conversation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B77B8DC01B9B54B40002C513 /* W_Conversation.swift */; };
 		B77B8DC41B9B54B40002C513 /* W_Messages.swift in Sources */ = {isa = PBXBuildFile; fileRef = B77B8DC11B9B54B40002C513 /* W_Messages.swift */; };
@@ -703,6 +704,7 @@
 		961BE5A71B994C1000E8631A /* ButtonToTabBehaviorizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonToTabBehaviorizer.swift; sourceTree = "<group>"; };
 		961BE5A91B994C4D00E8631A /* ResolutionCenterCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ResolutionCenterCell.xib; sourceTree = "<group>"; };
 		961BE5AB1B9958BC00E8631A /* CheckBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckBox.swift; sourceTree = "<group>"; };
+		96DEBC6C1B9F2731000ACFE7 /* ResolutionCenterModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ResolutionCenterModel.swift; path = YiLinkerOnlineBuyer/resources/Model/ResolutionCenterModel.swift; sourceTree = SOURCE_ROOT; };
 		B77B8DBF1B9B54B40002C513 /* W_Contact.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = W_Contact.swift; sourceTree = "<group>"; };
 		B77B8DC01B9B54B40002C513 /* W_Conversation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = W_Conversation.swift; sourceTree = "<group>"; };
 		B77B8DC11B9B54B40002C513 /* W_Messages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = W_Messages.swift; sourceTree = "<group>"; };
@@ -915,6 +917,7 @@
 			isa = PBXGroup;
 			children = (
 				B77B8DBC1B9B537C0002C513 /* Messaging */,
+				96DEBC6C1B9F2731000ACFE7 /* ResolutionCenterModel.swift */,
 				79E85FCD1B8A1F5800428AA1 /* ActivityLogModel.swift */,
 				79E85FCF1B8A1FBD00428AA1 /* ActivityModel.swift */,
 				0C5926051B836EA30021EA76 /* AddressModel.swift */,
@@ -1619,6 +1622,7 @@
 				0C538AE11B99EFC000EB64AB /* PaymentSuccessModel.swift in Sources */,
 				26D54FE71B86136300522398 /* TransactionTableViewCell.swift in Sources */,
 				0C2F44DC1B8583EF00021F45 /* CheckoutViews.swift in Sources */,
+				96DEBC6D1B9F2731000ACFE7 /* ResolutionCenterModel.swift in Sources */,
 				B77B8DD11B9B554A0002C513 /* ContactListTVC.swift in Sources */,
 				0C9937541B750583000D6074 /* RoundedLabel.swift in Sources */,
 				0C1003F41B87629400CAA17A /* NewAddressTableViewCell.swift in Sources */,

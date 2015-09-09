@@ -1,6 +1,6 @@
 //
 //  DisputeViewController.swift
-//  Bar Button Item
+//  Resolution Center
 //
 //  Created by @EasyShop.ph on 9/1/15.
 //  Copyright (c) 2015 YiLinker. All rights reserved.
@@ -16,24 +16,24 @@ class DisputeViewController: UIViewController, UITextFieldDelegate, UITextViewDe
     @IBOutlet weak var modalView: UIView!
     @IBOutlet weak var titleView: UIView!
     weak var delegate: ResolutionCenterViewController?
+    @IBOutlet weak var caseId: UILabel!
+    @IBOutlet weak var verticalSpaceInset: NSLayoutConstraint!
     
     var currentTextFieldTag: Int = 1
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        setupRoundedCorners()
-
-        // text field padding
-        addPadding(self.disputeTitle)
-        addPadding(self.transactionNumber)
         
-        //setUpTextFields()
+        setupRoundedCorners()
+        defaultModalPosition()
+        setUpTextFields()
     }
     
     func setupRoundedCorners() {
         self.disputeTitle.layer.cornerRadius = 5
+        addPadding(self.disputeTitle)
         self.transactionNumber.layer.cornerRadius = 5
+        addPadding(self.transactionNumber)
         self.remarks.layer.cornerRadius = 5
         self.submitButton.layer.cornerRadius = 5
         self.modalView.layer.cornerRadius = 5
@@ -44,25 +44,44 @@ class DisputeViewController: UIViewController, UITextFieldDelegate, UITextViewDe
         aTextField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: 20))
         aTextField.leftViewMode = .Always
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
+    func defaultModalPosition() {
+        let defaultIphone4Inset: CGFloat = 16
+        let defaultIphone5Inset: CGFloat = 32
+        let defaultIphone6Inset: CGFloat = 64
+        let defaultIphone6PlusInset: CGFloat = 64
+        
+        if IphoneType.isIphone4() {
+            self.adjustVerticalInset( defaultIphone4Inset )
+        } else if IphoneType.isIphone5() {
+            self.adjustVerticalInset( defaultIphone5Inset )
+        } else if IphoneType.isIphone6() {
+            self.adjustVerticalInset( defaultIphone6Inset )
+        } else if IphoneType.isIphone6Plus() {
+            self.adjustVerticalInset( defaultIphone6PlusInset )
+        }
+    }
+    
     func setUpTextFields() {
+        self.disputeTitle.tag = 1
         self.disputeTitle.delegate = self
         self.disputeTitle.addToolBarWithTarget(self, next: "next", previous: "previous", done: "done")
+        self.transactionNumber.tag = 2
         self.transactionNumber.delegate = self
         self.transactionNumber.addToolBarWithTarget(self, next: "next", previous: "previous", done: "done")
+        self.remarks.tag = 3
         self.remarks.delegate = self
-        //self.remarks.addToolBarWithTarget(self, next: "next", previous: "previous", done: "done")
+        self.remarks.addToolBarWithTarget(self, next: "next", previous: "previous", done: "done")
     }
     
     func done() {
         self.view.endEditing(true)
-        self.showCloseButton()
-        self.adjustTextFieldYInsetWithInset(0)
+        self.defaultModalPosition()
     }
     
     func previous() {
@@ -70,10 +89,7 @@ class DisputeViewController: UIViewController, UITextFieldDelegate, UITextViewDe
         
         if let textField: UITextField = self.view.viewWithTag(previousTag) as? UITextField {
             textField.becomeFirstResponder()
-        } else {
-            self.done()
         }
-        
     }
     
     
@@ -82,89 +98,44 @@ class DisputeViewController: UIViewController, UITextFieldDelegate, UITextViewDe
         
         if let textField: UITextField = self.view.viewWithTag(nextTag) as? UITextField {
             textField.becomeFirstResponder()
+            self.currentTextFieldTag = nextTag
+        } else if let textView: UITextView = self.view.viewWithTag(nextTag) as? UITextView {
+            textView.becomeFirstResponder()
+            self.currentTextFieldTag = nextTag
         } else {
             self.done()
         }
     }
     
     func textViewShouldBeginEditing(textView: UITextView) -> Bool {
-        self.adjustTextFieldYInsetWithInset(1600)
+        self.currentTextFieldTag = textView.tag
+        
+        if IphoneType.isIphone4() {
+            self.adjustVerticalInset(-165)
+        } else if IphoneType.isIphone5() {
+            self.adjustVerticalInset(-65)
+        } else if IphoneType.isIphone6() {
+            self.adjustVerticalInset(15)
+        }
         return true
     }
     
     func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
-        self.adjustTextFieldYInsetWithInset(60)
-        return true
-        /*
         self.currentTextFieldTag = textField.tag
-        let textFieldHeightWithInset: CGFloat = -30
-        if IphoneType.isIphone6Plus() {
-            if textField == self.passwordTextField || textField == self.reTypePasswordTextField {
-                self.adjustTextFieldYInsetWithInset(textFieldHeightWithInset)
-            } else {
-                self.adjustTextFieldYInsetWithInset(0)
-            }
-        } else if IphoneType.isIphone6() {
-            if textField == self.firstNameTextField {
-                self.adjustTextFieldYInsetWithInset(textFieldHeightWithInset)
-            } else if textField == self.lastNameTextField {
-                self.adjustTextFieldYInsetWithInset(textFieldHeightWithInset)
-            } else if textField == self.emailAddressTextField {
-                self.adjustTextFieldYInsetWithInset(CGFloat(textField.tag) * textFieldHeightWithInset)
-            } else {
-                self.adjustTextFieldYInsetWithInset(3 * textFieldHeightWithInset)
-            }
-        } else if IphoneType.isIphone5() {
-            if textField == self.firstNameTextField || textField == self.lastNameTextField {
-                self.showCloseButton()
-                self.adjustTextFieldYInsetWithInset(0)
-            } else if textField == self.emailAddressTextField {
-                self.showCloseButton()
-                self.adjustTextFieldYInsetWithInset(-50)
-            } else if textField == self.passwordTextField  || textField == self.reTypePasswordTextField {
-                self.hideCloseButton()
-                self.adjustTextFieldYInsetWithInset(-70)
-            }
-        } else if IphoneType.isIphone4() {
-            self.hideCloseButton()
-            if textField == self.firstNameTextField || textField == self.lastNameTextField {
-                self.adjustTextFieldYInsetWithInset(-50)
-            } else  {
-                if textField.tag != 5 {
-                    self.adjustTextFieldYInsetWithInset(CGFloat(textField.tag) * textFieldHeightWithInset)
-                } else {
-                    self.adjustTextFieldYInsetWithInset(CGFloat(textField.tag - 1) * textFieldHeightWithInset)
-                }
-            }
-        }
         
+        self.defaultModalPosition()
         
+        // original code at LoginViewController::textFieldShouldBeginEditing
         return true
-        */
-    }
-
-    
-    func showCloseButton() {
-//        if self.parentViewController!.isKindOfClass(LoginAndRegisterContentViewController) {
-//            UIView.animateWithDuration(0.3, delay: 0.0, options: nil, animations: {
-//                let parentViewController: LoginAndRegisterContentViewController = self.parentViewController as! LoginAndRegisterContentViewController
-//                parentViewController.closeButton.alpha = 1
-//                }, completion: {(value: Bool) in
-//                    
-//            })
-//        }
     }
     
-    func adjustTextFieldYInsetWithInset(inset: CGFloat) {
-//        if self.parentViewController!.isKindOfClass(LoginAndRegisterContentViewController) {
-//            UIView.animateWithDuration(0.5, delay: 0.0, options: nil, animations: {
-//                let parentViewController: LoginAndRegisterContentViewController = self.parentViewController as! LoginAndRegisterContentViewController
-//                parentViewController.verticalSpaceConstraint.constant = inset
-//                self.parentViewController!.view.layoutIfNeeded()
-//                }, completion: {(value: Bool) in
-//                    
-//            })
-//        }
+    func adjustVerticalInset(inset: CGFloat) {
+        UIView.animateWithDuration(0.5, delay: 0.0, options: nil, animations: {
+            self.verticalSpaceInset.constant = inset
+            self.view.layoutIfNeeded()
+            }, completion: {(value: Bool) in
+                
+        })
     }
     
     @IBAction func closeButtonPressed(sender: AnyObject) {
@@ -178,14 +149,4 @@ class DisputeViewController: UIViewController, UITextFieldDelegate, UITextViewDe
         self.delegate?.dissmissDisputeViewController(self, type: "none")
     }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
