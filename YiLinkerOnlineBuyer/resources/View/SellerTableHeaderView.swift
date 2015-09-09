@@ -37,8 +37,9 @@ class SellerTableHeaderView: UIView {
         if IphoneType.isIphone4() || IphoneType.isIphone5(){
             followButton.titleLabel?.font = UIFont(name: "HelveticaNeue", size: 11)
             viewFeedbackButton.titleLabel?.font = UIFont(name: "HelveticaNeue", size: 11)
-            
-        } 
+        }
+        
+        viewFeedbackButton.titleEdgeInsets = UIEdgeInsetsMake(0, 2, 0, 2)
     }
     
     func gradient() {

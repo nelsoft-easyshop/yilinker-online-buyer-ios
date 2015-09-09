@@ -11,8 +11,8 @@ import UIKit
 class HiddenViewController: UIViewController {
 
     var helpViewController: HelpViewController?
-    var registerViewController: RegisterViewController?
-    var loginViewController: LoginViewController?
+    var registerViewController: LoginAndRegisterContentViewController?
+    var loginViewController: LoginAndRegisterContentViewController?
     var messagingViewController: ConversationVC?
     var customizeShoppingViewController: CustomizeShoppingViewController?
     var resultViewController: ResultViewController?
@@ -41,7 +41,11 @@ class HiddenViewController: UIViewController {
     func setSelectedViewControllerWithIndex(index: Int) {
         if self.viewControllers.count != 0 {
             let viewController: UIViewController = viewControllers[index]
-            setSelectedViewController(viewController)
+            if !SessionManager.isLoggedIn() && index == 3 {
+                
+            } else {
+                setSelectedViewController(viewController)
+            }
         }
         
         if index == 0 {
@@ -54,9 +58,13 @@ class HiddenViewController: UIViewController {
                 titleLabel.textColor = .whiteColor()
                 titleLabel.sizeToFit()
                 self.navigationItem.titleView = titleLabel
+            } else {
+                self.registerViewController?.defaultViewControllerIndex = 1
+                self.registerViewController?.closeButton.hidden = true
             }
         } else if index == 2 {
-            
+            self.loginViewController?.defaultViewControllerIndex = 0
+            self.loginViewController?.closeButton.hidden = true
         } else if index == 3 {
             
         } else if index == 4 {
@@ -139,9 +147,21 @@ class HiddenViewController: UIViewController {
             
             let storyBoard: UIStoryboard = UIStoryboard(name: "StartPageStoryBoard", bundle: nil)
             
-            self.registerViewController = storyBoard.instantiateViewControllerWithIdentifier("RegisterViewController") as? RegisterViewController
+            if IphoneType.isIphone5() {
+                self.registerViewController = storyBoard.instantiateViewControllerWithIdentifier("LoginAndRegisterContentViewController5") as? LoginAndRegisterContentViewController
+                
+                self.loginViewController =  storyBoard.instantiateViewControllerWithIdentifier("LoginAndRegisterContentViewController5") as? LoginAndRegisterContentViewController
+            } else if IphoneType.isIphone4() {
+                self.registerViewController = storyBoard.instantiateViewControllerWithIdentifier("LoginAndRegisterContentViewController4") as? LoginAndRegisterContentViewController
+                
+                self.loginViewController =  storyBoard.instantiateViewControllerWithIdentifier("LoginAndRegisterContentViewController4") as? LoginAndRegisterContentViewController
+            } else {
+                self.registerViewController = storyBoard.instantiateViewControllerWithIdentifier("LoginAndRegisterContentViewController") as? LoginAndRegisterContentViewController
+                
+                self.loginViewController =  storyBoard.instantiateViewControllerWithIdentifier("LoginAndRegisterContentViewController") as? LoginAndRegisterContentViewController
+
+            }
             
-            self.loginViewController =  storyBoard.instantiateViewControllerWithIdentifier("LoginViewController") as? LoginViewController
             
             let storyBoard1: UIStoryboard = UIStoryboard(name: "HomeStoryBoard", bundle: nil)
             self.messagingViewController = storyBoard1.instantiateViewControllerWithIdentifier("ConversationVC") as? ConversationVC
