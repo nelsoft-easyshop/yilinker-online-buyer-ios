@@ -73,14 +73,14 @@ class TransactionViewController: UIViewController {
         
         if self.transactionModel != nil {
             var price: Float = (self.transactionModel!.total_item_price[indexPath.row] as NSString).floatValue
-            cell.priceLabel.text = "(P \(price.string(2))"//NSString(format:"%.2f", self.transactionModel!.total_item_price[indexPath.row]) as String
+            cell.priceLabel.text = "P \(price.string(2))"//NSString(format:"%.2f", self.transactionModel!.total_item_price[indexPath.row]) as String
             cell.dateLabel.text = self.transactionModel!.date_added[indexPath.row]
             if self.transactionModel!.product_count[indexPath.row].toInt() < 2 {
                 cell.numberLabel.text =  "\(self.transactionModel!.product_count[indexPath.row]) product"
             } else {
                 cell.numberLabel.text =  "\(self.transactionModel!.product_count[indexPath.row]) products"
             }
-            cell.transactionIdLabel.text = self.transactionModel!.order_id[indexPath.row]
+            cell.transactionIdLabel.text = self.transactionModel!.invoice_number[indexPath.row]
         }
         
         cell.selectionStyle = .None
@@ -92,6 +92,15 @@ class TransactionViewController: UIViewController {
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let transactionDetails = TransactionDetailsViewController(nibName: "TransactionDetailsViewController", bundle: nil)
+        transactionDetails.transactionId = self.transactionModel!.invoice_number[indexPath.row]
+        transactionDetails.totalProducts = self.transactionModel!.product_count[indexPath.row]
+        transactionDetails.orderStatus = self.transactionModel!.order_status[indexPath.row]
+        transactionDetails.paymentType = self.transactionModel!.payment_type[indexPath.row]
+        transactionDetails.dateCreated = self.transactionModel!.date_added[indexPath.row]
+        transactionDetails.totalQuantity = self.transactionModel!.total_quantity[indexPath.row]
+        transactionDetails.totalUnitCost = self.transactionModel!.total_unit_price[indexPath.row]
+        transactionDetails.shippingFee = self.transactionModel!.total_handling_fee[indexPath.row]
+        transactionDetails.totalCost = self.transactionModel!.total_price[indexPath.row]
         self.navigationController?.pushViewController(transactionDetails, animated: true)
     }
     
