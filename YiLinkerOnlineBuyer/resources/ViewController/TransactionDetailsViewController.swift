@@ -42,8 +42,12 @@ class TransactionDetailsViewController: UIViewController {
     
     var hud: MBProgressHUD?
     
+    var seconds: Int = 300
+    var timer = NSTimer()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         
         self.fireTransactionDetails(self.transactionId)
         
