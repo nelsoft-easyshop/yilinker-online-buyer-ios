@@ -62,6 +62,8 @@ struct APIAtlas {
     static let activityLogs = "auth/user/activityLog?access_token="
     static let getCategories = "product/getCategories?parentId="
     static let productList = "product/getProductList"
+    static let updateMobileNumber = "auth/user/changeContactNumber"
+    static let smsVerification = "auth/sms/verify"
     static let baseUrl = APIEnvironment.baseUrl()
     
     /* MESSAGING CONSTANTS */

@@ -10,6 +10,7 @@ import UIKit
 
 protocol EditProfilePersonalInformationTableViewCellDelegate {
     func passPersonalInformation(firstName: String, lastName: String, mobileNumber: String)
+    func changeMobileNumberAction()
 }
 
 class EditProfilePersonalInformationTableViewCell: UITableViewCell, UITextFieldDelegate {
@@ -20,12 +21,23 @@ class EditProfilePersonalInformationTableViewCell: UITableViewCell, UITextFieldD
     @IBOutlet weak var lastNameTextField: UITextField!
     @IBOutlet weak var mobilePhoneTextField: UITextField!
     
+    @IBOutlet weak var changeNumberButton: UIButton!
+    
     @IBAction func editingAction(sender: AnyObject) {
         delegate?.passPersonalInformation(firstNameTextField.text, lastName: lastNameTextField.text, mobileNumber: mobilePhoneTextField.text)
+    }
+
+    @IBAction func changeMobileAction(sender: AnyObject) {
+        delegate?.changeMobileNumberAction()
     }
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        initializeViews()
+    }
+    
+    func initializeViews() {
+        changeNumberButton.layer.cornerRadius = 8
     }
     
 }
