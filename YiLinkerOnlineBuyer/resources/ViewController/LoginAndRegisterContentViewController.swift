@@ -10,9 +10,9 @@
 class LoginAndRegisterContentViewController: UIViewController {
     
     @IBOutlet weak var contentView: UIView!
-    @IBOutlet weak var signInButton: DynamicRoundedButton!
-    @IBOutlet weak var registerButton: DynamicRoundedButton!
-    @IBOutlet weak var closeButton: DynamicRoundedButton!
+    @IBOutlet weak var signInButton: UIButton!
+    @IBOutlet weak var registerButton: UIButton!
+    @IBOutlet weak var closeButton: UIButton!
     
     var viewControllers = [UIViewController]()
     var selectedChildViewController: UIViewController?
@@ -39,27 +39,33 @@ class LoginAndRegisterContentViewController: UIViewController {
                 self.register(self.registerButton)
             }
         }
+
+        self.signInButton.layer.borderColor = Constants.Colors.appTheme.CGColor
+        self.signInButton.layer.cornerRadius = 20
+        self.signInButton.layer.borderWidth = 1
+        self.registerButton.layer.cornerRadius = 20
+        self.registerButton.layer.borderColor = Constants.Colors.appTheme.CGColor
+        self.registerButton.layer.borderWidth = 1
+        self.closeButton.layer.borderWidth = 1
+        
+        self.closeButton.layer.cornerRadius = self.closeButton.frame.size.width / 2
+        
+        self.closeButton.layer.borderColor = Constants.Colors.backgroundGray.CGColor
+        self.closeButton.layer.borderWidth = 1
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.contentViewFrame = CGRectMake(0, 0, self.contentView.frame.size.width, self.contentView.frame.size.height)
         self.initViewControllers()
         
         self.setSelectedViewControllerWithIndex(self.defaultViewControllerIndex)
-        if IphoneType.isIphone4() {
-            if self.logoWidthConstraint != nil {
-                self.logoHeightConstraint.constant = 50
-                self.logoWidthConstraint.constant = 50
-            }
-        }
         
         if self.defaultViewControllerIndex == 0 {
             self.signIn(self.signInButton)
         } else {
             self.register(self.registerButton)
         }
-        
-        
     }
     
     override func viewDidLayoutSubviews() {
