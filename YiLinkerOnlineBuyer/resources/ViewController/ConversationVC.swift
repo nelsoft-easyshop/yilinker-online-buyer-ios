@@ -36,12 +36,13 @@ class ConversationVC: UIViewController, EmptyViewDelegate{
             let indexPath = conversationTableView.indexPathForCell(sender as! ConversationTVC)
             selectedContact = conversations[indexPath!.row].contact
             
-            messageThreadVC.sender = W_Contact(fullName: "Jan Dennis Nora", userRegistrationIds: "", userIdleRegistrationIds: "", userId: "5", profileImageUrl: "http://online.api.easydeal.ph/assets/images/uploads/users/4292229bce95d32748bf08b642f0a070a70bc194.png?", isOnline: "1")
+            messageThreadVC.sender = W_Contact(fullName: "Jan Dennis Nora", userRegistrationIds: "", userIdleRegistrationIds: "", userId: SessionManager.accessToken(), profileImageUrl: SessionManager.profileImageStringUrl(), isOnline: "1")
             messageThreadVC.recipient = selectedContact
         }
     }
     
     override func viewDidLoad() {
+        
         var test = W_Conversation()
         //conversations = test.testData()
         self.placeCustomBackImage()
@@ -51,7 +52,7 @@ class ConversationVC: UIViewController, EmptyViewDelegate{
         super.viewDidLoad()
         
         var locX = UIScreen.mainScreen().bounds.size.width * 0.75
-        var locY = UIScreen.mainScreen().bounds.size.height * 0.85
+        var locY = UIScreen.mainScreen().bounds.size.height * 0.65
         
         let createMessageButton = UIButton()
         createMessageButton.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
@@ -80,36 +81,36 @@ class ConversationVC: UIViewController, EmptyViewDelegate{
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         /*
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "onRegistration:",
-            name: appDelegate.registrationKey, object: nil)
+        name: appDelegate.registrationKey, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "receivedMessage:",
-            name: appDelegate.messageKey, object: nil)
+        name: appDelegate.messageKey, object: nil)
         */
         
     }
     
     /*
     func onRegistration(notification: NSNotification){
-        if let info = notification.userInfo as? Dictionary<String,String> {
-            if let error = info["error"] {
-                showAlert("Error registering with GCM", message: error)
-            } else if let registrationToken = info["registrationToken"] {
-                let message = "Check the xcode debug console for the registration token for the server to send notifications to your device"
-                self.fireCreateRegistration(registrationToken)
-                showAlert("Registration Successful!", message: message)
-            }
-        }
+    if let info = notification.userInfo as? Dictionary<String,String> {
+    if let error = info["error"] {
+    showAlert("Error registering with GCM", message: error)
+    } else if let registrationToken = info["registrationToken"] {
+    let message = "Check the xcode debug console for the registration token for the server to send notifications to your device"
+    self.fireCreateRegistration(registrationToken)
+    showAlert("Registration Successful!", message: message)
+    }
+    }
     }
     
     func showAlert(title:String, message:String) {
-        let alert = UIAlertController(title: title,
-            message: message, preferredStyle: .Alert)
-        let dismissAction = UIAlertAction(title: "Dismiss", style: .Destructive, handler: nil)
-        alert.addAction(dismissAction)
-        self.presentViewController(alert, animated: true, completion: nil)
+    let alert = UIAlertController(title: title,
+    message: message, preferredStyle: .Alert)
+    let dismissAction = UIAlertAction(title: "Dismiss", style: .Destructive, handler: nil)
+    alert.addAction(dismissAction)
+    self.presentViewController(alert, animated: true, completion: nil)
     }
     
     func receivedMessage(notification : NSNotification){
-        //action here to open messaging
+    //action here to open messaging
     }
     */
     
@@ -185,7 +186,9 @@ class ConversationVC: UIViewController, EmptyViewDelegate{
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                 
                 if task.statusCode == 401 {
-                    self.fireRefreshToken()
+                    if (SessionManager.isLoggedIn()){
+                        self.fireRefreshToken()
+                    }
                 } else {
                     UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
                 }
@@ -216,7 +219,9 @@ class ConversationVC: UIViewController, EmptyViewDelegate{
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                 
                 if task.statusCode == 401 {
-                    self.fireRefreshToken()
+                    if (SessionManager.isLoggedIn()){
+                        self.fireRefreshToken()
+                    }
                 } else {
                     UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
                 }
@@ -256,7 +261,9 @@ class ConversationVC: UIViewController, EmptyViewDelegate{
                     let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                     
                     if task.statusCode == 401 {
-                        self.fireRefreshToken()
+                        if (SessionManager.isLoggedIn()){
+                            self.fireRefreshToken()
+                        }
                     } else {
                         UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
                     }

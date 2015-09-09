@@ -122,7 +122,6 @@ class MessageThreadVC: UIViewController {
     
     override func viewDidAppear(animated: Bool) {
         println("viewDidAppear")
-        
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWasShown:"), name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWasHidden:"), name: UIKeyboardWillHideNotification, object: nil)
         
@@ -130,6 +129,9 @@ class MessageThreadVC: UIViewController {
         self.placeRightNavigationControllerDetails()
         
         self.composeTextView.becomeFirstResponder()
+        
+        self.goToBottomTableView()
+        
     }
     
     func tableTapped(tap : UITapGestureRecognizer){
@@ -310,8 +312,8 @@ class MessageThreadVC: UIViewController {
         var recipientId = recipient?.userId ?? ""
         var senderId = self.sender?.userId ?? ""
         
-        self.messages.append(W_Messages(message_id: 0, senderId: senderId, recipientId: recipientId, message: lastMessage, isImage: 0, timeSent: NSDate(), isSeen: 0, timeSeen: dateSeen, isSent : 0))
-        
+        self.messages.append(W_Messages(message_id: 0, senderId: senderId, recipientId: recipientId, message: lastMessage, isImage: isImage, timeSent: NSDate(), isSeen: "0", timeSeen: dateSeen, isSent : "1"))
+        println(" Last Message : \(lastMessage)  is IMAGE \(isImage)")
         self.threadTableView.reloadData()
         self.goToBottomTableView()
         self.sendMessageToEndpoint(lastMessage, recipientId: recipientId, isImage: isImage)
@@ -325,7 +327,7 @@ class MessageThreadVC: UIViewController {
         let parameters: NSDictionary = [
             "message"       : "\(lastMessage)",
             "recipientId"  : "\(recipientId)",
-            "is_image"      : "\(isImage)",
+            "isImage"      : isImage,
             "access_token"  : SessionManager.accessToken()
             ]   as Dictionary<String, String>
         
@@ -335,18 +337,21 @@ class MessageThreadVC: UIViewController {
         
         manager.POST(url, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            self.messages[self.messages.count-1].isSent = 1
+            self.messages[self.messages.count-1].isSent = "1"
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
+                
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                 
                 if task.statusCode == 401 {
-                    self.fireRefreshToken()
+                    if (SessionManager.isLoggedIn()){
+                        self.fireRefreshToken()
+                    }
                 } else {
                     UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
                 }
                 
-                self.messages[self.messages.count-1].isSent = 0
+                self.messages[self.messages.count-1].isSent = "0"
                 println(error.description)
                 
         })
@@ -385,7 +390,9 @@ class MessageThreadVC: UIViewController {
                     let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                     
                     if task.statusCode == 401 {
-                        self.fireRefreshToken()
+                        if (SessionManager.isLoggedIn()){
+                            self.fireRefreshToken()
+                        }
                     } else {
                         UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
                     }
@@ -450,7 +457,7 @@ class MessageThreadVC: UIViewController {
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
         })
-
+        
     }
     
 }
@@ -505,7 +512,7 @@ extension MessageThreadVC : UITableViewDataSource, UITableViewDelegate{
         var currentTouchPosition : CGPoint = touch.locationInView(self.threadTableView)
         var indexPath : NSIndexPath = self.threadTableView.indexPathForRowAtPoint(currentTouchPosition)!
         if (!indexPath.isEqual(nil)) {
-            if (messages[indexPath.row].isImage == 0) {
+            if (messages[indexPath.row].isImage == "0") {
                 let cell = self.threadTableView.cellForRowAtIndexPath(indexPath) as! MessageThreadTVC
                 self.sendMessageToEndpoint(cell.message_label.text!, recipientId: messages[indexPath.row].recipientId, isImage: "0")
             }
@@ -549,7 +556,7 @@ extension MessageThreadVC : UITableViewDataSource, UITableViewDelegate{
         var index : Int = indexPath.row
         //index = (messages.count - indexPath.row) - 1
         
-        if (messages[index].isImage == 1){
+        if (messages[index].isImage == "1"){
             if (sender?.userId == messages[index].senderId){
                 let cell = tableView.dequeueReusableCellWithIdentifier(senderImageIndentifier) as! MessageThreadImageTVC
                 
@@ -570,7 +577,7 @@ extension MessageThreadVC : UITableViewDataSource, UITableViewDelegate{
                 cell.message_image.superview?.layer.shadowOpacity = 0.4
                 cell.message_image.superview?.layer.shadowOffset = CGSizeMake(1, 1)
                 
-                if (messages[index].isSent == 1) {
+                if (messages[index].isSent == "1") {
                     cell.timestamp_label.text = DateUtility.convertDateToString(NSDate()) as String
                     cell.resendButton.hidden = true
                     cell.timestamp_label.hidden = false
@@ -582,7 +589,7 @@ extension MessageThreadVC : UITableViewDataSource, UITableViewDelegate{
                 }
                 cell.resendButton.addTarget(self, action: Selector("resendButtonTapped:event:"), forControlEvents: UIControlEvents.TouchUpInside)
                 
-                if (messages[index].isSeen == 0) {
+                if (messages[index].isSeen == "0") {
                     cell.setSeenOff("sender")
                 }
                 return cell
@@ -607,7 +614,7 @@ extension MessageThreadVC : UITableViewDataSource, UITableViewDelegate{
                 cell.message_image.superview?.layer.shadowOpacity = 0.4
                 cell.message_image.superview?.layer.shadowOffset = CGSizeMake(1, 1)
                 
-                if (messages[index].isSeen == 0) {
+                if (messages[index].isSeen == "0") {
                     cell.setSeenOff("sender")
                 }
                 return cell
@@ -633,7 +640,7 @@ extension MessageThreadVC : UITableViewDataSource, UITableViewDelegate{
                 cell.message_label.superview?.layer.shadowOpacity = 0.4
                 cell.message_label.superview?.layer.shadowOffset = CGSizeMake(1, 1)
                 
-                if (messages[index].isSent == 1) {
+                if (messages[index].isSent == "1") {
                     cell.timestamp_label.text = DateUtility.convertDateToString(NSDate()) as String
                     cell.resendButton.hidden = true
                     cell.timestamp_label.hidden = false
@@ -646,7 +653,7 @@ extension MessageThreadVC : UITableViewDataSource, UITableViewDelegate{
                 }
                 cell.resendButton.addTarget(self, action: Selector("resendButtonTapped:event:"), forControlEvents: UIControlEvents.TouchUpInside)
                 
-                if (messages[index].isSeen == 0) {
+                if (messages[index].isSeen == "0") {
                     cell.setSeenOff("sender")
                 }
                 return cell
@@ -669,7 +676,7 @@ extension MessageThreadVC : UITableViewDataSource, UITableViewDelegate{
                 cell.message_label.superview?.layer.shadowOpacity = 0.4
                 cell.message_label.superview?.layer.shadowOffset = CGSizeMake(1, 1)
                 
-                if (messages[index].isSeen == 0) {
+                if (messages[index].isSeen == "0") {
                     cell.setSeenOff("receiver")
                 }
                 return cell

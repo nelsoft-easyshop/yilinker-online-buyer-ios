@@ -120,7 +120,9 @@ class ContactListVC: UIViewController {
                     let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                     
                     if task.statusCode == 401 {
-                        self.fireRefreshToken()
+                        if (SessionManager.isLoggedIn()){
+                            self.fireRefreshToken()
+                        }
                     } else {
                         UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
                     }

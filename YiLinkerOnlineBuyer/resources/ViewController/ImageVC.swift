@@ -30,7 +30,9 @@ class ImageVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        /*
         takePhoto()
+        */
         // Do any additional setup after loading the view.
         
         cameraRollButton.layer.cornerRadius = 5.0
@@ -102,7 +104,9 @@ class ImageVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
                     let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                     
                     if task.statusCode == 401 {
-                        self.fireRefreshToken()
+                        if (SessionManager.isLoggedIn()){
+                            self.fireRefreshToken()
+                        }
                     } else {
                         UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
                     }
