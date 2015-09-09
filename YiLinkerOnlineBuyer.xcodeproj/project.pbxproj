@@ -367,6 +367,7 @@
 		F7CCDAA71B943CF7000F5AD4 /* SeeMoreTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7CCDA9F1B943CF7000F5AD4 /* SeeMoreTableViewCell.swift */; };
 		F7D37CA11B92B09100FA7B16 /* ViewFeedBackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D37C9F1B92B09100FA7B16 /* ViewFeedBackViewController.swift */; };
 		F7D37CA21B92B09100FA7B16 /* ViewFeedBackViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7D37CA01B92B09100FA7B16 /* ViewFeedBackViewController.xib */; };
+		F7DC84DF1BA0083000D3878B /* TransactionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7DC84DE1BA0083000D3878B /* TransactionModel.swift */; };
 		F7DEF9BD1B90939100993F33 /* _GuestCheckoutTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7DEF9BB1B90939100993F33 /* _GuestCheckoutTableViewCell.swift */; };
 		F7DEF9C11B90941500993F33 /* _GuestCheckoutHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7DEF9BF1B90941500993F33 /* _GuestCheckoutHeaderTableViewCell.swift */; };
 		F7DEF9C21B90941500993F33 /* _GuestCheckoutHeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7DEF9C01B90941500993F33 /* _GuestCheckoutHeaderTableViewCell.xib */; };
@@ -751,6 +752,7 @@
 		F7CCDA9F1B943CF7000F5AD4 /* SeeMoreTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SeeMoreTableViewCell.swift; path = YiLinkerOnlineBuyer/resources/View/SeeMoreTableViewCell.swift; sourceTree = SOURCE_ROOT; };
 		F7D37C9F1B92B09100FA7B16 /* ViewFeedBackViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ViewFeedBackViewController.swift; path = YiLinkerOnlineBuyer/resources/Xib/ViewFeedBackViewController.swift; sourceTree = SOURCE_ROOT; };
 		F7D37CA01B92B09100FA7B16 /* ViewFeedBackViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ViewFeedBackViewController.xib; path = YiLinkerOnlineBuyer/resources/Xib/ViewFeedBackViewController.xib; sourceTree = SOURCE_ROOT; };
+		F7DC84DE1BA0083000D3878B /* TransactionModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TransactionModel.swift; path = YiLinkerOnlineBuyer/resources/Model/TransactionModel.swift; sourceTree = SOURCE_ROOT; };
 		F7DEF9BB1B90939100993F33 /* _GuestCheckoutTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = _GuestCheckoutTableViewCell.swift; path = YiLinkerOnlineBuyer/resources/View/_GuestCheckoutTableViewCell.swift; sourceTree = SOURCE_ROOT; };
 		F7DEF9BF1B90941500993F33 /* _GuestCheckoutHeaderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = _GuestCheckoutHeaderTableViewCell.swift; path = YiLinkerOnlineBuyer/resources/Xib/_GuestCheckoutHeaderTableViewCell.swift; sourceTree = SOURCE_ROOT; };
 		F7DEF9C01B90941500993F33 /* _GuestCheckoutHeaderTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = _GuestCheckoutHeaderTableViewCell.xib; path = YiLinkerOnlineBuyer/resources/Xib/_GuestCheckoutHeaderTableViewCell.xib; sourceTree = SOURCE_ROOT; };
@@ -916,6 +918,7 @@
 			children = (
 				B77B8DBC1B9B537C0002C513 /* Messaging */,
 				79E85FCD1B8A1F5800428AA1 /* ActivityLogModel.swift */,
+				F7DC84DE1BA0083000D3878B /* TransactionModel.swift */,
 				79E85FCF1B8A1FBD00428AA1 /* ActivityModel.swift */,
 				0C5926051B836EA30021EA76 /* AddressModel.swift */,
 				26C285431B8FADE3005EBD3A /* AddressModelV2.swift */,
@@ -1743,6 +1746,7 @@
 				0C329E751B7B2D32005BE2B6 /* RegisterModel.swift in Sources */,
 				0C99374B1B750583000D6074 /* HomePageCollectionViewLayout.swift in Sources */,
 				79E68B9B1B8B4239008626E4 /* ProfileSettingsTableViewCell.swift in Sources */,
+				F7DC84DF1BA0083000D3878B /* TransactionModel.swift in Sources */,
 				79E68BB71B8B5C58008626E4 /* EditProfileAccountInformationTableViewCell.swift in Sources */,
 				0CD103EC1B8B4769002E15F4 /* DynamicRoundedView.swift in Sources */,
 				0C9937451B750583000D6074 /* DiscountLabel.swift in Sources */,
