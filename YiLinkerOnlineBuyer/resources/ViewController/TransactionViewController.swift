@@ -34,6 +34,12 @@ class TransactionViewController: UIViewController {
     var labelsInArray: [UILabel] = []
     var deselectedImages: [String] = []
     
+    var queryType: String = ""
+    
+    var hud: MBProgressHUD?
+    
+    var transactionModel: TransactionModel?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -48,16 +54,34 @@ class TransactionViewController: UIViewController {
         deselectedImages = ["all", "pending", "onDelivery", "forFeedback", "support"]
         
         addViewsActions()
+        
+        self.fireTransaction("all")
     }
     
     // MARK: - Table View Data Source
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        if self.transactionModel != nil {
+            return self.transactionModel!.product_name.count
+        } else {
+            return 0
+        }
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell: TransactionTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("TransactionIdentifier") as! TransactionTableViewCell
+        
+        if self.transactionModel != nil {
+            var price: Float = (self.transactionModel!.total_item_price[indexPath.row] as NSString).floatValue
+            cell.priceLabel.text = "P \(price.string(2))"//NSString(format:"%.2f", self.transactionModel!.total_item_price[indexPath.row]) as String
+            cell.dateLabel.text = self.transactionModel!.date_added[indexPath.row]
+            if self.transactionModel!.product_count[indexPath.row].toInt() < 2 {
+                cell.numberLabel.text =  "\(self.transactionModel!.product_count[indexPath.row]) product"
+            } else {
+                cell.numberLabel.text =  "\(self.transactionModel!.product_count[indexPath.row]) products"
+            }
+            cell.transactionIdLabel.text = self.transactionModel!.invoice_number[indexPath.row]
+        }
         
         cell.selectionStyle = .None
         
@@ -68,6 +92,15 @@ class TransactionViewController: UIViewController {
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let transactionDetails = TransactionDetailsViewController(nibName: "TransactionDetailsViewController", bundle: nil)
+        transactionDetails.transactionId = self.transactionModel!.invoice_number[indexPath.row]
+        transactionDetails.totalProducts = self.transactionModel!.product_count[indexPath.row]
+        transactionDetails.orderStatus = self.transactionModel!.order_status[indexPath.row]
+        transactionDetails.paymentType = self.transactionModel!.payment_type[indexPath.row]
+        transactionDetails.dateCreated = self.transactionModel!.date_added[indexPath.row]
+        transactionDetails.totalQuantity = self.transactionModel!.total_quantity[indexPath.row]
+        transactionDetails.totalUnitCost = self.transactionModel!.total_unit_price[indexPath.row]
+        transactionDetails.shippingFee = self.transactionModel!.total_handling_fee[indexPath.row]
+        transactionDetails.totalCost = self.transactionModel!.total_price[indexPath.row]
         self.navigationController?.pushViewController(transactionDetails, animated: true)
     }
     
@@ -76,6 +109,7 @@ class TransactionViewController: UIViewController {
     func allAction(gesture: UIGestureRecognizer) {
         if allView.tag == 0 {
             selectView(allView, label: allLabel, imageView: allImageView, imageName: "all2")
+            self.fireTransaction("all")
             deselectOtherViews(allView)
         }
     }
@@ -83,6 +117,7 @@ class TransactionViewController: UIViewController {
     func pendingAction(gesture: UIGestureRecognizer) {
         if pendingView.tag == 0 {
             selectView(pendingView, label: pendingLabel, imageView: pendingImageView, imageName: "time")
+            self.fireTransaction("pending")
             deselectOtherViews(pendingView)
         }
     }
@@ -90,6 +125,7 @@ class TransactionViewController: UIViewController {
     func onDeliveryAction(gesture: UIGestureRecognizer) {
         if onDeliveryView.tag == 0 {
             selectView(onDeliveryView, label: onDeliveryLabel, imageView: onDeliveryImageView, imageName: "onDelivery2")
+            self.fireTransaction("ongoing")
             deselectOtherViews(onDeliveryView)
         }
     }
@@ -141,5 +177,65 @@ class TransactionViewController: UIViewController {
                 viewsInArray[i].tag = 0
             }
         }
+    }
+    
+    //MARK: Get transactions by type
+    func fireTransaction(queryType: String) {
+        self.clearModel()
+        self.showHUD()
+        let manager = APIManager.sharedInstance
+        manager.GET(APIAtlas.transactionLogs+"\(SessionManager.accessToken())&type=\(queryType)", parameters: nil, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+                self.transactionModel = TransactionModel.parseDataFromDictionary(responseObject as! NSDictionary)
+                self.tableView.reloadData()
+                println(responseObject.description)
+                self.hud?.hide(true)
+            }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
+                self.hud?.hide(true)
+                println(error.userInfo)
+              
+        })
+    }
+    
+    //MARK: Show HUD
+    func showHUD() {
+        if self.hud != nil {
+            self.hud!.hide(true)
+            self.hud = nil
+        }
+        
+        self.hud = MBProgressHUD(view: self.view)
+        self.hud?.removeFromSuperViewOnHide = true
+        self.hud?.dimBackground = false
+        self.navigationController?.view.addSubview(self.hud!)
+        self.hud?.show(true)
+    }
+    
+    func clearModel() {
+        self.transactionModel?.order_id.removeAll(keepCapacity: false)
+        self.transactionModel?.date_added.removeAll(keepCapacity: false)
+        self.transactionModel?.invoice_number.removeAll(keepCapacity: false)
+        self.transactionModel?.payment_type.removeAll(keepCapacity: false)
+        self.transactionModel?.payment_method_id.removeAll(keepCapacity: false)
+        self.transactionModel?.order_status.removeAll(keepCapacity: false)
+        self.transactionModel?.order_status_id.removeAll(keepCapacity: false)
+        self.transactionModel?.total_price.removeAll(keepCapacity: false)
+        self.transactionModel?.total_unit_price.removeAll(keepCapacity: false)
+        self.transactionModel?.total_item_price.removeAll(keepCapacity: false)
+        self.transactionModel?.total_handling_fee.removeAll(keepCapacity: false)
+        self.transactionModel?.total_quantity.removeAll(keepCapacity: false)
+        self.transactionModel?.product_name.removeAll(keepCapacity: false)
+        self.transactionModel?.product_count.removeAll(keepCapacity: false)
+    }
+}
+
+//MARK: Number Formatter
+extension Float {
+    func string(fractionDigits:Int) -> String {
+        let formatter = NSNumberFormatter()
+        formatter.minimumFractionDigits = fractionDigits
+        formatter.maximumFractionDigits = fractionDigits
+        formatter.numberStyle = NSNumberFormatterStyle.DecimalStyle
+        return formatter.stringFromNumber(self) ?? "\(self)"
     }
 }
