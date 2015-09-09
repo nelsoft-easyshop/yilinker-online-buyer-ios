@@ -348,7 +348,6 @@
 		F7CCDA891B943CBB000F5AD4 /* CategoriesTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7CCDA791B943CBB000F5AD4 /* CategoriesTableViewCell.xib */; };
 		F7CCDA8A1B943CBB000F5AD4 /* CategoriesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7CCDA7A1B943CBB000F5AD4 /* CategoriesViewController.xib */; };
 		F7CCDA8B1B943CBB000F5AD4 /* CheckoutContainerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7CCDA7B1B943CBB000F5AD4 /* CheckoutContainerViewController.xib */; };
-		F7CCDA8C1B943CBB000F5AD4 /* CustomizeShoppingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7CCDA7C1B943CBB000F5AD4 /* CustomizeShoppingViewController.xib */; };
 		F7CCDA8D1B943CBB000F5AD4 /* FollowedSellerTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7CCDA7D1B943CBB000F5AD4 /* FollowedSellerTableViewCell.xib */; };
 		F7CCDA8E1B943CBB000F5AD4 /* FollowedSellerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7CCDA7E1B943CBB000F5AD4 /* FollowedSellerViewController.xib */; };
 		F7CCDA8F1B943CBB000F5AD4 /* HelpViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7CCDA7F1B943CBB000F5AD4 /* HelpViewController.xib */; };
@@ -733,7 +732,6 @@
 		F7CCDA791B943CBB000F5AD4 /* CategoriesTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CategoriesTableViewCell.xib; path = YiLinkerOnlineBuyer/resources/ViewController/CategoriesTableViewCell.xib; sourceTree = SOURCE_ROOT; };
 		F7CCDA7A1B943CBB000F5AD4 /* CategoriesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CategoriesViewController.xib; path = YiLinkerOnlineBuyer/resources/ViewController/CategoriesViewController.xib; sourceTree = SOURCE_ROOT; };
 		F7CCDA7B1B943CBB000F5AD4 /* CheckoutContainerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CheckoutContainerViewController.xib; path = YiLinkerOnlineBuyer/resources/ViewController/CheckoutContainerViewController.xib; sourceTree = SOURCE_ROOT; };
-		F7CCDA7C1B943CBB000F5AD4 /* CustomizeShoppingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CustomizeShoppingViewController.xib; path = YiLinkerOnlineBuyer/resources/ViewController/CustomizeShoppingViewController.xib; sourceTree = SOURCE_ROOT; };
 		F7CCDA7D1B943CBB000F5AD4 /* FollowedSellerTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = FollowedSellerTableViewCell.xib; path = YiLinkerOnlineBuyer/resources/ViewController/FollowedSellerTableViewCell.xib; sourceTree = SOURCE_ROOT; };
 		F7CCDA7E1B943CBB000F5AD4 /* FollowedSellerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = FollowedSellerViewController.xib; path = YiLinkerOnlineBuyer/resources/ViewController/FollowedSellerViewController.xib; sourceTree = SOURCE_ROOT; };
 		F7CCDA7F1B943CBB000F5AD4 /* HelpViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = HelpViewController.xib; path = YiLinkerOnlineBuyer/resources/ViewController/HelpViewController.xib; sourceTree = SOURCE_ROOT; };
@@ -1148,7 +1146,6 @@
 				F7CCDA791B943CBB000F5AD4 /* CategoriesTableViewCell.xib */,
 				F7CCDA7A1B943CBB000F5AD4 /* CategoriesViewController.xib */,
 				F7CCDA7B1B943CBB000F5AD4 /* CheckoutContainerViewController.xib */,
-				F7CCDA7C1B943CBB000F5AD4 /* CustomizeShoppingViewController.xib */,
 				F7CCDA7D1B943CBB000F5AD4 /* FollowedSellerTableViewCell.xib */,
 				F7CCDA7E1B943CBB000F5AD4 /* FollowedSellerViewController.xib */,
 				F7CCDA7F1B943CBB000F5AD4 /* HelpViewController.xib */,
@@ -1514,7 +1511,6 @@
 				79E85FD21B8A230500428AA1 /* ActivityLogHeaderTableViewCell.xib in Resources */,
 				79E68BA11B8B428B008626E4 /* ProfileSettingsViewController.xib in Resources */,
 				0C374EFD1B8862F50050AE1D /* SuccessTableHeaderViewCell.xib in Resources */,
-				F7CCDA8C1B943CBB000F5AD4 /* CustomizeShoppingViewController.xib in Resources */,
 				0C374F391B88E3790050AE1D /* ShipToTableViewCell.xib in Resources */,
 				0C2F44C61B8576FE00021F45 /* Panton Bold.otf in Resources */,
 				F7B279F31B90B3BE003CEE5E /* _GuestCheckoutContainerViewController.xib in Resources */,
