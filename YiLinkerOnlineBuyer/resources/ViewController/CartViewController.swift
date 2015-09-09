@@ -204,6 +204,8 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
         } else {
             (self.tabBarController!.tabBar.items![4] as! UITabBarItem).badgeValue = nil
         }
+        
+        SessionManager.setCartCount(tableData.count)
     }
     
     func updateCounterLabel() {

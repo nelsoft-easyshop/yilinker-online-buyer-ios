@@ -9,14 +9,14 @@
 import UIKit
 
 protocol NewSellerScrollableCollectionViewCellDelegate {
-    func didSelectSellerCellWithTarget(target: String, targetType: String)
+    func didSelectSellerCellWithTarget(target: String, targetType: String, userId: Int)
 }
 
 class NewSellerScrollableCollectionViewCell: UICollectionViewCell {
 
     @IBOutlet weak var collectionView: UICollectionView!
     
-    var productModels: [HomePageProductModel]!
+    var sellerModels: [SellerModel]!
     var delegate: NewSellerScrollableCollectionViewCellDelegate?
   
     override func awakeFromNib() {
@@ -32,21 +32,22 @@ class NewSellerScrollableCollectionViewCell: UICollectionViewCell {
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.productModels.count
+        return self.sellerModels.count
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let scrollableProductCollectionViewCell: NewSellerCollectionViewCell = self.collectionView?.dequeueReusableCellWithReuseIdentifier("NewSellerCollectionViewCell", forIndexPath: indexPath) as! NewSellerCollectionViewCell
-        let homeProductModel: HomePageProductModel = self.productModels[indexPath.row] 
-        scrollableProductCollectionViewCell.sellerImageView.sd_setImageWithURL(homeProductModel.imageURL, placeholderImage: UIImage(named: "dummy-placeholder"))
-        scrollableProductCollectionViewCell.sellerNameLabel.text = homeProductModel.name
-
+        let sellerModel: SellerModel = self.sellerModels[indexPath.row]
+       
+        scrollableProductCollectionViewCell.sellerImageView.sd_setImageWithURL(sellerModel.avatar, placeholderImage: UIImage(named: "dummy-placeholder"))
+        scrollableProductCollectionViewCell.sellerNameLabel.text = sellerModel.name
+        
         return scrollableProductCollectionViewCell
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        let homeProductModel: HomePageProductModel = self.productModels[indexPath.row]
-        self.delegate?.didSelectSellerCellWithTarget(homeProductModel.target, targetType: homeProductModel.targetType)
+        let homeProductModel: SellerModel = self.sellerModels[indexPath.row]
+        self.delegate?.didSelectSellerCellWithTarget(homeProductModel.target, targetType: "", userId: homeProductModel.userId)
     }
 
 }

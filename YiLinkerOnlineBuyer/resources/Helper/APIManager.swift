@@ -35,8 +35,9 @@ struct APIAtlas {
     static let updateCartUrl = "auth/cart/updateCartItem"
     static let getSellerUrl = "v1/get-seller"
     static let buyerSellerFeedbacks = "v1/feedback/getUserFeedbacks"
-    static let productReviewUrl = "v1/product-review"
-    static let productPageUrl = "v1/get-product"
+    static let productDetails = "product/getProductDetail"
+    static let productReviews = "product/getProductReviews"
+    static let productSellerDetails = "v1/get-product"
     static let getSellerInfo = "user/getStoreInfo"
     static let followSeller = "auth/followSeller"
     static let unfollowSeller = "auth/unfollowSeller"
@@ -58,7 +59,22 @@ struct APIAtlas {
     static let cashOnDeliveryUrl = "auth/payment/doPaymentCod"
     static let pesoPayUrl = "auth/payment/doPesoPay"
     static let overViewUrl = "auth/payment/checkoutOverview"
+    static let activityLogs = "auth/user/activityLog?access_token="
+    static let getCategories = "product/getCategories?parentId="
+    static let productList = "product/getProductList"
     static let baseUrl = APIEnvironment.baseUrl()
+    
+    /* MESSAGING CONSTANTS */
+    static let ACTION_SEND_MESSAGE          = "/message/sendMessage"
+    static let ACTION_GET_CONVERSATION_HEAD = "/message/getConversationHead"
+    static let ACTION_GET_CONTACTS          = "/message/getContacts"
+    static let ACTION_GET_CONVERSATION_MESSAGES = "/message/getConversationMessages"
+    static let ACTION_SET_AS_READ           = "/message/setConversationAsRead"
+    static let ACTION_IMAGE_ATTACH          = "/message/imageAttach"
+    static let ACTION_GCM_CREATE            = "/auth/device/addRegistrationId"
+    static let ACTION_GCM_DELETE            = "/auth/device/deleteRegistrationId"
+    static let ACTION_GCM_UPDATE            = "/device/auth/updateRegistrationId"
+    static let uploadFileType = "jpeg"
 }
 
 class APIManager: AFHTTPSessionManager {

@@ -19,6 +19,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, GIDSignIn
     
     var currentTextFieldTag: Int = 1
     var parentView: UIView?
+    var hud: MBProgressHUD?
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
@@ -52,6 +53,20 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, GIDSignIn
     
     @IBAction func signIn(sender: AnyObject) {
         self.login()
+    }
+    
+    //Show HUD
+    func showHUD() {
+        if self.hud != nil {
+            self.hud!.hide(true)
+            self.hud = nil
+        }
+        
+        self.hud = MBProgressHUD(view: self.view)
+        self.hud?.removeFromSuperViewOnHide = true
+        self.hud?.dimBackground = false
+        self.navigationController?.view.addSubview(self.hud!)
+        self.hud?.show(true)
     }
     
     func setUpTextFields() {
@@ -232,8 +247,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, GIDSignIn
     }
     
     func fireLogin() {
-        SVProgressHUD.show()
-        SVProgressHUD.setBackgroundColor(UIColor.whiteColor())
+        self.showHUD()
         let manager: APIManager = APIManager.sharedInstance
         //seller@easyshop.ph
         //password
@@ -242,7 +256,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, GIDSignIn
         manager.POST(APIAtlas.loginUrl, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
                 SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
-                SVProgressHUD.dismiss()
+                self.hud?.hide(true)
                 self.showSuccessMessage()
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
@@ -261,7 +275,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, GIDSignIn
                     UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
                 }
 
-                SVProgressHUD.dismiss()
+                self.hud?.hide(true)
         })
     }
     

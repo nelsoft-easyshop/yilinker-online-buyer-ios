@@ -95,6 +95,14 @@ class WishlistViewController: UIViewController, UITableViewDelegate, UITableView
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in print(responseObject as! NSDictionary)
             if responseObject.objectForKey("error") != nil {
                 self.requestRefreshToken("addToCart", url: url, params: params)
+            } else{
+                SessionManager.setCartCount(SessionManager.cartCount() + 1)
+                if SessionManager.cartCount() != 0 {
+                    let badgeValue = (self.tabBarController!.tabBar.items![4] as! UITabBarItem).badgeValue?.toInt()
+                    (self.tabBarController!.tabBar.items![4] as! UITabBarItem).badgeValue = String(SessionManager.cartCount())
+                } else {
+                    (self.tabBarController!.tabBar.items![4] as! UITabBarItem).badgeValue = nil
+                }
             }
             self.dismissLoader()
             }, failure: {
@@ -165,6 +173,8 @@ class WishlistViewController: UIViewController, UITableViewDelegate, UITableView
         } else {
             (self.tabBarController!.tabBar.items![3] as! UITabBarItem).badgeValue = nil
         }
+        
+        SessionManager.setWishlistCount(tableData.count)
     }
     
     func updateCounterLabel() {

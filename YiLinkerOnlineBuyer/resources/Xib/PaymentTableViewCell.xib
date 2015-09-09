@@ -241,15 +241,22 @@
                     <view clipsSubviews="YES" tag="11" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4ib-d9-hJp">
                         <rect key="frame" x="156" y="48" width="136" height="124"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Creditcard" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ET9-zM-Un0">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Creditcard" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ET9-zM-Un0">
                                 <rect key="frame" x="45" y="18" width="94" height="23"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="23" id="wbj-MS-Bhd"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="16"/>
                                 <color key="textColor" white="0.27000000000000002" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rq3-le-FDD" customClass="SemiRoundedButton" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
+                            <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rq3-le-FDD" customClass="SemiRoundedButton" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
                                 <rect key="frame" x="12" y="18" width="25" height="25"/>
                                 <color key="backgroundColor" red="0.2666666667" green="0.64313725489999995" blue="0.56862745100000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="25" id="aKw-7c-lfH"/>
+                                    <constraint firstAttribute="height" constant="25" id="nF0-ip-irp"/>
+                                </constraints>
                                 <inset key="contentEdgeInsets" minX="6" minY="6" maxX="6" maxY="6"/>
                                 <state key="normal" image="checkBox"/>
                                 <userDefinedRuntimeAttributes>
@@ -258,17 +265,24 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="pesopay" translatesAutoresizingMaskIntoConstraints="NO" id="eo2-mh-uxO">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pesopay" translatesAutoresizingMaskIntoConstraints="NO" id="eo2-mh-uxO">
                                 <rect key="frame" x="23" y="60" width="90" height="46"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="46" id="YOD-Ut-I0Y"/>
+                                </constraints>
                             </imageView>
                         </subviews>
                         <constraints>
                             <constraint firstAttribute="height" constant="124" id="AuG-Im-Dtl"/>
-                            <constraint firstItem="eo2-mh-uxO" firstAttribute="top" secondItem="Rq3-le-FDD" secondAttribute="bottom" constant="17" id="Dse-HD-EGG"/>
-                            <constraint firstItem="eo2-mh-uxO" firstAttribute="leading" secondItem="4ib-d9-hJp" secondAttribute="leading" constant="23" id="Pld-kb-lIz"/>
-                            <constraint firstAttribute="bottom" secondItem="eo2-mh-uxO" secondAttribute="bottom" constant="18" id="TR7-in-RwT"/>
-                            <constraint firstAttribute="trailing" secondItem="eo2-mh-uxO" secondAttribute="trailing" constant="23" id="e50-kn-gLa"/>
+                            <constraint firstAttribute="trailing" secondItem="ET9-zM-Un0" secondAttribute="trailing" constant="-3" id="Ht4-2j-9BG"/>
+                            <constraint firstItem="ET9-zM-Un0" firstAttribute="leading" secondItem="Rq3-le-FDD" secondAttribute="trailing" constant="8" id="JiT-gu-bu7"/>
+                            <constraint firstItem="Rq3-le-FDD" firstAttribute="top" secondItem="4ib-d9-hJp" secondAttribute="top" constant="18" id="LKh-dD-23X"/>
+                            <constraint firstItem="eo2-mh-uxO" firstAttribute="top" secondItem="Rq3-le-FDD" secondAttribute="bottom" constant="17" id="Ri4-MZ-gP3"/>
+                            <constraint firstItem="Rq3-le-FDD" firstAttribute="leading" secondItem="4ib-d9-hJp" secondAttribute="leading" constant="12" id="VIU-i3-GRc"/>
+                            <constraint firstItem="eo2-mh-uxO" firstAttribute="leading" secondItem="4ib-d9-hJp" secondAttribute="leading" constant="23" id="aYx-fK-JHi"/>
                             <constraint firstAttribute="width" constant="136" id="fbx-nc-EFt"/>
+                            <constraint firstItem="ET9-zM-Un0" firstAttribute="top" secondItem="4ib-d9-hJp" secondAttribute="top" constant="18" id="hTE-0r-KFt"/>
+                            <constraint firstAttribute="trailing" secondItem="eo2-mh-uxO" secondAttribute="trailing" constant="23" id="sq9-te-R1u"/>
                         </constraints>
                     </view>
                     <view clipsSubviews="YES" tag="10" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Pw7-s3-ViR">

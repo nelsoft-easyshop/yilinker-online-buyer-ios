@@ -21,6 +21,9 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
     let reuseIdentifierSeller: String = "SellerResultCollectionViewCell"
     var type: String = "GRID"
     
+    //Variable for determining what kind of result will be shown
+    var targetType: TargetType?
+    
     @IBOutlet weak var noResultLabel: UILabel!
     @IBOutlet weak var sortPickerTableView: UITableView!
     @IBOutlet weak var dimView: UIView!
@@ -29,13 +32,17 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
     @IBOutlet weak var sortView: UIView!
     @IBOutlet weak var filterView: UIView!
     @IBOutlet weak var viewTypeView: UIView!
+    @IBOutlet weak var viewTypeImageView: UIImageView!
     
+    @IBOutlet weak var viewTypeLabel: UILabel!
     var collectionViewData: [SearchResultModel] = []
     var sortData: [String] = ["Old to new", "New to old", "A to Z", "Z to A"]
 
     var searchSuggestion: SearchSuggestionModel!
     
     var fullDimView: UIView?
+    
+    var hud: MBProgressHUD?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,8 +51,34 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
         self.registerNibs()
     }
     
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        fullDimView = UIView(frame: self.view.bounds)
+        fullDimView?.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
+        self.navigationController?.view.addSubview(fullDimView!)
+        //self.view.addSubview(dimView!)
+        fullDimView?.hidden = true
+        fullDimView?.alpha = 0
+
+        
+        self.navigationController?.navigationBar.alpha = 1
+        self.navigationController?.navigationBar.barTintColor = Constants.Colors.appTheme
+        self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
+    }
+
     func passSearchKey(key: String) {
         
+
+    }
+
+    func passCategoryID(id: Int) {
+        if Reachability.isConnectedToNetwork() {
+            requestSearchDetails("\(APIAtlas.productList)?categoryId=\(id)", params: nil)
+        } else {
+            showAlert("Connection Unreachable", message: "Cannot retrieve data. Please check your internet connection.")
+        }
+
     }
 
     override func didReceiveMemoryWarning() {
@@ -79,6 +112,7 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
         dimView.alpha = 0
         dimView.hidden = true
         
+        //self.view.layoutIfNeeded()
         fullDimView = UIView(frame: self.view.bounds)
         fullDimView?.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
         self.navigationController?.view.addSubview(fullDimView!)
@@ -139,7 +173,7 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
                 
                 self.collectionViewData.append(model)
             }
-            self.resultCollectionView.reloadData()
+            self.resultCollectionView.reloadSections(NSIndexSet(index: 0))
         }
         self.dismissLoader()
         
@@ -152,19 +186,31 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
     
     //Loader function
     func showLoader() {
-        SVProgressHUD.show()
-        SVProgressHUD.setBackgroundColor(UIColor.whiteColor())
+        if self.hud != nil {
+            self.hud!.hide(true)
+            self.hud = nil
+        }
+        
+        self.hud = MBProgressHUD(view: self.view)
+        self.hud?.removeFromSuperViewOnHide = true
+        self.hud?.dimBackground = false
+        self.view.addSubview(self.hud!)
+        self.hud?.show(true)
     }
     
     func dismissLoader() {
-        SVProgressHUD.dismiss()
+        self.hud?.hide(true)
     }
 
     func changeViewType() {
         if type == grid {
             type = list
+            viewTypeImageView.image = UIImage(named: "grid")
+            viewTypeLabel.text = "Grid"
         } else if type == list {
-            type = seller
+            type = grid
+            viewTypeImageView.image = UIImage(named: "list")
+            viewTypeLabel.text = "List"
         } else {
             type = grid
         }
@@ -269,7 +315,13 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
     }
     // MARK: UICollectionViewDelegate
     
-    func collectionView(collectionView: UICollectionView, didDeselectItemAtIndexPath indexPath: NSIndexPath) {
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        let productViewController: ProductViewController = ProductViewController(nibName: "ProductViewController", bundle: nil)
+        productViewController.tabController = self.tabBarController as! CustomTabBarController
+        productViewController.productId = collectionViewData[indexPath.row].id
+        
+        println("ID \(collectionViewData[indexPath.row].id)")
+        self.navigationController?.pushViewController(productViewController, animated: true)
     }
 
     

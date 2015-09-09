@@ -27,8 +27,19 @@ class SellerTableHeaderView: UIView {
     
     var delegate: SellerTableHeaderViewDelegate?
     
+    @IBOutlet weak var callButton: RoundedButton!
+    
+    @IBOutlet weak var messageButton: RoundedButton!
+    
     override func awakeFromNib() {
       self.gradient()
+            
+        if IphoneType.isIphone4() || IphoneType.isIphone5(){
+            followButton.titleLabel?.font = UIFont(name: "HelveticaNeue", size: 11)
+            viewFeedbackButton.titleLabel?.font = UIFont(name: "HelveticaNeue", size: 11)
+        }
+        
+        viewFeedbackButton.titleEdgeInsets = UIEdgeInsetsMake(0, 2, 0, 2)
     }
     
     func gradient() {

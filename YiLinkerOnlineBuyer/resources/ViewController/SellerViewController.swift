@@ -16,8 +16,10 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
     var followSellerModel: FollowedSellerModel?
     let sellerTableHeaderView: SellerTableHeaderView = SellerTableHeaderView.loadFromNibNamed("SellerTableHeaderView", bundle: nil) as! SellerTableHeaderView
     var is_successful: Bool = false
-    var sellerId: Int = 0
+    
     var hud: MBProgressHUD?
+    
+    var sellerId: Int = 0
     
     var dimView: UIView = UIView()
     
@@ -93,6 +95,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         sellerTableHeaderView.profileImageView.addSubview(imageView)
         sellerTableHeaderView.sellernameLabel.text = sellerModel!.store_name
         sellerTableHeaderView.addressLabel.text = sellerModel!.store_address
+        println("store address \(sellerModel!.store_address)")
         
         self.tableView.tableHeaderView = sellerTableHeaderView
         self.tableView.reloadData()
@@ -118,19 +121,42 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
     func fireSeller() {
         self.showHUD()
         let manager = APIManager.sharedInstance
-        //let parameters: NSDictionary = ["userId" : self.sellerId];
-        let parameters: NSDictionary = ["userId" : "1"]
+        println(sellerId)
+        let parameters: NSDictionary = ["userId" : sellerId];
         manager.POST(APIAtlas.getSellerInfo, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-                self.sellerModel = SellerModel.parseSellerDataFromDictionary(responseObject as! NSDictionary)
-                self.populateData()
-                self.is_successful == self.sellerModel?.is_allowed
-                self.hud?.hide(true)
+            println(responseObject["isSuccessful"])
+                if responseObject["isSuccessful"] as! Bool {
+                    self.sellerModel = SellerModel.parseSellerDataFromDictionary(responseObject as! NSDictionary)
+                    self.populateData()
+                    self.is_successful == self.sellerModel?.is_allowed
+                    self.hud?.hide(true)
+                } else {
+                    self.showAlert(title: "Error", message: responseObject["message"] as! String)
+                    self.hud?.hide(true)
+                }
+          
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                self.hud?.hide(true)
-                self.is_successful == self.sellerModel?.is_allowed
+                if error.userInfo != nil {
+                    println(error.userInfo)
+                    if let jsonResult = error.userInfo as? Dictionary<String, AnyObject> {
+                        if jsonResult["message"] != nil {
+                            self.showAlert(title: jsonResult["message"] as! String, message: nil)
+                            self.hud?.hide(true)
+                            self.is_successful == self.sellerModel?.is_allowed
 
+                        } else {
+                            self.showAlert(title: "Something went wrong", message: nil)
+                            self.hud?.hide(true)
+                            self.is_successful == self.sellerModel?.is_allowed
+                        }
+                    }
+                } else  {
+                    self.showAlert(title: "Error", message: "Something went wrong.")
+                    self.hud?.hide(true)
+                    self.is_successful == self.sellerModel?.is_allowed
+                }
         })
     }
     
@@ -138,7 +164,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         self.showHUD()
         let manager = APIManager.sharedInstance
-        let parameters: NSDictionary = ["sellerId" : 1, "access_token" : SessionManager.accessToken()];
+        let parameters: NSDictionary = ["sellerId" : sellerId, "access_token" : SessionManager.accessToken()];
         manager.POST(APIAtlas.followSeller, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             self.followSellerModel = FollowedSellerModel.parseFollowSellerDataWithDictionary(responseObject as! NSDictionary)
@@ -178,7 +204,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         self.showHUD()
         let manager = APIManager.sharedInstance
-        let parameters: NSDictionary = ["sellerId" : "1", "access_token" : SessionManager.accessToken()];
+        let parameters: NSDictionary = ["sellerId" : sellerId, "access_token" : SessionManager.accessToken()];
         
         manager.POST(APIAtlas.unfollowSeller, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
@@ -397,6 +423,13 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
             self.dimView.alpha = 0
             self.dimView.layer.zPosition = -1
         })
+    }
+    
+    func showAlert(#title: String!, message: String!) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+        let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+        alertController.addAction(defaultAction)
+        presentViewController(alertController, animated: true, completion: nil)
     }
 
 }

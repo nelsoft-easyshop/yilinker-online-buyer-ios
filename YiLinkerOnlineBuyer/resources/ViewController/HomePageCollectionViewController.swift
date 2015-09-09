@@ -34,7 +34,7 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
                 self.collectionView?.reloadData()
             }
         }
-        
+        println(layouts)
         self.navigationController?.navigationBar.alpha = 1.0
         self.navigationController?.navigationBar.barTintColor = Constants.Colors.appTheme
         UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.LightContent
@@ -97,7 +97,7 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
             return 3
         } else if self.layouts[section] == Constants.HomePage.layoutFourKey {
             return 4
-        } else if self.layouts[section] == Constants.HomePage.layoutFiveKey {
+        } else if self.layouts[section] == Constants.HomePage.layoutFiveKey || self.layouts[section] == Constants.HomePage.layoutFiveKeyWithFooter || self.layouts[section] == Constants.HomePage.layoutFiveKey2 {
             return 6
         } else if self.layouts[section] == Constants.HomePage.layoutSixKey {
             if let val: AnyObject = self.dictionary["itemsYouMayLike"] {
@@ -242,7 +242,7 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
             
             return fullImageColectionViewCell
 
-        }  else if self.layouts[indexPath.section] == Constants.HomePage.layoutFiveKey {
+        }  else if self.layouts[indexPath.section] == Constants.HomePage.layoutFiveKey || layouts[indexPath.section] == Constants.HomePage.layoutFiveKeyWithFooter || self.layouts[indexPath.section] == Constants.HomePage.layoutFiveKey2 {
             if let val: AnyObject = self.dictionary["trendingItems"] {
                 
                 let productDictionary: NSArray = dictionary["trendingItems"] as! NSArray
@@ -359,18 +359,17 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
         } else if layouts[indexPath.section] == Constants.HomePage.layoutNineKey {
             let scrollableCell: NewSellerScrollableCollectionViewCell = self.collectionView?.dequeueReusableCellWithReuseIdentifier("NewSellerScrollableCollectionViewCell", forIndexPath: indexPath) as! NewSellerScrollableCollectionViewCell
             
-            var productHomeModels: [HomePageProductModel] = [HomePageProductModel]()
-            let products: NSArray = self.dictionary["newSellers"] as! NSArray
+            var sellerModels: [SellerModel] = [SellerModel]()
+            let sellers: NSArray = self.dictionary["newSellers"] as! NSArray
             
-            for (index, product) in enumerate(products) {
-                let productDictionary: NSDictionary = product as! NSDictionary
-                let productModel = HomePageProductModel.parseDataWithDictionary(productDictionary)
-                productHomeModels.append(productModel)
+            for (index, seller) in enumerate(sellers) {
+                let sellerDictionary: NSDictionary = seller as! NSDictionary
+                let sellerModel = SellerModel.parseDataFromDictionary(sellerDictionary)
+                sellerModels.append(sellerModel)
             }
             
             scrollableCell.delegate = self
-            scrollableCell.productModels = productHomeModels
-            
+            scrollableCell.sellerModels = sellerModels
             return scrollableCell
         } else if layouts[indexPath.section] == Constants.HomePage.layoutTenKey {
             let sellerCollectionView: SellerCollectionViewCell = self.collectionView?.dequeueReusableCellWithReuseIdentifier("SellerCollectionViewCell", forIndexPath: indexPath) as! SellerCollectionViewCell
@@ -398,8 +397,7 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
                 sellerCollectionView.productThreeImageView.target = sellerModel.products[2].target
                 sellerCollectionView.productThreeImageView.targetType = sellerModel.products[2].targetType
             }
-
-            
+            sellerCollectionView.userId = sellerModel.userId
             sellerCollectionView.delegate = self
             
             sellerCollectionView.targetType = "Go to Seller!"
@@ -407,7 +405,7 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
             sellerCollectionView.target = sellerModel.target
      
             return sellerCollectionView
-        } else {
+        }  else {
             let productDictionary: NSArray = dictionary["mainbanner"] as! NSArray
             let fullImageColectionViewCell: FullImageCollectionViewCell = self.collectionView?.dequeueReusableCellWithReuseIdentifier("FullImageCollectionViewCell", forIndexPath: indexPath) as! FullImageCollectionViewCell
             let homeProductModels: [HomePageProductModel] = HomePageProductModel.parseDataWithArray(productDictionary)
@@ -427,21 +425,25 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
             if self.layouts[indexPath.section] == Constants.HomePage.layoutThreeKey {
                 if let val: AnyObject = self.dictionary["promos"] {
                     footerView.target = "View More Promos!"
-                    footerView.targetType = "Go to list!"
+                    footerView.targetType = TargetType.TodaysPromo
                 }
             } else if self.layouts[indexPath.section] == Constants.HomePage.layoutFourKey {
                 if let val: AnyObject = self.dictionary["popularCategories"] {
                     footerView.target = "View More Popular Categories!"
-                    footerView.targetType = "Go to list!"
+                    footerView.targetType = TargetType.Category
                     footerView.cellButton.setTitle("VIEW MORE CATEGORIES", forState: UIControlState.Normal)
                 }
             } else if self.layouts[indexPath.section] == Constants.HomePage.layoutFourKey {
                 
-            }
-            
-            
-            
-            else {
+            } else if self.layouts[indexPath.section] == Constants.HomePage.layoutFiveKeyWithFooter {
+                footerView.target = "View More Items"
+                footerView.targetType = TargetType.CategoryViewMoreItems
+                footerView.cellButton.setTitle("VIEW MORE ITEMS", forState: UIControlState.Normal)
+            } else if self.layouts[indexPath.section] == Constants.HomePage.layoutFiveKey2 {
+                footerView.target = "View More Popular Categories!"
+                footerView.targetType = TargetType.CategoryViewMoreItems
+                footerView.cellButton.setTitle("VIEW MORE ITEMS", forState: UIControlState.Normal)
+            } else {
                 if let val: AnyObject = self.dictionary["categories"] {
                     let categoryArray: NSArray = self.dictionary["categories"] as! NSArray
                     
@@ -497,6 +499,10 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
             } else if self.layouts[indexPath.section] == Constants.HomePage.layoutNineKey {
                 headerView.titleLabel.text = "New Sellers"
                 headerView.backgroundColor = UIColor.clearColor()
+            } else if self.layouts[indexPath.section] == Constants.HomePage.layoutFiveKeyWithFooter {
+                headerView.titleLabel.text = "Watches"
+            } else if self.layouts[indexPath.section] == Constants.HomePage.layoutFiveKey2 {
+                headerView.titleLabel.text = "Electronics"
             }
             
             headerView.updateTitleLine()
@@ -518,58 +524,54 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
             let fullImageCollectionViewCell: FullImageCollectionViewCell = self.collectionView!.cellForItemAtIndexPath(indexPath) as! FullImageCollectionViewCell
             println("Target: \(fullImageCollectionViewCell.target)")
             println("Target type: \(fullImageCollectionViewCell.targetType)")
-            self.redirectToProductpageWithProductID("1")
+            self.redirectToProductpageWithProductID(fullImageCollectionViewCell.target)
         } else if cell.isKindOfClass(HalfVerticalImageCollectionViewCell) {
             let halfVerticalImageCollectionViewCell: HalfVerticalImageCollectionViewCell = self.collectionView!.cellForItemAtIndexPath(indexPath) as! HalfVerticalImageCollectionViewCell
             println("Target: \(halfVerticalImageCollectionViewCell.target)")
             println("Target type: \(halfVerticalImageCollectionViewCell.targetType)")
-            self.redirectToProductpageWithProductID("1")
+            self.redirectToProductpageWithProductID(halfVerticalImageCollectionViewCell.target)
         } else if cell.isKindOfClass(ProductItemWithVerticalDisplayCollectionViewCell) {
             let productItemWithVerticalDisplayCollectionViewCell: ProductItemWithVerticalDisplayCollectionViewCell = cell as! ProductItemWithVerticalDisplayCollectionViewCell
             println("Target: \(productItemWithVerticalDisplayCollectionViewCell.target)")
             println("Target type: \(productItemWithVerticalDisplayCollectionViewCell.targetType)")
-            self.redirectToProductpageWithProductID("1")
+            self.redirectToProductpageWithProductID(productItemWithVerticalDisplayCollectionViewCell.target)
         } else if cell.isKindOfClass(ProductWithCenterNameCollectionViewCell) {
             let productWithCenterNameCollectionViewCell: ProductWithCenterNameCollectionViewCell = cell as! ProductWithCenterNameCollectionViewCell
             println("Target: \(productWithCenterNameCollectionViewCell.target)")
             println("Target type: \(productWithCenterNameCollectionViewCell.targetType)")
-            self.redirectToProductpageWithProductID("1")
+            self.redirectToProductpageWithProductID(productWithCenterNameCollectionViewCell.target)
         } else if cell.isKindOfClass(TwoColumnGridCollectionViewCell) {
             let twoColumnGridCollectionViewCell: TwoColumnGridCollectionViewCell = cell as! TwoColumnGridCollectionViewCell
             println("Target: \(twoColumnGridCollectionViewCell.target)")
             println("Target type: \(twoColumnGridCollectionViewCell.targetType)")
-            self.redirectToProductpageWithProductID("1")
+            self.redirectToProductpageWithProductID(twoColumnGridCollectionViewCell.target)
         } else if cell.isKindOfClass(VerticalImageCollectionViewCell) {
             let verticalImageCollectionViewCell: VerticalImageCollectionViewCell = cell as! VerticalImageCollectionViewCell
             println("Target: \(verticalImageCollectionViewCell.target)")
             println("Target type: \(verticalImageCollectionViewCell.targetType)")
-            self.redirectToProductpageWithProductID("1")
+            self.redirectToProductpageWithProductID(verticalImageCollectionViewCell.target)
         } else if cell.isKindOfClass(SellerCollectionViewCell) {
             let sellerCollectionViewCell: SellerCollectionViewCell = cell as! SellerCollectionViewCell
             println("Target: \(sellerCollectionViewCell.target)")
             println("Target type: \(sellerCollectionViewCell.targetType)")
-            self.redirectToSellerWithID("sellerID")
         }
-    
     }
     
     func didSelectectCellWithTarget(target: String, targetType: String) {
-        println("target: \(target) \ntarget type:\(targetType)")
-        self.redirectToResultView("target")
+        self.redirectToResultView(target, targetType: TargetType.CategoryViewMoreItems)
     }
     
-    func didSelectSellerCellWithTarget(target: String, targetType: String) {
-        println("target: \(target) \ntarget type:\(targetType)")
-        self.redirectToSellerWithID("asdasdas3w")
+    func didSelectSellerCellWithTarget(target: String, targetType: String, userId: Int) {
+        self.redirectToSellerWithID(userId)
     }
     
-    func didSelectViewMoreWithtarget(target: String, targetType: String) {
-        println("target: \(target) \ntarget type:\(targetType)")
-        self.redirectToResultView("target")
+    func didSelectViewMoreWithtarget(target: String, targetType: TargetType) {
+        self.redirectToResultView(target, targetType: targetType)
     }
     
-    func redirectToResultView(target: String) {
+    func redirectToResultView(target: String, targetType: TargetType) {
         let resultViewController: ResultViewController = ResultViewController(nibName: "ResultViewController", bundle: nil)
+        resultViewController.targetType = targetType
         self.navigationController!.pushViewController(resultViewController, animated: true)
     }
     
@@ -579,13 +581,16 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
     }
     
     func redirectToProductpageWithProductID(productID: String) {
+        println("product id: \(productID)")
         let productViewController: ProductViewController = ProductViewController(nibName: "ProductViewController", bundle: nil)
         productViewController.tabController = self.tabBarController as! CustomTabBarController
+        productViewController.productId = productID
         self.navigationController?.pushViewController(productViewController, animated: true)
     }
     
-    func redirectToSellerWithID(sellerID: String) {
+    func redirectToSellerWithID(sellerID: Int) {
         let sellerViewController: SellerViewController = SellerViewController(nibName: "SellerViewController", bundle: nil)
+        sellerViewController.sellerId = sellerID
         self.navigationController!.pushViewController(sellerViewController, animated: true)
     }
 }

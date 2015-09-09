@@ -74,7 +74,7 @@ class ProductSellerView: UIView, UICollectionViewDataSource {
 
     func setSellerDetails(model: ProductSellerModel) {
 
-        self.nameLabel.text = model.fullName
+        self.nameLabel.text = model.storeName
         self.subInfoLabel.text = "Specialty: " + model.specialty
         displayPictureImageView.sd_setImageWithURL(NSURL(string: model.profilePhoto), placeholderImage: UIImage(named: "dummy-placeholder"))
         self.images = model.images

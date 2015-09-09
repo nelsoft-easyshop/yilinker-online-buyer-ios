@@ -57,6 +57,8 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
     var quantity: Int = 1
     var unitId: String = ""
     
+    var hud: MBProgressHUD?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -183,6 +185,7 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
             hideSelf("done")
             if let delegate = self.delegate {
                 let quantity: Int = stocksLabel.text!.toInt()!
+                println(unitId)
                 delegate.doneActionPassDetailsToProductView(self, unitId: unitId, quantity: quantity, selectedId: selectedId)
             }
         } else {
@@ -199,20 +202,36 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
     }
     
     @IBAction func addToCartAction(sender: AnyObject) {
-        if SessionManager.isLoggedIn() {
-            let url: String = "http://online.api.easydeal.ph/api/v1/auth/cart/updateCartItem"
-            let quantity: Int = stocksLabel.text!.toInt()!
-            
-            let params: NSDictionary = ["access_token": SessionManager.accessToken(),
-                "productId": self.productDetailsModel.id,
-                "unitId": String(unitId.toInt()! + 1),
-                "quantity": String(quantity)]
-            
-            println(params)
-            
-            requestAddCartItem(url, params: params)
+
+        var selectionComplete: Bool = true
+        
+        for i in 0..<self.selectedId.count {
+            if selectedId[i] == "-1" {
+                selectionComplete = false
+            }
+        }
+        
+        if selectionComplete {
+            if SessionManager.isLoggedIn() {
+                let url: String = "http://online.api.easydeal.ph/api/v1/auth/cart/updateCartItem"
+                let quantity: Int = stocksLabel.text!.toInt()!
+                
+                let params: NSDictionary = ["access_token": SessionManager.accessToken(),
+                    "productId": self.productDetailsModel.id,
+                    "unitId": unitId,
+                    "quantity": String(quantity)]
+                
+                println(params)
+                
+                requestAddCartItem(url, params: params)
+            } else {
+                let alertController = UIAlertController(title: "Failed", message: "Please logged-in to add item in your cart.", preferredStyle: .Alert)
+                let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+                alertController.addAction(defaultAction)
+                self.presentViewController(alertController, animated: true, completion: nil)
+            }
         } else {
-            let alertController = UIAlertController(title: "Failed", message: "Please logged-in to add item in your cart.", preferredStyle: .Alert)
+            let alertController = UIAlertController(title: "Error", message: "Please complete the attributes.", preferredStyle: .Alert)
             let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
             alertController.addAction(defaultAction)
             self.presentViewController(alertController, animated: true, completion: nil)
@@ -224,15 +243,25 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
     }
     
     func buyItNowAction(gesture: UIGestureRecognizer) {
-        hideSelf("buy")
-        if let delegate = self.delegate {
-            delegate.gotoCheckoutFromAttributes(self)
+        var selectionComplete: Bool = true
+        
+        for i in 0..<self.selectedId.count {
+            if selectedId[i] == "-1" {
+                selectionComplete = false
+            }
         }
-    }
-    
-    func addBadge(items: Int) {
-        let badgeValue = (self.tabController.tabBar.items![4] as! UITabBarItem).badgeValue?.toInt()
-        (self.tabController.tabBar.items![4] as! UITabBarItem).badgeValue = String(items)
+        
+        if selectionComplete {
+            if SessionManager.isLoggedIn() {
+                hideSelf("buy")
+                delegate!.gotoCheckoutFromAttributes(self)
+            } else {
+                let alertController = UIAlertController(title: "Error", message: "Please complete the attributes.", preferredStyle: .Alert)
+                let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+                alertController.addAction(defaultAction)
+                self.presentViewController(alertController, animated: true, completion: nil)
+            }
+        }
     }
     
     // MARK: - Methods
@@ -353,15 +382,28 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
         view.layer.cornerRadius = radius
     }
     
+    func showHUD() {
+        if self.hud != nil {
+            self.hud!.hide(true)
+            self.hud = nil
+        }
+        
+        self.hud = MBProgressHUD(view: self.view)
+        self.hud?.removeFromSuperViewOnHide = true
+        self.hud?.dimBackground = false
+        self.view.addSubview(self.hud!)
+        self.hud?.show(true)
+    }
+    
     // MARK: - Requests
     
     func requestAddCartItem(url: String, params: NSDictionary!) {
-        SVProgressHUD.show()
+        self.showHUD()
         let manager = APIManager.sharedInstance
         manager.POST(url, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
-            SVProgressHUD.dismiss()
+            self.hud?.hide(true)
             
             if responseObject.isKindOfClass(NSDictionary) {
                 
@@ -369,8 +411,10 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
                     if tempVar {
                         var data: NSDictionary = responseObject["data"] as! NSDictionary
                         var items: NSArray = data["items"] as! NSArray
+                        SessionManager.setCartCount(items.count)
+                        (self.tabController.tabBar.items![4] as! UITabBarItem).badgeValue = String(SessionManager.cartCount())
                         self.hideSelf("cart")
-                        self.addBadge(items.count)
+                        
                     } else {
                         if let tempVar = responseObject["message"] as? String {
                             let alertController = UIAlertController(title: "Error", message: tempVar, preferredStyle: .Alert)
@@ -391,7 +435,7 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
                     self.requestRefreshToken()
                 } else {
                     println(error)
-                    SVProgressHUD.dismiss()
+                    self.hud?.hide(true)
                 }
         })
     }
@@ -407,7 +451,7 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
         manager.POST(url, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
-            SVProgressHUD.dismiss()
+            self.hud?.hide(true)
             
             if responseObject.isKindOfClass(NSDictionary) {
                 
@@ -424,7 +468,7 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
                             "quantity": quantity]
                         self.requestAddCartItem(url, params: params)
                     } else {
-                        SVProgressHUD.dismiss()
+                        self.hud?.hide(true)
                         if let tempVar = responseObject["message"] as? String {
                             let alertController = UIAlertController(title: "Error", message: tempVar, preferredStyle: .Alert)
                             let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
@@ -437,7 +481,7 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
             
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                SVProgressHUD.dismiss()
+                self.hud?.hide(true)
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                 
                 let alertController = UIAlertController(title: "Something Went Wrong", message: nil, preferredStyle: .Alert)
@@ -450,18 +494,18 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
 
     // MARK: - Delegates
     
-    func passModel(#productDetailsModel: ProductDetailsModel, selectedValue: NSArray, selectedId: NSArray, unitId: Int, quantity: Int) {
-        let index: Int = unitId - 1
-        setDetail("", title: productDetailsModel.title, price: productDetailsModel.productUnits[index].price)
+    func passModel(#productDetailsModel: ProductDetailsModel, selectedValue: NSArray, selectedId: NSArray, unitIdIndex: Int, quantity: Int) {
+
+        setDetail("", title: productDetailsModel.title, price: productDetailsModel.productUnits[unitIdIndex].price)
         self.productDetailsModel = productDetailsModel
         self.attributes = productDetailsModel.attributes as [ProductAttributeModel]
         self.selectedId = selectedId as! [String]
         self.selectedValue = selectedValue as! [String]
-        self.unitId = String(unitId)
-        self.selectedCombination = productDetailsModel.productUnits[index].combination
+        self.unitId = productDetailsModel.productUnits[unitIdIndex].productUnitId
+        self.selectedCombination = productDetailsModel.productUnits[unitIdIndex].combination
         
-        self.maximumStock = productDetailsModel.productUnits[index].quantity
-        self.availabilityStocksLabel.text = "Available stocks : \(productDetailsModel.productUnits[index].quantity)"
+        self.maximumStock = productDetailsModel.productUnits[unitIdIndex].quantity
+        self.availabilityStocksLabel.text = "Available stocks : \(productDetailsModel.productUnits[unitIdIndex].quantity)"
         
         convertCombinationToString()
         println(combinationString)

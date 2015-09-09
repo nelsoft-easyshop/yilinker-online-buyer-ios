@@ -50,7 +50,42 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         } else {
             self.addEmptyView()
         }
+        
+        /*
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "onRegistration:",
+            name: appDelegate.registrationKey, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "receivedMessage:",
+            name: appDelegate.messageKey, object: nil)
+        */
     }
+    
+    /*
+    
+    func onRegistration(notification: NSNotification){
+        if let info = notification.userInfo as? Dictionary<String,String> {
+            if let error = info["error"] {
+                showAlert("Error registering with GCM", message: error)
+            } else if let registrationToken = info["registrationToken"] {
+                let message = "Check the xcode debug console for the registration token for the server to send notifications to your device"
+                self.fireCreateRegistration(registrationToken)
+                showAlert("Registration Successful!", message: message)
+            }
+        }
+    }
+    
+    func showAlert(title:String, message:String) {
+        let alert = UIAlertController(title: title,
+            message: message, preferredStyle: .Alert)
+        let dismissAction = UIAlertAction(title: "Dismiss", style: .Destructive, handler: nil)
+        alert.addAction(dismissAction)
+        self.presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    func receivedMessage(notification : NSNotification){
+        //action here to open messaging
+    }
+
+    */
     
     func addEmptyView() {
         if self.emptyView == nil {
@@ -268,10 +303,12 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         
         for (index, category) in enumerate(categories) {
             let categoryDictionary: NSDictionary = category as! NSDictionary
-            let layoutId: String = categoryDictionary["layoutId"] as! String
+            let layoutId: Int = categoryDictionary["categoryId"] as! Int
             var layout: String = ""
-            if layoutId == "1" {
-                layout = Constants.HomePage.layoutFiveKey
+            if layoutId == 1 {
+                layout = Constants.HomePage.layoutFiveKeyWithFooter
+            } else {
+                layout = Constants.HomePage.layoutFiveKey2
             }
             
             hotItemLayouts.append(layout)
@@ -315,13 +352,15 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         self.showHUD()
         manager.POST(APIAtlas.getUserInfoUrl, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            SVProgressHUD.dismiss()
             let dictionary: NSDictionary = responseObject as! NSDictionary
             self.profileModel = ProfileUserDetailsModel.parseDataWithDictionary(dictionary["data"]!)
             //Insert Data to Session Manager
             SessionManager.setFullAddress("\(self.profileModel.address.barangay) \(self.profileModel.address.unitNumber) \(self.profileModel.address.subdivision) \(self.profileModel.address.streetNumber) \(self.profileModel.address.streetAddress) \(self.profileModel.address.streetName) \(self.profileModel.address.buildingName)")
             SessionManager.setUserFullName(self.profileModel.fullName)
             SessionManager.setAddressId(self.profileModel.address.userAddressId)
+            SessionManager.setCartCount(self.profileModel.cartCount)
+            SessionManager.setWishlistCount(self.profileModel.wishlistCount)
+            self.updateTabBarBadge()
                 
             self.hud?.hide(true)
             }, failure: {
@@ -338,24 +377,39 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         })
     }
     
+    func updateTabBarBadge() {
+        if SessionManager.wishlistCount() != 0 {
+            let badgeValue = (self.tabBarController!.tabBar.items![3] as! UITabBarItem).badgeValue?.toInt()
+            (self.tabBarController!.tabBar.items![3] as! UITabBarItem).badgeValue = "\(SessionManager.wishlistCount())"
+        } else {
+            (self.tabBarController!.tabBar.items![3] as! UITabBarItem).badgeValue = nil
+        }
+        
+        if SessionManager.cartCount() != 0 {
+            let badgeValue = (self.tabBarController!.tabBar.items![4] as! UITabBarItem).badgeValue?.toInt()
+            (self.tabBarController!.tabBar.items![4] as! UITabBarItem).badgeValue = "\(SessionManager.cartCount())"
+        } else {
+            (self.tabBarController!.tabBar.items![4] as! UITabBarItem).badgeValue = nil
+        }
+    }
+    
     func fireRefreshToken() {
         let manager: APIManager = APIManager.sharedInstance
         //seller@easyshop.ph
         //password
         let parameters: NSDictionary = ["client_id": Constants.Credentials.clientID, "client_secret": Constants.Credentials.clientSecret, "grant_type": Constants.Credentials.grantRefreshToken, "refresh_token":  SessionManager.refreshToken()]
-        SVProgressHUD.show()
+        self.showHUD()
         manager.POST(APIAtlas.refreshTokenUrl, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            SVProgressHUD.dismiss()
             SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
-            self.fireGetUserInfo()
+            self.hud?.hide(true)
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
             
                 UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
                 
-                SVProgressHUD.dismiss()
+                self.hud?.hide(true)
         })
 
     }
@@ -373,4 +427,6 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         self.view.addSubview(self.hud!)
         self.hud?.show(true)
     }
+    
+    
 }

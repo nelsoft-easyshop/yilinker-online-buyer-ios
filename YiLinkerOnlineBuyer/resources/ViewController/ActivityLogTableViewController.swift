@@ -11,9 +11,21 @@ import UIKit
 class ActivityLogTableViewController: UITableViewController {
     
     var tableData:[ActivityLogModel] = [
-        ActivityLogModel(date: "JUNE 23, 2015", activities: [ActivityModel(time: "2:58 AM", details: "You have purchased iPhone 6 - Gold from seller2daMax"), ActivityModel(time: "1:20 AM", details: "Upload Profile Photo")]),
-        ActivityLogModel(date: "JUNE 09, 2015", activities: [ActivityModel(time: "2:58 AM", details: "You have purchased iPhone 6 - Gold from seller2daMax"), ActivityModel(time: "1:20 AM", details: "Upload Profile Photo")])
+        ActivityLogModel(text: "MM-DD-YYYY", activities: [ActivityModel(time: "0:00 AM/PM", details: "No Activity logs yet.")])
     ]
+    
+    var activityModel: ActivityModel?
+    var activityLogsModel: ActivityLogModel!
+    
+    var table: [ActivityLogModel] = []
+    var tableSectionContents: ActivityModel!
+    var array = [ActivityModel]()
+    
+    var cellCount: Int = 0
+    var cellSection: Int = 0
+    var logsDictionary = Dictionary<String, String>()
+    
+    var hud: MBProgressHUD?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,6 +34,7 @@ class ActivityLogTableViewController: UITableViewController {
         titleView()
         backButton()
         registerNibs()
+        fireActivityLog()
     }
 
     override func didReceiveMemoryWarning() {
@@ -71,31 +84,37 @@ class ActivityLogTableViewController: UITableViewController {
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Potentially incomplete method implementation.
         // Return the number of sections.
-        return tableData.count
+        return self.table.count
+        //return 1
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete method implementation.
         // Return the number of rows in the section.
-        return tableData[section].activities.count
+        if self.cellCount != 0 {
+            return self.table[section].activities.count
+        } else {
+            return 0
+        }
     }
-
-    
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("ActivityLogTableViewCell", forIndexPath: indexPath) as! ActivityLogTableViewCell
-
-        cell.detailsLabel?.text = tableData[indexPath.section].activities[indexPath.row].details
-        cell.timeLabel?.text = tableData[indexPath.section].activities[indexPath.row].time
-        
-        println(tableData[indexPath.section].activities[indexPath.row].time)
-        println(tableData[indexPath.section].activities[indexPath.row].details)
-        
+      
+        if(self.activityLogsModel != nil){
+            cell.detailsLabel?.text = self.table[indexPath.section].activities[indexPath.row].details
+            cell.timeLabel?.text =  self.table[indexPath.section].activities[indexPath.row].time
+        }
+       
         return cell
     }
     
     override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        return setSectionHeader(tableData[section].date)
+        if self.cellSection != 0 {
+            return setSectionHeader(self.table[section].text)
+        } else {
+            return setSectionHeader(tableData[section].text)
+        }
     }
     
     override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -103,6 +122,46 @@ class ActivityLogTableViewController: UITableViewController {
     }
     
 
+    func fireActivityLog(){
+        self.showHUD()
+        let manager = APIManager.sharedInstance
+        manager.GET(APIAtlas.activityLogs+"\(SessionManager.accessToken())", parameters: nil, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+                self.activityLogsModel = ActivityLogModel.parsaActivityLogsDataFromDictionary(responseObject as! NSDictionary)
+                self.cellCount = self.activityLogsModel!.text_array.count
+                self.cellSection = self.activityLogsModel!.date_section_array.count
+           
+                for var a = 0; a < self.activityLogsModel.date_section_array.count; a++ {
+                    var arr = [ActivityModel]()
+                    for var b = 0; b < self.activityLogsModel.text_array.count; b++ {
+                        if self.activityLogsModel!.date_section_array[a] == self.activityLogsModel!.all_date_section_array[b] {
+                            self.tableSectionContents = ActivityModel(time: self.activityLogsModel!.date_array[b], details: self.activityLogsModel!.text_array[b])
+                            arr.append(self.tableSectionContents)
+                        }
+                    }
+                    self.table.append(ActivityLogModel(text: self.activityLogsModel!.date_section_array[a], activities: arr))
+                }
+                self.hud?.hide(true)
+                self.tableView.reloadData()
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                self.hud?.hide(true)
+        })
+    }
+    
+    func showHUD() {
+        if self.hud != nil {
+            self.hud!.hide(true)
+            self.hud = nil
+        }
+        
+        self.hud = MBProgressHUD(view: self.view)
+        self.hud?.removeFromSuperViewOnHide = true
+        self.hud?.dimBackground = false
+        self.navigationController?.view.addSubview(self.hud!)
+        self.hud?.show(true)
+    }
+    
     /*
     // Override to support conditional editing of the table view.
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
