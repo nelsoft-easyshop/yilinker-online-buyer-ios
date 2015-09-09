@@ -77,7 +77,6 @@
 		0C374F391B88E3790050AE1D /* ShipToTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C374F191B88E3790050AE1D /* ShipToTableViewCell.xib */; };
 		0C374F3A1B88E3790050AE1D /* ProductsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C374F1A1B88E3790050AE1D /* ProductsTableViewCell.xib */; };
 		0C374F3B1B88E3790050AE1D /* GeneralRatingTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C374F1B1B88E3790050AE1D /* GeneralRatingTableViewCell.xib */; };
-		0C374F3C1B88E3790050AE1D /* CartProductAttributeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C374F1C1B88E3790050AE1D /* CartProductAttributeViewController.xib */; };
 		0C374F3D1B88E3790050AE1D /* SellerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C374F1D1B88E3790050AE1D /* SellerViewController.xib */; };
 		0C374F3E1B88E3790050AE1D /* ChangeAddressFooterCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C374F1E1B88E3790050AE1D /* ChangeAddressFooterCollectionViewCell.xib */; };
 		0C374F3F1B88E3790050AE1D /* CategoriesTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C374F1F1B88E3790050AE1D /* CategoriesTableViewCell.xib */; };
@@ -462,7 +461,6 @@
 		0C374F191B88E3790050AE1D /* ShipToTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShipToTableViewCell.xib; sourceTree = "<group>"; };
 		0C374F1A1B88E3790050AE1D /* ProductsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProductsTableViewCell.xib; sourceTree = "<group>"; };
 		0C374F1B1B88E3790050AE1D /* GeneralRatingTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GeneralRatingTableViewCell.xib; sourceTree = "<group>"; };
-		0C374F1C1B88E3790050AE1D /* CartProductAttributeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CartProductAttributeViewController.xib; sourceTree = "<group>"; };
 		0C374F1D1B88E3790050AE1D /* SellerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SellerViewController.xib; sourceTree = "<group>"; };
 		0C374F1E1B88E3790050AE1D /* ChangeAddressFooterCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChangeAddressFooterCollectionViewCell.xib; sourceTree = "<group>"; };
 		0C374F1F1B88E3790050AE1D /* CategoriesTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CategoriesTableViewCell.xib; sourceTree = "<group>"; };
@@ -1165,7 +1163,6 @@
 				0C10042C1B877F8400CAA17A /* AddAddressTableViewController.xib */,
 				79AA08341B8F4E6300AF3AA4 /* CartProductAttributeTableViewCell.xib */,
 				F7CCDA781B943CBB000F5AD4 /* CartProductAttributeViewController.xib */,
-				0C374F1C1B88E3790050AE1D /* CartProductAttributeViewController.xib */,
 				797D49101B7A50BA00617F6B /* CartTableViewCell.xib */,
 				F7CCDA791B943CBB000F5AD4 /* CategoriesTableViewCell.xib */,
 				0C374F1F1B88E3790050AE1D /* CategoriesTableViewCell.xib */,
@@ -1523,7 +1520,6 @@
 				0C9937671B750583000D6074 /* ProductItemWithVerticalDisplayCollectionViewCell.xib in Resources */,
 				0C2F44CE1B8576FE00021F45 /* Panton Light.otf in Resources */,
 				0C374F421B88E3790050AE1D /* FollowedSellerViewController.xib in Resources */,
-				0C374F3C1B88E3790050AE1D /* CartProductAttributeViewController.xib in Resources */,
 				26AFB3C31B79DE5600E50926 /* ProductDescriptionViewController.xib in Resources */,
 				0C374F4D1B8998F30050AE1D /* CustomizeShoppingCollectionViewCell.xib in Resources */,
 				F7CCDA891B943CBB000F5AD4 /* CategoriesTableViewCell.xib in Resources */,
