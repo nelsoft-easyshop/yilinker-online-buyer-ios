@@ -14,7 +14,7 @@ class TransactionIdView: UIView {
     @IBOutlet weak var numberOfProductsLabel: UILabel!
     
     override func awakeFromNib() {
-
+        
     }
 
 }

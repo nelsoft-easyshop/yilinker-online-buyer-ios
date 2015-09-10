@@ -1,22 +1,22 @@
 //
-//  ChangePasswordViewController.swift
+//  ChangeMobileNumberViewController.swift
 //  YiLinkerOnlineBuyer
 //
-//  Created by John Paul Chan on 9/1/15.
+//  Created by John Paul Chan on 9/9/15.
 //  Copyright (c) 2015 yiLinker-online-buyer. All rights reserved.
 //
 
 import UIKit
 
-protocol ChangePasswordViewControllerDelegate {
-    func closeChangePasswordViewController()
-    func submitChangePasswordViewController()
+protocol ChangeMobileNumberViewControllerDelegate {
+    func closeChangeNumbderViewController()
+    func submitChangeNumberViewController()
 }
 
-class ChangePasswordViewController: UIViewController {
+class ChangeMobileNumberViewController: UIViewController {
     
-    var delegate: ChangePasswordViewControllerDelegate?
-
+    var delegate: ChangeMobileNumberViewControllerDelegate?
+    
     let manager = APIManager.sharedInstance
     
     @IBOutlet weak var topMarginConstraint: NSLayoutConstraint!
@@ -25,9 +25,8 @@ class ChangePasswordViewController: UIViewController {
     @IBOutlet weak var tapView: UIView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var closeButton: UIButton!
-    @IBOutlet weak var oldPasswordTextField: UITextField!
-    @IBOutlet weak var newPasswordTextField: UITextField!
-    @IBOutlet weak var confirmPasswordTextField: UITextField!
+    @IBOutlet weak var oldNumberTextField: UITextField!
+    @IBOutlet weak var newNumberTextField: UITextField!
     @IBOutlet weak var submitButton: UIButton!
     
     var mainViewOriginalFrame: CGRect?
@@ -49,6 +48,7 @@ class ChangePasswordViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+
     func initializeViews() {
         mainView.layer.cornerRadius = 8
         submitButton.layer.cornerRadius = 5
@@ -68,14 +68,22 @@ class ChangePasswordViewController: UIViewController {
     }
     
     @IBAction func editBegin(sender: AnyObject) {
-        if IphoneType.isIphone4() || IphoneType.isIphone5() {
+        if IphoneType.isIphone4() {
             topMarginConstraint.constant = screenHeight! / 10
+        } else if IphoneType.isIphone5() {
+            topMarginConstraint.constant = screenHeight! / 5
         }
     }
     
     func tapMainViewAction() {
-        if IphoneType.isIphone4() || IphoneType.isIphone5() {
+        if IphoneType.isIphone4() {
             if topMarginConstraint.constant == screenHeight! / 10 {
+                tapMainAction()
+            } else {
+                buttonAction(closeButton)
+            }
+        } else if(IphoneType.isIphone5() ) {
+            if topMarginConstraint.constant == screenHeight! / 5 {
                 tapMainAction()
             } else {
                 buttonAction(closeButton)
@@ -86,9 +94,8 @@ class ChangePasswordViewController: UIViewController {
     }
     
     func tapMainAction() {
-        oldPasswordTextField.resignFirstResponder()
-        newPasswordTextField.resignFirstResponder()
-        confirmPasswordTextField.resignFirstResponder()
+        oldNumberTextField.resignFirstResponder()
+        newNumberTextField.resignFirstResponder()
         
         topMarginConstraint.constant = (screenHeight! / 2) - (mainView.frame.height / 2)
     }
@@ -96,23 +103,23 @@ class ChangePasswordViewController: UIViewController {
     @IBAction func buttonAction(sender: AnyObject) {
         if sender as! UIButton == closeButton {
             self.dismissViewControllerAnimated(true, completion: nil)
-            self.delegate?.closeChangePasswordViewController()
+            self.delegate?.closeChangeNumbderViewController()
         } else if sender as! UIButton == submitButton {
-            tapMainAction()
-            if oldPasswordTextField.text.isEmpty ||  newPasswordTextField.text.isEmpty || confirmPasswordTextField.text.isEmpty {
+            oldNumberTextField.resignFirstResponder()
+            newNumberTextField.resignFirstResponder()
+            
+            if oldNumberTextField.text.isEmpty ||  newNumberTextField.text.isEmpty{
                 showAlert(title: "Error", message: "Complete necessary fields!")
-            } else if newPasswordTextField.text != confirmPasswordTextField.text {
-                showAlert(title: "Error", message: "Password does not match!")
+            } else if oldNumberTextField.text != mobileNumber {
+                showAlert(title: "Error", message: "Incorrect old mobile number!")
             } else {
-                fireUpdateProfile(APIAtlas.changePassword, params: NSDictionary(dictionary: [
-                    "access_token": SessionManager.accessToken(),
-                    "oldPassword": oldPasswordTextField.text,
-                    "newPassword": newPasswordTextField.text,
-                    "newPasswordConfirm": confirmPasswordTextField.text]))
+                fireUpdateProfile(APIAtlas.updateMobileNumber, params: NSDictionary(dictionary: ["access_token" : SessionManager.accessToken(),
+                    "oldContactNumber": oldNumberTextField.text,
+                    "newContactNumber": newNumberTextField.text]))
             }
         }
     }
-    
+
     func showAlert(#title: String!, message: String!) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
         let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
@@ -140,43 +147,29 @@ class ChangePasswordViewController: UIViewController {
     
     func fireUpdateProfile(url: String, params: NSDictionary!) {
         showLoader()
-        
-        self.manager.responseSerializer = JSONResponseSerializer()
-        manager.POST(url, parameters: params, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in print(responseObject as! NSDictionary)
-            if responseObject.objectForKey("error") != nil {
-                self.requestRefreshToken(url, params: params)
-            } else {
-                if responseObject["isSuccessful"] as! Bool {
-                    self.dismissViewControllerAnimated(true, completion: nil)
-                    self.dismissLoader()
-                    self.delegate?.submitChangePasswordViewController()
+
+            manager.POST(url, parameters: params, success: {
+                (task: NSURLSessionDataTask!, responseObject: AnyObject!) in print(responseObject as! NSDictionary)
+                if responseObject.objectForKey("error") != nil {
+                    self.requestRefreshToken(url, params: params)
                 } else {
-                    self.showAlert(title: "Error", message: responseObject["message"] as! String)
-                    self.dismissLoader()
-                }
-            }
-            println(responseObject)
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                
-                if Reachability.isConnectedToNetwork() {
-                    var info = error.userInfo!
-                    
-                    self.dismissLoader()
-                    
-                    if let data = info["message"] as? NSString {
-                        self.showAlert(title: "Error", message: data as String)
+                    if responseObject["isSuccessful"] as! Bool {
+                        self.dismissViewControllerAnimated(true, completion: nil)
+                        self.delegate?.submitChangeNumberViewController()
+                        self.dismissLoader()
                     } else {
-                        self.showAlert(title: "Error", message: "Something went wrong!")
+                        self.showAlert(title: "Error", message: responseObject["message"] as! String)
+                        self.dismissLoader()
                     }
-                    
-                } else {
-                    self.showAlert(title: "Error", message: "Check your internet connection!")
                 }
-                
-        })
-        
+                println(responseObject)
+                }, failure: {
+                    (task: NSURLSessionDataTask!, error: NSError!) in
+                    self.showAlert(title: "Error", message: "Something went wrong. . .")
+                    self.dismissLoader()
+                    println(error)
+            })
+
     }
     
     func requestRefreshToken(url: String, params: NSDictionary!) {
@@ -207,4 +200,8 @@ class ChangePasswordViewController: UIViewController {
                 
         })
     }
+    
+
+
+
 }

@@ -1,23 +1,24 @@
 //
-//  ChangePasswordViewController.swift
+//  VerifyMobileNumberViewController.swift
 //  YiLinkerOnlineBuyer
 //
-//  Created by John Paul Chan on 9/1/15.
+//  Created by John Paul Chan on 9/9/15.
 //  Copyright (c) 2015 yiLinker-online-buyer. All rights reserved.
 //
 
 import UIKit
 
-protocol ChangePasswordViewControllerDelegate {
-    func closeChangePasswordViewController()
-    func submitChangePasswordViewController()
+protocol VerifyMobileNumberViewControllerDelegate {
+    func closeVerifyMobileNumberViewController()
+    func verifyMobileNumberAction(isSuccessful: Bool)
+    func requestNewCodeAction()
 }
 
-class ChangePasswordViewController: UIViewController {
+class VerifyMobileNumberViewController: UIViewController {
     
-    var delegate: ChangePasswordViewControllerDelegate?
-
     let manager = APIManager.sharedInstance
+    
+    var delegate: VerifyMobileNumberViewControllerDelegate?
     
     @IBOutlet weak var topMarginConstraint: NSLayoutConstraint!
     
@@ -25,33 +26,37 @@ class ChangePasswordViewController: UIViewController {
     @IBOutlet weak var tapView: UIView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var closeButton: UIButton!
-    @IBOutlet weak var oldPasswordTextField: UITextField!
-    @IBOutlet weak var newPasswordTextField: UITextField!
-    @IBOutlet weak var confirmPasswordTextField: UITextField!
-    @IBOutlet weak var submitButton: UIButton!
+    @IBOutlet weak var codeTextField: UITextField!
+    @IBOutlet weak var timeLabel: UILabel!
+    @IBOutlet weak var verifyButton: UIButton!
+    @IBOutlet weak var requestButton: UIButton!
     
     var mainViewOriginalFrame: CGRect?
     
     var screenHeight: CGFloat?
     
-    var mobileNumber: String = ""
+    var seconds: Int = 300
+    var timer = NSTimer()
     
     var hud: MBProgressHUD?
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
         initializeViews()
     }
 
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: Selector("subtractTime"), userInfo: nil, repeats: true)
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
-    
+
     func initializeViews() {
         mainView.layer.cornerRadius = 8
-        submitButton.layer.cornerRadius = 5
+        verifyButton.layer.cornerRadius = 5
         mainViewOriginalFrame = mainView.frame
         
         // Add tap event to Sort View
@@ -68,27 +73,37 @@ class ChangePasswordViewController: UIViewController {
     }
     
     @IBAction func editBegin(sender: AnyObject) {
-        if IphoneType.isIphone4() || IphoneType.isIphone5() {
+        if IphoneType.isIphone4() {
             topMarginConstraint.constant = screenHeight! / 10
+        } else if IphoneType.isIphone5() {
+            topMarginConstraint.constant = screenHeight! / 5
+        }
+    }
+    
+    func subtractTime() {
+        seconds--
+        var secondsTemp: Int = seconds % 60
+        var minutes: Int = Int(seconds / 60)
+        if secondsTemp < 10 {
+            timeLabel.text = "0\(minutes):0\(secondsTemp)"
+        } else {
+            timeLabel.text = "0\(minutes):\(secondsTemp)"
+        }
+        
+        if(seconds == 0)  {
+            timer.invalidate()
+            timeLabel.text = "00:00"
+            self.dismissViewControllerAnimated(true, completion: nil)
+            delegate?.verifyMobileNumberAction(false)
         }
     }
     
     func tapMainViewAction() {
-        if IphoneType.isIphone4() || IphoneType.isIphone5() {
-            if topMarginConstraint.constant == screenHeight! / 10 {
-                tapMainAction()
-            } else {
-                buttonAction(closeButton)
-            }
-        } else {
-            buttonAction(closeButton)
-        }
+        tapMainAction()
     }
     
     func tapMainAction() {
-        oldPasswordTextField.resignFirstResponder()
-        newPasswordTextField.resignFirstResponder()
-        confirmPasswordTextField.resignFirstResponder()
+        codeTextField.resignFirstResponder()
         
         topMarginConstraint.constant = (screenHeight! / 2) - (mainView.frame.height / 2)
     }
@@ -96,28 +111,15 @@ class ChangePasswordViewController: UIViewController {
     @IBAction func buttonAction(sender: AnyObject) {
         if sender as! UIButton == closeButton {
             self.dismissViewControllerAnimated(true, completion: nil)
-            self.delegate?.closeChangePasswordViewController()
-        } else if sender as! UIButton == submitButton {
-            tapMainAction()
-            if oldPasswordTextField.text.isEmpty ||  newPasswordTextField.text.isEmpty || confirmPasswordTextField.text.isEmpty {
-                showAlert(title: "Error", message: "Complete necessary fields!")
-            } else if newPasswordTextField.text != confirmPasswordTextField.text {
-                showAlert(title: "Error", message: "Password does not match!")
-            } else {
-                fireUpdateProfile(APIAtlas.changePassword, params: NSDictionary(dictionary: [
-                    "access_token": SessionManager.accessToken(),
-                    "oldPassword": oldPasswordTextField.text,
-                    "newPassword": newPasswordTextField.text,
-                    "newPasswordConfirm": confirmPasswordTextField.text]))
-            }
+            delegate?.closeVerifyMobileNumberViewController()
+        } else if sender as! UIButton == verifyButton {
+            fireVerify(APIAtlas.smsVerification, params: NSDictionary(dictionary: [
+                "access_token": SessionManager.accessToken(),
+                "code": codeTextField.text]))
+        } else if sender as! UIButton == requestButton {
+            self.dismissViewControllerAnimated(true, completion: nil)
+            delegate?.requestNewCodeAction()
         }
-    }
-    
-    func showAlert(#title: String!, message: String!) {
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
-        let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
-        alertController.addAction(defaultAction)
-        presentViewController(alertController, animated: true, completion: nil)
     }
     
     //Loader function
@@ -138,10 +140,8 @@ class ChangePasswordViewController: UIViewController {
         self.hud?.hide(true)
     }
     
-    func fireUpdateProfile(url: String, params: NSDictionary!) {
+    func fireVerify(url: String, params: NSDictionary!) {
         showLoader()
-        
-        self.manager.responseSerializer = JSONResponseSerializer()
         manager.POST(url, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in print(responseObject as! NSDictionary)
             if responseObject.objectForKey("error") != nil {
@@ -149,32 +149,20 @@ class ChangePasswordViewController: UIViewController {
             } else {
                 if responseObject["isSuccessful"] as! Bool {
                     self.dismissViewControllerAnimated(true, completion: nil)
+                    self.delegate?.verifyMobileNumberAction(true)
                     self.dismissLoader()
-                    self.delegate?.submitChangePasswordViewController()
                 } else {
-                    self.showAlert(title: "Error", message: responseObject["message"] as! String)
                     self.dismissLoader()
+                    self.dismissViewControllerAnimated(true, completion: nil)
+                    self.delegate?.verifyMobileNumberAction(false)
                 }
             }
             println(responseObject)
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                
-                if Reachability.isConnectedToNetwork() {
-                    var info = error.userInfo!
-                    
-                    self.dismissLoader()
-                    
-                    if let data = info["message"] as? NSString {
-                        self.showAlert(title: "Error", message: data as String)
-                    } else {
-                        self.showAlert(title: "Error", message: "Something went wrong!")
-                    }
-                    
-                } else {
-                    self.showAlert(title: "Error", message: "Check your internet connection!")
-                }
-                
+                self.showAlert(title: "Error", message: "Something went wrong. . .")
+                self.dismissLoader()
+                println(error)
         })
         
     }
@@ -193,7 +181,7 @@ class ChangePasswordViewController: UIViewController {
             
             if (responseObject["isSuccessful"] as! Bool) {
                 SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
-                self.fireUpdateProfile(url, params: params)
+                self.fireVerify(url, params: params)
             } else {
                 self.showAlert(title: "Error", message: responseObject["message"] as! String)
             }
@@ -207,4 +195,12 @@ class ChangePasswordViewController: UIViewController {
                 
         })
     }
+    
+    func showAlert(#title: String!, message: String!) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+        let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+        alertController.addAction(defaultAction)
+        presentViewController(alertController, animated: true, completion: nil)
+    }
+
 }

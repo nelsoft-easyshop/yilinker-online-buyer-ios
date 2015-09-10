@@ -20,13 +20,13 @@ class ResolutionCenterCell: UITableViewCell {
         // Initialization code
     }
     
-    func setData(id: String, status: String, date: String, type: String) {
-        self.idLabel.text = id
-        self.dateLabel.text = date
-        self.userTypeLabel.text = type
+    func setData(data: ResolutionCenterData) {
+        self.idLabel.text = data.resolutionId
+        self.dateLabel.text = data.date
+        self.userTypeLabel.text = data.type
         self.viewStatus.layer.cornerRadius = self.viewStatus.bounds.size.width / 2
 
-        if( status == "Open" ) {
+        if( data.status == "Open" ) {
             self.imageStatus.image = UIImage(named: "status-open")
             self.viewStatus.backgroundColor = UIColor(red:0.28, green:0.71, blue:0.00, alpha:1.0)
         }

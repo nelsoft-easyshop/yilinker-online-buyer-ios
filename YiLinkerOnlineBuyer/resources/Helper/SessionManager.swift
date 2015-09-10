@@ -218,4 +218,20 @@ class SessionManager {
         }
         return returnValue
     }
+    
+    class func saveCookies() {
+        var cookiesData: NSData = NSKeyedArchiver.archivedDataWithRootObject(NSHTTPCookieStorage.sharedHTTPCookieStorage().cookies!)
+        var defaults: NSUserDefaults = NSUserDefaults.standardUserDefaults()
+        defaults.setObject(cookiesData, forKey: "sessionCookies")
+        defaults.synchronize()
+    }
+    
+    class func loadCookies() {
+        var cookiesData: NSData = NSUserDefaults.standardUserDefaults().objectForKey("sessionCookies") as! NSData
+        var cookies: [NSHTTPCookie] = NSKeyedUnarchiver.unarchiveObjectWithData(cookiesData) as! [NSHTTPCookie]
+        var cookieStorage: NSHTTPCookieStorage = NSHTTPCookieStorage.sharedHTTPCookieStorage()
+        for cookie in cookies {
+            cookieStorage.setCookie(cookie)
+        }
+    }
 }

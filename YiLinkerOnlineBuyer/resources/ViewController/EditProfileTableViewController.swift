@@ -8,7 +8,7 @@
 
 import UIKit
 
-class EditProfileTableViewController: UITableViewController, UINavigationControllerDelegate, EditProfileAddPhotoTableViewCellDelegate, EditProfileAddressTableViewCellDelegate, EditProfileAccountInformationTableViewCellDelegate, UIImagePickerControllerDelegate, UIActionSheetDelegate, EditProfilePersonalInformationTableViewCellDelegate, ChangePasswordViewControllerDelegate, ChangeAddressViewControllerDelegate  {
+class EditProfileTableViewController: UITableViewController, UINavigationControllerDelegate, EditProfileAddPhotoTableViewCellDelegate, EditProfileAddressTableViewCellDelegate, EditProfileAccountInformationTableViewCellDelegate, UIImagePickerControllerDelegate, UIActionSheetDelegate, EditProfilePersonalInformationTableViewCellDelegate, ChangePasswordViewControllerDelegate, ChangeAddressViewControllerDelegate, ChangeMobileNumberViewControllerDelegate, VerifyMobileNumberViewControllerDelegate, VerifyMobileNumberStatusViewControllerDelegate {
     
     let manager = APIManager.sharedInstance
     
@@ -189,51 +189,6 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
         }
     }
     
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-    // Return NO if you do not want the specified item to be editable.
-    return true
-    }
-    */
-    
-    /*
-    // Override to support editing the table view.
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-    if editingStyle == .Delete {
-    // Delete the row from the data source
-    tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-    } else if editingStyle == .Insert {
-    // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }
-    }
-    */
-    
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-    
-    }
-    */
-    
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-    // Return NO if you do not want the item to be re-orderable.
-    return true
-    }
-    */
-    
-    /*
-    // MARK: - Navigation
-    
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-    }
-    */
-    
     // MARK: - EditProfileAddPhotoTableViewCellDelegate
     func addPhotoAction(sender: AnyObject) {
         println("addPhotoAction")
@@ -358,6 +313,86 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
         profileUserDetailsModel.contactNumber = mobileNumber
     }
     
+    func changeMobileNumberAction(){
+        var changeNumberModal = ChangeMobileNumberViewController(nibName: "ChangeMobileNumberViewController", bundle: nil)
+        changeNumberModal.mobileNumber = profileUserDetailsModel.contactNumber
+        changeNumberModal.delegate = self
+        changeNumberModal.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
+        changeNumberModal.providesPresentationContextTransitionStyle = true
+        changeNumberModal.definesPresentationContext = true
+        changeNumberModal.view.backgroundColor = UIColor.clearColor()
+        changeNumberModal.view.frame.origin.y = 0
+        self.tabBarController?.presentViewController(changeNumberModal, animated: true, completion: nil)
+        
+        self.dimView!.hidden = false
+        UIView.animateWithDuration(0.3, animations: {
+            self.dimView!.alpha = 1
+            }, completion: { finished in
+        })
+    }
+    
+    // MARK: - ChangeMobileNumberViewControllerDelegate
+    func closeChangeNumbderViewController(){
+        hideDimView()
+    }
+    
+    func submitChangeNumberViewController(){
+        var verifyNumberModal = VerifyMobileNumberViewController(nibName: "VerifyMobileNumberViewController", bundle: nil)
+        verifyNumberModal.delegate = self
+        verifyNumberModal.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
+        verifyNumberModal.providesPresentationContextTransitionStyle = true
+        verifyNumberModal.definesPresentationContext = true
+        verifyNumberModal.view.backgroundColor = UIColor.clearColor()
+        verifyNumberModal.view.frame.origin.y = 0
+        self.tabBarController?.presentViewController(verifyNumberModal, animated: true, completion: nil)
+        
+        self.dimView!.hidden = false
+        UIView.animateWithDuration(0.3, animations: {
+            self.dimView!.alpha = 1
+            }, completion: { finished in
+        })
+    }
+    
+    // MARK: - VerifyMobileNumberViewControllerDelegate
+    func closeVerifyMobileNumberViewController() {
+        hideDimView()
+    }
+    
+    func verifyMobileNumberAction(isSuccessful: Bool) {
+        var verifyStatusModal = VerifyMobileNumberStatusViewController(nibName: "VerifyMobileNumberStatusViewController", bundle: nil)
+        verifyStatusModal.delegate = self
+        verifyStatusModal.isSuccessful = isSuccessful
+        verifyStatusModal.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
+        verifyStatusModal.providesPresentationContextTransitionStyle = true
+        verifyStatusModal.definesPresentationContext = true
+        verifyStatusModal.view.backgroundColor = UIColor.clearColor()
+        verifyStatusModal.view.frame.origin.y = 0
+        self.tabBarController?.presentViewController(verifyStatusModal, animated: true, completion: nil)
+        
+        self.dimView!.hidden = false
+        UIView.animateWithDuration(0.3, animations: {
+            self.dimView!.alpha = 1
+            }, completion: { finished in
+        })
+    }
+    
+    func requestNewCodeAction() {
+        changeMobileNumberAction()
+    }
+    
+    // MARK: - VerifyMobileNumberStatusViewControllerDelegate
+    func closeVerifyMobileNumberStatusViewController() {
+        hideDimView()
+    }
+    
+    func continueVerifyMobileNumberAction() {
+        hideDimView()
+    }
+    
+    func requestNewVerificationCodeAction() {
+        changeMobileNumberAction()
+    }
+    
     
     // MARK: - ChangePasswordViewControllerDelegate
     func closeChangePasswordViewController(){
@@ -366,6 +401,7 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
     
     func submitChangePasswordViewController(){
         hideDimView()
+        self.showAlert("Change Password", message: "Successfully changed password!")
     }
     
     func hideDimView() {
@@ -408,16 +444,14 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
                 if imageData != nil{
                     var params: NSDictionary = [
                         "firstName": firstName as String,
-                        "lastName": lastName as String,
-                        "contactNumber": mobileNumber as String]
+                        "lastName": lastName as String]
                     
                     fireUpdateProfile(APIAtlas.editProfileUrl + "?access_token=" + SessionManager.accessToken(), params: params, withImage: true)
                 } else {
                     var params: NSDictionary = [
                         "firstName": firstName as String,
                         "lastName": lastName as String,
-                        "profilePhoto": profileUserDetailsModel.profileImageUrl as String,
-                        "contactNumber": mobileNumber as String]
+                        "profilePhoto": profileUserDetailsModel.profileImageUrl as String]
                     
                     fireUpdateProfile(APIAtlas.editProfileUrl + "?access_token=" + SessionManager.accessToken(), params: params, withImage: false)
                 }

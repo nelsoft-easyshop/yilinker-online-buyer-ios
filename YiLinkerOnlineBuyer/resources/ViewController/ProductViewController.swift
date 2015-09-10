@@ -99,6 +99,14 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         }
     }
     
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if self.tableView.contentOffset.y <= 140 {
+            self.navigationController?.navigationBar.alpha = 0
+        }
+    }
+    
     override func viewWillDisappear(animated: Bool) {
         self.navigationController?.navigationBar.alpha = 1.0
         self.navigationController?.navigationBar.barTintColor = Constants.Colors.appTheme
@@ -566,7 +574,6 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         self.navigationController?.navigationBar.barTintColor = .whiteColor()
         self.navigationController?.navigationBar.tintColor = .grayColor()
         
-        //        let close = UIBarButtonItem(image: img.image, style: .Plain, target: self, action: "barCloseAction")
         let close = UIBarButtonItem(barButtonSystemItem: .Stop, target: self, action: "barCloseAction")
         let wishlist = UIBarButtonItem(image: UIImage(named: "wishlist"), style: .Plain, target: self, action: "barWishlistAction")
         let rate = UIBarButtonItem(image: UIImage(named: "rating"), style: .Plain, target: self, action: "barRateAction")

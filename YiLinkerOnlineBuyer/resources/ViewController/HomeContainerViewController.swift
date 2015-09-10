@@ -50,7 +50,6 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         } else {
             self.addEmptyView()
         }
-        
         /*
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "onRegistration:",
             name: appDelegate.registrationKey, object: nil)
@@ -274,6 +273,8 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                 //get user info
                 if SessionManager.isLoggedIn() {
                     self.fireGetUserInfo()
+                } else {
+                    SessionManager.saveCookies()
                 }
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
