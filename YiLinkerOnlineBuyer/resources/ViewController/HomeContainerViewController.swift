@@ -50,7 +50,6 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         } else {
             self.addEmptyView()
         }
-        
         /*
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "onRegistration:",
             name: appDelegate.registrationKey, object: nil)

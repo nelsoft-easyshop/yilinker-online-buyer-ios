@@ -48,3 +48,9 @@ enum TargetType {
     case Seller
     case SellerList
 }
+
+enum AddressPickerType {
+    case Province
+    case City
+    case Barangay
+}

@@ -24,6 +24,31 @@ struct APIEnvironment {
 }
 
 struct APIAtlas {
+    
+    static func COD() -> String {
+        if SessionManager.isLoggedIn() {
+            return "auth/payment/doPaymentCod"
+        } else {
+            return "payment/doPaymentCod"
+        }
+    }
+    
+    static func pesoPay() -> String {
+        if SessionManager.isLoggedIn() {
+            return "auth/payment/doPesoPay"
+        } else {
+            return "payment/doPesoPay"
+        }
+    }
+    
+    static func overView() -> String {
+        if SessionManager.isLoggedIn() {
+            return "auth/payment/checkoutOverview"
+        } else {
+            return "payment/checkoutOverview"
+        }
+    }
+    
     static let refreshTokenUrl = "login"
     static let loginUrl = "login"
     static let registerUrl = "user/register"
@@ -56,12 +81,13 @@ struct APIAtlas {
     static let updateGuestCheckout = "cart/cartToCheckout"
     static let editAddress = "auth/address/editUserAddress"
     static let setCheckoutAddressUrl = "auth/user/setAddress"
-    static let cashOnDeliveryUrl = "auth/payment/doPaymentCod"
-    static let pesoPayUrl = "auth/payment/doPesoPay"
-    static let overViewUrl = "auth/payment/checkoutOverview"
+    static let cashOnDeliveryUrl = APIAtlas.COD()
+    static let pesoPayUrl = APIAtlas.pesoPay()
+    static let overViewUrl = APIAtlas.overView()
     static let activityLogs = "auth/user/activityLog?access_token="
     static let getCategories = "product/getCategories?parentId="
     static let productList = "product/getProductList"
+    static let guestUserUrl = "guestUser"
     static let updateMobileNumber = "auth/user/changeContactNumber"
     static let smsVerification = "auth/sms/verify"
     static let changePassword = "auth/user/changePassword"
