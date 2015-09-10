@@ -243,6 +243,7 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
     }
     
     func buyItNowAction(gesture: UIGestureRecognizer) {
+        
         var selectionComplete: Bool = true
         
         for i in 0..<self.selectedId.count {
@@ -256,11 +257,13 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
                 hideSelf("buy")
                 delegate!.gotoCheckoutFromAttributes(self)
             } else {
-                let alertController = UIAlertController(title: "Error", message: "Please complete the attributes.", preferredStyle: .Alert)
-                let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
-                alertController.addAction(defaultAction)
-                self.presentViewController(alertController, animated: true, completion: nil)
+                // Guest Checkout Hereasd
             }
+        } else {
+            let alertController = UIAlertController(title: "Error", message: "Please complete the attributes.", preferredStyle: .Alert)
+            let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+            alertController.addAction(defaultAction)
+            self.presentViewController(alertController, animated: true, completion: nil)
         }
     }
     
