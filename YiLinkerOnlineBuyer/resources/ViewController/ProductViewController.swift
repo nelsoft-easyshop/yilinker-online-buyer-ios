@@ -86,6 +86,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         setBorderOf(view: buyItNowView, width: 1, color: .grayColor(), radius: 3)
         
         requestProductDetails()
+        requestReviewDetails()
         
         buyItNowView.addGestureRecognizer(tapGesture("buyItNowAction:"))
     }
@@ -344,7 +345,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     
     func requestReviewDetails() {
         
-        let params: NSDictionary = ["productId": self.productDetailsModel.id]
+        let params: NSDictionary = ["productId": productId]
         
         manager.POST(APIAtlas.productReviews, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
@@ -765,7 +766,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     
     func checkRequests() {
         
-        if productRequest && sellerRequest {
+        if productRequest && reviewRequest && sellerRequest {
             if productSuccess {
                 self.loadViewsWithDetails()
             } else {
