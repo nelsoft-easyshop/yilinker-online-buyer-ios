@@ -50,11 +50,6 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         } else {
             self.addEmptyView()
         }
-
-        let checkoutViewController: CheckoutContainerViewController = CheckoutContainerViewController(nibName: "CheckoutContainerViewController", bundle: nil)
-        let navigation: UINavigationController = UINavigationController(rootViewController: checkoutViewController)
-        self.tabBarController?.presentViewController(navigation, animated: true, completion: nil)
-        
         /*
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "onRegistration:",
             name: appDelegate.registrationKey, object: nil)
@@ -278,6 +273,8 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                 //get user info
                 if SessionManager.isLoggedIn() {
                     self.fireGetUserInfo()
+                } else {
+                    SessionManager.saveCookies()
                 }
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in

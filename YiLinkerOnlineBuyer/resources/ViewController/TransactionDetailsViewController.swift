@@ -26,8 +26,29 @@ class TransactionDetailsViewController: UIViewController {
     var transactionSellerView: TransactionSellerView!
     var transactionButtonView: UIView!
     
+    var transactionId: String = ""
+    var totalProducts: String = ""
+    var orderStatus: String = ""
+    var paymentType: String = ""
+    var dateCreated: String = ""
+    var totalQuantity: String = ""
+    var totalUnitCost: String = ""
+    var shippingFee: String = ""
+    var totalCost: String = ""
+    
+    var total_unit_price: Float = 0.0
+    var total_handling_fee: Float = 0.0
+    var total_cost: Float = 0.0
+    
+    var hud: MBProgressHUD?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.fireTransactionDetails(self.transactionId)
+        
+        total_unit_price = (self.totalUnitCost as NSString).floatValue
+        total_handling_fee = (self.shippingFee as NSString).floatValue
         
         self.title = "Transaction Details"
     }
@@ -79,6 +100,14 @@ class TransactionDetailsViewController: UIViewController {
     func getTransactionIdView() -> TransactionIdView {
         if self.transactionIdView == nil {
             self.transactionIdView = XibHelper.puffViewWithNibName("TransactionViews", index: 0) as! TransactionIdView
+            self.transactionIdView.transactionIdLabel.text = self.transactionId
+            
+            if self.totalQuantity.toInt() < 2 {
+                self.transactionIdView.numberOfProductsLabel.text = "\(self.totalQuantity) product"
+            } else {
+                self.transactionIdView.numberOfProductsLabel.text = "\(self.totalQuantity) products"
+            }
+            
             self.transactionIdView.frame.size.width = self.view.frame.size.width
         }
         return self.transactionIdView
@@ -87,6 +116,14 @@ class TransactionDetailsViewController: UIViewController {
     func getTransactionDetailsView() -> TransactionDetailsView {
         if self.transactionDetailsView == nil {
             self.transactionDetailsView = XibHelper.puffViewWithNibName("TransactionViews", index: 1) as! TransactionDetailsView
+            transactionDetailsView.statusLabel.text = self.orderStatus
+            transactionDetailsView.paymentTypeLabel.text = self.paymentType
+            transactionDetailsView.dateCreatedLabel.text = self.dateCreated
+            transactionDetailsView.quantityLabel.text = self.totalQuantity
+            transactionDetailsView.unitCostLabel.text = self.total_unit_price.stringToFormat(2)
+            transactionDetailsView.shippingFeeLabel.text = self.total_handling_fee.stringToFormat(2)
+            transactionDetailsView.totalCostLabel.text = ((self.totalCost as NSString).floatValue).stringToFormat(2)
+            
             self.transactionDetailsView.frame.size.width = self.view.frame.size.width
         }
         return self.transactionDetailsView
@@ -214,5 +251,50 @@ class TransactionDetailsViewController: UIViewController {
         feedbackView.rateSeller = true
         self.navigationController?.pushViewController(feedbackView, animated: true)
     }
+    
+    //MARK: Get transactions details by type
+    func fireTransactionDetails(transactionId: String) {
+        self.showHUD()
+        let manager = APIManager.sharedInstance
+        let url = APIAtlas.transactionDetails+"\(SessionManager.accessToken())&transactionId=\(transactionId)" as NSString
+        let urlEncoded = url.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)
+        println(urlEncoded)
+        manager.GET(urlEncoded!, parameters: nil, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            //self.transactionModel = TransactionModel.parseDataFromDictionary(responseObject as! NSDictionary)
+            println(responseObject.description)
+            self.tableView.reloadData()
+            self.hud?.hide(true)
+            }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
+                self.hud?.hide(true)
+                println(error.userInfo)
+                
+        })
+    }
+    
+    //MARK: Show HUD
+    func showHUD() {
+        if self.hud != nil {
+            self.hud!.hide(true)
+            self.hud = nil
+        }
+        
+        self.hud = MBProgressHUD(view: self.view)
+        self.hud?.removeFromSuperViewOnHide = true
+        self.hud?.dimBackground = false
+        self.navigationController?.view.addSubview(self.hud!)
+        self.hud?.show(true)
+    }
 
+}
+
+//MARK: Number Formatter
+extension Float {
+    func stringToFormat(fractionDigits:Int) -> String {
+        let formatter = NSNumberFormatter()
+        formatter.minimumFractionDigits = fractionDigits
+        formatter.maximumFractionDigits = fractionDigits
+        formatter.numberStyle = NSNumberFormatterStyle.DecimalStyle
+        return formatter.stringFromNumber(self) ?? "\(self)"
+    }
 }

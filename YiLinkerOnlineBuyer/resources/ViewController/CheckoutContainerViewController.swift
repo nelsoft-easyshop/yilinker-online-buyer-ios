@@ -253,7 +253,8 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
         self.showHUD()
         let manager: APIManager = APIManager.sharedInstance
         let parameters: NSDictionary = ["access_token": SessionManager.accessToken()]
-            manager.POST(APIAtlas.cashOnDeliveryUrl, parameters: parameters, success: {
+        SessionManager.loadCookies()
+        manager.POST(APIAtlas.cashOnDeliveryUrl, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             self.hud?.hide(true)
                 let paymentSuccessModel: PaymentSuccessModel = PaymentSuccessModel.parseDataWithDictionary(responseObject as! NSDictionary)
@@ -277,6 +278,7 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
         self.showHUD()
         let manager: APIManager = APIManager.sharedInstance
         let parameters: NSDictionary = ["access_token": SessionManager.accessToken()]
+        SessionManager.loadCookies()
         manager.POST(APIAtlas.pesoPayUrl, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             self.hud?.hide(true)

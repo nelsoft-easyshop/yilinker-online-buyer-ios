@@ -493,6 +493,7 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
         "user_address[isDefault]": true]
         
         self.showHUD()
+        SessionManager.loadCookies()
         manager.POST(APIAtlas.guestUserUrl, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             self.hud?.hide(true)
