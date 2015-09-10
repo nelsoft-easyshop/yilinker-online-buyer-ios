@@ -45,7 +45,7 @@ class CircularMenuViewController: UIViewController {
                     button.clipsToBounds = true
                     println("image name: \(imageName)")
                     profileImageView.sd_setImageWithURL(NSURL(string: imageName), placeholderImage: UIImage(named: "dummy-placeholder"))
-                    profileImageView.contentMode = UIViewContentMode.ScaleToFill
+                    profileImageView.contentMode = UIViewContentMode.ScaleAspectFill
                     profileImageView.backgroundColor = UIColor.greenColor()
                 }
                 
