@@ -169,11 +169,11 @@ class CircularMenuViewController: UIViewController {
                     //logout Button
                     if SessionManager.isLoggedIn() {
                         var logoutPosition: CGFloat = xPosition - 125
-                        let logoutButton: UIButton = UIButton(frame: CGRectMake(logoutPosition, yPosition + 15, 100, 30))
+                        let logoutButton: UIButton = UIButton(frame: CGRectMake(logoutPosition, yPosition + 15, 100, 20))
                         logoutButton.backgroundColor = UIColor.redColor()
                         logoutButton.setTitle(self.buttonTitles[index], forState: UIControlState.Normal)
                         logoutButton.layer.cornerRadius = 10
-                        logoutButton.titleLabel!.font =  UIFont(name: "HelveticaNeue", size: 14)
+                        logoutButton.titleLabel!.font =  UIFont(name: "HelveticaNeue", size: 12)
                         logoutButton.clipsToBounds = true
                         logoutButton.tag = 100 + index
                         logoutButton.alpha = 0
