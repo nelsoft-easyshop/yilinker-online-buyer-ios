@@ -43,6 +43,9 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
          ,"sortType=ALPHABETICAL&sortDirection=ASC"
          ,"sortType=ALPHABETICAL&sortDirection=DESC"]
 
+    typealias InitialSearchParameters = (targetUrl: String, parameters: NSDictionary!)
+    var initialParameters: InitialSearchParameters? = nil
+
     var searchSuggestion: SearchSuggestionModel!
     
     var fullDimView: UIView?
@@ -77,14 +80,6 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
 
     }
 
-    func passCategoryID(id: Int) {
-        if Reachability.isConnectedToNetwork() {
-            requestSearchDetails("\(APIAtlas.productList)?categoryId=\(id)", params: nil)
-        } else {
-            showAlert("Connection Unreachable", message: "Cannot retrieve data. Please check your internet connection.")
-        }
-    }
-    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -99,7 +94,15 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
         if self.respondsToSelector("edgesForExtendedLayout") {
             self.edgesForExtendedLayout = UIRectEdge.None
         }
-    
+        
+        self.title = "Results"
+        
+        // Back Button
+        let backButton = UIBarButtonItem(title:" ", style:.Plain, target: self, action:"goBack")
+        backButton.image = UIImage(named: "back-white")
+        //backButton.tintColor = UIColor.whiteColor()
+        self.navigationItem.leftBarButtonItem = backButton
+        
         // Add tap event to Sort View
         var sort = UITapGestureRecognizer(target:self, action:"tapSortViewAction")
         sortView.addGestureRecognizer(sort)
@@ -128,6 +131,11 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
         noResultLabel.hidden = true
     }
     
+    func goBack()
+    {
+        self.navigationController?.popViewControllerAnimated(true)
+    }
+    
     func registerNibs() {
         var cellNibGrid = UINib(nibName: reuseIdentifierGrid, bundle: nil)
         self.resultCollectionView?.registerNib(cellNibGrid, forCellWithReuseIdentifier: reuseIdentifierGrid)
@@ -137,6 +145,14 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
         
         var cellNib = UINib(nibName: reuseIdentifierSeller, bundle: nil)
         self.resultCollectionView?.registerNib(cellNib, forCellWithReuseIdentifier: reuseIdentifierSeller)
+    }
+    
+    func passCategoryID(id: Int) {
+        if Reachability.isConnectedToNetwork() {
+            requestSearchDetails("\(APIAtlas.productList)?categoryId=\(id)", params: nil)
+        } else {
+            showAlert("Connection Unreachable", message: "Cannot retrieve data. Please check your internet connection.")
+        }
     }
     
     func passModel(searchSuggestion: SearchSuggestionModel) {
@@ -150,6 +166,10 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
     }
     
     func requestSearchDetails(url: String, params: NSDictionary!) {
+        if( initialParameters == nil ) {
+            initialParameters = (targetUrl: url, parameters: params)
+        }
+        
         showLoader()
         
         manager.GET(url, parameters: params, success: {
@@ -361,15 +381,15 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
 
         if Reachability.isConnectedToNetwork() {
             let sortParameterSelection = sortParameter[indexPath.row]
-            if self.searchSuggestion != nil && self.searchSuggestion != "" {
-                let requestSuggestionSearchUrl = "\(searchSuggestion.searchUrl)&\(sortParameterSelection)"
+            if initialParameters != nil && initialParameters!.targetUrl != "" {
+                let requestSuggestionSearchUrl = "\(initialParameters!.targetUrl)&\(sortParameterSelection)"
                 NSLog(requestSuggestionSearchUrl)
-                requestSearchDetails(requestSuggestionSearchUrl, params: nil)
-            } else {
+                requestSearchDetails(requestSuggestionSearchUrl, params: initialParameters!.parameters)
+            }/* else {
                 let requestSoloSearchUrl = "\(APIAtlas.productList)?\(sortParameterSelection)"
                 NSLog(requestSoloSearchUrl)
                 requestSearchDetails(requestSoloSearchUrl, params: nil)
-            }
+            } */
             resultCollectionView.setContentOffset(CGPointZero, animated: true)
         } else {
             showAlert("Connection Unreachable", message: "Cannot retrieve data. Please check your internet connection.")
