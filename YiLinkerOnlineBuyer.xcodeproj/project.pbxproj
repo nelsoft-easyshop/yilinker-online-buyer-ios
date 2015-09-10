@@ -359,7 +359,6 @@
 		F7CCDA8F1B943CBB000F5AD4 /* HelpViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7CCDA7F1B943CBB000F5AD4 /* HelpViewController.xib */; };
 		F7CCDA901B943CBB000F5AD4 /* MessagingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7CCDA801B943CBB000F5AD4 /* MessagingViewController.xib */; };
 		F7CCDA921B943CBB000F5AD4 /* PaymentViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7CCDA821B943CBB000F5AD4 /* PaymentViewController.xib */; };
-		F7CCDA931B943CBB000F5AD4 /* ProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7CCDA831B943CBB000F5AD4 /* ProfileViewController.xib */; };
 		F7CCDA951B943CBB000F5AD4 /* SellerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7CCDA851B943CBB000F5AD4 /* SellerViewController.xib */; };
 		F7CCDA961B943CBB000F5AD4 /* SummaryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7CCDA861B943CBB000F5AD4 /* SummaryViewController.xib */; };
 		F7CCDA971B943CBB000F5AD4 /* TodaysPromoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7CCDA871B943CBB000F5AD4 /* TodaysPromoViewController.xib */; };
@@ -749,7 +748,6 @@
 		F7CCDA7F1B943CBB000F5AD4 /* HelpViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = HelpViewController.xib; path = YiLinkerOnlineBuyer/resources/ViewController/HelpViewController.xib; sourceTree = SOURCE_ROOT; };
 		F7CCDA801B943CBB000F5AD4 /* MessagingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MessagingViewController.xib; path = YiLinkerOnlineBuyer/resources/ViewController/MessagingViewController.xib; sourceTree = SOURCE_ROOT; };
 		F7CCDA821B943CBB000F5AD4 /* PaymentViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PaymentViewController.xib; path = YiLinkerOnlineBuyer/resources/ViewController/PaymentViewController.xib; sourceTree = SOURCE_ROOT; };
-		F7CCDA831B943CBB000F5AD4 /* ProfileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProfileViewController.xib; path = YiLinkerOnlineBuyer/resources/ViewController/ProfileViewController.xib; sourceTree = SOURCE_ROOT; };
 		F7CCDA851B943CBB000F5AD4 /* SellerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SellerViewController.xib; path = YiLinkerOnlineBuyer/resources/ViewController/SellerViewController.xib; sourceTree = SOURCE_ROOT; };
 		F7CCDA861B943CBB000F5AD4 /* SummaryViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SummaryViewController.xib; path = YiLinkerOnlineBuyer/resources/ViewController/SummaryViewController.xib; sourceTree = SOURCE_ROOT; };
 		F7CCDA871B943CBB000F5AD4 /* TodaysPromoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TodaysPromoViewController.xib; path = YiLinkerOnlineBuyer/resources/ViewController/TodaysPromoViewController.xib; sourceTree = SOURCE_ROOT; };
@@ -1181,7 +1179,6 @@
 				F740F08C1B90CBC900D23A34 /* CreateAccountViewController.xib */,
 				0C374F511B89EC4D0050AE1D /* CustomizeSelectedCollectionViewCell.xib */,
 				0C374F4B1B8998F30050AE1D /* CustomizeShoppingCollectionViewCell.xib */,
-				F7CCDA7C1B943CBB000F5AD4 /* CustomizeShoppingViewController.xib */,
 				0C374F261B88E3790050AE1D /* CustomizeShoppingViewController.xib */,
 				0C374F131B88E3790050AE1D /* DeliverToTableViewCell.xib */,
 				961BE59B1B9948C100E8631A /* DisputeViewController.xib */,
@@ -1238,7 +1235,6 @@
 				79E68B9C1B8B4270008626E4 /* ProfileSettingsTableViewCell.xib */,
 				79E68B9F1B8B428B008626E4 /* ProfileSettingsViewController.xib */,
 				79E85FBE1B89DE1C00428AA1 /* ProfileTableViewCell.xib */,
-				F7CCDA831B943CBB000F5AD4 /* ProfileViewController.xib */,
 				0C374F121B88E3790050AE1D /* ProfileViewController.xib */,
 				961BE5A91B994C4D00E8631A /* ResolutionCenterCell.xib */,
 				0C374F241B88E3790050AE1D /* ResultViewController.xib */,
@@ -1432,7 +1428,6 @@
 				26AFB3C11B79DE5600E50926 /* ProductReviewViewController.xib in Resources */,
 				7987F31A1B7B746000B02DF4 /* WishlistTableViewCell.xib in Resources */,
 				0C99376D1B750583000D6074 /* VerticalImageCollectionViewCell.xib in Resources */,
-				F7CCDA931B943CBB000F5AD4 /* ProfileViewController.xib in Resources */,
 				79E68BB51B8B5ADE008626E4 /* EditProfileAccountInformationTableViewCell.xib in Resources */,
 				0C2F44D31B8576FE00021F45 /* Panton Thin.otf in Resources */,
 				0C99376C1B750583000D6074 /* TwoColumnGridCollectionViewCell.xib in Resources */,
