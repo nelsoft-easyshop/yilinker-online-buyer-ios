@@ -505,6 +505,8 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
             if isSuccessful {
                 let checkoutContainerViewController: CheckoutContainerViewController = self.parentViewController as! CheckoutContainerViewController
                 checkoutContainerViewController.isValidGuestUser = true
+                checkoutContainerViewController.guestEmail = self.guestCheckoutTableViewCell.emailTextField.text
+                checkoutContainerViewController.saveAndContinue(checkoutContainerViewController.continueButton)
             } else {
                 let message: String = dictionary["message"] as! String
                 UIAlertController.displayErrorMessageWithTarget(self, errorMessage: message)

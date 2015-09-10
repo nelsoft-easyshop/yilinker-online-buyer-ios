@@ -50,6 +50,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         } else {
             self.addEmptyView()
         }
+        
         /*
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "onRegistration:",
             name: appDelegate.registrationKey, object: nil)
@@ -247,7 +248,6 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             }
             
         }
-        
     }
     
     func circularDraweView() {
@@ -423,6 +423,4 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         self.view.addSubview(self.hud!)
         self.hud?.show(true)
     }
-    
-    
 }

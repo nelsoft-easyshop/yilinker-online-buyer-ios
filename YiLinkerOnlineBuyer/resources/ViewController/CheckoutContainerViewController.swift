@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CheckoutContainerViewController: UIViewController, PaymentWebViewViewControllerDelegate {
+class CheckoutContainerViewController: UIViewController, PaymentWebViewViewControllerDelegate, RegisterModalViewControllerDelegate {
     
     var summaryViewController: SummaryViewController?
     var paymentViewController: PaymentViewController?
@@ -37,6 +37,8 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
     var isValidGuestUser: Bool = false
 
     var carItems: [CartProductDetailsModel] = []
+    
+    var guestEmail: String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -253,7 +255,6 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
         self.showHUD()
         let manager: APIManager = APIManager.sharedInstance
         let parameters: NSDictionary = ["access_token": SessionManager.accessToken()]
-        SessionManager.loadCookies()
         manager.POST(APIAtlas.cashOnDeliveryUrl, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             self.hud?.hide(true)
@@ -278,7 +279,6 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
         self.showHUD()
         let manager: APIManager = APIManager.sharedInstance
         let parameters: NSDictionary = ["access_token": SessionManager.accessToken()]
-        SessionManager.loadCookies()
         manager.POST(APIAtlas.pesoPayUrl, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             self.hud?.hide(true)
@@ -365,5 +365,39 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
                 self.hud?.hide(true)
         })
     }
-
+    
+    func showAlert() {
+        self.view.layoutIfNeeded()
+        
+        let dimView: UIView = UIView(frame: self.view.frame)
+        dimView.backgroundColor = UIColor.blackColor()
+        dimView.alpha = 0.0
+        dimView.tag = 100
+        self.view.addSubview(dimView)
+        
+        UIView.animateWithDuration(0.5, delay: 0.0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+            dimView.alpha = 0.5
+            }, completion: nil)
+        
+        let registerModelViewController: RegisterModalViewController = RegisterModalViewController(nibName:"RegisterModalViewController", bundle: nil)
+        registerModelViewController.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
+        registerModelViewController.providesPresentationContextTransitionStyle = true
+        registerModelViewController.definesPresentationContext = true
+        registerModelViewController.view.backgroundColor = UIColor.clearColor()
+        registerModelViewController.delegate = self
+        self.tabBarController!.presentViewController(registerModelViewController, animated: true, completion: nil)
+    }
+    
+    func registerModalViewController(didExit view: RegisterModalViewController) {
+        for dimView in self.view.subviews {
+            if dimView.tag == 100 {
+                let dimView2: UIView = dimView as! UIView
+                UIView.animateWithDuration(0.5, animations: { () -> Void in
+                    dimView2.alpha = 0.0
+                    }, completion: { (Bool) -> Void in
+                        dimView2.removeFromSuperview()
+                })
+            }
+        }
+    }
 }
