@@ -36,7 +36,12 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
     
     @IBOutlet weak var viewTypeLabel: UILabel!
     var collectionViewData: [SearchResultModel] = []
-    var sortData: [String] = ["Old to new", "New to old", "A to Z", "Z to A"]
+    var sortData: [String] = ["Old to New", "New to Old", "Alphabetically A - Z", "Alphabetically Z - A"]
+    var sortParameter: [String] =
+        [ "sortType=BYDATE&sortDirection=ASC"
+         ,"sortType=BYDATE&sortDirection=DESC"
+         ,"sortType=ALPHABETICAL&sortDirection=ASC"
+         ,"sortType=ALPHABETICAL&sortDirection=DESC"]
 
     var searchSuggestion: SearchSuggestionModel!
     
@@ -78,9 +83,8 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
         } else {
             showAlert("Connection Unreachable", message: "Cannot retrieve data. Please check your internet connection.")
         }
-
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -354,6 +358,22 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
             }, completion: { finished in
                 self.dimView.hidden = true
         })
+
+        if Reachability.isConnectedToNetwork() {
+            let sortParameterSelection = sortParameter[indexPath.row]
+            if self.searchSuggestion != nil && self.searchSuggestion != "" {
+                let requestSuggestionSearchUrl = "\(searchSuggestion.searchUrl)&\(sortParameterSelection)"
+                NSLog(requestSuggestionSearchUrl)
+                requestSearchDetails(requestSuggestionSearchUrl, params: nil)
+            } else {
+                let requestSoloSearchUrl = "\(APIAtlas.productList)?\(sortParameterSelection)"
+                NSLog(requestSoloSearchUrl)
+                requestSearchDetails(requestSoloSearchUrl, params: nil)
+            }
+            resultCollectionView.setContentOffset(CGPointZero, animated: true)
+        } else {
+            showAlert("Connection Unreachable", message: "Cannot retrieve data. Please check your internet connection.")
+        }
     }
     
     /*
