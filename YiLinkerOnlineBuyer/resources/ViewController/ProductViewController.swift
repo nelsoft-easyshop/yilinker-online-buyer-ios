@@ -468,7 +468,9 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
                                 itemUnitId = productUnit["productUnitId"] as! String
                                 
                                 if self.productId == itemProductId && self.unitId == itemUnitId {
-                                    self.requestCartToCheckout(item["itemId"] as! Int, totalAmount: data["totalAmount"] as! String)
+                                    var quantity: Double = productUnit["quantity"] as! Double
+                                    var price: Double = (productUnit["discountedPrice"] as! NSString).doubleValue
+                                    self.requestCartToCheckout(item["itemId"] as! Int, totalAmount: (quantity * price))
                                     break
                                 }
                                 
@@ -502,7 +504,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         })
     }
     
-    func requestCartToCheckout(id: Int, totalAmount: String) {
+    func requestCartToCheckout(id: Int, totalAmount: Double) {
         
         let item: [Int] = [id]
         let params: NSDictionary = ["access_token": SessionManager.accessToken(), "cart": item]
@@ -521,7 +523,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
             
             let checkout = CheckoutContainerViewController(nibName: "CheckoutContainerViewController", bundle: nil)
             checkout.carItems = cartProductModel
-            checkout.totalPrice = totalAmount
+            checkout.totalPrice = String(stringInterpolationSegment: totalAmount)
             let navigationController: UINavigationController = UINavigationController(rootViewController: checkout)
             navigationController.navigationBar.barTintColor = Constants.Colors.appTheme
             self.tabBarController?.presentViewController(navigationController, animated: true, completion: nil)
