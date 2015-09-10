@@ -111,12 +111,13 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     
     func tabBarController(tabBarController: UITabBarController, shouldSelectViewController viewController: UIViewController) -> Bool {
         if viewController == tabBarController.viewControllers![4] as! UIViewController {
-            if SessionManager.isLoggedIn() {
-                return true
-            } else {
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Please log in to view your Cart.", title: "Error")
-                return false
-            }
+            return true
+//            if SessionManager.isLoggedIn() {
+//                return true
+//            } else {
+//                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Please log in to view your Cart.", title: "Error")
+//                return false
+//            }
         } else if viewController == tabBarController.viewControllers![3] as! UIViewController {
             if SessionManager.isLoggedIn() {
                 return true
@@ -274,6 +275,8 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                 //get user info
                 if SessionManager.isLoggedIn() {
                     self.fireGetUserInfo()
+                } else {
+                    SessionManager.saveCookies()
                 }
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
