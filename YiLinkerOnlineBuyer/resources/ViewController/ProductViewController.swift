@@ -13,7 +13,7 @@ protocol ProductViewControllerDelegate {
 }
 
 class ProductViewController: UIViewController, ProductImagesViewDelegate, ProductDescriptionViewDelegate, ProductReviewFooterViewDelegate, ProductSellerViewDelegate, ProductReviewViewControllerDelegate, ProductAttributeViewControllerDelegate, EmptyViewDelegate {
-
+    
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var dimView: UIView!
     @IBOutlet weak var addToCartButton: UIButton!
@@ -76,7 +76,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         let nib = UINib(nibName: "ReviewTableViewCell", bundle: nil)
         self.tableView.registerNib(nib, forCellReuseIdentifier: "reviewIdentifier")
         self.tableView.rowHeight = UITableViewAutomaticDimension
@@ -131,7 +131,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         let cell: ReviewTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("reviewIdentifier") as! ReviewTableViewCell
         
         cell.selectionStyle = UITableViewCellSelectionStyle.None
-
+        
         cell.nameLabel.text = productReviewModel.reviews[indexPath.row].fullName
         cell.setDisplayPicture(productReviewModel.reviews[indexPath.row].profileImageUrl)
         cell.setRating(productReviewModel.reviews[indexPath.row].rating)
@@ -310,10 +310,10 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     func requestProductDetails() {
         self.showHUD()
         let id: String = "?productId=" + productId
-
+        
         manager.GET(APIAtlas.productDetails + id, parameters: nil, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-
+            
             if responseObject["isSuccessful"] as! Bool {
                 self.productDetailsModel = ProductDetailsModel.parseDataWithDictionary(responseObject)
                 self.productId = self.productDetailsModel.id
@@ -343,7 +343,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     }
     
     func requestReviewDetails() {
-
+        
         let params: NSDictionary = ["productId": self.productDetailsModel.id]
         
         manager.POST(APIAtlas.productReviews, parameters: params, success: {
@@ -400,7 +400,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
             "unitId": self.unitId,
             "quantity": "1",
             "wishlist": "true"]
-
+        
         manager.POST(APIAtlas.updateWishlistUrl, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
@@ -438,20 +438,20 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     
     func requestAddCartItem(type: String) {
         self.showHUD()
-
+        
         let params: NSDictionary = ["access_token": SessionManager.accessToken(),
             "productId": self.productDetailsModel.id,
             "unitId": self.unitId,
             "quantity": quantity]
-
-        manager.POST(APIAtlas.updateCartUrl, parameters: params, success: {
+        
+        manager.POST(APIAtlas.updateCart(), parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
             if responseObject.isKindOfClass(NSDictionary) {
-
+                
                 if let tempVar = responseObject["isSuccessful"] as? Bool {
                     var data: NSDictionary = responseObject["data"] as! NSDictionary
-
+                    
                     var items: NSArray = data["items"] as! NSArray
                     
                     if type == "buyitnow" {
@@ -466,12 +466,12 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
                             for i in 0..<productUnits.count {
                                 let productUnit: NSDictionary = productUnits[i] as! NSDictionary
                                 itemUnitId = productUnit["productUnitId"] as! String
-
+                                
                                 if self.productId == itemProductId && self.unitId == itemUnitId {
                                     self.requestCartToCheckout(item["itemId"] as! Int, totalAmount: data["totalAmount"] as! String)
                                     break
                                 }
-                            
+                                
                             } // loop for product unit
                         } // loop for items
                     } else {
@@ -507,11 +507,11 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         let item: [Int] = [id]
         let params: NSDictionary = ["access_token": SessionManager.accessToken(), "cart": item]
         
-        manager.POST(APIAtlas.updateCheckout, parameters: params, success: {
+        manager.POST(APIAtlas.updateCheckout(), parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!)in
-
+            
             var cartProductModel: [CartProductDetailsModel] = []
-
+            
             if let value: AnyObject = responseObject["data"] {
                 for subValue in responseObject["data"] as! NSArray {
                     let model: CartProductDetailsModel = CartProductDetailsModel.parseDataWithDictionary(subValue as! NSDictionary)
@@ -536,7 +536,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     }
     
     func requestRefreshToken(type: String) {
-
+        
         let params: NSDictionary = ["client_id": Constants.Credentials.clientID,
             "client_secret": Constants.Credentials.clientSecret,
             "grant_type": Constants.Credentials.grantRefreshToken,
@@ -719,7 +719,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
                 }
             }
         }
-
+        
         createAttributesLabel(selectedName.count, name: selectedName, value: selectedValue)
     }
     
@@ -785,7 +785,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         let badgeValue = (self.tabController.tabBar.items![3] as! UITabBarItem).badgeValue?.toInt()
         (self.tabController.tabBar.items![3] as! UITabBarItem).badgeValue = String(items)
     }
-
+    
     func showHUD() {
         if self.hud != nil {
             self.hud!.hide(true)
@@ -883,10 +883,10 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
                     self.showAlert(title: nil, message: "This item has been added to your cart.")
                     self.loadViewsWithDetails()
                 } else if type == "done" {
-//                    self.showAlert(type)
+                    //                    self.showAlert(type)
                 }
-            })
-
+        })
+        
     }
     
     func doneActionPassDetailsToProductView(controller: ProductAttributeViewController, unitId: String, quantity: Int, selectedId: NSArray) {
@@ -895,7 +895,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         self.quantity = quantity
         self.setAttributes(self.productDetailsModel.attributes, productUnits: self.productDetailsModel.productUnits, unitId: unitId, quantity: quantity)
     }
-
+    
     func gotoCheckoutFromAttributes(controller: ProductAttributeViewController) {
         self.buyItNowAction(UIGestureRecognizer())
     }
@@ -944,25 +944,13 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     
     @IBAction func addToCartAction(sender: AnyObject) {
         
-        if SessionManager.isLoggedIn() {
-            requestAddCartItem("cart")
-        } else {
-            showAlert(title: "Failed", message: "Please logged-in to add item in your wishlist.")
-        }
-
+        requestAddCartItem("cart")
+        
     }
     
     func buyItNowAction(gesture: UIGestureRecognizer) {
-        if SessionManager.isLoggedIn() {
-            requestAddCartItem("buyitnow")
-        } else {
-            showAlert(title: "Failed", message: "Please logged-in to buy this item.")
-            /*let checkout = GuestCheckoutContainerViewController(nibName: "GuestCheckoutContainerViewController", bundle: nil)
-            //self.navigationController?.pushViewController(checkout, animated: true)
-            let navigationController: UINavigationController = UINavigationController(rootViewController: checkout)
-            navigationController.navigationBar.barTintColor = Constants.Colors.appTheme
-            self.tabBarController?.presentViewController(navigationController, animated: true, completion: nil)*/
-        }
+        requestAddCartItem("buyitnow")
+        
     }
     
     func showAlert(#title: String!, message: String!) {
@@ -986,16 +974,16 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     
     func didTapReload() {
         self.requestProductDetails()
-//        self.requestReviewDetails()
+        //        self.requestReviewDetails()
         self.emptyView?.removeFromSuperview()
     }
     
     // MARK: - Navigation Bar Actions
-
+    
     func barCloseAction() {
         self.navigationController?.popToRootViewControllerAnimated(true)
     }
-
+    
     func barWishlistAction() {
         if SessionManager.isLoggedIn() {
             requestUpdateWishlistItem()
@@ -1003,20 +991,20 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
             showAlert(title: "Failed", message: "Please logged-in to add item in your wishlist.")
         }
     }
-
+    
     func barRateAction() {
         showAlert(title: "Coming Soon", message: nil)
     }
-
+    
     func barMessageAction() {
-//        let messaging = ConversationVC(nibName: "MessagingViewController", bundle: nil)
-//        self.navigationController?.pushViewController(messaging, animated: true)
-
+        //        let messaging = ConversationVC(nibName: "MessagingViewController", bundle: nil)
+        //        self.navigationController?.pushViewController(messaging, animated: true)
+        
         let storyBoard: UIStoryboard = UIStoryboard(name: "HomeStoryBoard", bundle: nil)
         let messagingViewController: ConversationVC = (storyBoard.instantiateViewControllerWithIdentifier("ConversationVC") as? ConversationVC)!
         self.navigationController?.pushViewController(messagingViewController, animated: true)
     }
-
+    
     func barShareAction() {
         var sharingItems = [AnyObject]()
         sharingItems.append("Sample Caption" + "\n")
