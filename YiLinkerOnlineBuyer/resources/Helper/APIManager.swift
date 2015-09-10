@@ -90,7 +90,7 @@ struct APIAtlas {
     static let guestUserUrl = "guestUser"
     static let updateMobileNumber = "auth/user/changeContactNumber"
     static let smsVerification = "auth/sms/verify"
-    
+    static let changePassword = "auth/user/changePassword"
     static let baseUrl = APIEnvironment.baseUrl()
     
     /* MESSAGING CONSTANTS */
