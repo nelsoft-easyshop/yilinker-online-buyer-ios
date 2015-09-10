@@ -36,7 +36,14 @@ class ContactListVC: UIViewController {
             let indexPath = contactTableView.indexPathForCell(sender as! ContactListTVC)
             selectedContact = contacts[indexPath!.row]
             
-            messageThreadVC.sender = W_Contact(fullName: "Jan Dennis Nora", userRegistrationIds: "", userIdleRegistrationIds: "", userId: "5", profileImageUrl: "http://online.api.easydeal.ph/assets/images/uploads/users/4292229bce95d32748bf08b642f0a070a70bc194.png?", isOnline: "1")
+            var isOnline = "-1"
+            if (SessionManager.isLoggedIn()){
+                isOnline = "1"
+            } else {
+                isOnline = "0"
+            }
+            
+            messageThreadVC.sender = W_Contact(fullName: SessionManager.userFullName(), userRegistrationIds: "", userIdleRegistrationIds: "", userId: SessionManager.accessToken() , profileImageUrl: SessionManager.profileImageStringUrl(), isOnline: isOnline)
             messageThreadVC.recipient = selectedContact
             
         }

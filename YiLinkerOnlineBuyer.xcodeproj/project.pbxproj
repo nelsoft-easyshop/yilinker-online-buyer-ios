@@ -12,7 +12,6 @@
 		0C10042D1B877F8400CAA17A /* AddAddressTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C10042C1B877F8400CAA17A /* AddAddressTableViewController.xib */; };
 		0C1004301B87AB9100CAA17A /* PaymentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C10042E1B87AB9100CAA17A /* PaymentTableViewCell.swift */; };
 		0C1C3A851B9406BD00E6180D /* JSONResponseSerializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C1C3A841B9406BD00E6180D /* JSONResponseSerializer.swift */; };
-		0C2670CD1B77290200394E29 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0C2670CC1B77290200394E29 /* GoogleService-Info.plist */; };
 		0C2670CF1B772E4B00394E29 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C2670CE1B772E4B00394E29 /* Enums.swift */; };
 		0C2E8A271B9AA3EE00D50455 /* PesoPayModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C2E8A261B9AA3EE00D50455 /* PesoPayModel.swift */; };
 		0C2F44A51B848B3A00021F45 /* SummaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C2F44A31B848B3A00021F45 /* SummaryViewController.swift */; };
@@ -334,6 +333,7 @@
 		B77B8DD91B9B554A0002C513 /* MessageThreadVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B77B8DCF1B9B554A0002C513 /* MessageThreadVC.swift */; };
 		B77B8DDA1B9B554A0002C513 /* TextViewAutoHeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = B77B8DD01B9B554A0002C513 /* TextViewAutoHeight.swift */; };
 		B77B8DDC1B9B588A0002C513 /* DateUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = B77B8DDB1B9B588A0002C513 /* DateUtility.swift */; };
+		B7B1D8321BA15B0C006A5DF5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B7B1D8311BA15B0C006A5DF5 /* GoogleService-Info.plist */; };
 		BE00C15B75D7E76D254AAEC1 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D038C18A7712E626564D2D3 /* libPods.a */; };
 		F740F08D1B90CBC900D23A34 /* CreateAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F740F08B1B90CBC900D23A34 /* CreateAccountViewController.swift */; };
 		F740F08E1B90CBC900D23A34 /* CreateAccountViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F740F08C1B90CBC900D23A34 /* CreateAccountViewController.xib */; };
@@ -391,7 +391,6 @@
 		0C10042E1B87AB9100CAA17A /* PaymentTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentTableViewCell.swift; sourceTree = "<group>"; };
 		0C1C3A841B9406BD00E6180D /* JSONResponseSerializer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONResponseSerializer.swift; sourceTree = "<group>"; };
 		0C25D94D1B76F81A00E9EFA6 /* YiLinkerOnlineBuyer-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "YiLinkerOnlineBuyer-Bridging-Header.h"; sourceTree = "<group>"; };
-		0C2670CC1B77290200394E29 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		0C2670CE1B772E4B00394E29 /* Enums.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
 		0C2E8A261B9AA3EE00D50455 /* PesoPayModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PesoPayModel.swift; sourceTree = "<group>"; };
 		0C2F44A31B848B3A00021F45 /* SummaryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SummaryViewController.swift; sourceTree = "<group>"; };
@@ -719,6 +718,7 @@
 		B77B8DCF1B9B554A0002C513 /* MessageThreadVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageThreadVC.swift; sourceTree = "<group>"; };
 		B77B8DD01B9B554A0002C513 /* TextViewAutoHeight.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextViewAutoHeight.swift; sourceTree = "<group>"; };
 		B77B8DDB1B9B588A0002C513 /* DateUtility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateUtility.swift; sourceTree = "<group>"; };
+		B7B1D8311BA15B0C006A5DF5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F740F08B1B90CBC900D23A34 /* CreateAccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CreateAccountViewController.swift; path = YiLinkerOnlineBuyer/resources/Xib/CreateAccountViewController.swift; sourceTree = SOURCE_ROOT; };
 		F740F08C1B90CBC900D23A34 /* CreateAccountViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CreateAccountViewController.xib; path = YiLinkerOnlineBuyer/resources/Xib/CreateAccountViewController.xib; sourceTree = SOURCE_ROOT; };
 		F740F08F1B90D1D800D23A34 /* address.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = address.png; sourceTree = "<group>"; };
@@ -886,7 +886,7 @@
 			isa = PBXGroup;
 			children = (
 				0C2F44AF1B8576FE00021F45 /* Font */,
-				0C2670CC1B77290200394E29 /* GoogleService-Info.plist */,
+				B7B1D8311BA15B0C006A5DF5 /* GoogleService-Info.plist */,
 				0C9936FC1B750583000D6074 /* dummyHome.json */,
 			);
 			path = External;
@@ -1375,6 +1375,11 @@
 					0C8A7C6D1B6772670039F013 = {
 						CreatedOnToolsVersion = 6.4;
 						DevelopmentTeam = XY4U9PK7G5;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 					0C8A7C821B6772670039F013 = {
 						CreatedOnToolsVersion = 6.4;
@@ -1474,7 +1479,6 @@
 				79E85FBC1B89DC1500428AA1 /* ProfileHeaderTableViewCell.xib in Resources */,
 				0C99376E1B750583000D6074 /* ViewMoreFooterCollectionViewCell.xib in Resources */,
 				F7CCDA881B943CBB000F5AD4 /* CartProductAttributeViewController.xib in Resources */,
-				0C2670CD1B77290200394E29 /* GoogleService-Info.plist in Resources */,
 				0C2F44D11B8576FE00021F45 /* Panton SemiBold.otf in Resources */,
 				0C9937641B750583000D6074 /* LayoutHeaderCollectionViewCell.xib in Resources */,
 				79E68B831B8AEC85008626E4 /* PointsEarnedTableViewCell.xib in Resources */,
@@ -1553,6 +1557,7 @@
 				79E68B9D1B8B4270008626E4 /* ProfileSettingsTableViewCell.xib in Resources */,
 				26DFF6351B8791B5005D8EDE /* TransactionViews.xib in Resources */,
 				0C9937661B750583000D6074 /* NewSellerScrollableCollectionViewCell.xib in Resources */,
+				B7B1D8321BA15B0C006A5DF5 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -36,7 +36,15 @@ class ConversationVC: UIViewController, EmptyViewDelegate{
             let indexPath = conversationTableView.indexPathForCell(sender as! ConversationTVC)
             selectedContact = conversations[indexPath!.row].contact
             
-            messageThreadVC.sender = W_Contact(fullName: "Jan Dennis Nora", userRegistrationIds: "", userIdleRegistrationIds: "", userId: SessionManager.accessToken(), profileImageUrl: SessionManager.profileImageStringUrl(), isOnline: "1")
+            var isOnline = "-1"
+            if (SessionManager.isLoggedIn()){
+                isOnline = "1"
+            } else {
+                isOnline = "0"
+            }
+            
+            println("IMAGE URL \(SessionManager.profileImageStringUrl())")
+            messageThreadVC.sender = W_Contact(fullName: SessionManager.userFullName() , userRegistrationIds: "", userIdleRegistrationIds: "", userId: SessionManager.accessToken(), profileImageUrl: SessionManager.profileImageStringUrl(), isOnline: isOnline)
             messageThreadVC.recipient = selectedContact
         }
     }
@@ -334,10 +342,7 @@ extension ConversationVC : UITableViewDataSource{
             convoCell.user_dt.text = DateUtility.convertDateToString(conversations[indexPath.row].lastMessageDt) as String
             //convoCell.user_thumbnail.image = conversations[indexPath.row].contact.profileImageUrl
             let url = NSURL(string: conversations[indexPath.row].contact.profileImageUrl)
-            convoCell.user_thumbnail.sd_setImageWithURL(url)
-            if (convoCell.user_thumbnail.image == nil){
-                convoCell.user_thumbnail.image = UIImage(named: "Male-50.png")
-            }
+            convoCell.user_thumbnail.sd_setImageWithURL(url, placeholderImage: UIImage(named : "Male-50.png"))
             convoCell.user_thumbnail.layer.cornerRadius = convoCell.user_thumbnail.frame.width/2
             convoCell.user_thumbnail.layer.masksToBounds = true
             

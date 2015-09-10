@@ -108,7 +108,8 @@ class ImageVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
                             self.fireRefreshToken()
                         }
                     } else {
-                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+                        
+                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong. (\(error.description))", title: "Error")
                     }
                     
                     println(error.description)

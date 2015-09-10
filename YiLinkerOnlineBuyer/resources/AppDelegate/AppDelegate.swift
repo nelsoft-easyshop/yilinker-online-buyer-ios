@@ -9,10 +9,10 @@
 import UIKit
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, GGLInstanceIDDelegate {
 
     var window: UIWindow?
-    var gcmSenderID = "AIzaSyDAlP85iUepL1LEhvB4tVrkyTnINCZTv7Q"
+    var gcmSenderID = "976304473940"
     var connectedToGCM = false
     var registrationToken: String?
     var registrationOptions = [String: AnyObject]()
@@ -38,7 +38,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Initialize sign-in
         var configureError: NSError?
         GGLContext.sharedInstance().configureWithError(&configureError)
-        //assert(configureError == nil, "Error configuring Google services: \(configureError)")
+        assert(configureError == nil, "Error configuring Google services: \(configureError)")
         //gcmSenderID = GGLContext.sharedInstance().configuration.gcmSenderID
         GIDSignIn.sharedInstance().clientID = "613594712632-q9iak1vgc6ua44fkc9kg5tut0s5vuo5m.apps.googleusercontent.com"
         

@@ -30,6 +30,9 @@ class MessageThreadVC: UIViewController {
     var sender : W_Contact?
     var recipient : W_Contact?
     
+    var senderImage : UIImageView?
+    var recipientImage : UIImageView?
+    
     var screenWidth : CGFloat?
     var screenHeight: CGFloat?
     var tabBarHeight: CGFloat = 49.0
@@ -84,6 +87,14 @@ class MessageThreadVC: UIViewController {
         self.getMessagesFromEndpoint("1", limit: "30", userId: r_temp)
         //self.setConversationAsReadFromEndpoint(r_temp)
         configureTableView()
+        
+        var imageStringRecipient = recipient?.profileImageUrl
+        var urlRecipient : NSURL = NSURL(string: imageStringRecipient)
+        recipientImage?.sd_setImageWithURL(urlRecipient, placeholderImage: UIImage(named: "Male-50.png"))
+        
+        var imageStringSender = sender?.profileImageUrl
+        var urlSender : NSURL = NSURL(string: imageStringSender)
+        recipientImage?.sd_setImageWithURL(urlSender, placeholderImage: UIImage(named: "Male-50.png"))
         
         minimumYComposeView = composeView.frame.origin.y
         maximumXComposeTextView = composeTextView.contentSize.height * 3
@@ -181,7 +192,6 @@ class MessageThreadVC: UIViewController {
         profileNameLabel.frame = profileNameFrame
         
         profileImageView = UIImageView(frame: CGRectMake(navBarWidth-profileImageDimension - rightPadding, 0,profileImageDimension, profileImageDimension))
-        ///profileImageView.image = UIImage(named: sender?.profileImageUrl)
         var temp = recipient!.profileImageUrl ?? ""
         let url = NSURL(string: temp)
         profileImageView.sd_setImageWithURL(url, placeholderImage: UIImage(named: "Male-50.png"))
@@ -557,14 +567,11 @@ extension MessageThreadVC : UITableViewDataSource, UITableViewDelegate{
         //index = (messages.count - indexPath.row) - 1
         
         if (messages[index].isImage == "1"){
-            if (sender?.userId == messages[index].senderId){
+            if (recipient?.userId != messages[index].senderId){
                 let cell = tableView.dequeueReusableCellWithIdentifier(senderImageIndentifier) as! MessageThreadImageTVC
                 
                 if(!imagePlaced){
-                    
-                    var temp = sender!.profileImageUrl ?? ""
-                    let url = NSURL(string: temp)
-                    cell.contact_image.sd_setImageWithURL(url, placeholderImage: UIImage(named: "Male-50.png"))
+                    cell.contact_image = senderImage!
                     imagePlaced = true
                 }
                 
@@ -589,18 +596,16 @@ extension MessageThreadVC : UITableViewDataSource, UITableViewDelegate{
                 }
                 cell.resendButton.addTarget(self, action: Selector("resendButtonTapped:event:"), forControlEvents: UIControlEvents.TouchUpInside)
                 
-                if (messages[index].isSeen == "0") {
-                    cell.setSeenOff("sender")
+                if (messages[index].isSeen == "1") {
+                    cell.setSeen()
                 }
+                
                 return cell
             } else {
                 let cell = tableView.dequeueReusableCellWithIdentifier(receiverImageIndentifier) as! MessageThreadImageTVC
                 
                 if(!imagePlaced){
-                    
-                    var temp = recipient!.profileImageUrl ?? ""
-                    let url = NSURL(string: temp)
-                    cell.contact_image.sd_setImageWithURL(url, placeholderImage: UIImage(named: "Male-50.png"))
+                    cell.contact_image = recipientImage!
                     imagePlaced = true
                 }
                 cell.timestamp_label.text = DateUtility.convertDateToString(NSDate()) as String
@@ -614,24 +619,18 @@ extension MessageThreadVC : UITableViewDataSource, UITableViewDelegate{
                 cell.message_image.superview?.layer.shadowOpacity = 0.4
                 cell.message_image.superview?.layer.shadowOffset = CGSizeMake(1, 1)
                 
-                if (messages[index].isSeen == "0") {
-                    cell.setSeenOff("sender")
-                }
                 return cell
             }
         } else {
-            if (sender?.userId == messages[index].senderId){
+            if (recipient?.userId != messages[index].senderId){
                 let cell = tableView.dequeueReusableCellWithIdentifier(senderIdentifier) as! MessageThreadTVC
                 
                 cell.message_label.text = messages[index].message as String
                 
-                if(!imagePlaced){
-                    
-                    var temp = sender!.profileImageUrl ?? ""
-                    let url = NSURL(string: temp)
-                    cell.contact_image.sd_setImageWithURL(url, placeholderImage: UIImage(named: "Male-50.png"))
-                    imagePlaced = true
-                }
+                //if(!imagePlaced){
+                    cell.contact_image = senderImage!
+                    //imagePlaced = true
+                //}
                 
                 cell.message_label.superview?.layer.cornerRadius = 5.0
                 
@@ -654,7 +653,7 @@ extension MessageThreadVC : UITableViewDataSource, UITableViewDelegate{
                 cell.resendButton.addTarget(self, action: Selector("resendButtonTapped:event:"), forControlEvents: UIControlEvents.TouchUpInside)
                 
                 if (messages[index].isSeen == "0") {
-                    cell.setSeenOff("sender")
+                    cell.setSeenOff()
                 }
                 return cell
             } else {
@@ -662,9 +661,8 @@ extension MessageThreadVC : UITableViewDataSource, UITableViewDelegate{
                 
                 cell.message_label.text = messages[index].message as String
                 if(!imagePlaced){
-                    var temp = recipient?.profileImageUrl ?? ""
-                    let url = NSURL(string: temp)
-                    cell.contact_image.sd_setImageWithURL(url, placeholderImage: UIImage(named: "Male-50.png"))
+                    cell.contact_image = recipientImage!
+                    imagePlaced = true
                 }
                 
                 cell.timestamp_label.text = DateUtility.convertDateToString(NSDate()) as String
@@ -676,9 +674,6 @@ extension MessageThreadVC : UITableViewDataSource, UITableViewDelegate{
                 cell.message_label.superview?.layer.shadowOpacity = 0.4
                 cell.message_label.superview?.layer.shadowOffset = CGSizeMake(1, 1)
                 
-                if (messages[index].isSeen == "0") {
-                    cell.setSeenOff("receiver")
-                }
                 return cell
             }
             
