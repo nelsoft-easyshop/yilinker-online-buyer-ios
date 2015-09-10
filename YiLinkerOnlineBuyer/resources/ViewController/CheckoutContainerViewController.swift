@@ -34,6 +34,7 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
     @IBOutlet weak var overViewLabel: UILabel!
     
     var hud: MBProgressHUD?
+    var isValidGuestUser: Bool = false
 
     var carItems: [CartProductDetailsModel] = []
     
@@ -81,10 +82,15 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
             let viewController: UIViewController = viewControllers[index]
             setSelectedViewController(viewController)
         } else if index == 1 {
-            self.secondCircle()
-            self.continueButton("Save and Go to Payment")
-            let viewController: UIViewController = viewControllers[index]
-            setSelectedViewController(viewController)
+            if SessionManager.isLoggedIn() || self.isValidGuestUser {
+                self.secondCircle()
+                self.continueButton("Save and Go to Payment")
+                let viewController: UIViewController = viewControllers[index]
+                setSelectedViewController(viewController)
+            } else {
+                self.selectedIndex--
+                self.summaryViewController!.fireGuestUser()
+            }
         } else if index == 2 {
             
         }

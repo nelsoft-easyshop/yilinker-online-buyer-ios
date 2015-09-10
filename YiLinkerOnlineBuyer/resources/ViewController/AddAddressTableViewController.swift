@@ -52,13 +52,6 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
         } else {
             self.title = "Add Address"
         }
-        
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillAppear"), name: UIKeyboardDidShowNotification, object: nil)
-    }
-    
-    func keyboardWillAppear() {
-        self.pickerView.selectRow(2, inComponent: 0, animated: true)
-        self.pickerView.hidden = true
     }
     
     //Show HUD

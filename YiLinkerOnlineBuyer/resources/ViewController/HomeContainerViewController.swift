@@ -50,6 +50,10 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         } else {
             self.addEmptyView()
         }
+
+        let checkoutViewController: CheckoutContainerViewController = CheckoutContainerViewController(nibName: "CheckoutContainerViewController", bundle: nil)
+        let navigation: UINavigationController = UINavigationController(rootViewController: checkoutViewController)
+        self.tabBarController?.presentViewController(navigation, animated: true, completion: nil)
         
         /*
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "onRegistration:",
