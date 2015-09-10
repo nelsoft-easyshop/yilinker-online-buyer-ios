@@ -101,7 +101,6 @@ class W_Messages: NSObject {
                 
                 
                 for message in messages as! NSArray {
-                    println(message)
                     var message_id  : Int = 0
                     var senderId    : String = ""
                     var recipientId : String = ""

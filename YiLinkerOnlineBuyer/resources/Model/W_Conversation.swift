@@ -49,10 +49,10 @@ class W_Conversation: NSObject {
         if dictionary.isKindOfClass(NSDictionary) {
             
             
-            if let contacts: AnyObject = dictionary["data"] {
+            if let conversations: AnyObject = dictionary["data"] {
                 
                 
-                for contact in contacts as! NSArray {
+                for conversation in conversations as! NSArray {
                     var fullName                : String = ""
                     var userRegistrationIds     : String = ""
                     var userIdleRegistrationIds : String = ""
@@ -65,41 +65,39 @@ class W_Conversation: NSObject {
                     var sender                  : String = ""
                     var hasUnreadMessage        : String = ""
                     
-                    println(contact)
-                    
-                    if let tempVar = contact["fullName"] as? String {
+                    if let tempVar = conversation["fullName"] as? String {
                         fullName = tempVar
                     }
                     
-                    if let tempVar = contact["userId"] as? String {
+                    if let tempVar = conversation["userId"] as? String {
                         userId = tempVar
                     }
                     
-                    if let tempVar = contact["profileImageUrl"] as? String {
+                    if let tempVar = conversation["profileImageUrl"] as? String {
                         profileImageUrl = tempVar
                     }
                     
-                    if let tempVar = contact["isOnline"] as? String {
+                    if let tempVar = conversation["isOnline"] as? String {
                         isOnline = tempVar
                     }
                     
-                    if let tempVar = contact["lastMessage"] as? String {
+                    if let tempVar = conversation["lastMessage"] as? String {
                         lastMessage = tempVar
                     }
                     
-                    if let tempVar = contact["lastMessageDate"] as? String {
+                    if let tempVar = conversation["lastMessageDate"] as? String {
                         lastMessageDt = tempVar
                     }
                     
-                    if let tempVar = contact["lastLoginDate"] as? String {
+                    if let tempVar = conversation["lastLoginDate"] as? String {
                         lastLoginDate = tempVar
                     }
                     
-                    if let tempVar = contact["sender"] as? String {
+                    if let tempVar = conversation["sender"] as? String {
                         sender = tempVar
                     }
                     
-                    if let tempVar = contact["hasUnreadMessage"] as? String {
+                    if let tempVar = conversation["hasUnreadMessage"] as? String {
                         hasUnreadMessage = tempVar
                     }
                     

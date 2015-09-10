@@ -88,13 +88,15 @@ class MessageThreadVC: UIViewController {
         //self.setConversationAsReadFromEndpoint(r_temp)
         configureTableView()
         
-        var imageStringRecipient = recipient?.profileImageUrl
-        var urlRecipient : NSURL = NSURL(string: imageStringRecipient)
-        recipientImage?.sd_setImageWithURL(urlRecipient, placeholderImage: UIImage(named: "Male-50.png"))
+        var imageStringRecipient = recipient!.profileImageUrl
+        var urlRecipient : NSURL = NSURL(string: imageStringRecipient)!
+        recipientImage = UIImageView()
+        recipientImage!.sd_setImageWithURL(urlRecipient, placeholderImage: UIImage(named: "Male-50.png"))
         
-        var imageStringSender = sender?.profileImageUrl
-        var urlSender : NSURL = NSURL(string: imageStringSender)
-        recipientImage?.sd_setImageWithURL(urlSender, placeholderImage: UIImage(named: "Male-50.png"))
+        senderImage = UIImageView()
+        var imageStringSender = sender!.profileImageUrl
+        var urlSender : NSURL = NSURL(string: imageStringSender)!
+        senderImage!.sd_setImageWithURL(urlSender, placeholderImage: UIImage(named: "Male-50.png"))
         
         minimumYComposeView = composeView.frame.origin.y
         maximumXComposeTextView = composeTextView.contentSize.height * 3
@@ -140,8 +142,6 @@ class MessageThreadVC: UIViewController {
         self.placeRightNavigationControllerDetails()
         
         self.composeTextView.becomeFirstResponder()
-        
-        self.goToBottomTableView()
         
     }
     
@@ -392,7 +392,7 @@ class MessageThreadVC: UIViewController {
                 (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
                 self.messages = W_Messages.parseMessages(responseObject as! NSDictionary)
                 self.threadTableView.reloadData()
-                
+                self.goToBottomTableView()
                 self.hud?.hide(true)
                 //SVProgressHUD.dismiss()
                 }, failure: {
@@ -530,6 +530,7 @@ extension MessageThreadVC : UITableViewDataSource, UITableViewDelegate{
     }
     
     func goToBottomTableView(){
+        println("asd \(threadTableView.numberOfRowsInSection(0))")
         if(threadTableView.numberOfRowsInSection(0) > 0) {
             var lastIndexPath : NSIndexPath = getLastIndexPath(threadTableView)
             threadTableView.scrollToRowAtIndexPath(lastIndexPath, atScrollPosition: UITableViewScrollPosition.Bottom, animated: false)
@@ -571,7 +572,7 @@ extension MessageThreadVC : UITableViewDataSource, UITableViewDelegate{
                 let cell = tableView.dequeueReusableCellWithIdentifier(senderImageIndentifier) as! MessageThreadImageTVC
                 
                 if(!imagePlaced){
-                    cell.contact_image = senderImage!
+                    cell.contact_image.image = senderImage!.image
                     imagePlaced = true
                 }
                 
@@ -605,7 +606,7 @@ extension MessageThreadVC : UITableViewDataSource, UITableViewDelegate{
                 let cell = tableView.dequeueReusableCellWithIdentifier(receiverImageIndentifier) as! MessageThreadImageTVC
                 
                 if(!imagePlaced){
-                    cell.contact_image = recipientImage!
+                    cell.contact_image.image = recipientImage!.image
                     imagePlaced = true
                 }
                 cell.timestamp_label.text = DateUtility.convertDateToString(NSDate()) as String
@@ -628,7 +629,7 @@ extension MessageThreadVC : UITableViewDataSource, UITableViewDelegate{
                 cell.message_label.text = messages[index].message as String
                 
                 //if(!imagePlaced){
-                    cell.contact_image = senderImage!
+                    cell.contact_image.image = senderImage!.image
                     //imagePlaced = true
                 //}
                 
@@ -661,7 +662,7 @@ extension MessageThreadVC : UITableViewDataSource, UITableViewDelegate{
                 
                 cell.message_label.text = messages[index].message as String
                 if(!imagePlaced){
-                    cell.contact_image = recipientImage!
+                    cell.contact_image.image = recipientImage!.image
                     imagePlaced = true
                 }
                 
