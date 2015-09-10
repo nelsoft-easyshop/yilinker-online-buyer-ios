@@ -401,6 +401,7 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
     
     func submitChangePasswordViewController(){
         hideDimView()
+        self.showAlert("Change Password", message: "Successfully changed password!")
     }
     
     func hideDimView() {
