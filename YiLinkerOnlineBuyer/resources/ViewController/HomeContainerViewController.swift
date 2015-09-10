@@ -274,6 +274,8 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                 //get user info
                 if SessionManager.isLoggedIn() {
                     self.fireGetUserInfo()
+                } else {
+                    SessionManager.saveCookies()
                 }
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
