@@ -159,7 +159,6 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
                 }
             }
             
-            
             return guestCheckoutTableViewCell
         }
     }
@@ -323,13 +322,17 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
             self.tableView.scrollIndicatorInsets = contentInset
         })
         
+        
         if textField == self.guestCheckoutTableViewCell.provinceTextField {
+            self.guestCheckoutTableViewCell.provinceTextField.text = self.addressModel.province
             self.guestCheckoutTableViewCell.provinceTextField.inputView = self.addPicker(self.provinceRow)
             self.addressPickerType = AddressPickerType.Province
         } else if textField == self.guestCheckoutTableViewCell.cityTextField {
+            self.guestCheckoutTableViewCell.cityTextField.text = self.addressModel.city
             self.guestCheckoutTableViewCell.cityTextField.inputView = self.addPicker(self.cityRow)
             self.addressPickerType = AddressPickerType.City
-        } else {
+        } else if textField == self.guestCheckoutTableViewCell.barangayTextField {
+            self.guestCheckoutTableViewCell.barangayTextField.text = self.addressModel.barangay
             self.guestCheckoutTableViewCell.barangayTextField.inputView = self.addPicker(self.barangayRow)
             self.addressPickerType = AddressPickerType.Barangay
         }
@@ -505,6 +508,8 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
             if isSuccessful {
                 let checkoutContainerViewController: CheckoutContainerViewController = self.parentViewController as! CheckoutContainerViewController
                 checkoutContainerViewController.isValidGuestUser = true
+                checkoutContainerViewController.guestEmail = self.guestCheckoutTableViewCell.emailTextField.text
+                checkoutContainerViewController.saveAndContinue(checkoutContainerViewController.continueButton)
             } else {
                 let message: String = dictionary["message"] as! String
                 UIAlertController.displayErrorMessageWithTarget(self, errorMessage: message)
