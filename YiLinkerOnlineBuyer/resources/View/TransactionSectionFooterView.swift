@@ -10,6 +10,11 @@ import UIKit
 
 class TransactionSectionFooterView: UIView {
 
+    @IBOutlet weak var leaveFeedbackButton: DynamicRoundedButton!
+    
+    @IBOutlet weak var sellerContactNumber: UILabel!
+    
+    @IBOutlet weak var sellerNameLabel: UILabel!
     /*
     // Only override drawRect: if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.
@@ -17,5 +22,18 @@ class TransactionSectionFooterView: UIView {
         // Drawing code
     }
     */
+    override func awakeFromNib() {
+        
+    }
+    
+    @IBAction func leaveFeedback(sender: AnyObject) {
+        println("leave feedback")
+    }
+    
+    @IBAction func message(sender: AnyObject) {
+        println("message")
+    }
+    
+    
 
 }

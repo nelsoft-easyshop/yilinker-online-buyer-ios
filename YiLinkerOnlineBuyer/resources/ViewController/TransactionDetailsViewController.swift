@@ -17,6 +17,7 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
     var newFrame: CGRect!
     
     var headerView: UIView!
+    var transactionSectionView: TransactionSectionFooterView!
     var transactionIdView: TransactionIdView!
     var transactionDetailsView: TransactionDetailsView!
     var transactionProductListView: UIView!
@@ -42,6 +43,14 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
     
     var hud: MBProgressHUD?
     
+    var table: [TransactionDetailsModel] = []
+    var tableSectionContents: TransactionDetailsProductsModel!
+    
+    var cellCount: Int = 0
+    var cellSection: Int = 0
+    
+    var transactionDetailsModel: TransactionDetailsModel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -63,11 +72,15 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
     
     // MARK: - Table View Data Source
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 2
+        return self.table.count
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return list.count
+        if self.cellCount != 0 {
+            return self.table[section].transactions.count
+        } else {
+            return 0
+        }
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -75,7 +88,11 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
         
         cell.selectionStyle = .None
         cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
-        cell.textLabel?.text = list[indexPath.row]
+        if(self.transactionDetailsModel != nil){
+            cell.textLabel?.text = self.table[indexPath.section].transactions[indexPath.row].productName
+            //cell.timeLabel?.text =  self.table[indexPath.section].activities[indexPath.row].time
+        }
+        //cell.textLabel?.text = list[indexPath.row]
         cell.textLabel?.font = UIFont.systemFontOfSize(15.0)
         cell.textLabel?.textColor = .darkGrayColor()
         
@@ -90,13 +107,34 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
     }
     
     func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+         self.transactionSectionView = XibHelper.puffViewWithNibName("TransactionViews", index: 7) as! TransactionSectionFooterView
+        if self.table.count != 0 {
+            if !self.table[section].feedback {
+                self.transactionSectionView.leaveFeedbackButton.backgroundColor = Constants.Colors.appTheme
+                self.transactionSectionView.leaveFeedbackButton.borderColor = Constants.Colors.appTheme
+                self.transactionSectionView.leaveFeedbackButton.borderWidth = 1
+                self.transactionSectionView.leaveFeedbackButton.setTitle("VIEW FEEDBACK FOR SELLER", forState: UIControlState.Normal)
+                self.transactionSectionView.leaveFeedbackButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+            } else {
+                self.transactionSectionView.leaveFeedbackButton.backgroundColor = UIColor.clearColor()
+                self.transactionSectionView.leaveFeedbackButton.borderColor = Constants.Colors.appTheme
+                self.transactionSectionView.leaveFeedbackButton.borderWidth = 1
+                self.transactionSectionView.leaveFeedbackButton.setTitle("LEAVE FEEDBACK FOR SELLER", forState: UIControlState.Normal)
+                self.transactionSectionView.leaveFeedbackButton.setTitleColor(Constants.Colors.appTheme, forState: UIControlState.Normal)
+            }
+            self.transactionSectionView.sellerNameLabel.text = self.table[section].sellerName
+            self.transactionSectionView.sellerContactNumber.text = self.table[section].sellerContact
+        }
         
-        return XibHelper.puffViewWithNibName("TransactionViews", index: 7) as! TransactionSectionFooterView
+        return self.transactionSectionView
         
     }
     
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        return XibHelper.puffViewWithNibName("TransactionViews", index: 8) as! TransactionSectionHeaderView
+        //self.transactionIdView =
+       
+        
+         return XibHelper.puffViewWithNibName("TransactionViews", index: 8) as! TransactionSectionHeaderView
     }
 
     func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
@@ -221,7 +259,7 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
         self.getHeaderView().addSubview(self.getTransactionProductListView())
         
         // FOOTERS
-        self.getFooterView().addSubview(self.getTransactionSellerView())
+        //self.getFooterView().addSubview(self.getTransactionSellerView())
         self.getFooterView().addSubview(self.getTransactionDeliveryStatusView())
         self.getFooterView().addSubview(self.getTransactionButtonView())
         
@@ -245,7 +283,7 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
         footerGrayColor.backgroundColor = Constants.Colors.backgroundGray
         self.getFooterView().addSubview(footerGrayColor)
         
-        self.setPosition(self.transactionDeliveryStatusView, from: self.transactionSellerView)
+        //self.setPosition(self.transactionDeliveryStatusView, from: self.transactionSellerView)
         self.setPosition(self.transactionButtonView, from: self.transactionDeliveryStatusView)
         self.setPosition(footerGrayColor, from: self.transactionButtonView)
         footerGrayColor.frame.origin.y -= 20
@@ -277,13 +315,32 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
     func fireTransactionDetails(transactionId: String) {
         self.showHUD()
         let manager = APIManager.sharedInstance
+        var sampleId = "2015-0123-77"
+        println("transaction id \(transactionId)")
         let url = APIAtlas.transactionDetails+"\(SessionManager.accessToken())&transactionId=\(transactionId)" as NSString
         let urlEncoded = url.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)
         println(urlEncoded)
         manager.GET(urlEncoded!, parameters: nil, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            //self.transactionModel = TransactionModel.parseDataFromDictionary(responseObject as! NSDictionary)
-            println(responseObject.description)
+            self.transactionDetailsModel = TransactionDetailsModel.parseDataFromDictionary(responseObject as! NSDictionary)
+          
+            self.cellCount = self.transactionDetailsModel!.sellerId.count
+            self.cellSection = self.transactionDetailsModel!.sellerId.count
+            println("get transactions: \(responseObject.description)")
+            println("seller store name \(self.transactionDetailsModel!.sellerStore)")
+            for var a = 0; a < self.transactionDetailsModel.sellerId.count; a++ {
+                var arr = [TransactionDetailsProductsModel]()
+                println("\(self.transactionDetailsModel.productName.count) of \(self.transactionDetailsModel.sellerStore[a])")
+                for var b = 0; b < self.transactionDetailsModel.productName.count; b++ {
+                    self.tableSectionContents = TransactionDetailsProductsModel(orderProductId: self.transactionDetailsModel.orderProductStatusId[b], productId: self.transactionDetailsModel.orderProductId[b], quantity: self.transactionDetailsModel.quantity[b], unitPrice: self.transactionDetailsModel.unitPrice[b], totalPrice: self.transactionDetailsModel.totalPrice[b], productName: self.transactionDetailsModel.productName[b], handlingFee: self.transactionDetailsModel.handlingFee[b])
+                        arr.append(self.tableSectionContents)
+                    println("product name \(self.transactionDetailsModel.productName[b]) of \(self.transactionDetailsModel!.sellerStore[0])")
+                }
+                println("seller name \(self.transactionDetailsModel!.sellerStore[a])")
+                self.table.append(TransactionDetailsModel(sellerName: self.transactionDetailsModel!.sellerStore[a], sellerContact: self.transactionDetailsModel!.sellerContactNumber[a], id: self.transactionDetailsModel.sellerId[a], feedback: self.transactionDetailsModel.hasFeedback[a], transactions: arr))
+            }
+
+            println("table ----- \(self.table.count)")
             self.tableView.reloadData()
             self.hud?.hide(true)
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in

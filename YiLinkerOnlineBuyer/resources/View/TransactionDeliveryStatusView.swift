@@ -22,7 +22,7 @@ class TransactionDeliveryStatusView: UIView {
     @IBOutlet weak var deliverySms: UIImageView!
     @IBOutlet weak var deliveryCall: UIImageView!
     
-    @IBOutlet weak var arrowImageView: UIImageView!
+    //@IBOutlet weak var arrowImageView: UIImageView!
 
     
     override func awakeFromNib() {
@@ -62,7 +62,7 @@ class TransactionDeliveryStatusView: UIView {
         self.pickupCall.addGestureRecognizer(tap("pickupCallAction:"))
         self.deliverySms.addGestureRecognizer(tap("deliverySmsAction:"))
         self.deliveryCall.addGestureRecognizer(tap("deliveryCallAction:"))
-        self.arrowImageView.addGestureRecognizer(tap("arrowImageViewAction:"))
+       // self.arrowImageView.addGestureRecognizer(tap("arrowImageViewAction:"))
     }
     
     func tap(action: Selector) -> UITapGestureRecognizer {
