@@ -78,43 +78,48 @@ class ImageVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
     
     func sendImageByFile(){
         if (imageView.image != nil){
-            //SVProgressHUD.show()
-            self.showHUD()
             
-            let manager: APIManager = APIManager.sharedInstance
-            manager.requestSerializer = AFHTTPRequestSerializer()
-            
-            let parameters: NSDictionary = [
-                "access_token"  : SessionManager.accessToken()
-                ]   as Dictionary<String, String>
-            
-            let url = APIAtlas.baseUrl + APIAtlas.ACTION_IMAGE_ATTACH + "?access_token=\(SessionManager.accessToken())"
-            
-            var imageData : NSData = UIImageJPEGRepresentation(imageView.image, 1)
-            var sequence = DateUtility.convertDateToString(NSDate())
-            //println(parameters)
-            manager.POST(url, parameters: parameters, constructingBodyWithBlock: { (data: AFMultipartFormData) -> Void in
-                data.appendPartWithFileData(imageData, name: "image", fileName: "image_\(self.recipient?.userId)_\(self.sender?.userId)_\(sequence)", mimeType: "image/JPEG")
-                }, success: { (task : NSURLSessionDataTask!, responseObject: AnyObject!) -> Void in
-                    self.imageVCDelegate?.sendMessage(W_Messages.parseUploadImageResponse(responseObject))
-                    self.hud?.hide(true)
-                    //SVProgressHUD.dismiss()
-                    self.goBack()
-                }) { (task : NSURLSessionDataTask!, error: NSError!) -> Void in
-                    let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                    
-                    if task.statusCode == 401 {
-                        if (SessionManager.isLoggedIn()){
-                            self.fireRefreshToken()
-                        }
-                    } else {
+            if (Reachability.isConnectedToNetwork()) {
+                //SVProgressHUD.show()
+                self.showHUD()
+                
+                let manager: APIManager = APIManager.sharedInstance
+                manager.requestSerializer = AFHTTPRequestSerializer()
+                
+                let parameters: NSDictionary = [
+                    "access_token"  : SessionManager.accessToken()
+                    ]   as Dictionary<String, String>
+                
+                let url = APIAtlas.baseUrl + APIAtlas.ACTION_IMAGE_ATTACH + "?access_token=\(SessionManager.accessToken())"
+                
+                var imageData : NSData = UIImageJPEGRepresentation(imageView.image, 1)
+                var sequence = DateUtility.convertDateToString(NSDate())
+                //println(parameters)
+                manager.POST(url, parameters: parameters, constructingBodyWithBlock: { (data: AFMultipartFormData) -> Void in
+                    data.appendPartWithFileData(imageData, name: "image", fileName: "image_\(self.recipient?.userId)_\(self.sender?.userId)_\(sequence)", mimeType: "image/JPEG")
+                    }, success: { (task : NSURLSessionDataTask!, responseObject: AnyObject!) -> Void in
+                        self.imageVCDelegate?.sendMessage(W_Messages.parseUploadImageResponse(responseObject))
+                        self.hud?.hide(true)
+                        //SVProgressHUD.dismiss()
+                        self.goBack()
+                    }) { (task : NSURLSessionDataTask!, error: NSError!) -> Void in
+                        let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                         
-                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong. (\(error.description))", title: "Error")
-                    }
-                    
-                    println(error.description)
-                    self.hud?.hide(true)
-                    //SVProgressHUD.dismiss()
+                        if task.statusCode == 401 {
+                            if (SessionManager.isLoggedIn()){
+                                self.fireRefreshToken()
+                            }
+                        } else {
+                            
+                            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong. (\(error.description))", title: "Error")
+                        }
+                        
+                        println(error.description)
+                        self.hud?.hide(true)
+                        //SVProgressHUD.dismiss()
+                }
+            } else {
+                self.showAlert("Connection Unreachable", message: "Cannot retrieve data. Please check your internet connection.")
             }
             
         } else {
@@ -139,6 +144,20 @@ class ImageVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
                 UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
         })
         
+    }
+    
+    func showAlert(title: String, message: String) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+        
+        let OKAction = UIAlertAction(title: "OK", style: .Default) { (action) in
+            alertController.dismissViewControllerAnimated(true, completion: nil)
+        }
+        
+        alertController.addAction(OKAction)
+        
+        self.presentViewController(alertController, animated: true) {
+            
+        }
     }
     
     func takePhoto(){

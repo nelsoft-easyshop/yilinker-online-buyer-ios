@@ -123,11 +123,12 @@ class ConversationVC: UIViewController, EmptyViewDelegate{
     */
     
     override func viewWillAppear(animated: Bool) {
-        self.fireLogin()
+        //self.fireLogin()
         self.getConversationsFromEndpoint("1", limit: "10")
     }
     
     func addEmptyView() {
+        println(self.emptyView)
         if self.emptyView == nil {
             self.emptyView = UIView.loadFromNibNamed("EmptyView", bundle: nil) as? EmptyView
             self.emptyView?.frame = self.contentViewFrame!
@@ -209,40 +210,47 @@ class ConversationVC: UIViewController, EmptyViewDelegate{
     
     func fireLogin() {
         
-        self.showHUD()
+        if(Reachability.isConnectedToNetwork()){
         
-        let manager: APIManager = APIManager.sharedInstance
-        //seller@easyshop.ph
-        //password
-        let parameters: NSDictionary = ["email": "buyer@easyshop.ph","password": "password", "client_id": Constants.Credentials.clientID, "client_secret": Constants.Credentials.clientSecret, "grant_type": Constants.Credentials.grantBuyer]
-        
-        manager.POST(APIAtlas.loginUrl, parameters: parameters, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
-            //SVProgressHUD.dismiss()
-            self.hud?.hide(true)
-            //self.showSuccessMessage()
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                
-                if task.statusCode == 401 {
-                    if (SessionManager.isLoggedIn()){
-                        self.fireRefreshToken()
-                    }
-                } else {
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
-                }
-                
+            self.showHUD()
+            
+            let manager: APIManager = APIManager.sharedInstance
+            //seller@easyshop.ph
+            //password
+            let parameters: NSDictionary = ["email": "buyer@easyshop.ph","password": "password", "client_id": Constants.Credentials.clientID, "client_secret": Constants.Credentials.clientSecret, "grant_type": Constants.Credentials.grantBuyer]
+            
+            manager.POST(APIAtlas.loginUrl, parameters: parameters, success: {
+                (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+                SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
                 //SVProgressHUD.dismiss()
                 self.hud?.hide(true)
-                self.addEmptyView()
-        })
+                //self.showSuccessMessage()
+                }, failure: {
+                    (task: NSURLSessionDataTask!, error: NSError!) in
+                    let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                    
+                    if task.statusCode == 401 {
+                        if (SessionManager.isLoggedIn()){
+                            self.fireRefreshToken()
+                        }
+                    } else {
+                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+                    }
+                    
+                    //SVProgressHUD.dismiss()
+                    self.hud?.hide(true)
+                    self.addEmptyView()
+            })
+        } else {
+            self.addEmptyView()
+        }
+        
     }
-    
+
     func getConversationsFromEndpoint(
         page : String,
         limit : String){
+            
             self.showHUD()
             //SVProgressHUD.show()
             
@@ -266,24 +274,32 @@ class ConversationVC: UIViewController, EmptyViewDelegate{
                 //SVProgressHUD.dismiss()
                 }, failure: {
                     (task: NSURLSessionDataTask!, error: NSError!) in
-                    let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                     
-                    if task.statusCode == 401 {
-                        if (SessionManager.isLoggedIn()){
-                            self.fireRefreshToken()
+                    println("REACHABILITY \(Reachability.isConnectedToNetwork())")
+                    if (Reachability.isConnectedToNetwork()){
+                        let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                        
+                        if task.statusCode == 401 {
+                            if (SessionManager.isLoggedIn()){
+                                self.fireRefreshToken()
+                            }
+                        } else {
+                            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
                         }
+                        
+                        self.conversations = Array<W_Conversation>()
+                        self.conversationTableView.reloadData()
+                        
+                        self.hud?.hide(true)
+                        //SVProgressHUD.dismiss()
+                        
+                        self.addEmptyView()
+                        
                     } else {
-                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+                        self.addEmptyView()
                     }
-                    
-                    self.conversations = Array<W_Conversation>()
-                    self.conversationTableView.reloadData()
-                    
-                    self.hud?.hide(true)
-                    //SVProgressHUD.dismiss()
-                    
-                    self.addEmptyView()
             })
+            
     }
     
     func fireRefreshToken() {

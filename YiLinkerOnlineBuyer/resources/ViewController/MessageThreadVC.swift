@@ -68,7 +68,6 @@ class MessageThreadVC: UIViewController {
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if (segue.identifier == uploadImageSegueIdentifier){
-            println("PREPARE FOR SEGUE IMAGE")
             var imageVC = segue.destinationViewController as! ImageVC
             
             imageVC.sender = self.sender
@@ -79,19 +78,19 @@ class MessageThreadVC: UIViewController {
     }
     
     override func viewDidLoad() {
-        println("viewDidLoad")
         super.viewDidLoad()
         var ref = W_Messages()
         //messages = ref.testData()
         var r_temp = recipient?.userId ?? ""
+        println("recipient id \(r_temp)")
         self.getMessagesFromEndpoint("1", limit: "30", userId: r_temp)
-        //self.setConversationAsReadFromEndpoint(r_temp)
         configureTableView()
         
         var imageStringRecipient = recipient!.profileImageUrl
         var urlRecipient : NSURL = NSURL(string: imageStringRecipient)!
         recipientImage = UIImageView()
         recipientImage!.sd_setImageWithURL(urlRecipient, placeholderImage: UIImage(named: "Male-50.png"))
+        recipientImage!.image = UIImage(named: "Male-50.png")
         
         senderImage = UIImageView()
         var imageStringSender = sender!.profileImageUrl
@@ -131,10 +130,48 @@ class MessageThreadVC: UIViewController {
         
         var tap = UITapGestureRecognizer (target: self, action: Selector("tableTapped:"))
         self.threadTableView.addGestureRecognizer(tap)
+        
+        
+        /* GCM */
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "onSeenMessage:",
+            name: appDelegate.seenMessageKey, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "onReceiveNewMessage:",
+            name: appDelegate.messageKey, object: nil)
+    }
+    
+    func onSeenMessage(notification : NSNotification){
+        println("onSeenMessage")
+        /* check if recipient id is the same as notification's recipient id */
+        if let info = notification.userInfo as? Dictionary<String,String> {
+            if let error = info["error"] {
+                println("Error with seen message on GCM \(error)")
+            } else if let recipientId = info["body"] {
+                if (recipientId == recipient?.userId){
+                    var s_temp = sender?.userId ?? ""
+                    self.getMessagesFromEndpoint("1", limit: "30", userId: s_temp)
+                }
+            }
+        }
+    }
+    
+    func onReceiveNewMessage(notification : NSNotification){
+        println("onReceiveNewMessage")
+        /* check if recipient id is the same as notification's recipient id */
+        if let info = notification.userInfo as? Dictionary<String,String> {
+            if let error = info["error"] {
+                println("Error with seen message on GCM \(error)")
+            } else if let recipientId = info["body"] {
+                if (recipientId == recipient?.userId){
+                    var s_temp = sender?.userId ?? ""
+                    self.getMessagesFromEndpoint("1", limit: "30", userId: s_temp)
+                }
+            }
+        }
     }
     
     override func viewDidAppear(animated: Bool) {
-        println("viewDidAppear")
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWasShown:"), name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWasHidden:"), name: UIKeyboardWillHideNotification, object: nil)
         
@@ -143,6 +180,9 @@ class MessageThreadVC: UIViewController {
         
         self.composeTextView.becomeFirstResponder()
         
+        /* set message as read */
+        var r_temp = recipient?.userId ?? ""
+        self.setConversationAsReadFromEndpoint(r_temp)
     }
     
     func tableTapped(tap : UITapGestureRecognizer){
@@ -151,15 +191,18 @@ class MessageThreadVC: UIViewController {
     }
     
     override func viewWillDisappear(animated: Bool) {
-        println("viewWillDisappear")
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
+        
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: appDelegate.seenMessageKey, object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: appDelegate.messageKey, object: nil)
         
     }
     
     override func viewDidDisappear(animated: Bool) {
         //self.findAndResignFirstResponder()
-        println("viewDidDisappear")
         
     }
     
@@ -323,13 +366,13 @@ class MessageThreadVC: UIViewController {
         var senderId = self.sender?.userId ?? ""
         
         self.messages.append(W_Messages(message_id: 0, senderId: senderId, recipientId: recipientId, message: lastMessage, isImage: isImage, timeSent: NSDate(), isSeen: "0", timeSeen: dateSeen, isSent : "1"))
-        println(" Last Message : \(lastMessage)  is IMAGE \(isImage)")
         self.threadTableView.reloadData()
         self.goToBottomTableView()
         self.sendMessageToEndpoint(lastMessage, recipientId: recipientId, isImage: isImage)
     }
     
     func sendMessageToEndpoint(lastMessage : String, recipientId : String, isImage : String){
+        
         let manager: APIManager = APIManager.sharedInstance
         manager.requestSerializer = AFHTTPRequestSerializer()
         
@@ -353,17 +396,19 @@ class MessageThreadVC: UIViewController {
                 
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                 
-                if task.statusCode == 401 {
-                    if (SessionManager.isLoggedIn()){
-                        self.fireRefreshToken()
+                if (Reachability.isConnectedToNetwork()) {
+                    if task.statusCode == 401 {
+                        if (SessionManager.isLoggedIn()){
+                            self.fireRefreshToken()
+                        }
+                    } else {
+                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
                     }
+                    
+                    self.messages[self.messages.count-1].isSent = "0"
                 } else {
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+                    self.showAlert("Connection Unreachable", message: "Cannot retrieve data. Please check your internet connection.")
                 }
-                
-                self.messages[self.messages.count-1].isSent = "0"
-                println(error.description)
-                
         })
         self.composeTextView.text = ""
         self.threadTableView.reloadData()
@@ -374,47 +419,66 @@ class MessageThreadVC: UIViewController {
         limit : String,
         userId: String){
             //SVProgressHUD.show()
-            self.showHUD()
             
-            let manager: APIManager = APIManager.sharedInstance
-            manager.requestSerializer = AFHTTPRequestSerializer()
-            
-            let parameters: NSDictionary = [
-                "page"          : "\(page)",
-                "limit"         : "\(limit)",
-                "userId"        : "\(userId)", //get user id from somewhere
-                "access_token"  : SessionManager.accessToken()
-                ]   as Dictionary<String, String>
-            
-            let url = APIAtlas.baseUrl + APIAtlas.ACTION_GET_CONVERSATION_MESSAGES
-            
-            manager.POST(url, parameters: parameters, success: {
-                (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-                self.messages = W_Messages.parseMessages(responseObject as! NSDictionary)
-                self.threadTableView.reloadData()
-                self.goToBottomTableView()
-                self.hud?.hide(true)
-                //SVProgressHUD.dismiss()
-                }, failure: {
-                    (task: NSURLSessionDataTask!, error: NSError!) in
-                    let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                    
-                    if task.statusCode == 401 {
-                        if (SessionManager.isLoggedIn()){
-                            self.fireRefreshToken()
-                        }
-                    } else {
-                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
-                    }
-                    
-                    self.messages = Array<W_Messages>()
+                self.showHUD()
+                
+                let manager: APIManager = APIManager.sharedInstance
+                manager.requestSerializer = AFHTTPRequestSerializer()
+                
+                let parameters: NSDictionary = [
+                    "page"          : "\(page)",
+                    "limit"         : "\(limit)",
+                    "userId"        : "\(userId)", //get user id from somewhere
+                    "access_token"  : SessionManager.accessToken()
+                    ]   as Dictionary<String, String>
+                
+                let url = APIAtlas.baseUrl + APIAtlas.ACTION_GET_CONVERSATION_MESSAGES
+                
+                manager.POST(url, parameters: parameters, success: {
+                    (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+                    self.messages = W_Messages.parseMessages(responseObject as! NSDictionary)
                     self.threadTableView.reloadData()
-                    
+                    self.goToBottomTableView()
                     self.hud?.hide(true)
                     //SVProgressHUD.dismiss()
-            })
+                    }, failure: {
+                        (task: NSURLSessionDataTask!, error: NSError!) in
+                        
+                        if (Reachability.isConnectedToNetwork()) {
+                            let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                            if task.statusCode == 401 {
+                                if (SessionManager.isLoggedIn()){
+                                    self.fireRefreshToken()
+                                }
+                            } else {
+                                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+                            }
+                        } else {
+                            self.showAlert("Connection Unreachable", message: "Cannot retrieve data. Please check your internet connection.")
+                        }
+                        
+                        self.messages = Array<W_Messages>()
+                        self.threadTableView.reloadData()
+                        
+                        self.hud?.hide(true)
+                        //SVProgressHUD.dismiss()
+                })
+                
+                self.goToBottomTableView()
+    }
+    
+    func showAlert(title: String, message: String) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+        
+        let OKAction = UIAlertAction(title: "OK", style: .Default) { (action) in
+            alertController.dismissViewControllerAnimated(true, completion: nil)
+        }
+        
+        alertController.addAction(OKAction)
+        
+        self.presentViewController(alertController, animated: true) {
             
-            self.goToBottomTableView()
+        }
     }
     
     //Show HUD
@@ -530,7 +594,6 @@ extension MessageThreadVC : UITableViewDataSource, UITableViewDelegate{
     }
     
     func goToBottomTableView(){
-        println("asd \(threadTableView.numberOfRowsInSection(0))")
         if(threadTableView.numberOfRowsInSection(0) > 0) {
             var lastIndexPath : NSIndexPath = getLastIndexPath(threadTableView)
             threadTableView.scrollToRowAtIndexPath(lastIndexPath, atScrollPosition: UITableViewScrollPosition.Bottom, animated: false)
