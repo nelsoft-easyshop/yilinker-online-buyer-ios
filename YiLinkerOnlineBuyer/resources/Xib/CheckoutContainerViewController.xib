@@ -154,7 +154,7 @@
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                     <connections>
-                        <action selector="saveAndContinue:" destination="-1" eventType="touchUpInside" id="qOs-e8-MrT"/>
+                        <action selector="saveAndContinue:" destination="-1" eventType="touchUpInside" id="cVZ-5c-Wu3"/>
                     </connections>
                 </button>
             </subviews>

@@ -10,6 +10,7 @@ import UIKit
 
 protocol RegisterModalViewControllerDelegate {
     func registerModalViewController(didExit view: RegisterModalViewController)
+    func registerModalViewController(didSave view: RegisterModalViewController, password: String)
 }
 
 class RegisterModalViewController: UIViewController {
@@ -30,6 +31,15 @@ class RegisterModalViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    @IBAction func create(sender: AnyObject) {
+        if self.passwordTextField.text == self.confirmPasswordTextField.text {
+            self.delegate?.registerModalViewController(didSave: self, password: self.passwordTextField.text)
+            self.dismissView()
+        } else {
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Mismatched password.", title: "Invalid Credential")
+        }
     }
     
     func dismissView() {

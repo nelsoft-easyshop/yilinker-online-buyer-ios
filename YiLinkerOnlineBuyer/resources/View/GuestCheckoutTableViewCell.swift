@@ -10,6 +10,8 @@ import UIKit
 
 protocol GuestCheckoutTableViewCellDelegate {
     func guestCheckoutTableViewCell(guestCheckoutTableViewCell: GuestCheckoutTableViewCell, didStartEditingTextFieldWithTag textfieldTag: Int, textField: UITextField)
+    func guestCheckoutTableViewCell(guestCheckoutTableViewCell: GuestCheckoutTableViewCell, didClickNext textfieldTag: Int, textField: UITextField)
+    func guestCheckoutTableViewCell(guestCheckoutTableViewCell: GuestCheckoutTableViewCell, didClickDone textfieldTag: Int, textField: UITextField)
 }
 
 class GuestCheckoutTableViewCell: UITableViewCell, UITextFieldDelegate {
@@ -73,6 +75,15 @@ class GuestCheckoutTableViewCell: UITableViewCell, UITextFieldDelegate {
     
     func textFieldDidBeginEditing(textField: UITextField) {
         self.delegate?.guestCheckoutTableViewCell(self, didStartEditingTextFieldWithTag: textField.tag, textField: textField)
+    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        if textField != self.additionalInfoTextField {
+            self.delegate?.guestCheckoutTableViewCell(self, didClickNext: textField.tag, textField: textField)
+        } else {
+            self.delegate?.guestCheckoutTableViewCell(self, didClickDone: textField.tag, textField: textField)
+        }
+        return true
     }
     
     func setBecomesFirstResponder(tag: Int) {

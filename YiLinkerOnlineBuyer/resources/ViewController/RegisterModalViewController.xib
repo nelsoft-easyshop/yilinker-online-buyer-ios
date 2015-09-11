@@ -45,6 +45,9 @@
                                     <state key="normal" title="CREATE">
                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                     </state>
+                                    <connections>
+                                        <action selector="create:" destination="-1" eventType="touchUpInside" id="eaH-Bk-sHy"/>
+                                    </connections>
                                 </button>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Password:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MHp-uY-Ui0">
                                     <rect key="frame" x="17" y="17" width="67" height="21"/>
