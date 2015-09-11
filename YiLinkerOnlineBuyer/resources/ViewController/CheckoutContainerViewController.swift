@@ -321,6 +321,7 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
         manager.POST(APIAtlas.pesoPayUrl, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             self.hud?.hide(true)
+            println(responseObject)
                 let pesoPayModel: PesoPayModel = PesoPayModel.parseDataWithDictionary(responseObject as! NSDictionary)
                 if pesoPayModel.isSuccessful {
                     self.redirectToPaymentWebViewWithUrl(pesoPayModel)
@@ -352,6 +353,7 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
         paymentWebViewController.delegate = self
         let navigationController: UINavigationController = UINavigationController(rootViewController: paymentWebViewController)
         navigationController.navigationBar.barTintColor = Constants.Colors.appTheme
+        self.presentViewController(navigationController, animated: true, completion: nil)
     }
     
     func paymentWebViewController(paymentDidCancel paymentWebViewController: PaymentWebViewViewController) {
