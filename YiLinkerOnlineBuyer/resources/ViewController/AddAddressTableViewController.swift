@@ -39,6 +39,7 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
     var isEdit2: Bool = true
     
     var pickerView: UIPickerView = UIPickerView()
+    var addressCellReference = [NewAddressTableViewCell?]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -191,6 +192,9 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
             cell.rowTextField.becomeFirstResponder()
         }
         
+        addressCellReference.append(cell)
+        assert(addressCellReference[indexPath.row] == cell)
+        
         return cell
     }
     
@@ -309,8 +313,10 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
     }
     
     func getTextAtIndex(index: Int) -> String {
-        let row = NSIndexPath(forItem: index, inSection: 0)
-        let cell: NewAddressTableViewCell = tableView.cellForRowAtIndexPath(row) as! NewAddressTableViewCell
+        // Fix for Issue #303
+        //let row = NSIndexPath(forItem: index, inSection: 0)
+        let cell: NewAddressTableViewCell = //tableView.cellForRowAtIndexPath(row) as! NewAddressTableViewCell
+            addressCellReference[index]!
         return cell.rowTextField.text
     }
     
