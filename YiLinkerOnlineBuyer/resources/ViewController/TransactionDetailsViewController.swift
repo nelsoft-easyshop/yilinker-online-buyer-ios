@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TransactionDetailsViewController: UIViewController {
+class TransactionDetailsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var tableView: UITableView!
     
@@ -61,7 +61,10 @@ class TransactionDetailsViewController: UIViewController {
         }
     }
     
-    // MARK: - Table View Data Souce
+    // MARK: - Table View Data Source
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 2
+    }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return list.count
@@ -84,6 +87,24 @@ class TransactionDetailsViewController: UIViewController {
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let productDetails = TransactionProductDetailsViewController(nibName: "TransactionProductDetailsViewController", bundle: nil)
         self.navigationController?.pushViewController(productDetails, animated: true)
+    }
+    
+    func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        
+        return XibHelper.puffViewWithNibName("TransactionViews", index: 7) as! TransactionSectionFooterView
+        
+    }
+    
+    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        return XibHelper.puffViewWithNibName("TransactionViews", index: 8) as! TransactionSectionHeaderView
+    }
+
+    func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 140
+    }
+    
+    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 25
     }
     
     // MARK: - Init Views
