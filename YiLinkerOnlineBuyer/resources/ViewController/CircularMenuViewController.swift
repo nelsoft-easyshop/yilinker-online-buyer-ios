@@ -48,8 +48,12 @@ class CircularMenuViewController: UIViewController {
                     profileImageView.contentMode = UIViewContentMode.ScaleAspectFill
                     profileImageView.backgroundColor = UIColor.greenColor()
                 }
-                
+                var insetSpace: CGFloat = 10
                 button.setImage(UIImage(named: imageName), forState: UIControlState.Normal)
+                button.imageView?.contentMode = UIViewContentMode.ScaleAspectFit
+                button.imageEdgeInsets = UIEdgeInsetsMake(insetSpace, insetSpace, insetSpace, insetSpace)
+                button.contentVerticalAlignment = UIControlContentVerticalAlignment.Center
+                button.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Center
                 button.clipsToBounds = true
                 button.addTarget(self, action: "menuClick:", forControlEvents: UIControlEvents.TouchUpInside)
                 self.view.addSubview(button)
