@@ -39,6 +39,10 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
     var carItems: [CartProductDetailsModel] = []
     
     var guestEmail: String = ""
+    var guestFirstName: String = ""
+    var guestLastName: String = ""
+    
+    var alertHasShown: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -85,6 +89,7 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
             setSelectedViewController(viewController)
         } else if index == 1 {
             if SessionManager.isLoggedIn() || self.isValidGuestUser {
+                self.isValidGuestUser = false
                 self.secondCircle()
                 self.continueButton("Save and Go to Payment")
                 let viewController: UIViewController = viewControllers[index]
@@ -99,15 +104,20 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
                     UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Mobile Number is required.", title: "Incomplete Information")
                 } else if self.summaryViewController!.guestCheckoutTableViewCell.emailTextField.text!.isEmpty {
                     UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Email Address is required.", title: "Incomplete Information")
-                } else if self.summaryViewController!.guestCheckoutTableViewCell.emailTextField.text!.isValidEmail() {
+                } else if !self.summaryViewController!.guestCheckoutTableViewCell.emailTextField.text!.isValidEmail() {
                     UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Invalid email address.", title: "Incomplete Information")
                 } else {
+                    self.guestEmail = self.summaryViewController!.guestCheckoutTableViewCell.emailTextField.text
+                    self.guestFirstName = self.summaryViewController!.guestCheckoutTableViewCell.firstNameTextField.text
+                    self.guestLastName = self.summaryViewController!.guestCheckoutTableViewCell.lastNameTextField.text
                     self.summaryViewController!.fireGuestUser()
                 }
 
             }
         } else if index == 2 {
             
+        } else if index == 3 {
+     
         }
     }
     
@@ -238,7 +248,9 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
     }
     
     @IBAction func saveAndContinue(sender: AnyObject) {
-        if selectedIndex != self.viewControllers.count {
+        var limit: Int = self.viewControllers.count
+        
+        if selectedIndex < limit {
             self.selectedIndex++
         }
         
@@ -256,12 +268,25 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
                 self.firePesoPay()
             }
         } else if self.selectedIndex == 3 {
-            let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-            appDelegate.changeRootToHomeView()
+            if SessionManager.isLoggedIn() {
+                self.redirectToHomeView()
+            } else {
+                if !alertHasShown {
+                    self.showRegisterAlert()
+                } else {
+                    self.redirectToHomeView()
+                }
+            }
+            
         } else {
-            self.setSelectedViewControllerWithIndex(self.selectedIndex)
+            self.redirectToHomeView()
         }
 
+    }
+    
+    func redirectToHomeView() {
+        let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        appDelegate.changeRootToHomeView()
     }
     
     func fireCOD() {
@@ -283,6 +308,7 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
                 if task.statusCode == 401 {
                     self.fireRefreshToken(CheckoutRefreshType.COD)
                 }
+                self.selectedIndex--
                 UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
                 self.hud?.hide(true)
         })
@@ -308,7 +334,7 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
                 if task.statusCode == 401 {
                     self.fireRefreshToken(CheckoutRefreshType.Credit)
                 }
-                
+                self.selectedIndex--
                 UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
                 self.hud?.hide(true)
         })
@@ -326,7 +352,6 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
         paymentWebViewController.delegate = self
         let navigationController: UINavigationController = UINavigationController(rootViewController: paymentWebViewController)
         navigationController.navigationBar.barTintColor = Constants.Colors.appTheme
-        self.presentViewController(navigationController, animated: true, completion: nil)
     }
     
     func paymentWebViewController(paymentDidCancel paymentWebViewController: PaymentWebViewViewController) {
@@ -379,7 +404,7 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
         })
     }
     
-    func showAlert() {
+    func showRegisterAlert() {
         self.view.layoutIfNeeded()
         
         let dimView: UIView = UIView(frame: self.view.frame)
@@ -398,7 +423,7 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
         registerModelViewController.definesPresentationContext = true
         registerModelViewController.view.backgroundColor = UIColor.clearColor()
         registerModelViewController.delegate = self
-        self.tabBarController!.presentViewController(registerModelViewController, animated: true, completion: nil)
+        self.presentViewController(registerModelViewController, animated: true, completion: nil)
     }
     
     func registerModalViewController(didExit view: RegisterModalViewController) {
@@ -409,8 +434,81 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
                     dimView2.alpha = 0.0
                     }, completion: { (Bool) -> Void in
                         dimView2.removeFromSuperview()
+                        self.alertHasShown = true
                 })
             }
+        }
+    }
+    
+    func registerModalViewController(didSave view: RegisterModalViewController, password: String) {
+        self.fireRegister(password)
+    }
+    
+    func fireRegister(password: String) {
+        self.showHUD()
+        let manager: APIManager = APIManager.sharedInstance
+        
+        let parameters: NSDictionary = ["email": self.guestEmail,"password": password, "firstName": "", "lastName": ""]
+        
+        manager.POST(APIAtlas.registerUrl, parameters: parameters, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            let registerModel: RegisterModel = RegisterModel.parseDataFromDictionary(responseObject as! NSDictionary)
+            if registerModel.isSuccessful {
+                self.fireLogin(self.guestEmail, password: password)
+            } else {
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: registerModel.message, title: "Error")
+                self.hud?.hide(true)
+            }
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                if !Reachability.isConnectedToNetwork() {
+                    UIAlertController.displayNoInternetConnectionError(self)
+                } else {
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+                }
+                
+                self.hud?.hide(true)
+        })
+    }
+    
+    func fireLogin(email: String, password: String) {
+        let manager: APIManager = APIManager.sharedInstance
+        //seller@easyshop.ph
+        //password
+        let parameters: NSDictionary = ["email": email,"password": password, "client_id": Constants.Credentials.clientID, "client_secret": Constants.Credentials.clientSecret, "grant_type": Constants.Credentials.grantBuyer]
+        self.showHUD()
+        manager.POST(APIAtlas.loginUrl, parameters: parameters, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+            self.showSuccessMessage()
+            self.hud?.hide(true)
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                
+                if task.statusCode == 401 {
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Mismatch username and password", title: "Login Failed")
+                } else {
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+                }
+                
+                self.hud?.hide(true)
+        })
+    }
+    
+    func showSuccessMessage() {
+        let alertController = UIAlertController(title: "Success", message: "Successfully login.", preferredStyle: .Alert)
+        
+        let OKAction = UIAlertAction(title: "OK", style: .Default) { (action) in
+            alertController.dismissViewControllerAnimated(true, completion: nil)
+            let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+            appDelegate.changeRootToHomeView()
+        }
+        
+        alertController.addAction(OKAction)
+        
+        self.presentViewController(alertController, animated: true) {
+            
         }
     }
 }

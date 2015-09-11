@@ -103,6 +103,7 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func changeAddressViewController(didSelectAddress address: String) {
+        self.fireSetCheckoutAddress(SessionManager.addressId())
         self.tableView.tableFooterView = self.tableFooterView()
     }
 
@@ -154,7 +155,7 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
                 if view.isKindOfClass(UITextField) {
                     let textField: UITextField = view as! UITextField
                     if !IphoneType.isIphone4() {
-                        textField.addToolBarWithTarget(self, next: "next:", previous: "previous:", done: "done")
+                        textField.addToolBarWithTarget(self, next: "next", previous: "previous:", done: "done")
                     }
                 }
             }
@@ -163,7 +164,7 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
         }
     }
     
-    func next(sender: AnyObject) {
+    func next() {
         self.guestCheckoutTableViewCell.setBecomesFirstResponder(self.currentTextFieldTag + 1)
     }
     
@@ -260,17 +261,15 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
         })
     }
     
-    /*
-        [UIView animateWithDuration:0.3 animations:^{
-        UIEdgeInsets contentInset = self.tableView.contentInset;
-        contentInset.top = 0;
-        contentInset.top = contentInset.top - yContentInset;
-        self.tableView.contentInset = contentInset;
-        self.tableView.scrollIndicatorInsets = contentInset;
-        }];
-    */
-    
     //Guest Checkout Delegate
+    func guestCheckoutTableViewCell(guestCheckoutTableViewCell: GuestCheckoutTableViewCell, didClickNext textfieldTag: Int, textField: UITextField) {
+        self.next()
+    }
+    
+    func guestCheckoutTableViewCell(guestCheckoutTableViewCell: GuestCheckoutTableViewCell, didClickDone textfieldTag: Int, textField: UITextField) {
+        self.view.endEditing(true)
+        self.fireGuestUser()
+    }
     func guestCheckoutTableViewCell(guestCheckoutTableViewCell: GuestCheckoutTableViewCell, didStartEditingTextFieldWithTag textfieldTag: Int, textField: UITextField) {
         self.currentTextFieldTag = textfieldTag
         
@@ -278,48 +277,50 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
             var contentInset: UIEdgeInsets = self.tableView.contentInset
             contentInset.top = 0.0
             if IphoneType.isIphone6Plus() {
-                if textfieldTag > 3 {
-                    contentInset.top = contentInset.top - (50 * CGFloat(textfieldTag))
-                }
+               contentInset.top = contentInset.top - (50 * CGFloat(textfieldTag + 1))
             } else if IphoneType.isIphone6() {
-                if textfieldTag > 1 {
-                    if textfieldTag > 11 {
-                        contentInset.top = contentInset.top - (60 * CGFloat(12))
-                    } else {
-                        contentInset.top = contentInset.top - (60 * CGFloat(textfieldTag))
-                    }
-                }
-            } else if IphoneType.isIphone5() {
-                if textfieldTag == 0 || textfieldTag == 1 {
-                    contentInset.top = -120
+
+                if textfieldTag == 13 {
+                    contentInset.top = contentInset.top - (60 * CGFloat(textfieldTag))
                 } else {
-                    if textfieldTag == 3 {
-                        contentInset.top = contentInset.top - (50 * CGFloat(textfieldTag - 1)) - 120
-                    } else if textfieldTag >= 8 {
-                        contentInset.top = contentInset.top - (55 * CGFloat(textfieldTag)) - 120
-                    } else {
-                        contentInset.top = contentInset.top - (45 * CGFloat(textfieldTag)) - 120
-                    }
+                    contentInset.top = contentInset.top - (60 * CGFloat(textfieldTag + 1))
                 }
                 
-            } else if IphoneType.isIphone4() {
-                let extraSpace: CGFloat = 150
-                if textfieldTag == 0 || textfieldTag == 1 {
-                    contentInset.top = -extraSpace
+                
+            } else if IphoneType.isIphone5() {
+                if textfieldTag == 3 {
+                    contentInset.top = contentInset.top - (50 * CGFloat(textfieldTag - 1)) - 120
+                } else if textfieldTag == 13 {
+                    contentInset.top = contentInset.top - (60 * CGFloat(textfieldTag)) - 120
+                } else if textfieldTag >= 8 {
+                    contentInset.top = contentInset.top - (55 * CGFloat(textfieldTag)) - 120
                 } else {
-                    if textfieldTag == 3 {
-                        contentInset.top = contentInset.top - (50 * CGFloat(textfieldTag - 1)) - extraSpace
-                    } else if textfieldTag >= 8 {
-                        contentInset.top = contentInset.top - (55 * CGFloat(textfieldTag)) - extraSpace
+                    contentInset.top = contentInset.top - (45 * CGFloat(textfieldTag + 1)) - 120
+                } 
+            } else if IphoneType.isIphone4() {
+                 let extraSpace: CGFloat = 150
+//                if textfieldTag == 3 {
+//                    contentInset.top = contentInset.top - (50 * CGFloat(textfieldTag - 1)) - extraSpace
+//                } else if textfieldTag >= 8 {
+//                    contentInset.top = contentInset.top - (55 * CGFloat(textfieldTag)) - extraSpace
+//                } else {
+//                    contentInset.top = contentInset.top - (45 * CGFloat(textfieldTag)) - extraSpace
+//                }
+                
+                if textfieldTag >= 8 {
+                    contentInset.top = contentInset.top - (60 * CGFloat(textfieldTag)) - extraSpace
+                } else {
+                    if textField.tag == 3 {
+                        contentInset.top = contentInset.top - (45 * CGFloat(textfieldTag)) - extraSpace                        
                     } else {
-                        contentInset.top = contentInset.top - (45 * CGFloat(textfieldTag)) - extraSpace
+                        contentInset.top = contentInset.top - (45 * CGFloat(textfieldTag + 1)) - extraSpace
                     }
+                    
                 }
                 
             }
-            
-            self.tableView.contentInset = contentInset
-            self.tableView.scrollIndicatorInsets = contentInset
+                self.tableView.contentInset = contentInset
+                self.tableView.scrollIndicatorInsets = contentInset
         })
         
         
@@ -519,4 +520,5 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
                 self.hud?.hide(true)
         })
     }
+    
 }
