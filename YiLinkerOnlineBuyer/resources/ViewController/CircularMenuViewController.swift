@@ -149,6 +149,11 @@ class CircularMenuViewController: UIViewController {
                         
                         if SessionManager.isLoggedIn() && index == 2 {
                             label.backgroundColor = UIColor.redColor()
+                            
+                            if SessionManager.unreadMessageCount() == "" || SessionManager.unreadMessageCount() == "You have 0 unread messages" {
+                                label.hidden = true
+                            }
+                            
                         } else {
                             label.backgroundColor = UIColor.clearColor()
                         }
