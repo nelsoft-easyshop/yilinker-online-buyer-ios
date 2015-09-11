@@ -89,18 +89,26 @@ class ViewFeedBackViewController: UIViewController, UITableViewDelegate, UITable
         return 3
     }
     
-    
     func fireSellerFeedback() {
         self.showHUD()
         let manager = APIManager.sharedInstance
-        let parameters: NSDictionary = ["access_token" : SessionManager.accessToken(), "sellerId" : "1"]
-        manager.POST(APIAtlas.buyerSellerFeedbacks, parameters: parameters, success: {
+        
+        manager.POST("\(APIAtlas.buyerSellerFeedbacks)?access_token=\(SessionManager.accessToken())&sellerId=1", parameters: nil, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             self.productReviewModel = ProductReviewModel.parseDataWithDictionary(responseObject as! NSDictionary)
             self.hud?.hide(true)
+            self.ratingAndReviewsTableView.reloadData()
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                println(error.userInfo)
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                if task.statusCode == 404 {
+                    let data = error.userInfo as! Dictionary<String, AnyObject>
+                    print(data["message"])
+                    var message = data["message"] as! String
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "\(message)", title: "Error")
+                } else {
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+                }
                 self.hud?.hide(true)
         })
         self.ratingAndReviewsTableView.reloadData()

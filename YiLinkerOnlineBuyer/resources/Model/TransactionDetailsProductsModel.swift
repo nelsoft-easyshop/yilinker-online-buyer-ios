@@ -22,7 +22,7 @@ class TransactionDetailsProductsModel: NSObject {
     var productDescription: [String] = []
     var productImage: [String] = []
     */
-    var orderProductId: Bool = false
+    var orderProductId: String = ""
     var productId: String = ""
     var quantity: Int = 0
     var unitPrice: String = ""
@@ -30,7 +30,7 @@ class TransactionDetailsProductsModel: NSObject {
     var productName: String = ""
     var handlingFee: String = ""
     
-    init(orderProductId: Bool, productId: String, quantity: Int, unitPrice: String, totalPrice: String, productName: String, handlingFee: String) {
+    init(orderProductId: String, productId: String, quantity: Int, unitPrice: String, totalPrice: String, productName: String, handlingFee: String) {
         self.orderProductId = orderProductId
         self.productId = productId
         self.quantity = quantity

@@ -8,13 +8,20 @@
 
 import UIKit
 
+protocol TransactionSectionFooterViewDelegate {
+    func leaveSellerFeedback(title: String)
+}
+
 class TransactionSectionFooterView: UIView {
 
     @IBOutlet weak var leaveFeedbackButton: DynamicRoundedButton!
     
+    @IBOutlet weak var messageButton: DynamicRoundedButton!
     @IBOutlet weak var sellerContactNumber: UILabel!
     
     @IBOutlet weak var sellerNameLabel: UILabel!
+    
+    var delegate: TransactionSectionFooterViewDelegate?
     /*
     // Only override drawRect: if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.
@@ -27,13 +34,13 @@ class TransactionSectionFooterView: UIView {
     }
     
     @IBAction func leaveFeedback(sender: AnyObject) {
-        println("leave feedback")
+        println("leave feedback \(sender.titleLabel!!.text)")
+        var label = sender.titleLabel!!.text
+        self.delegate?.leaveSellerFeedback(label!)
     }
     
     @IBAction func message(sender: AnyObject) {
         println("message")
     }
-    
-    
 
 }

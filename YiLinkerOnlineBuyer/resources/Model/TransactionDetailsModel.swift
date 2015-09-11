@@ -46,6 +46,7 @@ class TransactionDetailsModel: NSObject {
     */
     var isSuccessful: Bool = false
     var sellerId: [Int] = []
+    var sellerId2: [Int] = []
     var sellerStore: [String] = []
     var sellerContactNumber: [String] = []
     var hasFeedback: [Bool] = []
@@ -75,9 +76,10 @@ class TransactionDetailsModel: NSObject {
         self.transactions = transactions
     }
     
-    init(isSuccessful: Bool, sellerId: NSArray, sellerStore: NSArray, sellerContactNumber: NSArray, hasFeedback: NSArray, orderProductId: NSArray, productId: NSArray, quantity: NSArray, unitPrice: NSArray, totalPrice: NSArray, productName: NSArray, handlingFee: NSArray, orderProductStatusId: NSArray, name: NSArray, productDescription: NSArray, productImage: NSArray){
+    init(isSuccessful: Bool, sellerId: NSArray, sellerId2: NSArray, sellerStore: NSArray, sellerContactNumber: NSArray, hasFeedback: NSArray, orderProductId: NSArray, productId: NSArray, quantity: NSArray, unitPrice: NSArray, totalPrice: NSArray, productName: NSArray, handlingFee: NSArray, orderProductStatusId: NSArray, name: NSArray, productDescription: NSArray, productImage: NSArray){
         
         self.sellerId = sellerId as! [Int]
+        self.sellerId2 = sellerId2 as! [Int]
         self.sellerStore = sellerStore as! [String]
         self.sellerContactNumber = sellerContactNumber as! [String]
         self.hasFeedback = hasFeedback as! [Bool]
@@ -97,8 +99,8 @@ class TransactionDetailsModel: NSObject {
     }
     
     class func parseDataFromDictionary(dictionary: AnyObject) -> TransactionDetailsModel {
-        
         var sellerId: [Int] = []
+        var sellerId2: [Int] = []
         var sellerStore: [String] = []
         var sellerContactNumber: [String] = []
         var hasFeedback: [Bool] = []
@@ -139,7 +141,7 @@ class TransactionDetailsModel: NSObject {
                         totalPrice.append(product["totalPrice"] as! String)
                         productName.append(product["productName"] as! String)
                         handlingFee.append(product["handlingFee"] as! String)
-                        
+                        sellerId2.append(transaction["sellerId"] as! Int)
                         if let orderProductStatus: AnyObject = product["orderProductStatus"] {
                             orderProductStatusId.append(orderProductStatus["orderProductStatusId"] as! Bool)
                             name.append(orderProductStatus["name"] as! String)
@@ -152,7 +154,7 @@ class TransactionDetailsModel: NSObject {
             }
         }
         
-        let transactionDetailsModel = TransactionDetailsModel(isSuccessful: isSuccessful, sellerId: sellerId, sellerStore: sellerStore, sellerContactNumber: sellerContactNumber, hasFeedback: hasFeedback, orderProductId: orderProductId, productId: productId, quantity: quantity, unitPrice: unitPrice, totalPrice: totalPrice, productName: productName, handlingFee: handlingFee, orderProductStatusId: orderProductStatusId, name: name, productDescription: productDescription, productImage: productImage)
+        let transactionDetailsModel = TransactionDetailsModel(isSuccessful: isSuccessful, sellerId: sellerId, sellerId2: sellerId2, sellerStore: sellerStore, sellerContactNumber: sellerContactNumber, hasFeedback: hasFeedback, orderProductId: orderProductId, productId: productId, quantity: quantity, unitPrice: unitPrice, totalPrice: totalPrice, productName: productName, handlingFee: handlingFee, orderProductStatusId: orderProductStatusId, name: name, productDescription: productDescription, productImage: productImage)
         
         return transactionDetailsModel
     }

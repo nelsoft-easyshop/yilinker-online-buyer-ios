@@ -59,7 +59,7 @@ struct APIAtlas {
     static let updateWishlistUrl = "auth/cart/updateCartItem"
     static let updateCartUrl = "auth/cart/updateCartItem"
     static let getSellerUrl = "v1/get-seller"
-    static let buyerSellerFeedbacks = "v1/feedback/getUserFeedbacks"
+    static let buyerSellerFeedbacks = "feedback/getUserFeedbacks"
     static let productDetails = "product/getProductDetail"
     static let productReviews = "product/getProductReviews"
     static let productSellerDetails = "v1/get-product"

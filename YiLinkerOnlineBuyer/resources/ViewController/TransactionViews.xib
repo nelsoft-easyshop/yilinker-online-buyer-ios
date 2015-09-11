@@ -1009,6 +1009,7 @@ Phiippines</string>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="leaveFeedbackButton" destination="h81-DO-sDz" id="dNU-OZ-Q6l"/>
+                <outlet property="messageButton" destination="dSz-Qa-k82" id="ilY-KN-DKV"/>
                 <outlet property="sellerContactNumber" destination="F5P-s8-a3W" id="aom-b0-MIi"/>
                 <outlet property="sellerNameLabel" destination="ldQ-CF-qdm" id="vmF-NI-ePu"/>
             </connections>

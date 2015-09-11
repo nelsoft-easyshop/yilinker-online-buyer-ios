@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TransactionDetailsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class TransactionDetailsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource , TransactionSectionFooterViewDelegate, ViewFeedBackViewControllerDelegate{
 
     @IBOutlet weak var tableView: UITableView!
     
@@ -51,8 +51,20 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
     
     var transactionDetailsModel: TransactionDetailsModel!
     
+    var dimView: UIView!
+    
+    var viewLeaveFeedback: Bool = false
+    
+    var delegate: TransactionSectionFooterViewDelegate?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        dimView = UIView(frame: UIScreen.mainScreen().bounds)
+        dimView.backgroundColor=UIColor.blackColor()
+        dimView.alpha = 0.5
+        self.navigationController?.view.addSubview(dimView)
+        dimView.hidden = true
         
         self.fireTransactionDetails(self.transactionId)
         
@@ -90,6 +102,7 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
         cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
         if(self.transactionDetailsModel != nil){
             cell.textLabel?.text = self.table[indexPath.section].transactions[indexPath.row].productName
+            //cell.textLabel?.tag = self.table[indexPath.section].productId[indexPath.row].toInt()!
             //cell.timeLabel?.text =  self.table[indexPath.section].activities[indexPath.row].time
         }
         //cell.textLabel?.text = list[indexPath.row]
@@ -103,25 +116,30 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let productDetails = TransactionProductDetailsViewController(nibName: "TransactionProductDetailsViewController", bundle: nil)
+        println("section \(indexPath.section) product id: \(self.table[indexPath.section].transactions[indexPath.row].productId)")
         self.navigationController?.pushViewController(productDetails, animated: true)
     }
     
     func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
          self.transactionSectionView = XibHelper.puffViewWithNibName("TransactionViews", index: 7) as! TransactionSectionFooterView
+        self.transactionSectionView.delegate = self
         if self.table.count != 0 {
-            if !self.table[section].feedback {
+            if self.table[section].feedback {
                 self.transactionSectionView.leaveFeedbackButton.backgroundColor = Constants.Colors.appTheme
                 self.transactionSectionView.leaveFeedbackButton.borderColor = Constants.Colors.appTheme
                 self.transactionSectionView.leaveFeedbackButton.borderWidth = 1
                 self.transactionSectionView.leaveFeedbackButton.setTitle("VIEW FEEDBACK FOR SELLER", forState: UIControlState.Normal)
                 self.transactionSectionView.leaveFeedbackButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+                self.viewLeaveFeedback = false
             } else {
                 self.transactionSectionView.leaveFeedbackButton.backgroundColor = UIColor.clearColor()
                 self.transactionSectionView.leaveFeedbackButton.borderColor = Constants.Colors.appTheme
                 self.transactionSectionView.leaveFeedbackButton.borderWidth = 1
                 self.transactionSectionView.leaveFeedbackButton.setTitle("LEAVE FEEDBACK FOR SELLER", forState: UIControlState.Normal)
                 self.transactionSectionView.leaveFeedbackButton.setTitleColor(Constants.Colors.appTheme, forState: UIControlState.Normal)
+                self.viewLeaveFeedback = true
             }
+            self.transactionSectionView.messageButton.backgroundColor = Constants.Colors.appTheme
             self.transactionSectionView.sellerNameLabel.text = self.table[section].sellerName
             self.transactionSectionView.sellerContactNumber.text = self.table[section].sellerContact
         }
@@ -231,7 +249,7 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
     
     func getTransactionButtonView() -> UIView {
         if self.transactionButtonView == nil {
-            self.transactionButtonView = UIView(frame: CGRectMake(0, 0, self.view.frame.size.width, 50))
+            self.transactionButtonView = UIView(frame: CGRectMake(0, 0, self.view.frame.size.width, 0))//50
             
             var feedbackButton: UIButton = UIButton(frame: CGRectZero)
             feedbackButton.addTarget(self, action: "leaveFeedback", forControlEvents: .TouchUpInside)
@@ -243,7 +261,7 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
             feedbackButton.frame.size = CGSize(width: feedbackButton.frame.size.width + 20, height: 30)
             feedbackButton.center.x = self.view.center.x
             feedbackButton.layer.cornerRadius = feedbackButton.frame.size.height / 2
-            
+            feedbackButton.hidden = true
             self.transactionButtonView.addSubview(feedbackButton)
         }
         
@@ -257,6 +275,7 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
         self.getHeaderView().addSubview(self.getTransactionIdView())
         self.getHeaderView().addSubview(self.getTransactionDetailsView())
         self.getHeaderView().addSubview(self.getTransactionProductListView())
+    
         
         // FOOTERS
         //self.getFooterView().addSubview(self.getTransactionSellerView())
@@ -311,12 +330,28 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
         self.navigationController?.pushViewController(feedbackView, animated: true)
     }
     
+    //MARK: View sellers feedback
+    func leaveSellerFeedback(title: String) {
+        println("\(self.transactionSectionView.leaveFeedbackButton.titleLabel?.text)")
+        if title == "LEAVE FEEDBACK FOR SELLER" {
+            self.leaveFeedback()
+        } else {
+            self.showView()
+            var attributeModal = ViewFeedBackViewController(nibName: "ViewFeedBackViewController", bundle: nil)
+            attributeModal.delegate = self
+            attributeModal.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
+            attributeModal.providesPresentationContextTransitionStyle = true
+            attributeModal.definesPresentationContext = true
+            attributeModal.screenWidth = self.view.frame.width
+            self.tabBarController?.presentViewController(attributeModal, animated: true, completion: nil)
+        }
+       
+    }
+    
     //MARK: Get transactions details by type
     func fireTransactionDetails(transactionId: String) {
         self.showHUD()
         let manager = APIManager.sharedInstance
-        var sampleId = "2015-0123-77"
-        println("transaction id \(transactionId)")
         let url = APIAtlas.transactionDetails+"\(SessionManager.accessToken())&transactionId=\(transactionId)" as NSString
         let urlEncoded = url.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)
         println(urlEncoded)
@@ -326,21 +361,18 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
           
             self.cellCount = self.transactionDetailsModel!.sellerId.count
             self.cellSection = self.transactionDetailsModel!.sellerId.count
-            println("get transactions: \(responseObject.description)")
-            println("seller store name \(self.transactionDetailsModel!.sellerStore)")
+            
             for var a = 0; a < self.transactionDetailsModel.sellerId.count; a++ {
                 var arr = [TransactionDetailsProductsModel]()
-                println("\(self.transactionDetailsModel.productName.count) of \(self.transactionDetailsModel.sellerStore[a])")
                 for var b = 0; b < self.transactionDetailsModel.productName.count; b++ {
-                    self.tableSectionContents = TransactionDetailsProductsModel(orderProductId: self.transactionDetailsModel.orderProductStatusId[b], productId: self.transactionDetailsModel.orderProductId[b], quantity: self.transactionDetailsModel.quantity[b], unitPrice: self.transactionDetailsModel.unitPrice[b], totalPrice: self.transactionDetailsModel.totalPrice[b], productName: self.transactionDetailsModel.productName[b], handlingFee: self.transactionDetailsModel.handlingFee[b])
+                   if self.transactionDetailsModel.sellerId[a] == self.transactionDetailsModel.sellerId2[b] {
+                        self.tableSectionContents = TransactionDetailsProductsModel(orderProductId: self.transactionDetailsModel.orderProductId[b], productId: self.transactionDetailsModel.productId[b], quantity: self.transactionDetailsModel.quantity[b], unitPrice: self.transactionDetailsModel.unitPrice[b], totalPrice: self.transactionDetailsModel.totalPrice[b], productName: self.transactionDetailsModel.productName[b], handlingFee: self.transactionDetailsModel.handlingFee[b])
                         arr.append(self.tableSectionContents)
-                    println("product name \(self.transactionDetailsModel.productName[b]) of \(self.transactionDetailsModel!.sellerStore[0])")
+                    }
                 }
-                println("seller name \(self.transactionDetailsModel!.sellerStore[a])")
                 self.table.append(TransactionDetailsModel(sellerName: self.transactionDetailsModel!.sellerStore[a], sellerContact: self.transactionDetailsModel!.sellerContactNumber[a], id: self.transactionDetailsModel.sellerId[a], feedback: self.transactionDetailsModel.hasFeedback[a], transactions: arr))
             }
 
-            println("table ----- \(self.table.count)")
             self.tableView.reloadData()
             self.hud?.hide(true)
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
@@ -362,6 +394,26 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
         self.hud?.dimBackground = false
         self.navigationController?.view.addSubview(self.hud!)
         self.hud?.show(true)
+    }
+    
+    //MARK: Show and hide dim view
+    
+    func showView(){
+        UIView.animateWithDuration(0.3, animations: {
+            self.dimView.hidden = false
+            self.dimView.alpha = 0.5
+            self.dimView.layer.zPosition = 2
+            self.view.transform = CGAffineTransformMakeScale(0.92, 0.93)
+        })
+    }
+    
+    func dismissDimView() {
+        UIView.animateWithDuration(0.3, animations: {
+            self.dimView.hidden = true
+            self.view.transform = CGAffineTransformMakeTranslation(1, 1)
+            self.dimView.alpha = 0
+            self.dimView.layer.zPosition = -1
+        })
     }
 
 }
