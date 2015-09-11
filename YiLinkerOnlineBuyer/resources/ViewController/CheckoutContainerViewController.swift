@@ -91,7 +91,20 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
                 setSelectedViewController(viewController)
             } else {
                 self.selectedIndex--
-                self.summaryViewController!.fireGuestUser()
+                if self.summaryViewController!.guestCheckoutTableViewCell.firstNameTextField.text!.isEmpty {
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "First name is required.", title: "Incomplete Information")
+                } else if self.summaryViewController!.guestCheckoutTableViewCell.lastNameTextField.text!.isEmpty {
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Last name is required.", title: "Incomplete Information")
+                } else if self.summaryViewController!.guestCheckoutTableViewCell.mobileNumberTextField.text!.isEmpty {
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Mobile Number is required.", title: "Incomplete Information")
+                } else if self.summaryViewController!.guestCheckoutTableViewCell.emailTextField.text!.isEmpty {
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Email Address is required.", title: "Incomplete Information")
+                } else if self.summaryViewController!.guestCheckoutTableViewCell.emailTextField.text!.isValidEmail() {
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Invalid email address.", title: "Incomplete Information")
+                } else {
+                    self.summaryViewController!.fireGuestUser()
+                }
+
             }
         } else if index == 2 {
             

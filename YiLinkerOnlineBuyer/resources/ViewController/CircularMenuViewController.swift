@@ -45,11 +45,15 @@ class CircularMenuViewController: UIViewController {
                     button.clipsToBounds = true
                     println("image name: \(imageName)")
                     profileImageView.sd_setImageWithURL(NSURL(string: imageName), placeholderImage: UIImage(named: "dummy-placeholder"))
-                    profileImageView.contentMode = UIViewContentMode.ScaleToFill
+                    profileImageView.contentMode = UIViewContentMode.ScaleAspectFill
                     profileImageView.backgroundColor = UIColor.greenColor()
                 }
-                
+                var insetSpace: CGFloat = 10
                 button.setImage(UIImage(named: imageName), forState: UIControlState.Normal)
+                button.imageView?.contentMode = UIViewContentMode.ScaleAspectFit
+                button.imageEdgeInsets = UIEdgeInsetsMake(insetSpace, insetSpace, insetSpace, insetSpace)
+                button.contentVerticalAlignment = UIControlContentVerticalAlignment.Center
+                button.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Center
                 button.clipsToBounds = true
                 button.addTarget(self, action: "menuClick:", forControlEvents: UIControlEvents.TouchUpInside)
                 self.view.addSubview(button)
@@ -169,11 +173,11 @@ class CircularMenuViewController: UIViewController {
                     //logout Button
                     if SessionManager.isLoggedIn() {
                         var logoutPosition: CGFloat = xPosition - 125
-                        let logoutButton: UIButton = UIButton(frame: CGRectMake(logoutPosition, yPosition + 15, 100, 30))
+                        let logoutButton: UIButton = UIButton(frame: CGRectMake(logoutPosition, yPosition + 15, 100, 20))
                         logoutButton.backgroundColor = UIColor.redColor()
                         logoutButton.setTitle(self.buttonTitles[index], forState: UIControlState.Normal)
                         logoutButton.layer.cornerRadius = 10
-                        logoutButton.titleLabel!.font =  UIFont(name: "HelveticaNeue", size: 14)
+                        logoutButton.titleLabel!.font =  UIFont(name: "HelveticaNeue", size: 12)
                         logoutButton.clipsToBounds = true
                         logoutButton.tag = 100 + index
                         logoutButton.alpha = 0

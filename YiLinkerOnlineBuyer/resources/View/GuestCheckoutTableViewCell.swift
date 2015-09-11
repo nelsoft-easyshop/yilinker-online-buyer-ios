@@ -29,6 +29,17 @@ class GuestCheckoutTableViewCell: UITableViewCell, UITextFieldDelegate {
     @IBOutlet weak var zipCodeTextField: UITextField!
     @IBOutlet weak var additionalInfoTextField: UITextField!
     
+    
+    @IBOutlet weak var firstNameLabel: UILabel!
+    @IBOutlet weak var lastNameLabel: UILabel!
+    @IBOutlet weak var mobileNumberLabel: UILabel!
+    @IBOutlet weak var emailAddressLabel: UILabel!
+    
+    @IBOutlet weak var streetNumberLabel: UILabel!
+    @IBOutlet weak var streetNameLabel: UILabel!
+    @IBOutlet weak var zipCodelabel: UILabel!
+    
+    
     var delegate: GuestCheckoutTableViewCellDelegate?
     
     override func awakeFromNib() {
@@ -43,6 +54,15 @@ class GuestCheckoutTableViewCell: UITableViewCell, UITextFieldDelegate {
                 counter++
             }
         }
+        
+        self.firstNameLabel.required()
+        self.lastNameLabel.required()
+        self.mobileNumberLabel.required()
+        self.emailAddressLabel.required()
+        
+        self.streetNameLabel.required()
+        self.streetNumberLabel.required()
+        self.zipCodelabel.required()
     }
     
     override func setSelected(selected: Bool, animated: Bool) {

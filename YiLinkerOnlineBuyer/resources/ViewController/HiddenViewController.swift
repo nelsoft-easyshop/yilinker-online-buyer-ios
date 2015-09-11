@@ -48,61 +48,53 @@ class HiddenViewController: UIViewController {
             }
         }
         
-        if index == 0 {
-            
-        } else if index == 1 {
-            if SessionManager.isLoggedIn() {
-                var titleLabel = UILabel(frame: CGRectZero)
-                titleLabel.font = UIFont(name: "Panton-Regular", size: 20)
-                titleLabel.text = "Followed Sellers"
-                titleLabel.textColor = .whiteColor()
-                titleLabel.sizeToFit()
-                self.navigationItem.titleView = titleLabel
-            } else {
+        
+        if SessionManager.isLoggedIn() {
+            if index == 0 {
+                self.setNavigationBarTitle("Help")
+            } else if index == 1 {
+                self.setNavigationBarTitle("Followed Sellers")
+            } else if index == 2 {
+                self.setNavigationBarTitle("Messaging")
+            } else if index == 3 {
+                self.setNavigationBarTitle("Customize Shopping")
+            } else if index == 4 {
+                self.setNavigationBarTitle("Todays Promo")
+            } else if index == 5 {
+                self.setNavigationBarTitle("Category")
+            } else if index == 6 {
+                self.setNavigationBarTitle("Profile")
+            }
+        } else {
+            if index == 0 {
+                self.setNavigationBarTitle("Help")
+            } else if index == 1 {
+                self.setNavigationBarTitle("Register")
                 self.registerViewController?.defaultViewControllerIndex = 1
                 self.registerViewController?.closeButton.hidden = true
-            }
-        } else if index == 2 {
-            self.loginViewController?.defaultViewControllerIndex = 0
-            self.loginViewController?.closeButton.hidden = true
-        } else if index == 3 {
-            
-        } else if index == 4 {
-            if !SessionManager.isLoggedIn() {
-                var titleLabel = UILabel(frame: CGRectZero)
-                titleLabel.font = UIFont(name: "Panton-Regular", size: 20)
-                titleLabel.text = "Customize Shopping"
-                titleLabel.textColor = .whiteColor()
-                titleLabel.sizeToFit()
-                self.navigationItem.titleView = titleLabel
-            }
-        } else if index == 5 {
-            if !SessionManager.isLoggedIn() {
-                var titleLabel = UILabel(frame: CGRectZero)
-                titleLabel.text = "Customize Shopping"
-                titleLabel.font = UIFont(name: "Panton-Regular", size: 20)
-                titleLabel.textColor = .whiteColor()
-                titleLabel.sizeToFit()
-                self.navigationItem.titleView = titleLabel
-            } else if SessionManager.isLoggedIn() {
-                var titleLabel = UILabel(frame: CGRectZero)
-                titleLabel.font = UIFont(name: "Panton-Regular", size: 20)
-                titleLabel.text = "Category Page"
-                titleLabel.textColor = .whiteColor()
-                titleLabel.sizeToFit()
-                self.navigationItem.titleView = titleLabel
-            }
-        } else if index == 6 {
-            if !SessionManager.isLoggedIn() {
-                var titleLabel = UILabel(frame: CGRectZero)
-                titleLabel.font = UIFont(name: "Panton-Regular", size: 20)
-                titleLabel.text = "Category Page"
-                titleLabel.textColor = .whiteColor()
-                titleLabel.sizeToFit()
-                self.navigationItem.titleView = titleLabel
+            } else if index == 2 {
+                self.setNavigationBarTitle("Sign In")
+                self.loginViewController?.defaultViewControllerIndex = 0
+                self.loginViewController?.closeButton.hidden = true
+            } else if index == 3 {
+                self.setNavigationBarTitle("Messaging")
+            } else if index == 4 {
+                self.setNavigationBarTitle("Customize Shopping")
+            } else if index == 5 {
+                self.setNavigationBarTitle("Todays Promo")
+            } else if index == 6 {
+                self.setNavigationBarTitle("Categories")
             }
         }
-        
+    }
+    
+    func setNavigationBarTitle(title: String) {
+        var titleLabel = UILabel(frame: CGRectZero)
+        titleLabel.font = UIFont(name: "Panton-Regular", size: 20)
+        titleLabel.text = title
+        titleLabel.textColor = .whiteColor()
+        titleLabel.sizeToFit()
+        self.navigationItem.titleView = titleLabel
     }
     
     func setSelectedViewController(viewController: UIViewController) {

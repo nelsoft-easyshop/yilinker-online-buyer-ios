@@ -41,7 +41,7 @@
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="next"/>
                     </textField>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Last Name*" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oGN-Gf-fRy">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Last Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oGN-Gf-fRy">
                         <rect key="frame" x="180" y="17" width="83" height="25"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="25" id="hvM-jZ-j4p"/>
@@ -60,7 +60,7 @@
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="next"/>
                     </textField>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mobile Number*" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VUk-FF-mZX">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mobile Number" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VUk-FF-mZX">
                         <rect key="frame" x="20" y="82" width="91" height="25"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="91" id="Ebi-kS-Rlk"/>
@@ -79,7 +79,7 @@
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="next"/>
                     </textField>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Email Address*" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ChN-WF-Log">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Email Address" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ChN-WF-Log">
                         <rect key="frame" x="180" y="82" width="85" height="25"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="85" id="dGA-lr-31k"/>
@@ -268,7 +268,7 @@
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done"/>
                     </textField>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="First Name*" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rSE-Ke-QTp">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="First Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rSE-Ke-QTp">
                         <rect key="frame" x="20" y="17" width="83" height="25"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="25" id="3WQ-FO-NF2"/>
@@ -370,16 +370,23 @@
                 <outlet property="barangayTextField" destination="qSd-r5-Oq3" id="K99-w9-GEK"/>
                 <outlet property="buildingNumberTextField" destination="61x-Fo-0ZZ" id="mXY-tD-xui"/>
                 <outlet property="cityTextField" destination="E7G-fe-sdA" id="JiR-AT-FWK"/>
+                <outlet property="emailAddressLabel" destination="ChN-WF-Log" id="FVv-IW-dmm"/>
                 <outlet property="emailTextField" destination="fPn-Q1-PZh" id="029-wx-01V"/>
+                <outlet property="firstNameLabel" destination="rSE-Ke-QTp" id="c8F-kQ-5gM"/>
                 <outlet property="firstNameTextField" destination="Sys-3K-aNq" id="NcV-50-blK"/>
+                <outlet property="lastNameLabel" destination="oGN-Gf-fRy" id="fDF-nL-8PB"/>
                 <outlet property="lastNameTextField" destination="Shp-8x-Jfa" id="9PX-LK-BJW"/>
+                <outlet property="mobileNumberLabel" destination="VUk-FF-mZX" id="bOV-ot-ik8"/>
                 <outlet property="mobileNumberTextField" destination="TTh-SC-gfN" id="iyi-X8-0Eu"/>
                 <outlet property="provinceTextField" destination="EqT-uB-eRg" id="7Jd-L6-pC3"/>
+                <outlet property="streetNameLabel" destination="gFe-8h-v6f" id="7MK-fj-zdz"/>
                 <outlet property="streetNameTextField" destination="utt-Tu-9Dx" id="4ud-rQ-nhs"/>
+                <outlet property="streetNumberLabel" destination="5oC-vm-cxB" id="et4-SR-dUE"/>
                 <outlet property="streetNumberTextField" destination="2eV-bc-THR" id="19i-f5-psB"/>
                 <outlet property="subdivisionTextField" destination="8Ky-Ym-p0d" id="5pN-h8-np4"/>
                 <outlet property="unitNumberTextField" destination="R0G-o3-jHJ" id="DhI-q7-R9L"/>
                 <outlet property="zipCodeTextField" destination="QEl-Lj-Vla" id="unk-tq-PTP"/>
+                <outlet property="zipCodelabel" destination="ZN0-cY-iWs" id="NZg-JJ-y60"/>
             </connections>
             <point key="canvasLocation" x="283.5" y="479"/>
         </tableViewCell>

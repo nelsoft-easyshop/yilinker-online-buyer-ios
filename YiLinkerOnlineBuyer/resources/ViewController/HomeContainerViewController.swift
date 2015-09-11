@@ -131,7 +131,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             animatedViewController!.view.backgroundColor = UIColor.clearColor()
             
             if SessionManager.accessToken() != "" {
-                var buttonImages: [String] = ["help", "following", "message", "customize-shopping", "promo", "category", self.profileModel.profileImageUrl]
+                var buttonImages: [String] = ["fab_help", "fab_following", "fab_messaging", "fab_customize", "fab_promo", "fab_category", self.profileModel.profileImageUrl]
                 var buttonTitles: [String] = ["HELP", "FOLLOWED SELLER", "MESSAGING", "CUSTOMIZE SHOPPING", "TODAY'S PROMO", "CATEGORIES", "LOGOUT"]
                 var buttonRightText: [String] = ["", "", "You have 1 unread message", "", "", "", "\(self.profileModel.firstName) \(self.profileModel.lastName) \n\(self.profileModel.address.streetAddress) \(self.profileModel.address.subdivision)"]
                 
@@ -139,7 +139,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                 animatedViewController?.buttonTitles = buttonTitles
                 animatedViewController?.buttonRightText = buttonRightText
             } else {
-                var buttonImages: [String] = ["help", "register", "sign_in", "message","customize-shopping", "promo", "category"]
+                var buttonImages: [String] = ["fab_help", "fab_register", "fab_signin", "fab_messaging","fab_customize", "fab_promo", "fab_category"]
                 var buttonTitles: [String] = ["HELP", "REGISTER", "SIGN IN", "MESSAGING", "CUSTOMIZE SHOPPING", "TODAYS PROMO", "CATEGORIES"]
                 var buttonRightText: [String] = ["", "", "Must be Sign in", "Must be Sign in", "", "", ""]
                 
