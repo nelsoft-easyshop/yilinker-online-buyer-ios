@@ -10,6 +10,8 @@ import UIKit
 
 protocol GuestCheckoutTableViewCellDelegate {
     func guestCheckoutTableViewCell(guestCheckoutTableViewCell: GuestCheckoutTableViewCell, didStartEditingTextFieldWithTag textfieldTag: Int, textField: UITextField)
+    func guestCheckoutTableViewCell(guestCheckoutTableViewCell: GuestCheckoutTableViewCell, didClickNext textfieldTag: Int, textField: UITextField)
+    func guestCheckoutTableViewCell(guestCheckoutTableViewCell: GuestCheckoutTableViewCell, didClickDone textfieldTag: Int, textField: UITextField)
 }
 
 class GuestCheckoutTableViewCell: UITableViewCell, UITextFieldDelegate {
@@ -29,6 +31,17 @@ class GuestCheckoutTableViewCell: UITableViewCell, UITextFieldDelegate {
     @IBOutlet weak var zipCodeTextField: UITextField!
     @IBOutlet weak var additionalInfoTextField: UITextField!
     
+    
+    @IBOutlet weak var firstNameLabel: UILabel!
+    @IBOutlet weak var lastNameLabel: UILabel!
+    @IBOutlet weak var mobileNumberLabel: UILabel!
+    @IBOutlet weak var emailAddressLabel: UILabel!
+    
+    @IBOutlet weak var streetNumberLabel: UILabel!
+    @IBOutlet weak var streetNameLabel: UILabel!
+    @IBOutlet weak var zipCodelabel: UILabel!
+    
+    
     var delegate: GuestCheckoutTableViewCellDelegate?
     
     override func awakeFromNib() {
@@ -43,6 +56,15 @@ class GuestCheckoutTableViewCell: UITableViewCell, UITextFieldDelegate {
                 counter++
             }
         }
+        
+        self.firstNameLabel.required()
+        self.lastNameLabel.required()
+        self.mobileNumberLabel.required()
+        self.emailAddressLabel.required()
+        
+        self.streetNameLabel.required()
+        self.streetNumberLabel.required()
+        self.zipCodelabel.required()
     }
     
     override func setSelected(selected: Bool, animated: Bool) {
@@ -53,6 +75,15 @@ class GuestCheckoutTableViewCell: UITableViewCell, UITextFieldDelegate {
     
     func textFieldDidBeginEditing(textField: UITextField) {
         self.delegate?.guestCheckoutTableViewCell(self, didStartEditingTextFieldWithTag: textField.tag, textField: textField)
+    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        if textField != self.additionalInfoTextField {
+            self.delegate?.guestCheckoutTableViewCell(self, didClickNext: textField.tag, textField: textField)
+        } else {
+            self.delegate?.guestCheckoutTableViewCell(self, didClickDone: textField.tag, textField: textField)
+        }
+        return true
     }
     
     func setBecomesFirstResponder(tag: Int) {

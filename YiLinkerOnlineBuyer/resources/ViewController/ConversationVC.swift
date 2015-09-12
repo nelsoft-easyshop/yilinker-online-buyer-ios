@@ -36,12 +36,21 @@ class ConversationVC: UIViewController, EmptyViewDelegate{
             let indexPath = conversationTableView.indexPathForCell(sender as! ConversationTVC)
             selectedContact = conversations[indexPath!.row].contact
             
-            messageThreadVC.sender = W_Contact(fullName: "Jan Dennis Nora", userRegistrationIds: "", userIdleRegistrationIds: "", userId: "5", profileImageUrl: "http://online.api.easydeal.ph/assets/images/uploads/users/4292229bce95d32748bf08b642f0a070a70bc194.png?", isOnline: "1")
+            var isOnline = "-1"
+            if (SessionManager.isLoggedIn()){
+                isOnline = "1"
+            } else {
+                isOnline = "0"
+            }
+            
+            println("IMAGE URL \(SessionManager.profileImageStringUrl())")
+            messageThreadVC.sender = W_Contact(fullName: SessionManager.userFullName() , userRegistrationIds: "", userIdleRegistrationIds: "", userId: SessionManager.accessToken(), profileImageUrl: SessionManager.profileImageStringUrl(), isOnline: isOnline)
             messageThreadVC.recipient = selectedContact
         }
     }
     
     override func viewDidLoad() {
+        
         var test = W_Conversation()
         //conversations = test.testData()
         self.placeCustomBackImage()
@@ -51,7 +60,7 @@ class ConversationVC: UIViewController, EmptyViewDelegate{
         super.viewDidLoad()
         
         var locX = UIScreen.mainScreen().bounds.size.width * 0.75
-        var locY = UIScreen.mainScreen().bounds.size.height * 0.85
+        var locY = UIScreen.mainScreen().bounds.size.height * 0.65
         
         let createMessageButton = UIButton()
         createMessageButton.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
@@ -80,45 +89,46 @@ class ConversationVC: UIViewController, EmptyViewDelegate{
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         /*
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "onRegistration:",
-            name: appDelegate.registrationKey, object: nil)
+        name: appDelegate.registrationKey, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "receivedMessage:",
-            name: appDelegate.messageKey, object: nil)
+        name: appDelegate.messageKey, object: nil)
         */
         
     }
     
     /*
     func onRegistration(notification: NSNotification){
-        if let info = notification.userInfo as? Dictionary<String,String> {
-            if let error = info["error"] {
-                showAlert("Error registering with GCM", message: error)
-            } else if let registrationToken = info["registrationToken"] {
-                let message = "Check the xcode debug console for the registration token for the server to send notifications to your device"
-                self.fireCreateRegistration(registrationToken)
-                showAlert("Registration Successful!", message: message)
-            }
-        }
+    if let info = notification.userInfo as? Dictionary<String,String> {
+    if let error = info["error"] {
+    showAlert("Error registering with GCM", message: error)
+    } else if let registrationToken = info["registrationToken"] {
+    let message = "Check the xcode debug console for the registration token for the server to send notifications to your device"
+    self.fireCreateRegistration(registrationToken)
+    showAlert("Registration Successful!", message: message)
+    }
+    }
     }
     
     func showAlert(title:String, message:String) {
-        let alert = UIAlertController(title: title,
-            message: message, preferredStyle: .Alert)
-        let dismissAction = UIAlertAction(title: "Dismiss", style: .Destructive, handler: nil)
-        alert.addAction(dismissAction)
-        self.presentViewController(alert, animated: true, completion: nil)
+    let alert = UIAlertController(title: title,
+    message: message, preferredStyle: .Alert)
+    let dismissAction = UIAlertAction(title: "Dismiss", style: .Destructive, handler: nil)
+    alert.addAction(dismissAction)
+    self.presentViewController(alert, animated: true, completion: nil)
     }
     
     func receivedMessage(notification : NSNotification){
-        //action here to open messaging
+    //action here to open messaging
     }
     */
     
     override func viewWillAppear(animated: Bool) {
-        self.fireLogin()
+        //self.fireLogin()
         self.getConversationsFromEndpoint("1", limit: "10")
     }
     
     func addEmptyView() {
+        println(self.emptyView)
         if self.emptyView == nil {
             self.emptyView = UIView.loadFromNibNamed("EmptyView", bundle: nil) as? EmptyView
             self.emptyView?.frame = self.contentViewFrame!
@@ -185,7 +195,9 @@ class ConversationVC: UIViewController, EmptyViewDelegate{
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                 
                 if task.statusCode == 401 {
-                    self.fireRefreshToken()
+                    if (SessionManager.isLoggedIn()){
+                        self.fireRefreshToken()
+                    }
                 } else {
                     UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
                 }
@@ -198,38 +210,47 @@ class ConversationVC: UIViewController, EmptyViewDelegate{
     
     func fireLogin() {
         
-        self.showHUD()
+        if(Reachability.isConnectedToNetwork()){
         
-        let manager: APIManager = APIManager.sharedInstance
-        //seller@easyshop.ph
-        //password
-        let parameters: NSDictionary = ["email": "buyer@easyshop.ph","password": "password", "client_id": Constants.Credentials.clientID, "client_secret": Constants.Credentials.clientSecret, "grant_type": Constants.Credentials.grantBuyer]
-        
-        manager.POST(APIAtlas.loginUrl, parameters: parameters, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
-            //SVProgressHUD.dismiss()
-            self.hud?.hide(true)
-            //self.showSuccessMessage()
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                
-                if task.statusCode == 401 {
-                    self.fireRefreshToken()
-                } else {
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
-                }
-                
+            self.showHUD()
+            
+            let manager: APIManager = APIManager.sharedInstance
+            //seller@easyshop.ph
+            //password
+            let parameters: NSDictionary = ["email": "buyer@easyshop.ph","password": "password", "client_id": Constants.Credentials.clientID, "client_secret": Constants.Credentials.clientSecret, "grant_type": Constants.Credentials.grantBuyer]
+            
+            manager.POST(APIAtlas.loginUrl, parameters: parameters, success: {
+                (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+                SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
                 //SVProgressHUD.dismiss()
                 self.hud?.hide(true)
-                self.addEmptyView()
-        })
+                //self.showSuccessMessage()
+                }, failure: {
+                    (task: NSURLSessionDataTask!, error: NSError!) in
+                    let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                    
+                    if task.statusCode == 401 {
+                        if (SessionManager.isLoggedIn()){
+                            self.fireRefreshToken()
+                        }
+                    } else {
+                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+                    }
+                    
+                    //SVProgressHUD.dismiss()
+                    self.hud?.hide(true)
+                    self.addEmptyView()
+            })
+        } else {
+            self.addEmptyView()
+        }
+        
     }
-    
+
     func getConversationsFromEndpoint(
         page : String,
         limit : String){
+            
             self.showHUD()
             //SVProgressHUD.show()
             
@@ -253,22 +274,32 @@ class ConversationVC: UIViewController, EmptyViewDelegate{
                 //SVProgressHUD.dismiss()
                 }, failure: {
                     (task: NSURLSessionDataTask!, error: NSError!) in
-                    let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                     
-                    if task.statusCode == 401 {
-                        self.fireRefreshToken()
+                    println("REACHABILITY \(Reachability.isConnectedToNetwork())")
+                    if (Reachability.isConnectedToNetwork()){
+                        let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                        
+                        if task.statusCode == 401 {
+                            if (SessionManager.isLoggedIn()){
+                                self.fireRefreshToken()
+                            }
+                        } else {
+                            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+                        }
+                        
+                        self.conversations = Array<W_Conversation>()
+                        self.conversationTableView.reloadData()
+                        
+                        self.hud?.hide(true)
+                        //SVProgressHUD.dismiss()
+                        
+                        self.addEmptyView()
+                        
                     } else {
-                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+                        self.addEmptyView()
                     }
-                    
-                    self.conversations = Array<W_Conversation>()
-                    self.conversationTableView.reloadData()
-                    
-                    self.hud?.hide(true)
-                    //SVProgressHUD.dismiss()
-                    
-                    self.addEmptyView()
             })
+            
     }
     
     func fireRefreshToken() {
@@ -327,10 +358,7 @@ extension ConversationVC : UITableViewDataSource{
             convoCell.user_dt.text = DateUtility.convertDateToString(conversations[indexPath.row].lastMessageDt) as String
             //convoCell.user_thumbnail.image = conversations[indexPath.row].contact.profileImageUrl
             let url = NSURL(string: conversations[indexPath.row].contact.profileImageUrl)
-            convoCell.user_thumbnail.sd_setImageWithURL(url)
-            if (convoCell.user_thumbnail.image == nil){
-                convoCell.user_thumbnail.image = UIImage(named: "Male-50.png")
-            }
+            convoCell.user_thumbnail.sd_setImageWithURL(url, placeholderImage: UIImage(named : "Male-50.png"))
             convoCell.user_thumbnail.layer.cornerRadius = convoCell.user_thumbnail.frame.width/2
             convoCell.user_thumbnail.layer.masksToBounds = true
             

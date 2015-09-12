@@ -12,7 +12,6 @@
 		0C10042D1B877F8400CAA17A /* AddAddressTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C10042C1B877F8400CAA17A /* AddAddressTableViewController.xib */; };
 		0C1004301B87AB9100CAA17A /* PaymentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C10042E1B87AB9100CAA17A /* PaymentTableViewCell.swift */; };
 		0C1C3A851B9406BD00E6180D /* JSONResponseSerializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C1C3A841B9406BD00E6180D /* JSONResponseSerializer.swift */; };
-		0C2670CD1B77290200394E29 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0C2670CC1B77290200394E29 /* GoogleService-Info.plist */; };
 		0C2670CF1B772E4B00394E29 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C2670CE1B772E4B00394E29 /* Enums.swift */; };
 		0C2E8A271B9AA3EE00D50455 /* PesoPayModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C2E8A261B9AA3EE00D50455 /* PesoPayModel.swift */; };
 		0C2F44A51B848B3A00021F45 /* SummaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C2F44A31B848B3A00021F45 /* SummaryViewController.swift */; };
@@ -96,9 +95,10 @@
 		0C374F5A1B8A03CC0050AE1D /* CustomizeShoppingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C374F581B8A03CC0050AE1D /* CustomizeShoppingTableViewCell.swift */; };
 		0C374F5B1B8A03CC0050AE1D /* CustomizeShoppingTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C374F591B8A03CC0050AE1D /* CustomizeShoppingTableViewCell.xib */; };
 		0C374F5D1B8A2DBF0050AE1D /* CustomizeShoppingFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C374F5C1B8A2DBF0050AE1D /* CustomizeShoppingFlowLayout.swift */; };
+		0C4E5CD31BA1873E0098224A /* RegisterModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C4E5CD11BA1873E0098224A /* RegisterModalViewController.swift */; };
+		0C4E5CD41BA1873E0098224A /* RegisterModalViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C4E5CD21BA1873E0098224A /* RegisterModalViewController.xib */; };
 		0C5007691B861B1600BC0445 /* ChangeAddressFooterCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5007671B861B1600BC0445 /* ChangeAddressFooterCollectionViewCell.swift */; };
 		0C5111D51B81CD69002F0001 /* SellerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5111D31B81CD69002F0001 /* SellerViewController.swift */; };
-		0C5111DA1B81CEFE002F0001 /* SellerTableHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C5111D91B81CEFE002F0001 /* SellerTableHeaderView.xib */; };
 		0C5111DD1B81F21A002F0001 /* AboutSellerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5111DB1B81F21A002F0001 /* AboutSellerTableViewCell.swift */; };
 		0C538AE11B99EFC000EB64AB /* PaymentSuccessModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C538AE01B99EFC000EB64AB /* PaymentSuccessModel.swift */; };
 		0C538AE31B99F07100EB64AB /* PaymentDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C538AE21B99F07100EB64AB /* PaymentDataModel.swift */; };
@@ -341,6 +341,7 @@
 		B77B8DD91B9B554A0002C513 /* MessageThreadVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B77B8DCF1B9B554A0002C513 /* MessageThreadVC.swift */; };
 		B77B8DDA1B9B554A0002C513 /* TextViewAutoHeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = B77B8DD01B9B554A0002C513 /* TextViewAutoHeight.swift */; };
 		B77B8DDC1B9B588A0002C513 /* DateUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = B77B8DDB1B9B588A0002C513 /* DateUtility.swift */; };
+		B7B1D8321BA15B0C006A5DF5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B7B1D8311BA15B0C006A5DF5 /* GoogleService-Info.plist */; };
 		BE00C15B75D7E76D254AAEC1 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D038C18A7712E626564D2D3 /* libPods.a */; };
 		F740F08D1B90CBC900D23A34 /* CreateAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F740F08B1B90CBC900D23A34 /* CreateAccountViewController.swift */; };
 		F740F08E1B90CBC900D23A34 /* CreateAccountViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F740F08C1B90CBC900D23A34 /* CreateAccountViewController.xib */; };
@@ -349,7 +350,6 @@
 		F7CCDA881B943CBB000F5AD4 /* CartProductAttributeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7CCDA781B943CBB000F5AD4 /* CartProductAttributeViewController.xib */; };
 		F7CCDA891B943CBB000F5AD4 /* CategoriesTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7CCDA791B943CBB000F5AD4 /* CategoriesTableViewCell.xib */; };
 		F7CCDA8A1B943CBB000F5AD4 /* CategoriesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7CCDA7A1B943CBB000F5AD4 /* CategoriesViewController.xib */; };
-		F7CCDA8B1B943CBB000F5AD4 /* CheckoutContainerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7CCDA7B1B943CBB000F5AD4 /* CheckoutContainerViewController.xib */; };
 		F7CCDA8D1B943CBB000F5AD4 /* FollowedSellerTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7CCDA7D1B943CBB000F5AD4 /* FollowedSellerTableViewCell.xib */; };
 		F7CCDA8E1B943CBB000F5AD4 /* FollowedSellerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7CCDA7E1B943CBB000F5AD4 /* FollowedSellerViewController.xib */; };
 		F7CCDA8F1B943CBB000F5AD4 /* HelpViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7CCDA7F1B943CBB000F5AD4 /* HelpViewController.xib */; };
@@ -380,6 +380,7 @@
 		F7DEF9C11B90941500993F33 /* _GuestCheckoutHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7DEF9BF1B90941500993F33 /* _GuestCheckoutHeaderTableViewCell.swift */; };
 		F7DEF9C21B90941500993F33 /* _GuestCheckoutHeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7DEF9C01B90941500993F33 /* _GuestCheckoutHeaderTableViewCell.xib */; };
 		F7DC84DF1BA0083000D3878B /* TransactionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7DC84DE1BA0083000D3878B /* TransactionModel.swift */; };
+		F7DC84E11BA00F7300D3878B /* SellerTableHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7DC84E01BA00F7300D3878B /* SellerTableHeaderView.xib */; };
 		F7DC84E31BA0602800D3878B /* TransactionDetailsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7DC84E21BA0602800D3878B /* TransactionDetailsModel.swift */; };
 /* End PBXBuildFile section */
 
@@ -401,7 +402,6 @@
 		0C10042E1B87AB9100CAA17A /* PaymentTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentTableViewCell.swift; sourceTree = "<group>"; };
 		0C1C3A841B9406BD00E6180D /* JSONResponseSerializer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONResponseSerializer.swift; sourceTree = "<group>"; };
 		0C25D94D1B76F81A00E9EFA6 /* YiLinkerOnlineBuyer-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "YiLinkerOnlineBuyer-Bridging-Header.h"; sourceTree = "<group>"; };
-		0C2670CC1B77290200394E29 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		0C2670CE1B772E4B00394E29 /* Enums.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
 		0C2E8A261B9AA3EE00D50455 /* PesoPayModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PesoPayModel.swift; sourceTree = "<group>"; };
 		0C2F44A31B848B3A00021F45 /* SummaryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SummaryViewController.swift; sourceTree = "<group>"; };
@@ -485,9 +485,10 @@
 		0C374F581B8A03CC0050AE1D /* CustomizeShoppingTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomizeShoppingTableViewCell.swift; sourceTree = "<group>"; };
 		0C374F591B8A03CC0050AE1D /* CustomizeShoppingTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CustomizeShoppingTableViewCell.xib; sourceTree = "<group>"; };
 		0C374F5C1B8A2DBF0050AE1D /* CustomizeShoppingFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomizeShoppingFlowLayout.swift; sourceTree = "<group>"; };
+		0C4E5CD11BA1873E0098224A /* RegisterModalViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterModalViewController.swift; sourceTree = "<group>"; };
+		0C4E5CD21BA1873E0098224A /* RegisterModalViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RegisterModalViewController.xib; sourceTree = "<group>"; };
 		0C5007671B861B1600BC0445 /* ChangeAddressFooterCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeAddressFooterCollectionViewCell.swift; sourceTree = "<group>"; };
 		0C5111D31B81CD69002F0001 /* SellerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SellerViewController.swift; sourceTree = "<group>"; };
-		0C5111D91B81CEFE002F0001 /* SellerTableHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SellerTableHeaderView.xib; sourceTree = "<group>"; };
 		0C5111DB1B81F21A002F0001 /* AboutSellerTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutSellerTableViewCell.swift; sourceTree = "<group>"; };
 		0C538AE01B99EFC000EB64AB /* PaymentSuccessModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentSuccessModel.swift; sourceTree = "<group>"; };
 		0C538AE21B99F07100EB64AB /* PaymentDataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentDataModel.swift; sourceTree = "<group>"; };
@@ -498,7 +499,7 @@
 		0C6490751B7781E400F88F92 /* Category.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 		0C677BCF1BA03EFA007D8E03 /* GuestCheckoutTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuestCheckoutTableViewCell.swift; sourceTree = "<group>"; };
 		0C677BD01BA03EFA007D8E03 /* GuestCheckoutTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GuestCheckoutTableViewCell.xib; sourceTree = "<group>"; };
-		0C8A7C6E1B6772670039F013 /* YiLinkerOnlineBuyer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YiLinkerOnlineBuyer.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		0C8A7C6E1B6772670039F013 /* Buyer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Buyer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0C8A7C721B6772670039F013 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0C8A7C7A1B6772670039F013 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		0C8A7C831B6772670039F013 /* YiLinkerOnlineBuyerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = YiLinkerOnlineBuyerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -736,6 +737,7 @@
 		B77B8DCF1B9B554A0002C513 /* MessageThreadVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageThreadVC.swift; sourceTree = "<group>"; };
 		B77B8DD01B9B554A0002C513 /* TextViewAutoHeight.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextViewAutoHeight.swift; sourceTree = "<group>"; };
 		B77B8DDB1B9B588A0002C513 /* DateUtility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateUtility.swift; sourceTree = "<group>"; };
+		B7B1D8311BA15B0C006A5DF5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F740F08B1B90CBC900D23A34 /* CreateAccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CreateAccountViewController.swift; path = YiLinkerOnlineBuyer/resources/Xib/CreateAccountViewController.swift; sourceTree = SOURCE_ROOT; };
 		F740F08C1B90CBC900D23A34 /* CreateAccountViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CreateAccountViewController.xib; path = YiLinkerOnlineBuyer/resources/Xib/CreateAccountViewController.xib; sourceTree = SOURCE_ROOT; };
 		F740F08F1B90D1D800D23A34 /* address.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = address.png; sourceTree = "<group>"; };
@@ -744,7 +746,6 @@
 		F7CCDA781B943CBB000F5AD4 /* CartProductAttributeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CartProductAttributeViewController.xib; path = YiLinkerOnlineBuyer/resources/ViewController/CartProductAttributeViewController.xib; sourceTree = SOURCE_ROOT; };
 		F7CCDA791B943CBB000F5AD4 /* CategoriesTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CategoriesTableViewCell.xib; path = YiLinkerOnlineBuyer/resources/ViewController/CategoriesTableViewCell.xib; sourceTree = SOURCE_ROOT; };
 		F7CCDA7A1B943CBB000F5AD4 /* CategoriesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CategoriesViewController.xib; path = YiLinkerOnlineBuyer/resources/ViewController/CategoriesViewController.xib; sourceTree = SOURCE_ROOT; };
-		F7CCDA7B1B943CBB000F5AD4 /* CheckoutContainerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CheckoutContainerViewController.xib; path = YiLinkerOnlineBuyer/resources/ViewController/CheckoutContainerViewController.xib; sourceTree = SOURCE_ROOT; };
 		F7CCDA7D1B943CBB000F5AD4 /* FollowedSellerTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = FollowedSellerTableViewCell.xib; path = YiLinkerOnlineBuyer/resources/ViewController/FollowedSellerTableViewCell.xib; sourceTree = SOURCE_ROOT; };
 		F7CCDA7E1B943CBB000F5AD4 /* FollowedSellerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = FollowedSellerViewController.xib; path = YiLinkerOnlineBuyer/resources/ViewController/FollowedSellerViewController.xib; sourceTree = SOURCE_ROOT; };
 		F7CCDA7F1B943CBB000F5AD4 /* HelpViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = HelpViewController.xib; path = YiLinkerOnlineBuyer/resources/ViewController/HelpViewController.xib; sourceTree = SOURCE_ROOT; };
@@ -775,6 +776,7 @@
 		F7DEF9BF1B90941500993F33 /* _GuestCheckoutHeaderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = _GuestCheckoutHeaderTableViewCell.swift; path = YiLinkerOnlineBuyer/resources/Xib/_GuestCheckoutHeaderTableViewCell.swift; sourceTree = SOURCE_ROOT; };
 		F7DEF9C01B90941500993F33 /* _GuestCheckoutHeaderTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = _GuestCheckoutHeaderTableViewCell.xib; path = YiLinkerOnlineBuyer/resources/Xib/_GuestCheckoutHeaderTableViewCell.xib; sourceTree = SOURCE_ROOT; };
 		F7DC84DE1BA0083000D3878B /* TransactionModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TransactionModel.swift; path = YiLinkerOnlineBuyer/resources/Model/TransactionModel.swift; sourceTree = SOURCE_ROOT; };
+		F7DC84E01BA00F7300D3878B /* SellerTableHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SellerTableHeaderView.xib; sourceTree = "<group>"; };
 		F7DC84E21BA0602800D3878B /* TransactionDetailsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TransactionDetailsModel.swift; path = YiLinkerOnlineBuyer/resources/Model/TransactionDetailsModel.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -844,7 +846,7 @@
 		0C8A7C6F1B6772670039F013 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				0C8A7C6E1B6772670039F013 /* YiLinkerOnlineBuyer.app */,
+				0C8A7C6E1B6772670039F013 /* Buyer.app */,
 				0C8A7C831B6772670039F013 /* YiLinkerOnlineBuyerTests.xctest */,
 			);
 			name = Products;
@@ -906,7 +908,7 @@
 			isa = PBXGroup;
 			children = (
 				0C2F44AF1B8576FE00021F45 /* Font */,
-				0C2670CC1B77290200394E29 /* GoogleService-Info.plist */,
+				B7B1D8311BA15B0C006A5DF5 /* GoogleService-Info.plist */,
 				0C9936FC1B750583000D6074 /* dummyHome.json */,
 			);
 			path = External;
@@ -1163,7 +1165,9 @@
 				F7DC7EDD1BA141AF004F7FD4 /* SellerSubCategoryTableViewCell.xib */,
 				793A89941B9FFFD80030FDC7 /* ChangeMobileNumberViewController.swift */,
 				793A89981BA001AE0030FDC7 /* VerifyMobileNumberViewController.swift */,
-				793A899C1BA004550030FDC7 /* VerifyMobileNumberStatusViewController.swift */
+				793A899C1BA004550030FDC7 /* VerifyMobileNumberStatusViewController.swift */,
+				0C4E5CD11BA1873E0098224A /* RegisterModalViewController.swift */,
+				0C4E5CD21BA1873E0098224A /* RegisterModalViewController.xib */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -1171,34 +1175,8 @@
 		0C9937291B750583000D6074 /* Xib */ = {
 			isa = PBXGroup;
 			children = (
-				961BE59B1B9948C100E8631A /* DisputeViewController.xib */,
-				961BE5A91B994C4D00E8631A /* ResolutionCenterCell.xib */,
-				79EBE8841B95F50700434B42 /* ChangePasswordViewController.xib */,
-				F7D37C9F1B92B09100FA7B16 /* ViewFeedBackViewController.swift */,
-				F7D37CA01B92B09100FA7B16 /* ViewFeedBackViewController.xib */,
-				F7CCDA781B943CBB000F5AD4 /* CartProductAttributeViewController.xib */,
-				F7CCDA791B943CBB000F5AD4 /* CategoriesTableViewCell.xib */,
-				F7CCDA7A1B943CBB000F5AD4 /* CategoriesViewController.xib */,
-				F7CCDA7B1B943CBB000F5AD4 /* CheckoutContainerViewController.xib */,
-				F7CCDA7D1B943CBB000F5AD4 /* FollowedSellerTableViewCell.xib */,
-				F7CCDA7E1B943CBB000F5AD4 /* FollowedSellerViewController.xib */,
-				F7CCDA7F1B943CBB000F5AD4 /* HelpViewController.xib */,
-				F7CCDA801B943CBB000F5AD4 /* MessagingViewController.xib */,
-				F7CCDA821B943CBB000F5AD4 /* PaymentViewController.xib */,
-				F7CCDA831B943CBB000F5AD4 /* ProfileViewController.xib */,
-				F7CCDA851B943CBB000F5AD4 /* SellerViewController.xib */,
 				F7CCDA861B943CBB000F5AD4 /* SummaryViewController.xib */,
 				F7CCDA871B943CBB000F5AD4 /* TodaysPromoViewController.xib */,
-				F740F08B1B90CBC900D23A34 /* CreateAccountViewController.swift */,
-				F740F08C1B90CBC900D23A34 /* CreateAccountViewController.xib */,
-				0C374F511B89EC4D0050AE1D /* CustomizeSelectedCollectionViewCell.xib */,
-				0C374F4B1B8998F30050AE1D /* CustomizeShoppingCollectionViewCell.xib */,
-				26DFF6451B87BBE3005D8EDE /* TransactionProductDetailsTableViewCell.xib */,
-				26DFF62F1B879126005D8EDE /* TransactionProductDetailsViewController.xib */,
-				26DFF6331B8791B5005D8EDE /* TransactionViews.xib */,
-				268C1BAB1B864D8B009FA106 /* TransactionDetailsViewController.xib */,
-				26D54FE61B86136300522398 /* TransactionTableViewCell.xib */,
-				26D54FDE1B860CF400522398 /* TransactionViewController.xib */,
 				0C374F251B88E3790050AE1D /* AboutSellerTableViewCell.xib */,
 				79E85FD11B8A230500428AA1 /* ActivityLogHeaderTableViewCell.xib */,
 				79E68B721B8AB900008626E4 /* ActivityLogTableViewCell.xib */,
@@ -1216,7 +1194,6 @@
 				0C374F0B1B88E3790050AE1D /* ChangeAddressViewController.xib */,
 				793A89951B9FFFD80030FDC7 /* ChangeMobileNumberViewController.xib */,
 				79EBE8841B95F50700434B42 /* ChangePasswordViewController.xib */,
-				F7CCDA7B1B943CBB000F5AD4 /* CheckoutContainerViewController.xib */,
 				0C374F0C1B88E3790050AE1D /* CheckoutContainerViewController.xib */,
 				0C2F44DD1B85840F00021F45 /* CheckoutViews.xib */,
 				F740F08B1B90CBC900D23A34 /* CreateAccountViewController.swift */,
@@ -1289,7 +1266,7 @@
 				0C374F161B88E3790050AE1D /* SeeMoreTableViewCell.xib */,
 				0C9937341B750583000D6074 /* SellerCollectionViewCell.xib */,
 				79A1C6FA1B83787B0043AA36 /* SellerResultCollectionViewCell.xib */,
-				0C5111D91B81CEFE002F0001 /* SellerTableHeaderView.xib */,
+				F7DC84E01BA00F7300D3878B /* SellerTableHeaderView.xib */,
 				F7CCDA851B943CBB000F5AD4 /* SellerViewController.xib */,
 				0C374F1D1B88E3790050AE1D /* SellerViewController.xib */,
 				0C374F191B88E3790050AE1D /* ShipToTableViewCell.xib */,
@@ -1395,7 +1372,7 @@
 			);
 			name = YiLinkerOnlineBuyer;
 			productName = YiLinkerOnlineBuyer;
-			productReference = 0C8A7C6E1B6772670039F013 /* YiLinkerOnlineBuyer.app */;
+			productReference = 0C8A7C6E1B6772670039F013 /* Buyer.app */;
 			productType = "com.apple.product-type.application";
 		};
 		0C8A7C821B6772670039F013 /* YiLinkerOnlineBuyerTests */ = {
@@ -1428,6 +1405,11 @@
 					0C8A7C6D1B6772670039F013 = {
 						CreatedOnToolsVersion = 6.4;
 						DevelopmentTeam = XY4U9PK7G5;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 					0C8A7C821B6772670039F013 = {
 						CreatedOnToolsVersion = 6.4;
@@ -1483,6 +1465,7 @@
 				0C9937651B750583000D6074 /* NewSellerCollectionViewCell.xib in Resources */,
 				0C2F44CD1B8576FE00021F45 /* Panton Light Italic.otf in Resources */,
 				0C8A7C7B1B6772670039F013 /* Images.xcassets in Resources */,
+				F7DC84E11BA00F7300D3878B /* SellerTableHeaderView.xib in Resources */,
 				0C374F311B88E3790050AE1D /* OrderSummaryTableViewCell.xib in Resources */,
 				F7CCDA8D1B943CBB000F5AD4 /* FollowedSellerTableViewCell.xib in Resources */,
 				0C2F44C41B8576FE00021F45 /* Panton Black.otf in Resources */,
@@ -1490,7 +1473,6 @@
 				0C2F44C31B8576FE00021F45 /* Black Italic.otf in Resources */,
 				0CB9DB071B6A1E6600F2CA13 /* StartPageStoryBoard.storyboard in Resources */,
 				26D54FE01B860CF400522398 /* TransactionViewController.xib in Resources */,
-				0C5111DA1B81CEFE002F0001 /* SellerTableHeaderView.xib in Resources */,
 				0C374F411B88E3790050AE1D /* FollowedSellerTableViewCell.xib in Resources */,
 				79A1C6F31B83574A0043AA36 /* ProductResultListCollectionViewCell.xib in Resources */,
 				7971F7471B862D3A00322861 /* SortTableViewCell.xib in Resources */,
@@ -1527,7 +1509,6 @@
 				F7DC7EE31BA1421F004F7FD4 /* SellerSubCategoryViewController.xib in Resources */,
 				0C99376E1B750583000D6074 /* ViewMoreFooterCollectionViewCell.xib in Resources */,
 				F7CCDA881B943CBB000F5AD4 /* CartProductAttributeViewController.xib in Resources */,
-				0C2670CD1B77290200394E29 /* GoogleService-Info.plist in Resources */,
 				0C2F44D11B8576FE00021F45 /* Panton SemiBold.otf in Resources */,
 				0C9937641B750583000D6074 /* LayoutHeaderCollectionViewCell.xib in Resources */,
 				79E68B831B8AEC85008626E4 /* PointsEarnedTableViewCell.xib in Resources */,
@@ -1582,7 +1563,6 @@
 				26D54FE81B86136300522398 /* TransactionTableViewCell.xib in Resources */,
 				961BE5AA1B994C4D00E8631A /* ResolutionCenterCell.xib in Resources */,
 				2614E64F1B88FC5C00EE8B35 /* TransactionDeliveryLog2TableViewCell.xib in Resources */,
-				F7CCDA8B1B943CBB000F5AD4 /* CheckoutContainerViewController.xib in Resources */,
 				0C374F2F1B88E3790050AE1D /* TotalTableViewCell.xib in Resources */,
 				0C374F341B88E3790050AE1D /* NewAddressTableViewCell.xib in Resources */,
 				F7CCDA8A1B943CBB000F5AD4 /* CategoriesViewController.xib in Resources */,
@@ -1592,6 +1572,7 @@
 				79AA08351B8F4E6300AF3AA4 /* CartProductAttributeTableViewCell.xib in Resources */,
 				0C9937681B750583000D6074 /* ProductWithCenterNameCollectionViewCell.xib in Resources */,
 				79E68BA51B8B4376008626E4 /* EditProfileTableViewController.xib in Resources */,
+				0C4E5CD41BA1873E0098224A /* RegisterModalViewController.xib in Resources */,
 				0C374F321B88E3790050AE1D /* ProfileViewController.xib in Resources */,
 				79E68BA71B8B4572008626E4 /* EditProfileAddPhotoTableViewCell.xib in Resources */,
 				793A899F1BA004550030FDC7 /* VerifyMobileNumberStatusViewController.xib in Resources */,
@@ -1606,6 +1587,7 @@
 				79E68B9D1B8B4270008626E4 /* ProfileSettingsTableViewCell.xib in Resources */,
 				26DFF6351B8791B5005D8EDE /* TransactionViews.xib in Resources */,
 				0C9937661B750583000D6074 /* NewSellerScrollableCollectionViewCell.xib in Resources */,
+				B7B1D8321BA15B0C006A5DF5 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1678,6 +1660,7 @@
 				96DEBC6D1B9F2731000ACFE7 /* ResolutionCenterModel.swift in Sources */,
 				B77B8DD11B9B554A0002C513 /* ContactListTVC.swift in Sources */,
 				0C9937541B750583000D6074 /* RoundedLabel.swift in Sources */,
+				0C4E5CD31BA1873E0098224A /* RegisterModalViewController.swift in Sources */,
 				0C1003F41B87629400CAA17A /* NewAddressTableViewCell.swift in Sources */,
 				79E68B911B8B0AE9008626E4 /* PointModel.swift in Sources */,
 				0C2670CF1B772E4B00394E29 /* Enums.swift in Sources */,
@@ -1991,7 +1974,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = YiLinkerOnlineBuyer/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Buyer;
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "YiLinkerOnlineBuyer/Resources/Helper/YiLinkerOnlineBuyer-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -2036,7 +2019,7 @@
 					"\"$(PODS_ROOT)/GoogleUtilities/Libraries\"",
 					"\"$(PODS_ROOT)/GoogleUtilities/Libraries\"",
 				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Buyer;
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "YiLinkerOnlineBuyer/Resources/Helper/YiLinkerOnlineBuyer-Bridging-Header.h";
 			};
