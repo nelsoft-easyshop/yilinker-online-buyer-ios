@@ -431,7 +431,7 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
                 if let val: AnyObject = self.dictionary["popularCategories"] {
                     footerView.target = "View More Popular Categories!"
                     footerView.targetType = TargetType.Category
-                    footerView.cellButton.setTitle("VIEW MORE CATEGORIES", forState: UIControlState.Normal)
+                    footerView.cellButton.setTitle("VIEW ALL CATEGORIES", forState: UIControlState.Normal)
                 }
             } else if self.layouts[indexPath.section] == Constants.HomePage.layoutFourKey {
                 
@@ -566,7 +566,16 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
     }
     
     func didSelectViewMoreWithtarget(target: String, targetType: TargetType) {
-        self.redirectToResultView(target, targetType: targetType)
+        if targetType == TargetType.Category {
+            self.redirectToCategoriesView(target, targetType: targetType)
+        } else {
+            self.redirectToResultView(target, targetType: targetType)
+        }
+    }
+    
+    func redirectToCategoriesView(target: String, targetType: TargetType) {
+        let categoryViewController = CategoriesViewController(nibName: "CategoriesViewController", bundle: nil)
+        self.navigationController?.pushViewController(categoryViewController, animated: true)
     }
     
     func redirectToResultView(target: String, targetType: TargetType) {

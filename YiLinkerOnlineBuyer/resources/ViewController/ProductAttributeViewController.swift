@@ -15,7 +15,7 @@ protocol ProductAttributeViewControllerDelegate {
 }
 
 class ProductAttributeViewController: UIViewController, UITableViewDelegate, ProductAttributeTableViewCellDelegate {
-
+    
     @IBOutlet weak var dimView: UIView!
     @IBOutlet weak var productImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
@@ -61,7 +61,7 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         stocksLabel.layer.borderWidth = 1.2
         stocksLabel.layer.borderColor = UIColor.grayColor().CGColor
         stocksLabel.layer.cornerRadius = 5
@@ -84,32 +84,32 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
         priceLabel.textColor = Constants.Colors.productPrice
         
     }
-
+    
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-//        if setTitle == "cart" {
-//            
-//            seeMoreLabel = UILabel(frame: CGRectMake(0, 0, buyItNowView.frame.size.width, buyItNowView.frame.size.height))
-//            seeMoreLabel.text = "PROCEED TO\nCHECKOUT"
-//        } else if setTitle == "buy" {
-//            self.checkoutButton.hidden = false
-//        } else {
-//            seeMoreLabel = UILabel(frame: CGRectMake((buyItNowView.frame.size.width / 2) - 60, 0, 90, buyItNowView.frame.size.height))
-//            seeMoreLabel.frame.origin.x = 0
-//            seeMoreLabel.frame.size.width = buyItNowView.frame.size.width
-//            seeMoreLabel.text = "BUY IT NOW"
-//            
-//            var seeMoreImageView = UIImageView(frame: CGRectMake(seeMoreLabel.frame.size.width, (seeMoreLabel.frame.size.height / 2) - 6, 13, 13))
-//            seeMoreImageView.image = UIImage(named: "buy")
-//            //            seeMoreLabel.addSubview(seeMoreImageView)
-//        }
-//        
-//        seeMoreLabel.numberOfLines = 2
-//        seeMoreLabel.textColor = .whiteColor()
-//        seeMoreLabel.textAlignment = .Center
-//        seeMoreLabel.font = UIFont.boldSystemFontOfSize(13.0)
-//        self.buyItNowView.addSubview(seeMoreLabel)
+        //        if setTitle == "cart" {
+        //
+        //            seeMoreLabel = UILabel(frame: CGRectMake(0, 0, buyItNowView.frame.size.width, buyItNowView.frame.size.height))
+        //            seeMoreLabel.text = "PROCEED TO\nCHECKOUT"
+        //        } else if setTitle == "buy" {
+        //            self.checkoutButton.hidden = false
+        //        } else {
+        //            seeMoreLabel = UILabel(frame: CGRectMake((buyItNowView.frame.size.width / 2) - 60, 0, 90, buyItNowView.frame.size.height))
+        //            seeMoreLabel.frame.origin.x = 0
+        //            seeMoreLabel.frame.size.width = buyItNowView.frame.size.width
+        //            seeMoreLabel.text = "BUY IT NOW"
+        //
+        //            var seeMoreImageView = UIImageView(frame: CGRectMake(seeMoreLabel.frame.size.width, (seeMoreLabel.frame.size.height / 2) - 6, 13, 13))
+        //            seeMoreImageView.image = UIImage(named: "buy")
+        //            //            seeMoreLabel.addSubview(seeMoreImageView)
+        //        }
+        //
+        //        seeMoreLabel.numberOfLines = 2
+        //        seeMoreLabel.textColor = .whiteColor()
+        //        seeMoreLabel.textAlignment = .Center
+        //        seeMoreLabel.font = UIFont.boldSystemFontOfSize(13.0)
+        //        self.buyItNowView.addSubview(seeMoreLabel)
         
         if setTitle == "cart" {
             buyItNowLabel.text = "PROCEED TO\n CHECKOUT"
@@ -202,7 +202,7 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
     }
     
     @IBAction func addToCartAction(sender: AnyObject) {
-
+        
         var selectionComplete: Bool = true
         
         for i in 0..<self.selectedId.count {
@@ -212,24 +212,18 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
         }
         
         if selectionComplete {
-            if SessionManager.isLoggedIn() {
-                let url: String = "http://online.api.easydeal.ph/api/v1/auth/cart/updateCartItem"
-                let quantity: Int = stocksLabel.text!.toInt()!
-                
-                let params: NSDictionary = ["access_token": SessionManager.accessToken(),
-                    "productId": self.productDetailsModel.id,
-                    "unitId": unitId,
-                    "quantity": String(quantity)]
-                
-                println(params)
-                
-                requestAddCartItem(url, params: params)
-            } else {
-                let alertController = UIAlertController(title: "Failed", message: "Please logged-in to add item in your cart.", preferredStyle: .Alert)
-                let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
-                alertController.addAction(defaultAction)
-                self.presentViewController(alertController, animated: true, completion: nil)
-            }
+            let url: String = APIAtlas.updateCart()
+            let quantity: Int = stocksLabel.text!.toInt()!
+            
+            let params: NSDictionary = ["access_token": SessionManager.accessToken(),
+                "productId": self.productDetailsModel.id,
+                "unitId": unitId,
+                "quantity": String(quantity)]
+            
+            println(params)
+            
+            requestAddCartItem(url, params: params)
+            
         } else {
             let alertController = UIAlertController(title: "Error", message: "Please complete the attributes.", preferredStyle: .Alert)
             let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
@@ -237,12 +231,13 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
             self.presentViewController(alertController, animated: true, completion: nil)
         }
     }
-
+    
     func dimViewAction(gesture: UIGestureRecognizer) {
         cancelAction(nil)
     }
     
     func buyItNowAction(gesture: UIGestureRecognizer) {
+        
         var selectionComplete: Bool = true
         
         for i in 0..<self.selectedId.count {
@@ -251,17 +246,9 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
             }
         }
         
-        if selectionComplete {
-            if SessionManager.isLoggedIn() {
-                hideSelf("buy")
-                delegate!.gotoCheckoutFromAttributes(self)
-            } else {
-                let alertController = UIAlertController(title: "Error", message: "Please complete the attributes.", preferredStyle: .Alert)
-                let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
-                alertController.addAction(defaultAction)
-                self.presentViewController(alertController, animated: true, completion: nil)
-            }
-        }
+        hideSelf("buy")
+        delegate!.gotoCheckoutFromAttributes(self)
+
     }
     
     // MARK: - Methods
@@ -272,7 +259,7 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
         var regex: String = ""
         
         regex += "("
-
+        
         for i in 0..<self.selectedCombination.count {
             if self.selectedCombination[i].toInt() != -1 {
                 regex += self.selectedCombination[i]
@@ -339,7 +326,7 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
             stocksLabel.alpha = 1.0
             enableButton(increaseButton)
             enableButton(decreaseButton)
-
+            
         }
         
     }
@@ -491,11 +478,11 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
                 
         })
     }
-
+    
     // MARK: - Delegates
     
     func passModel(#productDetailsModel: ProductDetailsModel, selectedValue: NSArray, selectedId: NSArray, unitIdIndex: Int, quantity: Int) {
-
+        
         setDetail("", title: productDetailsModel.title, price: productDetailsModel.productUnits[unitIdIndex].price)
         self.productDetailsModel = productDetailsModel
         self.attributes = productDetailsModel.attributes as [ProductAttributeModel]

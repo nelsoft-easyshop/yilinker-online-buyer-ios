@@ -59,8 +59,6 @@ class W_Contact: NSObject {
                     var profileImageUrl         : String = ""
                     var isOnline                : String = "0"
                     
-                    println(contact)
-                    
                     if let tempVar = contact["fullName"] as? String {
                         fullName = tempVar
                     }

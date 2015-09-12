@@ -39,6 +39,7 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
     var isEdit2: Bool = true
     
     var pickerView: UIPickerView = UIPickerView()
+    var addressCellReference = [NewAddressTableViewCell?]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -98,11 +99,11 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
             } else if indexPath.row == 3 {
                 
                 cell.rowTextField.text = self.addressModel.streetNumber
-                
+                cell.rowTitleLabel.required()
             } else if indexPath.row == 4 {
                 
                 cell.rowTextField.text = self.addressModel.streetName
-                
+                cell.rowTitleLabel.required()
             } else if indexPath.row == 5 {
                 
                 cell.rowTextField.text = self.addressModel.subdivision
@@ -122,7 +123,7 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
             } else if indexPath.row == 9 {
                 
                 cell.rowTextField.text = self.addressModel.zipCode
-                
+                cell.rowTitleLabel.required()
             } else {
                 
                 cell.rowTextField.text = self.addressModel.additionalInfo
@@ -130,6 +131,13 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
             }
         }
         
+        if indexPath.row == 3 {
+            cell.rowTitleLabel.required()
+        } else if indexPath.row == 4 {
+            cell.rowTitleLabel.required()
+        } else if indexPath.row == 9 {
+            cell.rowTitleLabel.required()
+        }
         
         if indexPath.row == 6 || indexPath.row == 7 || indexPath.row == 8 {
             var selected: Int = 0
@@ -183,6 +191,9 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
         if indexPath.row == self.activeTextField {
             cell.rowTextField.becomeFirstResponder()
         }
+        
+        addressCellReference.append(cell)
+        assert(addressCellReference[indexPath.row] == cell)
         
         return cell
     }
@@ -302,8 +313,10 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
     }
     
     func getTextAtIndex(index: Int) -> String {
-        let row = NSIndexPath(forItem: index, inSection: 0)
-        let cell: NewAddressTableViewCell = tableView.cellForRowAtIndexPath(row) as! NewAddressTableViewCell
+        // Fix for Issue #303
+        //let row = NSIndexPath(forItem: index, inSection: 0)
+        let cell: NewAddressTableViewCell = //tableView.cellForRowAtIndexPath(row) as! NewAddressTableViewCell
+            addressCellReference[index]!
         return cell.rowTextField.text
     }
     

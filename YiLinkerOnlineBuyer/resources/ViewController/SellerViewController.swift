@@ -16,6 +16,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
     var followSellerModel: FollowedSellerModel?
     let sellerTableHeaderView: SellerTableHeaderView = SellerTableHeaderView.loadFromNibNamed("SellerTableHeaderView", bundle: nil) as! SellerTableHeaderView
     var is_successful: Bool = false
+    
     var hud: MBProgressHUD?
     
     var sellerId: Int = 0
@@ -69,6 +70,12 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         sellerTableHeaderView.delegate = self
         
         sellerTableHeaderView.coverPhotoImageView.sd_setImageWithURL(self.sellerModel!.coverPhoto, placeholderImage: UIImage(named: "dummy-placeholder"))
+        
+        if SessionManager.isLoggedIn() {
+            self.sellerTableHeaderView.followButton.enabled = true
+        } else {
+             self.sellerTableHeaderView.followButton.enabled = false
+        }
         
         if self.is_successful {
             self.sellerTableHeaderView.followButton.layer.borderColor = Constants.Colors.grayLine.CGColor
@@ -154,6 +161,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func fireFollowSeller() {
+        
         self.showHUD()
         let manager = APIManager.sharedInstance
         let parameters: NSDictionary = ["sellerId" : sellerId, "access_token" : SessionManager.accessToken()];
@@ -301,6 +309,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        
         if indexPath.section == 1 {
             return 174
         } else if indexPath.section == 2 {
@@ -378,8 +387,11 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func redirectToResultView(target: String) {
-        let resultViewController: ResultViewController = ResultViewController(nibName: "ResultViewController", bundle: nil)
+        /*let resultViewController: ResultViewController = ResultViewController(nibName: "ResultViewController", bundle: nil)
         self.navigationController!.pushViewController(resultViewController, animated: true)
+        */
+        let sellerCategoryViewController: SellerCategoryViewController = SellerCategoryViewController(nibName: "SellerCategoryViewController", bundle: nil)
+        self.navigationController!.pushViewController(sellerCategoryViewController, animated: true)
     }
     
     //MARK: Show HUD

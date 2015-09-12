@@ -29,6 +29,7 @@ struct APIAtlas {
         if SessionManager.isLoggedIn() {
             return "auth/payment/doPaymentCod"
         } else {
+            SessionManager.loadCookies()
             return "payment/doPaymentCod"
         }
     }
@@ -37,6 +38,7 @@ struct APIAtlas {
         if SessionManager.isLoggedIn() {
             return "auth/payment/doPesoPay"
         } else {
+            SessionManager.loadCookies()
             return "payment/doPesoPay"
         }
     }
@@ -45,7 +47,35 @@ struct APIAtlas {
         if SessionManager.isLoggedIn() {
             return "auth/payment/checkoutOverview"
         } else {
+            SessionManager.loadCookies()
             return "payment/checkoutOverview"
+        }
+    }
+    
+    static func cart() -> String {
+        if SessionManager.isLoggedIn() {
+            return "auth/cart/getCart"
+        } else {
+            SessionManager.loadCookies()
+            return "cart/getCart"
+        }
+    }
+    
+    static func updateCart() -> String {
+        if SessionManager.isLoggedIn() {
+            return "auth/cart/updateCartItem"
+        } else {
+            SessionManager.loadCookies()
+            return "cart/updateCartItem"
+        }
+    }
+    
+    static func updateCheckout() -> String {
+        if SessionManager.isLoggedIn() {
+            return "auth/cart/cartToCheckout"
+        } else {
+            SessionManager.loadCookies()
+            return "cart/cartToCheckout"
         }
     }
     
@@ -77,7 +107,7 @@ struct APIAtlas {
     static let citiesUrl = "location/getChildCities"
     static let barangay = "location/getBarangaysByCity"
     static let addAddressUrl = "auth/address/addNewAddress"
-    static let updateCheckout = "auth/cart/cartToCheckout"
+    static let updateCheckoutUrl = "auth/cart/cartToCheckout"
     static let updateGuestCheckout = "cart/cartToCheckout"
     static let editAddress = "auth/address/editUserAddress"
     static let setCheckoutAddressUrl = "auth/user/setAddress"
