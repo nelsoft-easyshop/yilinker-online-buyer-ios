@@ -137,6 +137,7 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
                 self.transactionSectionView.leaveFeedbackButton.borderWidth = 1
                 self.transactionSectionView.leaveFeedbackButton.setTitle("LEAVE FEEDBACK FOR SELLER", forState: UIControlState.Normal)
                 self.transactionSectionView.leaveFeedbackButton.setTitleColor(Constants.Colors.appTheme, forState: UIControlState.Normal)
+                self.transactionSectionView.leaveFeedbackButton.tag = self.table[section].sellerIdForFeedback
                 self.viewLeaveFeedback = true
             }
             self.transactionSectionView.messageButton.backgroundColor = Constants.Colors.appTheme
@@ -323,18 +324,18 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
     
     // MARK: - Actions
     
-    func leaveFeedback() {
-        let feedbackView = TransactionLeaveFeedbackViewController(nibName: "TransactionLeaveFeedbackViewController", bundle: nil)
+    func leaveFeedback(tag: Int) {
+        let feedbackView = TransactionLeaveSellerFeedbackViewController(nibName: "TransactionLeaveSellerFeedbackViewController", bundle: nil)
         feedbackView.edgesForExtendedLayout = UIRectEdge.None
-        feedbackView.rateSeller = true
+        feedbackView.sellerId = tag
         self.navigationController?.pushViewController(feedbackView, animated: true)
     }
     
     //MARK: View sellers feedback
-    func leaveSellerFeedback(title: String) {
-        println("\(self.transactionSectionView.leaveFeedbackButton.titleLabel?.text)")
+    func leaveSellerFeedback(title: String, tag: Int) {
+        println("\(self.transactionSectionView.leaveFeedbackButton.titleLabel?.text) \(tag)")
         if title == "LEAVE FEEDBACK FOR SELLER" {
-            self.leaveFeedback()
+            self.leaveFeedback(tag)
         } else {
             self.showView()
             var attributeModal = ViewFeedBackViewController(nibName: "ViewFeedBackViewController", bundle: nil)
@@ -370,7 +371,7 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
                         arr.append(self.tableSectionContents)
                     }
                 }
-                self.table.append(TransactionDetailsModel(sellerName: self.transactionDetailsModel!.sellerStore[a], sellerContact: self.transactionDetailsModel!.sellerContactNumber[a], id: self.transactionDetailsModel.sellerId[a], feedback: self.transactionDetailsModel.hasFeedback[a], transactions: arr))
+                self.table.append(TransactionDetailsModel(sellerName: self.transactionDetailsModel!.sellerStore[a], sellerContact: self.transactionDetailsModel!.sellerContactNumber[a], id: self.transactionDetailsModel.sellerId[a], sellerIdForFeedback: self.transactionDetailsModel.sellerId[a], feedback: self.transactionDetailsModel.hasFeedback[a], transactions: arr))
             }
 
             self.tableView.reloadData()

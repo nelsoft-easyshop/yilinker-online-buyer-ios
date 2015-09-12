@@ -108,6 +108,7 @@ struct APIAtlas {
     //Transactions
     static let transactionLogs = "auth/getTransactionList?access_token="
     static let transactionDetails = "auth/getTransaction?access_token="
+    static let transactionLeaveSellerFeedback = "auth/feedback/addUserFeedback?access_token="
 }
 
 class APIManager: AFHTTPSessionManager {

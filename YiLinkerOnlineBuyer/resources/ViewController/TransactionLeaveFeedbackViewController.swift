@@ -24,6 +24,7 @@ class TransactionLeaveFeedbackViewController: UIViewController {
     
     var rateButtons: [UIButton] = []
     var rate: Int = 0
+    var sellerId = 0
     var rateSeller = false
     
     override func viewDidLoad() {
@@ -32,6 +33,7 @@ class TransactionLeaveFeedbackViewController: UIViewController {
         // Do any additional setup after loading the view.
         rateButtons = [star1Button, star2Button, star3Button, star4Button, star5Button]
         self.title = "Feedback"
+        println("\(self.sellerId)")
         
         self.typingAreaView.layer.borderWidth = 1.0
         self.typingAreaView.layer.borderColor = UIColor.lightGrayColor().CGColor
@@ -109,6 +111,11 @@ class TransactionLeaveFeedbackViewController: UIViewController {
             
             self.rateButtons[i].frame.size = CGSize(width: 35, height: 30)
         }
+    }
+    
+    func fireSellerFeedback() {
+        
+        
     }
     
 }

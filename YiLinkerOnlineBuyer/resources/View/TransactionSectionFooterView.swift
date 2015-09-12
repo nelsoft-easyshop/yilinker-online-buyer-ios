@@ -9,7 +9,7 @@
 import UIKit
 
 protocol TransactionSectionFooterViewDelegate {
-    func leaveSellerFeedback(title: String)
+    func leaveSellerFeedback(title: String, tag: Int)
 }
 
 class TransactionSectionFooterView: UIView {
@@ -36,7 +36,8 @@ class TransactionSectionFooterView: UIView {
     @IBAction func leaveFeedback(sender: AnyObject) {
         println("leave feedback \(sender.titleLabel!!.text)")
         var label = sender.titleLabel!!.text
-        self.delegate?.leaveSellerFeedback(label!)
+        var tag = sender.tag
+        self.delegate?.leaveSellerFeedback(label!, tag: tag)
     }
     
     @IBAction func message(sender: AnyObject) {

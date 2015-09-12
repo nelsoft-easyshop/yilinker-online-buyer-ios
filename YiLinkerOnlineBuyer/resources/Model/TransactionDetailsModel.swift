@@ -65,13 +65,15 @@ class TransactionDetailsModel: NSObject {
     var sellerName: String = ""
     var sellerContact: String = ""
     var id: Int = 0
+    var sellerIdForFeedback: Int = 0
     var feedback: Bool = false
     var transactions: [TransactionDetailsProductsModel] = []
     
-    init(sellerName: String, sellerContact: String, id: Int, feedback: Bool, transactions: [TransactionDetailsProductsModel]) {
+    init(sellerName: String, sellerContact: String, id: Int, sellerIdForFeedback: Int, feedback: Bool, transactions: [TransactionDetailsProductsModel]) {
         self.sellerName = sellerName
         self.sellerContact = sellerContact
         self.id = id
+        self.sellerIdForFeedback = sellerIdForFeedback
         self.feedback = feedback
         self.transactions = transactions
     }
