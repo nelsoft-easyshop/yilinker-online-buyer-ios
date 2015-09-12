@@ -52,33 +52,7 @@ class TransactionLeaveSellerFeedbackViewController: UIViewController {
         self.typingAreaView.layer.borderWidth = 1.0
         self.typingAreaView.layer.borderColor = UIColor.lightGrayColor().CGColor
         self.inputTextField.becomeFirstResponder()
-        var jsonObject = self.rating(5, message: "Message 1", ratingComm: 4, messageComm: "Message 2")
-        println("rating sample format \(jsonObject)")
-        
-        //{"sellerId":"", "orderId":"", "title":"", "feedback":"", "ratings":[{"rateType":"1", "rating":"2.50"},{"rateType":"2", "rating":"4.50"}]}
-        let jsonObject2: [String: AnyObject] = [
-            "sellerId": 2,
-            "orderId": 176,
-            "title": "Sample title",
-            "feedback": "Sample feedback",
-            "ratings": [[
-                "ratingType": 1,
-                "rating": 5
-                ], [
-                    "ratingType": 2,
-                    "rating": 4
-                ]]
-        ]
-        
-        println(jsonObject2)
-        
-        let manager = APIManager.sharedInstance
-        manager.POST(APIAtlas.transactionLeaveSellerFeedback+"\(SessionManager.accessToken())", parameters: jsonObject2 as NSDictionary, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            println(responseObject.description)
-            }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
-             println(error.description)
-        })
+
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -135,7 +109,7 @@ class TransactionLeaveSellerFeedbackViewController: UIViewController {
         } else if self.inputTextField.text == "" {
             showAlert("Feedback", message: "Please send a feedback.")
         } else {
-            navigationController?.popViewControllerAnimated(true)
+            self.fireSellerFeedback()
             //            showAlert(String(rate), message: self.inputTextField.text)
            
         }
@@ -162,9 +136,9 @@ class TransactionLeaveSellerFeedbackViewController: UIViewController {
                 self.rateButtons[i].setImage(UIImage(named: "rating"), forState: .Normal)
             }
             
-            
             self.rateButtons[i].frame.size = CGSize(width: 35, height: 30)
         }
+        
     }
     
     func updateCommRate(index: Int) {
@@ -185,27 +159,46 @@ class TransactionLeaveSellerFeedbackViewController: UIViewController {
     
     func fireSellerFeedback() {
         
-        
-    }
-    
-    //MARK: Format rating to json
-    func rating(rating: Int, message: String, ratingComm: Int, messageComm: String) -> [AnyObject]{
-        
-       // {"sellerId":"", "orderId":"", "title":"", "feedback":"", "ratings":[{"rateType":"1", "rating":"2.50"},{"rateType":"2", "rating":"4.50"}]}
-        let jsonObject: [AnyObject]  = [
-            [
-                "rateType": "1",
-                "rating": rating,
-                "message": message
-            ], [
-                "rateType": "2",
-                "rating": ratingComm,
-                "message": messageComm
-            ], ["message" : message]
+        let jsonObject2: [String: AnyObject] = [
+            "sellerId": 2,
+            "orderId": 176,
+            "title": "Seller Feedback",
+            "feedback": self.inputTextField.text,
+            "ratings": [[
+                "ratingType": 1,
+                "rating": self.rate
+                ], [
+                    "ratingType": 2,
+                    "rating": self.rateComm
+                ]]
         ]
         
-        return jsonObject
+        let manager = APIManager.sharedInstance
+        manager.POST(APIAtlas.transactionLeaveSellerFeedback+"\(SessionManager.accessToken())", parameters: jsonObject2 as NSDictionary, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            println(responseObject.description)
+                if responseObject["isSuccessful"] as! Bool {
+                    self.navigationController?.popViewControllerAnimated(true)
+                } else {
+                    self.showAlert(title: "Feedback", message: responseObject["message"] as! String)
+                }
+            }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
+                println(error.description)
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                if task.statusCode == 404 || task.statusCode == 400 {
+                    let data = error.userInfo as! Dictionary<String, AnyObject>
+                    self.showAlert(title: "Feedback", message: data["message"] as! String)
+                } else {
+                   self.showAlert(title: "Feedback", message: "Something went wrong.")
+                }
+        })
+    }
+    
+    func showAlert(#title: String!, message: String!) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+        let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+        alertController.addAction(defaultAction)
+        presentViewController(alertController, animated: true, completion: nil)
     }
 
-    
 }
