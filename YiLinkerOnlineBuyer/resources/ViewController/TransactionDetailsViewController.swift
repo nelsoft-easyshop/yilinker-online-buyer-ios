@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TransactionDetailsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource , TransactionSectionFooterViewDelegate, ViewFeedBackViewControllerDelegate{
+class TransactionDetailsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource , TransactionSectionFooterViewDelegate, ViewFeedBackViewControllerDelegate, TransactionDeliveryStatusViewDelegate {
 
     @IBOutlet weak var tableView: UITableView!
     
@@ -244,6 +244,7 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
         if self.transactionDeliveryStatusView == nil {
             self.transactionDeliveryStatusView = XibHelper.puffViewWithNibName("TransactionViews", index: 3) as! TransactionDeliveryStatusView
             self.transactionDeliveryStatusView.frame.size.width = self.view.frame.size.width
+            self.transactionDeliveryStatusView.delegate = self
         }
         return self.transactionDeliveryStatusView
     }
@@ -359,6 +360,8 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
         manager.GET(urlEncoded!, parameters: nil, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             self.transactionDetailsModel = TransactionDetailsModel.parseDataFromDictionary(responseObject as! NSDictionary)
+            
+            println(responseObject.description)
           
             self.cellCount = self.transactionDetailsModel!.sellerId.count
             self.cellSection = self.transactionDetailsModel!.sellerId.count
@@ -416,7 +419,35 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
             self.dimView.layer.zPosition = -1
         })
     }
-
+    
+    //MARK: SMS and Phone call
+    func pickupSmsAction() {
+         UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Send SMS action.", title: "SMS pick-up")
+    }
+    
+    func pickupCallAction() {
+        if UIApplication.sharedApplication().canOpenURL(NSURL(string: "tel:9809088798")!) {
+            println("can call")
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Call number action.", title: "Call Pick-up")
+        } else {
+            println("cant make a call")
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Cannot make a call", title: "Call Pick-up")
+        }
+    }
+    
+    func deliverySmsAction() {
+         UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Send SMS action.", title: "SMS Pick-up")
+    }
+    
+    func deliveryCallAction() {
+        if UIApplication.sharedApplication().canOpenURL(NSURL(string: "tel:9809088798")!) {
+            println("can call")
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Call number action.", title: "Call Delivery")
+        } else {
+            println("cant make a call")
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Cannot make a call", title: "Call Delivery")
+        }
+    }
 }
 
 //MARK: Number Formatter

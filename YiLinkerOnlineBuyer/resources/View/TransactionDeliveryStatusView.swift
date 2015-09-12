@@ -8,6 +8,13 @@
 
 import UIKit
 
+protocol TransactionDeliveryStatusViewDelegate {
+    func pickupSmsAction()
+    func pickupCallAction()
+    func deliverySmsAction()
+    func deliveryCallAction()
+}
+
 class TransactionDeliveryStatusView: UIView {
 
     
@@ -24,6 +31,7 @@ class TransactionDeliveryStatusView: UIView {
     
     //@IBOutlet weak var arrowImageView: UIImageView!
 
+    var delegate: TransactionDeliveryStatusViewDelegate?
     
     override func awakeFromNib() {
         
@@ -34,19 +42,23 @@ class TransactionDeliveryStatusView: UIView {
     // MARK: - Actions
     
     func pickupSmsAction(gesture: UIGestureRecognizer) {
+        self.delegate?.pickupSmsAction()
         println("pickup sms")
     }
     
     func pickupCallAction(gesture: UIGestureRecognizer) {
         println("pickup call")
+        self.delegate?.pickupCallAction()
     }
     
     func deliverySmsAction(gesture: UIGestureRecognizer) {
         println("delivery sms")
+        self.delegate?.deliverySmsAction()
     }
     
     func deliveryCallAction(gesture: UIGestureRecognizer) {
         println("delivery call")
+        self.delegate?.deliveryCallAction()
     }
     
     func arrowImageViewAction(gesture: UIGestureRecognizer) {

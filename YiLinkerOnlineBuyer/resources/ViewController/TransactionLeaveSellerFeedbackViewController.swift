@@ -33,16 +33,12 @@ class TransactionLeaveSellerFeedbackViewController: UIViewController {
     var rate: Int = 0
     var rateComm: Int = 0
     var sellerId = 0
+    var orderId: Int = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
-        if UIApplication.sharedApplication().canOpenURL(NSURL(string: "tel:9809088798")!) {
-            println("can call")
-        } else {
-            println("cant make a call")
-        }
         
         rateButtons = [star1Button, star2Button, star3Button, star4Button, star5Button]
         rateCommButtons = [starComm1Button, starComm2Button, starComm3Button, starComm4Button, starComm5Button]
