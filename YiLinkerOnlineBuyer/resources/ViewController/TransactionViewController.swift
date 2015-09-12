@@ -54,8 +54,9 @@ class TransactionViewController: UIViewController {
         deselectedImages = ["all", "pending", "onDelivery", "forFeedback", "support"]
         
         addViewsActions()
-        
+    
         self.fireTransaction("all")
+        
     }
     
     // MARK: - Table View Data Source

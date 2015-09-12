@@ -8,6 +8,13 @@
 
 import UIKit
 
+protocol TransactionDeliveryStatusViewDelegate {
+    func pickupSmsAction()
+    func pickupCallAction()
+    func deliverySmsAction()
+    func deliveryCallAction()
+}
+
 class TransactionDeliveryStatusView: UIView {
 
     
@@ -22,8 +29,9 @@ class TransactionDeliveryStatusView: UIView {
     @IBOutlet weak var deliverySms: UIImageView!
     @IBOutlet weak var deliveryCall: UIImageView!
     
-    @IBOutlet weak var arrowImageView: UIImageView!
+    //@IBOutlet weak var arrowImageView: UIImageView!
 
+    var delegate: TransactionDeliveryStatusViewDelegate?
     
     override func awakeFromNib() {
         
@@ -34,19 +42,23 @@ class TransactionDeliveryStatusView: UIView {
     // MARK: - Actions
     
     func pickupSmsAction(gesture: UIGestureRecognizer) {
+        self.delegate?.pickupSmsAction()
         println("pickup sms")
     }
     
     func pickupCallAction(gesture: UIGestureRecognizer) {
         println("pickup call")
+        self.delegate?.pickupCallAction()
     }
     
     func deliverySmsAction(gesture: UIGestureRecognizer) {
         println("delivery sms")
+        self.delegate?.deliverySmsAction()
     }
     
     func deliveryCallAction(gesture: UIGestureRecognizer) {
         println("delivery call")
+        self.delegate?.deliveryCallAction()
     }
     
     func arrowImageViewAction(gesture: UIGestureRecognizer) {
@@ -62,7 +74,7 @@ class TransactionDeliveryStatusView: UIView {
         self.pickupCall.addGestureRecognizer(tap("pickupCallAction:"))
         self.deliverySms.addGestureRecognizer(tap("deliverySmsAction:"))
         self.deliveryCall.addGestureRecognizer(tap("deliveryCallAction:"))
-        self.arrowImageView.addGestureRecognizer(tap("arrowImageViewAction:"))
+       // self.arrowImageView.addGestureRecognizer(tap("arrowImageViewAction:"))
     }
     
     func tap(action: Selector) -> UITapGestureRecognizer {
