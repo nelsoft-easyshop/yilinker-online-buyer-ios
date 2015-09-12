@@ -52,6 +52,12 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
     
     var hud: MBProgressHUD?
     
+    var totalResultCount: Int = -1
+    
+    var page:Int = 0
+    
+    var requestSuggestionSearchUrl: String = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -149,6 +155,7 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
     
     func passCategoryID(id: Int) {
         if Reachability.isConnectedToNetwork() {
+            requestSuggestionSearchUrl = "\(APIAtlas.productList)?categoryId=\(id)"
             requestSearchDetails("\(APIAtlas.productList)?categoryId=\(id)", params: nil)
         } else {
             showAlert("Connection Unreachable", message: "Cannot retrieve data. Please check your internet connection.")
@@ -159,38 +166,56 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
         self.searchSuggestion = searchSuggestion
         
         if Reachability.isConnectedToNetwork() {
-           requestSearchDetails(searchSuggestion.searchUrl, params: nil)
+            requestSuggestionSearchUrl = searchSuggestion.searchUrl
+           requestSearchDetails(requestSuggestionSearchUrl, params: nil)
         } else {
             showAlert("Connection Unreachable", message: "Cannot retrieve data. Please check your internet connection.")
         }
     }
     
     func requestSearchDetails(url: String, params: NSDictionary!) {
-        if( initialParameters == nil ) {
-            initialParameters = (targetUrl: url, parameters: params)
-        }
-        
-        showLoader()
-        
-        manager.GET(url, parameters: params, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in print(responseObject as! NSDictionary)
-            if responseObject.objectForKey("error") != nil {
-                self.requestRefreshToken(url, params: params)
-            } else {
-                self.populateTableView(responseObject)
+        if collectionViewData.count != (totalResultCount + 15){
+            println("\(collectionViewData.count) \(totalResultCount)")
+            
+            page++
+            
+            if( initialParameters == nil ) {
+                initialParameters = (targetUrl: url, parameters: params)
             }
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                self.showAlert("Error", message: "Something went wrong. . .")
-                self.dismissLoader()
-        })
+            
+            showLoader()
+            
+            manager.GET(url, parameters: params, success: {
+                (task: NSURLSessionDataTask!, responseObject: AnyObject!) in print(responseObject as! NSDictionary)
+                
+                println(responseObject)
+                if responseObject.objectForKey("error") != nil {
+                    self.requestRefreshToken(url, params: params)
+                } else {
+                    self.populateTableView(responseObject)
+                }
+                }, failure: {
+                    (task: NSURLSessionDataTask!, error: NSError!) in
+                    self.showAlert("Error", message: "Something went wrong. . .")
+                    println(error)
+                    self.dismissLoader()
+            })
+        } else {
+            showAlert("Product List", message: "No more results.")
+        }
     }
     
     // MARK: Methods Updating Values
     
     func populateTableView(responseObject: AnyObject) {
-        collectionViewData.removeAll(keepCapacity: false)
-        if let value: AnyObject = responseObject["data"] {
+        if let value: NSDictionary = responseObject["data"] as? NSDictionary{
+            
+            if let value: AnyObject = value["totalResultCount"] {
+                if value as! NSObject != NSNull() {
+                    totalResultCount = value as! Int
+                }
+            }
+            
             for subValue in value["products"] as! NSArray {
                 println(subValue)
                 let model: SearchResultModel = SearchResultModel.parseDataWithDictionary(subValue as! NSDictionary)
@@ -379,10 +404,13 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
                 self.dimView.hidden = true
         })
 
+        page = 0
+        collectionViewData.removeAll(keepCapacity: false)
+        resultCollectionView.reloadData()
         if Reachability.isConnectedToNetwork() {
             let sortParameterSelection = sortParameter[indexPath.row]
             if initialParameters != nil && initialParameters!.targetUrl != "" {
-                let requestSuggestionSearchUrl = "\(initialParameters!.targetUrl)&\(sortParameterSelection)"
+                requestSuggestionSearchUrl = "\(initialParameters!.targetUrl)&\(sortParameterSelection)"
                 NSLog(requestSuggestionSearchUrl)
                 requestSearchDetails(requestSuggestionSearchUrl, params: initialParameters!.parameters)
             }/* else {
@@ -393,6 +421,20 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
             resultCollectionView.setContentOffset(CGPointZero, animated: true)
         } else {
             showAlert("Connection Unreachable", message: "Cannot retrieve data. Please check your internet connection.")
+        }
+    }
+    
+    func scrollViewDidEndDragging(aScrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        var offset: CGPoint = aScrollView.contentOffset
+        var bounds: CGRect = aScrollView.bounds
+        var size: CGSize = aScrollView.contentSize
+        var inset: UIEdgeInsets = aScrollView.contentInset
+        var y: CGFloat = offset.y + bounds.size.height - inset.bottom
+        var h: CGFloat = size.height
+        var reload_distance: CGFloat = 10
+        var temp: CGFloat = h + reload_distance
+        if y > temp {
+            requestSearchDetails(requestSuggestionSearchUrl, params: NSDictionary(dictionary: ["page": page]))
         }
     }
     
