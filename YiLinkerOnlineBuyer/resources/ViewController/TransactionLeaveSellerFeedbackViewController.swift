@@ -156,16 +156,16 @@ class TransactionLeaveSellerFeedbackViewController: UIViewController {
     func fireSellerFeedback() {
         
         let jsonObject2: [String: AnyObject] = [
-            "sellerId": 2,
-            "orderId": 176,
+            "sellerId": "\(2)",
+            "orderId": "\(176)",
             "title": "Seller Feedback",
             "feedback": self.inputTextField.text,
             "ratings": [[
-                "ratingType": 1,
-                "rating": self.rate
+                "rateType": 1,
+                "rating": "\(self.rate)"
                 ], [
-                    "ratingType": 2,
-                    "rating": self.rateComm
+                    "rateType": 2,
+                    "rating": "\(self.rateComm)"
                 ]]
         ]
         

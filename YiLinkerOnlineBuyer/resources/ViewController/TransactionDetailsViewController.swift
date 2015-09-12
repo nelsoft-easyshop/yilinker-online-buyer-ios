@@ -137,11 +137,12 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
                 self.transactionSectionView.leaveFeedbackButton.borderWidth = 1
                 self.transactionSectionView.leaveFeedbackButton.setTitle("LEAVE FEEDBACK FOR SELLER", forState: UIControlState.Normal)
                 self.transactionSectionView.leaveFeedbackButton.setTitleColor(Constants.Colors.appTheme, forState: UIControlState.Normal)
-                self.transactionSectionView.leaveFeedbackButton.tag = self.table[section].sellerIdForFeedback
                 self.viewLeaveFeedback = true
             }
+            self.transactionSectionView.leaveFeedbackButton.tag = self.table[section].sellerIdForFeedback
             self.transactionSectionView.messageButton.backgroundColor = Constants.Colors.appTheme
             self.transactionSectionView.sellerNameLabel.text = self.table[section].sellerName
+            self.transactionSectionView.sellerNameLabel.tag = self.table[section].sellerIdForFeedback
             self.transactionSectionView.sellerContactNumber.text = self.table[section].sellerContact
         }
         
@@ -337,10 +338,13 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
         println("\(self.transactionSectionView.leaveFeedbackButton.titleLabel?.text) \(tag)")
         if title == "LEAVE FEEDBACK FOR SELLER" {
             self.leaveFeedback(tag)
+            println("leave feedback \(tag)")
         } else {
             self.showView()
             var attributeModal = ViewFeedBackViewController(nibName: "ViewFeedBackViewController", bundle: nil)
             attributeModal.delegate = self
+            attributeModal.sellerId = tag
+            println("view feedback \(tag)")
             attributeModal.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
             attributeModal.providesPresentationContextTransitionStyle = true
             attributeModal.definesPresentationContext = true

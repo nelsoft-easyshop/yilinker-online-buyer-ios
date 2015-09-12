@@ -72,7 +72,7 @@ class ViewFeedBackViewController: UIViewController, UITableViewDelegate, UITable
         let cell: ReviewTableViewCell = self.ratingAndReviewsTableView.dequeueReusableCellWithIdentifier(reviewTableViewCellIdentifier, forIndexPath: indexPath) as! ReviewTableViewCell
         cell.delegate = self
         if(self.sellerModel != nil) {
-            let reviewModel: ProductReviewsModel = self.sellerModel!.reviews[indexPath.row]
+            let reviewModel: ProductReviewsModel = self.sellerModel!.reviews[indexPath.section]
             cell.messageLabel.text = reviewModel.review
             cell.nameLabel.text = reviewModel.fullName
             var strImageUrl = reviewModel.profileImageUrl
@@ -86,7 +86,7 @@ class ViewFeedBackViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
+        return 1
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -106,14 +106,14 @@ class ViewFeedBackViewController: UIViewController, UITableViewDelegate, UITable
     func fireSellerFeedback() {
         self.showHUD()
         let manager = APIManager.sharedInstance
-        println(sellerId)
+        println("seller id view feedback \(sellerId)")
         let parameters: NSDictionary = ["sellerId" : self.sellerId];
         manager.POST("\(APIAtlas.buyerSellerFeedbacks)?access_token=\(SessionManager.accessToken())", parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             println(responseObject["isSuccessful"])
             if responseObject["isSuccessful"] as! Bool {
                 self.sellerModel = SellerModel.parseSellerReviewsDataFromDictionary(responseObject as! NSDictionary)
-                println(self.sellerModel?.reviews.count)
+                println(self.sellerModel?.reviews[1].fullName)
                 self.setRating(self.sellerModel!.rating)
                 self.generalRatingLabel.text = "\(self.sellerModel!.rating)"
                 self.ratingAndReviewsTableView.reloadData()
