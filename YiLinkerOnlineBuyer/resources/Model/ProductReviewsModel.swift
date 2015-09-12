@@ -21,7 +21,7 @@ class ProductReviewsModel {
     var dateAdded: String = ""
     
     //seller
-    var ratingSellerReview: Int = 0
+    var ratingSellerReview: String = ""
     var imageUrl: String = ""
     
     class func parseProductReviesModel(reviews: NSDictionary) -> ProductReviewsModel! {
@@ -88,12 +88,26 @@ class ProductReviewsModel {
         
         var model = ProductReviewsModel()
         if reviews.isKindOfClass(NSDictionary) {
+            model.ratingSellerReview = reviews["averageRating"] as! String
+            model.fullName = reviews["fullName"] as! String
+            model.review = reviews["feedback"] as! String
+            model.imageUrl = reviews["profileImageUrl"] as! String
             
-            model.ratingSellerReview = reviews["rating"] as! Int
-            model.fullName = reviews["name"] as! String
-            model.review = reviews["message"] as! String
-            model.imageUrl = reviews["imageUrl"] as! String
+        }
+        
+        return model
+    }
+    
+    class func parseSellerProductReviewsModel(dictionary: NSDictionary) -> ProductReviewsModel! {
+        
+        var model = ProductReviewsModel()
             
+        if dictionary.isKindOfClass(NSDictionary) {
+            model.ratingSellerReview = dictionary["averageRating"] as! String
+            println("\(model.ratingSellerReview)")
+            model.fullName = dictionary["fullName"] as! String
+            model.review = dictionary["feedback"] as! String
+            model.imageUrl = dictionary["profileImageUrl"] as! String
         }
         
         return model

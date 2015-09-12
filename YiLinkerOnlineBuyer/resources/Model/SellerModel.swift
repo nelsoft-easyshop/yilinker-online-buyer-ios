@@ -34,7 +34,7 @@ class SellerModel: NSObject {
     var store_address: String = ""
     
     //For feed back seller reviews
-    var rating: String = ""
+    var rating: Int = 0
     var image_url: NSURL = NSURL(string: "")!
     var user_rating: String = ""
     var message: String = ""
@@ -89,7 +89,7 @@ class SellerModel: NSObject {
         self.store_address = store_address
     }
     
-    init(rating : String, product_reviews: [ProductReviewsModel]){
+    init(rating : Int, product_reviews: [ProductReviewsModel]){
         self.reviews = product_reviews
         self.rating = rating
     }
@@ -217,7 +217,7 @@ class SellerModel: NSObject {
                     sellerProductModel.append(productModel)
                 }
             }
-            
+            /*
             var myArrayOfDictRatings: NSArray = [
                 ["name": "Alvin Tandoc",
                     "imageUrl": "https://c1.staticflickr.com/7/6149/6196728559_c3a57d2711_b.jpg",
@@ -237,11 +237,13 @@ class SellerModel: NSObject {
                     "message": "The item is damaged!"]
 
             ]
+            */
+            //var dictReviews:NSDictionary = ["reviews" : myArrayOfDictRatings]
+            /*
+            var reviewArray: NSArray = value["reviews"] as! NSArray
             
-            var dictReviews:NSDictionary = ["reviews" : myArrayOfDictRatings]
-            
-            if let val: AnyObject = dictReviews["reviews"] {
-                var reviewArray: NSArray = dictReviews["reviews"] as! NSArray
+            if let val: AnyObject = value["reviews"] {
+                var reviewArray: NSArray = value["reviews"] as! NSArray
                 
                 for (index, review) in enumerate(reviewArray) {
                     let reviewDictionary: NSDictionary = review as! NSDictionary
@@ -249,6 +251,7 @@ class SellerModel: NSObject {
                     productReviews.append(productReviewModel)
                 }
             }
+            */
             
             if let val: AnyObject = value["storeAddress"] {
                // var reviewArray: NSDictionary = dictReviews["storeAddress"] as! NSDictionary
@@ -399,22 +402,22 @@ class SellerModel: NSObject {
     
     class func parseSellerReviewsDataFromDictionary(dictionary: NSDictionary) -> SellerModel {
         
-        var rating: String = ""
-         var productReviews: [ProductReviewsModel] = [ProductReviewsModel]()
+        var rating: Int = 0
+        var productReviews: [ProductReviewsModel] = [ProductReviewsModel]()
         
-        if let tempRating = dictionary["rating"] as? String {
-            rating = tempRating
-        }
-        
-        var dictReviews:NSDictionary = ["reviews" : dictionary]
-        
-        if let val: AnyObject = dictReviews["reviews"] {
-            var reviewArray: NSArray = dictReviews["reviews"] as! NSArray
+        if let value: AnyObject = dictionary["data"] {
+            if let tempRating = value["ratingAverage"] as? Int {
+                rating = tempRating
+            }
             
-            for (index, review) in enumerate(reviewArray) {
-                let reviewDictionary: NSDictionary = review as! NSDictionary
-                let productReviewModel: ProductReviewsModel = ProductReviewsModel.parseProductReviesModel(reviewDictionary)
-                productReviews.append(productReviewModel)
+            if let val: AnyObject = value["reviews"] {
+                var reviewArray: NSArray = value["reviews"] as! NSArray
+                
+                for (index, review) in enumerate(reviewArray) {
+                    let reviewDictionary: NSDictionary = review as! NSDictionary
+                    let productReviewModel: ProductReviewsModel = ProductReviewsModel.parseSellerProductReviewsModel(reviewDictionary)
+                    productReviews.append(productReviewModel)
+                }
             }
         }
         

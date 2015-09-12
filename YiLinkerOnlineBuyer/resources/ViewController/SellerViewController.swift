@@ -13,7 +13,11 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
     @IBOutlet weak var tableView: UITableView!
     
     var sellerModel: SellerModel?
+    var sellerModel2: SellerModel?
     var followSellerModel: FollowedSellerModel?
+    var productReviewModel: ProductReviewsModel?
+    var productReviews: [ProductReviewsModel] = [ProductReviewsModel]()
+    
     let sellerTableHeaderView: SellerTableHeaderView = SellerTableHeaderView.loadFromNibNamed("SellerTableHeaderView", bundle: nil) as! SellerTableHeaderView
     var is_successful: Bool = false
     
@@ -41,7 +45,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
       
         self.titleView()
         self.fireSeller()
-        
+        self.fireSellerFeedback()
         let footerView: UIView = UIView(frame: CGRectZero)
         self.tableView.tableFooterView = footerView
     }
@@ -164,6 +168,44 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         })
     }
     
+    func fireSellerFeedback() {
+        self.showHUD()
+        let manager = APIManager.sharedInstance
+        println(sellerId)
+        let parameters: NSDictionary = ["sellerId" : sellerId];
+        manager.POST("\(APIAtlas.buyerSellerFeedbacks)?access_token=\(SessionManager.accessToken())", parameters: parameters, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            println(responseObject["isSuccessful"])
+            if responseObject["isSuccessful"] as! Bool {
+                self.sellerModel2 = SellerModel.parseSellerReviewsDataFromDictionary(responseObject as! NSDictionary)
+                
+                self.hud?.hide(true)
+            } else {
+                self.showAlert(title: "Error", message: responseObject["message"] as! String)
+                self.hud?.hide(true)
+            }
+            
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                if error.userInfo != nil {
+                    println(error.userInfo)
+                    if let jsonResult = error.userInfo as? Dictionary<String, AnyObject> {
+                        if jsonResult["message"] != nil {
+                            self.showAlert(title: jsonResult["message"] as! String, message: nil)
+                            self.hud?.hide(true)
+                            
+                        } else {
+                            self.showAlert(title: "Something went wrong", message: nil)
+                            self.hud?.hide(true)
+                        }
+                    }
+                } else  {
+                    self.showAlert(title: "Error", message: "Something went wrong.")
+                    self.hud?.hide(true)
+                }
+        })
+    }
+    
     func fireFollowSeller() {
         
         self.showHUD()
@@ -265,7 +307,12 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return self.sellerModel!.reviews.count + 3
+        if self.sellerModel2 != nil {
+            return self.sellerModel2!.reviews.count + 3
+        } else {
+            return 1
+        }
+        
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -283,19 +330,26 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         } else if indexPath.section == 2 {
             let generalRatingTableViewCell: GeneralRatingTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(Constants.Seller.generalRatingTableViewCellNibNameAndIndentifier) as! GeneralRatingTableViewCell
             
-            generalRatingTableViewCell.setRating(self.sellerModel!.ratingAndFeedback)
+            if self.sellerModel2 != nil {
+               generalRatingTableViewCell.setRating(self.sellerModel2!.rating)
+            } else {
+                generalRatingTableViewCell.setRating(0)
+            }
+            
             return generalRatingTableViewCell
         } else {
             let index: Int = indexPath.section - 3
             let reviewCell: ReviewTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(Constants.Seller.reviewIdentifier) as! ReviewTableViewCell
             
-            let reviewModel: ProductReviewsModel = self.sellerModel!.reviews[index]
-//            reviewCell.displayPictureImageView.sd_setImageWithURL(NSURL(string: reviewModel.imageUrl)!, placeholderImage: UIImage(named: "dummy-placeholder"))
+            let reviewModel: ProductReviewsModel = self.sellerModel2!.reviews[index]
+            
+            reviewCell.displayPictureImageView.sd_setImageWithURL(NSURL(string: reviewModel.imageUrl)!, placeholderImage: UIImage(named: "dummy-placeholder"))
 //            reviewCell.messageLabel.text = reviewModel.message
 //            reviewCell.nameLabel.text = reviewModel.name
             reviewCell.messageLabel.text = reviewModel.review
             reviewCell.nameLabel.text = reviewModel.fullName
-            reviewCell.setRating(reviewModel.rating)
+            println("rating \(self.sellerModel2!.rating)")
+            reviewCell.setRating(reviewModel.ratingSellerReview)
             return reviewCell
         }
     }
@@ -329,6 +383,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.showView()
         var attributeModal = ViewFeedBackViewController(nibName: "ViewFeedBackViewController", bundle: nil)
         attributeModal.delegate = self
+        attributeModal.sellerId = self.sellerId
         attributeModal.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
         attributeModal.providesPresentationContextTransitionStyle = true
         attributeModal.definesPresentationContext = true
