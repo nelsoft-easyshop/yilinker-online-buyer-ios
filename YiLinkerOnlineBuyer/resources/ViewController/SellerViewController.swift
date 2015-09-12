@@ -20,6 +20,8 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
     var hud: MBProgressHUD?
     
     var sellerId: Int = 0
+    var sellerContactNumber: String = ""
+    var sellerName: String = ""
     
     var dimView: UIView = UIView()
     
@@ -95,6 +97,8 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         sellerTableHeaderView.profileImageView.addSubview(imageView)
         sellerTableHeaderView.sellernameLabel.text = sellerModel!.store_name
         sellerTableHeaderView.addressLabel.text = sellerModel!.store_address
+        self.sellerName = self.sellerModel!.store_name
+        self.sellerContactNumber = sellerModel!.contact_number
         println("store address \(sellerModel!.store_address)")
         
         self.tableView.tableHeaderView = sellerTableHeaderView
@@ -319,7 +323,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         }
     }
     
-    //Seller View Delegate
+    //MARK: Seller Header View Delegate
     func sellerTableHeaderViewDidViewFeedBack() {
         println("view feedback")
         self.showView()
@@ -366,10 +370,19 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     func sellerTableHeaderViewDidMessage() {
         println("message")
+        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Send message to seller \(self.sellerName).", title: "Message Seller")
     }
     
     func sellerTableHeaderViewDidCall() {
         println("call")
+        if UIApplication.sharedApplication().canOpenURL(NSURL(string: "tel:\(self.sellerContactNumber)" )!) {
+            println("can call")
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Calling number action \(self.sellerContactNumber).", title: "Call Seller")
+        } else {
+            println("cant make a call")
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Cannot make a call to \(self.sellerContactNumber).", title: "Call Seller")
+        }
+
     }
     
     func productstableViewCellDidTapMoreProductWithTarget(target: String) {
