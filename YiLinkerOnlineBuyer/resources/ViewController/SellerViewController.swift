@@ -309,6 +309,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        
         if indexPath.section == 1 {
             return 174
         } else if indexPath.section == 2 {
@@ -386,8 +387,11 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func redirectToResultView(target: String) {
-        let resultViewController: ResultViewController = ResultViewController(nibName: "ResultViewController", bundle: nil)
+        /*let resultViewController: ResultViewController = ResultViewController(nibName: "ResultViewController", bundle: nil)
         self.navigationController!.pushViewController(resultViewController, animated: true)
+        */
+        let sellerCategoryViewController: SellerCategoryViewController = SellerCategoryViewController(nibName: "SellerCategoryViewController", bundle: nil)
+        self.navigationController!.pushViewController(sellerCategoryViewController, animated: true)
     }
     
     //MARK: Show HUD
