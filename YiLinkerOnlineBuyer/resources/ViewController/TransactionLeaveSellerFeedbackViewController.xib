@@ -18,8 +18,8 @@
                 <outlet property="starComm1Button" destination="SL4-YP-Uim" id="bIp-Pz-O8B"/>
                 <outlet property="starComm2Button" destination="f8A-de-H2W" id="2vQ-7X-XBX"/>
                 <outlet property="starComm3Button" destination="LMK-sY-zdX" id="tBA-kX-BUL"/>
-                <outlet property="starComm4Button" destination="xdN-PM-FNn" id="Xio-kq-ItC"/>
-                <outlet property="starComm5Button" destination="r9D-cL-k6m" id="YgP-3N-Yxf"/>
+                <outlet property="starComm4Button" destination="ckd-Si-b66" id="PEd-lB-Chw"/>
+                <outlet property="starComm5Button" destination="IDX-Cy-R0w" id="bku-8g-UEZ"/>
                 <outlet property="typingAreaView" destination="kay-Jp-IoU" id="fYd-hO-E9S"/>
                 <outlet property="view" destination="9S1-yz-7MZ" id="rxk-8r-Jdf"/>
             </connections>
