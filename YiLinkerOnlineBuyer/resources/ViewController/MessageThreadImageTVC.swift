@@ -29,7 +29,7 @@ class MessageThreadImageTVC: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func setSeenOff(mode: String){
+    func setSeen(){
         if (seen_image != nil){
             seen_image.hidden = false
         }

@@ -38,23 +38,15 @@ class MessageThreadTVC: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func setSeenOff(mode: String){
+    func setSeenOff(){
         if (seen_image != nil){
-            if(mode == "receiver"){
-                seen_image.hidden = false
-            } else if (mode == "sender"){
-                seen_image.removeFromSuperview()
-                self.removeConstraint(trailingSpaceToSeen)
-            }
+            seen_image.removeFromSuperview()
+            self.removeConstraint(trailingSpaceToSeen)
         }
         
         if (seen_label != nil){
-            if(mode == "receiver"){
-                seen_label.hidden = false
-            } else if (mode == "sender"){
-                seen_label.removeFromSuperview()
-                timestampLabelTrailingContraint.constant = 10.0
-            }
+            seen_label.removeFromSuperview()
+            timestampLabelTrailingContraint.constant = 10.0
         }
 
     }

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ContactListVC: UIViewController {
+class ContactListVC: UIViewController, EmptyViewDelegate{
     
     @IBOutlet weak var contactTableView: UITableView!
     
@@ -26,6 +26,8 @@ class ContactListVC: UIViewController {
     var selectedContact : W_Contact?
     
     var hud: MBProgressHUD?
+    var emptyView : EmptyView?
+    var contentViewFrame: CGRect?
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         println(segue.identifier)
@@ -36,7 +38,14 @@ class ContactListVC: UIViewController {
             let indexPath = contactTableView.indexPathForCell(sender as! ContactListTVC)
             selectedContact = contacts[indexPath!.row]
             
-            messageThreadVC.sender = W_Contact(fullName: "Jan Dennis Nora", userRegistrationIds: "", userIdleRegistrationIds: "", userId: "5", profileImageUrl: "http://online.api.easydeal.ph/assets/images/uploads/users/4292229bce95d32748bf08b642f0a070a70bc194.png?", isOnline: "1")
+            var isOnline = "-1"
+            if (SessionManager.isLoggedIn()){
+                isOnline = "1"
+            } else {
+                isOnline = "0"
+            }
+            
+            messageThreadVC.sender = W_Contact(fullName: SessionManager.userFullName(), userRegistrationIds: "", userIdleRegistrationIds: "", userId: SessionManager.accessToken() , profileImageUrl: SessionManager.profileImageStringUrl(), isOnline: isOnline)
             messageThreadVC.recipient = selectedContact
             
         }
@@ -46,6 +55,8 @@ class ContactListVC: UIViewController {
         super.viewDidLoad()
         var ref = W_Contact()
         //contacts = ref.testData()
+        self.contentViewFrame = self.view.frame
+        
         self.getContactsFromEndpoint("1", limit: "30", keyword: "")
         
         self.resultSearchController = ({
@@ -60,6 +71,7 @@ class ContactListVC: UIViewController {
         
         self.navigationItem.title = "New Message"
         self.placeCustomBackImage()
+        
         // Do any additional setup after loading the view.
     }
     
@@ -94,43 +106,50 @@ class ContactListVC: UIViewController {
         limit : String,
         keyword: String){
             //SVProgressHUD.show()
-            self.showHUD()
-            
-            let manager: APIManager = APIManager.sharedInstance
-            manager.requestSerializer = AFHTTPRequestSerializer()
-            
-            let parameters: NSDictionary = [
-                "page"          : "\(page)",
-                "limit"         : "\(limit)",
-                "keyword"       : keyword,
-                "access_token"  : SessionManager.accessToken()
-                ]   as Dictionary<String, String>
-            
-            let url = APIAtlas.baseUrl + APIAtlas.ACTION_GET_CONTACTS
-            
-            manager.POST(url, parameters: parameters, success: {
-                (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-                self.contacts = W_Contact.parseContacts(responseObject as! NSDictionary)
-                self.contactTableView.reloadData()
+            if (Reachability.isConnectedToNetwork()) {
+                self.showHUD()
                 
-                //SVProgressHUD.dismiss()
-                self.hud?.hide(true)
-                }, failure: {
-                    (task: NSURLSessionDataTask!, error: NSError!) in
-                    let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                    
-                    if task.statusCode == 401 {
-                        self.fireRefreshToken()
-                    } else {
-                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
-                    }
-                    
-                    self.contacts = Array<W_Contact>()
+                let manager: APIManager = APIManager.sharedInstance
+                manager.requestSerializer = AFHTTPRequestSerializer()
+                
+                let parameters: NSDictionary = [
+                    "page"          : "\(page)",
+                    "limit"         : "\(limit)",
+                    "keyword"       : keyword,
+                    "access_token"  : SessionManager.accessToken()
+                    ]   as Dictionary<String, String>
+                
+                let url = APIAtlas.baseUrl + APIAtlas.ACTION_GET_CONTACTS
+                
+                manager.POST(url, parameters: parameters, success: {
+                    (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+                    self.contacts = W_Contact.parseContacts(responseObject as! NSDictionary)
                     self.contactTableView.reloadData()
                     
                     //SVProgressHUD.dismiss()
                     self.hud?.hide(true)
-            })
+                    }, failure: {
+                        (task: NSURLSessionDataTask!, error: NSError!) in
+                        let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                        
+                        if task.statusCode == 401 {
+                            if (SessionManager.isLoggedIn()){
+                                self.fireRefreshToken()
+                            }
+                        } else {
+                            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+                        }
+                        
+                        self.contacts = Array<W_Contact>()
+                        self.contactTableView.reloadData()
+                        
+                        //SVProgressHUD.dismiss()
+                        self.hud?.hide(true)
+                })
+            } else {
+                self.addEmptyView()
+            }
+            
     }
     
     func fireRefreshToken() {
@@ -149,6 +168,23 @@ class ContactListVC: UIViewController {
                 UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
         })
         
+    }
+    
+    func addEmptyView() {
+        if self.emptyView == nil {
+            self.emptyView = UIView.loadFromNibNamed("EmptyView", bundle: nil) as? EmptyView
+            self.emptyView?.frame = self.contentViewFrame!
+            self.emptyView!.delegate = self
+            self.view.addSubview(self.emptyView!)
+        } else {
+            self.emptyView!.hidden = false
+            println("unhide empty view")
+        }
+    }
+    
+    func didTapReload() {
+        self.getContactsFromEndpoint("1", limit: "30", keyword: "")
+        self.emptyView?.hidden = true
     }
     
     //Show HUD
