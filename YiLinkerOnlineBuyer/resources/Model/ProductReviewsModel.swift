@@ -29,56 +29,42 @@ class ProductReviewsModel {
         var model = ProductReviewsModel()
         if reviews.isKindOfClass(NSDictionary) {
             
-            model.userId = reviews["userId"] as! Int
-            model.title = reviews["title"] as! String
-            model.review = reviews["review"] as! String
-            model.rating = reviews["rating"] as! String
-            model.fullName = reviews["fullName"] as! String
-            model.firstName = reviews["firstName"] as! String
-            model.lastName = reviews["lastName"] as! String
-            model.profileImageUrl = reviews["profileImageUrl"] as! String
-            model.dateAdded = reviews["dateAdded"] as! String
+            if reviews["userId"] != nil {
+                model.userId = reviews["userId"] as! Int
+            }
             
-//            if let val: AnyObject = reviews["fullName"] {
-//                model.fullName = reviews["fullName"] as! String
-//            } else {
-//                model.fullName = reviews["name"] as! String
+//            if reviews["userId"] != nil {
+//                 model.title = reviews["title"] as! String
 //            }
-//            
-//            
-//            if let val: AnyObject = reviews["profileImageUrl"] {
-//                model.profileImageUrl = reviews["profileImageUrl"] as! String
-//            } else {
-//                model.profileImageUrl = reviews["imageUrl"] as! String
-//            }
-//            
-//            if let val: AnyObject = reviews["rating"] {
-//                if let tempRating = reviews["rating"] as? String {
-//                    model.rating = reviews["rating"] as! String
-//                }
-//            } else {
-//                model.rating = "5"
-//            }
-//            
-//            if let val: AnyObject = reviews["title"] {
-//                model.title = reviews["title"] as! String
-//            }
-//            
-//            if let val: AnyObject = reviews["dateAdded"] {
-//                model.dateAdded = reviews["dateAdded"] as! String
-//            }
-//            
-//            if let val: AnyObject = reviews["userId"] {
-//                model.userId = reviews["userId"] as! Int
-//            }
-//            
-//            if let val: AnyObject = reviews["review"] {
-//                model.review = reviews["review"] as! String
-//            }
-//            
-//            if let val: AnyObject = reviews["message"] {
-//                model.review = reviews["message"] as! String
-//            }
+            
+            if reviews["review"] != nil {
+                model.review = reviews["review"] as! String
+            }
+            
+            if reviews["rating"] != nil {
+                model.rating = reviews["rating"] as! String
+            }
+            
+            if reviews["fullName"] != nil {
+                model.fullName = reviews["fullName"] as! String
+            }
+            
+            if reviews["firstName"] != nil {
+                model.firstName = reviews["firstName"] as! String
+            }
+            
+            if reviews["lastName"] != nil {
+                model.lastName = reviews["lastName"] as! String
+            }
+            
+            if reviews["profileImageUrl"] != nil {
+                model.profileImageUrl = reviews["profileImageUrl"] as! String
+            }
+            
+            if reviews["dateAdded"] != nil {
+                model.dateAdded = reviews["dateAdded"] as! String
+            }
+   
         }
         
         return model
