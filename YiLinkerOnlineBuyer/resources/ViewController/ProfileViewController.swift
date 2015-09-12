@@ -40,6 +40,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     }
     
     func initializeViews() {
+        
         tableView.tableFooterView = UIView(frame: CGRectZero)
         self.title = "Profile Page"
     }

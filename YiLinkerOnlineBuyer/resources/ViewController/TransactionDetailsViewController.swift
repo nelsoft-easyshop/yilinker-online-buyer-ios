@@ -349,7 +349,7 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
        
     }
     
-    //MARK: Get transactions details by type
+    //MARK: Get transactions details by id
     func fireTransactionDetails(transactionId: String) {
         self.showHUD()
         let manager = APIManager.sharedInstance
