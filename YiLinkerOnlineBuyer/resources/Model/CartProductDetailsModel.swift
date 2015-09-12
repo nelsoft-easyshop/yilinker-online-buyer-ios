@@ -134,6 +134,10 @@ class CartProductDetailsModel {
                 quantity = tempVar
             }
             
+            if let tempVar = dictionary["quantity"] as? String {
+                quantity = tempVar.toInt()!
+            }
+            
             // data
         } // dictionary
         

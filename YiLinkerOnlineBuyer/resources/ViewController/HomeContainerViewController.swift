@@ -51,15 +51,14 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             self.addEmptyView()
         }
         
-        /*
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "onRegistration:",
             name: appDelegate.registrationKey, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "receivedMessage:",
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "onNewMessage:",
             name: appDelegate.messageKey, object: nil)
-        */
+        
     }
-    
-    /*
     
     func onRegistration(notification: NSNotification){
         if let info = notification.userInfo as? Dictionary<String,String> {
@@ -68,7 +67,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             } else if let registrationToken = info["registrationToken"] {
                 let message = "Check the xcode debug console for the registration token for the server to send notifications to your device"
                 self.fireCreateRegistration(registrationToken)
-                showAlert("Registration Successful!", message: message)
+                println("Registration Successful! \(message)")
             }
         }
     }
@@ -81,11 +80,50 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         self.presentViewController(alert, animated: true, completion: nil)
     }
     
-    func receivedMessage(notification : NSNotification){
+    func onNewMessage(notification : NSNotification){
         //action here to open messaging
+        //add count in messaging
     }
-
-    */
+    
+    func fireCreateRegistration(registrationID : String) {
+        
+        self.showHUD()
+        
+        let manager: APIManager = APIManager.sharedInstance
+        //seller@easyshop.ph
+        //password
+        let parameters: NSDictionary = [
+            "registrationId": "\(registrationID)",
+            "access_token"  : SessionManager.accessToken()
+            ]   as Dictionary<String, String>
+        
+        let url = APIAtlas.baseUrl + APIAtlas.ACTION_GCM_CREATE
+        
+        manager.POST(url, parameters: parameters, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+            //SVProgressHUD.dismiss()
+            self.hud?.hide(true)
+            //self.showSuccessMessage()
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                
+                println(task.response?.description)
+                
+                println(error.description)
+                if (Reachability.isConnectedToNetwork()) {
+                    let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                
+                    if task.statusCode == 401 {
+                        self.fireRefreshToken()
+                    } else {
+                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+                    }
+                }
+                //SVProgressHUD.dismiss()
+                self.hud?.hide(true)
+        })
+    }
     
     func addEmptyView() {
         if self.emptyView == nil {
@@ -111,12 +149,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     
     func tabBarController(tabBarController: UITabBarController, shouldSelectViewController viewController: UIViewController) -> Bool {
         if viewController == tabBarController.viewControllers![4] as! UIViewController {
-            if SessionManager.isLoggedIn() {
-                return true
-            } else {
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Please log in to view your Cart.", title: "Error")
-                return false
-            }
+            return true
         } else if viewController == tabBarController.viewControllers![3] as! UIViewController {
             if SessionManager.isLoggedIn() {
                 return true
@@ -136,15 +169,15 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             animatedViewController!.view.backgroundColor = UIColor.clearColor()
             
             if SessionManager.accessToken() != "" {
-                var buttonImages: [String] = ["help", "following", "message", "customize-shopping", "promo", "category", self.profileModel.profileImageUrl]
+                var buttonImages: [String] = ["fab_help", "fab_following", "fab_messaging", "fab_customize", "fab_promo", "fab_category", self.profileModel.profileImageUrl]
                 var buttonTitles: [String] = ["HELP", "FOLLOWED SELLER", "MESSAGING", "CUSTOMIZE SHOPPING", "TODAY'S PROMO", "CATEGORIES", "LOGOUT"]
-                var buttonRightText: [String] = ["", "", "You have 1 unread message", "", "", "", "\(self.profileModel.firstName) \(self.profileModel.lastName) \n\(self.profileModel.address.streetAddress) \(self.profileModel.address.subdivision)"]
+                var buttonRightText: [String] = ["", "", SessionManager.unreadMessageCount(), "", "", "", "\(self.profileModel.firstName) \(self.profileModel.lastName) \n\(self.profileModel.address.streetAddress) \(self.profileModel.address.subdivision)"]
                 
                 animatedViewController?.buttonImages = buttonImages
                 animatedViewController?.buttonTitles = buttonTitles
                 animatedViewController?.buttonRightText = buttonRightText
             } else {
-                var buttonImages: [String] = ["help", "register", "sign_in", "message","customize-shopping", "promo", "category"]
+                var buttonImages: [String] = ["fab_help", "fab_register", "fab_signin", "fab_messaging","fab_customize", "fab_promo", "fab_category"]
                 var buttonTitles: [String] = ["HELP", "REGISTER", "SIGN IN", "MESSAGING", "CUSTOMIZE SHOPPING", "TODAYS PROMO", "CATEGORIES"]
                 var buttonRightText: [String] = ["", "", "Must be Sign in", "Must be Sign in", "", "", ""]
                 
@@ -253,7 +286,6 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             }
             
         }
-        
     }
     
     func circularDraweView() {
@@ -274,6 +306,8 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                 //get user info
                 if SessionManager.isLoggedIn() {
                     self.fireGetUserInfo()
+                } else {
+                    SessionManager.saveCookies()
                 }
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
@@ -427,6 +461,4 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         self.view.addSubview(self.hud!)
         self.hud?.show(true)
     }
-    
-    
 }

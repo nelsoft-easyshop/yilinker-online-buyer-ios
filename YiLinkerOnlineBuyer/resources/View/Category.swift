@@ -77,9 +77,44 @@ extension UITextField {
         }
         return true
     }
+    
+}
 
+extension UILabel {
+    func required() {
+        self.text = "\(self.text!)*"
+        var myMutableString = NSMutableAttributedString(string: self.text!)
+        let stringCount: Int = count(self.text!)
+        myMutableString.addAttribute(NSForegroundColorAttributeName, value: UIColor.redColor(), range: NSRange(location: stringCount - 1,length:1))
+        self.attributedText = myMutableString
+    }
+}
+
+extension UITextView {
     
-    
+    func addToolBarWithTarget(target: AnyObject, next: Selector, previous: Selector, done: Selector) {
+        let toolBar = UIToolbar()
+        toolBar.sizeToFit()
+        toolBar.barStyle = UIBarStyle.Black
+        toolBar.barTintColor = Constants.Colors.appTheme
+        toolBar.tintColor = UIColor.whiteColor()
+        
+        let doneItem = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Done, target: target, action: done)
+        
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: self, action: nil)
+        
+        let previousItem = UIBarButtonItem(image: UIImage(named: "previous"), landscapeImagePhone: nil, style: UIBarButtonItemStyle.Plain, target: target, action: previous)
+        
+        let nextItem = UIBarButtonItem(image: UIImage(named: "next"), landscapeImagePhone: nil, style: UIBarButtonItemStyle.Plain, target: target, action: next)
+        
+        var toolbarButtons = [previousItem, nextItem,flexibleSpace, doneItem]
+        
+        //Put the buttons into the ToolBar and display the tool bar
+        toolBar.setItems(toolbarButtons, animated: false)
+        
+        self.inputAccessoryView = toolBar
+        
+    }
 }
 
 

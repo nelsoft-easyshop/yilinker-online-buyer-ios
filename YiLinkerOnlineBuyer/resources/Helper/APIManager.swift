@@ -24,6 +24,61 @@ struct APIEnvironment {
 }
 
 struct APIAtlas {
+    
+    static func COD() -> String {
+        if SessionManager.isLoggedIn() {
+            return "auth/payment/doPaymentCod"
+        } else {
+            SessionManager.loadCookies()
+            return "payment/doPaymentCod"
+        }
+    }
+    
+    static func pesoPay() -> String {
+        if SessionManager.isLoggedIn() {
+            return "auth/payment/doPesoPay"
+        } else {
+            SessionManager.loadCookies()
+            return "payment/doPesoPay"
+        }
+    }
+    
+    static func overView() -> String {
+        if SessionManager.isLoggedIn() {
+            return "auth/payment/checkoutOverview"
+        } else {
+            SessionManager.loadCookies()
+            return "payment/checkoutOverview"
+        }
+    }
+    
+    static func cart() -> String {
+        if SessionManager.isLoggedIn() {
+            return "auth/cart/getCart"
+        } else {
+            SessionManager.loadCookies()
+            return "cart/getCart"
+        }
+    }
+    
+    static func updateCart() -> String {
+        if SessionManager.isLoggedIn() {
+            return "auth/cart/updateCartItem"
+        } else {
+            SessionManager.loadCookies()
+            return "cart/updateCartItem"
+        }
+    }
+    
+    static func updateCheckout() -> String {
+        if SessionManager.isLoggedIn() {
+            return "auth/cart/cartToCheckout"
+        } else {
+            SessionManager.loadCookies()
+            return "cart/cartToCheckout"
+        }
+    }
+    
     static let refreshTokenUrl = "login"
     static let loginUrl = "login"
     static let registerUrl = "user/register"
@@ -52,16 +107,20 @@ struct APIAtlas {
     static let citiesUrl = "location/getChildCities"
     static let barangay = "location/getBarangaysByCity"
     static let addAddressUrl = "auth/address/addNewAddress"
-    static let updateCheckout = "auth/cart/cartToCheckout"
+    static let updateCheckoutUrl = "auth/cart/cartToCheckout"
     static let updateGuestCheckout = "cart/cartToCheckout"
     static let editAddress = "auth/address/editUserAddress"
     static let setCheckoutAddressUrl = "auth/user/setAddress"
-    static let cashOnDeliveryUrl = "auth/payment/doPaymentCod"
-    static let pesoPayUrl = "auth/payment/doPesoPay"
-    static let overViewUrl = "auth/payment/checkoutOverview"
+    static let cashOnDeliveryUrl = APIAtlas.COD()
+    static let pesoPayUrl = APIAtlas.pesoPay()
+    static let overViewUrl = APIAtlas.overView()
     static let activityLogs = "auth/user/activityLog?access_token="
     static let getCategories = "product/getCategories?parentId="
     static let productList = "product/getProductList"
+    static let guestUserUrl = "guestUser"
+    static let updateMobileNumber = "auth/user/changeContactNumber"
+    static let smsVerification = "auth/sms/verify"
+    static let changePassword = "auth/user/changePassword"
     static let baseUrl = APIEnvironment.baseUrl()
     
     /* MESSAGING CONSTANTS */
@@ -75,6 +134,10 @@ struct APIAtlas {
     static let ACTION_GCM_DELETE            = "/auth/device/deleteRegistrationId"
     static let ACTION_GCM_UPDATE            = "/device/auth/updateRegistrationId"
     static let uploadFileType = "jpeg"
+    
+    //Transactions
+    static let transactionLogs = "auth/getTransactionList?access_token="
+    static let transactionDetails = "auth/getTransaction?access_token="
 }
 
 class APIManager: AFHTTPSessionManager {

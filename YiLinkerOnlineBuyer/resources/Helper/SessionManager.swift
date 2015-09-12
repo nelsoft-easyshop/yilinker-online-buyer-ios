@@ -130,6 +130,7 @@ class SessionManager {
     class func logout() {
         NSUserDefaults.standardUserDefaults().setObject("", forKey: "accessToken")
         NSUserDefaults.standardUserDefaults().setObject("", forKey: "refreshToken")
+        NSUserDefaults.standardUserDefaults().setObject("0", forKey: "messageCount")
         NSUserDefaults.standardUserDefaults().synchronize()
     }
     
@@ -217,5 +218,43 @@ class SessionManager {
             returnValue = false
         }
         return returnValue
+    }
+    
+    class func saveCookies() {
+        var cookiesData: NSData = NSKeyedArchiver.archivedDataWithRootObject(NSHTTPCookieStorage.sharedHTTPCookieStorage().cookies!)
+        var defaults: NSUserDefaults = NSUserDefaults.standardUserDefaults()
+        defaults.setObject(cookiesData, forKey: "sessionCookies")
+        defaults.synchronize()
+    }
+    
+    class func loadCookies() {
+        var cookiesData: NSData = NSUserDefaults.standardUserDefaults().objectForKey("sessionCookies") as! NSData
+        var cookies: [NSHTTPCookie] = NSKeyedUnarchiver.unarchiveObjectWithData(cookiesData) as! [NSHTTPCookie]
+        var cookieStorage: NSHTTPCookieStorage = NSHTTPCookieStorage.sharedHTTPCookieStorage()
+        for cookie in cookies {
+            cookieStorage.setCookie(cookie)
+        }
+    }
+    
+    class func setUnReadMessagesCount(messageCount: Int) {
+        NSUserDefaults.standardUserDefaults().setObject("\(messageCount)", forKey: "messageCount")
+        NSUserDefaults.standardUserDefaults().synchronize()
+    }
+    
+    class func unreadMessageCount() -> String {
+        var messageCount: Int = 0
+
+        if let val: AnyObject = NSUserDefaults.standardUserDefaults().objectForKey("messageCount") as? String {
+            let result = val as! String
+            if result != "" {
+                messageCount = result.toInt()!
+            } else {
+                messageCount = 0
+            }
+        } else {
+            messageCount = 0
+        }
+        
+        return "You have \(messageCount) unread messages"
     }
 }

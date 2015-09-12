@@ -70,7 +70,7 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
             if selectedItemIDs.count == 0 {
                 showAlert("Error", message: "Choose item from your cart.", redirectToHome: false)
             } else {
-                firePassCartItem(APIAtlas.updateCheckout, params: NSDictionary(dictionary: ["cart": selectedItemIDs, "access_token": SessionManager.accessToken()]))
+                firePassCartItem(APIAtlas.updateCheckout(), params: NSDictionary(dictionary: ["cart": selectedItemIDs, "access_token": SessionManager.accessToken()]))
             }
         }
     }
@@ -81,7 +81,7 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
     func getCartData() {
         
         if Reachability.isConnectedToNetwork() {
-            requestProductDetails(APIAtlas.cartUrl, params: NSDictionary(dictionary: ["access_token": SessionManager.accessToken()]))
+            requestProductDetails(APIAtlas.cart(), params: NSDictionary(dictionary: ["access_token": SessionManager.accessToken()]))
         } else {
             addEmptyView()
         }
@@ -159,6 +159,7 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         manager.GET(url, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in print(responseObject as! NSDictionary)
+            
             if responseObject.objectForKey("error") != nil {
                 self.requestRefreshToken("getCart", url: url, params: params)
             } else {
@@ -176,7 +177,6 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
     func populateTableView(responseObject: AnyObject) {
         tableData.removeAll(keepCapacity: false)
         cartTableView.reloadData()
-        cartCounterLabel.text = ""
         if let value: AnyObject = responseObject["data"] {
             for subValue in value["items"] as! NSArray {
                 //println(subValue)
@@ -322,7 +322,7 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
                 "unitId": tempModel.unitId,
                 "quantity": 0,
             ]
-            fireDeleteCartItem(APIAtlas.updateCartUrl, params: params)
+            fireDeleteCartItem(APIAtlas.updateCart(), params: params)
         } else {
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Cannot retrieve data. Please check your internet connection.", title: "Connection Unreachable")
         }
@@ -429,7 +429,7 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
             
             //println("PARAMS\n\(params)")
             
-            fireAddToCartItem(APIAtlas.updateCartUrl, params: params)
+            fireAddToCartItem(APIAtlas.updateCart(), params: params)
         } else {
             showAlert("Connection Unreachable", message: "Cannot retrieve data. Please check your internet connection.", redirectToHome: false)
         }

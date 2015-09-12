@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -22,7 +23,7 @@
                         <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="P4,500" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VHu-cT-2FF">
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="P4,500" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VHu-cT-2FF">
                         <rect key="frame" x="8" y="66" width="98" height="21"/>
                         <color key="backgroundColor" red="0.43529411759999997" green="0.20392156859999999" blue="0.52156862749999999" alpha="1" colorSpace="calibratedRGB"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -49,36 +50,50 @@
                             <constraint firstAttribute="height" constant="1" id="DO9-CG-nAr"/>
                         </constraints>
                     </view>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="5 products     January 21, 2014" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KID-Y2-zv8">
-                        <rect key="frame" x="8" y="35" width="334" height="21"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="January 1, 2015" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1UX-f2-Xdr">
+                        <rect key="frame" x="135" y="36" width="200" height="21"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="21" id="4zh-36-Dfb"/>
+                            <constraint firstAttribute="width" constant="200" id="efv-J0-Tj0"/>
                         </constraints>
+                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="16"/>
+                        <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="5 products" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KID-Y2-zv8">
+                        <rect key="frame" x="8" y="37" width="119" height="21"/>
                         <fontDescription key="fontDescription" type="system" weight="light" pointSize="16"/>
                         <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="KID-Y2-zv8" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="16S-oe-gv1"/>
+                    <constraint firstItem="1UX-f2-Xdr" firstAttribute="leading" secondItem="KID-Y2-zv8" secondAttribute="trailing" constant="8" id="0tL-tY-6Zb"/>
                     <constraint firstAttribute="trailing" secondItem="I89-8h-WuF" secondAttribute="trailing" id="1Bs-t4-b5P"/>
                     <constraint firstItem="e3z-72-K8Y" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="1lg-es-AlZ"/>
                     <constraint firstItem="e3z-72-K8Y" firstAttribute="leading" secondItem="BG9-ai-ps2" secondAttribute="trailing" constant="8" id="CLi-Wf-Mwd"/>
+                    <constraint firstItem="I89-8h-WuF" firstAttribute="top" secondItem="1UX-f2-Xdr" secondAttribute="bottom" constant="42" id="KOx-dc-ie7"/>
                     <constraint firstAttribute="trailing" secondItem="e3z-72-K8Y" secondAttribute="trailing" id="Km8-5S-CAx"/>
-                    <constraint firstItem="e3z-72-K8Y" firstAttribute="leading" secondItem="KID-Y2-zv8" secondAttribute="trailing" constant="8" id="U3w-Ut-49c"/>
+                    <constraint firstItem="VHu-cT-2FF" firstAttribute="top" secondItem="KID-Y2-zv8" secondAttribute="bottom" constant="8" id="Oj4-Ff-3lH"/>
+                    <constraint firstItem="VHu-cT-2FF" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="PuE-Eb-XaP"/>
+                    <constraint firstItem="KID-Y2-zv8" firstAttribute="top" secondItem="BG9-ai-ps2" secondAttribute="bottom" constant="4" id="Qch-9J-wgC"/>
+                    <constraint firstItem="1UX-f2-Xdr" firstAttribute="top" secondItem="BG9-ai-ps2" secondAttribute="bottom" constant="3" id="V2y-jc-2Ee"/>
+                    <constraint firstItem="e3z-72-K8Y" firstAttribute="leading" secondItem="1UX-f2-Xdr" secondAttribute="trailing" constant="15" id="f8m-xG-paq"/>
+                    <constraint firstItem="e3z-72-K8Y" firstAttribute="leading" secondItem="VHu-cT-2FF" secondAttribute="trailing" constant="244" id="gfO-b0-Xl1"/>
                     <constraint firstItem="BG9-ai-ps2" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="12" id="gmj-Lj-cyJ"/>
                     <constraint firstItem="I89-8h-WuF" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="jjI-oz-3K5"/>
                     <constraint firstItem="BG9-ai-ps2" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="txd-PU-dzi"/>
+                    <constraint firstItem="KID-Y2-zv8" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="urM-X8-zU6"/>
                     <constraint firstAttribute="bottom" secondItem="I89-8h-WuF" secondAttribute="bottom" constant="-1" id="xo5-AY-Se7"/>
-                    <constraint firstItem="KID-Y2-zv8" firstAttribute="top" secondItem="BG9-ai-ps2" secondAttribute="bottom" constant="2" id="yDQ-S9-tFU"/>
+                    <constraint firstItem="I89-8h-WuF" firstAttribute="top" secondItem="VHu-cT-2FF" secondAttribute="bottom" constant="12" id="xv4-4u-Jzk"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
-                <outlet property="numberAndDateLabel" destination="KID-Y2-zv8" id="EuX-Ev-Co4"/>
+                <outlet property="dateLabel" destination="1UX-f2-Xdr" id="YcR-WO-wuX"/>
+                <outlet property="numberLabel" destination="KID-Y2-zv8" id="dqM-2V-uXH"/>
                 <outlet property="priceLabel" destination="VHu-cT-2FF" id="P4i-DA-KVj"/>
                 <outlet property="transactionIdLabel" destination="BG9-ai-ps2" id="wGC-CB-Qhz"/>
             </connections>
-            <point key="canvasLocation" x="340.5" y="346"/>
+            <point key="canvasLocation" x="324.5" y="151"/>
         </tableViewCell>
     </objects>
     <resources>

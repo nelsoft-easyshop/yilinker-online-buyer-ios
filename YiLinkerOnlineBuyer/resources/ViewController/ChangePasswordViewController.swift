@@ -17,6 +17,8 @@ class ChangePasswordViewController: UIViewController {
     
     var delegate: ChangePasswordViewControllerDelegate?
 
+    let manager = APIManager.sharedInstance
+    
     @IBOutlet weak var topMarginConstraint: NSLayoutConstraint!
     
     @IBOutlet weak var mainView: UIView!
@@ -31,6 +33,10 @@ class ChangePasswordViewController: UIViewController {
     var mainViewOriginalFrame: CGRect?
     
     var screenHeight: CGFloat?
+    
+    var mobileNumber: String = ""
+    
+    var hud: MBProgressHUD?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -92,11 +98,113 @@ class ChangePasswordViewController: UIViewController {
             self.dismissViewControllerAnimated(true, completion: nil)
             self.delegate?.closeChangePasswordViewController()
         } else if sender as! UIButton == submitButton {
-            self.dismissViewControllerAnimated(true, completion: nil)
-            self.delegate?.submitChangePasswordViewController()
+            tapMainAction()
+            if oldPasswordTextField.text.isEmpty ||  newPasswordTextField.text.isEmpty || confirmPasswordTextField.text.isEmpty {
+                showAlert(title: "Error", message: "Complete necessary fields!")
+            } else if newPasswordTextField.text != confirmPasswordTextField.text {
+                showAlert(title: "Error", message: "Password does not match!")
+            } else {
+                fireUpdateProfile(APIAtlas.changePassword, params: NSDictionary(dictionary: [
+                    "access_token": SessionManager.accessToken(),
+                    "oldPassword": oldPasswordTextField.text,
+                    "newPassword": newPasswordTextField.text,
+                    "newPasswordConfirm": confirmPasswordTextField.text]))
+            }
         }
     }
     
+    func showAlert(#title: String!, message: String!) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+        let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+        alertController.addAction(defaultAction)
+        presentViewController(alertController, animated: true, completion: nil)
+    }
     
-
+    //Loader function
+    func showLoader() {
+        if self.hud != nil {
+            self.hud!.hide(true)
+            self.hud = nil
+        }
+        
+        self.hud = MBProgressHUD(view: self.view)
+        self.hud?.removeFromSuperViewOnHide = true
+        self.hud?.dimBackground = false
+        self.view.addSubview(self.hud!)
+        self.hud?.show(true)
+    }
+    
+    func dismissLoader() {
+        self.hud?.hide(true)
+    }
+    
+    func fireUpdateProfile(url: String, params: NSDictionary!) {
+        showLoader()
+        
+        self.manager.responseSerializer = JSONResponseSerializer()
+        manager.POST(url, parameters: params, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in print(responseObject as! NSDictionary)
+            if responseObject.objectForKey("error") != nil {
+                self.requestRefreshToken(url, params: params)
+            } else {
+                if responseObject["isSuccessful"] as! Bool {
+                    self.dismissViewControllerAnimated(true, completion: nil)
+                    self.dismissLoader()
+                    self.delegate?.submitChangePasswordViewController()
+                } else {
+                    self.showAlert(title: "Error", message: responseObject["message"] as! String)
+                    self.dismissLoader()
+                }
+            }
+            println(responseObject)
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                
+                if Reachability.isConnectedToNetwork() {
+                    var info = error.userInfo!
+                    
+                    self.dismissLoader()
+                    
+                    if let data = info["message"] as? NSString {
+                        self.showAlert(title: "Error", message: data as String)
+                    } else {
+                        self.showAlert(title: "Error", message: "Something went wrong!")
+                    }
+                    
+                } else {
+                    self.showAlert(title: "Error", message: "Check your internet connection!")
+                }
+                
+        })
+        
+    }
+    
+    func requestRefreshToken(url: String, params: NSDictionary!) {
+        let url: String = "http://online.api.easydeal.ph/api/v1/login"
+        let params: NSDictionary = ["client_id": Constants.Credentials.clientID,
+            "client_secret": Constants.Credentials.clientSecret,
+            "grant_type": Constants.Credentials.grantRefreshToken,
+            "refresh_token": SessionManager.refreshToken()]
+        
+        let manager = APIManager.sharedInstance
+        manager.POST(url, parameters: params, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            self.dismissLoader()
+            
+            if (responseObject["isSuccessful"] as! Bool) {
+                SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+                self.fireUpdateProfile(url, params: params)
+            } else {
+                self.showAlert(title: "Error", message: responseObject["message"] as! String)
+            }
+            
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                self.dismissLoader()
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                
+                self.showAlert(title: "Something went wrong", message: "")
+                
+        })
+    }
 }
