@@ -22,7 +22,11 @@ class FollowedSellerViewController: UIViewController, EmptyViewDelegate {
         let nib = UINib(nibName: "FollowedSellerTableViewCell", bundle: nil)
         self.tableView.registerNib(nib, forCellReuseIdentifier: "FollowedSellerIdentifier")
         
-        requestFollowedSelers()
+        if Reachability.isConnectedToNetwork() {
+            requestFollowedSelers()
+        } else {
+            addEmptyView()
+        }
         
         customizedNavigationBar()
     }
