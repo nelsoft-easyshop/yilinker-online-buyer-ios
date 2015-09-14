@@ -57,7 +57,6 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             name: appDelegate.registrationKey, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "onNewMessage:",
             name: appDelegate.messageKey, object: nil)
-        
     }
     
     func onRegistration(notification: NSNotification){

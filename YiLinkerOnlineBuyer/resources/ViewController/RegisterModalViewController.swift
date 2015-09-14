@@ -9,17 +9,15 @@
 import UIKit
 
 protocol RegisterModalViewControllerDelegate {
-    func registerModalViewController(didExit view: RegisterModalViewController)
-    func registerModalViewController(didSave view: RegisterModalViewController, password: String)
+    func registerModalViewController(didExit view: RegisterModalViewController, isShowRegister: Bool)
 }
 
 class RegisterModalViewController: UIViewController {
 
     @IBOutlet weak var createButton: UIButton!
-    @IBOutlet weak var confirmPasswordTextField: UITextField!
-    @IBOutlet weak var passwordTextField: UITextField!
     
     var delegate: RegisterModalViewControllerDelegate?
+    var isShowRegister: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,17 +31,18 @@ class RegisterModalViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func create(sender: AnyObject) {
-        if self.passwordTextField.text == self.confirmPasswordTextField.text {
-            self.delegate?.registerModalViewController(didSave: self, password: self.passwordTextField.text)
-            self.dismissView()
-        } else {
-            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Mismatched password.", title: "Invalid Credential")
-        }
+    @IBAction func yes(sender: AnyObject) {
+        self.isShowRegister = true
+        self.dismissView()
     }
     
+    @IBAction func no(sender: AnyObject) {
+        self.dismissView()
+    }
+    
+    
     func dismissView() {
-        self.delegate?.registerModalViewController(didExit: self)
+        self.delegate?.registerModalViewController(didExit: self, isShowRegister: self.isShowRegister)
         self.dismissViewControllerAnimated(true, completion: nil)
     }
 
