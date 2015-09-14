@@ -75,7 +75,6 @@
 		0C374F391B88E3790050AE1D /* ShipToTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C374F191B88E3790050AE1D /* ShipToTableViewCell.xib */; };
 		0C374F3A1B88E3790050AE1D /* ProductsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C374F1A1B88E3790050AE1D /* ProductsTableViewCell.xib */; };
 		0C374F3B1B88E3790050AE1D /* GeneralRatingTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C374F1B1B88E3790050AE1D /* GeneralRatingTableViewCell.xib */; };
-		0C374F3D1B88E3790050AE1D /* SellerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C374F1D1B88E3790050AE1D /* SellerViewController.xib */; };
 		0C374F3E1B88E3790050AE1D /* ChangeAddressFooterCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C374F1E1B88E3790050AE1D /* ChangeAddressFooterCollectionViewCell.xib */; };
 		0C374F3F1B88E3790050AE1D /* CategoriesTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C374F1F1B88E3790050AE1D /* CategoriesTableViewCell.xib */; };
 		0C374F401B88E3790050AE1D /* CategoriesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C374F201B88E3790050AE1D /* CategoriesViewController.xib */; };
@@ -377,7 +376,6 @@
 		F7CCDAA71B943CF7000F5AD4 /* SeeMoreTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7CCDA9F1B943CF7000F5AD4 /* SeeMoreTableViewCell.swift */; };
 		F7D37CA11B92B09100FA7B16 /* ViewFeedBackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D37C9F1B92B09100FA7B16 /* ViewFeedBackViewController.swift */; };
 		F7D37CA21B92B09100FA7B16 /* ViewFeedBackViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7D37CA01B92B09100FA7B16 /* ViewFeedBackViewController.xib */; };
-		F7DC7EF11BA1E344004F7FD4 /* TransactionSectionFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7DC7EF01BA1E344004F7FD4 /* TransactionSectionFooterView.swift */; };
 		F7DC7ED61BA13E3D004F7FD4 /* SellerCategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7DC7ED41BA13E3D004F7FD4 /* SellerCategoryViewController.swift */; };
 		F7DC7ED71BA13E3D004F7FD4 /* SellerCategoryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7DC7ED51BA13E3D004F7FD4 /* SellerCategoryViewController.xib */; };
 		F7DC7EDA1BA13FAC004F7FD4 /* SellerCategoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7DC7ED81BA13FAC004F7FD4 /* SellerCategoryTableViewCell.swift */; };
@@ -386,15 +384,9 @@
 		F7DC7EDF1BA141AF004F7FD4 /* SellerSubCategoryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7DC7EDD1BA141AF004F7FD4 /* SellerSubCategoryTableViewCell.xib */; };
 		F7DC7EE21BA1421F004F7FD4 /* SellerSubCategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7DC7EE01BA1421F004F7FD4 /* SellerSubCategoryViewController.swift */; };
 		F7DC7EE31BA1421F004F7FD4 /* SellerSubCategoryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7DC7EE11BA1421F004F7FD4 /* SellerSubCategoryViewController.xib */; };
-		F7DEF9BD1B90939100993F33 /* _GuestCheckoutTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7DEF9BB1B90939100993F33 /* _GuestCheckoutTableViewCell.swift */; };
-		F7DEF9C11B90941500993F33 /* _GuestCheckoutHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7DEF9BF1B90941500993F33 /* _GuestCheckoutHeaderTableViewCell.swift */; };
-		F7DEF9C21B90941500993F33 /* _GuestCheckoutHeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7DEF9C01B90941500993F33 /* _GuestCheckoutHeaderTableViewCell.xib */; };
+		F7DC7EF11BA1E344004F7FD4 /* TransactionSectionFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7DC7EF01BA1E344004F7FD4 /* TransactionSectionFooterView.swift */; };
 		F7DC84DF1BA0083000D3878B /* TransactionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7DC84DE1BA0083000D3878B /* TransactionModel.swift */; };
 		F7DC84E11BA00F7300D3878B /* SellerTableHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7DC84E01BA00F7300D3878B /* SellerTableHeaderView.xib */; };
-		F7DEF9BD1B90939100993F33 /* _GuestCheckoutTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7DEF9BB1B90939100993F33 /* _GuestCheckoutTableViewCell.swift */; };
-		F7DEF9C11B90941500993F33 /* _GuestCheckoutHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7DEF9BF1B90941500993F33 /* _GuestCheckoutHeaderTableViewCell.swift */; };
-		F7DEF9C21B90941500993F33 /* _GuestCheckoutHeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7DEF9C01B90941500993F33 /* _GuestCheckoutHeaderTableViewCell.xib */; };
-		F7DC84DF1BA0083000D3878B /* TransactionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7DC84DE1BA0083000D3878B /* TransactionModel.swift */; };
 		F7DC84E31BA0602800D3878B /* TransactionDetailsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7DC84E21BA0602800D3878B /* TransactionDetailsModel.swift */; };
 /* End PBXBuildFile section */
 
@@ -479,7 +471,6 @@
 		0C374F191B88E3790050AE1D /* ShipToTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShipToTableViewCell.xib; sourceTree = "<group>"; };
 		0C374F1A1B88E3790050AE1D /* ProductsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProductsTableViewCell.xib; sourceTree = "<group>"; };
 		0C374F1B1B88E3790050AE1D /* GeneralRatingTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GeneralRatingTableViewCell.xib; sourceTree = "<group>"; };
-		0C374F1D1B88E3790050AE1D /* SellerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SellerViewController.xib; sourceTree = "<group>"; };
 		0C374F1E1B88E3790050AE1D /* ChangeAddressFooterCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChangeAddressFooterCollectionViewCell.xib; sourceTree = "<group>"; };
 		0C374F1F1B88E3790050AE1D /* CategoriesTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CategoriesTableViewCell.xib; sourceTree = "<group>"; };
 		0C374F201B88E3790050AE1D /* CategoriesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CategoriesViewController.xib; sourceTree = "<group>"; };
@@ -787,7 +778,6 @@
 		F7CCDA9F1B943CF7000F5AD4 /* SeeMoreTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SeeMoreTableViewCell.swift; path = YiLinkerOnlineBuyer/resources/View/SeeMoreTableViewCell.swift; sourceTree = SOURCE_ROOT; };
 		F7D37C9F1B92B09100FA7B16 /* ViewFeedBackViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ViewFeedBackViewController.swift; path = YiLinkerOnlineBuyer/resources/Xib/ViewFeedBackViewController.swift; sourceTree = SOURCE_ROOT; };
 		F7D37CA01B92B09100FA7B16 /* ViewFeedBackViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ViewFeedBackViewController.xib; path = YiLinkerOnlineBuyer/resources/Xib/ViewFeedBackViewController.xib; sourceTree = SOURCE_ROOT; };
-		F7DC7EF01BA1E344004F7FD4 /* TransactionSectionFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TransactionSectionFooterView.swift; path = YiLinkerOnlineBuyer/resources/View/TransactionSectionFooterView.swift; sourceTree = SOURCE_ROOT; };
 		F7DC7ED41BA13E3D004F7FD4 /* SellerCategoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SellerCategoryViewController.swift; path = YiLinkerOnlineBuyer/resources/ViewController/SellerCategoryViewController.swift; sourceTree = SOURCE_ROOT; };
 		F7DC7ED51BA13E3D004F7FD4 /* SellerCategoryViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SellerCategoryViewController.xib; path = YiLinkerOnlineBuyer/resources/ViewController/SellerCategoryViewController.xib; sourceTree = SOURCE_ROOT; };
 		F7DC7ED81BA13FAC004F7FD4 /* SellerCategoryTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SellerCategoryTableViewCell.swift; path = YiLinkerOnlineBuyer/resources/ViewController/SellerCategoryTableViewCell.swift; sourceTree = SOURCE_ROOT; };
@@ -796,15 +786,9 @@
 		F7DC7EDD1BA141AF004F7FD4 /* SellerSubCategoryTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SellerSubCategoryTableViewCell.xib; path = YiLinkerOnlineBuyer/resources/ViewController/SellerSubCategoryTableViewCell.xib; sourceTree = SOURCE_ROOT; };
 		F7DC7EE01BA1421F004F7FD4 /* SellerSubCategoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SellerSubCategoryViewController.swift; path = YiLinkerOnlineBuyer/resources/ViewController/SellerSubCategoryViewController.swift; sourceTree = SOURCE_ROOT; };
 		F7DC7EE11BA1421F004F7FD4 /* SellerSubCategoryViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SellerSubCategoryViewController.xib; path = YiLinkerOnlineBuyer/resources/ViewController/SellerSubCategoryViewController.xib; sourceTree = SOURCE_ROOT; };
-		F7DEF9BB1B90939100993F33 /* _GuestCheckoutTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = _GuestCheckoutTableViewCell.swift; path = YiLinkerOnlineBuyer/resources/View/_GuestCheckoutTableViewCell.swift; sourceTree = SOURCE_ROOT; };
-		F7DEF9BF1B90941500993F33 /* _GuestCheckoutHeaderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = _GuestCheckoutHeaderTableViewCell.swift; path = YiLinkerOnlineBuyer/resources/Xib/_GuestCheckoutHeaderTableViewCell.swift; sourceTree = SOURCE_ROOT; };
-		F7DEF9C01B90941500993F33 /* _GuestCheckoutHeaderTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = _GuestCheckoutHeaderTableViewCell.xib; path = YiLinkerOnlineBuyer/resources/Xib/_GuestCheckoutHeaderTableViewCell.xib; sourceTree = SOURCE_ROOT; };
+		F7DC7EF01BA1E344004F7FD4 /* TransactionSectionFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TransactionSectionFooterView.swift; path = YiLinkerOnlineBuyer/resources/View/TransactionSectionFooterView.swift; sourceTree = SOURCE_ROOT; };
 		F7DC84DE1BA0083000D3878B /* TransactionModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TransactionModel.swift; path = YiLinkerOnlineBuyer/resources/Model/TransactionModel.swift; sourceTree = SOURCE_ROOT; };
 		F7DC84E01BA00F7300D3878B /* SellerTableHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SellerTableHeaderView.xib; sourceTree = "<group>"; };
-		F7DEF9BB1B90939100993F33 /* _GuestCheckoutTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = _GuestCheckoutTableViewCell.swift; path = YiLinkerOnlineBuyer/resources/View/_GuestCheckoutTableViewCell.swift; sourceTree = SOURCE_ROOT; };
-		F7DEF9BF1B90941500993F33 /* _GuestCheckoutHeaderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = _GuestCheckoutHeaderTableViewCell.swift; path = YiLinkerOnlineBuyer/resources/Xib/_GuestCheckoutHeaderTableViewCell.swift; sourceTree = SOURCE_ROOT; };
-		F7DEF9C01B90941500993F33 /* _GuestCheckoutHeaderTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = _GuestCheckoutHeaderTableViewCell.xib; path = YiLinkerOnlineBuyer/resources/Xib/_GuestCheckoutHeaderTableViewCell.xib; sourceTree = SOURCE_ROOT; };
-		F7DC84DE1BA0083000D3878B /* TransactionModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TransactionModel.swift; path = YiLinkerOnlineBuyer/resources/Model/TransactionModel.swift; sourceTree = SOURCE_ROOT; };
 		F7DC84E21BA0602800D3878B /* TransactionDetailsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TransactionDetailsModel.swift; path = YiLinkerOnlineBuyer/resources/Model/TransactionDetailsModel.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -1305,9 +1289,7 @@
 				0C9937341B750583000D6074 /* SellerCollectionViewCell.xib */,
 				79A1C6FA1B83787B0043AA36 /* SellerResultCollectionViewCell.xib */,
 				F7DC84E01BA00F7300D3878B /* SellerTableHeaderView.xib */,
-				0C5111D91B81CEFE002F0001 /* SellerTableHeaderView.xib */,
 				F7CCDA851B943CBB000F5AD4 /* SellerViewController.xib */,
-				0C374F1D1B88E3790050AE1D /* SellerViewController.xib */,
 				0C374F191B88E3790050AE1D /* ShipToTableViewCell.xib */,
 				7971F7461B862D3A00322861 /* SortTableViewCell.xib */,
 				0C374EFC1B8862F50050AE1D /* SuccessTableHeaderViewCell.xib */,
@@ -1523,7 +1505,6 @@
 				0C374F491B88E3790050AE1D /* TodaysPromoViewController.xib in Resources */,
 				0C2F44C91B8576FE00021F45 /* Panton ExtraLight Italic.otf in Resources */,
 				0C374F3E1B88E3790050AE1D /* ChangeAddressFooterCollectionViewCell.xib in Resources */,
-				0C374F3D1B88E3790050AE1D /* SellerViewController.xib in Resources */,
 				F7CCDA971B943CBB000F5AD4 /* TodaysPromoViewController.xib in Resources */,
 				26AFB3C91B79DE5C00E50926 /* ProductAttributeTableViewCell.xib in Resources */,
 				0C9937631B750583000D6074 /* LaunchScreen.xib in Resources */,
@@ -1602,8 +1583,7 @@
 				F7CC69021BA344C9009168D7 /* TransactionLeaveSellerFeedbackViewController.xib in Resources */,
 				0C2F44CA1B8576FE00021F45 /* Panton ExtraLight.otf in Resources */,
 				0C2F44CA1B8576FE00021F45 /* Panton ExtraLight.otf in Resources */,
-                F7DC7ED71BA13E3D004F7FD4 /* SellerCategoryViewController.xib in Resources */,
-				0C374F351B88E3790050AE1D /* SummaryViewController.xib in Resources */,
+				F7DC7ED71BA13E3D004F7FD4 /* SellerCategoryViewController.xib in Resources */,
 				26AFB3C81B79DE5C00E50926 /* ReviewTableViewCell.xib in Resources */,
 				26D54FE81B86136300522398 /* TransactionTableViewCell.xib in Resources */,
 				961BE5AA1B994C4D00E8631A /* ResolutionCenterCell.xib in Resources */,

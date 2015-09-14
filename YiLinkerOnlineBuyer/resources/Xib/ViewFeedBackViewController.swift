@@ -14,12 +14,22 @@ protocol ViewFeedBackViewControllerDelegate {
 
 class ViewFeedBackViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, ReviewTableViewCellDelegate {
     
+    @IBOutlet weak var rateImageView1: UIButton!
+    @IBOutlet weak var rateImageView2: UIButton!
+    @IBOutlet weak var rateImageView3: UIButton!
+    @IBOutlet weak var rateImageView4: UIButton!
+    @IBOutlet weak var rateImageView5: UIButton!
+
+    
+    @IBOutlet weak var generalRatingLabel: UILabel!
     @IBOutlet weak var ratingView: UIView!
     @IBOutlet weak var ratingAndReviewsTableView: UITableView!
     
     let reviewTableViewCellIdentifier: String = "reviewIdentifier"
     
     var productReviewModel: ProductReviewModel?
+    var sellerModel: SellerModel?
+    var sellerId: Int = 0
     
     var screenWidth: CGFloat = 0.0
     
@@ -60,24 +70,23 @@ class ViewFeedBackViewController: UIViewController, UITableViewDelegate, UITable
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let cell: ReviewTableViewCell = self.ratingAndReviewsTableView.dequeueReusableCellWithIdentifier(reviewTableViewCellIdentifier, forIndexPath: indexPath) as! ReviewTableViewCell
-        
-        if(self.productReviewModel != nil) {
-            cell.messageLabel.text = self.productReviewModel?.reviews[indexPath.row].review
-            cell.nameLabel.text = self.productReviewModel?.reviews[indexPath.row].fullName
-            var strImageUrl = self.productReviewModel?.reviews[indexPath.row].profileImageUrl
-            var strRate = self.productReviewModel?.reviews[indexPath.row].rating
-            cell.setRating(strRate!)
-            cell.setDisplayPicture(strImageUrl!)
-        }
-        
         cell.delegate = self
+        if(self.sellerModel != nil) {
+            let reviewModel: ProductReviewsModel = self.sellerModel!.reviews[indexPath.section]
+            cell.messageLabel.text = reviewModel.review
+            cell.nameLabel.text = reviewModel.fullName
+            var strImageUrl = reviewModel.profileImageUrl
+            var strRate = reviewModel.ratingSellerReview
+            cell.setRating(strRate)
+            cell.setDisplayPicture(strImageUrl)
+        }
         
         return cell
     
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
+        return 1
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -86,33 +95,54 @@ class ViewFeedBackViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 3
+        if self.sellerModel != nil {
+            return self.sellerModel!.reviews.count
+        } else {
+            return 0
+        }
+        
     }
     
     func fireSellerFeedback() {
         self.showHUD()
         let manager = APIManager.sharedInstance
-        
-        manager.POST("\(APIAtlas.buyerSellerFeedbacks)?access_token=\(SessionManager.accessToken())&sellerId=1", parameters: nil, success: {
+        println("seller id view feedback \(sellerId)")
+        let parameters: NSDictionary = ["sellerId" : self.sellerId];
+        manager.POST("\(APIAtlas.buyerSellerFeedbacks)?access_token=\(SessionManager.accessToken())", parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            self.productReviewModel = ProductReviewModel.parseDataWithDictionary(responseObject as! NSDictionary)
-            self.hud?.hide(true)
-            self.ratingAndReviewsTableView.reloadData()
+            println(responseObject["isSuccessful"])
+            if responseObject["isSuccessful"] as! Bool {
+                self.sellerModel = SellerModel.parseSellerReviewsDataFromDictionary(responseObject as! NSDictionary)
+                println(self.sellerModel?.reviews[1].fullName)
+                self.setRating(self.sellerModel!.rating)
+                self.generalRatingLabel.text = "\(self.sellerModel!.rating)"
+                self.ratingAndReviewsTableView.reloadData()
+                self.hud?.hide(true)
+            } else {
+                self.showAlert(title: "Error", message: responseObject["message"] as! String)
+                self.hud?.hide(true)
+            }
+            
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                if task.statusCode == 404 {
-                    let data = error.userInfo as! Dictionary<String, AnyObject>
-                    print(data["message"])
-                    var message = data["message"] as! String
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "\(message)", title: "Error")
-                } else {
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+                if error.userInfo != nil {
+                    println(error.userInfo)
+                    if let jsonResult = error.userInfo as? Dictionary<String, AnyObject> {
+                        if jsonResult["message"] != nil {
+                            self.showAlert(title: jsonResult["message"] as! String, message: nil)
+                            self.hud?.hide(true)
+                            
+                        } else {
+                            self.showAlert(title: "Something went wrong", message: nil)
+                            self.hud?.hide(true)
+                        }
+                    }
+                } else  {
+                    self.showAlert(title: "Error", message: "Something went wrong.")
+                    self.hud?.hide(true)
                 }
-                self.hud?.hide(true)
         })
         self.ratingAndReviewsTableView.reloadData()
-
     }
     
     func showHUD() {
@@ -126,6 +156,42 @@ class ViewFeedBackViewController: UIViewController, UITableViewDelegate, UITable
         self.hud?.dimBackground = false
         self.navigationController?.view.addSubview(self.hud!)
         self.hud?.show(true)
+    }
+    
+    func showAlert(#title: String!, message: String!) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+        let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+        alertController.addAction(defaultAction)
+        presentViewController(alertController, animated: true, completion: nil)
+    }
+    
+    func setRating(rate: Int) {
+        
+        var r: Int = rate
+        
+        if r > 4 {
+            rateImage(rateImageView5)
+        }
+        
+        if r > 3 {
+            rateImage(rateImageView4)
+        }
+        
+        if r > 2 {
+            rateImage(rateImageView3)
+        }
+        
+        if r > 1  {
+            rateImage(rateImageView2)
+        }
+        
+        if r > 0 {
+            rateImage(rateImageView1)
+        }
+    }
+    
+    func rateImage(ctr: UIButton) {
+        ctr.setImage(UIImage(named: "rating2"), forState: UIControlState.Normal)
     }
 
     /*

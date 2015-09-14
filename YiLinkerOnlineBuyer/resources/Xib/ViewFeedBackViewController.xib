@@ -7,6 +7,12 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ViewFeedBackViewController" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
             <connections>
+                <outlet property="generalRatingLabel" destination="08P-ep-wO4" id="NVk-u5-n9e"/>
+                <outlet property="rateImageView1" destination="NQ7-pI-oJG" id="VxM-3w-Jwo"/>
+                <outlet property="rateImageView2" destination="2vm-Kt-AGL" id="irm-bs-1AN"/>
+                <outlet property="rateImageView3" destination="aew-zA-KKQ" id="rWN-zc-aFr"/>
+                <outlet property="rateImageView4" destination="3ur-DF-Hfp" id="Flf-53-GtG"/>
+                <outlet property="rateImageView5" destination="4tb-XK-UoJ" id="WU0-NS-XN7"/>
                 <outlet property="ratingAndReviewsTableView" destination="U8v-F3-mgJ" id="fqY-1D-UnY"/>
                 <outlet property="ratingView" destination="duf-5x-53L" id="brG-1g-fbj"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -85,16 +91,6 @@
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
                                         </button>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2vm-Kt-AGL" userLabel="star2">
-                                            <rect key="frame" x="41" y="13" width="30" height="30"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" constant="30" id="YhN-QQ-ZXW"/>
-                                                <constraint firstAttribute="height" constant="30" id="xRR-If-Gk0"/>
-                                            </constraints>
-                                            <state key="normal" image="rating">
-                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                            </state>
-                                        </button>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aew-zA-KKQ" userLabel="star3">
                                             <rect key="frame" x="69" y="13" width="30" height="30"/>
                                             <constraints>
@@ -120,6 +116,16 @@
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="30" id="cxh-jx-nrD"/>
                                                 <constraint firstAttribute="width" constant="30" id="ocY-Hh-5eA"/>
+                                            </constraints>
+                                            <state key="normal" image="rating">
+                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                            </state>
+                                        </button>
+                                        <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2vm-Kt-AGL" userLabel="star2">
+                                            <rect key="frame" x="42" y="13" width="30" height="30"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="30" id="YhN-QQ-ZXW"/>
+                                                <constraint firstAttribute="height" constant="30" id="xRR-If-Gk0"/>
                                             </constraints>
                                             <state key="normal" image="rating">
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
