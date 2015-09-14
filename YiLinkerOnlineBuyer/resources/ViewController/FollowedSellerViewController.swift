@@ -154,7 +154,11 @@ class FollowedSellerViewController: UIViewController, EmptyViewDelegate {
     }
     
     func didTapReload() {
-        requestFollowedSelers()
+        if Reachability.isConnectedToNetwork() {
+            requestFollowedSelers()
+        } else {
+            addEmptyView()
+        }
         self.emptyView?.removeFromSuperview()
     }
     
