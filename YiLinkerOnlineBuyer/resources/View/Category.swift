@@ -222,6 +222,14 @@ extension String {
     func contains(find: String) -> Bool{
         return self.rangeOfString(find) != nil
     }
+    
+    func formatToTwoDecimal() -> String{
+        let formatter = NSNumberFormatter()
+        formatter.minimumFractionDigits = 0
+        formatter.maximumFractionDigits = 2
+        formatter.numberStyle = .CurrencyStyle
+        return "\(formatter.stringFromNumber((self as NSString).doubleValue)!)"
+    }
 
 }
 

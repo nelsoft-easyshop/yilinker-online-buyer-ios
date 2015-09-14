@@ -20,7 +20,7 @@ class OverViewViewController: UIViewController, UITableViewDelegate, UITableView
         self.tableView.tableHeaderView = successHeaderView
         
         let totalTableViewCell: TotalTableViewCell = XibHelper.puffViewWithNibName(Constants.Checkout.OverView.totalTableViewCellNibNameAndIdentifier, index: 0) as! TotalTableViewCell
-        totalTableViewCell.priceLabel.text = "\(self.paymentSuccessModel.data.totalPrice)"
+        totalTableViewCell.priceLabel.text = "\(self.paymentSuccessModel.data.totalPrice.formatToTwoDecimal())"
             
         self.tableView.tableFooterView = totalTableViewCell
         self.registerNib()
