@@ -413,7 +413,7 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
         dimView.backgroundColor = UIColor.blackColor()
         dimView.alpha = 0.0
         dimView.tag = 100
-        self.view.addSubview(dimView)
+        self.navigationController!.view.addSubview(dimView)
         
         UIView.animateWithDuration(0.5, delay: 0.0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
             dimView.alpha = 0.5
@@ -425,11 +425,11 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
         registerModelViewController.definesPresentationContext = true
         registerModelViewController.view.backgroundColor = UIColor.clearColor()
         registerModelViewController.delegate = self
-        self.presentViewController(registerModelViewController, animated: true, completion: nil)
+        self.navigationController!.presentViewController(registerModelViewController, animated: true, completion: nil)
     }
     
-    func registerModalViewController(didExit view: RegisterModalViewController) {
-        for dimView in self.view.subviews {
+    func registerModalViewController(didExit view: RegisterModalViewController, isShowRegister: Bool) {
+        for dimView in self.navigationController!.view.subviews {
             if dimView.tag == 100 {
                 let dimView2: UIView = dimView as! UIView
                 UIView.animateWithDuration(0.5, animations: { () -> Void in
@@ -437,41 +437,15 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
                     }, completion: { (Bool) -> Void in
                         dimView2.removeFromSuperview()
                         self.alertHasShown = true
+                        
+                        if isShowRegister {
+                            self.redirectToRegister()
+                        }
                 })
             }
         }
     }
     
-    func registerModalViewController(didSave view: RegisterModalViewController, password: String) {
-        self.fireRegister(password)
-    }
-    
-    func fireRegister(password: String) {
-        self.showHUD()
-        let manager: APIManager = APIManager.sharedInstance
-        
-        let parameters: NSDictionary = ["email": self.guestEmail,"password": password, "firstName": "", "lastName": ""]
-        
-        manager.POST(APIAtlas.registerUrl, parameters: parameters, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            let registerModel: RegisterModel = RegisterModel.parseDataFromDictionary(responseObject as! NSDictionary)
-            if registerModel.isSuccessful {
-                self.fireLogin(self.guestEmail, password: password)
-            } else {
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: registerModel.message, title: "Error")
-                self.hud?.hide(true)
-            }
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                if !Reachability.isConnectedToNetwork() {
-                    UIAlertController.displayNoInternetConnectionError(self)
-                } else {
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
-                }
-                
-                self.hud?.hide(true)
-        })
-    }
     
     func fireLogin(email: String, password: String) {
         let manager: APIManager = APIManager.sharedInstance
@@ -512,5 +486,22 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
         self.presentViewController(alertController, animated: true) {
             
         }
+    }
+
+    
+    func redirectToRegister() {
+        let storyBoard: UIStoryboard = UIStoryboard(name: "StartPageStoryBoard", bundle: nil)
+        let registerViewController: LoginAndRegisterContentViewController?
+        if IphoneType.isIphone5() {
+            registerViewController = storyBoard.instantiateViewControllerWithIdentifier("LoginAndRegisterContentViewController5") as? LoginAndRegisterContentViewController
+        } else if IphoneType.isIphone4() {
+            registerViewController = storyBoard.instantiateViewControllerWithIdentifier("LoginAndRegisterContentViewController4") as? LoginAndRegisterContentViewController
+            
+        } else {
+            registerViewController = storyBoard.instantiateViewControllerWithIdentifier("LoginAndRegisterContentViewController") as? LoginAndRegisterContentViewController
+            
+        }
+        
+        self.navigationController?.presentViewController(registerViewController!, animated: true, completion: nil)
     }
 }
