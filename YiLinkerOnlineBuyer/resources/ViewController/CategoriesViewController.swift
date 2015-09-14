@@ -176,7 +176,9 @@ class CategoriesViewController: UIViewController, EmptyViewDelegate {
     
     func didTapReload() {
         self.emptyView?.removeFromSuperview()
-        requestMainCategories()
+        if firstLoad {
+            requestMainCategories()
+        }
     }
     
     func showHUD() {
