@@ -255,7 +255,9 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
                 }
             }
         }
-        totalPriceLabel.text = "P \(formatter.stringFromNumber(totalPrice)!)"
+        
+        var price: String = "\(totalPrice)"
+        totalPriceLabel.text = "P \(price.formatToTwoDecimal())"
     }
     
     
