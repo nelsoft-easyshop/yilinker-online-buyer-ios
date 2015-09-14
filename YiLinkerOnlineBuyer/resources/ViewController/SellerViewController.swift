@@ -166,6 +166,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
                     self.is_successful == self.sellerModel?.is_allowed
                 }
         })
+        self.tableView.reloadData()
     }
     
     func fireSellerFeedback() {
@@ -204,6 +205,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
                     self.hud?.hide(true)
                 }
         })
+        self.tableView.reloadData()
     }
     
     func fireFollowSeller() {
@@ -367,7 +369,16 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        
+        if indexPath.section == 1 {
+            return 174
+        } else if indexPath.section == 2 {
+            return 41
+        } else {
+            return UITableViewAutomaticDimension
+        }
+    }
+    
+    func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if indexPath.section == 1 {
             return 174
         } else if indexPath.section == 2 {
