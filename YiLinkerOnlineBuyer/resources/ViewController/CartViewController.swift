@@ -32,6 +32,8 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     var hud: MBProgressHUD?
     
+    var badgeCount: Int = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         manager = APIManager.sharedInstance
@@ -100,7 +102,7 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
                         array.append(model)
                     }
                 }
-                
+            
                 if responseObject.objectForKey("error") != nil {
                     self.requestRefreshToken("passCart", url: url, params: params)
                 } else {
@@ -193,19 +195,23 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
                 self.tableData.append(model)
             }
             self.cartTableView.reloadData()
+            
+            if let value: Int = value["total"] as? Int {
+                self.badgeCount = value
+            }
         }
         self.updateCounterLabel()
         self.calculateTotalPrice()
         self.dismissLoader()
         
-        if tableData.count != 0 {
+        if badgeCount != 0 {
             let badgeValue = (self.tabBarController!.tabBar.items![4] as! UITabBarItem).badgeValue?.toInt()
-            (self.tabBarController!.tabBar.items![4] as! UITabBarItem).badgeValue = String(tableData.count)
+            (self.tabBarController!.tabBar.items![4] as! UITabBarItem).badgeValue = String(badgeCount)
         } else {
             (self.tabBarController!.tabBar.items![4] as! UITabBarItem).badgeValue = nil
         }
         
-        SessionManager.setCartCount(tableData.count)
+        SessionManager.setCartCount(badgeCount)
     }
     
     func updateCounterLabel() {
