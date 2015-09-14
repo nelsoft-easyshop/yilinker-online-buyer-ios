@@ -33,7 +33,9 @@ class CategoriesViewController: UIViewController, EmptyViewDelegate {
         let nib = UINib(nibName: "CategoriesTableViewCell", bundle: nil)
         self.tableView.registerNib(nib, forCellReuseIdentifier: "CategoryIdentifier")
 
-        requestMainCategories()
+        if firstLoad {
+            requestMainCategories()
+        }
     }
 
     override func viewWillAppear(animated: Bool) {
@@ -98,8 +100,8 @@ class CategoriesViewController: UIViewController, EmptyViewDelegate {
         if Reachability.isConnectedToNetwork() {
             if categoryModel.hasChildren[indexPath.row] {
                 let categories = CategoriesViewController(nibName: "CategoriesViewController", bundle: nil)
+                categories.firstLoad = false
                 categories.parentText = categoryModel.name[indexPath.row]
-                categories.firstLoad = firstLoad
                 categories.requestCategories(parentId: categoryModel.id[indexPath.row])
                 self.navigationController?.pushViewController(categories, animated: true)
             } else {
@@ -112,10 +114,7 @@ class CategoriesViewController: UIViewController, EmptyViewDelegate {
     
     func requestMainCategories() {
         if Reachability.isConnectedToNetwork() {
-            if firstLoad {
-                requestCategories(parentId: categoryId)
-                firstLoad = false
-            }
+            requestCategories(parentId: categoryId)
         } else {
             addEmptyView()
         }
