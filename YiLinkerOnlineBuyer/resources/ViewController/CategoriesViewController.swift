@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CategoriesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class CategoriesViewController: UIViewController, EmptyViewDelegate {
 
     @IBOutlet weak var tableView: UITableView!
 
@@ -16,6 +16,9 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
     var parentText: String = ""
     var firstLoad: Bool = true
     var categoryId: Int = 1
+    
+    var emptyView: EmptyView?
+    var hud: MBProgressHUD?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,10 +33,7 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
         let nib = UINib(nibName: "CategoriesTableViewCell", bundle: nil)
         self.tableView.registerNib(nib, forCellReuseIdentifier: "CategoryIdentifier")
 
-        if firstLoad {
-            requestCategories(parentId: categoryId)
-            firstLoad = false
-        }
+        requestMainCategories()
     }
 
     override func viewWillAppear(animated: Bool) {
@@ -95,18 +95,31 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if categoryModel.hasChildren[indexPath.row] {
-            let categories = CategoriesViewController(nibName: "CategoriesViewController", bundle: nil)
-            categories.parentText = categoryModel.name[indexPath.row]
-            categories.firstLoad = firstLoad
-            categories.requestCategories(parentId: categoryModel.id[indexPath.row])
-            self.navigationController?.pushViewController(categories, animated: true)
-        } else {
-            gotoSearch()
+        if Reachability.isConnectedToNetwork() {
+            if categoryModel.hasChildren[indexPath.row] {
+                let categories = CategoriesViewController(nibName: "CategoriesViewController", bundle: nil)
+                categories.parentText = categoryModel.name[indexPath.row]
+                categories.firstLoad = firstLoad
+                categories.requestCategories(parentId: categoryModel.id[indexPath.row])
+                self.navigationController?.pushViewController(categories, animated: true)
+            } else {
+                gotoSearch()
+            }
         }
     }
     
     // Methods
+    
+    func requestMainCategories() {
+        if Reachability.isConnectedToNetwork() {
+            if firstLoad {
+                requestCategories(parentId: categoryId)
+                firstLoad = false
+            }
+        } else {
+            addEmptyView()
+        }
+    }
     
     func sectionHeaderView() -> UIView {
         var containerView = UIView(frame: CGRectMake(0, 0, self.view.frame.size.width, 40))
@@ -155,17 +168,41 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
         self.navigationController?.pushViewController(resultList, animated: true)
     }
     
+    func addEmptyView() {
+        self.emptyView = UIView.loadFromNibNamed("EmptyView", bundle: nil) as? EmptyView
+        self.emptyView!.delegate = self
+        self.emptyView!.frame = self.view.bounds
+        self.view.addSubview(self.emptyView!)
+    }
+    
+    func didTapReload() {
+        self.emptyView?.removeFromSuperview()
+        requestMainCategories()
+    }
+    
+    func showHUD() {
+        if self.hud != nil {
+            self.hud!.hide(true)
+            self.hud = nil
+        }
+        
+        self.hud = MBProgressHUD(view: self.view)
+        self.hud?.removeFromSuperViewOnHide = true
+        self.hud?.dimBackground = false
+        self.view.addSubview(self.hud!)
+        self.hud?.show(true)
+    }
+    
     // MARK: - Request
     
     func requestCategories(#parentId: Int) {
-        SVProgressHUD.show()
-
+        showHUD()
         let manager = APIManager.sharedInstance
         
         manager.GET(APIAtlas.getCategories + String(parentId), parameters: nil, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            println(responseObject)
-            SVProgressHUD.dismiss()
+            
+            self.hud?.hide(true)
             self.categoryModel = CategoryModel.parseCategories(responseObject)
             
             if self.tableView != nil {
@@ -174,8 +211,7 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
         
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                println("failed")
-                SVProgressHUD.dismiss()
+                self.hud?.hide(true)
         })
     }
 
