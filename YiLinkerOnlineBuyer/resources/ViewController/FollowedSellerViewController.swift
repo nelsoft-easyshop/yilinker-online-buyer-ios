@@ -22,7 +22,11 @@ class FollowedSellerViewController: UIViewController, EmptyViewDelegate {
         let nib = UINib(nibName: "FollowedSellerTableViewCell", bundle: nil)
         self.tableView.registerNib(nib, forCellReuseIdentifier: "FollowedSellerIdentifier")
         
-        requestFollowedSelers()
+        if Reachability.isConnectedToNetwork() {
+            requestFollowedSelers()
+        } else {
+            addEmptyView()
+        }
         
         customizedNavigationBar()
     }
@@ -94,11 +98,10 @@ class FollowedSellerViewController: UIViewController, EmptyViewDelegate {
         self.showHUD()
         
         let manager = APIManager.sharedInstance
-        let url = "http://online.api.easydeal.ph/api/v1/auth/getFollowedSellers"
         let params = ["access_token": SessionManager.accessToken(),
             "page": "1", "limit": "99"]
         
-        manager.POST(url, parameters: params, success: {
+        manager.POST(APIAtlas.getFollowedSellers, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
             self.followedSellerModel = FollowedSellerModel.parseDataWithDictionary(responseObject)
@@ -151,7 +154,11 @@ class FollowedSellerViewController: UIViewController, EmptyViewDelegate {
     }
     
     func didTapReload() {
-        requestFollowedSelers()
+        if Reachability.isConnectedToNetwork() {
+            requestFollowedSelers()
+        } else {
+            addEmptyView()
+        }
         self.emptyView?.removeFromSuperview()
     }
     

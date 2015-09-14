@@ -85,8 +85,12 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         setBorderOf(view: addToCartButton, width: 1, color: .grayColor(), radius: 3)
         setBorderOf(view: buyItNowView, width: 1, color: .grayColor(), radius: 3)
         
-        requestProductDetails()
-        requestReviewDetails()
+        if Reachability.isConnectedToNetwork() {
+            requestProductDetails()
+            requestReviewDetails()
+        } else {
+            addEmptyView()
+        }
         
         buyItNowView.addGestureRecognizer(tapGesture("buyItNowAction:"))
     }
@@ -976,8 +980,12 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     }
     
     func didTapReload() {
-        self.requestProductDetails()
-        //        self.requestReviewDetails()
+        if Reachability.isConnectedToNetwork() {
+            requestProductDetails()
+            requestReviewDetails()
+        } else {
+            addEmptyView()
+        }
         self.emptyView?.removeFromSuperview()
     }
     
