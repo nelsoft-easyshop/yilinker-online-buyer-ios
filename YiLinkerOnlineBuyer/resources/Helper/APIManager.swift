@@ -121,6 +121,7 @@ struct APIAtlas {
     static let updateMobileNumber = "auth/user/changeContactNumber"
     static let smsVerification = "auth/sms/verify"
     static let changePassword = "auth/user/changePassword"
+    static let getFollowedSellers = "auth/getFollowedSellers"
     static let baseUrl = APIEnvironment.baseUrl()
     
     /* MESSAGING CONSTANTS */

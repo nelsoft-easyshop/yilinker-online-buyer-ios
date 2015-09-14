@@ -98,11 +98,10 @@ class FollowedSellerViewController: UIViewController, EmptyViewDelegate {
         self.showHUD()
         
         let manager = APIManager.sharedInstance
-        let url = "http://online.api.easydeal.ph/api/v1/auth/getFollowedSellers"
         let params = ["access_token": SessionManager.accessToken(),
             "page": "1", "limit": "99"]
         
-        manager.POST(url, parameters: params, success: {
+        manager.POST(APIAtlas.getFollowedSellers, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
             self.followedSellerModel = FollowedSellerModel.parseDataWithDictionary(responseObject)
