@@ -920,24 +920,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     }
     
     func seeMoreReview(controller: ProductReviewFooterView) {
-        if self.productReviewModel != nil {
-            var reviewModal = ProductReviewViewController(nibName: "ProductReviewViewController", bundle: nil)
-            reviewModal.delegate = self
-            reviewModal.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
-            reviewModal.providesPresentationContextTransitionStyle = true
-            reviewModal.definesPresentationContext = true
-            reviewModal.view.backgroundColor = UIColor.clearColor()
-            reviewModal.view.frame.origin.y = reviewModal.view.frame.size.height
-            reviewModal.passModel(self.productReviewModel)
-            self.tabBarController?.presentViewController(reviewModal, animated: true, completion: nil)
-            
-            UIView.animateWithDuration(0.3, animations: {
-                self.dimView.alpha = 0.5
-                self.dimView.layer.zPosition = 2
-                self.view.transform = CGAffineTransformMakeScale(0.92, 0.93)
-                self.navigationController?.navigationBar.alpha = 0.0
-            })
-        }
+        self.barRateAction()
     }
     
     // MARK: - Product Seller Delegate
@@ -1005,7 +988,24 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     }
     
     func barRateAction() {
-        showAlert(title: "Coming Soon", message: nil)
+        if self.productReviewModel != nil {
+            var reviewModal = ProductReviewViewController(nibName: "ProductReviewViewController", bundle: nil)
+            reviewModal.delegate = self
+            reviewModal.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
+            reviewModal.providesPresentationContextTransitionStyle = true
+            reviewModal.definesPresentationContext = true
+            reviewModal.view.backgroundColor = UIColor.clearColor()
+            reviewModal.view.frame.origin.y = reviewModal.view.frame.size.height
+            reviewModal.passModel(self.productReviewModel)
+            self.tabBarController?.presentViewController(reviewModal, animated: true, completion: nil)
+            
+            UIView.animateWithDuration(0.3, animations: {
+                self.dimView.alpha = 0.5
+                self.dimView.layer.zPosition = 2
+                self.view.transform = CGAffineTransformMakeScale(0.92, 0.93)
+                self.navigationController?.navigationBar.alpha = 0.0
+            })
+        }
     }
     
     func barMessageAction() {
