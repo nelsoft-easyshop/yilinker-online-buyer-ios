@@ -398,7 +398,7 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
                     if tempVar {
                         var data: NSDictionary = responseObject["data"] as! NSDictionary
                         var items: NSArray = data["items"] as! NSArray
-                        SessionManager.setCartCount(items.count)
+                        SessionManager.setCartCount(data["total"] as! Int)
                         (self.tabController.tabBar.items![4] as! UITabBarItem).badgeValue = String(SessionManager.cartCount())
                         self.hideSelf("cart")
                         

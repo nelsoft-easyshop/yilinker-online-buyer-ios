@@ -485,7 +485,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
                     } else {
                         self.showAlert(title: nil, message: "This item has been added to your cart")
                         println(items.count)
-                        SessionManager.setCartCount(items.count)
+                        SessionManager.setCartCount(data["total"] as! Int)
                         self.addBadge("cart")
                         self.hud?.hide(true)
                     }
