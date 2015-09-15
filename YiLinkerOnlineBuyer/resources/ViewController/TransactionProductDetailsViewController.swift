@@ -130,14 +130,14 @@ class TransactionProductDetailsViewController: UIViewController {
         if self.transactionCancelView == nil {
             self.transactionCancelView = XibHelper.puffViewWithNibName("TransactionViews", index: 9) as! TransactionCancelOrderView
             self.transactionCancelView.frame.size.width = self.view.frame.size.width
-            self.transactionCancelView.frame.origin.y += CGFloat(20)
+            self.transactionCancelView.frame.origin.y += CGFloat(120)
         }
         return self.transactionCancelView
     }
     
     func getTransactionButtonView() -> UIView {
         if self.transactionButtonView == nil {
-            self.transactionButtonView = UIView(frame: CGRectMake(0, 0, self.view.frame.size.width, 50))
+            self.transactionButtonView = UIView(frame: CGRectMake(0, 0, self.view.frame.size.width, 0))
             
             var feedbackButton: UIButton = UIButton(frame: CGRectZero)
             feedbackButton.addTarget(self, action: "leaveFeedback", forControlEvents: .TouchUpInside)
@@ -176,6 +176,7 @@ class TransactionProductDetailsViewController: UIViewController {
         // header
         self.setPosition(self.transactionPurchaseDetailsView, from: self.transactionProductImagesView)
         self.setPosition(self.transactionProductDetailsView, from: self.transactionPurchaseDetailsView)
+        //self.setPosition(self.transactionCancelView, from: self.transactionCancelView)
         
         newFrame = self.headerView.frame
         newFrame.size.height = CGRectGetMaxY(self.transactionProductDetailsView.frame)
@@ -189,12 +190,12 @@ class TransactionProductDetailsViewController: UIViewController {
         footerGrayColor.backgroundColor = Constants.Colors.backgroundGray
         self.getFooterView().addSubview(footerGrayColor)
         
-        self.setPosition(self.transactionButtonView, from: self.transactionDescriptionView)
-        self.setPosition(footerGrayColor, from: self.transactionButtonView)
+        self.setPosition(self.transactionCancelView, from: self.transactionDescriptionView)
+        self.setPosition(footerGrayColor, from: self.transactionCancelView)
         footerGrayColor.frame.origin.y -= 20
         
         newFrame = self.footerView.frame
-        newFrame.size.height = CGRectGetMaxY(self.transactionButtonView.frame)
+        newFrame.size.height = CGRectGetMaxY(self.transactionCancelView.frame)
         self.footerView.frame = newFrame
 
         self.tableView.tableFooterView = nil
