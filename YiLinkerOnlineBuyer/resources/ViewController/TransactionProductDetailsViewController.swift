@@ -29,6 +29,7 @@ class TransactionProductDetailsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Product Details"
+        self.backButton()
         
         let nib = UINib(nibName: "TransactionProductDetailsTableViewCell", bundle: nil)
         self.tableView.registerNib(nib, forCellReuseIdentifier: "TransactionProductDetailsIdentifier")
@@ -197,6 +198,23 @@ class TransactionProductDetailsViewController: UIViewController {
         let feedbackView = TransactionLeaveFeedbackViewController(nibName: "TransactionLeaveFeedbackViewController", bundle: nil)
         feedbackView.edgesForExtendedLayout = UIRectEdge.None
         self.navigationController?.pushViewController(feedbackView, animated: true)
+    }
+    
+    //MARK: Navigation bar
+    func backButton() {
+        var backButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
+        backButton.frame = CGRectMake(0, 0, 40, 40)
+        backButton.addTarget(self, action: "back", forControlEvents: UIControlEvents.TouchUpInside)
+        backButton.setImage(UIImage(named: "back-white"), forState: UIControlState.Normal)
+        var customBackButton:UIBarButtonItem = UIBarButtonItem(customView: backButton)
+        
+        let navigationSpacer: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
+        navigationSpacer.width = -20
+        self.navigationItem.leftBarButtonItems = [navigationSpacer, customBackButton]
+    }
+    
+    func back() {
+        self.navigationController!.popViewControllerAnimated(true)
     }
 
 }

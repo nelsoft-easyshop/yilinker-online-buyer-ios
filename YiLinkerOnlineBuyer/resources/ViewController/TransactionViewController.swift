@@ -56,6 +56,7 @@ class TransactionViewController: UIViewController {
         addViewsActions()
     
         self.fireTransaction("all")
+        self.backButton()
         
     }
     
@@ -227,6 +228,23 @@ class TransactionViewController: UIViewController {
         self.transactionModel?.total_quantity.removeAll(keepCapacity: false)
         self.transactionModel?.product_name.removeAll(keepCapacity: false)
         self.transactionModel?.product_count.removeAll(keepCapacity: false)
+    }
+    
+    //MARK: Navigation bar
+    func backButton() {
+        var backButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
+        backButton.frame = CGRectMake(0, 0, 40, 40)
+        backButton.addTarget(self, action: "back", forControlEvents: UIControlEvents.TouchUpInside)
+        backButton.setImage(UIImage(named: "back-white"), forState: UIControlState.Normal)
+        var customBackButton:UIBarButtonItem = UIBarButtonItem(customView: backButton)
+        
+        let navigationSpacer: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
+        navigationSpacer.width = -20
+        self.navigationItem.leftBarButtonItems = [navigationSpacer, customBackButton]
+    }
+    
+    func back() {
+        self.navigationController!.popViewControllerAnimated(true)
     }
 }
 
