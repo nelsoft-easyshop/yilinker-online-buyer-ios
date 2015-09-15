@@ -42,6 +42,8 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
          ,"sortType=BYDATE&sortDirection=DESC"
          ,"sortType=ALPHABETICAL&sortDirection=ASC"
          ,"sortType=ALPHABETICAL&sortDirection=DESC"]
+    
+    var filterAtributes: [FilterAttributeModel] = []
 
     typealias InitialSearchParameters = (targetUrl: String, parameters: NSDictionary!)
     var initialParameters: InitialSearchParameters? = nil
@@ -57,6 +59,8 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
     var page:Int = 0
     
     var requestSuggestionSearchUrl: String = ""
+    var maxPrice: Double = 0
+    var minPrice: Double = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -174,6 +178,7 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
     }
     
     func requestSearchDetails(url: String, params: NSDictionary!) {
+        println("URL \(url)\nPARAMS:\(params)")
         if collectionViewData.count != (totalResultCount + 15){
             println("\(collectionViewData.count) \(totalResultCount)")
             
@@ -222,6 +227,33 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
                 
                 self.collectionViewData.append(model)
             }
+            
+            if let aggregations: AnyObject = value["aggregations"] {
+                if aggregations as! NSObject != NSNull() {
+                    
+                    if let subValue: AnyObject = aggregations["maxPrice"] {
+                        if subValue as! NSObject != NSNull() {
+                            maxPrice = subValue as! Double
+                        }
+                    }
+                    
+                    if let subValue: AnyObject = aggregations["minPrice"] {
+                        if subValue as! NSObject != NSNull() {
+                            minPrice = subValue as! Double
+                        }
+                    }
+                    
+                    if let attributes: AnyObject = aggregations["attributes"] {
+                        filterAtributes.removeAll(keepCapacity: false)
+                        if attributes as! NSObject != NSNull() {
+                            for attribute in attributes as! NSArray {
+                                filterAtributes.append(FilterAttributeModel.parseDataWithDictionary(attribute as! NSDictionary))
+                            }
+                        }
+                    }
+                }
+            }
+            
             self.resultCollectionView.reloadSections(NSIndexSet(index: 0))
         }
         self.dismissLoader()
@@ -298,6 +330,9 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
         attributeModal.providesPresentationContextTransitionStyle = true
         attributeModal.definesPresentationContext = true
         attributeModal.delegate = self
+        attributeModal.passFilter(filterAtributes, maxPrice: maxPrice, minPrice: minPrice)
+        attributeModal.maxPrice = maxPrice
+        attributeModal.minPrice = minPrice
         self.tabBarController?.presentViewController(attributeModal, animated: true, completion: nil)
         
         self.fullDimView!.hidden = false
@@ -434,55 +469,12 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
         var reload_distance: CGFloat = 10
         var temp: CGFloat = h + reload_distance
         if y > temp {
+            if page == 0{
+                page++
+            }
             requestSearchDetails(requestSuggestionSearchUrl, params: NSDictionary(dictionary: ["page": page]))
         }
     }
-    
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-    // Return NO if you do not want the specified item to be editable.
-    return true
-    }
-    */
-    
-    /*
-    // Override to support editing the table view.
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-    if editingStyle == .Delete {
-    // Delete the row from the data source
-    tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-    } else if editingStyle == .Insert {
-    // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }
-    }
-    */
-    
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-    
-    }
-    */
-    
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-    // Return NO if you do not want the item to be re-orderable.
-    return true
-    }
-    */
-
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
     
     // MARK: - FilterViewControllerDelegate
     func resetFilterViewControllerAction() {
@@ -491,6 +483,17 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
     
     func cancelFilterViewControllerAction() {
         hideDimView()
+    }
+    
+    func applyFilterViewControllerAction(maxPrice: Double, minPrice: Double, filters: NSDictionary) {
+        hideDimView()
+        page = 0
+        collectionViewData.removeAll(keepCapacity: false)
+        resultCollectionView.reloadData()
+        requestSearchDetails(requestSuggestionSearchUrl, params: NSDictionary(dictionary: [
+            "priceFrom": minPrice,
+            "priceTo": maxPrice,
+            "filters": [filters]]))
     }
     
     func showAlert(title: String, message: String) {

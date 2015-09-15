@@ -18,6 +18,8 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var searchResultTableView: UITableView!
+
+    var isQueueCancelled: Bool = false
     
     var tableData: [SearchSuggestionModel] = []
     
@@ -32,6 +34,8 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.navigationController?.navigationBar.alpha = 1
         self.navigationController?.navigationBar.barTintColor = Constants.Colors.appTheme
         self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
+        
+        isQueueCancelled = false
     }
     
     override func didReceiveMemoryWarning() {
@@ -117,7 +121,7 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
             self.searchResultTableView.reloadData()
         }
         
-        if tableData.count == 0 {
+        if tableData.count == 0 && !isQueueCancelled {
             showAlert("Search", message: "No result found.")
         }
         
@@ -161,6 +165,9 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+        manager.operationQueue.cancelAllOperations()
+        isQueueCancelled = true
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
         self.searchBar.resignFirstResponder()
         let newString = searchBar.text.stringByReplacingOccurrencesOfString(" ", withString: "+")
         
