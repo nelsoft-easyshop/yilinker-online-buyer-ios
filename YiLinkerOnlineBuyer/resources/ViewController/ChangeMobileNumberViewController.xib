@@ -27,10 +27,6 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ki8-IY-jlt" userLabel="Tap bakground view">
-                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                </view>
                 <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qcp-z0-MeU" userLabel="Main View">
                     <rect key="frame" x="10" y="172" width="300" height="225"/>
                     <subviews>
@@ -153,6 +149,10 @@
                                 <constraint firstItem="kDE-y6-aq1" firstAttribute="top" secondItem="bh3-gB-9kv" secondAttribute="top" constant="12" id="weA-gF-Tkd"/>
                             </constraints>
                         </view>
+                        <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ki8-IY-jlt" userLabel="Tap bakground view">
+                            <rect key="frame" x="-214" y="-358" width="320" height="568"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        </view>
                     </subviews>
                     <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
@@ -180,12 +180,8 @@
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="Qcp-z0-MeU" secondAttribute="trailing" constant="10" id="7au-8U-3hq"/>
-                <constraint firstItem="Ki8-IY-jlt" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="BHd-Ve-afa"/>
                 <constraint firstItem="Qcp-z0-MeU" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="172" id="J77-ab-Qfg"/>
                 <constraint firstItem="Qcp-z0-MeU" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="10" id="KyP-Kz-rdp"/>
-                <constraint firstAttribute="bottom" secondItem="Ki8-IY-jlt" secondAttribute="bottom" id="P39-S2-4dS"/>
-                <constraint firstItem="Ki8-IY-jlt" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="Uz9-c9-ZeN"/>
-                <constraint firstAttribute="trailing" secondItem="Ki8-IY-jlt" secondAttribute="trailing" id="oiE-UP-gOM"/>
             </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
             <point key="canvasLocation" x="268" y="248"/>

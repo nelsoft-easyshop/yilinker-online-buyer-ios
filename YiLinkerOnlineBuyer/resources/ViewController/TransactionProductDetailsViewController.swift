@@ -33,6 +33,10 @@ class TransactionProductDetailsViewController: UIViewController {
         
         let nib = UINib(nibName: "TransactionProductDetailsTableViewCell", bundle: nil)
         self.tableView.registerNib(nib, forCellReuseIdentifier: "TransactionProductDetailsIdentifier")
+        
+        let cell: TransactionCancelTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("TransactionCancelTableViewCell") as! TransactionCancelTableViewCell
+        self.tableView.tableFooterView = cell
+        
     }
     
     override func viewWillAppear(animated: Bool) {

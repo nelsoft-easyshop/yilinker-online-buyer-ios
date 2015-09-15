@@ -10,9 +10,13 @@ import UIKit
 
 class TransactionCancelViewController: UIViewController {
 
+    @IBOutlet weak var remarksTextView: UITextView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        remarksTextView.layer.cornerRadius = 5.0
+        remarksTextView.clipsToBounds = true
         // Do any additional setup after loading the view.
     }
 

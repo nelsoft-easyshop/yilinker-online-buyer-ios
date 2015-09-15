@@ -344,10 +344,7 @@
 		BE00C15B75D7E76D254AAEC1 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D038C18A7712E626564D2D3 /* libPods.a */; };
 		F740F08D1B90CBC900D23A34 /* CreateAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F740F08B1B90CBC900D23A34 /* CreateAccountViewController.swift */; };
 		F740F08E1B90CBC900D23A34 /* CreateAccountViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F740F08C1B90CBC900D23A34 /* CreateAccountViewController.xib */; };
-		F740F0901B90D1D800D23A34 /* address.png in Resources */ = {isa = PBXBuildFile; fileRef = F740F08F1B90D1D800D23A34 /* address.png */; };
-		F740F0921B90D1E200D23A34 /* close2.png in Resources */ = {isa = PBXBuildFile; fileRef = F740F0911B90D1E200D23A34 /* close2.png */; };
 		F7CC68F21BA28AFB009168D7 /* TransactionSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7CC68F11BA28AFB009168D7 /* TransactionSectionHeaderView.swift */; };
-		F7CC68F41BA295A2009168D7 /* message2.png in Resources */ = {isa = PBXBuildFile; fileRef = F7CC68F31BA295A2009168D7 /* message2.png */; };
 		F7CC68F71BA2A02F009168D7 /* TransactionCancelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7CC68F51BA2A02F009168D7 /* TransactionCancelViewController.swift */; };
 		F7CC68F81BA2A02F009168D7 /* TransactionCancelViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7CC68F61BA2A02F009168D7 /* TransactionCancelViewController.xib */; };
 		F7CC68FE1BA2ABDC009168D7 /* TransactionDetailsProductsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7CC68FD1BA2ABDC009168D7 /* TransactionDetailsProductsModel.swift */; };
@@ -388,6 +385,8 @@
 		F7DC84E31BA0602800D3878B /* TransactionDetailsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7DC84E21BA0602800D3878B /* TransactionDetailsModel.swift */; };
 		F7E739F71BA7FD3100F9C5B8 /* TransactionCancelOrderStatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E739F51BA7FD3100F9C5B8 /* TransactionCancelOrderStatusViewController.swift */; };
 		F7E739F81BA7FD3100F9C5B8 /* TransactionCancelOrderStatusViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7E739F61BA7FD3100F9C5B8 /* TransactionCancelOrderStatusViewController.xib */; };
+		F7E739FB1BA81B6000F9C5B8 /* TransactionCancelTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E739F91BA81B6000F9C5B8 /* TransactionCancelTableViewCell.swift */; };
+		F7E739FC1BA81B6000F9C5B8 /* TransactionCancelTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7E739FA1BA81B6000F9C5B8 /* TransactionCancelTableViewCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -745,10 +744,7 @@
 		B7B1D8311BA15B0C006A5DF5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F740F08B1B90CBC900D23A34 /* CreateAccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CreateAccountViewController.swift; path = YiLinkerOnlineBuyer/resources/Xib/CreateAccountViewController.swift; sourceTree = SOURCE_ROOT; };
 		F740F08C1B90CBC900D23A34 /* CreateAccountViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CreateAccountViewController.xib; path = YiLinkerOnlineBuyer/resources/Xib/CreateAccountViewController.xib; sourceTree = SOURCE_ROOT; };
-		F740F08F1B90D1D800D23A34 /* address.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = address.png; sourceTree = "<group>"; };
-		F740F0911B90D1E200D23A34 /* close2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = close2.png; sourceTree = "<group>"; };
 		F7CC68F11BA28AFB009168D7 /* TransactionSectionHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TransactionSectionHeaderView.swift; path = YiLinkerOnlineBuyer/resources/View/TransactionSectionHeaderView.swift; sourceTree = SOURCE_ROOT; };
-		F7CC68F31BA295A2009168D7 /* message2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = message2.png; sourceTree = "<group>"; };
 		F7CC68F51BA2A02F009168D7 /* TransactionCancelViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TransactionCancelViewController.swift; path = YiLinkerOnlineBuyer/resources/ViewController/TransactionCancelViewController.swift; sourceTree = SOURCE_ROOT; };
 		F7CC68F61BA2A02F009168D7 /* TransactionCancelViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TransactionCancelViewController.xib; path = YiLinkerOnlineBuyer/resources/ViewController/TransactionCancelViewController.xib; sourceTree = SOURCE_ROOT; };
 		F7CC68FD1BA2ABDC009168D7 /* TransactionDetailsProductsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TransactionDetailsProductsModel.swift; path = YiLinkerOnlineBuyer/resources/Model/TransactionDetailsProductsModel.swift; sourceTree = SOURCE_ROOT; };
@@ -790,6 +786,8 @@
 		F7DC84E21BA0602800D3878B /* TransactionDetailsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TransactionDetailsModel.swift; path = YiLinkerOnlineBuyer/resources/Model/TransactionDetailsModel.swift; sourceTree = SOURCE_ROOT; };
 		F7E739F51BA7FD3100F9C5B8 /* TransactionCancelOrderStatusViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TransactionCancelOrderStatusViewController.swift; path = YiLinkerOnlineBuyer/resources/ViewController/TransactionCancelOrderStatusViewController.swift; sourceTree = SOURCE_ROOT; };
 		F7E739F61BA7FD3100F9C5B8 /* TransactionCancelOrderStatusViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TransactionCancelOrderStatusViewController.xib; path = YiLinkerOnlineBuyer/resources/ViewController/TransactionCancelOrderStatusViewController.xib; sourceTree = SOURCE_ROOT; };
+		F7E739F91BA81B6000F9C5B8 /* TransactionCancelTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TransactionCancelTableViewCell.swift; path = YiLinkerOnlineBuyer/resources/ViewController/TransactionCancelTableViewCell.swift; sourceTree = SOURCE_ROOT; };
+		F7E739FA1BA81B6000F9C5B8 /* TransactionCancelTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TransactionCancelTableViewCell.xib; path = YiLinkerOnlineBuyer/resources/ViewController/TransactionCancelTableViewCell.xib; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -877,9 +875,6 @@
 		0C8A7C711B6772670039F013 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				F7CC68F31BA295A2009168D7 /* message2.png */,
-				F740F0911B90D1E200D23A34 /* close2.png */,
-				F740F08F1B90D1D800D23A34 /* address.png */,
 				0C8A7C721B6772670039F013 /* Info.plist */,
 			);
 			name = "Supporting Files";
@@ -1190,6 +1185,8 @@
 				F7E739F61BA7FD3100F9C5B8 /* TransactionCancelOrderStatusViewController.xib */,
 				0C4E5CD11BA1873E0098224A /* RegisterModalViewController.swift */,
 				0C4E5CD21BA1873E0098224A /* RegisterModalViewController.xib */,
+				F7E739F91BA81B6000F9C5B8 /* TransactionCancelTableViewCell.swift */,
+				F7E739FA1BA81B6000F9C5B8 /* TransactionCancelTableViewCell.xib */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -1480,11 +1477,11 @@
 				0C9937621B750583000D6074 /* HalfVerticalImageCollectionViewCell.xib in Resources */,
 				2614E64B1B886D3800EE8B35 /* TransactionDeliveryLogTableViewCell.xib in Resources */,
 				2614E6531B89051B00EE8B35 /* TransactionLeaveFeedbackViewController.xib in Resources */,
+				F7E739FC1BA81B6000F9C5B8 /* TransactionCancelTableViewCell.xib in Resources */,
 				961BE59C1B9948C100E8631A /* DisputeViewController.xib in Resources */,
 				0C2F44C81B8576FE00021F45 /* Panton ExtraBold.otf in Resources */,
 				79E68B871B8AFD22008626E4 /* PointsDetailsTableViewCell.xib in Resources */,
 				0C9937651B750583000D6074 /* NewSellerCollectionViewCell.xib in Resources */,
-				F7CC68F41BA295A2009168D7 /* message2.png in Resources */,
 				0C2F44CD1B8576FE00021F45 /* Panton Light Italic.otf in Resources */,
 				0C8A7C7B1B6772670039F013 /* Images.xcassets in Resources */,
 				F7DC84E11BA00F7300D3878B /* SellerTableHeaderView.xib in Resources */,
@@ -1524,7 +1521,6 @@
 				79E68B8B1B8B02C0008626E4 /* PointsBreakdownTableViewCell.xib in Resources */,
 				0C374F381B88E3790050AE1D /* PaymentWebViewViewController.xib in Resources */,
 				0C9937611B750583000D6074 /* FullImageCollectionViewCell.xib in Resources */,
-				F740F0901B90D1D800D23A34 /* address.png in Resources */,
 				0C374F3B1B88E3790050AE1D /* GeneralRatingTableViewCell.xib in Resources */,
 				0C2F44C71B8576FE00021F45 /* Panton ExtraBold Italic.otf in Resources */,
 				79E85FBC1B89DC1500428AA1 /* ProfileHeaderTableViewCell.xib in Resources */,
@@ -1535,7 +1531,6 @@
 				0C9937641B750583000D6074 /* LayoutHeaderCollectionViewCell.xib in Resources */,
 				79E68B831B8AEC85008626E4 /* PointsEarnedTableViewCell.xib in Resources */,
 				79E68B8F1B8B0717008626E4 /* PointsTableViewCell.xib in Resources */,
-				F740F0921B90D1E200D23A34 /* close2.png in Resources */,
 				7971F73F1B861ABE00322861 /* FilterTableViewCell.xib in Resources */,
 				0C2F44CF1B8576FE00021F45 /* Panton Regular Italic.otf in Resources */,
 				F7DC7EDB1BA13FAC004F7FD4 /* SellerCategoryTableViewCell.xib in Resources */,
@@ -1747,6 +1742,7 @@
 				26AFB39A1B79DDEA00E50926 /* ProductDetailsModel.swift in Sources */,
 				B77B8DD61B9B554A0002C513 /* ImageVC.swift in Sources */,
 				2614E6521B89051B00EE8B35 /* TransactionLeaveFeedbackViewController.swift in Sources */,
+				F7E739FB1BA81B6000F9C5B8 /* TransactionCancelTableViewCell.swift in Sources */,
 				F7CCDAA01B943CF7000F5AD4 /* ProductResultGridCollectionViewCell.swift in Sources */,
 				0C9937481B750583000D6074 /* FullImageCollectionViewCell.swift in Sources */,
 				B77B8DD41B9B554A0002C513 /* ConversationVC.swift in Sources */,
