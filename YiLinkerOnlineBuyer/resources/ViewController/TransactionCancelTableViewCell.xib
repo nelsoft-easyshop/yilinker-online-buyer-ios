@@ -21,15 +21,28 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gcd-3M-ONC" customClass="DynamicRoundedView" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
                         <rect key="frame" x="8" y="8" width="304" height="44"/>
                         <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CANCEL THIS ORDER" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1sX-Sj-6OM">
+                                <rect key="frame" x="102" y="12" width="164" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="164" id="cix-c5-9ki"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="14"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cancelled" translatesAutoresizingMaskIntoConstraints="NO" id="fjG-21-9Xs">
-                                <rect key="frame" x="67" y="11" width="20" height="20"/>
+                                <rect key="frame" x="72" y="12" width="20" height="20"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="bottom" secondItem="fjG-21-9Xs" secondAttribute="bottom" constant="13" id="J3X-1o-02O"/>
-                            <constraint firstItem="fjG-21-9Xs" firstAttribute="leading" secondItem="gcd-3M-ONC" secondAttribute="leading" constant="67" id="RYR-G6-UJK"/>
-                            <constraint firstItem="fjG-21-9Xs" firstAttribute="top" secondItem="gcd-3M-ONC" secondAttribute="top" constant="11" id="utW-nQ-t3G"/>
+                            <constraint firstAttribute="bottom" secondItem="1sX-Sj-6OM" secondAttribute="bottom" constant="11" id="1cW-FI-DnF"/>
+                            <constraint firstItem="1sX-Sj-6OM" firstAttribute="leading" secondItem="fjG-21-9Xs" secondAttribute="trailing" constant="10" id="Akf-U9-FFa"/>
+                            <constraint firstAttribute="bottom" secondItem="fjG-21-9Xs" secondAttribute="bottom" constant="12" id="aCL-QM-uBN"/>
+                            <constraint firstAttribute="trailing" secondItem="1sX-Sj-6OM" secondAttribute="trailing" constant="38" id="mfw-DS-UH9"/>
+                            <constraint firstItem="fjG-21-9Xs" firstAttribute="leading" secondItem="gcd-3M-ONC" secondAttribute="leading" constant="72" id="mhQ-Qe-qfG"/>
+                            <constraint firstItem="fjG-21-9Xs" firstAttribute="top" secondItem="gcd-3M-ONC" secondAttribute="top" constant="12" id="pKP-Wa-dV5"/>
+                            <constraint firstItem="1sX-Sj-6OM" firstAttribute="top" secondItem="gcd-3M-ONC" secondAttribute="top" constant="12" id="qq1-Rt-eAI"/>
                         </constraints>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -37,24 +50,11 @@
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </view>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CANCEL THIS ORDER" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1sX-Sj-6OM">
-                        <rect key="frame" x="111" y="19" width="164" height="21"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="164" id="xuK-Eq-vPu"/>
-                        </constraints>
-                        <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="14"/>
-                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <nil key="highlightedColor"/>
-                    </label>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="1sX-Sj-6OM" firstAttribute="leading" secondItem="fjG-21-9Xs" secondAttribute="trailing" constant="16" id="3De-w6-r0b"/>
-                    <constraint firstItem="1sX-Sj-6OM" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="19" id="CcR-0R-Vwt"/>
                     <constraint firstAttribute="trailing" secondItem="gcd-3M-ONC" secondAttribute="trailing" constant="8" id="ObG-Gt-4mZ"/>
                     <constraint firstItem="gcd-3M-ONC" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="Pfi-9B-hPO"/>
-                    <constraint firstAttribute="bottom" secondItem="1sX-Sj-6OM" secondAttribute="bottom" constant="20" id="Qno-5j-Rwr"/>
                     <constraint firstAttribute="centerY" secondItem="gcd-3M-ONC" secondAttribute="centerY" id="d2D-bg-4oI"/>
-                    <constraint firstAttribute="trailing" secondItem="1sX-Sj-6OM" secondAttribute="trailing" constant="45" id="ewT-fN-ytd"/>
                     <constraint firstItem="gcd-3M-ONC" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="rlS-cu-u41"/>
                     <constraint firstAttribute="bottom" secondItem="gcd-3M-ONC" secondAttribute="bottom" constant="8" id="w3C-yn-wm3"/>
                 </constraints>
@@ -62,7 +62,7 @@
             <connections>
                 <outlet property="cancelView" destination="gcd-3M-ONC" id="slg-s7-2mI"/>
             </connections>
-            <point key="canvasLocation" x="157" y="335.5"/>
+            <point key="canvasLocation" x="227" y="279.5"/>
         </tableViewCell>
     </objects>
     <resources>

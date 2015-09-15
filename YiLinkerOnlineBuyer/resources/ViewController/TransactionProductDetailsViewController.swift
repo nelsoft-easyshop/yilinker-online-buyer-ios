@@ -17,6 +17,7 @@ class TransactionProductDetailsViewController: UIViewController {
     var headerView: UIView!
     var transactionProductImagesView: TransactionProductImagesView!
     var transactionPurchaseDetailsView: TransactionPurchaseDetailsView!
+    var transactionCancelView: TransactionCancelOrderView!
     var transactionProductDetailsView: UIView!
     
     var footerView: UIView!
@@ -34,9 +35,9 @@ class TransactionProductDetailsViewController: UIViewController {
         let nib = UINib(nibName: "TransactionProductDetailsTableViewCell", bundle: nil)
         self.tableView.registerNib(nib, forCellReuseIdentifier: "TransactionProductDetailsIdentifier")
         
-        let cell: TransactionCancelTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("TransactionCancelTableViewCell") as! TransactionCancelTableViewCell
-        self.tableView.tableFooterView = cell
-        
+        //let cancelOrder: TransactionCancelOrderViewController = XibHelper.puffViewWithNibName("TransactionCancelOrderViewController", index: 0) as! TransactionCancelOrderViewController
+        //cancelOrder.delegate = self
+        //self.tableView.tableFooterView = cancelOrder
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -125,6 +126,15 @@ class TransactionProductDetailsViewController: UIViewController {
         return self.transactionDescriptionView
     }
     
+    func getTransactionCancelOrderView() -> TransactionCancelOrderView {
+        if self.transactionCancelView == nil {
+            self.transactionCancelView = XibHelper.puffViewWithNibName("TransactionViews", index: 9) as! TransactionCancelOrderView
+            self.transactionCancelView.frame.size.width = self.view.frame.size.width
+            self.transactionCancelView.frame.origin.y += CGFloat(20)
+        }
+        return self.transactionCancelView
+    }
+    
     func getTransactionButtonView() -> UIView {
         if self.transactionButtonView == nil {
             self.transactionButtonView = UIView(frame: CGRectMake(0, 0, self.view.frame.size.width, 50))
@@ -156,6 +166,7 @@ class TransactionProductDetailsViewController: UIViewController {
         
         // FOOTERS
         self.getFooterView().addSubview(self.getTransactionDescriptionView())
+        self.getFooterView().addSubview(self.getTransactionCancelOrderView())
         self.getFooterView().addSubview(self.getTransactionButtonView())
         
         setUpViews()

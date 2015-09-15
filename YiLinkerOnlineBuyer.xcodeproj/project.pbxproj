@@ -387,6 +387,7 @@
 		F7E739F81BA7FD3100F9C5B8 /* TransactionCancelOrderStatusViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7E739F61BA7FD3100F9C5B8 /* TransactionCancelOrderStatusViewController.xib */; };
 		F7E739FB1BA81B6000F9C5B8 /* TransactionCancelTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E739F91BA81B6000F9C5B8 /* TransactionCancelTableViewCell.swift */; };
 		F7E739FC1BA81B6000F9C5B8 /* TransactionCancelTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7E739FA1BA81B6000F9C5B8 /* TransactionCancelTableViewCell.xib */; };
+		F7E73A021BA8284800F9C5B8 /* TransactionCancelOrderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E73A011BA8284800F9C5B8 /* TransactionCancelOrderView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -788,6 +789,7 @@
 		F7E739F61BA7FD3100F9C5B8 /* TransactionCancelOrderStatusViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TransactionCancelOrderStatusViewController.xib; path = YiLinkerOnlineBuyer/resources/ViewController/TransactionCancelOrderStatusViewController.xib; sourceTree = SOURCE_ROOT; };
 		F7E739F91BA81B6000F9C5B8 /* TransactionCancelTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TransactionCancelTableViewCell.swift; path = YiLinkerOnlineBuyer/resources/ViewController/TransactionCancelTableViewCell.swift; sourceTree = SOURCE_ROOT; };
 		F7E739FA1BA81B6000F9C5B8 /* TransactionCancelTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TransactionCancelTableViewCell.xib; path = YiLinkerOnlineBuyer/resources/ViewController/TransactionCancelTableViewCell.xib; sourceTree = SOURCE_ROOT; };
+		F7E73A011BA8284800F9C5B8 /* TransactionCancelOrderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TransactionCancelOrderView.swift; path = YiLinkerOnlineBuyer/resources/View/TransactionCancelOrderView.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1104,6 +1106,7 @@
 				0C677BD01BA03EFA007D8E03 /* GuestCheckoutTableViewCell.xib */,
 				F7DC7EF01BA1E344004F7FD4 /* TransactionSectionFooterView.swift */,
 				F7CC68F11BA28AFB009168D7 /* TransactionSectionHeaderView.swift */,
+				F7E73A011BA8284800F9C5B8 /* TransactionCancelOrderView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1671,6 +1674,7 @@
 				0C99373A1B750583000D6074 /* APIManager.swift in Sources */,
 				0C9937501B750583000D6074 /* ProductitemWithVerticalDisplayCollectionViewCell.swift in Sources */,
 				0C9937711B75063B000D6074 /* AppDelegate.swift in Sources */,
+				F7E73A021BA8284800F9C5B8 /* TransactionCancelOrderView.swift in Sources */,
 				0C374F521B89EC4D0050AE1D /* CustomizeSelectedCollectionViewCell.swift in Sources */,
 				79E8F1531B9035D9009CE450 /* SearchResultModel.swift in Sources */,
 				0CC8A63F1B7B9BF600C91425 /* ProfileViewController.swift in Sources */,
