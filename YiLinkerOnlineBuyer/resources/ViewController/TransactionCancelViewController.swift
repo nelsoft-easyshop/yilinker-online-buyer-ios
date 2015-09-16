@@ -8,9 +8,17 @@
 
 import UIKit
 
+protocol TransactionCancelViewControllerDelegate {
+    func dismissView()
+}
+
 class TransactionCancelViewController: UIViewController {
 
+    @IBOutlet weak var closeButton: UIButton!
+    @IBOutlet weak var submitButton: DynamicRoundedButton!
     @IBOutlet weak var remarksTextView: UITextView!
+    
+    var delegate: TransactionCancelViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,6 +31,16 @@ class TransactionCancelViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    @IBAction func closeAction(sender: AnyObject) {
+        self.delegate?.dismissView()
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    @IBAction func submitAction(sender: AnyObject) {
+        self.delegate?.dismissView()
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
     
 

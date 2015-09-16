@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TransactionProductDetailsViewController: UIViewController {
+class TransactionProductDetailsViewController: UIViewController, TransactionCancelOrderViewDelegate, TransactionCancelViewControllerDelegate {
 
     @IBOutlet weak var tableView: UITableView!
     
@@ -23,21 +23,26 @@ class TransactionProductDetailsViewController: UIViewController {
     var footerView: UIView!
     var transactionDescriptionView: TransactionDescriptionView!
     var transactionButtonView: UIView!
+    var dimView: UIView!
     
     var name = ["SKU", "Brand", "Weight (kg)", "Height (mm)", "Type of Jack"]
     var value = ["ABCD-1234-5678-91022", "Beats Audio Version", "0.26", "203", "3.5mm"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        dimView = UIView(frame: UIScreen.mainScreen().bounds)
+        dimView.backgroundColor=UIColor.blackColor()
+        dimView.alpha = 0.5
+        self.navigationController?.view.addSubview(dimView)
+        dimView.hidden = true
+        
         self.title = "Product Details"
         self.backButton()
         
         let nib = UINib(nibName: "TransactionProductDetailsTableViewCell", bundle: nil)
         self.tableView.registerNib(nib, forCellReuseIdentifier: "TransactionProductDetailsIdentifier")
         
-        //let cancelOrder: TransactionCancelOrderViewController = XibHelper.puffViewWithNibName("TransactionCancelOrderViewController", index: 0) as! TransactionCancelOrderViewController
-        //cancelOrder.delegate = self
-        //self.tableView.tableFooterView = cancelOrder
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -129,6 +134,7 @@ class TransactionProductDetailsViewController: UIViewController {
     func getTransactionCancelOrderView() -> TransactionCancelOrderView {
         if self.transactionCancelView == nil {
             self.transactionCancelView = XibHelper.puffViewWithNibName("TransactionViews", index: 9) as! TransactionCancelOrderView
+            self.transactionCancelView.delegate = self
             self.transactionCancelView.frame.size.width = self.view.frame.size.width
             self.transactionCancelView.frame.origin.y += CGFloat(120)
         }
@@ -231,6 +237,36 @@ class TransactionProductDetailsViewController: UIViewController {
     
     func back() {
         self.navigationController!.popViewControllerAnimated(true)
+    }
+    
+    //MARK: TransactionCancelOrderViewDelegate
+    func showCancelOrder() {
+        self.showView()
+        let cancelOrder = TransactionCancelViewController(nibName: "TransactionCancelViewController", bundle: nil)
+        cancelOrder.delegate = self
+        cancelOrder.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
+        cancelOrder.providesPresentationContextTransitionStyle = true
+        cancelOrder.definesPresentationContext = true
+        cancelOrder.view.frame.origin.y = cancelOrder.view.frame.size.height
+        self.navigationController?.presentViewController(cancelOrder, animated: true, completion: nil)
+    }
+    
+    func showView(){
+        UIView.animateWithDuration(0.3, animations: {
+            self.dimView.hidden = false
+            self.dimView.alpha = 0.5
+            //self.dimView.layer.zPosition = 2
+            //self.view.transform = CGAffineTransformMakeScale(0.92, 0.93)
+        })
+    }
+    
+    func dismissView() {
+        UIView.animateWithDuration(0.3, animations: {
+            self.dimView.hidden = true
+            //self.view.transform = CGAffineTransformMakeTranslation(1, 1)
+            self.dimView.alpha = 0
+            //self.dimView.layer.zPosition = -1
+        })
     }
 
 }

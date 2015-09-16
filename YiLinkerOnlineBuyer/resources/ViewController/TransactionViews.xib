@@ -1025,14 +1025,14 @@ Phiippines</string>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gOp-uy-NuM" customClass="DynamicRoundedView" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
-                    <rect key="frame" x="8" y="7" width="359" height="44"/>
+                    <rect key="frame" x="8" y="13" width="359" height="31"/>
                     <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="44" id="rT3-wx-rwL"/>
+                        <constraint firstAttribute="height" constant="31" id="rT3-wx-rwL"/>
                     </constraints>
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                            <real key="value" value="20"/>
+                            <real key="value" value="15"/>
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
                 </view>
@@ -1069,7 +1069,7 @@ Phiippines</string>
             </subviews>
             <constraints>
                 <constraint firstItem="gOp-uy-NuM" firstAttribute="trailing" secondItem="CdL-Ze-R7c" secondAttribute="trailingMargin" id="E7I-AJ-3p7"/>
-                <constraint firstItem="gOp-uy-NuM" firstAttribute="bottom" secondItem="CdL-Ze-R7c" secondAttribute="bottomMargin" id="Hlv-Ha-klJ"/>
+                <constraint firstItem="gOp-uy-NuM" firstAttribute="bottom" secondItem="CdL-Ze-R7c" secondAttribute="bottomMargin" constant="-7" id="Hlv-Ha-klJ"/>
                 <constraint firstItem="7i2-hd-wvF" firstAttribute="top" secondItem="CdL-Ze-R7c" secondAttribute="top" constant="13" id="KMA-v7-mp0"/>
                 <constraint firstAttribute="centerX" secondItem="7i2-hd-wvF" secondAttribute="centerX" constant="-1.5" id="ZPk-zF-VAP"/>
                 <constraint firstAttribute="bottom" secondItem="7i2-hd-wvF" secondAttribute="bottom" constant="15" id="xWq-Ym-gpp"/>

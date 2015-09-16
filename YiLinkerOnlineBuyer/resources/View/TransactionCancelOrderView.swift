@@ -8,12 +8,15 @@
 
 import UIKit
 
-protocol TransactionCancelOrderViewDelegate
+protocol TransactionCancelOrderViewDelegate {
+    func showCancelOrder()
+}
 
 class TransactionCancelOrderView: UIView {
 
     @IBOutlet weak var cancelView: DynamicRoundedView!
     
+    var delegate: TransactionCancelOrderViewDelegate?
     override func awakeFromNib() {
         
         var tap = UITapGestureRecognizer(target: self, action: "cancelOrder:")
@@ -23,6 +26,7 @@ class TransactionCancelOrderView: UIView {
     
     func cancelOrder(sender: AnyObject){
         println("cancel order")
+        self.delegate?.showCancelOrder()
     }
 
     /*
