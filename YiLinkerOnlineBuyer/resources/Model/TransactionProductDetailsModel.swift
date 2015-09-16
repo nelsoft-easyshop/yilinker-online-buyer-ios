@@ -38,8 +38,12 @@ class TransactionProductDetailsModel: NSObject {
     var length: String = ""
     var weight: String = ""
     var brandName: String = ""
+    var longDescription: String = ""
+    var shortDescription: String = ""
+    var attributeName: [String] = []
+    var attributeValue: [String] = []
     
-    init(productImage: String, sku: String, color: String, size: String, width: String, height: String, length: String, weight: String, brandName: String) {
+    init(productImage: String, sku: String, color: String, size: String, width: String, height: String, length: String, weight: String, brandName: String, longDescription: String, shortDescription: String, attributeName: NSArray, attributeValue: NSArray) {
         self.productImage = productImage
         self.sku = sku
         self.color = color
@@ -49,6 +53,10 @@ class TransactionProductDetailsModel: NSObject {
         self.length = length
         self.weight = weight
         self.brandName = brandName
+        self.longDescription = longDescription
+        self.shortDescription = shortDescription
+        self.attributeName = attributeName as! [String]
+        self.attributeValue = attributeValue as! [String]
     }
     
     class func parseFromDataDictionary(dictionary: AnyObject) -> TransactionProductDetailsModel {
@@ -62,6 +70,11 @@ class TransactionProductDetailsModel: NSObject {
         var length: String = ""
         var weight: String = ""
         var brandName: String = ""
+        var longDescription: String = ""
+        var shortDescription: String = ""
+        
+        var attributeName: [String] = []
+        var attributeValue: [String] = []
         
         if dictionary.isKindOfClass(NSDictionary) {
             if let value: AnyObject = dictionary["data"] {
@@ -71,7 +84,23 @@ class TransactionProductDetailsModel: NSObject {
                 }
                 
                 if let val = value["sku"] as? String {
-                    productImage = val
+                    sku = val
+                    attributeName.append("SKU")
+                    attributeValue.append(sku)
+                }
+                
+                if let brand: AnyObject = value["brand"] {
+                    if let val = brand["name"] as? String {
+                        brandName = val
+                        attributeName.append("Brand")
+                        attributeValue.append(brandName)
+                    }
+                }
+                
+                let attributes: NSArray = value["attributes"] as! NSArray
+                for attribute in attributes as! [NSDictionary] {
+                    attributeName.append(attribute["attributeName"] as! String)
+                    attributeValue.append(attribute["attributeValue"] as! String)
                 }
                 
                 if let attributes: AnyObject = value["attributes"] {
@@ -86,30 +115,40 @@ class TransactionProductDetailsModel: NSObject {
                 
                 if let val = value["width"] as? String {
                     width = val
+                    attributeName.append("Width")
+                    attributeValue.append(width)
                 }
                 
                 if let val = value["height"] as? String {
                     height = val
+                    attributeName.append("Height")
+                    attributeValue.append(height)
                 }
                 
                 if let val = value["length"] as? String {
                     length = val
+                    attributeName.append("Length")
+                    attributeValue.append(length)
                 }
                 
                 if let val = value["weight"] as? String {
                     weight = val
+                    attributeName.append("Weight")
+                    attributeValue.append(weight)
                 }
                 
-                if let brand: AnyObject = value["brand"] {
-                    if let val = brand["name"] as? String {
-                        brandName = val
-                    }
+                if let val = value["description"] as? String {
+                    longDescription = val
+                }
+                
+                if let val = value["shortDescription"] as? String {
+                    shortDescription = val
                 }
                 
             }
         }
         
-        let transactionProductDetailsModel = TransactionProductDetailsModel(productImage: productImage, sku: sku, color: color, size: size, width: width, height: height, length: length, weight: weight, brandName: brandName)
+        let transactionProductDetailsModel = TransactionProductDetailsModel(productImage: productImage, sku: sku, color: color, size: size, width: width, height: height, length: length, weight: weight, brandName: brandName, longDescription: longDescription, shortDescription: shortDescription, attributeName: attributeName, attributeValue: attributeValue)
         
         return transactionProductDetailsModel
         

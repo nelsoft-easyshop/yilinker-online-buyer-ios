@@ -63,15 +63,16 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        if headerView == nil {
-            loadViewsWithDetails()
-        }
     }
     
     // MARK: - Table View Data Souce
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return name.count
+        if self.transactionProductDetailsModel != nil {
+            return self.transactionProductDetailsModel.attributeName.count
+        } else {
+            return 0
+        }
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -79,8 +80,8 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
 
         cell.selectionStyle = .None
         if self.transactionProductDetailsModel != nil {
-            cell.attributeNameLabel.text = name[indexPath.row]
-            cell.attributeValueLabel.text = self.productDictionary[name[indexPath.row]]
+            cell.attributeNameLabel.text = self.transactionProductDetailsModel.attributeName[indexPath.row]
+            cell.attributeValueLabel.text = self.transactionProductDetailsModel.attributeValue[indexPath.row]
         }
         
         
@@ -103,6 +104,9 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
         if self.transactionProductImagesView == nil {
             self.transactionProductImagesView = XibHelper.puffViewWithNibName("TransactionViews", index: 4) as! TransactionProductImagesView
             self.transactionProductImagesView.nameLabel.text = self.productName
+            if self.transactionProductDetailsModel != nil {
+                self.transactionProductImagesView.descriptionLabel.text = self.transactionProductDetailsModel.shortDescription
+            }
             self.transactionProductImagesView.frame.size.width = self.view.frame.size.width
         }
         return self.transactionProductImagesView
@@ -147,6 +151,9 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
     func getTransactionDescriptionView() -> TransactionDescriptionView {
         if self.transactionDescriptionView == nil {
             self.transactionDescriptionView = XibHelper.puffViewWithNibName("TransactionViews", index: 6) as! TransactionDescriptionView
+            if self.transactionProductDetailsModel != nil {
+                self.transactionDescriptionView.descriptionLabel.text = self.transactionProductDetailsModel.longDescription
+            }
             self.transactionDescriptionView.frame.size.width = self.view.frame.size.width
             self.transactionDescriptionView.frame.origin.y += CGFloat(20)
         }
@@ -321,17 +328,20 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
             self.transactionProductDetailsModel = TransactionProductDetailsModel.parseFromDataDictionary(responseObject as! NSDictionary)
             //for var i: Int = 0; i < self.name.count; i++ {
             //SKU", "Brand", "Weight (kg)", "Height (mm)", "Width (cm)", "Length (cm)"
-            self.productDictionary[self.name[0]] = self.transactionProductDetailsModel.sku
-            self.productDictionary[self.name[1]] = self.transactionProductDetailsModel.brandName
-            self.productDictionary[self.name[2]] = self.transactionProductDetailsModel.color
-            self.productDictionary[self.name[3]] = self.transactionProductDetailsModel.size
-            self.productDictionary[self.name[4]] = self.transactionProductDetailsModel.weight
-            self.productDictionary[self.name[5]] = self.transactionProductDetailsModel.height
-            self.productDictionary[self.name[6]] = self.transactionProductDetailsModel.width
-            self.productDictionary[self.name[7]] = self.transactionProductDetailsModel.length
+            //self.productDictionary[self.name[0]] = self.transactionProductDetailsModel.sku
+            //self.productDictionary[self.name[1]] = self.transactionProductDetailsModel.brandName
+            //self.productDictionary[self.name[2]] = self.transactionProductDetailsModel.color
+            //self.productDictionary[self.name[3]] = self.transactionProductDetailsModel.size
+           // self.productDictionary[self.name[4]] = self.transactionProductDetailsModel.weight
+           // self.productDictionary[self.name[5]] = self.transactionProductDetailsModel.height
+            //self.productDictionary[self.name[6]] = self.transactionProductDetailsModel.width
+           // self.productDictionary[self.name[7]] = self.transactionProductDetailsModel.length
             //}
             
             //self.array.
+            if self.headerView == nil {
+                self.loadViewsWithDetails()
+            }
             self.tableView.reloadData()
             self.hud?.hide(true)
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
