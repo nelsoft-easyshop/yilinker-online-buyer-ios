@@ -112,8 +112,8 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
         if self.transactionPurchaseDetailsView == nil {
             self.transactionPurchaseDetailsView = XibHelper.puffViewWithNibName("TransactionViews", index: 5) as! TransactionPurchaseDetailsView
             self.transactionPurchaseDetailsView.quantityLabel.text = "\(self.quantity)"
-            self.transactionPurchaseDetailsView.totalCostLabel.text = self.totalPrice
-            self.transactionPurchaseDetailsView.priceLabel.text = self.unitPrice
+            self.transactionPurchaseDetailsView.totalCostLabel.text = ((self.totalPrice as NSString).floatValue).stringToFormat(2)
+            self.transactionPurchaseDetailsView.priceLabel.text = ((self.unitPrice as NSString).floatValue).stringToFormat(2)
             self.transactionPurchaseDetailsView.frame.size.width = self.view.frame.size.width
         }
         return self.transactionPurchaseDetailsView
@@ -357,3 +357,5 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
     
 
 }
+
+
