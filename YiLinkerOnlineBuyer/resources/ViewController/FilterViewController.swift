@@ -11,9 +11,11 @@ import UIKit
 protocol FilterViewControllerDelegate {
     func resetFilterViewControllerAction()
     func cancelFilterViewControllerAction()
+    func applyFilterViewControllerAction(maxPrice: Double, minPrice: Double, filters: NSDictionary)
 }
 
-class FilterViewController: UIViewController {
+
+class FilterViewController: UIViewController, FilterTableViewCellDelegate {
     
     var delegate: FilterViewControllerDelegate?
     
@@ -23,10 +25,12 @@ class FilterViewController: UIViewController {
     @IBOutlet weak var applyFilterButton: SemiRoundedButton!
     @IBOutlet weak var filterTableView: UITableView!
     
-    var tableData: [FilterAttributeModel] = [
-        FilterAttributeModel(title: "Brands", attributes: ["All", "Samsung", "Apple", "Sony", "HTC", "LG", "Huawei"]),
-        FilterAttributeModel(title: "Memory", attributes: ["All", "1GB", "2GB", "4GB", "8GB", "16GB", "32GB", "64GB", "128GB"]),
-        FilterAttributeModel(title: "Color", attributes: ["All", "White", "Black", "Gold"])]
+    var tableData: [FilterAttributeModel] = []
+    
+    var selectedFilters: Dictionary <String, String> = Dictionary()
+    
+    var maxPrice: Double = 0
+    var minPrice: Double = 0
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,6 +38,21 @@ class FilterViewController: UIViewController {
         // Do any additional setup after loading the view.
         var nib = UINib(nibName: "FilterTableViewCell", bundle: nil)
         filterTableView.registerNib(nib, forCellReuseIdentifier: "FilterTableViewCell")
+        
+        rangeBar.minValue = Float(minPrice)
+        rangeBar.maxValue = Float(maxPrice)
+        
+        rangeBar.selectedMinimum = Float(minPrice)
+        rangeBar.selectedMaximum = Float(maxPrice)
+    }
+    
+    func passFilter(filters: [FilterAttributeModel], maxPrice: Double, minPrice: Double) {
+        tableData.removeAll(keepCapacity: false)
+        tableData = filters
+        
+        for var i: Int = 0; i < tableData.count; i++ {
+            selectedFilters[tableData[i].title] = "All"
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -42,15 +61,27 @@ class FilterViewController: UIViewController {
     }
     
     @IBAction func cancelAction(sender: AnyObject) {
+        for var i: Int = 0; i < tableData.count; i++ {
+            tableData[i].selectedIndex = 0
+        }
         delegate?.cancelFilterViewControllerAction()
         self.dismissViewControllerAnimated(true, completion: nil)
     }
 
     @IBAction func resetAction(sender: AnyObject) {
+        for var i: Int = 0; i < tableData.count; i++ {
+            tableData[i].selectedIndex = 0
+        }
+        
+        filterTableView.reloadData()
+        rangeBar.selectedMaximum = Float(maxPrice)
+        rangeBar.selectedMinimum = Float(minPrice)
         delegate?.resetFilterViewControllerAction()
     }
     
     @IBAction func applyFilterAction(sender: AnyObject) {
+        delegate!.applyFilterViewControllerAction(Double(rangeBar.selectedMaximum), minPrice: Double(rangeBar.selectedMinimum), filters: selectedFilters as NSDictionary)
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
     
     // MARK: - Table view data source
@@ -70,55 +101,20 @@ class FilterViewController: UIViewController {
    
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("FilterTableViewCell", forIndexPath: indexPath) as! FilterTableViewCell
-        cell.passModel(tableData[indexPath.row])
-    // Configure the cell...
+        cell.passModel(tableData[indexPath.row], attributeNameIndex: indexPath.row)
+        cell.delegate = self
     
     return cell
     }
     
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-    // Return NO if you do not want the specified item to be editable.
-    return true
-    }
-    */
     
-    /*
-    // Override to support editing the table view.
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-    if editingStyle == .Delete {
-    // Delete the row from the data source
-    tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-    } else if editingStyle == .Insert {
-    // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }
-    }
-    */
+    // MARK : FilterTableViewCellDelegate
     
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-    
+    func clickedAttributeAtIndex(index: Int, attributeNameIndex: Int) {
+        tableData[attributeNameIndex].selectedIndex = index
+        selectedFilters[tableData[attributeNameIndex].title] = tableData[attributeNameIndex].attributes[index]
+        
+        println(selectedFilters)
     }
-    */
-    
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-    // Return NO if you do not want the item to be re-orderable.
-    return true
-    }
-    */
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
