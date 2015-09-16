@@ -8,6 +8,8 @@
 
 import UIKit
 
+protocol TransactionCancelOrderViewDelegate
+
 class TransactionCancelOrderView: UIView {
 
     @IBOutlet weak var cancelView: DynamicRoundedView!
