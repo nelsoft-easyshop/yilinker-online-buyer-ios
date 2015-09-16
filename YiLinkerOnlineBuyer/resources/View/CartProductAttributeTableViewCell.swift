@@ -38,7 +38,7 @@ class CartProductAttributeTableViewCell: UITableViewCell {
     
     func passModel(model: ProductAttributeModel, availableCombination: [String: [String]], unitID: [String], selectedAttributes: [String]){
         productAttribute = model
-        filter = FilterAttributeModel(title: model.attributeName, attributes: model.valueName)
+        filter = FilterAttributeModel(title: model.attributeName, selectedIndex: 0, attributes: model.valueName)
         
         attributeIDs = productAttribute.valueId
         

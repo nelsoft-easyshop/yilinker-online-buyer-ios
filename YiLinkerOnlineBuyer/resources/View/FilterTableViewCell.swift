@@ -8,26 +8,37 @@
 
 import UIKit
 
+protocol FilterTableViewCellDelegate {
+    func clickedAttributeAtIndex(index: Int, attributeNameIndex: Int)
+}
+
 class FilterTableViewCell: UITableViewCell {
+    
+    var delegate: FilterTableViewCellDelegate?
+    
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var scrollView: UIScrollView!
     
     var filter: FilterAttributeModel!
+    var attributeNameIndex: Int = 0
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
-        
-        
     }
     
-    func passModel(model: FilterAttributeModel) {
+    func passModel(model: FilterAttributeModel, attributeNameIndex: Int) {
         filter = model
+        self.attributeNameIndex = attributeNameIndex
         initializeScrollView()
     }
     
     func initializeScrollView() {
         titleLabel.text = filter.title
+        
+        let subviews = self.scrollView.subviews
+        for subview in subviews{
+            subview.removeFromSuperview()
+        }
         
         var x: Int = 0
         var contentWidth = 0
@@ -44,9 +55,14 @@ class FilterTableViewCell: UITableViewCell {
             button.layer.cornerRadius = button.frame.height/2
             button.backgroundColor = UIColor.whiteColor()
             button.addTarget(self, action: "clickedAttribute:", forControlEvents: .TouchUpInside)
+            button.tag = i
             
             x += width + 10
             scrollView.addSubview(button)
+            
+            if i == filter.selectedIndex {
+                clickedAttribute(button)
+            }
         }
         
         scrollView.contentSize = CGSize(width: CGFloat(x), height: scrollView.frame.size.height)
@@ -54,10 +70,10 @@ class FilterTableViewCell: UITableViewCell {
     
     
     func clickedAttribute(sender: UIButton!) {
-        
+        delegate?.clickedAttributeAtIndex(sender.tag, attributeNameIndex: attributeNameIndex)
+
         if sender.selected {
-            DeselectButton(sender)
-            
+            //DeselectButton(sender)
         } else {
             for view in scrollView.subviews as! [UIView]{
                 if let button = view as? UIButton {

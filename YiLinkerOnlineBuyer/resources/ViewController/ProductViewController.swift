@@ -85,8 +85,12 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         setBorderOf(view: addToCartButton, width: 1, color: .grayColor(), radius: 3)
         setBorderOf(view: buyItNowView, width: 1, color: .grayColor(), radius: 3)
         
-        requestProductDetails()
-        requestReviewDetails()
+        if Reachability.isConnectedToNetwork() {
+            requestProductDetails()
+            requestReviewDetails()
+        } else {
+            addEmptyView()
+        }
         
         buyItNowView.addGestureRecognizer(tapGesture("buyItNowAction:"))
     }
@@ -469,9 +473,10 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
                                 itemUnitId = productUnit["productUnitId"] as! String
                                 
                                 if self.productId == itemProductId && self.unitId == itemUnitId {
-                                    var quantity: Double = productUnit["quantity"] as! Double
+                                    var quantity: String = item["quantity"] as! String
                                     var price: Double = (productUnit["discountedPrice"] as! NSString).doubleValue
-                                    self.requestCartToCheckout(item["itemId"] as! Int, totalAmount: (quantity * price))
+                                    var iQuantity: Double = (quantity as NSString).doubleValue
+                                    self.requestCartToCheckout(item["itemId"] as! Int, totalAmount: (iQuantity * price))
                                     break
                                 }
                                 
@@ -480,7 +485,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
                     } else {
                         self.showAlert(title: nil, message: "This item has been added to your cart")
                         println(items.count)
-                        SessionManager.setCartCount(items.count)
+                        SessionManager.setCartCount(data["total"] as! Int)
                         self.addBadge("cart")
                         self.hud?.hide(true)
                     }
@@ -915,24 +920,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     }
     
     func seeMoreReview(controller: ProductReviewFooterView) {
-        if self.productReviewModel != nil {
-            var reviewModal = ProductReviewViewController(nibName: "ProductReviewViewController", bundle: nil)
-            reviewModal.delegate = self
-            reviewModal.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
-            reviewModal.providesPresentationContextTransitionStyle = true
-            reviewModal.definesPresentationContext = true
-            reviewModal.view.backgroundColor = UIColor.clearColor()
-            reviewModal.view.frame.origin.y = reviewModal.view.frame.size.height
-            reviewModal.passModel(self.productReviewModel)
-            self.tabBarController?.presentViewController(reviewModal, animated: true, completion: nil)
-            
-            UIView.animateWithDuration(0.3, animations: {
-                self.dimView.alpha = 0.5
-                self.dimView.layer.zPosition = 2
-                self.view.transform = CGAffineTransformMakeScale(0.92, 0.93)
-                self.navigationController?.navigationBar.alpha = 0.0
-            })
-        }
+        self.barRateAction()
     }
     
     // MARK: - Product Seller Delegate
@@ -976,8 +964,12 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     }
     
     func didTapReload() {
-        self.requestProductDetails()
-        //        self.requestReviewDetails()
+        if Reachability.isConnectedToNetwork() {
+            requestProductDetails()
+            requestReviewDetails()
+        } else {
+            addEmptyView()
+        }
         self.emptyView?.removeFromSuperview()
     }
     
@@ -996,7 +988,24 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     }
     
     func barRateAction() {
-        showAlert(title: "Coming Soon", message: nil)
+        if self.productReviewModel != nil {
+            var reviewModal = ProductReviewViewController(nibName: "ProductReviewViewController", bundle: nil)
+            reviewModal.delegate = self
+            reviewModal.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
+            reviewModal.providesPresentationContextTransitionStyle = true
+            reviewModal.definesPresentationContext = true
+            reviewModal.view.backgroundColor = UIColor.clearColor()
+            reviewModal.view.frame.origin.y = reviewModal.view.frame.size.height
+            reviewModal.passModel(self.productReviewModel)
+            self.tabBarController?.presentViewController(reviewModal, animated: true, completion: nil)
+            
+            UIView.animateWithDuration(0.3, animations: {
+                self.dimView.alpha = 0.5
+                self.dimView.layer.zPosition = 2
+                self.view.transform = CGAffineTransformMakeScale(0.92, 0.93)
+                self.navigationController?.navigationBar.alpha = 0.0
+            })
+        }
     }
     
     func barMessageAction() {
