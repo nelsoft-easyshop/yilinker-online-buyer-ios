@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TransactionProductDetailsViewController: UIViewController, TransactionCancelOrderViewDelegate, TransactionCancelViewControllerDelegate {
+class TransactionProductDetailsViewController: UIViewController, TransactionCancelOrderViewDelegate, TransactionCancelViewControllerDelegate, TransactionCancelOrderSuccessViewControllerDelegate {
 
     @IBOutlet weak var tableView: UITableView!
     
@@ -25,9 +25,21 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
     var transactionButtonView: UIView!
     var dimView: UIView!
     
-    var name = ["SKU", "Brand", "Weight (kg)", "Height (mm)", "Type of Jack"]
+    var name = ["SKU", "Brand", "Color", "Size", "Weight (kg)", "Height (mm)", "Width (cm)", "Length (cm)"]
     var value = ["ABCD-1234-5678-91022", "Beats Audio Version", "0.26", "203", "3.5mm"]
+    var array: NSArray?
+    var mArray: NSMutableArray?
     
+    var orderProductId: String = ""
+    var quantity: Int = 0
+    var unitPrice: String = ""
+    var totalPrice: String = ""
+    var productName: String = ""
+    var transactionId: String = ""
+    
+    var hud: MBProgressHUD?
+    var transactionProductDetailsModel: TransactionProductDetailsModel!
+    var productDictionary = Dictionary<String, String>()
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -42,6 +54,9 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
         
         let nib = UINib(nibName: "TransactionProductDetailsTableViewCell", bundle: nil)
         self.tableView.registerNib(nib, forCellReuseIdentifier: "TransactionProductDetailsIdentifier")
+        
+        println("order product id \(self.orderProductId)")
+        self.fireTransactionProductDetails()
         
     }
     
@@ -63,8 +78,11 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
         let cell: TransactionProductDetailsTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("TransactionProductDetailsIdentifier") as! TransactionProductDetailsTableViewCell
 
         cell.selectionStyle = .None
-        cell.attributeNameLabel.text = name[indexPath.row]
-        cell.attributeValueLabel.text = value[indexPath.row]
+        if self.transactionProductDetailsModel != nil {
+            cell.attributeNameLabel.text = name[indexPath.row]
+            cell.attributeValueLabel.text = self.productDictionary[name[indexPath.row]]
+        }
+        
         
         return cell
     }
@@ -84,6 +102,7 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
     func getTransactionProductImagesView() -> TransactionProductImagesView {
         if self.transactionProductImagesView == nil {
             self.transactionProductImagesView = XibHelper.puffViewWithNibName("TransactionViews", index: 4) as! TransactionProductImagesView
+            self.transactionProductImagesView.nameLabel.text = self.productName
             self.transactionProductImagesView.frame.size.width = self.view.frame.size.width
         }
         return self.transactionProductImagesView
@@ -92,6 +111,9 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
     func getTransactionPurchaseDetailsView() -> TransactionPurchaseDetailsView {
         if self.transactionPurchaseDetailsView == nil {
             self.transactionPurchaseDetailsView = XibHelper.puffViewWithNibName("TransactionViews", index: 5) as! TransactionPurchaseDetailsView
+            self.transactionPurchaseDetailsView.quantityLabel.text = "\(self.quantity)"
+            self.transactionPurchaseDetailsView.totalCostLabel.text = self.totalPrice
+            self.transactionPurchaseDetailsView.priceLabel.text = self.unitPrice
             self.transactionPurchaseDetailsView.frame.size.width = self.view.frame.size.width
         }
         return self.transactionPurchaseDetailsView
@@ -215,7 +237,6 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
     }
     
     // MARK: - Actions
-    
     func leaveFeedback() {
         let feedbackView = TransactionLeaveFeedbackViewController(nibName: "TransactionLeaveFeedbackViewController", bundle: nil)
         feedbackView.edgesForExtendedLayout = UIRectEdge.None
@@ -244,6 +265,7 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
         self.showView()
         let cancelOrder = TransactionCancelViewController(nibName: "TransactionCancelViewController", bundle: nil)
         cancelOrder.delegate = self
+        cancelOrder.invoiceNumber = self.transactionId
         cancelOrder.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
         cancelOrder.providesPresentationContextTransitionStyle = true
         cancelOrder.definesPresentationContext = true
@@ -260,6 +282,7 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
         })
     }
     
+    //MARK: TransactionCancelViewControllerDelegate
     func dismissView() {
         UIView.animateWithDuration(0.3, animations: {
             self.dimView.hidden = true
@@ -268,5 +291,69 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
             //self.dimView.layer.zPosition = -1
         })
     }
+    
+    func submitTransactionCancelReason() {
+        var successController = TransactionCancelOrderSuccessViewController(nibName: "TransactionCancelOrderSuccessViewController", bundle: nil)
+        successController.delegate = self
+        successController.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
+        successController.providesPresentationContextTransitionStyle = true
+        successController.definesPresentationContext = true
+        successController.view.backgroundColor = UIColor.clearColor()
+        self.tabBarController?.presentViewController(successController, animated: true, completion: nil)
+    }
+    
+    // MARK: - TransactionCancelOrderSuccessViewControllerDelegate
+    func closeCancelOrderSuccessViewController() {
+        self.dismissView()
+    }
+    
+    func returnToDashboardAction() {
+        self.dismissView()
+        self.navigationController?.popToRootViewControllerAnimated(true)
+    }
+    
+    //MARK: Get transactions details by id
+    func fireTransactionProductDetails() {
+        self.showHUD()
+        let manager = APIManager.sharedInstance
+        manager.GET(APIAtlas.transactionProductDetails+"\(SessionManager.accessToken())&orderProductId=\(self.orderProductId)", parameters: nil, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            self.transactionProductDetailsModel = TransactionProductDetailsModel.parseFromDataDictionary(responseObject as! NSDictionary)
+            //for var i: Int = 0; i < self.name.count; i++ {
+            //SKU", "Brand", "Weight (kg)", "Height (mm)", "Width (cm)", "Length (cm)"
+            self.productDictionary[self.name[0]] = self.transactionProductDetailsModel.sku
+            self.productDictionary[self.name[1]] = self.transactionProductDetailsModel.brandName
+            self.productDictionary[self.name[2]] = self.transactionProductDetailsModel.color
+            self.productDictionary[self.name[3]] = self.transactionProductDetailsModel.size
+            self.productDictionary[self.name[4]] = self.transactionProductDetailsModel.weight
+            self.productDictionary[self.name[5]] = self.transactionProductDetailsModel.height
+            self.productDictionary[self.name[6]] = self.transactionProductDetailsModel.width
+            self.productDictionary[self.name[7]] = self.transactionProductDetailsModel.length
+            //}
+            
+            //self.array.
+            self.tableView.reloadData()
+            self.hud?.hide(true)
+            }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
+                self.hud?.hide(true)
+                println(error.userInfo)
+                
+        })
+    }
+    
+    //MARK: Show HUD
+    func showHUD() {
+        if self.hud != nil {
+            self.hud!.hide(true)
+            self.hud = nil
+        }
+        
+        self.hud = MBProgressHUD(view: self.view)
+        self.hud?.removeFromSuperViewOnHide = true
+        self.hud?.dimBackground = false
+        self.navigationController?.view.addSubview(self.hud!)
+        self.hud?.show(true)
+    }
+    
 
 }

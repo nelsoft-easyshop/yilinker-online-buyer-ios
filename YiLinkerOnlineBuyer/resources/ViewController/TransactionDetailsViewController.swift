@@ -117,7 +117,13 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let productDetails = TransactionProductDetailsViewController(nibName: "TransactionProductDetailsViewController", bundle: nil)
-        println("section \(indexPath.section) product id: \(self.table[indexPath.section].transactions[indexPath.row].productId)")
+        productDetails.orderProductId = self.table[indexPath.section].transactions[indexPath.row].orderProductId
+        productDetails.quantity = self.table[indexPath.section].transactions[indexPath.row].quantity
+        productDetails.unitPrice = self.table[indexPath.section].transactions[indexPath.row].unitPrice
+        productDetails.totalPrice = self.table[indexPath.section].transactions[indexPath.row].totalPrice
+        productDetails.productName = self.table[indexPath.section].transactions[indexPath.row].productName
+        productDetails.transactionId = self.transactionId
+        println("section \(indexPath.section) product id: \(self.table[indexPath.section].transactions[indexPath.row].orderProductId)")
         self.navigationController?.pushViewController(productDetails, animated: true)
     }
     

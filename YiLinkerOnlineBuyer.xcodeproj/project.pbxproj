@@ -383,6 +383,10 @@
 		F7DC84DF1BA0083000D3878B /* TransactionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7DC84DE1BA0083000D3878B /* TransactionModel.swift */; };
 		F7DC84E11BA00F7300D3878B /* SellerTableHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7DC84E01BA00F7300D3878B /* SellerTableHeaderView.xib */; };
 		F7DC84E31BA0602800D3878B /* TransactionDetailsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7DC84E21BA0602800D3878B /* TransactionDetailsModel.swift */; };
+		F7DF7CFD1BA975EF0086D414 /* TransactionProductDetailsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7DF7CFC1BA975EF0086D414 /* TransactionProductDetailsModel.swift */; };
+		F7DF7CFF1BA99E5E0086D414 /* TransactionCancellationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7DF7CFE1BA99E5E0086D414 /* TransactionCancellationModel.swift */; };
+		F7DF7D021BA9A4620086D414 /* TransactionCancelOrderSuccessViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7DF7D001BA9A4620086D414 /* TransactionCancelOrderSuccessViewController.swift */; };
+		F7DF7D031BA9A4620086D414 /* TransactionCancelOrderSuccessViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7DF7D011BA9A4620086D414 /* TransactionCancelOrderSuccessViewController.xib */; };
 		F7E739F71BA7FD3100F9C5B8 /* TransactionCancelOrderStatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E739F51BA7FD3100F9C5B8 /* TransactionCancelOrderStatusViewController.swift */; };
 		F7E739F81BA7FD3100F9C5B8 /* TransactionCancelOrderStatusViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7E739F61BA7FD3100F9C5B8 /* TransactionCancelOrderStatusViewController.xib */; };
 		F7E73A021BA8284800F9C5B8 /* TransactionCancelOrderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E73A011BA8284800F9C5B8 /* TransactionCancelOrderView.swift */; };
@@ -783,6 +787,10 @@
 		F7DC84DE1BA0083000D3878B /* TransactionModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TransactionModel.swift; path = YiLinkerOnlineBuyer/resources/Model/TransactionModel.swift; sourceTree = SOURCE_ROOT; };
 		F7DC84E01BA00F7300D3878B /* SellerTableHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SellerTableHeaderView.xib; sourceTree = "<group>"; };
 		F7DC84E21BA0602800D3878B /* TransactionDetailsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TransactionDetailsModel.swift; path = YiLinkerOnlineBuyer/resources/Model/TransactionDetailsModel.swift; sourceTree = SOURCE_ROOT; };
+		F7DF7CFC1BA975EF0086D414 /* TransactionProductDetailsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TransactionProductDetailsModel.swift; path = YiLinkerOnlineBuyer/resources/Model/TransactionProductDetailsModel.swift; sourceTree = SOURCE_ROOT; };
+		F7DF7CFE1BA99E5E0086D414 /* TransactionCancellationModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TransactionCancellationModel.swift; path = YiLinkerOnlineBuyer/resources/Model/TransactionCancellationModel.swift; sourceTree = SOURCE_ROOT; };
+		F7DF7D001BA9A4620086D414 /* TransactionCancelOrderSuccessViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionCancelOrderSuccessViewController.swift; sourceTree = "<group>"; };
+		F7DF7D011BA9A4620086D414 /* TransactionCancelOrderSuccessViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TransactionCancelOrderSuccessViewController.xib; sourceTree = "<group>"; };
 		F7E739F51BA7FD3100F9C5B8 /* TransactionCancelOrderStatusViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TransactionCancelOrderStatusViewController.swift; path = YiLinkerOnlineBuyer/resources/ViewController/TransactionCancelOrderStatusViewController.swift; sourceTree = SOURCE_ROOT; };
 		F7E739F61BA7FD3100F9C5B8 /* TransactionCancelOrderStatusViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TransactionCancelOrderStatusViewController.xib; path = YiLinkerOnlineBuyer/resources/ViewController/TransactionCancelOrderStatusViewController.xib; sourceTree = SOURCE_ROOT; };
 		F7E73A011BA8284800F9C5B8 /* TransactionCancelOrderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TransactionCancelOrderView.swift; path = YiLinkerOnlineBuyer/resources/View/TransactionCancelOrderView.swift; sourceTree = SOURCE_ROOT; };
@@ -947,6 +955,7 @@
 				B77B8DBC1B9B537C0002C513 /* Messaging */,
 				96DEBC6C1B9F2731000ACFE7 /* ResolutionCenterModel.swift */,
 				79E85FCD1B8A1F5800428AA1 /* ActivityLogModel.swift */,
+				F7DF7CFC1BA975EF0086D414 /* TransactionProductDetailsModel.swift */,
 				F7DC84DE1BA0083000D3878B /* TransactionModel.swift */,
 				79E85FCF1B8A1FBD00428AA1 /* ActivityModel.swift */,
 				0C5926051B836EA30021EA76 /* AddressModel.swift */,
@@ -986,6 +995,7 @@
 				0C2E8A261B9AA3EE00D50455 /* PesoPayModel.swift */,
 				F7DC84E21BA0602800D3878B /* TransactionDetailsModel.swift */,
 				F7CC68FD1BA2ABDC009168D7 /* TransactionDetailsProductsModel.swift */,
+				F7DF7CFE1BA99E5E0086D414 /* TransactionCancellationModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1110,6 +1120,8 @@
 		0C9937221B750583000D6074 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				F7DF7D001BA9A4620086D414 /* TransactionCancelOrderSuccessViewController.swift */,
+				F7DF7D011BA9A4620086D414 /* TransactionCancelOrderSuccessViewController.xib */,
 				B77B8DBD1B9B539D0002C513 /* Messaging */,
 				961BE59D1B994B2900E8631A /* ResolutionCenterViewController.swift */,
 				961BE59F1B994B7D00E8631A /* DisputeViewController.swift */,
@@ -1492,6 +1504,7 @@
 				79A1C6F31B83574A0043AA36 /* ProductResultListCollectionViewCell.xib in Resources */,
 				7971F7471B862D3A00322861 /* SortTableViewCell.xib in Resources */,
 				26AFB3CA1B79DE5C00E50926 /* ProductAttributeCollectionViewCell.xib in Resources */,
+				F7DF7D031BA9A4620086D414 /* TransactionCancelOrderSuccessViewController.xib in Resources */,
 				0C374F2C1B88E3790050AE1D /* CheckoutContainerViewController.xib in Resources */,
 				0C374F5B1B8A03CC0050AE1D /* CustomizeShoppingTableViewCell.xib in Resources */,
 				0C374F491B88E3790050AE1D /* TodaysPromoViewController.xib in Resources */,
@@ -1667,6 +1680,7 @@
 				0C99373A1B750583000D6074 /* APIManager.swift in Sources */,
 				0C9937501B750583000D6074 /* ProductitemWithVerticalDisplayCollectionViewCell.swift in Sources */,
 				0C9937711B75063B000D6074 /* AppDelegate.swift in Sources */,
+				F7DF7CFF1BA99E5E0086D414 /* TransactionCancellationModel.swift in Sources */,
 				F7E73A021BA8284800F9C5B8 /* TransactionCancelOrderView.swift in Sources */,
 				0C374F521B89EC4D0050AE1D /* CustomizeSelectedCollectionViewCell.swift in Sources */,
 				79E8F1531B9035D9009CE450 /* SearchResultModel.swift in Sources */,
@@ -1859,6 +1873,7 @@
 				0C9937521B750583000D6074 /* RoundedButton.swift in Sources */,
 				0C374EFB1B8862E10050AE1D /* SuccessTableHeaderViewCell.swift in Sources */,
 				0C9937411B750583000D6074 /* ProductModel.swift in Sources */,
+				F7DF7CFD1BA975EF0086D414 /* TransactionProductDetailsModel.swift in Sources */,
 				79E68B801B8AEC00008626E4 /* MyPointsTableViewController.swift in Sources */,
 				79F0DD9C1B7B17D500EB8053 /* CartModel.swift in Sources */,
 				0C374F5A1B8A03CC0050AE1D /* CustomizeShoppingTableViewCell.swift in Sources */,
@@ -1881,6 +1896,7 @@
 				F7E739F71BA7FD3100F9C5B8 /* TransactionCancelOrderStatusViewController.swift in Sources */,
 				0C9937491B750583000D6074 /* GenericCollectionViewCell.swift in Sources */,
 				26D54FDF1B860CF400522398 /* TransactionViewController.swift in Sources */,
+				F7DF7D021BA9A4620086D414 /* TransactionCancelOrderSuccessViewController.swift in Sources */,
 				0C9937461B750583000D6074 /* DynamicRoundedButton.swift in Sources */,
 				B77B8DD51B9B554A0002C513 /* DummyNavigationController.swift in Sources */,
 				26AFB3AA1B79DE2900E50926 /* ProductReviewHeaderView.swift in Sources */,
