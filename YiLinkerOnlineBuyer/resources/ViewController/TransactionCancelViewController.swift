@@ -14,6 +14,7 @@ protocol TransactionCancelViewControllerDelegate {
 
 class TransactionCancelViewController: UIViewController {
 
+    @IBOutlet weak var topConstraint: NSLayoutConstraint!
     @IBOutlet weak var closeButton: UIButton!
     @IBOutlet weak var submitButton: DynamicRoundedButton!
     @IBOutlet weak var remarksTextView: UITextView!
@@ -43,6 +44,16 @@ class TransactionCancelViewController: UIViewController {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
+    @IBAction func textFieldDidBeginEditing(sender: AnyObject) {
+        if IphoneType.isIphone4() {
+            topConstraint.constant = 40
+        } else if IphoneType.isIphone5() {
+            topConstraint.constant = 60
+        } else {
+            topConstraint.constant = 100
+        }
+        
+    }
 
     /*
     // MARK: - Navigation

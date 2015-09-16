@@ -14,6 +14,7 @@
                 <outlet property="closeButton" destination="9Gr-t1-jrX" id="PzL-jF-chw"/>
                 <outlet property="remarksTextView" destination="yM0-jV-wwB" id="FEr-37-zg8"/>
                 <outlet property="submitButton" destination="45Q-yG-XsU" id="j1e-cP-r1B"/>
+                <outlet property="topConstraint" destination="vL8-F1-G5p" id="eax-yM-loN"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -132,6 +133,9 @@
                             <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                             <textInputTraits key="textInputTraits" keyboardType="phonePad"/>
+                            <connections>
+                                <action selector="textFieldDidBeginEditing:" destination="-1" eventType="editingDidBegin" id="dbp-jC-sEh"/>
+                            </connections>
                         </textField>
                     </subviews>
                     <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
