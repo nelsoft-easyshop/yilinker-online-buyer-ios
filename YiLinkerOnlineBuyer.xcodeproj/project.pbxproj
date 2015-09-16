@@ -385,8 +385,6 @@
 		F7DC84E31BA0602800D3878B /* TransactionDetailsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7DC84E21BA0602800D3878B /* TransactionDetailsModel.swift */; };
 		F7E739F71BA7FD3100F9C5B8 /* TransactionCancelOrderStatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E739F51BA7FD3100F9C5B8 /* TransactionCancelOrderStatusViewController.swift */; };
 		F7E739F81BA7FD3100F9C5B8 /* TransactionCancelOrderStatusViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7E739F61BA7FD3100F9C5B8 /* TransactionCancelOrderStatusViewController.xib */; };
-		F7E739FB1BA81B6000F9C5B8 /* TransactionCancelTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E739F91BA81B6000F9C5B8 /* TransactionCancelTableViewCell.swift */; };
-		F7E739FC1BA81B6000F9C5B8 /* TransactionCancelTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7E739FA1BA81B6000F9C5B8 /* TransactionCancelTableViewCell.xib */; };
 		F7E73A021BA8284800F9C5B8 /* TransactionCancelOrderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E73A011BA8284800F9C5B8 /* TransactionCancelOrderView.swift */; };
 /* End PBXBuildFile section */
 
@@ -787,8 +785,6 @@
 		F7DC84E21BA0602800D3878B /* TransactionDetailsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TransactionDetailsModel.swift; path = YiLinkerOnlineBuyer/resources/Model/TransactionDetailsModel.swift; sourceTree = SOURCE_ROOT; };
 		F7E739F51BA7FD3100F9C5B8 /* TransactionCancelOrderStatusViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TransactionCancelOrderStatusViewController.swift; path = YiLinkerOnlineBuyer/resources/ViewController/TransactionCancelOrderStatusViewController.swift; sourceTree = SOURCE_ROOT; };
 		F7E739F61BA7FD3100F9C5B8 /* TransactionCancelOrderStatusViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TransactionCancelOrderStatusViewController.xib; path = YiLinkerOnlineBuyer/resources/ViewController/TransactionCancelOrderStatusViewController.xib; sourceTree = SOURCE_ROOT; };
-		F7E739F91BA81B6000F9C5B8 /* TransactionCancelTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TransactionCancelTableViewCell.swift; path = YiLinkerOnlineBuyer/resources/ViewController/TransactionCancelTableViewCell.swift; sourceTree = SOURCE_ROOT; };
-		F7E739FA1BA81B6000F9C5B8 /* TransactionCancelTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TransactionCancelTableViewCell.xib; path = YiLinkerOnlineBuyer/resources/ViewController/TransactionCancelTableViewCell.xib; sourceTree = SOURCE_ROOT; };
 		F7E73A011BA8284800F9C5B8 /* TransactionCancelOrderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TransactionCancelOrderView.swift; path = YiLinkerOnlineBuyer/resources/View/TransactionCancelOrderView.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -1188,8 +1184,6 @@
 				F7E739F61BA7FD3100F9C5B8 /* TransactionCancelOrderStatusViewController.xib */,
 				0C4E5CD11BA1873E0098224A /* RegisterModalViewController.swift */,
 				0C4E5CD21BA1873E0098224A /* RegisterModalViewController.xib */,
-				F7E739F91BA81B6000F9C5B8 /* TransactionCancelTableViewCell.swift */,
-				F7E739FA1BA81B6000F9C5B8 /* TransactionCancelTableViewCell.xib */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -1480,7 +1474,6 @@
 				0C9937621B750583000D6074 /* HalfVerticalImageCollectionViewCell.xib in Resources */,
 				2614E64B1B886D3800EE8B35 /* TransactionDeliveryLogTableViewCell.xib in Resources */,
 				2614E6531B89051B00EE8B35 /* TransactionLeaveFeedbackViewController.xib in Resources */,
-				F7E739FC1BA81B6000F9C5B8 /* TransactionCancelTableViewCell.xib in Resources */,
 				961BE59C1B9948C100E8631A /* DisputeViewController.xib in Resources */,
 				0C2F44C81B8576FE00021F45 /* Panton ExtraBold.otf in Resources */,
 				79E68B871B8AFD22008626E4 /* PointsDetailsTableViewCell.xib in Resources */,
@@ -1746,7 +1739,6 @@
 				26AFB39A1B79DDEA00E50926 /* ProductDetailsModel.swift in Sources */,
 				B77B8DD61B9B554A0002C513 /* ImageVC.swift in Sources */,
 				2614E6521B89051B00EE8B35 /* TransactionLeaveFeedbackViewController.swift in Sources */,
-				F7E739FB1BA81B6000F9C5B8 /* TransactionCancelTableViewCell.swift in Sources */,
 				F7CCDAA01B943CF7000F5AD4 /* ProductResultGridCollectionViewCell.swift in Sources */,
 				0C9937481B750583000D6074 /* FullImageCollectionViewCell.swift in Sources */,
 				B77B8DD41B9B554A0002C513 /* ConversationVC.swift in Sources */,

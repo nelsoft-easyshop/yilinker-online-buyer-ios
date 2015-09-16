@@ -167,7 +167,7 @@ class TransactionProductDetailsViewController: UIViewController {
         // FOOTERS
         self.getFooterView().addSubview(self.getTransactionDescriptionView())
         self.getFooterView().addSubview(self.getTransactionCancelOrderView())
-        self.getFooterView().addSubview(self.getTransactionButtonView())
+        //self.getFooterView().addSubview(self.getTransactionButtonView())
         
         setUpViews()
     }

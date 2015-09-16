@@ -10,6 +10,19 @@ import UIKit
 
 class TransactionCancelOrderView: UIView {
 
+    @IBOutlet weak var cancelView: DynamicRoundedView!
+    
+    override func awakeFromNib() {
+        
+        var tap = UITapGestureRecognizer(target: self, action: "cancelOrder:")
+        cancelView.addGestureRecognizer(tap)
+        
+    }
+    
+    func cancelOrder(sender: AnyObject){
+        println("cancel order")
+    }
+
     /*
     // Only override drawRect: if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.
