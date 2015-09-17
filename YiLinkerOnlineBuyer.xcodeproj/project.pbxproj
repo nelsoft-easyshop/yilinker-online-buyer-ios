@@ -318,7 +318,6 @@
 		79F2F55C1B85FD9D00F57E4B /* FilterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79F2F55A1B85FD9D00F57E4B /* FilterViewController.xib */; };
 		79F417761B7C3ADB0047D02D /* CartProductAttributeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F417741B7C3ADB0047D02D /* CartProductAttributeViewController.swift */; };
 		961BE59C1B9948C100E8631A /* DisputeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 961BE59B1B9948C100E8631A /* DisputeViewController.xib */; };
-		961BE59E1B994B2900E8631A /* ResolutionCenterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961BE59D1B994B2900E8631A /* ResolutionCenterViewController.swift */; };
 		961BE5A01B994B7D00E8631A /* DisputeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961BE59F1B994B7D00E8631A /* DisputeViewController.swift */; };
 		961BE5A21B994B9500E8631A /* CaseDetailsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961BE5A11B994B9500E8631A /* CaseDetailsTableViewController.swift */; };
 		961BE5A41B994BB600E8631A /* ResolutionFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961BE5A31B994BB600E8631A /* ResolutionFilterViewController.swift */; };
@@ -373,6 +372,14 @@
 		F7CCDAA71B943CF7000F5AD4 /* SeeMoreTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7CCDA9F1B943CF7000F5AD4 /* SeeMoreTableViewCell.swift */; };
 		F7D37CA11B92B09100FA7B16 /* ViewFeedBackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D37C9F1B92B09100FA7B16 /* ViewFeedBackViewController.swift */; };
 		F7D37CA21B92B09100FA7B16 /* ViewFeedBackViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7D37CA01B92B09100FA7B16 /* ViewFeedBackViewController.xib */; };
+		F7D885D51BAA8A0C00AB01C0 /* ResolutionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D885D31BAA8A0C00AB01C0 /* ResolutionViewController.swift */; };
+		F7D885D61BAA8A0C00AB01C0 /* ResolutionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7D885D41BAA8A0C00AB01C0 /* ResolutionViewController.xib */; };
+		F7D885D91BAA8F8000AB01C0 /* ResolutionFilterTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D885D71BAA8F8000AB01C0 /* ResolutionFilterTableViewController.swift */; };
+		F7D885DA1BAA8F8000AB01C0 /* ResolutionFilterTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7D885D81BAA8F8000AB01C0 /* ResolutionFilterTableViewController.xib */; };
+		F7D885DD1BAA9B6800AB01C0 /* ResolutionFilterTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D885DB1BAA9B6800AB01C0 /* ResolutionFilterTableViewCell.swift */; };
+		F7D885DE1BAA9B6800AB01C0 /* ResolutionFilterTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7D885DC1BAA9B6800AB01C0 /* ResolutionFilterTableViewCell.xib */; };
+		F7D885E01BAA9F4500AB01C0 /* ResolutionFilterModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D885DF1BAA9F4500AB01C0 /* ResolutionFilterModel.swift */; };
+		F7D885E21BAA9F5900AB01C0 /* ResolutionFilter2Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D885E11BAA9F5900AB01C0 /* ResolutionFilter2Model.swift */; };
 		F7DC7ED61BA13E3D004F7FD4 /* SellerCategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7DC7ED41BA13E3D004F7FD4 /* SellerCategoryViewController.swift */; };
 		F7DC7ED71BA13E3D004F7FD4 /* SellerCategoryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7DC7ED51BA13E3D004F7FD4 /* SellerCategoryViewController.xib */; };
 		F7DC7EDA1BA13FAC004F7FD4 /* SellerCategoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7DC7ED81BA13FAC004F7FD4 /* SellerCategoryTableViewCell.swift */; };
@@ -728,7 +735,6 @@
 		79F417741B7C3ADB0047D02D /* CartProductAttributeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CartProductAttributeViewController.swift; path = YiLinkerOnlineBuyer/resources/ViewController/CartProductAttributeViewController.swift; sourceTree = SOURCE_ROOT; };
 		9140515446F9D97EC8790C7B /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		961BE59B1B9948C100E8631A /* DisputeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DisputeViewController.xib; sourceTree = "<group>"; };
-		961BE59D1B994B2900E8631A /* ResolutionCenterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResolutionCenterViewController.swift; sourceTree = "<group>"; };
 		961BE59F1B994B7D00E8631A /* DisputeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisputeViewController.swift; sourceTree = "<group>"; };
 		961BE5A11B994B9500E8631A /* CaseDetailsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CaseDetailsTableViewController.swift; sourceTree = "<group>"; };
 		961BE5A31B994BB600E8631A /* ResolutionFilterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResolutionFilterViewController.swift; sourceTree = "<group>"; };
@@ -783,6 +789,14 @@
 		F7CCDA9F1B943CF7000F5AD4 /* SeeMoreTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SeeMoreTableViewCell.swift; path = YiLinkerOnlineBuyer/resources/View/SeeMoreTableViewCell.swift; sourceTree = SOURCE_ROOT; };
 		F7D37C9F1B92B09100FA7B16 /* ViewFeedBackViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ViewFeedBackViewController.swift; path = YiLinkerOnlineBuyer/resources/Xib/ViewFeedBackViewController.swift; sourceTree = SOURCE_ROOT; };
 		F7D37CA01B92B09100FA7B16 /* ViewFeedBackViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ViewFeedBackViewController.xib; path = YiLinkerOnlineBuyer/resources/Xib/ViewFeedBackViewController.xib; sourceTree = SOURCE_ROOT; };
+		F7D885D31BAA8A0C00AB01C0 /* ResolutionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ResolutionViewController.swift; path = YiLinkerOnlineBuyer/resources/ViewController/ResolutionViewController.swift; sourceTree = SOURCE_ROOT; };
+		F7D885D41BAA8A0C00AB01C0 /* ResolutionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ResolutionViewController.xib; path = YiLinkerOnlineBuyer/resources/ViewController/ResolutionViewController.xib; sourceTree = SOURCE_ROOT; };
+		F7D885D71BAA8F8000AB01C0 /* ResolutionFilterTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ResolutionFilterTableViewController.swift; path = YiLinkerOnlineBuyer/resources/ViewController/ResolutionFilterTableViewController.swift; sourceTree = SOURCE_ROOT; };
+		F7D885D81BAA8F8000AB01C0 /* ResolutionFilterTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ResolutionFilterTableViewController.xib; path = YiLinkerOnlineBuyer/resources/ViewController/ResolutionFilterTableViewController.xib; sourceTree = SOURCE_ROOT; };
+		F7D885DB1BAA9B6800AB01C0 /* ResolutionFilterTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ResolutionFilterTableViewCell.swift; path = YiLinkerOnlineBuyer/resources/ViewController/ResolutionFilterTableViewCell.swift; sourceTree = SOURCE_ROOT; };
+		F7D885DC1BAA9B6800AB01C0 /* ResolutionFilterTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ResolutionFilterTableViewCell.xib; path = YiLinkerOnlineBuyer/resources/ViewController/ResolutionFilterTableViewCell.xib; sourceTree = SOURCE_ROOT; };
+		F7D885DF1BAA9F4500AB01C0 /* ResolutionFilterModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ResolutionFilterModel.swift; path = YiLinkerOnlineBuyer/resources/Model/ResolutionFilterModel.swift; sourceTree = SOURCE_ROOT; };
+		F7D885E11BAA9F5900AB01C0 /* ResolutionFilter2Model.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ResolutionFilter2Model.swift; path = YiLinkerOnlineBuyer/resources/Model/ResolutionFilter2Model.swift; sourceTree = SOURCE_ROOT; };
 		F7DC7ED41BA13E3D004F7FD4 /* SellerCategoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SellerCategoryViewController.swift; path = YiLinkerOnlineBuyer/resources/ViewController/SellerCategoryViewController.swift; sourceTree = SOURCE_ROOT; };
 		F7DC7ED51BA13E3D004F7FD4 /* SellerCategoryViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SellerCategoryViewController.xib; path = YiLinkerOnlineBuyer/resources/ViewController/SellerCategoryViewController.xib; sourceTree = SOURCE_ROOT; };
 		F7DC7ED81BA13FAC004F7FD4 /* SellerCategoryTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SellerCategoryTableViewCell.swift; path = YiLinkerOnlineBuyer/resources/ViewController/SellerCategoryTableViewCell.swift; sourceTree = SOURCE_ROOT; };
@@ -972,6 +986,8 @@
 			children = (
 				B77B8DBC1B9B537C0002C513 /* Messaging */,
 				96DEBC6C1B9F2731000ACFE7 /* ResolutionCenterModel.swift */,
+				F7D885DF1BAA9F4500AB01C0 /* ResolutionFilterModel.swift */,
+				F7D885E11BAA9F5900AB01C0 /* ResolutionFilter2Model.swift */,
 				79E85FCD1B8A1F5800428AA1 /* ActivityLogModel.swift */,
 				F7DF7CFC1BA975EF0086D414 /* TransactionProductDetailsModel.swift */,
 				F7DC84DE1BA0083000D3878B /* TransactionModel.swift */,
@@ -1141,7 +1157,6 @@
 				F7DF7D001BA9A4620086D414 /* TransactionCancelOrderSuccessViewController.swift */,
 				F7DF7D011BA9A4620086D414 /* TransactionCancelOrderSuccessViewController.xib */,
 				B77B8DBD1B9B539D0002C513 /* Messaging */,
-				961BE59D1B994B2900E8631A /* ResolutionCenterViewController.swift */,
 				961BE59F1B994B7D00E8631A /* DisputeViewController.swift */,
 				961BE5A11B994B9500E8631A /* CaseDetailsTableViewController.swift */,
 				961BE5A31B994BB600E8631A /* ResolutionFilterViewController.swift */,
@@ -1214,6 +1229,12 @@
 				F7E739F61BA7FD3100F9C5B8 /* TransactionCancelOrderStatusViewController.xib */,
 				0C4E5CD11BA1873E0098224A /* RegisterModalViewController.swift */,
 				0C4E5CD21BA1873E0098224A /* RegisterModalViewController.xib */,
+				F7D885D31BAA8A0C00AB01C0 /* ResolutionViewController.swift */,
+				F7D885D41BAA8A0C00AB01C0 /* ResolutionViewController.xib */,
+				F7D885D71BAA8F8000AB01C0 /* ResolutionFilterTableViewController.swift */,
+				F7D885D81BAA8F8000AB01C0 /* ResolutionFilterTableViewController.xib */,
+				F7D885DB1BAA9B6800AB01C0 /* ResolutionFilterTableViewCell.swift */,
+				F7D885DC1BAA9B6800AB01C0 /* ResolutionFilterTableViewCell.xib */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -1521,6 +1542,7 @@
 				0CB9DB071B6A1E6600F2CA13 /* StartPageStoryBoard.storyboard in Resources */,
 				26D54FE01B860CF400522398 /* TransactionViewController.xib in Resources */,
 				0C374F411B88E3790050AE1D /* FollowedSellerTableViewCell.xib in Resources */,
+				F7D885DA1BAA8F8000AB01C0 /* ResolutionFilterTableViewController.xib in Resources */,
 				79A1C6F31B83574A0043AA36 /* ProductResultListCollectionViewCell.xib in Resources */,
 				7971F7471B862D3A00322861 /* SortTableViewCell.xib in Resources */,
 				26AFB3CA1B79DE5C00E50926 /* ProductAttributeCollectionViewCell.xib in Resources */,
@@ -1572,6 +1594,7 @@
 				0C9937391B750583000D6074 /* dummyHome.json in Resources */,
 				79F2F55C1B85FD9D00F57E4B /* FilterViewController.xib in Resources */,
 				797D49111B7A50BA00617F6B /* CartTableViewCell.xib in Resources */,
+				F7D885D61BAA8A0C00AB01C0 /* ResolutionViewController.xib in Resources */,
 				F7DC7EDF1BA141AF004F7FD4 /* SellerSubCategoryTableViewCell.xib in Resources */,
 				26DFF6471B87BBE3005D8EDE /* TransactionProductDetailsTableViewCell.xib in Resources */,
 				0C2F44D01B8576FE00021F45 /* Panton SemiBold Italic.otf in Resources */,
@@ -1607,6 +1630,7 @@
 				79A1C6F11B8329490043AA36 /* SearchSuggestionTableViewCell.xib in Resources */,
 				F7CC69021BA344C9009168D7 /* TransactionLeaveSellerFeedbackViewController.xib in Resources */,
 				0C2F44CA1B8576FE00021F45 /* Panton ExtraLight.otf in Resources */,
+				F7D885DE1BAA9B6800AB01C0 /* ResolutionFilterTableViewCell.xib in Resources */,
 				0C2F44CA1B8576FE00021F45 /* Panton ExtraLight.otf in Resources */,
 				F7DC7ED71BA13E3D004F7FD4 /* SellerCategoryViewController.xib in Resources */,
 				26AFB3C81B79DE5C00E50926 /* ReviewTableViewCell.xib in Resources */,
@@ -1713,6 +1737,7 @@
 				F7CC68F21BA28AFB009168D7 /* TransactionSectionHeaderView.swift in Sources */,
 				B77B8DD11B9B554A0002C513 /* ContactListTVC.swift in Sources */,
 				0C9937541B750583000D6074 /* RoundedLabel.swift in Sources */,
+				F7D885D91BAA8F8000AB01C0 /* ResolutionFilterTableViewController.swift in Sources */,
 				0C4E5CD31BA1873E0098224A /* RegisterModalViewController.swift in Sources */,
 				0C1003F41B87629400CAA17A /* NewAddressTableViewCell.swift in Sources */,
 				79E68B911B8B0AE9008626E4 /* PointModel.swift in Sources */,
@@ -1818,10 +1843,10 @@
 				0CC8A63B1B7B9BBF00C91425 /* FollowedSellerViewController.swift in Sources */,
 				0C9937421B750583000D6074 /* SellerModel.swift in Sources */,
 				793A899E1BA004550030FDC7 /* VerifyMobileNumberStatusViewController.swift in Sources */,
-				961BE59E1B994B2900E8631A /* ResolutionCenterViewController.swift in Sources */,
 				0C9937531B750583000D6074 /* RoundedImageView.swift in Sources */,
 				79E85FD01B8A1FBD00428AA1 /* ActivityModel.swift in Sources */,
 				2689FBF71B80412D007BEA68 /* CategoriesTableViewCell.swift in Sources */,
+				F7D885E21BAA9F5900AB01C0 /* ResolutionFilter2Model.swift in Sources */,
 				0C374F001B889D9A0050AE1D /* PlainTableViewCell.swift in Sources */,
 				F7CC68F71BA2A02F009168D7 /* TransactionCancelViewController.swift in Sources */,
 				26AFB3A91B79DE2900E50926 /* ProductDescriptionView.swift in Sources */,
@@ -1829,6 +1854,7 @@
 				26C285441B8FADE3005EBD3A /* AddressModelV2.swift in Sources */,
 				26DFF6371B87B0AA005D8EDE /* TransactionProductImagesView.swift in Sources */,
 				961BE5A61B994BF000E8631A /* ResolutionCenterCell.swift in Sources */,
+				F7D885DD1BAA9B6800AB01C0 /* ResolutionFilterTableViewCell.swift in Sources */,
 				0C99374D1B750583000D6074 /* NewSellerCollectionViewCell.swift in Sources */,
 				26AFB39B1B79DDEA00E50926 /* ProductAttributeModel.swift in Sources */,
 				0C99373D1B750583000D6074 /* IPhoneType.swift in Sources */,
@@ -1871,6 +1897,7 @@
 				0C329E841B7B738E005BE2B6 /* CustomizeShoppingViewController.swift in Sources */,
 				79F2F5541B859AD100F57E4B /* WishlistProductDetailsModel.swift in Sources */,
 				268C1BAC1B864D8B009FA106 /* TransactionDetailsViewController.swift in Sources */,
+				F7D885E01BAA9F4500AB01C0 /* ResolutionFilterModel.swift in Sources */,
 				26AFB39D1B79DDEA00E50926 /* ProductReviewModel.swift in Sources */,
 				79F2F5521B85795C00F57E4B /* WishlistModel.swift in Sources */,
 				26AFB3B91B79DE3800E50926 /* ProductDescriptionViewController.swift in Sources */,
@@ -1893,6 +1920,7 @@
 				961BE5A21B994B9500E8631A /* CaseDetailsTableViewController.swift in Sources */,
 				268C1BBB1B865B13009FA106 /* TransactionButtons.swift in Sources */,
 				0C9937521B750583000D6074 /* RoundedButton.swift in Sources */,
+				F7D885D51BAA8A0C00AB01C0 /* ResolutionViewController.swift in Sources */,
 				0C374EFB1B8862E10050AE1D /* SuccessTableHeaderViewCell.swift in Sources */,
 				0C9937411B750583000D6074 /* ProductModel.swift in Sources */,
 				F7DF7CFD1BA975EF0086D414 /* TransactionProductDetailsModel.swift in Sources */,

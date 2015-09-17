@@ -143,6 +143,9 @@ struct APIAtlas {
     static let transactionProductDetails = "auth/getOrderProductDetail?access_token="
     static let transactionCancellation = "auth/cancellation/reasons"
     static let postTransactionCancellation = "auth/transaction/cancel"
+    
+    //Resolution Center
+    static let getResolutionCenterCases = "/api/v1/auth/dispute/get-case"
 }
 
 class APIManager: AFHTTPSessionManager {
