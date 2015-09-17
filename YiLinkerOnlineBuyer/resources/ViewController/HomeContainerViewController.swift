@@ -176,8 +176,9 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                 animatedViewController?.buttonTitles = buttonTitles
                 animatedViewController?.buttonRightText = buttonRightText
             } else {
+                let signInLocalizeString: String = StringHelper.localizedStringWithKey("SIGNIN_LOCALIZE_KEY")
                 var buttonImages: [String] = ["fab_help", "fab_register", "fab_signin", "fab_messaging","fab_customize", "fab_promo", "fab_category"]
-                var buttonTitles: [String] = ["HELP", "REGISTER", "SIGN IN", "MESSAGING", "CUSTOMIZE SHOPPING", "TODAYS PROMO", "CATEGORIES"]
+                var buttonTitles: [String] = ["HELP", "REGISTER", signInLocalizeString, "MESSAGING", "CUSTOMIZE SHOPPING", "TODAYS PROMO", "CATEGORIES"]
                 var buttonRightText: [String] = ["", "", "Must be Sign in", "Must be Sign in", "", "", ""]
                 
                 animatedViewController?.buttonImages = buttonImages
