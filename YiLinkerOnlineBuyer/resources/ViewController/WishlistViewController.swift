@@ -218,7 +218,7 @@ class WishlistViewController: UIViewController, UITableViewDelegate, UITableView
                     }
                 }
                 cell.productDetailsLabel?.text = tempAttributesText
-                cell.productPriceLabel.text = "P " + tempProductUnit.discountedPrice + " x \(tempModel.quantity)"
+                cell.productPriceLabel.text = tempProductUnit.discountedPrice.formatToTwoDecimal() + " x \(tempModel.quantity)"
             }
         }
         
