@@ -50,6 +50,7 @@
             <string>Panton-Regular</string>
             <string>Panton-Regular</string>
             <string>Panton-Regular</string>
+            <string>Panton-Regular</string>
         </mutableArray>
     </customFonts>
     <scenes>
@@ -2319,6 +2320,16 @@
                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ITEMS" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IPD-6C-mRy">
+                                    <rect key="frame" x="15" y="276" width="76" height="21"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="76" id="d8A-8V-JqW"/>
+                                        <constraint firstAttribute="height" constant="21" id="orG-08-tjS"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="15"/>
+                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
                             </subviews>
                             <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
@@ -2326,12 +2337,14 @@
                                 <constraint firstItem="Kmh-U6-jIY" firstAttribute="top" secondItem="T0u-ch-Q8x" secondAttribute="top" id="2XA-p0-acy"/>
                                 <constraint firstItem="yJT-1M-98h" firstAttribute="top" secondItem="Kg9-FP-cU7" secondAttribute="bottom" constant="1" id="9NM-mM-Wyf"/>
                                 <constraint firstAttribute="trailing" secondItem="Kmh-U6-jIY" secondAttribute="trailing" id="Ak4-de-aqn"/>
+                                <constraint firstItem="IPD-6C-mRy" firstAttribute="leading" secondItem="T0u-ch-Q8x" secondAttribute="leading" constant="15" id="Ent-9e-klg"/>
                                 <constraint firstAttribute="trailing" secondItem="yJT-1M-98h" secondAttribute="trailing" id="HBR-VM-SJp"/>
                                 <constraint firstItem="Kg9-FP-cU7" firstAttribute="leading" secondItem="T0u-ch-Q8x" secondAttribute="leading" id="Hgh-uJ-rPJ"/>
                                 <constraint firstItem="jyi-J1-KRg" firstAttribute="leading" secondItem="T0u-ch-Q8x" secondAttribute="leading" id="Iko-At-nmO"/>
                                 <constraint firstItem="X6M-ZB-Omf" firstAttribute="top" secondItem="Kmh-U6-jIY" secondAttribute="bottom" constant="21" id="Kzh-CX-Upm"/>
                                 <constraint firstAttribute="bottom" secondItem="yJT-1M-98h" secondAttribute="bottom" constant="40" id="QG7-jG-0eC"/>
                                 <constraint firstItem="X6M-ZB-Omf" firstAttribute="leading" secondItem="T0u-ch-Q8x" secondAttribute="leading" constant="15" id="SLB-Sl-6l4"/>
+                                <constraint firstItem="IPD-6C-mRy" firstAttribute="top" secondItem="yJT-1M-98h" secondAttribute="bottom" constant="19" id="Uv5-HP-5Uk"/>
                                 <constraint firstItem="Kmh-U6-jIY" firstAttribute="leading" secondItem="T0u-ch-Q8x" secondAttribute="leading" id="V16-dN-XyL"/>
                                 <constraint firstItem="jyi-J1-KRg" firstAttribute="top" secondItem="X6M-ZB-Omf" secondAttribute="bottom" constant="8" id="ca6-vp-mdN"/>
                                 <constraint firstItem="yJT-1M-98h" firstAttribute="leading" secondItem="T0u-ch-Q8x" secondAttribute="leading" id="fjs-fa-4dw"/>

@@ -113,7 +113,7 @@ class CaseDetailsTableViewController: UITableViewController {
                 self.caseID.text = self.disputeId
                 self.statusCase.text = caseDetails.statusType
                 self.dateOpen.text = caseDetails.dateAdded
-                // In Seller other is Disputer, In Buyer other is Disputee
+                // In Buyer other is Disputer, In Seller other is Disputee
                 self.otherParty.text = caseDetails.disputerName
                 for remarkElement in caseDetails.remarks {
                     if( remarkElement.isAdmin ) {
