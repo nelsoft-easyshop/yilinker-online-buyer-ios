@@ -184,8 +184,6 @@ class ResolutionCenterViewController: UIViewController, UITableViewDataSource, U
         })
     }
     
-    
-    
     // MARK: - Navigation Bar Buttons
     func goBackButton() {
         self.navigationController?.popViewControllerAnimated(true)

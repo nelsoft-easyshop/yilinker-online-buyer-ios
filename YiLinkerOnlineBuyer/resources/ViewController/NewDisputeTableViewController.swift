@@ -100,14 +100,13 @@ class NewDisputeTableViewController: UITableViewController, UIPickerViewDataSour
         if self.transactionType.text == "Refund" {
             status == 10
         }
-        self.productIDs.append("12")
-        println(self.productIDs)
         
         let parameters: NSDictionary = [ "access_token": SessionManager.accessToken()
                                         ,"disputeTitle": self.disputeTitle.text
                                              ,"remarks": self.remarks.text
                                   ,"orderProductStatus": status
-                                     ,"orderProductIds": self.productIDs.description]
+                                     ,"orderProductIds": self.productIDs]
+        
         println(parameters)
         
         manager.POST(APIAtlas.postResolutionCenterAddCase, parameters: parameters, success: {
