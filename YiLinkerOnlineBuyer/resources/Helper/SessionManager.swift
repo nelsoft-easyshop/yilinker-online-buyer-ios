@@ -189,6 +189,32 @@ class SessionManager {
         }
     }
     
+    class func getUnReadMessagesCount() -> Int{
+        var messageCount: Int = 0
+        
+        if let val: AnyObject = NSUserDefaults.standardUserDefaults().objectForKey("messageCount") as? String {
+            let result = val as! String
+            if result != "" {
+                messageCount = result.toInt()!
+            } else {
+                messageCount = 0
+            }
+        } else {
+            messageCount = 0
+        }
+        
+        return messageCount
+    }
+    
+    class func setUnReadMessagesCount(messageCount: Int) {
+        NSUserDefaults.standardUserDefaults().setObject("\(messageCount)", forKey: "messageCount")
+        NSUserDefaults.standardUserDefaults().synchronize()
+    }
+    
+    class func unreadMessageCount() -> String {
+        return "You have \(self.getUnReadMessagesCount()) unread messages"
+    }
+    
     class func setRememberPaymentType(value: Bool) {
         var string: String = ""
         if value {

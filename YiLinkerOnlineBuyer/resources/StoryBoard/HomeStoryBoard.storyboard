@@ -310,7 +310,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DP3-44-XbQ" userLabel="Counter View">
                                 <rect key="frame" x="0.0" y="64" width="375" height="35"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PGR-Y7-dO2">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text=" " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PGR-Y7-dO2">
                                         <rect key="frame" x="8" y="7" width="359" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
@@ -1423,7 +1423,7 @@
                                                     <color key="textColor" red="0.49803921579999999" green="0.49803921579999999" blue="0.49803921579999999" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dz9-gB-zVw" customClass="RoundedButton" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dz9-gB-zVw" customClass="RoundedButton" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
                                                     <rect key="frame" x="8" y="35" width="25" height="25"/>
                                                     <color key="backgroundColor" red="0.90429991480000005" green="0.41363269790000001" blue="0.39315816190000002" alpha="1" colorSpace="calibratedRGB"/>
                                                     <constraints>
@@ -2170,6 +2170,6 @@
         <image name="wishlist" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="TtW-PK-dtI"/>
+        <segue reference="K0t-Jm-PtB"/>
     </inferredMetricsTieBreakers>
 </document>

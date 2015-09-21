@@ -81,8 +81,8 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     }
     
     func onNewMessage(notification : NSNotification){
-        //action here to open messaging
-        //add count in messaging
+        var newCount = SessionManager.getUnReadMessagesCount() + 1
+        SessionManager.setUnReadMessagesCount(newCount)
     }
     
     func fireCreateRegistration(registrationID : String) {

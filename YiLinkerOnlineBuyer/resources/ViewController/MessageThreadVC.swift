@@ -82,6 +82,7 @@ class MessageThreadVC: UIViewController {
         var ref = W_Messages()
         //messages = ref.testData()
         var r_temp = recipient?.userId ?? ""
+        println(recipient)
         println("recipient id \(r_temp)")
         self.getMessagesFromEndpoint("1", limit: "30", userId: r_temp)
         configureTableView()
@@ -90,7 +91,6 @@ class MessageThreadVC: UIViewController {
         var urlRecipient : NSURL = NSURL(string: imageStringRecipient)!
         recipientImage = UIImageView()
         recipientImage!.sd_setImageWithURL(urlRecipient, placeholderImage: UIImage(named: "Male-50.png"))
-        recipientImage!.image = UIImage(named: "Male-50.png")
         
         senderImage = UIImageView()
         var imageStringSender = sender!.profileImageUrl
@@ -142,36 +142,50 @@ class MessageThreadVC: UIViewController {
     }
     
     func onSeenMessage(notification : NSNotification){
-        println("onSeenMessage")
-        /* check if recipient id is the same as notification's recipient id */
-        if let info = notification.userInfo as? Dictionary<String,String> {
-            if let error = info["error"] {
-                println("Error with seen message on GCM \(error)")
-            } else if let recipientId = info["body"] {
-                if (recipientId == recipient?.userId){
-                    var s_temp = sender?.userId ?? ""
-                    self.getMessagesFromEndpoint("1", limit: "30", userId: s_temp)
+        if let info = notification.userInfo as? Dictionary<String, AnyObject> {
+            if let aps = info["aps"] as? Dictionary<String, AnyObject>{
+                if let alert = aps["alert"] as? Dictionary<String, AnyObject>{
+                    if let error = alert["error"] as? String{
+                        println("error with notification \(error)")
+                    }
+                    if let recipientId = alert["body"] as? String {
+                        if (recipientId == recipient?.userId){
+                            var r_temp = recipient?.userId ?? ""
+                            self.getMessagesFromEndpoint("1", limit: "30", userId: r_temp)
+                        }
+                    }
+                    
                 }
             }
+        } else {
+            println("userInfo is null")
         }
     }
     
     func onReceiveNewMessage(notification : NSNotification){
-        println("onReceiveNewMessage")
-        /* check if recipient id is the same as notification's recipient id */
-        if let info = notification.userInfo as? Dictionary<String,String> {
-            if let error = info["error"] {
-                println("Error with seen message on GCM \(error)")
-            } else if let recipientId = info["body"] {
-                if (recipientId == recipient?.userId){
-                    var s_temp = sender?.userId ?? ""
-                    self.getMessagesFromEndpoint("1", limit: "30", userId: s_temp)
+        if let info = notification.userInfo as? Dictionary<String, AnyObject> {
+            if let aps = info["aps"] as? Dictionary<String, AnyObject>{
+                if let alert = aps["alert"] as? Dictionary<String, AnyObject>{
+                    if let error = alert["error"] as? String{
+                        println("error with notification \(error)")
+                    }
+                    if let recipientId = alert["body"] as? String {
+                        if (recipientId == recipient?.userId){
+                            var r_temp = recipient?.userId ?? ""
+                            self.getMessagesFromEndpoint("1", limit: "30", userId: r_temp)
+                        }
+                    }
+                    
                 }
             }
+        } else {
+            println("userInfo is null")
         }
     }
     
     override func viewDidAppear(animated: Bool) {
+        self.clearProfileView()
+        
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWasShown:"), name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWasHidden:"), name: UIKeyboardWillHideNotification, object: nil)
         
@@ -282,10 +296,18 @@ class MessageThreadVC: UIViewController {
     }
     
     func clearProfileView(){
-        profileImageView.removeFromSuperview()
-        onlineView.removeFromSuperview()
-        profileNameLabel.removeFromSuperview()
-        onlineLabel.removeFromSuperview()
+        if (profileImageView != nil){
+            profileImageView.removeFromSuperview()
+        }
+        if (onlineView != nil){
+            onlineView.removeFromSuperview()
+        }
+        if (profileNameLabel != nil){
+            profileNameLabel.removeFromSuperview()
+        }
+        if (onlineLabel != nil){
+            onlineLabel.removeFromSuperview()
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -362,10 +384,10 @@ class MessageThreadVC: UIViewController {
     func createMessage(lastMessage: String, isImage : String){
         var dateSeen : NSDate? = nil
         
-        var recipientId = recipient?.userId ?? ""
-        var senderId = self.sender?.userId ?? ""
+        var recipientId = recipient?.userId ?? "0"
+        var senderId = self.sender?.userId ?? "0"
         
-        self.messages.append(W_Messages(message_id: 0, senderId: senderId, recipientId: recipientId, message: lastMessage, isImage: isImage, timeSent: NSDate(), isSeen: "0", timeSeen: dateSeen, isSent : "1"))
+        self.messages.append(W_Messages(message_id: 0, senderId: senderId.toInt()! , recipientId: recipientId.toInt()!, message: lastMessage, isImage: isImage, timeSent: NSDate(), isSeen: "0", timeSeen: dateSeen, isSent : "1"))
         self.threadTableView.reloadData()
         self.goToBottomTableView()
         self.sendMessageToEndpoint(lastMessage, recipientId: recipientId, isImage: isImage)
@@ -428,10 +450,10 @@ class MessageThreadVC: UIViewController {
                 let parameters: NSDictionary = [
                     "page"          : "\(page)",
                     "limit"         : "\(limit)",
-                    "userId"        : "\(userId)", //get user id from somewhere
+                    "userId"        : userId, //get user id from somewhere
                     "access_token"  : SessionManager.accessToken()
-                    ]   as Dictionary<String, String>
-                
+                    ]   as Dictionary<String, AnyObject>
+                println(parameters)
                 let url = APIAtlas.baseUrl + APIAtlas.ACTION_GET_CONVERSATION_MESSAGES
                 
                 manager.POST(url, parameters: parameters, success: {
@@ -502,7 +524,6 @@ class MessageThreadVC: UIViewController {
         let parameters: NSDictionary = ["client_id": Constants.Credentials.clientID, "client_secret": Constants.Credentials.clientSecret, "grant_type": Constants.Credentials.grantRefreshToken, "refresh_token":  SessionManager.refreshToken()]
         manager.POST(APIAtlas.refreshTokenUrl, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            SVProgressHUD.dismiss()
             SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
@@ -588,7 +609,7 @@ extension MessageThreadVC : UITableViewDataSource, UITableViewDelegate{
         if (!indexPath.isEqual(nil)) {
             if (messages[indexPath.row].isImage == "0") {
                 let cell = self.threadTableView.cellForRowAtIndexPath(indexPath) as! MessageThreadTVC
-                self.sendMessageToEndpoint(cell.message_label.text!, recipientId: messages[indexPath.row].recipientId, isImage: "0")
+                self.sendMessageToEndpoint(cell.message_label.text!, recipientId: String(messages[indexPath.row].recipientId), isImage: "0")
             }
         }
     }
@@ -628,16 +649,18 @@ extension MessageThreadVC : UITableViewDataSource, UITableViewDelegate{
         }
         
         var index : Int = indexPath.row
-        //index = (messages.count - indexPath.row) - 1
-        
+        println("RECIP \(recipient?.userId)")
+        println("SENDER ID\(messages[index].senderId)")
         if (messages[index].isImage == "1"){
-            if (recipient?.userId != messages[index].senderId){
+            if (recipient?.userId != String(messages[index].senderId)){
                 let cell = tableView.dequeueReusableCellWithIdentifier(senderImageIndentifier) as! MessageThreadImageTVC
+                
                 
                 if(!imagePlaced){
                     cell.contact_image.image = senderImage!.image
                     imagePlaced = true
                 }
+
                 
                 let url = NSURL(string: messages[index].message)
                 cell.message_image.sd_setImageWithURL(url, placeholderImage: nil)
@@ -668,10 +691,12 @@ extension MessageThreadVC : UITableViewDataSource, UITableViewDelegate{
             } else {
                 let cell = tableView.dequeueReusableCellWithIdentifier(receiverImageIndentifier) as! MessageThreadImageTVC
                 
+                
                 if(!imagePlaced){
                     cell.contact_image.image = recipientImage!.image
                     imagePlaced = true
                 }
+
                 cell.timestamp_label.text = DateUtility.convertDateToString(NSDate()) as String
                 
                 let url = NSURL(string: messages[index].message)
@@ -686,15 +711,15 @@ extension MessageThreadVC : UITableViewDataSource, UITableViewDelegate{
                 return cell
             }
         } else {
-            if (recipient?.userId != messages[index].senderId){
+            if (recipient?.userId != String(messages[index].senderId)){
                 let cell = tableView.dequeueReusableCellWithIdentifier(senderIdentifier) as! MessageThreadTVC
                 
                 cell.message_label.text = messages[index].message as String
                 
-                //if(!imagePlaced){
+                if(!imagePlaced){
                     cell.contact_image.image = senderImage!.image
-                    //imagePlaced = true
-                //}
+                    imagePlaced = true
+                }
                 
                 cell.message_label.superview?.layer.cornerRadius = 5.0
                 

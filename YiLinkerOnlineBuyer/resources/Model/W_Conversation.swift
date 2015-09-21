@@ -15,10 +15,10 @@ class W_Conversation: NSObject {
     var lastMessage : NSString
     var lastMessageDt : NSDate
     var lastLoginDate : NSDate?
-    var sender : NSString
-    var hasUnreadMessage : NSString
+    var sender : String
+    var hasUnreadMessage : String
 
-    init(contact : W_Contact, lastMessage : NSString, lastMessageDt: NSDate, lastLoginDate : NSDate?, sender : NSString, hasUnreadMessage : NSString)
+    init(contact : W_Contact, lastMessage : NSString, lastMessageDt: NSDate, lastLoginDate : NSDate?, sender : String, hasUnreadMessage : String)
     {
         self.contact = contact
         self.lastMessage = lastMessage
@@ -37,8 +37,8 @@ class W_Conversation: NSObject {
         self.lastMessage = "Hi!"
         self.lastMessageDt = NSDate(dateString: "2015-08-02 20:28:00")
         self.lastLoginDate = NSDate(dateString: "2015-08-02 20:28:00")
-        self.sender = ""
-        self.hasUnreadMessage = ""
+        self.sender = "0"
+        self.hasUnreadMessage = "0"
     }
     
     
@@ -53,12 +53,13 @@ class W_Conversation: NSObject {
                 
                 
                 for conversation in conversations as! NSArray {
+                    println(conversation)
                     var fullName                : String = ""
                     var userRegistrationIds     : String = ""
                     var userIdleRegistrationIds : String = ""
                     var userId                  : String = ""
                     var profileImageUrl         : String = ""
-                    var isOnline                : String = "0"
+                    var isOnline                : String = ""
                     var lastMessage             : String = ""
                     var lastMessageDt           : String = ""
                     var lastLoginDate           : String = ""
@@ -81,7 +82,7 @@ class W_Conversation: NSObject {
                         isOnline = tempVar
                     }
                     
-                    if let tempVar = conversation["lastMessage"] as? String {
+                    if let tempVar = conversation["message"] as? String {
                         lastMessage = tempVar
                     }
                     
@@ -105,9 +106,9 @@ class W_Conversation: NSObject {
                     if (lastLoginDate != ""){
                         temp = NSDate(dateString: lastLoginDate)
                     }
-                    
+                    println("ONLINE : \(isOnline)")
+                    println("USER ID : \(userId)")
                     parsedConversations.append(W_Conversation(contact: W_Contact(fullName: fullName, userRegistrationIds: userRegistrationIds, userIdleRegistrationIds: userIdleRegistrationIds, userId: userId, profileImageUrl: profileImageUrl, isOnline: isOnline), lastMessage: lastMessage, lastMessageDt: NSDate(dateString: lastMessageDt), lastLoginDate: temp, sender: sender, hasUnreadMessage: hasUnreadMessage))
-                    
                 }
                 
             }
@@ -117,13 +118,4 @@ class W_Conversation: NSObject {
         return parsedConversations
     } // parse
 
-    
-    func testData() -> Array<W_Conversation>
-    {
-        return [
-            W_Conversation(contact : W_Contact(fullName: "Dennis Nora", userRegistrationIds: "", userIdleRegistrationIds: "", userId: "201", profileImageUrl: "N/A", isOnline: "0"), lastMessage: "Hi! How are you? Long time short time make time big time small time. Hi! How are you? Long time short time make time big time small time.", lastMessageDt: NSDate(dateString: "2015-08-03 04:56:00"), lastLoginDate : NSDate(), sender : "", hasUnreadMessage : "YES"),
-            W_Conversation(contact : W_Contact(fullName: "Dennis Nora", userRegistrationIds: "", userIdleRegistrationIds: "", userId: "201", profileImageUrl: "N/A", isOnline: "1"), lastMessage: "Hi! How are you? Long time short time make time big time small time. Hi! How are you? Long time short time make time big time small time.", lastMessageDt: NSDate(dateString: "2015-08-02 04:56:00"), lastLoginDate : NSDate(), sender : "", hasUnreadMessage : "YES"),
-            W_Conversation(contact : W_Contact(fullName: "Dennis Nora", userRegistrationIds: "", userIdleRegistrationIds: "", userId: "201", profileImageUrl: "N/A", isOnline: "1"), lastMessage: "Hi! How are you? Long time short time make time big time small time. Hi! How are you? Long time short time make time big time small time.", lastMessageDt: NSDate(dateString: "2015-08-01 05:56:00"), lastLoginDate : NSDate(), sender : "", hasUnreadMessage : "YES")
-        ]
-    }
 }

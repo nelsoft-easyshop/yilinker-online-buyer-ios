@@ -45,7 +45,8 @@ class ContactListVC: UIViewController, EmptyViewDelegate{
                 isOnline = "0"
             }
             
-            messageThreadVC.sender = W_Contact(fullName: SessionManager.userFullName(), userRegistrationIds: "", userIdleRegistrationIds: "", userId: SessionManager.accessToken() , profileImageUrl: SessionManager.profileImageStringUrl(), isOnline: isOnline)
+            //messageThreadVC.sender = W_Contact(fullName: SessionManager.userFullName(), userRegistrationIds: "", userIdleRegistrationIds: "", userId: SessionManager.accessToken() , profileImageUrl: SessionManager.profileImageStringUrl(), isOnline: isOnline)
+            messageThreadVC.sender = W_Contact(fullName: SessionManager.userFullName(), userRegistrationIds: "", userIdleRegistrationIds: "", userId: SessionManager.accessToken(), profileImageUrl: SessionManager.profileImageStringUrl(), isOnline: isOnline)
             messageThreadVC.recipient = selectedContact
             
         }
@@ -159,7 +160,6 @@ class ContactListVC: UIViewController, EmptyViewDelegate{
         let parameters: NSDictionary = ["client_id": Constants.Credentials.clientID, "client_secret": Constants.Credentials.clientSecret, "grant_type": Constants.Credentials.grantRefreshToken, "refresh_token":  SessionManager.refreshToken()]
         manager.POST(APIAtlas.refreshTokenUrl, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            SVProgressHUD.dismiss()
             SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
