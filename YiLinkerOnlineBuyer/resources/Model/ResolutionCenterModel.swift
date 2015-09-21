@@ -8,16 +8,79 @@
 
 import Foundation
 
-typealias ResolutionCenterData = (resolutionId: String, status: String, date: String, type: String, complainantRemarks: String, csrRemarks: String)
+typealias ResolutionCenterElement = (resolutionId: String, status: String, date: String, type: String, complainantRemarks: String, csrRemarks: String)
 
 class ResolutionCenterModel {
-    let resolutionData: ResolutionCenterData
+    var message: String = ""
+    var isSuccessful: Bool = false
+    var resolutionArray: [ResolutionCenterElement]
     
-    init(resolutionData: ResolutionCenterData) {
-        self.resolutionData = resolutionData
+    init(message: String, isSuccessful: Bool, resolutionArray: [ResolutionCenterElement]) {
+        self.message = message
+        self.isSuccessful = isSuccessful
+        self.resolutionArray = resolutionArray
     }
     
+    class func parseDictionaryString(dictionary: NSDictionary, key: String, defaultValue: String = "") -> String {
+        if dictionary[key] != nil {
+            if let parsedValue = dictionary[key] as? String {
+                return parsedValue
+            }
+        }
+        
+        return defaultValue
+    }
+    
+    class func autocorrectStatus(elementStatus: String) -> String {
+        switch elementStatus {
+        case "CLOSE","Close","close","CLOSED","closed":
+            return "Closed"
+        case "OPEN","open":
+            return "Open"
+        default:
+            return elementStatus
+        }
+    }
+    class func parseDictionaryBool(dictionary: NSDictionary, key: String, defaultValue: Bool = false) -> Bool {
+        if dictionary[key] != nil {
+            if let parsedValue = dictionary[key] as? Bool {
+                return parsedValue
+            }
+        }
+        
+        return defaultValue
+    }
     class func parseDataWithDictionary(dictionary: AnyObject) -> ResolutionCenterModel {
-        return ResolutionCenterModel(resolutionData:("1234","Open","13/14/15","Seller","Something wrong happened","Yup it was very wrong!!!"))
+        if dictionary.isKindOfClass(NSDictionary) {
+            let aDictionary = dictionary as! NSDictionary
+            let message = parseDictionaryString(aDictionary, key:"message")
+            let isSuccessful = parseDictionaryBool(aDictionary, key:"isSuccessful")
+            var arrayResolutionCenter = [ResolutionCenterElement]()
+            
+            if let dictionaryArray = dictionary["data"] as? NSArray {
+                for arrayElement in dictionaryArray {
+                    if let currentElement = arrayElement as? NSDictionary {
+                        var element: ResolutionCenterElement
+                        
+                        element.resolutionId = parseDictionaryString(currentElement, key:"disputeId")
+                        element.status = parseDictionaryString(currentElement, key:"disputeStatusType")
+                        element.status = autocorrectStatus( element.status )
+                        element.type = parseDictionaryString(currentElement, key:"orderProductStatus")
+                        element.date = parseDictionaryString(currentElement, key:"dateAdded")
+                        // unused: "disputeeFullName"
+                        // unused: "disputeeContactNumber"
+                        element.complainantRemarks = ""
+                        element.csrRemarks = ""
+                        
+                        arrayResolutionCenter.append(element)
+                    }
+                }
+            }
+            
+            return ResolutionCenterModel(message: message, isSuccessful: isSuccessful, resolutionArray: arrayResolutionCenter)
+        } else {
+            return ResolutionCenterModel(message: "", isSuccessful:false, resolutionArray: [ResolutionCenterElement]())
+        }
     }
+    
 }

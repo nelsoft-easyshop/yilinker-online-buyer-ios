@@ -187,6 +187,10 @@
 		2614E6531B89051B00EE8B35 /* TransactionLeaveFeedbackViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2614E6511B89051B00EE8B35 /* TransactionLeaveFeedbackViewController.xib */; };
 		2632F5211B7F8690006931E4 /* FollowedSellerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2632F51F1B7F8690006931E4 /* FollowedSellerTableViewCell.swift */; };
 		2632F5241B7F8EFF006931E4 /* FollwedSellerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2632F5231B7F8EFF006931E4 /* FollwedSellerModel.swift */; };
+		266A5C601BB0029200343DB4 /* DisputeAddItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 266A5C5E1BB0029200343DB4 /* DisputeAddItemViewController.swift */; };
+		266A5C611BB0029200343DB4 /* DisputeAddItemViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 266A5C5F1BB0029200343DB4 /* DisputeAddItemViewController.xib */; };
+		266A5C641BB003B400343DB4 /* DisputeAddItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 266A5C621BB003B400343DB4 /* DisputeAddItemTableViewCell.swift */; };
+		266A5C651BB003B400343DB4 /* DisputeAddItemTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 266A5C631BB003B400343DB4 /* DisputeAddItemTableViewCell.xib */; };
 		2689FBF71B80412D007BEA68 /* CategoriesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2689FBF51B80412D007BEA68 /* CategoriesTableViewCell.swift */; };
 		2689FBFA1B8044CF007BEA68 /* CategoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2689FBF91B8044CF007BEA68 /* CategoryModel.swift */; };
 		2689FBFC1B81856B007BEA68 /* ProductUnitsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2689FBFB1B81856B007BEA68 /* ProductUnitsModel.swift */; };
@@ -328,6 +332,8 @@
 		961BE5A81B994C1000E8631A /* ButtonToTabBehaviorizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961BE5A71B994C1000E8631A /* ButtonToTabBehaviorizer.swift */; };
 		961BE5AA1B994C4D00E8631A /* ResolutionCenterCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 961BE5A91B994C4D00E8631A /* ResolutionCenterCell.xib */; };
 		961BE5AC1B9958BC00E8631A /* CheckBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961BE5AB1B9958BC00E8631A /* CheckBox.swift */; };
+		962595331BAB1BF500A118C0 /* CaseDetailsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 962595321BAB1BF500A118C0 /* CaseDetailsModel.swift */; };
+		964B8E921BAB1A3F002E7B4A /* NewDisputeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 964B8E911BAB1A3F002E7B4A /* NewDisputeTableViewController.swift */; };
 		96DEBC6D1B9F2731000ACFE7 /* ResolutionCenterModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96DEBC6C1B9F2731000ACFE7 /* ResolutionCenterModel.swift */; };
 		B77B8DC21B9B54B40002C513 /* W_Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = B77B8DBF1B9B54B40002C513 /* W_Contact.swift */; };
 		B77B8DC31B9B54B40002C513 /* W_Conversation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B77B8DC01B9B54B40002C513 /* W_Conversation.swift */; };
@@ -595,6 +601,10 @@
 		2614E6511B89051B00EE8B35 /* TransactionLeaveFeedbackViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TransactionLeaveFeedbackViewController.xib; path = YiLinkerOnlineBuyer/resources/ViewController/TransactionLeaveFeedbackViewController.xib; sourceTree = SOURCE_ROOT; };
 		2632F51F1B7F8690006931E4 /* FollowedSellerTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FollowedSellerTableViewCell.swift; path = YiLinkerOnlineBuyer/resources/ViewController/FollowedSellerTableViewCell.swift; sourceTree = SOURCE_ROOT; };
 		2632F5231B7F8EFF006931E4 /* FollwedSellerModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FollwedSellerModel.swift; path = YiLinkerOnlineBuyer/resources/Model/FollwedSellerModel.swift; sourceTree = SOURCE_ROOT; };
+		266A5C5E1BB0029200343DB4 /* DisputeAddItemViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisputeAddItemViewController.swift; sourceTree = "<group>"; };
+		266A5C5F1BB0029200343DB4 /* DisputeAddItemViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DisputeAddItemViewController.xib; sourceTree = "<group>"; };
+		266A5C621BB003B400343DB4 /* DisputeAddItemTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisputeAddItemTableViewCell.swift; sourceTree = "<group>"; };
+		266A5C631BB003B400343DB4 /* DisputeAddItemTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DisputeAddItemTableViewCell.xib; sourceTree = "<group>"; };
 		2689FBF51B80412D007BEA68 /* CategoriesTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CategoriesTableViewCell.swift; path = YiLinkerOnlineBuyer/resources/ViewController/CategoriesTableViewCell.swift; sourceTree = SOURCE_ROOT; };
 		2689FBF91B8044CF007BEA68 /* CategoryModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CategoryModel.swift; path = YiLinkerOnlineBuyer/resources/Model/CategoryModel.swift; sourceTree = SOURCE_ROOT; };
 		2689FBFB1B81856B007BEA68 /* ProductUnitsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProductUnitsModel.swift; path = YiLinkerOnlineBuyer/resources/Model/ProductUnitsModel.swift; sourceTree = SOURCE_ROOT; };
@@ -738,6 +748,8 @@
 		961BE5A71B994C1000E8631A /* ButtonToTabBehaviorizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonToTabBehaviorizer.swift; sourceTree = "<group>"; };
 		961BE5A91B994C4D00E8631A /* ResolutionCenterCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ResolutionCenterCell.xib; sourceTree = "<group>"; };
 		961BE5AB1B9958BC00E8631A /* CheckBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckBox.swift; sourceTree = "<group>"; };
+		962595321BAB1BF500A118C0 /* CaseDetailsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CaseDetailsModel.swift; path = YiLinkerOnlineBuyer/resources/Model/CaseDetailsModel.swift; sourceTree = SOURCE_ROOT; };
+		964B8E911BAB1A3F002E7B4A /* NewDisputeTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NewDisputeTableViewController.swift; path = YiLinkerOnlineBuyer/resources/ViewController/NewDisputeTableViewController.swift; sourceTree = SOURCE_ROOT; };
 		96DEBC6C1B9F2731000ACFE7 /* ResolutionCenterModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ResolutionCenterModel.swift; path = YiLinkerOnlineBuyer/resources/Model/ResolutionCenterModel.swift; sourceTree = SOURCE_ROOT; };
 		B77B8DBF1B9B54B40002C513 /* W_Contact.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = W_Contact.swift; sourceTree = "<group>"; };
 		B77B8DC01B9B54B40002C513 /* W_Conversation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = W_Conversation.swift; sourceTree = "<group>"; };
@@ -975,6 +987,7 @@
 			children = (
 				B77B8DBC1B9B537C0002C513 /* Messaging */,
 				96DEBC6C1B9F2731000ACFE7 /* ResolutionCenterModel.swift */,
+				962595321BAB1BF500A118C0 /* CaseDetailsModel.swift */,
 				79E85FCD1B8A1F5800428AA1 /* ActivityLogModel.swift */,
 				F7DC84DE1BA0083000D3878B /* TransactionModel.swift */,
 				79E85FCF1B8A1FBD00428AA1 /* ActivityModel.swift */,
@@ -1031,6 +1044,8 @@
 		0C99370B1B750583000D6074 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				266A5C621BB003B400343DB4 /* DisputeAddItemTableViewCell.swift */,
+				266A5C631BB003B400343DB4 /* DisputeAddItemTableViewCell.xib */,
 				B77B8DBE1B9B53A60002C513 /* Messaging */,
 				961BE5A51B994BF000E8631A /* ResolutionCenterCell.swift */,
 				0C5111DB1B81F21A002F0001 /* AboutSellerTableViewCell.swift */,
@@ -1138,11 +1153,17 @@
 		0C9937221B750583000D6074 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				266A5C5E1BB0029200343DB4 /* DisputeAddItemViewController.swift */,
+				266A5C5F1BB0029200343DB4 /* DisputeAddItemViewController.xib */,
+				964B8E911BAB1A3F002E7B4A /* NewDisputeTableViewController.swift */,
+				961BE59D1B994B2900E8631A /* ResolutionCenterViewController.swift */,
+				961BE59F1B994B7D00E8631A /* DisputeViewController.swift */,
+				961BE5A11B994B9500E8631A /* CaseDetailsTableViewController.swift */,
+				961BE5A31B994BB600E8631A /* ResolutionFilterViewController.swift */,
 				79E85FC91B8A1E0800428AA1 /* ActivityLogTableViewController.swift */,
 				0C1003F61B87690300CAA17A /* AddAddressTableViewController.swift */,
 				79F417741B7C3ADB0047D02D /* CartProductAttributeViewController.swift */,
 				0C9937231B750583000D6074 /* CartViewController.swift */,
-				961BE5A11B994B9500E8631A /* CaseDetailsTableViewController.swift */,
 				2689FBF51B80412D007BEA68 /* CategoriesTableViewCell.swift */,
 				0C329E8A1B7B73B7005BE2B6 /* CategoriesViewController.swift */,
 				0C2F45231B85E7CA00021F45 /* ChangeAddressViewController.swift */,
@@ -1179,8 +1200,6 @@
 				0C4E5CD11BA1873E0098224A /* RegisterModalViewController.swift */,
 				0C4E5CD21BA1873E0098224A /* RegisterModalViewController.xib */,
 				0CE35EB71B76711400AAA8F1 /* RegisterViewController.swift */,
-				961BE59D1B994B2900E8631A /* ResolutionCenterViewController.swift */,
-				961BE5A31B994BB600E8631A /* ResolutionFilterViewController.swift */,
 				0C5925FF1B8327BA0021EA76 /* ResultViewController.swift */,
 				0C9937271B750583000D6074 /* SearchViewController.swift */,
 				F7DC7ED81BA13FAC004F7FD4 /* SellerCategoryTableViewCell.swift */,
@@ -1537,6 +1556,7 @@
 				0C1179391BA8291900AA1554 /* LaunchScreen.xib in Resources */,
 				26DFF6311B879126005D8EDE /* TransactionProductDetailsViewController.xib in Resources */,
 				F7D37CA21B92B09100FA7B16 /* ViewFeedBackViewController.xib in Resources */,
+				266A5C611BB0029200343DB4 /* DisputeAddItemViewController.xib in Resources */,
 				26AFB3BF1B79DE5600E50926 /* ProductViewController.xib in Resources */,
 				F740F08E1B90CBC900D23A34 /* CreateAccountViewController.xib in Resources */,
 				0C10042D1B877F8400CAA17A /* AddAddressTableViewController.xib in Resources */,
@@ -1636,6 +1656,7 @@
 				0C374F451B88E3790050AE1D /* AboutSellerTableViewCell.xib in Resources */,
 				F7CCDA961B943CBB000F5AD4 /* SummaryViewController.xib in Resources */,
 				0C374F2A1B88E3790050AE1D /* ChangeAddressCollectionViewCell.xib in Resources */,
+				266A5C651BB003B400343DB4 /* DisputeAddItemTableViewCell.xib in Resources */,
 				0C2F44CB1B8576FE00021F45 /* Panton Heavy Italic.otf in Resources */,
 				79E68B9D1B8B4270008626E4 /* ProfileSettingsTableViewCell.xib in Resources */,
 				26DFF6351B8791B5005D8EDE /* TransactionViews.xib in Resources */,
@@ -1780,6 +1801,7 @@
 				0C9937481B750583000D6074 /* FullImageCollectionViewCell.swift in Sources */,
 				B77B8DD41B9B554A0002C513 /* ConversationVC.swift in Sources */,
 				F7DC7EDE1BA141AF004F7FD4 /* SellerSubCategoryTableViewCell.swift in Sources */,
+				964B8E921BAB1A3F002E7B4A /* NewDisputeTableViewController.swift in Sources */,
 				0C99374F1B750583000D6074 /* ProductImageView.swift in Sources */,
 				7971F7491B862D6300322861 /* SortTableViewCell.swift in Sources */,
 				79E85FBB1B89DC1500428AA1 /* ProfileHeaderTableViewCell.swift in Sources */,
@@ -1812,6 +1834,7 @@
 				26DFF6341B8791B5005D8EDE /* TransactionViews.swift in Sources */,
 				0CE35EB81B76711400AAA8F1 /* RegisterViewController.swift in Sources */,
 				0C2F44D71B857F0000021F45 /* OrderSummaryTableViewCell.swift in Sources */,
+				266A5C641BB003B400343DB4 /* DisputeAddItemTableViewCell.swift in Sources */,
 				26AFB3B51B79DE3800E50926 /* ProductViewController.swift in Sources */,
 				79F0DD9E1B7B24CB00EB8053 /* CartProductDetailsModel.swift in Sources */,
 				2614E64E1B88FC5C00EE8B35 /* TransactionDeliveryLog2TableViewCell.swift in Sources */,
@@ -1834,10 +1857,12 @@
 				26AFB39B1B79DDEA00E50926 /* ProductAttributeModel.swift in Sources */,
 				0C99373D1B750583000D6074 /* IPhoneType.swift in Sources */,
 				0C9937511B750583000D6074 /* ProductWithCenterNameCollectionViewCell.swift in Sources */,
+				266A5C601BB0029200343DB4 /* DisputeAddItemViewController.swift in Sources */,
 				0C9937401B750583000D6074 /* HomePageProductModel.swift in Sources */,
 				26C285461B8FEE42005EBD3A /* ProvinceModel.swift in Sources */,
 				79E68B891B8AFE99008626E4 /* PointsDetailsTableViewCell.swift in Sources */,
 				F740F08D1B90CBC900D23A34 /* CreateAccountViewController.swift in Sources */,
+				962595331BAB1BF500A118C0 /* CaseDetailsModel.swift in Sources */,
 				F7CCDAA61B943CF7000F5AD4 /* ProductsTableViewCell.swift in Sources */,
 				26AFB3B71B79DE3800E50926 /* ProductAttributeViewController.swift in Sources */,
 				26AFB3AD1B79DE2900E50926 /* ReviewTableViewCell.swift in Sources */,
