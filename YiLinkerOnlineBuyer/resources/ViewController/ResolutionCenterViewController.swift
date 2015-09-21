@@ -8,8 +8,7 @@
 
 import UIKit
 
-class ResolutionCenterViewController
-: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class ResolutionCenterViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     @IBOutlet weak var casesTab: UIButton!
     @IBOutlet weak var openTab: UIButton!
     @IBOutlet weak var closedTab: UIButton!

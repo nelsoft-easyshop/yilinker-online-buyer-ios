@@ -11,6 +11,8 @@ import UIKit
 class NewDisputeTableViewController: UITableViewController {
     @IBOutlet weak var disputeTitle: UITextField!
     @IBOutlet weak var transactionNumber: UITextField!
+    @IBOutlet weak var transactionType: UITextField!
+    @IBOutlet weak var addButton: UIButton!
     @IBOutlet weak var remarks: UITextView!
     @IBOutlet weak var submitButton: UIButton!
     
@@ -32,6 +34,7 @@ class NewDisputeTableViewController: UITableViewController {
     func setupRoundedCorners() {
         self.remarks.layer.cornerRadius = 5
         self.submitButton.layer.cornerRadius = 5
+        self.addButton.layer.cornerRadius = self.addButton.frame.size.height / 2
     }
     
     func setupNavigationBar() {
@@ -151,4 +154,6 @@ class NewDisputeTableViewController: UITableViewController {
     }
     */
     
+    @IBAction func addAction(sender: AnyObject) {
+    }
 }
