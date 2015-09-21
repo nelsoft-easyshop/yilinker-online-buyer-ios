@@ -10,6 +10,11 @@ import UIKit
 
 class NewDisputeTableViewController: UITableViewController, UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate, DisputeAddItemViewControllerDelegate {
     
+    @IBOutlet weak var disputeTitleLabel: UILabel!
+    @IBOutlet weak var transactionNumberLabel: UILabel!
+    @IBOutlet weak var transactionTypeLabel: UILabel!
+    @IBOutlet var productsLabel: UILabel!
+    @IBOutlet var remarksLabel: UILabel!
     @IBOutlet weak var disputeTitle: UITextField!
     @IBOutlet weak var transactionNumber: UITextField!
     @IBOutlet weak var transactionType: UITextField!
@@ -19,8 +24,12 @@ class NewDisputeTableViewController: UITableViewController, UIPickerViewDataSour
     
     var transactionModel: TransactionModel!
     var transactionIds: [String] = []
+    var transactionTypes: [String] = ["Refund", "Replacement"]
+    var pickerType: String = ""
+    
     var productIDs: [String] = []
     var productNames: [String] = []
+    
     
     var itemIndexToRemove: Int = -1
     
@@ -34,6 +43,14 @@ class NewDisputeTableViewController: UITableViewController, UIPickerViewDataSour
         setupNavigationBar()
         
         self.transactionNumber.delegate = self
+        self.transactionType.delegate = self
+        
+        self.disputeTitleLabel.required()
+        self.transactionNumberLabel.required()
+        self.transactionTypeLabel.required()
+        self.productsLabel.required()
+        self.remarksLabel.required()
+        self.transactionType.text = "Refund"
     }
     
     override func didReceiveMemoryWarning() {
@@ -66,8 +83,11 @@ class NewDisputeTableViewController: UITableViewController, UIPickerViewDataSour
     
     // MARK: - Event Handlers
     @IBAction func goSubmitCase(sender: AnyObject) {
-        fireSubmitCase()
-        self.navigationController?.popViewControllerAnimated(true)
+        if self.disputeTitle.text != "" && self.transactionNumber.text != "" && self.transactionType.text != "" && self.remarks.text != "" && self.productIDs.count != 0 {
+            fireSubmitCase()
+        } else {
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "All field must be filled up.", title: "Error")
+        }
     }
     
     // MARK: - Post methods
@@ -76,28 +96,35 @@ class NewDisputeTableViewController: UITableViewController, UIPickerViewDataSour
         let manager: APIManager = APIManager.sharedInstance
         //seller@easyshop.ph
         //password
-        let parameters: NSDictionary =
-        [ "access_token": SessionManager.accessToken()
-            ,"disputeTitle": self.disputeTitle.text
-            ,"remarks": self.remarks.text
-            ,"orderProductStatus": "10"
-            ,"orderProductIds": "[2,3,4]"]
+        var status: Int = 16
+        if self.transactionType.text == "Refund" {
+            status == 10
+        }
+        self.productIDs.append("12")
+        println(self.productIDs)
+        
+        let parameters: NSDictionary = [ "access_token": SessionManager.accessToken()
+                                        ,"disputeTitle": self.disputeTitle.text
+                                             ,"remarks": self.remarks.text
+                                  ,"orderProductStatus": status
+                                     ,"orderProductIds": self.productIDs.description]
         println(parameters)
         
         manager.POST(APIAtlas.postResolutionCenterAddCase, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
             self.hud?.hide(true)
+            self.navigationController?.popViewControllerAnimated(true)
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                
-                if error.userInfo != nil {
-                    if let jsonResult = error.userInfo as? Dictionary<String, AnyObject> {
-                        let errorDescription: String = jsonResult["error_description"] as! String
-                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorDescription)
-                    }
-                }
+                    println(error.userInfo)
+//                if error.userInfo != nil {
+//                    if let jsonResult = error.userInfo as? Dictionary<String, AnyObject> {
+//                        let errorDescription: String = jsonResult["error_description"] as! String
+//                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorDescription)
+//                    }
+//                }
                 
                 if task.statusCode == 401 {
                     UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Mismatch username and password", title: "Login Failed")
@@ -130,10 +157,16 @@ class NewDisputeTableViewController: UITableViewController, UIPickerViewDataSour
         let pickerView: UIPickerView = UIPickerView(frame:CGRectMake(0, 0, screenSize.width, 225))
         pickerView.delegate = self
         pickerView.dataSource = self
-//        pickerView.selectRow(0, inComponent: 0, animated: false)
-        self.transactionNumber.inputView = pickerView
-        self.transactionNumber.text = transactionIds[0]
+        if pickerType == "Number" {
+            self.transactionNumber.inputView = pickerView
+            self.transactionNumber.text = transactionIds[0]
+        } else {
+            self.transactionType.inputView = pickerView
+            self.transactionType.text = transactionTypes[0]
+        }
     }
+    
+    // MARK: - Add Tool Bar
     
     func addToolBarWithDoneTarget() {
         let toolBar = UIToolbar()
@@ -151,7 +184,11 @@ class NewDisputeTableViewController: UITableViewController, UIPickerViewDataSour
         //Put the buttons into the ToolBar and display the tool bar
         toolBar.setItems(toolbarButtons, animated: false)
         
-        self.transactionNumber.inputAccessoryView = toolBar
+        if pickerType == "Number" {
+            self.transactionNumber.inputAccessoryView = toolBar
+        } else {
+            self.transactionType.inputAccessoryView = toolBar
+        }
         
     }
     
@@ -174,9 +211,8 @@ class NewDisputeTableViewController: UITableViewController, UIPickerViewDataSour
         
         cell.textLabel!.text = self.productNames[indexPath.row]
         cell.selectionStyle = .None
-        cell.textLabel?.font = UIFont(name: "Panton", size: 14.0)
+        cell.textLabel?.font = UIFont(name: "Panton-Regular", size: 13.0)
         cell.textLabel?.textColor = .blackColor()
-        
         
         let removeButton: UIButton = UIButton(frame: CGRectMake(0, 0, 15, 15))
         removeButton.setImage(UIImage(named: "closeRed"), forState: .Normal)
@@ -198,7 +234,6 @@ class NewDisputeTableViewController: UITableViewController, UIPickerViewDataSour
             cell.preservesSuperviewLayoutMargins = false
         }
     }
-    
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
@@ -233,6 +268,7 @@ class NewDisputeTableViewController: UITableViewController, UIPickerViewDataSour
     
     func toolBarDoneAction() {
         self.transactionNumber.resignFirstResponder()
+        self.transactionType.resignFirstResponder()
     }
     
     func removeItemAction() {
@@ -269,6 +305,11 @@ class NewDisputeTableViewController: UITableViewController, UIPickerViewDataSour
     func textFieldDidBeginEditing(textField: UITextField) {
         
         if textField == self.transactionNumber {
+            pickerType = "Number"
+            addPickerView()
+            addToolBarWithDoneTarget()
+        } else if textField == self.transactionType {
+            pickerType = "Type"
             addPickerView()
             addToolBarWithDoneTarget()
         }
@@ -278,12 +319,16 @@ class NewDisputeTableViewController: UITableViewController, UIPickerViewDataSour
     // MARK: - Picker View Data Source and Delegate
     
     func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        
+        if pickerType == "Type" {
+            return self.transactionTypes.count
+        }
         return self.transactionIds.count
     }
     
     func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String! {
-        
+        if pickerType == "Type" {
+            return self.transactionTypes[row]
+        }
         return self.transactionIds[row]
     }
     
@@ -292,7 +337,11 @@ class NewDisputeTableViewController: UITableViewController, UIPickerViewDataSour
     }
     
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        self.transactionNumber.text = transactionIds[row]
+        if pickerType == "Type" {
+            self.transactionType.text = transactionTypes[row]
+        } else {
+            self.transactionNumber.text = transactionIds[row]
+        }
     }
     
     // MARK: - Dispute Add Item View Controller Delegate

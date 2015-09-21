@@ -2499,7 +2499,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
                         <view key="tableHeaderView" contentMode="scaleToFill" id="zcr-kS-haJ" userLabel="Header">
-                            <rect key="frame" x="0.0" y="64" width="320" height="260"/>
+                            <rect key="frame" x="0.0" y="64" width="320" height="253"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Dispute Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nlK-a2-AcX" userLabel="Label 1">
@@ -2559,14 +2559,14 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mYr-YN-xx7">
-                                            <rect key="frame" x="256" y="5" width="56" height="24"/>
+                                            <rect key="frame" x="239" y="5" width="73" height="24"/>
                                             <color key="backgroundColor" red="0.43529411759999997" green="0.20392156859999999" blue="0.52156862749999999" alpha="1" colorSpace="calibratedRGB"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="24" id="4If-RE-qqS"/>
-                                                <constraint firstAttribute="width" constant="56" id="cUL-2y-ezH"/>
+                                                <constraint firstAttribute="width" constant="73" id="cUL-2y-ezH"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="13"/>
-                                            <state key="normal" title="ADD">
+                                            <state key="normal" title="      ADD">
                                                 <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
@@ -2574,11 +2574,20 @@
                                                 <action selector="addAction:" destination="xW8-bZ-u6j" eventType="touchUpInside" id="6YV-p0-Jiv"/>
                                             </connections>
                                         </button>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="add" translatesAutoresizingMaskIntoConstraints="NO" id="qZN-hi-RNA">
+                                            <rect key="frame" x="249" y="9" width="15" height="15"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="15" id="35K-Ji-lBX"/>
+                                                <constraint firstAttribute="width" constant="15" id="jO0-jZ-73a"/>
+                                            </constraints>
+                                        </imageView>
                                     </subviews>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <constraints>
                                         <constraint firstItem="n55-1H-wnm" firstAttribute="top" secondItem="b9X-g9-txG" secondAttribute="top" constant="6" id="0bd-Hq-qXM"/>
+                                        <constraint firstItem="qZN-hi-RNA" firstAttribute="top" secondItem="b9X-g9-txG" secondAttribute="top" constant="9" id="6dV-yO-6vf"/>
                                         <constraint firstItem="n55-1H-wnm" firstAttribute="leading" secondItem="b9X-g9-txG" secondAttribute="leading" constant="8" id="7Yl-UN-rkI"/>
+                                        <constraint firstAttribute="trailing" secondItem="qZN-hi-RNA" secondAttribute="trailing" constant="56" id="DvL-w5-5a4"/>
                                         <constraint firstItem="mYr-YN-xx7" firstAttribute="top" secondItem="b9X-g9-txG" secondAttribute="top" constant="5" id="Ht9-lJ-40G"/>
                                         <constraint firstAttribute="trailing" secondItem="mYr-YN-xx7" secondAttribute="trailing" constant="8" id="NMZ-8p-b5w"/>
                                         <constraint firstAttribute="height" constant="33" id="RKz-cx-yw8"/>
@@ -2598,7 +2607,7 @@
                                 <constraint firstItem="L8l-kb-LXq" firstAttribute="top" secondItem="gUY-Ou-Ynj" secondAttribute="bottom" constant="8" id="1B3-5T-5gN"/>
                                 <constraint firstItem="KK4-wQ-PZQ" firstAttribute="leading" secondItem="zcr-kS-haJ" secondAttribute="leading" constant="8" id="3i9-nw-iva"/>
                                 <constraint firstAttribute="trailing" secondItem="nlK-a2-AcX" secondAttribute="trailing" constant="8" id="5pi-qG-xWo"/>
-                                <constraint firstAttribute="bottom" secondItem="b9X-g9-txG" secondAttribute="bottom" constant="8" id="9ZE-EN-kH8"/>
+                                <constraint firstAttribute="bottom" secondItem="b9X-g9-txG" secondAttribute="bottom" constant="1" id="9ZE-EN-kH8"/>
                                 <constraint firstAttribute="trailing" secondItem="VFy-zm-3zs" secondAttribute="trailing" constant="8" id="Cat-3q-gVz"/>
                                 <constraint firstItem="gUY-Ou-Ynj" firstAttribute="top" secondItem="VFy-zm-3zs" secondAttribute="bottom" constant="8" id="Ewc-ua-YzC"/>
                                 <constraint firstAttribute="trailing" secondItem="L8l-kb-LXq" secondAttribute="trailing" constant="8" id="N7E-oB-5oP"/>
@@ -2641,7 +2650,7 @@
                                     <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="14"/>
                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                 </textView>
-                                <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eIe-ZS-fGX" userLabel="Submit Button">
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eIe-ZS-fGX" userLabel="Submit Button">
                                     <rect key="frame" x="62" y="188" width="197" height="39"/>
                                     <color key="backgroundColor" red="0.27450980390000002" green="0.66274509800000003" blue="0.58823529409999997" alpha="1" colorSpace="calibratedRGB"/>
                                     <constraints>
@@ -2664,6 +2673,7 @@
                                 <constraint firstAttribute="trailing" secondItem="VAi-TC-dRH" secondAttribute="trailing" constant="8" id="bda-AY-Web"/>
                                 <constraint firstItem="VAi-TC-dRH" firstAttribute="leading" secondItem="95Q-Gc-WOD" secondAttribute="leading" constant="8" id="dBf-kY-Uqq"/>
                                 <constraint firstItem="VAi-TC-dRH" firstAttribute="top" secondItem="LeE-f7-e44" secondAttribute="bottom" constant="8" id="e4y-zD-BzE"/>
+                                <constraint firstItem="eIe-ZS-fGX" firstAttribute="top" secondItem="VAi-TC-dRH" secondAttribute="bottom" constant="16" id="fVA-vo-Mb2"/>
                                 <constraint firstItem="LeE-f7-e44" firstAttribute="leading" secondItem="95Q-Gc-WOD" secondAttribute="leading" constant="8" id="sBK-99-Kcr"/>
                                 <constraint firstAttribute="centerX" secondItem="eIe-ZS-fGX" secondAttribute="centerX" id="zao-Vq-W3R"/>
                             </constraints>
@@ -2686,10 +2696,15 @@
                     <connections>
                         <outlet property="addButton" destination="mYr-YN-xx7" id="68f-u2-IQt"/>
                         <outlet property="disputeTitle" destination="o7U-7i-MmR" id="LMA-Gg-fM8"/>
+                        <outlet property="disputeTitleLabel" destination="nlK-a2-AcX" id="mg8-kP-tH8"/>
+                        <outlet property="productsLabel" destination="n55-1H-wnm" id="W0v-ee-tME"/>
                         <outlet property="remarks" destination="VAi-TC-dRH" id="YsL-Gg-MOv"/>
+                        <outlet property="remarksLabel" destination="LeE-f7-e44" id="Oan-Tz-WhF"/>
                         <outlet property="submitButton" destination="eIe-ZS-fGX" id="VI5-yE-mIP"/>
                         <outlet property="transactionNumber" destination="gUY-Ou-Ynj" id="R5E-yX-e9a"/>
+                        <outlet property="transactionNumberLabel" destination="VFy-zm-3zs" id="nk5-Hz-Ydy"/>
                         <outlet property="transactionType" destination="KK4-wQ-PZQ" id="Ape-WF-PTH"/>
+                        <outlet property="transactionTypeLabel" destination="L8l-kb-LXq" id="nBV-M8-mB4"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Kph-aD-l2b" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2698,6 +2713,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="add" width="195" height="195"/>
         <image name="cart" width="25" height="25"/>
         <image name="close" width="22" height="22"/>
         <image name="filter-checked" width="20" height="20"/>

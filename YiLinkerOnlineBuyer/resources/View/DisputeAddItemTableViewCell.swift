@@ -29,6 +29,7 @@ class DisputeAddItemTableViewCell: UITableViewCell {
     }
     
     func setProductImage(image: String) {
+        println(image)
         self.itemImageView.sd_setImageWithURL(NSURL(string: image), placeholderImage: UIImage(named: "dummy-placeholder"))
     }
     
