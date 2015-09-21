@@ -2636,13 +2636,12 @@
                                     <rect key="frame" x="8" y="51" width="304" height="121"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <constraints>
-                                        <constraint firstAttribute="width" constant="304" id="FmQ-Yo-Elq"/>
-                                        <constraint firstAttribute="height" constant="121" id="qTy-nc-12U"/>
+                                        <constraint firstAttribute="height" constant="121" id="hOG-pi-w47"/>
                                     </constraints>
                                     <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="14"/>
                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                 </textView>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eIe-ZS-fGX" userLabel="Submit Button">
+                                <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eIe-ZS-fGX" userLabel="Submit Button">
                                     <rect key="frame" x="62" y="188" width="197" height="39"/>
                                     <color key="backgroundColor" red="0.27450980390000002" green="0.66274509800000003" blue="0.58823529409999997" alpha="1" colorSpace="calibratedRGB"/>
                                     <constraints>
@@ -2661,11 +2660,10 @@
                             </subviews>
                             <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
-                                <constraint firstItem="VAi-TC-dRH" firstAttribute="leading" secondItem="95Q-Gc-WOD" secondAttribute="leading" constant="8" id="B1O-Z4-Q0q"/>
-                                <constraint firstAttribute="trailing" secondItem="VAi-TC-dRH" secondAttribute="trailing" constant="8" id="Ggd-1J-GwG"/>
                                 <constraint firstItem="LeE-f7-e44" firstAttribute="top" secondItem="95Q-Gc-WOD" secondAttribute="top" constant="22" id="KEq-w1-es9"/>
-                                <constraint firstItem="VAi-TC-dRH" firstAttribute="top" secondItem="LeE-f7-e44" secondAttribute="bottom" constant="8" id="VRS-Ku-01h"/>
-                                <constraint firstItem="eIe-ZS-fGX" firstAttribute="top" secondItem="VAi-TC-dRH" secondAttribute="bottom" constant="16" id="dc0-h6-u13"/>
+                                <constraint firstAttribute="trailing" secondItem="VAi-TC-dRH" secondAttribute="trailing" constant="8" id="bda-AY-Web"/>
+                                <constraint firstItem="VAi-TC-dRH" firstAttribute="leading" secondItem="95Q-Gc-WOD" secondAttribute="leading" constant="8" id="dBf-kY-Uqq"/>
+                                <constraint firstItem="VAi-TC-dRH" firstAttribute="top" secondItem="LeE-f7-e44" secondAttribute="bottom" constant="8" id="e4y-zD-BzE"/>
                                 <constraint firstItem="LeE-f7-e44" firstAttribute="leading" secondItem="95Q-Gc-WOD" secondAttribute="leading" constant="8" id="sBK-99-Kcr"/>
                                 <constraint firstAttribute="centerX" secondItem="eIe-ZS-fGX" secondAttribute="centerX" id="zao-Vq-W3R"/>
                             </constraints>

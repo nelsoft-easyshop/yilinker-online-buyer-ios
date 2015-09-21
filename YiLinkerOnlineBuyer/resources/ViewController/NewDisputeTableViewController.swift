@@ -8,7 +8,7 @@
 
 import UIKit
 
-class NewDisputeTableViewController: UITableViewController {
+class NewDisputeTableViewController: UITableViewController, UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate {
     @IBOutlet weak var disputeTitle: UITextField!
     @IBOutlet weak var transactionNumber: UITextField!
     @IBOutlet weak var transactionType: UITextField!
@@ -16,13 +16,19 @@ class NewDisputeTableViewController: UITableViewController {
     @IBOutlet weak var remarks: UITextView!
     @IBOutlet weak var submitButton: UIButton!
     
+    var transactionModel: TransactionModel!
+    var transactionIds: [String] = []
+    
     var hud: MBProgressHUD?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        requestGetCaseDetails()
         setupRoundedCorners()
         setupNavigationBar()
+        
+        self.transactionNumber.delegate = self
     }
     
     override func didReceiveMemoryWarning() {
@@ -112,6 +118,38 @@ class NewDisputeTableViewController: UITableViewController {
         self.hud?.show(true)
     }
     
+    // MARK: - Add Picker View
+    
+    func addPickerView() {
+        let screenSize: CGRect = UIScreen.mainScreen().bounds
+        let pickerView: UIPickerView = UIPickerView(frame:CGRectMake(0, 0, screenSize.width, 225))
+        pickerView.delegate = self
+        pickerView.dataSource = self
+//        pickerView.selectRow(0, inComponent: 0, animated: false)
+        self.transactionNumber.inputView = pickerView
+        self.transactionNumber.text = transactionIds[0]
+    }
+    
+    func addToolBarWithDoneTarget() {
+        let toolBar = UIToolbar()
+        toolBar.sizeToFit()
+        toolBar.barStyle = UIBarStyle.Black
+        toolBar.barTintColor = Constants.Colors.appTheme
+        toolBar.tintColor = UIColor.whiteColor()
+        
+        let doneItem = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Done, target: self, action: "toolBarDoneAction")
+        
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: self, action: nil)
+        
+        var toolbarButtons = [flexibleSpace, doneItem]
+        
+        //Put the buttons into the ToolBar and display the tool bar
+        toolBar.setItems(toolbarButtons, animated: false)
+        
+        self.transactionNumber.inputAccessoryView = toolBar
+        
+    }
+    
     // MARK: - Table view data source
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -123,7 +161,7 @@ class NewDisputeTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete method implementation.
         // Return the number of rows in the section.
-        return 3
+        return 0
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -131,7 +169,8 @@ class NewDisputeTableViewController: UITableViewController {
         
         cell.textLabel!.text = "Sample"
         cell.selectionStyle = .None
-        cell.textLabel?.font = UIFont(name: "Panton-Semibold", size: 14.0)
+        cell.textLabel?.font = UIFont(name: "Panton", size: 14.0)
+        cell.textLabel?.textColor = .blackColor()
         
         
         let removeImageView: UIImageView = UIImageView(image: UIImage(named: "closeRed"))
@@ -168,6 +207,74 @@ class NewDisputeTableViewController: UITableViewController {
     }
     */
     
+    // MARK: - Actions
+    
     @IBAction func addAction(sender: AnyObject) {
+        if self.transactionNumber != "" {
+            let disputeAddItems = DisputeAddItemViewController(nibName: "DisputeAddItemViewController", bundle: nil)
+            //        addItem.delegate = self
+            disputeAddItems.transactionId = self.transactionNumber.text
+            var root = UINavigationController(rootViewController: disputeAddItems)
+            self.navigationController?.presentViewController(root, animated: true, completion: nil)
+        }
     }
+    
+    func toolBarDoneAction() {
+        self.transactionNumber.resignFirstResponder()
+    }
+    
+    // MARK: - Requests
+    
+    func requestGetCaseDetails() {
+        self.showHUD()
+        let manager = APIManager.sharedInstance
+        manager.GET(APIAtlas.transactionLogs + "\(SessionManager.accessToken())", parameters: nil, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            self.transactionModel = TransactionModel.parseDataFromDictionary(responseObject as! NSDictionary)
+            
+            for i in 0..<self.transactionModel.order_id.count {
+                self.transactionIds.append(self.transactionModel.invoice_number[i])
+            }
+            self.tableView.reloadData()
+            
+            self.hud?.hide(true)
+            }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
+                self.hud?.hide(true)
+                println(error.userInfo)
+                
+        })
+
+    }
+    
+    // MARK: - Text Field delegate
+    
+    func textFieldDidBeginEditing(textField: UITextField) {
+        
+        if textField == self.transactionNumber {
+            addPickerView()
+            addToolBarWithDoneTarget()
+        }
+        
+    }
+    
+    // MARK: - Picker View Data Source and Delegate
+    
+    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        
+        return self.transactionIds.count
+    }
+    
+    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String! {
+        
+        return self.transactionIds[row]
+    }
+    
+    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        self.transactionNumber.text = transactionIds[row]
+    }
+    
 }
