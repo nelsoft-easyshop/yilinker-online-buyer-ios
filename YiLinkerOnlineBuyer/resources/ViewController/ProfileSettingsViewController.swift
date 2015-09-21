@@ -8,14 +8,18 @@
 
 import UIKit
 
-class ProfileSettingsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, ProfileSettingsTableViewCellDelegate {
+class ProfileSettingsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, ProfileSettingsTableViewCellDelegate, DeactivateModalViewControllerDelegate {
 
     let profileSettingsIdentifier: String = "ProfileSettingsTableViewCell"
     
     @IBOutlet weak var tableView: UITableView!
     
     var tableData: [String] = ["Receive Notifications via SMS?", "Receive Notifications via Email?", "Deactivate My Account?"]
-    var tableDataStatus: [Bool] = [true, false, false]
+    var tableDataStatus: [Bool] = [false, false, false]
+    
+    var hud: MBProgressHUD?
+    
+    var dimView: UIView?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,6 +42,13 @@ class ProfileSettingsViewController: UIViewController, UITableViewDataSource, UI
         }
         
         tableView.tableFooterView = UIView(frame: CGRectZero)
+        
+        dimView = UIView(frame: self.view.bounds)
+        dimView?.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
+        self.navigationController?.view.addSubview(dimView!)
+        //self.view.addSubview(dimView!)
+        dimView?.hidden = true
+        dimView?.alpha = 0
     }
     
     func titleView() {
@@ -65,15 +76,6 @@ class ProfileSettingsViewController: UIViewController, UITableViewDataSource, UI
         tableView.registerNib(nib, forCellReuseIdentifier: profileSettingsIdentifier)
     }
     
-    /*
-    // MARK: - Navigation
-    
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-    // Get the new view controller using segue.destinationViewController.
-    // Pass the selected object to the new view controller.
-    }
-    */
     
     // MARK: - Table view data source
     
@@ -103,59 +105,183 @@ class ProfileSettingsViewController: UIViewController, UITableViewDataSource, UI
         return 50
     }
     
-    /*
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-    
-    }*/
-    
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-    // Return NO if you do not want the specified item to be editable.
-    return true
-    }
-    */
-    
-    /*
-    // Override to support editing the table view.
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-    if editingStyle == .Delete {
-    // Delete the row from the data source
-    tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-    } else if editingStyle == .Insert {
-    // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }
-    }
-    */
-    
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-    
-    }
-    */
-    
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-    // Return NO if you do not want the item to be re-orderable.
-    return true
-    }
-    */
-
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
     // MARK: - ProfileSettingsTableViewCellDelegate
     func settingsSwitchAction(sender: AnyObject, value: Bool) {
+        var pathOfTheCell: NSIndexPath = tableView.indexPathForCell(sender as! UITableViewCell)!
+        var rowOfTheCell: Int = pathOfTheCell.row
         
+        if rowOfTheCell == 0 {
+            tableDataStatus[0] = value
+            firePostSettings("email", isOn: value)
+        } else if rowOfTheCell == 1 {
+            tableDataStatus[1] = value
+            firePostSettings("sms", isOn: value)
+        } else {
+            tableDataStatus[2] = value
+            showDeactivateModal()
+        }
+    }
+    
+    func showHUD() {
+        if self.hud != nil {
+            self.hud!.hide(true)
+            self.hud = nil
+        }
+        
+        self.hud = MBProgressHUD(view: self.view)
+        self.hud?.removeFromSuperViewOnHide = true
+        self.hud?.dimBackground = false
+        self.view.addSubview(self.hud!)
+        self.hud?.show(true)
+    }
+    
+    
+    
+    func firePostSettings(type: String, isOn: Bool) {
+        showHUD()
+        let manager = APIManager.sharedInstance
+        var parameters: NSDictionary
+        var url: String = ""
+        
+        if type == "email" {
+            url = APIAtlas.postEmailNotif
+        } else if type == "sms" {
+            url = APIAtlas.postSMSNotif
+        }
+        url = "\(url)?access_token=\(SessionManager.accessToken())&isSubscribe=\(isOn)"
+        
+        manager.POST(url, parameters: nil, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            
+            println("RESPONSE \(responseObject)")
+            self.hud?.hide(true)
+            
+            if let tempDict = responseObject as? NSDictionary {
+                let tempVar = tempDict["isSuccessful"] as! Bool
+                if !(tempVar){
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: tempDict["message"] as! String, title: "Error")
+                } else {
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: tempDict["message"] as! String, title: "Notification")
+                }
+            }
+            }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
+                self.hud?.hide(true)
+                
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                
+                if task.statusCode == 401 {
+                    self.fireRefreshToken(type, isON: isOn)
+                } else {
+                    if Reachability.isConnectedToNetwork() {
+                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong!", title: "Error")
+                    } else {
+                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Check your internet connection!", title: "Error")
+                    }
+                    println(error)
+                }
+        })
+    }
+    
+    func fireRefreshToken(type: String, isON: Bool) {
+        self.showHUD()
+        let manager = APIManager.sharedInstance
+        let parameters: NSDictionary = [
+            "client_id": Constants.Credentials.clientID,
+            "client_secret": Constants.Credentials.clientSecret,
+            "grant_type": Constants.Credentials.grantRefreshToken,
+            "refresh_token": SessionManager.refreshToken()]
+        
+        manager.POST(APIAtlas.refreshTokenUrl, parameters: parameters, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            
+            self.firePostSettings(type, isOn: isON)
+            
+            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                self.hud?.hide(true)
+        })
+        
+    }
+    
+    //Method for
+    func handleIOS8(){
+        let alert = UIAlertController(title: "Deactivate Account", message: "", preferredStyle: UIAlertControllerStyle.ActionSheet)
+        let libButton = UIAlertAction(title: "Deactivate", style: UIAlertActionStyle.Destructive) { (alert) -> Void in
+            self.showDeactivateModal()
+        }
+        
+        let cancelButton = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel) { (alert) -> Void in
+            println("Cancel Pressed")
+        }
+        
+        alert.addAction(libButton)
+        alert.addAction(cancelButton)
+        
+        self.presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    func controllerAvailable() -> Bool {
+        if let gotModernAlert: AnyClass = NSClassFromString("UIAlertController") {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    
+    func actionSheet(actionSheet: UIActionSheet, clickedButtonAtIndex buttonIndex: Int) {
+        println("Title : \(actionSheet.buttonTitleAtIndex(buttonIndex))")
+        println("Button Index : \(buttonIndex)")
+        
+        if buttonIndex == 0 {
+            self.showDeactivateModal()
+        } else if buttonIndex == 1 {
+        } else {
+            
+        }
+    }
+    
+    func showDeactivateModal(){
+        var deactivateModal = DeactivateModalViewController(nibName: "DeactivateModalViewController", bundle: nil)
+        deactivateModal.delegate = self
+        deactivateModal.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
+        deactivateModal.providesPresentationContextTransitionStyle = true
+        deactivateModal.definesPresentationContext = true
+        deactivateModal.view.backgroundColor = UIColor.clearColor()
+        deactivateModal.view.frame.origin.y = 0
+        self.tabBarController?.presentViewController(deactivateModal, animated: true, completion: nil)
+        
+        self.dimView!.hidden = false
+        UIView.animateWithDuration(0.3, animations: {
+            self.dimView!.alpha = 1
+            }, completion: { finished in
+        })
+    }
+    
+    func hideDimView() {
+        UIView.animateWithDuration(0.3, animations: {
+            self.dimView!.alpha = 0
+            }, completion: { finished in
+                self.dimView!.hidden = true
+        })
+    }
+    // MARK : DeactivateModalViewControllerDelegate
+    func closeDeactivateModal(){
+        tableDataStatus[2] = false
+        hideDimView()
+        tableView.reloadData()
+    }
+
+    
+    func submitDeactivateModal(password: String){
+        tableDataStatus[2] = false
+        hideDimView()
+        tableView.reloadData()
+        
+        SessionManager.logout()
+        let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        appDelegate.changeRootToHomeView()
     }
 }
