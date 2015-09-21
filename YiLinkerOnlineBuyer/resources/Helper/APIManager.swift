@@ -122,6 +122,9 @@ struct APIAtlas {
     static let smsVerification = "auth/sms/verify"
     static let changePassword = "auth/user/changePassword"
     static let getFollowedSellers = "auth/getFollowedSellers"
+    static let postEmailNotif = "auth/email/subscription"
+    static let postSMSNotif = "auth/sms/subscription"
+    static let deactivate = "auth/account/disable"
     static let baseUrl = APIEnvironment.baseUrl()
     
     /* MESSAGING CONSTANTS */
