@@ -19,6 +19,7 @@ class DisputeViewController: UIViewController, UITextFieldDelegate, UITextViewDe
     @IBOutlet weak var verticalSpaceInset: NSLayoutConstraint!
     
     var currentTextFieldTag: Int = 1
+    weak var delegate: ResolutionCenterViewController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
