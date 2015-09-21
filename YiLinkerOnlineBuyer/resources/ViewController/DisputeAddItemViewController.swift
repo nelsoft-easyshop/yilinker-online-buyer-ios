@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol DisputeAddItemViewControllerDelegate {
+    func addTransactionProducts(productIds: [String], productNames: [String])
+}
+
 class DisputeAddItemViewController: UIViewController {
     
     @IBOutlet weak var searchBarTextField: UITextField!
@@ -15,8 +19,13 @@ class DisputeAddItemViewController: UIViewController {
     
     var transactionId: String = ""
     var transactionDetailsModel: TransactionDetailsModel!
+    var productIDs: [String] = []
+    var productNames: [String] = []
+    
+    var selectedTransactionIDIndex: [Int] = []
     
     var hud: MBProgressHUD?
+    var delegate: DisputeAddItemViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -63,15 +72,14 @@ class DisputeAddItemViewController: UIViewController {
     }
     
     func checkAction() {
-        
-//        if selectedItemIDs.count != 0 {
-//            for i in 0..<self.productModel.products.count {
-//                if contains(self.selectedItemIDs, self.productModel.products[i].id) {
-//                    selectedProductsModel.append(self.productModel.products[i])
-//                }
-//            }
-//            delegate?.addProductItems(self.productModel, itemIndexes: selectedItemIDsIndex, products: selectedProductsModel)
-//        }
+
+        if self.selectedTransactionIDIndex.count != 0 {
+            for i in 0..<self.selectedTransactionIDIndex.count {
+                productIDs.append(self.transactionDetailsModel.productId[self.selectedTransactionIDIndex[i]])
+                productNames.append(self.transactionDetailsModel.productName[self.selectedTransactionIDIndex[i]])
+            }
+            delegate?.addTransactionProducts(productIDs, productNames: productNames)
+        }
         
         closeAction()
     }
@@ -122,15 +130,15 @@ class DisputeAddItemViewController: UIViewController {
         let cell: DisputeAddItemTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("DisputeAddItemTableViewCell") as! DisputeAddItemTableViewCell
         cell.selectionStyle = .None
         
-//        cell.setProductImage(self.transactionDetailsModel.productImage[indexPath.row])
-//        cell.itemNameLabel.text = self.transactionDetailsModel.productName[indexPath.row]
+        cell.setProductImage(self.transactionDetailsModel.productImage[indexPath.row])
+        cell.itemNameLabel.text = self.transactionDetailsModel.productName[indexPath.row]
 //        cell.itemNameLabel.text = self.transactionDetailsModel.productName[indexPath.row].name
         
-//        if (find(selectedItemIDs, productModel.products[indexPath.row].id) != nil) {
-//            cell.updateStatusImage(true)
-//        } else {
-//            cell.updateStatusImage(false)
-//        }
+        if (find(selectedTransactionIDIndex, indexPath.row) != nil) {
+            cell.updateStatusImage(true)
+        } else {
+            cell.updateStatusImage(false)
+        }
         
         return cell
     }
@@ -140,9 +148,11 @@ class DisputeAddItemViewController: UIViewController {
 
         if cell.addImageView?.image == UIImage(named: "addItem") {
             cell.updateStatusImage(true)
+            selectedTransactionIDIndex.append(indexPath.row)
 //            selectedItemIDs.append(self.productModel.products[indexPath.row].id)
         } else {
             cell.updateStatusImage(false)
+            selectedTransactionIDIndex = selectedTransactionIDIndex.filter({$0 != indexPath.row})
 //            selectedItemIDs = selectedItemIDs.filter({$0 != self.productModel.products[indexPath.row].id})
         }
 

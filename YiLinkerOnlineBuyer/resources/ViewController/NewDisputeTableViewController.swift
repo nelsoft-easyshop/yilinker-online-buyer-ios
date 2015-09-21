@@ -8,7 +8,8 @@
 
 import UIKit
 
-class NewDisputeTableViewController: UITableViewController, UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate {
+class NewDisputeTableViewController: UITableViewController, UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate, DisputeAddItemViewControllerDelegate {
+    
     @IBOutlet weak var disputeTitle: UITextField!
     @IBOutlet weak var transactionNumber: UITextField!
     @IBOutlet weak var transactionType: UITextField!
@@ -18,6 +19,10 @@ class NewDisputeTableViewController: UITableViewController, UIPickerViewDataSour
     
     var transactionModel: TransactionModel!
     var transactionIds: [String] = []
+    var productIDs: [String] = []
+    var productNames: [String] = []
+    
+    var itemIndexToRemove: Int = -1
     
     var hud: MBProgressHUD?
     
@@ -161,21 +166,23 @@ class NewDisputeTableViewController: UITableViewController, UIPickerViewDataSour
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete method implementation.
         // Return the number of rows in the section.
-        return 0
+        return self.productIDs.count
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath) as! UITableViewCell
         
-        cell.textLabel!.text = "Sample"
+        cell.textLabel!.text = self.productNames[indexPath.row]
         cell.selectionStyle = .None
         cell.textLabel?.font = UIFont(name: "Panton", size: 14.0)
         cell.textLabel?.textColor = .blackColor()
         
         
-        let removeImageView: UIImageView = UIImageView(image: UIImage(named: "closeRed"))
-        removeImageView.frame = CGRectMake(0, 0, 20, 20)
-        cell.accessoryView = removeImageView
+        let removeButton: UIButton = UIButton(frame: CGRectMake(0, 0, 15, 15))
+        removeButton.setImage(UIImage(named: "closeRed"), forState: .Normal)
+        removeButton.addTarget(self, action: "removeItemAction", forControlEvents: .TouchUpInside)
+        itemIndexToRemove = indexPath.row
+        cell.accessoryView = removeButton
         
         return cell
     }
@@ -190,6 +197,11 @@ class NewDisputeTableViewController: UITableViewController, UIPickerViewDataSour
         if cell.respondsToSelector("setPreservesSuperviewLayoutMargins:") {
             cell.preservesSuperviewLayoutMargins = false
         }
+    }
+    
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
     }
     
     /*
@@ -210,9 +222,9 @@ class NewDisputeTableViewController: UITableViewController, UIPickerViewDataSour
     // MARK: - Actions
     
     @IBAction func addAction(sender: AnyObject) {
-        if self.transactionNumber != "" {
+        if self.transactionNumber.text != "" {
             let disputeAddItems = DisputeAddItemViewController(nibName: "DisputeAddItemViewController", bundle: nil)
-            //        addItem.delegate = self
+            disputeAddItems.delegate = self
             disputeAddItems.transactionId = self.transactionNumber.text
             var root = UINavigationController(rootViewController: disputeAddItems)
             self.navigationController?.presentViewController(root, animated: true, completion: nil)
@@ -221,6 +233,12 @@ class NewDisputeTableViewController: UITableViewController, UIPickerViewDataSour
     
     func toolBarDoneAction() {
         self.transactionNumber.resignFirstResponder()
+    }
+    
+    func removeItemAction() {
+        self.productIDs.removeAtIndex(itemIndexToRemove)
+        self.productNames.removeAtIndex(itemIndexToRemove)
+        self.tableView.reloadData()
     }
     
     // MARK: - Requests
@@ -275,6 +293,19 @@ class NewDisputeTableViewController: UITableViewController, UIPickerViewDataSour
     
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         self.transactionNumber.text = transactionIds[row]
+    }
+    
+    // MARK: - Dispute Add Item View Controller Delegate
+    
+    func addTransactionProducts(productIds: [String], productNames: [String]) {
+        for i in 0..<productIds.count {
+            if (find(productIDs, productIds[i]) == nil) {
+                self.productIDs.append(productIds[i])
+                self.productNames.append(productNames[i])
+            }
+            
+        }
+        self.tableView.reloadData()
     }
     
 }
