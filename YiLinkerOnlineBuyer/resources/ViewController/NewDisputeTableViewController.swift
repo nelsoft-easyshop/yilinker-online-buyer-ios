@@ -48,21 +48,6 @@ class NewDisputeTableViewController: UITableViewController {
         self.navigationItem.leftBarButtonItem = backButton
     }
     
-    
-    // MARK: - Table view data source
-    
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // #warning Potentially incomplete method implementation.
-        // Return the number of sections.
-        return 0
-    }
-    
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete method implementation.
-        // Return the number of rows in the section.
-        return 0
-    }
-    
     // MARK: - Navigation Bar Buttons
     func goBackButton() {
         self.navigationController?.popViewControllerAnimated(true)
@@ -127,17 +112,46 @@ class NewDisputeTableViewController: UITableViewController {
         self.hud?.show(true)
     }
     
+    // MARK: - Table view data source
     
-    
-    /*
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-    let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath) as! UITableViewCell
-    
-    // Configure the cell...
-    
-    return cell
+    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        // #warning Potentially incomplete method implementation.
+        // Return the number of sections.
+        return 1
     }
-    */
+    
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        // #warning Incomplete method implementation.
+        // Return the number of rows in the section.
+        return 3
+    }
+
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath) as! UITableViewCell
+        
+        cell.textLabel!.text = "Sample"
+        cell.selectionStyle = .None
+        cell.textLabel?.font = UIFont(name: "Panton-Semibold", size: 14.0)
+        
+        
+        let removeImageView: UIImageView = UIImageView(image: UIImage(named: "closeRed"))
+        removeImageView.frame = CGRectMake(0, 0, 20, 20)
+        cell.accessoryView = removeImageView
+        
+        return cell
+    }
+
+    override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        if cell.respondsToSelector("setSeparatorInset:") {
+            cell.separatorInset = UIEdgeInsetsZero
+        }
+        if cell.respondsToSelector("setLayoutMargins:") {
+            cell.layoutMargins = UIEdgeInsetsZero
+        }
+        if cell.respondsToSelector("setPreservesSuperviewLayoutMargins:") {
+            cell.preservesSuperviewLayoutMargins = false
+        }
+    }
     
     /*
     // Override to support rearranging the table view.
