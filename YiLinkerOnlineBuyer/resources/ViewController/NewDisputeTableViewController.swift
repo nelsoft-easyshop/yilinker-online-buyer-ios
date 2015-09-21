@@ -316,6 +316,10 @@ class NewDisputeTableViewController: UITableViewController, UIPickerViewDataSour
         
     }
     
+    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+        return false
+    }
+    
     // MARK: - Picker View Data Source and Delegate
     
     func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
