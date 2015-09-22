@@ -10,7 +10,7 @@ import UIKit
 
 class StringHelper: NSObject {
     class func localizedStringWithKey(key: String) -> String {
-        let string: String = NSLocalizedString(key, tableName: "LocalizableStrings", comment: "comment")
+        let string: String = NSLocalizedString(key, tableName: "LocalizableString", comment: "comment")
         return string
     }
 }
