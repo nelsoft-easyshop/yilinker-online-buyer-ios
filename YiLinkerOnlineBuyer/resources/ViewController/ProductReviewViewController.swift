@@ -30,9 +30,6 @@ class ProductReviewViewController: UIViewController {
     
     var delegate: ProductReviewViewControllerDelegate?
     
-    let bodyText = ["Proin gravida nibh vel velit auctor aliquet. Aenean solicitudin, lorem quis bibendum auctir, nisi elit consequat ipsum.",
-        "Proin gravida nibh vel velit auctor aliquet. Aenean solicitudin, lorem quis bibendum auctir, nisi elit consequat ipsum, nec sagittis sem nibh id elit. Duis sed odio sit amet nibh vulputate."]
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 

@@ -8,6 +8,33 @@
 
 import UIKit
 
+struct ProductStrings {
+    static let freeShipping = StringHelper.localizedStringWithKey("FREESHIPPING_LOCALIZE_KEY")
+    static let details = StringHelper.localizedStringWithKey("DETAILS_LOCALIZE_KEY")
+    static let quantity = StringHelper.localizedStringWithKey("QUANTITY_LOCALIZE_KEY")
+    static let description = StringHelper.localizedStringWithKey("DESCRIPTION_LOCALIZE_KEY")
+    static let seeMore = StringHelper.localizedStringWithKey("SEEMORE_LOCALIZE_KEY")
+    static let ratingFeedback = StringHelper.localizedStringWithKey("RATINGFEEDBACK_LOCALIZE_KEY")
+    static let seller = StringHelper.localizedStringWithKey("SELLER_LOCALIZE_KEY")
+
+    static let addToCart = StringHelper.localizedStringWithKey("ADDTOCART_LOCALIZE_KEY")
+    static let buytItNow = StringHelper.localizedStringWithKey("BUYITNOW_LOCALIZE_KEY")
+    
+    static let cancel = StringHelper.localizedStringWithKey("CANCEL_LOCALIZE_KEY")
+    static let done = StringHelper.localizedStringWithKey("DONE_LOCALIZE_KEY")
+    static let enterQuantity = StringHelper.localizedStringWithKey("ENTERQUANTITY_LOCALIZE_KEY")
+    static let availableStocks = StringHelper.localizedStringWithKey("AVAILABLESTOCKS_LOCALIZE_KEY")
+    static let select = StringHelper.localizedStringWithKey("SELECT_LOCALIZE_KEY")
+    
+    static let reviewRatingFeedback = StringHelper.localizedStringWithKey("REVIEWRATINGFEEDBACK_LOCALIZE_KEY")
+    static let peopleRate = StringHelper.localizedStringWithKey("PEOPLERATE_LOCALIZE_KEY")
+    
+    static let alertWishlist = StringHelper.localizedStringWithKey("ALERT_ADDEDTOWISHLIST_LOCALIZE_KEY")
+    static let alertCart = StringHelper.localizedStringWithKey("ALERT_ADDEDTOCART_LOCALIZE_KEY")
+    static let alertLogin = StringHelper.localizedStringWithKey("ALERT_PLEASELOGIN_LOCALIZE_KEY")
+    static let alertComplete = StringHelper.localizedStringWithKey("ALERT_PLEASECOMPLETE_LOCALIZE_KEY")
+}
+
 protocol ProductViewControllerDelegate {
     func pressedDimViewFromProductPage(controller: ProductViewController)
 }
@@ -228,7 +255,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
             self.productAttributeView.backgroundColor = .whiteColor()
             
             var titleLabel = UILabel(frame: CGRectMake(8, 0, self.productAttributeView.frame.size.width - 16, 40))
-            titleLabel.text = "Details"
+            titleLabel.text = ProductStrings.details
             titleLabel.font = UIFont.systemFontOfSize(16.0)
             titleLabel.textColor = UIColor.darkGrayColor()
             titleLabel.userInteractionEnabled = true
@@ -256,8 +283,10 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
             self.productDescriptionView = XibHelper.puffViewWithNibName("ProductViewsViewController", index: 1) as! ProductDescriptionView
             self.productDescriptionView.frame.size.width = self.view.frame.size.width
             
+            self.productDescriptionView.descriptionTitleLabel.text = ProductStrings.description
+            
             var seeMoreLabel = UILabel(frame: CGRectMake(0, 0, 90, 41))
-            seeMoreLabel.text = "SEE MORE"
+            seeMoreLabel.text = ProductStrings.seeMore
             seeMoreLabel.textColor = .blueColor()
             seeMoreLabel.font = UIFont.systemFontOfSize(15.0)
             seeMoreLabel.textAlignment = .Center
@@ -276,6 +305,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         if self.productReviewHeaderView == nil {
             self.productReviewHeaderView = XibHelper.puffViewWithNibName("ProductViewsViewController", index: 2) as! ProductReviewHeaderView
             self.productReviewHeaderView.frame.size.width = self.view.frame.size.width
+            self.productReviewHeaderView.reviewTitleLabel.text = ProductStrings.ratingFeedback
         }
         return self.productReviewHeaderView
     }
@@ -287,7 +317,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
             
             var seeMoreLabel = UILabel(frame: self.productReviewFooterView.frame)
             seeMoreLabel.frame.size.width = 90
-            seeMoreLabel.text = "SEE MORE"
+            seeMoreLabel.text = ProductStrings.seeMore
             seeMoreLabel.textColor = .blueColor()
             seeMoreLabel.font = UIFont.systemFontOfSize(15.0)
             seeMoreLabel.textAlignment = .Center
@@ -306,6 +336,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         if self.productSellerView == nil {
             self.productSellerView = XibHelper.puffViewWithNibName("ProductViewsViewController", index: 4) as! ProductSellerView
             self.productSellerView.frame.size.width = self.view.frame.size.width
+            self.productSellerView.sellerLabel.text = ProductStrings.seller
         }
         return self.productSellerView
     }
@@ -643,7 +674,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         
         self.productImagesView.setDetails(self.productDetailsModel, unitId: unitIdIndex, width: self.view.frame.size.width)
         //        self.setDetails(productDetailsModel.details)
-        self.setDetails(["Free Shipping"])
+        self.setDetails([ProductStrings.freeShipping])
         
         self.setAttributes(self.productDetailsModel.attributes, productUnits: self.productDetailsModel.productUnits, unitId: self.unitId, quantity: 1)
         self.productDescriptionView.setDescription(productDetailsModel.shortDescription, full: productDetailsModel.fullDescription)
@@ -710,7 +741,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         selectedName = []
         selectedValue = []
         selectedId = []
-        selectedName.append("Quantity")
+        selectedName.append(ProductStrings.quantity)
         if quantity == 0 {
             selectedValue.append(String(self.quantity) + "x")
         } else {

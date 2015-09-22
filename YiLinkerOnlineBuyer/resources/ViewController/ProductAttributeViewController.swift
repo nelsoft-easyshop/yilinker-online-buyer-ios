@@ -8,6 +8,26 @@
 
 import UIKit
 
+struct AttributeStrings {
+    
+    static let addToCart = StringHelper.localizedStringWithKey("ADDTOCART_LOCALIZE_KEY")
+    static let buytItNow = StringHelper.localizedStringWithKey("BUYITNOW_LOCALIZE_KEY")
+    
+    static let cancel = StringHelper.localizedStringWithKey("CANCEL_LOCALIZE_KEY")
+    static let done = StringHelper.localizedStringWithKey("DONE_LOCALIZE_KEY")
+    static let enterQuantity = StringHelper.localizedStringWithKey("ENTERQUANTITY_LOCALIZE_KEY")
+    static let availableStocks = StringHelper.localizedStringWithKey("AVAILABLESTOCKS_LOCALIZE_KEY")
+    static let select = StringHelper.localizedStringWithKey("SELECT_LOCALIZE_KEY")
+    
+    static let reviewRatingFeedback = StringHelper.localizedStringWithKey("REVIEWRATINGFEEDBACK_LOCALIZE_KEY")
+    static let peopleRate = StringHelper.localizedStringWithKey("PEOPLERATE_LOCALIZE_KEY")
+    
+    static let alertWishlist = StringHelper.localizedStringWithKey("ALERT_ADDEDTOWISHLIST_LOCALIZE_KEY")
+    static let alertCart = StringHelper.localizedStringWithKey("ALERT_ADDEDTOCART_LOCALIZE_KEY")
+    static let alertLogin = StringHelper.localizedStringWithKey("ALERT_PLEASELOGIN_LOCALIZE_KEY")
+    static let alertComplete = StringHelper.localizedStringWithKey("ALERT_PLEASECOMPLETE_LOCALIZE_KEY")
+}
+
 protocol ProductAttributeViewControllerDelegate {
     func dissmissAttributeViewController(controller: ProductAttributeViewController, type: String)
     func doneActionPassDetailsToProductView(controller: ProductAttributeViewController, unitId: String, quantity: Int, selectedId: NSArray)

@@ -14,6 +14,7 @@ protocol ProductDescriptionViewDelegate {
 
 class ProductDescriptionView: UIView {
 
+    @IBOutlet weak var descriptionTitleLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var seeMoreView: UIView!
     
