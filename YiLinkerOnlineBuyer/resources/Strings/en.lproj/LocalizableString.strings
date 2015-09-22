@@ -89,3 +89,14 @@ PRODUCT_LOCALIZE_KEY = "Product";
 SELLER_LOCALIZE_KEY = "Seller";
 BROWSECATEGORY_LOCALIZE_KEY = "Browse by Category";
 
+//Search Results
+RESULTS_LOCALIZE_KEY = "Results";
+OLDTONEW_LOCALIZE_KEY = "Old to New";
+NEWTOOLD_LOCALIZE_KEY = "New to Old";
+ATOZ_LOCALIZE_KEY = "Alphabetically A - Z";
+ZTOA_LOCALIZE_KEY = "Alphabetically Z - A";
+SORT_LOCALIZE_KEY = "Sort";
+FILTER_LOCALIZE_KEY = "Filter";
+GRID_LOCALIZE_KEY = "Grid";
+LIST_LOCALIZE_KEY = "List";
+NOMORERESULTS_LOCALIZE_KEY = "No more results.";
