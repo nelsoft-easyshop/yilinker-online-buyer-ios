@@ -143,8 +143,11 @@ struct APIAtlas {
     static let transactionLogs = "auth/getTransactionList?access_token="
     static let transactionDetails = "auth/getTransaction?access_token="
     static let transactionLeaveSellerFeedback = "auth/feedback/addUserFeedback?access_token="
+
+    static let transactionProductDetails = "auth/getOrderProductDetail?access_token="
+    static let transactionCancellation = "auth/cancellation/reasons"
+    static let postTransactionCancellation = "auth/transaction/cancel"
     
-    //Resolution Center
     static let getResolutionCenterCases = "/api/v1/auth/dispute/get-case"
     static let getResolutionCenterCaseDetails = "/api/v1/auth/dispute/get-case-detail"
     static let postResolutionCenterAddCase = "/api/v1/auth/dispute/add-case"

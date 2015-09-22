@@ -72,6 +72,7 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
         total_handling_fee = (self.shippingFee as NSString).floatValue
         
         self.title = "Transaction Details"
+        self.backButton()
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -116,7 +117,13 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let productDetails = TransactionProductDetailsViewController(nibName: "TransactionProductDetailsViewController", bundle: nil)
-        println("section \(indexPath.section) product id: \(self.table[indexPath.section].transactions[indexPath.row].productId)")
+        productDetails.orderProductId = self.table[indexPath.section].transactions[indexPath.row].orderProductId
+        productDetails.quantity = self.table[indexPath.section].transactions[indexPath.row].quantity
+        productDetails.unitPrice = self.table[indexPath.section].transactions[indexPath.row].unitPrice
+        productDetails.totalPrice = self.table[indexPath.section].transactions[indexPath.row].totalPrice
+        productDetails.productName = self.table[indexPath.section].transactions[indexPath.row].productName
+        productDetails.transactionId = self.transactionId
+        println("section \(indexPath.section) product id: \(self.table[indexPath.section].transactions[indexPath.row].orderProductId)")
         self.navigationController?.pushViewController(productDetails, animated: true)
     }
     
@@ -451,6 +458,23 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
             println("cant make a call")
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Cannot make a call", title: "Call Delivery")
         }
+    }
+    
+    //MARK: Navigation bar
+    func backButton() {
+        var backButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
+        backButton.frame = CGRectMake(0, 0, 40, 40)
+        backButton.addTarget(self, action: "back", forControlEvents: UIControlEvents.TouchUpInside)
+        backButton.setImage(UIImage(named: "back-white"), forState: UIControlState.Normal)
+        var customBackButton:UIBarButtonItem = UIBarButtonItem(customView: backButton)
+        
+        let navigationSpacer: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
+        navigationSpacer.width = -20
+        self.navigationItem.leftBarButtonItems = [navigationSpacer, customBackButton]
+    }
+    
+    func back() {
+        self.navigationController!.popViewControllerAnimated(true)
     }
 }
 

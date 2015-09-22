@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Panton Bold.otf">
+            <string>Panton-Bold</string>
+        </mutableArray>
+        <mutableArray key="Panton SemiBold.otf">
+            <string>Panton-SemiBold</string>
+        </mutableArray>
+        <mutableArray key="Panton.otf">
+            <string>Panton-Regular</string>
+        </mutableArray>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TransactionCancelOrderSuccessViewController" customModule="YiLinkerOnlineSeller" customModuleProvider="target">
+            <connections>
+                <outlet property="closeButton" destination="7ej-8b-D2E" id="4Wx-n0-tav"/>
+                <outlet property="mainView" destination="5ec-i9-RyD" id="qgA-So-4gV"/>
+                <outlet property="returnDashboardButton" destination="lZi-ne-zZx" id="q09-85-aql"/>
+                <outlet property="successView" destination="mDj-3Z-5dA" id="a1F-iG-Fbo"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5ec-i9-RyD">
+                    <rect key="frame" x="16" y="201" width="343" height="265"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7ej-8b-D2E" userLabel="Close">
+                            <rect key="frame" x="16" y="16" width="15" height="14"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="14" id="noq-9L-8XK"/>
+                                <constraint firstAttribute="width" constant="15" id="wGo-wc-2Rn"/>
+                            </constraints>
+                            <state key="normal" image="close">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="buttonAction:" destination="-1" eventType="touchUpInside" id="81n-4O-UPV"/>
+                            </connections>
+                        </button>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mDj-3Z-5dA" userLabel="Check View">
+                            <rect key="frame" x="139" y="35" width="65" height="65"/>
+                            <subviews>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="check2" translatesAutoresizingMaskIntoConstraints="NO" id="xG2-FP-75M">
+                                    <rect key="frame" x="12" y="13" width="40" height="40"/>
+                                </imageView>
+                            </subviews>
+                            <color key="backgroundColor" red="0.45882352941176469" green="0.20392156862745098" blue="0.54117647058823526" alpha="1" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="65" id="Ehh-1e-enh"/>
+                                <constraint firstAttribute="width" constant="65" id="Izf-bZ-jn3"/>
+                            </constraints>
+                        </view>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="A Customer Service Representative will contact you shortly to ask hiw we can help you from losing more orders" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gij-eX-9ke">
+                            <rect key="frame" x="8" y="136" width="327" height="56"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="56" id="bc0-hv-Hc9"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="12"/>
+                            <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eag-0V-x8d" userLabel="Button View">
+                            <rect key="frame" x="0.0" y="200" width="343" height="65"/>
+                            <subviews>
+                                <view alpha="0.0" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XNI-eR-MlY" userLabel="Left Spacer">
+                                    <rect key="frame" x="8" y="16" width="46" height="33"/>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </view>
+                                <view alpha="0.0" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Eiz-bl-r7u" userLabel="Right Spacer">
+                                    <rect key="frame" x="289" y="16" width="46" height="33"/>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </view>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lZi-ne-zZx">
+                                    <rect key="frame" x="84" y="18" width="175" height="30"/>
+                                    <color key="backgroundColor" red="0.3294117647" green="0.71372549019999998" blue="0.65490196079999996" alpha="1" colorSpace="calibratedRGB"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="30" id="AH4-wJ-Xbl"/>
+                                        <constraint firstAttribute="width" constant="175" id="u2s-bD-mPh"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="12"/>
+                                    <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <state key="normal" title="RETURN TO DASHBOARD">
+                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="buttonAction:" destination="-1" eventType="touchUpInside" id="Et6-Kq-Rn7"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                            <color key="backgroundColor" red="0.90588235289999997" green="0.90588235289999997" blue="0.90588235289999997" alpha="1" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="65" id="73v-IN-cSL"/>
+                                <constraint firstAttribute="centerX" secondItem="lZi-ne-zZx" secondAttribute="centerX" id="74g-Je-04T"/>
+                                <constraint firstAttribute="centerY" secondItem="lZi-ne-zZx" secondAttribute="centerY" id="zzb-Gj-g2t"/>
+                            </constraints>
+                        </view>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This order has been successfully beeb cancelled" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tqm-hR-rje">
+                            <rect key="frame" x="8" y="108" width="327" height="21"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="21" id="LVr-LO-vjs"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="14"/>
+                            <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="bottom" secondItem="eag-0V-x8d" secondAttribute="bottom" id="46w-Bl-KOc"/>
+                        <constraint firstAttribute="trailing" secondItem="eag-0V-x8d" secondAttribute="trailing" id="4n3-e4-VOD"/>
+                        <constraint firstItem="7ej-8b-D2E" firstAttribute="leading" secondItem="5ec-i9-RyD" secondAttribute="leading" constant="16" id="5yM-gs-FCR"/>
+                        <constraint firstAttribute="trailing" secondItem="Gij-eX-9ke" secondAttribute="trailing" constant="8" id="8Rc-WF-kj2"/>
+                        <constraint firstItem="Tqm-hR-rje" firstAttribute="leading" secondItem="5ec-i9-RyD" secondAttribute="leading" constant="8" id="CZr-Yw-rFz"/>
+                        <constraint firstItem="7ej-8b-D2E" firstAttribute="top" secondItem="5ec-i9-RyD" secondAttribute="top" constant="16" id="Da8-nt-4ka"/>
+                        <constraint firstAttribute="trailing" secondItem="Tqm-hR-rje" secondAttribute="trailing" constant="8" id="EA5-gp-19Q"/>
+                        <constraint firstItem="Tqm-hR-rje" firstAttribute="top" secondItem="mDj-3Z-5dA" secondAttribute="bottom" constant="8" id="EKZ-Ir-BVE"/>
+                        <constraint firstItem="Gij-eX-9ke" firstAttribute="leading" secondItem="5ec-i9-RyD" secondAttribute="leading" constant="8" id="QNj-Pl-UAx"/>
+                        <constraint firstItem="Gij-eX-9ke" firstAttribute="top" secondItem="Tqm-hR-rje" secondAttribute="bottom" constant="7" id="UIR-WG-HrH"/>
+                        <constraint firstItem="mDj-3Z-5dA" firstAttribute="top" secondItem="5ec-i9-RyD" secondAttribute="top" constant="35" id="XFy-ex-ElF"/>
+                        <constraint firstItem="eag-0V-x8d" firstAttribute="leading" secondItem="5ec-i9-RyD" secondAttribute="leading" id="Zpn-ym-Co5"/>
+                        <constraint firstAttribute="centerX" secondItem="mDj-3Z-5dA" secondAttribute="centerX" id="g34-QI-zSl"/>
+                        <constraint firstAttribute="height" constant="265" id="kgq-3W-UIg"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="centerX" secondItem="5ec-i9-RyD" secondAttribute="centerX" id="A0c-me-wkC"/>
+                <constraint firstAttribute="centerY" secondItem="5ec-i9-RyD" secondAttribute="centerY" id="Lq8-FZ-Zaq"/>
+                <constraint firstItem="5ec-i9-RyD" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="16" id="M71-ef-NJN"/>
+                <constraint firstAttribute="trailing" secondItem="5ec-i9-RyD" secondAttribute="trailing" constant="16" id="jTW-86-51c"/>
+            </constraints>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="check2" width="200" height="140"/>
+        <image name="close" width="22" height="22"/>
+    </resources>
+</document>
