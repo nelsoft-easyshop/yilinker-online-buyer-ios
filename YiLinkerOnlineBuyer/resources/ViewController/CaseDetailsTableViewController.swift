@@ -8,6 +8,18 @@
 
 import UIKit
 
+struct CaseStrings {
+    static let title = StringHelper.localizedStringWithKey("CASE_TITLE_LOCALIZE_KEY")
+    static let id = StringHelper.localizedStringWithKey("CASE_ID_LOCALIZE_KEY")
+    static let details = StringHelper.localizedStringWithKey("CASE_DETAILS_LOCALIZE_KEY")
+    static let status = StringHelper.localizedStringWithKey("CASE_STATUS_LOCALIZE_KEY")
+    static let dateOpen = StringHelper.localizedStringWithKey("CASE_DATE_OPEN_LOCALIZE_KEY")
+    static let otherParty = StringHelper.localizedStringWithKey("CASE_OTHER_PARTY_LOCALIZE_KEY")
+    static let items = StringHelper.localizedStringWithKey("CASE_ITEMS_LOCALIZE_KEY")
+    static let complaint = StringHelper.localizedStringWithKey("CASE_COMPLAINT_LOCALIZE_KEY")
+    static let csr = StringHelper.localizedStringWithKey("CASE_CSR_LOCALIZE_KEY")
+}
+
 class CaseDetailsTableViewController: UITableViewController {
     @IBOutlet weak var caseID: UILabel!
     @IBOutlet weak var statusCase: UILabel!
@@ -18,16 +30,29 @@ class CaseDetailsTableViewController: UITableViewController {
     //@IBOutlet weak var complainRemarksCell: UITableViewCell!
     @IBOutlet weak var csrRemarks: UILabel!
     
+    @IBOutlet weak var caseIdLabel: UILabel!
+    @IBOutlet weak var detailsLabel: UILabel!
+    @IBOutlet weak var statusLabel: UILabel!
+    @IBOutlet weak var dateOpenLabel: UILabel!
+    @IBOutlet weak var otherPartyLabel: UILabel!
+    @IBOutlet weak var itemsLabel: UILabel!
+    @IBOutlet weak var complainantLabel: UILabel!
+    @IBOutlet weak var csrLabel: UILabel!
+    
+    
     var tableData = [String]()
     
     private var disputeId: String = ""
     
     var hud: MBProgressHUD?
     
+    // MARK: - View Life Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupNavigationBar()
+        setStrings()
         setupClearFields()
         setupControlShape()
     }
@@ -35,6 +60,20 @@ class CaseDetailsTableViewController: UITableViewController {
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         fireGetCases()
+    }
+    
+    // MARK: - Methods
+    
+    func setStrings() {
+        self.title = CaseStrings.title
+        caseIdLabel.text = CaseStrings.id
+        detailsLabel.text = CaseStrings.details
+        statusLabel.text = CaseStrings.status
+        dateOpenLabel.text = CaseStrings.dateOpen
+        otherPartyLabel.text = CaseStrings.otherParty
+        itemsLabel.text = CaseStrings.items
+        complainantLabel.text = CaseStrings.complaint
+        csrLabel.text = CaseStrings.csr
     }
     
     private func setupControlShape() {
@@ -57,7 +96,6 @@ class CaseDetailsTableViewController: UITableViewController {
         if self.navigationController != nil {
             // white Title on Navigation Bar
             self.navigationController!.navigationBar.barStyle = UIBarStyle.Black
-            self.navigationItem.title = "Case Details"
             
             // white back button, no text
             let backButton = UIBarButtonItem(title: "Back", style:.Plain, target: self, action:"goBackButton")
