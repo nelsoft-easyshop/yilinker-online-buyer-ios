@@ -8,7 +8,7 @@
 
 import UIKit
 
-struct DisputStrings {
+struct DisputeStrings {
     static let title = StringHelper.localizedStringWithKey("DISPUTE_TITLE_LOCALIZE_KEY")
     static let number = StringHelper.localizedStringWithKey("DISPUTE_TRANSACTION_NUMBER_LOCALIZE_KEY")
     static let placeholder = StringHelper.localizedStringWithKey("DISPUTE_TRANSACTION_NUMBER_PLACEHOLDER_LOCALIZE_KEY")
@@ -37,7 +37,7 @@ class NewDisputeTableViewController: UITableViewController, UIPickerViewDataSour
     
     var transactionModel: TransactionModel!
     var transactionIds: [String] = []
-    var transactionTypes: [String] = ["Refund", "Replacement"]
+    var transactionTypes: [String] = [DisputeStrings.refund, DisputeStrings.replacement]
     var pickerType: String = ""
     
     var productIDs: [String] = []
@@ -64,6 +64,21 @@ class NewDisputeTableViewController: UITableViewController, UIPickerViewDataSour
         self.productsLabel.required()
         self.remarksLabel.required()
         self.transactionType.text = "Refund"
+    }
+    
+    func setStrings() {
+        self.title = CaseStrings.title
+        disputeTitleLabel.text = DisputeStrings.title
+        transactionNumberLabel.text = DisputeStrings.number
+        transactionNumber.placeholder = DisputeStrings.placeholder
+        transactionTypeLabel.text = DisputeStrings.type
+        
+        productsLabel.text = DisputeStrings.products
+        addButton.setTitle(DisputeStrings.add, forState: .Normal)
+        
+        remarksLabel.text = DisputeStrings.remarks
+        
+        submitButton.setTitle(DisputeStrings.submit, forState: .Normal)
     }
     
     override func didReceiveMemoryWarning() {
@@ -110,7 +125,7 @@ class NewDisputeTableViewController: UITableViewController, UIPickerViewDataSour
         //seller@easyshop.ph
         //password
         var status: Int = 16
-        if self.transactionType.text == "Refund" {
+        if self.transactionType.text == DisputeStrings.refund {
             status == 10
         }
         
