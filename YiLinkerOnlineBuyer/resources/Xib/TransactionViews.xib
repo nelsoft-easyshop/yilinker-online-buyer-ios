@@ -636,8 +636,8 @@ Phiippines</string>
                 <outlet property="deliveryRiderTitleLabel" destination="YHa-Hz-Wbm" id="pCd-x7-xbU"/>
                 <outlet property="deliverySms" destination="XMI-n2-oX4" id="aZq-HQ-McT"/>
                 <outlet property="deliveryStatusLabel" destination="owQ-FA-h7I" id="ScL-VS-DTc"/>
-                <outlet property="nameAndPlacTitleLabel" destination="mr3-vS-KA3" id="lCG-H8-YX5"/>
                 <outlet property="nameAndPlaceLabel" destination="bbn-ft-Jy2" id="cA7-Z7-mh8"/>
+                <outlet property="nameAndPlaceTitleLabel" destination="mr3-vS-KA3" id="kFl-bJ-rni"/>
                 <outlet property="pickupCall" destination="TPx-1b-Ida" id="zby-Cl-B90"/>
                 <outlet property="pickupRiderLabel" destination="S4E-Ye-PKY" id="oqO-NU-hXj"/>
                 <outlet property="pickupRiderTitleLabel" destination="5om-iF-rnT" id="vK5-fp-8Qr"/>
@@ -835,7 +835,7 @@ Phiippines</string>
             </connections>
             <point key="canvasLocation" x="896.5" y="206"/>
         </view>
-        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="CIA-nt-QAA" userLabel="Product Description" customClass="TransactionDescriptionView" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="CIA-nt-QAA" userLabel="Product Description" customClass="TransactionDescriptionView" customModule="YiLinkerOnlineBuyer">
             <rect key="frame" x="0.0" y="0.0" width="375" height="136"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>

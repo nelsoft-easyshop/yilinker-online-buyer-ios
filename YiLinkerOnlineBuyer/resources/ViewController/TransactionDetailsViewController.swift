@@ -84,7 +84,7 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
     var message = StringHelper.localizedStringWithKey("TRANSACTION_DETAILS_MESSAGE_LOCALIZE_KEY")
     
     //Description
-    var description = StringHelper.localizedStringWithKey("TRANSACTION_PRODUCT_DETAILS_DESCRIPTION_LOCALIZE_KEY")
+    var descriptionTitle = StringHelper.localizedStringWithKey("TRANSACTION_PRODUCT_DETAILS_DESCRIPTION_LOCALIZE_KEY")
     var seeMore = StringHelper.localizedStringWithKey("TRANSACTION_PRODUCT_DETAILS_SEE_MORE_LOCALIZE_KEY")
     
     //Cancel Order
@@ -165,6 +165,7 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
         self.transactionSectionView.delegate = self
         self.transactionSectionView.sellerContactNumberTitle.text = self.seller
         self.transactionSectionView.sellerNameLabelTitle.text = self.contactNumber
+        self.transactionSectionView.messageButton.setTitle(self.message, forState: UIControlState.Normal)
         if self.table.count != 0 {
             if self.table[section].feedback {
                 self.transactionSectionView.leaveFeedbackButton.backgroundColor = Constants.Colors.appTheme
@@ -237,6 +238,7 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
     func getTransactionDetailsView() -> TransactionDetailsView {
         if self.transactionDetailsView == nil {
             self.transactionDetailsView = XibHelper.puffViewWithNibName("TransactionViews", index: 1) as! TransactionDetailsView
+            transactionDetailsView.transactionDetails.text  = self.transactionDetails
             transactionDetailsView.statusTitleLabel.text = self.statusTitle
             transactionDetailsView.paymentTypeTitleLabel.text = self.paymentTypeTitle
             transactionDetailsView.dateCreatedTitleLabel.text = self.dateCreatedTitle
@@ -261,12 +263,10 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
     func getTransactionProductListView() -> UIView {
         if self.transactionProductListView == nil {
             self.transactionProductListView = UIView(frame: (CGRectMake(0, 0, self.view.frame.size.width, 30)))
-            
             var listLabel = UILabel(frame: CGRectMake(8, 0, self.transactionProductListView.frame.size.width - 8, self.transactionProductListView.frame.size.height))
-            listLabel.text =
             listLabel.textColor = .darkGrayColor()
             listLabel.font = UIFont.systemFontOfSize(12.0)
-            
+            listLabel.text = self.productList
             self.transactionProductListView.addSubview(listLabel)
         }
         return self.transactionProductListView
@@ -294,6 +294,10 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
     func getTransactionDeliveryStatusView() -> TransactionDeliveryStatusView {
         if self.transactionDeliveryStatusView == nil {
             self.transactionDeliveryStatusView = XibHelper.puffViewWithNibName("TransactionViews", index: 3) as! TransactionDeliveryStatusView
+            self.transactionDeliveryStatusView.deliveryStatusLabel.text = self.deliveryStatus
+            self.transactionDeliveryStatusView.nameAndPlaceTitleLabel.text = self.checkIn
+            self.transactionDeliveryStatusView.pickupRiderTitleLabel.text = self.pickUp
+            self.transactionDeliveryStatusView.deliveryRiderTitleLabel.text = self.delivery
             self.transactionDeliveryStatusView.frame.size.width = self.view.frame.size.width
             self.transactionDeliveryStatusView.delegate = self
         }
@@ -386,7 +390,7 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
     //MARK: View sellers feedback
     func leaveSellerFeedback(title: String, tag: Int) {
         println("\(self.transactionSectionView.leaveFeedbackButton.titleLabel?.text) \(tag)")
-        if title == "LEAVE FEEDBACK FOR SELLER" {
+        if title == self.leaveFeedback {
             self.leaveFeedback(tag)
             println("leave feedback \(tag)")
         } else {
