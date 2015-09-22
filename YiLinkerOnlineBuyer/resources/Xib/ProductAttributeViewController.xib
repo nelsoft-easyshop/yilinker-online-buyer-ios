@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
@@ -10,10 +10,12 @@
                 <outlet property="availabilityStocksLabel" destination="a3l-QT-0Gi" id="Skp-tx-pjf"/>
                 <outlet property="buyItNowLabel" destination="f9h-6L-tA6" id="Qib-xt-8jx"/>
                 <outlet property="buyItNowView" destination="Is7-28-Leq" id="n1V-wf-HKG"/>
+                <outlet property="cancelButton" destination="dQw-Uh-E2D" id="iVu-EO-Ec4"/>
                 <outlet property="checkoutButton" destination="aZT-15-hih" id="ZOB-8A-zBM"/>
                 <outlet property="decreaseButton" destination="uIc-uv-kX7" id="gyL-sg-clB"/>
                 <outlet property="dimView" destination="k2O-S7-h4z" id="d7b-38-wAb"/>
                 <outlet property="doneButton" destination="8Qx-pn-leh" id="zyX-BQ-8ck"/>
+                <outlet property="enterQuantityLabel" destination="XZb-VJ-75G" id="74e-Hq-Lcv"/>
                 <outlet property="increaseButton" destination="Qyk-Vt-Dnb" id="0gq-CW-AzR"/>
                 <outlet property="nameLabel" destination="BP7-Yr-SBU" id="5YI-4Q-Qzf"/>
                 <outlet property="priceLabel" destination="N2z-E7-mxv" id="gUq-2a-Yda"/>
@@ -335,7 +337,7 @@
         </view>
     </objects>
     <resources>
-        <image name="dummy-placeholder" width="300" height="188"/>
+        <image name="dummy-placeholder" width="1280" height="800"/>
         <image name="minus" width="200" height="200"/>
         <image name="plus" width="200" height="200"/>
     </resources>

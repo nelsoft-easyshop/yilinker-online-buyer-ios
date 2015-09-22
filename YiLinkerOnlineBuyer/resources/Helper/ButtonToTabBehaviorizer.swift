@@ -36,8 +36,32 @@ class ButtonToTabBehaviorizer  {
         return (currentSelection as! UIButton) == self.selectedTab
     }
     
+    private func didReselectSameTab(selection: ButtonChoice) -> Bool {
+        switch selection {
+        case .TabOne:
+            if self.selectedTab == self.tabOne {
+                return true
+            }
+        case .TabTwo:
+            if self.selectedTab == self.tabTwo {
+                return true
+            }
+        case .TabThree:
+            if self.selectedTab == self.tabTre {
+                return true
+            }
+        default:
+            return false
+        }
+        return false
+    }
+    
     func setSelection(selection: ButtonChoice)
     {
+        if self.didReselectSameTab(selection) {
+            return
+        }
+        
         var selectedButtonTab : UIButton
         var selectedButtonImage : String = ""
 

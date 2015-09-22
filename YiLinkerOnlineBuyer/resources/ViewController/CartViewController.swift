@@ -23,9 +23,6 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
     var tableData: [CartProductDetailsModel] = []
     var selectedValue: [String] = []
     
-    //formatter of Text to remove trailing decimal
-    let formatter = NSNumberFormatter()
-    
     var emptyView: EmptyView?
     
     var selectedItemIDs: [Int] = []
@@ -47,8 +44,7 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
         var nib = UINib(nibName: "CartTableViewCell", bundle: nil)
         cartTableView.registerNib(nib, forCellReuseIdentifier: "CartTableViewCell")
         
-        formatter.minimumFractionDigits = 0
-        formatter.maximumFractionDigits = 2
+        checkoutButton.layer.cornerRadius = 5
         
     }
     
@@ -257,7 +253,7 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
         
         var price: String = "\(totalPrice)"
-        totalPriceLabel.text = "P \(price.formatToTwoDecimal())"
+        totalPriceLabel.text = "\(price.formatToTwoDecimal())"
     }
     
     
@@ -298,7 +294,7 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
                     }
                 }
                 cell.productDetailsLabel?.text = tempAttributesText
-                cell.productPriceLabel.text = "P " + tempProductUnit.discountedPrice + " x \(tempModel.quantity)"
+                cell.productPriceLabel.text = tempProductUnit.discountedPrice.formatToTwoDecimal() + " x \(tempModel.quantity)"
             }
         }
         

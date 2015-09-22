@@ -29,6 +29,62 @@ class SelectedFilters {
         self.time = time
         self.status = status
     }
+    
+    func getStatusFilter() -> String {
+        switch status {
+        case .Open:
+            return "1"
+        case .Closed:
+            return "2"
+        default:
+            return "0"
+        }
+    }
+    
+    func isDefault() -> Bool {
+        return self.time == .Total && self.status == .Both
+    }
+    
+    func getTimeFilter() -> String {
+        let formatter = NSDateFormatter()
+        let now = NSDate()
+        formatter.dateFormat = "MM/dd/YYYY"
+        switch time {
+        case .Today:
+            return formatter.stringFromDate(now)
+        case .ThisWeek:
+            let oneWeek: NSTimeInterval = 60*60*24*7
+            let lastWeek = now.dateByAddingTimeInterval(-oneWeek)
+            return formatter.stringFromDate(lastWeek)
+        case .ThisMonth:
+            let oneMonth: NSTimeInterval = 60*60*24*30
+            let lastMonth = now.dateByAddingTimeInterval(-oneMonth)
+            return formatter.stringFromDate(lastMonth)
+        case .Total:
+            return ""
+        default:
+            return ""
+        }
+    }
+    
+    func getTimeNow() -> String {
+        let formatter = NSDateFormatter()
+        formatter.dateFormat = "MM/dd/YYYY"
+        let now = NSDate()
+        return formatter.stringFromDate(now)
+    }
+}
+
+struct FilterStrings {
+    static let title = StringHelper.localizedStringWithKey("FILTER_TITLE_LOCALIZE_KEY")
+    static let dates = StringHelper.localizedStringWithKey("FILTER_DATES_LOCALIZE_KEY")
+    static let today = StringHelper.localizedStringWithKey("FILTER_TODAY_LOCALIZE_KEY")
+    static let week = StringHelper.localizedStringWithKey("FILTER_WEEK_LOCALIZE_KEY")
+    static let month = StringHelper.localizedStringWithKey("FILTER_MONTH_LOCALIZE_KEY")
+    static let total = StringHelper.localizedStringWithKey("FILTER_TOTAL_LOCALIZE_KEY")
+    static let status = StringHelper.localizedStringWithKey("FILTER_STATUS_LOCALIZE_KEY")
+    static let open = StringHelper.localizedStringWithKey("FILTER_OPEN_LOCALIZE_KEY")
+    static let closed = StringHelper.localizedStringWithKey("FILTER_CLOSE_LOCALIZE_KEY")
 }
 
 class ResolutionFilterViewController: UITableViewController {
@@ -41,27 +97,38 @@ class ResolutionFilterViewController: UITableViewController {
     @IBOutlet weak var buttonOpen: CheckBox!
     @IBOutlet weak var buttonClosed: CheckBox!
     
+//    @IBOutlet weak var dateSection: UITableViewSection!
+    @IBOutlet weak var todayLabel: UILabel!
+    @IBOutlet weak var weekLabel: UILabel!
+    @IBOutlet weak var monthLabel: UILabel!
+    @IBOutlet weak var totalLabel: UILabel!
+//    @IBOutlet weak var statusSection: UITableViewSection!
+    @IBOutlet weak var openLabel: UILabel!
+    @IBOutlet weak var closedLabel: UILabel!
+    
+    
     private var timeFilter: ResolutionTimeFilter = .Total
     private var statusFilter: ResolutionStatusFilter = .Both
-    weak var currentFilter: SelectedFilters?
-
+    //weak var currentFilter: SelectedFilters?
+    var delegate: ResolutionCenterViewController?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // White title text
         self.navigationController!.navigationBar.barStyle = UIBarStyle.Black
-
-        self.cancel.tintColor = UIColor.whiteColor()
-        self.cancel.target = self
-        self.cancel.action = "cancelPressed"
         
-        self.save.tintColor = UIColor.whiteColor()
-        self.save.target = self
-        self.save.action = "savePressed"
+        cancel.tintColor = UIColor.whiteColor()
+        cancel.target = self
+        cancel.action = "cancelPressed"
         
-        self.timeFilter = currentFilter!.time
+        save.tintColor = UIColor.whiteColor()
+        save.target = self
+        save.action = "savePressed"
+        
+        self.timeFilter = self.delegate!.currentSelectedFilter.time
         selectTimeFilter(self.timeFilter)
-        self.statusFilter = currentFilter!.status
+        self.statusFilter = self.delegate!.currentSelectedFilter.status
         selectStatusFilter(self.statusFilter)
         
         self.buttonToday.addTarget(self, action: "todayPressed"
@@ -76,14 +143,27 @@ class ResolutionFilterViewController: UITableViewController {
             , forControlEvents:.TouchUpInside)
         self.buttonClosed.addTarget(self, action: "closedPressed"
             , forControlEvents:.TouchUpInside)
+        
+        setStrings()
     }
-
+    
+    func setStrings() {
+        self.title = FilterStrings.title
+        
+        todayLabel.text = FilterStrings.today
+        weekLabel.text = FilterStrings.week
+        monthLabel.text = FilterStrings.month
+        totalLabel.text = FilterStrings.total
+        
+        openLabel.text = FilterStrings.open
+        closedLabel.text = FilterStrings.closed
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-
     // MARK: - Time Filter Checkbox Selection
     private func selectTimeFilter(timeFilterSelection: ResolutionTimeFilter) {
         self.timeFilter = timeFilterSelection
@@ -122,6 +202,7 @@ class ResolutionFilterViewController: UITableViewController {
     func totalPressed() {
         selectTimeFilter(.Total)
     }
+    
     // MARK: - Status Filter Checkbox Selection
     private func selectStatusFilter(filterSelection: ResolutionStatusFilter) {
         if self.statusFilter == .Both {
@@ -163,27 +244,18 @@ class ResolutionFilterViewController: UITableViewController {
     func closedPressed() {
         selectStatusFilter(.Closed)
     }
+    
+    // MARK - Cancel & Save
     func cancelPressed() {
         //self.navigationController?.popViewControllerAnimated(true)
         self.dismissViewControllerAnimated(true, completion: nil)
     }
-
+    
     func savePressed() {
-        //self.navigationController?.popViewControllerAnimated(true)
-        if currentFilter != nil {
-            self.currentFilter!.time = self.timeFilter
-            self.currentFilter!.status = self.statusFilter
-        }
+        self.delegate!.currentSelectedFilter.time = self.timeFilter
+        self.delegate!.currentSelectedFilter.status = self.statusFilter
         self.dismissViewControllerAnimated(true, completion: nil)
+        self.delegate!.applyFilter()
     }
     
-
-    /*
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

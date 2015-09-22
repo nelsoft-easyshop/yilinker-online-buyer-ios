@@ -1,14 +1,14 @@
 //
-//  TransactioncancelOrderStatusViewController.swift
+//  TransactionCancelOrderStatusViewController.swift
 //  YiLinkerOnlineBuyer
 //
-//  Created by Joriel Oller Fronda on 9/11/15.
+//  Created by Joriel Oller Fronda on 9/15/15.
 //  Copyright (c) 2015 yiLinker-online-buyer. All rights reserved.
 //
 
 import UIKit
 
-class TransactioncancelOrderStatusViewController: UIViewController {
+class TransactionCancelOrderStatusViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()

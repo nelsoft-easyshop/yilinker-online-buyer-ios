@@ -10,6 +10,7 @@ import UIKit
 
 class ProductReviewHeaderView: UIView {
 
+    @IBOutlet weak var reviewTitleLabel: UILabel!
     @IBOutlet weak var rate1: UIImageView!
     @IBOutlet weak var rate2: UIImageView!
     @IBOutlet weak var rate3: UIImageView!

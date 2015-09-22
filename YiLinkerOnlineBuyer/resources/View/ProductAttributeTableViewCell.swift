@@ -40,7 +40,7 @@ class ProductAttributeTableViewCell: UITableViewCell {
     // MARK: - Methods
 
     func setAttribute( model: ProductAttributeModel, availableCombination: NSArray, selectedValue: NSArray, selectedId: NSArray, width: CGFloat) {
-        attributeLabel.text = "Select \(model.attributeName)"
+        attributeLabel.text = ProductStrings.select + " \(model.attributeName)"
         
         self.attributesId = []
         self.attributesId = model.valueId

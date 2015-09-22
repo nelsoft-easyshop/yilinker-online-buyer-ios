@@ -20,7 +20,7 @@ class ResolutionCenterCell: UITableViewCell {
         // Initialization code
     }
     
-    func setData(data: ResolutionCenterData) {
+    func setData(data: ResolutionCenterElement) {
         self.idLabel.text = data.resolutionId
         self.dateLabel.text = data.date
         self.userTypeLabel.text = data.type
