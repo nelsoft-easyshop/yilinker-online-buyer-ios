@@ -74,7 +74,7 @@ class FollowedSellerViewController: UIViewController, EmptyViewDelegate {
         cell.selectionStyle = .None
         
         cell.nameLabel.text = followedSellerModel.storeName[indexPath.row]
-        cell.specialtyLabel.text = String("Specialty: ") + followedSellerModel.specialty[indexPath.row]
+        cell.specialtyLabel.text = String(StringHelper.localizedStringWithKey("SPECIALTY_LOCALIZE_KEY") + ": ") + followedSellerModel.specialty[indexPath.row]
         cell.setPicture(followedSellerModel.profileImageUrl[indexPath.row])
         cell.setRating(followedSellerModel.rating[indexPath.row])
         
