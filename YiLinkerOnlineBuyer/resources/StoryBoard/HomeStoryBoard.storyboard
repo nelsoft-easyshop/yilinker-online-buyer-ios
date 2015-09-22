@@ -2485,11 +2485,19 @@
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
                         <outlet property="caseID" destination="FGE-m5-1ic" id="eBU-Ls-Ahs"/>
+                        <outlet property="caseIdLabel" destination="lgk-sK-yQf" id="xzd-eq-vht"/>
+                        <outlet property="complainantLabel" destination="0kw-I0-80f" id="VMM-IW-X62"/>
                         <outlet property="complainantRemarks" destination="p3d-Cd-RhW" id="OhR-hq-H6q"/>
+                        <outlet property="csrLabel" destination="Tud-8f-SSU" id="axk-fI-cZ3"/>
                         <outlet property="csrRemarks" destination="X5n-7i-WfI" id="Gcp-No-9aG"/>
                         <outlet property="dateOpen" destination="jnS-VN-MKx" id="0af-0o-JsZ"/>
+                        <outlet property="dateOpenLabel" destination="j0Z-qE-9tE" id="6tQ-hw-Tbt"/>
+                        <outlet property="detailsLabel" destination="X6M-ZB-Omf" id="Nfp-vI-Dxp"/>
+                        <outlet property="itemsLabel" destination="IPD-6C-mRy" id="iYr-B5-HbY"/>
                         <outlet property="otherParty" destination="h5t-a6-8z9" id="usL-Iq-UPP"/>
+                        <outlet property="otherPartyLabel" destination="qzW-Or-Peb" id="eSG-gv-kNc"/>
                         <outlet property="statusCase" destination="jHj-y3-sWI" id="7l2-ym-XUh"/>
+                        <outlet property="statusLabel" destination="Itb-Ym-ALE" id="MXD-Ie-O63"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ASf-F2-o8a" userLabel="First Responder" sceneMemberID="firstResponder"/>
