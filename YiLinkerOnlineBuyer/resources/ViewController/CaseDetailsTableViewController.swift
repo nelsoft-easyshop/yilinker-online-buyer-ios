@@ -8,6 +8,18 @@
 
 import UIKit
 
+struct CaseStrings {
+    static let title = StringHelper.localizedStringWithKey("CASE_TITLE_LOCALIZE_KEY")
+    static let id = StringHelper.localizedStringWithKey("CASE_ID_LOCALIZE_KEY")
+    static let details = StringHelper.localizedStringWithKey("CASE_DETAILS_LOCALIZE_KEY")
+    static let status = StringHelper.localizedStringWithKey("CASE_STATUS_LOCALIZE_KEY")
+    static let dateOpen = StringHelper.localizedStringWithKey("CASE_DATE_OPEN_LOCALIZE_KEY")
+    static let otherParty = StringHelper.localizedStringWithKey("CASE_OTHER_PARTY_LOCALIZE_KEY")
+    static let items = StringHelper.localizedStringWithKey("CASE_ITEMS_LOCALIZE_KEY")
+    static let complaint = StringHelper.localizedStringWithKey("CASE_COMPLAINT_LOCALIZE_KEY")
+    static let csr = StringHelper.localizedStringWithKey("CASE_CSR_LOCALIZE_KEY")
+}
+
 class CaseDetailsTableViewController: UITableViewController {
     @IBOutlet weak var caseID: UILabel!
     @IBOutlet weak var statusCase: UILabel!

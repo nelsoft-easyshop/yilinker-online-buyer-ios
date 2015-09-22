@@ -75,6 +75,18 @@ class SelectedFilters {
     }
 }
 
+struct FilterStrings {
+    static let filter = StringHelper.localizedStringWithKey("FILTER_TITLE_LOCALIZE_KEY")
+    static let dates = StringHelper.localizedStringWithKey("FILTER_DATES_LOCALIZE_KEY")
+    static let today = StringHelper.localizedStringWithKey("FILTER_TODAY_LOCALIZE_KEY")
+    static let week = StringHelper.localizedStringWithKey("FILTER_WEEK_LOCALIZE_KEY")
+    static let month = StringHelper.localizedStringWithKey("FILTER_MONTH_LOCALIZE_KEY")
+    static let total = StringHelper.localizedStringWithKey("FILTER_TOTAL_LOCALIZE_KEY")
+    static let status = StringHelper.localizedStringWithKey("FILTER_STATUS_LOCALIZE_KEY")
+    static let open = StringHelper.localizedStringWithKey("FILTER_OPEN_LOCALIZE_KEY")
+    static let close = StringHelper.localizedStringWithKey("FILTER_CLOSE_LOCALIZE_KEY")
+}
+
 class ResolutionFilterViewController: UITableViewController {
     @IBOutlet weak var cancel: UIBarButtonItem!
     @IBOutlet weak var save: UIBarButtonItem!

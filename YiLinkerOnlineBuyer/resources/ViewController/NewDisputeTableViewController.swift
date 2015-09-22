@@ -8,6 +8,19 @@
 
 import UIKit
 
+struct DisputStrings {
+    static let title = StringHelper.localizedStringWithKey("DISPUTE_TITLE_LOCALIZE_KEY")
+    static let number = StringHelper.localizedStringWithKey("DISPUTE_TRANSACTION_NUMBER_LOCALIZE_KEY")
+    static let placeholder = StringHelper.localizedStringWithKey("DISPUTE_TRANSACTION_NUMBER_PLACEHOLDER_LOCALIZE_KEY")
+    static let type = StringHelper.localizedStringWithKey("DISPUTE_TRANSACTION_TYPE_LOCALIZE_KEY")
+    static let refund = StringHelper.localizedStringWithKey("DISPUTE_REFUND_LOCALIZE_KEY")
+    static let replacement = StringHelper.localizedStringWithKey("DISPUTE_REPLACEMENT_LOCALIZE_KEY")
+    static let products = StringHelper.localizedStringWithKey("DISPUTE_PRODUCTS_LOCALIZE_KEY")
+    static let add = StringHelper.localizedStringWithKey("DISPUTE_ADD_LOCALIZE_KEY")
+    static let remarks = StringHelper.localizedStringWithKey("DISPUTE_REMARKS_LOCALIZE_KEY")
+    static let submit = StringHelper.localizedStringWithKey("DISPUTE_SUBMIT_CASE_LOCALIZE_KEY")
+}
+
 class NewDisputeTableViewController: UITableViewController, UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate, DisputeAddItemViewControllerDelegate {
     
     @IBOutlet weak var disputeTitleLabel: UILabel!
