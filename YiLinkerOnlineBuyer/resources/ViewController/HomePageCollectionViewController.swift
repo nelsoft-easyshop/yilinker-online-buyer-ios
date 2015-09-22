@@ -9,7 +9,7 @@
 import UIKit
 
 struct HomeCollectionViewStrings {
-    static let todaysPromo: String = StringHelper.localizedStringWithKey("TODAYS_PROMO_LOCALIZE_KEY")
+    static let todaysPromo: String = StringHelper.localizedStringWithKey("TODAYS_PROMO_FOOTER_LOCALIZE_KEY")
     static let popularCategories: String = StringHelper.localizedStringWithKey("POPULAR_CATEGORIES_LOCALIZE_KEY")
     static let trendingItems: String = StringHelper.localizedStringWithKey("TRENDING_ITEMS_LOCALIZE_KEY")
     static let itemsYouMyLike: String = StringHelper.localizedStringWithKey("ITEMS_YOU_MY_LIKE_LOCALIZE_KEY")

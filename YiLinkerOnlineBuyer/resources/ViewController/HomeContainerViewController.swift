@@ -26,6 +26,7 @@ struct FABStrings {
     static let mustBeSignIn: String = StringHelper.localizedStringWithKey("MUST_BE_SIGNIN_LOCALIZE_KEY")
     static let followedSeller: String = StringHelper.localizedStringWithKey("FOLLOWED_SELLER_LOCALIZE_KEY")
     static let logout: String = StringHelper.localizedStringWithKey("LOGOUT_LOCALIZE_KEY")
+    static let profile: String = StringHelper.localizedStringWithKey("PROFILE_LOCALIZE_KEY")
 }
 
 class HomeContainerViewController: UIViewController, UITabBarControllerDelegate, EmptyViewDelegate {

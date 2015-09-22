@@ -52,6 +52,9 @@ class LoginAndRegisterContentViewController: UIViewController {
         
         self.closeButton.layer.borderColor = Constants.Colors.backgroundGray.CGColor
         self.closeButton.layer.borderWidth = 1
+        
+        self.signInButton.setTitle(FABStrings.signIn, forState: UIControlState.Normal)
+        self.registerButton.setTitle(FABStrings.register, forState: UIControlState.Normal)
     }
     
     override func viewDidLoad() {
