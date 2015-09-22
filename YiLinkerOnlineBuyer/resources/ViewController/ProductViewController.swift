@@ -51,6 +51,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     @IBOutlet weak var buyItNowView: UIView!
     @IBOutlet weak var buttonsContainer: UIView!
     @IBOutlet weak var buttonSubContainer: UIView!
+    @IBOutlet weak var buyItNowLabel: UILabel!
     
     var headerView: UIView!
     var footerView: UIView!
@@ -124,6 +125,9 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         }
         
         buyItNowView.addGestureRecognizer(tapGesture("buyItNowAction:"))
+        
+        addToCartButton.setTitle(ProductStrings.addToCart, forState: .Normal)
+        buyItNowLabel.text = ProductStrings.buytItNow
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -736,7 +740,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         for view in self.productAttributeView.subviews {
             if view is UILabel {
                 let label: UILabel = view as! UILabel
-                if label.text != "Details" {
+                if label.text != ProductStrings.details {
                     view.removeFromSuperview()
                 }
             }

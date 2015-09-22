@@ -14,6 +14,7 @@ protocol ProductReviewViewControllerDelegate {
 
 class ProductReviewViewController: UIViewController {
 
+    @IBOutlet weak var cancelButton: UIButton!
     @IBOutlet weak var ratingFeedbackLabel: UIButton!
     @IBOutlet weak var rateLabel: UILabel!
     @IBOutlet weak var numberOfPeopleLabel: UILabel!
@@ -91,7 +92,7 @@ class ProductReviewViewController: UIViewController {
     func customizeViews() {
         ratingFeedbackLabel.setTitle(ProductStrings.reviewRatingFeedback, forState: .Normal)
         numberOfPeopleLabel.text = ProductStrings.peopleRate
-        
+        cancelButton.setTitle( ProductStrings.cancel, forState: .Normal)
         let nib = UINib(nibName: "ReviewTableViewCell", bundle: nil)
         self.tableView.registerNib(nib, forCellReuseIdentifier: "reviewIdentifier")
         self.tableView.rowHeight = UITableViewAutomaticDimension

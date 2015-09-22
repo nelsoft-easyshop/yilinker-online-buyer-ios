@@ -6,6 +6,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ProductReviewViewController" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
             <connections>
+                <outlet property="cancelButton" destination="rTi-Xl-Z1J" id="f6f-Ba-GSS"/>
                 <outlet property="cancelContainer" destination="BpA-HT-4vZ" id="I9l-be-hjk"/>
                 <outlet property="dimView" destination="wJH-9f-E6Q" id="LyS-jh-1PB"/>
                 <outlet property="numberOfPeopleLabel" destination="xnx-Sw-KbC" id="VDY-fw-Bzo"/>

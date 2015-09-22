@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
@@ -9,6 +9,7 @@
                 <outlet property="addToCartButton" destination="h9O-cg-S2c" id="6hb-Fe-KRc"/>
                 <outlet property="buttonSubContainer" destination="1eX-c7-A5b" id="gO8-yj-3re"/>
                 <outlet property="buttonsContainer" destination="C60-aW-ouZ" id="GzR-X4-rmh"/>
+                <outlet property="buyItNowLabel" destination="fhZ-EI-5fo" id="pCb-Qh-OLt"/>
                 <outlet property="buyItNowView" destination="IQR-t4-99U" id="VGI-gN-oqo"/>
                 <outlet property="dimView" destination="E51-2e-Dng" id="BEl-KQ-PAN"/>
                 <outlet property="tableView" destination="r01-f0-aka" id="6la-mP-bFW"/>
