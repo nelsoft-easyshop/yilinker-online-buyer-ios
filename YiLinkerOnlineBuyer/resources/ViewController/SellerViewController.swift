@@ -29,6 +29,12 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     var dimView: UIView = UIView()
     
+    //Localized strings
+    let follow: String = StringHelper.localizedStringWithKey("FOLLOW_LOCALIZE_KEY")
+    let following: String = StringHelper.localizedStringWithKey("UNFOLLOW_LOCALIZE_KEY")
+    let viewFeedback: String = StringHelper.localizedStringWithKey("VIEW_FEEDBACK_LOCALIZE_KEY")
+    let vendorTitle: String = StringHelper.localizedStringWithKey("VENDOR_PAGE_TITLE_LOCALIZE_KEY")
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -60,7 +66,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     func titleView() {
         let label: UILabel = UILabel(frame: CGRectMake(0, 0, 100, 50))
-        label.text = "Vendor Page"
+        label.text = vendorTitle
         label.textAlignment = NSTextAlignment.Center
         label.textColor = UIColor.whiteColor()
         self.navigationItem.titleView = label
@@ -87,17 +93,18 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
             self.sellerTableHeaderView.followButton.layer.borderColor = Constants.Colors.grayLine.CGColor
             self.sellerTableHeaderView.followButton.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
             self.sellerTableHeaderView.followButton.backgroundColor = UIColor.clearColor()
-            self.sellerTableHeaderView.followButton.setTitle("FOLLOWING", forState: UIControlState.Normal)
+            self.sellerTableHeaderView.followButton.setTitle(following, forState: UIControlState.Normal)
         } else if !(self.is_successful){
             self.sellerTableHeaderView.followButton.backgroundColor = Constants.Colors.appTheme
             self.sellerTableHeaderView.followButton.borderColor = UIColor.clearColor()
             self.sellerTableHeaderView.followButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
-            self.sellerTableHeaderView.followButton.setTitle("FOLLOW", forState: UIControlState.Normal)
+            self.sellerTableHeaderView.followButton.setTitle(follow, forState: UIControlState.Normal)
         }
         
         let imageView: UIImageView = UIImageView(frame: CGRectMake(0, 0, sellerTableHeaderView.profileImageView.frame.width, sellerTableHeaderView.profileImageView.frame.height))
         imageView.sd_setImageWithURL(self.sellerModel!.avatar, placeholderImage: UIImage(named: "dummy-placeholder"))
         
+        sellerTableHeaderView.viewFeedbackButton.setTitle(viewFeedback, forState: UIControlState.Normal)
         sellerTableHeaderView.profileImageView.addSubview(imageView)
         sellerTableHeaderView.sellernameLabel.text = sellerModel!.store_name
         sellerTableHeaderView.addressLabel.text = sellerModel!.store_address
@@ -420,7 +427,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
             self.sellerTableHeaderView.followButton.borderColor = UIColor.clearColor()
             self.sellerTableHeaderView.followButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
             
-             self.sellerTableHeaderView.followButton.setTitle("FOLLOW", forState: UIControlState.Normal)
+             self.sellerTableHeaderView.followButton.setTitle(follow, forState: UIControlState.Normal)
             fireUnfollowSeller()
         } else {
             self.sellerTableHeaderView.followButton.tag = 1
@@ -428,7 +435,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
             self.sellerTableHeaderView.followButton.setTitleColor(UIColor.grayColor(), forState: UIControlState.Normal)
             self.sellerTableHeaderView.followButton.backgroundColor = UIColor.clearColor()
 
-            self.sellerTableHeaderView.followButton.setTitle("FOLLOWING", forState: UIControlState.Normal)
+            self.sellerTableHeaderView.followButton.setTitle(following, forState: UIControlState.Normal)
             fireFollowSeller()
         }
         
