@@ -8,6 +8,11 @@
 
 SIGNIN_LOCALIZE_KEY = "SIGN IN";
 
+// Global
+
+SOMETHINGWENTWRONG_LOCALIZE_KEY = "Something Went Wrong";
+OKBUTTON_LOCALIZE_KEY = "OK";
+
 // Rj's Modules
 
 // Followed Sellers
