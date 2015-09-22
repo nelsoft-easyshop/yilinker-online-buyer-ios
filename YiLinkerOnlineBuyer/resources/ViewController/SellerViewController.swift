@@ -103,7 +103,6 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         sellerTableHeaderView.addressLabel.text = sellerModel!.store_address
         self.sellerName = self.sellerModel!.store_name
         self.sellerContactNumber = sellerModel!.contact_number
-        println("store address \(sellerModel!.store_address)")
         
         self.tableView.tableHeaderView = sellerTableHeaderView
         self.tableView.reloadData()
