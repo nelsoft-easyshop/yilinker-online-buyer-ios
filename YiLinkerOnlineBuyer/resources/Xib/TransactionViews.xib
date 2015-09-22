@@ -820,7 +820,7 @@ Phiippines</string>
             <point key="canvasLocation" x="896.5" y="206"/>
         </view>
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="CIA-nt-QAA" userLabel="Product Description" customClass="TransactionDescriptionView" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="375" height="116"/>
+            <rect key="frame" x="0.0" y="0.0" width="375" height="136"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Description" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N8e-iL-fXN">
@@ -840,16 +840,16 @@ Phiippines</string>
                     </constraints>
                 </view>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text="Description Text Here" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R0O-Uw-d5G">
-                    <rect key="frame" x="10" y="57" width="357" height="16"/>
+                    <rect key="frame" x="10" y="57" width="357" height="42"/>
                     <constraints>
-                        <constraint firstAttribute="height" priority="500" constant="16" id="ats-e0-s4m"/>
+                        <constraint firstAttribute="height" constant="42" id="ats-e0-s4m"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" weight="light" pointSize="13"/>
                     <color key="textColor" red="0.29803922770000002" green="0.29803922770000002" blue="0.29803922770000002" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oLe-L9-EGC">
-                    <rect key="frame" x="83" y="81" width="209" height="35"/>
+                    <rect key="frame" x="83" y="99" width="209" height="35"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="SEE MORE" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jsQ-aI-8bJ">
                             <rect key="frame" x="55" y="0.0" width="90" height="35"/>
@@ -879,14 +879,14 @@ Phiippines</string>
                 <constraint firstAttribute="trailing" secondItem="R0O-Uw-d5G" secondAttribute="trailing" constant="8" id="Vmy-7q-RZt"/>
                 <constraint firstItem="N8e-iL-fXN" firstAttribute="leading" secondItem="CIA-nt-QAA" secondAttribute="leading" constant="8" id="YKi-xb-tFQ"/>
                 <constraint firstItem="R0O-Uw-d5G" firstAttribute="top" secondItem="XwX-un-xTz" secondAttribute="bottom" constant="15" id="a8A-eN-Vh1"/>
-                <constraint firstAttribute="bottom" secondItem="oLe-L9-EGC" secondAttribute="bottom" id="bOu-EB-o23"/>
+                <constraint firstAttribute="bottom" secondItem="oLe-L9-EGC" secondAttribute="bottom" constant="2" id="bOu-EB-o23"/>
                 <constraint firstAttribute="trailing" secondItem="N8e-iL-fXN" secondAttribute="trailing" constant="8" id="yOe-4a-BYy"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="descriptionLabel" destination="R0O-Uw-d5G" id="c9p-s0-y4p"/>
             </connections>
-            <point key="canvasLocation" x="939.5" y="411"/>
+            <point key="canvasLocation" x="939.5" y="421"/>
         </view>
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="HYi-6R-oZb" userLabel="Product Description" customClass="TransactionSectionFooterView" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="375" height="140"/>
@@ -927,7 +927,7 @@ Phiippines</string>
                     <color key="textColor" red="0.29803922770000002" green="0.29803922770000002" blue="0.29803922770000002" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dSz-Qa-k82" customClass="DynamicRoundedButton" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
+                <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dSz-Qa-k82" customClass="DynamicRoundedButton" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
                     <rect key="frame" x="227" y="92" width="121" height="28"/>
                     <color key="backgroundColor" red="0.35294117647058826" green="0.12156862745098039" blue="0.45882352941176469" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
@@ -947,7 +947,7 @@ Phiippines</string>
                         <action selector="message:" destination="HYi-6R-oZb" eventType="touchUpInside" id="Ul2-RP-r4f"/>
                     </connections>
                 </button>
-                <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h81-DO-sDz" customClass="DynamicRoundedButton" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
+                <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h81-DO-sDz" customClass="DynamicRoundedButton" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
                     <rect key="frame" x="8" y="92" width="177" height="28"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="28" id="dcp-7H-7hs"/>
