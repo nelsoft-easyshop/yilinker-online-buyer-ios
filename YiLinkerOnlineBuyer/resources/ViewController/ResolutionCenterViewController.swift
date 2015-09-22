@@ -67,9 +67,9 @@ class ResolutionCenterViewController: UIViewController, UITableViewDataSource, U
         // Initial data load
         fireGetCases()
         
-        casesTab.setTitle(ResolutionStrings.cases, forState: .Normal)
-        openTab.setTitle(ResolutionStrings.open, forState: .Normal)
-        closedTab.setTitle(ResolutionStrings.closed, forState: .Normal)
+//        casesTab.setTitle(ResolutionStrings.cases, forState: .Normal)
+//        openTab.setTitle(ResolutionStrings.open, forState: .Normal)
+//        closedTab.setTitle(ResolutionStrings.closed, forState: .Normal)
         disputeButton.setTitle(ResolutionStrings.file, forState: .Normal)
     }
     
