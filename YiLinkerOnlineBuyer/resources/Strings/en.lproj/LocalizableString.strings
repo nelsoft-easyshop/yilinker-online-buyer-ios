@@ -15,11 +15,11 @@ OKBUTTON_LOCALIZE_KEY = "OK";
 // Rj's Modules
 
 // Followed Sellers
-FOLLOWEDSELLERS_LOCALIZE_KEY = "Followed Sellers8";
+FOLLOWEDSELLERS_LOCALIZE_KEY = "Followed Sellers";
 
 // Customized Categories
-CATEGORY_LOCALIZE_KEY = "Category8";
-SELECTCATEGORY_LOCALIZE_KEY = "Select Category8";
+CATEGORY_LOCALIZE_KEY = "Category";
+SELECTCATEGORY_LOCALIZE_KEY = "Select Category";
 
 
 

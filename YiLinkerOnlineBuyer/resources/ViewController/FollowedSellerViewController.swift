@@ -34,9 +34,6 @@ class FollowedSellerViewController: UIViewController, EmptyViewDelegate {
     // MARK: - Methods
     
     func customizedNavigationBar() {
-        
-        self.title = StringHelper.localizedStringWithKey("FOLLOWEDSELLERS_LOCALIZE_KEY")
-        
         let backButton: UIBarButtonItem = UIBarButtonItem(image: UIImage(named: "back-white"), style: UIBarButtonItemStyle.Plain, target: self, action: "backAction")
         let navigationSpacer: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
         navigationSpacer.width = -10
