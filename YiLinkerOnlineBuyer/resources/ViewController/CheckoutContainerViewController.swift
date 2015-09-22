@@ -45,6 +45,12 @@ struct AddressStrings {
     static let barangay: String = StringHelper.localizedStringWithKey("BARANGAY_LOCALIZE_KEY")
     static let zipCode: String = StringHelper.localizedStringWithKey("ZIP_CODE_LOCALIZE_KEY")
     static let additionalInfo: String = StringHelper.localizedStringWithKey("ADDITIONAL_INFO_LOCALIZE_KEY")
+    
+    static let newAddress: String = StringHelper.localizedStringWithKey("NEW_ADDRESS_LOCALIZE_KEY")
+    static let editAddress: String = StringHelper.localizedStringWithKey("EDIT_ADDRESS_LOCALIZE_KEY")
+    static let addAddress: String = StringHelper.localizedStringWithKey("ADD_ADDRESS_LOCALIZE_KEY")
+    static let changeAddress: String = StringHelper.localizedStringWithKey("CHANGE_ADDRESS_LOCALIZE_KEY")
+    static let addressTitle: String = StringHelper.localizedStringWithKey("ADDRESS_TITLE_ADDRESS_LOCALIZE_KEY")
 }
 
 class CheckoutContainerViewController: UIViewController, PaymentWebViewViewControllerDelegate, RegisterModalViewControllerDelegate {
