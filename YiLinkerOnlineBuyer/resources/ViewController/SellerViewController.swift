@@ -87,12 +87,14 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
             self.sellerTableHeaderView.followButton.layer.borderColor = Constants.Colors.grayLine.CGColor
             self.sellerTableHeaderView.followButton.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
             self.sellerTableHeaderView.followButton.backgroundColor = UIColor.clearColor()
-            self.sellerTableHeaderView.followButton.setTitle("FOLLOWING", forState: UIControlState.Normal)
+            let following: String = StringHelper.localizedStringWithKey("UNFOLLOW_LOCALIZE_KEY")
+            self.sellerTableHeaderView.followButton.setTitle(following, forState: UIControlState.Normal)
         } else if !(self.is_successful){
             self.sellerTableHeaderView.followButton.backgroundColor = Constants.Colors.appTheme
             self.sellerTableHeaderView.followButton.borderColor = UIColor.clearColor()
             self.sellerTableHeaderView.followButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
-            self.sellerTableHeaderView.followButton.setTitle("FOLLOW", forState: UIControlState.Normal)
+            let follow: String = StringHelper.localizedStringWithKey("FOLLOW_LOCALIZE_KEY")
+            self.sellerTableHeaderView.followButton.setTitle(follow, forState: UIControlState.Normal)
         }
         
         let imageView: UIImageView = UIImageView(frame: CGRectMake(0, 0, sellerTableHeaderView.profileImageView.frame.width, sellerTableHeaderView.profileImageView.frame.height))
