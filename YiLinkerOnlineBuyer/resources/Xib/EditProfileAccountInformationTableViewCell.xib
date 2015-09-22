@@ -166,9 +166,12 @@
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="accountInformationLabel" destination="sTB-Ra-wPE" id="Wvu-1C-IZi"/>
                 <outlet property="changeEmailButton" destination="ZTk-YW-n6h" id="Jyt-71-07f"/>
                 <outlet property="changePasswordButton" destination="FHa-In-V1Z" id="4bX-H0-3cj"/>
                 <outlet property="emailAddressTextField" destination="fmb-Z0-W7z" id="Jtp-Rh-q5Y"/>
+                <outlet property="emailLabel" destination="GIu-xB-hJx" id="eQf-Pa-5Hp"/>
+                <outlet property="passwordLabel" destination="o56-Wr-f7u" id="61A-Wh-wGZ"/>
                 <outlet property="passwordTextField" destination="Yey-oc-Fe4" id="OFb-Gq-TLA"/>
                 <outlet property="saveButton" destination="lS9-Fq-0QH" id="BqF-EK-k7K"/>
             </connections>

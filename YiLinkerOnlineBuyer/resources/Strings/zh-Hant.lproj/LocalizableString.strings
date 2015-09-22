@@ -113,3 +113,57 @@ ACTIVITYLOGS_LOCALIZE_KEY = "行为\n日志";
 MYPOINTS_LOCALIZE_KEY = "我的\n积分";
 RESOLUTIONCENTER_LOCALIZE_KEY = "解析度\n中央";
 SETTINGS_LOCALIZE_KEY = "设置";
+
+//Edit Profile
+EDITPROFILE_LOCALIZE_KEY = "Edit Profile";
+EDITPHOTO_LOCALIZE_KEY = "Edit Photo";
+ADDPHOTO_LOCALIZE_KEY = "Add Photo";
+SELECTPHOTO_LOCALIZE_KEY = "Select photo from library";
+TAKEPHOTO_LOCALIZE_KEY = "Take a picture";
+CHANGEPASSWORD_LOCALIZE_KEY = "Change Password";
+SUCCESSCHANGEPASSWORD_LOCALIZE_KEY = "Successfully changed password!";
+SUCCESS_LOCALIZE_KEY = "Success";
+SUCCESSUPDATEPROFILE_LOCALIZE_KEY = "Successfully updated profile!";
+
+//Account Information
+ACCOUNTINFO_LOCALIZE_KEY = "Account Information";
+EMAILADD_LOCALIZE_KEY = "Email Address";
+PASSWORD_LOCALIZE_KEY = "Password";
+CHANGE_LOCALIZE_KEY = "CHANGE";
+SAVE_LOCALIZE_KEY = "SAVE";
+
+//Address
+ADDRESS_LOCALIZE_KEY = "Address";
+DEFAULTADDRESS_LOCALIZE_KEY = "Default Address";
+CHANGEADDRESS_LOCALIZE_KEY = "Change Address";
+
+//Personal Information
+PERSONALINFO_LOCALIZE_KEY = "Personal Information";
+FIRSTNAME_LOCALIZE_KEY = "First Name";
+LASTNAME_LOCALIZE_KEY = "Last Name";
+MOBILE_LOCALIZE_KEY = "Mobile Phone";
+
+//Change Mobile Number
+CHANGEMOBILE_LOCALIZE_KEY = "Change Mobile Number";
+OLDNUMBER_LOCALIZE_KEY = "Old Number";
+NEWNUMBER_LOCALIZE_KEY = "New Number";
+SUBMIT_LOCALIZE_KEY = "Submit";
+COMPLETEFIELDS_LOCALIZE_KEY = "Complete necessary fields!";
+INCORRECTMOBILE_LOCALIZE_KEY = "Incorrect old mobile number!";
+
+//Change Password
+CHANGEPASSWORD_LOCALIZE_KEY = "Change Password";
+OLDPASSWORD_LOCALIZE_KEY = "Old Password";
+NEWPASSWORD_LOCALIZE_KEY = "New Password";
+CONFIRMPASSWORD_LOCALIZE_KEY = "Confirm Password";
+SUBMIT_LOCALIZE_KEY = "Submit";
+PASSWORDMISMATCH_LOCALIZE_KEY = "Password does not match!";
+
+//Settings
+SETTINGS_LOCALIZE_KEY = "Settings";
+NOTIFICATION_LOCALIZE_KEY = "Notification";
+DEACTIVATEACCOUNT_LOCALIZE_KEY = "Deactivate Account";
+DEACTIVATE_LOCALIZE_KEY = "Deactivate";
+SETTINGSSMS_LOCALIZE_KEY = "Receive Notifications via SMS?";
+SETTINGSEMAIL_LOCALIZE_KEY = "Receive Notifications via Email?";
+SETTINGSDEACTIVATE_LOCALIZE_KEY = "Deactivate My Account?";

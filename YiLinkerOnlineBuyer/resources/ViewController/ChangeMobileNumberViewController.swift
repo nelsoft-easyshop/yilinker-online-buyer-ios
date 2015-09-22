@@ -29,6 +29,10 @@ class ChangeMobileNumberViewController: UIViewController {
     @IBOutlet weak var newNumberTextField: UITextField!
     @IBOutlet weak var submitButton: UIButton!
     
+    @IBOutlet weak var changeMobileLabel: UILabel!
+    @IBOutlet weak var oldNumberLabel: UILabel!
+    @IBOutlet weak var newNumberLabel: UILabel!
+    
     var mainViewOriginalFrame: CGRect?
     
     var screenHeight: CGFloat?
@@ -37,10 +41,14 @@ class ChangeMobileNumberViewController: UIViewController {
     
     var hud: MBProgressHUD?
     
+    var errorLocalizeString: String  = ""
+    var somethingWrongLocalizeString: String = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         initializeViews()
+        initializeLocalizedString()
     }
 
     override func didReceiveMemoryWarning() {
@@ -65,6 +73,23 @@ class ChangeMobileNumberViewController: UIViewController {
         screenHeight = screenSize.height
         
         topMarginConstraint.constant = (screenHeight! / 2) - (mainView.frame.height / 2)
+    }
+    
+    func initializeLocalizedString() {
+        //Initialized Localized String
+        errorLocalizeString = StringHelper.localizedStringWithKey("ERROR_LOCALIZE_KEY")
+        somethingWrongLocalizeString = StringHelper.localizedStringWithKey("SOMETHINGWENTWRONG_LOCALIZE_KEY")
+        
+        var changeMobileLocalizeString = StringHelper.localizedStringWithKey("CHANGEMOBILE_LOCALIZE_KEY")
+        var oldNumberLocalizeString = StringHelper.localizedStringWithKey("OLDNUMBER_LOCALIZE_KEY")
+        var newNumberLocalizeString = StringHelper.localizedStringWithKey("NEWNUMBER_LOCALIZE_KEY")
+        var submitLocalizeString = StringHelper.localizedStringWithKey("SUBMIT_LOCALIZE_KEY")
+        
+        submitButton.setTitle(submitLocalizeString, forState: UIControlState.Normal)
+        
+        changeMobileLabel.text = changeMobileLocalizeString
+        oldNumberLabel.text = oldNumberLocalizeString
+        newNumberLabel.text = newNumberLocalizeString
     }
     
     @IBAction func editBegin(sender: AnyObject) {
@@ -109,9 +134,11 @@ class ChangeMobileNumberViewController: UIViewController {
             newNumberTextField.resignFirstResponder()
             
             if oldNumberTextField.text.isEmpty ||  newNumberTextField.text.isEmpty{
-                showAlert(title: "Error", message: "Complete necessary fields!")
+                var completeLocalizeString = StringHelper.localizedStringWithKey("COMPLETEFIELDS_LOCALIZE_KEY")
+                showAlert(title: errorLocalizeString, message: completeLocalizeString)
             } else if oldNumberTextField.text != mobileNumber {
-                showAlert(title: "Error", message: "Incorrect old mobile number!")
+                var incorrectLocalizeString = StringHelper.localizedStringWithKey("INCORRECTMOBILE_LOCALIZE_KEY")
+                showAlert(title: errorLocalizeString, message: incorrectLocalizeString)
             } else {
                 fireUpdateProfile(APIAtlas.updateMobileNumber, params: NSDictionary(dictionary: ["access_token" : SessionManager.accessToken(),
                     "oldContactNumber": oldNumberTextField.text,
@@ -122,7 +149,8 @@ class ChangeMobileNumberViewController: UIViewController {
 
     func showAlert(#title: String!, message: String!) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
-        let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+        var okLocalizeString = StringHelper.localizedStringWithKey("OKBUTTON_LOCALIZE_KEY")
+        let defaultAction = UIAlertAction(title: okLocalizeString, style: .Default, handler: nil)
         alertController.addAction(defaultAction)
         presentViewController(alertController, animated: true, completion: nil)
     }
@@ -158,14 +186,14 @@ class ChangeMobileNumberViewController: UIViewController {
                         self.delegate?.submitChangeNumberViewController()
                         self.dismissLoader()
                     } else {
-                        self.showAlert(title: "Error", message: responseObject["message"] as! String)
+                        self.showAlert(title: self.errorLocalizeString, message: responseObject["message"] as! String)
                         self.dismissLoader()
                     }
                 }
                 println(responseObject)
                 }, failure: {
                     (task: NSURLSessionDataTask!, error: NSError!) in
-                    self.showAlert(title: "Error", message: "Something went wrong. . .")
+                    self.showAlert(title: self.errorLocalizeString, message: self.somethingWrongLocalizeString)
                     self.dismissLoader()
                     println(error)
             })
@@ -188,7 +216,7 @@ class ChangeMobileNumberViewController: UIViewController {
                 SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
                 self.fireUpdateProfile(url, params: params)
             } else {
-                self.showAlert(title: "Error", message: responseObject["message"] as! String)
+                self.showAlert(title: self.errorLocalizeString, message: responseObject["message"] as! String)
             }
             
             }, failure: {
@@ -196,7 +224,7 @@ class ChangeMobileNumberViewController: UIViewController {
                 self.dismissLoader()
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                 
-                self.showAlert(title: "Something went wrong", message: "")
+                self.showAlert(title: self.errorLocalizeString, message: self.somethingWrongLocalizeString)
                 
         })
     }

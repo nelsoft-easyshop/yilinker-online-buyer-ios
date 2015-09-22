@@ -108,6 +108,7 @@
             </tableViewCellContentView>
             <connections>
                 <outlet property="addressLabel" destination="y8e-dk-W3d" id="1Xu-rg-iHe"/>
+                <outlet property="addressSectionTitle" destination="vUx-6r-03k" id="n0g-eN-o9q"/>
                 <outlet property="addressTitleLabel" destination="TeV-4G-Wd9" id="FxW-yB-KUh"/>
                 <outlet property="changeAddressButton" destination="Wj7-3S-mMq" id="yKY-Ox-RPp"/>
                 <outlet property="changeAdressIconButton" destination="ZuC-3O-rEz" id="Mt1-Gq-e6V"/>
