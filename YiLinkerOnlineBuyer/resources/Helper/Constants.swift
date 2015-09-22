@@ -33,9 +33,6 @@ struct Constants {
         static let selectedCellColor: UIColor = HexaColor.colorWithHexa(0xE1E1E1)
         static let successfulVerification: UIColor = HexaColor.colorWithHexa(0x75348A)
         static let errorVerification: UIColor = HexaColor.colorWithHexa(0x666666)
-        static let grayText: UIColor = HexaColor.colorWithHexa(0x666666)
-        static let transactionGreen: UIColor = HexaColor.colorWithHexa(0x6ec850)
-        static let transactionGrey: UIColor = HexaColor.colorWithHexa(0xB6B6B6)
     }
     
     struct Facebook {

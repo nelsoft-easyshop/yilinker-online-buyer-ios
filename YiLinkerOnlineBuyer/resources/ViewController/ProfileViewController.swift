@@ -170,7 +170,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     func editProfileTapAction() {
         var editViewController = EditProfileTableViewController(nibName: "EditProfileTableViewController", bundle: nil)
         editViewController.passModel(profileDetails!)
-        self.navigationController?.pushViewController(editViewController, animated: true)
+        self.navigationController?.pushViewController(editViewController, animated:true)
     }
     
     func transactionsTapAction() {
@@ -193,14 +193,9 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     }
     
     func resolutionTapAction() {
-        //let storyboard = UIStoryboard(name: "HomeStoryBoard", bundle: nil)
-        //let resolutionCenter = storyboard.instantiateViewControllerWithIdentifier("ResolutionCenterViewController")
-        //     as! ResolutionCenterViewController
-        //resolutionCenter.hidesBottomBarWhenPushed = true
-        var resolutionCenter = ResolutionViewController(nibName: "ResolutionViewController", bundle: nil)
-        if resolutionCenter.respondsToSelector("edgesForExtendedLayout") {
-            resolutionCenter.edgesForExtendedLayout = UIRectEdge.None
-        }
+        let storyboard = UIStoryboard(name: "HomeStoryBoard", bundle: nil)
+        let resolutionCenter = storyboard.instantiateViewControllerWithIdentifier("ResolutionCenterViewController")
+            as! ResolutionCenterViewController
         resolutionCenter.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(resolutionCenter, animated:true)
         
