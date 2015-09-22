@@ -8,7 +8,6 @@
 
 SIGNIN_LOCALIZE_KEY = "SIGN IN";
 
-<<<<<<< HEAD
 // Global
 SOMETHINGWENTWRONG_LOCALIZE_KEY = "Something Went Wrong";
 OKBUTTON_LOCALIZE_KEY = "OK";
@@ -50,12 +49,6 @@ ALERT_ADDEDTOCART_LOCALIZE_KEY = "This item has been added to your cart.";
 ALERT_PLEASELOGIN_LOCALIZE_KEY = "Please logged-in to add item in your wishlist.";
 ALERT_PLEASECOMPLETE_LOCALIZE_KEY = "Please complete the attributes.";
 
-
-
-
-
-
-=======
 //Vendor Page
 VENDOR_PAGE_TITLE_LOCALIZE_KEY = "VENDOR PAGE";
 FOLLOW_LOCALIZE_KEY = "FOLLOW";
@@ -70,4 +63,3 @@ PRODUCT_RATINGS_AND_FEEDBACK_LOCALIZE_KEY = "Product Rating & Feedback";
 CANCEL_LOCALIZE_KEY = "CANCEL";
 SELLERS_RATING_AND_FEEDBACK_LOCALIZE_KEY = "Seller's Rating & Feedback";
 SELLERS_RATING_LOCALIZE_KEY = "people rate this seller";
->>>>>>> 5c409a6d8868bfbd82873f161e55132874fb1096
