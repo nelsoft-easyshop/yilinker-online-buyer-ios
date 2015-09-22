@@ -8,6 +8,10 @@
 
 import UIKit
 
+struct AttributeCellsStrings {
+    static let select = StringHelper.localizedStringWithKey("SELECT_LOCALIZE_KEY")
+}
+
 protocol ProductAttributeTableViewCellDelegate {
     func selectedAttribute(controller: ProductAttributeTableViewCell, attributeIndex: Int, attributeValue: String!, attributeId: Int)
 }
@@ -40,7 +44,7 @@ class ProductAttributeTableViewCell: UITableViewCell {
     // MARK: - Methods
 
     func setAttribute( model: ProductAttributeModel, availableCombination: NSArray, selectedValue: NSArray, selectedId: NSArray, width: CGFloat) {
-        attributeLabel.text = "Select \(model.attributeName)"
+        attributeLabel.text = AttributeCellsStrings.select + " \(model.attributeName)"
         
         self.attributesId = []
         self.attributesId = model.valueId

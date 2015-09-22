@@ -8,7 +8,7 @@
 
 import UIKit
 
-struct AttributeStrings {
+struct AttributesStrings {
     
     static let addToCart = StringHelper.localizedStringWithKey("ADDTOCART_LOCALIZE_KEY")
     static let buytItNow = StringHelper.localizedStringWithKey("BUYITNOW_LOCALIZE_KEY")
@@ -18,9 +18,6 @@ struct AttributeStrings {
     static let enterQuantity = StringHelper.localizedStringWithKey("ENTERQUANTITY_LOCALIZE_KEY")
     static let availableStocks = StringHelper.localizedStringWithKey("AVAILABLESTOCKS_LOCALIZE_KEY")
     static let select = StringHelper.localizedStringWithKey("SELECT_LOCALIZE_KEY")
-    
-    static let reviewRatingFeedback = StringHelper.localizedStringWithKey("REVIEWRATINGFEEDBACK_LOCALIZE_KEY")
-    static let peopleRate = StringHelper.localizedStringWithKey("PEOPLERATE_LOCALIZE_KEY")
     
     static let alertWishlist = StringHelper.localizedStringWithKey("ALERT_ADDEDTOWISHLIST_LOCALIZE_KEY")
     static let alertCart = StringHelper.localizedStringWithKey("ALERT_ADDEDTOCART_LOCALIZE_KEY")
@@ -37,6 +34,8 @@ protocol ProductAttributeViewControllerDelegate {
 class ProductAttributeViewController: UIViewController, UITableViewDelegate, ProductAttributeTableViewCellDelegate {
     
     @IBOutlet weak var dimView: UIView!
+    @IBOutlet weak var cancelButton: UIButton!
+    @IBOutlet weak var enterQuantityLabel: UILabel!
     @IBOutlet weak var productImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var priceLabel: UILabel!
@@ -82,26 +81,7 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        stocksLabel.layer.borderWidth = 1.2
-        stocksLabel.layer.borderColor = UIColor.grayColor().CGColor
-        stocksLabel.layer.cornerRadius = 5
-        
-        let nib = UINib(nibName: "ProductAttributeTableViewCell", bundle: nil)
-        self.tableView.registerNib(nib, forCellReuseIdentifier: "AttributeTableCell")
-        
-        let tap = UITapGestureRecognizer()
-        tap.numberOfTapsRequired = 1
-        tap.addTarget(self, action: "dimViewAction:")
-        self.dimView.addGestureRecognizer(tap)
-        self.dimView.backgroundColor = .clearColor()
-        
-        setBorderOf(view: addToCartButton, width: 1, color: .grayColor(), radius: 3)
-        setBorderOf(view: buyItNowView, width: 1, color: .grayColor(), radius: 3)
-        setBorderOf(view: checkoutButton, width: 1, color: .grayColor(), radius: 3)
-        
-        buyItNowView.addGestureRecognizer(tapGesture("buyItNowAction:"))
-        
-        priceLabel.textColor = Constants.Colors.productPrice
+        customizeViews()
         
     }
     
@@ -273,6 +253,35 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
     
     // MARK: - Methods
     
+    func customizeViews() {
+        stocksLabel.layer.borderWidth = 1.2
+        stocksLabel.layer.borderColor = UIColor.grayColor().CGColor
+        stocksLabel.layer.cornerRadius = 5
+        
+        let nib = UINib(nibName: "ProductAttributeTableViewCell", bundle: nil)
+        self.tableView.registerNib(nib, forCellReuseIdentifier: "AttributeTableCell")
+        
+        let tap = UITapGestureRecognizer()
+        tap.numberOfTapsRequired = 1
+        tap.addTarget(self, action: "dimViewAction:")
+        self.dimView.addGestureRecognizer(tap)
+        self.dimView.backgroundColor = .clearColor()
+        
+        setBorderOf(view: addToCartButton, width: 1, color: .grayColor(), radius: 3)
+        setBorderOf(view: buyItNowView, width: 1, color: .grayColor(), radius: 3)
+        setBorderOf(view: checkoutButton, width: 1, color: .grayColor(), radius: 3)
+        
+        buyItNowView.addGestureRecognizer(tapGesture("buyItNowAction:"))
+        
+        priceLabel.textColor = Constants.Colors.productPrice
+        
+        cancelButton.setTitle(AttributesStrings.cancel, forState: .Normal)
+        doneButton.setTitle(AttributesStrings.done, forState: .Normal)
+        enterQuantityLabel.text = AttributesStrings.enterQuantity
+        addToCartButton.setTitle(AttributesStrings.addToCart, forState: .Normal)
+        buyItNowLabel.text = AttributesStrings.buytItNow
+    }
+    
     func listAvailableCombinations() {
         self.availableCombination = []
         let not = "[^,]*"
@@ -316,7 +325,6 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
         
         for i in 0..<self.productDetailsModel.productUnits.count {
             if selectedCombination == self.productDetailsModel.productUnits[i].combination {
-                println("PRODUCT UNIT ID : \(self.productDetailsModel.productUnits[i].productUnitId)")
                 return self.productDetailsModel.productUnits[i].quantity
             }
         }
@@ -512,10 +520,9 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
         self.selectedCombination = productDetailsModel.productUnits[unitIdIndex].combination
         
         self.maximumStock = productDetailsModel.productUnits[unitIdIndex].quantity
-        self.availabilityStocksLabel.text = "Available stocks : \(productDetailsModel.productUnits[unitIdIndex].quantity)"
+        self.availabilityStocksLabel.text = AttributesStrings.availableStocks + " : \(productDetailsModel.productUnits[unitIdIndex].quantity)"
         
         convertCombinationToString()
-        println(combinationString)
         
         if self.maximumStock != 0 {
             stocks = quantity
