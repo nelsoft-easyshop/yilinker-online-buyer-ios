@@ -8,23 +8,6 @@
 
 import UIKit
 
-struct AttributesStrings {
-    
-    static let addToCart = StringHelper.localizedStringWithKey("ADDTOCART_LOCALIZE_KEY")
-    static let buytItNow = StringHelper.localizedStringWithKey("BUYITNOW_LOCALIZE_KEY")
-    
-    static let cancel = StringHelper.localizedStringWithKey("CANCEL_LOCALIZE_KEY")
-    static let done = StringHelper.localizedStringWithKey("DONE_LOCALIZE_KEY")
-    static let enterQuantity = StringHelper.localizedStringWithKey("ENTERQUANTITY_LOCALIZE_KEY")
-    static let availableStocks = StringHelper.localizedStringWithKey("AVAILABLESTOCKS_LOCALIZE_KEY")
-    static let select = StringHelper.localizedStringWithKey("SELECT_LOCALIZE_KEY")
-    
-    static let alertWishlist = StringHelper.localizedStringWithKey("ALERT_ADDEDTOWISHLIST_LOCALIZE_KEY")
-    static let alertCart = StringHelper.localizedStringWithKey("ALERT_ADDEDTOCART_LOCALIZE_KEY")
-    static let alertLogin = StringHelper.localizedStringWithKey("ALERT_PLEASELOGIN_LOCALIZE_KEY")
-    static let alertComplete = StringHelper.localizedStringWithKey("ALERT_PLEASECOMPLETE_LOCALIZE_KEY")
-}
-
 protocol ProductAttributeViewControllerDelegate {
     func dissmissAttributeViewController(controller: ProductAttributeViewController, type: String)
     func doneActionPassDetailsToProductView(controller: ProductAttributeViewController, unitId: String, quantity: Int, selectedId: NSArray)
@@ -275,11 +258,11 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
         
         priceLabel.textColor = Constants.Colors.productPrice
         
-        cancelButton.setTitle(AttributesStrings.cancel, forState: .Normal)
-        doneButton.setTitle(AttributesStrings.done, forState: .Normal)
-        enterQuantityLabel.text = AttributesStrings.enterQuantity
-        addToCartButton.setTitle(AttributesStrings.addToCart, forState: .Normal)
-        buyItNowLabel.text = AttributesStrings.buytItNow
+        cancelButton.setTitle(ProductStrings.cancel, forState: .Normal)
+        doneButton.setTitle(ProductStrings.done, forState: .Normal)
+        enterQuantityLabel.text = ProductStrings.enterQuantity
+        addToCartButton.setTitle(ProductStrings.addToCart, forState: .Normal)
+        buyItNowLabel.text = ProductStrings.buytItNow
     }
     
     func listAvailableCombinations() {
@@ -520,7 +503,7 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
         self.selectedCombination = productDetailsModel.productUnits[unitIdIndex].combination
         
         self.maximumStock = productDetailsModel.productUnits[unitIdIndex].quantity
-        self.availabilityStocksLabel.text = AttributesStrings.availableStocks + " : \(productDetailsModel.productUnits[unitIdIndex].quantity)"
+        self.availabilityStocksLabel.text = ProductStrings.availableStocks + " : \(productDetailsModel.productUnits[unitIdIndex].quantity)"
         
         convertCombinationToString()
         
