@@ -9,32 +9,32 @@
 import UIKit
 
 struct ProductStrings {
-    static let freeShipping = StringHelper.localizedStringWithKey("FREESHIPPING_LOCALIZE_KEY")
+    static let freeShipping = StringHelper.localizedStringWithKey("FREE_SHIPPING_LOCALIZE_KEY")
     static let details = StringHelper.localizedStringWithKey("DETAILS_LOCALIZE_KEY")
     static let quantity = StringHelper.localizedStringWithKey("QUANTITY_LOCALIZE_KEY")
     static let description = StringHelper.localizedStringWithKey("DESCRIPTION_LOCALIZE_KEY")
-    static let seeMore = StringHelper.localizedStringWithKey("SEEMORE_LOCALIZE_KEY")
-    static let ratingFeedback = StringHelper.localizedStringWithKey("RATINGFEEDBACK_LOCALIZE_KEY")
+    static let seeMore = StringHelper.localizedStringWithKey("SEE_MORE_LOCALIZE_KEY")
+    static let ratingFeedback = StringHelper.localizedStringWithKey("RATING_FEEDBACK_LOCALIZE_KEY")
     static let seller = StringHelper.localizedStringWithKey("SELLER_LOCALIZE_KEY")
 
-    static let addToCart = StringHelper.localizedStringWithKey("ADDTOCART_LOCALIZE_KEY")
-    static let buytItNow = StringHelper.localizedStringWithKey("BUYITNOW_LOCALIZE_KEY")
+    static let addToCart = StringHelper.localizedStringWithKey("ADD_TO_CART_LOCALIZE_KEY")
+    static let buytItNow = StringHelper.localizedStringWithKey("BUY_IT_NOW_LOCALIZE_KEY")
     
     static let cancel = StringHelper.localizedStringWithKey("CANCEL_LOCALIZE_KEY")
     static let done = StringHelper.localizedStringWithKey("DONE_LOCALIZE_KEY")
-    static let enterQuantity = StringHelper.localizedStringWithKey("ENTERQUANTITY_LOCALIZE_KEY")
-    static let availableStocks = StringHelper.localizedStringWithKey("AVAILABLESTOCKS_LOCALIZE_KEY")
+    static let enterQuantity = StringHelper.localizedStringWithKey("ENTER_QUANTITY_LOCALIZE_KEY")
+    static let availableStocks = StringHelper.localizedStringWithKey("AVAILABLE_STOCKS_LOCALIZE_KEY")
     static let select = StringHelper.localizedStringWithKey("SELECT_LOCALIZE_KEY")
     
-    static let reviewRatingFeedback = StringHelper.localizedStringWithKey("REVIEWRATINGFEEDBACK_LOCALIZE_KEY")
-    static let peopleRate = StringHelper.localizedStringWithKey("PEOPLERATE_LOCALIZE_KEY")
+    static let reviewRatingFeedback = StringHelper.localizedStringWithKey("REVIEW_RATING_FEEDBACK_LOCALIZE_KEY")
+    static let peopleRate = StringHelper.localizedStringWithKey("PEOPLE_RATE_LOCALIZE_KEY")
     
-    static let alertWishlist = StringHelper.localizedStringWithKey("ALERT_ADDEDTOWISHLIST_LOCALIZE_KEY")
-    static let alertCart = StringHelper.localizedStringWithKey("ALERT_ADDEDTOCART_LOCALIZE_KEY")
-    static let alertLogin = StringHelper.localizedStringWithKey("ALERT_PLEASELOGIN_LOCALIZE_KEY")
-    static let alertComplete = StringHelper.localizedStringWithKey("ALERT_PLEASECOMPLETE_LOCALIZE_KEY")
-    static let alertWentWrong = StringHelper.localizedStringWithKey("SOMETHINGWENTWRONG_LOCALIZE_KEY")
-    static let alertOk = StringHelper.localizedStringWithKey("OKBUTTON_LOCALIZE_KEY")
+    static let alertWishlist = StringHelper.localizedStringWithKey("ALERT_ADDED_TO_WISHLIST_LOCALIZE_KEY")
+    static let alertCart = StringHelper.localizedStringWithKey("ALERT_ADDED_TO_CART_LOCALIZE_KEY")
+    static let alertLogin = StringHelper.localizedStringWithKey("ALERT_PLEASE_LOGIN_LOCALIZE_KEY")
+    static let alertComplete = StringHelper.localizedStringWithKey("ALERT_PLEASE_COMPLETE_LOCALIZE_KEY")
+    static let alertWentWrong = StringHelper.localizedStringWithKey("SOMETHING_WENT_WRONG_LOCALIZE_KEY")
+    static let alertOk = StringHelper.localizedStringWithKey("OK_BUTTON_LOCALIZE_KEY")
     static let alertError = StringHelper.localizedStringWithKey("ERROR_LOCALIZE_KEY")
     static let alertFailed = StringHelper.localizedStringWithKey("FAILED_LOCALIZE_KEY")
 }

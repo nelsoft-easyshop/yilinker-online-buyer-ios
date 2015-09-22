@@ -53,7 +53,7 @@ class HiddenViewController: UIViewController {
             if index == 0 {
                 self.setNavigationBarTitle("Help")
             } else if index == 1 {
-                self.setNavigationBarTitle(StringHelper.localizedStringWithKey("FOLLOWEDSELLERS_LOCALIZE_KEY"))
+                self.setNavigationBarTitle(StringHelper.localizedStringWithKey("FOLLOWED_SELLERS_LOCALIZE_KEY"))
             } else if index == 2 {
                 self.setNavigationBarTitle("Messaging")
             } else if index == 3 {

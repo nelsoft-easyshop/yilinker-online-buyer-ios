@@ -128,7 +128,7 @@ class CategoriesViewController: UIViewController, EmptyViewDelegate {
         categoryLabel.text = "    "
      
         if parentText == "" {
-            categoryLabel.text! += StringHelper.localizedStringWithKey("SELECTCATEGORY_LOCALIZE_KEY")
+            categoryLabel.text! += StringHelper.localizedStringWithKey("SELECT_CATEGORY_LOCALIZE_KEY")
             categoryLabel.sizeToFit()
             categoryLabel.frame.size.height = containerView.frame.size.height
         } else {
