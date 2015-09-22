@@ -21,6 +21,10 @@ class TransactionSectionFooterView: UIView {
     
     @IBOutlet weak var sellerNameLabel: UILabel!
     
+    @IBOutlet weak var sellerContactNumberTitle: UILabel!
+    
+    @IBOutlet weak var sellerNameLabelTitle: UILabel!
+    
     var delegate: TransactionSectionFooterViewDelegate?
     /*
     // Only override drawRect: if you perform custom drawing.

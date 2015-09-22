@@ -57,6 +57,39 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
     
     var delegate: TransactionSectionFooterViewDelegate?
     
+    //Transaction Details
+    var transactionDetailsTitle = StringHelper.localizedStringWithKey("TRANSACTION_DETAILS_TITLE_LOCALIZE_KEY")
+    
+    var transactionDetails = StringHelper.localizedStringWithKey("TRANSACTION_DETAILS_LOCALIZE_KEY")
+    var statusTitle = StringHelper.localizedStringWithKey("TRANSACTION_DETAILS_STATUS_LOCALIZE_KEY")
+    var paymentTypeTitle = StringHelper.localizedStringWithKey("TRANSACTION_DETAILS_PAYMENT_LOCALIZE_KEY")
+    var dateCreatedTitle = StringHelper.localizedStringWithKey("TRANSACTION_DETAILS_DATE_LOCALIZE_KEY")
+    var totalQuantityTitle = StringHelper.localizedStringWithKey("TRANSACTION_DETAILS_QUANTITY_LOCALIZE_KEY")
+    var totalUnitCostTitle = StringHelper.localizedStringWithKey("TRANSACTION_DETAILS_UNIT_COST_LOCALIZE_KEY")
+    var shippingFeeTitle = StringHelper.localizedStringWithKey("TRANSACTION_DETAILS_SHIPPING_LOCALIZE_KEY")
+    var totalCostTitle = StringHelper.localizedStringWithKey("TRANSACTION_DETAILS_TOTAL_COST_LOCALIZE_KEY")
+    
+    //Delivery Status
+    var deliveryStatus = StringHelper.localizedStringWithKey("TRANSACTION_DETAILS_DELIVERY_STATUS_LOCALIZE_KEY")
+    var checkIn = StringHelper.localizedStringWithKey("TRANSACTION_DETAILS_CHECKIN_LOCALIZE_KEY")
+    var pickUp = StringHelper.localizedStringWithKey("TRANSACTION_DETAILS_PICKUP_LOCALIZE_KEY")
+    var delivery = StringHelper.localizedStringWithKey("TRANSACTION_DETAILS_DELIVERY_LOCALIZE_KEY")
+    
+    //Product List
+    var productList = StringHelper.localizedStringWithKey("TRANSACTION_DETAILS_PRODUCT_LIST_LOCALIZE_KEY")
+    var seller = StringHelper.localizedStringWithKey("TRANSACTION_DETAILS_SELLER_LOCALIZE_KEY")
+    var contactNumber = StringHelper.localizedStringWithKey("TRANSACTION_DETAILS_CONTACT_NUMBER_LOCALIZE_KEY")
+    var viewFeedback = StringHelper.localizedStringWithKey("TRANSACTION_DETAILS_VIEW_FEEDBACK_LOCALIZE_KEY")
+    var leaveFeedback = StringHelper.localizedStringWithKey("TRANSACTION_DETAILS_LEAVE_FEEDBACK_LOCALIZE_KEY")
+    var message = StringHelper.localizedStringWithKey("TRANSACTION_DETAILS_MESSAGE_LOCALIZE_KEY")
+    
+    //Description
+    var description = StringHelper.localizedStringWithKey("TRANSACTION_PRODUCT_DETAILS_DESCRIPTION_LOCALIZE_KEY")
+    var seeMore = StringHelper.localizedStringWithKey("TRANSACTION_PRODUCT_DETAILS_SEE_MORE_LOCALIZE_KEY")
+    
+    //Cancel Order
+    var cancelOrder = StringHelper.localizedStringWithKey("TRANSACTION_PRODUCT_DETAILS_CANCEL_ORDER_LOCALIZE_KEY")
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -71,7 +104,7 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
         total_unit_price = (self.totalUnitCost as NSString).floatValue
         total_handling_fee = (self.shippingFee as NSString).floatValue
         
-        self.title = "Transaction Details"
+        self.title = transactionDetailsTitle
         self.backButton()
     }
     
@@ -130,19 +163,21 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
     func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
          self.transactionSectionView = XibHelper.puffViewWithNibName("TransactionViews", index: 7) as! TransactionSectionFooterView
         self.transactionSectionView.delegate = self
+        self.transactionSectionView.sellerContactNumberTitle.text = self.seller
+        self.transactionSectionView.sellerNameLabelTitle.text = self.contactNumber
         if self.table.count != 0 {
             if self.table[section].feedback {
                 self.transactionSectionView.leaveFeedbackButton.backgroundColor = Constants.Colors.appTheme
                 self.transactionSectionView.leaveFeedbackButton.borderColor = Constants.Colors.appTheme
                 self.transactionSectionView.leaveFeedbackButton.borderWidth = 1
-                self.transactionSectionView.leaveFeedbackButton.setTitle("VIEW FEEDBACK FOR SELLER", forState: UIControlState.Normal)
+                self.transactionSectionView.leaveFeedbackButton.setTitle(viewFeedback, forState: UIControlState.Normal)
                 self.transactionSectionView.leaveFeedbackButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
                 self.viewLeaveFeedback = false
             } else {
                 self.transactionSectionView.leaveFeedbackButton.backgroundColor = UIColor.clearColor()
                 self.transactionSectionView.leaveFeedbackButton.borderColor = Constants.Colors.appTheme
                 self.transactionSectionView.leaveFeedbackButton.borderWidth = 1
-                self.transactionSectionView.leaveFeedbackButton.setTitle("LEAVE FEEDBACK FOR SELLER", forState: UIControlState.Normal)
+                self.transactionSectionView.leaveFeedbackButton.setTitle(leaveFeedback, forState: UIControlState.Normal)
                 self.transactionSectionView.leaveFeedbackButton.setTitleColor(Constants.Colors.appTheme, forState: UIControlState.Normal)
                 self.viewLeaveFeedback = true
             }
@@ -202,6 +237,14 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
     func getTransactionDetailsView() -> TransactionDetailsView {
         if self.transactionDetailsView == nil {
             self.transactionDetailsView = XibHelper.puffViewWithNibName("TransactionViews", index: 1) as! TransactionDetailsView
+            transactionDetailsView.statusTitleLabel.text = self.statusTitle
+            transactionDetailsView.paymentTypeTitleLabel.text = self.paymentTypeTitle
+            transactionDetailsView.dateCreatedTitleLabel.text = self.dateCreatedTitle
+            transactionDetailsView.quantityTitleLabel.text = self.totalQuantityTitle
+            transactionDetailsView.unitCostTitleLabel.text = self.totalUnitCostTitle
+            transactionDetailsView.shippingFeeTitleLabel.text = self.shippingFeeTitle
+            transactionDetailsView.totalCostTitleLabel.text = self.totalCostTitle
+            
             transactionDetailsView.statusLabel.text = self.orderStatus
             transactionDetailsView.paymentTypeLabel.text = self.paymentType
             transactionDetailsView.dateCreatedLabel.text = self.dateCreated
@@ -220,7 +263,7 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
             self.transactionProductListView = UIView(frame: (CGRectMake(0, 0, self.view.frame.size.width, 30)))
             
             var listLabel = UILabel(frame: CGRectMake(8, 0, self.transactionProductListView.frame.size.width - 8, self.transactionProductListView.frame.size.height))
-            listLabel.text = "PRODUCT LIST"
+            listLabel.text =
             listLabel.textColor = .darkGrayColor()
             listLabel.font = UIFont.systemFontOfSize(12.0)
             

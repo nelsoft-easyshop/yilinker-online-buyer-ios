@@ -109,6 +109,7 @@ class TransactionViewController: UIViewController {
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let transactionDetails = TransactionDetailsViewController(nibName: "TransactionDetailsViewController", bundle: nil)
+        transactionDetails.transactionDe
         transactionDetails.transactionId = self.transactionModel!.invoice_number[indexPath.row]
         transactionDetails.totalProducts = self.transactionModel!.product_count[indexPath.row]
         transactionDetails.orderStatus = self.transactionModel!.order_status[indexPath.row]
