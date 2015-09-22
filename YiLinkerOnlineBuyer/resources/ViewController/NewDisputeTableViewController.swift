@@ -19,6 +19,7 @@ struct DisputeStrings {
     static let add = StringHelper.localizedStringWithKey("DISPUTE_ADD_LOCALIZE_KEY")
     static let remarks = StringHelper.localizedStringWithKey("DISPUTE_REMARKS_LOCALIZE_KEY")
     static let submit = StringHelper.localizedStringWithKey("DISPUTE_SUBMIT_CASE_LOCALIZE_KEY")
+    static let done = StringHelper.localizedStringWithKey("TOOLBAR_DONE_LOCALIZE_KEY")
 }
 
 class NewDisputeTableViewController: UITableViewController, UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate, DisputeAddItemViewControllerDelegate {
@@ -63,7 +64,8 @@ class NewDisputeTableViewController: UITableViewController, UIPickerViewDataSour
         self.transactionTypeLabel.required()
         self.productsLabel.required()
         self.remarksLabel.required()
-        self.transactionType.text = "Refund"
+
+        setStrings()
     }
     
     func setStrings() {
@@ -202,7 +204,7 @@ class NewDisputeTableViewController: UITableViewController, UIPickerViewDataSour
         toolBar.barTintColor = Constants.Colors.appTheme
         toolBar.tintColor = UIColor.whiteColor()
         
-        let doneItem = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Done, target: self, action: "toolBarDoneAction")
+        let doneItem = UIBarButtonItem(title: DisputeStrings.done, style: UIBarButtonItemStyle.Done, target: self, action: "toolBarDoneAction")
         
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: self, action: nil)
         
