@@ -66,7 +66,6 @@ class CartProductAttributeViewController: UIViewController, UITableViewDelegate,
         initializeLocalizedString()
     }
     
-    
     func initializeLocalizedString() {
         let cancelLocalizeString: String = StringHelper.localizedStringWithKey("CANCEL_LOCALIZE_KEY")
         doneButton.setTitle(cancelLocalizeString, forState: UIControlState.Normal)
@@ -79,6 +78,7 @@ class CartProductAttributeViewController: UIViewController, UITableViewDelegate,
         
         availableLocalizeString = StringHelper.localizedStringWithKey("AVAILABLESTOCKS_LOCALIZE_KEY")
     }
+    
     // MARK: - Table View Data Source
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
