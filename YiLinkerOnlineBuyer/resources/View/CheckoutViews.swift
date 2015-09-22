@@ -12,12 +12,24 @@ class CheckoutViews: UIView {
 
     @IBOutlet weak var totalPricelabel: UILabel!
     
-    /*
-    // Only override drawRect: if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func drawRect(rect: CGRect) {
-        // Drawing code
+    override func awakeFromNib() {
+        for view in self.subviews {
+            if view.tag == 10 {
+                let label: UILabel = view as! UILabel
+                label.text = CheckoutStrings.orderSummary
+            } else if view.tag == 20 {
+                let label: UILabel = view as! UILabel
+                label.text = CheckoutStrings.delivery
+            } else if view.tag == 30 {
+                let label: UILabel = view as! UILabel
+                label.text = CheckoutStrings.total
+            } else if view.tag == 40 {
+                let label: UILabel = view as! UILabel
+                label.text = CheckoutStrings.free
+            } else if view.tag == 50 {
+                let label: UILabel = view as! UILabel
+                label.text = CheckoutStrings.shipTo
+            }
+        }
     }
-    */
-
 }

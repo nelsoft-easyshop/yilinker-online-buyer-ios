@@ -364,7 +364,6 @@
 		F7CCDA8D1B943CBB000F5AD4 /* FollowedSellerTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7CCDA7D1B943CBB000F5AD4 /* FollowedSellerTableViewCell.xib */; };
 		F7CCDA8E1B943CBB000F5AD4 /* FollowedSellerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7CCDA7E1B943CBB000F5AD4 /* FollowedSellerViewController.xib */; };
 		F7CCDA901B943CBB000F5AD4 /* MessagingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7CCDA801B943CBB000F5AD4 /* MessagingViewController.xib */; };
-		F7CCDA921B943CBB000F5AD4 /* PaymentViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7CCDA821B943CBB000F5AD4 /* PaymentViewController.xib */; };
 		F7CCDA951B943CBB000F5AD4 /* SellerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7CCDA851B943CBB000F5AD4 /* SellerViewController.xib */; };
 		F7CCDA961B943CBB000F5AD4 /* SummaryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7CCDA861B943CBB000F5AD4 /* SummaryViewController.xib */; };
 		F7CCDA971B943CBB000F5AD4 /* TodaysPromoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7CCDA871B943CBB000F5AD4 /* TodaysPromoViewController.xib */; };
@@ -772,7 +771,6 @@
 		F7CCDA7D1B943CBB000F5AD4 /* FollowedSellerTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = FollowedSellerTableViewCell.xib; path = YiLinkerOnlineBuyer/resources/ViewController/FollowedSellerTableViewCell.xib; sourceTree = SOURCE_ROOT; };
 		F7CCDA7E1B943CBB000F5AD4 /* FollowedSellerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = FollowedSellerViewController.xib; path = YiLinkerOnlineBuyer/resources/ViewController/FollowedSellerViewController.xib; sourceTree = SOURCE_ROOT; };
 		F7CCDA801B943CBB000F5AD4 /* MessagingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MessagingViewController.xib; path = YiLinkerOnlineBuyer/resources/ViewController/MessagingViewController.xib; sourceTree = SOURCE_ROOT; };
-		F7CCDA821B943CBB000F5AD4 /* PaymentViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PaymentViewController.xib; path = YiLinkerOnlineBuyer/resources/ViewController/PaymentViewController.xib; sourceTree = SOURCE_ROOT; };
 		F7CCDA851B943CBB000F5AD4 /* SellerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SellerViewController.xib; path = YiLinkerOnlineBuyer/resources/ViewController/SellerViewController.xib; sourceTree = SOURCE_ROOT; };
 		F7CCDA861B943CBB000F5AD4 /* SummaryViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SummaryViewController.xib; path = YiLinkerOnlineBuyer/resources/ViewController/SummaryViewController.xib; sourceTree = SOURCE_ROOT; };
 		F7CCDA871B943CBB000F5AD4 /* TodaysPromoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TodaysPromoViewController.xib; path = YiLinkerOnlineBuyer/resources/ViewController/TodaysPromoViewController.xib; sourceTree = SOURCE_ROOT; };
@@ -1271,7 +1269,6 @@
 				0C374F111B88E3790050AE1D /* OrderSummaryTableViewCell.xib */,
 				0C374F101B88E3790050AE1D /* OverViewViewController.xib */,
 				0C374F0D1B88E3790050AE1D /* PaymentTableViewCell.xib */,
-				F7CCDA821B943CBB000F5AD4 /* PaymentViewController.xib */,
 				0C374F171B88E3790050AE1D /* PaymentViewController.xib */,
 				0C374F181B88E3790050AE1D /* PaymentWebViewViewController.xib */,
 				0C374F0E1B88E3790050AE1D /* PlainTableViewCell.xib */,
@@ -1612,7 +1609,6 @@
 				0C374F2F1B88E3790050AE1D /* TotalTableViewCell.xib in Resources */,
 				0C374F341B88E3790050AE1D /* NewAddressTableViewCell.xib in Resources */,
 				F7CCDA8A1B943CBB000F5AD4 /* CategoriesViewController.xib in Resources */,
-				F7CCDA921B943CBB000F5AD4 /* PaymentViewController.xib in Resources */,
 				0C374F331B88E3790050AE1D /* DeliverToTableViewCell.xib in Resources */,
 				0C374F3A1B88E3790050AE1D /* ProductsTableViewCell.xib in Resources */,
 				79AA08351B8F4E6300AF3AA4 /* CartProductAttributeTableViewCell.xib in Resources */,

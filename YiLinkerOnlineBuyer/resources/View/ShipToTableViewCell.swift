@@ -18,6 +18,7 @@ class ShipToTableViewCell: UITableViewCell {
     @IBOutlet weak var changeAddressLabel: UILabel!
     @IBOutlet weak var defaultAddressLabel: UILabel!
     @IBOutlet weak var fakeContainerView: UIView!
+    @IBOutlet weak var shipToLabel: UILabel!
     
     var delegate: ShipToTableViewCellDelegate?
     
@@ -32,6 +33,10 @@ class ShipToTableViewCell: UITableViewCell {
         let touchRecognizer: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "tap")
         self.userInteractionEnabled = true
         self.addGestureRecognizer(touchRecognizer)
+        
+        self.shipToLabel.text = CheckoutStrings.shipTo
+        self.defaultAddressLabel.text = CheckoutStrings.defaultAddress
+        self.changeAddressLabel.text = CheckoutStrings.changeAddress
     }
     
     func tap() {

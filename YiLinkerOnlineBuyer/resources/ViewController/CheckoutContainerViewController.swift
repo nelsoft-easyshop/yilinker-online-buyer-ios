@@ -8,6 +8,45 @@
 
 import UIKit
 
+struct CheckoutStrings {
+    static let summary: String = StringHelper.localizedStringWithKey("SUMMARY_LOCALIZE_KEY")
+    static let payment: String = StringHelper.localizedStringWithKey("PAYMENT_LOCALIZE_KEY")
+    static let overView: String = StringHelper.localizedStringWithKey("OVERVIEW_LOCALIZE_KEY")
+    
+    static let orderSummary: String = StringHelper.localizedStringWithKey("ORDER_SUMMARY_LOCALIZE_KEY")
+    static let delivery: String = StringHelper.localizedStringWithKey("DELIVERY_LOCALIZE_KEY")
+    static let total: String = StringHelper.localizedStringWithKey("TOTAL_LOCALIZE_KEY")
+    static let free: String = StringHelper.localizedStringWithKey("FREE_LOCALIZE_KEY")
+    
+    static let shipTo: String = StringHelper.localizedStringWithKey("SHIP_TO_LOCALIZE_KEY")
+    static let defaultAddress: String = StringHelper.localizedStringWithKey("DEFAULT_ADDRESS_LOCALIZE_KEY")
+    static let changeAddress: String = StringHelper.localizedStringWithKey("CHANGE_ADDRESS_LOCALIZE_KEY")
+    
+    static let saveAndContinue: String = StringHelper.localizedStringWithKey("SAVE_AND_CONTINUE_LOCALIZE_KEY")
+    static let saveAndGoToPayment: String = StringHelper.localizedStringWithKey("SAVE_AND_GO_TO_PAYMENT_LOCALIZE_KEY")
+    static let continueShopping: String = StringHelper.localizedStringWithKey("CONTINUE_SHOPPING_LOCALIZE_KEY")
+}
+
+struct AddressStrings {
+    static let firstName: String = StringHelper.localizedStringWithKey("FIRST_NAME_LOCALIZE_KEY")
+    static let lastName: String = StringHelper.localizedStringWithKey("LAST_NAME_LOCALIZE_KEY")
+    
+    static let mobileNumber: String = StringHelper.localizedStringWithKey("MOBILE_NUMBER_LOCALIZE_KEY")
+    static let emailAddress: String = StringHelper.localizedStringWithKey("EMAIL_ADDRESS_LOCALIZE_KEY")
+    static let unitNo: String = StringHelper.localizedStringWithKey("UNIT_NO_LOCALIZE_KEY")
+    static let buildingName: String = StringHelper.localizedStringWithKey("BUILDING_NAME_LOCALIZE_KEY")
+    static let streetNo: String = StringHelper.localizedStringWithKey("STREET_NO_LOCALIZE_KEY")
+    static let streetName: String = StringHelper.localizedStringWithKey("STREET_NAME_LOCALIZE_KEY")
+
+    static let subdivision: String = StringHelper.localizedStringWithKey("SUBDIVISION_LOCALIZE_KEY")
+    static let province: String = StringHelper.localizedStringWithKey("PROVINCE_LOCALIZE_KEY")
+    static let city: String = StringHelper.localizedStringWithKey("CITY_LOCALIZE_KEY")
+    
+    static let barangay: String = StringHelper.localizedStringWithKey("BARANGAY_LOCALIZE_KEY")
+    static let zipCode: String = StringHelper.localizedStringWithKey("ZIP_CODE_LOCALIZE_KEY")
+    static let additionalInfo: String = StringHelper.localizedStringWithKey("ADDITIONAL_INFO_LOCALIZE_KEY")
+}
+
 class CheckoutContainerViewController: UIViewController, PaymentWebViewViewControllerDelegate, RegisterModalViewControllerDelegate {
     
     var summaryViewController: SummaryViewController?
@@ -56,6 +95,12 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
         self.initViewController()
         self.setSelectedViewControllerWithIndex(self.selectedIndex)
         self.backButton()
+        
+        self.summaryLabel.text = CheckoutStrings.summary
+        self.paymentLabel.text = CheckoutStrings.payment
+        self.overViewLabel.text = CheckoutStrings.overView
+        
+        self.continueButton.setTitle(CheckoutStrings.saveAndContinue, forState: UIControlState.Normal)
     }
     
     func showHUD() {
@@ -84,14 +129,14 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
     func setSelectedViewControllerWithIndex(index: Int) {
         if index == 0 {
             self.firsCircle()
-            self.continueButton("Save and Continue")
+            self.continueButton(CheckoutStrings.saveAndContinue)
             let viewController: UIViewController = viewControllers[index]
             setSelectedViewController(viewController)
         } else if index == 1 {
             if SessionManager.isLoggedIn() || self.isValidGuestUser {
                 self.isValidGuestUser = false
                 self.secondCircle()
-                self.continueButton("Save and Go to Payment")
+                self.continueButton(CheckoutStrings.saveAndGoToPayment)
                 let viewController: UIViewController = viewControllers[index]
                 setSelectedViewController(viewController)
             } else {
@@ -371,7 +416,7 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
         setSelectedViewController(viewController)
         self.navigationItem.leftBarButtonItems = []
         self.navigationItem.rightBarButtonItems = []
-        self.continueButton("Continue Shopping")
+        self.continueButton(CheckoutStrings.continueShopping)
         self.thirdCircle()
     }
     

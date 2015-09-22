@@ -77,6 +77,51 @@ SELLER_CS_LOCALIZE_KEY = "Seller";
 PROMOS_CS_LOCALIZE_KEY = "Promos";
 OTHERS_CS_LOCALIZE_KEY = "Others";
 
+// MARK: - Checkout Container
+SUMMARY_LOCALIZE_KEY = "Summary";
+PAYMENT_LOCALIZE_KEY = "Payment";
+OVERVIEW_LOCALIZE_KEY = "Overview";
+
+ORDER_SUMMARY_LOCALIZE_KEY = "Order Summary";
+DELIVERY_LOCALIZE_KEY = "Delivery";
+TOTAL_LOCALIZE_KEY = "Total";
+FREE_LOCALIZE_KEY = "Free";
+
+SHIP_TO_LOCALIZE_KEY = "Ship to";
+DEFAULT_ADDRESS_LOCALIZE_KEY = "Default Address";
+CHANGE_ADDRESS_LOCALIZE_KEY = "Change Address";
+
+SAVE_AND_CONTINUE_LOCALIZE_KEY = "Save and Continue";
+SAVE_AND_GO_TO_PAYMENT_LOCALIZE_KEY = "Save and Go to Payment";
+CONTINUE_SHOPPING_LOCALIZE_KEY = "Continue Shopping";
+
+// Mark: - Address
+MOBILE_NUMBER_LOCALIZE_KEY = "Mobile Number";
+EMAIL_ADDRESS_LOCALIZE_KEY = "Email Address";
+UNIT_NO_LOCALIZE_KEY = "Unit No.";
+BUILDING_NAME_LOCALIZE_KEY = "Building Name";
+
+STREET_NO_LOCALIZE_KEY = "Street No.";
+STREET_NAME_LOCALIZE_KEY = "Street Name";
+
+SUBDIVISION_LOCALIZE_KEY = "Subdivision";
+PROVINCE_LOCALIZE_KEY = "Province";
+CITY_LOCALIZE_KEY = "City";
+
+BARANGAY_LOCALIZE_KEY = "Barangay";
+ZIP_CODE_LOCALIZE_KEY = "Zip Code";
+ADDITIONAL_INFO_LOCALIZE_KEY = "Additional Info";
+
+// MARK: - Checkout - Payment
+HOW_DO_LOCALIZE_KEY = "How do you wish to pay";
+REMEMBER_PAYMENT_LOCALIZE_KEY = "Remember Payment Option";
+DELIVER_TO_LOCALIZE_KEY = "Deliver to:";
+COD_LOCALIZE_KEY = "CoD";
+CREDIT_CARD_LOCALIZE_KEY = "Creditcard";
+
+// MARK: - Checkout OverView
+CONGRATULATIONS_LOCALIZE_KEY = "Congratulations!";
+SUCCESS_PURCHASE_LOCALIZE_KEY = "Your purchase was a success";
 
 
 
