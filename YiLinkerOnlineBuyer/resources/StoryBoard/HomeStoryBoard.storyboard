@@ -948,7 +948,13 @@
                         <outlet property="buttonToday" destination="mlM-jx-7ra" id="4pY-Ul-hQW"/>
                         <outlet property="buttonTotal" destination="AdQ-rN-r1e" id="ozz-rj-mfx"/>
                         <outlet property="cancel" destination="aTb-qN-hXV" id="CgG-pg-rPy"/>
+                        <outlet property="closedLabel" destination="neX-1N-0PN" id="GRo-6t-ezW"/>
+                        <outlet property="monthLabel" destination="ocx-5w-obH" id="BXL-CR-qYC"/>
+                        <outlet property="openLabel" destination="Rsd-M6-tDO" id="FdV-8r-LyQ"/>
                         <outlet property="save" destination="zyT-LJ-DEP" id="LG1-oE-Ngr"/>
+                        <outlet property="todayLabel" destination="Mtp-aF-9d6" id="kJW-7e-i6r"/>
+                        <outlet property="totalLabel" destination="WB5-cS-AWW" id="Oql-sn-fhA"/>
+                        <outlet property="weekLabel" destination="hpH-WI-5Fd" id="vrS-PB-8U2"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QPg-Fs-cIK" userLabel="First Responder" sceneMemberID="firstResponder"/>

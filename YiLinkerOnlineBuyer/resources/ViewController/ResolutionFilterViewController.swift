@@ -76,7 +76,7 @@ class SelectedFilters {
 }
 
 struct FilterStrings {
-    static let filter = StringHelper.localizedStringWithKey("FILTER_TITLE_LOCALIZE_KEY")
+    static let title = StringHelper.localizedStringWithKey("FILTER_TITLE_LOCALIZE_KEY")
     static let dates = StringHelper.localizedStringWithKey("FILTER_DATES_LOCALIZE_KEY")
     static let today = StringHelper.localizedStringWithKey("FILTER_TODAY_LOCALIZE_KEY")
     static let week = StringHelper.localizedStringWithKey("FILTER_WEEK_LOCALIZE_KEY")
@@ -84,7 +84,7 @@ struct FilterStrings {
     static let total = StringHelper.localizedStringWithKey("FILTER_TOTAL_LOCALIZE_KEY")
     static let status = StringHelper.localizedStringWithKey("FILTER_STATUS_LOCALIZE_KEY")
     static let open = StringHelper.localizedStringWithKey("FILTER_OPEN_LOCALIZE_KEY")
-    static let close = StringHelper.localizedStringWithKey("FILTER_CLOSE_LOCALIZE_KEY")
+    static let closed = StringHelper.localizedStringWithKey("FILTER_CLOSE_LOCALIZE_KEY")
 }
 
 class ResolutionFilterViewController: UITableViewController {
@@ -96,6 +96,16 @@ class ResolutionFilterViewController: UITableViewController {
     @IBOutlet weak var buttonTotal: CheckBox!
     @IBOutlet weak var buttonOpen: CheckBox!
     @IBOutlet weak var buttonClosed: CheckBox!
+    
+//    @IBOutlet weak var dateSection: UITableViewSection!
+    @IBOutlet weak var todayLabel: UILabel!
+    @IBOutlet weak var weekLabel: UILabel!
+    @IBOutlet weak var monthLabel: UILabel!
+    @IBOutlet weak var totalLabel: UILabel!
+//    @IBOutlet weak var statusSection: UITableViewSection!
+    @IBOutlet weak var openLabel: UILabel!
+    @IBOutlet weak var closedLabel: UILabel!
+    
     
     private var timeFilter: ResolutionTimeFilter = .Total
     private var statusFilter: ResolutionStatusFilter = .Both
@@ -133,6 +143,20 @@ class ResolutionFilterViewController: UITableViewController {
             , forControlEvents:.TouchUpInside)
         self.buttonClosed.addTarget(self, action: "closedPressed"
             , forControlEvents:.TouchUpInside)
+        
+        setStrings()
+    }
+    
+    func setStrings() {
+        self.title = FilterStrings.title
+        
+        todayLabel.text = FilterStrings.today
+        weekLabel.text = FilterStrings.week
+        monthLabel.text = FilterStrings.month
+        totalLabel.text = FilterStrings.total
+        
+        openLabel.text = FilterStrings.open
+        closedLabel.text = FilterStrings.closed
     }
     
     override func didReceiveMemoryWarning() {
