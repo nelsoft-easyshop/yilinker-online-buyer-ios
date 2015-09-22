@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="tG5-US-oYc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="tG5-US-oYc">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
@@ -334,6 +334,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Flk-HZ-Njb" userLabel="Dim View">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DP3-44-XbQ" userLabel="Counter View">
                                 <rect key="frame" x="0.0" y="64" width="375" height="35"/>
                                 <subviews>
@@ -432,6 +436,10 @@
                             <constraint firstItem="DP3-44-XbQ" firstAttribute="top" secondItem="Q5h-SR-VNN" secondAttribute="bottom" id="Ubm-9I-AXE"/>
                             <constraint firstItem="DP3-44-XbQ" firstAttribute="leading" secondItem="fCv-gF-g2z" secondAttribute="leading" id="bHD-Yc-aBB"/>
                             <constraint firstAttribute="trailing" secondItem="mFe-cC-ywX" secondAttribute="trailing" id="dfx-rA-3Fc"/>
+                            <constraint firstAttribute="bottom" secondItem="Flk-HZ-Njb" secondAttribute="bottom" id="jCG-Bv-COW"/>
+                            <constraint firstItem="Flk-HZ-Njb" firstAttribute="leading" secondItem="fCv-gF-g2z" secondAttribute="leading" id="lYM-D0-vcr"/>
+                            <constraint firstItem="Flk-HZ-Njb" firstAttribute="top" secondItem="fCv-gF-g2z" secondAttribute="top" id="spV-fZ-1h3"/>
+                            <constraint firstAttribute="trailing" secondItem="Flk-HZ-Njb" secondAttribute="trailing" id="tAT-6Y-RfG"/>
                             <constraint firstAttribute="trailing" secondItem="vgh-W9-rFp" secondAttribute="trailing" id="wXE-EN-end"/>
                             <constraint firstItem="vgh-W9-rFp" firstAttribute="leading" secondItem="fCv-gF-g2z" secondAttribute="leading" id="wgO-br-uqL"/>
                             <constraint firstItem="9HC-u3-3mw" firstAttribute="top" secondItem="vgh-W9-rFp" secondAttribute="bottom" id="y92-hO-jNf"/>
@@ -443,7 +451,8 @@
                         <outlet property="cartCounterLabel" destination="PGR-Y7-dO2" id="WGL-Iz-Se7"/>
                         <outlet property="cartTableView" destination="mFe-cC-ywX" id="GdG-2D-8Wv"/>
                         <outlet property="checkoutButton" destination="QsH-XS-WrT" id="vXL-p5-paz"/>
-                        <outlet property="dimView" destination="Yk8-Ux-T9y" id="O3T-MN-L23"/>
+                        <outlet property="dimView" destination="Flk-HZ-Njb" id="ljs-fY-8c3"/>
+                        <outlet property="totalLabel" destination="R5e-rH-Gus" id="IGw-fY-4Fh"/>
                         <outlet property="totalPriceLabel" destination="d0X-nt-S88" id="kH7-C0-0gX"/>
                     </connections>
                 </viewController>

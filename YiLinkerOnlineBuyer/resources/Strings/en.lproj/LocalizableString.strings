@@ -13,6 +13,8 @@ SOMETHINGWENTWRONG_LOCALIZE_KEY = "Something Went Wrong";
 OKBUTTON_LOCALIZE_KEY = "OK";
 ERROR_LOCALIZE_KEY = "Error";
 FAILED_LOCALIZE_KEY = "Failed";
+CONNECTIONUNREACHABLE_LOCALIZE_KEY = "Connection Unreachable";
+CONNECTIONERRORMESSAGE_LOCALIZE_KEY = "Cannot retrieve data. Please check your internet connection.";
 
 // Rj's Modules
 
@@ -63,3 +65,18 @@ PRODUCT_RATINGS_AND_FEEDBACK_LOCALIZE_KEY = "Product Rating & Feedback";
 CANCEL_LOCALIZE_KEY = "CANCEL";
 SELLERS_RATING_AND_FEEDBACK_LOCALIZE_KEY = "Seller's Rating & Feedback";
 SELLERS_RATING_LOCALIZE_KEY = "people rate this seller";
+
+
+//Chan' Module
+
+// Cart
+CARTTITLE_LOCALIZE_KEY = "Cart";
+YOUHAVE_LOCALIZE_KEY = "You have";
+ITEM_LOCALIZE_KEY = "item";
+ITEMS_LOCALIZE_KEY = "items";
+ITEMSINCART_LOCALIZE_KEY = "in your shopping cart";
+TOTAL_LOCALIZE_KEY = "Total";
+CHECKOUT_LOCALIZE_KEY = "CHECKOUT";
+CHOOSEITEMFROMCART_LOCALIZE_KEY = "Choose item from your cart.";
+
+
