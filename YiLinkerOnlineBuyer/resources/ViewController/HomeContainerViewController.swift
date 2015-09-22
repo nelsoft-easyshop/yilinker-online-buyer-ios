@@ -9,6 +9,13 @@
 import UIKit
 
 struct HomeStrings {
+    static let featured: String = StringHelper.localizedStringWithKey("FEATURED_LOCALIZE_KEY")
+    static let hotItems: String = StringHelper.localizedStringWithKey("HOT_ITEMS_LOCALIZE_KEY")
+    static let newItem: String = StringHelper.localizedStringWithKey("NEW_ITEMS_LOCALIZE_KEY")
+    static let seller: String = StringHelper.localizedStringWithKey("SELLER_LOCALIZE_KEY")
+}
+
+struct FABStrings {
     static let signIn: String = StringHelper.localizedStringWithKey("SIGNIN_LOCALIZE_KEY")
     static let help: String = StringHelper.localizedStringWithKey("HELP_LOCALIZE_KEY")
     static let register: String = StringHelper.localizedStringWithKey("REGISTER_LOCALIZE_KEY")
@@ -182,7 +189,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             
             if SessionManager.accessToken() != "" {
                 var buttonImages: [String] = ["fab_help", "fab_following", "fab_messaging", "fab_customize", "fab_promo", "fab_category", self.profileModel.profileImageUrl]
-                var buttonTitles: [String] = [HomeStrings.help, HomeStrings.followedSeller, HomeStrings.messaging, HomeStrings.customizeShopping, HomeStrings.todaysPromo, HomeStrings.categories, HomeStrings.logout]
+                var buttonTitles: [String] = [FABStrings.help, FABStrings.followedSeller, FABStrings.messaging, FABStrings.customizeShopping, FABStrings.todaysPromo, FABStrings.categories, FABStrings.logout]
                 var buttonRightText: [String] = ["", "", SessionManager.unreadMessageCount(), "", "", "", "\(self.profileModel.firstName) \(self.profileModel.lastName) \n\(self.profileModel.address.streetAddress) \(self.profileModel.address.subdivision)"]
                 
                 animatedViewController?.buttonImages = buttonImages
@@ -190,8 +197,8 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                 animatedViewController?.buttonRightText = buttonRightText
             } else {
                 var buttonImages: [String] = ["fab_help", "fab_register", "fab_signin", "fab_messaging","fab_customize", "fab_promo", "fab_category"]
-                var buttonTitles: [String] = [HomeStrings.help, "REGISTER", HomeStrings.signIn, HomeStrings.messaging, HomeStrings.customizeShopping, HomeStrings.todaysPromo, HomeStrings.categories]
-                var buttonRightText: [String] = ["", "", HomeStrings.mustBeSignIn, HomeStrings.mustBeSignIn, "", "", ""]
+                var buttonTitles: [String] = [FABStrings.help, "REGISTER", FABStrings.signIn, FABStrings.messaging, FABStrings.customizeShopping, FABStrings.todaysPromo, FABStrings.categories]
+                var buttonRightText: [String] = ["", "", FABStrings.mustBeSignIn, FABStrings.mustBeSignIn, "", "", ""]
                 
                 animatedViewController?.buttonImages = buttonImages
                 animatedViewController?.buttonTitles = buttonTitles
@@ -246,7 +253,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     
     func addSuHeaderScrollView() {
         let scrollView: UIScrollView = UIScrollView(frame: CGRectMake(0, 0, self.view.frame.size.width, 40))
-        let titles: [String] = ["FEATURED", "HOT ITEMS", "NEW ITEMS", "SELLER"]
+        let titles: [String] = [HomeStrings.featured, HomeStrings.hotItems, HomeStrings.newItem, HomeStrings.seller]
         var xPosition: CGFloat = 10
         var counter = 0
         for title in titles {

@@ -8,7 +8,26 @@
 
 import UIKit
 
-let reuseIdentifier = "Cell"
+struct HomeCollectionViewStrings {
+    static let todaysPromo: String = StringHelper.localizedStringWithKey("TODAYS_PROMO_LOCALIZE_KEY")
+    static let popularCategories: String = StringHelper.localizedStringWithKey("POPULAR_CATEGORIES_LOCALIZE_KEY")
+    static let trendingItems: String = StringHelper.localizedStringWithKey("TRENDING_ITEMS_LOCALIZE_KEY")
+    static let itemsYouMyLike: String = StringHelper.localizedStringWithKey("ITEMS_YOU_MY_LIKE_LOCALIZE_KEY")
+    
+    static let topPicks: String = StringHelper.localizedStringWithKey("TOP_PICKS_LOCALIZE_KEY")
+    static let watches: String = StringHelper.localizedStringWithKey("WATCHES_LOCALIZE_KEY")
+    static let electronics: String = StringHelper.localizedStringWithKey("ELECTRONICS_LOCALIZE_KEY")
+    
+    static let shopByCategory: String = StringHelper.localizedStringWithKey("SHOP_BY_CATEGORY_LOCALIZE_KEY")
+    
+    static let newSeller: String = StringHelper.localizedStringWithKey("NEW_SELLERS_LOCALIZE_KEY")
+    static let topSeller: String = StringHelper.localizedStringWithKey("TOP_SELLERS_LOCALIZE_KEY")
+    
+    static let viewMoreItems: String = StringHelper.localizedStringWithKey("VIEW_MORE_ITEMS_LOCALIZE_KEY")
+    static let viewMorePromos: String = StringHelper.localizedStringWithKey("VIEW_MORE_PROMOS_LOCALIZE_KEY")
+    static let viewAllCategories: String = StringHelper.localizedStringWithKey("VIEW_ALL_CATEGORIES_LOCALIZE_KEY")
+    static let viewMorePopularCategories: String = StringHelper.localizedStringWithKey("VIEW_MORE_POPULAR_CATEGORIES_LOCALIZE_KEY")
+}
 
 class HomePageCollectionViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, ScrollableCollectionViewCellDelegate, NewSellerScrollableCollectionViewCellDelegate, ViewMoreFooterCollectionViewCellDelegate, SellerCollectionViewCellDelegate {
     var collectionView: UICollectionView?
@@ -424,25 +443,26 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
             
             if self.layouts[indexPath.section] == Constants.HomePage.layoutThreeKey {
                 if let val: AnyObject = self.dictionary["promos"] {
-                    footerView.target = "View More Promos!"
+                    footerView.target = "VIEW MORE PROMOS"
                     footerView.targetType = TargetType.TodaysPromo
+                    footerView.cellButton.setTitle(HomeCollectionViewStrings.viewMorePromos, forState: UIControlState.Normal)
                 }
             } else if self.layouts[indexPath.section] == Constants.HomePage.layoutFourKey {
                 if let val: AnyObject = self.dictionary["popularCategories"] {
                     footerView.target = "View More Popular Categories!"
+                    footerView.cellButton.setTitle(HomeCollectionViewStrings.viewAllCategories, forState: UIControlState.Normal)
                     footerView.targetType = TargetType.Category
-                    footerView.cellButton.setTitle("VIEW ALL CATEGORIES", forState: UIControlState.Normal)
                 }
             } else if self.layouts[indexPath.section] == Constants.HomePage.layoutFourKey {
                 
             } else if self.layouts[indexPath.section] == Constants.HomePage.layoutFiveKeyWithFooter {
                 footerView.target = "View More Items"
                 footerView.targetType = TargetType.CategoryViewMoreItems
-                footerView.cellButton.setTitle("VIEW MORE ITEMS", forState: UIControlState.Normal)
+                footerView.cellButton.setTitle(HomeCollectionViewStrings.viewMoreItems, forState: UIControlState.Normal)
             } else if self.layouts[indexPath.section] == Constants.HomePage.layoutFiveKey2 {
                 footerView.target = "View More Popular Categories!"
                 footerView.targetType = TargetType.CategoryViewMoreItems
-                footerView.cellButton.setTitle("VIEW MORE ITEMS", forState: UIControlState.Normal)
+                footerView.cellButton.setTitle(HomeCollectionViewStrings.viewMoreItems, forState: UIControlState.Normal)
             } else {
                 if let val: AnyObject = self.dictionary["categories"] {
                     let categoryArray: NSArray = self.dictionary["categories"] as! NSArray
@@ -453,7 +473,7 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
                     }
                 }
             }
-            
+            footerView.cellButton.setTitle(HomeCollectionViewStrings.viewMoreItems, forState: UIControlState.Normal)
             footerView.delegate = self
             return footerView
         } else {
@@ -466,7 +486,7 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
                 
             } else if self.layouts[indexPath.section] == Constants.HomePage.layoutThreeKey {
                 if let val: AnyObject = dictionary["promos"] {
-                    headerView.titleLabel.text = "Today's Promo"
+                    headerView.titleLabel.text = HomeCollectionViewStrings.todaysPromo
                 } else {
                     let arrayCategory: NSArray = self.dictionary["categories"] as! NSArray
                     let dictionaryCategory: NSDictionary = arrayCategory[0] as! NSDictionary
@@ -474,7 +494,7 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
                 }
 
             } else if self.layouts[indexPath.section] == Constants.HomePage.layoutFourKey {
-                headerView.titleLabel.text = "Popular Categories"
+                headerView.titleLabel.text = HomeCollectionViewStrings.popularCategories
                 headerView.backgroundColor = UIColor.whiteColor()
             } else if self.layouts[indexPath.section] == Constants.HomePage.layoutFiveKey {
                 if let val: AnyObject = self.dictionary["categories"] {
@@ -482,27 +502,27 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
                     let dictionaryCategory: NSDictionary = arrayCategory[indexPath.section - 2] as! NSDictionary
                     headerView.titleLabel.text = dictionaryCategory["categoryName"] as? String
                 } else {
-                    headerView.titleLabel.text = "Trending Items"
+                    headerView.titleLabel.text = HomeCollectionViewStrings.trendingItems
                 }
             } else if self.layouts[indexPath.section] == Constants.HomePage.layoutSixKey {
-                headerView.titleLabel.text = "Items you my like"
+                headerView.titleLabel.text = HomeCollectionViewStrings.itemsYouMyLike
                 headerView.backgroundColor = UIColor.clearColor()
             } else if self.layouts[indexPath.section] == Constants.HomePage.layoutSevenKey {
-                headerView.titleLabel.text = "Top Picks"
+                headerView.titleLabel.text = HomeCollectionViewStrings.topPicks
                 headerView.backgroundColor = UIColor.whiteColor()
             } else if self.layouts[indexPath.section] == Constants.HomePage.layoutEightKey {
-                headerView.titleLabel.text = "Shop by category"
+                headerView.titleLabel.text = HomeCollectionViewStrings.shopByCategory
                 headerView.backgroundColor = UIColor.clearColor()
             } else if self.layouts[indexPath.section] == Constants.HomePage.layoutTenKey {
-                headerView.titleLabel.text = "Top Sellers"
+                headerView.titleLabel.text = HomeCollectionViewStrings.topSeller
                 headerView.backgroundColor = UIColor.clearColor()
             } else if self.layouts[indexPath.section] == Constants.HomePage.layoutNineKey {
-                headerView.titleLabel.text = "New Sellers"
+                headerView.titleLabel.text = HomeCollectionViewStrings.newSeller
                 headerView.backgroundColor = UIColor.clearColor()
             } else if self.layouts[indexPath.section] == Constants.HomePage.layoutFiveKeyWithFooter {
-                headerView.titleLabel.text = "Watches"
+                headerView.titleLabel.text = HomeCollectionViewStrings.watches
             } else if self.layouts[indexPath.section] == Constants.HomePage.layoutFiveKey2 {
-                headerView.titleLabel.text = "Electronics"
+                headerView.titleLabel.text = HomeCollectionViewStrings.electronics
             }
             
             headerView.updateTitleLine()
