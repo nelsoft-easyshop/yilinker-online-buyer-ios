@@ -123,5 +123,10 @@ CREDIT_CARD_LOCALIZE_KEY = "Creditcard";
 CONGRATULATIONS_LOCALIZE_KEY = "Congratulations!";
 SUCCESS_PURCHASE_LOCALIZE_KEY = "Your purchase was a success";
 
+// MARK: - Checkout Modal
+CREATE_ACCOUT_LOCALIZE_KEY = "Do you want to create an account?";
+CREATE_MESSAGE_PURCHASE_LOCALIZE_KEY = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.";
+YES_LOCALIZE_KEY = "YES";
+NO_LOCALIZE_KEY = "NO";
 
 

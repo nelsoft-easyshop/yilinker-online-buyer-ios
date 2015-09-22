@@ -8,6 +8,13 @@
 
 import UIKit
 
+struct RegisterModalStrings {
+    static let yes: String = StringHelper.localizedStringWithKey("YES_LOCALIZE_KEY")
+    static let no: String = StringHelper.localizedStringWithKey("NO_LOCALIZE_KEY")
+    static let createMessage: String = StringHelper.localizedStringWithKey("CREATE_MESSAGE_PURCHASE_LOCALIZE_KEY")
+    static let doYouWant: String = StringHelper.localizedStringWithKey("CREATE_ACCOUT_LOCALIZE_KEY")
+}
+
 protocol RegisterModalViewControllerDelegate {
     func registerModalViewController(didExit view: RegisterModalViewController, isShowRegister: Bool)
 }
@@ -15,6 +22,9 @@ protocol RegisterModalViewControllerDelegate {
 class RegisterModalViewController: UIViewController {
 
     @IBOutlet weak var createButton: UIButton!
+    @IBOutlet weak var doYouWantLabel: UILabel!
+    @IBOutlet weak var messageLabel: UILabel!
+    @IBOutlet weak var noButton: UIButton!
     
     var delegate: RegisterModalViewControllerDelegate?
     var isShowRegister: Bool = false
@@ -24,6 +34,12 @@ class RegisterModalViewController: UIViewController {
         let gestureRecognizer: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissView")
         self.view.userInteractionEnabled = true
         self.view.addGestureRecognizer(gestureRecognizer)
+        
+        self.createButton.setTitle(RegisterModalStrings.yes, forState: UIControlState.Normal)
+        self.noButton.setTitle(RegisterModalStrings.no, forState: UIControlState.Normal)
+        
+        self.messageLabel.text = RegisterModalStrings.createMessage
+        self.doYouWantLabel.text = RegisterModalStrings.doYouWant
     }
 
     override func didReceiveMemoryWarning() {
