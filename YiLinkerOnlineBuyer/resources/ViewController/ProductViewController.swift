@@ -8,6 +8,37 @@
 
 import UIKit
 
+struct ProductStrings {
+    static let freeShipping = StringHelper.localizedStringWithKey("FREESHIPPING_LOCALIZE_KEY")
+    static let details = StringHelper.localizedStringWithKey("DETAILS_LOCALIZE_KEY")
+    static let quantity = StringHelper.localizedStringWithKey("QUANTITY_LOCALIZE_KEY")
+    static let description = StringHelper.localizedStringWithKey("DESCRIPTION_LOCALIZE_KEY")
+    static let seeMore = StringHelper.localizedStringWithKey("SEEMORE_LOCALIZE_KEY")
+    static let ratingFeedback = StringHelper.localizedStringWithKey("RATINGFEEDBACK_LOCALIZE_KEY")
+    static let seller = StringHelper.localizedStringWithKey("SELLER_LOCALIZE_KEY")
+
+    static let addToCart = StringHelper.localizedStringWithKey("ADDTOCART_LOCALIZE_KEY")
+    static let buytItNow = StringHelper.localizedStringWithKey("BUYITNOW_LOCALIZE_KEY")
+    
+    static let cancel = StringHelper.localizedStringWithKey("CANCEL_LOCALIZE_KEY")
+    static let done = StringHelper.localizedStringWithKey("DONE_LOCALIZE_KEY")
+    static let enterQuantity = StringHelper.localizedStringWithKey("ENTERQUANTITY_LOCALIZE_KEY")
+    static let availableStocks = StringHelper.localizedStringWithKey("AVAILABLESTOCKS_LOCALIZE_KEY")
+    static let select = StringHelper.localizedStringWithKey("SELECT_LOCALIZE_KEY")
+    
+    static let reviewRatingFeedback = StringHelper.localizedStringWithKey("REVIEWRATINGFEEDBACK_LOCALIZE_KEY")
+    static let peopleRate = StringHelper.localizedStringWithKey("PEOPLERATE_LOCALIZE_KEY")
+    
+    static let alertWishlist = StringHelper.localizedStringWithKey("ALERT_ADDEDTOWISHLIST_LOCALIZE_KEY")
+    static let alertCart = StringHelper.localizedStringWithKey("ALERT_ADDEDTOCART_LOCALIZE_KEY")
+    static let alertLogin = StringHelper.localizedStringWithKey("ALERT_PLEASELOGIN_LOCALIZE_KEY")
+    static let alertComplete = StringHelper.localizedStringWithKey("ALERT_PLEASECOMPLETE_LOCALIZE_KEY")
+    static let alertWentWrong = StringHelper.localizedStringWithKey("SOMETHINGWENTWRONG_LOCALIZE_KEY")
+    static let alertOk = StringHelper.localizedStringWithKey("OKBUTTON_LOCALIZE_KEY")
+    static let alertError = StringHelper.localizedStringWithKey("ERROR_LOCALIZE_KEY")
+    static let alertFailed = StringHelper.localizedStringWithKey("FAILED_LOCALIZE_KEY")
+}
+
 protocol ProductViewControllerDelegate {
     func pressedDimViewFromProductPage(controller: ProductViewController)
 }
@@ -20,6 +51,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     @IBOutlet weak var buyItNowView: UIView!
     @IBOutlet weak var buttonsContainer: UIView!
     @IBOutlet weak var buttonSubContainer: UIView!
+    @IBOutlet weak var buyItNowLabel: UILabel!
     
     var headerView: UIView!
     var footerView: UIView!
@@ -93,6 +125,9 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         }
         
         buyItNowView.addGestureRecognizer(tapGesture("buyItNowAction:"))
+        
+        addToCartButton.setTitle(ProductStrings.addToCart, forState: .Normal)
+        buyItNowLabel.text = ProductStrings.buytItNow
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -228,7 +263,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
             self.productAttributeView.backgroundColor = .whiteColor()
             
             var titleLabel = UILabel(frame: CGRectMake(8, 0, self.productAttributeView.frame.size.width - 16, 40))
-            titleLabel.text = "Details"
+            titleLabel.text = ProductStrings.details
             titleLabel.font = UIFont.systemFontOfSize(16.0)
             titleLabel.textColor = UIColor.darkGrayColor()
             titleLabel.userInteractionEnabled = true
@@ -256,8 +291,10 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
             self.productDescriptionView = XibHelper.puffViewWithNibName("ProductViewsViewController", index: 1) as! ProductDescriptionView
             self.productDescriptionView.frame.size.width = self.view.frame.size.width
             
+            self.productDescriptionView.descriptionTitleLabel.text = ProductStrings.description
+            
             var seeMoreLabel = UILabel(frame: CGRectMake(0, 0, 90, 41))
-            seeMoreLabel.text = "SEE MORE"
+            seeMoreLabel.text = ProductStrings.seeMore
             seeMoreLabel.textColor = .blueColor()
             seeMoreLabel.font = UIFont.systemFontOfSize(15.0)
             seeMoreLabel.textAlignment = .Center
@@ -276,6 +313,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         if self.productReviewHeaderView == nil {
             self.productReviewHeaderView = XibHelper.puffViewWithNibName("ProductViewsViewController", index: 2) as! ProductReviewHeaderView
             self.productReviewHeaderView.frame.size.width = self.view.frame.size.width
+            self.productReviewHeaderView.reviewTitleLabel.text = ProductStrings.ratingFeedback
         }
         return self.productReviewHeaderView
     }
@@ -287,7 +325,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
             
             var seeMoreLabel = UILabel(frame: self.productReviewFooterView.frame)
             seeMoreLabel.frame.size.width = 90
-            seeMoreLabel.text = "SEE MORE"
+            seeMoreLabel.text = ProductStrings.seeMore
             seeMoreLabel.textColor = .blueColor()
             seeMoreLabel.font = UIFont.systemFontOfSize(15.0)
             seeMoreLabel.textAlignment = .Center
@@ -306,6 +344,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         if self.productSellerView == nil {
             self.productSellerView = XibHelper.puffViewWithNibName("ProductViewsViewController", index: 4) as! ProductSellerView
             self.productSellerView.frame.size.width = self.view.frame.size.width
+            self.productSellerView.sellerLabel.text = ProductStrings.seller
         }
         return self.productSellerView
     }
@@ -329,7 +368,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
                 self.attributes = self.productDetailsModel.attributes
                 self.requestSellerDetails()
             } else {
-                self.showAlert(title: "Error", message: responseObject["message"] as! String)
+                self.showAlert(title: ProductStrings.alertError, message: responseObject["message"] as! String)
                 self.hud?.hide(true)
                 self.addEmptyView()
             }
@@ -381,7 +420,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
                 self.sellerSuccess = true
                 self.checkRequests()
             } else {
-                self.showAlert(title: "Error", message: responseObject["message"] as! String)
+                self.showAlert(title: ProductStrings.alertError, message: responseObject["message"] as! String)
                 self.hud?.hide(true)
                 self.addEmptyView()
             }
@@ -416,11 +455,11 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
                         var data: NSDictionary = responseObject["data"] as! NSDictionary
                         var items: NSArray = data["items"] as! NSArray
                         SessionManager.setWishlistCount(items.count)
-                        self.showAlert(title: nil, message: "This item has been added to your wishlist")
+                        self.showAlert(title: nil, message: ProductStrings.alertWishlist)
                         self.addBadge("wishlist")
                     } else {
                         if let tempVar = responseObject["message"] as? String {
-                            self.showAlert(title: "Error", message: tempVar)
+                            self.showAlert(title: ProductStrings.alertError, message: tempVar)
                         }
                     }
                 }
@@ -483,7 +522,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
                             } // loop for product unit
                         } // loop for items
                     } else {
-                        self.showAlert(title: nil, message: "This item has been added to your cart")
+                        self.showAlert(title: nil, message: ProductStrings.alertCart)
                         println(items.count)
                         SessionManager.setCartCount(data["total"] as! Int)
                         self.addBadge("cart")
@@ -491,7 +530,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
                     }
                     
                 } else {
-                    self.showAlert(title: "Error", message: responseObject["message"] as! String)
+                    self.showAlert(title: ProductStrings.alertError, message: responseObject["message"] as! String)
                     self.hud?.hide(true)
                 }
             }
@@ -569,7 +608,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
                 self.hud?.hide(true)
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                 
-                self.showAlert(title: "Something went wrong", message: nil)
+                self.showAlert(title: ProductStrings.alertWentWrong, message: nil)
                 
         })
     }
@@ -643,7 +682,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         
         self.productImagesView.setDetails(self.productDetailsModel, unitId: unitIdIndex, width: self.view.frame.size.width)
         //        self.setDetails(productDetailsModel.details)
-        self.setDetails(["Free Shipping"])
+        self.setDetails([ProductStrings.freeShipping])
         
         self.setAttributes(self.productDetailsModel.attributes, productUnits: self.productDetailsModel.productUnits, unitId: self.unitId, quantity: 1)
         self.productDescriptionView.setDescription(productDetailsModel.shortDescription, full: productDetailsModel.fullDescription)
@@ -701,7 +740,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         for view in self.productAttributeView.subviews {
             if view is UILabel {
                 let label: UILabel = view as! UILabel
-                if label.text != "Details" {
+                if label.text != ProductStrings.details {
                     view.removeFromSuperview()
                 }
             }
@@ -710,7 +749,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         selectedName = []
         selectedValue = []
         selectedId = []
-        selectedName.append("Quantity")
+        selectedName.append(ProductStrings.quantity)
         if quantity == 0 {
             selectedValue.append(String(self.quantity) + "x")
         } else {
@@ -888,7 +927,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
             self.navigationController?.navigationBar.alpha = CGFloat(self.visibility)
             }, completion: { finished in
                 if type == "cart" {
-                    self.showAlert(title: nil, message: "This item has been added to your cart.")
+                    self.showAlert(title: nil, message: ProductStrings.alertCart)
                     self.loadViewsWithDetails()
                 } else if type == "done" {
                     //                    self.showAlert(type)
@@ -946,7 +985,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     
     func showAlert(#title: String!, message: String!) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
-        let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+        let defaultAction = UIAlertAction(title: ProductStrings.alertOk, style: .Default, handler: nil)
         alertController.addAction(defaultAction)
         presentViewController(alertController, animated: true, completion: nil)
     }
@@ -983,7 +1022,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         if SessionManager.isLoggedIn() {
             requestUpdateWishlistItem()
         } else {
-            showAlert(title: "Failed", message: "Please logged-in to add item in your wishlist.")
+            showAlert(title: ProductStrings.alertFailed, message: ProductStrings.alertLogin)
         }
     }
     

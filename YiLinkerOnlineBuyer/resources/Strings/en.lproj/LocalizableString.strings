@@ -8,6 +8,54 @@
 
 SIGNIN_LOCALIZE_KEY = "SIGN IN";
 
+<<<<<<< HEAD
+// Global
+SOMETHINGWENTWRONG_LOCALIZE_KEY = "Something Went Wrong";
+OKBUTTON_LOCALIZE_KEY = "OK";
+ERROR_LOCALIZE_KEY = "Error";
+FAILED_LOCALIZE_KEY = "Failed";
+
+// Rj's Modules
+
+// Followed Sellers
+FOLLOWEDSELLERS_LOCALIZE_KEY = "Followed Sellers";
+
+// Customized Categories
+CATEGORY_LOCALIZE_KEY = "Category";
+SELECTCATEGORY_LOCALIZE_KEY = "Select Category";
+
+// Product Details
+FREESHIPPING_LOCALIZE_KEY = "Free Shipping";
+DETAILS_LOCALIZE_KEY = "Details";
+QUANTITY_LOCALIZE_KEY = "Quantity";
+DESCRIPTION_LOCALIZE_KEY = "Description";
+SEEMORE_LOCALIZE_KEY = "SEE MORE";
+RATINGFEEDBACK_LOCALIZE_KEY = "Product Rating & Feedback";
+SELLER_LOCALIZE_KEY = "Seller";
+SPECIALTY_LOCALIZE_KEY = "Specialty";
+ADDTOCART_LOCALIZE_KEY = "ADD TO CART";
+BUYITNOW_LOCALIZE_KEY = "BUY IT NOW";
+
+CANCEL_LOCALIZE_KEY = "CANCEL";
+DONE_LOCALIZE_KEY = "DONE";
+ENTERQUANTITY_LOCALIZE_KEY = "Enter Quantity";
+AVAILABLESTOCKS_LOCALIZE_KEY = "Available Stocks";
+SELECT_LOCALIZE_KEY = "Select";
+
+REVIEWRATINGFEEDBACK_LOCALIZE_KEY = "Product's rating & feedback";
+PEOPLERATE_LOCALIZE_KEY = "people rate this product";
+
+ALERT_ADDEDTOWISHLIST_LOCALIZE_KEY = "This item has been added to your wishlist.";
+ALERT_ADDEDTOCART_LOCALIZE_KEY = "This item has been added to your cart.";
+ALERT_PLEASELOGIN_LOCALIZE_KEY = "Please logged-in to add item in your wishlist.";
+ALERT_PLEASECOMPLETE_LOCALIZE_KEY = "Please complete the attributes.";
+
+
+
+
+
+
+=======
 //Vendor Page
 VENDOR_PAGE_TITLE_LOCALIZE_KEY = "VENDOR PAGE";
 FOLLOW_LOCALIZE_KEY = "FOLLOW";
@@ -22,3 +70,4 @@ PRODUCT_RATINGS_AND_FEEDBACK_LOCALIZE_KEY = "Product Rating & Feedback";
 CANCEL_LOCALIZE_KEY = "CANCEL";
 SELLERS_RATING_AND_FEEDBACK_LOCALIZE_KEY = "Seller's Rating & Feedback";
 SELLERS_RATING_LOCALIZE_KEY = "people rate this seller";
+>>>>>>> 5c409a6d8868bfbd82873f161e55132874fb1096

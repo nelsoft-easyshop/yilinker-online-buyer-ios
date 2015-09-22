@@ -34,9 +34,6 @@ class FollowedSellerViewController: UIViewController, EmptyViewDelegate {
     // MARK: - Methods
     
     func customizedNavigationBar() {
-        
-        self.title = "Followed Seller"
-        
         let backButton: UIBarButtonItem = UIBarButtonItem(image: UIImage(named: "back-white"), style: UIBarButtonItemStyle.Plain, target: self, action: "backAction")
         let navigationSpacer: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
         navigationSpacer.width = -10
@@ -77,7 +74,7 @@ class FollowedSellerViewController: UIViewController, EmptyViewDelegate {
         cell.selectionStyle = .None
         
         cell.nameLabel.text = followedSellerModel.storeName[indexPath.row]
-        cell.specialtyLabel.text = String("Specialty: ") + followedSellerModel.specialty[indexPath.row]
+        cell.specialtyLabel.text = String(StringHelper.localizedStringWithKey("SPECIALTY_LOCALIZE_KEY") + ": ") + followedSellerModel.specialty[indexPath.row]
         cell.setPicture(followedSellerModel.profileImageUrl[indexPath.row])
         cell.setRating(followedSellerModel.rating[indexPath.row])
         
@@ -137,8 +134,8 @@ class FollowedSellerViewController: UIViewController, EmptyViewDelegate {
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 self.hud?.hide(true)
-                let alertController = UIAlertController(title: "Something went wrong", message: "", preferredStyle: .Alert)
-                let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+                let alertController = UIAlertController(title: StringHelper.localizedStringWithKey("SOMETHINGWENTWRONG_LOCALIZE_KEY"), message: "", preferredStyle: .Alert)
+                let defaultAction = UIAlertAction(title: StringHelper.localizedStringWithKey("OKBUTTON_LOCALIZE_KEY"), style: .Default, handler: nil)
                 alertController.addAction(defaultAction)
                 self.presentViewController(alertController, animated: true, completion: nil)
         })

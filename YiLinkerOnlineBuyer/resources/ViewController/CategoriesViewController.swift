@@ -27,7 +27,6 @@ class CategoriesViewController: UIViewController, EmptyViewDelegate {
             self.edgesForExtendedLayout = UIRectEdge.None
         }
         
-        self.title = "Category Page"
         configureNavigationBar()
         
         let nib = UINib(nibName: "CategoriesTableViewCell", bundle: nil)
@@ -45,7 +44,6 @@ class CategoriesViewController: UIViewController, EmptyViewDelegate {
     }
     
     func configureNavigationBar() {
-
         var backButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
         backButton.frame = CGRectMake(0, 0, 40, 40)
         backButton.addTarget(self, action: "back", forControlEvents: UIControlEvents.TouchUpInside)
@@ -130,7 +128,7 @@ class CategoriesViewController: UIViewController, EmptyViewDelegate {
         categoryLabel.text = "    "
      
         if parentText == "" {
-            categoryLabel.text! += "Select Category"
+            categoryLabel.text! += StringHelper.localizedStringWithKey("SELECTCATEGORY_LOCALIZE_KEY")
             categoryLabel.sizeToFit()
             categoryLabel.frame.size.height = containerView.frame.size.height
         } else {

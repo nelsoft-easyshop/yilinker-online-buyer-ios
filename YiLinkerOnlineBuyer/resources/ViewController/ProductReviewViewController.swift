@@ -14,6 +14,8 @@ protocol ProductReviewViewControllerDelegate {
 
 class ProductReviewViewController: UIViewController {
 
+    @IBOutlet weak var cancelButton: UIButton!
+    @IBOutlet weak var ratingFeedbackLabel: UIButton!
     @IBOutlet weak var rateLabel: UILabel!
     @IBOutlet weak var numberOfPeopleLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
@@ -30,32 +32,10 @@ class ProductReviewViewController: UIViewController {
     
     var delegate: ProductReviewViewControllerDelegate?
     
-    let bodyText = ["Proin gravida nibh vel velit auctor aliquet. Aenean solicitudin, lorem quis bibendum auctir, nisi elit consequat ipsum.",
-        "Proin gravida nibh vel velit auctor aliquet. Aenean solicitudin, lorem quis bibendum auctir, nisi elit consequat ipsum, nec sagittis sem nibh id elit. Duis sed odio sit amet nibh vulputate."]
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let nib = UINib(nibName: "ReviewTableViewCell", bundle: nil)
-        self.tableView.registerNib(nib, forCellReuseIdentifier: "reviewIdentifier")
-        self.tableView.rowHeight = UITableViewAutomaticDimension
-        self.tableView.estimatedRowHeight = 100.0
-        
-        numberOfPeopleLabel.layer.shadowColor = UIColor.redColor().CGColor
-        numberOfPeopleLabel.layer.shadowOffset = CGSizeMake(-1, 1)
-        numberOfPeopleLabel.layer.shadowOpacity = 0.2
-        numberOfPeopleLabel.layer.shadowRadius = 2
-        
-        rateLabel.layer.cornerRadius = rateLabel.frame.size.width / 2
-        rateLabel.clipsToBounds = true
-        rateLabel.backgroundColor = Constants.Colors.productReviewGreen
-        
-        let tap = UITapGestureRecognizer()
-        tap.numberOfTapsRequired = 1
-        tap.addTarget(self, action: "dimViewAction:")
-        self.dimView.addGestureRecognizer(tap)
-        self.dimView.backgroundColor = .clearColor()
-        
+        customizeViews()
     }
 
     // MARK: - Table View Data Source
@@ -94,11 +74,44 @@ class ProductReviewViewController: UIViewController {
         }
     }
     
+    // MARK: - Actions
+    
     @IBAction func cancelAction(sender: AnyObject!) {
         self.dismissViewControllerAnimated(true, completion: nil)
         if let delegate = self.delegate {
             delegate.pressedCancelReview(self)
         }
+    }
+    
+    func dimViewAction(gesture: UIGestureRecognizer) {
+        cancelAction(nil)
+    }
+    
+    // MARK: - Methods
+    
+    func customizeViews() {
+        ratingFeedbackLabel.setTitle(ProductStrings.reviewRatingFeedback, forState: .Normal)
+        numberOfPeopleLabel.text = ProductStrings.peopleRate
+        cancelButton.setTitle( ProductStrings.cancel, forState: .Normal)
+        let nib = UINib(nibName: "ReviewTableViewCell", bundle: nil)
+        self.tableView.registerNib(nib, forCellReuseIdentifier: "reviewIdentifier")
+        self.tableView.rowHeight = UITableViewAutomaticDimension
+        self.tableView.estimatedRowHeight = 100.0
+        
+        numberOfPeopleLabel.layer.shadowColor = UIColor.redColor().CGColor
+        numberOfPeopleLabel.layer.shadowOffset = CGSizeMake(-1, 1)
+        numberOfPeopleLabel.layer.shadowOpacity = 0.2
+        numberOfPeopleLabel.layer.shadowRadius = 2
+        
+        rateLabel.layer.cornerRadius = rateLabel.frame.size.width / 2
+        rateLabel.clipsToBounds = true
+        rateLabel.backgroundColor = Constants.Colors.productReviewGreen
+        
+        let tap = UITapGestureRecognizer()
+        tap.numberOfTapsRequired = 1
+        tap.addTarget(self, action: "dimViewAction:")
+        self.dimView.addGestureRecognizer(tap)
+        self.dimView.backgroundColor = .clearColor()
     }
     
     func passModel(model: ProductReviewModel) {
@@ -116,14 +129,10 @@ class ProductReviewViewController: UIViewController {
         
         font = [NSFontAttributeName : UIFont.boldSystemFontOfSize(14.0)]
         rater = NSMutableAttributedString(string: "\(model.reviews.count)", attributes: font)
-        textToAppend = NSMutableAttributedString(string: " people rate this product")
+        textToAppend = NSMutableAttributedString(string: " " + ProductStrings.peopleRate)
         rater.appendAttributedString(textToAppend)
         
         numberOfPeopleLabel.attributedText = rater
-    }
-    
-    func dimViewAction(gesture: UIGestureRecognizer) {
-        cancelAction(nil)
     }
     
     func setRating(rate: Int) {

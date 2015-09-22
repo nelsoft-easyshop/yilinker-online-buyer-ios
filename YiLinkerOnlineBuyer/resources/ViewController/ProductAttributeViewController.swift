@@ -17,6 +17,8 @@ protocol ProductAttributeViewControllerDelegate {
 class ProductAttributeViewController: UIViewController, UITableViewDelegate, ProductAttributeTableViewCellDelegate {
     
     @IBOutlet weak var dimView: UIView!
+    @IBOutlet weak var cancelButton: UIButton!
+    @IBOutlet weak var enterQuantityLabel: UILabel!
     @IBOutlet weak var productImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var priceLabel: UILabel!
@@ -62,26 +64,7 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        stocksLabel.layer.borderWidth = 1.2
-        stocksLabel.layer.borderColor = UIColor.grayColor().CGColor
-        stocksLabel.layer.cornerRadius = 5
-        
-        let nib = UINib(nibName: "ProductAttributeTableViewCell", bundle: nil)
-        self.tableView.registerNib(nib, forCellReuseIdentifier: "AttributeTableCell")
-        
-        let tap = UITapGestureRecognizer()
-        tap.numberOfTapsRequired = 1
-        tap.addTarget(self, action: "dimViewAction:")
-        self.dimView.addGestureRecognizer(tap)
-        self.dimView.backgroundColor = .clearColor()
-        
-        setBorderOf(view: addToCartButton, width: 1, color: .grayColor(), radius: 3)
-        setBorderOf(view: buyItNowView, width: 1, color: .grayColor(), radius: 3)
-        setBorderOf(view: checkoutButton, width: 1, color: .grayColor(), radius: 3)
-        
-        buyItNowView.addGestureRecognizer(tapGesture("buyItNowAction:"))
-        
-        priceLabel.textColor = Constants.Colors.productPrice
+        customizeViews()
         
     }
     
@@ -225,8 +208,8 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
             requestAddCartItem(url, params: params)
             
         } else {
-            let alertController = UIAlertController(title: "Error", message: "Please complete the attributes.", preferredStyle: .Alert)
-            let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+            let alertController = UIAlertController(title: ProductStrings.alertError, message: ProductStrings.alertComplete, preferredStyle: .Alert)
+            let defaultAction = UIAlertAction(title: ProductStrings.alertOk, style: .Default, handler: nil)
             alertController.addAction(defaultAction)
             self.presentViewController(alertController, animated: true, completion: nil)
         }
@@ -252,6 +235,35 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
     }
     
     // MARK: - Methods
+    
+    func customizeViews() {
+        stocksLabel.layer.borderWidth = 1.2
+        stocksLabel.layer.borderColor = UIColor.grayColor().CGColor
+        stocksLabel.layer.cornerRadius = 5
+        
+        let nib = UINib(nibName: "ProductAttributeTableViewCell", bundle: nil)
+        self.tableView.registerNib(nib, forCellReuseIdentifier: "AttributeTableCell")
+        
+        let tap = UITapGestureRecognizer()
+        tap.numberOfTapsRequired = 1
+        tap.addTarget(self, action: "dimViewAction:")
+        self.dimView.addGestureRecognizer(tap)
+        self.dimView.backgroundColor = .clearColor()
+        
+        setBorderOf(view: addToCartButton, width: 1, color: .grayColor(), radius: 3)
+        setBorderOf(view: buyItNowView, width: 1, color: .grayColor(), radius: 3)
+        setBorderOf(view: checkoutButton, width: 1, color: .grayColor(), radius: 3)
+        
+        buyItNowView.addGestureRecognizer(tapGesture("buyItNowAction:"))
+        
+        priceLabel.textColor = Constants.Colors.productPrice
+        
+        cancelButton.setTitle(ProductStrings.cancel, forState: .Normal)
+        doneButton.setTitle(ProductStrings.done, forState: .Normal)
+        enterQuantityLabel.text = ProductStrings.enterQuantity
+        addToCartButton.setTitle(ProductStrings.addToCart, forState: .Normal)
+        buyItNowLabel.text = ProductStrings.buytItNow
+    }
     
     func listAvailableCombinations() {
         self.availableCombination = []
@@ -296,7 +308,6 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
         
         for i in 0..<self.productDetailsModel.productUnits.count {
             if selectedCombination == self.productDetailsModel.productUnits[i].combination {
-                println("PRODUCT UNIT ID : \(self.productDetailsModel.productUnits[i].productUnitId)")
                 return self.productDetailsModel.productUnits[i].quantity
             }
         }
@@ -404,8 +415,8 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
                         
                     } else {
                         if let tempVar = responseObject["message"] as? String {
-                            let alertController = UIAlertController(title: "Error", message: tempVar, preferredStyle: .Alert)
-                            let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+                            let alertController = UIAlertController(title: ProductStrings.alertError, message: tempVar, preferredStyle: .Alert)
+                            let defaultAction = UIAlertAction(title: ProductStrings.alertOk, style: .Default, handler: nil)
                             alertController.addAction(defaultAction)
                             self.presentViewController(alertController, animated: true, completion: nil)
                         }
@@ -457,8 +468,8 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
                     } else {
                         self.hud?.hide(true)
                         if let tempVar = responseObject["message"] as? String {
-                            let alertController = UIAlertController(title: "Error", message: tempVar, preferredStyle: .Alert)
-                            let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+                            let alertController = UIAlertController(title: ProductStrings.alertError, message: tempVar, preferredStyle: .Alert)
+                            let defaultAction = UIAlertAction(title: ProductStrings.alertOk, style: .Default, handler: nil)
                             alertController.addAction(defaultAction)
                             self.presentViewController(alertController, animated: true, completion: nil)
                         }
@@ -471,8 +482,8 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
                 self.hud?.hide(true)
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                 
-                let alertController = UIAlertController(title: "Something Went Wrong", message: nil, preferredStyle: .Alert)
-                let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+                let alertController = UIAlertController(title: ProductStrings.alertWentWrong, message: nil, preferredStyle: .Alert)
+                let defaultAction = UIAlertAction(title: ProductStrings.alertOk, style: .Default, handler: nil)
                 alertController.addAction(defaultAction)
                 self.presentViewController(alertController, animated: true, completion: nil)
                 
@@ -492,10 +503,9 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
         self.selectedCombination = productDetailsModel.productUnits[unitIdIndex].combination
         
         self.maximumStock = productDetailsModel.productUnits[unitIdIndex].quantity
-        self.availabilityStocksLabel.text = "Available stocks : \(productDetailsModel.productUnits[unitIdIndex].quantity)"
+        self.availabilityStocksLabel.text = ProductStrings.availableStocks + " : \(productDetailsModel.productUnits[unitIdIndex].quantity)"
         
         convertCombinationToString()
-        println(combinationString)
         
         if self.maximumStock != 0 {
             stocks = quantity

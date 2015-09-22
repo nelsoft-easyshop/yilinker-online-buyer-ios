@@ -53,7 +53,7 @@ class HiddenViewController: UIViewController {
             if index == 0 {
                 self.setNavigationBarTitle("Help")
             } else if index == 1 {
-                self.setNavigationBarTitle("Followed Sellers")
+                self.setNavigationBarTitle(StringHelper.localizedStringWithKey("FOLLOWEDSELLERS_LOCALIZE_KEY"))
             } else if index == 2 {
                 self.setNavigationBarTitle("Messaging")
             } else if index == 3 {
@@ -61,7 +61,7 @@ class HiddenViewController: UIViewController {
             } else if index == 4 {
                 self.setNavigationBarTitle("Todays Promo")
             } else if index == 5 {
-                self.setNavigationBarTitle("Category")
+                self.setNavigationBarTitle(StringHelper.localizedStringWithKey("CATEGORY_LOCALIZE_KEY"))
             } else if index == 6 {
                 self.setNavigationBarTitle("Profile")
             }
@@ -83,7 +83,7 @@ class HiddenViewController: UIViewController {
             } else if index == 5 {
                 self.setNavigationBarTitle("Todays Promo")
             } else if index == 6 {
-                self.setNavigationBarTitle("Categories")
+                self.setNavigationBarTitle(StringHelper.localizedStringWithKey("CATEGORY_LOCALIZE_KEY"))
             }
         }
     }
