@@ -7,3 +7,10 @@
 */
 
 SIGNIN_LOCALIZE_KEY = "SIGN IN";
+
+// Rj's Modules
+
+// Followed Sellers
+FOLLOWEDSELLERS_LOCALIZE_KEY = "Followed Sellers";
+
+
