@@ -15,11 +15,11 @@ class DisputeViewController: UIViewController, UITextFieldDelegate, UITextViewDe
     @IBOutlet weak var submitButton: UIButton!
     @IBOutlet weak var modalView: UIView!
     @IBOutlet weak var titleView: UIView!
+    weak var delegate: ResolutionCenterViewController?
     @IBOutlet weak var caseId: UILabel!
     @IBOutlet weak var verticalSpaceInset: NSLayoutConstraint!
     
     var currentTextFieldTag: Int = 1
-    weak var delegate: ResolutionCenterViewController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -140,13 +140,13 @@ class DisputeViewController: UIViewController, UITextFieldDelegate, UITextViewDe
     
     @IBAction func closeButtonPressed(sender: AnyObject) {
         self.dismissViewControllerAnimated(true, completion: nil)
-        //self.delegate?.dissmissDisputeViewController(self, type: "none")
+        self.delegate?.dissmissDisputeViewController(self, type: "none")
     }
     
     
     @IBAction func submitButtonPressed(sender: AnyObject) {
         self.dismissViewControllerAnimated(true, completion: nil)
-        //self.delegate?.dissmissDisputeViewController(self, type: "none")
+        self.delegate?.dissmissDisputeViewController(self, type: "none")
     }
     
 }

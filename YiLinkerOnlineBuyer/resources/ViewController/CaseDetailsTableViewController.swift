@@ -18,28 +18,15 @@ class CaseDetailsTableViewController: UITableViewController {
     //@IBOutlet weak var complainRemarksCell: UITableViewCell!
     @IBOutlet weak var csrRemarks: UILabel!
     
-    var data = ResolutionCenterElement("","","","","","")
     var tableData = [String]()
     
     private var disputeId: String = ""
     
     var hud: MBProgressHUD?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Title text in Navigation Bar will now turn WHITE
-        self.navigationController!.navigationBar.barStyle = UIBarStyle.Black
         
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-        
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
-        
-        let backButton = UIBarButtonItem(title: "Back", style:.Plain, target: self, action:"goBackButton")
-        backButton.image = UIImage(named: "back-white")
-        backButton.tintColor = UIColor.whiteColor()
-        self.navigationItem.leftBarButtonItem = backButton
-
         setupNavigationBar()
         setupClearFields()
         setupControlShape()
@@ -91,7 +78,6 @@ class CaseDetailsTableViewController: UITableViewController {
     }
     
     func passData(data: ResolutionCenterElement) {
-        self.data = data
         self.disputeId = data.resolutionId
     }
     

@@ -130,13 +130,7 @@ class TransactionDetailsModel: NSObject {
                 for transaction in transactions as! [NSDictionary] {
                     
                     sellerId.append(transaction["sellerId"] as! Int)
-                    
-                    if let value = transaction["sellerStore"] as? String {
-                        sellerStore.append(transaction["sellerStore"] as! String)
-                    } else {
-                        sellerStore.append("No store name")
-                    }
-                   
+                    sellerStore.append(transaction["sellerStore"] as! String)
                     sellerContactNumber.append(transaction["sellerContactNumber"] as! String)
                     hasFeedback.append(transaction["hasFeedback"] as! Bool)
                     
