@@ -40,10 +40,19 @@ class TransactionViewController: UIViewController {
     
     var transactionModel: TransactionModel?
     
+    var transactionTitle = StringHelper.localizedStringWithKey("TRANSACTION_TITLE_TITLE_LOCALIZE_KEY")
+    var all = StringHelper.localizedStringWithKey("TRANSACTION_ALL_LOCALIZE_KEY")
+    var pending = StringHelper.localizedStringWithKey("TRANSACTION_PENDING_LOCALIZE_KEY")
+    var onDelivery = StringHelper.localizedStringWithKey("TRANSACTION_ONDELIVERY_LOCALIZE_KEY")
+    var forFeedback = StringHelper.localizedStringWithKey("TRANSACTION_FOR_FEEDBACK_LOCALIZE_KEY")
+    var support = StringHelper.localizedStringWithKey("TRANSACTION_SUPPORT_LOCALIZE_KEY")
+    var product = StringHelper.localizedStringWithKey("TRANSACTION_PRODUCT_LOCALIZE_KEY")
+    var products = StringHelper.localizedStringWithKey("TRANSACTION_PRODUCTS_LOCALIZE_KEY")
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.title = "Transaction"
+        self.title = transactionTitle
         
         let nib = UINib(nibName: "TransactionTableViewCell", bundle: nil)
         self.tableView.registerNib(nib, forCellReuseIdentifier: "TransactionIdentifier")
@@ -53,6 +62,12 @@ class TransactionViewController: UIViewController {
         labelsInArray = [allLabel, pendingLabel, onDeliveryLabel, forFeedbackLabel, supportLabel]
         deselectedImages = ["all", "pending", "onDelivery", "forFeedback", "support"]
         
+        allLabel.text = all
+        pendingLabel.text = pending
+        onDeliveryLabel.text = onDelivery
+        forFeedbackLabel.text = forFeedback
+        supportLabel.text = support
+            
         addViewsActions()
     
         self.fireTransaction("all")
@@ -78,9 +93,9 @@ class TransactionViewController: UIViewController {
             cell.priceLabel.text = "P \(price.string(2))"//NSString(format:"%.2f", self.transactionModel!.total_item_price[indexPath.row]) as String
             cell.dateLabel.text = self.transactionModel!.date_added[indexPath.row]
             if self.transactionModel!.product_count[indexPath.row].toInt() < 2 {
-                cell.numberLabel.text =  "\(self.transactionModel!.product_count[indexPath.row]) product"
+                cell.numberLabel.text =  "\(self.transactionModel!.product_count[indexPath.row]) \(product)"
             } else {
-                cell.numberLabel.text =  "\(self.transactionModel!.product_count[indexPath.row]) products"
+                cell.numberLabel.text =  "\(self.transactionModel!.product_count[indexPath.row]) \(products)"
             }
             cell.transactionIdLabel.text = self.transactionModel!.invoice_number[indexPath.row]
         }
