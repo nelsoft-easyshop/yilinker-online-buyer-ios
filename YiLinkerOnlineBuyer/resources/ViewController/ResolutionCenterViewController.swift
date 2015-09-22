@@ -164,8 +164,6 @@ class ResolutionCenterViewController
             //self.navigationController?.navigationBar.alpha = CGFloat(self.visibility)
         })
     }
-
-    
     
     // MARK: - Navigation Bar Buttons
     func goBackButton() {
