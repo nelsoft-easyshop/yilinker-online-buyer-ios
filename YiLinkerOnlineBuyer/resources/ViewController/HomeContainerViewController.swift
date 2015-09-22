@@ -8,6 +8,19 @@
 
 import UIKit
 
+struct HomeStrings {
+    static let signIn: String = StringHelper.localizedStringWithKey("SIGNIN_LOCALIZE_KEY")
+    static let help: String = StringHelper.localizedStringWithKey("HELP_LOCALIZE_KEY")
+    static let register: String = StringHelper.localizedStringWithKey("REGISTER_LOCALIZE_KEY")
+    static let messaging: String = StringHelper.localizedStringWithKey("MESSAGING_LOCALIZE_KEY")
+    static let customizeShopping: String = StringHelper.localizedStringWithKey("CUSTOMIZE_SHOPPING_LOCALIZE_KEY")
+    static let todaysPromo: String = StringHelper.localizedStringWithKey("TODAYS_PROMO_LOCALIZE_KEY")
+    static let categories: String = StringHelper.localizedStringWithKey("CATEGORIES_LOCALIZE_KEY")
+    static let mustBeSignIn: String = StringHelper.localizedStringWithKey("MUST_BE_SIGNIN_LOCALIZE_KEY")
+    static let followedSeller: String = StringHelper.localizedStringWithKey("FOLLOWED_SELLER_LOCALIZE_KEY")
+    static let logout: String = StringHelper.localizedStringWithKey("LOGOUT_LOCALIZE_KEY")
+}
+
 class HomeContainerViewController: UIViewController, UITabBarControllerDelegate, EmptyViewDelegate {
     
     @IBOutlet weak var contentView: UIView!
@@ -169,17 +182,16 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             
             if SessionManager.accessToken() != "" {
                 var buttonImages: [String] = ["fab_help", "fab_following", "fab_messaging", "fab_customize", "fab_promo", "fab_category", self.profileModel.profileImageUrl]
-                var buttonTitles: [String] = ["HELP", "FOLLOWED SELLER", "MESSAGING", "CUSTOMIZE SHOPPING", "TODAY'S PROMO", "CATEGORIES", "LOGOUT"]
+                var buttonTitles: [String] = [HomeStrings.help, HomeStrings.followedSeller, HomeStrings.messaging, HomeStrings.customizeShopping, HomeStrings.todaysPromo, HomeStrings.categories, HomeStrings.logout]
                 var buttonRightText: [String] = ["", "", SessionManager.unreadMessageCount(), "", "", "", "\(self.profileModel.firstName) \(self.profileModel.lastName) \n\(self.profileModel.address.streetAddress) \(self.profileModel.address.subdivision)"]
                 
                 animatedViewController?.buttonImages = buttonImages
                 animatedViewController?.buttonTitles = buttonTitles
                 animatedViewController?.buttonRightText = buttonRightText
             } else {
-                let signInLocalizeString: String = StringHelper.localizedStringWithKey("SIGNIN_LOCALIZE_KEY")
                 var buttonImages: [String] = ["fab_help", "fab_register", "fab_signin", "fab_messaging","fab_customize", "fab_promo", "fab_category"]
-                var buttonTitles: [String] = ["HELP", "REGISTER", signInLocalizeString, "MESSAGING", "CUSTOMIZE SHOPPING", "TODAYS PROMO", "CATEGORIES"]
-                var buttonRightText: [String] = ["", "", "Must be Sign in", "Must be Sign in", "", "", ""]
+                var buttonTitles: [String] = [HomeStrings.help, "REGISTER", HomeStrings.signIn, HomeStrings.messaging, HomeStrings.customizeShopping, HomeStrings.todaysPromo, HomeStrings.categories]
+                var buttonRightText: [String] = ["", "", HomeStrings.mustBeSignIn, HomeStrings.mustBeSignIn, "", "", ""]
                 
                 animatedViewController?.buttonImages = buttonImages
                 animatedViewController?.buttonTitles = buttonTitles
