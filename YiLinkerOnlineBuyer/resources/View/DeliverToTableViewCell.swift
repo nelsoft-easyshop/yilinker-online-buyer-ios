@@ -12,11 +12,11 @@ class DeliverToTableViewCell: UITableViewCell {
 
     @IBOutlet weak var userNameLabel: UILabel!
     @IBOutlet weak var addressLabel: UILabel!
-    
-    
+    @IBOutlet weak var deliverToLabel: UILabel!
+
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        self.deliverToLabel.text = PaymentStrings.deliverTo
     }
 
     override func setSelected(selected: Bool, animated: Bool) {

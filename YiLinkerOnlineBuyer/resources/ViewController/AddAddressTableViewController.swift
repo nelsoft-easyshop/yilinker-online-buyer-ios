@@ -14,7 +14,7 @@ protocol AddAddressTableViewControllerDelegate {
 
 class AddAddressTableViewController: UITableViewController, UITableViewDelegate, UITableViewDataSource, NewAddressTableViewCellDelegate {
     
-    let titles: [String] = ["Address Title:", "Unit No.:", "Building Name:", "Street No.:", "Street Name:", "Subdivision:", "Province:", "City:", "Barangay:", "Zip Code:", "Additional Info:"]
+    let titles: [String] = ["\(AddressStrings.addressTitle):", "\(AddressStrings.unitNo):", "\(AddressStrings.buildingName):", "\(AddressStrings.streetNo):", "\(AddressStrings.streetName):", "\(AddressStrings.subdivision):", "\(AddressStrings.province):", "\(AddressStrings.city):", "\(AddressStrings.barangay):", "\(AddressStrings.zipCode):", "\(AddressStrings.additionalInfo):"]
     
     var delegate: AddAddressTableViewControllerDelegate?
     
@@ -49,9 +49,9 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
         self.requestGetProvince()
        
         if self.isEdit {
-            self.title = "Edit Address"
+            self.title = AddressStrings.editAddress
         } else {
-            self.title = "Add Address"
+            self.title = AddressStrings.addAddress
         }
     }
     

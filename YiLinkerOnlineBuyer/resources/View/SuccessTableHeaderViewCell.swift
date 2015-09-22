@@ -11,6 +11,8 @@ import UIKit
 class SuccessTableHeaderViewCell: UITableViewCell {
     
     @IBOutlet weak var roundedView: UIView!
+    @IBOutlet weak var congratsLabel: UILabel!
+    @IBOutlet weak var successMessageLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -24,6 +26,9 @@ class SuccessTableHeaderViewCell: UITableViewCell {
         maskLayer.frame = self.roundedView.bounds
         maskLayer.path = maskPath.CGPath
         self.roundedView.layer.mask = maskLayer
+        
+        self.congratsLabel.text = OverViewStrings.congrats
+        self.successMessageLabel.text = OverViewStrings.successPurchase
     }
     
     override func setSelected(selected: Bool, animated: Bool) {

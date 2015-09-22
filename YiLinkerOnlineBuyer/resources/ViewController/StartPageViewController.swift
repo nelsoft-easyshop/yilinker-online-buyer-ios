@@ -8,6 +8,11 @@
 
 import UIKit
 
+struct StartPageStrings {
+    static let or: String = StringHelper.localizedStringWithKey("OR_LOCALIZE_KEY")
+    static let getStarted: String = StringHelper.localizedStringWithKey("GET_STARTED_LOCALIZE_KEY")
+}
+
 class StartPageViewController: UIViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate, UIScrollViewDelegate {
     
     @IBOutlet weak var companyLogoImageView: UIImageView!
@@ -72,6 +77,10 @@ class StartPageViewController: UIViewController, UIPageViewControllerDataSource,
             }
         }
         self.timer = NSTimer.scheduledTimerWithTimeInterval(2.0, target: self, selector: Selector("scrollPage"), userInfo: nil, repeats: false)
+        
+        self.getStartedButton.setTitle(StartPageStrings.getStarted, forState: UIControlState.Normal)
+        self.orLabel.text = StartPageStrings.or
+        self.signInButton.setTitle(FABStrings.signIn, forState: UIControlState.Normal)
     }
     
     func scrollPage() {

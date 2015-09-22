@@ -11,9 +11,11 @@ import UIKit
 class TotalTableViewCell: UITableViewCell {
 
     @IBOutlet weak var priceLabel: UILabel!
+    @IBOutlet weak var totalLabel: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        self.totalLabel.text = OverViewStrings.total
     }
 
     override func setSelected(selected: Bool, animated: Bool) {

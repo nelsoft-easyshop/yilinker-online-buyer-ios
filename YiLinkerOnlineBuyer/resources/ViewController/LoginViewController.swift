@@ -6,6 +6,10 @@
 //  Copyright (c) 2015 yiLinker-online-buyer. All rights reserved.
 //
 
+struct LoginStrings {
+    static let enterEmailAddress: String = StringHelper.localizedStringWithKey("ENTER_EMAIL_ADDRESS_LOCALIZE_KEY")
+    static let enterPassword: String = StringHelper.localizedStringWithKey("ENTER_PASSWORD_ADDRESS_LOCALIZE_KEY")
+}
 
 class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, GIDSignInUIDelegate, GIDSignInDelegate, UITextFieldDelegate {
    
@@ -16,6 +20,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, GIDSignIn
     
     @IBOutlet weak var emailAddressTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
+    @IBOutlet weak var signInButton: UIButton!
     
     var currentTextFieldTag: Int = 1
     var parentView: UIView?
@@ -23,6 +28,11 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, GIDSignIn
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
+        
+        self.emailAddressTextField.placeholder = LoginStrings.enterEmailAddress
+        self.passwordTextField.placeholder = LoginStrings.enterPassword
+        
+        self.signInButton.setTitle(FABStrings.signIn, forState: UIControlState.Normal)
     }
     
     override func viewWillDisappear(animated: Bool) {

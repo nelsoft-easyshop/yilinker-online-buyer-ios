@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -189,9 +189,13 @@
             <connections>
                 <outlet property="cellSwitch" destination="1Qc-Y5-5bI" id="swz-Fe-4BC"/>
                 <outlet property="codCheckBoxButton" destination="A5S-Z4-E1A" id="2TZ-uh-EsN"/>
+                <outlet property="codLabel" destination="Mt9-tX-bUu" id="nlk-Un-NZm"/>
                 <outlet property="codView" destination="GGo-2p-Uf4" id="zVy-JC-gnn"/>
                 <outlet property="creditCardCheckBoxbutton" destination="W4n-Sp-Rev" id="OcO-xJ-Gna"/>
+                <outlet property="creditCardLabel" destination="LPM-0K-pJV" id="MgI-qc-bqx"/>
                 <outlet property="creditCardView" destination="b5J-5D-3zJ" id="UKR-AI-ERt"/>
+                <outlet property="howDoYouWishLabel" destination="noK-Z1-oYu" id="WLe-3D-aA9"/>
+                <outlet property="rememberPaymentOption" destination="ZtJ-VB-2qV" id="NcA-ma-1tm"/>
             </connections>
             <point key="canvasLocation" x="460.5" y="304"/>
         </tableViewCell>
@@ -288,7 +292,7 @@
                     <view clipsSubviews="YES" tag="10" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Pw7-s3-ViR">
                         <rect key="frame" x="11" y="48" width="136" height="124"/>
                         <subviews>
-                            <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gBn-nf-yql" customClass="SemiRoundedButton" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
+                            <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gBn-nf-yql" customClass="SemiRoundedButton" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
                                 <rect key="frame" x="22" y="17" width="25" height="25"/>
                                 <color key="backgroundColor" red="0.2666666667" green="0.64313725489999995" blue="0.56862745100000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <inset key="contentEdgeInsets" minX="6" minY="6" maxX="6" maxY="6"/>
@@ -299,13 +303,13 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="CoD" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FfD-4C-J4R">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CoD" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FfD-4C-J4R">
                                 <rect key="frame" x="63" y="17" width="38" height="23"/>
                                 <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="16"/>
                                 <color key="textColor" white="0.27000000000000002" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="cod" translatesAutoresizingMaskIntoConstraints="NO" id="76o-g0-mM5">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cod" translatesAutoresizingMaskIntoConstraints="NO" id="76o-g0-mM5">
                                 <rect key="frame" x="6" y="54" width="124" height="65"/>
                             </imageView>
                         </subviews>
@@ -346,9 +350,12 @@
             <connections>
                 <outlet property="cellSwitch" destination="txJ-HB-GOc" id="VRg-ku-PGu"/>
                 <outlet property="codCheckBoxButton" destination="gBn-nf-yql" id="LUO-d4-0Qk"/>
+                <outlet property="codLabel" destination="FfD-4C-J4R" id="riT-hF-kQr"/>
                 <outlet property="codView" destination="Pw7-s3-ViR" id="0Qk-ck-ifS"/>
                 <outlet property="creditCardCheckBoxbutton" destination="Rq3-le-FDD" id="Vgh-np-k8g"/>
-                <outlet property="creditCardView" destination="4ib-d9-hJp" id="hdJ-W5-FHV"/>
+                <outlet property="creditCardLabel" destination="ET9-zM-Un0" id="pZY-Z2-9Yq"/>
+                <outlet property="howDoYouWishLabel" destination="hXU-3J-ofu" id="jK7-21-VuN"/>
+                <outlet property="rememberPaymentOption" destination="h1K-GJ-Wzz" id="jEv-Gj-xyC"/>
             </connections>
             <point key="canvasLocation" x="446" y="602.5"/>
         </tableViewCell>

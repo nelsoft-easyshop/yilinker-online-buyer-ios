@@ -8,6 +8,27 @@
 
 import UIKit
 
+struct HomeStrings {
+    static let featured: String = StringHelper.localizedStringWithKey("FEATURED_LOCALIZE_KEY")
+    static let hotItems: String = StringHelper.localizedStringWithKey("HOT_ITEMS_LOCALIZE_KEY")
+    static let newItem: String = StringHelper.localizedStringWithKey("NEW_ITEMS_LOCALIZE_KEY")
+    static let seller: String = StringHelper.localizedStringWithKey("SELLER_LOCALIZE_KEY")
+}
+
+struct FABStrings {
+    static let signIn: String = StringHelper.localizedStringWithKey("SIGNIN_LOCALIZE_KEY")
+    static let help: String = StringHelper.localizedStringWithKey("HELP_LOCALIZE_KEY")
+    static let register: String = StringHelper.localizedStringWithKey("REGISTER_LOCALIZE_KEY")
+    static let messaging: String = StringHelper.localizedStringWithKey("MESSAGING_LOCALIZE_KEY")
+    static let customizeShopping: String = StringHelper.localizedStringWithKey("CUSTOMIZE_SHOPPING_LOCALIZE_KEY")
+    static let todaysPromo: String = StringHelper.localizedStringWithKey("TODAYS_PROMO_LOCALIZE_KEY")
+    static let categories: String = StringHelper.localizedStringWithKey("CATEGORIES_LOCALIZE_KEY")
+    static let mustBeSignIn: String = StringHelper.localizedStringWithKey("MUST_BE_SIGNIN_LOCALIZE_KEY")
+    static let followedSeller: String = StringHelper.localizedStringWithKey("FOLLOWED_SELLER_LOCALIZE_KEY")
+    static let logout: String = StringHelper.localizedStringWithKey("LOGOUT_LOCALIZE_KEY")
+    static let profile: String = StringHelper.localizedStringWithKey("PROFILE_LOCALIZE_KEY")
+}
+
 class HomeContainerViewController: UIViewController, UITabBarControllerDelegate, EmptyViewDelegate {
     
     @IBOutlet weak var contentView: UIView!
@@ -169,17 +190,16 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             
             if SessionManager.accessToken() != "" {
                 var buttonImages: [String] = ["fab_help", "fab_following", "fab_messaging", "fab_customize", "fab_promo", "fab_category", self.profileModel.profileImageUrl]
-                var buttonTitles: [String] = ["HELP", "FOLLOWED SELLER", "MESSAGING", "CUSTOMIZE SHOPPING", "TODAY'S PROMO", "CATEGORIES", "LOGOUT"]
+                var buttonTitles: [String] = [FABStrings.help, FABStrings.followedSeller, FABStrings.messaging, FABStrings.customizeShopping, FABStrings.todaysPromo, FABStrings.categories, FABStrings.logout]
                 var buttonRightText: [String] = ["", "", SessionManager.unreadMessageCount(), "", "", "", "\(self.profileModel.firstName) \(self.profileModel.lastName) \n\(self.profileModel.address.streetAddress) \(self.profileModel.address.subdivision)"]
                 
                 animatedViewController?.buttonImages = buttonImages
                 animatedViewController?.buttonTitles = buttonTitles
                 animatedViewController?.buttonRightText = buttonRightText
             } else {
-                let signInLocalizeString: String = StringHelper.localizedStringWithKey("SIGNIN_LOCALIZE_KEY")
                 var buttonImages: [String] = ["fab_help", "fab_register", "fab_signin", "fab_messaging","fab_customize", "fab_promo", "fab_category"]
-                var buttonTitles: [String] = ["HELP", "REGISTER", signInLocalizeString, "MESSAGING", "CUSTOMIZE SHOPPING", "TODAYS PROMO", "CATEGORIES"]
-                var buttonRightText: [String] = ["", "", "Must be Sign in", "Must be Sign in", "", "", ""]
+                var buttonTitles: [String] = [FABStrings.help, "REGISTER", FABStrings.signIn, FABStrings.messaging, FABStrings.customizeShopping, FABStrings.todaysPromo, FABStrings.categories]
+                var buttonRightText: [String] = ["", "", FABStrings.mustBeSignIn, FABStrings.mustBeSignIn, "", "", ""]
                 
                 animatedViewController?.buttonImages = buttonImages
                 animatedViewController?.buttonTitles = buttonTitles
@@ -234,7 +254,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     
     func addSuHeaderScrollView() {
         let scrollView: UIScrollView = UIScrollView(frame: CGRectMake(0, 0, self.view.frame.size.width, 40))
-        let titles: [String] = ["FEATURED", "HOT ITEMS", "NEW ITEMS", "SELLER"]
+        let titles: [String] = [HomeStrings.featured, HomeStrings.hotItems, HomeStrings.newItem, HomeStrings.seller]
         var xPosition: CGFloat = 10
         var counter = 0
         for title in titles {

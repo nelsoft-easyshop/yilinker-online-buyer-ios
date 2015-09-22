@@ -7,6 +7,15 @@
 //
 
 
+struct RegisterStrings {
+    static let firstName: String = StringHelper.localizedStringWithKey("FIRST_NAME_LOCALIZE_KEY")
+    static let lastName: String = StringHelper.localizedStringWithKey("LAST_NAME_LOCALIZE_KEY")
+    static let emailAddress: String = StringHelper.localizedStringWithKey("EMAIL_ADDRESS_LOCALIZE_KEY")
+    static let password: String = StringHelper.localizedStringWithKey("PASSWORD_LOCALIZE_KEY")
+    static let reTypePassword: String = StringHelper.localizedStringWithKey("RE_TYPE_PASSWORD_LOCALIZE_KEY")
+    static let registerMeNow: String = StringHelper.localizedStringWithKey("REGISTER_ME_NOW_LOCALIZE_KEY")
+}
+
 class RegisterViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var firstNameTextField: UITextField!
@@ -36,6 +45,14 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         self.view.layoutIfNeeded()
         self.setUpTextFields()
         self.registerButton.addTarget(self, action: "register", forControlEvents: UIControlEvents.TouchUpInside)
+        
+        self.firstNameTextField.placeholder = RegisterStrings.firstName
+        self.lastNameTextField.placeholder = RegisterStrings.lastName
+        self.emailAddressTextField.placeholder = RegisterStrings.emailAddress
+        self.passwordTextField.placeholder = RegisterStrings.password
+        self.reTypePasswordTextField.placeholder = RegisterStrings.reTypePassword
+        
+        self.registerButton.setTitle(RegisterStrings.registerMeNow, forState: UIControlState.Normal)
     }
     
     //Show HUD
