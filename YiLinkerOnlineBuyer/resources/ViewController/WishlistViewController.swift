@@ -27,6 +27,11 @@ class WishlistViewController: UIViewController, UITableViewDelegate, UITableView
     
     var hud: MBProgressHUD?
     
+    var errorLocalizeString: String  = ""
+    var somethingWrongLocalizeString: String = ""
+    var connectionLocalizeString: String = ""
+    var connectionMessageLocalizeString: String = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -40,13 +45,14 @@ class WishlistViewController: UIViewController, UITableViewDelegate, UITableView
         
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
         
+        self.title = StringHelper.localizedStringWithKey("WISHLISTTITLE_LOCALIZE_KEY")
+        
         formatter.minimumFractionDigits = 0
         formatter.maximumFractionDigits = 2
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -60,8 +66,15 @@ class WishlistViewController: UIViewController, UITableViewDelegate, UITableView
         getWishlistData()
     }
     
+    func initializeLocalizedString() {
+        //Initialized Localized String
+        errorLocalizeString = StringHelper.localizedStringWithKey("ERROR_LOCALIZE_KEY")
+        somethingWrongLocalizeString = StringHelper.localizedStringWithKey("SOMETHINGWENTWRONG_LOCALIZE_KEY")
+        connectionLocalizeString = StringHelper.localizedStringWithKey("CONNECTIONUNREACHABLE_LOCALIZE_KEY")
+        connectionMessageLocalizeString = StringHelper.localizedStringWithKey("CONNECTIONERRORMESSAGE_LOCALIZE_KEY")
+    }
+    
     //REST API request
-    //
     
     func getWishlistData() {
         
@@ -84,7 +97,7 @@ class WishlistViewController: UIViewController, UITableViewDelegate, UITableView
             
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                self.showAlert("Error", message: "Something went wrong. . .")
+                self.showAlert(self.errorLocalizeString, message: self.somethingWrongLocalizeString)
                 self.dismissLoader()
         })
     }
@@ -107,7 +120,7 @@ class WishlistViewController: UIViewController, UITableViewDelegate, UITableView
             self.dismissLoader()
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                self.showAlert("Error", message: "Something went wrong. . .")
+                self.showAlert(self.errorLocalizeString, message: self.somethingWrongLocalizeString)
                 self.dismissLoader()
         })
     }
@@ -124,7 +137,7 @@ class WishlistViewController: UIViewController, UITableViewDelegate, UITableView
             }
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                self.showAlert("Error", message: "Something went wrong. . .")
+                self.showAlert(self.errorLocalizeString, message: self.somethingWrongLocalizeString)
                 self.updateCounterLabel()
                 self.dismissLoader()
         })
@@ -178,10 +191,15 @@ class WishlistViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func updateCounterLabel() {
+        let youHaveLocalizeString: String = StringHelper.localizedStringWithKey("YOUHAVE_LOCALIZE_KEY")
+        let itemsLocalizeString: String = StringHelper.localizedStringWithKey("ITEMSINWISHLIST_LOCALIZE_KEY")
+        
         if tableData.count < 2 {
-            wishListCounterLabel.text = "You have \(tableData.count) item in your wishlist"
+            let itemString: String = StringHelper.localizedStringWithKey("ITEM_LOCALIZE_KEY")
+            wishListCounterLabel.text = "\(youHaveLocalizeString) \(tableData.count) \(itemString) \(itemsLocalizeString)"
         } else {
-            wishListCounterLabel.text = "You have \(tableData.count) items in your wishlist"
+            let itemString: String = StringHelper.localizedStringWithKey("ITEMS_LOCALIZE_KEY")
+            wishListCounterLabel.text = "\(youHaveLocalizeString) \(tableData.count) \(itemString) \(itemsLocalizeString)"
         }
     }
     
@@ -257,7 +275,7 @@ class WishlistViewController: UIViewController, UITableViewDelegate, UITableView
             ]
             fireDeleteCartItem(APIAtlas.updateWishlistUrl, params: params)
         } else {
-            showAlert("Connection Unreachable", message: "Cannot retrieve data. Please check your internet connection.")
+            showAlert(connectionLocalizeString, message: connectionMessageLocalizeString)
         }
     }
     
@@ -276,7 +294,7 @@ class WishlistViewController: UIViewController, UITableViewDelegate, UITableView
             
             fireAddToCartItem(APIAtlas.updateWishlistUrl, params: params)
         } else {
-            showAlert("Connection Unreachable", message: "Cannot retrieve data. Please check your internet connection.")
+            showAlert(connectionLocalizeString, message: connectionMessageLocalizeString)
         }
     }
     
@@ -304,8 +322,8 @@ class WishlistViewController: UIViewController, UITableViewDelegate, UITableView
     
     func showAlert(title: String, message: String) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
-        
-        let OKAction = UIAlertAction(title: "OK", style: .Default) { (action) in
+        let okLocalizeString: String = StringHelper.localizedStringWithKey("OKBUTTON_LOCALIZE_KEY")
+        let OKAction = UIAlertAction(title: okLocalizeString, style: .Default) { (action) in
             alertController.dismissViewControllerAnimated(true, completion: nil)
             
             let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
@@ -343,7 +361,7 @@ class WishlistViewController: UIViewController, UITableViewDelegate, UITableView
                     self.fireDeleteCartItem(url, params: params)
                 }
             } else {
-                self.showAlert("Error", message: responseObject["message"] as! String)
+                self.showAlert(self.errorLocalizeString, message: responseObject["message"] as! String)
             }
             
             }, failure: {
@@ -351,7 +369,7 @@ class WishlistViewController: UIViewController, UITableViewDelegate, UITableView
                 SVProgressHUD.dismiss()
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                 
-                self.showAlert("Something went wrong", message: "")
+                self.showAlert(self.somethingWrongLocalizeString, message: self.somethingWrongLocalizeString)
                 
         })
     }

@@ -69,7 +69,7 @@ SELLERS_RATING_LOCALIZE_KEY = "people rate this seller";
 
 //Chan' Module
 
-// Cart
+//Cart
 CARTTITLE_LOCALIZE_KEY = "Cart";
 YOUHAVE_LOCALIZE_KEY = "You have";
 ITEM_LOCALIZE_KEY = "item";
@@ -79,4 +79,7 @@ TOTAL_LOCALIZE_KEY = "Total";
 CHECKOUT_LOCALIZE_KEY = "CHECKOUT";
 CHOOSEITEMFROMCART_LOCALIZE_KEY = "Choose item from your cart.";
 
+//Wishlist
+WISHLISTTITLE_LOCALIZE_KEY = "Wishlist";
+ITEMSINWISHLIST_LOCALIZE_KEY = "in your wishlist";
 
