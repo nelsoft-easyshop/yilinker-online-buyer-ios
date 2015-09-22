@@ -33,6 +33,10 @@ struct ProductStrings {
     static let alertCart = StringHelper.localizedStringWithKey("ALERT_ADDEDTOCART_LOCALIZE_KEY")
     static let alertLogin = StringHelper.localizedStringWithKey("ALERT_PLEASELOGIN_LOCALIZE_KEY")
     static let alertComplete = StringHelper.localizedStringWithKey("ALERT_PLEASECOMPLETE_LOCALIZE_KEY")
+    static let alertWentWrong = StringHelper.localizedStringWithKey("SOMETHINGWENTWRONG_LOCALIZE_KEY")
+    static let alertOk = StringHelper.localizedStringWithKey("OKBUTTON_LOCALIZE_KEY")
+    static let alertError = StringHelper.localizedStringWithKey("ERROR_LOCALIZE_KEY")
+    static let alertFailed = StringHelper.localizedStringWithKey("FAILED_LOCALIZE_KEY")
 }
 
 protocol ProductViewControllerDelegate {
@@ -360,7 +364,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
                 self.attributes = self.productDetailsModel.attributes
                 self.requestSellerDetails()
             } else {
-                self.showAlert(title: "Error", message: responseObject["message"] as! String)
+                self.showAlert(title: ProductStrings.alertError, message: responseObject["message"] as! String)
                 self.hud?.hide(true)
                 self.addEmptyView()
             }
@@ -412,7 +416,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
                 self.sellerSuccess = true
                 self.checkRequests()
             } else {
-                self.showAlert(title: "Error", message: responseObject["message"] as! String)
+                self.showAlert(title: ProductStrings.alertError, message: responseObject["message"] as! String)
                 self.hud?.hide(true)
                 self.addEmptyView()
             }
@@ -447,11 +451,11 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
                         var data: NSDictionary = responseObject["data"] as! NSDictionary
                         var items: NSArray = data["items"] as! NSArray
                         SessionManager.setWishlistCount(items.count)
-                        self.showAlert(title: nil, message: "This item has been added to your wishlist")
+                        self.showAlert(title: nil, message: ProductStrings.alertWishlist)
                         self.addBadge("wishlist")
                     } else {
                         if let tempVar = responseObject["message"] as? String {
-                            self.showAlert(title: "Error", message: tempVar)
+                            self.showAlert(title: ProductStrings.alertError, message: tempVar)
                         }
                     }
                 }
@@ -514,7 +518,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
                             } // loop for product unit
                         } // loop for items
                     } else {
-                        self.showAlert(title: nil, message: "This item has been added to your cart")
+                        self.showAlert(title: nil, message: ProductStrings.alertCart)
                         println(items.count)
                         SessionManager.setCartCount(data["total"] as! Int)
                         self.addBadge("cart")
@@ -522,7 +526,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
                     }
                     
                 } else {
-                    self.showAlert(title: "Error", message: responseObject["message"] as! String)
+                    self.showAlert(title: ProductStrings.alertError, message: responseObject["message"] as! String)
                     self.hud?.hide(true)
                 }
             }
@@ -600,7 +604,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
                 self.hud?.hide(true)
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                 
-                self.showAlert(title: "Something went wrong", message: nil)
+                self.showAlert(title: ProductStrings.alertWentWrong, message: nil)
                 
         })
     }
@@ -919,7 +923,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
             self.navigationController?.navigationBar.alpha = CGFloat(self.visibility)
             }, completion: { finished in
                 if type == "cart" {
-                    self.showAlert(title: nil, message: "This item has been added to your cart.")
+                    self.showAlert(title: nil, message: ProductStrings.alertCart)
                     self.loadViewsWithDetails()
                 } else if type == "done" {
                     //                    self.showAlert(type)
@@ -977,7 +981,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     
     func showAlert(#title: String!, message: String!) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
-        let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+        let defaultAction = UIAlertAction(title: ProductStrings.alertOk, style: .Default, handler: nil)
         alertController.addAction(defaultAction)
         presentViewController(alertController, animated: true, completion: nil)
     }
@@ -1014,7 +1018,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         if SessionManager.isLoggedIn() {
             requestUpdateWishlistItem()
         } else {
-            showAlert(title: "Failed", message: "Please logged-in to add item in your wishlist.")
+            showAlert(title: ProductStrings.alertFailed, message: ProductStrings.alertLogin)
         }
     }
     

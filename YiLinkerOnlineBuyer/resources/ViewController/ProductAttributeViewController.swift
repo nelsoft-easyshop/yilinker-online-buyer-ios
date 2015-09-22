@@ -208,8 +208,8 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
             requestAddCartItem(url, params: params)
             
         } else {
-            let alertController = UIAlertController(title: "Error", message: "Please complete the attributes.", preferredStyle: .Alert)
-            let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+            let alertController = UIAlertController(title: ProductStrings.alertError, message: ProductStrings.alertComplete, preferredStyle: .Alert)
+            let defaultAction = UIAlertAction(title: ProductStrings.alertOk, style: .Default, handler: nil)
             alertController.addAction(defaultAction)
             self.presentViewController(alertController, animated: true, completion: nil)
         }
@@ -415,8 +415,8 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
                         
                     } else {
                         if let tempVar = responseObject["message"] as? String {
-                            let alertController = UIAlertController(title: "Error", message: tempVar, preferredStyle: .Alert)
-                            let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+                            let alertController = UIAlertController(title: ProductStrings.alertError, message: tempVar, preferredStyle: .Alert)
+                            let defaultAction = UIAlertAction(title: ProductStrings.alertOk, style: .Default, handler: nil)
                             alertController.addAction(defaultAction)
                             self.presentViewController(alertController, animated: true, completion: nil)
                         }
@@ -468,8 +468,8 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
                     } else {
                         self.hud?.hide(true)
                         if let tempVar = responseObject["message"] as? String {
-                            let alertController = UIAlertController(title: "Error", message: tempVar, preferredStyle: .Alert)
-                            let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+                            let alertController = UIAlertController(title: ProductStrings.alertError, message: tempVar, preferredStyle: .Alert)
+                            let defaultAction = UIAlertAction(title: ProductStrings.alertOk, style: .Default, handler: nil)
                             alertController.addAction(defaultAction)
                             self.presentViewController(alertController, animated: true, completion: nil)
                         }
@@ -482,8 +482,8 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
                 self.hud?.hide(true)
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                 
-                let alertController = UIAlertController(title: "Something Went Wrong", message: nil, preferredStyle: .Alert)
-                let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+                let alertController = UIAlertController(title: ProductStrings.alertWentWrong, message: nil, preferredStyle: .Alert)
+                let defaultAction = UIAlertAction(title: ProductStrings.alertOk, style: .Default, handler: nil)
                 alertController.addAction(defaultAction)
                 self.presentViewController(alertController, animated: true, completion: nil)
                 
