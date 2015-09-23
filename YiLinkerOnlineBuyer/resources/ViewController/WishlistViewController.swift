@@ -191,7 +191,7 @@ class WishlistViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func updateCounterLabel() {
-        let youHaveLocalizeString: String = StringHelper.localizedStringWithKey("YOUHAVE_LOCALIZE_KEY")
+        let youHaveLocalizeString: String = StringHelper.localizedStringWithKey("YOU_HAVE_LOCALIZE_KEY")
         let itemsLocalizeString: String = StringHelper.localizedStringWithKey("ITEMSINWISHLIST_LOCALIZE_KEY")
         
         if tableData.count < 2 {

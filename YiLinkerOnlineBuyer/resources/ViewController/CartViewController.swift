@@ -51,7 +51,7 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         checkoutButton.layer.cornerRadius = 5
         
-        self.title = StringHelper.localizedStringWithKey("CARTTITLE_LOCALIZE_KEY")
+        self.title = StringHelper.localizedStringWithKey("CART_TITLE_LOCALIZE_KEY")
         
         initializeLocalizedString()
     }
@@ -88,7 +88,7 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBAction func buttonClicked(sender: AnyObject) {
         if sender as! UIButton == checkoutButton {
             if selectedItemIDs.count == 0 {
-                let chooseItemLocalizeString: String = StringHelper.localizedStringWithKey("CHOOSEITEMFROMCART_LOCALIZE_KEY")
+                let chooseItemLocalizeString: String = StringHelper.localizedStringWithKey("CHOOSE_ITEM_FROM_CART_LOCALIZE_KEY")
                 showAlert(errorLocalizeString, message: chooseItemLocalizeString, redirectToHome: false)
             } else {
                 firePassCartItem(APIAtlas.updateCheckout(), params: NSDictionary(dictionary: ["cart": selectedItemIDs, "access_token": SessionManager.accessToken()]))
@@ -231,8 +231,8 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func updateCounterLabel() {
-        let youHaveLocalizeString: String = StringHelper.localizedStringWithKey("YOUHAVE_LOCALIZE_KEY")
-        let itemsLocalizeString: String = StringHelper.localizedStringWithKey("ITEMSINCART_LOCALIZE_KEY")
+        let youHaveLocalizeString: String = StringHelper.localizedStringWithKey("YOU_HAVE_LOCALIZE_KEY")
+        let itemsLocalizeString: String = StringHelper.localizedStringWithKey("ITEMS_IN_CART_LOCALIZE_KEY")
         
         if tableData.count < 2 {
             let itemString: String = StringHelper.localizedStringWithKey("ITEM_LOCALIZE_KEY")

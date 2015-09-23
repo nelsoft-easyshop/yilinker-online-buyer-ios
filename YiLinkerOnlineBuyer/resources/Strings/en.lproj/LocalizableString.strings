@@ -236,14 +236,14 @@ SELLERS_RATING_LOCALIZE_KEY = "people rate this seller";
 //Chan' Module
 
 //Cart
-CARTTITLE_LOCALIZE_KEY = "Cart";
-YOUHAVE_LOCALIZE_KEY = "You have";
+CART_TITLE_LOCALIZE_KEY = "Cart";
+YOU_HAVE_LOCALIZE_KEY = "You have";
 ITEM_LOCALIZE_KEY = "item";
 ITEMS_LOCALIZE_KEY = "items";
-ITEMSINCART_LOCALIZE_KEY = "in your shopping cart";
+ITEMS_IN_CART_LOCALIZE_KEY = "in your shopping cart";
 TOTAL_LOCALIZE_KEY = "Total";
 CHECKOUT_LOCALIZE_KEY = "CHECKOUT";
-CHOOSEITEMFROMCART_LOCALIZE_KEY = "Choose item from your cart.";
+CHOOSE_ITEM_FROM_CART_LOCALIZE_KEY = "Choose item from your cart.";
 
 //Wishlist
 WISHLISTTITLE_LOCALIZE_KEY = "Wishlist";
