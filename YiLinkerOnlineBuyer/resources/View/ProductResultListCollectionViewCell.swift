@@ -23,7 +23,11 @@ class ProductResultListCollectionViewCell: UICollectionViewCell {
     }
     
     func setDiscount(text: String) {
-        discountLabel.text = text + "% OFF"
+        if text == "0" {
+            discountLabel.hidden = true
+        } else {
+            discountLabel.text = text + "% OFF"
+        }
     }
     
     func setProductName(text: String) {
