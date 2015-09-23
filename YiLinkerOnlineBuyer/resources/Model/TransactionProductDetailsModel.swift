@@ -76,6 +76,15 @@ class TransactionProductDetailsModel: NSObject {
         var attributeName: [String] = []
         var attributeValue: [String] = []
         
+        var skuTitle = StringHelper.localizedStringWithKey("TRANSACTION_PRODUCT_DETAILS_SKU_LOCALIZE_KEY")
+        var brandTitle = StringHelper.localizedStringWithKey("TRANSACTION_PRODUCT_DETAILS_BRAND_LOCALIZE_KEY")
+        var widthTitle = StringHelper.localizedStringWithKey("TRANSACTION_PRODUCT_DETAILS_WIDTH_LOCALIZE_KEY")
+        var heightTitle = StringHelper.localizedStringWithKey("TRANSACTION_PRODUCT_DETAILS_HEIGHT_LOCALIZE_KEY")
+        var lengthTitle = StringHelper.localizedStringWithKey("TRANSACTION_PRODUCT_DETAILS_LENGTH_LOCALIZE_KEY")
+        var weightTitle = StringHelper.localizedStringWithKey("TRANSACTION_PRODUCT_DETAILS_WEIGHT_LOCALIZE_KEY")
+        var colorTitle = StringHelper.localizedStringWithKey("TRANSACTION_PRODUCT_DETAILS_COLOR_LOCALIZE_KEY")
+        var sizeTitle = StringHelper.localizedStringWithKey("TRANSACTION_PRODUCT_DETAILS_SIZE_LOCALIZE_KEY")
+        
         if dictionary.isKindOfClass(NSDictionary) {
             if let value: AnyObject = dictionary["data"] {
                 
@@ -85,14 +94,14 @@ class TransactionProductDetailsModel: NSObject {
                 
                 if let val = value["sku"] as? String {
                     sku = val
-                    attributeName.append("SKU")
+                    attributeName.append(skuTitle)
                     attributeValue.append(sku)
                 }
                 
                 if let brand: AnyObject = value["brand"] {
                     if let val = brand["name"] as? String {
                         brandName = val
-                        attributeName.append("Brand")
+                        attributeName.append(brandTitle)
                         attributeValue.append(brandName)
                     }
                 }
@@ -115,25 +124,25 @@ class TransactionProductDetailsModel: NSObject {
                 
                 if let val = value["width"] as? String {
                     width = val
-                    attributeName.append("Width")
+                    attributeName.append(widthTitle)
                     attributeValue.append(width)
                 }
                 
                 if let val = value["height"] as? String {
                     height = val
-                    attributeName.append("Height")
+                    attributeName.append(heightTitle)
                     attributeValue.append(height)
                 }
                 
                 if let val = value["length"] as? String {
                     length = val
-                    attributeName.append("Length")
+                    attributeName.append(lengthTitle)
                     attributeValue.append(length)
                 }
                 
                 if let val = value["weight"] as? String {
                     weight = val
-                    attributeName.append("Weight")
+                    attributeName.append(weightTitle)
                     attributeValue.append(weight)
                 }
                 

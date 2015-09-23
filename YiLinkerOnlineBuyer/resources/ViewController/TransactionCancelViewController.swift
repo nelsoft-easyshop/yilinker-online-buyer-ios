@@ -20,6 +20,9 @@ class TransactionCancelViewController: UIViewController, UITextViewDelegate, UIP
     @IBOutlet weak var submitButton: DynamicRoundedButton!
     @IBOutlet weak var remarksTextView: UITextView!
     @IBOutlet weak var reasonTextField: UITextField!
+    @IBOutlet weak var reasonOfCancellationLabel: UILabel!
+    @IBOutlet weak var typeOfReasonLabel: UILabel!
+    @IBOutlet weak var remarksLabel: UILabel!
     
     var delegate: TransactionCancelViewControllerDelegate?
     
@@ -30,12 +33,24 @@ class TransactionCancelViewController: UIViewController, UITextViewDelegate, UIP
     var selectedRow: Int = 0
     var invoiceNumber: String = ""
     
+    var reasonOfCancellation = StringHelper.localizedStringWithKey("TRANSACTION_CANCEL_ORDER_REASON_LOCALIZE_KEY")
+    var typeOfReason = StringHelper.localizedStringWithKey("TRANSACTION_CANCEL_ORDER_TYPE_LOCALIZE_KEY")
+    var remarks = StringHelper.localizedStringWithKey("TRANSACTION_CANCEL_ORDER_REMARKS_LOCALIZE_KEY")
+    var submit = StringHelper.localizedStringWithKey("TRANSACTION_CANCEL_ORDER_SUBMIT_LOCALIZE_KEY")
+    var selectReason = StringHelper.localizedStringWithKey("TRANSACTION_CANCEL_ORDER_SELECT_LOCALIZE_KEY")
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         remarksTextView.layer.cornerRadius = 5.0
         remarksTextView.clipsToBounds = true
         addPicker()
+        
+        self.reasonOfCancellationLabel.text = reasonOfCancellation
+        self.typeOfReasonLabel.text = typeOfReason
+        self.remarksLabel.text = remarks
+        self.reasonTextField.placeholder = selectReason
+        self.submitButton.setTitle(submit, forState: UIControlState.Normal)
         // Do any additional setup after loading the view.
     }
     

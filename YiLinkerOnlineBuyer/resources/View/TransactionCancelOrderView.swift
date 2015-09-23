@@ -14,6 +14,7 @@ protocol TransactionCancelOrderViewDelegate {
 
 class TransactionCancelOrderView: UIView {
 
+    @IBOutlet weak var cancelOrderLabel: UILabel!
     @IBOutlet weak var cancelView: DynamicRoundedView!
     
     var delegate: TransactionCancelOrderViewDelegate?
