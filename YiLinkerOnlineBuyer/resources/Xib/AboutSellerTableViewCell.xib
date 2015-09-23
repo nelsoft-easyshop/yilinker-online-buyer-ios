@@ -19,16 +19,6 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="About Seller" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UJU-9e-m8M">
-                        <rect key="frame" x="14" y="8" width="94" height="21"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="94" id="2uH-op-xlb"/>
-                            <constraint firstAttribute="height" constant="21" id="4bl-w0-ema"/>
-                        </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                        <nil key="highlightedColor"/>
-                    </label>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SWk-Se-46e">
                         <rect key="frame" x="-12" y="37" width="560" height="1"/>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
@@ -64,6 +54,16 @@
                             <constraint firstAttribute="height" constant="30" id="cs4-ce-EX0"/>
                         </constraints>
                     </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="About Seller" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UJU-9e-m8M">
+                        <rect key="frame" x="14" y="8" width="94" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="94" id="2uH-op-xlb"/>
+                            <constraint firstAttribute="height" constant="21" id="4bl-w0-ema"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <constraints>
                     <constraint firstItem="SWk-Se-46e" firstAttribute="top" secondItem="vUS-rN-Lb3" secondAttribute="bottom" constant="3" id="AWx-vw-Ipo"/>
@@ -85,6 +85,7 @@
             </tableViewCellContentView>
             <connections>
                 <outlet property="aboutLabel" destination="VeD-BW-SNB" id="80o-vD-i6v"/>
+                <outlet property="aboutTitleLabel" destination="UJU-9e-m8M" id="fBl-G4-kT5"/>
                 <outlet property="separatorLine" destination="SWk-Se-46e" id="NeU-7l-caq"/>
             </connections>
             <point key="canvasLocation" x="585" y="376"/>

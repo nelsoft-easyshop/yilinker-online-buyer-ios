@@ -8,8 +8,10 @@
             <connections>
                 <outlet property="cameraView" destination="vh2-af-BUs" id="3dA-i8-N1e"/>
                 <outlet property="inputTextField" destination="mfP-Ea-95c" id="2c5-Ud-wUI"/>
+                <outlet property="itemQualityLabel" destination="RkA-Z2-3iV" id="Nfu-Ad-1pJ"/>
                 <outlet property="messageLabel" destination="rMf-VA-Bhf" id="aHw-SQ-g5w"/>
                 <outlet property="rateThisLabel" destination="Cac-i0-sfM" id="e6z-E5-vRf"/>
+                <outlet property="sendButton" destination="TKo-Sv-xYi" id="nmo-iF-INg"/>
                 <outlet property="star1Button" destination="ASy-WU-evp" id="pBY-zu-ld0"/>
                 <outlet property="star2Button" destination="kag-e0-QoV" id="rOF-zd-cVE"/>
                 <outlet property="star3Button" destination="Anr-kZ-QIA" id="Vf3-Yq-Kpj"/>
@@ -20,6 +22,7 @@
                 <outlet property="starComm3Button" destination="LMK-sY-zdX" id="tBA-kX-BUL"/>
                 <outlet property="starComm4Button" destination="ckd-Si-b66" id="PEd-lB-Chw"/>
                 <outlet property="starComm5Button" destination="IDX-Cy-R0w" id="bku-8g-UEZ"/>
+                <outlet property="titleLabel" destination="rMf-VA-Bhf" id="vDt-no-nkm"/>
                 <outlet property="typingAreaView" destination="kay-Jp-IoU" id="fYd-hO-E9S"/>
                 <outlet property="view" destination="9S1-yz-7MZ" id="rxk-8r-Jdf"/>
             </connections>
@@ -58,11 +61,6 @@ product.</string>
                                 <constraint firstAttribute="width" constant="59" id="29G-Ix-Nce"/>
                             </constraints>
                         </view>
-                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Type your feedback here" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mfP-Ea-95c">
-                            <rect key="frame" x="59" y="0.0" width="241" height="50"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                            <textInputTraits key="textInputTraits" autocorrectionType="no"/>
-                        </textField>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TKo-Sv-xYi">
                             <rect key="frame" x="300" y="0.0" width="75" height="50"/>
                             <color key="backgroundColor" red="0.50122048590000001" green="0.0" blue="0.7202493687" alpha="1" colorSpace="calibratedRGB"/>
@@ -79,6 +77,11 @@ product.</string>
                                 <action selector="sendAction:" destination="-1" eventType="touchUpInside" id="eXq-xd-dbk"/>
                             </connections>
                         </button>
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Type your feedback here" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mfP-Ea-95c">
+                            <rect key="frame" x="59" y="0.0" width="241" height="50"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits" autocorrectionType="no"/>
+                        </textField>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
@@ -95,15 +98,6 @@ product.</string>
                         <constraint firstAttribute="trailing" secondItem="TKo-Sv-xYi" secondAttribute="trailing" id="nyA-Zj-i1c"/>
                     </constraints>
                 </view>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Communication" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cac-i0-sfM">
-                    <rect key="frame" x="8" y="344" width="359" height="21"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="21" id="u3S-J2-jFy"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
-                    <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
-                    <nil key="highlightedColor"/>
-                </label>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6ck-Vi-A19" userLabel="Star Container">
                     <rect key="frame" x="52" y="373" width="272" height="30"/>
                     <subviews>
@@ -219,6 +213,15 @@ product.</string>
                     <constraints>
                         <constraint firstAttribute="width" constant="359" id="3bd-HI-vXJ"/>
                         <constraint firstAttribute="height" constant="21" id="zYv-r1-mUK"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
+                    <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Communication" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cac-i0-sfM">
+                    <rect key="frame" x="8" y="344" width="359" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="21" id="u3S-J2-jFy"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
                     <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>

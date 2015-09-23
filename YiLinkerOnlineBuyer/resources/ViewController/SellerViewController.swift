@@ -34,6 +34,10 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
     let following: String = StringHelper.localizedStringWithKey("UNFOLLOW_LOCALIZE_KEY")
     let viewFeedback: String = StringHelper.localizedStringWithKey("VIEW_FEEDBACK_LOCALIZE_KEY")
     let vendorTitle: String = StringHelper.localizedStringWithKey("VENDOR_PAGE_TITLE_LOCALIZE_KEY")
+    let aboutSeller: String = StringHelper.localizedStringWithKey("ABOUT_SELLER_LOCALIZE_KEY")
+    let productsTitle: String = StringHelper.localizedStringWithKey("PRODUCTS_SELLER_LOCALIZE_KEY")
+    let moreSellersProduct: String = StringHelper.localizedStringWithKey("MORE_SELLERS_PRODUCT_LOCALIZE_KEY")
+    let productRatings: String = StringHelper.localizedStringWithKey("PRODUCT_RATINGS_AND_FEEDBACK_LOCALIZE_KEY")
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -328,15 +332,19 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
             let aboutSellerTableViewCell: AboutSellerTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(Constants.Seller.aboutSellerTableViewCellNibNameAndIdentifier) as! AboutSellerTableViewCell
 //                aboutSellerTableViewCell.aboutLabel.text = self.sellerModel!.sellerAbout
             aboutSellerTableViewCell.aboutLabel.text = self.sellerModel?.store_description
+            aboutSellerTableViewCell.aboutTitleLabel.text = aboutSeller
             
             return aboutSellerTableViewCell
         } else if indexPath.section == 1 {
             let productsTableViewCell: ProductsTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(Constants.Seller.productsTableViewCellNibNameAndIdentifier) as! ProductsTableViewCell
                 productsTableViewCell.productModels = sellerModel!.products
+                productsTableViewCell.productsLabel.text = productsTitle
+                productsTableViewCell.moreSellersProduct.setTitle(moreSellersProduct, forState: UIControlState.Normal)
                 productsTableViewCell.delegate = self
             return productsTableViewCell
         } else if indexPath.section == 2 {
             let generalRatingTableViewCell: GeneralRatingTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(Constants.Seller.generalRatingTableViewCellNibNameAndIndentifier) as! GeneralRatingTableViewCell
+            generalRatingTableViewCell.productRatingLabel.text = productRatings
             
             if self.sellerModel2 != nil {
                generalRatingTableViewCell.setRating(self.sellerModel2!.rating)

@@ -75,6 +75,9 @@
                     <constraint firstItem="mgF-Kr-lDQ" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="3" id="xP6-KX-wf0"/>
                 </constraints>
             </tableViewCellContentView>
+            <connections>
+                <outlet property="productRatingLabel" destination="lVA-hm-qeQ" id="oMg-lG-TkX"/>
+            </connections>
             <point key="canvasLocation" x="382.5" y="340.5"/>
         </tableViewCell>
     </objects>

@@ -7,6 +7,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ViewFeedBackViewController" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
             <connections>
+                <outlet property="cancelButton" destination="lVi-l6-TcM" id="5hj-es-KAG"/>
                 <outlet property="generalRatingLabel" destination="08P-ep-wO4" id="NVk-u5-n9e"/>
                 <outlet property="rateImageView1" destination="NQ7-pI-oJG" id="VxM-3w-Jwo"/>
                 <outlet property="rateImageView2" destination="2vm-Kt-AGL" id="irm-bs-1AN"/>
@@ -14,7 +15,9 @@
                 <outlet property="rateImageView4" destination="3ur-DF-Hfp" id="Flf-53-GtG"/>
                 <outlet property="rateImageView5" destination="4tb-XK-UoJ" id="WU0-NS-XN7"/>
                 <outlet property="ratingAndReviewsTableView" destination="U8v-F3-mgJ" id="fqY-1D-UnY"/>
+                <outlet property="ratingLabel" destination="7BL-o2-4ty" id="Ycw-cg-v8M"/>
                 <outlet property="ratingView" destination="duf-5x-53L" id="brG-1g-fbj"/>
+                <outlet property="sellerRatingLabel" destination="c7Z-Ed-9kq" id="v3I-q3-aYN"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -48,24 +51,14 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oBD-Vp-Y5a">
                             <rect key="frame" x="1" y="53" width="374" height="132"/>
                             <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Seller's rating &amp; feedback" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c7Z-Ed-9kq">
-                                    <rect key="frame" x="72" y="0.0" width="214" height="21"/>
-                                    <constraints>
-                                        <constraint firstAttribute="width" constant="214" id="6OQ-Jj-1Py"/>
-                                        <constraint firstAttribute="height" constant="21" id="YKt-So-fXe"/>
-                                    </constraints>
-                                    <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
-                                    <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FiL-TI-0MD" userLabel="Star Container">
                                     <rect key="frame" x="130" y="25" width="188" height="80"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="people rate this seller" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7BL-o2-4ty">
-                                            <rect key="frame" x="28" y="38" width="134" height="21"/>
+                                            <rect key="frame" x="28" y="38" width="152" height="21"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="21" id="2D5-yB-8KO"/>
-                                                <constraint firstAttribute="width" constant="134" id="2ov-Vf-Ksm"/>
+                                                <constraint firstAttribute="width" constant="152" id="2ov-Vf-Ksm"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
                                             <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
@@ -201,18 +194,28 @@
                                         <constraint firstAttribute="height" constant="80" id="scm-2W-GER"/>
                                     </constraints>
                                 </view>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Seller's rating &amp; feedback" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c7Z-Ed-9kq">
+                                    <rect key="frame" x="8" y="0.0" width="347" height="21"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="347" id="6OQ-Jj-1Py"/>
+                                        <constraint firstAttribute="height" constant="21" id="YKt-So-fXe"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
+                                    <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstItem="FiL-TI-0MD" firstAttribute="leading" secondItem="duf-5x-53L" secondAttribute="trailing" constant="8" id="1ZL-BG-6OS"/>
                                 <constraint firstAttribute="bottom" secondItem="FiL-TI-0MD" secondAttribute="bottom" constant="27" id="Bdd-iu-tuW"/>
                                 <constraint firstItem="duf-5x-53L" firstAttribute="leading" secondItem="oBD-Vp-Y5a" secondAttribute="leading" constant="42" id="DfI-aQ-nSz"/>
-                                <constraint firstItem="c7Z-Ed-9kq" firstAttribute="leading" secondItem="oBD-Vp-Y5a" secondAttribute="leading" constant="72" id="FhW-lR-zhF"/>
+                                <constraint firstItem="c7Z-Ed-9kq" firstAttribute="leading" secondItem="oBD-Vp-Y5a" secondAttribute="leading" constant="8" id="FhW-lR-zhF"/>
                                 <constraint firstAttribute="bottom" secondItem="duf-5x-53L" secondAttribute="bottom" constant="27" id="V7P-ao-tSz"/>
                                 <constraint firstAttribute="trailing" secondItem="FiL-TI-0MD" secondAttribute="trailing" constant="56" id="Vuc-fv-O8B"/>
                                 <constraint firstItem="FiL-TI-0MD" firstAttribute="leading" secondItem="duf-5x-53L" secondAttribute="trailing" constant="8" id="bp1-Ov-X5Q"/>
                                 <constraint firstItem="FiL-TI-0MD" firstAttribute="top" secondItem="c7Z-Ed-9kq" secondAttribute="bottom" constant="4" id="dW9-M0-Io7"/>
-                                <constraint firstAttribute="trailing" secondItem="c7Z-Ed-9kq" secondAttribute="trailing" constant="88" id="dao-Z7-3nX"/>
+                                <constraint firstAttribute="trailing" secondItem="c7Z-Ed-9kq" secondAttribute="trailing" constant="19" id="dao-Z7-3nX"/>
                                 <constraint firstItem="duf-5x-53L" firstAttribute="top" secondItem="c7Z-Ed-9kq" secondAttribute="bottom" constant="4" id="gZS-py-RvW"/>
                                 <constraint firstAttribute="width" constant="374" id="qQ3-fD-1Ro"/>
                                 <constraint firstItem="duf-5x-53L" firstAttribute="top" secondItem="oBD-Vp-Y5a" secondAttribute="top" constant="25" id="ro5-Kc-m6P"/>

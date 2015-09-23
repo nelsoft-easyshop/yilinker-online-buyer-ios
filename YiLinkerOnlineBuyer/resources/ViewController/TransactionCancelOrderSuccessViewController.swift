@@ -17,14 +17,25 @@ class TransactionCancelOrderSuccessViewController: UIViewController {
 
     var delegate: TransactionCancelOrderSuccessViewControllerDelegate?
     
+    @IBOutlet weak var successLabel: UILabel!
+    @IBOutlet weak var successSubLabel: UILabel!
+    @IBOutlet weak var returnToDashboardButton: UIButton!
     @IBOutlet weak var closeButton: UIButton!
     @IBOutlet weak var successView: UIView!
     @IBOutlet weak var returnDashboardButton: UIButton!
     @IBOutlet weak var mainView: UIView!
+    
+    var successTitle = StringHelper.localizedStringWithKey("TRANSACTION_CANCEL_ORDER_SUCCESS_LOCALIZE_KEY")
+    var successSubTitle = StringHelper.localizedStringWithKey("TRANSACTION_CANCEL_ORDER_SUCCESS_SUB_LOCALIZE_KEY")
+    var returnToDashboard = StringHelper.localizedStringWithKey("TRANSACTION_CANCEL_ORDER_RETURN_LOCALIZE_KEY")
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         initializeViews()
+        self.successLabel.text = successTitle
+        self.successSubLabel.text = successSubTitle
+        self.returnDashboardButton.setTitle(returnToDashboard, forState: UIControlState.Normal)
     }
 
     override func didReceiveMemoryWarning() {
