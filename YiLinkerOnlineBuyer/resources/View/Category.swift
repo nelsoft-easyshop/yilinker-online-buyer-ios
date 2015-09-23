@@ -225,7 +225,7 @@ extension String {
     
     func formatToTwoDecimal() -> String {
         let formatter = NSNumberFormatter()
-        formatter.minimumFractionDigits = 0
+        formatter.minimumFractionDigits = 2
         formatter.maximumFractionDigits = 2
         formatter.numberStyle = .CurrencyStyle
         return "\(formatter.stringFromNumber((self as NSString).doubleValue)!)"
