@@ -20,6 +20,9 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     
     var hud: MBProgressHUD?
     
+    var errorLocalizeString: String  = ""
+    var somethingWrongLocalizeString: String = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -39,10 +42,15 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         requestProfileDetails(APIAtlas.profileUrl, params: NSDictionary(dictionary: ["access_token": SessionManager.accessToken()]), showLoader: false)
     }
     
+    func initializeLocalizedString() {
+        //Initialized Localized String
+        errorLocalizeString = StringHelper.localizedStringWithKey("ERROR_LOCALIZE_KEY")
+        somethingWrongLocalizeString = StringHelper.localizedStringWithKey("SOMETHINGWENTWRONG_LOCALIZE_KEY")
+    }
+    
     func initializeViews() {
         
         tableView.tableFooterView = UIView(frame: CGRectZero)
-        self.title = "Profile Page"
     }
 
     func registerNibs() {
@@ -71,32 +79,18 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
             }
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                self.showAlert("Error", message: "Something went wrong. . .")
+                self.showAlert(self.errorLocalizeString, message: self.somethingWrongLocalizeString)
                 self.dismissLoader()
         })
     }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-    
     // MARK: - Table view data source
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // #warning Potentially incomplete method implementation.
-        // Return the number of sections.
         return 1
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete method implementation.
-        // Return the number of rows in the section.
         return 2
     }
     
@@ -126,46 +120,6 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         }
     }
     
-    /*
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-
-    }*/
-    
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-    // Return NO if you do not want the specified item to be editable.
-    return true
-    }
-    */
-    
-    /*
-    // Override to support editing the table view.
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-    if editingStyle == .Delete {
-    // Delete the row from the data source
-    tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-    } else if editingStyle == .Insert {
-    // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }
-    }
-    */
-    
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-    
-    }
-    */
-    
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-    // Return NO if you do not want the item to be re-orderable.
-    return true
-    }
-    */
-
     // MARK: - Profile Table View cell Delegate
     func editProfileTapAction() {
         var editViewController = EditProfileTableViewController(nibName: "EditProfileTableViewController", bundle: nil)
@@ -241,7 +195,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                 SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
                 self.requestProfileDetails(url, params: params, showLoader: showLoader)
             } else {
-                self.showAlert("Error", message: responseObject["message"] as! String)
+                self.showAlert(self.errorLocalizeString, message: responseObject["message"] as! String)
             }
             
             }, failure: {
@@ -249,15 +203,15 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                 SVProgressHUD.dismiss()
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                 
-                self.showAlert("Something went wrong", message: "")
+                self.showAlert(self.errorLocalizeString, message: self.somethingWrongLocalizeString)
                 
         })
     }
     
     func showAlert(title: String, message: String) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
-        
-        let OKAction = UIAlertAction(title: "OK", style: .Default) { (action) in
+        let okLocalizeString = StringHelper.localizedStringWithKey("OK_LOCALIZE_KEY")
+        let OKAction = UIAlertAction(title: okLocalizeString, style: .Default) { (action) in
             alertController.dismissViewControllerAnimated(true, completion: nil)
             
             let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate

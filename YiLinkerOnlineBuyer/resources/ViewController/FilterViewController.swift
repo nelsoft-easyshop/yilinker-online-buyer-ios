@@ -44,6 +44,19 @@ class FilterViewController: UIViewController, FilterTableViewCellDelegate {
         
         rangeBar.selectedMinimum = Float(minPrice)
         rangeBar.selectedMaximum = Float(maxPrice)
+        
+        initializeLocalizedString()
+    }
+    
+    func initializeLocalizedString() {
+        let cancelLocalizeString: String = StringHelper.localizedStringWithKey("CANCEL_LOCALIZE_KEY")
+        cancelButton.setTitle(cancelLocalizeString, forState: UIControlState.Normal)
+        
+        let doneLocalizeString: String = StringHelper.localizedStringWithKey("RESET_LOCALIZE_KEY")
+        resetButton.setTitle(doneLocalizeString, forState: UIControlState.Normal)
+        
+        let applyLocalizeString: String = StringHelper.localizedStringWithKey("APPLYFILTER_LOCALIZE_KEY")
+        applyFilterButton.setTitle(applyLocalizeString, forState: UIControlState.Normal)
     }
     
     func passFilter(filters: [FilterAttributeModel], maxPrice: Double, minPrice: Double) {

@@ -16,6 +16,7 @@ class EditProfileAddressTableViewCell: UITableViewCell {
     
     var delegate: EditProfileAddressTableViewCellDelegate?
 
+    @IBOutlet weak var addressSectionTitle: UILabel!
     @IBOutlet weak var addressLabel: UILabel!
     @IBOutlet weak var addressTitleLabel: UILabel!
     @IBOutlet weak var changeAddressButton: UIButton!
@@ -23,10 +24,20 @@ class EditProfileAddressTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        
-        
         addressLabel.sizeToFit()
-        addressLabel.text = "LG Sta. Lucia East Grand Mall,\nMarcos Highway Corner Felix Avenue,\nOrtigas, Pasig City"
+        addressLabel.text = ""
+        initializeLocalizedString()
+    }
+    
+    func initializeLocalizedString() {
+        //Initialized Localized String
+        var addressLocalizeString = StringHelper.localizedStringWithKey("ADDRESS_LOCALIZE_KEY")
+        var defaultLocalizeString = StringHelper.localizedStringWithKey("DEFAULTADDRESS_LOCALIZE_KEY")
+        var changeLocalizeString = StringHelper.localizedStringWithKey("CHANGEADDRESS_LOCALIZE_KEY")
+        
+        addressSectionTitle.text = addressLocalizeString
+        addressTitleLabel.text = defaultLocalizeString
+        changeAddressButton.setTitle(changeLocalizeString, forState: UIControlState.Normal)
     }
     
     @IBAction func changeAddressAction(sender: AnyObject) {

@@ -43,10 +43,22 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
     
     var profileImage: UIImage?
     
+    var errorLocalizeString: String  = ""
+    var somethingWrongLocalizeString: String = ""
+    var connectionLocalizeString: String = ""
+    var connectionMessageLocalizeString: String = ""
+    
+    var editPhotoLocalizeString: String  = ""
+    var addPhotoLocalizeString: String  = ""
+    var selectPhotoLocalizeString: String  = ""
+    var takePhotoLocalizeString: String  = ""
+    var cancelLocalizeString: String  = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         initializeViews()
+        initializeLocalizedString()
         backButton()
         titleView()
         registerNibs()
@@ -77,6 +89,21 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
     
     }
     
+    func initializeLocalizedString() {
+        //Initialized Localized String
+        errorLocalizeString = StringHelper.localizedStringWithKey("ERROR_LOCALIZE_KEY")
+        somethingWrongLocalizeString = StringHelper.localizedStringWithKey("SOMETHINGWENTWRONG_LOCALIZE_KEY")
+        connectionLocalizeString = StringHelper.localizedStringWithKey("CONNECTIONUNREACHABLE_LOCALIZE_KEY")
+        connectionMessageLocalizeString = StringHelper.localizedStringWithKey("CONNECTIONERRORMESSAGE_LOCALIZE_KEY")
+        
+        editPhotoLocalizeString = StringHelper.localizedStringWithKey("EDITPHOTO_LOCALIZE_KEY")
+        addPhotoLocalizeString = StringHelper.localizedStringWithKey("ADDPHOTO_LOCALIZE_KEY")
+        selectPhotoLocalizeString = StringHelper.localizedStringWithKey("SELECTPHOTO_LOCALIZE_KEY")
+        takePhotoLocalizeString = StringHelper.localizedStringWithKey("TAKEPHOTO_LOCALIZE_KEY")
+        
+        cancelLocalizeString = StringHelper.localizedStringWithKey("CANCEL_LOCALIZE_KEY")
+    }
+    
     func passModel(profileModel: ProfileUserDetailsModel){
         profileUserDetailsModel = profileModel
         firstName = profileModel.firstName
@@ -86,7 +113,8 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
     }
     
     func titleView() {
-        self.title = "Edit Profile"
+        var editProfileLocalizeString = StringHelper.localizedStringWithKey("EDITPROFILE_LOCALIZE_KEY")
+        self.title = editProfileLocalizeString
     }
     
     func backButton() {
@@ -143,7 +171,9 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
             
             if profileUserDetailsModel.profileImageUrl.isNotEmpty() {
                 cell.profileImageView.hidden = false
-                cell.addPhotoLabel.text = "Edit Photo"
+                cell.addPhotoLabel.text = editPhotoLocalizeString
+            } else {
+                cell.addPhotoLabel.text = addPhotoLocalizeString
             }
             
             if profileImage != nil {
@@ -198,9 +228,9 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
         } else {
             var actionSheet:UIActionSheet
             if(UIImagePickerController .isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera)){
-                actionSheet = UIActionSheet(title: "Add photo", delegate: self, cancelButtonTitle: "Cancel", destructiveButtonTitle: nil,otherButtonTitles:"Select photo from library", "Take a picture")
+                actionSheet = UIActionSheet(title: addPhotoLocalizeString, delegate: self, cancelButtonTitle: cancelLocalizeString, destructiveButtonTitle: nil,otherButtonTitles: selectPhotoLocalizeString, takePhotoLocalizeString)
             } else {
-                actionSheet = UIActionSheet(title: "Add photo", delegate: self, cancelButtonTitle: "Cancel", destructiveButtonTitle: nil,otherButtonTitles:"Select photo from library")
+                actionSheet = UIActionSheet(title: addPhotoLocalizeString, delegate: self, cancelButtonTitle: cancelLocalizeString, destructiveButtonTitle: nil,otherButtonTitles: selectPhotoLocalizeString)
             }
             actionSheet.delegate = self
             actionSheet.showInView(self.view)
@@ -213,25 +243,22 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
         let imageController = UIImagePickerController()
         imageController.editing = false
         imageController.delegate = self
-        let alert = UIAlertController(title: "Add photo", message: "", preferredStyle: UIAlertControllerStyle.ActionSheet)
-        let libButton = UIAlertAction(title: "Select photo from library", style: UIAlertActionStyle.Default) { (alert) -> Void in
+        let alert = UIAlertController(title: addPhotoLocalizeString, message: "", preferredStyle: UIAlertControllerStyle.ActionSheet)
+        let libButton = UIAlertAction(title: selectPhotoLocalizeString, style: UIAlertActionStyle.Default) { (alert) -> Void in
             imageController.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
             self.presentViewController(imageController, animated: true, completion: nil)
         }
         if(UIImagePickerController .isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera)){
-            let cameraButton = UIAlertAction(title: "Take a picture", style: UIAlertActionStyle.Default) { (alert) -> Void in
-                println("Take Photo")
+            let cameraButton = UIAlertAction(title:takePhotoLocalizeString, style: UIAlertActionStyle.Default) { (alert) -> Void in
                 imageController.sourceType = UIImagePickerControllerSourceType.Camera
                 self.presentViewController(imageController, animated: true, completion: nil)
                 
             }
             alert.addAction(cameraButton)
         } else {
-            println("Camera not available")
             
         }
-        let cancelButton = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel) { (alert) -> Void in
-            println("Cancel Pressed")
+        let cancelButton = UIAlertAction(title: cancelLocalizeString, style: UIAlertActionStyle.Cancel) { (alert) -> Void in
         }
         
         alert.addAction(libButton)
@@ -248,7 +275,7 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
         
         addPhotoCell!.profileImageView.hidden = false
         addPhotoCell!.profileImageView.image = image
-        addPhotoCell!.addPhotoLabel.text = "Edit Photo"
+        addPhotoCell!.addPhotoLabel.text = editPhotoLocalizeString
         
         profileImage = image
         
@@ -256,8 +283,6 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
     }
     
     func actionSheet(actionSheet: UIActionSheet, clickedButtonAtIndex buttonIndex: Int) {
-        println("Title : \(actionSheet.buttonTitleAtIndex(buttonIndex))")
-        println("Button Index : \(buttonIndex)")
         let imageController = UIImagePickerController()
         imageController.editing = false
         imageController.delegate = self;
@@ -282,7 +307,6 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
     
     // MARK: - EditProfileAddressTableViewCellDelegate
     func changeAddressAction(sender: AnyObject){
-        println("changeAddressAction")
         let changeAddressViewController: ChangeAddressViewController = ChangeAddressViewController(nibName: "ChangeAddressViewController", bundle: nil)
         changeAddressViewController.delegate = self
         self.navigationController!.pushViewController(changeAddressViewController, animated: true)
@@ -401,7 +425,9 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
     
     func submitChangePasswordViewController(){
         hideDimView()
-        self.showAlert("Change Password", message: "Successfully changed password!")
+        var changeLocalizeString = StringHelper.localizedStringWithKey("CHANGEPASSWORD_LOCALIZE_KEY")
+        var successLocalizeString = StringHelper.localizedStringWithKey("SUCCESSCHANGEPASSWORD_LOCALIZE_KEY")
+        self.showAlert(changeLocalizeString, message: successLocalizeString)
     }
     
     func hideDimView() {
@@ -457,7 +483,7 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
                 }
             }
             else {
-                showAlert("Connection Unreachable", message: "Cannot retrieve data. Please check your internet connection.")
+                showAlert(self.connectionLocalizeString, message: self.connectionMessageLocalizeString)
             }
         }
             
@@ -496,13 +522,15 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
                         self.requestRefreshToken("updateProfile", url: url, params: params, withImage: withImage)
                     }
                     self.dismissLoader()
-                    self.showAlert("Success", message: "Successfully updated profile!")
+                    var changeLocalizeString = StringHelper.localizedStringWithKey("SUCCESS_LOCALIZE_KEY")
+                    var successLocalizeString = StringHelper.localizedStringWithKey("SUCCESSUPDATEPROFILE_LOCALIZE_KEY")
+                    self.showAlert(changeLocalizeString, message: successLocalizeString)
                     self.imageData = nil
                     self.profileImage = nil
                 }, failure: {
                     (task: NSURLSessionDataTask!, error: NSError!) in
                     self.dismissLoader()
-                    self.showAlert("Error", message: "Something went wrong. . .")
+                    self.showAlert(self.errorLocalizeString, message: self.somethingWrongLocalizeString)
                     println(error)
             })
         } else {
@@ -512,11 +540,14 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
                         self.requestRefreshToken("updateProfile", url: url, params: params, withImage: withImage)
                     }
                     self.dismissLoader()
-                    self.showAlert("Success", message: "Successfully updated profile!")
+                    var changeLocalizeString = StringHelper.localizedStringWithKey("SUCCESS_LOCALIZE_KEY")
+                    var successLocalizeString = StringHelper.localizedStringWithKey("SUCCESSUPDATEPROFILE_LOCALIZE_KEY")
+                    self.showAlert(changeLocalizeString, message: successLocalizeString)
+                
                     println(responseObject)
                 }, failure: {
                     (task: NSURLSessionDataTask!, error: NSError!) in
-                    self.showAlert("Error", message: "Something went wrong. . .")
+                    self.showAlert(self.errorLocalizeString, message: self.somethingWrongLocalizeString)
                     self.dismissLoader()
                     println(error)
             })
@@ -563,7 +594,7 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
                 
                 
             } else {
-                self.showAlert("Error", message: responseObject["message"] as! String)
+                self.showAlert(self.errorLocalizeString, message: responseObject["message"] as! String)
             }
             
             }, failure: {
@@ -571,15 +602,15 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
                 SVProgressHUD.dismiss()
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                 
-                self.showAlert("Something went wrong", message: "")
+                self.showAlert(self.errorLocalizeString, message: self.somethingWrongLocalizeString)
                 
         })
     }
     
     func showAlert(title: String, message: String) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
-        
-        let OKAction = UIAlertAction(title: "OK", style: .Default) { (action) in
+        var okLocalizeString = StringHelper.localizedStringWithKey("OKBUTTON_LOCALIZE_KEY")
+        let OKAction = UIAlertAction(title: okLocalizeString, style: .Default) { (action) in
             alertController.dismissViewControllerAnimated(true, completion: nil)
         }
         
