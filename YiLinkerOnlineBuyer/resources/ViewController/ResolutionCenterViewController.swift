@@ -45,6 +45,8 @@ class ResolutionCenterViewController: UIViewController, UITableViewDataSource, U
     //    fireGetCases()
     //}
     
+    var resolutionCenterModel: ResolutionCenterModel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Initialize tab-behavior for buttons
@@ -64,13 +66,16 @@ class ResolutionCenterViewController: UIViewController, UITableViewDataSource, U
         // Dispute button
         disputeButton.addTarget(self, action:"disputePressed", forControlEvents:.TouchUpInside)
         
-        // Initial data load
-        fireGetCases()
-        
 //        casesTab.setTitle(ResolutionStrings.cases, forState: .Normal)
 //        openTab.setTitle(ResolutionStrings.open, forState: .Normal)
 //        closedTab.setTitle(ResolutionStrings.closed, forState: .Normal)
         disputeButton.setTitle(ResolutionStrings.file, forState: .Normal)
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        fireGetCases()
     }
     
     override func didReceiveMemoryWarning() {
@@ -241,7 +246,10 @@ class ResolutionCenterViewController: UIViewController, UITableViewDataSource, U
     }
     
     func fireGetCases() {
-        self.showHUD()
+        if resolutionCenterModel == nil {
+            self.showHUD()
+        }
+        
         let manager = APIManager.sharedInstance
         var parameters: NSDictionary = NSDictionary();
         var urlString: String = APIAtlas.getResolutionCenterCases
@@ -253,32 +261,28 @@ class ResolutionCenterViewController: UIViewController, UITableViewDataSource, U
             let statusFilter = self.currentSelectedFilter.getStatusFilter()
             let timeFilter = self.currentSelectedFilter.getTimeFilter()
             if timeFilter == ""  {
-                parameters = [ "access_token" : SessionManager.accessToken()
-                    , "disputeStatusType" : statusFilter]
+                parameters = [ "access_token" : SessionManager.accessToken(), "disputeStatusType" : statusFilter]
             } else if statusFilter == "0" {
-                parameters = [ "access_token" : SessionManager.accessToken()
-                    , "dateFrom" : timeFilter]
+                parameters = [ "access_token" : SessionManager.accessToken(), "dateFrom" : timeFilter, "dateTo": self.currentSelectedFilter.getSundayDate()]
             } else {
-                parameters = [ "access_token" : SessionManager.accessToken()
-                    , "disputeStatusType" : statusFilter
-                    , "dateFrom" : timeFilter]
+                parameters = [ "access_token" : SessionManager.accessToken(), "disputeStatusType" : statusFilter, "dateFrom" : timeFilter]
             }
         }
         println(parameters)
         
         manager.GET(urlString, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            let resolutionCenterModel: ResolutionCenterModel = ResolutionCenterModel.parseDataWithDictionary(responseObject)
+            self.resolutionCenterModel = ResolutionCenterModel.parseDataWithDictionary(responseObject)
             
-            if resolutionCenterModel.isSuccessful {
+            if self.resolutionCenterModel.isSuccessful {
                 self.tableData.removeAll(keepCapacity: false)
-                self.tableData = resolutionCenterModel.resolutionArray
+                self.tableData = self.resolutionCenterModel.resolutionArray
                 self.resolutionTableView.reloadData()
             } else {
                 println(responseObject)
                 //UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Error while reading Resolution Center table", title: "Data Loading Error")
                 self.tableData.removeAll(keepCapacity: false)
-                self.tableData = resolutionCenterModel.resolutionArray
+                self.tableData = self.resolutionCenterModel.resolutionArray
                 self.resolutionTableView.reloadData()
             }
             

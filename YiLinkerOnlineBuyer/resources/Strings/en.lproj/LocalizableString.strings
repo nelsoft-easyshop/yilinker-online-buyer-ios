@@ -186,16 +186,16 @@ CONNECTION_TITLE_LOCALIZE_KEY = "Connection Unreachable";
 CONNECTION_MESSAGE_LOCALIZE_KEY = "Cannot retrieve data. Please check your internet connection.";
 CONNECTION_TAP_TO_RELOAD_LOCALIZE_KEY = "Tap to reloadtitletitme";
 
-// Rj's Modules
+// MARK: - Rj's Modules
 
-// Followed Sellers
+// MARK: - Followed Sellers
 FOLLOWED_SELLERS_LOCALIZE_KEY = "Followed Sellers";
 
-// Customized Categories
+// MARK: - Customized Categories
 CATEGORY_LOCALIZE_KEY = "Category";
 SELECT_CATEGORY_LOCALIZE_KEY = "Select Category";
 
-// Product Details
+// MARK: - Product Details
 FREE_SHIPPING_LOCALIZE_KEY = "Free Shipping";
 DETAILS_LOCALIZE_KEY = "Details";
 QUANTITY_LOCALIZE_KEY = "Quantity";
@@ -221,7 +221,7 @@ ALERT_ADDED_TO_CART_LOCALIZE_KEY = "This item has been added to your cart.";
 ALERT_PLEASE_LOGIN_LOCALIZE_KEY = "Please logged-in to add item in your wishlist.";
 ALERT_PLEASE_COMPLETE_LOCALIZE_KEY = "Please complete the attributes.";
 
-// Resolution Center
+// MARK: - Resolution Center
 RESOLUTION_TITLE_LOCALIZE_KEY = "Resolution Center";
 RESOLUTION_CASES_LOCALIZE_KEY = "CASES";
 RESOLUTION_OPEN_LOCALIZE_KEY = "OPEN";
@@ -255,7 +255,7 @@ DISPUTE_TRANSACTION_TYPE_LOCALIZE_KEY = "Transaction Type";
 DISPUTE_REFUND_LOCALIZE_KEY = "Refund";
 DISPUTE_REPLACEMENT_LOCALIZE_KEY = "Replacement";
 DISPUTE_PRODUCTS_LOCALIZE_KEY = "Products";
-DISPUTE_ADD_LOCALIZE_KEY = "ADD";
+DISPUTE_ADD_LOCALIZE_KEY = "  ADD";
 DISPUTE_REMARKS_LOCALIZE_KEY = "Remarks";
 DISPUTE_SUBMIT_CASE_LOCALIZE_KEY = "SUBMIT CASE";
 

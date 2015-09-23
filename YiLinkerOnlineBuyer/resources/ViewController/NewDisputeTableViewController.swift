@@ -124,43 +124,38 @@ class NewDisputeTableViewController: UITableViewController, UIPickerViewDataSour
     func fireSubmitCase() {
         self.showHUD()
         let manager: APIManager = APIManager.sharedInstance
-        //seller@easyshop.ph
-        //password
-        var status: Int = 16
-        if self.transactionType.text == DisputeStrings.refund {
-            status == 10
-        }
+
+        var parameters: NSDictionary!
         
-        let parameters: NSDictionary = [ "access_token": SessionManager.accessToken()
-                                        ,"disputeTitle": self.disputeTitle.text
-                                             ,"remarks": self.remarks.text
-                                  ,"orderProductStatus": status
-                                     ,"orderProductIds": self.productIDs]
+        if self.transactionType.text == DisputeStrings.replacement {
+            parameters = [ "access_token": SessionManager.accessToken()
+                ,"disputeTitle": self.disputeTitle.text
+                ,"remarks": self.remarks.text
+                ,"orderProductStatus": 16
+                ,"orderProductIds": self.productIDs.description]
+        } else if self.transactionType.text == DisputeStrings.refund {
+            parameters = [ "access_token": SessionManager.accessToken()
+                ,"disputeTitle": self.disputeTitle.text
+                ,"remarks": self.remarks.text
+                ,"orderProductStatus": 10
+                ,"orderProductIds": self.productIDs.description]
+        }
         
         println(parameters)
         
         manager.POST(APIAtlas.postResolutionCenterAddCase, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
             self.hud?.hide(true)
-            self.navigationController?.popViewControllerAnimated(true)
+            
+            if responseObject["isSuccessful"] as! Bool {
+                self.navigationController?.popViewControllerAnimated(true)
+            } else {
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: responseObject["message"] as! String, title: "Error")
+            }
+            
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                    println(error.userInfo)
-//                if error.userInfo != nil {
-//                    if let jsonResult = error.userInfo as? Dictionary<String, AnyObject> {
-//                        let errorDescription: String = jsonResult["error_description"] as! String
-//                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorDescription)
-//                    }
-//                }
-                
-                if task.statusCode == 401 {
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Mismatch username and password", title: "Login Failed")
-                } else {
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
-                }
-                
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
                 self.hud?.hide(true)
         })
     }
