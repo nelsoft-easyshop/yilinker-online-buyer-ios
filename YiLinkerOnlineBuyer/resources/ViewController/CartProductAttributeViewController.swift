@@ -73,10 +73,10 @@ class CartProductAttributeViewController: UIViewController, UITableViewDelegate,
         let doneLocalizeString: String = StringHelper.localizedStringWithKey("DONE_LOCALIZE_KEY")
         doneButton.setTitle(doneLocalizeString, forState: UIControlState.Normal)
         
-        let quantityLocalizeString: String = StringHelper.localizedStringWithKey("ENTERQUANTITY_LOCALIZE_KEY")
+        let quantityLocalizeString: String = StringHelper.localizedStringWithKey("ENTER_QUANTITY_LOCALIZE_KEY")
         quantityTextLabel.text = quantityLocalizeString
         
-        availableLocalizeString = StringHelper.localizedStringWithKey("AVAILABLESTOCKS_LOCALIZE_KEY")
+        availableLocalizeString = StringHelper.localizedStringWithKey("AVAILABLE_STOCKS_LOCALIZE_KEY")
     }
     
     // MARK: - Table View Data Source
@@ -133,7 +133,7 @@ class CartProductAttributeViewController: UIViewController, UITableViewDelegate,
         stocks = cartModel.quantity
         checkStock(stocks)
         selectedProductUnit = selectedProductUnits
-        self.availabilityStocksLabel.text = availableLocalizeString + String(maximumStock)
+        self.availabilityStocksLabel.text = availableLocalizeString + ": " + String(maximumStock)
         
         selectedCombinations = selectedProductUnit.combination
         
