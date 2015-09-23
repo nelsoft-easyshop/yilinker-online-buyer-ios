@@ -7,6 +7,21 @@
 //
 
 struct Constants {
+    struct Localized {
+        static let ok: String = StringHelper.localizedStringWithKey("OK_BUTTON_LOCALIZE_KEY")
+        static let someThingWentWrong: String = StringHelper.localizedStringWithKey("SOMETHING_WENT_WRONG_LOCALIZE_KEY")
+        static let error: String = StringHelper.localizedStringWithKey("ERROR_LOCALIZE_KEY")
+        static let failed: String = StringHelper.localizedStringWithKey("FAILED_LOCALIZE_KEY")
+        static let done: String = StringHelper.localizedStringWithKey("TOOLBAR_DONE_LOCALIZE_KEY")
+        static let success: String = StringHelper.localizedStringWithKey("SUCCESS_LOGIN_LOCALIZE_KEY")
+        static let serverError: String = StringHelper.localizedStringWithKey("SERVER_ERROR_LOCALIZE_KEY")
+        static let next: String = StringHelper.localizedStringWithKey("NEXT_LOCALIZE_KEY")
+        static let previous: String = StringHelper.localizedStringWithKey("PREVIOUS_LOCALIZE_KEY")
+        
+        static let noInternet: String = StringHelper.localizedStringWithKey("NO_INTERNET_LOCALIZE_KEY")
+        static let noInternetErrorMessage: String = StringHelper.localizedStringWithKey("NO_INTERNET_ERROR_MESSAGE_LOCALIZE_KEY")
+    }
+    
     struct HomePage {
         static let layoutOneKey = "layout1"
         static let layoutTwoKey = "layout2"

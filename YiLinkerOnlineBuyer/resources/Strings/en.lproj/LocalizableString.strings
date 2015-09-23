@@ -6,6 +6,8 @@
   Copyright (c) 2015 yiLinker-online-buyer. All rights reserved.
 */
 
+//Alvin's Module
+
 // MARK: - FAB
 SIGNIN_LOCALIZE_KEY = "SIGN IN";
 HELP_LOCALIZE_KEY = "HELP";
@@ -55,6 +57,10 @@ VIEW_MORE_ITEMS_LOCALIZE_KEY = "VIEW MORE ITEMS";
 VIEW_MORE_PROMOS_LOCALIZE_KEY = "VIEW MORE PROMOS";
 VIEW_ALL_CATEGORIES_LOCALIZE_KEY = "VIEW ALL CATEGORIES";
 
+// MARK: - Home Errors
+WISHLIST_ERROR_LOCALIZE_KEY = "VIEW MORE ITEMS";
+
+
 // MARK: - Start Page
 OR_LOCALIZE_KEY = "or";
 GET_STARTED_LOCALIZE_KEY = "GET STARTED";
@@ -63,6 +69,17 @@ GET_STARTED_LOCALIZE_KEY = "GET STARTED";
 ENTER_EMAIL_ADDRESS_LOCALIZE_KEY = "Enter email address";
 ENTER_PASSWORD_ADDRESS_LOCALIZE_KEY = "Enter password";
 
+// MARK: - Sign In Errors
+MISMATCH_LOCALIZE_KEY = "Mismatch username and password";
+LOGIN_FAILED_LOCALIZE_KEY = "Login Failed";
+
+EMAIL_IS_REQUIRED_LOCALIZE_KEY = "Email is required";
+INVALID_EMAIL_REQUIRED_LOCALIZE_KEY = "Email Address is not valid";
+PASSWORD_IS_REQUIRED_LOCALIZE_KEY = "Password is required";
+
+// MARK: - Sing In Success Message
+SUCCESS_LOGIN_LOCALIZE_KEY = "Successfully login.";
+
 // MARK: - Register
 FIRST_NAME_LOCALIZE_KEY = "First Name";
 LAST_NAME_LOCALIZE_KEY = "Last Name";
@@ -70,6 +87,18 @@ EMAIL_ADDRESS_LOCALIZE_KEY = "email address";
 PASSWORD_LOCALIZE_KEY = "password";
 RE_TYPE_PASSWORD_LOCALIZE_KEY = "Re-type password";
 REGISTER_ME_NOW_LOCALIZE_KEY = "REGISTER ME NOW";
+
+// MARK: - Register Error
+FIRST_NAME_REQUIRED_LOCALIZE_KEY = "First name is required";
+FIRST_NAME_ILLEGAL_LOCALIZE_KEY = "First name contains illegal characters. It can only contain letters, numbers and underscores.";
+LAST_NAME_REQUIRED_LOCALIZE_KEY = "Last name is required";
+INVALID_LAST_NAME_LOCALIZE_KEY = "Last name contains illegal characters. It can only contain letters, numbers and underscores.";
+EMAIL_REQUIRED_LOCALIZE_KEY = "Email is required.";
+INVALID_EMAIL_LOCALIZE_KEY = "The email address you enter is not a valid email address.";
+PASSWORD_REQUIRED_LOCALIZE_KEY = "Password is required.";
+ILLEGAL_PASSWORD_LOCALIZE_KEY = "Password contains illegal characters. It can only contain letters, numbers and underscores.";
+RETYPE_REQUIRED_LOCALIZE_KEY = "Re-type password is required.";
+PASSWORD_NOT_MATCH_LOCALIZE_KEY = "The password does not match.";
 
 // MARK: - Customize Shopping
 CATEGORIES_CS_LOCALIZE_KEY = "Categories";
@@ -95,7 +124,7 @@ SAVE_AND_CONTINUE_LOCALIZE_KEY = "Save and Continue";
 SAVE_AND_GO_TO_PAYMENT_LOCALIZE_KEY = "Save and Go to Payment";
 CONTINUE_SHOPPING_LOCALIZE_KEY = "Continue Shopping";
 
-// Mark: - Address
+// MARK: - Address
 MOBILE_NUMBER_LOCALIZE_KEY = "Mobile Number";
 EMAIL_ADDRESS_LOCALIZE_KEY = "Email Address";
 UNIT_NO_LOCALIZE_KEY = "Unit No.";
@@ -118,6 +147,13 @@ EDIT_ADDRESS_LOCALIZE_KEY = "Edit Address";
 ADD_ADDRESS_LOCALIZE_KEY = "ADD Address";
 ADDRESS_TITLE_ADDRESS_LOCALIZE_KEY = "Address Title";
 
+// MARK: - Address Error
+INCOMPLETE_INFORMATION_LOCALIZE_KEY = "Incomplete Information";
+MOBILE_NUMBER_REQUIRED_LOCALIZE_KEY = "Mobile Number is required";
+
+STREET_NUMBER_REQUIRED_LOCALIZE_KEY = "Street number is required.";
+STREET_NAME_REQUIRED_LOCALIZE_KEY = "Street name is required.";
+ZIP_CODE_REQUIRED_LOCALIZE_KEY = "Zip code is required.";
 
 // MARK: - Checkout - Payment
 HOW_DO_LOCALIZE_KEY = "How do you wish to pay";
@@ -135,6 +171,11 @@ CREATE_ACCOUT_LOCALIZE_KEY = "Do you want to create an account?";
 CREATE_MESSAGE_PURCHASE_LOCALIZE_KEY = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.";
 YES_LOCALIZE_KEY = "YES";
 NO_LOCALIZE_KEY = "NO";
+
+// MARK: - Empty View
+CONNECTION_TITLE_LOCALIZE_KEY = "Connection Unreachable";
+CONNECTION_MESSAGE_LOCALIZE_KEY = "Cannot retrieve data. Please check your internet connection.";
+CONNECTION_TAP_TO_RELOAD_LOCALIZE_KEY = "Tap to reloadtitletitme";
 
 // Rj's Modules
 
@@ -276,9 +317,13 @@ TRANSACTION_PRODUCT_DETAILS_LOCALIZE_KEY = "Description";
 TRANSACTION_PRODUCT_DETAILS_LOCALIZE_KEY = "SEE MORE";
 TRANSACTION_PRODUCT_DETAILS_LOCALIZE_KEY = "CANCEL THIS ORDER";
 
-// Global
+// MARK: - Global
 SOMETHING_WENT_WRONG_LOCALIZE_KEY = "Something Went Wrong";
 OK_BUTTON_LOCALIZE_KEY = "OK";
+SUCCESS_LOCALIZE_KEY = "Success";
 ERROR_LOCALIZE_KEY = "Error";
 FAILED_LOCALIZE_KEY = "Failed";
 TOOLBAR_DONE_LOCALIZE_KEY = "Done";
+SERVER_ERROR_LOCALIZE_KEY = "Server Error";
+NO_INTERNET_LOCALIZE_KEY = "No Internet Connection";
+NO_INTERNET_ERROR_MESSAGE_LOCALIZE_KEY = "Please check your internet connection.";
