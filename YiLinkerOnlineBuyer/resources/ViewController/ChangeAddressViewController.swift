@@ -59,7 +59,7 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
     }
     
     func titleView() {
-        self.title = "Change Address"
+        self.title = AddressStrings.changeAddress
     }
     
     func backButton() {

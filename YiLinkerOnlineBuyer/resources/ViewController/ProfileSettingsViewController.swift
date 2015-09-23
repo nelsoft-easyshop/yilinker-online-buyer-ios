@@ -14,17 +14,23 @@ class ProfileSettingsViewController: UIViewController, UITableViewDataSource, UI
     
     @IBOutlet weak var tableView: UITableView!
     
-    var tableData: [String] = ["Receive Notifications via SMS?", "Receive Notifications via Email?", "Deactivate My Account?"]
+    var tableData: [String] = []
     var tableDataStatus: [Bool] = [false, false, false]
     
     var hud: MBProgressHUD?
     
     var dimView: UIView?
     
+    var errorLocalizeString: String  = ""
+    var somethingWrongLocalizeString: String = ""
+    var connectionLocalizeString: String = ""
+    var connectionMessageLocalizeString: String = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         initializeViews()
+        initializeLocalizedString()
         titleView()
         backButton()
         registerNibs()
@@ -51,8 +57,26 @@ class ProfileSettingsViewController: UIViewController, UITableViewDataSource, UI
         dimView?.alpha = 0
     }
     
+    func initializeLocalizedString() {
+        //Initialized Localized String
+        errorLocalizeString = StringHelper.localizedStringWithKey("ERROR_LOCALIZE_KEY")
+        somethingWrongLocalizeString = StringHelper.localizedStringWithKey("SOMETHINGWENTWRONG_LOCALIZE_KEY")
+        connectionLocalizeString = StringHelper.localizedStringWithKey("CONNECTIONUNREACHABLE_LOCALIZE_KEY")
+        connectionMessageLocalizeString = StringHelper.localizedStringWithKey("CONNECTIONERRORMESSAGE_LOCALIZE_KEY")
+        
+        let smsLocalizeString = StringHelper.localizedStringWithKey("SETTINGSSMS_LOCALIZE_KEY")
+        let emailLocalizeString = StringHelper.localizedStringWithKey("SETTINGSEMAIL_LOCALIZE_KEY")
+        let deactivateLocalizeString = StringHelper.localizedStringWithKey("SETTINGSDEACTIVATE_LOCALIZE_KEY")
+        
+        tableData.append(smsLocalizeString)
+        tableData.append(emailLocalizeString)
+        tableData.append(deactivateLocalizeString)
+        
+        tableView.reloadData()
+    }
+    
     func titleView() {
-        self.title = "Settings"
+        self.title = StringHelper.localizedStringWithKey("SETTINGS_LOCALIZE_KEY")
     }
     
     func backButton() {
@@ -159,9 +183,10 @@ class ProfileSettingsViewController: UIViewController, UITableViewDataSource, UI
             if let tempDict = responseObject as? NSDictionary {
                 let tempVar = tempDict["isSuccessful"] as! Bool
                 if !(tempVar){
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: tempDict["message"] as! String, title: "Error")
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: tempDict["message"] as! String, title: self.errorLocalizeString)
                 } else {
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: tempDict["message"] as! String, title: "Notification")
+                    let notifLocalizeString = StringHelper.localizedStringWithKey("NOTIFICATION_LOCALIZE_KEY")
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: tempDict["message"] as! String, title: notifLocalizeString)
                 }
             }
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
@@ -173,9 +198,9 @@ class ProfileSettingsViewController: UIViewController, UITableViewDataSource, UI
                     self.fireRefreshToken(type, isON: isOn)
                 } else {
                     if Reachability.isConnectedToNetwork() {
-                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong!", title: "Error")
+                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: self.somethingWrongLocalizeString, title: self.errorLocalizeString)
                     } else {
-                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Check your internet connection!", title: "Error")
+                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: self.connectionMessageLocalizeString, title: self.errorLocalizeString)
                     }
                     println(error)
                 }
@@ -207,12 +232,16 @@ class ProfileSettingsViewController: UIViewController, UITableViewDataSource, UI
     
     //Method for
     func handleIOS8(){
-        let alert = UIAlertController(title: "Deactivate Account", message: "", preferredStyle: UIAlertControllerStyle.ActionSheet)
-        let libButton = UIAlertAction(title: "Deactivate", style: UIAlertActionStyle.Destructive) { (alert) -> Void in
+        let deactivateAccountLocalizeString = StringHelper.localizedStringWithKey("DEACTIVATEACCOUNT_LOCALIZE_KEY")
+        let deactivateLocalizeString = StringHelper.localizedStringWithKey("DEACTIVATE_LOCALIZE_KEY")
+        let cancelLocalizeString = StringHelper.localizedStringWithKey("CANCEL_LOCALIZE_KEY")
+        
+        let alert = UIAlertController(title: deactivateAccountLocalizeString, message: "", preferredStyle: UIAlertControllerStyle.ActionSheet)
+        let libButton = UIAlertAction(title: deactivateLocalizeString, style: UIAlertActionStyle.Destructive) { (alert) -> Void in
             self.showDeactivateModal()
         }
         
-        let cancelButton = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel) { (alert) -> Void in
+        let cancelButton = UIAlertAction(title: cancelLocalizeString, style: UIAlertActionStyle.Cancel) { (alert) -> Void in
             println("Cancel Pressed")
         }
         

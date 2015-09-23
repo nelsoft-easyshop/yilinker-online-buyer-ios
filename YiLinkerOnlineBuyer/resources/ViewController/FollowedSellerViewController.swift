@@ -134,8 +134,8 @@ class FollowedSellerViewController: UIViewController, EmptyViewDelegate {
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 self.hud?.hide(true)
-                let alertController = UIAlertController(title: StringHelper.localizedStringWithKey("SOMETHINGWENTWRONG_LOCALIZE_KEY"), message: "", preferredStyle: .Alert)
-                let defaultAction = UIAlertAction(title: StringHelper.localizedStringWithKey("OKBUTTON_LOCALIZE_KEY"), style: .Default, handler: nil)
+                let alertController = UIAlertController(title: ProductStrings.alertWentWrong, message: "", preferredStyle: .Alert)
+                let defaultAction = UIAlertAction(title: ProductStrings.alertOk, style: .Default, handler: nil)
                 alertController.addAction(defaultAction)
                 self.presentViewController(alertController, animated: true, completion: nil)
         })

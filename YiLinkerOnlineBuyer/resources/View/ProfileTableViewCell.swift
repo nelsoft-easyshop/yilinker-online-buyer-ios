@@ -23,6 +23,12 @@ class ProfileTableViewCell: UITableViewCell {
     
     @IBOutlet weak var followingLabel: UILabel!
     @IBOutlet weak var transactionsLabel: UILabel!
+    @IBOutlet weak var editProfileLabel: UILabel!
+    @IBOutlet weak var transactionButtonLabel: UILabel!
+    @IBOutlet weak var activityLogsLabel: UILabel!
+    @IBOutlet weak var myPointsLabel: UILabel!
+    @IBOutlet weak var resolutionCenterLabel: UILabel!
+    @IBOutlet weak var settingsLabel: UILabel!
 
     @IBOutlet weak var editProfileView: UIView!
     @IBOutlet weak var transactionsView: UIView!
@@ -37,12 +43,15 @@ class ProfileTableViewCell: UITableViewCell {
     @IBOutlet weak var myPointsButton: UIButton!
     @IBOutlet weak var resolutionButton: UIButton!
     @IBOutlet weak var settingsButton: UIButton!
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
         
         initializeViews()
         initializesTapGesture()
+        initializeLocalizedString()
     }
 
     func initializeViews() {
@@ -52,6 +61,25 @@ class ProfileTableViewCell: UITableViewCell {
         myPointsButton.layer.cornerRadius = myPointsButton.frame.height / 2
         resolutionButton.layer.cornerRadius = resolutionButton.frame.height / 2
         settingsButton.layer.cornerRadius = settingsButton.frame.height / 2
+    }
+    
+    func initializeLocalizedString() {
+        let followingLocalizeString: String = StringHelper.localizedStringWithKey("FOLLOWING_LOCALIZE_KEY")
+        let transactionsLocalizeString: String = StringHelper.localizedStringWithKey("TRANSACTIONS_LOCALIZE_KEY")
+        let editProfileLocalizeString: String = StringHelper.localizedStringWithKey("EDITPROFILE_LOCALIZE_KEY")
+        let activityLogsLocalizeString: String = StringHelper.localizedStringWithKey("ACTIVITYLOGS_LOCALIZE_KEY")
+        let myPointsLocalizeString: String = StringHelper.localizedStringWithKey("MYPOINTS_LOCALIZE_KEY")
+        let resolutionCenterLocalizeString: String = StringHelper.localizedStringWithKey("RESOLUTIONCENTER_LOCALIZE_KEY")
+        let settingssLocalizeString: String = StringHelper.localizedStringWithKey("SETTINGS_LOCALIZE_KEY")
+        
+        followingLabel.text = followingLocalizeString
+        transactionsLabel.text = transactionsLocalizeString
+        editProfileLabel.text = editProfileLocalizeString
+        transactionButtonLabel.text = transactionsLocalizeString
+        activityLogsLabel.text = activityLogsLocalizeString
+        myPointsLabel.text = myPointsLocalizeString
+        resolutionCenterLabel.text = resolutionCenterLocalizeString
+        settingsLabel.text = settingssLocalizeString
     }
     
     func initializesTapGesture() {

@@ -19,7 +19,7 @@ class ChangeAddressFooterCollectionViewCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        self.newAddressButton.setTitle(AddressStrings.newAddress, forState: UIControlState.Normal)
     }
     
     @IBAction func newAddress(sender: AnyObject) {

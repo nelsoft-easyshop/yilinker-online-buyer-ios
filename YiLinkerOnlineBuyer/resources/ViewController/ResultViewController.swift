@@ -34,9 +34,12 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
     @IBOutlet weak var viewTypeView: UIView!
     @IBOutlet weak var viewTypeImageView: UIImageView!
     
+    @IBOutlet weak var filterLabel: UILabel!
+    @IBOutlet weak var sortLabel: UILabel!
     @IBOutlet weak var viewTypeLabel: UILabel!
+    
     var collectionViewData: [SearchResultModel] = []
-    var sortData: [String] = ["Old to New", "New to Old", "Alphabetically A - Z", "Alphabetically Z - A"]
+    var sortData: [String] = []
     var sortParameter: [String] =
         [ "sortType=BYDATE&sortDirection=ASC"
          ,"sortType=BYDATE&sortDirection=DESC"
@@ -62,10 +65,18 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
     var maxPrice: Double = 0
     var minPrice: Double = 0
     
+    var errorLocalizeString: String  = ""
+    var somethingWrongLocalizeString: String = ""
+    var connectionLocalizeString: String = ""
+    var connectionMessageLocalizeString: String = ""
+    var listLocalizeString: String = ""
+    var gridMessageLocalizeString: String = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         self.initializeViews()
+        self.initializeLocalizedString()
         self.registerNibs()
     }
     
@@ -86,13 +97,37 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
     }
 
     func passSearchKey(key: String) {
-        
-
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    }
+    
+    func initializeLocalizedString() {
+        //Initialized Localized String
+        errorLocalizeString = StringHelper.localizedStringWithKey("ERROR_LOCALIZE_KEY")
+        somethingWrongLocalizeString = StringHelper.localizedStringWithKey("SOMETHINGWENTWRONG_LOCALIZE_KEY")
+        connectionLocalizeString = StringHelper.localizedStringWithKey("CONNECTIONUNREACHABLE_LOCALIZE_KEY")
+        connectionMessageLocalizeString = StringHelper.localizedStringWithKey("CONNECTIONERRORMESSAGE_LOCALIZE_KEY")
+        listLocalizeString = StringHelper.localizedStringWithKey("LIST_LOCALIZE_KEY")
+        gridMessageLocalizeString = StringHelper.localizedStringWithKey("GRID_LOCALIZE_KEY")
+        
+        let oldToNewLocalizeString: String = StringHelper.localizedStringWithKey("OLDTONEW_LOCALIZE_KEY")
+        let newToOldLocalizeString: String = StringHelper.localizedStringWithKey("NEWTOOLD_LOCALIZE_KEY")
+        let AToZLocalizeString: String = StringHelper.localizedStringWithKey("ATOZ_LOCALIZE_KEY")
+        let ZToALocalizeString: String = StringHelper.localizedStringWithKey("ZTOA_LOCALIZE_KEY")
+        let filterLocalizeString: String = StringHelper.localizedStringWithKey("SORT_LOCALIZE_KEY")
+        let sortLocalizeString: String = StringHelper.localizedStringWithKey("FILTER_LOCALIZE_KEY")
+        
+        sortData.append(oldToNewLocalizeString)
+        sortData.append(newToOldLocalizeString)
+        sortData.append(AToZLocalizeString)
+        sortData.append(ZToALocalizeString)
+        sortPickerTableView.reloadData()
+        
+        filterLabel.text = filterLocalizeString
+        sortLabel.text = sortLocalizeString
+        viewTypeLabel.text = listLocalizeString
     }
 
     func initializeViews() {
@@ -105,7 +140,8 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
             self.edgesForExtendedLayout = UIRectEdge.None
         }
         
-        self.title = "Results"
+        let resultsLocalizeString: String = StringHelper.localizedStringWithKey("RESULTS_LOCALIZE_KEY")
+        self.title = resultsLocalizeString
         
         // Back Button
         let backButton = UIBarButtonItem(title:" ", style:.Plain, target: self, action:"goBack")
@@ -137,12 +173,10 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
         fullDimView?.hidden = true
         fullDimView?.alpha = 0
 
-        
         noResultLabel.hidden = true
     }
     
-    func goBack()
-    {
+    func goBack(){
         self.navigationController?.popViewControllerAnimated(true)
     }
     
@@ -162,7 +196,7 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
             requestSuggestionSearchUrl = "\(APIAtlas.productList)?categoryId=\(id)"
             requestSearchDetails("\(APIAtlas.productList)?categoryId=\(id)", params: nil)
         } else {
-            showAlert("Connection Unreachable", message: "Cannot retrieve data. Please check your internet connection.")
+            showAlert(connectionLocalizeString, message: connectionMessageLocalizeString)
         }
     }
     
@@ -173,7 +207,7 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
             requestSuggestionSearchUrl = searchSuggestion.searchUrl
            requestSearchDetails(requestSuggestionSearchUrl, params: nil)
         } else {
-            showAlert("Connection Unreachable", message: "Cannot retrieve data. Please check your internet connection.")
+            showAlert(connectionLocalizeString, message: connectionMessageLocalizeString)
         }
     }
     
@@ -201,12 +235,14 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
                 }
                 }, failure: {
                     (task: NSURLSessionDataTask!, error: NSError!) in
-                    self.showAlert("Error", message: "Something went wrong. . .")
+                    self.showAlert(self.errorLocalizeString, message: self.somethingWrongLocalizeString)
                     println(error)
                     self.dismissLoader()
             })
         } else {
-            showAlert("Product List", message: "No more results.")
+            let noMoreLocalizeString: String = StringHelper.localizedStringWithKey("NOMORERESULTS_LOCALIZE_KEY")
+            let resultsLocalizeString: String = StringHelper.localizedStringWithKey("RESULTS_LOCALIZE_KEY")
+            showAlert(resultsLocalizeString, message: noMoreLocalizeString)
         }
     }
     
@@ -264,7 +300,6 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
     }
 
     
-    
     //Loader function
     func showLoader() {
         if self.hud != nil {
@@ -287,11 +322,11 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
         if type == grid {
             type = list
             viewTypeImageView.image = UIImage(named: "grid")
-            viewTypeLabel.text = "Grid"
+            viewTypeLabel.text = gridMessageLocalizeString
         } else if type == list {
             type = grid
             viewTypeImageView.image = UIImage(named: "list")
-            viewTypeLabel.text = "List"
+            viewTypeLabel.text = listLocalizeString
         } else {
             type = grid
         }
@@ -344,21 +379,17 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
     }
     
     func tapViewTypeViewAction() {
-        println("View Type Tapped!")
         self.changeViewType()
-        
     }
     
     // MARK: UICollectionViewDataSource
     
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
-        //#warning Incomplete method implementation -- Return the number of sections
         return 1
     }
     
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        //#warning Incomplete method implementation -- Return the number of items in the section
         return collectionViewData.count
     }
     
@@ -384,6 +415,7 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
             return cell
         }
     }
+    
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
         let screenSize: CGRect = UIScreen.mainScreen().bounds
         let screenWidth = screenSize.width
@@ -397,6 +429,7 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
             return CGSize(width: screenWidth, height: 225)
         }
     }
+    
     // MARK: UICollectionViewDelegate
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
@@ -412,21 +445,16 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
     // MARK: - Table view data source
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // #warning Potentially incomplete method implementation.
-        // Return the number of sections.
         return 1
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete method implementation.
-        // Return the number of rows in the section.
         return sortData.count
     }
 
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("SortTableViewCell", forIndexPath: indexPath) as! SortTableViewCell
     
-    // Configure the cell...
         cell.detailsLabel?.text = sortData[indexPath.row]
     
         return cell
@@ -455,7 +483,7 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
             } */
             resultCollectionView.setContentOffset(CGPointZero, animated: true)
         } else {
-            showAlert("Connection Unreachable", message: "Cannot retrieve data. Please check your internet connection.")
+            showAlert(connectionLocalizeString, message: connectionMessageLocalizeString)
         }
     }
     
@@ -499,7 +527,8 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
     func showAlert(title: String, message: String) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
         
-        let OKAction = UIAlertAction(title: "OK", style: .Default) { (action) in
+        let okLocalizeString: String = StringHelper.localizedStringWithKey("OKBUTTON_LOCALIZE_KEY")
+        let OKAction = UIAlertAction(title: "okLocalizeString", style: .Default) { (action) in
             alertController.dismissViewControllerAnimated(true, completion: nil)
         }
         
@@ -527,7 +556,7 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
                 SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
                 self.requestSearchDetails(url, params: params)
             } else {
-                self.showAlert("Error", message: responseObject["message"] as! String)
+                self.showAlert(self.errorLocalizeString, message: responseObject["message"] as! String)
             }
             
             }, failure: {
@@ -535,10 +564,8 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
                 SVProgressHUD.dismiss()
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                 
-                self.showAlert("Something went wrong", message: "")
+                self.showAlert(self.errorLocalizeString, message: self.somethingWrongLocalizeString)
                 
         })
     }
-
-
 }

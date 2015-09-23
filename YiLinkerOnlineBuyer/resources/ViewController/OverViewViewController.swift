@@ -8,6 +8,12 @@
 
 import UIKit
 
+struct OverViewStrings {
+    static let congrats: String = StringHelper.localizedStringWithKey("CONGRATULATIONS_LOCALIZE_KEY")
+    static let successPurchase: String = StringHelper.localizedStringWithKey("SUCCESS_PURCHASE_LOCALIZE_KEY")
+    static let total: String = StringHelper.localizedStringWithKey("TOTAL_LOCALIZE_KEY")
+}
+
 class OverViewViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var tableView: UITableView!
@@ -21,7 +27,7 @@ class OverViewViewController: UIViewController, UITableViewDelegate, UITableView
         
         let totalTableViewCell: TotalTableViewCell = XibHelper.puffViewWithNibName(Constants.Checkout.OverView.totalTableViewCellNibNameAndIdentifier, index: 0) as! TotalTableViewCell
         totalTableViewCell.priceLabel.text = "\(self.paymentSuccessModel.data.totalPrice.formatToTwoDecimal())"
-            
+        
         self.tableView.tableFooterView = totalTableViewCell
         self.registerNib()
     }

@@ -41,6 +41,15 @@ class GuestCheckoutTableViewCell: UITableViewCell, UITextFieldDelegate {
     @IBOutlet weak var streetNameLabel: UILabel!
     @IBOutlet weak var zipCodelabel: UILabel!
     
+    @IBOutlet weak var unitNoLabel: UILabel!
+    @IBOutlet weak var buildingNameLabel: UILabel!
+    @IBOutlet weak var subdivisionLabel: UILabel!
+    @IBOutlet weak var provinceLabel: UILabel!
+    @IBOutlet weak var cityLabel: UILabel!
+    @IBOutlet weak var barangayLabel: UILabel!
+    @IBOutlet weak var additionalInfoLabel: UILabel!
+    
+    
     
     var delegate: GuestCheckoutTableViewCellDelegate?
     
@@ -65,6 +74,25 @@ class GuestCheckoutTableViewCell: UITableViewCell, UITextFieldDelegate {
         self.streetNameLabel.required()
         self.streetNumberLabel.required()
         self.zipCodelabel.required()
+        
+        self.localizedLabels()
+    }
+    
+    func localizedLabels() {
+        self.firstNameLabel.text = AddressStrings.firstName
+        self.lastNameLabel.text = AddressStrings.lastName
+        self.mobileNumberLabel.text = AddressStrings.mobileNumber
+        self.emailAddressLabel.text = AddressStrings.emailAddress
+        self.unitNoLabel.text = AddressStrings.unitNo
+        self.buildingNameLabel.text = AddressStrings.buildingName
+        self.streetNumberLabel.text = AddressStrings.streetNo
+        self.streetNameLabel.text = AddressStrings.streetName
+        self.subdivisionLabel.text = AddressStrings.subdivision
+        self.provinceLabel.text = AddressStrings.province
+        self.cityLabel.text = AddressStrings.city
+        self.barangayLabel.text = AddressStrings.barangay
+        self.zipCodelabel.text = AddressStrings.zipCode
+        self.additionalInfoLabel.text = AddressStrings.additionalInfo
     }
     
     override func setSelected(selected: Bool, animated: Bool) {

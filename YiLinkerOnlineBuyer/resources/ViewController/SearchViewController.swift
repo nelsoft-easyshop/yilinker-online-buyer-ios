@@ -23,10 +23,19 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     var tableData: [SearchSuggestionModel] = []
     
+    var errorLocalizeString: String  = ""
+    var somethingWrongLocalizeString: String = ""
+    var connectionLocalizeString: String = ""
+    var connectionMessageLocalizeString: String = ""
+    var searchLocalizeString: String = ""
+    var browseLocalizeString: String = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.initializeViews()
+        self.initializeLocalizedString()
+        self.addBrowseCategory()
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -64,7 +73,20 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         var nib = UINib(nibName: "SearchSuggestionTableViewCell", bundle: nil)
         searchResultTableView.registerNib(nib, forCellReuseIdentifier: "SearchSuggestionTableViewCell")
         
-        addBrowseCategory()
+        //Add scopebar
+        let sellerLocalizeString: String = StringHelper.localizedStringWithKey("SELLER_LOCALIZE_KEY")
+        let productLocalizeString: String = StringHelper.localizedStringWithKey("PRODUCT_LOCALIZE_KEY")
+        searchBar.scopeButtonTitles = [productLocalizeString, sellerLocalizeString]
+    }
+    
+    func initializeLocalizedString() {
+        //Initialized Localized String
+        errorLocalizeString = StringHelper.localizedStringWithKey("ERROR_LOCALIZE_KEY")
+        somethingWrongLocalizeString = StringHelper.localizedStringWithKey("SOMETHINGWENTWRONG_LOCALIZE_KEY")
+        connectionLocalizeString = StringHelper.localizedStringWithKey("CONNECTIONUNREACHABLE_LOCALIZE_KEY")
+        connectionMessageLocalizeString = StringHelper.localizedStringWithKey("CONNECTIONERRORMESSAGE_LOCALIZE_KEY")
+        searchLocalizeString = StringHelper.localizedStringWithKey("SEARCH_LOCALIZE_KEY")
+        browseLocalizeString = StringHelper.localizedStringWithKey("BROWSECATEGORY_LOCALIZE_KEY")
     }
     
     func requestSearch(url: String, params: NSDictionary!) {
@@ -93,16 +115,16 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
                     println("STATUS CODE \(statusCode)")
                     if statusCode == -1009 {
                         if !Reachability.isConnectedToNetwork() {
-                            self.showAlert("Error", message: "Check your intenet connection.")
+                            self.showAlert(self.errorLocalizeString, message: self.connectionMessageLocalizeString)
                         }
                     }else if(statusCode != -999) {
-                        self.showAlert("Error", message: "Something went wrong. . .")
+                        self.showAlert(self.errorLocalizeString, message: self.somethingWrongLocalizeString)
                     } else {
                         self.requestSearch(url, params: params)
                     }
                 } else {
                     if !Reachability.isConnectedToNetwork() {
-                        self.showAlert("Error", message: "Check your intenet connection.")
+                        self.showAlert(self.errorLocalizeString, message: self.connectionMessageLocalizeString)
                     }
                 }
         })
@@ -122,14 +144,15 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         }
         
         if tableData.count == 0 && !isQueueCancelled {
-            showAlert("Search", message: "No result found.")
+            let noResultLocalizeString = StringHelper.localizedStringWithKey("NORESULT_LOCALIZE_KEY")
+            showAlert(searchLocalizeString, message: noResultLocalizeString)
         }
         
         addBrowseCategory()
     }
     
     func addBrowseCategory() {
-        var temp: SearchSuggestionModel = SearchSuggestionModel(suggestion: "Browse by Category", imageURL: "SearchBrowseCategory", searchUrl: "") as SearchSuggestionModel
+        var temp: SearchSuggestionModel = SearchSuggestionModel(suggestion: browseLocalizeString, imageURL: "SearchBrowseCategory", searchUrl: "") as SearchSuggestionModel
         
         tableData.append(temp)
         self.searchResultTableView.reloadData()
@@ -196,7 +219,7 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         var tempModel: SearchSuggestionModel = tableData[indexPath.row]
         
         cell.suggestionTextLabel?.text = tempModel.suggestion
-        if tempModel.suggestion.contains("Browse by Category") {
+        if tempModel.suggestion.contains(browseLocalizeString) {
             cell.suggestionImageView.image = UIImage(named: "SearchBrowseCategory")
         } else {
             cell.suggestionImageView.sd_setImageWithURL(NSURL(string: tempModel.imageURL), placeholderImage: UIImage(named: "dummy-placeholder"))
@@ -209,7 +232,7 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         var tempModel: SearchSuggestionModel = tableData[indexPath.row]
         
-        if tempModel.suggestion.contains("Browse by Category") {
+        if tempModel.suggestion.contains(browseLocalizeString) {
             let categoryViewController = CategoriesViewController(nibName: "CategoriesViewController", bundle: nil)
             self.navigationController?.pushViewController(categoryViewController, animated: true)
         } else {
@@ -228,8 +251,8 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     func showAlert(title: String, message: String) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
-        
-        let OKAction = UIAlertAction(title: "OK", style: .Default) { (action) in
+        let okLocalizeString = StringHelper.localizedStringWithKey("OKBUTTON_LOCALIZE_KEY")
+        let OKAction = UIAlertAction(title: okLocalizeString, style: .Default) { (action) in
             alertController.dismissViewControllerAnimated(true, completion: nil)
         }
         
