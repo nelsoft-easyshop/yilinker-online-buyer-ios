@@ -17,6 +17,9 @@ class ProductsTableViewCell: UITableViewCell, UICollectionViewDelegate, UICollec
 
     @IBOutlet weak var collectionView: UICollectionView!
     
+    @IBOutlet weak var productsLabel: UILabel!
+    @IBOutlet weak var moreSellersProduct: DynamicRoundedButton!
+    
     var productModels:[HomePageProductModel] = [HomePageProductModel]()
     var delegate: ProductsTableViewCellDelegate?
     

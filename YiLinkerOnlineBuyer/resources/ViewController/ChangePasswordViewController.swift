@@ -29,6 +29,10 @@ class ChangePasswordViewController: UIViewController {
     @IBOutlet weak var newPasswordTextField: UITextField!
     @IBOutlet weak var confirmPasswordTextField: UITextField!
     @IBOutlet weak var submitButton: UIButton!
+
+    @IBOutlet weak var oldPasswordLabel: UILabel!
+    @IBOutlet weak var newPasswordLabel: UILabel!
+    @IBOutlet weak var confirmPasswordLabel: UILabel!
     
     var mainViewOriginalFrame: CGRect?
     
@@ -38,10 +42,16 @@ class ChangePasswordViewController: UIViewController {
     
     var hud: MBProgressHUD?
     
+    var errorLocalizeString: String  = ""
+    var somethingWrongLocalizeString: String = ""
+    var connectionLocalizeString: String = ""
+    var connectionMessageLocalizeString: String = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         initializeViews()
+        initializeLocalizedString()
     }
 
     override func didReceiveMemoryWarning() {
@@ -65,6 +75,27 @@ class ChangePasswordViewController: UIViewController {
         screenHeight = screenSize.height
         
         topMarginConstraint.constant = (screenHeight! / 2) - (mainView.frame.height / 2)
+    }
+    
+    func initializeLocalizedString() {
+        //Initialized Localized String
+        errorLocalizeString = StringHelper.localizedStringWithKey("ERROR_LOCALIZE_KEY")
+        somethingWrongLocalizeString = StringHelper.localizedStringWithKey("SOMETHINGWENTWRONG_LOCALIZE_KEY")
+        connectionLocalizeString = StringHelper.localizedStringWithKey("CONNECTIONUNREACHABLE_LOCALIZE_KEY")
+        connectionMessageLocalizeString = StringHelper.localizedStringWithKey("CONNECTIONERRORMESSAGE_LOCALIZE_KEY")
+        
+        var changePasswordLocalizeString = StringHelper.localizedStringWithKey("CHANGEPASSWORD_LOCALIZE_KEY")
+        var oldPasswordLocalizeString = StringHelper.localizedStringWithKey("OLDPASSWORD_LOCALIZE_KEY")
+        var newPasswordLocalizeString = StringHelper.localizedStringWithKey("NEWPASSWORD_LOCALIZE_KEY")
+        var confirmPasswordLocalizeString = StringHelper.localizedStringWithKey("CONFIRMPASSWORD_LOCALIZE_KEY")
+        var submitLocalizeString = StringHelper.localizedStringWithKey("SUBMIT_LOCALIZE_KEY")
+        
+        submitButton.setTitle(submitLocalizeString, forState: UIControlState.Normal)
+        
+        titleLabel.text = changePasswordLocalizeString
+        oldPasswordLabel.text = oldPasswordLocalizeString
+        newPasswordLabel.text = newPasswordLocalizeString
+        confirmPasswordLabel.text = confirmPasswordLocalizeString
     }
     
     @IBAction func editBegin(sender: AnyObject) {
@@ -100,9 +131,11 @@ class ChangePasswordViewController: UIViewController {
         } else if sender as! UIButton == submitButton {
             tapMainAction()
             if oldPasswordTextField.text.isEmpty ||  newPasswordTextField.text.isEmpty || confirmPasswordTextField.text.isEmpty {
-                showAlert(title: "Error", message: "Complete necessary fields!")
+                var completeLocalizeString = StringHelper.localizedStringWithKey("COMPLETEFIELDS_LOCALIZE_KEY")
+                showAlert(title: self.errorLocalizeString, message: completeLocalizeString)
             } else if newPasswordTextField.text != confirmPasswordTextField.text {
-                showAlert(title: "Error", message: "Password does not match!")
+                var passwordLocalizeString = StringHelper.localizedStringWithKey("PASSWORDMISMATCH_LOCALIZE_KEY")
+                showAlert(title: self.errorLocalizeString, message: passwordLocalizeString)
             } else {
                 fireUpdateProfile(APIAtlas.changePassword, params: NSDictionary(dictionary: [
                     "access_token": SessionManager.accessToken(),
@@ -115,7 +148,8 @@ class ChangePasswordViewController: UIViewController {
     
     func showAlert(#title: String!, message: String!) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
-        let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+        var okLocalizeString = StringHelper.localizedStringWithKey("OKBUTTON_LOCALIZE_KEY")
+        let defaultAction = UIAlertAction(title: okLocalizeString, style: .Default, handler: nil)
         alertController.addAction(defaultAction)
         presentViewController(alertController, animated: true, completion: nil)
     }
@@ -152,7 +186,7 @@ class ChangePasswordViewController: UIViewController {
                     self.dismissLoader()
                     self.delegate?.submitChangePasswordViewController()
                 } else {
-                    self.showAlert(title: "Error", message: responseObject["message"] as! String)
+                    self.showAlert(title: self.errorLocalizeString, message: responseObject["message"] as! String)
                     self.dismissLoader()
                 }
             }
@@ -166,13 +200,13 @@ class ChangePasswordViewController: UIViewController {
                     self.dismissLoader()
                     
                     if let data = info["message"] as? NSString {
-                        self.showAlert(title: "Error", message: data as String)
+                        self.showAlert(title: self.errorLocalizeString, message: data as String)
                     } else {
-                        self.showAlert(title: "Error", message: "Something went wrong!")
+                        self.showAlert(title: self.errorLocalizeString, message: self.somethingWrongLocalizeString)
                     }
                     
                 } else {
-                    self.showAlert(title: "Error", message: "Check your internet connection!")
+                    self.showAlert(title: self.connectionLocalizeString, message: self.connectionMessageLocalizeString)
                 }
                 
         })
@@ -195,7 +229,7 @@ class ChangePasswordViewController: UIViewController {
                 SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
                 self.fireUpdateProfile(url, params: params)
             } else {
-                self.showAlert(title: "Error", message: responseObject["message"] as! String)
+                self.showAlert(title: self.errorLocalizeString, message: responseObject["message"] as! String)
             }
             
             }, failure: {
@@ -203,7 +237,7 @@ class ChangePasswordViewController: UIViewController {
                 self.dismissLoader()
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                 
-                self.showAlert(title: "Something went wrong", message: "")
+                self.showAlert(title: self.errorLocalizeString, message: self.somethingWrongLocalizeString)
                 
         })
     }

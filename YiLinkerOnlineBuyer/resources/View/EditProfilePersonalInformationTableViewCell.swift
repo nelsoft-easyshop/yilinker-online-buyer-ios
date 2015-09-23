@@ -23,6 +23,11 @@ class EditProfilePersonalInformationTableViewCell: UITableViewCell, UITextFieldD
     
     @IBOutlet weak var changeNumberButton: UIButton!
     
+    @IBOutlet weak var personalInfoLabel: UILabel!
+    @IBOutlet weak var firstNameLabel: UILabel!
+    @IBOutlet weak var lastNameLabel: UILabel!
+    @IBOutlet weak var mobilePhoneLabel: UILabel!
+    
     @IBAction func editingAction(sender: AnyObject) {
         delegate?.passPersonalInformation(firstNameTextField.text, lastName: lastNameTextField.text, mobileNumber: mobilePhoneTextField.text)
     }
@@ -34,10 +39,27 @@ class EditProfilePersonalInformationTableViewCell: UITableViewCell, UITextFieldD
     override func awakeFromNib() {
         super.awakeFromNib()
         initializeViews()
+        initializeLocalizedString()
     }
     
     func initializeViews() {
         changeNumberButton.layer.cornerRadius = 8
+    }
+    
+    func initializeLocalizedString() {
+        //Initialized Localized String
+        let personalLocalizeString = StringHelper.localizedStringWithKey("PERSONALINFO_LOCALIZE_KEY")
+        let firstNameLocalizeString = StringHelper.localizedStringWithKey("FIRSTNAME_LOCALIZE_KEY")
+        let lastNameLocalizeString = StringHelper.localizedStringWithKey("LASTNAME_LOCALIZE_KEY")
+        let mobileNameLocalizeString = StringHelper.localizedStringWithKey("MOBILE_LOCALIZE_KEY")
+        let changeLocalizeString = StringHelper.localizedStringWithKey("CHANGE_LOCALIZE_KEY")
+        
+        changeNumberButton.setTitle(changeLocalizeString, forState: UIControlState.Normal)
+        
+        personalInfoLabel.text = personalLocalizeString
+        firstNameLabel.text = firstNameLocalizeString
+        lastNameLabel.text = lastNameLocalizeString
+        mobilePhoneLabel.text = mobileNameLocalizeString
     }
     
 }

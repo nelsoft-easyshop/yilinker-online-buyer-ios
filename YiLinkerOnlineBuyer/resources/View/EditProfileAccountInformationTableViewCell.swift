@@ -24,16 +24,35 @@ class EditProfileAccountInformationTableViewCell: UITableViewCell {
     @IBOutlet weak var changeEmailButton: UIButton!
     @IBOutlet weak var changePasswordButton: UIButton!
     
+    @IBOutlet weak var accountInformationLabel: UILabel!
+    @IBOutlet weak var emailLabel: UILabel!
+    @IBOutlet weak var passwordLabel: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         
         initializeViews()
+        initializeLocalizedString()
     }
     
     func initializeViews() {
         saveButton.layer.cornerRadius = 8
         changeEmailButton.layer.cornerRadius = 8
         changePasswordButton.layer.cornerRadius = 8
+    }
+    
+    func initializeLocalizedString() {
+        let accountInfoLocalizeString = StringHelper.localizedStringWithKey("ACCOUNTINFO_LOCALIZE_KEY")
+        let emailLocalizeString = StringHelper.localizedStringWithKey("EMAILADD_LOCALIZE_KEY")
+        let passwordLocalizeString = StringHelper.localizedStringWithKey("PASSWORD_LOCALIZE_KEY")
+        let changeLocalizeString = StringHelper.localizedStringWithKey("CHANGE_LOCALIZE_KEY")
+        let saveLocalizeString = StringHelper.localizedStringWithKey("SAVE_LOCALIZE_KEY")
+        
+        accountInformationLabel.text = accountInfoLocalizeString
+        emailLabel.text = emailLocalizeString
+        passwordLabel.text = passwordLocalizeString
+        changePasswordButton.setTitle(changeLocalizeString, forState: UIControlState.Normal)
+        saveButton.setTitle(saveLocalizeString, forState: UIControlState.Normal)
     }
     
     @IBAction func saveAction(sender: AnyObject) {

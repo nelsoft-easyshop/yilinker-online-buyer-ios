@@ -21,6 +21,7 @@ class CartProductAttributeViewController: UIViewController, UITableViewDelegate,
     @IBOutlet weak var productImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var priceLabel: UILabel!
+    @IBOutlet weak var quantityTextLabel: UILabel!
     @IBOutlet weak var availabilityStocksLabel: UILabel!
     @IBOutlet weak var stocksLabel: UILabel!
     @IBOutlet weak var decreaseButton: UIButton!
@@ -44,6 +45,8 @@ class CartProductAttributeViewController: UIViewController, UITableViewDelegate,
     
     var unitIDs: [String] = []
     
+    var availableLocalizeString: String = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -59,6 +62,21 @@ class CartProductAttributeViewController: UIViewController, UITableViewDelegate,
         tap.addTarget(self, action: "dimViewAction:")
         self.dimView.addGestureRecognizer(tap)
         self.dimView.backgroundColor = .clearColor()
+        
+        initializeLocalizedString()
+    }
+    
+    func initializeLocalizedString() {
+        let cancelLocalizeString: String = StringHelper.localizedStringWithKey("CANCEL_LOCALIZE_KEY")
+        doneButton.setTitle(cancelLocalizeString, forState: UIControlState.Normal)
+        
+        let doneLocalizeString: String = StringHelper.localizedStringWithKey("DONE_LOCALIZE_KEY")
+        doneButton.setTitle(doneLocalizeString, forState: UIControlState.Normal)
+        
+        let quantityLocalizeString: String = StringHelper.localizedStringWithKey("ENTER_QUANTITY_LOCALIZE_KEY")
+        quantityTextLabel.text = quantityLocalizeString
+        
+        availableLocalizeString = StringHelper.localizedStringWithKey("AVAILABLE_STOCKS_LOCALIZE_KEY")
     }
     
     // MARK: - Table View Data Source
@@ -115,7 +133,7 @@ class CartProductAttributeViewController: UIViewController, UITableViewDelegate,
         stocks = cartModel.quantity
         checkStock(stocks)
         selectedProductUnit = selectedProductUnits
-        self.availabilityStocksLabel.text = "Available stocks : " + String(maximumStock)
+        self.availabilityStocksLabel.text = availableLocalizeString + ": " + String(maximumStock)
         
         selectedCombinations = selectedProductUnit.combination
         
@@ -171,12 +189,12 @@ class CartProductAttributeViewController: UIViewController, UITableViewDelegate,
             self.maximumStock = selectedProductUnit.quantity
             stocks = productDetailModel!.quantity
             checkStock(stocks)
-            self.availabilityStocksLabel.text = "Available stocks : " + String(maximumStock)
+            self.availabilityStocksLabel.text = availableLocalizeString + String(maximumStock)
         } else {
             self.maximumStock = 0
             stocks = 0
             checkStock(stocks)
-            self.availabilityStocksLabel.text = "Available stocks : " + String(0)
+            self.availabilityStocksLabel.text = availableLocalizeString + String(0)
         }
         
     }

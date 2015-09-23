@@ -12,6 +12,7 @@ class AboutSellerTableViewCell: UITableViewCell {
 
     @IBOutlet weak var separatorLine: UIView!
     @IBOutlet weak var aboutLabel: UILabel!
+    @IBOutlet weak var aboutTitleLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()

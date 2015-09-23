@@ -103,27 +103,6 @@ class WishlistTableViewCell: UITableViewCell, UIScrollViewDelegate {
         }
     }
     
-    
-    /*
-    // MARK: - Methods 
-    
-    func setProductName(productName: String) {
-        productNameLabel.text = productName
-    }
-    
-    func setProductDetails(details: String) {
-        productDetailsLabel.text = details
-    }
-    
-    func setProductPrice(price: String, quantity: Int) {
-        productPriceLabel.text = "P \(price) x\(quantity)"
-    }
-    
-    func setProductImage(imageURL: String) {
-        productItemImageView.sd_setImageWithURL(imageURL, placeholderImage: UIImage(named: "dummy-placeholder"))
-    }
-    */
-    
     // Close Swipe View
     func closeSwipeView() {
         if isSwipeViewOpen {
@@ -137,8 +116,6 @@ class WishlistTableViewCell: UITableViewCell, UIScrollViewDelegate {
         if scrollView.contentOffset.x < 0 {
             scrollView.contentOffset = CGPointZero
         }
-        
-        //cellButtonView.frame = CGRectMake(scrollView.contentOffset.x + (CGRectGetWidth(self.bounds) - buttonViewWidth), 0.0, buttonViewWidth, CGRectGetHeight(self.bounds))
     }
     
     func scrollViewWillEndDragging(scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {

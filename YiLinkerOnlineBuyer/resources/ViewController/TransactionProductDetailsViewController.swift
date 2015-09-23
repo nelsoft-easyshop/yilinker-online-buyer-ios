@@ -40,6 +40,25 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
     var hud: MBProgressHUD?
     var transactionProductDetailsModel: TransactionProductDetailsModel!
     var productDictionary = Dictionary<String, String>()
+    
+    //Product details
+    var productDetailsTitle = StringHelper.localizedStringWithKey("TRANSACTION_PRODUCT_DETAILS_TITLE_LOCALIZE_KEY")
+    
+    var purchaseDetails = StringHelper.localizedStringWithKey("TRANSACTION_PRODUCT_PURCHASE_DETAILS_LOCALIZE_KEY")
+    var quantityTitle = StringHelper.localizedStringWithKey("TRANSACTION_PRODUCT_DETAILS_QUANTITY_LOCALIZE_KEY")
+    var priceTitle = StringHelper.localizedStringWithKey("TRANSACTION_PRODUCT_DETAILS_PRICE_LOCALIZE_KEY")
+    var totalCostTitle = StringHelper.localizedStringWithKey("TRANSACTION_PRODUCT_DETAILS_TOTAL_COST_LOCALIZE_KEY")
+    
+    var productDetails = StringHelper.localizedStringWithKey("TRANSACTION_PRODUCT_DETAILS_LOCALIZE_KEY")
+    
+    //Description
+    var descriptionTitle = StringHelper.localizedStringWithKey("TRANSACTION_PRODUCT_DETAILS_DESCRIPTION_LOCALIZE_KEY")
+    var seeMore = StringHelper.localizedStringWithKey("TRANSACTION_PRODUCT_DETAILS_SEE_MORE_LOCALIZE_KEY")
+    
+    //Cancel Order
+    var cancelOrder = StringHelper.localizedStringWithKey("TRANSACTION_PRODUCT_DETAILS_CANCEL_ORDER_LOCALIZE_KEY")
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -49,7 +68,7 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
         self.navigationController?.view.addSubview(dimView)
         dimView.hidden = true
         
-        self.title = "Product Details"
+        self.title = productDetailsTitle
         self.backButton()
         
         let nib = UINib(nibName: "TransactionProductDetailsTableViewCell", bundle: nil)
@@ -115,6 +134,10 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
     func getTransactionPurchaseDetailsView() -> TransactionPurchaseDetailsView {
         if self.transactionPurchaseDetailsView == nil {
             self.transactionPurchaseDetailsView = XibHelper.puffViewWithNibName("TransactionViews", index: 5) as! TransactionPurchaseDetailsView
+            self.transactionPurchaseDetailsView.quantityTitleLabel.text = self.quantityTitle
+            self.transactionPurchaseDetailsView.totalCostTitleLabel.text = self.totalCostTitle
+            self.transactionPurchaseDetailsView.priceTitleLabel.text = self.priceTitle
+            self.transactionPurchaseDetailsView.purchaseDetailsLabel.text = self.purchaseDetails
             self.transactionPurchaseDetailsView.quantityLabel.text = "\(self.quantity)"
             self.transactionPurchaseDetailsView.totalCostLabel.text = ((self.totalPrice as NSString).floatValue).stringToFormat(2)
             self.transactionPurchaseDetailsView.priceLabel.text = ((self.unitPrice as NSString).floatValue).stringToFormat(2)
@@ -129,7 +152,7 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
             self.transactionProductDetailsView.backgroundColor = .whiteColor()
             
             var textLabel = UILabel(frame: CGRectMake(8, 0, self.transactionProductDetailsView.frame.size.width - 8, self.transactionProductDetailsView.frame.size.height))
-            textLabel.text = "Product Details"
+            textLabel.text = self.productDetails
             textLabel.textColor = .darkGrayColor()
             textLabel.font = UIFont.systemFontOfSize(15.0)
             
@@ -151,6 +174,8 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
     func getTransactionDescriptionView() -> TransactionDescriptionView {
         if self.transactionDescriptionView == nil {
             self.transactionDescriptionView = XibHelper.puffViewWithNibName("TransactionViews", index: 6) as! TransactionDescriptionView
+            self.transactionDescriptionView.descriptionTitleLabel.text = self.descriptionTitle
+            self.transactionDescriptionView.seeMoreLabel.text = self.seeMore
             if self.transactionProductDetailsModel != nil {
                 self.transactionDescriptionView.descriptionLabel.text = self.transactionProductDetailsModel.longDescription
             }
@@ -163,6 +188,7 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
     func getTransactionCancelOrderView() -> TransactionCancelOrderView {
         if self.transactionCancelView == nil {
             self.transactionCancelView = XibHelper.puffViewWithNibName("TransactionViews", index: 9) as! TransactionCancelOrderView
+            self.transactionCancelView.cancelOrderLabel.text = self.cancelOrder
             self.transactionCancelView.delegate = self
             self.transactionCancelView.frame.size.width = self.view.frame.size.width
             self.transactionCancelView.frame.origin.y += CGFloat(120)

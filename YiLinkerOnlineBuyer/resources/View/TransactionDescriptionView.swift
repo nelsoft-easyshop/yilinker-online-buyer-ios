@@ -12,6 +12,9 @@ class TransactionDescriptionView: UIView {
 
     @IBOutlet weak var descriptionLabel: UILabel!
 
+    @IBOutlet weak var seeMoreLabel: UILabel!
+    @IBOutlet weak var descriptionTitleLabel: UILabel!
+    
     override func awakeFromNib() {
         
     }

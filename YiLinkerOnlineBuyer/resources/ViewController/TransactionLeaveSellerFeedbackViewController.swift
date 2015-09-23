@@ -21,7 +21,10 @@ class TransactionLeaveSellerFeedbackViewController: UIViewController {
     @IBOutlet weak var starComm3Button: UIButton!
     @IBOutlet weak var starComm4Button: UIButton!
     @IBOutlet weak var starComm5Button: UIButton!
+    @IBOutlet weak var sendButton: UIButton!
     
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var itemQualityLabel: UILabel!
     @IBOutlet weak var messageLabel: UILabel!
     @IBOutlet weak var rateThisLabel: UILabel!
     @IBOutlet weak var typingAreaView: UIView!
@@ -35,6 +38,13 @@ class TransactionLeaveSellerFeedbackViewController: UIViewController {
     var sellerId = 0
     var orderId: Int = 0
     
+    var feedbackTitle = StringHelper.localizedStringWithKey("TRANSACTION_LEAVE_FEEDBACK_TITLE_LOCALIZE_KEY")
+    var titleLabelTitle = StringHelper.localizedStringWithKey("TRANSACTION_LEAVE_FEEDBACK_INFO_LOCALIZE_KEY")
+    var itemQualityTitle = StringHelper.localizedStringWithKey("TRANSACTION_LEAVE_FEEDBACK_QUALITY_LOCALIZE_KEY")
+    var communicationTitle = StringHelper.localizedStringWithKey("TRANSACTION_LEAVE_FEEDBACK_COMMUNICATION_LOCALIZE_KEY")
+    var typeFeedback = StringHelper.localizedStringWithKey("TRANSACTION_LEAVE_FEEDBACK_TYPE_LOCALIZE_KEY")
+    var sendTitle = StringHelper.localizedStringWithKey("TRANSACTION_LEAVE_FEEDBACK_SEND_LOCALIZE_KEY")
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -42,7 +52,11 @@ class TransactionLeaveSellerFeedbackViewController: UIViewController {
         
         rateButtons = [star1Button, star2Button, star3Button, star4Button, star5Button]
         rateCommButtons = [starComm1Button, starComm2Button, starComm3Button, starComm4Button, starComm5Button]
-        self.title = "Feedback"
+        self.title = feedbackTitle
+        self.inputTextField.placeholder = typeFeedback
+        self.itemQualityLabel.text = itemQualityTitle
+        self.rateThisLabel.text = communicationTitle
+        self.sendButton.setTitle(sendTitle, forState: UIControlState.Normal)
         println("\(self.sellerId)")
         
         self.typingAreaView.layer.borderWidth = 1.0

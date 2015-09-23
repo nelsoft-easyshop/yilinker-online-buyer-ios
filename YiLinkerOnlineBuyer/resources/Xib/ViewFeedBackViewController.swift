@@ -19,9 +19,11 @@ class ViewFeedBackViewController: UIViewController, UITableViewDelegate, UITable
     @IBOutlet weak var rateImageView3: UIButton!
     @IBOutlet weak var rateImageView4: UIButton!
     @IBOutlet weak var rateImageView5: UIButton!
-
+    @IBOutlet weak var cancelButton: UIButton!
     
+    @IBOutlet weak var ratingLabel: UILabel!
     @IBOutlet weak var generalRatingLabel: UILabel!
+    @IBOutlet weak var sellerRatingLabel: UILabel!
     @IBOutlet weak var ratingView: UIView!
     @IBOutlet weak var ratingAndReviewsTableView: UITableView!
     
@@ -38,6 +40,10 @@ class ViewFeedBackViewController: UIViewController, UITableViewDelegate, UITable
     var hud: MBProgressHUD?
     var delegate: ViewFeedBackViewControllerDelegate?
     
+    var cancelTitle = StringHelper.localizedStringWithKey("CANCEL_LOCALIZE_KEY")
+    var sellerRating = StringHelper.localizedStringWithKey("SELLERS_RATING_AND_FEEDBACK_LOCALIZE_KEY")
+    var ratingTitle = StringHelper.localizedStringWithKey("SELLERS_RATING_LOCALIZE_KEY")
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -47,6 +53,10 @@ class ViewFeedBackViewController: UIViewController, UITableViewDelegate, UITable
         self.ratingAndReviewsTableView.delegate = self
         self.ratingAndReviewsTableView.dataSource = self
         self.registerNibs()
+        
+        self.cancelButton.setTitle(cancelTitle, forState: UIControlState.Normal)
+        self.sellerRatingLabel.text = sellerRating
+        self.ratingLabel.text = ratingTitle
         
         self.fireSellerFeedback()
         // Do any additional setup after loading the view.
