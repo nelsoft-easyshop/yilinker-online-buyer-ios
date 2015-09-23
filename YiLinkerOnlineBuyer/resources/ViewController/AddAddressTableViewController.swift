@@ -274,15 +274,15 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
         if index == 3 {
             self.activeTextField = index - 1
             self.next()
-            showAlert(title: "Error", message: "Street number is required.")
+            showAlert(title: AddressStrings.incompleteInformation, message: AddressStrings.streetNumberRequired)
         } else if index == 4 {
             self.activeTextField = index - 1
             self.next()
-            showAlert(title: "Error", message: "Street name is required.")
+            showAlert(title: AddressStrings.incompleteInformation, message: AddressStrings.streetNameRequired)
         } else if index == 9 {
             self.activeTextField = index - 1
             self.next()
-            showAlert(title: "Error", message: "Zip code is required.")
+            showAlert(title: AddressStrings.incompleteInformation, message: AddressStrings.zipCodeRequired)
         }
         //If index is zero all required fields are filled up
         if index == 0 {
@@ -328,7 +328,7 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
     
     func showAlert(#title: String!, message: String!) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
-        let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+        let defaultAction = UIAlertAction(title: Constants.Localized.ok, style: .Default, handler: nil)
         alertController.addAction(defaultAction)
         presentViewController(alertController, animated: true, completion: nil)
     }
@@ -364,7 +364,7 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
                 if task.statusCode == 401 {
                     self.requestRefreshToken(AddressRefreshType.Create)
                 } else {
-                    self.showAlert(title: "Something went wrong", message: nil)
+                    self.showAlert(title: Constants.Localized.someThingWentWrong, message: nil)
                     self.hud?.hide(true)
                 }
         })
@@ -400,11 +400,11 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
                 if error.userInfo != nil {
                     let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
                     let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: "Something went wrong")
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: Constants.Localized.someThingWentWrong)
                 } else if task.statusCode == 401 {
                     self.requestRefreshToken(AddressRefreshType.Edit)
                 } else {
-                    self.showAlert(title: "Something went wrong", message: nil)
+                    self.showAlert(title: Constants.Localized.someThingWentWrong, message: nil)
                     self.hud?.hide(true)
                 }
         })
@@ -429,8 +429,8 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 self.hud?.hide(true)
-                let alertController = UIAlertController(title: "Something went wrong", message: "", preferredStyle: .Alert)
-                let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+                let alertController = UIAlertController(title: Constants.Localized.someThingWentWrong, message: "", preferredStyle: .Alert)
+                let defaultAction = UIAlertAction(title: Constants.Localized.ok, style: .Default, handler: nil)
                 alertController.addAction(defaultAction)
                 self.presentViewController(alertController, animated: true, completion: nil)
         })
@@ -460,7 +460,7 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 self.hud?.hide(true)
-                self.showAlert(title: "Something went wrong", message: nil)
+                self.showAlert(title: Constants.Localized.someThingWentWrong, message: nil)
         })
     }
     
@@ -494,7 +494,7 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 self.hud?.hide(true)
-                self.showAlert(title: "Something went wrong", message: nil)
+                self.showAlert(title: Constants.Localized.someThingWentWrong, message: nil)
         })
     }
     
@@ -516,7 +516,7 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 self.hud?.hide(true)
-                self.showAlert(title: "Something went wrong", message: nil)
+                self.showAlert(title: Constants.Localized.someThingWentWrong, message: nil)
         })
     }
 

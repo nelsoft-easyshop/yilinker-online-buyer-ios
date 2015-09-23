@@ -14,6 +14,19 @@ struct RegisterStrings {
     static let password: String = StringHelper.localizedStringWithKey("PASSWORD_LOCALIZE_KEY")
     static let reTypePassword: String = StringHelper.localizedStringWithKey("RE_TYPE_PASSWORD_LOCALIZE_KEY")
     static let registerMeNow: String = StringHelper.localizedStringWithKey("REGISTER_ME_NOW_LOCALIZE_KEY")
+    
+    static let firstNameRequired: String = StringHelper.localizedStringWithKey("FIRST_NAME_REQUIRED_LOCALIZE_KEY")
+    static let illegalFirstName: String = StringHelper.localizedStringWithKey("FIRST_NAME_ILLEGAL_LOCALIZE_KEY")
+    static let lastNameRequired: String = StringHelper.localizedStringWithKey("LAST_NAME_REQUIRED_LOCALIZE_KEY")
+    static let invalidLastName: String = StringHelper.localizedStringWithKey("INVALID_LAST_NAME_LOCALIZE_KEY")
+    static let emailRequired: String = StringHelper.localizedStringWithKey("EMAIL_REQUIRED_LOCALIZE_KEY")
+    
+    static let invalidEmail: String = StringHelper.localizedStringWithKey("INVALID_EMAIL_LOCALIZE_KEY")
+    static let passwordRequired: String = StringHelper.localizedStringWithKey("PASSWORD_REQUIRED_LOCALIZE_KEY")
+    static let illegalPassword: String = StringHelper.localizedStringWithKey("ILLEGAL_PASSWORD_LOCALIZE_KEY")
+    static let reTypePasswordError: String = StringHelper.localizedStringWithKey("RETYPE_REQUIRED_LOCALIZE_KEY")
+    static let passwordNotMatch: String = StringHelper.localizedStringWithKey("PASSWORD_NOT_MATCH_LOCALIZE_KEY")
+    
 }
 
 class RegisterViewController: UIViewController, UITextFieldDelegate {
@@ -193,25 +206,25 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         var errorMessage: String = ""
         
         if !self.firstNameTextField.isNotEmpty() {
-            errorMessage = "First name is required."
+            errorMessage = RegisterStrings.firstNameRequired
         } else if !self.firstNameTextField.isValidName() {
-            errorMessage = "First name contains illegal characters. It can only contain letters, numbers and underscores."
+            errorMessage = RegisterStrings.illegalFirstName
         } else if !self.lastNameTextField.isNotEmpty() {
-            errorMessage = "Last name is required."
+            errorMessage = RegisterStrings.lastNameRequired
         } else if !self.lastNameTextField.isValidName() {
-            errorMessage = "Last name contains illegal characters. It can only contain letters, numbers and underscores."
+            errorMessage = RegisterStrings.invalidLastName
         } else if !self.emailAddressTextField.isNotEmpty() {
-            errorMessage = "Email is required."
+            errorMessage = RegisterStrings.emailRequired
         } else if !self.emailAddressTextField.isValidEmail() {
-            errorMessage = "The email address you enter is not a valid email address."
+            errorMessage = RegisterStrings.invalidEmail
         } else if !self.passwordTextField.isNotEmpty() {
-            errorMessage = "Password is required."
+            errorMessage = RegisterStrings.passwordRequired
         } else if !self.passwordTextField.isAlphaNumeric() {
-            errorMessage = "Password contains illegal characters. It can only contain letters, numbers and underscores."
+            errorMessage = RegisterStrings.illegalPassword
         } else if !self.reTypePasswordTextField.isNotEmpty() {
-            errorMessage = "Re-type password is required."
+            errorMessage = RegisterStrings.reTypePasswordError
         } else if self.passwordTextField.text != self.passwordTextField.text {
-            errorMessage = "The password does not match."
+            errorMessage = RegisterStrings.passwordNotMatch
         }
         
         if errorMessage != "" {
@@ -265,7 +278,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
                 if !Reachability.isConnectedToNetwork() {
                     UIAlertController.displayNoInternetConnectionError(self)
                 } else {
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
                 }
                 
                 self.hud?.hide(true)
@@ -285,22 +298,15 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
             self.hud?.hide(true)
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                
-                if task.statusCode == 401 {
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Mismatch username and password", title: "Login Failed")
-                } else {
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
-                }
-                
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
                 self.hud?.hide(true)
         })
     }
     
     func showSuccessMessage() {
-        let alertController = UIAlertController(title: "Success", message: "Successfully login.", preferredStyle: .Alert)
+        let alertController = UIAlertController(title: Constants.Localized.success, message: LoginStrings.successMessage, preferredStyle: .Alert)
         
-        let OKAction = UIAlertAction(title: "OK", style: .Default) { (action) in
+        let OKAction = UIAlertAction(title: Constants.Localized.ok, style: .Default) { (action) in
             alertController.dismissViewControllerAnimated(true, completion: nil)
             let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
             appDelegate.changeRootToHomeView()

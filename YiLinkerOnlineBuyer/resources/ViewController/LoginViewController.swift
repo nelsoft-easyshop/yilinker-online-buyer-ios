@@ -9,6 +9,15 @@
 struct LoginStrings {
     static let enterEmailAddress: String = StringHelper.localizedStringWithKey("ENTER_EMAIL_ADDRESS_LOCALIZE_KEY")
     static let enterPassword: String = StringHelper.localizedStringWithKey("ENTER_PASSWORD_ADDRESS_LOCALIZE_KEY")
+    
+    static let mismatch: String = StringHelper.localizedStringWithKey("MISMATCH_LOCALIZE_KEY")
+    static let loginFailed: String = StringHelper.localizedStringWithKey("LOGIN_FAILED_LOCALIZE_KEY")
+    
+    static let emailIsRequired: String = StringHelper.localizedStringWithKey("INVALID_EMAIL_REQUIRED_LOCALIZE_KEY")
+    static let invalidEmail: String = StringHelper.localizedStringWithKey("INVALID_EMAIL_REQUIRED_LOCALIZE_KEY")
+    static let passwordIsRequired: String = StringHelper.localizedStringWithKey("PASSWORD_IS_REQUIRED_LOCALIZE_KEY")
+    
+    static let successMessage: String = StringHelper.localizedStringWithKey("SUCCESS_LOGIN_LOCALIZE_KEY")
 }
 
 class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, GIDSignInUIDelegate, GIDSignInDelegate, UITextFieldDelegate {
@@ -112,25 +121,21 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, GIDSignIn
         graphRequest.startWithCompletionHandler({ (connection, result, error) -> Void in
             if ((error) != nil) {
                 // Process error
-                println("Error: \(error)")
             } else {
                 var uid: String = ""
                 
                 if let val: AnyObject = result.valueForKey(Constants.Facebook.userNameKey) {
                     let userName : NSString = result.valueForKey(Constants.Facebook.userNameKey) as! NSString
-                    println("fetched user: \(userName)")
                 }
                 
                 if let val: AnyObject = result.valueForKey(Constants.Facebook.userIDKey) {
                     uid = result.valueForKey(Constants.Facebook.userIDKey) as! String
-                    println("fetched userID: \(uid)")
                 }
                
                 if let val: AnyObject = result.valueForKey(Constants.Facebook.userEmail) {
                     let email : String = result.valueForKey(Constants.Facebook.userEmail) as! String
-                    println("fetched userID: \(email)")
                 } else {
-                    println("Email is not available!")
+                    
                 }
                 
                 self.getProfileImage(uid)
@@ -171,8 +176,6 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, GIDSignIn
                 SessionManager.setAccessToken(idToken)
                 SessionManager.setProfileImage("\(image)")
                 self.showSuccessMessage()
-            } else {
-                println("\(error.localizedDescription)")
             }
     }
     
@@ -239,11 +242,11 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, GIDSignIn
         var errorMessage: String = ""
         
         if !self.emailAddressTextField.isNotEmpty() {
-            errorMessage = "Email is required."
+            errorMessage = LoginStrings.emailIsRequired
         } else if !self.emailAddressTextField.isValidEmail() {
-            errorMessage = "Email Address is not valid."
+            errorMessage = LoginStrings.invalidEmail
         } else if !self.passwordTextField.isNotEmpty() {
-            errorMessage = "Password is required."
+            errorMessage = LoginStrings.passwordIsRequired
         }
         
         if errorMessage != "" {
@@ -280,9 +283,9 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, GIDSignIn
                 }
                 
                 if task.statusCode == 401 {
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Mismatch username and password", title: "Login Failed")
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: LoginStrings.mismatch, title: LoginStrings.loginFailed)
                 } else {
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
                 }
 
                 self.hud?.hide(true)
@@ -290,9 +293,9 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, GIDSignIn
     }
     
     func showSuccessMessage() {
-        let alertController = UIAlertController(title: "Success", message: "Successfully login.", preferredStyle: .Alert)
+        let alertController = UIAlertController(title: Constants.Localized.success, message: LoginStrings.successMessage, preferredStyle: .Alert)
     
-        let OKAction = UIAlertAction(title: "OK", style: .Default) { (action) in
+        let OKAction = UIAlertAction(title: Constants.Localized.ok, style: .Default) { (action) in
             alertController.dismissViewControllerAnimated(true, completion: nil)
             
             let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
