@@ -83,13 +83,6 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
     var leaveFeedback = StringHelper.localizedStringWithKey("TRANSACTION_DETAILS_LEAVE_FEEDBACK_LOCALIZE_KEY")
     var message = StringHelper.localizedStringWithKey("TRANSACTION_DETAILS_MESSAGE_LOCALIZE_KEY")
     
-    //Description
-    var descriptionTitle = StringHelper.localizedStringWithKey("TRANSACTION_PRODUCT_DETAILS_DESCRIPTION_LOCALIZE_KEY")
-    var seeMore = StringHelper.localizedStringWithKey("TRANSACTION_PRODUCT_DETAILS_SEE_MORE_LOCALIZE_KEY")
-    
-    //Cancel Order
-    var cancelOrder = StringHelper.localizedStringWithKey("TRANSACTION_PRODUCT_DETAILS_CANCEL_ORDER_LOCALIZE_KEY")
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
