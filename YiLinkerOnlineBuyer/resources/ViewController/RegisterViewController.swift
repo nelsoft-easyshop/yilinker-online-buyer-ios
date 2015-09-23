@@ -223,7 +223,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
             errorMessage = RegisterStrings.illegalPassword
         } else if !self.reTypePasswordTextField.isNotEmpty() {
             errorMessage = RegisterStrings.reTypePasswordError
-        } else if self.passwordTextField.text != self.passwordTextField.text {
+        } else if self.passwordTextField.text != self.reTypePasswordTextField.text {
             errorMessage = RegisterStrings.passwordNotMatch
         }
         
