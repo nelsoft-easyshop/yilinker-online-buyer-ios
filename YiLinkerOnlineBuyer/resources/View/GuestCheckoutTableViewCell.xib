@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -366,9 +366,13 @@
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="additionalInfoLabel" destination="RXP-oS-vxy" id="vlx-ZG-qGX"/>
                 <outlet property="additionalInfoTextField" destination="FPE-ki-wY4" id="3rB-JR-tXP"/>
+                <outlet property="barangayLabel" destination="sSM-SW-Bi3" id="JLX-g6-nwb"/>
                 <outlet property="barangayTextField" destination="qSd-r5-Oq3" id="K99-w9-GEK"/>
+                <outlet property="buildingNameLabel" destination="D9h-zl-N4x" id="l0L-1W-vts"/>
                 <outlet property="buildingNumberTextField" destination="61x-Fo-0ZZ" id="mXY-tD-xui"/>
+                <outlet property="cityLabel" destination="ULe-ag-rMo" id="v7M-WF-Sh1"/>
                 <outlet property="cityTextField" destination="E7G-fe-sdA" id="JiR-AT-FWK"/>
                 <outlet property="emailAddressLabel" destination="ChN-WF-Log" id="FVv-IW-dmm"/>
                 <outlet property="emailTextField" destination="fPn-Q1-PZh" id="029-wx-01V"/>
@@ -378,12 +382,15 @@
                 <outlet property="lastNameTextField" destination="Shp-8x-Jfa" id="9PX-LK-BJW"/>
                 <outlet property="mobileNumberLabel" destination="VUk-FF-mZX" id="bOV-ot-ik8"/>
                 <outlet property="mobileNumberTextField" destination="TTh-SC-gfN" id="iyi-X8-0Eu"/>
+                <outlet property="provinceLabel" destination="9fK-aX-S0i" id="9Jh-Z3-QAI"/>
                 <outlet property="provinceTextField" destination="EqT-uB-eRg" id="7Jd-L6-pC3"/>
                 <outlet property="streetNameLabel" destination="gFe-8h-v6f" id="7MK-fj-zdz"/>
                 <outlet property="streetNameTextField" destination="utt-Tu-9Dx" id="4ud-rQ-nhs"/>
                 <outlet property="streetNumberLabel" destination="5oC-vm-cxB" id="et4-SR-dUE"/>
                 <outlet property="streetNumberTextField" destination="2eV-bc-THR" id="19i-f5-psB"/>
+                <outlet property="subdivisionLabel" destination="CT1-RB-edB" id="syE-EG-eCU"/>
                 <outlet property="subdivisionTextField" destination="8Ky-Ym-p0d" id="5pN-h8-np4"/>
+                <outlet property="unitNoLabel" destination="EQJ-Va-l11" id="3iS-P5-ZM6"/>
                 <outlet property="unitNumberTextField" destination="R0G-o3-jHJ" id="DhI-q7-R9L"/>
                 <outlet property="zipCodeTextField" destination="QEl-Lj-Vla" id="unk-tq-PTP"/>
                 <outlet property="zipCodelabel" destination="ZN0-cY-iWs" id="NZg-JJ-y60"/>

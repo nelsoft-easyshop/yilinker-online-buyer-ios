@@ -15,7 +15,10 @@ protocol PaymentTableViewCellDelegate {
 
 class PaymentTableViewCell: UITableViewCell {
 
-   
+    @IBOutlet weak var rememberPaymentOption: UILabel!
+    @IBOutlet weak var creditCardLabel: UILabel!
+    @IBOutlet weak var codLabel: UILabel!
+    @IBOutlet weak var howDoYouWishLabel: UILabel!
     @IBOutlet weak var cellSwitch: UISwitch!
     @IBOutlet weak var codView: UIView!
     @IBOutlet weak var creditCardView: UIView!
@@ -26,6 +29,11 @@ class PaymentTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        
+        self.howDoYouWishLabel.text = PaymentStrings.howDoYou
+        self.codLabel.text = PaymentStrings.cod
+        self.creditCardLabel.text = PaymentStrings.creditCard
+        self.rememberPaymentOption.text = PaymentStrings.rememberPayment
             
         for touchableView in self.contentView.subviews {
             if touchableView.tag == Constants.Checkout.Payment.touchabelTagCOD || touchableView.tag == Constants.Checkout.Payment.touchabelTagCreditCard  {

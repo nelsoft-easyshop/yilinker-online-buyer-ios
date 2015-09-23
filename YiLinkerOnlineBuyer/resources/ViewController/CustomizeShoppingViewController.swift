@@ -8,6 +8,13 @@
 
 import UIKit
 
+struct CustomizeShoppingStrings {
+    static let categories: String = StringHelper.localizedStringWithKey("CATEGORIES_CS_LOCALIZE_KEY")
+    static let seller: String = StringHelper.localizedStringWithKey("SELLER_CS_LOCALIZE_KEY")
+    static let promos: String = StringHelper.localizedStringWithKey("PROMOS_CS_LOCALIZE_KEY")
+    static let others: String = StringHelper.localizedStringWithKey("OTHERS_CS_LOCALIZE_KEY")
+}
+
 class CustomizeShoppingViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, CustomizeShoppingCollectionViewLayoutDelegate, UICollectionViewDataSource, UICollectionViewDelegate, CustomizeSelectedCollectionViewCellDelegate {
     
     @IBOutlet weak var collectionView: UICollectionView!
@@ -68,6 +75,11 @@ class CustomizeShoppingViewController: UIViewController, UITableViewDelegate, UI
         selectedCollectionViewCell.delegate = self
         self.tableView.tableHeaderView = selectedCollectionViewCell
         self.registerCell()
+        
+        self.categoriesButton.setTitle(CustomizeShoppingStrings.categories, forState: UIControlState.Normal)
+        self.sellerButton.setTitle(CustomizeShoppingStrings.seller, forState: UIControlState.Normal)
+        self.promosButton.setTitle(CustomizeShoppingStrings.promos, forState: UIControlState.Normal)
+        self.OthersButton.setTitle(CustomizeShoppingStrings.others, forState: UIControlState.Normal)
     }
     
     

@@ -8,6 +8,14 @@
 
 import UIKit
 
+struct PaymentStrings {
+    static let howDoYou: String = StringHelper.localizedStringWithKey("HOW_DO_LOCALIZE_KEY")
+    static let rememberPayment: String = StringHelper.localizedStringWithKey("REMEMBER_PAYMENT_LOCALIZE_KEY")
+    static let deliverTo: String = StringHelper.localizedStringWithKey("DELIVER_TO_LOCALIZE_KEY")
+    static let cod: String = StringHelper.localizedStringWithKey("COD_LOCALIZE_KEY")
+    static let creditCard: String = StringHelper.localizedStringWithKey("CREDIT_CARD_LOCALIZE_KEY")
+}
+
 class PaymentViewController: UIViewController, PaymentTableViewCellDelegate {
 
     @IBOutlet weak var tableView: UITableView!

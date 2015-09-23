@@ -8,6 +8,20 @@
 
 import UIKit
 
+struct DisputeStrings {
+    static let title = StringHelper.localizedStringWithKey("DISPUTE_TITLE_LOCALIZE_KEY")
+    static let number = StringHelper.localizedStringWithKey("DISPUTE_TRANSACTION_NUMBER_LOCALIZE_KEY")
+    static let placeholder = StringHelper.localizedStringWithKey("DISPUTE_TRANSACTION_NUMBER_PLACEHOLDER_LOCALIZE_KEY")
+    static let type = StringHelper.localizedStringWithKey("DISPUTE_TRANSACTION_TYPE_LOCALIZE_KEY")
+    static let refund = StringHelper.localizedStringWithKey("DISPUTE_REFUND_LOCALIZE_KEY")
+    static let replacement = StringHelper.localizedStringWithKey("DISPUTE_REPLACEMENT_LOCALIZE_KEY")
+    static let products = StringHelper.localizedStringWithKey("DISPUTE_PRODUCTS_LOCALIZE_KEY")
+    static let add = StringHelper.localizedStringWithKey("DISPUTE_ADD_LOCALIZE_KEY")
+    static let remarks = StringHelper.localizedStringWithKey("DISPUTE_REMARKS_LOCALIZE_KEY")
+    static let submit = StringHelper.localizedStringWithKey("DISPUTE_SUBMIT_CASE_LOCALIZE_KEY")
+    static let done = StringHelper.localizedStringWithKey("TOOLBAR_DONE_LOCALIZE_KEY")
+}
+
 class NewDisputeTableViewController: UITableViewController, UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate, DisputeAddItemViewControllerDelegate {
     
     @IBOutlet weak var disputeTitleLabel: UILabel!
@@ -24,7 +38,7 @@ class NewDisputeTableViewController: UITableViewController, UIPickerViewDataSour
     
     var transactionModel: TransactionModel!
     var transactionIds: [String] = []
-    var transactionTypes: [String] = ["Refund", "Replacement"]
+    var transactionTypes: [String] = [DisputeStrings.refund, DisputeStrings.replacement]
     var pickerType: String = ""
     
     var productIDs: [String] = []
@@ -50,7 +64,23 @@ class NewDisputeTableViewController: UITableViewController, UIPickerViewDataSour
         self.transactionTypeLabel.required()
         self.productsLabel.required()
         self.remarksLabel.required()
-        self.transactionType.text = "Refund"
+
+        setStrings()
+    }
+    
+    func setStrings() {
+        self.title = CaseStrings.title
+        disputeTitleLabel.text = DisputeStrings.title
+        transactionNumberLabel.text = DisputeStrings.number
+        transactionNumber.placeholder = DisputeStrings.placeholder
+        transactionTypeLabel.text = DisputeStrings.type
+        
+        productsLabel.text = DisputeStrings.products
+        addButton.setTitle(DisputeStrings.add, forState: .Normal)
+        
+        remarksLabel.text = DisputeStrings.remarks
+        
+        submitButton.setTitle(DisputeStrings.submit, forState: .Normal)
     }
     
     override func didReceiveMemoryWarning() {
@@ -97,7 +127,7 @@ class NewDisputeTableViewController: UITableViewController, UIPickerViewDataSour
         //seller@easyshop.ph
         //password
         var status: Int = 16
-        if self.transactionType.text == "Refund" {
+        if self.transactionType.text == DisputeStrings.refund {
             status == 10
         }
         
@@ -174,7 +204,7 @@ class NewDisputeTableViewController: UITableViewController, UIPickerViewDataSour
         toolBar.barTintColor = Constants.Colors.appTheme
         toolBar.tintColor = UIColor.whiteColor()
         
-        let doneItem = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Done, target: self, action: "toolBarDoneAction")
+        let doneItem = UIBarButtonItem(title: DisputeStrings.done, style: UIBarButtonItemStyle.Done, target: self, action: "toolBarDoneAction")
         
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: self, action: nil)
         

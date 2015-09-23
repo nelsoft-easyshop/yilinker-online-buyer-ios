@@ -8,6 +8,14 @@
 
 import UIKit
 
+struct ResolutionStrings {
+    static let title = StringHelper.localizedStringWithKey("RESOLUTION_TITLE_LOCALIZE_KEY")
+    static let cases = StringHelper.localizedStringWithKey("RESOLUTION_CASES_LOCALIZE_KEY")
+    static let open = StringHelper.localizedStringWithKey("RESOLUTION_OPEN_LOCALIZE_KEY")
+    static let closed = StringHelper.localizedStringWithKey("RESOLUTION_CLOSED_LOCALIZE_KEY")
+    static let file = StringHelper.localizedStringWithKey("RESOLUTION_FILE_LOCALIZE_KEY")
+}
+
 class ResolutionCenterViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     @IBOutlet weak var casesTab: UIButton!
     @IBOutlet weak var openTab: UIButton!
@@ -58,6 +66,11 @@ class ResolutionCenterViewController: UIViewController, UITableViewDataSource, U
         
         // Initial data load
         fireGetCases()
+        
+//        casesTab.setTitle(ResolutionStrings.cases, forState: .Normal)
+//        openTab.setTitle(ResolutionStrings.open, forState: .Normal)
+//        closedTab.setTitle(ResolutionStrings.closed, forState: .Normal)
+        disputeButton.setTitle(ResolutionStrings.file, forState: .Normal)
     }
     
     override func didReceiveMemoryWarning() {
@@ -68,6 +81,7 @@ class ResolutionCenterViewController: UIViewController, UITableViewDataSource, U
     // MARK: initialization functions
     func setupNavigationBar() {
         // Title text in Navigation Bar will now turn WHITE
+        self.title = ResolutionStrings.title
         self.navigationController!.navigationBar.barStyle = UIBarStyle.Black
         
         // Back button

@@ -8,6 +8,20 @@
 
 import UIKit
 
+struct HiddenStrings {
+    static let signIn: String = StringHelper.localizedStringWithKey("SIGNIN_HIDDEN_LOCALIZE_KEY")
+    static let help: String = StringHelper.localizedStringWithKey("HELP_HIDDEN_LOCALIZE_KEY")
+    static let register: String = StringHelper.localizedStringWithKey("REGISTER_HIDDEN_LOCALIZE_KEY")
+    static let messaging: String = StringHelper.localizedStringWithKey("MESSAGING_HIDDEN_LOCALIZE_KEY")
+    static let customizeShopping: String = StringHelper.localizedStringWithKey("CUSTOMIZE_SHOPPING_HIDDEN_LOCALIZE_KEY")
+    static let todaysPromo: String = StringHelper.localizedStringWithKey("TODAYS_PROMO_HIDDEN_LOCALIZE_KEY")
+    static let categories: String = StringHelper.localizedStringWithKey("CATEGORIES_HIDDEN_LOCALIZE_KEY")
+    static let mustBeSignIn: String = StringHelper.localizedStringWithKey("MUST_BE_SIGNIN_HIDDEN_LOCALIZE_KEY")
+    static let followedSeller: String = StringHelper.localizedStringWithKey("FOLLOWED_SELLER_HIDDEN_LOCALIZE_KEY")
+    static let logout: String = StringHelper.localizedStringWithKey("LOGOUT_HIDDEN_LOCALIZE_KEY")
+    static let profile: String = StringHelper.localizedStringWithKey("PROFILE_HIDDEN_LOCALIZE_KEY")
+}
+
 class HiddenViewController: UIViewController {
 
     var helpViewController: HelpViewController?
@@ -51,39 +65,39 @@ class HiddenViewController: UIViewController {
         
         if SessionManager.isLoggedIn() {
             if index == 0 {
-                self.setNavigationBarTitle("Help")
+                self.setNavigationBarTitle(HiddenStrings.help)
             } else if index == 1 {
-                self.setNavigationBarTitle(StringHelper.localizedStringWithKey("FOLLOWEDSELLERS_LOCALIZE_KEY"))
+                self.setNavigationBarTitle(HiddenStrings.followedSeller)
             } else if index == 2 {
-                self.setNavigationBarTitle("Messaging")
+                self.setNavigationBarTitle(HiddenStrings.messaging)
             } else if index == 3 {
-                self.setNavigationBarTitle("Customize Shopping")
+                self.setNavigationBarTitle(HiddenStrings.customizeShopping)
             } else if index == 4 {
-                self.setNavigationBarTitle("Todays Promo")
+                self.setNavigationBarTitle(HiddenStrings.todaysPromo)
             } else if index == 5 {
-                self.setNavigationBarTitle(StringHelper.localizedStringWithKey("CATEGORY_LOCALIZE_KEY"))
+                self.setNavigationBarTitle(HiddenStrings.categories)
             } else if index == 6 {
-                self.setNavigationBarTitle("Profile")
+                self.setNavigationBarTitle(HiddenStrings.profile)
             }
         } else {
             if index == 0 {
-                self.setNavigationBarTitle("Help")
+                self.setNavigationBarTitle(HiddenStrings.help)
             } else if index == 1 {
-                self.setNavigationBarTitle("Register")
+                self.setNavigationBarTitle(HiddenStrings.register)
                 self.registerViewController?.defaultViewControllerIndex = 1
                 self.registerViewController?.closeButton.hidden = true
             } else if index == 2 {
-                self.setNavigationBarTitle("Sign In")
+                self.setNavigationBarTitle(HiddenStrings.signIn)
                 self.loginViewController?.defaultViewControllerIndex = 0
                 self.loginViewController?.closeButton.hidden = true
             } else if index == 3 {
-                self.setNavigationBarTitle("Messaging")
+                self.setNavigationBarTitle(HiddenStrings.messaging)
             } else if index == 4 {
-                self.setNavigationBarTitle("Customize Shopping")
+                self.setNavigationBarTitle(HiddenStrings.customizeShopping)
             } else if index == 5 {
-                self.setNavigationBarTitle("Todays Promo")
+                self.setNavigationBarTitle(HiddenStrings.todaysPromo)
             } else if index == 6 {
-                self.setNavigationBarTitle(StringHelper.localizedStringWithKey("CATEGORY_LOCALIZE_KEY"))
+                self.setNavigationBarTitle(HiddenStrings.categories)
             }
         }
     }
