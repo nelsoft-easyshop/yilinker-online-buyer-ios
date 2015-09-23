@@ -141,7 +141,6 @@ class NewDisputeTableViewController: UITableViewController, UIPickerViewDataSour
         
         manager.POST(APIAtlas.postResolutionCenterAddCase, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
             self.hud?.hide(true)
             self.navigationController?.popViewControllerAnimated(true)
             }, failure: {
