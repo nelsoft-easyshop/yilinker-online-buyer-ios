@@ -133,7 +133,7 @@ class ResolutionCenterViewController: UIViewController, UITableViewDataSource, U
         }
         self.tabSelector.setSelection(.TabOne)
         self.currentSelectedFilter.status = .Both
-        fireGetCases()
+//        fireGetCases()
     }
     
     @IBAction func openPressed(sender: AnyObject) {
@@ -142,7 +142,7 @@ class ResolutionCenterViewController: UIViewController, UITableViewDataSource, U
         }
         self.tabSelector.setSelection(.TabTwo)
         self.currentSelectedFilter.status = .Open
-        fireGetCases()
+//        fireGetCases()
     }
     
     @IBAction func closedPressed(sender: AnyObject) {
@@ -151,7 +151,7 @@ class ResolutionCenterViewController: UIViewController, UITableViewDataSource, U
         }
         self.tabSelector.setSelection(.TabThree)
         self.currentSelectedFilter.status = .Closed
-        fireGetCases()
+//        fireGetCases()
     }
     
     // Mark: - New Dispute View Controller
@@ -246,9 +246,7 @@ class ResolutionCenterViewController: UIViewController, UITableViewDataSource, U
     }
     
     func fireGetCases() {
-        if resolutionCenterModel == nil {
-            self.showHUD()
-        }
+        self.showHUD()
         
         let manager = APIManager.sharedInstance
         var parameters: NSDictionary = NSDictionary();
@@ -260,12 +258,44 @@ class ResolutionCenterViewController: UIViewController, UITableViewDataSource, U
         } else {
             let statusFilter = self.currentSelectedFilter.getStatusFilter()
             let timeFilter = self.currentSelectedFilter.getTimeFilter()
+            
+            var fullDate = timeFilter.componentsSeparatedByString("-")
+            
             if timeFilter == ""  {
                 parameters = [ "access_token" : SessionManager.accessToken(), "disputeStatusType" : statusFilter]
             } else if statusFilter == "0" {
-                parameters = [ "access_token" : SessionManager.accessToken(), "dateFrom" : timeFilter, "dateTo": self.currentSelectedFilter.getSundayDate()]
+                if self.currentSelectedFilter.getFilterType() == ResolutionTimeFilter.ThisMonth {
+                    parameters = [ "access_token" : SessionManager.accessToken()
+                        , "dateFrom" : "\(fullDate[0])/1/\(fullDate[2])",
+                        "dateTo": timeFilter]
+                    
+                } else if self.currentSelectedFilter.getFilterType() == ResolutionTimeFilter.ThisWeek {
+                    parameters = [ "access_token" : SessionManager.accessToken()
+                        , "dateFrom" : self.currentSelectedFilter.sundayDate(),
+                        "dateTo": timeFilter,
+                        "disputeStatusType" : statusFilter]
+                } else {
+                    parameters = [ "access_token" : SessionManager.accessToken()
+                        , "dateFrom" : timeFilter,
+                        "disputeStatusType" : statusFilter]
+                }
             } else {
-                parameters = [ "access_token" : SessionManager.accessToken(), "disputeStatusType" : statusFilter, "dateFrom" : timeFilter]
+                if self.currentSelectedFilter.getFilterType() == ResolutionTimeFilter.ThisMonth {
+                    parameters = [ "access_token" : SessionManager.accessToken()
+                        , "dateFrom" : "\(fullDate[0])/1/\(fullDate[2])",
+                        "dateTo": timeFilter,
+                        "disputeStatusType" : statusFilter]
+                    
+                } else if self.currentSelectedFilter.getFilterType() == ResolutionTimeFilter.ThisWeek {
+                    parameters = [ "access_token" : SessionManager.accessToken()
+                        , "dateFrom" : self.currentSelectedFilter.sundayDate(),
+                        "dateTo": timeFilter,
+                        "disputeStatusType" : statusFilter]
+                } else {
+                    parameters = [ "access_token" : SessionManager.accessToken()
+                        , "dateFrom" : timeFilter,
+                        "disputeStatusType" : statusFilter]
+                }
             }
         }
         println(parameters)
