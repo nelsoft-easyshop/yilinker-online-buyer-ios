@@ -27,6 +27,8 @@ class ActivityLogTableViewController: UITableViewController {
     
     var hud: MBProgressHUD?
     
+    let activityLogTitle: String = StringHelper.localizedStringWithKey("ACTIVITY_LOG_TITLE_LOCALIZE_KEY")
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -54,7 +56,7 @@ class ActivityLogTableViewController: UITableViewController {
     }
     
     func titleView() {
-        self.title = "Activity Log"
+        self.title = self.activityLogTitle
     }
     
     func backButton() {

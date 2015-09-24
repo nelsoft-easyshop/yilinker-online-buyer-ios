@@ -233,6 +233,9 @@ CANCEL_LOCALIZE_KEY = "CANCEL";
 SELLERS_RATING_AND_FEEDBACK_LOCALIZE_KEY = "Seller's Rating & Feedback";
 SELLERS_RATING_LOCALIZE_KEY = "people rate this seller";
 
+//Activity logs
+ACTIVITY_LOG_TITLE_LOCALIZE_KEY = "Activity Log";
+
 //Chan' Module
 
 //Cart

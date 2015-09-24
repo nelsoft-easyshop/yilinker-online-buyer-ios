@@ -234,6 +234,9 @@ CANCEL_LOCALIZE_KEY = "取消";
 SELLERS_RATING_AND_FEEDBACK_LOCALIZE_KEY = "賣家的評價與反饋";
 SELLERS_RATING_LOCALIZE_KEY = "人們評論這個賣家";
 
+//Activity logs
+ACTIVITY_LOG_TITLE_LOCALIZE_KEY = "活動日誌";
+
 //Chan' Module
 
 //Cart
