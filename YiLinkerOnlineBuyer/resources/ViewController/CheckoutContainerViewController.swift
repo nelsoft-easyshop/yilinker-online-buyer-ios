@@ -51,6 +51,13 @@ struct AddressStrings {
     static let addAddress: String = StringHelper.localizedStringWithKey("ADD_ADDRESS_LOCALIZE_KEY")
     static let changeAddress: String = StringHelper.localizedStringWithKey("CHANGE_ADDRESS_LOCALIZE_KEY")
     static let addressTitle: String = StringHelper.localizedStringWithKey("ADDRESS_TITLE_ADDRESS_LOCALIZE_KEY")
+    
+    static let incompleteInformation: String = StringHelper.localizedStringWithKey("INCOMPLETE_INFORMATION_LOCALIZE_KEY")
+    static let mobileNumberIsRequired: String = StringHelper.localizedStringWithKey("MOBILE_NUMBER_REQUIRED_LOCALIZE_KEY")
+    
+    static let streetNumberRequired: String = StringHelper.localizedStringWithKey("STREET_NUMBER_REQUIRED_LOCALIZE_KEY")
+    static let streetNameRequired: String = StringHelper.localizedStringWithKey("STREET_NAME_REQUIRED_LOCALIZE_KEY")
+    static let zipCodeRequired: String = StringHelper.localizedStringWithKey("ZIP_CODE_REQUIRED_LOCALIZE_KEY")
 }
 
 class CheckoutContainerViewController: UIViewController, PaymentWebViewViewControllerDelegate, RegisterModalViewControllerDelegate {
@@ -148,15 +155,15 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
             } else {
                 self.selectedIndex--
                 if self.summaryViewController!.guestCheckoutTableViewCell.firstNameTextField.text!.isEmpty {
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "First name is required.", title: "Incomplete Information")
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: RegisterStrings.firstNameRequired, title: AddressStrings.incompleteInformation)
                 } else if self.summaryViewController!.guestCheckoutTableViewCell.lastNameTextField.text!.isEmpty {
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Last name is required.", title: "Incomplete Information")
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: RegisterStrings.lastNameRequired, title: AddressStrings.incompleteInformation)
                 } else if self.summaryViewController!.guestCheckoutTableViewCell.mobileNumberTextField.text!.isEmpty {
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Mobile Number is required.", title: "Incomplete Information")
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: AddressStrings.mobileNumberIsRequired, title: AddressStrings.incompleteInformation)
                 } else if self.summaryViewController!.guestCheckoutTableViewCell.emailTextField.text!.isEmpty {
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Email Address is required.", title: "Incomplete Information")
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: RegisterStrings.emailRequired, title: AddressStrings.incompleteInformation)
                 } else if !self.summaryViewController!.guestCheckoutTableViewCell.emailTextField.text!.isValidEmail() {
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Invalid email address.", title: "Incomplete Information")
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: RegisterStrings.invalidEmail, title: AddressStrings.incompleteInformation)
                 } else {
                     self.guestEmail = self.summaryViewController!.guestCheckoutTableViewCell.emailTextField.text
                     self.guestFirstName = self.summaryViewController!.guestCheckoutTableViewCell.firstNameTextField.text
@@ -310,7 +317,7 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
                 self.setSelectedViewControllerWithIndex(self.selectedIndex)
             } else {
                 self.selectedIndex--
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Server Error", title: "Something went wrong")
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.serverError, title: Constants.Localized.someThingWentWrong)
             }
         } else if self.selectedIndex == 2 {
             if self.paymentViewController!.paymentType == PaymentType.COD {
@@ -351,7 +358,7 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
                 if paymentSuccessModel.isSuccessful {
                     self.redirectToSuccessPage(paymentSuccessModel)
                 } else {
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: paymentSuccessModel.message, title: "Something went wrong")
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: paymentSuccessModel.message, title: Constants.Localized.someThingWentWrong)
                 }
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
@@ -360,7 +367,7 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
                     self.fireRefreshToken(CheckoutRefreshType.COD)
                 }
                 self.selectedIndex--
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
                 self.hud?.hide(true)
         })
     }
@@ -449,8 +456,8 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
             
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                let alertController = UIAlertController(title: "Something went wrong", message: "", preferredStyle: .Alert)
-                let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+                let alertController = UIAlertController(title: Constants.Localized.someThingWentWrong, message: "", preferredStyle: .Alert)
+                let defaultAction = UIAlertAction(title: Constants.Localized.ok, style: .Default, handler: nil)
                 alertController.addAction(defaultAction)
                 self.presentViewController(alertController, animated: true, completion: nil)
                 self.hud?.hide(true)
@@ -524,7 +531,7 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
     }
     
     func showSuccessMessage() {
-        let alertController = UIAlertController(title: "Success", message: "Successfully login.", preferredStyle: .Alert)
+        let alertController = UIAlertController(title: Constants.Localized.success, message: LoginStrings.successMessage, preferredStyle: .Alert)
         
         let OKAction = UIAlertAction(title: "OK", style: .Default) { (action) in
             alertController.dismissViewControllerAnimated(true, completion: nil)

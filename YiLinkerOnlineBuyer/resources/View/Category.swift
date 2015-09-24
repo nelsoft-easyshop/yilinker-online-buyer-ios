@@ -14,7 +14,7 @@ extension UITextField {
         toolBar.barTintColor = Constants.Colors.appTheme
         toolBar.tintColor = UIColor.whiteColor()
         
-        let doneItem = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Done, target: target, action: done)
+        let doneItem = UIBarButtonItem(title: Constants.Localized.done, style: UIBarButtonItemStyle.Done, target: target, action: done)
         
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: self, action: nil)
         
@@ -121,22 +121,22 @@ extension UITextView {
 extension UIAlertController {
     
     class func displayErrorMessageWithTarget(target: AnyObject, errorMessage: String) {
-        let alert = UIAlertController(title: "Something went wrong", message: errorMessage, preferredStyle: UIAlertControllerStyle.Alert)
-        let OKAction = UIAlertAction(title: "OK", style: .Default) { (action) in }
+        let alert = UIAlertController(title: Constants.Localized.someThingWentWrong, message: errorMessage, preferredStyle: UIAlertControllerStyle.Alert)
+        let OKAction = UIAlertAction(title: Constants.Localized.ok, style: .Default) { (action) in }
         alert.addAction(OKAction)
         target.presentViewController(alert, animated: true, completion: nil)
     }
     
     class func displayErrorMessageWithTarget(target: AnyObject, errorMessage: String, title: String) {
         let alert = UIAlertController(title: title, message: errorMessage, preferredStyle: UIAlertControllerStyle.Alert)
-        let OKAction = UIAlertAction(title: "OK", style: .Default) { (action) in }
+        let OKAction = UIAlertAction(title: Constants.Localized.ok, style: .Default) { (action) in }
         alert.addAction(OKAction)
         target.presentViewController(alert, animated: true, completion: nil)
     }
     
     class func displayNoInternetConnectionError(target: AnyObject) {
-        let alert = UIAlertController(title: "No Internet Connection", message: "Please check your internet connection.", preferredStyle: UIAlertControllerStyle.Alert)
-        let OKAction = UIAlertAction(title: "OK", style: .Default) { (action) in }
+        let alert = UIAlertController(title: Constants.Localized.noInternet, message: Constants.Localized.noInternetErrorMessage, preferredStyle: UIAlertControllerStyle.Alert)
+        let OKAction = UIAlertAction(title: Constants.Localized.ok, style: .Default) { (action) in }
         alert.addAction(OKAction)
         target.presentViewController(alert, animated: true, completion: nil)
     }
@@ -225,7 +225,7 @@ extension String {
     
     func formatToTwoDecimal() -> String {
         let formatter = NSNumberFormatter()
-        formatter.minimumFractionDigits = 0
+        formatter.minimumFractionDigits = 2
         formatter.maximumFractionDigits = 2
         formatter.numberStyle = .CurrencyStyle
         return "\(formatter.stringFromNumber((self as NSString).doubleValue)!)"

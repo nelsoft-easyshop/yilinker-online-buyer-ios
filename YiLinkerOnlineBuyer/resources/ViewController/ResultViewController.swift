@@ -401,6 +401,7 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
             cell.setProductName(tempModel.productName)
             cell.setOriginalPrice(tempModel.originalPrice)
             cell.setNewPrice(tempModel.newPrice)
+            cell.setDiscount("\(tempModel.discount)")
             return cell
         } else if type == list {
             let cell: ProductResultListCollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifierList, forIndexPath: indexPath) as! ProductResultListCollectionViewCell
@@ -409,6 +410,7 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
             cell.setProductName(tempModel.productName)
             cell.setOriginalPrice(tempModel.originalPrice)
             cell.setNewPrice(tempModel.newPrice)
+            cell.setDiscount("\(tempModel.discount)")
             return cell
         } else{
             let cell: SellerResultCollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifierSeller, forIndexPath: indexPath) as! SellerResultCollectionViewCell

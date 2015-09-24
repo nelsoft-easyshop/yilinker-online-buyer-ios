@@ -13,6 +13,10 @@ struct HomeStrings {
     static let hotItems: String = StringHelper.localizedStringWithKey("HOT_ITEMS_LOCALIZE_KEY")
     static let newItem: String = StringHelper.localizedStringWithKey("NEW_ITEMS_LOCALIZE_KEY")
     static let seller: String = StringHelper.localizedStringWithKey("SELLER_LOCALIZE_KEY")
+    
+    static let wishlistError: String = StringHelper.localizedStringWithKey("WISHLIST_ERROR_LOCALIZE_KEY")
+    static let error: String = StringHelper.localizedStringWithKey("ERROR_LOCALIZE_KEY")
+    static let somethingWentWrong: String = StringHelper.localizedStringWithKey("SOMETHING_WENT_WRONG_LOCALIZE_KEY")
 }
 
 struct FABStrings {
@@ -137,7 +141,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                     if task.statusCode == 401 {
                         self.fireRefreshToken()
                     } else {
-                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: HomeStrings.somethingWentWrong, title: HomeStrings.error)
                     }
                 }
                 //SVProgressHUD.dismiss()
@@ -174,7 +178,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             if SessionManager.isLoggedIn() {
                 return true
             } else {
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Please log in to view your Wishlist.", title: "Error")
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: HomeStrings.wishlistError, title: HomeStrings.error)
                 return false
             }
         } else if self != viewController && viewController != tabBarController.viewControllers![2] as! UIViewController {
@@ -424,7 +428,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                 if task.statusCode == 401 {
                     self.fireRefreshToken()
                 } else {
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: HomeStrings.somethingWentWrong, title: HomeStrings.error)
                 }
                 
                 self.hud?.hide(true)
@@ -461,7 +465,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
             
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: HomeStrings.somethingWentWrong, title: HomeStrings.error)
                 
                 self.hud?.hide(true)
         })
