@@ -8,7 +8,7 @@
 
 import Foundation
 
-typealias ResolutionCenterElement = (resolutionId: String, status: String, date: String, type: String, complainantRemarks: String, csrRemarks: String)
+typealias ResolutionCenterElement = (ticketId: String, resolutionId: String, status: String, date: String, type: String, complainantRemarks: String, csrRemarks: String)
 
 class ResolutionCenterModel {
     var message: String = ""
@@ -67,6 +67,7 @@ class ResolutionCenterModel {
                         element.status = autocorrectStatus( element.status )
                         element.type = parseDictionaryString(currentElement, key:"orderProductStatus")
                         element.date = parseDictionaryString(currentElement, key:"dateAdded")
+                        element.ticketId = parseDictionaryString(currentElement, key: "ticketId")
                         // unused: "disputeeFullName"
                         // unused: "disputeeContactNumber"
                         element.complainantRemarks = ""
