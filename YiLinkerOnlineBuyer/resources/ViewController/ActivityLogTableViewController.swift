@@ -130,16 +130,19 @@ class ActivityLogTableViewController: UITableViewController {
                 self.activityLogsModel = ActivityLogModel.parsaActivityLogsDataFromDictionary(responseObject as! NSDictionary)
                 self.cellCount = self.activityLogsModel!.text_array.count
                 self.cellSection = self.activityLogsModel!.date_section_array.count
-           
+            
                 for var a = 0; a < self.activityLogsModel.date_section_array.count; a++ {
+                    //println("dates \(self.formatDateToCompleteString(self.formatStringToDate(self.activityLogsModel!.date_section_array[a])))")
                     var arr = [ActivityModel]()
                     for var b = 0; b < self.activityLogsModel.text_array.count; b++ {
-                        if self.activityLogsModel!.date_section_array[a] == self.activityLogsModel!.all_date_section_array[b] {
-                            self.tableSectionContents = ActivityModel(time: self.activityLogsModel!.date_array[b], details: self.activityLogsModel!.text_array[b])
+                        if self.formatDateToCompleteString(self.formatStringToDate(self.activityLogsModel!.date_section_array[a])) == self.formatDateToCompleteString(self.formatStringToDate(self.activityLogsModel!.all_date_section_array[b])) {
+                            //println("date section \(self.formatDateToCompleteString(self.formatStringToDate(self.activityLogsModel!.date_section_array[a]))) date all \(self.formatDateToCompleteString(self.formatStringToDate(self.activityLogsModel!.all_date_section_array[b])))")
+                            //println("time \(self.formatDateToTimeString(self.formatStringToDate(self.activityLogsModel!.date_array[b])))")
+                            self.tableSectionContents = ActivityModel(time: self.formatDateToTimeString(self.formatStringToDate(self.activityLogsModel!.date_array[b])), details: self.activityLogsModel!.text_array[b])
                             arr.append(self.tableSectionContents)
                         }
                     }
-                    self.table.append(ActivityLogModel(text: self.activityLogsModel!.date_section_array[a], activities: arr))
+                    self.table.append(ActivityLogModel(text: self.formatDateToCompleteString(self.formatStringToDate(self.activityLogsModel!.date_section_array[a])), activities: arr))
                 }
                 self.hud?.hide(true)
                 self.tableView.reloadData()
@@ -233,4 +236,28 @@ class ActivityLogTableViewController: UITableViewController {
         return sectionHeaderView
     }
     
+    func formatStringToDate(date: String) -> NSDate {
+        var dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss.SSSSSS"
+        
+        return dateFormatter.dateFromString(date)!
+    }
+    
+    func formatDateToString(date: NSDate) -> String {
+        var dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss.SSSSSS"
+        return dateFormatter.stringFromDate(date)
+    }
+    
+    func formatDateToTimeString(date: NSDate) -> String {
+        var dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "KK:mm aa"
+        return dateFormatter.stringFromDate(date)
+    }
+    
+    func formatDateToCompleteString(date: NSDate) -> String {
+        var dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "MMMM dd, yyyy"
+        return dateFormatter.stringFromDate(date)
+    }
 }

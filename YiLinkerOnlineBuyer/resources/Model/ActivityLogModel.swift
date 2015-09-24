@@ -67,6 +67,7 @@ class ActivityLogModel: NSObject {
         var date_array: [String] = []
         var text_array: [String] = []
         var section_date_array: [String] = []
+        var section_date_array2: [String] = []
         var all_section_date_array: [String] = []
         let dateComponents = NSDateComponents()
 
@@ -79,7 +80,7 @@ class ActivityLogModel: NSObject {
                             let date: NSDictionary = activityDictionary["date"] as! NSDictionary
                             if let value = date["date"] as? String {
                                 //time = value
-                                
+                                /*
                                 var dates = value as NSString!
                                 //dateComponents.year = dates.substringWithRange(NSRange(location: 0, length: 4)).toInt()!
                                 //dateComponents.month = dates.substringWithRange(NSRange(location: 5, length: 2)).toInt()!
@@ -93,11 +94,14 @@ class ActivityLogModel: NSObject {
                                 let date = NSCalendar.currentCalendar().dateFromComponents(dateComponents)!
                                 let dateString = formatter.stringFromDate(date)
                                 var trimDate = dateString.stringByReplacingOccurrencesOfString("January 1, 1 at ", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
-                                date_array.append(trimDate.stringByReplacingOccurrencesOfString(":00", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil))
+                               // date_array.append(trimDate.stringByReplacingOccurrencesOfString(":00", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil))
+                                */
+                                date_array.append(value)
                                 
                             }
                             
                             if let value = date["date"] as? String {
+                            
                                 let dateComponents = NSDateComponents()
                                 
                                 var dates = value as NSString!
@@ -114,12 +118,15 @@ class ActivityLogModel: NSObject {
                                 let date = NSCalendar.currentCalendar().dateFromComponents(dateComponents)!
                                 let dateString = formatter.stringFromDate(date)
                                 var trimDate = dateString.stringByReplacingOccurrencesOfString(" at 12:00:00 AM", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
-                                
-                                if !contains(section_date_array, trimDate) {
-                                    section_date_array.append(trimDate)
-                                    println("\(trimDate)")
+                              
+                                if !contains(section_date_array2, trimDate) {
+                                    //section_date_array.append(trimDate)
+                                    section_date_array2.append(trimDate)
+                                    section_date_array.append(value)
                                 }
-                                all_section_date_array.append(trimDate)
+                                
+                                //all_section_date_array.append(trimDate)
+                                all_section_date_array.append(value)
                             }
                             
                             if let text = activityDictionary["text"] as? String {
@@ -138,4 +145,29 @@ class ActivityLogModel: NSObject {
     
     }
 
+    
+    func formatStringToDate(date: String) -> NSDate {
+        var dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss.SSSSSS"
+        
+        return dateFormatter.dateFromString(date)!
+    }
+    
+    func formatDateToString(date: NSDate) -> String {
+        var dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss.SSSSSS"
+        return dateFormatter.stringFromDate(date)
+    }
+    
+    func formatDateToTimeString(date: NSDate) -> String {
+        var dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "KK:mm aa"
+        return dateFormatter.stringFromDate(date)
+    }
+    
+    func formatDateToCompleteString(date: NSDate) -> String {
+        var dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "MMMM dd, yyyy"
+        return dateFormatter.stringFromDate(date)
+    }
 }
