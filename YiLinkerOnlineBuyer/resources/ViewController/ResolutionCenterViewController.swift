@@ -259,7 +259,7 @@ class ResolutionCenterViewController: UIViewController, UITableViewDataSource, U
             let statusFilter = self.currentSelectedFilter.getStatusFilter()
             let timeFilter = self.currentSelectedFilter.getTimeFilter()
             
-            var fullDate = timeFilter.componentsSeparatedByString("/")
+            var fullDate = timeFilter.componentsSeparatedByString("-")
             
             if timeFilter == ""  {
                 parameters = [ "access_token" : SessionManager.accessToken(), "disputeStatusType" : statusFilter]
