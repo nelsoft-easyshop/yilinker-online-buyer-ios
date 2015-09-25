@@ -34,6 +34,13 @@ enum AddressRefreshType {
     case Get
 }
 
+enum SellerRefreshType {
+    case Follow
+    case Unfollow
+    case Get
+    case Feedback
+}
+
 enum CheckoutRefreshType {
     case COD
     case Credit

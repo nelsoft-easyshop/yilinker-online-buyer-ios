@@ -156,13 +156,27 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
           
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                if error.userInfo != nil {
+                    let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: Constants.Localized.someThingWentWrong)
+                    self.hud?.hide(true)
+                } else if task.statusCode == 401 {
+                    self.requestRefreshToken(SellerRefreshType.Get)
+                } else {
+                    self.showAlert(title: Constants.Localized.someThingWentWrong, message: nil)
+                    self.hud?.hide(true)
+                    self.is_successful == self.sellerModel?.is_allowed
+                }
+                /*
                 if error.userInfo != nil {
                     println(error.userInfo)
+                    
                     if let jsonResult = error.userInfo as? Dictionary<String, AnyObject> {
                         if jsonResult["message"] != nil {
                             self.showAlert(title: jsonResult["message"] as! String, message: nil)
                             self.hud?.hide(true)
-                            self.is_successful == self.sellerModel?.is_allowed
 
                         } else {
                             self.showAlert(title: "Something went wrong", message: nil)
@@ -175,6 +189,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
                     self.hud?.hide(true)
                     self.is_successful == self.sellerModel?.is_allowed
                 }
+                */
         })
         self.tableView.reloadData()
     }
@@ -198,6 +213,19 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
             
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                if error.userInfo != nil {
+                    let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: Constants.Localized.someThingWentWrong)
+                    self.hud?.hide(true)
+                } else if task.statusCode == 401 {
+                    self.requestRefreshToken(SellerRefreshType.Feedback)
+                } else {
+                    self.showAlert(title: Constants.Localized.someThingWentWrong, message: nil)
+                    self.hud?.hide(true)
+                }
+                /*
                 if error.userInfo != nil {
                     println(error.userInfo)
                     if let jsonResult = error.userInfo as? Dictionary<String, AnyObject> {
@@ -214,6 +242,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
                     self.showAlert(title: "Error", message: "Something went wrong.")
                     self.hud?.hide(true)
                 }
+            */
         })
         self.tableView.reloadData()
     }
@@ -239,6 +268,27 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 
                 self.hud?.hide(true)
                 
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                if error.userInfo != nil {
+                    let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: Constants.Localized.someThingWentWrong)
+                    self.followSellerModel = FollowedSellerModel.parseFollowSellerDataWithDictionary(error.userInfo as! Dictionary<String, AnyObject>)
+                    println(self.followSellerModel?.message)
+                    self.is_successful = true
+                    self.sellerTableHeaderView.followButton.tag = 1
+                    println("result after ff error block: \(self.is_successful)")
+                    println("button after ff error block: \(self.sellerTableHeaderView.followButton.highlighted)")
+
+                } else if task.statusCode == 401 {
+                    self.requestRefreshToken(SellerRefreshType.Follow)
+                } else {
+                    self.showAlert(title: Constants.Localized.someThingWentWrong, message: nil)
+                    self.is_successful = false
+                    self.sellerTableHeaderView.followButton.tag = 2
+                }
+
+                /*
                 //let dictionary: NSDictionary =(data, options: nil, error: nil)
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                 if task.statusCode == 400 {
@@ -254,6 +304,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
                     self.is_successful = false
                     self.sellerTableHeaderView.followButton.tag = 2
                 }
+                */
         })
        
     }
@@ -277,6 +328,25 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 println(self.followSellerModel?.isSuccessful)
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
                 self.hud?.hide(true)
+                
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                if error.userInfo != nil {
+                    let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: Constants.Localized.someThingWentWrong)
+                    let data = error.userInfo as! Dictionary<String, AnyObject>
+                    self.followSellerModel = FollowedSellerModel.parseFollowSellerDataWithDictionary(error.userInfo as! Dictionary<String, AnyObject>)
+                    print(self.followSellerModel?.message)
+                    self.is_successful = false
+                    self.sellerTableHeaderView.followButton.tag = 2
+                } else if task.statusCode == 401 {
+                    self.requestRefreshToken(SellerRefreshType.Unfollow)
+                } else {
+                    self.showAlert(title: Constants.Localized.someThingWentWrong, message: nil)
+                    self.is_successful = false
+                    self.sellerTableHeaderView.followButton.tag = 2
+                }
+                /*
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                 if task.statusCode == 400 {
                     let data = error.userInfo as! Dictionary<String, AnyObject>
@@ -289,6 +359,37 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
                     self.is_successful = false
                     self.sellerTableHeaderView.followButton.tag = 2
                 }
+                */
+        })
+    }
+    
+    func requestRefreshToken(type: SellerRefreshType) {
+        let params: NSDictionary = ["client_id": Constants.Credentials.clientID,
+            "client_secret": Constants.Credentials.clientSecret,
+            "grant_type": Constants.Credentials.grantRefreshToken,
+            "refresh_token": SessionManager.refreshToken()]
+        self.showHUD()
+        let manager = APIManager.sharedInstance
+        manager.POST(APIAtlas.loginUrl, parameters: params, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            
+            if type == SellerRefreshType.Follow {
+                self.fireFollowSeller()
+            } else if type == SellerRefreshType.Unfollow {
+                self.fireUnfollowSeller()
+            } else if type == SellerRefreshType.Get {
+                self.fireSeller()
+            } else {
+                self.fireSellerFeedback()
+            }
+            
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                self.hud?.hide(true)
+                let alertController = UIAlertController(title: Constants.Localized.someThingWentWrong, message: "", preferredStyle: .Alert)
+                let defaultAction = UIAlertAction(title: Constants.Localized.ok, style: .Default, handler: nil)
+                alertController.addAction(defaultAction)
+                self.presentViewController(alertController, animated: true, completion: nil)
         })
     }
     
