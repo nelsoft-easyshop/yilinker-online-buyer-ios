@@ -133,7 +133,7 @@ class ResolutionCenterViewController: UIViewController, UITableViewDataSource, U
         }
         self.tabSelector.setSelection(.TabOne)
         self.currentSelectedFilter.status = .Both
-//        fireGetCases()
+        fireGetCases()
     }
     
     @IBAction func openPressed(sender: AnyObject) {
@@ -142,7 +142,7 @@ class ResolutionCenterViewController: UIViewController, UITableViewDataSource, U
         }
         self.tabSelector.setSelection(.TabTwo)
         self.currentSelectedFilter.status = .Open
-//        fireGetCases()
+        fireGetCases()
     }
     
     @IBAction func closedPressed(sender: AnyObject) {
@@ -151,7 +151,7 @@ class ResolutionCenterViewController: UIViewController, UITableViewDataSource, U
         }
         self.tabSelector.setSelection(.TabThree)
         self.currentSelectedFilter.status = .Closed
-//        fireGetCases()
+        fireGetCases()
     }
     
     // Mark: - New Dispute View Controller
@@ -229,7 +229,7 @@ class ResolutionCenterViewController: UIViewController, UITableViewDataSource, U
         default:
             tabSelector.setSelection(.TabOne)
         }
-        fireGetCases()
+//        fireGetCases()
     }
     
     func showHUD() {
@@ -260,13 +260,13 @@ class ResolutionCenterViewController: UIViewController, UITableViewDataSource, U
             let timeFilter = self.currentSelectedFilter.getTimeFilter()
             
             var fullDate = timeFilter.componentsSeparatedByString("-")
-            
+
             if timeFilter == ""  {
                 parameters = [ "access_token" : SessionManager.accessToken(), "disputeStatusType" : statusFilter]
             } else if statusFilter == "0" {
                 if self.currentSelectedFilter.getFilterType() == ResolutionTimeFilter.ThisMonth {
                     parameters = [ "access_token" : SessionManager.accessToken()
-                        , "dateFrom" : "\(fullDate[0])/1/\(fullDate[2])",
+                        , "dateFrom" : "\(fullDate[0])-1-\(fullDate[2])",
                         "dateTo": timeFilter]
                     
                 } else if self.currentSelectedFilter.getFilterType() == ResolutionTimeFilter.ThisWeek {
@@ -282,7 +282,7 @@ class ResolutionCenterViewController: UIViewController, UITableViewDataSource, U
             } else {
                 if self.currentSelectedFilter.getFilterType() == ResolutionTimeFilter.ThisMonth {
                     parameters = [ "access_token" : SessionManager.accessToken()
-                        , "dateFrom" : "\(fullDate[0])/1/\(fullDate[2])",
+                        , "dateFrom" : "\(fullDate[0])-1-\(fullDate[2])",
                         "dateTo": timeFilter,
                         "disputeStatusType" : statusFilter]
                     
@@ -304,12 +304,20 @@ class ResolutionCenterViewController: UIViewController, UITableViewDataSource, U
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             self.resolutionCenterModel = ResolutionCenterModel.parseDataWithDictionary(responseObject)
             
+//            var fullDate = self.resolutionCenterModel.resolutionArray[0].date.componentsSeparatedByString(" ")
+//            println(fullDate[0])
+//            
+//            let dateFormatter = NSDateFormatter()
+//            dateFormatter.dateFormat = "MM/dd/yyyy"
+//            let date = dateFormatter.dateFromString(fullDate[0])
+//            println(date)
+            
             if self.resolutionCenterModel.isSuccessful {
                 self.tableData.removeAll(keepCapacity: false)
                 self.tableData = self.resolutionCenterModel.resolutionArray
                 self.resolutionTableView.reloadData()
             } else {
-                println(responseObject)
+                println(responseObject["message"])
                 //UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Error while reading Resolution Center table", title: "Data Loading Error")
                 self.tableData.removeAll(keepCapacity: false)
                 self.tableData = self.resolutionCenterModel.resolutionArray
