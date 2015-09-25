@@ -41,6 +41,14 @@ enum SellerRefreshType {
     case Feedback
 }
 
+enum TransactionRefreshType {
+    case All
+    case OnGoing
+    case Pending
+    case ForFeedback
+    case Support
+}
+
 enum CheckoutRefreshType {
     case COD
     case Credit
