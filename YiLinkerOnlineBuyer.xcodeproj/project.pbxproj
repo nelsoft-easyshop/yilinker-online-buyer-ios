@@ -27,7 +27,6 @@
 		0C2F44C71B8576FE00021F45 /* Panton ExtraBold Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0C2F44B51B8576FE00021F45 /* Panton ExtraBold Italic.otf */; };
 		0C2F44C81B8576FE00021F45 /* Panton ExtraBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0C2F44B61B8576FE00021F45 /* Panton ExtraBold.otf */; };
 		0C2F44C91B8576FE00021F45 /* Panton ExtraLight Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0C2F44B71B8576FE00021F45 /* Panton ExtraLight Italic.otf */; };
-		0C2F44CA1B8576FE00021F45 /* Panton ExtraLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0C2F44B81B8576FE00021F45 /* Panton ExtraLight.otf */; };
 		0C2F44CB1B8576FE00021F45 /* Panton Heavy Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0C2F44B91B8576FE00021F45 /* Panton Heavy Italic.otf */; };
 		0C2F44CC1B8576FE00021F45 /* Panton Heavy.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0C2F44BA1B8576FE00021F45 /* Panton Heavy.otf */; };
 		0C2F44CD1B8576FE00021F45 /* Panton Light Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0C2F44BB1B8576FE00021F45 /* Panton Light Italic.otf */; };
@@ -1640,8 +1639,6 @@
 				79E68BAB1B8B4EB9008626E4 /* EditProfilePersonalInformationTableViewCell.xib in Resources */,
 				79EBE8861B95F50700434B42 /* ChangePasswordViewController.xib in Resources */,
 				79A1C6F11B8329490043AA36 /* SearchSuggestionTableViewCell.xib in Resources */,
-				0C2F44CA1B8576FE00021F45 /* Panton ExtraLight.otf in Resources */,
-				0C2F44CA1B8576FE00021F45 /* Panton ExtraLight.otf in Resources */,
 				F7DC7ED71BA13E3D004F7FD4 /* SellerCategoryViewController.xib in Resources */,
 				26AFB3C81B79DE5C00E50926 /* ReviewTableViewCell.xib in Resources */,
 				961BE5AA1B994C4D00E8631A /* ResolutionCenterCell.xib in Resources */,
