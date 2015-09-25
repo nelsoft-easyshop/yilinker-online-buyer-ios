@@ -75,7 +75,7 @@ class DisputeAddItemViewController: UIViewController {
 
         if self.selectedTransactionIDIndex.count != 0 {
             for i in 0..<self.selectedTransactionIDIndex.count {
-                productIDs.append(self.transactionDetailsModel.productId[self.selectedTransactionIDIndex[i]])
+                productIDs.append(self.transactionDetailsModel.orderProductId[self.selectedTransactionIDIndex[i]])
                 productNames.append(self.transactionDetailsModel.productName[self.selectedTransactionIDIndex[i]])
             }
             delegate?.addTransactionProducts(productIDs, productNames: productNames)
