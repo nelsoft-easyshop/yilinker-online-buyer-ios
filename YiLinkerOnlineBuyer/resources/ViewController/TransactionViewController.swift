@@ -34,7 +34,7 @@ class TransactionViewController: UIViewController {
     var labelsInArray: [UILabel] = []
     var deselectedImages: [String] = []
     
-    var queryType: String = ""
+    var query: String = ""
     
     var hud: MBProgressHUD?
     
@@ -71,6 +71,7 @@ class TransactionViewController: UIViewController {
         addViewsActions()
     
         self.fireTransaction("all")
+        self.query = "all"
         self.backButton()
         
     }
@@ -127,6 +128,7 @@ class TransactionViewController: UIViewController {
         if allView.tag == 0 {
             selectView(allView, label: allLabel, imageView: allImageView, imageName: "all2")
             self.fireTransaction("all")
+            self.query = "all"
             deselectOtherViews(allView)
         }
     }
@@ -135,6 +137,7 @@ class TransactionViewController: UIViewController {
         if pendingView.tag == 0 {
             selectView(pendingView, label: pendingLabel, imageView: pendingImageView, imageName: "time")
             self.fireTransaction("pending")
+            self.query = "pending"
             deselectOtherViews(pendingView)
         }
     }
@@ -143,6 +146,7 @@ class TransactionViewController: UIViewController {
         if onDeliveryView.tag == 0 {
             selectView(onDeliveryView, label: onDeliveryLabel, imageView: onDeliveryImageView, imageName: "onDelivery2")
             self.fireTransaction("ongoing")
+            self.query = "ongoing"
             deselectOtherViews(onDeliveryView)
         }
     }
@@ -150,6 +154,7 @@ class TransactionViewController: UIViewController {
     func forFeedbackAction(gesture: UIGestureRecognizer) {
         if forFeedbackView.tag == 0 {
             selectView(forFeedbackView, label: forFeedbackLabel, imageView: forFeedbackImageView, imageName: "forFeedback2")
+            self.query = "forFeedback"
             deselectOtherViews(forFeedbackView)
         }
     }
@@ -157,6 +162,7 @@ class TransactionViewController: UIViewController {
     func supportAction(gesture: UIGestureRecognizer) {
         if supportView.tag == 0 {
             selectView(supportView, label: supportLabel, imageView: supportImageView, imageName: "support2")
+            self.query = "support"
             deselectOtherViews(supportView)
         }
     }
@@ -209,9 +215,68 @@ class TransactionViewController: UIViewController {
                 self.hud?.hide(true)
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
                 self.hud?.hide(true)
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                if error.userInfo != nil {
+                    let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: Constants.Localized.someThingWentWrong)
+                } else if task.statusCode == 401 {
+                    if self.query == "all" {
+                        self.requestRefreshToken(TransactionRefreshType.All)
+                    } else if self.query == "ongoing" {
+                        self.requestRefreshToken(TransactionRefreshType.OnGoing)
+                    } else if self.query == "pending" {
+                        self.requestRefreshToken(TransactionRefreshType.Pending)
+                    } else if self.query == "forFeedback" {
+                        self.requestRefreshToken(TransactionRefreshType.ForFeedback)
+                    } else {
+                        self.requestRefreshToken(TransactionRefreshType.Support)
+                    }
+                } else {
+                    self.showAlert(title: Constants.Localized.someThingWentWrong, message: nil)
+                    self.hud?.hide(true)
+                }
                 println(error.userInfo)
               
         })
+    }
+    
+    func requestRefreshToken(type: TransactionRefreshType) {
+        let params: NSDictionary = ["client_id": Constants.Credentials.clientID,
+            "client_secret": Constants.Credentials.clientSecret,
+            "grant_type": Constants.Credentials.grantRefreshToken,
+            "refresh_token": SessionManager.refreshToken()]
+        self.showHUD()
+        let manager = APIManager.sharedInstance
+        manager.POST(APIAtlas.loginUrl, parameters: params, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            
+            if type == TransactionRefreshType.All {
+                self.fireTransaction("all")
+            } else if type == TransactionRefreshType.OnGoing {
+                self.fireTransaction("ongoing")
+            } else if type == TransactionRefreshType.Pending {
+                self.fireTransaction("pending")
+            } else if type == TransactionRefreshType.ForFeedback {
+                self.fireTransaction("forfeedback")
+            } else {
+                self.fireTransaction("support")
+            }
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                self.hud?.hide(true)
+                let alertController = UIAlertController(title: Constants.Localized.someThingWentWrong, message: "", preferredStyle: .Alert)
+                let defaultAction = UIAlertAction(title: Constants.Localized.ok, style: .Default, handler: nil)
+                alertController.addAction(defaultAction)
+                self.presentViewController(alertController, animated: true, completion: nil)
+        })
+    }
+    
+    func showAlert(#title: String!, message: String!) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+        let defaultAction = UIAlertAction(title: Constants.Localized.ok, style: .Default, handler: nil)
+        alertController.addAction(defaultAction)
+        presentViewController(alertController, animated: true, completion: nil)
     }
     
     //MARK: Show HUD
