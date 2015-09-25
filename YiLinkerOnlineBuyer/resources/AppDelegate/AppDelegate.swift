@@ -55,11 +55,32 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GGLInstanceIDDelegate {
         application.registerForRemoteNotifications()
         
         GCMService.sharedInstance().startWithConfig(GCMConfig.defaultConfig())
-        
+        UIApplication.sharedApplication().applicationIconBadgeNumber = 0
         return FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
     }
     
     func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
+        
+        // Rj
+        
+        let trimEnds: String = deviceToken.description.stringByTrimmingCharactersInSet(NSCharacterSet(charactersInString: "<>"))
+        let cleanToken: String = trimEnds.stringByReplacingOccurrencesOfString(" ", withString: "", options: nil, range: nil)
+        println("Device Token > \(cleanToken)")
+        
+//        // Register for Push Notitications, if running iOS 8
+//        if application.respondsToSelector("registerUserNotificationSettings:") {
+//            
+//            let types:UIUserNotificationType = (.Alert | .Badge | .Sound)
+//            let settings:UIUserNotificationSettings = UIUserNotificationSettings(forTypes: types, categories: nil)
+//            
+//            application.registerUserNotificationSettings(settings)
+//            application.registerForRemoteNotifications()
+//            
+//        } else {
+//            // Register for Push Notifications before iOS 8
+//            application.registerForRemoteNotificationTypes(.Alert | .Badge | .Sound)
+//        }
+        
         GGLInstanceID.sharedInstance().startWithConfig(GGLInstanceIDConfig.defaultConfig())
         registrationOptions = [kGGLInstanceIDRegisterAPNSOption:deviceToken,
             kGGLInstanceIDAPNSServerTypeSandboxOption:true]
@@ -193,6 +214,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GGLInstanceIDDelegate {
             }
         }
         completionHandler(UIBackgroundFetchResult.NoData);
+        
+        
+        // Rj
+        if application.applicationState == UIApplicationState.Active {
+            UIApplication.sharedApplication().applicationIconBadgeNumber = 0
+            var body: NSDictionary = userInfo["aps"] as! NSDictionary
+            let alertController = UIAlertController(title: "YiLinker", message: body["alert"] as? String, preferredStyle: .Alert)
+            alertController.addAction(UIAlertAction(title: ProductStrings.alertOk, style: .Default, handler: nil))
+            self.window?.rootViewController?.presentViewController(alertController, animated: true, completion: nil)
+        }
     }
     
     func onTokenRefresh(){
@@ -238,6 +269,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GGLInstanceIDDelegate {
 
     func applicationWillEnterForeground(application: UIApplication) {
         // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+        UIApplication.sharedApplication().applicationIconBadgeNumber = 0
     }
 
     func applicationDidBecomeActive(application: UIApplication) {
