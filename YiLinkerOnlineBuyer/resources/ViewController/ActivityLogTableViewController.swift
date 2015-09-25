@@ -150,8 +150,49 @@ class ActivityLogTableViewController: UITableViewController {
                 self.tableView.reloadData()
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                if error.userInfo != nil {
+                    let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: Constants.Localized.someThingWentWrong)
+                } else if task.statusCode == 401 {
+                    self.requestRefreshToken()
+                } else {
+                    self.showAlert(title: Constants.Localized.someThingWentWrong, message: nil)
+                    self.hud?.hide(true)
+                }
                 self.hud?.hide(true)
         })
+    }
+    
+    
+    func requestRefreshToken() {
+        let params: NSDictionary = ["client_id": Constants.Credentials.clientID,
+            "client_secret": Constants.Credentials.clientSecret,
+            "grant_type": Constants.Credentials.grantRefreshToken,
+            "refresh_token": SessionManager.refreshToken()]
+        self.showHUD()
+        let manager = APIManager.sharedInstance
+        manager.POST(APIAtlas.loginUrl, parameters: params, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            
+            self.fireActivityLog()
+            
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                self.hud?.hide(true)
+                let alertController = UIAlertController(title: Constants.Localized.someThingWentWrong, message: "", preferredStyle: .Alert)
+                let defaultAction = UIAlertAction(title: Constants.Localized.ok, style: .Default, handler: nil)
+                alertController.addAction(defaultAction)
+                self.presentViewController(alertController, animated: true, completion: nil)
+        })
+    }
+    
+    func showAlert(#title: String!, message: String!) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+        let defaultAction = UIAlertAction(title: Constants.Localized.ok, style: .Default, handler: nil)
+        alertController.addAction(defaultAction)
+        presentViewController(alertController, animated: true, completion: nil)
     }
     
     func showHUD() {
