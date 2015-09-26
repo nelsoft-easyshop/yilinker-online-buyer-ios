@@ -272,8 +272,7 @@ class ResolutionCenterViewController: UIViewController, UITableViewDataSource, U
                 } else if self.currentSelectedFilter.getFilterType() == ResolutionTimeFilter.ThisWeek {
                     parameters = [ "access_token" : SessionManager.accessToken()
                         , "dateFrom" : self.currentSelectedFilter.sundayDate(),
-                        "dateTo": timeFilter,
-                        "disputeStatusType" : statusFilter]
+                        "dateTo": timeFilter]
                 } else {
                     parameters = [ "access_token" : SessionManager.accessToken()
                         , "dateFrom" : timeFilter,
