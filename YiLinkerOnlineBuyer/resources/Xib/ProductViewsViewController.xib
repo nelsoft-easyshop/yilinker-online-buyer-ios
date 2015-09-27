@@ -382,7 +382,7 @@
             <point key="canvasLocation" x="364.5" y="1155.5"/>
         </view>
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="b5m-Sg-d34" customClass="ProductSellerView" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="375" height="238"/>
+            <rect key="frame" x="0.0" y="0.0" width="375" height="120"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Seller" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kzu-Kc-e0E">
@@ -457,7 +457,7 @@
                         <constraint firstAttribute="width" constant="34" id="7YH-6R-OSb"/>
                     </constraints>
                 </imageView>
-                <collectionView clipsSubviews="YES" clearsContextBeforeDrawing="NO" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="bgc-Qk-Kc4">
+                <collectionView hidden="YES" clipsSubviews="YES" clearsContextBeforeDrawing="NO" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="bgc-Qk-Kc4">
                     <rect key="frame" x="0.0" y="123" width="375" height="100"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
@@ -483,7 +483,6 @@
                 <constraint firstAttribute="trailing" secondItem="Kzu-Kc-e0E" secondAttribute="trailing" constant="8" id="OKR-ru-SEx"/>
                 <constraint firstItem="QSa-up-KMN" firstAttribute="top" secondItem="9eV-P8-MMr" secondAttribute="bottom" constant="11" id="PQW-1n-4Fw"/>
                 <constraint firstAttribute="trailing" secondItem="bgc-Qk-Kc4" secondAttribute="trailing" id="QWl-9I-1ER"/>
-                <constraint firstAttribute="bottom" secondItem="bgc-Qk-Kc4" secondAttribute="bottom" constant="15" id="Wpr-Sx-lOB"/>
                 <constraint firstItem="JQN-fu-kVc" firstAttribute="top" secondItem="QSa-up-KMN" secondAttribute="bottom" constant="16" id="XRe-ug-TEc"/>
                 <constraint firstItem="hi6-R0-3Kc" firstAttribute="leading" secondItem="1Ic-lg-NFJ" secondAttribute="trailing" constant="29" id="ZV6-tc-Y05"/>
                 <constraint firstAttribute="trailing" secondItem="hi6-R0-3Kc" secondAttribute="trailing" constant="42" id="Zn1-Gk-K0H"/>
@@ -495,6 +494,7 @@
                 <constraint firstItem="1Ic-lg-NFJ" firstAttribute="top" secondItem="QSa-up-KMN" secondAttribute="bottom" constant="20" id="h1I-gN-mkN"/>
                 <constraint firstItem="hi6-R0-3Kc" firstAttribute="leading" secondItem="uIJ-km-82t" secondAttribute="trailing" constant="29" id="hmU-es-XTd"/>
                 <constraint firstAttribute="trailing" secondItem="9eV-P8-MMr" secondAttribute="trailing" constant="13" id="lhX-gW-okO"/>
+                <constraint firstItem="bgc-Qk-Kc4" firstAttribute="top" secondItem="JQN-fu-kVc" secondAttribute="bottom" constant="15" id="nCV-SZ-65f"/>
                 <constraint firstItem="waL-E6-G39" firstAttribute="top" secondItem="QSa-up-KMN" secondAttribute="bottom" constant="24" id="rN8-KT-RHt"/>
                 <constraint firstItem="JQN-fu-kVc" firstAttribute="leading" secondItem="b5m-Sg-d34" secondAttribute="leading" constant="10" id="rgI-Fo-ylu"/>
                 <constraint firstItem="9eV-P8-MMr" firstAttribute="top" secondItem="b5m-Sg-d34" secondAttribute="top" constant="13" id="woF-ki-iyj"/>
@@ -510,7 +510,7 @@
                 <outlet property="sellerLabel" destination="Kzu-Kc-e0E" id="lI8-Gv-Wda"/>
                 <outlet property="subInfoLabel" destination="uIJ-km-82t" id="TCe-Xz-4bC"/>
             </connections>
-            <point key="canvasLocation" x="364.5" y="1362"/>
+            <point key="canvasLocation" x="364.5" y="1303"/>
         </view>
     </objects>
     <resources>
