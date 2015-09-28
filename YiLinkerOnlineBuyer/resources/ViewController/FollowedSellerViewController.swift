@@ -96,7 +96,7 @@ class FollowedSellerViewController: UIViewController, EmptyViewDelegate {
         
         let manager = APIManager.sharedInstance
         let params = ["access_token": SessionManager.accessToken(),
-            "page": "1", "limit": "99"]
+            "page": "1", "limit": "999"]
         
         manager.POST(APIAtlas.getFollowedSellers, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
