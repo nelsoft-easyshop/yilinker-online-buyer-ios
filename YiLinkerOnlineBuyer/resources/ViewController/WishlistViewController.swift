@@ -20,9 +20,6 @@ class WishlistViewController: UIViewController, UITableViewDelegate, UITableView
     
     var tableData: [WishlistProductDetailsModel] = []
     
-    //formatter of Text to remove trailing decimal
-    let formatter = NSNumberFormatter()
-    
     var emptyView: EmptyView?
     
     var hud: MBProgressHUD?
@@ -46,9 +43,6 @@ class WishlistViewController: UIViewController, UITableViewDelegate, UITableView
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
         
         self.title = StringHelper.localizedStringWithKey("WISHLISTTITLE_LOCALIZE_KEY")
-        
-        formatter.minimumFractionDigits = 0
-        formatter.maximumFractionDigits = 2
     }
     
     override func didReceiveMemoryWarning() {
@@ -77,10 +71,10 @@ class WishlistViewController: UIViewController, UITableViewDelegate, UITableView
     //REST API request
     
     func getWishlistData() {
-        
         if Reachability.isConnectedToNetwork() {
             requestProductDetails(APIAtlas.wishlistUrl, params: NSDictionary(dictionary: ["access_token": SessionManager.accessToken(), "wishlist": "true"]))
         } else {
+            UIAlertController.displayNoInternetConnectionError(self)
             addEmptyView()
         }
     }
@@ -89,16 +83,24 @@ class WishlistViewController: UIViewController, UITableViewDelegate, UITableView
         showLoader()
         manager.POST(url, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in print(responseObject as! NSDictionary)
-            if responseObject.objectForKey("error") != nil {
-                self.requestRefreshToken("getWishlist", url: url, params: params)
-            } else {
-                self.populateTableView(responseObject)
-            }
+                if responseObject.objectForKey("error") != nil {
+                    self.requestRefreshToken("deleteWishlist", url: url, params: params)
+                } else {
+                    self.populateTableView(responseObject)
+                }
             
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                self.showAlert(self.errorLocalizeString, message: self.somethingWrongLocalizeString)
-                self.dismissLoader()
+                if task.response as? NSHTTPURLResponse != nil {
+                    let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                    
+                    if task.statusCode == 401 {
+                        self.requestRefreshToken("deleteWishlist", url: url, params: params)
+                    } else {
+                        UIAlertController.displaySomethingWentWrongError(self)
+                        self.dismissLoader()
+                    }
+                }
         })
     }
     
@@ -106,22 +108,30 @@ class WishlistViewController: UIViewController, UITableViewDelegate, UITableView
         showLoader()
         manager.POST(url, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in print(responseObject as! NSDictionary)
-            if responseObject.objectForKey("error") != nil {
-                self.requestRefreshToken("addToCart", url: url, params: params)
-            } else{
-                SessionManager.setCartCount(SessionManager.cartCount() + 1)
-                if SessionManager.cartCount() != 0 {
-                    let badgeValue = (self.tabBarController!.tabBar.items![4] as! UITabBarItem).badgeValue?.toInt()
-                    (self.tabBarController!.tabBar.items![4] as! UITabBarItem).badgeValue = String(SessionManager.cartCount())
-                } else {
-                    (self.tabBarController!.tabBar.items![4] as! UITabBarItem).badgeValue = nil
+                if responseObject.objectForKey("error") != nil {
+                    self.requestRefreshToken("addToCart", url: url, params: params)
+                } else{
+                    SessionManager.setCartCount(SessionManager.cartCount() + 1)
+                    if SessionManager.cartCount() != 0 {
+                        let badgeValue = (self.tabBarController!.tabBar.items![4] as! UITabBarItem).badgeValue?.toInt()
+                        (self.tabBarController!.tabBar.items![4] as! UITabBarItem).badgeValue = String(SessionManager.cartCount())
+                    } else {
+                        (self.tabBarController!.tabBar.items![4] as! UITabBarItem).badgeValue = nil
+                    }
                 }
-            }
-            self.dismissLoader()
+                self.dismissLoader()
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                self.showAlert(self.errorLocalizeString, message: self.somethingWrongLocalizeString)
-                self.dismissLoader()
+                if task.response as? NSHTTPURLResponse != nil {
+                    let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                    
+                    if task.statusCode == 401 {
+                        self.requestRefreshToken("addToCart", url: url, params: params)
+                    } else {
+                        UIAlertController.displaySomethingWentWrongError(self)
+                        self.dismissLoader()
+                    }
+                }
         })
     }
     
@@ -130,16 +140,24 @@ class WishlistViewController: UIViewController, UITableViewDelegate, UITableView
         
         manager.GET(url, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in print(responseObject as! NSDictionary)
-            if responseObject.objectForKey("error") != nil {
+                if responseObject.objectForKey("error") != nil {
                 self.requestRefreshToken("getWishlist", url: url, params: params)
-            } else {
-                self.populateTableView(responseObject)
-            }
+                } else {
+                    self.populateTableView(responseObject)
+                }
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                self.showAlert(self.errorLocalizeString, message: self.somethingWrongLocalizeString)
-                self.updateCounterLabel()
-                self.dismissLoader()
+                if task.response as? NSHTTPURLResponse != nil {
+                    let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                    
+                    if task.statusCode == 401 {
+                        self.requestRefreshToken("getWishlist", url: url, params: params)
+                    } else {
+                        UIAlertController.displaySomethingWentWrongError(self)
+                        self.updateCounterLabel()
+                        self.dismissLoader()
+                    }
+                }
         })
     }
     
@@ -275,7 +293,7 @@ class WishlistViewController: UIViewController, UITableViewDelegate, UITableView
             ]
             fireDeleteCartItem(APIAtlas.updateWishlistUrl, params: params)
         } else {
-            showAlert(connectionLocalizeString, message: connectionMessageLocalizeString)
+            UIAlertController.displayNoInternetConnectionError(self)
         }
     }
     
@@ -294,7 +312,7 @@ class WishlistViewController: UIViewController, UITableViewDelegate, UITableView
             
             fireAddToCartItem(APIAtlas.updateWishlistUrl, params: params)
         } else {
-            showAlert(connectionLocalizeString, message: connectionMessageLocalizeString)
+            UIAlertController.displayNoInternetConnectionError(self)
         }
     }
     
@@ -320,23 +338,6 @@ class WishlistViewController: UIViewController, UITableViewDelegate, UITableView
         }
     }
     
-    func showAlert(title: String, message: String) {
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
-        let okLocalizeString: String = StringHelper.localizedStringWithKey("OKBUTTON_LOCALIZE_KEY")
-        let OKAction = UIAlertAction(title: okLocalizeString, style: .Default) { (action) in
-            alertController.dismissViewControllerAnimated(true, completion: nil)
-            
-            let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-            appDelegate.changeRootToHomeView()
-        }
-        
-        alertController.addAction(OKAction)
-        
-        self.presentViewController(alertController, animated: true) {
-            
-        }
-    }
-    
     func requestRefreshToken(type: String, url: String, params: NSDictionary!) {
         let url: String = "http://online.api.easydeal.ph/api/v1/login"
         let params: NSDictionary = ["client_id": Constants.Credentials.clientID,
@@ -348,28 +349,28 @@ class WishlistViewController: UIViewController, UITableViewDelegate, UITableView
         manager.POST(url, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
-            SVProgressHUD.dismiss()
+                SVProgressHUD.dismiss()
             
-            if (responseObject["isSuccessful"] as! Bool) {
-                SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+                if (responseObject["isSuccessful"] as! Bool) {
+                    SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
                 
-                if type == "getWishlist" {
-                    self.requestProductDetails(url, params: params)
-                } else if type == "addToCart" {
-                    self.fireAddToCartItem(url, params: params)
-                } else if type == "deleteWishlist" {
-                    self.fireDeleteCartItem(url, params: params)
+                    if type == "getWishlist" {
+                        self.requestProductDetails(url, params: params)
+                    } else if type == "addToCart" {
+                        self.fireAddToCartItem(url, params: params)
+                    } else if type == "deleteWishlist" {
+                        self.fireDeleteCartItem(url, params: params)
+                    }
+                } else {
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: responseObject["message"] as! String, title: Constants.Localized.error)
                 }
-            } else {
-                self.showAlert(self.errorLocalizeString, message: responseObject["message"] as! String)
-            }
             
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 SVProgressHUD.dismiss()
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                 
-                self.showAlert(self.somethingWrongLocalizeString, message: self.somethingWrongLocalizeString)
+                UIAlertController.displaySomethingWentWrongError(self)
                 
         })
     }
