@@ -13,7 +13,6 @@ class WishlistViewController: UIViewController, UITableViewDelegate, UITableView
     let manager = APIManager.sharedInstance
     
     @IBOutlet var wishlistTableView: UITableView!
-    
     @IBOutlet var wishListCounterLabel: UILabel!
     
     let viewControllerIndex = 2
@@ -24,17 +23,30 @@ class WishlistViewController: UIViewController, UITableViewDelegate, UITableView
     
     var hud: MBProgressHUD?
     
-    var errorLocalizeString: String  = ""
-    var somethingWrongLocalizeString: String = ""
-    var connectionLocalizeString: String = ""
-    var connectionMessageLocalizeString: String = ""
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         wishlistTableView.delegate = self;
         wishlistTableView.dataSource = self;
         
+        initializeViews()
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(true)
+        if emptyView != nil {
+            emptyView?.hidden = true
+        }
+        NSNotificationCenter.defaultCenter().postNotificationName("SwipeForOptionsCellEnclosingTableViewDidBeginScrollingNotification", object: self)
+        getWishlistData()
+    }
+    
+    // MARK : Initialization
+    func initializeViews() {
         wishlistTableView.tableFooterView = UIView()
         
         var nib = UINib(nibName: "WishlistTableViewCell", bundle: nil)
@@ -45,31 +57,8 @@ class WishlistViewController: UIViewController, UITableViewDelegate, UITableView
         self.title = StringHelper.localizedStringWithKey("WISHLISTTITLE_LOCALIZE_KEY")
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
     
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(true)
-        
-        if emptyView != nil {
-            emptyView?.hidden = true
-        }
-        NSNotificationCenter.defaultCenter().postNotificationName("SwipeForOptionsCellEnclosingTableViewDidBeginScrollingNotification", object: self)
-        
-        getWishlistData()
-    }
-    
-    func initializeLocalizedString() {
-        //Initialized Localized String
-        errorLocalizeString = StringHelper.localizedStringWithKey("ERROR_LOCALIZE_KEY")
-        somethingWrongLocalizeString = StringHelper.localizedStringWithKey("SOMETHINGWENTWRONG_LOCALIZE_KEY")
-        connectionLocalizeString = StringHelper.localizedStringWithKey("CONNECTIONUNREACHABLE_LOCALIZE_KEY")
-        connectionMessageLocalizeString = StringHelper.localizedStringWithKey("CONNECTIONERRORMESSAGE_LOCALIZE_KEY")
-    }
-    
-    //REST API request
-    
+    // MARK : REST API request
     func getWishlistData() {
         if Reachability.isConnectedToNetwork() {
             requestProductDetails(APIAtlas.wishlistUrl, params: NSDictionary(dictionary: ["access_token": SessionManager.accessToken(), "wishlist": "true"]))
@@ -161,27 +150,42 @@ class WishlistViewController: UIViewController, UITableViewDelegate, UITableView
         })
     }
     
-    
-    //Loader function
-    func showLoader() {
-        if self.hud != nil {
-            self.hud!.hide(true)
-            self.hud = nil
-        }
+    func requestRefreshToken(type: String, url: String, params: NSDictionary!) {
+        let url: String = "http://online.api.easydeal.ph/api/v1/login"
+        let params: NSDictionary = ["client_id": Constants.Credentials.clientID,
+            "client_secret": Constants.Credentials.clientSecret,
+            "grant_type": Constants.Credentials.grantRefreshToken,
+            "refresh_token": SessionManager.refreshToken()]
         
-        self.hud = MBProgressHUD(view: self.view)
-        self.hud?.removeFromSuperViewOnHide = true
-        self.hud?.dimBackground = false
-        self.view.addSubview(self.hud!)
-        self.hud?.show(true)
-    }
-    
-    func dismissLoader() {
-        self.hud?.hide(true)
+        let manager = APIManager.sharedInstance
+        manager.POST(url, parameters: params, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            self.dismissLoader()
+            
+            if (responseObject["isSuccessful"] as! Bool) {
+                SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+                
+                if type == "getWishlist" {
+                    self.requestProductDetails(url, params: params)
+                } else if type == "addToCart" {
+                    self.fireAddToCartItem(url, params: params)
+                } else if type == "deleteWishlist" {
+                    self.fireDeleteCartItem(url, params: params)
+                }
+            } else {
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: responseObject["message"] as! String, title: Constants.Localized.error)
+            }
+            
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                self.dismissLoader()
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                UIAlertController.displaySomethingWentWrongError(self)
+                
+        })
     }
     
     // MARK: Methods Updating Values
-    
     func populateTableView(responseObject: AnyObject) {
         tableData.removeAll(keepCapacity: false)
         wishlistTableView.reloadData()
@@ -221,8 +225,8 @@ class WishlistViewController: UIViewController, UITableViewDelegate, UITableView
         }
     }
     
+    // MARK: - Delegates
     // MARK: - Table View Delegate
-    
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.tableData.count
     }
@@ -330,6 +334,7 @@ class WishlistViewController: UIViewController, UITableViewDelegate, UITableView
         getWishlistData()
     }
     
+    // MARK : Functions
     func addEmptyView() {
         if self.emptyView == nil {
             tableData.removeAll(keepCapacity: false)
@@ -343,40 +348,22 @@ class WishlistViewController: UIViewController, UITableViewDelegate, UITableView
         }
     }
     
-    func requestRefreshToken(type: String, url: String, params: NSDictionary!) {
-        let url: String = "http://online.api.easydeal.ph/api/v1/login"
-        let params: NSDictionary = ["client_id": Constants.Credentials.clientID,
-            "client_secret": Constants.Credentials.clientSecret,
-            "grant_type": Constants.Credentials.grantRefreshToken,
-            "refresh_token": SessionManager.refreshToken()]
+    //Loader function
+    func showLoader() {
+        if self.hud != nil {
+            self.hud!.hide(true)
+            self.hud = nil
+        }
         
-        let manager = APIManager.sharedInstance
-        manager.POST(url, parameters: params, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            
-                SVProgressHUD.dismiss()
-            
-                if (responseObject["isSuccessful"] as! Bool) {
-                    SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
-                
-                    if type == "getWishlist" {
-                        self.requestProductDetails(url, params: params)
-                    } else if type == "addToCart" {
-                        self.fireAddToCartItem(url, params: params)
-                    } else if type == "deleteWishlist" {
-                        self.fireDeleteCartItem(url, params: params)
-                    }
-                } else {
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: responseObject["message"] as! String, title: Constants.Localized.error)
-                }
-            
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                SVProgressHUD.dismiss()
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                
-                UIAlertController.displaySomethingWentWrongError(self)
-                
-        })
+        self.hud = MBProgressHUD(view: self.view)
+        self.hud?.removeFromSuperViewOnHide = true
+        self.hud?.dimBackground = false
+        self.view.addSubview(self.hud!)
+        self.hud?.show(true)
     }
+    
+    func dismissLoader() {
+        self.hud?.hide(true)
+    }
+
 }
