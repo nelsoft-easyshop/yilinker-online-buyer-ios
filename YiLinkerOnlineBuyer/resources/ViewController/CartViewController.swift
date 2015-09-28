@@ -89,7 +89,7 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
         if sender as! UIButton == checkoutButton {
             if selectedItemIDs.count == 0 {
                 let chooseItemLocalizeString: String = StringHelper.localizedStringWithKey("CHOOSE_ITEM_FROM_CART_LOCALIZE_KEY")
-                showAlert(errorLocalizeString, message: chooseItemLocalizeString, redirectToHome: false)
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: chooseItemLocalizeString)
             } else {
                 firePassCartItem(APIAtlas.updateCheckout(), params: NSDictionary(dictionary: ["cart": selectedItemIDs, "access_token": SessionManager.accessToken()]))
             }
@@ -132,7 +132,7 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
                 }
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: self.somethingWrongLocalizeString, title: self.errorLocalizeString)
+                UIAlertController.displaySomethingWentWrongError(self)
                 self.dismissLoader()
         })
     }
@@ -151,7 +151,7 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
             
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: self.somethingWrongLocalizeString, title: self.errorLocalizeString)
+                UIAlertController.displaySomethingWentWrongError(self)
                 self.dismissLoader()
         })
     }
@@ -169,7 +169,7 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
                 self.dismissLoader()
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: self.somethingWrongLocalizeString, title: self.errorLocalizeString)
+                UIAlertController.displaySomethingWentWrongError(self)
                 self.dismissLoader()
         })
     }
@@ -188,7 +188,7 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
             
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: self.somethingWrongLocalizeString, title: self.errorLocalizeString)
+                UIAlertController.displaySomethingWentWrongError(self)
                 self.updateCounterLabel()
                 self.dismissLoader()
         })
@@ -332,12 +332,12 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
         return 105
     }
     
-    // MARK: - Wishlist Table View Delegate
+    // MARK: - Cart Table View Delegate
     func scrollViewWillBeginDragging(scrollView: UIScrollView) {
         NSNotificationCenter.defaultCenter().postNotificationName("SwipeForOptionsCellEnclosingTableViewDidBeginScrollingNotification", object: scrollView)
     }
     
-    // MARK: - Wishlist Table View Delegate
+    // MARK: - Cart Table View Delegate
     func deleteButtonActionForIndex(sender: AnyObject){
         if Reachability.isConnectedToNetwork() {
             var pathOfTheCell: NSIndexPath = cartTableView.indexPathForCell(sender as! UITableViewCell)!
@@ -352,7 +352,7 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
             ]
             fireDeleteCartItem(APIAtlas.updateCart(), params: params)
         } else {
-            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: connectionMessageLocalizeString, title: connectionLocalizeString)
+            UIAlertController.displayNoInternetConnectionError(self)
         }
     }
     
@@ -432,7 +432,7 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
             
             fireAddToCartItem(APIAtlas.updateCart(), params: params)
         } else {
-            showAlert(connectionLocalizeString, message: connectionMessageLocalizeString, redirectToHome: false)
+            UIAlertController.displayNoInternetConnectionError(self)
         }
         
         UIView.animateWithDuration(0.3, animations: {
@@ -457,27 +457,6 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
             self.view.addSubview(self.emptyView!)
         } else {
             self.emptyView!.hidden = false
-        }
-    }
-    
-    func showAlert(title: String, message: String, redirectToHome: Bool) {
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
-        
-        let okLocalizeString: String = StringHelper.localizedStringWithKey("OKBUTTON_LOCALIZE_KEY")
-        
-        let OKAction = UIAlertAction(title: okLocalizeString, style: .Default) { (action) in
-            alertController.dismissViewControllerAnimated(true, completion: nil)
-            
-            if redirectToHome {
-                let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-                appDelegate.changeRootToHomeView()
-            }
-        }
-        
-        alertController.addAction(OKAction)
-        
-        self.presentViewController(alertController, animated: true) {
-            
         }
     }
     
@@ -508,7 +487,7 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
                         self.firePassCartItem(url, params: params)
                     }
                 } else {
-                    self.showAlert(self.errorLocalizeString, message: responseObject["message"] as! String, redirectToHome: true)
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: responseObject["message"] as! String)
                 }
             
             }, failure: {
