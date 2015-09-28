@@ -13,24 +13,15 @@ class WishlistViewController: UIViewController, UITableViewDelegate, UITableView
     let manager = APIManager.sharedInstance
     
     @IBOutlet var wishlistTableView: UITableView!
-    
     @IBOutlet var wishListCounterLabel: UILabel!
     
     let viewControllerIndex = 2
     
     var tableData: [WishlistProductDetailsModel] = []
     
-    //formatter of Text to remove trailing decimal
-    let formatter = NSNumberFormatter()
-    
     var emptyView: EmptyView?
     
     var hud: MBProgressHUD?
-    
-    var errorLocalizeString: String  = ""
-    var somethingWrongLocalizeString: String = ""
-    var connectionLocalizeString: String = ""
-    var connectionMessageLocalizeString: String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,17 +29,7 @@ class WishlistViewController: UIViewController, UITableViewDelegate, UITableView
         wishlistTableView.delegate = self;
         wishlistTableView.dataSource = self;
         
-        wishlistTableView.tableFooterView = UIView()
-        
-        var nib = UINib(nibName: "WishlistTableViewCell", bundle: nil)
-        wishlistTableView.registerNib(nib, forCellReuseIdentifier: "WishlistTableViewCell")
-        
-        self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
-        
-        self.title = StringHelper.localizedStringWithKey("WISHLISTTITLE_LOCALIZE_KEY")
-        
-        formatter.minimumFractionDigits = 0
-        formatter.maximumFractionDigits = 2
+        initializeViews()
     }
     
     override func didReceiveMemoryWarning() {
@@ -57,30 +38,32 @@ class WishlistViewController: UIViewController, UITableViewDelegate, UITableView
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(true)
-        
         if emptyView != nil {
             emptyView?.hidden = true
         }
         NSNotificationCenter.defaultCenter().postNotificationName("SwipeForOptionsCellEnclosingTableViewDidBeginScrollingNotification", object: self)
-        
         getWishlistData()
     }
     
-    func initializeLocalizedString() {
-        //Initialized Localized String
-        errorLocalizeString = StringHelper.localizedStringWithKey("ERROR_LOCALIZE_KEY")
-        somethingWrongLocalizeString = StringHelper.localizedStringWithKey("SOMETHINGWENTWRONG_LOCALIZE_KEY")
-        connectionLocalizeString = StringHelper.localizedStringWithKey("CONNECTIONUNREACHABLE_LOCALIZE_KEY")
-        connectionMessageLocalizeString = StringHelper.localizedStringWithKey("CONNECTIONERRORMESSAGE_LOCALIZE_KEY")
+    // MARK : Initialization
+    func initializeViews() {
+        wishlistTableView.tableFooterView = UIView()
+        
+        var nib = UINib(nibName: "WishlistTableViewCell", bundle: nil)
+        wishlistTableView.registerNib(nib, forCellReuseIdentifier: "WishlistTableViewCell")
+        
+        self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
+        
+        self.title = StringHelper.localizedStringWithKey("WISHLISTTITLE_LOCALIZE_KEY")
     }
     
-    //REST API request
     
+    // MARK : REST API request
     func getWishlistData() {
-        
         if Reachability.isConnectedToNetwork() {
             requestProductDetails(APIAtlas.wishlistUrl, params: NSDictionary(dictionary: ["access_token": SessionManager.accessToken(), "wishlist": "true"]))
         } else {
+            UIAlertController.displayNoInternetConnectionError(self)
             addEmptyView()
         }
     }
@@ -89,16 +72,24 @@ class WishlistViewController: UIViewController, UITableViewDelegate, UITableView
         showLoader()
         manager.POST(url, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in print(responseObject as! NSDictionary)
-            if responseObject.objectForKey("error") != nil {
-                self.requestRefreshToken("getWishlist", url: url, params: params)
-            } else {
-                self.populateTableView(responseObject)
-            }
+                if responseObject.objectForKey("error") != nil {
+                    self.requestRefreshToken("deleteWishlist", url: url, params: params)
+                } else {
+                    self.populateTableView(responseObject)
+                }
             
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                self.showAlert(self.errorLocalizeString, message: self.somethingWrongLocalizeString)
-                self.dismissLoader()
+                if task.response as? NSHTTPURLResponse != nil {
+                    let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                    
+                    if task.statusCode == 401 {
+                        self.requestRefreshToken("deleteWishlist", url: url, params: params)
+                    } else {
+                        UIAlertController.displaySomethingWentWrongError(self)
+                        self.dismissLoader()
+                    }
+                }
         })
     }
     
@@ -106,22 +97,30 @@ class WishlistViewController: UIViewController, UITableViewDelegate, UITableView
         showLoader()
         manager.POST(url, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in print(responseObject as! NSDictionary)
-            if responseObject.objectForKey("error") != nil {
-                self.requestRefreshToken("addToCart", url: url, params: params)
-            } else{
-                SessionManager.setCartCount(SessionManager.cartCount() + 1)
-                if SessionManager.cartCount() != 0 {
-                    let badgeValue = (self.tabBarController!.tabBar.items![4] as! UITabBarItem).badgeValue?.toInt()
-                    (self.tabBarController!.tabBar.items![4] as! UITabBarItem).badgeValue = String(SessionManager.cartCount())
-                } else {
-                    (self.tabBarController!.tabBar.items![4] as! UITabBarItem).badgeValue = nil
+                if responseObject.objectForKey("error") != nil {
+                    self.requestRefreshToken("addToCart", url: url, params: params)
+                } else{
+                    SessionManager.setCartCount(SessionManager.cartCount() + 1)
+                    if SessionManager.cartCount() != 0 {
+                        let badgeValue = (self.tabBarController!.tabBar.items![4] as! UITabBarItem).badgeValue?.toInt()
+                        (self.tabBarController!.tabBar.items![4] as! UITabBarItem).badgeValue = String(SessionManager.cartCount())
+                    } else {
+                        (self.tabBarController!.tabBar.items![4] as! UITabBarItem).badgeValue = nil
+                    }
                 }
-            }
-            self.dismissLoader()
+                self.dismissLoader()
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                self.showAlert(self.errorLocalizeString, message: self.somethingWrongLocalizeString)
-                self.dismissLoader()
+                if task.response as? NSHTTPURLResponse != nil {
+                    let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                    
+                    if task.statusCode == 401 {
+                        self.requestRefreshToken("addToCart", url: url, params: params)
+                    } else {
+                        UIAlertController.displaySomethingWentWrongError(self)
+                        self.dismissLoader()
+                    }
+                }
         })
     }
     
@@ -130,40 +129,63 @@ class WishlistViewController: UIViewController, UITableViewDelegate, UITableView
         
         manager.GET(url, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in print(responseObject as! NSDictionary)
-            if responseObject.objectForKey("error") != nil {
+                if responseObject.objectForKey("error") != nil {
                 self.requestRefreshToken("getWishlist", url: url, params: params)
-            } else {
-                self.populateTableView(responseObject)
-            }
+                } else {
+                    self.populateTableView(responseObject)
+                }
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                self.showAlert(self.errorLocalizeString, message: self.somethingWrongLocalizeString)
-                self.updateCounterLabel()
-                self.dismissLoader()
+                if task.response as? NSHTTPURLResponse != nil {
+                    let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                    
+                    if task.statusCode == 401 {
+                        self.requestRefreshToken("getWishlist", url: url, params: params)
+                    } else {
+                        UIAlertController.displaySomethingWentWrongError(self)
+                        self.updateCounterLabel()
+                        self.dismissLoader()
+                    }
+                }
         })
     }
     
-    
-    //Loader function
-    func showLoader() {
-        if self.hud != nil {
-            self.hud!.hide(true)
-            self.hud = nil
-        }
+    func requestRefreshToken(type: String, url: String, params: NSDictionary!) {
+        let url: String = "http://online.api.easydeal.ph/api/v1/login"
+        let params: NSDictionary = ["client_id": Constants.Credentials.clientID,
+            "client_secret": Constants.Credentials.clientSecret,
+            "grant_type": Constants.Credentials.grantRefreshToken,
+            "refresh_token": SessionManager.refreshToken()]
         
-        self.hud = MBProgressHUD(view: self.view)
-        self.hud?.removeFromSuperViewOnHide = true
-        self.hud?.dimBackground = false
-        self.view.addSubview(self.hud!)
-        self.hud?.show(true)
-    }
-    
-    func dismissLoader() {
-        self.hud?.hide(true)
+        let manager = APIManager.sharedInstance
+        manager.POST(url, parameters: params, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            self.dismissLoader()
+            
+            if (responseObject["isSuccessful"] as! Bool) {
+                SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+                
+                if type == "getWishlist" {
+                    self.requestProductDetails(url, params: params)
+                } else if type == "addToCart" {
+                    self.fireAddToCartItem(url, params: params)
+                } else if type == "deleteWishlist" {
+                    self.fireDeleteCartItem(url, params: params)
+                }
+            } else {
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: responseObject["message"] as! String, title: Constants.Localized.error)
+            }
+            
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                self.dismissLoader()
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                UIAlertController.displaySomethingWentWrongError(self)
+                
+        })
     }
     
     // MARK: Methods Updating Values
-    
     func populateTableView(responseObject: AnyObject) {
         tableData.removeAll(keepCapacity: false)
         wishlistTableView.reloadData()
@@ -203,8 +225,8 @@ class WishlistViewController: UIViewController, UITableViewDelegate, UITableView
         }
     }
     
+    // MARK: - Delegates
     // MARK: - Table View Delegate
-    
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.tableData.count
     }
@@ -217,10 +239,15 @@ class WishlistViewController: UIViewController, UITableViewDelegate, UITableView
         
         for tempProductUnit in tempModel.productUnits {
             if tempModel.unitId == tempProductUnit.productUnitId {
-                if tempProductUnit.imageIds.count == 0 {
-                    cell.productItemImageView.sd_setImageWithURL(NSURL(string: tempModel.image), placeholderImage: UIImage(named: "dummy-placeholder"))
+//                if tempProductUnit.imageIds.count == 0 {
+//                    cell.productItemImageView.sd_setImageWithURL(NSURL(string: tempModel.image), placeholderImage: UIImage(named: "dummy-placeholder"))
+//                } else {
+//                    cell.productItemImageView.sd_setImageWithURL(NSURL(string: tempProductUnit.imageIds[0]), placeholderImage: UIImage(named: "dummy-placeholder"))
+//                }
+                if tempModel.images.count != 0 {
+                    cell.productItemImageView.sd_setImageWithURL(NSURL(string: tempModel.images[0]), placeholderImage: UIImage(named: "dummy-placeholder"))
                 } else {
-                    cell.productItemImageView.sd_setImageWithURL(NSURL(string: tempProductUnit.imageIds[0]), placeholderImage: UIImage(named: "dummy-placeholder"))
+                    cell.productItemImageView.image = UIImage(named: "dummy-placeholder")
                 }
                 
                 var tempAttributesText: String = ""
@@ -275,7 +302,7 @@ class WishlistViewController: UIViewController, UITableViewDelegate, UITableView
             ]
             fireDeleteCartItem(APIAtlas.updateWishlistUrl, params: params)
         } else {
-            showAlert(connectionLocalizeString, message: connectionMessageLocalizeString)
+            UIAlertController.displayNoInternetConnectionError(self)
         }
     }
     
@@ -294,7 +321,7 @@ class WishlistViewController: UIViewController, UITableViewDelegate, UITableView
             
             fireAddToCartItem(APIAtlas.updateWishlistUrl, params: params)
         } else {
-            showAlert(connectionLocalizeString, message: connectionMessageLocalizeString)
+            UIAlertController.displayNoInternetConnectionError(self)
         }
     }
     
@@ -307,6 +334,7 @@ class WishlistViewController: UIViewController, UITableViewDelegate, UITableView
         getWishlistData()
     }
     
+    // MARK : Functions
     func addEmptyView() {
         if self.emptyView == nil {
             tableData.removeAll(keepCapacity: false)
@@ -320,57 +348,22 @@ class WishlistViewController: UIViewController, UITableViewDelegate, UITableView
         }
     }
     
-    func showAlert(title: String, message: String) {
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
-        let okLocalizeString: String = StringHelper.localizedStringWithKey("OKBUTTON_LOCALIZE_KEY")
-        let OKAction = UIAlertAction(title: okLocalizeString, style: .Default) { (action) in
-            alertController.dismissViewControllerAnimated(true, completion: nil)
-            
-            let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-            appDelegate.changeRootToHomeView()
+    //Loader function
+    func showLoader() {
+        if self.hud != nil {
+            self.hud!.hide(true)
+            self.hud = nil
         }
         
-        alertController.addAction(OKAction)
-        
-        self.presentViewController(alertController, animated: true) {
-            
-        }
+        self.hud = MBProgressHUD(view: self.view)
+        self.hud?.removeFromSuperViewOnHide = true
+        self.hud?.dimBackground = false
+        self.view.addSubview(self.hud!)
+        self.hud?.show(true)
     }
     
-    func requestRefreshToken(type: String, url: String, params: NSDictionary!) {
-        let url: String = "http://online.api.easydeal.ph/api/v1/login"
-        let params: NSDictionary = ["client_id": Constants.Credentials.clientID,
-            "client_secret": Constants.Credentials.clientSecret,
-            "grant_type": Constants.Credentials.grantRefreshToken,
-            "refresh_token": SessionManager.refreshToken()]
-        
-        let manager = APIManager.sharedInstance
-        manager.POST(url, parameters: params, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            
-            SVProgressHUD.dismiss()
-            
-            if (responseObject["isSuccessful"] as! Bool) {
-                SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
-                
-                if type == "getWishlist" {
-                    self.requestProductDetails(url, params: params)
-                } else if type == "addToCart" {
-                    self.fireAddToCartItem(url, params: params)
-                } else if type == "deleteWishlist" {
-                    self.fireDeleteCartItem(url, params: params)
-                }
-            } else {
-                self.showAlert(self.errorLocalizeString, message: responseObject["message"] as! String)
-            }
-            
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                SVProgressHUD.dismiss()
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                
-                self.showAlert(self.somethingWrongLocalizeString, message: self.somethingWrongLocalizeString)
-                
-        })
+    func dismissLoader() {
+        self.hud?.hide(true)
     }
+
 }
