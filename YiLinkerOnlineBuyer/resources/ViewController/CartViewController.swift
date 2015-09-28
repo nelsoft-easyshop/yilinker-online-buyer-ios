@@ -30,11 +30,6 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     var badgeCount: Int = 0
     
-    var errorLocalizeString: String  = ""
-    var somethingWrongLocalizeString: String = ""
-    var connectionLocalizeString: String = ""
-    var connectionMessageLocalizeString: String = ""
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -73,13 +68,7 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     func initializeLocalizedString() {
         //Initialized Localized String
-        errorLocalizeString = StringHelper.localizedStringWithKey("ERROR_LOCALIZE_KEY")
-        somethingWrongLocalizeString = StringHelper.localizedStringWithKey("SOMETHINGWENTWRONG_LOCALIZE_KEY")
-        connectionLocalizeString = StringHelper.localizedStringWithKey("CONNECTIONUNREACHABLE_LOCALIZE_KEY")
-        connectionMessageLocalizeString = StringHelper.localizedStringWithKey("CONNECTIONERRORMESSAGE_LOCALIZE_KEY")
-        
-        let totalLocalizeString: String = StringHelper.localizedStringWithKey("TOTAL_LOCALIZE_KEY")
-        totalLabel.text = totalLocalizeString
+        totalLabel.text = StringHelper.localizedStringWithKey("TOTAL_LOCALIZE_KEY")
         
         let checkoutLocalizeString: String = StringHelper.localizedStringWithKey("CHECKOUT_LOCALIZE_KEY")
         checkoutButton.setTitle(checkoutLocalizeString, forState: UIControlState.Normal)
@@ -98,7 +87,6 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     //REST API request
     func getCartData() {
-        
         if Reachability.isConnectedToNetwork() {
             requestProductDetails(APIAtlas.cart(), params: NSDictionary(dictionary: ["access_token": SessionManager.accessToken()]))
         } else {
@@ -139,10 +127,9 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     func fireDeleteCartItem(url: String, params: NSDictionary!) {
         showLoader()
-        
         manager.POST(url, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in print(responseObject as! NSDictionary)
-            
+
                 if responseObject.objectForKey("error") != nil {
                     self.requestRefreshToken("getCart", url: url, params: params)
                 } else {
@@ -158,7 +145,6 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     func fireAddToCartItem(url: String, params: NSDictionary!) {
         showLoader()
-    
         manager.POST(url, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in print(responseObject as! NSDictionary)
                 if responseObject.objectForKey("error") != nil {
@@ -421,7 +407,6 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func pressedDoneAttribute(controller: CartProductAttributeViewController, productID: Int, unitID: Int, itemID: Int, quantity: Int) {
-        
         if Reachability.isConnectedToNetwork() {
             var params: NSDictionary = ["access_token": SessionManager.accessToken(),
                 "productId": "\(productID)",
