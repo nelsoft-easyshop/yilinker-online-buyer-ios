@@ -12,6 +12,7 @@ class FollowedSellerViewController: UIViewController, EmptyViewDelegate {
 
     @IBOutlet weak var tableView: UITableView!
 
+    @IBOutlet weak var emptyLabel: UILabel!
     var hud: MBProgressHUD?
     var emptyView: EmptyView?
     var followedSellerModel: FollowedSellerModel!
@@ -102,7 +103,12 @@ class FollowedSellerViewController: UIViewController, EmptyViewDelegate {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
             self.followedSellerModel = FollowedSellerModel.parseDataWithDictionary(responseObject)
-            self.tableView.reloadData()
+            
+            if self.followedSellerModel.id.count != 0 {
+                self.tableView.reloadData()
+            } else {
+                self.emptyLabel.hidden = false
+            }
             self.hud?.hide(true)
             
             }, failure: {

@@ -80,8 +80,6 @@
 		0C374F3E1B88E3790050AE1D /* ChangeAddressFooterCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C374F1E1B88E3790050AE1D /* ChangeAddressFooterCollectionViewCell.xib */; };
 		0C374F3F1B88E3790050AE1D /* CategoriesTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C374F1F1B88E3790050AE1D /* CategoriesTableViewCell.xib */; };
 		0C374F401B88E3790050AE1D /* CategoriesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C374F201B88E3790050AE1D /* CategoriesViewController.xib */; };
-		0C374F411B88E3790050AE1D /* FollowedSellerTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C374F211B88E3790050AE1D /* FollowedSellerTableViewCell.xib */; };
-		0C374F421B88E3790050AE1D /* FollowedSellerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C374F221B88E3790050AE1D /* FollowedSellerViewController.xib */; };
 		0C374F441B88E3790050AE1D /* ResultViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C374F241B88E3790050AE1D /* ResultViewController.xib */; };
 		0C374F451B88E3790050AE1D /* AboutSellerTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C374F251B88E3790050AE1D /* AboutSellerTableViewCell.xib */; };
 		0C374F461B88E3790050AE1D /* CustomizeShoppingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C374F261B88E3790050AE1D /* CustomizeShoppingViewController.xib */; };
@@ -494,8 +492,6 @@
 		0C374F1E1B88E3790050AE1D /* ChangeAddressFooterCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChangeAddressFooterCollectionViewCell.xib; sourceTree = "<group>"; };
 		0C374F1F1B88E3790050AE1D /* CategoriesTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CategoriesTableViewCell.xib; sourceTree = "<group>"; };
 		0C374F201B88E3790050AE1D /* CategoriesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CategoriesViewController.xib; sourceTree = "<group>"; };
-		0C374F211B88E3790050AE1D /* FollowedSellerTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FollowedSellerTableViewCell.xib; sourceTree = "<group>"; };
-		0C374F221B88E3790050AE1D /* FollowedSellerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FollowedSellerViewController.xib; sourceTree = "<group>"; };
 		0C374F241B88E3790050AE1D /* ResultViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ResultViewController.xib; sourceTree = "<group>"; };
 		0C374F251B88E3790050AE1D /* AboutSellerTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AboutSellerTableViewCell.xib; sourceTree = "<group>"; };
 		0C374F261B88E3790050AE1D /* CustomizeShoppingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CustomizeShoppingViewController.xib; sourceTree = "<group>"; };
@@ -1293,9 +1289,7 @@
 				7971F73E1B861ABE00322861 /* FilterTableViewCell.xib */,
 				79F2F55A1B85FD9D00F57E4B /* FilterViewController.xib */,
 				F7CCDA7D1B943CBB000F5AD4 /* FollowedSellerTableViewCell.xib */,
-				0C374F211B88E3790050AE1D /* FollowedSellerTableViewCell.xib */,
 				F7CCDA7E1B943CBB000F5AD4 /* FollowedSellerViewController.xib */,
-				0C374F221B88E3790050AE1D /* FollowedSellerViewController.xib */,
 				0C99372A1B750583000D6074 /* FullImageCollectionViewCell.xib */,
 				0C374F1B1B88E3790050AE1D /* GeneralRatingTableViewCell.xib */,
 				0C99372B1B750583000D6074 /* HalfVerticalImageCollectionViewCell.xib */,
@@ -1549,7 +1543,6 @@
 				0C2F44D21B8576FE00021F45 /* Panton Thin Italic.otf in Resources */,
 				0C2F44C31B8576FE00021F45 /* Black Italic.otf in Resources */,
 				0CB9DB071B6A1E6600F2CA13 /* StartPageStoryBoard.storyboard in Resources */,
-				0C374F411B88E3790050AE1D /* FollowedSellerTableViewCell.xib in Resources */,
 				79A1C6F31B83574A0043AA36 /* ProductResultListCollectionViewCell.xib in Resources */,
 				7971F7471B862D3A00322861 /* SortTableViewCell.xib in Resources */,
 				26AFB3CA1B79DE5C00E50926 /* ProductAttributeCollectionViewCell.xib in Resources */,
@@ -1621,7 +1614,6 @@
 				79E68B811B8AEC00008626E4 /* MyPointsTableViewController.xib in Resources */,
 				0C9937671B750583000D6074 /* ProductItemWithVerticalDisplayCollectionViewCell.xib in Resources */,
 				0C2F44CE1B8576FE00021F45 /* Panton Light.otf in Resources */,
-				0C374F421B88E3790050AE1D /* FollowedSellerViewController.xib in Resources */,
 				26AFB3C31B79DE5600E50926 /* ProductDescriptionViewController.xib in Resources */,
 				0C374F4D1B8998F30050AE1D /* CustomizeShoppingCollectionViewCell.xib in Resources */,
 				F7CCDA891B943CBB000F5AD4 /* CategoriesTableViewCell.xib in Resources */,
