@@ -23,10 +23,6 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     var tableData: [SearchSuggestionModel] = []
     
-    var errorLocalizeString: String  = ""
-    var somethingWrongLocalizeString: String = ""
-    var connectionLocalizeString: String = ""
-    var connectionMessageLocalizeString: String = ""
     var searchLocalizeString: String = ""
     var browseLocalizeString: String = ""
     
@@ -80,11 +76,6 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func initializeLocalizedString() {
-        //Initialized Localized String
-        errorLocalizeString = StringHelper.localizedStringWithKey("ERROR_LOCALIZE_KEY")
-        somethingWrongLocalizeString = StringHelper.localizedStringWithKey("SOMETHINGWENTWRONG_LOCALIZE_KEY")
-        connectionLocalizeString = StringHelper.localizedStringWithKey("CONNECTIONUNREACHABLE_LOCALIZE_KEY")
-        connectionMessageLocalizeString = StringHelper.localizedStringWithKey("CONNECTIONERRORMESSAGE_LOCALIZE_KEY")
         searchLocalizeString = StringHelper.localizedStringWithKey("SEARCH_LOCALIZE_KEY")
         browseLocalizeString = StringHelper.localizedStringWithKey("BROWSECATEGORY_LOCALIZE_KEY")
     }
@@ -115,21 +106,19 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
                     println("STATUS CODE \(statusCode)")
                     if statusCode == -1009 {
                         if !Reachability.isConnectedToNetwork() {
-                            self.showAlert(self.errorLocalizeString, message: self.connectionMessageLocalizeString)
+                            UIAlertController.displayNoInternetConnectionError(self)
                         }
                     }else if(statusCode != -999) {
-                        self.showAlert(self.errorLocalizeString, message: self.somethingWrongLocalizeString)
+                        UIAlertController.displaySomethingWentWrongError(self)
                     } else {
                         self.requestSearch(url, params: params)
                     }
                 } else {
                     if !Reachability.isConnectedToNetwork() {
-                        self.showAlert(self.errorLocalizeString, message: self.connectionMessageLocalizeString)
+                        UIAlertController.displayNoInternetConnectionError(self)
                     }
                 }
         })
-        
-        
     }
     
     func populateTableView(responseObject: AnyObject) {
@@ -145,7 +134,7 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         if tableData.count == 0 && !isQueueCancelled {
             let noResultLocalizeString = StringHelper.localizedStringWithKey("NORESULT_LOCALIZE_KEY")
-            showAlert(searchLocalizeString, message: noResultLocalizeString)
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: noResultLocalizeString, title: searchLocalizeString)
         }
         
         addBrowseCategory()
@@ -170,9 +159,7 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
         if count(searchText) > 1 {
-            //if Reachability.isConnectedToNetwork(){
-                requestSearch(APIAtlas.searchUrl, params: NSDictionary(dictionary: ["queryString" : searchText]))
-
+            requestSearch(APIAtlas.searchUrl, params: NSDictionary(dictionary: ["queryString" : searchText]))
         } else {
             tableData.removeAll(keepCapacity: false)
             addBrowseCategory()
@@ -247,20 +234,6 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
         searchBar.resignFirstResponder()
-    }
-    
-    func showAlert(title: String, message: String) {
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
-        let okLocalizeString = StringHelper.localizedStringWithKey("OKBUTTON_LOCALIZE_KEY")
-        let OKAction = UIAlertAction(title: okLocalizeString, style: .Default) { (action) in
-            alertController.dismissViewControllerAnimated(true, completion: nil)
-        }
-        
-        alertController.addAction(OKAction)
-        
-        self.presentViewController(alertController, animated: true) {
-            
-        }
     }
     
 }
