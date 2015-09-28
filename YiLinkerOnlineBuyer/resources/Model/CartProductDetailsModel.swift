@@ -95,7 +95,7 @@ class CartProductDetailsModel {
             }
             
             for tempVar in dictionary["images"] as! NSArray {
-                if let temp = tempVar["imageLocation"] as? String {
+                if let temp = tempVar["fullImageLocation"] as? String {
                     images.append(temp)
                 }
             }

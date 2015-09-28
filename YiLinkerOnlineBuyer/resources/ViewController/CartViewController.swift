@@ -10,7 +10,7 @@ import UIKit
 
 class CartViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, CartTableViewCellDelegate, CartProductAttributeViewControllerDelegate, EmptyViewDelegate {
     
-    var manager = APIManager()
+    var manager = APIManager.sharedInstance
     
     @IBOutlet var cartTableView: UITableView!
     @IBOutlet weak var dimView: UIView!
@@ -21,38 +21,17 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     var tableData: [CartProductDetailsModel] = []
     var selectedValue: [String] = []
-    
-    var emptyView: EmptyView?
-    
     var selectedItemIDs: [Int] = []
     
+    var emptyView: EmptyView?
     var hud: MBProgressHUD?
     
     var badgeCount: Int = 0
     
-    var errorLocalizeString: String  = ""
-    var somethingWrongLocalizeString: String = ""
-    var connectionLocalizeString: String = ""
-    var connectionMessageLocalizeString: String = ""
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        manager = APIManager.sharedInstance
-        self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
-        
-        cartTableView.delegate = self
-        cartTableView.dataSource = self
-        
-        cartTableView.tableFooterView = UIView()
-        
-        var nib = UINib(nibName: "CartTableViewCell", bundle: nil)
-        cartTableView.registerNib(nib, forCellReuseIdentifier: "CartTableViewCell")
-        
-        checkoutButton.layer.cornerRadius = 5
-        
-        self.title = StringHelper.localizedStringWithKey("CART_TITLE_LOCALIZE_KEY")
-        
+        initializeViews()
         initializeLocalizedString()
     }
     
@@ -68,18 +47,27 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
         NSNotificationCenter.defaultCenter().postNotificationName("SwipeForOptionsCellEnclosingTableViewDidBeginScrollingNotification", object: self)
         getCartData()
+    }
+    
+    // MARK : Initializations
+    func initializeViews() {
+        self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
         
+        cartTableView.delegate = self
+        cartTableView.dataSource = self
+        
+        cartTableView.tableFooterView = UIView()
+        
+        var nib = UINib(nibName: "CartTableViewCell", bundle: nil)
+        cartTableView.registerNib(nib, forCellReuseIdentifier: "CartTableViewCell")
+        
+        checkoutButton.layer.cornerRadius = 5
+        
+        self.title = StringHelper.localizedStringWithKey("CART_TITLE_LOCALIZE_KEY")
     }
     
     func initializeLocalizedString() {
-        //Initialized Localized String
-        errorLocalizeString = StringHelper.localizedStringWithKey("ERROR_LOCALIZE_KEY")
-        somethingWrongLocalizeString = StringHelper.localizedStringWithKey("SOMETHINGWENTWRONG_LOCALIZE_KEY")
-        connectionLocalizeString = StringHelper.localizedStringWithKey("CONNECTIONUNREACHABLE_LOCALIZE_KEY")
-        connectionMessageLocalizeString = StringHelper.localizedStringWithKey("CONNECTIONERRORMESSAGE_LOCALIZE_KEY")
-        
-        let totalLocalizeString: String = StringHelper.localizedStringWithKey("TOTAL_LOCALIZE_KEY")
-        totalLabel.text = totalLocalizeString
+        totalLabel.text = StringHelper.localizedStringWithKey("TOTAL_LOCALIZE_KEY")
         
         let checkoutLocalizeString: String = StringHelper.localizedStringWithKey("CHECKOUT_LOCALIZE_KEY")
         checkoutButton.setTitle(checkoutLocalizeString, forState: UIControlState.Normal)
@@ -89,23 +77,23 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
         if sender as! UIButton == checkoutButton {
             if selectedItemIDs.count == 0 {
                 let chooseItemLocalizeString: String = StringHelper.localizedStringWithKey("CHOOSE_ITEM_FROM_CART_LOCALIZE_KEY")
-                showAlert(errorLocalizeString, message: chooseItemLocalizeString, redirectToHome: false)
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: chooseItemLocalizeString, title: Constants.Localized.error)
             } else {
                 firePassCartItem(APIAtlas.updateCheckout(), params: NSDictionary(dictionary: ["cart": selectedItemIDs, "access_token": SessionManager.accessToken()]))
             }
         }
     }
     
-    //REST API request
+    // MARK : REST API request
     func getCartData() {
-        
         if Reachability.isConnectedToNetwork() {
-            requestProductDetails(APIAtlas.cart(), params: NSDictionary(dictionary: ["access_token": SessionManager.accessToken()]))
+            fireGetCartItems(APIAtlas.cart(), params: NSDictionary(dictionary: ["access_token": SessionManager.accessToken()]))
         } else {
             addEmptyView()
         }
     }
     
+    // MARK : Pass Cart Item to Checkout
     func firePassCartItem(url: String, params: NSDictionary!) {
         showLoader()
         manager.POST(url, parameters: params, success: {
@@ -132,35 +120,50 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
                 }
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: self.somethingWrongLocalizeString, title: self.errorLocalizeString)
-                self.dismissLoader()
+                if task.response as? NSHTTPURLResponse != nil {
+                    let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                    
+                    if task.statusCode == 401 {
+                        self.requestRefreshToken("passCart", url: url, params: params)
+                    } else {
+                        UIAlertController.displaySomethingWentWrongError(self)
+                        self.dismissLoader()
+                    }
+                }
         })
     }
     
     func fireDeleteCartItem(url: String, params: NSDictionary!) {
         showLoader()
-        
         manager.POST(url, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in print(responseObject as! NSDictionary)
-            
+
                 if responseObject.objectForKey("error") != nil {
-                    self.requestRefreshToken("getCart", url: url, params: params)
+                    self.requestRefreshToken("deleteCart", url: url, params: params)
                 } else {
                     self.populateTableView(responseObject)
                 }
             
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: self.somethingWrongLocalizeString, title: self.errorLocalizeString)
-                self.dismissLoader()
+                if task.response as? NSHTTPURLResponse != nil {
+                    let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+
+                    if task.statusCode == 401 {
+                        self.requestRefreshToken("deleteCart", url: url, params: params)
+                    } else {
+                        UIAlertController.displaySomethingWentWrongError(self)
+                        self.dismissLoader()
+                    }
+                }
         })
     }
     
     func fireAddToCartItem(url: String, params: NSDictionary!) {
         showLoader()
-    
         manager.POST(url, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in print(responseObject as! NSDictionary)
+            
                 if responseObject.objectForKey("error") != nil {
                     self.requestRefreshToken("editToCart", url: url, params: params)
                 } else {
@@ -169,14 +172,21 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
                 self.dismissLoader()
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: self.somethingWrongLocalizeString, title: self.errorLocalizeString)
-                self.dismissLoader()
+                if task.response as? NSHTTPURLResponse != nil {
+                    let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                    
+                    if task.statusCode == 401 {
+                        self.requestRefreshToken("editToCart", url: url, params: params)
+                    } else {
+                        UIAlertController.displaySomethingWentWrongError(self)
+                        self.dismissLoader()
+                    }
+                }
         })
     }
     
-    func requestProductDetails(url: String, params: NSDictionary!) {
+    func fireGetCartItems(url: String, params: NSDictionary!) {
         showLoader()
-        
         manager.GET(url, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in print(responseObject as! NSDictionary)
             
@@ -188,9 +198,18 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
             
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: self.somethingWrongLocalizeString, title: self.errorLocalizeString)
-                self.updateCounterLabel()
-                self.dismissLoader()
+                if task.response as? NSHTTPURLResponse != nil {
+                    let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                    
+                    if task.statusCode == 401 {
+                        self.requestRefreshToken("getCart", url: url, params: params)
+                    } else {
+                        UIAlertController.displaySomethingWentWrongError(self)
+                        self.updateCounterLabel()
+                        self.dismissLoader()
+                    }
+                }
+                
         })
     }
     
@@ -230,6 +249,185 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
         SessionManager.setCartCount(badgeCount)
     }
     
+    func requestRefreshToken(type: String, url: String, params: NSDictionary!) {
+        let url: String = "http://online.api.easydeal.ph/api/v1/login"
+        let params: NSDictionary = ["client_id": Constants.Credentials.clientID,
+            "client_secret": Constants.Credentials.clientSecret,
+            "grant_type": Constants.Credentials.grantRefreshToken,
+            "refresh_token": SessionManager.refreshToken()]
+        
+        let manager = APIManager.sharedInstance
+        
+        manager.POST(url, parameters: params, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            
+            if (responseObject["isSuccessful"] as! Bool) {
+                SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+                
+                if type == "getCart" {
+                    self.fireGetCartItems(url, params: params)
+                } else if type == "editToCart" {
+                    self.fireAddToCartItem(url, params: params)
+                } else if type == "deleteCart" {
+                    self.fireDeleteCartItem(url, params: params)
+                } else if type == "passCart" {
+                    self.firePassCartItem(url, params: params)
+                }
+            } else {
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: responseObject["message"] as! String)
+            }
+            
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+        })
+    }
+    
+    // MARK: - DELEGATES
+    
+    // MARK: - Table View Delegate
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return self.tableData.count
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell 	{
+        var cell:CartTableViewCell = self.cartTableView.dequeueReusableCellWithIdentifier("CartTableViewCell") as! CartTableViewCell
+        
+        //Set cell data
+        var tempModel: CartProductDetailsModel = tableData[indexPath.row]
+        
+        cell.checkBox.selected = true
+        cell.checkBox.backgroundColor = UIColor(red: 68/255.0, green: 164/255.0, blue: 145/255.0, alpha: 1.0)
+        cell.checkBox.layer.borderWidth = 0
+        cell.checkBox.layer.borderColor = UIColor.whiteColor().CGColor
+        
+        for tempProductUnit in tempModel.productUnits {
+            if tempModel.unitId == tempProductUnit.productUnitId {
+//                if tempProductUnit.imageIds.count == 0 {
+//                    cell.productItemImageView.sd_setImageWithURL(NSURL(string: tempModel.image), placeholderImage: UIImage(named: "dummy-placeholder"))
+//                } else {
+//                    cell.productItemImageView.sd_setImageWithURL(NSURL(string: tempProductUnit.imageIds[0]), placeholderImage: UIImage(named: "dummy-placeholder"))
+//                }
+                
+                if tempModel.images.count != 0 {
+                    cell.productItemImageView.sd_setImageWithURL(NSURL(string: tempModel.images[0]), placeholderImage: UIImage(named: "dummy-placeholder"))
+                } else {
+                    cell.productItemImageView.image = UIImage(named: "dummy-placeholder")
+                }
+                
+                var tempAttributesText: String = ""
+                for tempId in tempProductUnit.combination {
+                    for tempAttributes in tempModel.attributes {
+                        if let index = find(tempAttributes.valueId, tempId) {
+                            if tempAttributesText.isEmpty {
+                                tempAttributesText = tempAttributes.valueName[index]
+                            } else {
+                                tempAttributesText += " | " + tempAttributes.valueName[index]
+                            }
+                        }
+                    }
+                }
+                
+                cell.productDetailsLabel?.text = tempAttributesText
+                cell.productPriceLabel.text = tempProductUnit.discountedPrice.formatToTwoDecimal() + " x \(tempModel.quantity)"
+            }
+        }
+        
+        cell.productNameLabel.text = tempModel.title
+        cell.delegate = self
+        return cell
+    }
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 105
+    }
+    
+    // MARK: - Cart Table View Delegate
+    func scrollViewWillBeginDragging(scrollView: UIScrollView) {
+        NSNotificationCenter.defaultCenter().postNotificationName("SwipeForOptionsCellEnclosingTableViewDidBeginScrollingNotification", object: scrollView)
+    }
+    
+    // MARK: - Cart Table View Delegate
+    func deleteButtonActionForIndex(sender: AnyObject){
+        if Reachability.isConnectedToNetwork() {
+            var pathOfTheCell: NSIndexPath = cartTableView.indexPathForCell(sender as! UITableViewCell)!
+            var rowOfTheCell: Int = pathOfTheCell.row
+            
+            let tempModel: CartProductDetailsModel = tableData[rowOfTheCell]
+            
+            var params: NSDictionary = ["access_token": SessionManager.accessToken(),
+                "productId": tempModel.id,
+                "unitId": tempModel.unitId,
+                "quantity": 0,
+            ]
+            fireDeleteCartItem(APIAtlas.updateCart(), params: params)
+        } else {
+            UIAlertController.displayNoInternetConnectionError(self)
+        }
+    }
+    
+    func editButtonActionForIndex(sender: AnyObject){
+        var pathOfTheCell: NSIndexPath = cartTableView.indexPathForCell(sender as! UITableViewCell)!
+        var rowOfTheCell: Int = pathOfTheCell.row
+        
+        editItem(rowOfTheCell)
+    }
+    
+    func checkBoxButtonActionForIndex(sender: AnyObject, state: Bool){
+        var pathOfTheCell: NSIndexPath = cartTableView.indexPathForCell(sender as! UITableViewCell)!
+        var rowOfTheCell: Int = pathOfTheCell.row
+        
+        tableData[rowOfTheCell].selected = state
+        
+        let tempItemId = tableData[rowOfTheCell].itemId
+        if state {
+            selectedItemIDs.append(tempItemId)
+        } else {
+            selectedItemIDs = selectedItemIDs.filter({$0 != tempItemId})
+        }
+        
+        calculateTotalPrice()
+    }
+    
+    func swipeViewDidScroll(sender: AnyObject) {
+        NSNotificationCenter.defaultCenter().postNotificationName("SwipeForOptionsCellEnclosingTableViewDidBeginScrollingNotification", object: self)
+    }
+    
+    // MARK: - Cart Product Attribute View Controller Delegate
+    func pressedCancelAttribute(controller: CartProductAttributeViewController) {
+        UIView.animateWithDuration(0.3, animations: {
+            self.view.transform = CGAffineTransformMakeTranslation(1, 1)
+            self.dimView.alpha = 0
+            self.navigationController?.navigationBar.alpha = 1.0
+        })
+    }
+    
+    func pressedDoneAttribute(controller: CartProductAttributeViewController, productID: Int, unitID: Int, itemID: Int, quantity: Int) {
+        if Reachability.isConnectedToNetwork() {
+            var params: NSDictionary = ["access_token": SessionManager.accessToken(),
+                "productId": "\(productID)",
+                "unitId": "\(unitID)",
+                "itemId": "\(itemID)",
+                "quantity": "\(quantity)"
+            ]
+            
+            fireAddToCartItem(APIAtlas.updateCart(), params: params)
+        } else {
+            UIAlertController.displayNoInternetConnectionError(self)
+        }
+        
+        UIView.animateWithDuration(0.3, animations: {
+            self.view.transform = CGAffineTransformMakeTranslation(1, 1)
+            self.dimView.alpha = 0
+            self.navigationController?.navigationBar.alpha = 1.0
+        })
+    }
+    
+    func didTapReload() {
+        emptyView?.hidden = true
+        getCartData()
+    }
+    
+    // MARK: - METHODS
     func updateCounterLabel() {
         let youHaveLocalizeString: String = StringHelper.localizedStringWithKey("YOU_HAVE_LOCALIZE_KEY")
         let itemsLocalizeString: String = StringHelper.localizedStringWithKey("ITEMS_IN_CART_LOCALIZE_KEY")
@@ -243,8 +441,7 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
     }
     
-    
-    //Loader function
+    // MARK: - Loader function
     func showLoader() {
         if self.hud != nil {
             self.hud!.hide(true)
@@ -281,82 +478,7 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
         totalPriceLabel.text = "\(price.formatToTwoDecimal())"
     }
     
-    // MARK: - Table View Delegate
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.tableData.count
-    }
-    
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell 	{
-        var cell:CartTableViewCell = self.cartTableView.dequeueReusableCellWithIdentifier("CartTableViewCell") as! CartTableViewCell
-        
-        //Set cell data
-        var tempModel: CartProductDetailsModel = tableData[indexPath.row]
-        
-        cell.checkBox.selected = true
-        cell.checkBox.backgroundColor = UIColor(red: 68/255.0, green: 164/255.0, blue: 145/255.0, alpha: 1.0)
-        cell.checkBox.layer.borderWidth = 0
-        cell.checkBox.layer.borderColor = UIColor.whiteColor().CGColor
-        
-        for tempProductUnit in tempModel.productUnits {
-            if tempModel.unitId == tempProductUnit.productUnitId {
-                if tempProductUnit.imageIds.count == 0 {
-                    cell.productItemImageView.sd_setImageWithURL(NSURL(string: tempModel.image), placeholderImage: UIImage(named: "dummy-placeholder"))
-                } else {
-                    cell.productItemImageView.sd_setImageWithURL(NSURL(string: tempProductUnit.imageIds[0]), placeholderImage: UIImage(named: "dummy-placeholder"))
-                }
-                
-                var tempAttributesText: String = ""
-                for tempId in tempProductUnit.combination {
-                    for tempAttributes in tempModel.attributes {
-                        if let index = find(tempAttributes.valueId, tempId) {
-                            if tempAttributesText.isEmpty {
-                                tempAttributesText = tempAttributes.valueName[index]
-                            } else {
-                                tempAttributesText += " | " + tempAttributes.valueName[index]
-                            }
-                        }
-                    }
-                }
-                
-                cell.productDetailsLabel?.text = tempAttributesText
-                cell.productPriceLabel.text = tempProductUnit.discountedPrice.formatToTwoDecimal() + " x \(tempModel.quantity)"
-            }
-        }
-        
-        cell.productNameLabel.text = tempModel.title
-        cell.delegate = self
-        return cell
-    }
-    
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 105
-    }
-    
-    // MARK: - Wishlist Table View Delegate
-    func scrollViewWillBeginDragging(scrollView: UIScrollView) {
-        NSNotificationCenter.defaultCenter().postNotificationName("SwipeForOptionsCellEnclosingTableViewDidBeginScrollingNotification", object: scrollView)
-    }
-    
-    // MARK: - Wishlist Table View Delegate
-    func deleteButtonActionForIndex(sender: AnyObject){
-        if Reachability.isConnectedToNetwork() {
-            var pathOfTheCell: NSIndexPath = cartTableView.indexPathForCell(sender as! UITableViewCell)!
-            var rowOfTheCell: Int = pathOfTheCell.row
-            
-            let tempModel: CartProductDetailsModel = tableData[rowOfTheCell]
-            
-            var params: NSDictionary = ["access_token": SessionManager.accessToken(),
-                "productId": tempModel.id,
-                "unitId": tempModel.unitId,
-                "quantity": 0,
-            ]
-            fireDeleteCartItem(APIAtlas.updateCart(), params: params)
-        } else {
-            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: connectionMessageLocalizeString, title: connectionLocalizeString)
-        }
-    }
-    
-    func seeMoreAttribute(index: Int) {
+    func editItem(index: Int) {
         var tempModel: CartProductDetailsModel = tableData[index]
         var selectedProductUnits: ProductUnitsModel?
         
@@ -384,69 +506,6 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
         
     }
     
-    func editButtonActionForIndex(sender: AnyObject){
-        var pathOfTheCell: NSIndexPath = cartTableView.indexPathForCell(sender as! UITableViewCell)!
-        var rowOfTheCell: Int = pathOfTheCell.row
-        
-        seeMoreAttribute(rowOfTheCell)
-    }
-    
-    func checkBoxButtonActionForIndex(sender: AnyObject, state: Bool){
-        var pathOfTheCell: NSIndexPath = cartTableView.indexPathForCell(sender as! UITableViewCell)!
-        var rowOfTheCell: Int = pathOfTheCell.row
-        
-        tableData[rowOfTheCell].selected = state
-        
-        let tempItemId = tableData[rowOfTheCell].itemId
-        if state {
-            selectedItemIDs.append(tempItemId)
-        } else {
-            selectedItemIDs = selectedItemIDs.filter({$0 != tempItemId})
-        }
-        
-        calculateTotalPrice()
-    }
-    
-    func swipeViewDidScroll(sender: AnyObject) {
-        NSNotificationCenter.defaultCenter().postNotificationName("SwipeForOptionsCellEnclosingTableViewDidBeginScrollingNotification", object: self)
-    }
-    
-    // MARK: - Cart Product Attribute View Controller Delegate
-    func pressedCancelAttribute(controller: CartProductAttributeViewController) {
-        UIView.animateWithDuration(0.3, animations: {
-            self.view.transform = CGAffineTransformMakeTranslation(1, 1)
-            self.dimView.alpha = 0
-            self.navigationController?.navigationBar.alpha = 1.0
-        })
-    }
-    
-    func pressedDoneAttribute(controller: CartProductAttributeViewController, productID: Int, unitID: Int, itemID: Int, quantity: Int) {
-        
-        if Reachability.isConnectedToNetwork() {
-            var params: NSDictionary = ["access_token": SessionManager.accessToken(),
-                "productId": "\(productID)",
-                "unitId": "\(unitID)",
-                "itemId": "\(itemID)",
-                "quantity": "\(quantity)"
-            ]
-            
-            fireAddToCartItem(APIAtlas.updateCart(), params: params)
-        } else {
-            showAlert(connectionLocalizeString, message: connectionMessageLocalizeString, redirectToHome: false)
-        }
-        
-        UIView.animateWithDuration(0.3, animations: {
-            self.view.transform = CGAffineTransformMakeTranslation(1, 1)
-            self.dimView.alpha = 0
-            self.navigationController?.navigationBar.alpha = 1.0
-        })
-    }
-    
-    func didTapReload() {
-        emptyView?.hidden = true
-        getCartData()
-    }
-    
     func addEmptyView() {
         if self.emptyView == nil {
             tableData.removeAll(keepCapacity: false)
@@ -458,62 +517,5 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
         } else {
             self.emptyView!.hidden = false
         }
-    }
-    
-    func showAlert(title: String, message: String, redirectToHome: Bool) {
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
-        
-        let okLocalizeString: String = StringHelper.localizedStringWithKey("OKBUTTON_LOCALIZE_KEY")
-        
-        let OKAction = UIAlertAction(title: okLocalizeString, style: .Default) { (action) in
-            alertController.dismissViewControllerAnimated(true, completion: nil)
-            
-            if redirectToHome {
-                let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-                appDelegate.changeRootToHomeView()
-            }
-        }
-        
-        alertController.addAction(OKAction)
-        
-        self.presentViewController(alertController, animated: true) {
-            
-        }
-    }
-    
-    func requestRefreshToken(type: String, url: String, params: NSDictionary!) {
-        let url: String = "http://online.api.easydeal.ph/api/v1/login"
-        let params: NSDictionary = ["client_id": Constants.Credentials.clientID,
-            "client_secret": Constants.Credentials.clientSecret,
-            "grant_type": Constants.Credentials.grantRefreshToken,
-            "refresh_token": SessionManager.refreshToken()]
-        
-        let manager = APIManager.sharedInstance
-        
-        manager.POST(url, parameters: params, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            
-                SVProgressHUD.dismiss()
-            
-                if (responseObject["isSuccessful"] as! Bool) {
-                    SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
-                
-                    if type == "getCart" {
-                        self.requestProductDetails(url, params: params)
-                    } else if type == "editToCart" {
-                        self.fireAddToCartItem(url, params: params)
-                    } else if type == "deleteWishlist" {
-                        self.fireDeleteCartItem(url, params: params)
-                    } else if type == "passCart" {
-                        self.firePassCartItem(url, params: params)
-                    }
-                } else {
-                    self.showAlert(self.errorLocalizeString, message: responseObject["message"] as! String, redirectToHome: true)
-                }
-            
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                SVProgressHUD.dismiss()
-        })
     }
 }
