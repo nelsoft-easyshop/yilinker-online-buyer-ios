@@ -39,6 +39,7 @@ class TransactionViewController: UIViewController {
     var hud: MBProgressHUD?
     
     var transactionModel: TransactionModel?
+    var tableData:[TransactionModel] = []
     
     var transactionTitle = StringHelper.localizedStringWithKey("TRANSACTION_TITLE_TITLE_LOCALIZE_KEY")
     var all = StringHelper.localizedStringWithKey("TRANSACTION_ALL_LOCALIZE_KEY")
@@ -49,6 +50,9 @@ class TransactionViewController: UIViewController {
     var product = StringHelper.localizedStringWithKey("TRANSACTION_PRODUCT_LOCALIZE_KEY")
     var products = StringHelper.localizedStringWithKey("TRANSACTION_PRODUCTS_LOCALIZE_KEY")
     
+    var isPageEnd: Bool = false
+    var page: Int = 1
+    var transactionArray: NSArray?
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -79,8 +83,8 @@ class TransactionViewController: UIViewController {
     // MARK: - Table View Data Source
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if self.transactionModel != nil {
-            return self.transactionModel!.product_name.count
+        if self.tableData.count != 0 {
+            return self.tableData.count
         } else {
             return 0
         }
@@ -89,16 +93,16 @@ class TransactionViewController: UIViewController {
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell: TransactionTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("TransactionIdentifier") as! TransactionTableViewCell
         
-        if self.transactionModel != nil {
-            var price: Float = (self.transactionModel!.total_item_price[indexPath.row] as NSString).floatValue
+        if self.tableData.count != 0 {
+            var price: Float = (tableData[indexPath.row].total_item_price2 as NSString).floatValue
             cell.priceLabel.text = "P \(price.string(2))"//NSString(format:"%.2f", self.transactionModel!.total_item_price[indexPath.row]) as String
-            cell.dateLabel.text = self.transactionModel!.date_added[indexPath.row]
-            if self.transactionModel!.product_count[indexPath.row].toInt() < 2 {
-                cell.numberLabel.text =  "\(self.transactionModel!.product_count[indexPath.row]) \(product)"
+            cell.dateLabel.text = tableData[indexPath.row].date_added2
+            if tableData[indexPath.row].product_count2.toInt() < 2 {
+                cell.numberLabel.text =  "\(tableData[indexPath.row].product_count2) \(product)"
             } else {
-                cell.numberLabel.text =  "\(self.transactionModel!.product_count[indexPath.row]) \(products)"
+                cell.numberLabel.text =  "\(tableData[indexPath.row].product_count2) \(products)"
             }
-            cell.transactionIdLabel.text = self.transactionModel!.invoice_number[indexPath.row]
+            cell.transactionIdLabel.text = tableData[indexPath.row].invoice_number2
         }
         
         cell.selectionStyle = .None
@@ -110,16 +114,30 @@ class TransactionViewController: UIViewController {
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let transactionDetails = TransactionDetailsViewController(nibName: "TransactionDetailsViewController", bundle: nil)
-        transactionDetails.transactionId = self.transactionModel!.invoice_number[indexPath.row]
-        transactionDetails.totalProducts = self.transactionModel!.product_count[indexPath.row]
-        transactionDetails.orderStatus = self.transactionModel!.order_status[indexPath.row]
-        transactionDetails.paymentType = self.transactionModel!.payment_type[indexPath.row]
-        transactionDetails.dateCreated = self.transactionModel!.date_added[indexPath.row]
-        transactionDetails.totalQuantity = self.transactionModel!.total_quantity[indexPath.row]
-        transactionDetails.totalUnitCost = self.transactionModel!.total_unit_price[indexPath.row]
-        transactionDetails.shippingFee = self.transactionModel!.total_handling_fee[indexPath.row]
-        transactionDetails.totalCost = self.transactionModel!.total_price[indexPath.row]
+        transactionDetails.transactionId = tableData[indexPath.row].invoice_number2
+        transactionDetails.totalProducts = tableData[indexPath.row].product_count2
+        transactionDetails.orderStatus = tableData[indexPath.row].order_status2
+        transactionDetails.paymentType = tableData[indexPath.row].payment_type2
+        transactionDetails.dateCreated = tableData[indexPath.row].date_added2
+        transactionDetails.totalQuantity = tableData[indexPath.row].total_quantity2
+        transactionDetails.totalUnitCost = tableData[indexPath.row].total_unit_price2
+        transactionDetails.shippingFee = tableData[indexPath.row].total_handling_fee2
+        transactionDetails.totalCost = tableData[indexPath.row].total_price2
         self.navigationController?.pushViewController(transactionDetails, animated: true)
+    }
+    
+    func scrollViewDidEndDragging(aScrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        var offset: CGPoint = aScrollView.contentOffset
+        var bounds: CGRect = aScrollView.bounds
+        var size: CGSize = aScrollView.contentSize
+        var inset: UIEdgeInsets = aScrollView.contentInset
+        var y: CGFloat = offset.y + bounds.size.height - inset.bottom
+        var h: CGFloat = size.height
+        var reload_distance: CGFloat = 10
+        var temp: CGFloat = h + reload_distance
+        if y > temp {
+            self.fireTransaction(self.query)
+        }
     }
     
     // Actions
@@ -204,41 +222,59 @@ class TransactionViewController: UIViewController {
     
     //MARK: Get transactions by type
     func fireTransaction(queryType: String) {
-        self.clearModel()
-        self.showHUD()
-        let manager = APIManager.sharedInstance
-        manager.GET(APIAtlas.transactionLogs+"\(SessionManager.accessToken())&type=\(queryType)", parameters: nil, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-                self.transactionModel = TransactionModel.parseDataFromDictionary(responseObject as! NSDictionary)
+        if !isPageEnd {
+        //self.clearModel()
+            page++
+            self.showHUD()
+            let manager = APIManager.sharedInstance
+            manager.GET(APIAtlas.transactionLogs+"\(SessionManager.accessToken())&type=\(queryType)&perPage=15&page=\(page)", parameters: nil, success: {
+                (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+                let trans: TransactionModel = TransactionModel.parseDataFromDictionary2(responseObject as! NSDictionary)
+                //self.transactionModel = TransactionModel.parseDataFromDictionary(responseObject as! NSDictionary)
+        
+               println("\(trans.order_count)")
+                if trans.order_count < 15 {
+                    self.isPageEnd = true
+                    
+                }
+                if trans.is_successful {
+                    for var i = 0; i < trans.order_count; i++ {
+                        self.tableData.append(TransactionModel(order_id: trans.order_id2, date_added: trans.date_added2, invoice_number: trans.invoice_number2, payment_type: trans.payment_type2, payment_method_id: trans.payment_method_id2, order_status: trans.order_status2, order_status_id: trans.order_status_id2, total_price: trans.total_price2, total_unit_price: trans.total_unit_price2, total_item_price: trans.total_item_price2, total_handling_fee: trans.total_handling_fee2, total_quantity: trans.total_quantity2, product_name: trans.product_name2, product_count: trans.product_count2, is_successful: trans.is_successful, order_count: trans.order_count))
+                        println("\(self.tableData.count)")
+                    }
+                } else {
+                    self.isPageEnd = true
+                }
                 self.tableView.reloadData()
                 println(responseObject.description)
                 self.hud?.hide(true)
-            }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
-                self.hud?.hide(true)
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                if error.userInfo != nil {
-                    let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
-                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: Constants.Localized.someThingWentWrong)
-                } else if task.statusCode == 401 {
-                    if self.query == "all" {
-                        self.requestRefreshToken(TransactionRefreshType.All)
-                    } else if self.query == "ongoing" {
-                        self.requestRefreshToken(TransactionRefreshType.OnGoing)
-                    } else if self.query == "pending" {
-                        self.requestRefreshToken(TransactionRefreshType.Pending)
-                    } else if self.query == "forFeedback" {
-                        self.requestRefreshToken(TransactionRefreshType.ForFeedback)
-                    } else {
-                        self.requestRefreshToken(TransactionRefreshType.Support)
-                    }
-                } else {
-                    self.showAlert(title: Constants.Localized.someThingWentWrong, message: nil)
+                }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
                     self.hud?.hide(true)
-                }
-                println(error.userInfo)
-              
-        })
+                    let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                    if error.userInfo != nil {
+                        let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
+                        let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
+                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: Constants.Localized.someThingWentWrong)
+                    } else if task.statusCode == 401 {
+                        if self.query == "all" {
+                            self.requestRefreshToken(TransactionRefreshType.All)
+                        } else if self.query == "ongoing" {
+                            self.requestRefreshToken(TransactionRefreshType.OnGoing)
+                        } else if self.query == "pending" {
+                            self.requestRefreshToken(TransactionRefreshType.Pending)
+                        } else if self.query == "forFeedback" {
+                            self.requestRefreshToken(TransactionRefreshType.ForFeedback)
+                        } else {
+                            self.requestRefreshToken(TransactionRefreshType.Support)
+                        }
+                    } else {
+                        self.showAlert(title: Constants.Localized.someThingWentWrong, message: nil)
+                        self.hud?.hide(true)
+                    }
+                    println(error.userInfo)
+                    
+            })
+        }
     }
     
     func requestRefreshToken(type: TransactionRefreshType) {
