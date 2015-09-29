@@ -9,6 +9,7 @@
             <connections>
                 <outlet property="cancelButton" destination="lVi-l6-TcM" id="5hj-es-KAG"/>
                 <outlet property="generalRatingLabel" destination="08P-ep-wO4" id="NVk-u5-n9e"/>
+                <outlet property="numberOfPeopleLabel" destination="cbL-st-hbN" id="f2X-Fm-sMI"/>
                 <outlet property="rateImageView1" destination="NQ7-pI-oJG" id="VxM-3w-Jwo"/>
                 <outlet property="rateImageView2" destination="2vm-Kt-AGL" id="irm-bs-1AN"/>
                 <outlet property="rateImageView3" destination="aew-zA-KKQ" id="rWN-zc-aFr"/>

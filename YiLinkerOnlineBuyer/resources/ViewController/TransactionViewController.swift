@@ -53,6 +53,7 @@ class TransactionViewController: UIViewController {
     var isPageEnd: Bool = false
     var page: Int = 1
     var transactionArray: NSArray?
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
