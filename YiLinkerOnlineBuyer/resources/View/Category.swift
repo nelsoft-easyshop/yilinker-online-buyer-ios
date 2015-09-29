@@ -141,6 +141,12 @@ extension UIAlertController {
         target.presentViewController(alert, animated: true, completion: nil)
     }
     
+    class func displaySomethingWentWrongError(target: AnyObject) {
+        let alert = UIAlertController(title: Constants.Localized.error, message: Constants.Localized.someThingWentWrong, preferredStyle: UIAlertControllerStyle.Alert)
+        let OKAction = UIAlertAction(title: Constants.Localized.ok, style: .Default) { (action) in }
+        alert.addAction(OKAction)
+        target.presentViewController(alert, animated: true, completion: nil)
+    }
 }
 
 
