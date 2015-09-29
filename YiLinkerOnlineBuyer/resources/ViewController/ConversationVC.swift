@@ -35,7 +35,7 @@ class ConversationVC: UIViewController, EmptyViewDelegate{
             var messageThreadVC = segue.destinationViewController as! MessageThreadVC
             let indexPath = conversationTableView.indexPathForCell(sender as! ConversationTVC)
             selectedContact = conversations[indexPath!.row].contact
-            
+            println("\(selectedContact)")
             var isOnline = "-1"
             if (SessionManager.isLoggedIn()){
                 isOnline = "1"
