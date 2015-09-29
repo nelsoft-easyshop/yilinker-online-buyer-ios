@@ -16,7 +16,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     
     @IBOutlet weak var tableView: UITableView!
 
-    var profileDetails: ProfileUserDetailsModel?
+    var profileDetails: ProfileUserDetailsModel!
     
     var hud: MBProgressHUD?
     
@@ -104,6 +104,10 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
             return cell
         } else {
             let cell = tableView.dequeueReusableCellWithIdentifier(cellContentIdentifier, forIndexPath: indexPath) as! ProfileTableViewCell
+            if profileDetails != nil {
+                cell.followingValueLabel.text = "\(profileDetails!.followingCount)"
+                cell.transactionsValueLabel.text = "\(profileDetails!.transactionCount)"
+            }
             cell.delegate = self
             return cell
         }
