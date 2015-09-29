@@ -20,6 +20,7 @@ struct DisputeStrings {
     static let remarks = StringHelper.localizedStringWithKey("DISPUTE_REMARKS_LOCALIZE_KEY")
     static let submit = StringHelper.localizedStringWithKey("DISPUTE_SUBMIT_CASE_LOCALIZE_KEY")
     static let done = StringHelper.localizedStringWithKey("TOOLBAR_DONE_LOCALIZE_KEY")
+    static let noAvailableTransaction = StringHelper.localizedStringWithKey("DISPUTE_NO_AVAILABLE_TRANSACTION_LOCALIZE_KEY")
 }
 
 class NewDisputeTableViewController: UITableViewController, UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate, DisputeAddItemViewControllerDelegate {
@@ -182,8 +183,12 @@ class NewDisputeTableViewController: UITableViewController, UIPickerViewDataSour
         pickerView.delegate = self
         pickerView.dataSource = self
         if pickerType == "Number" {
-            self.transactionNumber.inputView = pickerView
-            self.transactionNumber.text = transactionIds[0]
+            if self.transactionIds.count != 0 {
+                self.transactionNumber.inputView = pickerView
+                self.transactionNumber.text = transactionIds[0]
+            } else {
+               UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "", title: DisputeStrings.noAvailableTransaction)
+            }
         } else {
             self.transactionType.inputView = pickerView
             self.transactionType.text = transactionTypes[0]
@@ -294,9 +299,11 @@ class NewDisputeTableViewController: UITableViewController, UIPickerViewDataSour
         manager.GET(APIAtlas.transactionLogs + "\(SessionManager.accessToken())", parameters: nil, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             self.transactionModel = TransactionModel.parseDataFromDictionary(responseObject as! NSDictionary)
-            
+
             for i in 0..<self.transactionModel.order_id.count {
-                self.transactionIds.append(self.transactionModel.invoice_number[i])
+                if self.transactionModel.order_status_id[i] == "5" {
+                    self.transactionIds.append(self.transactionModel.invoice_number[i])
+                }
             }
             self.tableView.reloadData()
             
