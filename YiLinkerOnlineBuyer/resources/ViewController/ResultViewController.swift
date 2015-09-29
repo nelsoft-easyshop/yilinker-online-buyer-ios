@@ -65,10 +65,6 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
     var maxPrice: Double = 0
     var minPrice: Double = 0
     
-    var errorLocalizeString: String  = ""
-    var somethingWrongLocalizeString: String = ""
-    var connectionLocalizeString: String = ""
-    var connectionMessageLocalizeString: String = ""
     var listLocalizeString: String = ""
     var gridMessageLocalizeString: String = ""
     
@@ -95,20 +91,16 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
         self.navigationController?.navigationBar.barTintColor = Constants.Colors.appTheme
         self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
     }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+    }
 
     func passSearchKey(key: String) {
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
-    
+    // MARK : Initializations
     func initializeLocalizedString() {
-        //Initialized Localized String
-        errorLocalizeString = StringHelper.localizedStringWithKey("ERROR_LOCALIZE_KEY")
-        somethingWrongLocalizeString = StringHelper.localizedStringWithKey("SOMETHINGWENTWRONG_LOCALIZE_KEY")
-        connectionLocalizeString = StringHelper.localizedStringWithKey("CONNECTIONUNREACHABLE_LOCALIZE_KEY")
-        connectionMessageLocalizeString = StringHelper.localizedStringWithKey("CONNECTIONERRORMESSAGE_LOCALIZE_KEY")
         listLocalizeString = StringHelper.localizedStringWithKey("LIST_LOCALIZE_KEY")
         gridMessageLocalizeString = StringHelper.localizedStringWithKey("GRID_LOCALIZE_KEY")
         
@@ -131,7 +123,6 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
     }
 
     func initializeViews() {
-        
         var nib = UINib(nibName: "SortTableViewCell", bundle: nil)
         sortPickerTableView.registerNib(nib, forCellReuseIdentifier: "SortTableViewCell")
         
@@ -165,19 +156,13 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
         dimView.alpha = 0
         dimView.hidden = true
         
-        //self.view.layoutIfNeeded()
         fullDimView = UIView(frame: self.view.bounds)
         fullDimView?.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
         self.navigationController?.view.addSubview(fullDimView!)
-        //self.view.addSubview(dimView!)
         fullDimView?.hidden = true
         fullDimView?.alpha = 0
 
         noResultLabel.hidden = true
-    }
-    
-    func goBack(){
-        self.navigationController?.popViewControllerAnimated(true)
     }
     
     func registerNibs() {
@@ -191,12 +176,16 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
         self.resultCollectionView?.registerNib(cellNib, forCellWithReuseIdentifier: reuseIdentifierSeller)
     }
     
+    func goBack(){
+        self.navigationController?.popViewControllerAnimated(true)
+    }
+    
     func passCategoryID(id: Int) {
         if Reachability.isConnectedToNetwork() {
             requestSuggestionSearchUrl = "\(APIAtlas.productList)?categoryId=\(id)"
             requestSearchDetails("\(APIAtlas.productList)?categoryId=\(id)", params: nil)
         } else {
-            showAlert(connectionLocalizeString, message: connectionMessageLocalizeString)
+            UIAlertController.displayNoInternetConnectionError(self)
         }
     }
     
@@ -207,10 +196,11 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
             requestSuggestionSearchUrl = searchSuggestion.searchUrl
            requestSearchDetails(requestSuggestionSearchUrl, params: nil)
         } else {
-            showAlert(connectionLocalizeString, message: connectionMessageLocalizeString)
+            UIAlertController.displayNoInternetConnectionError(self)
         }
     }
-    
+
+    // MARK: API Request
     func requestSearchDetails(url: String, params: NSDictionary!) {
         println("URL \(url)\nPARAMS:\(params)")
         if collectionViewData.count != (totalResultCount + 15){
@@ -227,30 +217,63 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
             manager.GET(url, parameters: params, success: {
                 (task: NSURLSessionDataTask!, responseObject: AnyObject!) in print(responseObject as! NSDictionary)
                 
-                println(responseObject)
-                if responseObject.objectForKey("error") != nil {
-                    self.requestRefreshToken(url, params: params)
-                } else {
-                    self.populateTableView(responseObject)
-                }
+                    println(responseObject)
+                    if responseObject.objectForKey("error") != nil {
+                        self.requestRefreshToken(url, params: params)
+                    } else {
+                        self.populateTableView(responseObject)
+                    }
                 }, failure: {
                     (task: NSURLSessionDataTask!, error: NSError!) in
-                    self.showAlert(self.errorLocalizeString, message: self.somethingWrongLocalizeString)
-                    println(error)
-                    self.dismissLoader()
+                    if task.response as? NSHTTPURLResponse != nil {
+                        let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                        
+                        if task.statusCode == 401 {
+                            self.requestRefreshToken( url, params: params)
+                        } else {
+                            UIAlertController.displaySomethingWentWrongError(self)
+                            self.dismissLoader()
+                        }
+                    }
             })
         } else {
             let noMoreLocalizeString: String = StringHelper.localizedStringWithKey("NOMORERESULTS_LOCALIZE_KEY")
             let resultsLocalizeString: String = StringHelper.localizedStringWithKey("RESULTS_LOCALIZE_KEY")
-            showAlert(resultsLocalizeString, message: noMoreLocalizeString)
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: noMoreLocalizeString, title: resultsLocalizeString)
         }
     }
     
-    // MARK: Methods Updating Values
+    func requestRefreshToken(url: String, params: NSDictionary!) {
+        let url: String = "http://online.api.easydeal.ph/api/v1/login"
+        let params: NSDictionary = ["client_id": Constants.Credentials.clientID,
+            "client_secret": Constants.Credentials.clientSecret,
+            "grant_type": Constants.Credentials.grantRefreshToken,
+            "refresh_token": SessionManager.refreshToken()]
+        
+        let manager = APIManager.sharedInstance
+        manager.POST(url, parameters: params, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            self.dismissLoader()
+            if (responseObject["isSuccessful"] as! Bool) {
+                SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+                self.requestSearchDetails(url, params: params)
+            } else {
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: responseObject["message"] as! String, title: Constants.Localized.error)
+            }
+            
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                self.dismissLoader()
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                UIAlertController.displaySomethingWentWrongError(self)
+                
+        })
+    }
     
+    // MARK: Delegates
+    // MARK: Functions Updating Values
     func populateTableView(responseObject: AnyObject) {
         if let value: NSDictionary = responseObject["data"] as? NSDictionary{
-            
             if let value: AnyObject = value["totalResultCount"] {
                 if value as! NSObject != NSNull() {
                     totalResultCount = value as! Int
@@ -260,7 +283,6 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
             for subValue in value["products"] as! NSArray {
                 println(subValue)
                 let model: SearchResultModel = SearchResultModel.parseDataWithDictionary(subValue as! NSDictionary)
-                
                 self.collectionViewData.append(model)
             }
             
@@ -297,89 +319,6 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
         if self.collectionViewData.count == 0 {
             noResultLabel.hidden = false
         }
-    }
-
-    
-    //Loader function
-    func showLoader() {
-        if self.hud != nil {
-            self.hud!.hide(true)
-            self.hud = nil
-        }
-        
-        self.hud = MBProgressHUD(view: self.view)
-        self.hud?.removeFromSuperViewOnHide = true
-        self.hud?.dimBackground = false
-        self.view.addSubview(self.hud!)
-        self.hud?.show(true)
-    }
-    
-    func dismissLoader() {
-        self.hud?.hide(true)
-    }
-
-    func changeViewType() {
-        if type == grid {
-            type = list
-            viewTypeImageView.image = UIImage(named: "grid")
-            viewTypeLabel.text = gridMessageLocalizeString
-        } else if type == list {
-            type = grid
-            viewTypeImageView.image = UIImage(named: "list")
-            viewTypeLabel.text = listLocalizeString
-        } else {
-            type = grid
-        }
-        self.resultCollectionView?.reloadData()
-    }
-    
-    func hideDimView() {
-        UIView.animateWithDuration(0.3, animations: {
-            self.fullDimView!.alpha = 0
-            }, completion: { finished in
-                self.fullDimView!.hidden = true
-        })
-    }
-    
-    // Tap Gesture Action
-    func tapSortViewAction() {
-        println("Sort Tapped!")
-        if dimView.hidden {
-            UIView.animateWithDuration(0.3, animations: {
-                self.dimView.hidden = false
-                self.dimView.alpha = 1.0
-            })
-        } else {
-            UIView.animateWithDuration(0.3, animations: {
-                 self.dimView.alpha = 0
-                }, completion: { finished in
-                    self.dimView.hidden = true
-            })
-        }
-    }
-    
-    func tapFilterViewAction() {
-        println("Filter Tapped!")
-        var attributeModal = FilterViewController(nibName: "FilterViewController", bundle: nil)
-        attributeModal.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
-        attributeModal.providesPresentationContextTransitionStyle = true
-        attributeModal.definesPresentationContext = true
-        attributeModal.delegate = self
-        attributeModal.passFilter(filterAtributes, maxPrice: maxPrice, minPrice: minPrice)
-        attributeModal.maxPrice = maxPrice
-        attributeModal.minPrice = minPrice
-        self.tabBarController?.presentViewController(attributeModal, animated: true, completion: nil)
-        
-        self.fullDimView!.hidden = false
-        UIView.animateWithDuration(0.3, animations: {
-            self.fullDimView!.alpha = 1
-            }, completion: { finished in
-        })
-
-    }
-    
-    func tapViewTypeViewAction() {
-        self.changeViewType()
     }
     
     // MARK: UICollectionViewDataSource
@@ -485,7 +424,7 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
             } */
             resultCollectionView.setContentOffset(CGPointZero, animated: true)
         } else {
-            showAlert(connectionLocalizeString, message: connectionMessageLocalizeString)
+            UIAlertController.displayNoInternetConnectionError(self)
         }
     }
     
@@ -526,48 +465,86 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
             "filters": [filters]]))
     }
     
-    func showAlert(title: String, message: String) {
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
-        
-        let okLocalizeString: String = StringHelper.localizedStringWithKey("OKBUTTON_LOCALIZE_KEY")
-        let OKAction = UIAlertAction(title: "okLocalizeString", style: .Default) { (action) in
-            alertController.dismissViewControllerAnimated(true, completion: nil)
+    // MARK : - Functions 
+    //Loader function
+    func showLoader() {
+        if self.hud != nil {
+            self.hud!.hide(true)
+            self.hud = nil
         }
         
-        alertController.addAction(OKAction)
-        
-        self.presentViewController(alertController, animated: true) {
-            
+        self.hud = MBProgressHUD(view: self.view)
+        self.hud?.removeFromSuperViewOnHide = true
+        self.hud?.dimBackground = false
+        self.view.addSubview(self.hud!)
+        self.hud?.show(true)
+    }
+    
+    func dismissLoader() {
+        self.hud?.hide(true)
+    }
+    
+    func changeViewType() {
+        if type == grid {
+            type = list
+            viewTypeImageView.image = UIImage(named: "grid")
+            viewTypeLabel.text = gridMessageLocalizeString
+        } else if type == list {
+            type = grid
+            viewTypeImageView.image = UIImage(named: "list")
+            viewTypeLabel.text = listLocalizeString
+        } else {
+            type = grid
+        }
+        self.resultCollectionView?.reloadData()
+    }
+    
+    func hideDimView() {
+        UIView.animateWithDuration(0.3, animations: {
+            self.fullDimView!.alpha = 0
+            }, completion: { finished in
+                self.fullDimView!.hidden = true
+        })
+    }
+    
+    // Tap Gesture Action
+    func tapSortViewAction() {
+        println("Sort Tapped!")
+        if dimView.hidden {
+            UIView.animateWithDuration(0.3, animations: {
+                self.dimView.hidden = false
+                self.dimView.alpha = 1.0
+            })
+        } else {
+            UIView.animateWithDuration(0.3, animations: {
+                self.dimView.alpha = 0
+                }, completion: { finished in
+                    self.dimView.hidden = true
+            })
         }
     }
     
-    func requestRefreshToken(url: String, params: NSDictionary!) {
-        let url: String = "http://online.api.easydeal.ph/api/v1/login"
-        let params: NSDictionary = ["client_id": Constants.Credentials.clientID,
-            "client_secret": Constants.Credentials.clientSecret,
-            "grant_type": Constants.Credentials.grantRefreshToken,
-            "refresh_token": SessionManager.refreshToken()]
+    func tapFilterViewAction() {
+        println("Filter Tapped!")
+        var attributeModal = FilterViewController(nibName: "FilterViewController", bundle: nil)
+        attributeModal.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
+        attributeModal.providesPresentationContextTransitionStyle = true
+        attributeModal.definesPresentationContext = true
+        attributeModal.delegate = self
+        attributeModal.passFilter(filterAtributes, maxPrice: maxPrice, minPrice: minPrice)
+        attributeModal.maxPrice = maxPrice
+        attributeModal.minPrice = minPrice
+        self.tabBarController?.presentViewController(attributeModal, animated: true, completion: nil)
         
-        let manager = APIManager.sharedInstance
-        manager.POST(url, parameters: params, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            
-            SVProgressHUD.dismiss()
-            
-            if (responseObject["isSuccessful"] as! Bool) {
-                SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
-                self.requestSearchDetails(url, params: params)
-            } else {
-                self.showAlert(self.errorLocalizeString, message: responseObject["message"] as! String)
-            }
-            
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                SVProgressHUD.dismiss()
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                
-                self.showAlert(self.errorLocalizeString, message: self.somethingWrongLocalizeString)
-                
+        self.fullDimView!.hidden = false
+        UIView.animateWithDuration(0.3, animations: {
+            self.fullDimView!.alpha = 1
+            }, completion: { finished in
         })
+        
+    }
+    
+    func tapViewTypeViewAction() {
+        self.changeViewType()
     }
 }
