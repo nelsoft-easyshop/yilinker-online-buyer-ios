@@ -21,6 +21,7 @@ class TransactionCancelOrderView: UIView {
     override func awakeFromNib() {
         
         var tap = UITapGestureRecognizer(target: self, action: "cancelOrder:")
+        cancelOrderLabel.addGestureRecognizer(tap)
         cancelView.addGestureRecognizer(tap)
         
     }
