@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
@@ -14,19 +14,16 @@
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZaV-ed-oxG">
                         <rect key="frame" x="8" y="1" width="349" height="21"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="21" id="J6L-PZ-OVK"/>
-                        </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="trailing" secondItem="ZaV-ed-oxG" secondAttribute="trailing" constant="8" id="7eP-wG-Qgd"/>
-                    <constraint firstItem="ZaV-ed-oxG" firstAttribute="top" secondItem="Ixk-3G-eLI" secondAttribute="top" constant="1" id="ByW-an-HOP"/>
-                    <constraint firstAttribute="bottom" secondItem="ZaV-ed-oxG" secondAttribute="bottom" constant="2" id="CwD-pM-Sef"/>
-                    <constraint firstItem="ZaV-ed-oxG" firstAttribute="leading" secondItem="Ixk-3G-eLI" secondAttribute="leading" constant="8" id="fIG-4E-Lto"/>
+                    <constraint firstAttribute="bottom" secondItem="ZaV-ed-oxG" secondAttribute="bottom" constant="2" id="LRx-0l-gxX"/>
+                    <constraint firstItem="ZaV-ed-oxG" firstAttribute="leading" secondItem="Ixk-3G-eLI" secondAttribute="leading" constant="8" id="gXy-6h-lEq"/>
+                    <constraint firstItem="ZaV-ed-oxG" firstAttribute="top" secondItem="Ixk-3G-eLI" secondAttribute="top" constant="1" id="j3l-g5-sVX"/>
+                    <constraint firstAttribute="trailing" secondItem="ZaV-ed-oxG" secondAttribute="trailing" constant="8" id="mvy-Ds-VSs"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
