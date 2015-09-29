@@ -275,6 +275,7 @@
                 <outlet property="editProfileLabel" destination="Nqx-0U-kbN" id="6xV-eB-kcI"/>
                 <outlet property="editProfileView" destination="8qb-Uh-aRG" id="9A1-R3-MaH"/>
                 <outlet property="followingLabel" destination="CHn-mG-ctm" id="pds-hf-vKA"/>
+                <outlet property="followingValueLabel" destination="i0B-8a-R37" id="lD2-cF-ASD"/>
                 <outlet property="myPointsButton" destination="N7H-53-Vw8" id="ZxB-D4-Hvm"/>
                 <outlet property="myPointsLabel" destination="W2d-a6-VYV" id="VnF-eK-9Um"/>
                 <outlet property="myPointsView" destination="MS7-oC-IX3" id="mM0-vb-pfi"/>
@@ -287,6 +288,7 @@
                 <outlet property="transactionButtonLabel" destination="5yN-FY-ZP1" id="JPV-Zd-JzY"/>
                 <outlet property="transactionsButton" destination="gfO-lN-4H6" id="j5w-Zc-VHS"/>
                 <outlet property="transactionsLabel" destination="Gd0-X3-Opt" id="5CG-Bn-NPr"/>
+                <outlet property="transactionsValueLabel" destination="O5W-Kv-PRr" id="Uc8-fK-Zo6"/>
                 <outlet property="transactionsView" destination="pCN-OU-UYC" id="7gK-Jt-VOa"/>
             </connections>
             <point key="canvasLocation" x="254.5" y="741.5"/>
