@@ -310,6 +310,7 @@ FILTER_LOCALIZE_KEY = "Filter";
 GRID_LOCALIZE_KEY = "Grid";
 LIST_LOCALIZE_KEY = "List";
 NOMORERESULTS_LOCALIZE_KEY = "No more results.";
+NORESULT_LOCALIZE_KEY = "No results found.";
 
 //Search Filter
 CANCEL_LOCALIZE_KEY = "CANCEL";
