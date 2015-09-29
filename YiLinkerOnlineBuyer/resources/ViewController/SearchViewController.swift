@@ -80,10 +80,104 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         browseLocalizeString = StringHelper.localizedStringWithKey("BROWSECATEGORY_LOCALIZE_KEY")
     }
     
-    func requestSearch(url: String, params: NSDictionary!) {
+    // Mark: - UISearchBarDelegate
+    func searchBarShouldBeginEditing(searchBar: UISearchBar) -> Bool {
+        // Show Scope bar with cancel
+        self.searchBar.showsScopeBar = true
+        self.searchBar.sizeToFit()
+        self.searchBar.setShowsCancelButton(true, animated: true)
         
+        return true
+    }
+    
+    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+        if count(searchText) > 1 {
+            requestSearch(APIAtlas.searchUrl, params: NSDictionary(dictionary: ["queryString" : searchText]))
+        } else {
+            tableData.removeAll(keepCapacity: false)
+            addBrowseCategory()
+            searchResultTableView.reloadData()
+        }
+    }
+    
+    func searchBarShouldEndEditing(searchBar: UISearchBar) -> Bool {
+        self.searchBar.showsScopeBar = false
+        self.searchBar.sizeToFit()
+        self.searchBar.setShowsCancelButton(false, animated: true)
+        return true
+    }
+    
+    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
         if (self.searchTask != nil) {
             searchTask?.cancel()
+            manager.operationQueue.cancelAllOperations()
+            searchTask = nil
+        }
+        
+        isQueueCancelled = true
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+        self.searchBar.resignFirstResponder()
+        let newString = searchBar.text.stringByReplacingOccurrencesOfString(" ", withString: "+")
+        
+        var resultController = ResultViewController(nibName: "ResultViewController", bundle: nil)
+        resultController.passModel(SearchSuggestionModel(suggestion: searchBar.text, imageURL: "", searchUrl: "http://online.api.easydeal.ph/api/v1/product/getProductList?query=\(newString)"))
+        self.navigationController?.pushViewController(resultController, animated:true);
+        
+    }
+    
+    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+        self.searchBar.resignFirstResponder()
+    }
+    
+    // Mark: - UITableViewDataSource methods
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return tableData.count
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = searchResultTableView.dequeueReusableCellWithIdentifier("SearchSuggestionTableViewCell") as! SearchSuggestionTableViewCell
+        
+        var tempModel: SearchSuggestionModel = tableData[indexPath.row]
+        
+        cell.suggestionTextLabel?.text = tempModel.suggestion
+        if tempModel.suggestion.contains(browseLocalizeString) {
+            cell.suggestionImageView.image = UIImage(named: "SearchBrowseCategory")
+        } else {
+            cell.suggestionImageView.sd_setImageWithURL(NSURL(string: tempModel.imageURL), placeholderImage: UIImage(named: "dummy-placeholder"))
+        }
+        
+        return cell
+    }
+    
+    // Mark: - UITableViewDelegate methods
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        var tempModel: SearchSuggestionModel = tableData[indexPath.row]
+        
+        if tempModel.suggestion.contains(browseLocalizeString) {
+            let categoryViewController = CategoriesViewController(nibName: "CategoriesViewController", bundle: nil)
+            self.navigationController?.pushViewController(categoryViewController, animated: true)
+        } else {
+            var resultController = ResultViewController(nibName: "ResultViewController", bundle: nil)
+            resultController.passModel(tableData[indexPath.row])
+            self.navigationController?.pushViewController(resultController, animated:true);
+        }
+        
+        searchBar.resignFirstResponder()
+        
+    }
+    
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        searchBar.resignFirstResponder()
+    }
+    
+    func requestSearch(url: String, params: NSDictionary!) {
+        if (self.searchTask != nil) {
+            searchTask?.cancel()
+            manager.operationQueue.cancelAllOperations()
             searchTask = nil
             UIApplication.sharedApplication().networkActivityIndicatorVisible = false
         }
@@ -146,94 +240,4 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         tableData.append(temp)
         self.searchResultTableView.reloadData()
     }
-    
-    // Mark: - UISearchBarDelegate
-    func searchBarShouldBeginEditing(searchBar: UISearchBar) -> Bool {
-        // Show Scope bar with cancel
-        self.searchBar.showsScopeBar = true
-        self.searchBar.sizeToFit()
-        self.searchBar.setShowsCancelButton(true, animated: true)
-        
-        return true
-    }
-    
-    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
-        if count(searchText) > 1 {
-            requestSearch(APIAtlas.searchUrl, params: NSDictionary(dictionary: ["queryString" : searchText]))
-        } else {
-            tableData.removeAll(keepCapacity: false)
-            addBrowseCategory()
-            searchResultTableView.reloadData()
-        }
-    }
-    
-    func searchBarShouldEndEditing(searchBar: UISearchBar) -> Bool {
-        self.searchBar.showsScopeBar = false
-        self.searchBar.sizeToFit()
-        self.searchBar.setShowsCancelButton(false, animated: true)
-        return true
-    }
-    
-    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
-        manager.operationQueue.cancelAllOperations()
-        isQueueCancelled = true
-        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-        self.searchBar.resignFirstResponder()
-        let newString = searchBar.text.stringByReplacingOccurrencesOfString(" ", withString: "+")
-        
-        var resultController = ResultViewController(nibName: "ResultViewController", bundle: nil)
-        resultController.passModel(SearchSuggestionModel(suggestion: searchBar.text, imageURL: "", searchUrl: "http://online.api.easydeal.ph/api/v1/product/getProductList?query=\(newString)"))
-        self.navigationController?.pushViewController(resultController, animated:true);
-
-    }
-    
-    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
-        self.searchBar.resignFirstResponder()
-    }
-    
-    // Mark: - UITableViewDataSource methods
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1
-    }
-    
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return tableData.count
-    }
-    
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = searchResultTableView.dequeueReusableCellWithIdentifier("SearchSuggestionTableViewCell") as! SearchSuggestionTableViewCell
-        
-        var tempModel: SearchSuggestionModel = tableData[indexPath.row]
-        
-        cell.suggestionTextLabel?.text = tempModel.suggestion
-        if tempModel.suggestion.contains(browseLocalizeString) {
-            cell.suggestionImageView.image = UIImage(named: "SearchBrowseCategory")
-        } else {
-            cell.suggestionImageView.sd_setImageWithURL(NSURL(string: tempModel.imageURL), placeholderImage: UIImage(named: "dummy-placeholder"))
-        }
-        
-        return cell
-    }
-    
-    // Mark: - UITableViewDelegate methods
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        var tempModel: SearchSuggestionModel = tableData[indexPath.row]
-        
-        if tempModel.suggestion.contains(browseLocalizeString) {
-            let categoryViewController = CategoriesViewController(nibName: "CategoriesViewController", bundle: nil)
-            self.navigationController?.pushViewController(categoryViewController, animated: true)
-        } else {
-            var resultController = ResultViewController(nibName: "ResultViewController", bundle: nil)
-            resultController.passModel(tableData[indexPath.row])
-            self.navigationController?.pushViewController(resultController, animated:true);
-        }
-        
-        searchBar.resignFirstResponder()
-        
-    }
-    
-    func scrollViewDidScroll(scrollView: UIScrollView) {
-        searchBar.resignFirstResponder()
-    }
-    
 }
