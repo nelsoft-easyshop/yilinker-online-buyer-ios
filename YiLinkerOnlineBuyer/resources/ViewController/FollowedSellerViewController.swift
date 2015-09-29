@@ -12,6 +12,7 @@ class FollowedSellerViewController: UIViewController, EmptyViewDelegate {
 
     @IBOutlet weak var tableView: UITableView!
 
+    @IBOutlet weak var emptyLabel: UILabel!
     var hud: MBProgressHUD?
     var emptyView: EmptyView?
     var followedSellerModel: FollowedSellerModel!
@@ -96,13 +97,18 @@ class FollowedSellerViewController: UIViewController, EmptyViewDelegate {
         
         let manager = APIManager.sharedInstance
         let params = ["access_token": SessionManager.accessToken(),
-            "page": "1", "limit": "99"]
+            "page": "1", "limit": "999"]
         
         manager.POST(APIAtlas.getFollowedSellers, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
             self.followedSellerModel = FollowedSellerModel.parseDataWithDictionary(responseObject)
-            self.tableView.reloadData()
+            
+            if self.followedSellerModel.id.count != 0 {
+                self.tableView.reloadData()
+            } else {
+                self.emptyLabel.hidden = false
+            }
             self.hud?.hide(true)
             
             }, failure: {

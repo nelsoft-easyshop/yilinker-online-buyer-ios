@@ -17,7 +17,7 @@ struct HiddenStrings {
     static let todaysPromo: String = StringHelper.localizedStringWithKey("TODAYS_PROMO_HIDDEN_LOCALIZE_KEY")
     static let categories: String = StringHelper.localizedStringWithKey("CATEGORIES_HIDDEN_LOCALIZE_KEY")
     static let mustBeSignIn: String = StringHelper.localizedStringWithKey("MUST_BE_SIGNIN_HIDDEN_LOCALIZE_KEY")
-    static let followedSeller: String = StringHelper.localizedStringWithKey("FOLLOWED_SELLER_HIDDEN_LOCALIZE_KEY")
+    static let followedSeller: String = StringHelper.localizedStringWithKey("FOLLOWED_SELLERS_LOCALIZE_KEY")
     static let logout: String = StringHelper.localizedStringWithKey("LOGOUT_HIDDEN_LOCALIZE_KEY")
     static let profile: String = StringHelper.localizedStringWithKey("PROFILE_HIDDEN_LOCALIZE_KEY")
 }
