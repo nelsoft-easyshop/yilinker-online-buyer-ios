@@ -21,7 +21,6 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     var hud: MBProgressHUD?
     
     var errorLocalizeString: String  = ""
-    var somethingWrongLocalizeString: String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,7 +44,6 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     func initializeLocalizedString() {
         //Initialized Localized String
         errorLocalizeString = StringHelper.localizedStringWithKey("ERROR_LOCALIZE_KEY")
-        somethingWrongLocalizeString = StringHelper.localizedStringWithKey("SOMETHINGWENTWRONG_LOCALIZE_KEY")
     }
     
     func initializeViews() {
@@ -79,7 +77,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
             }
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                self.showAlert(self.errorLocalizeString, message: self.somethingWrongLocalizeString)
+                UIAlertController.displaySomethingWentWrongError(self)
                 self.dismissLoader()
         })
     }
@@ -189,39 +187,19 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         manager.POST(url, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
-            SVProgressHUD.dismiss()
-            
             if (responseObject["isSuccessful"] as! Bool) {
                 SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
                 self.requestProfileDetails(url, params: params, showLoader: showLoader)
             } else {
-                self.showAlert(self.errorLocalizeString, message: responseObject["message"] as! String)
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: responseObject["message"] as! String, title: Constants.Localized.error)
             }
             
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 SVProgressHUD.dismiss()
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                
-                self.showAlert(self.errorLocalizeString, message: self.somethingWrongLocalizeString)
+                UIAlertController.displaySomethingWentWrongError(self)
                 
         })
-    }
-    
-    func showAlert(title: String, message: String) {
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
-        let okLocalizeString = StringHelper.localizedStringWithKey("OK_LOCALIZE_KEY")
-        let OKAction = UIAlertAction(title: okLocalizeString, style: .Default) { (action) in
-            alertController.dismissViewControllerAnimated(true, completion: nil)
-            
-            let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-            appDelegate.changeRootToHomeView()
-        }
-        
-        alertController.addAction(OKAction)
-        
-        self.presentViewController(alertController, animated: true) {
-            
-        }
     }
 }
