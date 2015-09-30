@@ -151,6 +151,9 @@ struct APIAtlas {
     static let getResolutionCenterCases = "/api/v1/auth/dispute/get-case"
     static let getResolutionCenterCaseDetails = "/api/v1/auth/dispute/get-case-detail"
     static let postResolutionCenterAddCase = "/api/v1/auth/dispute/add-case"
+    
+    //Seller Category
+    static let sellerCategory = "category/getCustomCategories?sellerId="
 }
 
 class APIManager: AFHTTPSessionManager {
