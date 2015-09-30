@@ -23,10 +23,6 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     var tableData: [SearchSuggestionModel] = []
     
-    var errorLocalizeString: String  = ""
-    var somethingWrongLocalizeString: String = ""
-    var connectionLocalizeString: String = ""
-    var connectionMessageLocalizeString: String = ""
     var searchLocalizeString: String = ""
     var browseLocalizeString: String = ""
     
@@ -80,82 +76,8 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func initializeLocalizedString() {
-        //Initialized Localized String
-        errorLocalizeString = StringHelper.localizedStringWithKey("ERROR_LOCALIZE_KEY")
-        somethingWrongLocalizeString = StringHelper.localizedStringWithKey("SOMETHINGWENTWRONG_LOCALIZE_KEY")
-        connectionLocalizeString = StringHelper.localizedStringWithKey("CONNECTIONUNREACHABLE_LOCALIZE_KEY")
-        connectionMessageLocalizeString = StringHelper.localizedStringWithKey("CONNECTIONERRORMESSAGE_LOCALIZE_KEY")
         searchLocalizeString = StringHelper.localizedStringWithKey("SEARCH_LOCALIZE_KEY")
         browseLocalizeString = StringHelper.localizedStringWithKey("BROWSECATEGORY_LOCALIZE_KEY")
-    }
-    
-    func requestSearch(url: String, params: NSDictionary!) {
-        
-        if (self.searchTask != nil) {
-            searchTask?.cancel()
-            searchTask = nil
-            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-        }
-        
-        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
-        searchTask = manager.GET(url, parameters: params, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in print(responseObject as! NSDictionary)
-            if responseObject.objectForKey("error") != nil {
-            } else {
-                self.populateTableView(responseObject)
-            }
-            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                println(error)
-                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-                if (task.response as? NSHTTPURLResponse != nil) {
-                    let response: NSHTTPURLResponse  = task.response as! NSHTTPURLResponse
-                    let statusCode: Int = response.statusCode
-                    println("STATUS CODE \(statusCode)")
-                    if statusCode == -1009 {
-                        if !Reachability.isConnectedToNetwork() {
-                            self.showAlert(self.errorLocalizeString, message: self.connectionMessageLocalizeString)
-                        }
-                    }else if(statusCode != -999) {
-                        self.showAlert(self.errorLocalizeString, message: self.somethingWrongLocalizeString)
-                    } else {
-                        self.requestSearch(url, params: params)
-                    }
-                } else {
-                    if !Reachability.isConnectedToNetwork() {
-                        self.showAlert(self.errorLocalizeString, message: self.connectionMessageLocalizeString)
-                    }
-                }
-        })
-        
-        
-    }
-    
-    func populateTableView(responseObject: AnyObject) {
-        tableData.removeAll(keepCapacity: false)
-        if let value: AnyObject = responseObject["data"] {
-            for subValue in value as! NSArray {
-                let model: SearchSuggestionModel = SearchSuggestionModel.parseDataFromDictionary(subValue as! NSDictionary)
-                
-                self.tableData.append(model)
-            }
-            self.searchResultTableView.reloadData()
-        }
-        
-        if tableData.count == 0 && !isQueueCancelled {
-            let noResultLocalizeString = StringHelper.localizedStringWithKey("NORESULT_LOCALIZE_KEY")
-            showAlert(searchLocalizeString, message: noResultLocalizeString)
-        }
-        
-        addBrowseCategory()
-    }
-    
-    func addBrowseCategory() {
-        var temp: SearchSuggestionModel = SearchSuggestionModel(suggestion: browseLocalizeString, imageURL: "SearchBrowseCategory", searchUrl: "") as SearchSuggestionModel
-        
-        tableData.append(temp)
-        self.searchResultTableView.reloadData()
     }
     
     // Mark: - UISearchBarDelegate
@@ -170,9 +92,7 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
         if count(searchText) > 1 {
-            //if Reachability.isConnectedToNetwork(){
-                requestSearch(APIAtlas.searchUrl, params: NSDictionary(dictionary: ["queryString" : searchText]))
-
+            requestSearch(APIAtlas.searchUrl, params: NSDictionary(dictionary: ["queryString" : searchText]))
         } else {
             tableData.removeAll(keepCapacity: false)
             addBrowseCategory()
@@ -188,7 +108,12 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
-        manager.operationQueue.cancelAllOperations()
+        if (self.searchTask != nil) {
+            searchTask?.cancel()
+            manager.operationQueue.cancelAllOperations()
+            searchTask = nil
+        }
+        
         isQueueCancelled = true
         UIApplication.sharedApplication().networkActivityIndicatorVisible = false
         self.searchBar.resignFirstResponder()
@@ -197,7 +122,7 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         var resultController = ResultViewController(nibName: "ResultViewController", bundle: nil)
         resultController.passModel(SearchSuggestionModel(suggestion: searchBar.text, imageURL: "", searchUrl: "http://online.api.easydeal.ph/api/v1/product/getProductList?query=\(newString)"))
         self.navigationController?.pushViewController(resultController, animated:true);
-
+        
     }
     
     func searchBarCancelButtonClicked(searchBar: UISearchBar) {
@@ -249,18 +174,70 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         searchBar.resignFirstResponder()
     }
     
-    func showAlert(title: String, message: String) {
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
-        let okLocalizeString = StringHelper.localizedStringWithKey("OKBUTTON_LOCALIZE_KEY")
-        let OKAction = UIAlertAction(title: okLocalizeString, style: .Default) { (action) in
-            alertController.dismissViewControllerAnimated(true, completion: nil)
+    func requestSearch(url: String, params: NSDictionary!) {
+        if (self.searchTask != nil) {
+            searchTask?.cancel()
+            manager.operationQueue.cancelAllOperations()
+            searchTask = nil
+            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
         }
         
-        alertController.addAction(OKAction)
-        
-        self.presentViewController(alertController, animated: true) {
-            
-        }
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+        searchTask = manager.GET(url, parameters: params, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in print(responseObject as! NSDictionary)
+            if responseObject.objectForKey("error") != nil {
+            } else {
+                self.populateTableView(responseObject)
+            }
+            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                println(error)
+                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                if (task.response as? NSHTTPURLResponse != nil) {
+                    let response: NSHTTPURLResponse  = task.response as! NSHTTPURLResponse
+                    let statusCode: Int = response.statusCode
+                    println("STATUS CODE \(statusCode)")
+                    if statusCode == -1009 {
+                        if !Reachability.isConnectedToNetwork() {
+                            UIAlertController.displayNoInternetConnectionError(self)
+                        }
+                    }else if(statusCode != -999) {
+                        UIAlertController.displaySomethingWentWrongError(self)
+                    } else {
+                        self.requestSearch(url, params: params)
+                    }
+                } else {
+                    if !Reachability.isConnectedToNetwork() {
+                        UIAlertController.displayNoInternetConnectionError(self)
+                    }
+                }
+        })
     }
     
+    func populateTableView(responseObject: AnyObject) {
+        tableData.removeAll(keepCapacity: false)
+        if let value: AnyObject = responseObject["data"] {
+            for subValue in value as! NSArray {
+                let model: SearchSuggestionModel = SearchSuggestionModel.parseDataFromDictionary(subValue as! NSDictionary)
+                
+                self.tableData.append(model)
+            }
+            self.searchResultTableView.reloadData()
+        }
+        
+        if tableData.count == 0 && !isQueueCancelled {
+            let noResultLocalizeString = StringHelper.localizedStringWithKey("NORESULT_LOCALIZE_KEY")
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: noResultLocalizeString, title: searchLocalizeString)
+        }
+        
+        addBrowseCategory()
+    }
+    
+    func addBrowseCategory() {
+        var temp: SearchSuggestionModel = SearchSuggestionModel(suggestion: browseLocalizeString, imageURL: "SearchBrowseCategory", searchUrl: "") as SearchSuggestionModel
+        
+        tableData.append(temp)
+        self.searchResultTableView.reloadData()
+    }
 }
