@@ -32,6 +32,7 @@ class TransactionCancelViewController: UIViewController, UITextViewDelegate, UIP
     
     var selectedRow: Int = 0
     var invoiceNumber: String = ""
+    var orderProductId: String = ""
     
     var reasonOfCancellation = StringHelper.localizedStringWithKey("TRANSACTION_CANCEL_ORDER_REASON_LOCALIZE_KEY")
     var typeOfReason = StringHelper.localizedStringWithKey("TRANSACTION_CANCEL_ORDER_TYPE_LOCALIZE_KEY")
@@ -179,8 +180,9 @@ class TransactionCancelViewController: UIViewController, UITextViewDelegate, UIP
         let parameters: NSDictionary = ["access_token" : SessionManager.accessToken(),
             "transactionId": invoiceNumber,
             "reasonId": cancellationModels[selectedRow].cancellationId,
-            "remark": remarksTextView.text];
+            "remarks": remarksTextView.text, "orderProductIds": orderProductId];
         
+        println("\(parameters)")
         manager.POST(APIAtlas.postTransactionCancellation, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             println(responseObject)
