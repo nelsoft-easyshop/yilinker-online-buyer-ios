@@ -14,6 +14,9 @@ class SellerCategoryViewController: UIViewController, UITableViewDataSource, UIT
     
     var sellerCategory: SellerCategoryModel?
     var tableData: [SellerCategoryModel] = []
+    
+    var hud: MBProgressHUD?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -107,6 +110,7 @@ class SellerCategoryViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     func fireSellerCategory() {
+        self.showHUD()
         let manager = APIManager.sharedInstance
         //let parameters: NSDictionary = ["access_token" : SessionManager.accessToken()];
         println(APIAtlas.sellerCategory+"1")
@@ -118,11 +122,25 @@ class SellerCategoryViewController: UIViewController, UITableViewDataSource, UIT
                 self.tableData.append(SellerCategoryModel(name: self.sellerCategory!.name[i], subCategories: self.sellerCategory!.subCategories2[i], subCategories2: self.sellerCategory!.subCategories3[i]))
             }
             self.categoryTableView.reloadData()
-            
+            self.hud?.hide(true)
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
                 println(error)
+                self.hud?.hide(true)
         })
 
+    }
+    
+    func showHUD() {
+        if self.hud != nil {
+            self.hud!.hide(true)
+            self.hud = nil
+        }
+        
+        self.hud = MBProgressHUD(view: self.view)
+        self.hud?.removeFromSuperViewOnHide = true
+        self.hud?.dimBackground = false
+        self.navigationController?.view.addSubview(self.hud!)
+        self.hud?.show(true)
     }
     
     /*

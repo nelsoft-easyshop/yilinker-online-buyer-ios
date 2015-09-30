@@ -20,6 +20,7 @@ class SellerSubCategoryViewController: UIViewController, UITableViewDataSource, 
     var tableData: [SellerCategoryModel] = []
     var arr: [String] = []
     var arrCategoryId: [Int] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         var dictCategory:NSDictionary = ["subcategories" : self.subCategoryName]
