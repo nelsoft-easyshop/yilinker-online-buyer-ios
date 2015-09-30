@@ -16,6 +16,7 @@ class SellerCategoryViewController: UIViewController, UITableViewDataSource, UIT
     var tableData: [SellerCategoryModel] = []
     
     var hud: MBProgressHUD?
+    var sellerId: Int = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -114,7 +115,7 @@ class SellerCategoryViewController: UIViewController, UITableViewDataSource, UIT
         let manager = APIManager.sharedInstance
         //let parameters: NSDictionary = ["access_token" : SessionManager.accessToken()];
         println(APIAtlas.sellerCategory+"1")
-        manager.GET(APIAtlas.sellerCategory+"\(1)", parameters: nil, success: {
+        manager.GET(APIAtlas.sellerCategory+"\(self.sellerId)", parameters: nil, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
             self.sellerCategory = SellerCategoryModel.parseDataFromDictionary(responseObject as! NSDictionary)

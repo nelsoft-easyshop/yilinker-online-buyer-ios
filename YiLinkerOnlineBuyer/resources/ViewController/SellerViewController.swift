@@ -585,6 +585,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.navigationController!.pushViewController(resultViewController, animated: true)
         */
         let sellerCategoryViewController: SellerCategoryViewController = SellerCategoryViewController(nibName: "SellerCategoryViewController", bundle: nil)
+        sellerCategoryViewController.sellerId = self.sellerId
         self.navigationController!.pushViewController(sellerCategoryViewController, animated: true)
     }
     

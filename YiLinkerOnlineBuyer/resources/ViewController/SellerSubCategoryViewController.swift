@@ -11,13 +11,11 @@ import UIKit
 class SellerSubCategoryViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     @IBOutlet weak var subCategoryTableView: UITableView!
-    var subCategories: NSArray!
-    var subCategories2: NSArray!
-    var category: String!
+    
     var subCategoryName: NSArray!
     var sellerSubCategoryModel: SellerSubCategoryModel?
     var sellerCategory: SellerCategoryModel?
-    var tableData: [SellerCategoryModel] = []
+    
     var arr: [String] = []
     var arrCategoryId: [Int] = []
     
