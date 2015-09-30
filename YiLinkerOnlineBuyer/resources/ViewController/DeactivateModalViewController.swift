@@ -103,7 +103,7 @@ class DeactivateModalViewController: UIViewController {
     func fireDeactivate(url: String, params: NSDictionary!) {
         showLoader()
         
-        manager.GET(url, parameters: params, success: {
+        manager.POST(url, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in print(responseObject as! NSDictionary)
             if responseObject.objectForKey("error") != nil {
                 self.requestRefreshToken(url, params: params)
