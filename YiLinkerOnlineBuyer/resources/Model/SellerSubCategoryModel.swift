@@ -11,17 +11,17 @@ import UIKit
 class SellerSubCategoryModel: NSObject {
    
     var name: [String] = []
-    var categoryId: [String] = []
+    var categoryId: [Int] = []
     
     init(name: NSArray, categoryId: NSArray) {
         self.name = name as! [String]
-        self.categoryId = categoryId as! [String]
+        self.categoryId = categoryId as! [Int]
     }
     
     class func parseDataFromDictionary(dictionary: AnyObject) -> SellerSubCategoryModel {
     
         var name: [String] = []
-        var category: [String] = []
+        var category: [Int] = []
         
         if dictionary.isKindOfClass(NSDictionary) {
             
@@ -29,7 +29,9 @@ class SellerSubCategoryModel: NSObject {
                 if let categoryName = dictionary["name"] as? String {
                     name.append(categoryName)
                 }
-                if let categoryId = dictionary["categoryId"] as? String {
+            }
+            if let val: AnyObject = dictionary["categoryId"] {
+                if let categoryId = dictionary["categoryId"] as? Int {
                     category.append(categoryId)
                 }
             }
