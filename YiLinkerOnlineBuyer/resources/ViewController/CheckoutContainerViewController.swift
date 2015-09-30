@@ -207,8 +207,8 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
         self.firstCircleLabel.addSubview(checkImageView)
         self.firstCircleLabel.text = ""
         
-        self.secondCircleLabel.backgroundColor = UIColor.clearColor()
-        self.secondCircleLabel.textColor = Constants.Colors.appTheme
+        self.secondCircleLabel.backgroundColor = Constants.Colors.appTheme
+        self.secondCircleLabel.textColor = UIColor.whiteColor()
         
         self.thirdCircleLabel.backgroundColor = UIColor.clearColor()
         
@@ -243,11 +243,12 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
         self.secondCircleLabel.backgroundColor = Constants.Colors.appTheme
         
         self.thirdCircleLabel.text = "3"
-        self.thirdCircleLabel.textColor = Constants.Colors.appTheme
+        self.thirdCircleLabel.textColor = UIColor.whiteColor()
+        self.thirdCircleLabel.backgroundColor = Constants.Colors.appTheme
         
         self.summaryLabel.textColor = UIColor.lightGrayColor()
-        self.paymentLabel.textColor = UIColor.whiteColor()
-        self.overViewLabel.textColor = UIColor.lightGrayColor()
+        self.paymentLabel.textColor = UIColor.lightGrayColor()
+        self.overViewLabel.textColor = UIColor.whiteColor()
     }
     
     override func viewDidLayoutSubviews() {
