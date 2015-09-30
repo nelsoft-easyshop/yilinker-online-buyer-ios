@@ -108,8 +108,8 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
         let newToOldLocalizeString: String = StringHelper.localizedStringWithKey("NEWTOOLD_LOCALIZE_KEY")
         let AToZLocalizeString: String = StringHelper.localizedStringWithKey("ATOZ_LOCALIZE_KEY")
         let ZToALocalizeString: String = StringHelper.localizedStringWithKey("ZTOA_LOCALIZE_KEY")
-        let filterLocalizeString: String = StringHelper.localizedStringWithKey("SORT_LOCALIZE_KEY")
-        let sortLocalizeString: String = StringHelper.localizedStringWithKey("FILTER_LOCALIZE_KEY")
+        let filterLocalizeString: String = StringHelper.localizedStringWithKey("FILTER_LOCALIZE_KEY")
+        let sortLocalizeString: String = StringHelper.localizedStringWithKey("SORT_LOCALIZE_KEY")
         
         sortData.append(oldToNewLocalizeString)
         sortData.append(newToOldLocalizeString)
