@@ -12,7 +12,8 @@ class SellerCategoryViewController: UIViewController, UITableViewDataSource, UIT
 
     @IBOutlet weak var categoryTableView: UITableView!
     
-    
+    var sellerCategory: SellerCategoryModel?
+    var tableData: [SellerCategoryModel] = []
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -29,6 +30,7 @@ class SellerCategoryViewController: UIViewController, UITableViewDataSource, UIT
         self.categoryTableView.rowHeight = UITableViewAutomaticDimension
         let footerView: UIView = UIView(frame: CGRectZero)
         self.categoryTableView.tableFooterView = footerView
+        self.fireSellerCategory()
         
     }
 
@@ -72,7 +74,11 @@ class SellerCategoryViewController: UIViewController, UITableViewDataSource, UIT
     
     //MARK: Tableview delegate methods
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        if !self.tableData.isEmpty {
+            return self.tableData.count
+        } else {
+           return 0
+        }
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -81,7 +87,10 @@ class SellerCategoryViewController: UIViewController, UITableViewDataSource, UIT
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
             let categoryTableViewCell: SellerCategoryTableViewCell = self.categoryTableView.dequeueReusableCellWithIdentifier("SellerCategoryTableViewCell") as! SellerCategoryTableViewCell
-            
+            if !self.tableData.isEmpty {
+                categoryTableViewCell.categoryLabel.text = self.tableData[indexPath.row].categoryName
+                categoryTableViewCell.categoryDescriptionLabel.text = self.tableData[indexPath.row].categorySubs
+            }
             return categoryTableViewCell
     }
     
@@ -92,8 +101,28 @@ class SellerCategoryViewController: UIViewController, UITableViewDataSource, UIT
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
        
-        return 86
+        return 93
         
+    }
+    
+    func fireSellerCategory() {
+        let manager = APIManager.sharedInstance
+        //let parameters: NSDictionary = ["access_token" : SessionManager.accessToken()];
+        println(APIAtlas.sellerCategory+"1")
+        manager.GET(APIAtlas.sellerCategory+"\(1)", parameters: nil, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            
+            self.sellerCategory = SellerCategoryModel.parseDataFromDictionary(responseObject as! NSDictionary)
+            
+            for var i: Int = 0; i < self.sellerCategory!.name.count; i++ {
+                self.tableData.append(SellerCategoryModel(name: self.sellerCategory!.name[i], subCategories: self.sellerCategory!.subCategories2[i]))
+            }
+            self.categoryTableView.reloadData()
+            
+            }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
+                println(error)
+        })
+
     }
     
     /*
