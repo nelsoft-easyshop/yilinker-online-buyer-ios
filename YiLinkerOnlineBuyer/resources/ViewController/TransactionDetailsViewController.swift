@@ -83,6 +83,10 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
     var leaveFeedback = StringHelper.localizedStringWithKey("TRANSACTION_DETAILS_LEAVE_FEEDBACK_LOCALIZE_KEY")
     var message = StringHelper.localizedStringWithKey("TRANSACTION_DETAILS_MESSAGE_LOCALIZE_KEY")
     
+    var selectedContact : W_Contact?
+    var emptyView : EmptyView?
+    var conversations = [W_Conversation]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -93,6 +97,7 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
         dimView.hidden = true
         
         self.fireTransactionDetails(self.transactionId)
+        self.getConversationsFromEndpoint("1", limit: "30")
         
         total_unit_price = (self.totalUnitCost as NSString).floatValue
         total_handling_fee = (self.shippingFee as NSString).floatValue
@@ -156,8 +161,8 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
     func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
          self.transactionSectionView = XibHelper.puffViewWithNibName("TransactionViews", index: 7) as! TransactionSectionFooterView
         self.transactionSectionView.delegate = self
-        self.transactionSectionView.sellerContactNumberTitle.text = self.seller
-        self.transactionSectionView.sellerNameLabelTitle.text = self.contactNumber
+        self.transactionSectionView.sellerContactNumberTitle.text = self.contactNumber
+        self.transactionSectionView.sellerNameLabelTitle.text = self.seller
         self.transactionSectionView.messageButton.setTitle(self.message, forState: UIControlState.Normal)
         if self.table.count != 0 {
             if self.table[section].feedback {
@@ -177,6 +182,7 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
             }
             self.transactionSectionView.leaveFeedbackButton.tag = self.table[section].sellerIdForFeedback
             self.transactionSectionView.messageButton.backgroundColor = Constants.Colors.appTheme
+            self.transactionSectionView.messageButton.tag = self.table[section].sellerIdForFeedback
             self.transactionSectionView.sellerNameLabel.text = self.table[section].sellerName
             self.transactionSectionView.sellerNameLabel.tag = self.table[section].sellerIdForFeedback
             self.transactionSectionView.sellerContactNumber.text = self.table[section].sellerContact
@@ -380,6 +386,30 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
         self.navigationController?.pushViewController(feedbackView, animated: true)
     }
     
+    func messageSeller(sellerId: Int) {
+        let storyBoard: UIStoryboard = UIStoryboard(name: "HomeStoryBoard", bundle: nil)
+        let messagingViewController: MessageThreadVC = (storyBoard.instantiateViewControllerWithIdentifier("MessageThreadVC") as? MessageThreadVC)!
+        for var i = 0; i < self.conversations.count; i++ {
+            println("\(sellerId) \(self.conversations[i].sender)")
+            if conversations[i].sender == "\(sellerId)" {
+                self.selectedContact = conversations[i].contact
+                println("--- \(conversations[i].contact)")
+            } else {
+                println("\(conversations[i].contact)")
+            }
+        }
+        
+        var isOnline = "-1"
+        if (SessionManager.isLoggedIn()){
+            isOnline = "1"
+        } else {
+            isOnline = "0"
+        }
+        messagingViewController.sender = W_Contact(fullName: SessionManager.userFullName() , userRegistrationIds: "", userIdleRegistrationIds: "", userId: SessionManager.accessToken(), profileImageUrl: SessionManager.profileImageStringUrl(), isOnline: isOnline)
+        messagingViewController.recipient = selectedContact
+        self.navigationController?.pushViewController(messagingViewController, animated: true)
+    }
+    
     //MARK: View sellers feedback
     func leaveSellerFeedback(title: String, tag: Int) {
         println("\(self.transactionSectionView.leaveFeedbackButton.titleLabel?.text) \(tag)")
@@ -437,6 +467,72 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
         })
     }
     
+    func getConversationsFromEndpoint(
+        page : String,
+        limit : String){
+            
+            self.showHUD()
+            //SVProgressHUD.show()
+            
+            let manager: APIManager = APIManager.sharedInstance
+            manager.requestSerializer = AFHTTPRequestSerializer()
+            
+            let parameters: NSDictionary = [
+                "page"          : "\(page)",
+                "limit"         : "\(limit)",
+                "access_token"  : SessionManager.accessToken()
+                ]   as Dictionary<String, String>
+            
+            /* uncomment + "a" to test retry sending */
+            let url = APIAtlas.baseUrl + APIAtlas.ACTION_GET_CONVERSATION_HEAD //+ "a"
+            manager.POST(url, parameters: parameters, success: {
+                (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+                self.conversations = W_Conversation.parseConversations(responseObject as! NSDictionary)
+                println(responseObject)
+                self.hud?.hide(true)
+                //SVProgressHUD.dismiss()
+                }, failure: {
+                    (task: NSURLSessionDataTask!, error: NSError!) in
+                    
+                    println("REACHABILITY \(Reachability.isConnectedToNetwork())")
+                    if (Reachability.isConnectedToNetwork()){
+                        let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                        
+                        if task.statusCode == 401 {
+                            if (SessionManager.isLoggedIn()){
+                                self.fireRefreshToken()
+                            }
+                        } else {
+                            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+                        }
+                        
+                        self.conversations = Array<W_Conversation>()
+                        
+                        self.hud?.hide(true)
+                        //SVProgressHUD.dismiss()
+                    }
+            })
+            
+    }
+    
+    func fireRefreshToken() {
+        let manager: APIManager = APIManager.sharedInstance
+        //seller@easyshop.ph
+        //password
+        let parameters: NSDictionary = ["client_id": Constants.Credentials.clientID, "client_secret": Constants.Credentials.clientSecret, "grant_type": Constants.Credentials.grantRefreshToken, "refresh_token":  SessionManager.refreshToken()]
+        manager.POST(APIAtlas.refreshTokenUrl, parameters: parameters, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            self.hud?.hide(true)
+            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                self.hud?.hide(true)
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+        })
+        
+    }
+
     //MARK: Show HUD
     func showHUD() {
         if self.hud != nil {

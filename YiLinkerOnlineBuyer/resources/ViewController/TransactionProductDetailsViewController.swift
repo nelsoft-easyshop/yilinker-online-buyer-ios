@@ -36,6 +36,7 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
     var totalPrice: String = ""
     var productName: String = ""
     var transactionId: String = ""
+    var imageUrl: String = ""
     
     var hud: MBProgressHUD?
     var transactionProductDetailsModel: TransactionProductDetailsModel!
@@ -123,6 +124,8 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
         if self.transactionProductImagesView == nil {
             self.transactionProductImagesView = XibHelper.puffViewWithNibName("TransactionViews", index: 4) as! TransactionProductImagesView
             self.transactionProductImagesView.nameLabel.text = self.productName
+            self.imageUrl = self.transactionProductDetailsModel.productImage
+            self.transactionProductImagesView.imageUrl = self.imageUrl
             if self.transactionProductDetailsModel != nil {
                 self.transactionProductImagesView.descriptionLabel.text = self.transactionProductDetailsModel.shortDescription
             }

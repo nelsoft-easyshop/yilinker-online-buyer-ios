@@ -25,6 +25,7 @@ class ViewFeedBackViewController: UIViewController, UITableViewDelegate, UITable
     @IBOutlet weak var generalRatingLabel: UILabel!
     @IBOutlet weak var sellerRatingLabel: UILabel!
     @IBOutlet weak var ratingView: UIView!
+    @IBOutlet weak var numberOfPeopleLabel: UILabel!
     @IBOutlet weak var ratingAndReviewsTableView: UITableView!
     
     let reviewTableViewCellIdentifier: String = "reviewIdentifier"
@@ -126,6 +127,7 @@ class ViewFeedBackViewController: UIViewController, UITableViewDelegate, UITable
                 println(self.sellerModel?.reviews[1].fullName)
                 self.setRating(self.sellerModel!.rating)
                 self.generalRatingLabel.text = "\(self.sellerModel!.rating)"
+                self.numberOfPeopleLabel.text = "\(self.sellerModel!.reviews.count)"
                 self.ratingAndReviewsTableView.reloadData()
                 self.hud?.hide(true)
             } else {

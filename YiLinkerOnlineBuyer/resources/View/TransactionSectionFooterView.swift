@@ -10,6 +10,7 @@ import UIKit
 
 protocol TransactionSectionFooterViewDelegate {
     func leaveSellerFeedback(title: String, tag: Int)
+    func messageSeller(sellerId: Int)
 }
 
 class TransactionSectionFooterView: UIView {
@@ -46,6 +47,8 @@ class TransactionSectionFooterView: UIView {
     
     @IBAction func message(sender: AnyObject) {
         println("message")
+        var tag = sender.tag
+        self.delegate?.messageSeller(tag)
     }
 
 }
