@@ -1058,8 +1058,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     
     func barShareAction() {
         var sharingItems = [AnyObject]()
-        sharingItems.append("Sample Caption" + "\n")
-        sharingItems.append(NSURL(string: "http://online.api.easydeal.ph/")!)
+        sharingItems.append(NSURL(string: "http://online.api.easydeal.ph/item/" + self.productDetailsModel.slug)!)
         
         let shareViewController = UIActivityViewController(activityItems: sharingItems, applicationActivities: nil)
         self.presentViewController(shareViewController, animated: true, completion: nil)
