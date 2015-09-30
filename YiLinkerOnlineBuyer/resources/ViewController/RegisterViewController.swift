@@ -37,6 +37,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var reTypePasswordTextField: UITextField!
     @IBOutlet weak var registerButton: DynamicRoundedButton!
+    @IBOutlet weak var mobileNumberTextField: UITextField!
     
     var currentTextFieldTag: Int = 1
     var hud: MBProgressHUD?
@@ -97,14 +98,19 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         self.passwordTextField.addToolBarWithTarget(self, next: "next", previous: "previous", done: "done")
         self.reTypePasswordTextField.delegate = self
         self.reTypePasswordTextField.addToolBarWithTarget(self, next: "next", previous: "previous", done: "done")
+        self.mobileNumberTextField.addToolBarWithTarget(self, next: "next", previous: "previous", done: "done")
+        self.mobileNumberTextField.delegate = self
     }
     
+    
+    // Mark: - Done
     func done() {
         self.view.endEditing(true)
         self.showCloseButton()
         self.adjustTextFieldYInsetWithInset(0)
     }
     
+    // Mark: - Previous
     func previous() {
         let previousTag: Int = self.currentTextFieldTag - 1
        
@@ -116,7 +122,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
 
     }
     
-    
+    // Mark: - Next
     func next() {
         let nextTag: Int = self.currentTextFieldTag + 1
         
@@ -179,7 +185,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
     }
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
-        if textField.tag != 5 {
+        if textField.tag != 6 {
             self.next()
         } else {
             self.done()
@@ -225,6 +231,8 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
             errorMessage = RegisterStrings.reTypePasswordError
         } else if self.passwordTextField.text != self.reTypePasswordTextField.text {
             errorMessage = RegisterStrings.passwordNotMatch
+        } else if self.mobileNumberTextField.text == "" {
+            errorMessage = "Mobile number is required."
         }
         
         if errorMessage != "" {
