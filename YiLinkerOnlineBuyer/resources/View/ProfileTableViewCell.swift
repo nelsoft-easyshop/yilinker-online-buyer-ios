@@ -21,6 +21,8 @@ class ProfileTableViewCell: UITableViewCell {
     
     var delegate: ProfileTableViewCellDelegate?
     
+    @IBOutlet weak var followingValueLabel: UILabel!
+    @IBOutlet weak var transactionsValueLabel: UILabel!
     @IBOutlet weak var followingLabel: UILabel!
     @IBOutlet weak var transactionsLabel: UILabel!
     @IBOutlet weak var editProfileLabel: UILabel!

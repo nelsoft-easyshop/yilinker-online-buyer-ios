@@ -1369,7 +1369,7 @@
         <!--Message ThreadVC-->
         <scene sceneID="Bn5-Kd-bo7">
             <objects>
-                <viewController id="wG9-hd-NR4" customClass="MessageThreadVC" customModule="YiLinkerOnlineBuyer" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MessageThreadVC" id="wG9-hd-NR4" customClass="MessageThreadVC" customModule="YiLinkerOnlineBuyer" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="lHj-Pj-yee"/>
                         <viewControllerLayoutGuide type="bottom" id="CrU-P5-tCl"/>

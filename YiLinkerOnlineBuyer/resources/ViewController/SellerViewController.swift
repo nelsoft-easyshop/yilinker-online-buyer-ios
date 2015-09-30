@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, SellerTableHeaderViewDelegate, ProductsTableViewCellDelegate, ViewFeedBackViewControllerDelegate {
+class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, SellerTableHeaderViewDelegate, ProductsTableViewCellDelegate, ViewFeedBackViewControllerDelegate, EmptyViewDelegate {
 
     @IBOutlet weak var tableView: UITableView!
     
@@ -38,9 +38,16 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
     let productsTitle: String = StringHelper.localizedStringWithKey("PRODUCTS_SELLER_LOCALIZE_KEY")
     let moreSellersProduct: String = StringHelper.localizedStringWithKey("MORE_SELLERS_PRODUCT_LOCALIZE_KEY")
     let productRatings: String = StringHelper.localizedStringWithKey("PRODUCT_RATINGS_AND_FEEDBACK_LOCALIZE_KEY")
+
+    var selectedContact : W_Contact?
+    var emptyView : EmptyView?
+    var conversations = [W_Conversation]()
+    var contentViewFrame: CGRect?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.contentViewFrame = self.view.frame
         
         dimView = UIView(frame: UIScreen.mainScreen().bounds)
         dimView.backgroundColor=UIColor.blackColor()
@@ -56,6 +63,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.titleView()
         self.fireSeller()
         self.fireSellerFeedback()
+        self.getConversationsFromEndpoint("1", limit: "30")
         let footerView: UIView = UIView(frame: CGRectZero)
         self.tableView.tableFooterView = footerView
     }
@@ -86,7 +94,6 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         sellerTableHeaderView.delegate = self
         
         sellerTableHeaderView.coverPhotoImageView.sd_setImageWithURL(self.sellerModel!.coverPhoto, placeholderImage: UIImage(named: "dummy-placeholder"))
-        
         if SessionManager.isLoggedIn() {
             self.sellerTableHeaderView.followButton.enabled = true
         } else {
@@ -393,6 +400,11 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         })
     }
     
+    func didTapReload() {
+        self.getConversationsFromEndpoint("1", limit: "30")
+        self.emptyView?.hidden = true
+    }
+    
     func backButton() {
         var backButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
         backButton.frame = CGRectMake(0, 0, 40, 40)
@@ -551,7 +563,92 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     func sellerTableHeaderViewDidMessage() {
         println("message")
-        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Send message to seller \(self.sellerName).", title: "Message Seller")
+        //UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Send message to seller \(self.sellerName).", title: "Message Seller")
+        let storyBoard: UIStoryboard = UIStoryboard(name: "HomeStoryBoard", bundle: nil)
+        let messagingViewController: MessageThreadVC = (storyBoard.instantiateViewControllerWithIdentifier("MessageThreadVC") as? MessageThreadVC)!
+        for var i = 0; i < self.conversations.count; i++ {
+            println("\(self.sellerId) \(self.conversations[i].sender)")
+            if conversations[i].sender == "\(self.sellerId)" {
+                self.selectedContact = conversations[i].contact
+                println("--- \(conversations[i].contact)")
+            } else {
+                 println("\(conversations[i].contact)")
+            }
+        }
+        
+        var isOnline = "-1"
+        if (SessionManager.isLoggedIn()){
+            isOnline = "1"
+        } else {
+            isOnline = "0"
+        }
+        messagingViewController.sender = W_Contact(fullName: SessionManager.userFullName() , userRegistrationIds: "", userIdleRegistrationIds: "", userId: SessionManager.accessToken(), profileImageUrl: SessionManager.profileImageStringUrl(), isOnline: isOnline)
+        messagingViewController.recipient = selectedContact
+        self.navigationController?.pushViewController(messagingViewController, animated: true)
+    }
+    func getConversationsFromEndpoint(
+        page : String,
+        limit : String){
+            
+            self.showHUD()
+            //SVProgressHUD.show()
+            
+            let manager: APIManager = APIManager.sharedInstance
+            manager.requestSerializer = AFHTTPRequestSerializer()
+            
+            let parameters: NSDictionary = [
+                "page"          : "\(page)",
+                "limit"         : "\(limit)",
+                "access_token"  : SessionManager.accessToken()
+                ]   as Dictionary<String, String>
+            
+            /* uncomment + "a" to test retry sending */
+            let url = APIAtlas.baseUrl + APIAtlas.ACTION_GET_CONVERSATION_HEAD //+ "a"
+            manager.POST(url, parameters: parameters, success: {
+                (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+                self.conversations = W_Conversation.parseConversations(responseObject as! NSDictionary)
+                println(responseObject)
+                self.hud?.hide(true)
+                //SVProgressHUD.dismiss()
+                }, failure: {
+                    (task: NSURLSessionDataTask!, error: NSError!) in
+                    
+                    println("REACHABILITY \(Reachability.isConnectedToNetwork())")
+                    if (Reachability.isConnectedToNetwork()){
+                        let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                        
+                        if task.statusCode == 401 {
+                            if (SessionManager.isLoggedIn()){
+                                self.fireRefreshToken()
+                            }
+                        } else {
+                            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+                        }
+                        
+                        self.conversations = Array<W_Conversation>()
+                        
+                        self.hud?.hide(true)
+                        //SVProgressHUD.dismiss()
+                        
+                        self.addEmptyView()
+                        
+                    } else {
+                        self.addEmptyView()
+                    }
+            })
+            
+    }
+    
+    func addEmptyView() {
+        println(self.emptyView)
+        if self.emptyView == nil {
+            self.emptyView = UIView.loadFromNibNamed("EmptyView", bundle: nil) as? EmptyView
+            self.emptyView?.frame = self.contentViewFrame!
+            self.emptyView!.delegate = self
+            self.view.addSubview(self.emptyView!)
+        } else {
+            self.emptyView!.hidden = false
+        }
     }
     
     func sellerTableHeaderViewDidCall() {
@@ -564,6 +661,24 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Cannot make a call to \(self.sellerContactNumber).", title: "Call Seller")
         }
 
+    }
+    
+    func fireRefreshToken() {
+        let manager: APIManager = APIManager.sharedInstance
+        //seller@easyshop.ph
+        //password
+        let parameters: NSDictionary = ["client_id": Constants.Credentials.clientID, "client_secret": Constants.Credentials.clientSecret, "grant_type": Constants.Credentials.grantRefreshToken, "refresh_token":  SessionManager.refreshToken()]
+        manager.POST(APIAtlas.refreshTokenUrl, parameters: parameters, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            SVProgressHUD.dismiss()
+            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+        })
+        
     }
     
     func productstableViewCellDidTapMoreProductWithTarget(target: String) {
