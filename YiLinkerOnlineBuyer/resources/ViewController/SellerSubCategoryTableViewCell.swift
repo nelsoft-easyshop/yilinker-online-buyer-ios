@@ -10,6 +10,8 @@ import UIKit
 
 class SellerSubCategoryTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var subCategoryLabel: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

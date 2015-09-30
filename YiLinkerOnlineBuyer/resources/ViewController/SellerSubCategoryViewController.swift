@@ -11,9 +11,26 @@ import UIKit
 class SellerSubCategoryViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     @IBOutlet weak var subCategoryTableView: UITableView!
-    
+    var subCategories: NSArray!
+    var subCategories2: NSArray!
+    var category: String!
+    var subCategoryName: NSArray!
+    var sellerSubCategoryModel: SellerSubCategoryModel?
+    var sellerCategory: SellerCategoryModel?
+    var tableData: [SellerCategoryModel] = []
+    var arr: [String] = []
     override func viewDidLoad() {
         super.viewDidLoad()
+        var dictCategory:NSDictionary = ["subcategories" : self.subCategoryName]
+        if let val: AnyObject = dictCategory["subcategories"] {
+            let cat: NSArray = dictCategory["subcategories"] as! NSArray
+            println(cat.count)
+            for categoryDictionary in cat as! [NSDictionary] {
+                self.sellerSubCategoryModel = SellerSubCategoryModel.parseDataFromDictionary(categoryDictionary)
+                self.arr.append(self.sellerSubCategoryModel!.name[0])
+                println("\(self.arr.count)")
+            }
+        }
         
         // Do any additional setup after loading the view.
         self.titleView()
@@ -71,7 +88,7 @@ class SellerSubCategoryViewController: UIViewController, UITableViewDataSource, 
     
     //MARK: Tableview delegate methods
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 20
+        return self.arr.count
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -80,7 +97,8 @@ class SellerSubCategoryViewController: UIViewController, UITableViewDataSource, 
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let subCategoryTableViewCell: SellerSubCategoryTableViewCell = self.subCategoryTableView.dequeueReusableCellWithIdentifier("SellerSubCategoryTableViewCell") as! SellerSubCategoryTableViewCell
-        
+       
+        subCategoryTableViewCell.subCategoryLabel.text = self.arr[indexPath.row]
         return subCategoryTableViewCell
     }
     

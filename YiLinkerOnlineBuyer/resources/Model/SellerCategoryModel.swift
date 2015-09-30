@@ -34,6 +34,7 @@ class SellerCategoryModel: NSObject {
     var isSuccessful: Bool = false
     var categoryName: String = ""
     var categorySubs: String = ""
+    var categorySubs2: NSArray = []
     
     init(name: NSArray, subCategories2: NSArray, subCategories: String, isSuccessful: Bool, subCategories3: NSArray){
         self.name = name as! [String]
@@ -42,9 +43,11 @@ class SellerCategoryModel: NSObject {
         self.subCategories3 = subCategories3 as! [NSArray]
         self.isSuccessful = isSuccessful
     }
-    init(name: String, subCategories: String){
+    
+    init(name: String, subCategories: String, subCategories2: NSArray){
         self.categoryName = name
         self.categorySubs = subCategories
+        self.categorySubs2 = subCategories2
     }
     
     class func parseDataFromDictionary(dictionary: NSDictionary) -> SellerCategoryModel {
@@ -64,8 +67,8 @@ class SellerCategoryModel: NSObject {
             if let tempArr = dictionary["data"] as? NSArray {
                 for subValue in tempArr as NSArray {
                     name.append(subValue["name"] as! String)
-                    subCategories3.append(subValue["subcategories"] as! NSArray)
                     if let tempArr2 = subValue["subcategories"] as? NSArray {
+                        subCategories3.append(subValue["subcategories"] as! NSArray)
                         var i: Int = tempArr2.count
                         if tempArr2.count != 0 {
                             for subValue2 in tempArr2 as NSArray {

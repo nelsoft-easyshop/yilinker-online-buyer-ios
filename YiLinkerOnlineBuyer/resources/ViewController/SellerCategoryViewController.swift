@@ -16,7 +16,7 @@ class SellerCategoryViewController: UIViewController, UITableViewDataSource, UIT
     var tableData: [SellerCategoryModel] = []
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
         self.titleView()
         self.backButton()
@@ -96,6 +96,7 @@ class SellerCategoryViewController: UIViewController, UITableViewDataSource, UIT
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let sellerSubCategoryViewController: SellerSubCategoryViewController = SellerSubCategoryViewController(nibName: "SellerSubCategoryViewController", bundle: nil)
+        sellerSubCategoryViewController.subCategoryName = self.tableData[indexPath.row].categorySubs2
         self.navigationController!.pushViewController(sellerSubCategoryViewController, animated: true)
     }
     
@@ -113,9 +114,8 @@ class SellerCategoryViewController: UIViewController, UITableViewDataSource, UIT
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
             self.sellerCategory = SellerCategoryModel.parseDataFromDictionary(responseObject as! NSDictionary)
-            
             for var i: Int = 0; i < self.sellerCategory!.name.count; i++ {
-                self.tableData.append(SellerCategoryModel(name: self.sellerCategory!.name[i], subCategories: self.sellerCategory!.subCategories2[i]))
+                self.tableData.append(SellerCategoryModel(name: self.sellerCategory!.name[i], subCategories: self.sellerCategory!.subCategories2[i], subCategories2: self.sellerCategory!.subCategories3[i]))
             }
             self.categoryTableView.reloadData()
             
