@@ -72,6 +72,9 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
     var listLocalizeString: String = ""
     var gridMessageLocalizeString: String = ""
     
+    var categoryName: String = ""
+    var categoryId: String = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 

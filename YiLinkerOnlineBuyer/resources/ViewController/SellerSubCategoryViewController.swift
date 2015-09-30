@@ -19,6 +19,7 @@ class SellerSubCategoryViewController: UIViewController, UITableViewDataSource, 
     var sellerCategory: SellerCategoryModel?
     var tableData: [SellerCategoryModel] = []
     var arr: [String] = []
+    var arrCategoryId: [String] = []
     override func viewDidLoad() {
         super.viewDidLoad()
         var dictCategory:NSDictionary = ["subcategories" : self.subCategoryName]
@@ -28,7 +29,7 @@ class SellerSubCategoryViewController: UIViewController, UITableViewDataSource, 
             for categoryDictionary in cat as! [NSDictionary] {
                 self.sellerSubCategoryModel = SellerSubCategoryModel.parseDataFromDictionary(categoryDictionary)
                 self.arr.append(self.sellerSubCategoryModel!.name[0])
-                println("\(self.arr.count)")
+                self.arrCategoryId.append(self.sellerSubCategoryModel!.categoryId[0])
             }
         }
         
@@ -104,6 +105,8 @@ class SellerSubCategoryViewController: UIViewController, UITableViewDataSource, 
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let resultViewController: ResultViewController = ResultViewController(nibName: "ResultViewController", bundle: nil)
+        resultViewController.categoryName = self.arr[indexPath.row]
+        resultViewController.categoryId = self.arrCategoryId[indexPath.row]
         self.navigationController!.pushViewController(resultViewController, animated: true)
     }
     
