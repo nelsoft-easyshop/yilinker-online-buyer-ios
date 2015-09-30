@@ -127,7 +127,7 @@ class ViewFeedBackViewController: UIViewController, UITableViewDelegate, UITable
                 println(self.sellerModel?.reviews[1].fullName)
                 self.setRating(self.sellerModel!.rating)
                 self.generalRatingLabel.text = "\(self.sellerModel!.rating)"
-                self.numberOfPeopleLabel.text = "\(self.sellerModel?.reviews.count)"
+                self.numberOfPeopleLabel.text = "\(self.sellerModel!.reviews.count)"
                 self.ratingAndReviewsTableView.reloadData()
                 self.hud?.hide(true)
             } else {

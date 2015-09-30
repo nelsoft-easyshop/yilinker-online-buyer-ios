@@ -13,6 +13,7 @@ class TransactionProductImagesView: UIView, UICollectionViewDataSource {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
+    var imageUrl: String = ""
 
     override func awakeFromNib() {
         
@@ -30,9 +31,9 @@ class TransactionProductImagesView: UIView, UICollectionViewDataSource {
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell: ProductSellerViewCollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier("productSellerIdentifier", forIndexPath: indexPath) as! ProductSellerViewCollectionViewCell
-        
-        cell.setImage("dummy-placeholder")
-        
+        //cell.sd_setImageWithURL(, placeholderImage: UIImage(named: "dummy-placeholder"))
+        cell.setImage(self.imageUrl)
+        println(self.imageUrl)
         return cell
     }
 

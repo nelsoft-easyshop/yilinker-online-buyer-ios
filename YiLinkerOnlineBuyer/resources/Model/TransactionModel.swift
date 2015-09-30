@@ -60,7 +60,7 @@ class TransactionModel: NSObject {
     var product_count2: String = ""
     var order_count: Int = 0
     
-    init(order_id: NSArray, date_added: NSArray, invoice_number: NSArray, payment_type: NSArray, payment_method_id: NSArray, order_status: NSArray, order_status_id: NSArray, total_price: NSArray, total_unit_price: NSArray, total_item_price: NSArray, total_handling_fee: NSArray, total_quantity: NSArray, product_name: NSArray, product_count: NSArray){
+    init(order_id: NSArray, date_added: NSArray, invoice_number: NSArray, payment_type: NSArray, payment_method_id: NSArray, order_status: NSArray, order_status_id: NSArray, total_price: NSArray, total_unit_price: NSArray, total_item_price: NSArray, total_handling_fee: NSArray, total_quantity: NSArray, product_name: NSArray, product_count: NSArray, is_successful: Bool){
         
         self.order_id = order_id as! [String]
         self.date_added = date_added as! [String]
@@ -76,6 +76,7 @@ class TransactionModel: NSObject {
         self.total_quantity = total_quantity as! [String]
         self.product_name = product_name as! [String]
         self.product_count = product_count as! [String]
+        self.is_successful = is_successful
     }
     
     init(order_id: String, date_added: String, invoice_number: String, payment_type: String, payment_method_id: String, order_status: String, order_status_id: String, total_price: String, total_unit_price: String, total_item_price: String, total_handling_fee: String, total_quantity: String, product_name: String, product_count: String, is_successful: Bool, order_count: Int){
@@ -160,7 +161,7 @@ class TransactionModel: NSObject {
             }
         }
         
-        let transactionModel = TransactionModel(order_id: order_id, date_added: date_added, invoice_number: invoice_number, payment_type: payment_type, payment_method_id: payment_method_id, order_status: order_status, order_status_id: order_status_id, total_price: total_price, total_unit_price: total_unit_price, total_item_price: total_item_price, total_handling_fee: total_handling_fee, total_quantity: total_quantity, product_name: product_name, product_count: product_count)
+        let transactionModel = TransactionModel(order_id: order_id, date_added: date_added, invoice_number: invoice_number, payment_type: payment_type, payment_method_id: payment_method_id, order_status: order_status, order_status_id: order_status_id, total_price: total_price, total_unit_price: total_unit_price, total_item_price: total_item_price, total_handling_fee: total_handling_fee, total_quantity: total_quantity, product_name: product_name, product_count: product_count, is_successful: isSuccessful)
         
         return transactionModel
     }

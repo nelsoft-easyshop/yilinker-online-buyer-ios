@@ -161,8 +161,8 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
     func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
          self.transactionSectionView = XibHelper.puffViewWithNibName("TransactionViews", index: 7) as! TransactionSectionFooterView
         self.transactionSectionView.delegate = self
-        self.transactionSectionView.sellerContactNumberTitle.text = self.seller
-        self.transactionSectionView.sellerNameLabelTitle.text = self.contactNumber
+        self.transactionSectionView.sellerContactNumberTitle.text = self.contactNumber
+        self.transactionSectionView.sellerNameLabelTitle.text = self.seller
         self.transactionSectionView.messageButton.setTitle(self.message, forState: UIControlState.Normal)
         if self.table.count != 0 {
             if self.table[section].feedback {
