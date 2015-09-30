@@ -208,6 +208,7 @@ class SellerModel: NSObject {
                     "targetType": ""]
             ]
             
+            println("\(myArrayOfDictProducts)")
             var dictProducts:NSDictionary = ["products" : myArrayOfDictProducts]
             
             if let val: AnyObject = dictProducts["products"] {

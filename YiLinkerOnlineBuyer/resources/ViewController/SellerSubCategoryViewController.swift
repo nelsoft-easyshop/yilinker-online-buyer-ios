@@ -12,8 +12,25 @@ class SellerSubCategoryViewController: UIViewController, UITableViewDataSource, 
     
     @IBOutlet weak var subCategoryTableView: UITableView!
     
+    var subCategoryName: NSArray!
+    var sellerSubCategoryModel: SellerSubCategoryModel?
+    var sellerCategory: SellerCategoryModel?
+    
+    var arr: [String] = []
+    var arrCategoryId: [Int] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        var dictCategory:NSDictionary = ["subcategories" : self.subCategoryName]
+        if let val: AnyObject = dictCategory["subcategories"] {
+            let cat: NSArray = dictCategory["subcategories"] as! NSArray
+            println(cat.count)
+            for categoryDictionary in cat as! [NSDictionary] {
+                self.sellerSubCategoryModel = SellerSubCategoryModel.parseDataFromDictionary(categoryDictionary)
+                self.arr.append(self.sellerSubCategoryModel!.name[0])
+                self.arrCategoryId.append(self.sellerSubCategoryModel!.categoryId[0])
+            }
+        }
         
         // Do any additional setup after loading the view.
         self.titleView()
@@ -71,7 +88,7 @@ class SellerSubCategoryViewController: UIViewController, UITableViewDataSource, 
     
     //MARK: Tableview delegate methods
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 20
+        return self.arr.count
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -80,12 +97,15 @@ class SellerSubCategoryViewController: UIViewController, UITableViewDataSource, 
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let subCategoryTableViewCell: SellerSubCategoryTableViewCell = self.subCategoryTableView.dequeueReusableCellWithIdentifier("SellerSubCategoryTableViewCell") as! SellerSubCategoryTableViewCell
-        
+       
+        subCategoryTableViewCell.subCategoryLabel.text = self.arr[indexPath.row]
         return subCategoryTableViewCell
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let resultViewController: ResultViewController = ResultViewController(nibName: "ResultViewController", bundle: nil)
+        resultViewController.categoryName = self.arr[indexPath.row]
+        resultViewController.passCategoryID(self.arrCategoryId[indexPath.row])
         self.navigationController!.pushViewController(resultViewController, animated: true)
     }
     
