@@ -310,15 +310,15 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
         footerGrayColor.backgroundColor = Constants.Colors.backgroundGray
         self.getFooterView().addSubview(footerGrayColor)
         
-        self.setPosition(self.transactionCancelView, from: self.transactionDescriptionView)
-        self.setPosition(footerGrayColor, from: self.transactionCancelView)
+        self.setPosition(self.transactionDeliveryStatusView, from: self.transactionDescriptionView)
+        self.setPosition(footerGrayColor, from: self.transactionDeliveryStatusView)
 
-        self.setPosition(self.transactionButtonView, from: self.transactionDeliveryStatusView)
-        self.setPosition(footerGrayColor, from: self.transactionButtonView)
+        self.setPosition(self.transactionCancelView, from: self.transactionDeliveryStatusView)
+        self.setPosition(footerGrayColor, from: self.transactionCancelView)
         footerGrayColor.frame.origin.y -= 20
         
         newFrame = self.footerView.frame
-        newFrame.size.height = CGRectGetMaxY(self.transactionButtonView.frame)
+        newFrame.size.height = CGRectGetMaxY(self.transactionCancelView.frame)
         self.footerView.frame = newFrame
 
         self.tableView.tableFooterView = nil
