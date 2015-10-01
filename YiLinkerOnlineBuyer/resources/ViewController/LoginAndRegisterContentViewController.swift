@@ -39,11 +39,19 @@ class LoginAndRegisterContentViewController: UIViewController {
                 self.register(self.registerButton)
             }
         }
+        
+        if IphoneType.isIphone6() && IphoneType.isIphone6Plus() {
+            self.signInButton.layer.cornerRadius = 20
+            self.registerButton.layer.cornerRadius = 20
+        } else {
+            self.signInButton.layer.cornerRadius = 15
+            self.registerButton.layer.cornerRadius = 15
+        }
 
         self.signInButton.layer.borderColor = Constants.Colors.appTheme.CGColor
-        self.signInButton.layer.cornerRadius = 20
+        
         self.signInButton.layer.borderWidth = 1
-        self.registerButton.layer.cornerRadius = 20
+       
         self.registerButton.layer.borderColor = Constants.Colors.appTheme.CGColor
         self.registerButton.layer.borderWidth = 1
         self.closeButton.layer.borderWidth = 1
