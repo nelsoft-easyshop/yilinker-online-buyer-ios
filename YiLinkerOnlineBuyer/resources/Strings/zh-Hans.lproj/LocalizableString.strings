@@ -108,6 +108,7 @@ PASSWORD_REQUIRED_LOCALIZE_KEY = "Password is required.";
 ILLEGAL_PASSWORD_LOCALIZE_KEY = "Password contains illegal characters. It can only contain letters, numbers and underscores.";
 RETYPE_REQUIRED_LOCALIZE_KEY = "Re-type password is required.";
 PASSWORD_NOT_MATCH_LOCALIZE_KEY = "The password does not match.";
+CONTACT_REQUIRED_LOCALIZE_KEY = "Contact number is required.";
 
 // MARK: - Customize Shopping
 CATEGORIES_CS_LOCALIZE_KEY = "Categories";

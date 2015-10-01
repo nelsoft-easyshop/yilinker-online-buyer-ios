@@ -26,7 +26,7 @@ struct RegisterStrings {
     static let illegalPassword: String = StringHelper.localizedStringWithKey("ILLEGAL_PASSWORD_LOCALIZE_KEY")
     static let reTypePasswordError: String = StringHelper.localizedStringWithKey("RETYPE_REQUIRED_LOCALIZE_KEY")
     static let passwordNotMatch: String = StringHelper.localizedStringWithKey("PASSWORD_NOT_MATCH_LOCALIZE_KEY")
-    
+    static let contactRequired: String = StringHelper.localizedStringWithKey("CONTACT_REQUIRED_LOCALIZE_KEY")
 }
 
 class RegisterViewController: UIViewController, UITextFieldDelegate {
@@ -232,7 +232,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         } else if self.passwordTextField.text != self.reTypePasswordTextField.text {
             errorMessage = RegisterStrings.passwordNotMatch
         } else if self.mobileNumberTextField.text == "" {
-            errorMessage = "Mobile number is required."
+            errorMessage = RegisterStrings.contactRequired
         }
         
         if errorMessage != "" {
@@ -268,7 +268,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         self.showHUD()
         let manager: APIManager = APIManager.sharedInstance
 
-        let parameters: NSDictionary = ["email": self.emailAddressTextField.text,"password": self.passwordTextField.text, "firstName": self.firstNameTextField.text, "lastName": self.lastNameTextField.text]
+        let parameters: NSDictionary = ["email": self.emailAddressTextField.text,"password": self.passwordTextField.text, "firstName": self.firstNameTextField.text, "lastName": self.lastNameTextField.text, "contactNumber": self.mobileNumberTextField.text]
         
         manager.POST(APIAtlas.registerUrl, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
