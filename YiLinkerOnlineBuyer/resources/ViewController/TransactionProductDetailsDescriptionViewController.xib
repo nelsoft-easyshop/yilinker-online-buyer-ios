@@ -115,16 +115,16 @@
                             <rect key="frame" x="16" y="71" width="268" height="149"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RPv-TN-w6i">
-                                    <rect key="frame" x="8" y="8" width="252" height="21"/>
+                                    <rect key="frame" x="8" y="8" width="252" height="141"/>
                                     <constraints>
-                                        <constraint firstAttribute="height" constant="21" id="4Nr-M7-oI7"/>
+                                        <constraint firstAttribute="height" constant="141" id="Vfc-Jo-UjS"/>
                                     </constraints>
                                     <attributedString key="attributedText">
                                         <fragment content="Long Description">
                                             <attributes>
                                                 <color key="NSColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                 <font key="NSFont" size="12" name="HelveticaNeue"/>
-                                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                             </attributes>
                                         </fragment>
                                     </attributedString>
