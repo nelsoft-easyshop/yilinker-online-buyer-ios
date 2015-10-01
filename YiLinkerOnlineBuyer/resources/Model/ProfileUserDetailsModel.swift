@@ -27,8 +27,10 @@ class ProfileUserDetailsModel: NSObject {
     var cartCount: Int = 0
     var messageCount: Int = 0
     var followingCount: Int = 0
+    var isEmailSubscribed: Bool = false
+    var isSmsSubscribed: Bool = false
     
-    init(fullName: String, firstName: String, lastName: String, email: String, contactNumber: String, profileImageUrl: String, coverPhoto: String, gender: String, birthdate: String, address: AddressModelV2, transactionCount: Int, wishlistCount: Int, cartCount: Int, messageCount: Int, followingCount: Int){
+    init(fullName: String, firstName: String, lastName: String, email: String, contactNumber: String, profileImageUrl: String, coverPhoto: String, gender: String, birthdate: String, address: AddressModelV2, transactionCount: Int, wishlistCount: Int, cartCount: Int, messageCount: Int, followingCount: Int, isEmailSubscribed: Bool, isSmsSubscribed: Bool){
         self.fullName = fullName
         self.firstName = firstName
         self.lastName = lastName
@@ -44,6 +46,8 @@ class ProfileUserDetailsModel: NSObject {
         self.cartCount = cartCount
         self.messageCount = messageCount
         self.followingCount = followingCount
+        self.isEmailSubscribed = isEmailSubscribed
+        self.isSmsSubscribed = isSmsSubscribed
     }
     
     override init() {
@@ -68,6 +72,8 @@ class ProfileUserDetailsModel: NSObject {
         var cartCount: Int = 0
         var messageCount: Int = 0
         var followingCount: Int = 0
+        var isEmailSubscribed: Bool = false
+        var isSmsSubscribed: Bool = false
     
         if let value: AnyObject = dictionary["fullName"] {
             if value as! NSObject != NSNull() {
@@ -160,6 +166,18 @@ class ProfileUserDetailsModel: NSObject {
             }
         }
         
+        if let value: AnyObject = dictionary["isEmailSubscribed"] {
+            if value as! NSObject != NSNull() {
+                isEmailSubscribed = value as! Bool
+            }
+        }
+        
+        if let value: AnyObject = dictionary["isSmsSubscribed"] {
+            if value as! NSObject != NSNull() {
+                isSmsSubscribed = value as! Bool
+            }
+        }
+        
         return ProfileUserDetailsModel(fullName: fullName,
             firstName: firstName,
             lastName: lastName,
@@ -174,7 +192,9 @@ class ProfileUserDetailsModel: NSObject {
             wishlistCount: wishlistCount,
             cartCount: cartCount,
             messageCount: messageCount,
-            followingCount: followingCount)
+            followingCount: followingCount,
+            isEmailSubscribed: isEmailSubscribed,
+            isSmsSubscribed: isSmsSubscribed)
     }
     
 

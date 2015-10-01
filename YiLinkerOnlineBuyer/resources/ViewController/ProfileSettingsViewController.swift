@@ -15,7 +15,7 @@ class ProfileSettingsViewController: UIViewController, UITableViewDataSource, UI
     @IBOutlet weak var tableView: UITableView!
     
     var tableData: [String] = []
-    var tableDataStatus: [Bool] = [false, false, false]
+    var tableDataStatus: [Bool] = []
     
     var hud: MBProgressHUD?
     
