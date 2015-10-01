@@ -457,6 +457,10 @@ TRANSACTION_CANCEL_ORDER_SUCCESS_LOCALIZE_KEY = "This order has been successfull
 TRANSACTION_CANCEL_ORDER_SUCCESS_SUB_LOCALIZE_KEY = "A Customer Service Representative will contact you shortly to ask how we can help you from losing more orders";
 TRANSACTION_CANCEL_ORDER_RETURN_LOCALIZE_KEY = "Return to Dashboard";
 
+//Transaction Description
+TRANSACTION_PRODUCT_DESCRIPTION_TITLE_LOCALIZE_KEY = "Description";
+TRANSACTION_PRODUCT_DESCRIPTION_LOCALIZE_KEY= "Product Description";
+
 // MARK: - Global
 SOMETHING_WENT_WRONG_LOCALIZE_KEY = "Something Went Wrong";
 OK_BUTTON_LOCALIZE_KEY = "OK";
