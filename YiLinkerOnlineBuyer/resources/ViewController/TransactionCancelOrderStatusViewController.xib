@@ -41,7 +41,7 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rPC-S6-j1V" userLabel="Check View">
                             <rect key="frame" x="139" y="35" width="65" height="65"/>
                             <subviews>
-                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="checkAddress" translatesAutoresizingMaskIntoConstraints="NO" id="Nqh-9u-4bF">
+                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="checkAddress" translatesAutoresizingMaskIntoConstraints="NO" id="Nqh-9u-4bF">
                                     <rect key="frame" x="12" y="13" width="40" height="40"/>
                                 </imageView>
                             </subviews>

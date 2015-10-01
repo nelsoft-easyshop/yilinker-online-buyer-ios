@@ -390,8 +390,6 @@
 		F7D37CA21B92B09100FA7B16 /* ViewFeedBackViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7D37CA01B92B09100FA7B16 /* ViewFeedBackViewController.xib */; };
 		F7D8C9051BBC056200305EF2 /* SellerCategoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D8C9041BBC056100305EF2 /* SellerCategoryModel.swift */; };
 		F7D8C9091BBC1BB300305EF2 /* SellerSubCategoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D8C9081BBC1BB300305EF2 /* SellerSubCategoryModel.swift */; };
-		F7D9BAA51BBCD9DA0097B76C /* TransactionProductDetailsDescriptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D9BAA31BBCD9DA0097B76C /* TransactionProductDetailsDescriptionViewController.swift */; };
-		F7D9BAA61BBCD9DA0097B76C /* TransactionProductDetailsDescriptionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7D9BAA41BBCD9DA0097B76C /* TransactionProductDetailsDescriptionViewController.xib */; };
 		F7DC7ED61BA13E3D004F7FD4 /* SellerCategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7DC7ED41BA13E3D004F7FD4 /* SellerCategoryViewController.swift */; };
 		F7DC7ED71BA13E3D004F7FD4 /* SellerCategoryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7DC7ED51BA13E3D004F7FD4 /* SellerCategoryViewController.xib */; };
 		F7DC7EDA1BA13FAC004F7FD4 /* SellerCategoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7DC7ED81BA13FAC004F7FD4 /* SellerCategoryTableViewCell.swift */; };
@@ -810,8 +808,6 @@
 		F7D37CA01B92B09100FA7B16 /* ViewFeedBackViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ViewFeedBackViewController.xib; path = YiLinkerOnlineBuyer/resources/Xib/ViewFeedBackViewController.xib; sourceTree = SOURCE_ROOT; };
 		F7D8C9041BBC056100305EF2 /* SellerCategoryModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SellerCategoryModel.swift; path = YiLinkerOnlineBuyer/resources/Model/SellerCategoryModel.swift; sourceTree = SOURCE_ROOT; };
 		F7D8C9081BBC1BB300305EF2 /* SellerSubCategoryModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SellerSubCategoryModel.swift; path = YiLinkerOnlineBuyer/resources/Model/SellerSubCategoryModel.swift; sourceTree = SOURCE_ROOT; };
-		F7D9BAA31BBCD9DA0097B76C /* TransactionProductDetailsDescriptionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TransactionProductDetailsDescriptionViewController.swift; path = YiLinkerOnlineBuyer/resources/ViewController/TransactionProductDetailsDescriptionViewController.swift; sourceTree = SOURCE_ROOT; };
-		F7D9BAA41BBCD9DA0097B76C /* TransactionProductDetailsDescriptionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TransactionProductDetailsDescriptionViewController.xib; path = YiLinkerOnlineBuyer/resources/ViewController/TransactionProductDetailsDescriptionViewController.xib; sourceTree = SOURCE_ROOT; };
 		F7DC7ED41BA13E3D004F7FD4 /* SellerCategoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SellerCategoryViewController.swift; path = YiLinkerOnlineBuyer/resources/ViewController/SellerCategoryViewController.swift; sourceTree = SOURCE_ROOT; };
 		F7DC7ED51BA13E3D004F7FD4 /* SellerCategoryViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SellerCategoryViewController.xib; path = YiLinkerOnlineBuyer/resources/ViewController/SellerCategoryViewController.xib; sourceTree = SOURCE_ROOT; };
 		F7DC7ED81BA13FAC004F7FD4 /* SellerCategoryTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SellerCategoryTableViewCell.swift; path = YiLinkerOnlineBuyer/resources/ViewController/SellerCategoryTableViewCell.swift; sourceTree = SOURCE_ROOT; };
@@ -1247,8 +1243,6 @@
 				793A899C1BA004550030FDC7 /* VerifyMobileNumberStatusViewController.swift */,
 				793A89981BA001AE0030FDC7 /* VerifyMobileNumberViewController.swift */,
 				0C9937281B750583000D6074 /* WishlistViewController.swift */,
-				F7D9BAA31BBCD9DA0097B76C /* TransactionProductDetailsDescriptionViewController.swift */,
-				F7D9BAA41BBCD9DA0097B76C /* TransactionProductDetailsDescriptionViewController.xib */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -1632,7 +1626,6 @@
 				0C2F44C61B8576FE00021F45 /* Panton Bold.otf in Resources */,
 				F7CCDA951B943CBB000F5AD4 /* SellerViewController.xib in Resources */,
 				0C374F2E1B88E3790050AE1D /* PlainTableViewCell.xib in Resources */,
-				F7D9BAA61BBCD9DA0097B76C /* TransactionProductDetailsDescriptionViewController.xib in Resources */,
 				79E68BAB1B8B4EB9008626E4 /* EditProfilePersonalInformationTableViewCell.xib in Resources */,
 				79EBE8861B95F50700434B42 /* ChangePasswordViewController.xib in Resources */,
 				79A1C6F11B8329490043AA36 /* SearchSuggestionTableViewCell.xib in Resources */,
@@ -1800,7 +1793,6 @@
 				0CDA117C1B764015007B5DED /* LoginAndRegisterContentViewController.swift in Sources */,
 				0C99374A1B750583000D6074 /* HalfVerticalImageCollectionViewCell.swift in Sources */,
 				B77B8DC31B9B54B40002C513 /* W_Conversation.swift in Sources */,
-				F7D9BAA51BBCD9DA0097B76C /* TransactionProductDetailsDescriptionViewController.swift in Sources */,
 				B77B8DD91B9B554A0002C513 /* MessageThreadVC.swift in Sources */,
 				0C99375C1B750583000D6074 /* CircularMenuViewController.swift in Sources */,
 				B77B8DD71B9B554A0002C513 /* MessageThreadImageTVC.swift in Sources */,

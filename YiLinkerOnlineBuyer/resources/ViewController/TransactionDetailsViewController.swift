@@ -54,7 +54,7 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
     var dimView: UIView!
     
     var viewLeaveFeedback: Bool = false
-    var canMessage: Bool = false
+    
     var delegate: TransactionSectionFooterViewDelegate?
     
     //Transaction Details
@@ -86,7 +86,6 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
     var selectedContact : W_Contact?
     var emptyView : EmptyView?
     var conversations = [W_Conversation]()
-    var contacts = [W_Contact()]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -98,7 +97,7 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
         dimView.hidden = true
         
         self.fireTransactionDetails(self.transactionId)
-        self.getContactsFromEndpoint("1", limit: "30", keyword: "")
+        self.getConversationsFromEndpoint("1", limit: "30")
         
         total_unit_price = (self.totalUnitCost as NSString).floatValue
         total_handling_fee = (self.shippingFee as NSString).floatValue
@@ -336,7 +335,7 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
         
         // FOOTERS
         //self.getFooterView().addSubview(self.getTransactionSellerView())
-        //self.getFooterView().addSubview(self.getTransactionDeliveryStatusView())
+        self.getFooterView().addSubview(self.getTransactionDeliveryStatusView())
         self.getFooterView().addSubview(self.getTransactionButtonView())
         
         setUpViews()
@@ -360,16 +359,16 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
         self.getFooterView().addSubview(footerGrayColor)
         
         //self.setPosition(self.transactionDeliveryStatusView, from: self.transactionSellerView)
-        //self.setPosition(self.transactionButtonView, from: self.transactionDeliveryStatusView)
-        //self.setPosition(footerGrayColor, from: self.transactionButtonView)
-        //footerGrayColor.frame.origin.y -= 20
+        self.setPosition(self.transactionButtonView, from: self.transactionDeliveryStatusView)
+        self.setPosition(footerGrayColor, from: self.transactionButtonView)
+        footerGrayColor.frame.origin.y -= 20
         
-        //newFrame = self.footerView.frame
-        //newFrame.size.height = CGRectGetMaxY(self.transactionButtonView.frame)
-        //self.footerView.frame = newFrame
+        newFrame = self.footerView.frame
+        newFrame.size.height = CGRectGetMaxY(self.transactionButtonView.frame)
+        self.footerView.frame = newFrame
         
-        //self.tableView.tableFooterView = nil
-        //self.tableView.tableFooterView = self.footerView
+        self.tableView.tableFooterView = nil
+        self.tableView.tableFooterView = self.footerView
     }
     
     func setPosition(view: UIView!, from: UIView!) {
@@ -390,14 +389,13 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
     func messageSeller(sellerId: Int) {
         let storyBoard: UIStoryboard = UIStoryboard(name: "HomeStoryBoard", bundle: nil)
         let messagingViewController: MessageThreadVC = (storyBoard.instantiateViewControllerWithIdentifier("MessageThreadVC") as? MessageThreadVC)!
-        for var i = 0; i < self.contacts.count; i++ {
-            if "\(sellerId)" == contacts[i].userId {
-                self.selectedContact = contacts[i]
-                println("--- \(contacts[i].fullName)")
-                self.canMessage = true
+        for var i = 0; i < self.conversations.count; i++ {
+            println("\(sellerId) \(self.conversations[i].sender)")
+            if conversations[i].sender == "\(sellerId)" {
+                self.selectedContact = conversations[i].contact
+                println("--- \(conversations[i].contact)")
             } else {
-                println("\(contacts[i].fullName) \(self.seller)")
-                //self.canMessage = false
+                println("\(conversations[i].contact)")
             }
         }
         
@@ -409,13 +407,7 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
         }
         messagingViewController.sender = W_Contact(fullName: SessionManager.userFullName() , userRegistrationIds: "", userIdleRegistrationIds: "", userId: SessionManager.accessToken(), profileImageUrl: SessionManager.profileImageStringUrl(), isOnline: isOnline)
         messagingViewController.recipient = selectedContact
-        
-        if self.canMessage {
-            self.navigationController?.pushViewController(messagingViewController, animated: true)
-        } else {
-             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "You cannot allowed to message this seller.", title: "Error")
-        }
-        
+        self.navigationController?.pushViewController(messagingViewController, animated: true)
     }
     
     //MARK: View sellers feedback
@@ -475,34 +467,35 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
         })
     }
     
-    func getContactsFromEndpoint(
+    func getConversationsFromEndpoint(
         page : String,
-        limit : String,
-        keyword: String){
+        limit : String){
+            
+            self.showHUD()
             //SVProgressHUD.show()
-            if (Reachability.isConnectedToNetwork()) {
-                self.showHUD()
-                
-                let manager: APIManager = APIManager.sharedInstance
-                manager.requestSerializer = AFHTTPRequestSerializer()
-                
-                let parameters: NSDictionary = [
-                    "page"          : "\(page)",
-                    "limit"         : "\(limit)",
-                    "keyword"       : keyword,
-                    "access_token"  : SessionManager.accessToken()
-                    ]   as Dictionary<String, String>
-                
-                let url = APIAtlas.baseUrl + APIAtlas.ACTION_GET_CONTACTS
-                
-                manager.POST(url, parameters: parameters, success: {
-                    (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-                    self.contacts = W_Contact.parseContacts(responseObject as! NSDictionary)
-        
-                    //SVProgressHUD.dismiss()
-                    self.hud?.hide(true)
-                    }, failure: {
-                        (task: NSURLSessionDataTask!, error: NSError!) in
+            
+            let manager: APIManager = APIManager.sharedInstance
+            manager.requestSerializer = AFHTTPRequestSerializer()
+            
+            let parameters: NSDictionary = [
+                "page"          : "\(page)",
+                "limit"         : "\(limit)",
+                "access_token"  : SessionManager.accessToken()
+                ]   as Dictionary<String, String>
+            
+            /* uncomment + "a" to test retry sending */
+            let url = APIAtlas.baseUrl + APIAtlas.ACTION_GET_CONVERSATION_HEAD //+ "a"
+            manager.POST(url, parameters: parameters, success: {
+                (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+                self.conversations = W_Conversation.parseConversations(responseObject as! NSDictionary)
+                println(responseObject)
+                self.hud?.hide(true)
+                //SVProgressHUD.dismiss()
+                }, failure: {
+                    (task: NSURLSessionDataTask!, error: NSError!) in
+                    
+                    println("REACHABILITY \(Reachability.isConnectedToNetwork())")
+                    if (Reachability.isConnectedToNetwork()){
                         let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                         
                         if task.statusCode == 401 {
@@ -513,12 +506,13 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
                             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
                         }
                         
-                        self.contacts = Array<W_Contact>()
+                        self.conversations = Array<W_Conversation>()
                         
-                        //SVProgressHUD.dismiss()
                         self.hud?.hide(true)
-                })
-            }
+                        //SVProgressHUD.dismiss()
+                    }
+            })
+            
     }
     
     func fireRefreshToken() {
