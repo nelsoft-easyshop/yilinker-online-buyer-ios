@@ -51,7 +51,7 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
     var products = StringHelper.localizedStringWithKey("TRANSACTION_PRODUCTS_LOCALIZE_KEY")
     
     var isPageEnd: Bool = false
-    var page: Int = 1
+    var page: Int = 0
     var transactionArray: NSArray?
     
     var emptyView : EmptyView?
@@ -242,6 +242,7 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
             page++
             self.showHUD()
             let manager = APIManager.sharedInstance
+            println(APIAtlas.transactionLogs+"\(SessionManager.accessToken())&type=\(queryType)&perPage=15&page=\(page)")
             manager.GET(APIAtlas.transactionLogs+"\(SessionManager.accessToken())&type=\(queryType)&perPage=15&page=\(page)", parameters: nil, success: {
                 (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
                 let trans: TransactionModel = TransactionModel.parseDataFromDictionary(responseObject as! NSDictionary)
