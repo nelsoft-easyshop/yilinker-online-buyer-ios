@@ -159,6 +159,10 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     
     func settingsTapAction(){
         var settingsViewController = ProfileSettingsViewController(nibName: "ProfileSettingsViewController", bundle: nil)
+        settingsViewController.tableDataStatus.removeAll(keepCapacity: false)
+        settingsViewController.tableDataStatus.append(profileDetails.isSmsSubscribed)
+        settingsViewController.tableDataStatus.append(profileDetails.isEmailSubscribed)
+        settingsViewController.tableDataStatus.append(false)
         self.navigationController?.pushViewController(settingsViewController, animated:true)
     }
     

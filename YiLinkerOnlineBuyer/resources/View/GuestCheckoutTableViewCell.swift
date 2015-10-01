@@ -66,16 +66,19 @@ class GuestCheckoutTableViewCell: UITableViewCell, UITextFieldDelegate {
             }
         }
         
+        self.localizedLabels()
         self.firstNameLabel.required()
         self.lastNameLabel.required()
         self.mobileNumberLabel.required()
         self.emailAddressLabel.required()
         
         self.streetNameLabel.required()
-        self.streetNumberLabel.required()
-        self.zipCodelabel.required()
         
-        self.localizedLabels()
+        self.provinceLabel.required()
+        self.cityLabel.required()
+        self.barangayLabel.required()
+        
+        self.zipCodelabel.required()
     }
     
     func localizedLabels() {
