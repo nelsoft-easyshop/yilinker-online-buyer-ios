@@ -90,9 +90,13 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
     }
     
     func done() {
-        let cell: ChangeAddressCollectionViewCell = self.collectionView.cellForItemAtIndexPath(NSIndexPath(forItem: self.selectedIndex, inSection: 0)) as! ChangeAddressCollectionViewCell
-        self.delegate!.changeAddressViewController(didSelectAddress: cell.addressLabel.text!)
-        self.navigationController!.popViewControllerAnimated(true)
+        if let cell: ChangeAddressCollectionViewCell = self.collectionView.cellForItemAtIndexPath(NSIndexPath(forItem: self.selectedIndex, inSection: 0)) as? ChangeAddressCollectionViewCell {
+            let cell: ChangeAddressCollectionViewCell = self.collectionView.cellForItemAtIndexPath(NSIndexPath(forItem: self.selectedIndex, inSection: 0)) as! ChangeAddressCollectionViewCell
+            self.delegate!.changeAddressViewController(didSelectAddress: cell.addressLabel.text!)
+            self.navigationController!.popViewControllerAnimated(true)
+        } else {
+            self.navigationController!.popViewControllerAnimated(true)
+        }
     }
     
     func regsiterNib() {
