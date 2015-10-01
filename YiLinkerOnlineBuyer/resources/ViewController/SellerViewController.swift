@@ -42,9 +42,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
     var selectedContact : W_Contact?
     var emptyView : EmptyView?
     var conversations = [W_Conversation]()
-    var contacts = [W_Contact()]
     var contentViewFrame: CGRect?
-    var canMessage: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -65,7 +63,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.titleView()
         self.fireSeller()
         self.fireSellerFeedback()
-        self.getContactsFromEndpoint("1", limit: "30", keyword: "")
+        self.getConversationsFromEndpoint("1", limit: "30")
         let footerView: UIView = UIView(frame: CGRectZero)
         self.tableView.tableFooterView = footerView
     }
@@ -403,7 +401,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func didTapReload() {
-        //self.getConversationsFromEndpoint("1", limit: "30")
+        self.getConversationsFromEndpoint("1", limit: "30")
         self.emptyView?.hidden = true
     }
     
@@ -568,14 +566,13 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         //UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Send message to seller \(self.sellerName).", title: "Message Seller")
         let storyBoard: UIStoryboard = UIStoryboard(name: "HomeStoryBoard", bundle: nil)
         let messagingViewController: MessageThreadVC = (storyBoard.instantiateViewControllerWithIdentifier("MessageThreadVC") as? MessageThreadVC)!
-        for var i = 0; i < self.contacts.count; i++ {
-            if "\(self.sellerId)" == contacts[i].userId {
-                self.selectedContact = contacts[i]
-                println("--- \(contacts[i].fullName)")
-                self.canMessage = true
+        for var i = 0; i < self.conversations.count; i++ {
+            println("\(self.sellerId) \(self.conversations[i].sender)")
+            if conversations[i].sender == "\(self.sellerId)" {
+                self.selectedContact = conversations[i].contact
+                println("--- \(conversations[i].contact)")
             } else {
-                println("\(contacts[i].fullName) \(self.sellerId)")
-                //self.canMessage = false
+                 println("\(conversations[i].contact)")
             }
         }
         
@@ -587,43 +584,37 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         }
         messagingViewController.sender = W_Contact(fullName: SessionManager.userFullName() , userRegistrationIds: "", userIdleRegistrationIds: "", userId: SessionManager.accessToken(), profileImageUrl: SessionManager.profileImageStringUrl(), isOnline: isOnline)
         messagingViewController.recipient = selectedContact
-        
-        if self.canMessage {
-            self.navigationController?.pushViewController(messagingViewController, animated: true)
-        } else {
-            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "You cannot allowed to message this seller.", title: "Error")
-        }
-
+        self.navigationController?.pushViewController(messagingViewController, animated: true)
     }
-   
-    func getContactsFromEndpoint(
+    func getConversationsFromEndpoint(
         page : String,
-        limit : String,
-        keyword: String){
+        limit : String){
+            
+            self.showHUD()
             //SVProgressHUD.show()
-            if (Reachability.isConnectedToNetwork()) {
-                self.showHUD()
-                
-                let manager: APIManager = APIManager.sharedInstance
-                manager.requestSerializer = AFHTTPRequestSerializer()
-                
-                let parameters: NSDictionary = [
-                    "page"          : "\(page)",
-                    "limit"         : "\(limit)",
-                    "keyword"       : keyword,
-                    "access_token"  : SessionManager.accessToken()
-                    ]   as Dictionary<String, String>
-                
-                let url = APIAtlas.baseUrl + APIAtlas.ACTION_GET_CONTACTS
-                
-                manager.POST(url, parameters: parameters, success: {
-                    (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-                    self.contacts = W_Contact.parseContacts(responseObject as! NSDictionary)
+            
+            let manager: APIManager = APIManager.sharedInstance
+            manager.requestSerializer = AFHTTPRequestSerializer()
+            
+            let parameters: NSDictionary = [
+                "page"          : "\(page)",
+                "limit"         : "\(limit)",
+                "access_token"  : SessionManager.accessToken()
+                ]   as Dictionary<String, String>
+            
+            /* uncomment + "a" to test retry sending */
+            let url = APIAtlas.baseUrl + APIAtlas.ACTION_GET_CONVERSATION_HEAD //+ "a"
+            manager.POST(url, parameters: parameters, success: {
+                (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+                self.conversations = W_Conversation.parseConversations(responseObject as! NSDictionary)
+                println(responseObject)
+                self.hud?.hide(true)
+                //SVProgressHUD.dismiss()
+                }, failure: {
+                    (task: NSURLSessionDataTask!, error: NSError!) in
                     
-                    //SVProgressHUD.dismiss()
-                    self.hud?.hide(true)
-                    }, failure: {
-                        (task: NSURLSessionDataTask!, error: NSError!) in
+                    println("REACHABILITY \(Reachability.isConnectedToNetwork())")
+                    if (Reachability.isConnectedToNetwork()){
                         let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                         
                         if task.statusCode == 401 {
@@ -634,12 +625,18 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
                             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
                         }
                         
-                        self.contacts = Array<W_Contact>()
+                        self.conversations = Array<W_Conversation>()
                         
-                        //SVProgressHUD.dismiss()
                         self.hud?.hide(true)
-                })
-            }
+                        //SVProgressHUD.dismiss()
+                        
+                        self.addEmptyView()
+                        
+                    } else {
+                        self.addEmptyView()
+                    }
+            })
+            
     }
     
     func addEmptyView() {
