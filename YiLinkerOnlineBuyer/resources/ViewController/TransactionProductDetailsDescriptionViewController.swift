@@ -10,6 +10,11 @@ import UIKit
 
 class TransactionProductDetailsDescriptionViewController: UIViewController {
 
+    @IBOutlet weak var closeButton: UIButton!
+    @IBOutlet weak var okButton: UIButton!
+    @IBOutlet weak var descriptionTitleLabel: UILabel!
+    @IBOutlet weak var productDescriptionLabel: UILabel!
+    @IBOutlet weak var longDesctiptionLabel: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
 
