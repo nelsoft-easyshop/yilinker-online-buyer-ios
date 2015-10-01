@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TransactionViewController: UIViewController {
+class TransactionViewController: UIViewController, EmptyViewDelegate {
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var allView: UIView!
@@ -153,6 +153,7 @@ class TransactionViewController: UIViewController {
             selectView(allView, label: allLabel, imageView: allImageView, imageName: "all2")
             self.tableData.removeAll(keepCapacity: false)
             page = 0
+            self.isPageEnd = false
             self.fireTransaction("all")
             self.query = "all"
             deselectOtherViews(allView)
@@ -164,6 +165,7 @@ class TransactionViewController: UIViewController {
             selectView(pendingView, label: pendingLabel, imageView: pendingImageView, imageName: "time")
             self.tableData.removeAll(keepCapacity: false)
             page = 0
+            self.isPageEnd = false
             self.fireTransaction("pending")
             self.query = "pending"
             deselectOtherViews(pendingView)
@@ -175,6 +177,7 @@ class TransactionViewController: UIViewController {
             selectView(onDeliveryView, label: onDeliveryLabel, imageView: onDeliveryImageView, imageName: "onDelivery2")
             self.tableData.removeAll(keepCapacity: false)
             page = 0
+            self.isPageEnd = false
             self.fireTransaction("completed")
             self.query = "completed"
             deselectOtherViews(onDeliveryView)
@@ -242,7 +245,7 @@ class TransactionViewController: UIViewController {
             manager.GET(APIAtlas.transactionLogs+"\(SessionManager.accessToken())&type=\(queryType)&perPage=15&page=\(page)", parameters: nil, success: {
                 (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
                 let trans: TransactionModel = TransactionModel.parseDataFromDictionary(responseObject as! NSDictionary)
-                
+                println(responseObject)
                 if trans.order_id.count != 0 {
                     if trans.order_id.count < 15 {
                         self.isPageEnd = true
@@ -386,6 +389,18 @@ class TransactionViewController: UIViewController {
             self.emptyView!.hidden = false
             println("unhide empty view")
         }
+    }
+    
+    func didTapReload() {
+        if self.query == "all" {
+            self.fireTransaction("all")
+            self.query = "all"
+        } else if self.query == "completed"{
+            self.fireTransaction("completed")
+            self.query = "completed"
+        }
+        
+        self.emptyView?.hidden = true
     }
 }
 
