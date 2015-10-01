@@ -1,10 +1,10 @@
-/* 
-  LocalizableString.strings
-  YiLinkerOnlineBuyer
-
-  Created by Alvin John Tandoc on 9/15/15.
-  Copyright (c) 2015 yiLinker-online-buyer. All rights reserved.
-*/
+/*
+ LocalizableString.strings
+ YiLinkerOnlineBuyer
+ 
+ Created by Alvin John Tandoc on 9/15/15.
+ Copyright (c) 2015 yiLinker-online-buyer. All rights reserved.
+ */
 
 //Alvin's Module
 
@@ -457,6 +457,10 @@ TRANSACTION_CANCEL_ORDER_SELECT_LOCALIZE_KEY = "Select Reason";
 TRANSACTION_CANCEL_ORDER_SUCCESS_LOCALIZE_KEY = "This order has been successfully beeb cancelled";
 TRANSACTION_CANCEL_ORDER_SUCCESS_SUB_LOCALIZE_KEY = "A Customer Service Representative will contact you shortly to ask how we can help you from losing more orders";
 TRANSACTION_CANCEL_ORDER_RETURN_LOCALIZE_KEY = "Return to Dashboard";
+
+//Transaction Description
+TRANSACTION_PRODUCT_DESCRIPTION_TITLE_LOCALIZE_KEY = "Description";
+TRANSACTION_PRODUCT_DESCRIPTION_LOCALIZE_KEY= "Product Description";
 
 // MARK: - Global
 SOMETHING_WENT_WRONG_LOCALIZE_KEY = "Something Went Wrong";

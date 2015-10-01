@@ -9,7 +9,7 @@
 import UIKit
 
 class TransactionDetailsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource , TransactionSectionFooterViewDelegate, ViewFeedBackViewControllerDelegate, TransactionDeliveryStatusViewDelegate {
-
+    
     @IBOutlet weak var tableView: UITableView!
     
     let list = ["North Face Super Uber Traver Bag", "Beats Studio Type 20 Headphones", "Sony Super Bass"]
@@ -54,7 +54,7 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
     var dimView: UIView!
     
     var viewLeaveFeedback: Bool = false
-    
+    var canMessage: Bool = false
     var delegate: TransactionSectionFooterViewDelegate?
     
     //Transaction Details
@@ -86,6 +86,7 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
     var selectedContact : W_Contact?
     var emptyView : EmptyView?
     var conversations = [W_Conversation]()
+    var contacts = [W_Contact()]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -97,7 +98,7 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
         dimView.hidden = true
         
         self.fireTransactionDetails(self.transactionId)
-        self.getConversationsFromEndpoint("1", limit: "30")
+        self.getContactsFromEndpoint("1", limit: "30", keyword: "")
         
         total_unit_price = (self.totalUnitCost as NSString).floatValue
         total_handling_fee = (self.shippingFee as NSString).floatValue
@@ -159,7 +160,7 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
     }
     
     func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-         self.transactionSectionView = XibHelper.puffViewWithNibName("TransactionViews", index: 7) as! TransactionSectionFooterView
+        self.transactionSectionView = XibHelper.puffViewWithNibName("TransactionViews", index: 7) as! TransactionSectionFooterView
         self.transactionSectionView.delegate = self
         self.transactionSectionView.sellerContactNumberTitle.text = self.contactNumber
         self.transactionSectionView.sellerNameLabelTitle.text = self.seller
@@ -194,11 +195,11 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
     
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         //self.transactionIdView =
-       
         
-         return XibHelper.puffViewWithNibName("TransactionViews", index: 8) as! TransactionSectionHeaderView
+        
+        return XibHelper.puffViewWithNibName("TransactionViews", index: 8) as! TransactionSectionHeaderView
     }
-
+    
     func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return 140
     }
@@ -233,7 +234,7 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
         }
         return self.transactionIdView
     }
-
+    
     func getTransactionDetailsView() -> TransactionDetailsView {
         if self.transactionDetailsView == nil {
             self.transactionDetailsView = XibHelper.puffViewWithNibName("TransactionViews", index: 1) as! TransactionDetailsView
@@ -331,11 +332,11 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
         self.getHeaderView().addSubview(self.getTransactionIdView())
         self.getHeaderView().addSubview(self.getTransactionDetailsView())
         self.getHeaderView().addSubview(self.getTransactionProductListView())
-    
+        
         
         // FOOTERS
         //self.getFooterView().addSubview(self.getTransactionSellerView())
-        self.getFooterView().addSubview(self.getTransactionDeliveryStatusView())
+        //self.getFooterView().addSubview(self.getTransactionDeliveryStatusView())
         self.getFooterView().addSubview(self.getTransactionButtonView())
         
         setUpViews()
@@ -345,11 +346,11 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
         // header
         self.setPosition(self.transactionDetailsView, from: self.transactionIdView)
         self.setPosition(self.transactionProductListView, from: self.transactionDetailsView)
-
+        
         newFrame = self.headerView.frame
         newFrame.size.height = CGRectGetMaxY(self.transactionProductListView.frame)
         self.headerView.frame = newFrame
-
+        
         self.tableView.tableHeaderView = nil
         self.tableView.tableHeaderView = self.headerView
         
@@ -359,16 +360,16 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
         self.getFooterView().addSubview(footerGrayColor)
         
         //self.setPosition(self.transactionDeliveryStatusView, from: self.transactionSellerView)
-        self.setPosition(self.transactionButtonView, from: self.transactionDeliveryStatusView)
-        self.setPosition(footerGrayColor, from: self.transactionButtonView)
-        footerGrayColor.frame.origin.y -= 20
+        //self.setPosition(self.transactionButtonView, from: self.transactionDeliveryStatusView)
+        //self.setPosition(footerGrayColor, from: self.transactionButtonView)
+        //footerGrayColor.frame.origin.y -= 20
         
-        newFrame = self.footerView.frame
-        newFrame.size.height = CGRectGetMaxY(self.transactionButtonView.frame)
-        self.footerView.frame = newFrame
+        //newFrame = self.footerView.frame
+        //newFrame.size.height = CGRectGetMaxY(self.transactionButtonView.frame)
+        //self.footerView.frame = newFrame
         
-        self.tableView.tableFooterView = nil
-        self.tableView.tableFooterView = self.footerView
+        //self.tableView.tableFooterView = nil
+        //self.tableView.tableFooterView = self.footerView
     }
     
     func setPosition(view: UIView!, from: UIView!) {
@@ -389,13 +390,12 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
     func messageSeller(sellerId: Int) {
         let storyBoard: UIStoryboard = UIStoryboard(name: "HomeStoryBoard", bundle: nil)
         let messagingViewController: MessageThreadVC = (storyBoard.instantiateViewControllerWithIdentifier("MessageThreadVC") as? MessageThreadVC)!
-        for var i = 0; i < self.conversations.count; i++ {
-            println("\(sellerId) \(self.conversations[i].sender)")
-            if conversations[i].sender == "\(sellerId)" {
-                self.selectedContact = conversations[i].contact
-                println("--- \(conversations[i].contact)")
+        for var i = 0; i < self.contacts.count; i++ {
+            if "\(sellerId)" == contacts[i].userId {
+                self.selectedContact = contacts[i]
+                self.canMessage = true
             } else {
-                println("\(conversations[i].contact)")
+                //self.canMessage = false
             }
         }
         
@@ -407,7 +407,13 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
         }
         messagingViewController.sender = W_Contact(fullName: SessionManager.userFullName() , userRegistrationIds: "", userIdleRegistrationIds: "", userId: SessionManager.accessToken(), profileImageUrl: SessionManager.profileImageStringUrl(), isOnline: isOnline)
         messagingViewController.recipient = selectedContact
-        self.navigationController?.pushViewController(messagingViewController, animated: true)
+        
+        if self.canMessage {
+            self.navigationController?.pushViewController(messagingViewController, animated: true)
+        } else {
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "You cannot allowed to message this seller.", title: "Error")
+        }
+        
     }
     
     //MARK: View sellers feedback
@@ -428,7 +434,7 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
             attributeModal.screenWidth = self.view.frame.width
             self.tabBarController?.presentViewController(attributeModal, animated: true, completion: nil)
         }
-       
+        
     }
     
     //MARK: Get transactions details by id
@@ -443,21 +449,21 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
             self.transactionDetailsModel = TransactionDetailsModel.parseDataFromDictionary(responseObject as! NSDictionary)
             
             println(responseObject.description)
-          
+            
             self.cellCount = self.transactionDetailsModel!.sellerId.count
             self.cellSection = self.transactionDetailsModel!.sellerId.count
             
             for var a = 0; a < self.transactionDetailsModel.sellerId.count; a++ {
                 var arr = [TransactionDetailsProductsModel]()
                 for var b = 0; b < self.transactionDetailsModel.productName.count; b++ {
-                   if self.transactionDetailsModel.sellerId[a] == self.transactionDetailsModel.sellerId2[b] {
+                    if self.transactionDetailsModel.sellerId[a] == self.transactionDetailsModel.sellerId2[b] {
                         self.tableSectionContents = TransactionDetailsProductsModel(orderProductId: self.transactionDetailsModel.orderProductId[b], productId: self.transactionDetailsModel.productId[b], quantity: self.transactionDetailsModel.quantity[b], unitPrice: self.transactionDetailsModel.unitPrice[b], totalPrice: self.transactionDetailsModel.totalPrice[b], productName: self.transactionDetailsModel.productName[b], handlingFee: self.transactionDetailsModel.handlingFee[b])
                         arr.append(self.tableSectionContents)
                     }
                 }
                 self.table.append(TransactionDetailsModel(sellerName: self.transactionDetailsModel!.sellerStore[a], sellerContact: self.transactionDetailsModel!.sellerContactNumber[a], id: self.transactionDetailsModel.sellerId[a], sellerIdForFeedback: self.transactionDetailsModel.sellerId[a], feedback: self.transactionDetailsModel.hasFeedback[a], transactions: arr))
             }
-
+            
             self.tableView.reloadData()
             self.hud?.hide(true)
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
@@ -467,35 +473,31 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
         })
     }
     
-    func getConversationsFromEndpoint(
+    func getContactsFromEndpoint(
         page : String,
-        limit : String){
-            
-            self.showHUD()
-            //SVProgressHUD.show()
-            
-            let manager: APIManager = APIManager.sharedInstance
-            manager.requestSerializer = AFHTTPRequestSerializer()
-            
-            let parameters: NSDictionary = [
-                "page"          : "\(page)",
-                "limit"         : "\(limit)",
-                "access_token"  : SessionManager.accessToken()
-                ]   as Dictionary<String, String>
-            
-            /* uncomment + "a" to test retry sending */
-            let url = APIAtlas.baseUrl + APIAtlas.ACTION_GET_CONVERSATION_HEAD //+ "a"
-            manager.POST(url, parameters: parameters, success: {
-                (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-                self.conversations = W_Conversation.parseConversations(responseObject as! NSDictionary)
-                println(responseObject)
-                self.hud?.hide(true)
-                //SVProgressHUD.dismiss()
-                }, failure: {
-                    (task: NSURLSessionDataTask!, error: NSError!) in
-                    
-                    println("REACHABILITY \(Reachability.isConnectedToNetwork())")
-                    if (Reachability.isConnectedToNetwork()){
+        limit : String,
+        keyword: String){
+            if (Reachability.isConnectedToNetwork()) {
+                self.showHUD()
+                
+                let manager: APIManager = APIManager.sharedInstance
+                manager.requestSerializer = AFHTTPRequestSerializer()
+                
+                let parameters: NSDictionary = [
+                    "page"          : "\(page)",
+                    "limit"         : "\(limit)",
+                    "keyword"       : keyword,
+                    "access_token"  : SessionManager.accessToken()
+                    ]   as Dictionary<String, String>
+                
+                let url = APIAtlas.baseUrl + APIAtlas.ACTION_GET_CONTACTS
+                
+                manager.POST(url, parameters: parameters, success: {
+                    (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+                    self.contacts = W_Contact.parseContacts(responseObject as! NSDictionary)
+                    self.hud?.hide(true)
+                    }, failure: {
+                        (task: NSURLSessionDataTask!, error: NSError!) in
                         let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                         
                         if task.statusCode == 401 {
@@ -506,13 +508,10 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
                             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
                         }
                         
-                        self.conversations = Array<W_Conversation>()
-                        
+                        self.contacts = Array<W_Contact>()
                         self.hud?.hide(true)
-                        //SVProgressHUD.dismiss()
-                    }
-            })
-            
+                })
+            }
     }
     
     func fireRefreshToken() {
@@ -532,7 +531,7 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
         })
         
     }
-
+    
     //MARK: Show HUD
     func showHUD() {
         if self.hud != nil {
@@ -569,7 +568,7 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
     
     //MARK: SMS and Phone call
     func pickupSmsAction() {
-         UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Send SMS action.", title: "SMS pick-up")
+        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Send SMS action.", title: "SMS pick-up")
     }
     
     func pickupCallAction() {
@@ -583,7 +582,7 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
     }
     
     func deliverySmsAction() {
-         UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Send SMS action.", title: "SMS Pick-up")
+        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Send SMS action.", title: "SMS Pick-up")
     }
     
     func deliveryCallAction() {
