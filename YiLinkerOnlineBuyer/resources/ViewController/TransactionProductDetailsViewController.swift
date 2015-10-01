@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TransactionProductDetailsViewController: UIViewController, TransactionCancelOrderViewDelegate, TransactionCancelViewControllerDelegate, TransactionCancelOrderSuccessViewControllerDelegate {
+class TransactionProductDetailsViewController: UIViewController, TransactionCancelOrderViewDelegate, TransactionCancelViewControllerDelegate, TransactionCancelOrderSuccessViewControllerDelegate, TransactionDescriptionViewDelegate, TransactionProductDetailsDescriptionViewControllerDelegate{
 
     @IBOutlet weak var tableView: UITableView!
     
@@ -179,6 +179,7 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
             self.transactionDescriptionView = XibHelper.puffViewWithNibName("TransactionViews", index: 6) as! TransactionDescriptionView
             self.transactionDescriptionView.descriptionTitleLabel.text = self.descriptionTitle
             self.transactionDescriptionView.seeMoreLabel.text = self.seeMore
+            self.transactionDescriptionView.delegate = self
             if self.transactionProductDetailsModel != nil {
                 self.transactionDescriptionView.descriptionLabel.text = self.transactionProductDetailsModel.longDescription
             }
@@ -194,7 +195,7 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
             self.transactionCancelView.cancelOrderLabel.text = self.cancelOrder
             self.transactionCancelView.delegate = self
             self.transactionCancelView.frame.size.width = self.view.frame.size.width
-            self.transactionCancelView.frame.origin.y += CGFloat(120)
+            self.transactionCancelView.frame.origin.y += CGFloat(20)
         }
         return self.transactionCancelView
     }
@@ -218,6 +219,29 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
         }
         
         return self.transactionButtonView
+    }
+    
+    //MARK: Transaction Description Delegate Method
+    func getProductDescription(desc: String) {
+        self.showView()
+        var productDescription = TransactionProductDetailsDescriptionViewController(nibName: "TransactionProductDetailsDescriptionViewController", bundle: nil)
+        productDescription.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
+        productDescription.providesPresentationContextTransitionStyle = true
+        productDescription.definesPresentationContext = true
+        productDescription.view.frame.origin.y = productDescription.view.frame.size.height
+        productDescription.longDesctiptionLabel.text = desc
+        productDescription.delegate = self
+        self.navigationController?.presentViewController(productDescription, animated: true, completion:
+            nil)
+    }
+    
+    //MARK: TransactionProductDetailsDescriptionViewController delegate method
+    func closeAction() {
+        self.dismissView()
+    }
+    
+    func okAction() {
+        self.dismissView()
     }
     
     // MARK: - Methods

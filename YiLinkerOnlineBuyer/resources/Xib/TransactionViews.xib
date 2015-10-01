@@ -880,28 +880,42 @@ Phiippines</string>
                         <constraint firstAttribute="width" constant="209" id="dTe-XL-6jD"/>
                     </constraints>
                 </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QIq-iT-Mk8">
+                    <rect key="frame" x="8" y="8" width="359" height="120"/>
+                    <state key="normal">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="seeMore:" destination="CIA-nt-QAA" eventType="touchUpInside" id="o9I-Mp-I19"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="R0O-Uw-d5G" firstAttribute="leading" secondItem="CIA-nt-QAA" secondAttribute="leading" constant="10" id="15D-iS-7re"/>
                 <constraint firstItem="N8e-iL-fXN" firstAttribute="top" secondItem="CIA-nt-QAA" secondAttribute="top" id="Ase-Lm-dsd"/>
                 <constraint firstAttribute="trailing" secondItem="XwX-un-xTz" secondAttribute="trailing" id="Dzf-rK-nF5"/>
+                <constraint firstItem="QIq-iT-Mk8" firstAttribute="leading" secondItem="CIA-nt-QAA" secondAttribute="leading" constant="8" id="G0x-Uh-Ype"/>
                 <constraint firstAttribute="centerX" secondItem="oLe-L9-EGC" secondAttribute="centerX" id="NOh-Nj-WzS"/>
                 <constraint firstItem="XwX-un-xTz" firstAttribute="top" secondItem="CIA-nt-QAA" secondAttribute="top" constant="41" id="PIP-Vn-XZf"/>
                 <constraint firstItem="XwX-un-xTz" firstAttribute="leading" secondItem="CIA-nt-QAA" secondAttribute="leading" id="Pao-o2-0d4"/>
                 <constraint firstAttribute="trailing" secondItem="R0O-Uw-d5G" secondAttribute="trailing" constant="8" id="Vmy-7q-RZt"/>
                 <constraint firstItem="N8e-iL-fXN" firstAttribute="leading" secondItem="CIA-nt-QAA" secondAttribute="leading" constant="8" id="YKi-xb-tFQ"/>
                 <constraint firstItem="R0O-Uw-d5G" firstAttribute="top" secondItem="XwX-un-xTz" secondAttribute="bottom" constant="15" id="a8A-eN-Vh1"/>
+                <constraint firstAttribute="bottom" secondItem="QIq-iT-Mk8" secondAttribute="bottom" constant="8" id="ap2-mw-BsG"/>
                 <constraint firstAttribute="bottom" secondItem="oLe-L9-EGC" secondAttribute="bottom" constant="2" id="bOu-EB-o23"/>
+                <constraint firstAttribute="trailing" secondItem="QIq-iT-Mk8" secondAttribute="trailing" constant="8" id="laf-d0-fiL"/>
+                <constraint firstItem="QIq-iT-Mk8" firstAttribute="top" secondItem="CIA-nt-QAA" secondAttribute="top" constant="8" id="qnk-zV-m7V"/>
                 <constraint firstAttribute="trailing" secondItem="N8e-iL-fXN" secondAttribute="trailing" constant="8" id="yOe-4a-BYy"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="descriptionLabel" destination="R0O-Uw-d5G" id="c9p-s0-y4p"/>
                 <outlet property="descriptionTitleLabel" destination="N8e-iL-fXN" id="llj-15-toY"/>
+                <outlet property="seeMoreButton" destination="QIq-iT-Mk8" id="ddd-eC-9J3"/>
                 <outlet property="seeMoreLabel" destination="jsQ-aI-8bJ" id="yyz-RD-CCj"/>
             </connections>
-            <point key="canvasLocation" x="939.5" y="421"/>
+            <point key="canvasLocation" x="935.5" y="410"/>
         </view>
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="HYi-6R-oZb" userLabel="Product Description" customClass="TransactionSectionFooterView" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="375" height="140"/>

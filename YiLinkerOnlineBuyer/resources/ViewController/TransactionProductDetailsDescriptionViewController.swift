@@ -8,6 +8,11 @@
 
 import UIKit
 
+protocol TransactionProductDetailsDescriptionViewControllerDelegate {
+    func closeAction()
+    func okAction()
+}
+
 class TransactionProductDetailsDescriptionViewController: UIViewController {
 
     @IBOutlet weak var closeButton: UIButton!
@@ -15,6 +20,8 @@ class TransactionProductDetailsDescriptionViewController: UIViewController {
     @IBOutlet weak var descriptionTitleLabel: UILabel!
     @IBOutlet weak var productDescriptionLabel: UILabel!
     @IBOutlet weak var longDesctiptionLabel: UILabel!
+    
+    var delegate: TransactionProductDetailsDescriptionViewControllerDelegate?
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -24,6 +31,16 @@ class TransactionProductDetailsDescriptionViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    @IBAction func closeAction(sender: AnyObject) {
+        self.delegate?.closeAction()
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    @IBAction func okAction(sender: AnyObject) {
+        self.delegate?.okAction()
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
     
 
