@@ -47,7 +47,7 @@ class ProfileUserDetailsModel: NSObject {
         self.messageCount = messageCount
         self.followingCount = followingCount
         self.isEmailSubscribed = isEmailSubscribed
-        self.isSmsSubscribed = isEmailSubscribed
+        self.isSmsSubscribed = isSmsSubscribed
     }
     
     override init() {
