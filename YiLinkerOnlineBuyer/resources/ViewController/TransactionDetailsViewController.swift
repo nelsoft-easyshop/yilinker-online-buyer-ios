@@ -393,10 +393,8 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
         for var i = 0; i < self.contacts.count; i++ {
             if "\(sellerId)" == contacts[i].userId {
                 self.selectedContact = contacts[i]
-                println("--- \(contacts[i].fullName)")
                 self.canMessage = true
             } else {
-                println("\(contacts[i].fullName) \(self.seller)")
                 //self.canMessage = false
             }
         }
@@ -479,7 +477,6 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
         page : String,
         limit : String,
         keyword: String){
-            //SVProgressHUD.show()
             if (Reachability.isConnectedToNetwork()) {
                 self.showHUD()
                 
@@ -498,8 +495,6 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
                 manager.POST(url, parameters: parameters, success: {
                     (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
                     self.contacts = W_Contact.parseContacts(responseObject as! NSDictionary)
-        
-                    //SVProgressHUD.dismiss()
                     self.hud?.hide(true)
                     }, failure: {
                         (task: NSURLSessionDataTask!, error: NSError!) in
@@ -514,8 +509,6 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
                         }
                         
                         self.contacts = Array<W_Contact>()
-                        
-                        //SVProgressHUD.dismiss()
                         self.hud?.hide(true)
                 })
             }

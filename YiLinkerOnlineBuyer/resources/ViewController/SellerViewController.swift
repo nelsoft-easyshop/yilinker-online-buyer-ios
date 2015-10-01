@@ -571,11 +571,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         for var i = 0; i < self.contacts.count; i++ {
             if "\(self.sellerId)" == contacts[i].userId {
                 self.selectedContact = contacts[i]
-                println("--- \(contacts[i].fullName)")
                 self.canMessage = true
-            } else {
-                println("\(contacts[i].fullName) \(self.sellerId)")
-                //self.canMessage = false
             }
         }
         
@@ -600,7 +596,6 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         page : String,
         limit : String,
         keyword: String){
-            //SVProgressHUD.show()
             if (Reachability.isConnectedToNetwork()) {
                 self.showHUD()
                 
@@ -619,8 +614,6 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 manager.POST(url, parameters: parameters, success: {
                     (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
                     self.contacts = W_Contact.parseContacts(responseObject as! NSDictionary)
-                    
-                    //SVProgressHUD.dismiss()
                     self.hud?.hide(true)
                     }, failure: {
                         (task: NSURLSessionDataTask!, error: NSError!) in
@@ -635,8 +628,6 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
                         }
                         
                         self.contacts = Array<W_Contact>()
-                        
-                        //SVProgressHUD.dismiss()
                         self.hud?.hide(true)
                 })
             }
