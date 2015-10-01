@@ -75,6 +75,10 @@ class W_Contact: NSObject {
                         userId = tempVar
                     }
                     
+                    if let tempVar = contact["userId"] as? Int {
+                        userId = "\(tempVar)"
+                    }
+                    
                     if let tempVar = contact["profileImageUrl"] as? String {
                         profileImageUrl = tempVar
                     }
