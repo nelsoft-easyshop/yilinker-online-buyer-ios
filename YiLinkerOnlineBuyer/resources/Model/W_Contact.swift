@@ -9,7 +9,7 @@
 import UIKit
 
 class W_Contact: NSObject {
-
+    
     var fullName  : String
     var userRegistrationIds : String
     var userIdleRegistrationIds : String
@@ -75,6 +75,10 @@ class W_Contact: NSObject {
                         userId = tempVar
                     }
                     
+                    if let tempVar = contact["userId"] as? Int {
+                        userId = "\(tempVar)"
+                    }
+                    
                     if let tempVar = contact["profileImageUrl"] as? String {
                         profileImageUrl = tempVar
                     }
@@ -86,7 +90,7 @@ class W_Contact: NSObject {
                     parsedContacts.append(W_Contact(fullName: fullName, userRegistrationIds: userRegistrationIds, userIdleRegistrationIds: userIdleRegistrationIds, userId: userId, profileImageUrl: profileImageUrl, isOnline: isOnline
                         ))
                 }
-
+                
             }
             
         } // dictionary

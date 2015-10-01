@@ -349,7 +349,6 @@
 		F7C569E11BB1776F004740E1 /* TransactionProductDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7C569DC1BB1776F004740E1 /* TransactionProductDetailsViewController.xib */; };
 		F7C569E21BB1776F004740E1 /* TransactionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7C569DD1BB1776F004740E1 /* TransactionTableViewCell.xib */; };
 		F7C569E31BB1776F004740E1 /* TransactionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7C569DE1BB1776F004740E1 /* TransactionViewController.xib */; };
-		F7C569E41BB1776F004740E1 /* TransactionViews.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7C569DF1BB1776F004740E1 /* TransactionViews.xib */; };
 		F7C569E61BB17823004740E1 /* TransactionProductDetailsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7C569E51BB17823004740E1 /* TransactionProductDetailsTableViewCell.xib */; };
 		F7C569F71BB1790A004740E1 /* TransactionCancelOrderStatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C569E71BB1790A004740E1 /* TransactionCancelOrderStatusViewController.swift */; };
 		F7C569F81BB1790A004740E1 /* TransactionCancelOrderStatusViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7C569E81BB1790A004740E1 /* TransactionCancelOrderStatusViewController.xib */; };
@@ -390,6 +389,9 @@
 		F7D37CA21B92B09100FA7B16 /* ViewFeedBackViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7D37CA01B92B09100FA7B16 /* ViewFeedBackViewController.xib */; };
 		F7D8C9051BBC056200305EF2 /* SellerCategoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D8C9041BBC056100305EF2 /* SellerCategoryModel.swift */; };
 		F7D8C9091BBC1BB300305EF2 /* SellerSubCategoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D8C9081BBC1BB300305EF2 /* SellerSubCategoryModel.swift */; };
+		F7D9BAB91BBD70830097B76C /* TransactionProductDetailsDescriptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D9BAB71BBD70830097B76C /* TransactionProductDetailsDescriptionViewController.swift */; };
+		F7D9BABA1BBD70830097B76C /* TransactionProductDetailsDescriptionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7D9BAB81BBD70830097B76C /* TransactionProductDetailsDescriptionViewController.xib */; };
+		F7D9BABC1BBD70AA0097B76C /* TransactionViews.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7D9BABB1BBD70AA0097B76C /* TransactionViews.xib */; };
 		F7DC7ED61BA13E3D004F7FD4 /* SellerCategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7DC7ED41BA13E3D004F7FD4 /* SellerCategoryViewController.swift */; };
 		F7DC7ED71BA13E3D004F7FD4 /* SellerCategoryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7DC7ED51BA13E3D004F7FD4 /* SellerCategoryViewController.xib */; };
 		F7DC7EDA1BA13FAC004F7FD4 /* SellerCategoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7DC7ED81BA13FAC004F7FD4 /* SellerCategoryTableViewCell.swift */; };
@@ -766,7 +768,6 @@
 		F7C569DC1BB1776F004740E1 /* TransactionProductDetailsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TransactionProductDetailsViewController.xib; sourceTree = "<group>"; };
 		F7C569DD1BB1776F004740E1 /* TransactionTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TransactionTableViewCell.xib; sourceTree = "<group>"; };
 		F7C569DE1BB1776F004740E1 /* TransactionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TransactionViewController.xib; sourceTree = "<group>"; };
-		F7C569DF1BB1776F004740E1 /* TransactionViews.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TransactionViews.xib; sourceTree = "<group>"; };
 		F7C569E51BB17823004740E1 /* TransactionProductDetailsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TransactionProductDetailsTableViewCell.xib; sourceTree = "<group>"; };
 		F7C569E71BB1790A004740E1 /* TransactionCancelOrderStatusViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionCancelOrderStatusViewController.swift; sourceTree = "<group>"; };
 		F7C569E81BB1790A004740E1 /* TransactionCancelOrderStatusViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TransactionCancelOrderStatusViewController.xib; sourceTree = "<group>"; };
@@ -808,6 +809,9 @@
 		F7D37CA01B92B09100FA7B16 /* ViewFeedBackViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ViewFeedBackViewController.xib; path = YiLinkerOnlineBuyer/resources/Xib/ViewFeedBackViewController.xib; sourceTree = SOURCE_ROOT; };
 		F7D8C9041BBC056100305EF2 /* SellerCategoryModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SellerCategoryModel.swift; path = YiLinkerOnlineBuyer/resources/Model/SellerCategoryModel.swift; sourceTree = SOURCE_ROOT; };
 		F7D8C9081BBC1BB300305EF2 /* SellerSubCategoryModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SellerSubCategoryModel.swift; path = YiLinkerOnlineBuyer/resources/Model/SellerSubCategoryModel.swift; sourceTree = SOURCE_ROOT; };
+		F7D9BAB71BBD70830097B76C /* TransactionProductDetailsDescriptionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionProductDetailsDescriptionViewController.swift; sourceTree = "<group>"; };
+		F7D9BAB81BBD70830097B76C /* TransactionProductDetailsDescriptionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TransactionProductDetailsDescriptionViewController.xib; sourceTree = "<group>"; };
+		F7D9BABB1BBD70AA0097B76C /* TransactionViews.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TransactionViews.xib; path = ../../../TransactionViews.xib; sourceTree = "<group>"; };
 		F7DC7ED41BA13E3D004F7FD4 /* SellerCategoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SellerCategoryViewController.swift; path = YiLinkerOnlineBuyer/resources/ViewController/SellerCategoryViewController.swift; sourceTree = SOURCE_ROOT; };
 		F7DC7ED51BA13E3D004F7FD4 /* SellerCategoryViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SellerCategoryViewController.xib; path = YiLinkerOnlineBuyer/resources/ViewController/SellerCategoryViewController.xib; sourceTree = SOURCE_ROOT; };
 		F7DC7ED81BA13FAC004F7FD4 /* SellerCategoryTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SellerCategoryTableViewCell.swift; path = YiLinkerOnlineBuyer/resources/ViewController/SellerCategoryTableViewCell.swift; sourceTree = SOURCE_ROOT; };
@@ -1162,6 +1166,8 @@
 		0C9937221B750583000D6074 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				F7D9BAB71BBD70830097B76C /* TransactionProductDetailsDescriptionViewController.swift */,
+				F7D9BAB81BBD70830097B76C /* TransactionProductDetailsDescriptionViewController.xib */,
 				0C5066011BB161F3003793C5 /* HelpViewController.xib */,
 				F7C569E71BB1790A004740E1 /* TransactionCancelOrderStatusViewController.swift */,
 				F7C569E81BB1790A004740E1 /* TransactionCancelOrderStatusViewController.xib */,
@@ -1250,11 +1256,11 @@
 		0C9937291B750583000D6074 /* Xib */ = {
 			isa = PBXGroup;
 			children = (
+				F7D9BABB1BBD70AA0097B76C /* TransactionViews.xib */,
 				F7C569DB1BB1776F004740E1 /* TransactionDetailsViewController.xib */,
 				F7C569DC1BB1776F004740E1 /* TransactionProductDetailsViewController.xib */,
 				F7C569DD1BB1776F004740E1 /* TransactionTableViewCell.xib */,
 				F7C569DE1BB1776F004740E1 /* TransactionViewController.xib */,
-				F7C569DF1BB1776F004740E1 /* TransactionViews.xib */,
 				0C374F251B88E3790050AE1D /* AboutSellerTableViewCell.xib */,
 				79E85FD11B8A230500428AA1 /* ActivityLogHeaderTableViewCell.xib */,
 				79E68B721B8AB900008626E4 /* ActivityLogTableViewCell.xib */,
@@ -1581,7 +1587,6 @@
 				0C2F44D11B8576FE00021F45 /* Panton SemiBold.otf in Resources */,
 				F7C569E61BB17823004740E1 /* TransactionProductDetailsTableViewCell.xib in Resources */,
 				0C9937641B750583000D6074 /* LayoutHeaderCollectionViewCell.xib in Resources */,
-				F7C569E41BB1776F004740E1 /* TransactionViews.xib in Resources */,
 				79E68B831B8AEC85008626E4 /* PointsEarnedTableViewCell.xib in Resources */,
 				79E68B8F1B8B0717008626E4 /* PointsTableViewCell.xib in Resources */,
 				F740F0921B90D1E200D23A34 /* close2.png in Resources */,
@@ -1626,8 +1631,10 @@
 				0C2F44C61B8576FE00021F45 /* Panton Bold.otf in Resources */,
 				F7CCDA951B943CBB000F5AD4 /* SellerViewController.xib in Resources */,
 				0C374F2E1B88E3790050AE1D /* PlainTableViewCell.xib in Resources */,
+				F7D9BABA1BBD70830097B76C /* TransactionProductDetailsDescriptionViewController.xib in Resources */,
 				79E68BAB1B8B4EB9008626E4 /* EditProfilePersonalInformationTableViewCell.xib in Resources */,
 				79EBE8861B95F50700434B42 /* ChangePasswordViewController.xib in Resources */,
+				F7D9BABC1BBD70AA0097B76C /* TransactionViews.xib in Resources */,
 				79A1C6F11B8329490043AA36 /* SearchSuggestionTableViewCell.xib in Resources */,
 				F7DC7ED71BA13E3D004F7FD4 /* SellerCategoryViewController.xib in Resources */,
 				26AFB3C81B79DE5C00E50926 /* ReviewTableViewCell.xib in Resources */,
@@ -1793,6 +1800,7 @@
 				0CDA117C1B764015007B5DED /* LoginAndRegisterContentViewController.swift in Sources */,
 				0C99374A1B750583000D6074 /* HalfVerticalImageCollectionViewCell.swift in Sources */,
 				B77B8DC31B9B54B40002C513 /* W_Conversation.swift in Sources */,
+				F7D9BAB91BBD70830097B76C /* TransactionProductDetailsDescriptionViewController.swift in Sources */,
 				B77B8DD91B9B554A0002C513 /* MessageThreadVC.swift in Sources */,
 				0C99375C1B750583000D6074 /* CircularMenuViewController.swift in Sources */,
 				B77B8DD71B9B554A0002C513 /* MessageThreadImageTVC.swift in Sources */,
