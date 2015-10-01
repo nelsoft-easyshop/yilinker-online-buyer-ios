@@ -87,7 +87,7 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
             if indexPath.row == 0 {
                 
                 cell.rowTextField.text = self.addressModel.title
-                
+                cell.rowTitleLabel.required()
             } else if indexPath.row == 1 {
                 
                 cell.rowTextField.text = self.addressModel.unitNumber
@@ -99,7 +99,6 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
             } else if indexPath.row == 3 {
                 
                 cell.rowTextField.text = self.addressModel.streetNumber
-                cell.rowTitleLabel.required()
             } else if indexPath.row == 4 {
                 
                 cell.rowTextField.text = self.addressModel.streetName
@@ -111,15 +110,15 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
             } else if indexPath.row == 6 {
                 
                 cell.rowTextField.text = self.addressModel.province
-                
+                cell.rowTitleLabel.required()
             } else if indexPath.row == 7 {
                 
                 cell.rowTextField.text = self.addressModel.city
-                
+                cell.rowTitleLabel.required()
             } else if indexPath.row == 8 {
                 
                 cell.rowTextField.text = self.addressModel.barangay
-                
+                cell.rowTitleLabel.required()
             } else if indexPath.row == 9 {
                 
                 cell.rowTextField.text = self.addressModel.zipCode
@@ -131,7 +130,7 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
             }
         }
         
-        if indexPath.row == 3 {
+        if indexPath.row == 0 {
             cell.rowTitleLabel.required()
         } else if indexPath.row == 4 {
             cell.rowTitleLabel.required()
@@ -140,6 +139,7 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
         }
         
         if indexPath.row == 6 || indexPath.row == 7 || indexPath.row == 8 {
+            cell.rowTitleLabel.required()
             var selected: Int = 0
             var titles: [String] = []
             if indexPath.row == 6 {
@@ -153,6 +153,7 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
                     }
                 }
             } else if indexPath.row == 7 {
+                cell.rowTitleLabel.required()
                 if self.cityModel.location.count != 0 {
                     for (index, uid) in enumerate(self.cityModel.cityId) {
                         if uid == self.addressModel.cityId {
@@ -163,6 +164,7 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
                     }
                 }
             } else if indexPath.row == 8 {
+                cell.rowTitleLabel.required()
                 if self.cityModel.location.count != 0 {
                     for (index, uid) in enumerate(self.barangayModel.barangayId) {
                         if uid == self.addressModel.barangayId {
@@ -265,16 +267,16 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
     func check() {
         var index: Int = 0
         for i in 0..<10 {
-            if getTextAtIndex(i) == "" && i != 1 && i != 2 && i != 10 && i != 5 {
+            if getTextAtIndex(i) == "" && i != 0 && i != 2 && i != 10 && i != 5 {
                 index = i
                 break
             }
         }
         
-        if index == 3 {
+        if index == 1 {
             self.activeTextField = index - 1
             self.next()
-            showAlert(title: AddressStrings.incompleteInformation, message: AddressStrings.streetNumberRequired)
+            showAlert(title: AddressStrings.incompleteInformation, message: AddressStrings.mobileNumberIsRequired)
         } else if index == 4 {
             self.activeTextField = index - 1
             self.next()
@@ -284,6 +286,7 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
             self.next()
             showAlert(title: AddressStrings.incompleteInformation, message: AddressStrings.zipCodeRequired)
         }
+        
         //If index is zero all required fields are filled up
         if index == 0 {
             if self.isEdit2 {

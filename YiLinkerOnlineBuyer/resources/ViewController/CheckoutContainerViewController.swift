@@ -440,13 +440,12 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
     
     func fireRefreshToken(refreshType: CheckoutRefreshType) {
         self.showHUD()
-        let url: String = "http://online.api.easydeal.ph/api/v1/login"
         let params: NSDictionary = ["client_id": Constants.Credentials.clientID,
             "client_secret": Constants.Credentials.clientSecret,
             "grant_type": Constants.Credentials.grantRefreshToken,
             "refresh_token": SessionManager.refreshToken()]
         let manager = APIManager.sharedInstance
-        manager.POST(url, parameters: params, success: {
+        manager.POST(APIAtlas.loginUrl, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
                 if refreshType == CheckoutRefreshType.COD {

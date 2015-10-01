@@ -230,13 +230,15 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
     func fireSetCheckoutAddress(addressId: Int) {
         self.showHUD()
         let manager: APIManager = APIManager.sharedInstance
-        let parameters: NSDictionary = ["access_token": SessionManager.accessToken(), "address_id": addressId]
+        let parameters: NSDictionary = ["access_token": SessionManager.accessToken(), "address_id": "\(addressId)"]
         manager.POST(APIAtlas.setCheckoutAddressUrl, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             let jsonResult: Dictionary = responseObject as! Dictionary<String, AnyObject>!
             if jsonResult["isSuccessful"] as! Bool != true {
                 UIAlertController.displayErrorMessageWithTarget(self, errorMessage: jsonResult["message"] as! String)
                 self.isValidToSelectPayment = false
+            } else {
+                self.isValidToSelectPayment = true
             }
             self.hud?.hide(true)
             
