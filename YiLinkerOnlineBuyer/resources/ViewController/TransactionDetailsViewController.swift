@@ -335,7 +335,7 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
         
         // FOOTERS
         //self.getFooterView().addSubview(self.getTransactionSellerView())
-        self.getFooterView().addSubview(self.getTransactionDeliveryStatusView())
+        //self.getFooterView().addSubview(self.getTransactionDeliveryStatusView())
         self.getFooterView().addSubview(self.getTransactionButtonView())
         
         setUpViews()
@@ -359,16 +359,16 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
         self.getFooterView().addSubview(footerGrayColor)
         
         //self.setPosition(self.transactionDeliveryStatusView, from: self.transactionSellerView)
-        self.setPosition(self.transactionButtonView, from: self.transactionDeliveryStatusView)
-        self.setPosition(footerGrayColor, from: self.transactionButtonView)
-        footerGrayColor.frame.origin.y -= 20
+        //self.setPosition(self.transactionButtonView, from: self.transactionDeliveryStatusView)
+        //self.setPosition(footerGrayColor, from: self.transactionButtonView)
+        //footerGrayColor.frame.origin.y -= 20
         
-        newFrame = self.footerView.frame
-        newFrame.size.height = CGRectGetMaxY(self.transactionButtonView.frame)
-        self.footerView.frame = newFrame
+        //newFrame = self.footerView.frame
+        //newFrame.size.height = CGRectGetMaxY(self.transactionButtonView.frame)
+        //self.footerView.frame = newFrame
         
-        self.tableView.tableFooterView = nil
-        self.tableView.tableFooterView = self.footerView
+        //self.tableView.tableFooterView = nil
+        //self.tableView.tableFooterView = self.footerView
     }
     
     func setPosition(view: UIView!, from: UIView!) {

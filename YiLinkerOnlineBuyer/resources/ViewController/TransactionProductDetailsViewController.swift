@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TransactionProductDetailsViewController: UIViewController, TransactionCancelOrderViewDelegate, TransactionCancelViewControllerDelegate, TransactionCancelOrderSuccessViewControllerDelegate, TransactionDescriptionViewDelegate, TransactionProductDetailsDescriptionViewControllerDelegate{
+class TransactionProductDetailsViewController: UIViewController, TransactionCancelOrderViewDelegate, TransactionCancelViewControllerDelegate, TransactionCancelOrderSuccessViewControllerDelegate, TransactionDescriptionViewDelegate, TransactionProductDetailsDescriptionViewControllerDelegate, TransactionDeliveryStatusViewDelegate{
 
     @IBOutlet weak var tableView: UITableView!
     
@@ -22,6 +22,7 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
     
     var footerView: UIView!
     var transactionDescriptionView: TransactionDescriptionView!
+    var transactionDeliveryStatusView: TransactionDeliveryStatusView!
     var transactionButtonView: UIView!
     var dimView: UIView!
     
@@ -59,10 +60,16 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
     //Cancel Order
     var cancelOrder = StringHelper.localizedStringWithKey("TRANSACTION_PRODUCT_DETAILS_CANCEL_ORDER_LOCALIZE_KEY")
     
-    var descriptionTitle = StringHelper.localizedStringWithKey("TRANSACTION_PRODUCT_DESCRIPTION_TITLE_LOCALIZE_KEY")
+    var descriptionProductTitle = StringHelper.localizedStringWithKey("TRANSACTION_PRODUCT_DESCRIPTION_TITLE_LOCALIZE_KEY")
     var longDescription = StringHelper.localizedStringWithKey("TRANSACTION_PRODUCT_DESCRIPTION_LOCALIZE_KEY")
     
-     var okTitle = StringHelper.localizedStringWithKey("OK_BUTTON_LOCALIZE_KEY")
+    var okTitle = StringHelper.localizedStringWithKey("OK_BUTTON_LOCALIZE_KEY")
+    
+    //Delivery Status
+    var deliveryStatus = StringHelper.localizedStringWithKey("TRANSACTION_DETAILS_DELIVERY_STATUS_LOCALIZE_KEY")
+    var checkIn = StringHelper.localizedStringWithKey("TRANSACTION_DETAILS_CHECKIN_LOCALIZE_KEY")
+    var pickUp = StringHelper.localizedStringWithKey("TRANSACTION_DETAILS_PICKUP_LOCALIZE_KEY")
+    var delivery = StringHelper.localizedStringWithKey("TRANSACTION_DETAILS_DELIVERY_LOCALIZE_KEY")
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -193,6 +200,23 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
         return self.transactionDescriptionView
     }
     
+    
+    func getTransactionDeliveryStatusView() -> TransactionDeliveryStatusView {
+        if self.transactionDeliveryStatusView == nil {
+            self.transactionDeliveryStatusView = XibHelper.puffViewWithNibName("TransactionViews", index: 3) as! TransactionDeliveryStatusView
+            self.transactionDeliveryStatusView.deliveryStatusLabel.text = self.deliveryStatus
+            self.transactionDeliveryStatusView.nameAndPlaceTitleLabel.text = self.checkIn
+            self.transactionDeliveryStatusView.pickupRiderTitleLabel.text = self.pickUp
+            self.transactionDeliveryStatusView.deliveryRiderTitleLabel.text = self.delivery
+            self.transactionDeliveryStatusView.frame.size.width = self.view.frame.size.width
+            self.transactionDeliveryStatusView.delegate = self
+            
+            self.transactionDeliveryStatusView.frame.size.width = self.view.frame.size.width
+            self.transactionDeliveryStatusView.frame.origin.y += CGFloat(20)
+        }
+        return self.transactionDeliveryStatusView
+    }
+    
     func getTransactionCancelOrderView() -> TransactionCancelOrderView {
         if self.transactionCancelView == nil {
             self.transactionCancelView = XibHelper.puffViewWithNibName("TransactionViews", index: 9) as! TransactionCancelOrderView
@@ -233,7 +257,7 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
         productDescription.providesPresentationContextTransitionStyle = true
         productDescription.definesPresentationContext = true
         productDescription.view.frame.origin.y = productDescription.view.frame.size.height
-        productDescription.descriptionTitleLabel.text = self.descriptionTitle
+        productDescription.descriptionTitleLabel.text = self.descriptionProductTitle
         productDescription.longDesctiptionLabel.text = self.longDescription
         productDescription.longDesctiptionLabel.text = desc
         productDescription.okButton.setTitle(self.okTitle, forState: UIControlState.Normal)
@@ -261,6 +285,7 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
         
         // FOOTERS
         self.getFooterView().addSubview(self.getTransactionDescriptionView())
+        self.getFooterView().addSubview(self.getTransactionDeliveryStatusView())
         self.getFooterView().addSubview(self.getTransactionCancelOrderView())
         //self.getFooterView().addSubview(self.getTransactionButtonView())
         
@@ -287,10 +312,13 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
         
         self.setPosition(self.transactionCancelView, from: self.transactionDescriptionView)
         self.setPosition(footerGrayColor, from: self.transactionCancelView)
+
+        self.setPosition(self.transactionButtonView, from: self.transactionDeliveryStatusView)
+        self.setPosition(footerGrayColor, from: self.transactionButtonView)
         footerGrayColor.frame.origin.y -= 20
         
         newFrame = self.footerView.frame
-        newFrame.size.height = CGRectGetMaxY(self.transactionCancelView.frame)
+        newFrame.size.height = CGRectGetMaxY(self.transactionButtonView.frame)
         self.footerView.frame = newFrame
 
         self.tableView.tableFooterView = nil
@@ -325,6 +353,36 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
     
     func back() {
         self.navigationController!.popViewControllerAnimated(true)
+    }
+    
+    //MARK: Delivery Status
+    //MARK: SMS and Phone call
+    func pickupSmsAction() {
+        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Send SMS action.", title: "SMS pick-up")
+    }
+    
+    func pickupCallAction() {
+        if UIApplication.sharedApplication().canOpenURL(NSURL(string: "tel:9809088798")!) {
+            println("can call")
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Call number action.", title: "Call Pick-up")
+        } else {
+            println("cant make a call")
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Cannot make a call", title: "Call Pick-up")
+        }
+    }
+    
+    func deliverySmsAction() {
+        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Send SMS action.", title: "SMS Pick-up")
+    }
+    
+    func deliveryCallAction() {
+        if UIApplication.sharedApplication().canOpenURL(NSURL(string: "tel:9809088798")!) {
+            println("can call")
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Call number action.", title: "Call Delivery")
+        } else {
+            println("cant make a call")
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Cannot make a call", title: "Call Delivery")
+        }
     }
     
     //MARK: TransactionCancelOrderViewDelegate
