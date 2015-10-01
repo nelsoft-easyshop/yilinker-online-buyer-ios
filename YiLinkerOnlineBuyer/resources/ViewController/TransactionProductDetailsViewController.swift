@@ -59,6 +59,10 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
     //Cancel Order
     var cancelOrder = StringHelper.localizedStringWithKey("TRANSACTION_PRODUCT_DETAILS_CANCEL_ORDER_LOCALIZE_KEY")
     
+    var descriptionTitle = StringHelper.localizedStringWithKey("TRANSACTION_PRODUCT_DESCRIPTION_TITLE_LOCALIZE_KEY")
+    var longDescription = StringHelper.localizedStringWithKey("TRANSACTION_PRODUCT_DESCRIPTION_LOCALIZE_KEY")
+    
+     var okTitle = StringHelper.localizedStringWithKey("OK_BUTTON_LOCALIZE_KEY")
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -229,7 +233,10 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
         productDescription.providesPresentationContextTransitionStyle = true
         productDescription.definesPresentationContext = true
         productDescription.view.frame.origin.y = productDescription.view.frame.size.height
+        productDescription.descriptionTitleLabel.text = self.descriptionTitle
+        productDescription.longDesctiptionLabel.text = self.longDescription
         productDescription.longDesctiptionLabel.text = desc
+        productDescription.okButton.setTitle(self.okTitle, forState: UIControlState.Normal)
         productDescription.delegate = self
         self.navigationController?.presentViewController(productDescription, animated: true, completion:
             nil)
