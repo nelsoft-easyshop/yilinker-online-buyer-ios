@@ -16,11 +16,13 @@ class TransactionCancelOrderView: UIView {
 
     @IBOutlet weak var cancelOrderLabel: UILabel!
     @IBOutlet weak var cancelView: DynamicRoundedView!
+    @IBOutlet weak var cancelButton: UIButton!
     
     var delegate: TransactionCancelOrderViewDelegate?
     override func awakeFromNib() {
         
         var tap = UITapGestureRecognizer(target: self, action: "cancelOrder:")
+        cancelOrderLabel.addGestureRecognizer(tap)
         cancelView.addGestureRecognizer(tap)
         
     }
@@ -30,6 +32,9 @@ class TransactionCancelOrderView: UIView {
         self.delegate?.showCancelOrder()
     }
 
+    @IBAction func cancelButtonAction(sender: AnyObject){
+        self.delegate?.showCancelOrder()
+    }
     /*
     // Only override drawRect: if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.

@@ -399,6 +399,7 @@ class CircularMenuViewController: UIViewController {
             self.customTabBarController?.selectedIndex = 2
             
             let navigationController: UINavigationController = self.customTabBarController!.viewControllers![2] as! UINavigationController
+            navigationController.popToRootViewControllerAnimated(false)
             let hiddenViewController: HiddenViewController = navigationController.viewControllers[0] as! HiddenViewController
             hiddenViewController.selectViewControllerAtIndex(index)
             

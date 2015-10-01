@@ -302,6 +302,7 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
         let cancelOrder = TransactionCancelViewController(nibName: "TransactionCancelViewController", bundle: nil)
         cancelOrder.delegate = self
         cancelOrder.invoiceNumber = self.transactionId
+        cancelOrder.orderProductId = self.orderProductId
         cancelOrder.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
         cancelOrder.providesPresentationContextTransitionStyle = true
         cancelOrder.definesPresentationContext = true

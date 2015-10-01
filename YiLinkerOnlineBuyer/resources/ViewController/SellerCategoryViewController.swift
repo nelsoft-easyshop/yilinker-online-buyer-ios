@@ -12,10 +12,15 @@ class SellerCategoryViewController: UIViewController, UITableViewDataSource, UIT
 
     @IBOutlet weak var categoryTableView: UITableView!
     
+    var sellerCategory: SellerCategoryModel?
+    var tableData: [SellerCategoryModel] = []
+    
+    var hud: MBProgressHUD?
+    var sellerId: Int = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
         self.titleView()
         self.backButton()
@@ -29,6 +34,7 @@ class SellerCategoryViewController: UIViewController, UITableViewDataSource, UIT
         self.categoryTableView.rowHeight = UITableViewAutomaticDimension
         let footerView: UIView = UIView(frame: CGRectZero)
         self.categoryTableView.tableFooterView = footerView
+        self.fireSellerCategory()
         
     }
 
@@ -72,7 +78,11 @@ class SellerCategoryViewController: UIViewController, UITableViewDataSource, UIT
     
     //MARK: Tableview delegate methods
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        if !self.tableData.isEmpty {
+            return self.tableData.count
+        } else {
+           return 0
+        }
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -81,19 +91,57 @@ class SellerCategoryViewController: UIViewController, UITableViewDataSource, UIT
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
             let categoryTableViewCell: SellerCategoryTableViewCell = self.categoryTableView.dequeueReusableCellWithIdentifier("SellerCategoryTableViewCell") as! SellerCategoryTableViewCell
-            
+            if !self.tableData.isEmpty {
+                categoryTableViewCell.categoryLabel.text = self.tableData[indexPath.row].categoryName
+                categoryTableViewCell.categoryDescriptionLabel.text = self.tableData[indexPath.row].categorySubs
+            }
             return categoryTableViewCell
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let sellerSubCategoryViewController: SellerSubCategoryViewController = SellerSubCategoryViewController(nibName: "SellerSubCategoryViewController", bundle: nil)
+        sellerSubCategoryViewController.subCategoryName = self.tableData[indexPath.row].categorySubs2
         self.navigationController!.pushViewController(sellerSubCategoryViewController, animated: true)
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
        
-        return 86
+        return 93
         
+    }
+    
+    func fireSellerCategory() {
+        self.showHUD()
+        let manager = APIManager.sharedInstance
+        //let parameters: NSDictionary = ["access_token" : SessionManager.accessToken()];
+        println(APIAtlas.sellerCategory+"1")
+        manager.GET(APIAtlas.sellerCategory+"\(self.sellerId)", parameters: nil, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            
+            self.sellerCategory = SellerCategoryModel.parseDataFromDictionary(responseObject as! NSDictionary)
+            for var i: Int = 0; i < self.sellerCategory!.name.count; i++ {
+                self.tableData.append(SellerCategoryModel(name: self.sellerCategory!.name[i], subCategories: self.sellerCategory!.subCategories2[i], subCategories2: self.sellerCategory!.subCategories3[i]))
+            }
+            self.categoryTableView.reloadData()
+            self.hud?.hide(true)
+            }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
+                println(error)
+                self.hud?.hide(true)
+        })
+
+    }
+    
+    func showHUD() {
+        if self.hud != nil {
+            self.hud!.hide(true)
+            self.hud = nil
+        }
+        
+        self.hud = MBProgressHUD(view: self.view)
+        self.hud?.removeFromSuperViewOnHide = true
+        self.hud?.dimBackground = false
+        self.navigationController?.view.addSubview(self.hud!)
+        self.hud?.show(true)
     }
     
     /*
