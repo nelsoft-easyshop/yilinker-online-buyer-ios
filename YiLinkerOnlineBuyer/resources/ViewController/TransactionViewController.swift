@@ -53,9 +53,14 @@ class TransactionViewController: UIViewController {
     var isPageEnd: Bool = false
     var page: Int = 1
     var transactionArray: NSArray?
+    
+    var emptyView : EmptyView?
+    var contentViewFrame: CGRect?
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.contentViewFrame = self.view.frame
         
         self.title = transactionTitle
         
@@ -237,20 +242,23 @@ class TransactionViewController: UIViewController {
             manager.GET(APIAtlas.transactionLogs+"\(SessionManager.accessToken())&type=\(queryType)&perPage=15&page=\(page)", parameters: nil, success: {
                 (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
                 let trans: TransactionModel = TransactionModel.parseDataFromDictionary(responseObject as! NSDictionary)
-                //self.transactionModel = TransactionModel.parseDataFromDictionary(responseObject as! NSDictionary)
-                println(responseObject)
-               println("--- \(trans.order_id.count) \(trans.is_successful)")
-                if trans.order_id.count < 15 {
-                    self.isPageEnd = true
-                    
-                }
-                if trans.is_successful {
-                    for var i = 0; i < trans.order_id.count; i++ {
-                        self.tableData.append(TransactionModel(order_id: trans.order_id[i], date_added: trans.date_added[i], invoice_number: trans.invoice_number[i], payment_type: trans.payment_type[i], payment_method_id: trans.payment_method_id[i], order_status: trans.order_status[i], order_status_id: trans.order_status_id[i], total_price: trans.total_price[i], total_unit_price: trans.total_unit_price[i], total_item_price: trans.total_item_price[i], total_handling_fee: trans.total_handling_fee[i], total_quantity: trans.total_quantity[i], product_name: trans.product_name[i], product_count: trans.product_count[i], is_successful: trans.is_successful, order_count: trans.order_count))
+                
+                if trans.order_id.count != 0 {
+                    if trans.order_id.count < 15 {
+                        self.isPageEnd = true
+                        
+                    }
+                    if trans.is_successful {
+                        for var i = 0; i < trans.order_id.count; i++ {
+                            self.tableData.append(TransactionModel(order_id: trans.order_id[i], date_added: trans.date_added[i], invoice_number: trans.invoice_number[i], payment_type: trans.payment_type[i], payment_method_id: trans.payment_method_id[i], order_status: trans.order_status[i], order_status_id: trans.order_status_id[i], total_price: trans.total_price[i], total_unit_price: trans.total_unit_price[i], total_item_price: trans.total_item_price[i], total_handling_fee: trans.total_handling_fee[i], total_quantity: trans.total_quantity[i], product_name: trans.product_name[i], product_count: trans.product_count[i], is_successful: trans.is_successful, order_count: trans.order_count))
+                        }
+                    } else {
+                        self.isPageEnd = true
                     }
                 } else {
-                    self.isPageEnd = true
+                    self.addEmptyView()
                 }
+               
                 self.tableView.reloadData()
                 self.hud?.hide(true)
                 }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
@@ -366,6 +374,18 @@ class TransactionViewController: UIViewController {
     
     func back() {
         self.navigationController!.popViewControllerAnimated(true)
+    }
+    
+    func addEmptyView() {
+        if self.emptyView == nil {
+            self.emptyView = UIView.loadFromNibNamed("EmptyView", bundle: nil) as? EmptyView
+            self.emptyView?.frame = self.contentViewFrame!
+            self.emptyView!.delegate = self
+            self.view.addSubview(self.emptyView!)
+        } else {
+            self.emptyView!.hidden = false
+            println("unhide empty view")
+        }
     }
 }
 
