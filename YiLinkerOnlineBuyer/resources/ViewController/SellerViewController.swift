@@ -637,7 +637,9 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
                                 self.fireRefreshToken()
                             }
                         } else {
-                            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+                            if (SessionManager.isLoggedIn()){
+                                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+                            } 
                         }
                         
                         self.contacts = Array<W_Contact>()
