@@ -65,6 +65,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GGLInstanceIDDelegate {
         
         let trimEnds: String = deviceToken.description.stringByTrimmingCharactersInSet(NSCharacterSet(charactersInString: "<>"))
         let cleanToken: String = trimEnds.stringByReplacingOccurrencesOfString(" ", withString: "", options: nil, range: nil)
+        SessionManager.setDeviceToken(cleanToken)
         println("Device Token > \(cleanToken)")
         
 //        // Register for Push Notitications, if running iOS 8
