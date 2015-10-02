@@ -93,6 +93,7 @@ struct APIAtlas {
     static let productDetails = "product/getProductDetail"
     static let productReviews = "product/getProductReviews"
     static let productSellerDetails = "v1/get-product"
+    static let getSellerInfoLoggedIn = "auth/user/getStoreInfo"
     static let getSellerInfo = "user/getStoreInfo"
     static let followSeller = "auth/followSeller"
     static let unfollowSeller = "auth/unfollowSeller"
