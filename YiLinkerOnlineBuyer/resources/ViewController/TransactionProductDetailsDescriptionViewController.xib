@@ -7,12 +7,16 @@
         <mutableArray key="Panton Bold.otf">
             <string>Panton-Bold</string>
         </mutableArray>
+        <mutableArray key="Panton.otf">
+            <string>Panton-Regular</string>
+        </mutableArray>
     </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TransactionProductDetailsDescriptionViewController" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
             <connections>
                 <outlet property="closeButton" destination="pP9-3F-6Nx" id="iqT-Vr-EJz"/>
                 <outlet property="descriptionTitleLabel" destination="Vjx-Ea-3HJ" id="b8b-mi-dui"/>
+                <outlet property="longDescriptionTextView" destination="zb5-oF-gYM" id="fpX-hY-dMW"/>
                 <outlet property="longDesctiptionLabel" destination="RPv-TN-w6i" id="zpP-D6-Uth"/>
                 <outlet property="okButton" destination="2yf-uV-Dfc" id="q3W-hk-fDP"/>
                 <outlet property="productDescriptionLabel" destination="e4r-FJ-8XX" id="wxv-QL-HIQ"/>
@@ -130,12 +134,22 @@
                                     </attributedString>
                                     <nil key="highlightedColor"/>
                                 </label>
+                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zb5-oF-gYM">
+                                    <rect key="frame" x="8" y="8" width="252" height="133"/>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="14"/>
+                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                </textView>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
+                                <constraint firstAttribute="bottom" secondItem="zb5-oF-gYM" secondAttribute="bottom" constant="8" id="Qu6-Ub-yQq"/>
+                                <constraint firstAttribute="trailing" secondItem="zb5-oF-gYM" secondAttribute="trailing" constant="8" id="Wfl-CA-LvQ"/>
                                 <constraint firstAttribute="trailing" secondItem="RPv-TN-w6i" secondAttribute="trailing" constant="8" id="b9N-H0-yAB"/>
                                 <constraint firstItem="RPv-TN-w6i" firstAttribute="top" secondItem="Qud-f7-qXg" secondAttribute="top" constant="8" id="eKm-wF-TvL"/>
                                 <constraint firstAttribute="height" constant="149" id="oQB-ba-m1P"/>
+                                <constraint firstItem="zb5-oF-gYM" firstAttribute="leading" secondItem="Qud-f7-qXg" secondAttribute="leading" constant="8" id="qlu-94-enp"/>
+                                <constraint firstItem="zb5-oF-gYM" firstAttribute="top" secondItem="Qud-f7-qXg" secondAttribute="top" constant="8" id="qqx-f1-370"/>
                                 <constraint firstItem="RPv-TN-w6i" firstAttribute="leading" secondItem="Qud-f7-qXg" secondAttribute="leading" constant="8" id="s1W-PC-x89"/>
                             </constraints>
                         </view>

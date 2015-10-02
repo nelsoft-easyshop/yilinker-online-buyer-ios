@@ -264,6 +264,7 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
         productDescription.descriptionTitleLabel.text = self.descriptionProductTitle
         productDescription.longDesctiptionLabel.text = self.longDescription
         productDescription.longDesctiptionLabel.text = desc
+        productDescription.longDescriptionTextView.text = desc
         productDescription.okButton.setTitle(self.okTitle, forState: UIControlState.Normal)
         productDescription.delegate = self
         self.navigationController?.presentViewController(productDescription, animated: true, completion:
