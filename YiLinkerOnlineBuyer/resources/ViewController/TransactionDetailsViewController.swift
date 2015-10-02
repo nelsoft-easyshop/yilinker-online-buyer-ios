@@ -155,6 +155,7 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
         productDetails.totalPrice = self.table[indexPath.section].transactions[indexPath.row].totalPrice
         productDetails.productName = self.table[indexPath.section].transactions[indexPath.row].productName
         productDetails.transactionId = self.transactionId
+        productDetails.isCancellable = self.table[indexPath.section].transactions[indexPath.row].isCancellable
         println("section \(indexPath.section) product id: \(self.table[indexPath.section].transactions[indexPath.row].orderProductId)")
         self.navigationController?.pushViewController(productDetails, animated: true)
     }
@@ -457,7 +458,7 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
                 var arr = [TransactionDetailsProductsModel]()
                 for var b = 0; b < self.transactionDetailsModel.productName.count; b++ {
                     if self.transactionDetailsModel.sellerId[a] == self.transactionDetailsModel.sellerId2[b] {
-                        self.tableSectionContents = TransactionDetailsProductsModel(orderProductId: self.transactionDetailsModel.orderProductId[b], productId: self.transactionDetailsModel.productId[b], quantity: self.transactionDetailsModel.quantity[b], unitPrice: self.transactionDetailsModel.unitPrice[b], totalPrice: self.transactionDetailsModel.totalPrice[b], productName: self.transactionDetailsModel.productName[b], handlingFee: self.transactionDetailsModel.handlingFee[b])
+                        self.tableSectionContents = TransactionDetailsProductsModel(orderProductId: self.transactionDetailsModel.orderProductId[b], productId: self.transactionDetailsModel.productId[b], quantity: self.transactionDetailsModel.quantity[b], unitPrice: self.transactionDetailsModel.unitPrice[b], totalPrice: self.transactionDetailsModel.totalPrice[b], productName: self.transactionDetailsModel.productName[b], handlingFee: self.transactionDetailsModel.handlingFee[b], isCancellable: self.transactionDetailsModel.isCancellable[b])
                         arr.append(self.tableSectionContents)
                     }
                 }
