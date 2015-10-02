@@ -59,12 +59,6 @@ class NewDisputeTableViewController: UITableViewController, UIPickerViewDataSour
         
         self.transactionNumber.delegate = self
         self.transactionType.delegate = self
-        
-        self.disputeTitleLabel.required()
-        self.transactionNumberLabel.required()
-        self.transactionTypeLabel.required()
-        self.productsLabel.required()
-        self.remarksLabel.required()
 
         setStrings()
     }
@@ -82,6 +76,12 @@ class NewDisputeTableViewController: UITableViewController, UIPickerViewDataSour
         remarksLabel.text = DisputeStrings.remarks
         
         submitButton.setTitle(DisputeStrings.submit, forState: .Normal)
+        
+        self.disputeTitleLabel.required()
+        self.transactionNumberLabel.required()
+        self.transactionTypeLabel.required()
+        self.productsLabel.required()
+        self.remarksLabel.required()
     }
     
     override func didReceiveMemoryWarning() {
