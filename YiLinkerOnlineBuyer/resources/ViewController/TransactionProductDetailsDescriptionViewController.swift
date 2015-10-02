@@ -20,11 +20,12 @@ class TransactionProductDetailsDescriptionViewController: UIViewController {
     @IBOutlet weak var descriptionTitleLabel: UILabel!
     @IBOutlet weak var productDescriptionLabel: UILabel!
     @IBOutlet weak var longDesctiptionLabel: UILabel!
+    @IBOutlet weak var longDescriptionTextView: UITextView!
     
     var delegate: TransactionProductDetailsDescriptionViewControllerDelegate?
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        self.longDesctiptionLabel.hidden = true
         // Do any additional setup after loading the view.
     }
 
