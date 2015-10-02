@@ -96,21 +96,17 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         sellerTableHeaderView.delegate = self
         
         sellerTableHeaderView.coverPhotoImageView.sd_setImageWithURL(self.sellerModel!.coverPhoto, placeholderImage: UIImage(named: "dummy-placeholder"))
-        if SessionManager.isLoggedIn() {
-            self.sellerTableHeaderView.followButton.enabled = true
-        } else {
-            self.sellerTableHeaderView.followButton.enabled = false
-        }
         
         if self.is_successful {
-            self.sellerTableHeaderView.followButton.layer.borderColor = Constants.Colors.grayLine.CGColor
-            self.sellerTableHeaderView.followButton.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
-            self.sellerTableHeaderView.followButton.backgroundColor = UIColor.clearColor()
+            //self.sellerTableHeaderView.followButton.layer.borderColor = Constants.Colors.grayLine.CGColor
+            //self.sellerTableHeaderView.followButton.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
+            self.sellerTableHeaderView.followButton.borderColor = UIColor.clearColor()
+            //self.sellerTableHeaderView.followButton.backgroundColor = UIColor.clearColor()
             self.sellerTableHeaderView.followButton.setTitle(following, forState: UIControlState.Normal)
         } else if !(self.is_successful){
-            self.sellerTableHeaderView.followButton.backgroundColor = Constants.Colors.appTheme
+            //self.sellerTableHeaderView.followButton.backgroundColor = Constants.Colors.appTheme
             self.sellerTableHeaderView.followButton.borderColor = UIColor.clearColor()
-            self.sellerTableHeaderView.followButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+            //self.sellerTableHeaderView.followButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
             self.sellerTableHeaderView.followButton.setTitle(follow, forState: UIControlState.Normal)
         }
         
@@ -149,14 +145,24 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.showHUD()
         let manager = APIManager.sharedInstance
         println(sellerId)
-        let parameters: NSDictionary = ["userId" : sellerId];
-        manager.POST(APIAtlas.getSellerInfo, parameters: parameters, success: {
+        let parameters: NSDictionary?
+        var url: String = ""
+        
+        if SessionManager.isLoggedIn() {
+            url = APIAtlas.getSellerInfoLoggedIn
+            parameters = ["userId" : sellerId, "access_token" : SessionManager.accessToken()] as NSDictionary
+        } else {
+            url = APIAtlas.getSellerInfo
+            parameters = ["userId" : sellerId] as NSDictionary
+        }
+        
+        manager.POST(url, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            println(responseObject["isSuccessful"])
+            println(responseObject)
             if responseObject["isSuccessful"] as! Bool {
                 self.sellerModel = SellerModel.parseSellerDataFromDictionary(responseObject as! NSDictionary)
+                self.is_successful = self.sellerModel!.is_allowed
                 self.populateData()
-                self.is_successful == self.sellerModel?.is_allowed
                 self.hud?.hide(true)
             } else {
                 self.showAlert(title: "Error", message: responseObject["message"] as! String)
@@ -538,29 +544,36 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         sellerTableHeaderView.delegate = self
         println("result: \(self.is_successful)")
         println("button: \(self.sellerTableHeaderView.followButton.selected)")
-        if self.is_successful {
-            self.sellerTableHeaderView.followButton.tag = 1
+        if SessionManager.isLoggedIn() {
+            if self.is_successful {
+                self.sellerTableHeaderView.followButton.tag = 1
+            } else {
+                self.sellerTableHeaderView.followButton.tag = 2
+            }
+            if self.sellerTableHeaderView.followButton.tag == 1 {
+                self.sellerTableHeaderView.followButton.tag = 2
+                //self.sellerTableHeaderView.followButton.backgroundColor = Constants.Colors.appTheme
+                self.sellerTableHeaderView.followButton.borderColor = UIColor.clearColor()
+                // self.sellerTableHeaderView.followButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+                
+                self.sellerTableHeaderView.followButton.setTitle(follow, forState: UIControlState.Normal)
+                fireUnfollowSeller()
+            } else {
+                self.sellerTableHeaderView.followButton.tag = 1
+                //self.sellerTableHeaderView.followButton.layer.borderColor = Constants.Colors.grayLine.CGColor
+                self.sellerTableHeaderView.followButton.borderColor = UIColor.clearColor()
+                //self.sellerTableHeaderView.followButton.setTitleColor(UIColor.grayColor(), forState: UIControlState.Normal)
+                //self.sellerTableHeaderView.followButton.backgroundColor = UIColor.clearColor()
+                
+                self.sellerTableHeaderView.followButton.setTitle(following, forState: UIControlState.Normal)
+                fireFollowSeller()
+            }
         } else {
-            self.sellerTableHeaderView.followButton.tag = 2
+            let alertController = UIAlertController(title: "Please login to follow this seller.", message: "", preferredStyle: .Alert)
+            let defaultAction = UIAlertAction(title: Constants.Localized.ok, style: .Default, handler: nil)
+            alertController.addAction(defaultAction)
+            self.presentViewController(alertController, animated: true, completion: nil)
         }
-        if self.sellerTableHeaderView.followButton.tag == 1 {
-            self.sellerTableHeaderView.followButton.tag = 2
-            self.sellerTableHeaderView.followButton.backgroundColor = Constants.Colors.appTheme
-            self.sellerTableHeaderView.followButton.borderColor = UIColor.clearColor()
-            self.sellerTableHeaderView.followButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
-            
-            self.sellerTableHeaderView.followButton.setTitle(follow, forState: UIControlState.Normal)
-            fireUnfollowSeller()
-        } else {
-            self.sellerTableHeaderView.followButton.tag = 1
-            self.sellerTableHeaderView.followButton.layer.borderColor = Constants.Colors.grayLine.CGColor
-            self.sellerTableHeaderView.followButton.setTitleColor(UIColor.grayColor(), forState: UIControlState.Normal)
-            self.sellerTableHeaderView.followButton.backgroundColor = UIColor.clearColor()
-            
-            self.sellerTableHeaderView.followButton.setTitle(following, forState: UIControlState.Normal)
-            fireFollowSeller()
-        }
-        
     }
     
     func sellerTableHeaderViewDidMessage() {
