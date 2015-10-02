@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:TransactionViews.xib">
+   </FileRef>
+   <FileRef
       location = "group:YiLinkerOnlineBuyer.xcodeproj">
    </FileRef>
    <FileRef

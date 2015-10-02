@@ -38,6 +38,7 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
     var productName: String = ""
     var transactionId: String = ""
     var imageUrl: String = ""
+    var isCancellable: Bool = false
     
     var hud: MBProgressHUD?
     var transactionProductDetailsModel: TransactionProductDetailsModel!
@@ -86,7 +87,7 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
         let nib = UINib(nibName: "TransactionProductDetailsTableViewCell", bundle: nil)
         self.tableView.registerNib(nib, forCellReuseIdentifier: "TransactionProductDetailsIdentifier")
         
-        println("order product id \(self.orderProductId)")
+        println("order product id \(self.orderProductId) \(self.isCancellable)")
         self.fireTransactionProductDetails()
         
     }
@@ -222,6 +223,9 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
             self.transactionCancelView = XibHelper.puffViewWithNibName("TransactionViews", index: 9) as! TransactionCancelOrderView
             self.transactionCancelView.cancelOrderLabel.text = self.cancelOrder
             self.transactionCancelView.delegate = self
+            if !self.isCancellable {
+                self.transactionCancelView.cancelView.hidden = true
+            }
             self.transactionCancelView.frame.size.width = self.view.frame.size.width
             self.transactionCancelView.frame.origin.y += CGFloat(20)
         }
@@ -286,7 +290,9 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
         // FOOTERS
         self.getFooterView().addSubview(self.getTransactionDescriptionView())
         self.getFooterView().addSubview(self.getTransactionDeliveryStatusView())
+        
         self.getFooterView().addSubview(self.getTransactionCancelOrderView())
+        
         //self.getFooterView().addSubview(self.getTransactionButtonView())
         
         setUpViews()
