@@ -203,7 +203,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             } else {
                 var buttonImages: [String] = ["fab_help", "fab_register", "fab_signin", "fab_messaging","fab_customize", "fab_promo", "fab_category"]
                 var buttonTitles: [String] = [FABStrings.help, "REGISTER", FABStrings.signIn, FABStrings.messaging, FABStrings.customizeShopping, FABStrings.todaysPromo, FABStrings.categories]
-                var buttonRightText: [String] = ["", "", FABStrings.mustBeSignIn, FABStrings.mustBeSignIn, "", "", ""]
+                var buttonRightText: [String] = ["", "", "", FABStrings.mustBeSignIn, FABStrings.mustBeSignIn, "", ""]
                 
                 animatedViewController?.buttonImages = buttonImages
                 animatedViewController?.buttonTitles = buttonTitles
