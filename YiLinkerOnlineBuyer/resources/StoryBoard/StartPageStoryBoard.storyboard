@@ -165,7 +165,7 @@
                                     <constraint firstAttribute="height" constant="1" id="9gH-ig-hVf"/>
                                 </constraints>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="or" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2O9-6l-JXq">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="or" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="2O9-6l-JXq">
                                 <rect key="frame" x="172" y="160" width="30" height="21"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                 <constraints>
@@ -260,6 +260,7 @@
                         <outlet property="facebookButtonHeightConstraints" destination="Bvi-3c-rx2" id="jij-gm-8H7"/>
                         <outlet property="gmailButtonHeightConstraints" destination="cYH-fi-8BR" id="TBD-GG-5Ae"/>
                         <outlet property="gmailLoginButton" destination="vdK-Ps-Zp2" id="pma-Dc-Ti1"/>
+                        <outlet property="orLabel" destination="2O9-6l-JXq" id="FM6-gC-iio"/>
                         <outlet property="passwordTextField" destination="xzl-Np-eOe" id="GFw-Jc-OXJ"/>
                         <outlet property="signInButton" destination="A9t-oa-0dv" id="uYa-dy-T1j"/>
                     </connections>
@@ -424,7 +425,7 @@
                                     <constraint firstAttribute="height" constant="1" id="N3C-bc-O7F"/>
                                 </constraints>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="or" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w8g-ZV-XwH">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="or" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="w8g-ZV-XwH">
                                 <rect key="frame" x="178" y="239" width="27" height="21"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                 <constraints>
@@ -499,7 +500,7 @@
                                     <constraint firstAttribute="height" constant="30" id="wD7-pJ-KUb"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" returnKeyType="next" secureTextEntry="YES"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="next"/>
                             </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -545,6 +546,7 @@
                         <outlet property="firstNameTextField" destination="Is2-D0-FIi" id="sfq-hI-pD4"/>
                         <outlet property="lastNameTextField" destination="PmC-S0-dVe" id="D0y-ck-osv"/>
                         <outlet property="mobileNumberTextField" destination="CpR-Jr-t2b" id="TNs-U3-3eA"/>
+                        <outlet property="orLabel" destination="w8g-ZV-XwH" id="uLZ-IU-reN"/>
                         <outlet property="passwordTextField" destination="ZC1-il-o21" id="ohY-EB-G8x"/>
                         <outlet property="reTypePasswordTextField" destination="Pa1-v1-nmm" id="lx1-MM-Unw"/>
                         <outlet property="registerButton" destination="2o2-9L-awo" id="hWr-zd-xFh"/>
@@ -786,7 +788,7 @@
                                     <action selector="register:" destination="A4b-5R-jjS" eventType="touchUpInside" id="cFc-rR-mvO"/>
                                 </connections>
                             </button>
-                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hFg-DD-m5g" customClass="DynamicRoundedButton" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hFg-DD-m5g" customClass="DynamicRoundedButton" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
                                 <rect key="frame" x="274" y="28" width="46" height="30"/>
                                 <state key="normal" title="Button">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>

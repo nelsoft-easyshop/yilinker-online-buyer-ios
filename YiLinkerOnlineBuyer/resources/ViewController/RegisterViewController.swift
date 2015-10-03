@@ -42,6 +42,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
     var currentTextFieldTag: Int = 1
     var hud: MBProgressHUD?
     
+    @IBOutlet weak var orLabel: UILabel!
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
     }
@@ -65,6 +66,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         self.emailAddressTextField.placeholder = RegisterStrings.emailAddress
         self.passwordTextField.placeholder = RegisterStrings.password
         self.reTypePasswordTextField.placeholder = RegisterStrings.reTypePassword
+        self.orLabel.text = LoginStrings.or
         
         self.registerButton.setTitle(RegisterStrings.registerMeNow, forState: UIControlState.Normal)
     }

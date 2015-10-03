@@ -424,8 +424,6 @@
 		0C1179471BA82BE700AA1554 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/LocalizableString.strings; sourceTree = "<group>"; };
 		0C1179491BA82BE800AA1554 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LocalizableString.strings"; sourceTree = "<group>"; };
 		0C11794A1BA98EFE00AA1554 /* StringHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringHelper.swift; sourceTree = "<group>"; };
-		0C11794C1BA9919E00AA1554 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
-		0C11794D1BA9919E00AA1554 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/LocalizableString.strings"; sourceTree = "<group>"; };
 		0C1C3A841B9406BD00E6180D /* JSONResponseSerializer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONResponseSerializer.swift; sourceTree = "<group>"; };
 		0C25D94D1B76F81A00E9EFA6 /* YiLinkerOnlineBuyer-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "YiLinkerOnlineBuyer-Bridging-Header.h"; sourceTree = "<group>"; };
 		0C2670CE1B772E4B00394E29 /* Enums.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
@@ -1499,7 +1497,6 @@
 				en,
 				Base,
 				"zh-Hans",
-				"zh-Hant",
 			);
 			mainGroup = 0C8A7C651B6772670039F013;
 			productRefGroup = 0C8A7C6F1B6772670039F013 /* Products */;
@@ -1986,7 +1983,6 @@
 			children = (
 				0C11793A1BA8291900AA1554 /* Base */,
 				0C11793C1BA8292700AA1554 /* zh-Hans */,
-				0C11794C1BA9919E00AA1554 /* zh-Hant */,
 			);
 			name = LaunchScreen.xib;
 			sourceTree = "<group>";
@@ -1996,7 +1992,6 @@
 			children = (
 				0C1179471BA82BE700AA1554 /* en */,
 				0C1179491BA82BE800AA1554 /* zh-Hans */,
-				0C11794D1BA9919E00AA1554 /* zh-Hant */,
 			);
 			name = LocalizableString.strings;
 			sourceTree = "<group>";
