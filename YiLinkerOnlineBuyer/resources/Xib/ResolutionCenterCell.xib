@@ -50,7 +50,7 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rcG-kw-eeN">
                         <rect key="frame" x="16" y="34" width="40" height="40"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="status-open" translatesAutoresizingMaskIntoConstraints="NO" id="MYF-JA-XqP">
+                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="status-open" translatesAutoresizingMaskIntoConstraints="NO" id="MYF-JA-XqP">
                                 <rect key="frame" x="7" y="10" width="26" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="26" id="0Nt-hs-J3i"/>
