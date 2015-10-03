@@ -62,20 +62,20 @@ class ResolutionCenterModel {
                     if let currentElement = arrayElement as? NSDictionary {
                         var element: ResolutionCenterElement
                         
-                        var dates = parseDictionaryString(currentElement, key:"dateAdded")
-                        let dateFormatter = NSDateFormatter()
-                        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-                        let date: NSDate = dateFormatter.dateFromString(dates)!
-                        
-                        let dateFormatter1 = NSDateFormatter()
-                        dateFormatter1.dateFormat = "MMMM dd, yyyy"
-                        let dateAdded = dateFormatter1.stringFromDate(date)
+//                        var dates = parseDictionaryString(currentElement, key:"dateAdded")
+//                        let dateFormatter = NSDateFormatter()
+//                        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+//                        let date: NSDate = dateFormatter.dateFromString(dates)!
+//                        
+//                        let dateFormatter1 = NSDateFormatter()
+//                        dateFormatter1.dateFormat = "MMMM dd, yyyy"
+//                        let dateAdded = dateFormatter1.stringFromDate(date)
                         
                         element.resolutionId = parseDictionaryString(currentElement, key:"disputeId")
                         element.status = parseDictionaryString(currentElement, key:"disputeStatusType")
                         element.status = autocorrectStatus( element.status )
                         element.type = parseDictionaryString(currentElement, key:"orderProductStatus")
-                        element.date = dateAdded
+                        element.date = parseDictionaryString(currentElement, key:"dateAdded")//dateAdded
                         element.ticketId = parseDictionaryString(currentElement, key: "ticketId")
                         // unused: "disputeeFullName"
                         // unused: "disputeeContactNumber"
