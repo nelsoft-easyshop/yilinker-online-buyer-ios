@@ -99,6 +99,7 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
             } else if indexPath.row == 3 {
                 
                 cell.rowTextField.text = self.addressModel.streetNumber
+                cell.rowTitleLabel.required()
             } else if indexPath.row == 4 {
                 
                 cell.rowTextField.text = self.addressModel.streetName
@@ -114,11 +115,9 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
             } else if indexPath.row == 7 {
                 
                 cell.rowTextField.text = self.addressModel.city
-                cell.rowTitleLabel.required()
             } else if indexPath.row == 8 {
                 
                 cell.rowTextField.text = self.addressModel.barangay
-                cell.rowTitleLabel.required()
             } else if indexPath.row == 9 {
                 
                 cell.rowTextField.text = self.addressModel.zipCode
@@ -153,7 +152,6 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
                     }
                 }
             } else if indexPath.row == 7 {
-                cell.rowTitleLabel.required()
                 if self.cityModel.location.count != 0 {
                     for (index, uid) in enumerate(self.cityModel.cityId) {
                         if uid == self.addressModel.cityId {
@@ -164,7 +162,6 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
                     }
                 }
             } else if indexPath.row == 8 {
-                cell.rowTitleLabel.required()
                 if self.cityModel.location.count != 0 {
                     for (index, uid) in enumerate(self.barangayModel.barangayId) {
                         if uid == self.addressModel.barangayId {
@@ -265,48 +262,28 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
     }
     
     func check() {
-        var index: Int = 0
-        for i in 0..<10 {
-            if getTextAtIndex(i) == "" && i != 0 && i != 2 && i != 10 && i != 5 {
-                index = i
-                break
-            }
-        }
-        
-        if index == 1 {
-            self.activeTextField = index - 1
-            self.next()
-            showAlert(title: AddressStrings.incompleteInformation, message: AddressStrings.mobileNumberIsRequired)
-        } else if index == 4 {
-            self.activeTextField = index - 1
-            self.next()
-            showAlert(title: AddressStrings.incompleteInformation, message: AddressStrings.streetNameRequired)
-        } else if index == 9 {
-            self.activeTextField = index - 1
-            self.next()
-            showAlert(title: AddressStrings.incompleteInformation, message: AddressStrings.zipCodeRequired)
-        }
-        
-        //If index is zero all required fields are filled up
-        if index == 0 {
-            if self.isEdit2 {
-                self.fireEditAddress()
-            } else {
-                requestAddAddress()
-            }
-        }
-        
-        /*if filledUpAllFields {
-            if self.isEdit2 {
-                self.fireEditAddress()
-            } else {
-                requestAddAddress()
-            }
-            
-        } else {
-            showAlert(title: "Error", message: "All text fields must be filled up.")
-        }*/
+        self.addressModel.title = getTextAtIndex(0)
+        self.addressModel.streetNumber = getTextAtIndex(3)
+        self.addressModel.streetName =  getTextAtIndex(4)
+        self.addressModel.zipCode = getTextAtIndex(9)
 
+        
+        if self.addressModel.title == "" {
+           showAlert(title: AddressStrings.incompleteInformation, message: AddressStrings.addressTitleRequired)
+        } else if self.addressModel.streetNumber == "" {
+            showAlert(title: AddressStrings.incompleteInformation, message: AddressStrings.streetNumberRequired)
+        } else if self.addressModel.streetName == "" {
+            showAlert(title: AddressStrings.incompleteInformation, message: AddressStrings.streetNameRequired)
+        } else if self.addressModel.zipCode == "" {
+            showAlert(title: AddressStrings.incompleteInformation, message: AddressStrings.zipCode)
+        } else {
+            if self.isEdit2 {
+                self.fireEditAddress()
+            } else {
+                requestAddAddress()
+            }
+        }
+        
     }
     
     func done() {
