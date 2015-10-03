@@ -191,6 +191,7 @@ CONNECTION_TAP_TO_RELOAD_LOCALIZE_KEY = "Tap to reloadtitletitme";
 
 // MARK: - Followed Sellers
 FOLLOWED_SELLERS_LOCALIZE_KEY = "Followed Sellers";
+FOLLOWED_SELLERS_EMPTY_LOCALIZE_KEY = "You didn't followed any sellers yet";
 
 // MARK: - Customized Categories
 CATEGORY_LOCALIZE_KEY = "Category";

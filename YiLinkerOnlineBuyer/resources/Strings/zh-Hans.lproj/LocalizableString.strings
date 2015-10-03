@@ -192,6 +192,7 @@ CONNECTION_TAP_TO_RELOAD_LOCALIZE_KEY = "点击重装";
 
 // MARK: - Followed Sellers
 FOLLOWED_SELLERS_LOCALIZE_KEY = "其次卖家";
+FOLLOWED_SELLERS_EMPTY_LOCALIZE_KEY = "你还没有遵循任何卖家";
 
 // MARK: - Customized Categories
 CATEGORY_LOCALIZE_KEY = "类别";
