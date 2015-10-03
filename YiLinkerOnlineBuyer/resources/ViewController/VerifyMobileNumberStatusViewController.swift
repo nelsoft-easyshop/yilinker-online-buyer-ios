@@ -51,15 +51,15 @@ class VerifyMobileNumberStatusViewController: UIViewController {
             iconImageView.image = UIImage(named: "checkAddress")
             continueButton.hidden = false
             requestButton.hidden = true
-            titleLabel.text = "Congratulations!"
-            messageLabel.text = "You have successfully verified your account."
+            titleLabel.text = StringHelper.localizedStringWithKey("CONGRATULATIONS_LOCALIZED_KEY")
+            messageLabel.text = StringHelper.localizedStringWithKey("SUCCESS_VERIFIED_LOCALIZED_KEY")
         } else {
             iconView.backgroundColor = Constants.Colors.errorVerification
             iconImageView.image = UIImage(named: "oops")
             continueButton.hidden = true
             requestButton.hidden = false
-            titleLabel.text = "Ooooops!!"
-            messageLabel.text = "You have either entered an incorrect code or it has already expired."
+            titleLabel.text = StringHelper.localizedStringWithKey("OOOOPS_LOCALIZE_KEY")
+            messageLabel.text = StringHelper.localizedStringWithKey("FAILED_VERIFIED_LOCALIZED_KEY")
         }
     }
 
