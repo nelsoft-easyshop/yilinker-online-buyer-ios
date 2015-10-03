@@ -58,8 +58,8 @@ class HomePageProductModel: ProductModel {
                 }
             }
 
-            if let val: AnyObject = dictionary["image"] {
-                if let tempProductImageURL = dictionary["image"] as? String {
+            if let val: AnyObject = dictionary["imageUrl"] {
+                if let tempProductImageURL = dictionary["imageUrl"] as? String {
                     
                     imageURL = NSURL(string: tempProductImageURL)!
                 } else {
