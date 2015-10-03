@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
@@ -78,11 +78,11 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="oQY-dk-gji">
-                                        <rect key="frame" x="0.0" y="33" width="81" height="40"/>
+                                        <rect key="frame" x="0.0" y="33" width="81" height="29"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                         <inset key="titleEdgeInsets" minX="-25" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                        <state key="normal" image="cart-1">
+                                        <state key="normal" image="cart2">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
@@ -90,16 +90,30 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="teM-fc-O26">
-                                        <rect key="frame" x="81" y="33" width="81" height="40"/>
+                                        <rect key="frame" x="81" y="33" width="81" height="29"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                        <state key="normal" image="delete">
+                                        <state key="normal" image="delete-1">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
                                             <action selector="buttonClicked:" destination="ju7-Il-n4p" eventType="touchUpInside" id="FjO-50-dCq"/>
                                         </connections>
                                     </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Delete" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ybM-rO-94r">
+                                        <rect key="frame" x="100" y="62" width="42" height="15"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add to Cart" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="drI-MC-qvB">
+                                        <rect key="frame" x="3" y="62" width="75" height="15"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
@@ -111,10 +125,12 @@
             <color key="backgroundColor" red="0.37647058820000001" green="0.12549019610000001" blue="0.46666666670000001" alpha="1" colorSpace="calibratedRGB"/>
             <connections>
                 <outlet property="addToCartButton" destination="oQY-dk-gji" id="U08-gZ-4rC"/>
+                <outlet property="addToCartLabel" destination="drI-MC-qvB" id="ANk-Df-x1h"/>
                 <outlet property="cellButtonView" destination="6ux-4j-m2f" id="Jub-fx-NIh"/>
                 <outlet property="cellContentView" destination="1s6-3P-NGx" id="GkI-nS-8AE"/>
                 <outlet property="cellScrollView" destination="rcr-Cw-LIl" id="zTC-zl-c8d"/>
                 <outlet property="deleteButton" destination="teM-fc-O26" id="Czp-UG-Iqc"/>
+                <outlet property="deleteLabel" destination="ybM-rO-94r" id="KzN-qx-uvj"/>
                 <outlet property="productDetailsLabel" destination="3iw-vp-aag" id="uJK-uJ-9lA"/>
                 <outlet property="productItemImageView" destination="XQi-YS-4WJ" id="shd-fO-FZl"/>
                 <outlet property="productNameLabel" destination="iEb-C3-OT7" id="M43-8f-aSO"/>
@@ -126,9 +142,9 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="cart-1" width="200" height="143"/>
-        <image name="delete" width="149" height="200"/>
-        <image name="dummy-placeholder" width="300" height="188"/>
+        <image name="cart2" width="200" height="175"/>
+        <image name="delete-1" width="200" height="200"/>
+        <image name="dummy-placeholder" width="1280" height="800"/>
         <image name="left" width="97" height="200"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
