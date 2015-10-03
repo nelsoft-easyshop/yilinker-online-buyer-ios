@@ -88,7 +88,7 @@
                     <rect key="frame" x="0.0" y="489" width="375" height="54"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Samsung Edge - 32gb" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0jG-D7-b0E">
-                            <rect key="frame" x="8" y="0.0" width="249" height="54"/>
+                            <rect key="frame" x="8" y="0.0" width="235" height="54"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="54" id="g22-Ft-T9i"/>
@@ -98,10 +98,10 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eRo-V1-0UV">
-                            <rect key="frame" x="265" y="0.0" width="102" height="54"/>
+                            <rect key="frame" x="251" y="0.0" width="116" height="54"/>
                             <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="P32,000" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PP3-Z9-OBE">
-                                    <rect key="frame" x="0.0" y="22" width="102" height="32"/>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="P32,000" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="16" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PP3-Z9-OBE">
+                                    <rect key="frame" x="0.0" y="22" width="116" height="32"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="32" id="HRO-NZ-6Tn"/>
                                     </constraints>
@@ -110,7 +110,7 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="original price" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oP0-pM-aTf">
-                                    <rect key="frame" x="0.0" y="0.0" width="102" height="22"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="116" height="22"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="22" id="xkL-Ct-xSE"/>
                                     </constraints>
@@ -123,7 +123,7 @@
                             <constraints>
                                 <constraint firstAttribute="trailing" secondItem="PP3-Z9-OBE" secondAttribute="trailing" id="2b3-uf-Rpr"/>
                                 <constraint firstItem="PP3-Z9-OBE" firstAttribute="leading" secondItem="eRo-V1-0UV" secondAttribute="leading" id="7YF-ky-sEZ"/>
-                                <constraint firstAttribute="width" constant="102" id="T1J-jx-CCw"/>
+                                <constraint firstAttribute="width" constant="116" id="T1J-jx-CCw"/>
                                 <constraint firstAttribute="trailing" secondItem="oP0-pM-aTf" secondAttribute="trailing" id="Zxg-s4-XY8"/>
                                 <constraint firstAttribute="bottom" secondItem="PP3-Z9-OBE" secondAttribute="bottom" id="hhp-if-26h"/>
                                 <constraint firstAttribute="height" constant="54" id="urg-6n-1tB"/>
