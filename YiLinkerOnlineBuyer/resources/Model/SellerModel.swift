@@ -211,13 +211,13 @@ class SellerModel: NSObject {
             println("\(myArrayOfDictProducts)")
             var dictProducts:NSDictionary = ["products" : myArrayOfDictProducts]
             
-            if let val: AnyObject = dictProducts["products"] {
-                let products: NSArray = dictProducts["products"] as! NSArray
+            //if let val: AnyObject = value["products"] {
+                let products: NSArray = value["products"] as! NSArray
                 for productDictionary in products as! [NSDictionary] {
                     let productModel: HomePageProductModel = HomePageProductModel.parseDataWithDictionary(productDictionary)
                     sellerProductModel.append(productModel)
                 }
-            }
+            //}
             /*
             var myArrayOfDictRatings: NSArray = [
                 ["name": "Alvin Tandoc",
