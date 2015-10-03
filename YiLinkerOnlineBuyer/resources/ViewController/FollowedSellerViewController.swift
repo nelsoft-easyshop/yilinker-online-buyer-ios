@@ -20,6 +20,8 @@ class FollowedSellerViewController: UIViewController, EmptyViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        
+        
         let nib = UINib(nibName: "FollowedSellerTableViewCell", bundle: nil)
         self.tableView.registerNib(nib, forCellReuseIdentifier: "FollowedSellerIdentifier")
         
@@ -40,6 +42,8 @@ class FollowedSellerViewController: UIViewController, EmptyViewDelegate {
         navigationSpacer.width = -10
         self.navigationItem.leftBarButtonItems = [navigationSpacer, backButton]
         self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
+        
+        self.emptyLabel.text = StringHelper.localizedStringWithKey("FOLLOWED_SELLERS_EMPTY_LOCALIZE_KEY")
     }
     
     func backAction() {
