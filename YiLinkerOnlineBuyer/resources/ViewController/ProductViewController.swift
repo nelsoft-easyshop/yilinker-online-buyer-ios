@@ -974,6 +974,12 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         self.navigationController?.pushViewController(seller, animated: true)
     }
     
+    func gotoSellerProduct(controller: ProductSellerView, id: String) {
+        let productView = ProductViewController(nibName: "ProductViewController", bundle: nil)
+        productView.productId = id
+        self.navigationController?.pushViewController(productView, animated: true)
+    }
+    
     // MARK: Actions
     
     @IBAction func addToCartAction(sender: AnyObject) {
@@ -1019,7 +1025,8 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     // MARK: - Navigation Bar Actions
     
     func barCloseAction() {
-        self.navigationController?.popToRootViewControllerAnimated(true)
+        self.navigationController?.popViewControllerAnimated(true)
+//        self.navigationController?.popToRootViewControllerAnimated(true)
     }
     
     func barWishlistAction() {
