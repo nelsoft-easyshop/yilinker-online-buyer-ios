@@ -409,11 +409,11 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     
     func requestSellerDetails() {
         
-        let params = ["userId": "1"/*self.productDetailsModel.sellerId*/]
+        let params = ["userId": self.productDetailsModel.sellerId]
         println(params)
         manager.POST(APIAtlas.getSellerInfo, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            
+
             if responseObject["isSuccessful"] as! Bool {
                 self.productSellerModel = ProductSellerModel.parseDataWithDictionary(responseObject)
                 self.sellerRequest = true
@@ -695,6 +695,10 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         self.tableView.reloadData()
         
         if self.productSellerModel != nil {
+            if self.productSellerModel.images.count < 1 {
+                self.productSellerView.collectionView.hidden = true
+                self.productSellerView.frame.size.height = 123.0
+            }
             self.productSellerView.setSellerDetails(self.productSellerModel)
         }
         
@@ -970,6 +974,12 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         self.navigationController?.pushViewController(seller, animated: true)
     }
     
+    func gotoSellerProduct(controller: ProductSellerView, id: String) {
+        let productView = ProductViewController(nibName: "ProductViewController", bundle: nil)
+        productView.productId = id
+        self.navigationController?.pushViewController(productView, animated: true)
+    }
+    
     // MARK: Actions
     
     @IBAction func addToCartAction(sender: AnyObject) {
@@ -1015,7 +1025,8 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     // MARK: - Navigation Bar Actions
     
     func barCloseAction() {
-        self.navigationController?.popToRootViewControllerAnimated(true)
+        self.navigationController?.popViewControllerAnimated(true)
+//        self.navigationController?.popToRootViewControllerAnimated(true)
     }
     
     func barWishlistAction() {

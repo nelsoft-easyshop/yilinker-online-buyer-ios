@@ -13,6 +13,7 @@ class ProductSellerModel {
     var message: String = ""
     var isSuccessful: Bool = false
     
+    var productId: [String] = []
     var userId: Int = 0
     var fullName: String = ""
     var email: String = ""
@@ -30,11 +31,12 @@ class ProductSellerModel {
     
     var isFollowed: Bool = false
     
-    init(message: String, isSuccessful: Bool, userId: Int, fullName: String, email: String, gender: String, nickname: String, contactNumber: String, specialty: String, birthdate: String, storeName: String, storeDescription: String, profilePhoto: String, coverPhoto: String, images: NSArray, isFollowed: Bool) {
+    init(message: String, isSuccessful: Bool, userId: Int, fullName: String, email: String, gender: String, nickname: String, contactNumber: String, specialty: String, birthdate: String, storeName: String, storeDescription: String, profilePhoto: String, coverPhoto: String, images: NSArray, isFollowed: Bool, productId: [String]) {
         
         self.message = message
         self.isSuccessful = isSuccessful
         
+        self.productId = productId
         self.userId = userId
         self.fullName = fullName
         self.email = email
@@ -58,6 +60,7 @@ class ProductSellerModel {
         var message: String = ""
         var isSuccessful: Bool = false
         
+        var productId: [String] = []
         var userId: Int = 0
         var fullName: String = ""
         var email: String = ""
@@ -71,12 +74,12 @@ class ProductSellerModel {
         
         var profilePhoto: String = ""
         var coverPhoto: String = ""
-        var images: NSArray = []
+        var images: [String] = []
         
         var isFollowed: Bool = false
         
         if dictionary.isKindOfClass(NSDictionary) {
-            
+
             if let tempVar = dictionary["message"] as? String {
                 message = tempVar
             }
@@ -139,14 +142,15 @@ class ProductSellerModel {
                     isFollowed = tempVar
                 }
                 
-                if let tempVar = value["images"] as? NSArray {
-                    images = tempVar
+                for subValue in value["products"] as! NSArray {
+                    images.append(subValue["imageUrl"] as! String)
+                    productId.append(subValue["productId"] as! String)
                 }
                 
             }
             
         }
         
-        return ProductSellerModel(message: message, isSuccessful: isSuccessful, userId: userId, fullName: fullName, email: email, gender: gender, nickname: nickname, contactNumber: contactNumber, specialty: specialty, birthdate: birthdate, storeName: storeName, storeDescription: storeDescription, profilePhoto: profilePhoto, coverPhoto: coverPhoto, images: images, isFollowed: isFollowed)
+        return ProductSellerModel(message: message, isSuccessful: isSuccessful, userId: userId, fullName: fullName, email: email, gender: gender, nickname: nickname, contactNumber: contactNumber, specialty: specialty, birthdate: birthdate, storeName: storeName, storeDescription: storeDescription, profilePhoto: profilePhoto, coverPhoto: coverPhoto, images: images, isFollowed: isFollowed, productId: productId)
     }
 }
