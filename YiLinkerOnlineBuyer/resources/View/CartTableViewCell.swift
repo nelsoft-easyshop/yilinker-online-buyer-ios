@@ -30,6 +30,8 @@ class CartTableViewCell: UITableViewCell, UIScrollViewDelegate {
     @IBOutlet weak var cellButtonView: UIView!
     @IBOutlet weak var swipeIndicatorView: UIView!
     
+    @IBOutlet weak var editLabel: UILabel!
+    @IBOutlet weak var deleteLabel: UILabel!
     @IBOutlet weak var deleteButton: UIButton!
     @IBOutlet weak var editButton: UIButton!
     @IBOutlet weak var checkBox: UIButton!
@@ -97,6 +99,9 @@ class CartTableViewCell: UITableViewCell, UIScrollViewDelegate {
 
         var contentTap = UITapGestureRecognizer(target:self, action:"contentTapAction")
         contentView.addGestureRecognizer(contentTap)
+        
+        editLabel.text = StringHelper.localizedStringWithKey("CART_EDIT_LOCALIZE_KEY")
+        deleteLabel.text = StringHelper.localizedStringWithKey("CART_DELETE_LOCALIZE_KEY")
     }
     
     func contentTapAction() {

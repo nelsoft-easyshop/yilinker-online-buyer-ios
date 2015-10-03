@@ -3,6 +3,12 @@
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Panton SemiBold.otf">
+            <string>Panton-SemiBold</string>
+            <string>Panton-SemiBold</string>
+        </mutableArray>
+    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -93,11 +99,11 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="zGA-R0-sbK">
-                                        <rect key="frame" x="0.0" y="33" width="81" height="40"/>
+                                        <rect key="frame" x="0.0" y="33" width="81" height="29"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                         <inset key="titleEdgeInsets" minX="-25" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                        <state key="normal" image="edit">
+                                        <state key="normal" image="edit2">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
@@ -105,16 +111,30 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="YGY-8T-CvA">
-                                        <rect key="frame" x="81" y="33" width="81" height="40"/>
+                                        <rect key="frame" x="81" y="33" width="81" height="29"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                        <state key="normal" image="delete">
+                                        <state key="normal" image="delete-1">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
                                             <action selector="buttonClicked:" destination="4k9-dh-HWa" eventType="touchUpInside" id="8QU-9M-fSw"/>
                                         </connections>
                                     </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Delete" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="PE3-ZC-Ttn">
+                                        <rect key="frame" x="100" y="63" width="42" height="15"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="12"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Edit" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="cTa-7b-a23">
+                                        <rect key="frame" x="16" y="63" width="42" height="15"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="12"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
@@ -130,7 +150,9 @@
                 <outlet property="cellScrollView" destination="uoe-4c-vuG" id="w9G-cy-7cM"/>
                 <outlet property="checkBox" destination="fqn-Gd-wkj" id="9qB-tS-tGl"/>
                 <outlet property="deleteButton" destination="YGY-8T-CvA" id="kIJ-2d-kyZ"/>
+                <outlet property="deleteLabel" destination="PE3-ZC-Ttn" id="Y87-T4-kQE"/>
                 <outlet property="editButton" destination="zGA-R0-sbK" id="xmo-mP-5XD"/>
+                <outlet property="editLabel" destination="cTa-7b-a23" id="npI-kQ-mxi"/>
                 <outlet property="productDetailsLabel" destination="eg5-B1-pGL" id="rFV-Cu-BrS"/>
                 <outlet property="productItemImageView" destination="bLm-e4-ynS" id="nuo-3G-Zub"/>
                 <outlet property="productNameLabel" destination="Fgx-8P-g7b" id="wSU-VC-Tf6"/>
@@ -143,9 +165,9 @@
     </objects>
     <resources>
         <image name="checkBox" width="200" height="140"/>
-        <image name="delete" width="149" height="200"/>
+        <image name="delete-1" width="200" height="200"/>
         <image name="dummy-placeholder" width="1280" height="800"/>
-        <image name="edit" width="135" height="200"/>
+        <image name="edit2" width="200" height="200"/>
         <image name="left" width="97" height="200"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
