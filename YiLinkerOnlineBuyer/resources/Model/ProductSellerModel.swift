@@ -71,7 +71,7 @@ class ProductSellerModel {
         
         var profilePhoto: String = ""
         var coverPhoto: String = ""
-        var images: NSArray = []
+        var images: [String] = []
         
         var isFollowed: Bool = false
         
@@ -86,7 +86,7 @@ class ProductSellerModel {
             }
             
             if let value: AnyObject = dictionary["data"] {
-                
+                println(value)
                 if let tempVar = value["id"] as? Int {
                     userId = tempVar
                 }
@@ -139,8 +139,8 @@ class ProductSellerModel {
                     isFollowed = tempVar
                 }
                 
-                if let tempVar = value["images"] as? NSArray {
-                    images = tempVar
+                for subValue in value["products"] as! NSArray {
+                    images.append(subValue["imageUrl"] as! String)
                 }
                 
             }

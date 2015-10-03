@@ -409,11 +409,11 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     
     func requestSellerDetails() {
         
-        let params = ["userId": "1"/*self.productDetailsModel.sellerId*/]
+        let params = ["userId": self.productDetailsModel.sellerId]
         println(params)
         manager.POST(APIAtlas.getSellerInfo, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            
+
             if responseObject["isSuccessful"] as! Bool {
                 self.productSellerModel = ProductSellerModel.parseDataWithDictionary(responseObject)
                 self.sellerRequest = true
@@ -695,6 +695,10 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         self.tableView.reloadData()
         
         if self.productSellerModel != nil {
+            if self.productSellerModel.images.count < 1 {
+                self.productSellerView.collectionView.hidden = true
+                self.productSellerView.frame.size.height = 123.0
+            }
             self.productSellerView.setSellerDetails(self.productSellerModel)
         }
         
