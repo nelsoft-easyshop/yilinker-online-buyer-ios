@@ -37,6 +37,7 @@ struct ProductStrings {
     static let alertOk = StringHelper.localizedStringWithKey("OK_BUTTON_LOCALIZE_KEY")
     static let alertError = StringHelper.localizedStringWithKey("ERROR_LOCALIZE_KEY")
     static let alertFailed = StringHelper.localizedStringWithKey("FAILED_LOCALIZE_KEY")
+    static let alertNoReviews = StringHelper.localizedStringWithKey("NO_REVIEWS_LOCALIZE_KEY")
 }
 
 protocol ProductViewControllerDelegate {
@@ -1038,7 +1039,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     }
     
     func barRateAction() {
-        if self.productReviewModel != nil {
+        if self.productReviewModel != nil && self.productReviewModel.reviews.count != 0 {
             var reviewModal = ProductReviewViewController(nibName: "ProductReviewViewController", bundle: nil)
             reviewModal.delegate = self
             reviewModal.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
@@ -1055,6 +1056,8 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
                 self.view.transform = CGAffineTransformMakeScale(0.92, 0.93)
                 self.navigationController?.navigationBar.alpha = 0.0
             })
+        } else {
+            self.showAlert(title: ProductStrings.alertNoReviews, message: nil)
         }
     }
     
@@ -1073,6 +1076,5 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         
         let shareViewController = UIActivityViewController(activityItems: sharingItems, applicationActivities: nil)
         self.presentViewController(shareViewController, animated: true, completion: nil)
-    }
-    
+    }   
 }

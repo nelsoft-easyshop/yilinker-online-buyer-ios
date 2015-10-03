@@ -137,10 +137,10 @@ class ProductImagesView: UIView, UICollectionViewDataSource, UICollectionViewDel
 
         if model.productUnits[unitId].discount == 0 {
             self.originalPrice.hidden = true
-            self.priceLabel.text = "P" + model.productUnits[unitId].price
+            self.priceLabel.text = "₱" + (model.productUnits[unitId].price).floatValue.string(2)
         } else {
-            self.originalPrice.text = "P" + model.productUnits[unitId].price
-            self.priceLabel.text = "P" + model.productUnits[unitId].discountedPrice
+            self.originalPrice.text = "₱" + (model.productUnits[unitId].price).floatValue.string(2)
+            self.priceLabel.text = "₱" + (model.productUnits[unitId].discountedPrice).floatValue.string(2)
         }
         
         self.width = width
@@ -151,4 +151,12 @@ class ProductImagesView: UIView, UICollectionViewDataSource, UICollectionViewDel
         self.collectionView.reloadData()
     }
     
+}
+
+// MARK: Extentions
+
+extension String {
+    var floatValue: Float {
+        return (self as NSString).floatValue
+    }
 }
