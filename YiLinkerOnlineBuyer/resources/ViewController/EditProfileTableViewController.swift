@@ -444,24 +444,24 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
         
         var errorMessage: String = ""
         
-        /*
+    
         if firstName.isEmpty {
             errorMessage = "First name is required."
-        } else if firstName.isValidName() {
+        } else if !firstName.isValidName() {
             errorMessage = "First name contains illegal characters. It can only contain letters, numbers and underscores."
-        } else if lastName.isNotEmpty() {
+        } else if lastName.isEmpty {
             errorMessage = "Last name is required."
-        } else if lastName.isValidName() {
+        } else if !lastName.isValidName() {
             errorMessage = "Last name contains illegal characters. It can only contain letters, numbers and underscores."
-        } else if emailAddress.isNotEmpty() {
-            errorMessage = "Email is required."
-        } else if emailAddress.isValidEmail() {
-            errorMessage = "The email address you enter is not a valid email address."
-        } else if password.isNotEmpty() {
-            errorMessage = "Password is required."
-        } else if password.isAlphaNumeric() {
-            errorMessage = "Password contains illegal characters. It can only contain letters, numbers and underscores."
-        }*/
+        } //        } else if emailAddress.isNotEmpty() {
+//            errorMessage = "Email is required."
+//        } else if emailAddress.isValidEmail() {
+//            errorMessage = "The email address you enter is not a valid email address."
+//        } else if password.isNotEmpty() {
+//            errorMessage = "Password is required."
+//        } else if password.isAlphaNumeric() {
+//            errorMessage = "Password contains illegal characters. It can only contain letters, numbers and underscores."
+//        }
         
         if errorMessage != "" {
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorMessage)

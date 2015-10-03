@@ -38,12 +38,16 @@ class EditProfilePersonalInformationTableViewCell: UITableViewCell, UITextFieldD
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        initializeViews()
+        
         initializeLocalizedString()
+        initializeViews()
     }
     
     func initializeViews() {
         changeNumberButton.layer.cornerRadius = 8
+        firstNameLabel.required()
+        lastNameLabel.required()
+        mobilePhoneLabel.required()
     }
     
     func initializeLocalizedString() {
