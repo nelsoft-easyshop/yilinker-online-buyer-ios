@@ -61,9 +61,9 @@
                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="next"/>
                     </textField>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mobile Number" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VUk-FF-mZX">
-                        <rect key="frame" x="20" y="82" width="91" height="25"/>
+                        <rect key="frame" x="20" y="82" width="110" height="25"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="91" id="Ebi-kS-Rlk"/>
+                            <constraint firstAttribute="width" constant="110" id="Ebi-kS-Rlk"/>
                             <constraint firstAttribute="height" constant="25" id="Y1W-fq-3eC"/>
                         </constraints>
                         <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="13"/>
@@ -80,9 +80,9 @@
                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="next"/>
                     </textField>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Email Address" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ChN-WF-Log">
-                        <rect key="frame" x="180" y="82" width="85" height="25"/>
+                        <rect key="frame" x="180" y="82" width="109" height="25"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="85" id="dGA-lr-31k"/>
+                            <constraint firstAttribute="width" constant="109" id="dGA-lr-31k"/>
                             <constraint firstAttribute="height" constant="25" id="ed2-BH-BeQ"/>
                         </constraints>
                         <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="13"/>
