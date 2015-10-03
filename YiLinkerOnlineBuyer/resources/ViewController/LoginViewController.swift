@@ -18,6 +18,7 @@ struct LoginStrings {
     static let passwordIsRequired: String = StringHelper.localizedStringWithKey("PASSWORD_IS_REQUIRED_LOCALIZE_KEY")
     
     static let successMessage: String = StringHelper.localizedStringWithKey("SUCCESS_LOGIN_LOCALIZE_KEY")
+    static let or: String = StringHelper.localizedStringWithKey("OR_LOCALIZE_KEY")
 }
 
 class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, GIDSignInUIDelegate, GIDSignInDelegate, UITextFieldDelegate {
@@ -30,6 +31,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, GIDSignIn
     @IBOutlet weak var emailAddressTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var signInButton: UIButton!
+    @IBOutlet weak var orLabel: UILabel!
     
     var currentTextFieldTag: Int = 1
     var parentView: UIView?
@@ -40,7 +42,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, GIDSignIn
         
         self.emailAddressTextField.placeholder = LoginStrings.enterEmailAddress
         self.passwordTextField.placeholder = LoginStrings.enterPassword
-        
+        self.orLabel.text = LoginStrings.or
         self.signInButton.setTitle(FABStrings.signIn, forState: UIControlState.Normal)
     }
     
