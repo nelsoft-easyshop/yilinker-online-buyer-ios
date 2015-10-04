@@ -50,7 +50,6 @@ class ProductsTableViewCell: UITableViewCell, UICollectionViewDelegate, UICollec
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell: FullImageCollectionViewCell = self.collectionView?.dequeueReusableCellWithReuseIdentifier("FullImageCollectionViewCell", forIndexPath: indexPath) as! FullImageCollectionViewCell
         let homeProductModel: ProductModel = self.productModels[indexPath.row]
-        println("\(self.productModels[indexPath.row].productId)")
         cell.itemProductImageView.sd_setImageWithURL(homeProductModel.imageURL, placeholderImage: UIImage(named: "dummy-placeholder"))
         return cell
     }
