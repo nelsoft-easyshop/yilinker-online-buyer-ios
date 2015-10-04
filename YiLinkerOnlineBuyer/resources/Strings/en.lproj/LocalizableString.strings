@@ -191,6 +191,7 @@ CONNECTION_TAP_TO_RELOAD_LOCALIZE_KEY = "Tap to reloadtitletitme";
 
 // MARK: - Followed Sellers
 FOLLOWED_SELLERS_LOCALIZE_KEY = "Followed Sellers";
+FOLLOWED_SELLERS_EMPTY_LOCALIZE_KEY = "You didn't followed any sellers yet";
 
 // MARK: - Customized Categories
 CATEGORY_LOCALIZE_KEY = "Category";
@@ -338,6 +339,15 @@ CHANGEPASSWORD_LOCALIZE_KEY = "Change Password";
 SUCCESSCHANGEPASSWORD_LOCALIZE_KEY = "Successfully changed password!";
 SUCCESS_LOCALIZE_KEY = "Success";
 SUCCESSUPDATEPROFILE_LOCALIZE_KEY = "Successfully updated profile!";
+CONGRATULATIONS_LOCALIZED_KEY = "Congratulations!";
+SUCCESS_VERIFIED_LOCALIZED_KEY = "You have successfully verified your account.";
+OOOOPS_LOCALIZE_KEY = "Ooooops!!";
+FAILED_VERIFIED_LOCALIZED_KEY = "You have either entered an incorrect code or it has already expired.";
+VERIFY_NUMBER_LOCALIZED_KEY = "Verify Number";
+PLEASE_ENTER_VERIFY_NUMBER_LOCALIZED_KEY = "Please enter the 6 digit code that was sent to your mobile phone";
+TIME_LEFT_LOCALIZED_KEY = "Time Left:";
+VERIFY_NUMBER_LOCALIZED_KEY = "VERIFY";
+REQUEST_NEW_CODE_LOCALIZED_KEY = "Request new verification code";
 
 //Account Information
 ACCOUNTINFO_LOCALIZE_KEY = "Account Information";
