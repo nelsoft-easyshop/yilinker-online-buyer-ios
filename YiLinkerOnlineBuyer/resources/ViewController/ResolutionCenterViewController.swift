@@ -34,6 +34,16 @@ class ResolutionCenterViewController: UIViewController, UITableViewDataSource, U
     ,("2345647856", "Closed", "January 21, 2016" , "Buyer" , "On-start", "What's goin on")]
     **/
     
+    @IBOutlet weak var casesContainerView: UIView!
+    @IBOutlet weak var casesImageView: UIImageView!
+    @IBOutlet weak var casesLabel: UILabel!
+    @IBOutlet weak var openContainerView: UIView!
+    @IBOutlet weak var openImageView: UIImageView!
+    @IBOutlet weak var openLabel: UILabel!
+    @IBOutlet weak var closedContainerView: UIView!
+    @IBOutlet weak var closedImageView: UIImageView!
+    @IBOutlet weak var closedLabel: UILabel!
+    
     var currentSelectedFilter = SelectedFilters(time:.Total,status:.Both)
     
     var hud: MBProgressHUD?
@@ -66,10 +76,16 @@ class ResolutionCenterViewController: UIViewController, UITableViewDataSource, U
         // Dispute button
         disputeButton.addTarget(self, action:"disputePressed", forControlEvents:.TouchUpInside)
         
-//        casesTab.setTitle(ResolutionStrings.cases, forState: .Normal)
-//        openTab.setTitle(ResolutionStrings.open, forState: .Normal)
-//        closedTab.setTitle(ResolutionStrings.closed, forState: .Normal)
+        self.casesLabel.text = ResolutionStrings.cases
+        self.openLabel.text = ResolutionStrings.open
+        self.closedLabel.text = ResolutionStrings.closed
         disputeButton.setTitle(ResolutionStrings.file, forState: .Normal)
+        
+        self.casesContainerView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "casesAction:"))
+        self.openContainerView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "openAction:"))
+        self.closedContainerView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "closedAction:"))
+        
+        setSelectedTab(0)
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -152,6 +168,54 @@ class ResolutionCenterViewController: UIViewController, UITableViewDataSource, U
         self.tabSelector.setSelection(.TabThree)
         self.currentSelectedFilter.status = .Closed
         fireGetCases()
+    }
+    
+    // MARK: - Tabs Actions
+    
+    func casesAction(gesture: UIGestureRecognizer) {
+        setSelectedTab(0)
+        self.currentSelectedFilter.status = .Both
+        fireGetCases()
+    }
+    
+    func openAction(gesture: UIGestureRecognizer) {
+        setSelectedTab(1)
+        self.currentSelectedFilter.status = .Open
+        fireGetCases()
+    }
+    
+    func closedAction(gesture: UIGestureRecognizer) {
+        setSelectedTab(2)
+        self.currentSelectedFilter.status = .Closed
+        fireGetCases()
+    }
+    
+    func setSelectedTab(index: Int) {
+        self.casesContainerView.backgroundColor = Constants.Colors.appTheme
+        self.casesImageView.image = UIImage(named: "rc-cases-white")
+        self.casesLabel.textColor = UIColor.whiteColor()
+        
+        self.openContainerView.backgroundColor = Constants.Colors.appTheme
+        self.openImageView.image = UIImage(named: "rc-open-white")
+        self.openLabel.textColor = UIColor.whiteColor()
+        
+        self.closedContainerView.backgroundColor = Constants.Colors.appTheme
+        self.closedImageView.image = UIImage(named: "rc-close-white")
+        self.closedLabel.textColor = UIColor.whiteColor()
+        
+        if index == 0 {
+            self.casesContainerView.backgroundColor = UIColor.whiteColor()
+            self.casesImageView.image = UIImage(named: "rc-cases-violet")
+            self.casesLabel.textColor = Constants.Colors.appTheme
+        } else if index == 1 {
+            self.openContainerView.backgroundColor = UIColor.whiteColor()
+            self.openImageView.image = UIImage(named: "rc-open-violet")
+            self.openLabel.textColor = Constants.Colors.appTheme
+        } else if index == 2 {
+            self.closedContainerView.backgroundColor = UIColor.whiteColor()
+            self.closedImageView.image = UIImage(named: "rc-close-violet")
+            self.closedLabel.textColor = Constants.Colors.appTheme
+        }
     }
     
     // Mark: - New Dispute View Controller

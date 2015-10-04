@@ -37,6 +37,7 @@ struct ProductStrings {
     static let alertOk = StringHelper.localizedStringWithKey("OK_BUTTON_LOCALIZE_KEY")
     static let alertError = StringHelper.localizedStringWithKey("ERROR_LOCALIZE_KEY")
     static let alertFailed = StringHelper.localizedStringWithKey("FAILED_LOCALIZE_KEY")
+    static let alertNoReviews = StringHelper.localizedStringWithKey("NO_REVIEWS_LOCALIZE_KEY")
 }
 
 protocol ProductViewControllerDelegate {
@@ -409,11 +410,11 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     
     func requestSellerDetails() {
         
-        let params = ["userId": "1"/*self.productDetailsModel.sellerId*/]
+        let params = ["userId": self.productDetailsModel.sellerId]
         println(params)
         manager.POST(APIAtlas.getSellerInfo, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            
+
             if responseObject["isSuccessful"] as! Bool {
                 self.productSellerModel = ProductSellerModel.parseDataWithDictionary(responseObject)
                 self.sellerRequest = true
@@ -695,6 +696,10 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         self.tableView.reloadData()
         
         if self.productSellerModel != nil {
+            if self.productSellerModel.images.count < 1 {
+                self.productSellerView.collectionView.hidden = true
+                self.productSellerView.frame.size.height = 123.0
+            }
             self.productSellerView.setSellerDetails(self.productSellerModel)
         }
         
@@ -970,6 +975,12 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         self.navigationController?.pushViewController(seller, animated: true)
     }
     
+    func gotoSellerProduct(controller: ProductSellerView, id: String) {
+        let productView = ProductViewController(nibName: "ProductViewController", bundle: nil)
+        productView.productId = id
+        self.navigationController?.pushViewController(productView, animated: true)
+    }
+    
     // MARK: Actions
     
     @IBAction func addToCartAction(sender: AnyObject) {
@@ -1015,7 +1026,8 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     // MARK: - Navigation Bar Actions
     
     func barCloseAction() {
-        self.navigationController?.popToRootViewControllerAnimated(true)
+        self.navigationController?.popViewControllerAnimated(true)
+//        self.navigationController?.popToRootViewControllerAnimated(true)
     }
     
     func barWishlistAction() {
@@ -1027,7 +1039,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     }
     
     func barRateAction() {
-        if self.productReviewModel != nil {
+        if self.productReviewModel != nil && self.productReviewModel.reviews.count != 0 {
             var reviewModal = ProductReviewViewController(nibName: "ProductReviewViewController", bundle: nil)
             reviewModal.delegate = self
             reviewModal.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
@@ -1044,6 +1056,8 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
                 self.view.transform = CGAffineTransformMakeScale(0.92, 0.93)
                 self.navigationController?.navigationBar.alpha = 0.0
             })
+        } else {
+            self.showAlert(title: ProductStrings.alertNoReviews, message: nil)
         }
     }
     
@@ -1062,6 +1076,5 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         
         let shareViewController = UIActivityViewController(activityItems: sharingItems, applicationActivities: nil)
         self.presentViewController(shareViewController, animated: true, completion: nil)
-    }
-    
+    }   
 }

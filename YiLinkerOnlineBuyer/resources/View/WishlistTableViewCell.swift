@@ -36,6 +36,8 @@ class WishlistTableViewCell: UITableViewCell, UIScrollViewDelegate {
     @IBOutlet weak var productNameLabel: UILabel!
     @IBOutlet weak var productDetailsLabel: UILabel!
     @IBOutlet weak var productPriceLabel: UILabel!
+    @IBOutlet weak var addToCartLabel: UILabel!
+    @IBOutlet weak var deleteLabel: UILabel!
     
     @IBOutlet weak var productItemImageView: UIImageView!
 
@@ -81,6 +83,9 @@ class WishlistTableViewCell: UITableViewCell, UIScrollViewDelegate {
         swipeIndicatorView.frame = CGRectMake((width - 25), 0, 25, CGRectGetHeight(self.bounds))
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "closeSwipeView", name: swipeForOptionsCellEnclosingTableViewDidBeginScrollingNotification, object: nil)
+        
+        addToCartLabel.text = StringHelper.localizedStringWithKey("WISHLIST_ADD_LOCALIZE_KEY")
+        deleteLabel.text = StringHelper.localizedStringWithKey("WISHLIST_DELETE_LOCALIZE_KEY")
     }
     
     func updateSwipeViewStatus(){
