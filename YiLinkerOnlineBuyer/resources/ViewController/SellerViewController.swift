@@ -695,12 +695,13 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.redirectToResultView("target")
     }
     
-    func productstableViewCellDidTapProductWithTarget(target: String, type: String) {
-        self.redirectToProductpageWithProductID("1")
+    func productstableViewCellDidTapProductWithTarget(target: String, type: String, productId: String) {
+        self.redirectToProductpageWithProductID(productId)
     }
     
     func redirectToProductpageWithProductID(productID: String) {
         let productViewController: ProductViewController = ProductViewController(nibName: "ProductViewController", bundle: nil)
+        productViewController.productId = productID
         self.navigationController?.pushViewController(productViewController, animated: true)
     }
     
