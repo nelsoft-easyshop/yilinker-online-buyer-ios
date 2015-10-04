@@ -71,10 +71,10 @@ class TransactionCancelViewController: UIViewController, UITextViewDelegate, UIP
     }
     
     @IBAction func submitAction(sender: AnyObject) {
-        if self.reasonTextField.text != "" {
+        if self.reasonTextField.text != "" || self.remarksTextView.text != "" {
             self.firePostCancellation()
         } else {
-             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "All fields are required.", title: "Error")
         }
         
     }
