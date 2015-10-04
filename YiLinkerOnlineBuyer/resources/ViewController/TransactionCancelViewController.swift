@@ -71,7 +71,12 @@ class TransactionCancelViewController: UIViewController, UITextViewDelegate, UIP
     }
     
     @IBAction func submitAction(sender: AnyObject) {
-        self.firePostCancellation()
+        if !self.typeOfReason.isEmpty {
+            self.firePostCancellation()
+        } else {
+             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+        }
+        
     }
     
     @IBAction func textFieldDidBeginEditing(sender: AnyObject) {
