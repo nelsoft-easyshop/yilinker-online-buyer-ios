@@ -429,6 +429,8 @@ TRANSACTION_DETAILS_DELIVERY_STATUS_LOCALIZE_KEY = "DELIVERY STATUS";
 TRANSACTION_DETAILS_CHECKIN_LOCALIZE_KEY = "last check-in";
 TRANSACTION_DETAILS_PICKUP_LOCALIZE_KEY = "pickup rider";
 TRANSACTION_DETAILS_DELIVERY_LOCALIZE_KEY = "delivery rider";
+TRANSACTION_DETAILS_NOT_ALLOWED_FEEDBACK_LOCALIZE_KEY = "You're not allowed to leave feedback to this seller unless your transaction status is completed.";
+TRANSACTION_DETAILS_NOT_ALLOWED_MESSAGE_LOCALIZE_KEY = "You're not allowed to message this seller."
 
 //Transaction Product Details
 TRANSACTION_PRODUCT_DETAILS_TITLE_LOCALIZE_KEY = "Product Details";
