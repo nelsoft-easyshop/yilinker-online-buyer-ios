@@ -129,6 +129,7 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
         transactionDetails.totalUnitCost = tableData[indexPath.row].total_unit_price2
         transactionDetails.shippingFee = tableData[indexPath.row].total_handling_fee2
         transactionDetails.totalCost = tableData[indexPath.row].total_price2
+        transactionDetails.orderStatusId = tableData[indexPath.row].order_status_id2
         self.navigationController?.pushViewController(transactionDetails, animated: true)
     }
     
