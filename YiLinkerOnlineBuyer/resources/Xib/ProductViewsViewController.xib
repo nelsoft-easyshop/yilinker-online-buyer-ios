@@ -418,10 +418,10 @@
                         <constraint firstAttribute="height" constant="50" id="m2w-el-hSm"/>
                     </constraints>
                 </imageView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Beats Audio Store" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Ic-lg-NFJ">
-                    <rect key="frame" x="76" y="62" width="194" height="21"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Store name here" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="13" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1Ic-lg-NFJ">
+                    <rect key="frame" x="76" y="52" width="194" height="31"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="21" id="nWk-hM-l74"/>
+                        <constraint firstAttribute="height" constant="31" id="nWk-hM-l74"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
                     <color key="textColor" red="0.29803922770000002" green="0.29803922770000002" blue="0.29803922770000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -491,7 +491,7 @@
                 <constraint firstItem="hi6-R0-3Kc" firstAttribute="top" secondItem="QSa-up-KMN" secondAttribute="bottom" constant="24" id="dNR-ZL-Ql3"/>
                 <constraint firstItem="Kzu-Kc-e0E" firstAttribute="top" secondItem="b5m-Sg-d34" secondAttribute="top" id="fNR-1p-9bT"/>
                 <constraint firstItem="uIJ-km-82t" firstAttribute="leading" secondItem="JQN-fu-kVc" secondAttribute="trailing" constant="16" id="giP-76-QMU"/>
-                <constraint firstItem="1Ic-lg-NFJ" firstAttribute="top" secondItem="QSa-up-KMN" secondAttribute="bottom" constant="20" id="h1I-gN-mkN"/>
+                <constraint firstItem="1Ic-lg-NFJ" firstAttribute="top" secondItem="QSa-up-KMN" secondAttribute="bottom" constant="10" id="h1I-gN-mkN"/>
                 <constraint firstItem="hi6-R0-3Kc" firstAttribute="leading" secondItem="uIJ-km-82t" secondAttribute="trailing" constant="29" id="hmU-es-XTd"/>
                 <constraint firstAttribute="trailing" secondItem="9eV-P8-MMr" secondAttribute="trailing" constant="13" id="lhX-gW-okO"/>
                 <constraint firstItem="bgc-Qk-Kc4" firstAttribute="top" secondItem="JQN-fu-kVc" secondAttribute="bottom" constant="15" id="nCV-SZ-65f"/>
