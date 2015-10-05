@@ -53,7 +53,7 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
                 self.collectionView?.reloadData()
             }
         }
-        println(layouts)
+        
         self.navigationController?.navigationBar.alpha = 1.0
         self.navigationController?.navigationBar.barTintColor = Constants.Colors.appTheme
         UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.LightContent
@@ -340,6 +340,8 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
             twoColumnGridCollectionViewCell.discountPercentageLabel.text = homeProductModel?.discountPercentage
             twoColumnGridCollectionViewCell.productNameLabel.text = homeProductModel?.name
             twoColumnGridCollectionViewCell.originalPriceLabel.text = homeProductModel?.originalPrice
+            twoColumnGridCollectionViewCell.layoutIfNeeded()
+            twoColumnGridCollectionViewCell.layoutSubviews()
             twoColumnGridCollectionViewCell.discountedPriceLabel.drawDiscountLine()
             
             return twoColumnGridCollectionViewCell
