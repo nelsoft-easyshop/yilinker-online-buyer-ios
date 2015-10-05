@@ -100,6 +100,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     
     var unitIdIndex: Int = 0
     
+    var isExiting: Bool = true
     // MARK: Parameters
     
     var unitId: String = "0"
@@ -133,6 +134,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     }
     
     override func viewWillAppear(animated: Bool) {
+        isExiting = true
         UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.Default
         self.navigationController?.navigationBar.barTintColor = .whiteColor()
         self.navigationController?.navigationBar.tintColor = .grayColor()
@@ -150,11 +152,13 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     }
     
     override func viewWillDisappear(animated: Bool) {
-        self.navigationController?.navigationBar.alpha = 1.0
-        self.navigationController?.navigationBar.barTintColor = Constants.Colors.appTheme
-        UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.LightContent
-        self.hud?.hide(true)
         super.viewWillDisappear(animated)
+        if isExiting {
+            self.navigationController?.navigationBar.alpha = 1.0
+            self.navigationController?.navigationBar.barTintColor = Constants.Colors.appTheme
+            UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.LightContent
+        }
+        self.hud?.hide(true)
     }
     
     // MARK: - Table View Data Source and Delegates
@@ -927,9 +931,12 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     // MARK: - Product Description Delegate
     
     func seeMoreDescription(controller: ProductDescriptionView) {
+        isExiting = false
         let description = ProductDescriptionViewController(nibName: "ProductDescriptionViewController", bundle: nil)
         description.url = self.productDetailsModel.fullDescription
-        self.tabBarController?.presentViewController(description, animated: true, completion: nil)
+        description.title = self.productDetailsModel.title
+        let root: UINavigationController = UINavigationController(rootViewController: description)
+        self.tabBarController?.presentViewController(root, animated: true, completion: nil)
     }
     
     // MARK: - Product Attribute Delegate
