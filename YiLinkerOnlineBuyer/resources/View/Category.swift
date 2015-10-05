@@ -39,6 +39,14 @@ extension UITextField {
         return emailTest.evaluateWithObject(self.text)
     }
     
+    func isValidPassword() -> Bool {
+        // println("validate calendar: \(testStr)")
+        let emailRegEx = "^(?=.*\\d)(?=.*[a-zA-Z])[^ ]{0,}$"
+        
+        let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
+        return emailTest.evaluateWithObject(self.text)
+    }
+    
     func isAlphaNumeric() -> Bool {
         let passwordRegEx = "[A-Za-z0-9_]*"
         let passwordTest = NSPredicate(format: "SELF MATCHES %@", passwordRegEx)
