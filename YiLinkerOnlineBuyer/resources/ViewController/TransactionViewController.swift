@@ -286,7 +286,7 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
                             self.requestRefreshToken(TransactionRefreshType.Support)
                         }
                     } else {
-                       
+                        self.showAlert(title: Constants.Localized.someThingWentWrong, message: nil)
                         self.hud?.hide(true)
                     }
                     println(error.userInfo)

@@ -159,7 +159,12 @@ class TransactionDetailsModel: NSObject {
                             productDescription.append(orderProductStatus["description"] as! String)
                         }
                         
-                        productImage.append(product["productImage"] as! String)
+                        if (product["productImage"] as! String) != "" {
+                            productImage.append(product["productImage"] as! String)
+                        } else {
+                            productImage.append("")
+                        }
+                        
                         isCancellable.append(product["isCancellable"] as! Bool)
                     }
                 }

@@ -426,6 +426,7 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
     }
     
     func submitTransactionCancelReason() {
+        self.showView()
         var successController = TransactionCancelOrderSuccessViewController(nibName: "TransactionCancelOrderSuccessViewController", bundle: nil)
         successController.delegate = self
         successController.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
