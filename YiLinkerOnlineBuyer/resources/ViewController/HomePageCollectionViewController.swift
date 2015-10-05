@@ -53,7 +53,7 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
                 self.collectionView?.reloadData()
             }
         }
-        println(layouts)
+        
         self.navigationController?.navigationBar.alpha = 1.0
         self.navigationController?.navigationBar.barTintColor = Constants.Colors.appTheme
         UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.LightContent
@@ -148,7 +148,7 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
             
             fullImageColectionViewCell.targetType = homeProductModel.targetType
             fullImageColectionViewCell.target = homeProductModel.target
-            
+        
             fullImageColectionViewCell.itemProductImageView.sd_setImageWithURL(homeProductModel.imageURL, placeholderImage: UIImage(named: "dummy-placeholder"))
             return fullImageColectionViewCell
         } else if self.layouts[indexPath.section] == Constants.HomePage.layoutTwoKey {
@@ -201,7 +201,7 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
                 fourImageCollectionViewCell.productItemImageView.sd_setImageWithURL(homeProductModel!.imageURL, placeholderImage: UIImage(named: "dummy-placeholder"))
                 fourImageCollectionViewCell.productNameLabel.text = homeProductModel!.name
                 
-                if homeProductModel!.discountedPrice != "" {
+                if homeProductModel!.discountedPrice != ""  && homeProductModel!.discountPercentage.toInt() != nil {
                     fourImageCollectionViewCell.discountedPriceLabel.text = "P \(homeProductModel!.discountedPrice)"
                     fourImageCollectionViewCell.discountPercentageLabel.text = "\(homeProductModel!.discountPercentage) %"
                 } else {
@@ -224,7 +224,7 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
                     fourImageCollectionViewCell.targetType = homeProductModel!.targetType
                     fourImageCollectionViewCell.target = homeProductModel!.target
                     
-                    if homeProductModel!.discountedPrice != "" {
+                    if homeProductModel!.discountedPrice != "" && homeProductModel!.discountPercentage.toInt() != nil {
                         fourImageCollectionViewCell.discountedPriceLabel.text = "P \(homeProductModel!.discountedPrice)"
                         fourImageCollectionViewCell.discountPercentageLabel.text = "\(homeProductModel!.discountPercentage) %"
                     } else {
@@ -340,7 +340,13 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
             twoColumnGridCollectionViewCell.discountPercentageLabel.text = homeProductModel?.discountPercentage
             twoColumnGridCollectionViewCell.productNameLabel.text = homeProductModel?.name
             twoColumnGridCollectionViewCell.originalPriceLabel.text = homeProductModel?.originalPrice
+            twoColumnGridCollectionViewCell.layoutIfNeeded()
+            twoColumnGridCollectionViewCell.layoutSubviews()
             twoColumnGridCollectionViewCell.discountedPriceLabel.drawDiscountLine()
+            
+            if homeProductModel!.discountPercentage != "0" {
+                twoColumnGridCollectionViewCell.discountPercentageLabel.hidden = true
+            }
             
             return twoColumnGridCollectionViewCell
         } else if self.layouts[indexPath.section] == Constants.HomePage.layoutSevenKey {
@@ -354,8 +360,8 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
                 productItemWithVerticalDisplay.productItemImageView.sd_setImageWithURL(homeProductModel.imageURL, placeholderImage: UIImage(named: "dummy-placeholder"))
                 productItemWithVerticalDisplay.originalPriceLabel.text = homeProductModel.originalPrice
                 productItemWithVerticalDisplay.productNameLabel.text = homeProductModel.name
-                
-                if homeProductModel.discountedPrice != "" {
+                println("discount: \(homeProductModel.discountPercentage.toInt())")
+                if homeProductModel.discountedPrice != "" && homeProductModel.discountPercentage != "0" && homeProductModel.discountPercentage.toInt() != nil {
                     productItemWithVerticalDisplay.discountedPriceLabel.text = "P \(homeProductModel.discountedPrice)"
                     productItemWithVerticalDisplay.discountPercentageLabel.text = "\(homeProductModel.discountPercentage) %"
                 } else {
@@ -614,7 +620,7 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
     
     func didSelectProductWithTarget(target: String, targetType: String) {
         println("target: \(target) \ntarget type:\(targetType)")
-        self.redirectToProductpageWithProductID("1")
+        self.redirectToProductpageWithProductID(target)
     }
     
     func redirectToProductpageWithProductID(productID: String) {
