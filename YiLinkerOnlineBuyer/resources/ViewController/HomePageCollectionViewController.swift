@@ -201,7 +201,7 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
                 fourImageCollectionViewCell.productItemImageView.sd_setImageWithURL(homeProductModel!.imageURL, placeholderImage: UIImage(named: "dummy-placeholder"))
                 fourImageCollectionViewCell.productNameLabel.text = homeProductModel!.name
                 
-                if homeProductModel!.discountedPrice != "" {
+                if homeProductModel!.discountedPrice != ""  && homeProductModel!.discountPercentage.toInt() != nil {
                     fourImageCollectionViewCell.discountedPriceLabel.text = "P \(homeProductModel!.discountedPrice)"
                     fourImageCollectionViewCell.discountPercentageLabel.text = "\(homeProductModel!.discountPercentage) %"
                 } else {
@@ -224,7 +224,7 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
                     fourImageCollectionViewCell.targetType = homeProductModel!.targetType
                     fourImageCollectionViewCell.target = homeProductModel!.target
                     
-                    if homeProductModel!.discountedPrice != "" {
+                    if homeProductModel!.discountedPrice != "" && homeProductModel!.discountPercentage.toInt() != nil {
                         fourImageCollectionViewCell.discountedPriceLabel.text = "P \(homeProductModel!.discountedPrice)"
                         fourImageCollectionViewCell.discountPercentageLabel.text = "\(homeProductModel!.discountPercentage) %"
                     } else {
@@ -344,6 +344,10 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
             twoColumnGridCollectionViewCell.layoutSubviews()
             twoColumnGridCollectionViewCell.discountedPriceLabel.drawDiscountLine()
             
+            if homeProductModel!.discountPercentage != "0" {
+                twoColumnGridCollectionViewCell.discountPercentageLabel.hidden = true
+            }
+            
             return twoColumnGridCollectionViewCell
         } else if self.layouts[indexPath.section] == Constants.HomePage.layoutSevenKey {
             let productItemWithVerticalDisplay: ProductItemWithVerticalDisplayCollectionViewCell = self.collectionView?.dequeueReusableCellWithReuseIdentifier("ProductItemWithVerticalDisplayCollectionViewCell", forIndexPath: indexPath) as! ProductItemWithVerticalDisplayCollectionViewCell
@@ -356,8 +360,8 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
                 productItemWithVerticalDisplay.productItemImageView.sd_setImageWithURL(homeProductModel.imageURL, placeholderImage: UIImage(named: "dummy-placeholder"))
                 productItemWithVerticalDisplay.originalPriceLabel.text = homeProductModel.originalPrice
                 productItemWithVerticalDisplay.productNameLabel.text = homeProductModel.name
-                
-                if homeProductModel.discountedPrice != "" {
+                println("discount: \(homeProductModel.discountPercentage.toInt())")
+                if homeProductModel.discountedPrice != "" && homeProductModel.discountPercentage != "0" && homeProductModel.discountPercentage.toInt() != nil {
                     productItemWithVerticalDisplay.discountedPriceLabel.text = "P \(homeProductModel.discountedPrice)"
                     productItemWithVerticalDisplay.discountPercentageLabel.text = "\(homeProductModel.discountPercentage) %"
                 } else {
