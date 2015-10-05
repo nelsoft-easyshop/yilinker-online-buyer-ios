@@ -109,7 +109,7 @@
                                     <color key="textColor" red="0.3803921569" green="0.12549019610000001" blue="0.46666666670000001" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="original price" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oP0-pM-aTf">
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="original price" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oP0-pM-aTf" customClass="DiscountLabel" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
                                     <rect key="frame" x="0.0" y="0.0" width="116" height="22"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="22" id="xkL-Ct-xSE"/>
@@ -192,9 +192,9 @@
                 <outlet property="collectionView" destination="GOO-gy-vhj" id="jj9-CS-2t3"/>
                 <outlet property="messageContainerView" destination="RJM-7I-w4S" id="N9a-2p-wHb"/>
                 <outlet property="nameLabel" destination="0jG-D7-b0E" id="XQd-rJ-1h2"/>
-                <outlet property="originalPrice" destination="oP0-pM-aTf" id="8S4-5N-EoQ"/>
                 <outlet property="pageControl" destination="aWQ-Wr-v5c" id="CCd-Hp-jPL"/>
-                <outlet property="priceLabel" destination="PP3-Z9-OBE" id="p5t-7f-fg0"/>
+                <outlet property="priceCustomLabel" destination="oP0-pM-aTf" id="eU0-DD-ygT"/>
+                <outlet property="priceLabel" destination="PP3-Z9-OBE" id="z3K-VD-l4y"/>
                 <outlet property="rateContainerView" destination="sVc-rl-QSJ" id="5e6-j5-35e"/>
                 <outlet property="shareContainerView" destination="ryl-d0-Apw" id="592-ML-uYD"/>
                 <outlet property="wishlistContainerView" destination="Mf8-6k-Nbf" id="kRH-h4-fQr"/>

@@ -14,13 +14,16 @@ class DiscountLabel: UILabel {
        
     }
     
-    func drawDiscountLine() {
+    func drawDiscountLine(floatLeft: Bool) {
         self.layer.sublayers = nil
         let myString: NSString = self.text!
         let stringSize: CGSize = myString.sizeWithAttributes([NSFontAttributeName: self.font])
         let discoutLine: CALayer = CALayer()
         discoutLine.frame = CGRectMake(0, self.frame.size.height / 2, stringSize.width, 1)
-        discoutLine.backgroundColor = UIColor.darkGrayColor().CGColor
+        if floatLeft {
+            discoutLine.frame.origin.x = self.frame.size.width - discoutLine.frame.size.width
+        }
+        discoutLine.backgroundColor = UIColor.grayColor().CGColor
         self.layer.addSublayer(discoutLine)
     }
 
