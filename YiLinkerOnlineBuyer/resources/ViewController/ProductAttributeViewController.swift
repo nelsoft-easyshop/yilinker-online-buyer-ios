@@ -342,7 +342,7 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
         
     }
     
-    func setDetail(image: String, title: String, price: String) {
+    func setDetail(#image: String, title: String, price: String) {
         
         productImageView.sd_setImageWithURL(NSURL(string: image), placeholderImage: UIImage(named: "dummy-placeholder"))
         nameLabel.text = title
@@ -492,9 +492,9 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
     
     // MARK: - Delegates
     
-    func passModel(#productDetailsModel: ProductDetailsModel, selectedValue: NSArray, selectedId: NSArray, unitIdIndex: Int, quantity: Int, price: String) {
+    func passModel(#productDetailsModel: ProductDetailsModel, selectedValue: NSArray, selectedId: NSArray, unitIdIndex: Int, quantity: Int, price: String, imageIndex: Int) {
         
-        setDetail("", title: productDetailsModel.title, price: price)
+        setDetail(image: productDetailsModel.images[imageIndex].imageLocation, title: productDetailsModel.title, price: price)
         self.productDetailsModel = productDetailsModel
         self.attributes = productDetailsModel.attributes as [ProductAttributeModel]
         self.selectedId = selectedId as! [String]

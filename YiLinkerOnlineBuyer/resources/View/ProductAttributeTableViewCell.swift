@@ -89,15 +89,6 @@ class ProductAttributeTableViewCell: UITableViewCell {
             button.tag = attributesId[i].toInt()!
             
             leftMargin += buttonWidth + 10
-//            //>>>>
-//            button.sizeToFit()
-//            button.frame.size.width += CGFloat(30)
-//            if spacingX != 0.0 {
-//                spacingX += button.frame.size.width
-//            }
-//            spacingX += 10.0
-//            button.frame.origin.x += CGFloat(spacingX)
-//            //<<<<
 
             if availableCombinationString.rangeOfString(attributesId[i]) == nil {
                 self.disableButton(button)
