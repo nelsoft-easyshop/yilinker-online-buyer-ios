@@ -121,7 +121,7 @@ extension UITextView {
 extension UIAlertController {
     
     class func displayErrorMessageWithTarget(target: AnyObject, errorMessage: String) {
-        let alert = UIAlertController(title: Constants.Localized.someThingWentWrong, message: errorMessage, preferredStyle: UIAlertControllerStyle.Alert)
+        let alert = UIAlertController(title: Constants.Localized.error, message: errorMessage, preferredStyle: UIAlertControllerStyle.Alert)
         let OKAction = UIAlertAction(title: Constants.Localized.ok, style: .Default) { (action) in }
         alert.addAction(OKAction)
         target.presentViewController(alert, animated: true, completion: nil)

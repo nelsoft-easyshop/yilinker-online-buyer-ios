@@ -227,7 +227,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
             errorMessage = RegisterStrings.invalidEmail
         } else if !self.passwordTextField.isNotEmpty() {
             errorMessage = RegisterStrings.passwordRequired
-        } else if !self.passwordTextField.isAlphaNumeric() {
+        } else if !self.passwordTextField.isValidName() {
             errorMessage = RegisterStrings.illegalPassword
         } else if !self.reTypePasswordTextField.isNotEmpty() {
             errorMessage = RegisterStrings.reTypePasswordError

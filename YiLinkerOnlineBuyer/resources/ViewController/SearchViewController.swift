@@ -91,12 +91,14 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
-        if count(searchText) > 1 {
-            requestSearch(APIAtlas.searchUrl, params: NSDictionary(dictionary: ["queryString" : searchText]))
-        } else {
-            tableData.removeAll(keepCapacity: false)
-            addBrowseCategory()
-            searchResultTableView.reloadData()
+        if searchBar.selectedScopeButtonIndex == 0 {
+            if count(searchText) > 1 {
+                requestSearch(APIAtlas.searchUrl, params: NSDictionary(dictionary: ["queryString" : searchText]))
+            } else {
+                tableData.removeAll(keepCapacity: false)
+                addBrowseCategory()
+                searchResultTableView.reloadData()
+            }
         }
     }
     
@@ -113,20 +115,44 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
             manager.operationQueue.cancelAllOperations()
             searchTask = nil
         }
-        
         isQueueCancelled = true
         UIApplication.sharedApplication().networkActivityIndicatorVisible = false
         self.searchBar.resignFirstResponder()
         let newString = searchBar.text.stringByReplacingOccurrencesOfString(" ", withString: "+")
         
         var resultController = ResultViewController(nibName: "ResultViewController", bundle: nil)
-        resultController.passModel(SearchSuggestionModel(suggestion: searchBar.text, imageURL: "", searchUrl: "http://online.api.easydeal.ph/api/v1/product/getProductList?query=\(newString)"))
+        
+        if searchBar.selectedScopeButtonIndex == 0 {
+            resultController.isSellerSearch = false
+            resultController.passModel(SearchSuggestionModel(suggestion: searchBar.text, imageURL: "", searchUrl: "http://online.api.easydeal.ph/api/v1/product/getProductList?query=\(newString)"))
+        } else {
+            resultController.isSellerSearch = true
+            resultController.passModel(SearchSuggestionModel(suggestion: searchBar.text, imageURL: "", searchUrl: "http://online.api.easydeal.ph/api/v1/store/search?queryString=\(newString)"))
+        }
+        
         self.navigationController?.pushViewController(resultController, animated:true);
         
     }
     
     func searchBarCancelButtonClicked(searchBar: UISearchBar) {
         self.searchBar.resignFirstResponder()
+    }
+    
+    
+    func searchBar(searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
+        tableData.removeAll(keepCapacity: false)
+        searchResultTableView.reloadData()
+        if selectedScope == 0 {
+            if count(searchBar.text) > 1 {
+                requestSearch(APIAtlas.searchUrl, params: NSDictionary(dictionary: ["queryString" : searchBar.text]))
+            } else {
+                tableData.removeAll(keepCapacity: false)
+                addBrowseCategory()
+                searchResultTableView.reloadData()
+            }
+        } else {
+            
+        }
     }
     
     // Mark: - UITableViewDataSource methods
