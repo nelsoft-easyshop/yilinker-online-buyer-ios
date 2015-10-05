@@ -39,6 +39,7 @@ struct ProductStrings {
     static let alertError = StringHelper.localizedStringWithKey("ERROR_LOCALIZE_KEY")
     static let alertFailed = StringHelper.localizedStringWithKey("FAILED_LOCALIZE_KEY")
     static let alertNoReviews = StringHelper.localizedStringWithKey("NO_REVIEWS_LOCALIZE_KEY")
+    static let cannotMessage = StringHelper.localizedStringWithKey("VENDOR_PAGE_CANNOT_MESSAGE_LOCALIZE_KEY")
 }
 
 protocol ProductViewControllerDelegate {
@@ -95,12 +96,14 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     
     var emptyView: EmptyView?
     var hud: MBProgressHUD?
-    
     var tabController = CustomTabBarController()
     
     var unitIdIndex: Int = 0
-    
     var isExiting: Bool = true
+    
+    // Messaging
+    var selectedContact : W_Contact?
+    var contacts = [W_Contact()]
     // MARK: Parameters
     
     var unitId: String = "0"
@@ -380,6 +383,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
                 
                 self.attributes = self.productDetailsModel.attributes
                 self.requestSellerDetails()
+                self.requestContactsFromEndpoint()
             } else {
                 let alert = UIAlertController(title: ProductStrings.alertError,
                                             message: responseObject["message"] as? String,
@@ -621,7 +625,9 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
                 self.requestAddCartItem("")
             } else if type == "wishlist" {
                 self.requestUpdateWishlistItem()
-            } else {
+            } else if type == "message" {
+                self.requestContactsFromEndpoint()
+            }else {
                 println("else in product view refresh token")
             }
             
@@ -633,6 +639,46 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
                 self.showAlert(title: ProductStrings.alertWentWrong, message: nil)
                 
         })
+    }
+    
+    func requestContactsFromEndpoint(){
+            if (Reachability.isConnectedToNetwork()) {
+                self.showHUD()
+                
+                let manager: APIManager = APIManager.sharedInstance
+                manager.requestSerializer = AFHTTPRequestSerializer()
+                
+                let parameters: NSDictionary = [
+                    "page"          : "1",
+                    "limit"         : "30",
+                    "keyword"       : "",
+                    "access_token"  : SessionManager.accessToken()
+                    ]   as Dictionary<String, String>
+                
+                let url = APIAtlas.baseUrl + APIAtlas.ACTION_GET_CONTACTS
+                
+                manager.POST(url, parameters: parameters, success: {
+                    (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+                    self.contacts = W_Contact.parseContacts(responseObject as! NSDictionary)
+                    self.hud?.hide(true)
+                    }, failure: {
+                        (task: NSURLSessionDataTask!, error: NSError!) in
+                        let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                        
+                        if task.statusCode == 401 {
+                            if (SessionManager.isLoggedIn()){
+                                self.requestRefreshToken("message")
+                            }
+                        } else {
+                            if (SessionManager.isLoggedIn()){
+                                self.showAlert(title: Constants.Localized.error, message: Constants.Localized.someThingWentWrong)
+                            }
+                        }
+                        
+                        self.contacts = Array<W_Contact>()
+                        self.hud?.hide(true)
+                })
+            }
     }
     
     // MARK: - Methods
@@ -1088,12 +1134,32 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     }
     
     func barMessageAction() {
-        //        let messaging = ConversationVC(nibName: "MessagingViewController", bundle: nil)
-        //        self.navigationController?.pushViewController(messaging, animated: true)
-        
         let storyBoard: UIStoryboard = UIStoryboard(name: "HomeStoryBoard", bundle: nil)
-        let messagingViewController: ConversationVC = (storyBoard.instantiateViewControllerWithIdentifier("ConversationVC") as? ConversationVC)!
-        self.navigationController?.pushViewController(messagingViewController, animated: true)
+        let messagingViewController: MessageThreadVC = (storyBoard.instantiateViewControllerWithIdentifier("MessageThreadVC") as? MessageThreadVC)!
+        
+        var canMessage: Bool = false
+        for var i = 0; i < self.contacts.count; i++ {
+            if "\(self.productDetailsModel.sellerId)" == contacts[i].userId {
+                self.selectedContact = contacts[i]
+                canMessage = true
+            }
+        }
+        
+        var isOnline = "-1"
+        if (SessionManager.isLoggedIn()){
+            isOnline = "1"
+        } else {
+            isOnline = "0"
+        }
+        messagingViewController.sender = W_Contact(fullName: SessionManager.userFullName() , userRegistrationIds: "", userIdleRegistrationIds: "", userId: SessionManager.accessToken(), profileImageUrl: SessionManager.profileImageStringUrl(), isOnline: isOnline)
+        messagingViewController.recipient = selectedContact
+        
+        if canMessage {
+            self.navigationController?.pushViewController(messagingViewController, animated: true)
+        } else {
+            self.showAlert(title: Constants.Localized.error, message: ProductStrings.cannotMessage)
+            //UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "You're allowed to message this seller. Please login first.", title: "Error")
+        }
     }
     
     func barShareAction() {
