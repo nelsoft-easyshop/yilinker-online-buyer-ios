@@ -17,7 +17,7 @@ struct Constants {
         static let serverError: String = StringHelper.localizedStringWithKey("SERVER_ERROR_LOCALIZE_KEY")
         static let next: String = StringHelper.localizedStringWithKey("NEXT_LOCALIZE_KEY")
         static let previous: String = StringHelper.localizedStringWithKey("PREVIOUS_LOCALIZE_KEY")
-        
+        static let information: String = StringHelper.localizedStringWithKey("INFORMATION_LOCALIZE_KEY")
         static let noInternet: String = StringHelper.localizedStringWithKey("NO_INTERNET_LOCALIZE_KEY")
         static let noInternetErrorMessage: String = StringHelper.localizedStringWithKey("NO_INTERNET_ERROR_MESSAGE_LOCALIZE_KEY")
     }

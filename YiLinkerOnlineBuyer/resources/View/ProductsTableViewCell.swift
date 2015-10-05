@@ -9,7 +9,7 @@
 import UIKit
 
 protocol ProductsTableViewCellDelegate {
-    func productstableViewCellDidTapProductWithTarget(target: String, type: String)
+    func productstableViewCellDidTapProductWithTarget(target: String, type: String, productId: String)
     func productstableViewCellDidTapMoreProductWithTarget(target: String)
 }
 
@@ -50,14 +50,13 @@ class ProductsTableViewCell: UITableViewCell, UICollectionViewDelegate, UICollec
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell: FullImageCollectionViewCell = self.collectionView?.dequeueReusableCellWithReuseIdentifier("FullImageCollectionViewCell", forIndexPath: indexPath) as! FullImageCollectionViewCell
         let homeProductModel: ProductModel = self.productModels[indexPath.row]
-        
         cell.itemProductImageView.sd_setImageWithURL(homeProductModel.imageURL, placeholderImage: UIImage(named: "dummy-placeholder"))
         return cell
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         let productModel: HomePageProductModel = self.productModels[indexPath.row]
-        self.delegate?.productstableViewCellDidTapProductWithTarget(productModel.target, type: productModel.targetType)
+        self.delegate?.productstableViewCellDidTapProductWithTarget(productModel.target, type: productModel.targetType, productId: productModel.productId)
     }
     
     @IBAction func moreSellerProduct(sender: AnyObject) {

@@ -153,9 +153,9 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
             self.transactionPurchaseDetailsView.totalCostTitleLabel.text = self.totalCostTitle
             self.transactionPurchaseDetailsView.priceTitleLabel.text = self.priceTitle
             self.transactionPurchaseDetailsView.purchaseDetailsLabel.text = self.purchaseDetails
-            self.transactionPurchaseDetailsView.quantityLabel.text = "\(self.quantity)"
-            self.transactionPurchaseDetailsView.totalCostLabel.text = ((self.totalPrice as NSString).floatValue).stringToFormat(2)
-            self.transactionPurchaseDetailsView.priceLabel.text = ((self.unitPrice as NSString).floatValue).stringToFormat(2)
+            self.transactionPurchaseDetailsView.quantityLabel.text = "\(self.quantity)x"
+            self.transactionPurchaseDetailsView.totalCostLabel.text = "P \(((self.totalPrice as NSString).floatValue).stringToFormat(2))"
+            self.transactionPurchaseDetailsView.priceLabel.text = "P \(((self.unitPrice as NSString).floatValue).stringToFormat(2))"
             self.transactionPurchaseDetailsView.frame.size.width = self.view.frame.size.width
         }
         return self.transactionPurchaseDetailsView
@@ -267,7 +267,7 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
         productDescription.longDescriptionTextView.text = desc
         productDescription.okButton.setTitle(self.okTitle, forState: UIControlState.Normal)
         productDescription.delegate = self
-        self.navigationController?.presentViewController(productDescription, animated: true, completion:
+        self.tabBarController?.presentViewController(productDescription, animated: true, completion:
             nil)
     }
     
@@ -403,7 +403,7 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
         cancelOrder.providesPresentationContextTransitionStyle = true
         cancelOrder.definesPresentationContext = true
         cancelOrder.view.frame.origin.y = cancelOrder.view.frame.size.height
-        self.navigationController?.presentViewController(cancelOrder, animated: true, completion: nil)
+        self.tabBarController?.presentViewController(cancelOrder, animated: true, completion: nil)
     }
     
     func showView(){
@@ -426,6 +426,7 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
     }
     
     func submitTransactionCancelReason() {
+        self.showView()
         var successController = TransactionCancelOrderSuccessViewController(nibName: "TransactionCancelOrderSuccessViewController", bundle: nil)
         successController.delegate = self
         successController.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
