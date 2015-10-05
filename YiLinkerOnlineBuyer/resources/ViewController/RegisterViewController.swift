@@ -28,6 +28,8 @@ struct RegisterStrings {
     static let passwordNotMatch: String = StringHelper.localizedStringWithKey("PASSWORD_NOT_MATCH_LOCALIZE_KEY")
     static let contactRequired: String = StringHelper.localizedStringWithKey("CONTACT_REQUIRED_LOCALIZE_KEY")
     static let numbersAndLettersOnly: String = StringHelper.localizedStringWithKey("NUMBER_LETTERS_LOCALIZE_KEY")
+    static let successRegister: String = StringHelper.localizedStringWithKey("SUCCESS_REGISTER_LOCALIZED_KEY")
+    static let thankyou: String = StringHelper.localizedStringWithKey("THANKYOU_LOCALIZED_KEY")
 }
 
 class RegisterViewController: UIViewController, UITextFieldDelegate {
@@ -228,7 +230,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
             errorMessage = RegisterStrings.invalidEmail
         } else if !self.passwordTextField.isNotEmpty() {
             errorMessage = RegisterStrings.passwordRequired
-        } else if !self.passwordTextField.isValidName() {
+        } else if !self.passwordTextField.isAlphaNumeric() {
             errorMessage = RegisterStrings.illegalPassword
         } else if !self.passwordTextField.isValidPassword() {
             errorMessage = RegisterStrings.numbersAndLettersOnly
@@ -317,7 +319,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
     }
     
     func showSuccessMessage() {
-        let alertController = UIAlertController(title: Constants.Localized.success, message: LoginStrings.successMessage, preferredStyle: .Alert)
+        let alertController = UIAlertController(title: RegisterStrings.thankyou, message: RegisterStrings.successRegister, preferredStyle: .Alert)
         
         let OKAction = UIAlertAction(title: Constants.Localized.ok, style: .Default) { (action) in
             alertController.dismissViewControllerAnimated(true, completion: nil)
