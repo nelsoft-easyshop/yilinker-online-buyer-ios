@@ -369,7 +369,16 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
                 self.attributes = self.productDetailsModel.attributes
                 self.requestSellerDetails()
             } else {
-                self.showAlert(title: ProductStrings.alertError, message: responseObject["message"] as! String)
+                let alert = UIAlertController(title: ProductStrings.alertError,
+                                            message: responseObject["message"] as? String,
+                                     preferredStyle: UIAlertControllerStyle.Alert)
+                let okButton = UIAlertAction(title: ProductStrings.alertOk,
+                                             style: UIAlertActionStyle.Cancel) { (alert) -> Void in
+                    self.barCloseAction()
+                }
+                alert.addAction(okButton)
+                self.presentViewController(alert, animated: true, completion: nil)
+                
                 self.hud?.hide(true)
                 self.addEmptyView()
             }
