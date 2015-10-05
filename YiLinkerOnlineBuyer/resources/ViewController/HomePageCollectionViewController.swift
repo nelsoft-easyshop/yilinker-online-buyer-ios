@@ -211,7 +211,7 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
                 
                 fourImageCollectionViewCell.targetType = homeProductModel!.targetType
                 fourImageCollectionViewCell.target = homeProductModel!.target
-                fourImageCollectionViewCell.discountedPriceLabel.drawDiscountLine()
+                fourImageCollectionViewCell.discountedPriceLabel.drawDiscountLine(false)
                 
                 return fourImageCollectionViewCell
             } else {
@@ -233,7 +233,7 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
                     }
                     fourImageCollectionViewCell.targetType = homeProductModel!.targetType
                     fourImageCollectionViewCell.target = homeProductModel!.target
-                    fourImageCollectionViewCell.discountedPriceLabel.drawDiscountLine()
+                    fourImageCollectionViewCell.discountedPriceLabel.drawDiscountLine(false)
                 }
                 
                 
@@ -342,7 +342,7 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
             twoColumnGridCollectionViewCell.originalPriceLabel.text = homeProductModel?.originalPrice
             twoColumnGridCollectionViewCell.layoutIfNeeded()
             twoColumnGridCollectionViewCell.layoutSubviews()
-            twoColumnGridCollectionViewCell.discountedPriceLabel.drawDiscountLine()
+            twoColumnGridCollectionViewCell.discountedPriceLabel.drawDiscountLine(false)
             
             if homeProductModel!.discountPercentage != "0" {
                 twoColumnGridCollectionViewCell.discountPercentageLabel.hidden = true
@@ -370,7 +370,7 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
                 }
                 productItemWithVerticalDisplay.targetType = homeProductModel.targetType
                 productItemWithVerticalDisplay.target = homeProductModel.target
-                productItemWithVerticalDisplay.discountedPriceLabel.drawDiscountLine()
+                productItemWithVerticalDisplay.discountedPriceLabel.drawDiscountLine(false)
             }
             
             return productItemWithVerticalDisplay

@@ -13,7 +13,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GGLInstanceIDDelegate {
 
     var window: UIWindow?
     var gcmSenderID = "976304473940"
-    var connectedToGCM = false
+    var connectedToGCM = false 
     var registrationToken: String?
     var registrationOptions = [String: AnyObject]()
     
