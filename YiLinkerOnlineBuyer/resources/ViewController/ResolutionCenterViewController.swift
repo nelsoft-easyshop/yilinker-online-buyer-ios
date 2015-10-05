@@ -330,21 +330,21 @@ class ResolutionCenterViewController: UIViewController, UITableViewDataSource, U
             } else if statusFilter == "0" {
                 if self.currentSelectedFilter.getFilterType() == ResolutionTimeFilter.ThisMonth {
                     parameters = [ "access_token" : SessionManager.accessToken()
-                        , "dateFrom" : "\(fullDate[0])-1-\(fullDate[2])",
+                        , "dateFrom" : "\(fullDate[0])-\(fullDate[1])-1",
                         "dateTo": timeFilter]
                     
                 } else if self.currentSelectedFilter.getFilterType() == ResolutionTimeFilter.ThisWeek {
                     parameters = [ "access_token" : SessionManager.accessToken()
                         , "dateFrom" : self.currentSelectedFilter.sundayDate(),
                         "dateTo": timeFilter]
-                } else {
+                } else {    
                     parameters = [ "access_token" : SessionManager.accessToken()
                         , "dateFrom" : timeFilter]
                 }
             } else {
                 if self.currentSelectedFilter.getFilterType() == ResolutionTimeFilter.ThisMonth {
                     parameters = [ "access_token" : SessionManager.accessToken()
-                        , "dateFrom" : "\(fullDate[0])-1-\(fullDate[2])",
+                        , "dateFrom" : "\(fullDate[0])-\(fullDate[1])-1",
                         "dateTo": timeFilter,
                         "disputeStatusType" : statusFilter]
                     
