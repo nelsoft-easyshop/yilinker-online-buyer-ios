@@ -276,7 +276,9 @@ ABOUT_SELLER_LOCALIZE_KEY = "About Seller";
 PRODUCTS_SELLER_LOCALIZE_KEY = "Products";
 MORE_SELLERS_PRODUCT_LOCALIZE_KEY = "MORE SELLER'S PRODUCT";
 PRODUCT_RATINGS_AND_FEEDBACK_LOCALIZE_KEY = "Product Rating & Feedback";
-
+VENDOR_PAGE_CANNOT_FOLLOW_LOCALIZE_KEY = "Please login to follow this seller.";
+VENDOR_PAGE_CANNOT_MESSAGE_LOCALIZE_KEY = "You're allowed to message this seller. Please login first.";
+VENDOR_PAGE_CANNOT_CALL_LOCALIZE_KEY = "Cannot make a call to";
 //Vendor View Feedback
 CANCEL_LOCALIZE_KEY = "CANCEL";
 SELLERS_RATING_AND_FEEDBACK_LOCALIZE_KEY = "Seller's Rating & Feedback";
@@ -493,5 +495,5 @@ TOOLBAR_DONE_LOCALIZE_KEY = "Done";
 SERVER_ERROR_LOCALIZE_KEY = "Server Error";
 NO_INTERNET_LOCALIZE_KEY = "No Internet Connection";
 NO_INTERNET_ERROR_MESSAGE_LOCALIZE_KEY = "Please check your internet connection.";
-
+INFORMATION_LOCALIZE_KEY = "Information";
 

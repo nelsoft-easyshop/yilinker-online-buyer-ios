@@ -267,7 +267,7 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
         productDescription.longDescriptionTextView.text = desc
         productDescription.okButton.setTitle(self.okTitle, forState: UIControlState.Normal)
         productDescription.delegate = self
-        self.navigationController?.presentViewController(productDescription, animated: true, completion:
+        self.tabBarController?.presentViewController(productDescription, animated: true, completion:
             nil)
     }
     
@@ -403,7 +403,7 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
         cancelOrder.providesPresentationContextTransitionStyle = true
         cancelOrder.definesPresentationContext = true
         cancelOrder.view.frame.origin.y = cancelOrder.view.frame.size.height
-        self.navigationController?.presentViewController(cancelOrder, animated: true, completion: nil)
+        self.tabBarController?.presentViewController(cancelOrder, animated: true, completion: nil)
     }
     
     func showView(){
