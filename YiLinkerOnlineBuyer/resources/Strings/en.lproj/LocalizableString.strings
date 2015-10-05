@@ -96,6 +96,7 @@ EMAIL_ADDRESS_LOCALIZE_KEY = "email address";
 PASSWORD_LOCALIZE_KEY = "password";
 RE_TYPE_PASSWORD_LOCALIZE_KEY = "Re-type password";
 REGISTER_ME_NOW_LOCALIZE_KEY = "REGISTER ME NOW";
+NUMBER_LETTERS_LOCALIZE_KEY = "Password must be a combination of letters and numbers.";
 
 // MARK: - Register Error
 FIRST_NAME_REQUIRED_LOCALIZE_KEY = "First name is required";
