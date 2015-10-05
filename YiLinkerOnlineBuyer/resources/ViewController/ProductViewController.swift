@@ -354,7 +354,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     
     func requestProductDetails() {
         self.showHUD()
-        let id: String = "?productId=" + productId
+        let id: String = "?productId=" + "1"//productId
         
         manager.GET(APIAtlas.productDetails + id, parameters: nil, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
@@ -908,7 +908,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         attributeModal.definesPresentationContext = true
         attributeModal.view.backgroundColor = UIColor.clearColor()
         attributeModal.view.frame.origin.y = attributeModal.view.frame.size.height
-        attributeModal.passModel(productDetailsModel: productDetailsModel, selectedValue: selectedValue, selectedId: selectedId, unitIdIndex: unitIdIndex, quantity: self.quantity)
+        attributeModal.passModel(productDetailsModel: productDetailsModel, selectedValue: selectedValue, selectedId: selectedId, unitIdIndex: unitIdIndex, quantity: self.quantity, price: self.productImagesView.priceLabel.text!)
         attributeModal.setTitle = title
         attributeModal.tabController = self.tabController
         attributeModal.screenWidth = self.view.frame.width

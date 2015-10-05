@@ -492,9 +492,9 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
     
     // MARK: - Delegates
     
-    func passModel(#productDetailsModel: ProductDetailsModel, selectedValue: NSArray, selectedId: NSArray, unitIdIndex: Int, quantity: Int) {
+    func passModel(#productDetailsModel: ProductDetailsModel, selectedValue: NSArray, selectedId: NSArray, unitIdIndex: Int, quantity: Int, price: String) {
         
-        setDetail("", title: productDetailsModel.title, price: productDetailsModel.productUnits[unitIdIndex].price)
+        setDetail("", title: productDetailsModel.title, price: price)
         self.productDetailsModel = productDetailsModel
         self.attributes = productDetailsModel.attributes as [ProductAttributeModel]
         self.selectedId = selectedId as! [String]
