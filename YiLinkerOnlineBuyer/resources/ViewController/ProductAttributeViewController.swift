@@ -58,6 +58,7 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
     var accessToken = ""
     var quantity: Int = 1
     var unitId: String = ""
+    var price: String = ""
     
     var hud: MBProgressHUD?
     
@@ -322,6 +323,8 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
             stocksLabel.text = String(stringInterpolationSegment: stocks)
         }
         
+        priceLabel.text = "₱" + (price.floatValue * self.stocksLabel.text!.floatValue).string(2)
+        
         if stocks == 0 {
             disableButton(increaseButton)
             disableButton(decreaseButton)
@@ -346,7 +349,7 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
         
         productImageView.sd_setImageWithURL(NSURL(string: image), placeholderImage: UIImage(named: "dummy-placeholder"))
         nameLabel.text = title
-        priceLabel.text = price
+//        priceLabel.text = 
     }
     
     func disableButton(button: UIButton) {
@@ -496,6 +499,11 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
         
         setDetail(image: productDetailsModel.images[imageIndex].imageLocation, title: productDetailsModel.title, price: price)
         self.productDetailsModel = productDetailsModel
+        if productDetailsModel.productUnits[unitIdIndex].discount == 0 {
+            self.price = productDetailsModel.productUnits[unitIdIndex].price
+        } else {
+            self.price = productDetailsModel.productUnits[unitIdIndex].discountedPrice
+        }
         self.attributes = productDetailsModel.attributes as [ProductAttributeModel]
         self.selectedId = selectedId as! [String]
         self.selectedValue = selectedValue as! [String]
