@@ -343,21 +343,23 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
             let productDictionary: NSArray = dictionary["topPicks"] as! NSArray
             let homeProductModels: [HomePageProductModel] = HomePageProductModel.parseDataWithArray(productDictionary)
             
-            let homeProductModel: HomePageProductModel = homeProductModels[indexPath.row]
-            productItemWithVerticalDisplay.productItemImageView.sd_setImageWithURL(homeProductModel.imageURL, placeholderImage: UIImage(named: "dummy-placeholder"))
-            productItemWithVerticalDisplay.originalPriceLabel.text = homeProductModel.originalPrice
-            productItemWithVerticalDisplay.productNameLabel.text = homeProductModel.name
-          
-            if homeProductModel.discountedPrice != "" {
-                productItemWithVerticalDisplay.discountedPriceLabel.text = "P \(homeProductModel.discountedPrice)"
-                productItemWithVerticalDisplay.discountPercentageLabel.text = "\(homeProductModel.discountPercentage) %"
-            } else {
-                productItemWithVerticalDisplay.discountedPriceLabel.hidden = true
-                productItemWithVerticalDisplay.discountPercentageLabel.hidden = true
+            if indexPath.row < homeProductModels.count {
+                let homeProductModel: HomePageProductModel = homeProductModels[indexPath.row]
+                productItemWithVerticalDisplay.productItemImageView.sd_setImageWithURL(homeProductModel.imageURL, placeholderImage: UIImage(named: "dummy-placeholder"))
+                productItemWithVerticalDisplay.originalPriceLabel.text = homeProductModel.originalPrice
+                productItemWithVerticalDisplay.productNameLabel.text = homeProductModel.name
+                
+                if homeProductModel.discountedPrice != "" {
+                    productItemWithVerticalDisplay.discountedPriceLabel.text = "P \(homeProductModel.discountedPrice)"
+                    productItemWithVerticalDisplay.discountPercentageLabel.text = "\(homeProductModel.discountPercentage) %"
+                } else {
+                    productItemWithVerticalDisplay.discountedPriceLabel.hidden = true
+                    productItemWithVerticalDisplay.discountPercentageLabel.hidden = true
+                }
+                productItemWithVerticalDisplay.targetType = homeProductModel.targetType
+                productItemWithVerticalDisplay.target = homeProductModel.target
+                productItemWithVerticalDisplay.discountedPriceLabel.drawDiscountLine()
             }
-            productItemWithVerticalDisplay.targetType = homeProductModel.targetType
-            productItemWithVerticalDisplay.target = homeProductModel.target
-            productItemWithVerticalDisplay.discountedPriceLabel.drawDiscountLine()
             
             return productItemWithVerticalDisplay
         } else if layouts[indexPath.section] == Constants.HomePage.layoutEightKey {

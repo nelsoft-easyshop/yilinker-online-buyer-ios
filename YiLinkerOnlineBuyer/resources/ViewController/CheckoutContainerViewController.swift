@@ -55,6 +55,11 @@ struct AddressStrings {
     static let incompleteInformation: String = StringHelper.localizedStringWithKey("INCOMPLETE_INFORMATION_LOCALIZE_KEY")
     static let mobileNumberIsRequired: String = StringHelper.localizedStringWithKey("MOBILE_NUMBER_REQUIRED_LOCALIZE_KEY")
     
+    static let streetTitleRequired: String = StringHelper.localizedStringWithKey("STREET_TITLE_REQUIRED_LOCALIZE_KEY")
+    static let unitNoRequired: String = StringHelper.localizedStringWithKey("UNIT_NO_REQUIRED_LOCALIZE_KEY")
+    
+    static let addressTitleRequired: String = StringHelper.localizedStringWithKey("ADDRESS_TITLE_REQUIRED_LOCALIZE_KEY")
+    
     static let streetNumberRequired: String = StringHelper.localizedStringWithKey("STREET_NUMBER_REQUIRED_LOCALIZE_KEY")
     static let streetNameRequired: String = StringHelper.localizedStringWithKey("STREET_NAME_REQUIRED_LOCALIZE_KEY")
     static let zipCodeRequired: String = StringHelper.localizedStringWithKey("ZIP_CODE_REQUIRED_LOCALIZE_KEY")
