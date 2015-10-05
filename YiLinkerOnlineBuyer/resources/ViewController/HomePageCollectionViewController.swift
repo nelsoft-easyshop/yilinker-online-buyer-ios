@@ -148,7 +148,7 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
             
             fullImageColectionViewCell.targetType = homeProductModel.targetType
             fullImageColectionViewCell.target = homeProductModel.target
-            
+        
             fullImageColectionViewCell.itemProductImageView.sd_setImageWithURL(homeProductModel.imageURL, placeholderImage: UIImage(named: "dummy-placeholder"))
             return fullImageColectionViewCell
         } else if self.layouts[indexPath.section] == Constants.HomePage.layoutTwoKey {
@@ -614,7 +614,7 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
     
     func didSelectProductWithTarget(target: String, targetType: String) {
         println("target: \(target) \ntarget type:\(targetType)")
-        self.redirectToProductpageWithProductID("1")
+        self.redirectToProductpageWithProductID(target)
     }
     
     func redirectToProductpageWithProductID(productID: String) {
