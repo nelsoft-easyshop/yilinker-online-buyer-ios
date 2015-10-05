@@ -27,6 +27,7 @@ struct RegisterStrings {
     static let reTypePasswordError: String = StringHelper.localizedStringWithKey("RETYPE_REQUIRED_LOCALIZE_KEY")
     static let passwordNotMatch: String = StringHelper.localizedStringWithKey("PASSWORD_NOT_MATCH_LOCALIZE_KEY")
     static let contactRequired: String = StringHelper.localizedStringWithKey("CONTACT_REQUIRED_LOCALIZE_KEY")
+    static let numbersAndLettersOnly: String = StringHelper.localizedStringWithKey("NUMBER_LETTERS_LOCALIZE_KEY")
 }
 
 class RegisterViewController: UIViewController, UITextFieldDelegate {
@@ -229,6 +230,8 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
             errorMessage = RegisterStrings.passwordRequired
         } else if !self.passwordTextField.isValidName() {
             errorMessage = RegisterStrings.illegalPassword
+        } else if !self.passwordTextField.isValidPassword() {
+            errorMessage = RegisterStrings.numbersAndLettersOnly
         } else if !self.reTypePasswordTextField.isNotEmpty() {
             errorMessage = RegisterStrings.reTypePasswordError
         } else if self.passwordTextField.text != self.reTypePasswordTextField.text {
