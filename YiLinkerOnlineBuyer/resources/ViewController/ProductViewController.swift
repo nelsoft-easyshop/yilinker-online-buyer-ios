@@ -331,14 +331,21 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
             
             var seeMoreLabel = UILabel(frame: self.productReviewFooterView.frame)
             seeMoreLabel.frame.size.width = 90
-            seeMoreLabel.text = ProductStrings.seeMore
-            seeMoreLabel.textColor = .blueColor()
             seeMoreLabel.font = UIFont.systemFontOfSize(15.0)
             seeMoreLabel.textAlignment = .Center
             
-            var seeMoreImageView = UIImageView(frame: CGRectMake(seeMoreLabel.frame.size.width, (seeMoreLabel.frame.size.height / 2) - 6, 8, 12))
-            seeMoreImageView.image = UIImage(named: "seeMore")
-            seeMoreLabel.addSubview(seeMoreImageView)
+            if self.productReviewModel != nil && self.productReviewModel.reviews.count != 0 {
+                seeMoreLabel.text = ProductStrings.seeMore
+                seeMoreLabel.textColor = .blueColor()
+                
+                var seeMoreImageView = UIImageView(frame: CGRectMake(seeMoreLabel.frame.size.width, (seeMoreLabel.frame.size.height / 2) - 6, 8, 12))
+                seeMoreImageView.image = UIImage(named: "seeMore")
+                seeMoreLabel.addSubview(seeMoreImageView)
+            } else {
+                seeMoreLabel.frame.size.width = self.productReviewFooterView.frame.size.width
+                seeMoreLabel.text = ProductStrings.alertNoReviews
+                seeMoreLabel.textColor = .grayColor()
+            }
             
             seeMoreLabel.center.x = self.view.center.x - 5
             self.productReviewFooterView.addSubview(seeMoreLabel)
@@ -1074,9 +1081,10 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
                 self.view.transform = CGAffineTransformMakeScale(0.92, 0.93)
                 self.navigationController?.navigationBar.alpha = 0.0
             })
-        } else {
-            self.showAlert(title: ProductStrings.alertNoReviews, message: nil)
         }
+//        else {
+//            self.showAlert(title: ProductStrings.alertNoReviews, message: nil)
+//        }
     }
     
     func barMessageAction() {
