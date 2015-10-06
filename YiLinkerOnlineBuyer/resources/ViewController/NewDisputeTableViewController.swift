@@ -23,6 +23,7 @@ struct DisputeStrings {
     static let done = StringHelper.localizedStringWithKey("TOOLBAR_DONE_LOCALIZE_KEY")
     static let noAvailableTransaction = StringHelper.localizedStringWithKey("DISPUTE_NO_AVAILABLE_TRANSACTION_LOCALIZE_KEY")
     static let noAvailableReason = StringHelper.localizedStringWithKey("DISPUTE_NO_REASON_TRANSACTION_LOCALIZE_KEY")
+    static let pleaseChooseTransactionNumber = StringHelper.localizedStringWithKey("DISPUTE_CHOOSE_TRANSACTION_NUMBER_TRANSACTION_LOCALIZE_KEY")
 }
 
 class NewDisputeTableViewController: UITableViewController, UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate, DisputeAddItemViewControllerDelegate {
@@ -309,6 +310,8 @@ class NewDisputeTableViewController: UITableViewController, UIPickerViewDataSour
             disputeAddItems.transactionId = self.transactionNumber.text
             var root = UINavigationController(rootViewController: disputeAddItems)
             self.navigationController?.presentViewController(root, animated: true, completion: nil)
+        } else {
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: DisputeStrings.pleaseChooseTransactionNumber, title: "")
         }
     }
     
