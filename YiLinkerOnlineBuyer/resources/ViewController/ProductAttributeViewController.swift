@@ -38,6 +38,7 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
     var minimumStock = 1
     var maximumStock = 1
     var stocks: Int = 0
+    var imageUrls: [String] = []
     
     var productDetailsModel: ProductDetailsModel!
     var attributes: [ProductAttributeModel] = []
@@ -129,7 +130,7 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
         cell.delegate = self
         cell.passProductDetailModel(self.productDetailsModel)
         cell.tag = indexPath.row
-        println(selectedValue)
+//        println(selectedValue)
         listAvailableCombinations()
         cell.setAttribute(self.productDetailsModel.attributes[indexPath.row], availableCombination: self.availableCombination, selectedValue: self.selectedValue, selectedId: self.selectedId, width: self.view.frame.size.width)
         
@@ -137,7 +138,7 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        println(indexPath.row)
+//        println(indexPath.row)
     }
     
     // MARK: - Actions
@@ -169,7 +170,7 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
             hideSelf("done")
             if let delegate = self.delegate {
                 let quantity: Int = stocksLabel.text!.toInt()!
-                println(unitId)
+//                println(unitId)
                 delegate.doneActionPassDetailsToProductView(self, unitId: unitId, quantity: quantity, selectedId: selectedId)
             }
         } else {
@@ -287,12 +288,12 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
         }
         
         regex += ")"
-        println(regex)
+//        println(regex)
         
         let re = NSRegularExpression(pattern: regex, options: nil, error: nil)!
         let matches = re.matchesInString(combinationString, options: nil, range: NSRange(location: 0, length: count(combinationString.utf16)))
         
-        println("number of matches: \(matches.count)")
+//        println("number of matches: \(matches.count)")
         
         for match in matches as! [NSTextCheckingResult] {
             let substring = (combinationString as NSString).substringWithRange(match.rangeAtIndex(1))
@@ -436,7 +437,10 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
                     self.requestRefreshToken()
                 } else {
                     println(error)
-                    self.hud?.hide(true)
+                    let alertController = UIAlertController(title: ProductStrings.alertWentWrong, message: nil, preferredStyle: .Alert)
+                    let defaultAction = UIAlertAction(title: ProductStrings.alertOk, style: .Default, handler: nil)
+                    alertController.addAction(defaultAction)
+                    self.presentViewController(alertController, animated: true, completion: nil)
                 }
         })
     }
@@ -540,11 +544,33 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
             }
         }
         
+        var index: Int = 0
+        self.imageUrls = []
+        for i in 0..<self.productDetailsModel.productUnits.count {
+            if selectedCombination == self.productDetailsModel.productUnits[i].combination {
+                index = i
+                if self.productDetailsModel.productUnits[i].imageIds.count != 0 {
+                    for j in 0..<self.productDetailsModel.productUnits[i].imageIds.count {
+                        for l in 0..<self.productDetailsModel.images.count {
+                            if self.productDetailsModel.productUnits[i].imageIds[j] == self.productDetailsModel.images[l].id {
+                                self.imageUrls.append(self.productDetailsModel.images[l].imageLocation)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
+        if self.imageUrls.count != 0 {
+            println(self.imageUrls[0])
+            self.productImageView.sd_setImageWithURL(NSURL(string: self.imageUrls[0]), placeholderImage: UIImage(named: "dummy-placeholder"))
+        }
+        
         maximumStock = availableStock(selectedCombination)
         self.availabilityStocksLabel.text = "Available stocks : " + String(maximumStock)
         
         listAvailableCombinations()
-        println(self.availableCombination)
+//        println(self.availableCombination)
         self.tableView.reloadData()
         
         if self.maximumStock != 0 {

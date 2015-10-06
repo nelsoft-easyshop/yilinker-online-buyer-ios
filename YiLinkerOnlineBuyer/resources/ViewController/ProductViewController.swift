@@ -373,7 +373,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         
         manager.GET(APIAtlas.productDetails + id, parameters: nil, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            
+            println(responseObject)
             if responseObject["isSuccessful"] as! Bool {
                 self.productDetailsModel = ProductDetailsModel.parseDataWithDictionary(responseObject)
                 self.productId = self.productDetailsModel.id
@@ -569,7 +569,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
                 if task.statusCode == 401 {
                     self.requestRefreshToken("cart")
                 } else {
-                    println(error)
+                    self.showAlert(title: ProductStrings.alertWentWrong, message: nil)
                     self.hud?.hide(true)
                 }
         })
@@ -634,10 +634,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 self.hud?.hide(true)
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                
                 self.showAlert(title: ProductStrings.alertWentWrong, message: nil)
-                
         })
     }
     
