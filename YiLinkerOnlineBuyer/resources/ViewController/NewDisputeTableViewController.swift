@@ -23,6 +23,7 @@ struct DisputeStrings {
     static let done = StringHelper.localizedStringWithKey("TOOLBAR_DONE_LOCALIZE_KEY")
     static let noAvailableTransaction = StringHelper.localizedStringWithKey("DISPUTE_NO_AVAILABLE_TRANSACTION_LOCALIZE_KEY")
     static let noAvailableReason = StringHelper.localizedStringWithKey("DISPUTE_NO_REASON_TRANSACTION_LOCALIZE_KEY")
+    static let pleaseChooseTransactionNumber = StringHelper.localizedStringWithKey("DISPUTE_CHOOSE_TRANSACTION_NUMBER_TRANSACTION_LOCALIZE_KEY")
 }
 
 class NewDisputeTableViewController: UITableViewController, UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate, DisputeAddItemViewControllerDelegate {
@@ -57,6 +58,8 @@ class NewDisputeTableViewController: UITableViewController, UIPickerViewDataSour
     var itemIndexToRemove: Int = -1
     
     var hud: MBProgressHUD?
+    
+    var reasonId: Int = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -142,12 +145,14 @@ class NewDisputeTableViewController: UITableViewController, UIPickerViewDataSour
                 ,"disputeTitle": self.disputeTitle.text
                 ,"remarks": self.remarks.text
                 ,"orderProductStatus": 16
+                ,"reasonId": self.reasonId
                 ,"orderProductIds": self.productIDs.description]
         } else if self.transactionType.text == DisputeStrings.refund {
             parameters = [ "access_token": SessionManager.accessToken()
                 ,"disputeTitle": self.disputeTitle.text
                 ,"remarks": self.remarks.text
                 ,"orderProductStatus": 10
+                ,"reasonId": self.reasonId
                 ,"orderProductIds": self.productIDs.description]
         }
         
@@ -209,6 +214,7 @@ class NewDisputeTableViewController: UITableViewController, UIPickerViewDataSour
                 if disputeReasonModel.refundReason.count != 0 {
                     self.reasonTextField.inputView = pickerView
                     self.reasonTextField.text = disputeReasonModel.refundReason[0]
+                    self.reasonId = self.disputeReasonModel.refundId[0]
                 } else {
                     UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "", title: DisputeStrings.noAvailableReason)
                 }
@@ -216,6 +222,7 @@ class NewDisputeTableViewController: UITableViewController, UIPickerViewDataSour
                 if disputeReasonModel.replacementReason.count != 0 {
                     self.reasonTextField.inputView = pickerView
                     self.reasonTextField.text = disputeReasonModel.replacementReason[0]
+                    self.reasonId = self.disputeReasonModel.replacementId[0]
                 } else {
                     UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "", title: DisputeStrings.noAvailableReason)
                 }
@@ -309,6 +316,8 @@ class NewDisputeTableViewController: UITableViewController, UIPickerViewDataSour
             disputeAddItems.transactionId = self.transactionNumber.text
             var root = UINavigationController(rootViewController: disputeAddItems)
             self.navigationController?.presentViewController(root, animated: true, completion: nil)
+        } else {
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: DisputeStrings.pleaseChooseTransactionNumber, title: "")
         }
     }
     
@@ -441,9 +450,11 @@ class NewDisputeTableViewController: UITableViewController, UIPickerViewDataSour
         } else if pickerType == "Number" {
             self.transactionNumber.text = transactionIds[row]
         } else if pickerType == "Reason" && self.transactionType.text == DisputeStrings.refund {
-             self.reasonTextField.text = self.disputeReasonModel.refundReason[row]
+            self.reasonTextField.text = self.disputeReasonModel.refundReason[row]
+            self.reasonId = self.disputeReasonModel.refundId[row]
         } else if pickerType == "Reason" && self.transactionType.text == DisputeStrings.replacement {
             self.reasonTextField.text = self.disputeReasonModel.replacementReason[row]
+            self.reasonId = self.disputeReasonModel.replacementId[row]
         }
     }
     

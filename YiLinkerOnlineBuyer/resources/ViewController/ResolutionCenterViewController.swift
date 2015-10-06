@@ -14,6 +14,7 @@ struct ResolutionStrings {
     static let open = StringHelper.localizedStringWithKey("RESOLUTION_OPEN_LOCALIZE_KEY")
     static let closed = StringHelper.localizedStringWithKey("RESOLUTION_CLOSED_LOCALIZE_KEY")
     static let file = StringHelper.localizedStringWithKey("RESOLUTION_FILE_LOCALIZE_KEY")
+    static let emptyText = StringHelper.localizedStringWithKey("RESOLUTION_EMPTY_LOCALIZE_KEY")
 }
 
 class ResolutionCenterViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
@@ -43,6 +44,7 @@ class ResolutionCenterViewController: UIViewController, UITableViewDataSource, U
     @IBOutlet weak var closedContainerView: UIView!
     @IBOutlet weak var closedImageView: UIImageView!
     @IBOutlet weak var closedLabel: UILabel!
+    @IBOutlet weak var emptyLabel: UILabel!
     
     var currentSelectedFilter = SelectedFilters(time:.Total,status:.Both)
     
@@ -79,7 +81,8 @@ class ResolutionCenterViewController: UIViewController, UITableViewDataSource, U
         self.casesLabel.text = ResolutionStrings.cases
         self.openLabel.text = ResolutionStrings.open
         self.closedLabel.text = ResolutionStrings.closed
-        disputeButton.setTitle(ResolutionStrings.file, forState: .Normal)
+        self.disputeButton.setTitle(ResolutionStrings.file, forState: .Normal)
+        self.emptyLabel.text = ResolutionStrings.emptyText
         
         self.casesContainerView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "casesAction:"))
         self.openContainerView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "openAction:"))
@@ -90,7 +93,7 @@ class ResolutionCenterViewController: UIViewController, UITableViewDataSource, U
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        
+        self.emptyLabel.hidden = true
         fireGetCases()
     }
     
@@ -126,7 +129,6 @@ class ResolutionCenterViewController: UIViewController, UITableViewDataSource, U
         
         self.navigationController?.pushViewController(caseDetails, animated:true);
     }
-    
     
     // MARK: UITableViewDataSource
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -176,18 +178,21 @@ class ResolutionCenterViewController: UIViewController, UITableViewDataSource, U
         setSelectedTab(0)
         self.currentSelectedFilter.status = .Both
         fireGetCases()
+        self.emptyLabel.hidden = true
     }
     
     func openAction(gesture: UIGestureRecognizer) {
         setSelectedTab(1)
         self.currentSelectedFilter.status = .Open
         fireGetCases()
+        self.emptyLabel.hidden = true
     }
     
     func closedAction(gesture: UIGestureRecognizer) {
         setSelectedTab(2)
         self.currentSelectedFilter.status = .Closed
         fireGetCases()
+        self.emptyLabel.hidden = true
     }
     
     func setSelectedTab(index: Int) {
@@ -366,24 +371,17 @@ class ResolutionCenterViewController: UIViewController, UITableViewDataSource, U
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             self.resolutionCenterModel = ResolutionCenterModel.parseDataWithDictionary(responseObject)
             
-//            var fullDate = self.resolutionCenterModel.resolutionArray[0].date.componentsSeparatedByString(" ")
-//            println(fullDate[0])
-//            
-//            let dateFormatter = NSDateFormatter()
-//            dateFormatter.dateFormat = "MM/dd/yyyy"
-//            let date = dateFormatter.dateFromString(fullDate[0])
-//            println(date)
-            
             if self.resolutionCenterModel.isSuccessful {
-                self.tableData.removeAll(keepCapacity: false)
-                self.tableData = self.resolutionCenterModel.resolutionArray
-                self.resolutionTableView.reloadData()
+                if self.resolutionCenterModel.resolutionArray.count == 0 {
+                    self.emptyLabel.hidden = false
+                } else {
+                    self.tableData.removeAll(keepCapacity: false)
+                    self.tableData = self.resolutionCenterModel.resolutionArray
+                    self.resolutionTableView.reloadData()
+                }
             } else {
                 println(responseObject["message"])
-                //UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Error while reading Resolution Center table", title: "Data Loading Error")
-                self.tableData.removeAll(keepCapacity: false)
-                self.tableData = self.resolutionCenterModel.resolutionArray
-                self.resolutionTableView.reloadData()
+                self.emptyLabel.hidden = false
             }
             
             self.hud?.hide(true)
@@ -396,7 +394,7 @@ class ResolutionCenterViewController: UIViewController, UITableViewDataSource, U
                 if task.statusCode == 401 {
                     self.fireRefreshToken()
                 } else {
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Error Refreshing Token", title: "Refresh Token Error")
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: ProductStrings.alertError, title: ProductStrings.alertWentWrong)
                 }
                 
                 println(error)
