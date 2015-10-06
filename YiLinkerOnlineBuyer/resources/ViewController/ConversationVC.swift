@@ -8,6 +8,29 @@
 
 import UIKit
 
+struct LocalizedStrings{
+    static let title = StringHelper.localizedStringWithKey("MESSAGING_TITLE")
+    static let errorMessage = StringHelper.localizedStringWithKey("MESSAGING_ERROR_MESSAGE")
+    static let errorTitle = StringHelper.localizedStringWithKey("MESSAGING_ERROR_TITLE")
+    static let titleNewMessage = StringHelper.localizedStringWithKey("MESSAGING_NEW")
+    static let online = StringHelper.localizedStringWithKey("MESSAGING_ONLINE")
+    static let offline = StringHelper.localizedStringWithKey("MESSAGING_OFFLINE")
+    
+    
+    static let send = StringHelper.localizedStringWithKey("MESSAGING_SEND")
+    static let camera = StringHelper.localizedStringWithKey("MESSAGING_CAMERA")
+    static let cameraRoll = StringHelper.localizedStringWithKey("MESSAGING_CAMERA_ROLL")
+    static let connectionUnreachableTitle = StringHelper.localizedStringWithKey("CONNECTION_UNREACHABLE_LOCALIZE_KEY")
+    static let connectionUnreachableMessage = StringHelper.localizedStringWithKey("PLEASE_CHECK_INTERNET_LOCALIZE_KEY")
+    static let pickImageFirst = StringHelper.localizedStringWithKey("MESSAGING_PICK_IMAGE_ERROR")
+    static let ok = StringHelper.localizedStringWithKey("OKBUTTON_LOCALIZE_KEY")
+    static let saveFailed = StringHelper.localizedStringWithKey("MESSAGING_SAVE_FAILED")
+    static let saveFailedMessage = StringHelper.localizedStringWithKey("MESSAGING_SAVE_FAILED_MESSAGE")
+    static let typeYourMessage = StringHelper.localizedStringWithKey("MESSAGING_TYPE_YOUR_MESSAGE")
+    
+    static let seen = StringHelper.localizedStringWithKey("MESSAGING_SEEN")
+}
+
 class ConversationVC: UIViewController, EmptyViewDelegate{
     
     @IBOutlet weak var conversationTableView: UITableView!
@@ -35,7 +58,7 @@ class ConversationVC: UIViewController, EmptyViewDelegate{
             var messageThreadVC = segue.destinationViewController as! MessageThreadVC
             let indexPath = conversationTableView.indexPathForCell(sender as! ConversationTVC)
             selectedContact = conversations[indexPath!.row].contact
-            println("\(selectedContact)")
+            
             var isOnline = "-1"
             if (SessionManager.isLoggedIn()){
                 isOnline = "1"
@@ -44,6 +67,7 @@ class ConversationVC: UIViewController, EmptyViewDelegate{
             }
             
             println("IMAGE URL \(SessionManager.profileImageStringUrl())")
+            //messageThreadVC.sender = W_Contact(fullName: SessionManager.userFullName() , userRegistrationIds: "", userIdleRegistrationIds: "", userId: SessionManager.accessToken(), profileImageUrl: SessionManager.profileImageStringUrl(), isOnline: isOnline)
             messageThreadVC.sender = W_Contact(fullName: SessionManager.userFullName() , userRegistrationIds: "", userIdleRegistrationIds: "", userId: SessionManager.accessToken(), profileImageUrl: SessionManager.profileImageStringUrl(), isOnline: isOnline)
             messageThreadVC.recipient = selectedContact
         }
@@ -53,14 +77,14 @@ class ConversationVC: UIViewController, EmptyViewDelegate{
         
         var test = W_Conversation()
         //conversations = test.testData()
-        self.placeCustomBackImage()
+        //self.placeCustomBackImage()
         
         conversationTableView.tableFooterView = UIView(frame: CGRectZero)
         
         super.viewDidLoad()
         
         var locX = UIScreen.mainScreen().bounds.size.width * 0.75
-        var locY = UIScreen.mainScreen().bounds.size.height * 0.65
+        var locY = UIScreen.mainScreen().bounds.size.height * 0.80
         
         let createMessageButton = UIButton()
         createMessageButton.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
@@ -87,6 +111,8 @@ class ConversationVC: UIViewController, EmptyViewDelegate{
         self.contentViewFrame = self.view.frame
         
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        
+        self.navigationItem.title = LocalizedStrings.title
         /*
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "onRegistration:",
         name: appDelegate.registrationKey, object: nil)
@@ -125,6 +151,7 @@ class ConversationVC: UIViewController, EmptyViewDelegate{
     override func viewWillAppear(animated: Bool) {
         //self.fireLogin()
         self.getConversationsFromEndpoint("1", limit: "10")
+        SessionManager.setUnReadMessagesCount(0)
     }
     
     func addEmptyView() {
@@ -158,8 +185,10 @@ class ConversationVC: UIViewController, EmptyViewDelegate{
     }
     
     func goBack(){
-        self.navigationController?.dismissViewControllerAnimated(true, completion: nil)
+        //self.navigationController?.dismissViewControllerAnimated(true, completion: nil)
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
+    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -199,7 +228,7 @@ class ConversationVC: UIViewController, EmptyViewDelegate{
                         self.fireRefreshToken()
                     }
                 } else {
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: LocalizedStrings.errorMessage, title: LocalizedStrings.errorTitle)
                 }
                 
                 //SVProgressHUD.dismiss()
@@ -211,7 +240,7 @@ class ConversationVC: UIViewController, EmptyViewDelegate{
     func fireLogin() {
         
         if(Reachability.isConnectedToNetwork()){
-        
+            
             self.showHUD()
             
             let manager: APIManager = APIManager.sharedInstance
@@ -234,7 +263,7 @@ class ConversationVC: UIViewController, EmptyViewDelegate{
                             self.fireRefreshToken()
                         }
                     } else {
-                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: LocalizedStrings.errorMessage, title: LocalizedStrings.errorTitle)
                     }
                     
                     //SVProgressHUD.dismiss()
@@ -246,7 +275,7 @@ class ConversationVC: UIViewController, EmptyViewDelegate{
         }
         
     }
-
+    
     func getConversationsFromEndpoint(
         page : String,
         limit : String){
@@ -284,7 +313,7 @@ class ConversationVC: UIViewController, EmptyViewDelegate{
                                 self.fireRefreshToken()
                             }
                         } else {
-                            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+                            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: LocalizedStrings.errorMessage, title: LocalizedStrings.errorTitle)
                         }
                         
                         self.conversations = Array<W_Conversation>()
@@ -309,13 +338,12 @@ class ConversationVC: UIViewController, EmptyViewDelegate{
         let parameters: NSDictionary = ["client_id": Constants.Credentials.clientID, "client_secret": Constants.Credentials.clientSecret, "grant_type": Constants.Credentials.grantRefreshToken, "refresh_token":  SessionManager.refreshToken()]
         manager.POST(APIAtlas.refreshTokenUrl, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            SVProgressHUD.dismiss()
             SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                 
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: LocalizedStrings.errorMessage, title: LocalizedStrings.errorTitle)
         })
         
     }

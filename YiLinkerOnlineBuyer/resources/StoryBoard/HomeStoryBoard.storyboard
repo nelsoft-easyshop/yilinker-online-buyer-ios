@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="tG5-US-oYc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="tG5-US-oYc">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
@@ -1370,6 +1370,7 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="80" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="lfE-Nf-AS0">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <inset key="scrollIndicatorInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="55"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="MessageCell" rowHeight="80" id="n6g-7J-9Dj" customClass="ConversationTVC" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
                                         <autoresizingMask key="autoresizingMask"/>
@@ -2081,6 +2082,7 @@
                         <outlet property="composeView" destination="MgO-NG-4nM" id="h3X-Rw-ffE"/>
                         <outlet property="composeViewBottomLayout" destination="FSK-mr-U4g" id="nJK-Nd-cEm"/>
                         <outlet property="composeViewHeightConstraint" destination="81z-k5-dU4" id="1dA-b0-2TN"/>
+                        <outlet property="sendButton" destination="Fx5-6t-7OB" id="KbN-7t-27j"/>
                         <outlet property="threadTableView" destination="gcd-9O-68g" id="7o0-RH-UyZ"/>
                         <outlet property="threadTableViewConstraint" destination="QoW-sv-ufz" id="aYh-Kz-cAJ"/>
                     </connections>

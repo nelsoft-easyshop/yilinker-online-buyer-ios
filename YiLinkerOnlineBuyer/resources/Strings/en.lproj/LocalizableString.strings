@@ -191,6 +191,26 @@ CONNECTION_TITLE_LOCALIZE_KEY = "Connection Unreachable";
 CONNECTION_MESSAGE_LOCALIZE_KEY = "Cannot retrieve data. Please check your internet connection.";
 CONNECTION_TAP_TO_RELOAD_LOCALIZE_KEY = "Tap to reloadtitletitme";
 
+// MESSAGES
+
+// MESSAGES
+MESSAGING_TITLE = "Message";
+MESSAGING_NEW = "New Message";
+MESSAGING_ONLINE = "Online";
+MESSAGING_OFFLINE = "Offline";
+MESSAGING_SEND = "Send";
+MESSAGING_WRITE = "Write to...";
+MESSAGING_ERROR_PHOTO = "Error loading photo";
+MESSAGING_TYPE_YOUR_MESSAGE = "Type Your Message";
+MESSAGING_SOMETHING_WENT_WRONG = "Something went wrong";
+MESSAGING_ERROR_TITLE = "Error";
+MESSAGING_SEEN = "Seen";
+MESSAGING_CAMERA = "Camera";
+MESSAGING_CAMERA_ROLL = "Camera Roll";
+MESSAGING_PICK_IMAGE_ERROR = "Please pick or upload an image first.";
+MESSAGING_SAVE_FAILED = "Save Failed.";
+MESSAGING_SAVE_FAILED_MESSAGE = "Failed to save image";
+
 // MARK: - Rj's Modules
 
 // MARK: - Followed Sellers
