@@ -262,6 +262,7 @@ class SellerModel: NSObject {
                 var streetName: String = ""
                 var subdivision: String = ""
                 var zipCode: String = ""
+                var fullLocation: String = ""
                 /*var streetAddress: String = ""
                 var province: String = ""
                 var city: String = ""
@@ -287,7 +288,11 @@ class SellerModel: NSObject {
                     zipCode = temZipCode
                 }
                 
-                store_address = unitNumber + " " + bldgName + ", " + streetName + ", " + subdivision + ", " + zipCode
+                if let temFullLocation = val["fullLocation"] as? String {
+                    fullLocation = temFullLocation
+                }
+                
+                store_address = fullLocation
             }
             
         }

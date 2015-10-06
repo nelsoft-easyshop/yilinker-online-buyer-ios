@@ -450,6 +450,7 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
     func fireTransactionProductDetails() {
         self.showHUD()
         let manager = APIManager.sharedInstance
+        println("orderProductId \(self.orderProductId)")
         manager.GET(APIAtlas.transactionProductDetails+"\(SessionManager.accessToken())&orderProductId=\(self.orderProductId)", parameters: nil, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             self.transactionProductDetailsModel = TransactionProductDetailsModel.parseFromDataDictionary(responseObject as! NSDictionary)
