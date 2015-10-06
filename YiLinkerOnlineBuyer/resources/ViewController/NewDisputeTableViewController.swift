@@ -13,6 +13,7 @@ struct DisputeStrings {
     static let number = StringHelper.localizedStringWithKey("DISPUTE_TRANSACTION_NUMBER_LOCALIZE_KEY")
     static let placeholder = StringHelper.localizedStringWithKey("DISPUTE_TRANSACTION_NUMBER_PLACEHOLDER_LOCALIZE_KEY")
     static let type = StringHelper.localizedStringWithKey("DISPUTE_TRANSACTION_TYPE_LOCALIZE_KEY")
+    static let reason = StringHelper.localizedStringWithKey("DISPUTE_REASON_LOCALIZE_KEY")
     static let refund = StringHelper.localizedStringWithKey("DISPUTE_REFUND_LOCALIZE_KEY")
     static let replacement = StringHelper.localizedStringWithKey("DISPUTE_REPLACEMENT_LOCALIZE_KEY")
     static let products = StringHelper.localizedStringWithKey("DISPUTE_PRODUCTS_LOCALIZE_KEY")
@@ -28,11 +29,13 @@ class NewDisputeTableViewController: UITableViewController, UIPickerViewDataSour
     @IBOutlet weak var disputeTitleLabel: UILabel!
     @IBOutlet weak var transactionNumberLabel: UILabel!
     @IBOutlet weak var transactionTypeLabel: UILabel!
+    @IBOutlet weak var reasonLabel: UILabel!
     @IBOutlet var productsLabel: UILabel!
     @IBOutlet var remarksLabel: UILabel!
     @IBOutlet weak var disputeTitle: UITextField!
     @IBOutlet weak var transactionNumber: UITextField!
     @IBOutlet weak var transactionType: UITextField!
+    @IBOutlet weak var reasonTextField: UITextField!
     @IBOutlet weak var addButton: UIButton!
     @IBOutlet weak var remarks: UITextView!
     @IBOutlet weak var submitButton: UIButton!
@@ -59,7 +62,8 @@ class NewDisputeTableViewController: UITableViewController, UIPickerViewDataSour
         
         self.transactionNumber.delegate = self
         self.transactionType.delegate = self
-
+        self.reasonTextField.delegate = self
+        
         setStrings()
     }
     
@@ -69,17 +73,16 @@ class NewDisputeTableViewController: UITableViewController, UIPickerViewDataSour
         transactionNumberLabel.text = DisputeStrings.number
         transactionNumber.placeholder = DisputeStrings.placeholder
         transactionTypeLabel.text = DisputeStrings.type
-        
+        reasonLabel.text = DisputeStrings.reason
         productsLabel.text = DisputeStrings.products
         addButton.setTitle(DisputeStrings.add, forState: .Normal)
-        
         remarksLabel.text = DisputeStrings.remarks
-        
         submitButton.setTitle(DisputeStrings.submit, forState: .Normal)
         
         self.disputeTitleLabel.required()
         self.transactionNumberLabel.required()
         self.transactionTypeLabel.required()
+        self.reasonLabel.required()
         self.productsLabel.required()
         self.remarksLabel.required()
     }
@@ -189,9 +192,18 @@ class NewDisputeTableViewController: UITableViewController, UIPickerViewDataSour
             } else {
                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "", title: DisputeStrings.noAvailableTransaction)
             }
-        } else {
+        } else if pickerType == "Type" {
             self.transactionType.inputView = pickerView
             self.transactionType.text = transactionTypes[0]
+            self.reasonTextField.enabled = true
+            self.reasonTextField.backgroundColor = .whiteColor()
+        } else if pickerType == "Reason" {
+            if self.transactionIds.count != 0 {
+                self.transactionNumber.inputView = pickerView
+                self.transactionNumber.text = transactionIds[0]
+            } else {
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "", title: DisputeStrings.noAvailableTransaction)
+            }
         }
     }
     
@@ -215,8 +227,10 @@ class NewDisputeTableViewController: UITableViewController, UIPickerViewDataSour
         
         if pickerType == "Number" {
             self.transactionNumber.inputAccessoryView = toolBar
-        } else {
+        } else if pickerType == "Type" {
             self.transactionType.inputAccessoryView = toolBar
+        } else if pickerType == "Reason" {
+            self.reasonTextField.inputAccessoryView = toolBar
         }
         
     }
@@ -322,13 +336,14 @@ class NewDisputeTableViewController: UITableViewController, UIPickerViewDataSour
         
         if textField == self.transactionNumber {
             pickerType = "Number"
-            addPickerView()
-            addToolBarWithDoneTarget()
         } else if textField == self.transactionType {
             pickerType = "Type"
-            addPickerView()
-            addToolBarWithDoneTarget()
+        } else if textField == self.reasonTextField {
+            pickerType = "Reason"
         }
+        
+        addPickerView()
+        addToolBarWithDoneTarget()
         
     }
     
