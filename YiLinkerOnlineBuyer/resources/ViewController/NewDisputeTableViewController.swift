@@ -22,6 +22,7 @@ struct DisputeStrings {
     static let submit = StringHelper.localizedStringWithKey("DISPUTE_SUBMIT_CASE_LOCALIZE_KEY")
     static let done = StringHelper.localizedStringWithKey("TOOLBAR_DONE_LOCALIZE_KEY")
     static let noAvailableTransaction = StringHelper.localizedStringWithKey("DISPUTE_NO_AVAILABLE_TRANSACTION_LOCALIZE_KEY")
+    static let noAvailableReason = StringHelper.localizedStringWithKey("DISPUTE_NO_REASON_TRANSACTION_LOCALIZE_KEY")
 }
 
 class NewDisputeTableViewController: UITableViewController, UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate, DisputeAddItemViewControllerDelegate {
@@ -41,6 +42,8 @@ class NewDisputeTableViewController: UITableViewController, UIPickerViewDataSour
     @IBOutlet weak var submitButton: UIButton!
     
     var transactionModel: TransactionModel!
+    var disputeReasonModel: DisputeReasonsModel!
+    
     var transactionIds: [String] = []
     var transactionTypes: [String] = [DisputeStrings.refund, DisputeStrings.replacement]
     var pickerType: String = ""
@@ -48,6 +51,8 @@ class NewDisputeTableViewController: UITableViewController, UIPickerViewDataSour
     var productIDs: [String] = []
     var productNames: [String] = []
     
+    var isCaseDetailsDone: Bool = false
+    var isReasonsDone: Bool = false
     
     var itemIndexToRemove: Int = -1
     
@@ -57,6 +62,7 @@ class NewDisputeTableViewController: UITableViewController, UIPickerViewDataSour
         super.viewDidLoad()
         
         requestGetCaseDetails()
+        requestGetReasons()
         setupRoundedCorners()
         setupNavigationBar()
         
@@ -195,14 +201,26 @@ class NewDisputeTableViewController: UITableViewController, UIPickerViewDataSour
         } else if pickerType == "Type" {
             self.transactionType.inputView = pickerView
             self.transactionType.text = transactionTypes[0]
+            self.reasonTextField.text = ""
             self.reasonTextField.enabled = true
             self.reasonTextField.backgroundColor = .whiteColor()
         } else if pickerType == "Reason" {
-            if self.transactionIds.count != 0 {
-                self.transactionNumber.inputView = pickerView
-                self.transactionNumber.text = transactionIds[0]
+            if self.transactionType.text == DisputeStrings.refund {
+                if disputeReasonModel.refundReason.count != 0 {
+                    self.reasonTextField.inputView = pickerView
+                    self.reasonTextField.text = disputeReasonModel.refundReason[0]
+                } else {
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "", title: DisputeStrings.noAvailableReason)
+                }
+            } else if self.transactionType.text == DisputeStrings.replacement {
+                if disputeReasonModel.replacementReason.count != 0 {
+                    self.reasonTextField.inputView = pickerView
+                    self.reasonTextField.text = disputeReasonModel.replacementReason[0]
+                } else {
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "", title: DisputeStrings.noAvailableReason)
+                }
             } else {
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "", title: DisputeStrings.noAvailableTransaction)
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "", title: DisputeStrings.noAvailableReason)
             }
         }
     }
@@ -297,6 +315,7 @@ class NewDisputeTableViewController: UITableViewController, UIPickerViewDataSour
     func toolBarDoneAction() {
         self.transactionNumber.resignFirstResponder()
         self.transactionType.resignFirstResponder()
+        self.reasonTextField.resignFirstResponder()
     }
     
     func removeItemAction() {
@@ -310,24 +329,53 @@ class NewDisputeTableViewController: UITableViewController, UIPickerViewDataSour
     func requestGetCaseDetails() {
         self.showHUD()
         let manager = APIManager.sharedInstance
-        manager.GET(APIAtlas.transactionLogs + "\(SessionManager.accessToken())", parameters: nil, success: {
+        manager.GET(APIAtlas.transactionLogs + "\(SessionManager.accessToken())" + "&orderStatusId=3", parameters: nil, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             self.transactionModel = TransactionModel.parseDataFromDictionary(responseObject as! NSDictionary)
-
-            for i in 0..<self.transactionModel.order_id.count {
-                if self.transactionModel.order_status_id[i] == "5" {
-                    self.transactionIds.append(self.transactionModel.invoice_number[i])
-                }
-            }
-            self.tableView.reloadData()
+            self.transactionIds = self.transactionModel.invoice_number
+//            for i in 0..<self.transactionModel.order_id.count {
+//                if self.transactionModel.order_status_id[i] == "5" {
+//                    self.transactionIds.append(self.transactionModel.invoice_number[i])
+//                }
+//            }
+//            self.tableView.reloadData()
             
-            self.hud?.hide(true)
+//            self.hud?.hide(true)
+            self.isCaseDetailsDone = true
+            self.requestChecker()
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
-                self.hud?.hide(true)
+//                self.hud?.hide(true)
                 println(error.userInfo)
-                
+                self.isCaseDetailsDone = true
+                self.requestChecker()
         })
+    }
+    
+    func requestGetReasons() {
 
+        let manager = APIManager.sharedInstance
+        manager.GET(APIAtlas.getReasons + "\(SessionManager.accessToken())", parameters: nil, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            self.disputeReasonModel = DisputeReasonsModel.parseDataWithDictionary(responseObject)
+            
+//            self.tableView.reloadData()
+            
+//            self.hud?.hide(true)
+            self.isReasonsDone = true
+            self.requestChecker()
+            }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
+//                self.hud?.hide(true)
+                println(error.userInfo)
+                self.isReasonsDone = true
+                self.requestChecker()
+        })
+    }
+    
+    func requestChecker() {
+        if self.isCaseDetailsDone && self.isReasonsDone {
+            self.tableView.reloadData()
+            self.hud?.hide(true)
+        }
     }
     
     // MARK: - Text Field delegate
@@ -356,6 +404,14 @@ class NewDisputeTableViewController: UITableViewController, UIPickerViewDataSour
     func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         if pickerType == "Type" {
             return self.transactionTypes.count
+        } else if pickerType == "Reason" {
+            if self.transactionType.text == DisputeStrings.refund {
+                return disputeReasonModel.refundReason.count
+            } else if self.transactionType.text == DisputeStrings.replacement {
+                return disputeReasonModel.replacementReason.count
+            } else {
+                return 0
+            }
         }
         return self.transactionIds.count
     }
@@ -363,8 +419,16 @@ class NewDisputeTableViewController: UITableViewController, UIPickerViewDataSour
     func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String! {
         if pickerType == "Type" {
             return self.transactionTypes[row]
+        } else if pickerType == "Number" {
+            return self.transactionIds[row]
+        } else if pickerType == "Reason" {
+            if self.transactionType.text == DisputeStrings.refund {
+                return self.disputeReasonModel.refundReason[row]
+            } else if self.transactionType.text == DisputeStrings.replacement {
+                return self.disputeReasonModel.replacementReason[row]
+            }
         }
-        return self.transactionIds[row]
+        return ""
     }
     
     func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
@@ -374,8 +438,12 @@ class NewDisputeTableViewController: UITableViewController, UIPickerViewDataSour
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if pickerType == "Type" {
             self.transactionType.text = transactionTypes[row]
-        } else {
+        } else if pickerType == "Number" {
             self.transactionNumber.text = transactionIds[row]
+        } else if pickerType == "Reason" && self.transactionType.text == DisputeStrings.refund {
+             self.reasonTextField.text = self.disputeReasonModel.refundReason[row]
+        } else if pickerType == "Reason" && self.transactionType.text == DisputeStrings.replacement {
+            self.reasonTextField.text = self.disputeReasonModel.replacementReason[row]
         }
     }
     

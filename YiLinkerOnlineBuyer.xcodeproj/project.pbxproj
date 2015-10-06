@@ -179,6 +179,7 @@
 		266A5C611BB0029200343DB4 /* DisputeAddItemViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 266A5C5F1BB0029200343DB4 /* DisputeAddItemViewController.xib */; };
 		266A5C641BB003B400343DB4 /* DisputeAddItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 266A5C621BB003B400343DB4 /* DisputeAddItemTableViewCell.swift */; };
 		266A5C651BB003B400343DB4 /* DisputeAddItemTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 266A5C631BB003B400343DB4 /* DisputeAddItemTableViewCell.xib */; };
+		266BE1EA1BC3B0B300BB6642 /* DisputeReasonsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 266BE1E91BC3B0B300BB6642 /* DisputeReasonsModel.swift */; };
 		2689FBF71B80412D007BEA68 /* CategoriesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2689FBF51B80412D007BEA68 /* CategoriesTableViewCell.swift */; };
 		2689FBFA1B8044CF007BEA68 /* CategoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2689FBF91B8044CF007BEA68 /* CategoryModel.swift */; };
 		2689FBFC1B81856B007BEA68 /* ProductUnitsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2689FBFB1B81856B007BEA68 /* ProductUnitsModel.swift */; };
@@ -596,6 +597,7 @@
 		266A5C5F1BB0029200343DB4 /* DisputeAddItemViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DisputeAddItemViewController.xib; sourceTree = "<group>"; };
 		266A5C621BB003B400343DB4 /* DisputeAddItemTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisputeAddItemTableViewCell.swift; sourceTree = "<group>"; };
 		266A5C631BB003B400343DB4 /* DisputeAddItemTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DisputeAddItemTableViewCell.xib; sourceTree = "<group>"; };
+		266BE1E91BC3B0B300BB6642 /* DisputeReasonsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DisputeReasonsModel.swift; path = YiLinkerOnlineBuyer/resources/Model/DisputeReasonsModel.swift; sourceTree = SOURCE_ROOT; };
 		2689FBF51B80412D007BEA68 /* CategoriesTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CategoriesTableViewCell.swift; path = YiLinkerOnlineBuyer/resources/ViewController/CategoriesTableViewCell.swift; sourceTree = SOURCE_ROOT; };
 		2689FBF91B8044CF007BEA68 /* CategoryModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CategoryModel.swift; path = YiLinkerOnlineBuyer/resources/Model/CategoryModel.swift; sourceTree = SOURCE_ROOT; };
 		2689FBFB1B81856B007BEA68 /* ProductUnitsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProductUnitsModel.swift; path = YiLinkerOnlineBuyer/resources/Model/ProductUnitsModel.swift; sourceTree = SOURCE_ROOT; };
@@ -1040,6 +1042,7 @@
 				0C538AE61B99F37D00EB64AB /* OrderedProductsModel.swift */,
 				0C2E8A261B9AA3EE00D50455 /* PesoPayModel.swift */,
 				79F9FC4B1BC022FB00B3E0DA /* SearchSellerModel.swift */,
+				266BE1E91BC3B0B300BB6642 /* DisputeReasonsModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1771,6 +1774,7 @@
 				0C5926041B836C670021EA76 /* ProfileModel.swift in Sources */,
 				79E68BA01B8B428B008626E4 /* ProfileSettingsViewController.swift in Sources */,
 				F7CCDAA71B943CF7000F5AD4 /* SeeMoreTableViewCell.swift in Sources */,
+				266BE1EA1BC3B0B300BB6642 /* DisputeReasonsModel.swift in Sources */,
 				0C2F45251B85E7CA00021F45 /* ChangeAddressViewController.swift in Sources */,
 				F7DC7EDA1BA13FAC004F7FD4 /* SellerCategoryTableViewCell.swift in Sources */,
 				26AFB3931B79DD9100E50926 /* XibHelper.swift in Sources */,

@@ -132,7 +132,7 @@ class DisputeAddItemViewController: UIViewController {
         
         cell.setProductImage(self.transactionDetailsModel.productImage[indexPath.row])
         cell.itemNameLabel.text = self.transactionDetailsModel.productName[indexPath.row]
-        cell.vendorLabel.text = self.transactionDetailsModel.sellerStore[indexPath.row]
+        cell.vendorLabel.text = self.transactionDetailsModel.sellerStore[0]
         
         if (find(selectedTransactionIDIndex, indexPath.row) != nil) {
             cell.updateStatusImage(true)
