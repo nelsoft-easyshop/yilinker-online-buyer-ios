@@ -164,7 +164,12 @@ class CaseDetailsTableViewController: UITableViewController {
                 self.tableData = caseDetails.products
                 self.tableView.reloadData()
             } else {
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Error while reading Case Details", title: "Data Loading Error")
+                let alert = UIAlertController(title: ProductStrings.alertWentWrong, message: nil, preferredStyle: UIAlertControllerStyle.Alert)
+                let okButton = UIAlertAction(title: ProductStrings.alertOk, style: UIAlertActionStyle.Cancel) { (alert) -> Void in
+                    self.navigationController?.popViewControllerAnimated(true)
+                }
+                alert.addAction(okButton)
+                self.presentViewController(alert, animated: true, completion: nil)
             }
             self.hud?.hide(true)
             
@@ -177,7 +182,12 @@ class CaseDetailsTableViewController: UITableViewController {
                 if task.statusCode == 401 {
                     self.fireRefreshToken()
                 } else {
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Error Refreshing Token", title: "Refresh Token Error")
+                    let alert = UIAlertController(title: ProductStrings.alertWentWrong, message: nil, preferredStyle: UIAlertControllerStyle.Alert)
+                    let okButton = UIAlertAction(title: ProductStrings.alertOk, style: UIAlertActionStyle.Cancel) { (alert) -> Void in
+                            self.navigationController?.popViewControllerAnimated(true)
+                    }
+                    alert.addAction(okButton)
+                    self.presentViewController(alert, animated: true, completion: nil)
                 }
                 
                 println(error)

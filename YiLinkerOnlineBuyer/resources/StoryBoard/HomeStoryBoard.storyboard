@@ -1167,6 +1167,7 @@
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Status" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ihe-VT-wl0">
                                                     <rect key="frame" x="15" y="11" width="50" height="21"/>
+                                                    <color key="backgroundColor" red="0.50122048590000001" green="0.0" blue="0.7202493687" alpha="1" colorSpace="calibratedRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="21" id="Fgs-wZ-U7a"/>
                                                         <constraint firstAttribute="width" constant="50" id="wCY-6s-rIR"/>
@@ -2378,10 +2379,10 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Status" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Itb-Ym-ALE">
-                                            <rect key="frame" x="15" y="9" width="50" height="21"/>
+                                            <rect key="frame" x="15" y="9" width="65" height="21"/>
                                             <constraints>
-                                                <constraint firstAttribute="height" constant="21" id="foa-Ng-nwa"/>
-                                                <constraint firstAttribute="width" constant="50" id="pV8-PD-5Wd"/>
+                                                <constraint firstAttribute="width" constant="65" id="ZP5-ee-h16"/>
+                                                <constraint firstAttribute="height" constant="21" id="dP3-K3-InL"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="17"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -2390,9 +2391,9 @@
                                     </subviews>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <constraints>
-                                        <constraint firstItem="Itb-Ym-ALE" firstAttribute="leading" secondItem="jyi-J1-KRg" secondAttribute="leading" constant="15" id="7vb-e9-GkU"/>
+                                        <constraint firstItem="Itb-Ym-ALE" firstAttribute="top" secondItem="jyi-J1-KRg" secondAttribute="top" constant="9" id="Ext-0c-s2d"/>
                                         <constraint firstAttribute="height" constant="40" id="F3V-Mw-Bab"/>
-                                        <constraint firstAttribute="centerY" secondItem="Itb-Ym-ALE" secondAttribute="centerY" id="h12-oD-1cK"/>
+                                        <constraint firstItem="Itb-Ym-ALE" firstAttribute="leading" secondItem="jyi-J1-KRg" secondAttribute="leading" constant="15" id="OGq-vn-cty"/>
                                         <constraint firstAttribute="trailing" secondItem="jHj-y3-sWI" secondAttribute="trailing" constant="15" id="nZB-31-VUi"/>
                                         <constraint firstAttribute="centerY" secondItem="jHj-y3-sWI" secondAttribute="centerY" id="puu-wc-WSn"/>
                                     </constraints>
