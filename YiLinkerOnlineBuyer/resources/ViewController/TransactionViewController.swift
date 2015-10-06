@@ -80,10 +80,19 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
             
         addViewsActions()
     
-        self.fireTransaction("all")
-        self.query = "all"
+        //self.fireTransaction("all")
+        //self.query = "all"
         self.backButton()
-        
+
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        println("view did appear")
+        self.tableData.removeAll(keepCapacity: false)
+        page = 0
+        self.isPageEnd = false
+        self.fireTransaction(self.query)
+        //return true
     }
     
     // MARK: - Table View Data Source

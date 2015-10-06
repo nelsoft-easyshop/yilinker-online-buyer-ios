@@ -130,6 +130,9 @@ class ViewFeedBackViewController: UIViewController, UITableViewDelegate, UITable
                 self.numberOfPeopleLabel.text = "\(self.sellerModel!.reviews.count)"
                 self.ratingAndReviewsTableView.reloadData()
                 self.hud?.hide(true)
+                if self.sellerModel!.reviews.count == 0 {
+                    self.showAlert(title: ProductStrings.alertNoReviews, message: nil)
+                }
             } else {
                 self.showAlert(title: "Error", message: responseObject["message"] as! String)
                 self.hud?.hide(true)
@@ -145,12 +148,12 @@ class ViewFeedBackViewController: UIViewController, UITableViewDelegate, UITable
                             self.hud?.hide(true)
                             
                         } else {
-                            self.showAlert(title: "Something went wrong", message: nil)
+                            self.showAlert(title: Constants.Localized.someThingWentWrong, message: nil)
                             self.hud?.hide(true)
                         }
                     }
                 } else  {
-                    self.showAlert(title: "Error", message: "Something went wrong.")
+                    self.showAlert(title: Constants.Localized.error, message: Constants.Localized.someThingWentWrong)
                     self.hud?.hide(true)
                 }
         })
