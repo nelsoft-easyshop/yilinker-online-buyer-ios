@@ -59,6 +59,8 @@ class NewDisputeTableViewController: UITableViewController, UIPickerViewDataSour
     
     var hud: MBProgressHUD?
     
+    var reasonId: Int = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -143,12 +145,14 @@ class NewDisputeTableViewController: UITableViewController, UIPickerViewDataSour
                 ,"disputeTitle": self.disputeTitle.text
                 ,"remarks": self.remarks.text
                 ,"orderProductStatus": 16
+                ,"reasonId": self.reasonId
                 ,"orderProductIds": self.productIDs.description]
         } else if self.transactionType.text == DisputeStrings.refund {
             parameters = [ "access_token": SessionManager.accessToken()
                 ,"disputeTitle": self.disputeTitle.text
                 ,"remarks": self.remarks.text
                 ,"orderProductStatus": 10
+                ,"reasonId": self.reasonId
                 ,"orderProductIds": self.productIDs.description]
         }
         
@@ -210,6 +214,7 @@ class NewDisputeTableViewController: UITableViewController, UIPickerViewDataSour
                 if disputeReasonModel.refundReason.count != 0 {
                     self.reasonTextField.inputView = pickerView
                     self.reasonTextField.text = disputeReasonModel.refundReason[0]
+                    self.reasonId = self.disputeReasonModel.refundId[0]
                 } else {
                     UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "", title: DisputeStrings.noAvailableReason)
                 }
@@ -217,6 +222,7 @@ class NewDisputeTableViewController: UITableViewController, UIPickerViewDataSour
                 if disputeReasonModel.replacementReason.count != 0 {
                     self.reasonTextField.inputView = pickerView
                     self.reasonTextField.text = disputeReasonModel.replacementReason[0]
+                    self.reasonId = self.disputeReasonModel.replacementId[0]
                 } else {
                     UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "", title: DisputeStrings.noAvailableReason)
                 }
@@ -444,9 +450,11 @@ class NewDisputeTableViewController: UITableViewController, UIPickerViewDataSour
         } else if pickerType == "Number" {
             self.transactionNumber.text = transactionIds[row]
         } else if pickerType == "Reason" && self.transactionType.text == DisputeStrings.refund {
-             self.reasonTextField.text = self.disputeReasonModel.refundReason[row]
+            self.reasonTextField.text = self.disputeReasonModel.refundReason[row]
+            self.reasonId = self.disputeReasonModel.refundId[row]
         } else if pickerType == "Reason" && self.transactionType.text == DisputeStrings.replacement {
             self.reasonTextField.text = self.disputeReasonModel.replacementReason[row]
+            self.reasonId = self.disputeReasonModel.replacementId[row]
         }
     }
     
