@@ -124,7 +124,7 @@ class ViewFeedBackViewController: UIViewController, UITableViewDelegate, UITable
             println(responseObject["isSuccessful"])
             if responseObject["isSuccessful"] as! Bool {
                 self.sellerModel = SellerModel.parseSellerReviewsDataFromDictionary(responseObject as! NSDictionary)
-                println(self.sellerModel?.reviews[1].fullName)
+                //println(self.sellerModel?.reviews[1].fullName)
                 self.setRating(self.sellerModel!.rating)
                 self.generalRatingLabel.text = "\(self.sellerModel!.rating)"
                 self.numberOfPeopleLabel.text = "\(self.sellerModel!.reviews.count)"

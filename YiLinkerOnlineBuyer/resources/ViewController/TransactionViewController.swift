@@ -132,6 +132,7 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
         transactionDetails.totalUnitCost = tableData[indexPath.row].total_unit_price2
         transactionDetails.shippingFee = tableData[indexPath.row].total_handling_fee2
         transactionDetails.totalCost = tableData[indexPath.row].total_price2
+        transactionDetails.orderId = tableData[indexPath.row].order_id2
         self.navigationController?.pushViewController(transactionDetails, animated: true)
     }
     
@@ -275,12 +276,12 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
                 }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
                     self.hud?.hide(true)
                     let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                    if error.userInfo != nil {
+                    
+                        if self.query == "all" {if error.userInfo != nil {
                         let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
                         let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
                         UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: Constants.Localized.someThingWentWrong)
                     } else if task.statusCode == 401 {
-                        if self.query == "all" {
                             self.requestRefreshToken(TransactionRefreshType.All)
                         } else if self.query == "on-delivery" {
                             self.requestRefreshToken(TransactionRefreshType.OnGoing)

@@ -36,6 +36,7 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
     var totalUnitCost: String = ""
     var shippingFee: String = ""
     var totalCost: String = ""
+    var orderId: String = ""
     
     var total_unit_price: Float = 0.0
     var total_handling_fee: Float = 0.0
@@ -385,6 +386,7 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
         let feedbackView = TransactionLeaveSellerFeedbackViewController(nibName: "TransactionLeaveSellerFeedbackViewController", bundle: nil)
         feedbackView.edgesForExtendedLayout = UIRectEdge.None
         feedbackView.sellerId = tag
+        feedbackView.orderId = self.orderId.toInt()!
         self.navigationController?.pushViewController(feedbackView, animated: true)
     }
     

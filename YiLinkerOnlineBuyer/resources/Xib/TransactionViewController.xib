@@ -68,7 +68,7 @@
                                 <constraint firstAttribute="width" constant="93" id="yBG-DV-eGo"/>
                             </constraints>
                         </view>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="M4H-ai-uXl" userLabel="On Delivery">
+                        <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="M4H-ai-uXl" userLabel="On Delivery">
                             <rect key="frame" x="184" y="0.0" width="93" height="70"/>
                             <subviews>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="onDelivery" translatesAutoresizingMaskIntoConstraints="NO" id="0BV-9b-3ee">
