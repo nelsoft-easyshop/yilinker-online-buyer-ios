@@ -102,7 +102,7 @@ class PaymentWebViewViewController: UIViewController, UIWebViewDelegate {
     func fireOverView(transactionId: String) {
         self.showHUD()
         let manager: APIManager = APIManager.sharedInstance
-        let parameters: NSDictionary = ["access_token": SessionManager.accessToken(), "transactionId": transactionId]
+        let parameters: NSDictionary = ["access_token": SessionManager.accessToken(), "transactionId": transactionId, "transactionClear": true]
         manager.POST(APIAtlas.overViewUrl, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             self.hud?.hide(true)
