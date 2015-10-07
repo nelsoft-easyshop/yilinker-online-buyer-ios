@@ -348,9 +348,8 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
     
     func setDetail(#image: String, title: String, price: String) {
         
-        productImageView.sd_setImageWithURL(NSURL(string: image), placeholderImage: UIImage(named: "dummy-placeholder"))
+//        productImageView.sd_setImageWithURL(NSURL(string: image), placeholderImage: UIImage(named: "dummy-placeholder"))
         nameLabel.text = title
-//        priceLabel.text = 
     }
     
     func disableButton(button: UIButton) {
@@ -501,19 +500,43 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
     
     func passModel(#productDetailsModel: ProductDetailsModel, selectedValue: NSArray, selectedId: NSArray, unitIdIndex: Int, quantity: Int, price: String, imageIndex: Int) {
         
-        setDetail(image: productDetailsModel.images[imageIndex].imageLocation, title: productDetailsModel.title, price: price)
-        self.productDetailsModel = productDetailsModel
-        if productDetailsModel.productUnits[unitIdIndex].discount == 0 {
-            self.price = productDetailsModel.productUnits[unitIdIndex].price
-        } else {
-            self.price = productDetailsModel.productUnits[unitIdIndex].discountedPrice
-        }
         self.attributes = productDetailsModel.attributes as [ProductAttributeModel]
         self.selectedId = selectedId as! [String]
         self.selectedValue = selectedValue as! [String]
         self.unitId = productDetailsModel.productUnits[unitIdIndex].productUnitId
         self.selectedCombination = productDetailsModel.productUnits[unitIdIndex].combination
         
+//        setDetail(image: productDetailsModel.images[unitIdIndex].imageLocation, title: productDetailsModel.title, price: price)
+        self.productDetailsModel = productDetailsModel
+        self.nameLabel.text = productDetailsModel.title
+        if productDetailsModel.productUnits[unitIdIndex].discount == 0 {
+            self.price = productDetailsModel.productUnits[unitIdIndex].price
+        } else {
+            self.price = productDetailsModel.productUnits[unitIdIndex].discountedPrice
+        }
+        
+        self.imageUrls = []
+        for i in 0..<self.productDetailsModel.productUnits.count {
+            if selectedCombination == self.productDetailsModel.productUnits[i].combination {
+                if self.productDetailsModel.productUnits[i].imageIds.count != 0 {
+                    for j in 0..<self.productDetailsModel.productUnits[i].imageIds.count {
+                        for l in 0..<self.productDetailsModel.images.count {
+                            if self.productDetailsModel.productUnits[i].imageIds[j] == self.productDetailsModel.images[l].id {
+                                self.imageUrls.append(self.productDetailsModel.images[l].imageLocation)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
+        if self.imageUrls.count != 0 {
+            println(self.imageUrls[0])
+            self.productImageView.sd_setImageWithURL(NSURL(string: self.imageUrls[0]), placeholderImage: UIImage(named: "dummy-placeholder"))
+        }
+        
+        
+            
         self.maximumStock = productDetailsModel.productUnits[unitIdIndex].quantity
         self.availabilityStocksLabel.text = ProductStrings.availableStocks + " : \(productDetailsModel.productUnits[unitIdIndex].quantity)"
         
