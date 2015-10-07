@@ -3,6 +3,14 @@
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Panton Bold.otf">
+            <string>Panton-Bold</string>
+            <string>Panton-Bold</string>
+            <string>Panton-Bold</string>
+            <string>Panton-Bold</string>
+        </mutableArray>
+    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TransactionViewController" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
             <connections>
@@ -38,7 +46,7 @@
                                 </imageView>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="FOR FEEDBACK" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Sv-7A-H5I">
                                     <rect key="frame" x="11" y="36" width="79" height="21"/>
-                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="9"/>
+                                    <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="9"/>
                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <nil key="highlightedColor"/>
                                 </label>
@@ -57,7 +65,7 @@
                                 </imageView>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="PENDING" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vri-MS-s7W">
                                     <rect key="frame" x="23" y="36" width="46" height="21"/>
-                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="9"/>
+                                    <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="9"/>
                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <nil key="highlightedColor"/>
                                 </label>
@@ -68,7 +76,7 @@
                                 <constraint firstAttribute="width" constant="93" id="yBG-DV-eGo"/>
                             </constraints>
                         </view>
-                        <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="M4H-ai-uXl" userLabel="On Delivery">
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="M4H-ai-uXl" userLabel="On Delivery">
                             <rect key="frame" x="184" y="0.0" width="93" height="70"/>
                             <subviews>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="onDelivery" translatesAutoresizingMaskIntoConstraints="NO" id="0BV-9b-3ee">
@@ -76,7 +84,7 @@
                                 </imageView>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="ON-DELIVERY" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vdH-na-zaJ">
                                     <rect key="frame" x="12" y="35" width="68" height="21"/>
-                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="9"/>
+                                    <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="9"/>
                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <nil key="highlightedColor"/>
                                 </label>
@@ -95,7 +103,7 @@
                                 </imageView>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="ALL" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xv1-iT-0na">
                                     <rect key="frame" x="25" y="37" width="42" height="21"/>
-                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="9"/>
+                                    <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="9"/>
                                     <color key="textColor" red="0.43529411759999997" green="0.20392156859999999" blue="0.52156862749999999" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
@@ -108,6 +116,7 @@
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
+                        <constraint firstItem="M4H-ai-uXl" firstAttribute="top" secondItem="sqe-Ue-eQ7" secondAttribute="top" id="4zU-ai-snK"/>
                         <constraint firstItem="67p-wN-uJa" firstAttribute="top" secondItem="xR4-z3-FXA" secondAttribute="top" id="GLI-Bl-31A"/>
                         <constraint firstItem="67p-wN-uJa" firstAttribute="width" secondItem="mGm-4A-0gd" secondAttribute="width" constant="-7" id="LcE-bL-P5M"/>
                         <constraint firstItem="67p-wN-uJa" firstAttribute="height" secondItem="sqe-Ue-eQ7" secondAttribute="height" id="PrK-rB-z0y"/>

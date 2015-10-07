@@ -115,6 +115,7 @@ class ViewFeedBackViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     func fireSellerFeedback() {
+        self.cancelButton.enabled = false
         self.showHUD()
         let manager = APIManager.sharedInstance
         println("seller id view feedback \(sellerId)")
@@ -137,7 +138,8 @@ class ViewFeedBackViewController: UIViewController, UITableViewDelegate, UITable
                 self.showAlert(title: "Error", message: responseObject["message"] as! String)
                 self.hud?.hide(true)
             }
-            
+            self.ratingAndReviewsTableView.reloadData()
+            self.cancelButton.enabled = true
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 if error.userInfo != nil {
@@ -156,8 +158,9 @@ class ViewFeedBackViewController: UIViewController, UITableViewDelegate, UITable
                     self.showAlert(title: Constants.Localized.error, message: Constants.Localized.someThingWentWrong)
                     self.hud?.hide(true)
                 }
+                self.cancelButton.enabled = true
         })
-        self.ratingAndReviewsTableView.reloadData()
+        
     }
     
     func showHUD() {

@@ -202,14 +202,14 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
         return self.transactionSectionView
         
     }
-    
+    /*
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         //self.transactionIdView =
         
         
         return XibHelper.puffViewWithNibName("TransactionViews", index: 8) as! TransactionSectionHeaderView
     }
-    
+    */
     func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return 140
     }
