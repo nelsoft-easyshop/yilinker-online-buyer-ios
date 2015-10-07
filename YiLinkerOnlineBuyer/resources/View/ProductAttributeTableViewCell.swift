@@ -69,7 +69,7 @@ class ProductAttributeTableViewCell: UITableViewCell, UIScrollViewDelegate {
             }
         }
         
-        scroll = UIScrollView(frame: CGRectMake(0, self.frame.size.height - 70, width, 70))
+        scroll = UIScrollView(frame: CGRectMake(0, 0/*self.frame.size.height - 70*/, width, 70))
         scroll.delegate = self
         var spacingX: CGFloat = 0.0
         
@@ -80,7 +80,7 @@ class ProductAttributeTableViewCell: UITableViewCell, UIScrollViewDelegate {
             let buttonTitle: String = attributes[i] as! String
             var buttonWidth: Int = (count(buttonTitle) * 10) + 20
             
-            var button = UIButton(frame: CGRectMake(CGFloat(leftMargin), (scroll.frame.size.height / 2) - 15, CGFloat(buttonWidth), 30))
+            var button = UIButton(frame: CGRectMake(CGFloat(leftMargin), scroll.frame.size.height - 45/*(scroll.frame.size.height / 2) - 15*/, CGFloat(buttonWidth), 30))
             button.setTitle(buttonTitle, forState: .Normal)
             button.titleLabel?.font = UIFont(name: "Panton-Bold", size: 15.0)
             button.titleLabel?.font = UIFont.boldSystemFontOfSize(15.0)
@@ -104,19 +104,13 @@ class ProductAttributeTableViewCell: UITableViewCell, UIScrollViewDelegate {
                     button.layer.borderColor = Constants.Colors.appTheme.CGColor
                     button.backgroundColor = Constants.Colors.appTheme
                     button.setTitleColor(UIColor.whiteColor(), forState: .Normal)
-                    
-//                    var tempy: CGFloat = scroll.frame.size.height
-//                    var tempx: CGFloat = scroll.frame.size.width
-//                    var zoomRect: CGRect = CGRectMake((tempx/2)-160, (tempy/2)-240, scroll.frame.size.width, scroll.frame.size.height)
-//                    scroll.scrollRectToVisible(zoomRect, animated: false)
                 }
             }
             
             scroll.addSubview(button)
             scroll.contentSize = CGSize(width: CGFloat(leftMargin), height: scroll.frame.size.height)
         }
-        
-//        scroll.contentSize = CGSize(width: CGFloat((110 * attributes.count) + 10), height: scroll.frame.size.height)
+//        scroll.backgroundColor = .greenColor()
         self.addSubview(scroll)
         self.scroll.contentOffset.x = self.scrollPosition
     }
