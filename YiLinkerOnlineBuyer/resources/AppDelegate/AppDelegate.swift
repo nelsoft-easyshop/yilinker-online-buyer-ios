@@ -242,12 +242,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GGLInstanceIDDelegate {
         openURL url: NSURL,
         sourceApplication: String?,
         annotation: AnyObject?) -> Bool {
-
-        return FBSDKApplicationDelegate.sharedInstance().application(
-            application,
-            openURL: url,
-            sourceApplication: sourceApplication,
-            annotation: annotation)
+            
+            let sessionManager: SessionManager = SessionManager.sharedInstance
+           
+            if sessionManager.loginType == LoginType.FacebookLogin {
+                return FBSDKApplicationDelegate.sharedInstance().application(
+                    application,
+                    openURL: url,
+                    sourceApplication: sourceApplication,
+                    annotation: annotation)
+            } else {
+                return GPPURLHandler.handleURL(url, sourceApplication: sourceApplication, annotation: annotation)
+            }
     }
 
     func signIn(signIn: GIDSignIn!, didDisconnectWithUser user:GIDGoogleUser!,

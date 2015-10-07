@@ -102,6 +102,19 @@
 		0C538AE11B99EFC000EB64AB /* PaymentSuccessModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C538AE01B99EFC000EB64AB /* PaymentSuccessModel.swift */; };
 		0C538AE31B99F07100EB64AB /* PaymentDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C538AE21B99F07100EB64AB /* PaymentDataModel.swift */; };
 		0C538AE71B99F37D00EB64AB /* OrderedProductsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C538AE61B99F37D00EB64AB /* OrderedProductsModel.swift */; };
+		0C574A141BC516FC00913F29 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C574A131BC516FC00913F29 /* AddressBook.framework */; };
+		0C574A161BC5170400913F29 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C574A151BC5170400913F29 /* AssetsLibrary.framework */; };
+		0C574A181BC5171100913F29 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C574A171BC5171100913F29 /* Foundation.framework */; };
+		0C574A1A1BC5171900913F29 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C574A191BC5171900913F29 /* CoreLocation.framework */; };
+		0C574A1C1BC5172100913F29 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C574A1B1BC5172100913F29 /* CoreMotion.framework */; };
+		0C574A1E1BC5172800913F29 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C574A1D1BC5172800913F29 /* CoreGraphics.framework */; };
+		0C574A201BC5172F00913F29 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C574A1F1BC5172F00913F29 /* CoreText.framework */; };
+		0C574A221BC5173800913F29 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C574A211BC5173800913F29 /* MediaPlayer.framework */; };
+		0C574A241BC5173F00913F29 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C574A231BC5173F00913F29 /* Security.framework */; };
+		0C574A261BC5174900913F29 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C574A251BC5174900913F29 /* SystemConfiguration.framework */; };
+		0C574A281BC5175000913F29 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C574A271BC5175000913F29 /* UIKit.framework */; };
+		0C574A2B1BC5176C00913F29 /* GoogleOpenSource.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C574A291BC5176C00913F29 /* GoogleOpenSource.framework */; };
+		0C574A2C1BC5176C00913F29 /* GooglePlus.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C574A2A1BC5176C00913F29 /* GooglePlus.framework */; };
 		0C5926011B8327BA0021EA76 /* ResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5925FF1B8327BA0021EA76 /* ResultViewController.swift */; };
 		0C5926041B836C670021EA76 /* ProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5926031B836C670021EA76 /* ProfileModel.swift */; };
 		0C5926061B836EA30021EA76 /* AddressModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5926051B836EA30021EA76 /* AddressModel.swift */; };
@@ -517,6 +530,19 @@
 		0C538AE01B99EFC000EB64AB /* PaymentSuccessModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentSuccessModel.swift; sourceTree = "<group>"; };
 		0C538AE21B99F07100EB64AB /* PaymentDataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentDataModel.swift; sourceTree = "<group>"; };
 		0C538AE61B99F37D00EB64AB /* OrderedProductsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderedProductsModel.swift; sourceTree = "<group>"; };
+		0C574A131BC516FC00913F29 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
+		0C574A151BC5170400913F29 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
+		0C574A171BC5171100913F29 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		0C574A191BC5171900913F29 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		0C574A1B1BC5172100913F29 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
+		0C574A1D1BC5172800913F29 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		0C574A1F1BC5172F00913F29 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
+		0C574A211BC5173800913F29 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		0C574A231BC5173F00913F29 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		0C574A251BC5174900913F29 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		0C574A271BC5175000913F29 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		0C574A291BC5176C00913F29 /* GoogleOpenSource.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleOpenSource.framework; sourceTree = "<group>"; };
+		0C574A2A1BC5176C00913F29 /* GooglePlus.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GooglePlus.framework; sourceTree = "<group>"; };
 		0C5925FF1B8327BA0021EA76 /* ResultViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultViewController.swift; sourceTree = "<group>"; };
 		0C5926031B836C670021EA76 /* ProfileModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileModel.swift; sourceTree = "<group>"; };
 		0C5926051B836EA30021EA76 /* AddressModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressModel.swift; sourceTree = "<group>"; };
@@ -832,6 +858,19 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0C574A281BC5175000913F29 /* UIKit.framework in Frameworks */,
+				0C574A261BC5174900913F29 /* SystemConfiguration.framework in Frameworks */,
+				0C574A2B1BC5176C00913F29 /* GoogleOpenSource.framework in Frameworks */,
+				0C574A241BC5173F00913F29 /* Security.framework in Frameworks */,
+				0C574A221BC5173800913F29 /* MediaPlayer.framework in Frameworks */,
+				0C574A201BC5172F00913F29 /* CoreText.framework in Frameworks */,
+				0C574A1E1BC5172800913F29 /* CoreGraphics.framework in Frameworks */,
+				0C574A1C1BC5172100913F29 /* CoreMotion.framework in Frameworks */,
+				0C574A1A1BC5171900913F29 /* CoreLocation.framework in Frameworks */,
+				0C574A2C1BC5176C00913F29 /* GooglePlus.framework in Frameworks */,
+				0C574A181BC5171100913F29 /* Foundation.framework in Frameworks */,
+				0C574A161BC5170400913F29 /* AssetsLibrary.framework in Frameworks */,
+				0C574A141BC516FC00913F29 /* AddressBook.framework in Frameworks */,
 				BE00C15B75D7E76D254AAEC1 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -964,6 +1003,8 @@
 		0C9936FB1B750583000D6074 /* External */ = {
 			isa = PBXGroup;
 			children = (
+				0C574A291BC5176C00913F29 /* GoogleOpenSource.framework */,
+				0C574A2A1BC5176C00913F29 /* GooglePlus.framework */,
 				0C2F44AF1B8576FE00021F45 /* Font */,
 				B7B1D8311BA15B0C006A5DF5 /* GoogleService-Info.plist */,
 				0C9936FC1B750583000D6074 /* dummyHome.json */,
@@ -1393,6 +1434,17 @@
 		6E2C7023C2EB23DC920F908B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0C574A271BC5175000913F29 /* UIKit.framework */,
+				0C574A251BC5174900913F29 /* SystemConfiguration.framework */,
+				0C574A231BC5173F00913F29 /* Security.framework */,
+				0C574A211BC5173800913F29 /* MediaPlayer.framework */,
+				0C574A1F1BC5172F00913F29 /* CoreText.framework */,
+				0C574A1D1BC5172800913F29 /* CoreGraphics.framework */,
+				0C574A1B1BC5172100913F29 /* CoreMotion.framework */,
+				0C574A191BC5171900913F29 /* CoreLocation.framework */,
+				0C574A171BC5171100913F29 /* Foundation.framework */,
+				0C574A151BC5170400913F29 /* AssetsLibrary.framework */,
+				0C574A131BC516FC00913F29 /* AddressBook.framework */,
 				F7CCDA451B940268000F5AD4 /* libPods.a */,
 				5D038C18A7712E626564D2D3 /* libPods.a */,
 			);
@@ -2108,6 +2160,10 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/YiLinkerOnlineBuyer/Resources/External",
+				);
 				INFOPLIST_FILE = YiLinkerOnlineBuyer/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2125,6 +2181,10 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/YiLinkerOnlineBuyer/Resources/External",
+				);
 				INFOPLIST_FILE = YiLinkerOnlineBuyer/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (

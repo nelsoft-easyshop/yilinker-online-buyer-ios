@@ -187,17 +187,10 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
-                            </button>
-                            <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vdK-Ps-Zp2" customClass="GIDSignInButton">
-                                <rect key="frame" x="16" y="231" width="343" height="35"/>
-                                <color key="backgroundColor" red="0.78823529410000004" green="0.062745098040000002" blue="0.38431372549999998" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="35" id="cYH-fi-8BR"/>
-                                </constraints>
                                 <connections>
-                                    <action selector="facebookLogin:" destination="O08-Ch-JVM" eventType="touchUpInside" id="uAD-Y1-6y3"/>
+                                    <action selector="facebookLogin:" destination="O08-Ch-JVM" eventType="touchUpInside" id="dyi-sX-ZLU"/>
                                 </connections>
-                            </view>
+                            </button>
                             <textField opaque="NO" clipsSubviews="YES" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="xzl-Np-eOe">
                                 <rect key="frame" x="16" y="73" width="343" height="30"/>
                                 <constraints>
@@ -228,27 +221,38 @@
                                     <action selector="signIn:" destination="O08-Ch-JVM" eventType="touchUpInside" id="YB8-aZ-ROI"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ARp-5K-ovg" customClass="GPPSignInButton">
+                                <rect key="frame" x="17" y="236" width="340" height="42"/>
+                                <color key="backgroundColor" red="0.89631470960000004" green="0.029226388759999999" blue="0.12704667019999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="42" id="w1S-YM-ynF"/>
+                                </constraints>
+                                <state key="normal" title="Button">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailingMargin" secondItem="C4q-lA-2QX" secondAttribute="trailing" constant="-2" id="3yD-Ea-EPW"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="ARp-5K-ovg" secondAttribute="trailing" constant="2" id="5rj-fR-sH6"/>
                             <constraint firstAttribute="centerX" secondItem="2O9-6l-JXq" secondAttribute="centerX" id="A3b-dN-Wzj"/>
                             <constraint firstItem="tHe-hv-xQq" firstAttribute="top" secondItem="2O9-6l-JXq" secondAttribute="bottom" constant="7" id="Bgo-nX-KVt"/>
                             <constraint firstAttribute="trailingMargin" secondItem="tHe-hv-xQq" secondAttribute="trailing" constant="2" id="EcI-qZ-Mjj"/>
+                            <constraint firstItem="ARp-5K-ovg" firstAttribute="leading" secondItem="NOX-vm-tZ2" secondAttribute="leadingMargin" constant="1" id="H8k-HD-5GT"/>
                             <constraint firstItem="C4q-lA-2QX" firstAttribute="leading" secondItem="NOX-vm-tZ2" secondAttribute="leadingMargin" id="Mdk-wg-fgo"/>
                             <constraint firstItem="A9t-oa-0dv" firstAttribute="top" secondItem="xzl-Np-eOe" secondAttribute="bottom" constant="15" id="NKk-Iu-bWE"/>
                             <constraint firstItem="tHe-hv-xQq" firstAttribute="leading" secondItem="NOX-vm-tZ2" secondAttribute="leadingMargin" constant="1" id="TdH-jd-lBL"/>
                             <constraint firstItem="xzl-Np-eOe" firstAttribute="leading" secondItem="NOX-vm-tZ2" secondAttribute="leadingMargin" id="XKf-a4-GGO"/>
                             <constraint firstItem="gbM-PH-QcJ" firstAttribute="trailing" secondItem="NOX-vm-tZ2" secondAttribute="trailingMargin" id="XuT-PD-RnD"/>
-                            <constraint firstItem="vdK-Ps-Zp2" firstAttribute="top" secondItem="tHe-hv-xQq" secondAttribute="bottom" constant="8" id="YKz-11-rfe"/>
                             <constraint firstItem="gbM-PH-QcJ" firstAttribute="leading" secondItem="NOX-vm-tZ2" secondAttribute="leadingMargin" id="a2W-9I-NQd"/>
-                            <constraint firstItem="vdK-Ps-Zp2" firstAttribute="trailing" secondItem="NOX-vm-tZ2" secondAttribute="trailingMargin" id="cl5-mE-1Xd"/>
                             <constraint firstItem="A9t-oa-0dv" firstAttribute="leading" secondItem="NOX-vm-tZ2" secondAttribute="leadingMargin" id="fHy-dj-i98"/>
-                            <constraint firstItem="vdK-Ps-Zp2" firstAttribute="leading" secondItem="NOX-vm-tZ2" secondAttribute="leadingMargin" id="fLk-du-9Xn"/>
                             <constraint firstItem="xzl-Np-eOe" firstAttribute="top" secondItem="gbM-PH-QcJ" secondAttribute="bottom" constant="15" id="gA5-mp-E0w"/>
                             <constraint firstItem="A9t-oa-0dv" firstAttribute="trailing" secondItem="NOX-vm-tZ2" secondAttribute="trailingMargin" id="hxv-8J-Kca"/>
                             <constraint firstItem="2O9-6l-JXq" firstAttribute="top" secondItem="A9t-oa-0dv" secondAttribute="bottom" constant="7" id="kan-QA-lDF"/>
                             <constraint firstItem="xzl-Np-eOe" firstAttribute="trailing" secondItem="NOX-vm-tZ2" secondAttribute="trailingMargin" id="nd8-nO-I1x"/>
+                            <constraint firstItem="ARp-5K-ovg" firstAttribute="top" secondItem="tHe-hv-xQq" secondAttribute="bottom" constant="13" id="oVz-ow-7Hq"/>
                             <constraint firstItem="gbM-PH-QcJ" firstAttribute="top" secondItem="Vii-Fa-HzU" secondAttribute="bottom" constant="8" id="zJN-QT-lYm"/>
                             <constraint firstItem="C4q-lA-2QX" firstAttribute="top" secondItem="A9t-oa-0dv" secondAttribute="bottom" constant="17" id="zz2-58-ZRo"/>
                         </constraints>
@@ -258,8 +262,7 @@
                         <outlet property="emailAddressTextField" destination="gbM-PH-QcJ" id="HMq-JW-Ryg"/>
                         <outlet property="facebookButton" destination="tHe-hv-xQq" id="B5e-ok-F74"/>
                         <outlet property="facebookButtonHeightConstraints" destination="Bvi-3c-rx2" id="jij-gm-8H7"/>
-                        <outlet property="gmailButtonHeightConstraints" destination="cYH-fi-8BR" id="TBD-GG-5Ae"/>
-                        <outlet property="gmailLoginButton" destination="vdK-Ps-Zp2" id="pma-Dc-Ti1"/>
+                        <outlet property="gmailLoginButton" destination="ARp-5K-ovg" id="UfW-Xd-wu6"/>
                         <outlet property="orLabel" destination="2O9-6l-JXq" id="FM6-gC-iio"/>
                         <outlet property="passwordTextField" destination="xzl-Np-eOe" id="GFw-Jc-OXJ"/>
                         <outlet property="signInButton" destination="A9t-oa-0dv" id="uYa-dy-T1j"/>
@@ -734,7 +737,7 @@
                                     <action selector="register:" destination="A4b-5R-jjS" eventType="touchUpInside" id="cFc-rR-mvO"/>
                                 </connections>
                             </button>
-                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hFg-DD-m5g" customClass="DynamicRoundedButton" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hFg-DD-m5g" customClass="DynamicRoundedButton" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
                                 <rect key="frame" x="274" y="28" width="46" height="30"/>
                                 <state key="normal" title="Button">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
