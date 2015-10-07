@@ -71,11 +71,14 @@ class ProductAttributeTableViewCell: UITableViewCell {
         var spacingX: CGFloat = 0.0
         
         println(availableCombinationString)
+        var leftMargin: Int = 10
         
         for i in 0..<attributes.count {
+            let buttonTitle: String = attributes[i] as! String
+            var buttonWidth: Int = (count(buttonTitle) * 10) + 20
             
-            var button = UIButton(frame: CGRectMake(CGFloat(i * 110) + 10, (scroll.frame.size.height / 2) - 15, 100, 30))
-            button.setTitle(attributes[i] as? String, forState: .Normal)
+            var button = UIButton(frame: CGRectMake(CGFloat(leftMargin), (scroll.frame.size.height / 2) - 15, CGFloat(buttonWidth), 30))
+            button.setTitle(buttonTitle, forState: .Normal)
             button.titleLabel?.font = UIFont.boldSystemFontOfSize(15.0)
             button.setTitleColor(UIColor.darkGrayColor(), forState: .Normal)
             button.layer.borderWidth = 1.2
@@ -84,15 +87,8 @@ class ProductAttributeTableViewCell: UITableViewCell {
             button.backgroundColor = UIColor.whiteColor()
             button.addTarget(self, action: "clickedAttriubte:", forControlEvents: .TouchUpInside)
             button.tag = attributesId[i].toInt()!
-//            //>>>>
-//            button.sizeToFit()
-//            button.frame.size.width += CGFloat(30)
-//            if spacingX != 0.0 {
-//                spacingX += button.frame.size.width
-//            }
-//            spacingX += 10.0
-//            button.frame.origin.x += CGFloat(spacingX)
-//            //<<<<
+            
+            leftMargin += buttonWidth + 10
 
             if availableCombinationString.rangeOfString(attributesId[i]) == nil {
                 self.disableButton(button)
@@ -101,8 +97,8 @@ class ProductAttributeTableViewCell: UITableViewCell {
             for a in 0..<selectedId.count {
                 if attributesId[i] == selectedId[a] as! String {
                     button.selected = true
-                    button.layer.borderColor = UIColor.purpleColor().CGColor
-                    button.backgroundColor = UIColor.purpleColor()
+                    button.layer.borderColor = Constants.Colors.appTheme.CGColor
+                    button.backgroundColor = Constants.Colors.appTheme
                     button.setTitleColor(UIColor.whiteColor(), forState: .Normal)
                     
                     var tempy: CGFloat = scroll.frame.size.height
@@ -159,8 +155,8 @@ class ProductAttributeTableViewCell: UITableViewCell {
     
     func SelectButton(button: UIButton) {
         button.selected = true
-        button.layer.borderColor = UIColor.purpleColor().CGColor
-        button.backgroundColor = UIColor.purpleColor()
+        button.layer.borderColor = Constants.Colors.appTheme.CGColor
+        button.backgroundColor = Constants.Colors.appTheme
         button.setTitleColor(UIColor.whiteColor(), forState: .Normal)
         
         if let delegate = self.delegate {

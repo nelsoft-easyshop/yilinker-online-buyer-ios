@@ -27,7 +27,7 @@
 			<string>None</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>fb397537620440336</string>
+				<string>fb922572817803410</string>
 			</array>
 		</dict>
 		<dict>
@@ -50,9 +50,9 @@
 	<key>CFBundleVersion</key>
 	<string>1</string>
 	<key>FacebookAppID</key>
-	<string>397537620440336</string>
+	<string>922572817803410</string>
 	<key>FacebookDisplayName</key>
-	<string>YiLinker</string>
+	<string>yilinker</string>
 	<key>LSApplicationCategoryType</key>
 	<string></string>
 	<key>LSRequiresIPhoneOS</key>

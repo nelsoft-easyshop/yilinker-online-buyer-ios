@@ -27,6 +27,9 @@ struct RegisterStrings {
     static let reTypePasswordError: String = StringHelper.localizedStringWithKey("RETYPE_REQUIRED_LOCALIZE_KEY")
     static let passwordNotMatch: String = StringHelper.localizedStringWithKey("PASSWORD_NOT_MATCH_LOCALIZE_KEY")
     static let contactRequired: String = StringHelper.localizedStringWithKey("CONTACT_REQUIRED_LOCALIZE_KEY")
+    static let numbersAndLettersOnly: String = StringHelper.localizedStringWithKey("NUMBER_LETTERS_LOCALIZE_KEY")
+    static let successRegister: String = StringHelper.localizedStringWithKey("SUCCESS_REGISTER_LOCALIZED_KEY")
+    static let thankyou: String = StringHelper.localizedStringWithKey("THANKYOU_LOCALIZED_KEY")
 }
 
 class RegisterViewController: UIViewController, UITextFieldDelegate {
@@ -42,6 +45,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
     var currentTextFieldTag: Int = 1
     var hud: MBProgressHUD?
     
+    @IBOutlet weak var orLabel: UILabel!
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
     }
@@ -227,6 +231,8 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
             errorMessage = RegisterStrings.passwordRequired
         } else if !self.passwordTextField.isAlphaNumeric() {
             errorMessage = RegisterStrings.illegalPassword
+        } else if !self.passwordTextField.isValidPassword() {
+            errorMessage = RegisterStrings.numbersAndLettersOnly
         } else if !self.reTypePasswordTextField.isNotEmpty() {
             errorMessage = RegisterStrings.reTypePasswordError
         } else if self.passwordTextField.text != self.reTypePasswordTextField.text {
@@ -312,7 +318,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
     }
     
     func showSuccessMessage() {
-        let alertController = UIAlertController(title: Constants.Localized.success, message: LoginStrings.successMessage, preferredStyle: .Alert)
+        let alertController = UIAlertController(title: RegisterStrings.thankyou, message: RegisterStrings.successRegister, preferredStyle: .Alert)
         
         let OKAction = UIAlertAction(title: Constants.Localized.ok, style: .Default) { (action) in
             alertController.dismissViewControllerAnimated(true, completion: nil)

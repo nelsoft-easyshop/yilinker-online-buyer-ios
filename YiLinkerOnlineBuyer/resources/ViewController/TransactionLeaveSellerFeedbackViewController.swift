@@ -191,16 +191,16 @@ class TransactionLeaveSellerFeedbackViewController: UIViewController {
         self.showHUD()
         //[{"rateType":"1", "rating":"2.50"},{"rateType":"2", "rating":"4.50"}]
         let jsonObject2: [String: AnyObject] = [
-            "sellerId": self.sellerId,
-            "orderId": self.orderId,
+            "sellerId": String(self.sellerId),
+            "orderId": String(self.orderId),
             "title": "Seller Feedback",
             "feedback": "\(self.inputTextField.text)",
             "ratings": [[
-                "rateType": 1,
-                "rating": self.rate
+                "rateType": "1",
+                "rating": String(self.rate)
                 ], [
-                    "rateType": 2,
-                    "rating": self.rateComm
+                    "rateType": "2",
+                    "rating": String(self.rateComm)
                 ]]
         ]
         println("\(jsonObject2 as NSDictionary)")

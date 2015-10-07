@@ -133,11 +133,10 @@ class TransactionDetailsModel: NSObject {
                 for transaction in transactions as! [NSDictionary] {
                     
                     sellerId.append(transaction["sellerId"] as! Int)
-                    
-                    if let value = transaction["sellerStore"] as? String {
-                        sellerStore.append(transaction["sellerStore"] as! String)
+                    if value["sellerStore"] is NSNull {
+                        sellerStore.append("No Store Name")
                     } else {
-                        sellerStore.append("No store name")
+                        sellerStore.append(transaction["sellerStore"] as! String)
                     }
                    
                     sellerContactNumber.append(transaction["sellerContactNumber"] as! String)
@@ -159,7 +158,12 @@ class TransactionDetailsModel: NSObject {
                             productDescription.append(orderProductStatus["description"] as! String)
                         }
                         
-                        productImage.append(product["productImage"] as! String)
+                        if (product["productImage"] as! String) != "" {
+                            productImage.append(product["productImage"] as! String)
+                        } else {
+                            productImage.append("")
+                        }
+                        
                         isCancellable.append(product["isCancellable"] as! Bool)
                     }
                 }

@@ -48,6 +48,8 @@ class LoginAndRegisterContentViewController: UIViewController {
             self.registerButton.layer.cornerRadius = 15
         }
 
+        
+        
         self.signInButton.layer.borderColor = Constants.Colors.appTheme.CGColor
         
         self.signInButton.layer.borderWidth = 1

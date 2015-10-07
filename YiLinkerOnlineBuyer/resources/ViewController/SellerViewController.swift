@@ -38,7 +38,15 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
     let productsTitle: String = StringHelper.localizedStringWithKey("PRODUCTS_SELLER_LOCALIZE_KEY")
     let moreSellersProduct: String = StringHelper.localizedStringWithKey("MORE_SELLERS_PRODUCT_LOCALIZE_KEY")
     let productRatings: String = StringHelper.localizedStringWithKey("PRODUCT_RATINGS_AND_FEEDBACK_LOCALIZE_KEY")
+    let cannotFollow: String = StringHelper.localizedStringWithKey("VENDOR_PAGE_CANNOT_FOLLOW_LOCALIZE_KEY")
+    let cannotMessage: String = StringHelper.localizedStringWithKey("VENDOR_PAGE_CANNOT_MESSAGE_LOCALIZE_KEY")
+    let cannotCall: String = StringHelper.localizedStringWithKey("VENDOR_PAGE_CANNOT_CALL_LOCALIZE_KEY")
     
+    //Error messages
+    let ok: String = StringHelper.localizedStringWithKey("OKBUTTON_LOCALIZE_KEY")
+    let somethingWentWrong: String = StringHelper.localizedStringWithKey("SOMETHINGWENTWRONG_LOCALIZE_KEY")
+    let error: String = StringHelper.localizedStringWithKey("ERROR_LOCALIZE_KEY")
+
     var selectedContact : W_Contact?
     var emptyView : EmptyView?
     var conversations = [W_Conversation]()
@@ -222,7 +230,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 
                 self.hud?.hide(true)
             } else {
-                self.showAlert(title: "Error", message: responseObject["message"] as! String)
+                self.showAlert(title: Constants.Localized.error, message: responseObject["message"] as! String)
                 self.hud?.hide(true)
             }
             
@@ -401,10 +409,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 self.hud?.hide(true)
-                let alertController = UIAlertController(title: Constants.Localized.someThingWentWrong, message: "", preferredStyle: .Alert)
-                let defaultAction = UIAlertAction(title: Constants.Localized.ok, style: .Default, handler: nil)
-                alertController.addAction(defaultAction)
-                self.presentViewController(alertController, animated: true, completion: nil)
+                self.showAlert(title: Constants.Localized.ok, message: Constants.Localized.someThingWentWrong)
         })
     }
     
@@ -569,10 +574,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 fireFollowSeller()
             }
         } else {
-            let alertController = UIAlertController(title: "Please login to follow this seller.", message: "", preferredStyle: .Alert)
-            let defaultAction = UIAlertAction(title: Constants.Localized.ok, style: .Default, handler: nil)
-            alertController.addAction(defaultAction)
-            self.presentViewController(alertController, animated: true, completion: nil)
+            self.showAlert(title: Constants.Localized.error, message: self.cannotFollow)
         }
     }
     
@@ -600,7 +602,8 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         if self.canMessage {
             self.navigationController?.pushViewController(messagingViewController, animated: true)
         } else {
-            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "You cannot allowed to message this seller.", title: "Error")
+            self.showAlert(title: Constants.Localized.error, message: self.cannotMessage)
+            //UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "You're allowed to message this seller. Please login first.", title: "Error")
         }
         
     }
@@ -638,7 +641,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
                             }
                         } else {
                             if (SessionManager.isLoggedIn()){
-                                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+                                self.showAlert(title: Constants.Localized.error, message: Constants.Localized.someThingWentWrong)
                             } 
                         }
                         
@@ -662,12 +665,15 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     func sellerTableHeaderViewDidCall() {
         println("call")
-        if UIApplication.sharedApplication().canOpenURL(NSURL(string: "tel:\(self.sellerContactNumber)" )!) {
+        if UIApplication.sharedApplication().canOpenURL(NSURL(string: "tel://\(self.sellerContactNumber)" )!) {
             println("can call")
-            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Calling number action \(self.sellerContactNumber).", title: "Call Seller")
+            let url = NSURL(string: "tel://\(self.sellerContactNumber)")
+            UIApplication.sharedApplication().openURL(url!)
+            //UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Calling number action \(self.sellerContactNumber).", title: "Call Seller")
         } else {
             println("cant make a call")
-            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Cannot make a call to \(self.sellerContactNumber).", title: "Call Seller")
+             self.showAlert(title: Constants.Localized.error, message: self.cannotCall + " \(self.sellerContactNumber)")
+            //UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Cannot make a call to \(self.sellerContactNumber).", title: "Call Seller")
         }
         
     }
@@ -685,7 +691,8 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                 
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+                self.showAlert(title: Constants.Localized.error, message: Constants.Localized.someThingWentWrong)
+                //UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
         })
         
     }
@@ -695,12 +702,13 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.redirectToResultView("target")
     }
     
-    func productstableViewCellDidTapProductWithTarget(target: String, type: String) {
-        self.redirectToProductpageWithProductID("1")
+    func productstableViewCellDidTapProductWithTarget(target: String, type: String, productId: String) {
+        self.redirectToProductpageWithProductID(productId)
     }
     
     func redirectToProductpageWithProductID(productID: String) {
         let productViewController: ProductViewController = ProductViewController(nibName: "ProductViewController", bundle: nil)
+        productViewController.productId = productID
         self.navigationController?.pushViewController(productViewController, animated: true)
     }
     
@@ -748,9 +756,9 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         })
     }
     
-    func showAlert(#title: String!, message: String!) {
+   func showAlert(#title: String!, message: String!) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
-        let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+        let defaultAction = UIAlertAction(title: self.ok, style: .Default, handler: nil)
         alertController.addAction(defaultAction)
         presentViewController(alertController, animated: true, completion: nil)
     }

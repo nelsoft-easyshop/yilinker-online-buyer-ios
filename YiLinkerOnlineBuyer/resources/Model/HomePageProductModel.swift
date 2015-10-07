@@ -12,9 +12,9 @@ class HomePageProductModel: ProductModel {
     var targetType: String = ""
     var targetUrl: String = ""
     
-     init(name: String, imageURL: NSURL, originalPrice: String, discountedPrice: String, discountPercentage: String, target: String, targetType: String, targetUrl: String) {
+     init(name: String, imageURL: NSURL, originalPrice: String, discountedPrice: String, discountPercentage: String, target: String, targetType: String, targetUrl: String, productId: String) {
         
-        super.init(name: "", imageURL: NSURL(string: "")!, originalPrice: "", discountedPrice: "", discountPercentage: "", target: "")
+        super.init(name: "", imageURL: NSURL(string: "")!, originalPrice: "", discountedPrice: "", discountPercentage: "", target: "", productId: "")
         
         self.name = name
         self.imageURL = imageURL
@@ -24,6 +24,7 @@ class HomePageProductModel: ProductModel {
         self.target = target
         self.targetType = targetType
         self.targetUrl = targetUrl
+        self.productId = productId
     }
     
     
@@ -35,7 +36,7 @@ class HomePageProductModel: ProductModel {
         var target: String = ""
         var discountPercentage: String = ""
         var targetType: String = ""
-        
+        var productId: String = ""
         if dictionary.isKindOfClass(NSDictionary) {
            
             if let val: AnyObject = dictionary["productName"] {
@@ -58,9 +59,14 @@ class HomePageProductModel: ProductModel {
                 }
             }
 
-            if let val: AnyObject = dictionary["image"] {
+            if let val: AnyObject = dictionary["imageUrl"] {
+                if let tempProductImageURL = dictionary["imageUrl"] as? String {
+                    imageURL = NSURL(string: tempProductImageURL)!
+                } else {
+                    imageURL = NSURL(string: "")!
+                }
+            } else if let val: AnyObject = dictionary["image"] {
                 if let tempProductImageURL = dictionary["image"] as? String {
-                    
                     imageURL = NSURL(string: tempProductImageURL)!
                 } else {
                     imageURL = NSURL(string: "")!
@@ -110,9 +116,10 @@ class HomePageProductModel: ProductModel {
             
             if let val: AnyObject = dictionary["productId"] {
                 if let tempTarget = dictionary["productId"] as? String {
-                    target = tempTarget
+                    productId = tempTarget
+                    target = productId
                 } else {
-                    target = ""
+                    productId = ""
                 }
             } else if let val: AnyObject = dictionary["target"] {
                 if let tempTarget = dictionary["target"] as? String {
@@ -122,10 +129,10 @@ class HomePageProductModel: ProductModel {
                 }
             }
             
-            let homePageProductModel: HomePageProductModel = HomePageProductModel(name: name, imageURL: imageURL, originalPrice: originalPrice, discountedPrice: discountedPrice, discountPercentage: discountPercentage, target: target, targetType: targetType, targetUrl: "")
+            let homePageProductModel: HomePageProductModel = HomePageProductModel(name: name, imageURL: imageURL, originalPrice: originalPrice, discountedPrice: discountedPrice, discountPercentage: discountPercentage, target: target, targetType: targetType, targetUrl: "", productId: productId)
             return homePageProductModel
         } else {
-             let homePageProductModel: HomePageProductModel = HomePageProductModel(name: "", imageURL: NSURL(string:"")!, originalPrice: "", discountedPrice: "", discountPercentage: "", target: "", targetType: "", targetUrl: "")
+             let homePageProductModel: HomePageProductModel = HomePageProductModel(name: "", imageURL: NSURL(string:"")!, originalPrice: "", discountedPrice: "", discountPercentage: "", target: "", targetType: "", targetUrl: "", productId: "")
             return homePageProductModel
         }
     }
@@ -142,6 +149,7 @@ class HomePageProductModel: ProductModel {
             var target: String = ""
             var discountPercentage: String = ""
             var targetType: String = ""
+            var productId: String = ""
                 
             if let val: AnyObject = dictionary["productName"] {
                 if let tempProductname = dictionary["productName"] as? String {
@@ -199,9 +207,10 @@ class HomePageProductModel: ProductModel {
             
             if let val: AnyObject = dictionary["productId"] {
                 if let tempTarget = dictionary["productId"] as? String {
-                    target = tempTarget
+                    productId = tempTarget
+                    target = productId
                 } else {
-                    target = ""
+                    productId = ""
                 }
             } else if let val: AnyObject = dictionary["target"] {
                 if let tempTarget = dictionary["target"] as? String {
@@ -220,8 +229,7 @@ class HomePageProductModel: ProductModel {
             }
             
            
-            let homePageProductModel: HomePageProductModel = HomePageProductModel(name: name, imageURL: imageUrl, originalPrice: originalPrice, discountedPrice: discountedPrice, discountPercentage: discountPercentage, target: target, targetType: targetType, targetUrl: "")
-            
+            let homePageProductModel: HomePageProductModel = HomePageProductModel(name: name, imageURL: imageUrl, originalPrice: originalPrice, discountedPrice: discountedPrice, discountPercentage: discountPercentage, target: target, targetType: targetType, targetUrl: "", productId: productId)
             
             models.append(homePageProductModel)
     }

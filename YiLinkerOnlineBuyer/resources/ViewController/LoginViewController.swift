@@ -18,6 +18,7 @@ struct LoginStrings {
     static let passwordIsRequired: String = StringHelper.localizedStringWithKey("PASSWORD_IS_REQUIRED_LOCALIZE_KEY")
     
     static let successMessage: String = StringHelper.localizedStringWithKey("SUCCESS_LOGIN_LOCALIZE_KEY")
+    static let or: String = StringHelper.localizedStringWithKey("OR_LOCALIZE_KEY")
 }
 
 class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, GIDSignInUIDelegate, GIDSignInDelegate, UITextFieldDelegate {
@@ -30,6 +31,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, GIDSignIn
     @IBOutlet weak var emailAddressTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var signInButton: UIButton!
+    @IBOutlet weak var orLabel: UILabel!
     
     var currentTextFieldTag: Int = 1
     var parentView: UIView?
@@ -40,7 +42,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, GIDSignIn
         
         self.emailAddressTextField.placeholder = LoginStrings.enterEmailAddress
         self.passwordTextField.placeholder = LoginStrings.enterPassword
-        
+        self.orLabel.text = LoginStrings.or
         self.signInButton.setTitle(FABStrings.signIn, forState: UIControlState.Normal)
     }
     
@@ -84,7 +86,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, GIDSignIn
         self.hud = MBProgressHUD(view: self.view)
         self.hud?.removeFromSuperViewOnHide = true
         self.hud?.dimBackground = false
-        self.navigationController?.view.addSubview(self.hud!)
+        self.view.addSubview(self.hud!)
         self.hud?.show(true)
     }
     
@@ -137,17 +139,16 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, GIDSignIn
                 } else {
                     
                 }
+
+                self.fireFacebookLoginWithToken(self.getFaceBookAccessToken())
                 
-                self.getProfileImage(uid)
-                self.getFaceBookAccessToken()
-                self.showSuccessMessage()
             }
         })
     }
     
-    func getFaceBookAccessToken() {
+    func getFaceBookAccessToken() -> String {
         var accessToken = FBSDKAccessToken.currentAccessToken().tokenString
-        SessionManager.setAccessToken(accessToken)
+        return accessToken
     }
     
     @IBAction func facebookLogin(sender: AnyObject) {
@@ -330,7 +331,6 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, GIDSignIn
                     
             })
         }
-       
     }
     
     func showCloseButton() {
@@ -348,4 +348,43 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, GIDSignIn
         SessionManager.setProfileImage("http://graph.facebook.com/\(userID)/picture?type=large")
     }
     
+    func fireFacebookLoginWithToken(token: String) {
+        self.showHUD()
+        let manager: APIManager = APIManager.sharedInstance
+        //seller@easyshop.ph
+        //password
+        let parameters: NSDictionary = ["token": token, "client_id": Constants.Credentials.clientID, "client_secret": Constants.Credentials.clientSecret, "grant_type": Constants.Credentials.grantBuyer]
+        
+        manager.POST(APIAtlas.facebookUrl, parameters: parameters, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+           
+            self.hud?.hide(true)
+            println(responseObject.description)
+            
+            let loginModel: LoginModel = LoginModel.parseDataFromDictionary(responseObject as! NSDictionary)
+            if loginModel.isSuccessful {
+                 SessionManager.parseTokensFromResponseObject(loginModel.dataDictionary)
+                self.showSuccessMessage()
+            } else {
+                FBSDKLoginManager().logOut()
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: loginModel.message, title: Constants.Localized.error)
+            }
+            
+            
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+            
+                println(task.statusCode)
+                
+                if task.statusCode == 401 {
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: LoginStrings.mismatch, title: LoginStrings.loginFailed)
+                } else {
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
+                }
+                
+                self.hud?.hide(true)
+        })
+
+    }
 }

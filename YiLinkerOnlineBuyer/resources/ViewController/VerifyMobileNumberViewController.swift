@@ -25,6 +25,8 @@ class VerifyMobileNumberViewController: UIViewController {
     @IBOutlet weak var mainView: UIView!
     @IBOutlet weak var tapView: UIView!
     @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var pleaseLabel: UILabel!
+    @IBOutlet weak var timeLeftLabel: UILabel!
     @IBOutlet weak var closeButton: UIButton!
     @IBOutlet weak var codeTextField: UITextField!
     @IBOutlet weak var timeLabel: UILabel!
@@ -44,6 +46,7 @@ class VerifyMobileNumberViewController: UIViewController {
         super.viewDidLoad()
 
         initializeViews()
+        initializeLocalizeStrings()
     }
 
     override func viewDidAppear(animated: Bool) {
@@ -70,6 +73,14 @@ class VerifyMobileNumberViewController: UIViewController {
         screenHeight = screenSize.height
         
         topMarginConstraint.constant = (screenHeight! / 2) - (mainView.frame.height / 2)
+    }
+    
+    func initializeLocalizeStrings() {
+        titleLabel.text = StringHelper.localizedStringWithKey("VERIFY_NUMBER_LOCALIZED_KEY")
+        pleaseLabel.text = StringHelper.localizedStringWithKey("PLEASE_ENTER_VERIFY_NUMBER_LOCALIZED_KEY")
+        timeLeftLabel.text = StringHelper.localizedStringWithKey("TIME_LEFT_LOCALIZED_KEY")
+        verifyButton.setTitle(StringHelper.localizedStringWithKey("VERIFY_NUMBER_LOCALIZED_KEY"), forState: .Normal)
+        requestButton.setTitle(StringHelper.localizedStringWithKey("REQUEST_NEW_CODE_LOCALIZED_KEY"), forState: .Normal)
     }
     
     @IBAction func editBegin(sender: AnyObject) {

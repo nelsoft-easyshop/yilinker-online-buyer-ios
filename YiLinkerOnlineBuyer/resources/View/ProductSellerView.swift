@@ -10,9 +10,10 @@ import UIKit
 
 protocol ProductSellerViewDelegate {
     func seeMoreSeller(controller: ProductSellerView)
+    func gotoSellerProduct(controller: ProductSellerView, id: String)
 }
 
-class ProductSellerView: UIView, UICollectionViewDataSource {
+class ProductSellerView: UIView, UICollectionViewDataSource, UICollectionViewDelegate {
 
     @IBOutlet weak var sellerLabel: UILabel!
     @IBOutlet weak var arrowImageView: UIImageView!
@@ -25,11 +26,13 @@ class ProductSellerView: UIView, UICollectionViewDataSource {
     @IBOutlet weak var collectionView: UICollectionView!
     
     var images: NSArray = []
+    var ids: [String] = []
     
     var delegate: ProductSellerViewDelegate?
     
     override func awakeFromNib() {
         self.collectionView.dataSource = self
+        self.collectionView.delegate = self
         
         self.displayPictureImageView.layer.cornerRadius = self.displayPictureImageView.frame.size.width / 2
         self.displayPictureImageView.clipsToBounds = true
@@ -64,6 +67,12 @@ class ProductSellerView: UIView, UICollectionViewDataSource {
         return cell
     }
     
+    // MARK: - Collection View Delegate
+    
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        delegate?.gotoSellerProduct(self, id: ids[indexPath.row])
+    }
+    
     // MARK: - Action
     
     func seeMoreAction(gesture: UIGestureRecognizer) {
@@ -78,6 +87,7 @@ class ProductSellerView: UIView, UICollectionViewDataSource {
         self.subInfoLabel.text = StringHelper.localizedStringWithKey("SPECIALTY_LOCALIZE_KEY") + ": " + model.specialty
         displayPictureImageView.sd_setImageWithURL(NSURL(string: model.profilePhoto), placeholderImage: UIImage(named: "dummy-placeholder"))
         self.images = model.images
+        self.ids = model.productId
         
         self.collectionView.reloadData()
 

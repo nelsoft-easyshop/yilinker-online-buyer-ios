@@ -211,13 +211,13 @@ class SellerModel: NSObject {
             println("\(myArrayOfDictProducts)")
             var dictProducts:NSDictionary = ["products" : myArrayOfDictProducts]
             
-            if let val: AnyObject = dictProducts["products"] {
-                let products: NSArray = dictProducts["products"] as! NSArray
+            //if let val: AnyObject = value["products"] {
+                let products: NSArray = value["products"] as! NSArray
                 for productDictionary in products as! [NSDictionary] {
                     let productModel: HomePageProductModel = HomePageProductModel.parseDataWithDictionary(productDictionary)
                     sellerProductModel.append(productModel)
                 }
-            }
+            //}
             /*
             var myArrayOfDictRatings: NSArray = [
                 ["name": "Alvin Tandoc",
@@ -262,6 +262,7 @@ class SellerModel: NSObject {
                 var streetName: String = ""
                 var subdivision: String = ""
                 var zipCode: String = ""
+                var fullLocation: String = ""
                 /*var streetAddress: String = ""
                 var province: String = ""
                 var city: String = ""
@@ -287,7 +288,11 @@ class SellerModel: NSObject {
                     zipCode = temZipCode
                 }
                 
-                store_address = unitNumber + " " + bldgName + ", " + streetName + ", " + subdivision + ", " + zipCode
+                if let temFullLocation = val["fullLocation"] as? String {
+                    fullLocation = temFullLocation
+                }
+                
+                store_address = fullLocation
             }
             
         }

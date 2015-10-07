@@ -52,6 +52,11 @@ class SessionManager {
         NSUserDefaults.standardUserDefaults().synchronize()
     }
     
+    class func setDeviceToken(deviceToken: String) {
+        NSUserDefaults.standardUserDefaults().setObject(deviceToken, forKey: "deviceToken")
+        NSUserDefaults.standardUserDefaults().synchronize()
+    }
+    
     class func cartCount() -> Int {
         var result: String = ""
         if let val: AnyObject = NSUserDefaults.standardUserDefaults().objectForKey("cartCount") as? String {
@@ -119,6 +124,18 @@ class SessionManager {
         var returnValue : String?
         
         returnValue = NSUserDefaults.standardUserDefaults().objectForKey("refreshToken") as? String
+        
+        if returnValue == nil {
+            returnValue = ""
+        }
+        
+        return returnValue!
+    }
+    
+    class func deviceToken() -> String {
+        var returnValue : String?
+        
+        returnValue = NSUserDefaults.standardUserDefaults().objectForKey("deviceToken") as? String
         
         if returnValue == nil {
             returnValue = ""

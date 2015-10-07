@@ -15,13 +15,14 @@ class ProductModel: NSObject {
     var discountedPrice: String = ""
     var discountPercentage: String = ""
     var target: String = ""
-    
-    init(name: String, imageURL: NSURL, originalPrice: String, discountedPrice: String, discountPercentage: String, target: String) {
+    var productId: String = ""
+    init(name: String, imageURL: NSURL, originalPrice: String, discountedPrice: String, discountPercentage: String, target: String, productId: String) {
         self.name = name
         self.imageURL = imageURL
         self.originalPrice = originalPrice
         self.discountedPrice = discountedPrice
         self.discountPercentage = discountPercentage
         self.target = target
+        self.productId = productId
     }
 }

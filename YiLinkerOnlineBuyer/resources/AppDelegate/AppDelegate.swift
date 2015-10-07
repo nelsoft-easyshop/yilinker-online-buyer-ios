@@ -13,7 +13,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GGLInstanceIDDelegate {
 
     var window: UIWindow?
     var gcmSenderID = "976304473940"
-    var connectedToGCM = false
+    var connectedToGCM = false 
     var registrationToken: String?
     var registrationOptions = [String: AnyObject]()
     
@@ -65,6 +65,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GGLInstanceIDDelegate {
         
         let trimEnds: String = deviceToken.description.stringByTrimmingCharactersInSet(NSCharacterSet(charactersInString: "<>"))
         let cleanToken: String = trimEnds.stringByReplacingOccurrencesOfString(" ", withString: "", options: nil, range: nil)
+        SessionManager.setDeviceToken(cleanToken)
         println("Device Token > \(cleanToken)")
         
 //        // Register for Push Notitications, if running iOS 8
