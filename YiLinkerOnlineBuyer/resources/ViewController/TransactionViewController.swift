@@ -67,16 +67,19 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
         let nib = UINib(nibName: "TransactionTableViewCell", bundle: nil)
         self.tableView.registerNib(nib, forCellReuseIdentifier: "TransactionIdentifier")
         
-        viewsInArray = [allView, pendingView, onDeliveryView, forFeedbackView, supportView]
+        viewsInArray = [allView, pendingView, onDeliveryView, forFeedbackView]
+        imagesInArray = [allImageView, pendingImageView, onDeliveryImageView, forFeedbackImageView]
+        labelsInArray = [allLabel, pendingLabel, onDeliveryLabel, forFeedbackLabel]
+        deselectedImages = ["all", "pending", "onDelivery", "forFeedback"]
+        /*viewsInArray = [allView, pendingView, onDeliveryView, forFeedbackView, supportView]
         imagesInArray = [allImageView, pendingImageView, onDeliveryImageView, forFeedbackImageView, supportImageView]
         labelsInArray = [allLabel, pendingLabel, onDeliveryLabel, forFeedbackLabel, supportLabel]
-        deselectedImages = ["all", "pending", "onDelivery", "forFeedback", "support"]
-        
+        deselectedImages = ["all", "pending", "onDelivery", "forFeedback", "support"]*/
         allLabel.text = all
         pendingLabel.text = pending
         onDeliveryLabel.text = onDelivery
         forFeedbackLabel.text = forFeedback
-        supportLabel.text = support
+        //supportLabel.text = support
             
         addViewsActions()
     
@@ -110,7 +113,7 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
         
         if self.tableData.count != 0 {
             var price: Float = (tableData[indexPath.row].total_price2 as NSString).floatValue
-            cell.priceLabel.text = "P \(price.string(2))"//NSString(format:"%.2f", self.transactionModel!.total_item_price[indexPath.row]) as String
+            cell.priceLabel.text = "\((tableData[indexPath.row].total_price2).formatToTwoDecimal())"//"P \(price.string(2))"//NSString(format:"%.2f", self.transactionModel!.total_item_price[indexPath.row]) as String
             cell.dateLabel.text = tableData[indexPath.row].date_added2
             if tableData[indexPath.row].product_count2.toInt() < 2 {
                 cell.numberLabel.text =  "\(tableData[indexPath.row].total_quantity2) \(product)"
@@ -138,6 +141,7 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
         transactionDetails.totalUnitCost = tableData[indexPath.row].total_unit_price2
         transactionDetails.shippingFee = tableData[indexPath.row].total_handling_fee2
         transactionDetails.totalCost = tableData[indexPath.row].total_price2
+        transactionDetails.orderId = tableData[indexPath.row].order_id2
         transactionDetails.orderStatusId = tableData[indexPath.row].order_status_id2
         self.navigationController?.pushViewController(transactionDetails, animated: true)
     }
@@ -188,8 +192,8 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
             self.tableData.removeAll(keepCapacity: false)
             page = 0
             self.isPageEnd = false
-            self.fireTransaction("completed")
-            self.query = "completed"
+            self.fireTransaction("on-delivery")
+            self.query = "on-delivery"
             deselectOtherViews(onDeliveryView)
         }
     }
@@ -197,7 +201,11 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
     func forFeedbackAction(gesture: UIGestureRecognizer) {
         if forFeedbackView.tag == 0 {
             selectView(forFeedbackView, label: forFeedbackLabel, imageView: forFeedbackImageView, imageName: "forFeedback2")
-            self.query = "forFeedback"
+            self.tableData.removeAll(keepCapacity: false)
+            page = 0
+            self.isPageEnd = false
+            self.fireTransaction("for-feedback")
+            self.query = "for-feedback"
             deselectOtherViews(forFeedbackView)
         }
     }
@@ -217,7 +225,7 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
         self.pendingView.addGestureRecognizer(tap("pendingAction:"))
         self.onDeliveryView.addGestureRecognizer(tap("onDeliveryAction:"))
         self.forFeedbackView.addGestureRecognizer(tap("forFeedbackAction:"))
-        self.supportView.addGestureRecognizer(tap("supportAction:"))
+        //self.supportView.addGestureRecognizer(tap("supportAction:"))
     }
     
     func tap(action: Selector) -> UITapGestureRecognizer {
@@ -278,18 +286,18 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
                 }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
                     self.hud?.hide(true)
                     let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                    if error.userInfo != nil {
+                    
+                        if self.query == "all" {if error.userInfo != nil {
                         let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
                         let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
                         UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: Constants.Localized.someThingWentWrong)
                     } else if task.statusCode == 401 {
-                        if self.query == "all" {
                             self.requestRefreshToken(TransactionRefreshType.All)
-                        } else if self.query == "ongoing" {
+                        } else if self.query == "on-delivery" {
                             self.requestRefreshToken(TransactionRefreshType.OnGoing)
                         } else if self.query == "pending" {
                             self.requestRefreshToken(TransactionRefreshType.Pending)
-                        } else if self.query == "forFeedback" {
+                        } else if self.query == "for-feedback" {
                             self.requestRefreshToken(TransactionRefreshType.ForFeedback)
                         } else {
                             self.requestRefreshToken(TransactionRefreshType.Support)
@@ -317,11 +325,11 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
             if type == TransactionRefreshType.All {
                 self.fireTransaction("all")
             } else if type == TransactionRefreshType.OnGoing {
-                self.fireTransaction("ongoing")
+                self.fireTransaction("on-delivery")
             } else if type == TransactionRefreshType.Pending {
                 self.fireTransaction("pending")
             } else if type == TransactionRefreshType.ForFeedback {
-                self.fireTransaction("forfeedback")
+                self.fireTransaction("for-feedback")
             } else {
                 self.fireTransaction("support")
             }
@@ -406,9 +414,15 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
         if self.query == "all" {
             self.fireTransaction("all")
             self.query = "all"
-        } else if self.query == "completed"{
-            self.fireTransaction("completed")
-            self.query = "completed"
+        } else if self.query == "on-delivery"{
+            self.fireTransaction("on-delivery")
+            self.query = "on-delivery"
+        }  else if self.query == "for-feedback"{
+            self.fireTransaction("for-feedback")
+            self.query = "for-feedback"
+        } else {
+            self.fireTransaction("pending")
+            self.query = "pending"
         }
         
         self.emptyView?.hidden = true
