@@ -156,6 +156,8 @@ struct APIAtlas {
     
     //Seller Category
     static let sellerCategory = "category/getCustomCategories?sellerId="
+    
+    static let facebookUrl = "facebook/auth"
 }
 
 class APIManager: AFHTTPSessionManager {
