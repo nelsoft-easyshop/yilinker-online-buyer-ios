@@ -54,6 +54,7 @@
 		0C329E8C1B7B73B7005BE2B6 /* CategoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C329E8A1B7B73B7005BE2B6 /* CategoriesViewController.swift */; };
 		0C329E931B7B7B2F005BE2B6 /* HiddenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C329E921B7B7B2F005BE2B6 /* HiddenViewController.swift */; };
 		0C329E951B7B7C5B005BE2B6 /* CustomTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C329E941B7B7C5B005BE2B6 /* CustomTabBarController.swift */; };
+		0C35A5CF1BC425AE006C0A65 /* LoginModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C35A5CE1BC425AE006C0A65 /* LoginModel.swift */; };
 		0C374EF41B8851C00050AE1D /* DeliverToTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C374EF21B8851C00050AE1D /* DeliverToTableViewCell.swift */; };
 		0C374EF81B88552E0050AE1D /* PaymentWebViewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C374EF61B88552E0050AE1D /* PaymentWebViewViewController.swift */; };
 		0C374EFB1B8862E10050AE1D /* SuccessTableHeaderViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C374EFA1B8862E10050AE1D /* SuccessTableHeaderViewCell.swift */; };
@@ -468,6 +469,7 @@
 		0C329E8A1B7B73B7005BE2B6 /* CategoriesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoriesViewController.swift; sourceTree = "<group>"; };
 		0C329E921B7B7B2F005BE2B6 /* HiddenViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HiddenViewController.swift; sourceTree = "<group>"; };
 		0C329E941B7B7C5B005BE2B6 /* CustomTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTabBarController.swift; sourceTree = "<group>"; };
+		0C35A5CE1BC425AE006C0A65 /* LoginModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginModel.swift; sourceTree = "<group>"; };
 		0C374EF21B8851C00050AE1D /* DeliverToTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeliverToTableViewCell.swift; sourceTree = "<group>"; };
 		0C374EF61B88552E0050AE1D /* PaymentWebViewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentWebViewViewController.swift; sourceTree = "<group>"; };
 		0C374EFA1B8862E10050AE1D /* SuccessTableHeaderViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SuccessTableHeaderViewCell.swift; sourceTree = "<group>"; };
@@ -1043,6 +1045,7 @@
 				0C2E8A261B9AA3EE00D50455 /* PesoPayModel.swift */,
 				79F9FC4B1BC022FB00B3E0DA /* SearchSellerModel.swift */,
 				266BE1E91BC3B0B300BB6642 /* DisputeReasonsModel.swift */,
+				0C35A5CE1BC425AE006C0A65 /* LoginModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1945,6 +1948,7 @@
 				0C374F5A1B8A03CC0050AE1D /* CustomizeShoppingTableViewCell.swift in Sources */,
 				F7CCDAA11B943CF7000F5AD4 /* ProductResultListCollectionViewCell.swift in Sources */,
 				0C99375E1B750583000D6074 /* HomePageCollectionViewController.swift in Sources */,
+				0C35A5CF1BC425AE006C0A65 /* LoginModel.swift in Sources */,
 				0C374EF81B88552E0050AE1D /* PaymentWebViewViewController.swift in Sources */,
 				26DB062E1B981CF300D38EA8 /* ProductImagesModel.swift in Sources */,
 				79E68B751B8AC390008626E4 /* ActivityLogTableViewCell.swift in Sources */,

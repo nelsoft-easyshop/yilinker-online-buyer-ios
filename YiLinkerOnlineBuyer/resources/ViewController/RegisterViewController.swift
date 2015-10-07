@@ -69,7 +69,6 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         self.emailAddressTextField.placeholder = RegisterStrings.emailAddress
         self.passwordTextField.placeholder = RegisterStrings.password
         self.reTypePasswordTextField.placeholder = RegisterStrings.reTypePassword
-        self.orLabel.text = LoginStrings.or
         
         self.registerButton.setTitle(RegisterStrings.registerMeNow, forState: UIControlState.Normal)
     }
