@@ -12,6 +12,7 @@ class ProductImagesModel {
     
     var id: String = ""
     var imageLocation: String = ""
+//    var fullImageLocation: String = ""
     var isPrimary: Bool = false
     var isDeleted: Bool = false
     
@@ -22,6 +23,7 @@ class ProductImagesModel {
             
             model.id = images["id"] as! String
             model.imageLocation = images["imageLocation"] as! String
+//            model.fullImageLocation = images["fullImageLocation"] as! String
             model.isPrimary = images["isPrimary"] as! Bool
             model.isDeleted = images["isDeleted"] as! Bool
             

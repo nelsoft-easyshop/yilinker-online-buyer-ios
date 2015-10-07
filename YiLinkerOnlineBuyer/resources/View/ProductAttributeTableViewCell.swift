@@ -12,7 +12,7 @@ protocol ProductAttributeTableViewCellDelegate {
     func selectedAttribute(controller: ProductAttributeTableViewCell, attributeIndex: Int, attributeValue: String!, attributeId: Int)
 }
 
-class ProductAttributeTableViewCell: UITableViewCell {
+class ProductAttributeTableViewCell: UITableViewCell, UIScrollViewDelegate {
 
     @IBOutlet weak var attributeLabel: UILabel!
 
@@ -32,6 +32,8 @@ class ProductAttributeTableViewCell: UITableViewCell {
     var delegate: ProductAttributeTableViewCellDelegate?
     
     var productDetailModel: ProductDetailsModel!
+    
+    var scrollPosition: CGFloat = 0.0
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -68,9 +70,10 @@ class ProductAttributeTableViewCell: UITableViewCell {
         }
         
         scroll = UIScrollView(frame: CGRectMake(0, self.frame.size.height - 70, width, 70))
+        scroll.delegate = self
         var spacingX: CGFloat = 0.0
         
-        println(availableCombinationString)
+//        println(availableCombinationString)
         var leftMargin: Int = 10
         
         for i in 0..<attributes.count {
@@ -79,6 +82,7 @@ class ProductAttributeTableViewCell: UITableViewCell {
             
             var button = UIButton(frame: CGRectMake(CGFloat(leftMargin), (scroll.frame.size.height / 2) - 15, CGFloat(buttonWidth), 30))
             button.setTitle(buttonTitle, forState: .Normal)
+            button.titleLabel?.font = UIFont(name: "Panton-Bold", size: 15.0)
             button.titleLabel?.font = UIFont.boldSystemFontOfSize(15.0)
             button.setTitleColor(UIColor.darkGrayColor(), forState: .Normal)
             button.layer.borderWidth = 1.2
@@ -101,18 +105,20 @@ class ProductAttributeTableViewCell: UITableViewCell {
                     button.backgroundColor = Constants.Colors.appTheme
                     button.setTitleColor(UIColor.whiteColor(), forState: .Normal)
                     
-                    var tempy: CGFloat = scroll.frame.size.height
-                    var tempx: CGFloat = scroll.frame.size.width
-                    var zoomRect: CGRect = CGRectMake((tempx/2)-160, (tempy/2)-240, scroll.frame.size.width, scroll.frame.size.height)
-                    scroll.scrollRectToVisible(zoomRect, animated: false)
+//                    var tempy: CGFloat = scroll.frame.size.height
+//                    var tempx: CGFloat = scroll.frame.size.width
+//                    var zoomRect: CGRect = CGRectMake((tempx/2)-160, (tempy/2)-240, scroll.frame.size.width, scroll.frame.size.height)
+//                    scroll.scrollRectToVisible(zoomRect, animated: false)
                 }
             }
             
             scroll.addSubview(button)
+            scroll.contentSize = CGSize(width: CGFloat(leftMargin), height: scroll.frame.size.height)
         }
         
-        scroll.contentSize = CGSize(width: CGFloat((110 * attributes.count) + 10), height: scroll.frame.size.height)
+//        scroll.contentSize = CGSize(width: CGFloat((110 * attributes.count) + 10), height: scroll.frame.size.height)
         self.addSubview(scroll)
+        self.scroll.contentOffset.x = self.scrollPosition
     }
     
     func formatCombination(combinations: NSArray) -> String {
@@ -128,8 +134,10 @@ class ProductAttributeTableViewCell: UITableViewCell {
         return formatCombination
     }
     
+    // MARK: - Actions
+    
     func clickedAttriubte(sender: UIButton!) {
-        println("button id: \(sender.tag)")
+//        println("button id: \(sender.tag)")
         
         if sender.selected { // Unselect
             DeselectButton(sender)
@@ -173,5 +181,11 @@ class ProductAttributeTableViewCell: UITableViewCell {
     func disableButton(button: UIButton) {
         button.alpha = 0.3
         button.userInteractionEnabled = false
+    }
+    
+    // MARK: - Scroll View Delegate
+    
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        self.scrollPosition = scrollView.contentOffset.x
     }
 }
