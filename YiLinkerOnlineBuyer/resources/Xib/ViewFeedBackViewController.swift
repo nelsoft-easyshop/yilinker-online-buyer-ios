@@ -138,6 +138,7 @@ class ViewFeedBackViewController: UIViewController, UITableViewDelegate, UITable
                 self.showAlert(title: "Error", message: responseObject["message"] as! String)
                 self.hud?.hide(true)
             }
+            self.ratingAndReviewsTableView.reloadData()
             self.cancelButton.enabled = true
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
@@ -159,7 +160,7 @@ class ViewFeedBackViewController: UIViewController, UITableViewDelegate, UITable
                 }
                 self.cancelButton.enabled = true
         })
-        self.ratingAndReviewsTableView.reloadData()
+        
     }
     
     func showHUD() {
