@@ -103,7 +103,7 @@ class CategoriesViewController: UIViewController, EmptyViewDelegate {
                 categories.requestCategories(parentId: categoryModel.id[indexPath.row])
                 self.navigationController?.pushViewController(categories, animated: true)
             } else {
-                gotoSearch()
+                gotoSearch(categoryModel.id[indexPath.row])
             }
         }
     }
@@ -156,12 +156,12 @@ class CategoriesViewController: UIViewController, EmptyViewDelegate {
     }
     
     func gotoList(gesture: UIGestureRecognizer) {
-        gotoSearch()
+        gotoSearch(categoryId)
     }
     
-    func gotoSearch() {
+    func gotoSearch(id: Int) {
         let resultList = ResultViewController(nibName: "ResultViewController", bundle: nil)
-        resultList.passCategoryID(categoryId)
+        resultList.passCategoryID(id)
         self.navigationController?.pushViewController(resultList, animated: true)
     }
     
