@@ -10,7 +10,7 @@ import UIKit
 
 protocol ProductAttributeViewControllerDelegate {
     func dissmissAttributeViewController(controller: ProductAttributeViewController, type: String)
-    func doneActionPassDetailsToProductView(controller: ProductAttributeViewController, unitId: String, quantity: Int, selectedId: NSArray)
+    func doneActionPassDetailsToProductView(controller: ProductAttributeViewController, unitId: String, quantity: Int, selectedId: NSArray, images: [String])
     func gotoCheckoutFromAttributes(controller: ProductAttributeViewController)
 }
 
@@ -171,7 +171,7 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
             if let delegate = self.delegate {
                 let quantity: Int = stocksLabel.text!.toInt()!
 //                println(unitId)
-                delegate.doneActionPassDetailsToProductView(self, unitId: unitId, quantity: quantity, selectedId: selectedId)
+                delegate.doneActionPassDetailsToProductView(self, unitId: unitId, quantity: quantity, selectedId: selectedId, images: self.imageUrls)
             }
         } else {
             hideSelf("cancel")
@@ -536,7 +536,7 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
         }
         
         
-            
+        
         self.maximumStock = productDetailsModel.productUnits[unitIdIndex].quantity
         self.availabilityStocksLabel.text = ProductStrings.availableStocks + " : \(productDetailsModel.productUnits[unitIdIndex].quantity)"
         

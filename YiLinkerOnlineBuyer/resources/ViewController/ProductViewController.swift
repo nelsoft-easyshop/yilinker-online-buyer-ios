@@ -1009,11 +1009,12 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         
     }
     
-    func doneActionPassDetailsToProductView(controller: ProductAttributeViewController, unitId: String, quantity: Int, selectedId: NSArray) {
+    func doneActionPassDetailsToProductView(controller: ProductAttributeViewController, unitId: String, quantity: Int, selectedId: NSArray, images: [String]) {
         self.unitId = unitId
         self.selectedId = selectedId as! [String]
         self.quantity = quantity
         self.setAttributes(self.productDetailsModel.attributes, productUnits: self.productDetailsModel.productUnits, unitId: unitId, quantity: quantity)
+        self.productImagesView.updateDetails(self.productDetailsModel, unitId: unitIdIndex, images: images)
     }
     
     func gotoCheckoutFromAttributes(controller: ProductAttributeViewController) {
