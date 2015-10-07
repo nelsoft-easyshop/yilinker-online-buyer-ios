@@ -260,10 +260,10 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
             transactionDetailsView.statusLabel.text = self.orderStatus
             transactionDetailsView.paymentTypeLabel.text = self.paymentType
             transactionDetailsView.dateCreatedLabel.text = self.dateCreated
-            transactionDetailsView.quantityLabel.text = self.totalQuantity+"x"
-            transactionDetailsView.unitCostLabel.text = "P \(self.total_unit_price.stringToFormat(2))"
-            transactionDetailsView.shippingFeeLabel.text = "P \(self.total_handling_fee.stringToFormat(2))"
-            transactionDetailsView.totalCostLabel.text = "P \(((self.totalCost as NSString).floatValue).stringToFormat(2))"
+            transactionDetailsView.quantityLabel.text = self.totalQuantity
+            transactionDetailsView.unitCostLabel.text = "\((self.totalUnitCost).formatToTwoDecimal())"
+            transactionDetailsView.shippingFeeLabel.text = "\((self.shippingFee).formatToTwoDecimal())"
+            transactionDetailsView.totalCostLabel.text = "\((self.totalCost).formatToTwoDecimal())"
             
             self.transactionDetailsView.frame.size.width = self.view.frame.size.width
         }

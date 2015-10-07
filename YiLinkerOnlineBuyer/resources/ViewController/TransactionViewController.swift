@@ -113,7 +113,7 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
         
         if self.tableData.count != 0 {
             var price: Float = (tableData[indexPath.row].total_price2 as NSString).floatValue
-            cell.priceLabel.text = "P \(price.string(2))"//NSString(format:"%.2f", self.transactionModel!.total_item_price[indexPath.row]) as String
+            cell.priceLabel.text = "\((tableData[indexPath.row].total_price2).formatToTwoDecimal())"//"P \(price.string(2))"//NSString(format:"%.2f", self.transactionModel!.total_item_price[indexPath.row]) as String
             cell.dateLabel.text = tableData[indexPath.row].date_added2
             if tableData[indexPath.row].product_count2.toInt() < 2 {
                 cell.numberLabel.text =  "\(tableData[indexPath.row].total_quantity2) \(product)"
