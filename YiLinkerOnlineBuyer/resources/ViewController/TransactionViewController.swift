@@ -67,16 +67,19 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
         let nib = UINib(nibName: "TransactionTableViewCell", bundle: nil)
         self.tableView.registerNib(nib, forCellReuseIdentifier: "TransactionIdentifier")
         
-        viewsInArray = [allView, pendingView, onDeliveryView, forFeedbackView, supportView]
+        viewsInArray = [allView, pendingView, onDeliveryView, forFeedbackView]
+        imagesInArray = [allImageView, pendingImageView, onDeliveryImageView, forFeedbackImageView]
+        labelsInArray = [allLabel, pendingLabel, onDeliveryLabel, forFeedbackLabel]
+        deselectedImages = ["all", "pending", "onDelivery", "forFeedback"]
+        /*viewsInArray = [allView, pendingView, onDeliveryView, forFeedbackView, supportView]
         imagesInArray = [allImageView, pendingImageView, onDeliveryImageView, forFeedbackImageView, supportImageView]
         labelsInArray = [allLabel, pendingLabel, onDeliveryLabel, forFeedbackLabel, supportLabel]
-        deselectedImages = ["all", "pending", "onDelivery", "forFeedback", "support"]
-        
+        deselectedImages = ["all", "pending", "onDelivery", "forFeedback", "support"]*/
         allLabel.text = all
         pendingLabel.text = pending
         onDeliveryLabel.text = onDelivery
         forFeedbackLabel.text = forFeedback
-        supportLabel.text = support
+        //supportLabel.text = support
             
         addViewsActions()
     
@@ -178,8 +181,8 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
             self.tableData.removeAll(keepCapacity: false)
             page = 0
             self.isPageEnd = false
-            self.fireTransaction("completed")
-            self.query = "completed"
+            self.fireTransaction("on-delivery")
+            self.query = "on-delivery"
             deselectOtherViews(onDeliveryView)
         }
     }
@@ -187,7 +190,11 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
     func forFeedbackAction(gesture: UIGestureRecognizer) {
         if forFeedbackView.tag == 0 {
             selectView(forFeedbackView, label: forFeedbackLabel, imageView: forFeedbackImageView, imageName: "forFeedback2")
-            self.query = "forFeedback"
+            self.tableData.removeAll(keepCapacity: false)
+            page = 0
+            self.isPageEnd = false
+            self.fireTransaction("for-feedback")
+            self.query = "for-feedback"
             deselectOtherViews(forFeedbackView)
         }
     }
@@ -207,7 +214,7 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
         self.pendingView.addGestureRecognizer(tap("pendingAction:"))
         self.onDeliveryView.addGestureRecognizer(tap("onDeliveryAction:"))
         self.forFeedbackView.addGestureRecognizer(tap("forFeedbackAction:"))
-        self.supportView.addGestureRecognizer(tap("supportAction:"))
+        //self.supportView.addGestureRecognizer(tap("supportAction:"))
     }
     
     func tap(action: Selector) -> UITapGestureRecognizer {
@@ -275,11 +282,11 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
                     } else if task.statusCode == 401 {
                         if self.query == "all" {
                             self.requestRefreshToken(TransactionRefreshType.All)
-                        } else if self.query == "ongoing" {
+                        } else if self.query == "on-delivery" {
                             self.requestRefreshToken(TransactionRefreshType.OnGoing)
                         } else if self.query == "pending" {
                             self.requestRefreshToken(TransactionRefreshType.Pending)
-                        } else if self.query == "forFeedback" {
+                        } else if self.query == "for-feedback" {
                             self.requestRefreshToken(TransactionRefreshType.ForFeedback)
                         } else {
                             self.requestRefreshToken(TransactionRefreshType.Support)
@@ -307,11 +314,11 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
             if type == TransactionRefreshType.All {
                 self.fireTransaction("all")
             } else if type == TransactionRefreshType.OnGoing {
-                self.fireTransaction("ongoing")
+                self.fireTransaction("on-delivery")
             } else if type == TransactionRefreshType.Pending {
                 self.fireTransaction("pending")
             } else if type == TransactionRefreshType.ForFeedback {
-                self.fireTransaction("forfeedback")
+                self.fireTransaction("for-feedback")
             } else {
                 self.fireTransaction("support")
             }
@@ -396,9 +403,15 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
         if self.query == "all" {
             self.fireTransaction("all")
             self.query = "all"
-        } else if self.query == "completed"{
-            self.fireTransaction("completed")
-            self.query = "completed"
+        } else if self.query == "on-delivery"{
+            self.fireTransaction("on-delivery")
+            self.query = "on-delivery"
+        }  else if self.query == "for-feedback"{
+            self.fireTransaction("for-feedback")
+            self.query = "for-feedback"
+        } else {
+            self.fireTransaction("pending")
+            self.query = "pending"
         }
         
         self.emptyView?.hidden = true
