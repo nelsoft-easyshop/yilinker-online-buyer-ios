@@ -186,15 +186,17 @@ class CartProductAttributeViewController: UIViewController, UITableViewDelegate,
                 }
             }
             
+            priceLabel.text = selectedProductUnit.price.formatToTwoDecimal()
             self.maximumStock = selectedProductUnit.quantity
             stocks = productDetailModel!.quantity
             checkStock(stocks)
-            self.availabilityStocksLabel.text = availableLocalizeString + String(maximumStock)
+            self.availabilityStocksLabel.text = availableLocalizeString + ": " + String(maximumStock)
         } else {
+            priceLabel.text = "0".formatToTwoDecimal()
             self.maximumStock = 0
             stocks = 0
             checkStock(stocks)
-            self.availabilityStocksLabel.text = availableLocalizeString + String(0)
+            self.availabilityStocksLabel.text = availableLocalizeString + ": " + String(0)
         }
         
     }
