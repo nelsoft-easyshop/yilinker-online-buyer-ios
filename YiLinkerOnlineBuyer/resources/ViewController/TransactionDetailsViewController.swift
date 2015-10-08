@@ -429,9 +429,9 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
     
     //MARK: View sellers feedback
     func leaveSellerFeedback(title: String, tag: Int) {
-        println("\(self.transactionSectionView.leaveFeedbackButton.titleLabel?.text) \(tag)")
+        println("\(self.transactionSectionView.leaveFeedbackButton.titleLabel?.text) \(tag) orderStatusId \(self.orderStatusId )")
         if title == self.leaveFeedback {
-            if self.orderStatusId == "3" {
+            if self.orderStatusId == "3" || self.orderStatusId == "6"{
                 self.leaveFeedback(tag)
             } else {
                 self.showAlert(title: self.error, message: self.errorFeedback)
