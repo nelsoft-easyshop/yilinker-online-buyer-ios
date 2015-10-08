@@ -10,6 +10,9 @@
             <string>Panton-Bold</string>
             <string>Panton-Bold</string>
         </mutableArray>
+        <mutableArray key="Panton.otf">
+            <string>Panton-Regular</string>
+        </mutableArray>
     </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TransactionViewController" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
@@ -20,6 +23,7 @@
                 <outlet property="forFeedbackImageView" destination="2xO-RK-Eta" id="avh-Wk-GrR"/>
                 <outlet property="forFeedbackLabel" destination="7Sv-7A-H5I" id="b6x-AH-gvV"/>
                 <outlet property="forFeedbackView" destination="mGm-4A-0gd" id="X8E-Sk-WuI"/>
+                <outlet property="noTransactionLabel" destination="ih2-Z5-Sra" id="5W4-rC-2jA"/>
                 <outlet property="onDeliveryImageView" destination="0BV-9b-3ee" id="tVb-rG-v3W"/>
                 <outlet property="onDeliveryLabel" destination="vdH-na-zaJ" id="GCh-PV-d5K"/>
                 <outlet property="onDeliveryView" destination="M4H-ai-uXl" id="0mA-SP-cWy"/>
@@ -189,14 +193,24 @@
                         <outlet property="delegate" destination="-1" id="VA8-7u-RVf"/>
                     </connections>
                 </tableView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No transaction available" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ih2-Z5-Sra">
+                    <rect key="frame" x="8" y="323" width="359" height="21"/>
+                    <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="17"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="xR4-z3-FXA" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="2Ce-nk-JiQ"/>
                 <constraint firstItem="Szc-kr-kRl" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="8d5-2x-TLn"/>
+                <constraint firstAttribute="centerX" secondItem="ih2-Z5-Sra" secondAttribute="centerX" id="8pT-BA-pgR"/>
+                <constraint firstAttribute="trailing" secondItem="ih2-Z5-Sra" secondAttribute="trailing" constant="8" id="DDi-Jd-Utt"/>
+                <constraint firstItem="ih2-Z5-Sra" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="DcK-JC-meK"/>
                 <constraint firstItem="xR4-z3-FXA" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Dss-6V-pYu"/>
                 <constraint firstItem="Szc-kr-kRl" firstAttribute="top" secondItem="xR4-z3-FXA" secondAttribute="bottom" id="O5F-O8-iLi"/>
                 <constraint firstAttribute="bottom" secondItem="Szc-kr-kRl" secondAttribute="bottom" id="YDK-Yc-7di"/>
+                <constraint firstAttribute="centerY" secondItem="ih2-Z5-Sra" secondAttribute="centerY" id="huT-8r-sFm"/>
                 <constraint firstAttribute="trailing" secondItem="xR4-z3-FXA" secondAttribute="trailing" id="iaL-dq-5wj"/>
                 <constraint firstAttribute="trailing" secondItem="Szc-kr-kRl" secondAttribute="trailing" id="rmY-HG-XPC"/>
             </constraints>

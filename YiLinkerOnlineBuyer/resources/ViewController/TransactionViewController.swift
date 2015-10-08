@@ -28,6 +28,7 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
     @IBOutlet weak var onDeliveryLabel: UILabel!
     @IBOutlet weak var forFeedbackLabel: UILabel!
     @IBOutlet weak var supportLabel: UILabel!
+    @IBOutlet var noTransactionLabel: UILabel!
     
     var viewsInArray: [UIView] = []
     var imagesInArray: [UIImageView] = []
@@ -49,6 +50,7 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
     var support = StringHelper.localizedStringWithKey("TRANSACTION_SUPPORT_LOCALIZE_KEY")
     var product = StringHelper.localizedStringWithKey("TRANSACTION_PRODUCT_LOCALIZE_KEY")
     var products = StringHelper.localizedStringWithKey("TRANSACTION_PRODUCTS_LOCALIZE_KEY")
+    var noTransaction = StringHelper.localizedStringWithKey("TRANSACTION_NO_TRANSACTION_LOCALIZE_KEY")
     
     var isPageEnd: Bool = false
     var page: Int = 0
@@ -79,6 +81,8 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
         pendingLabel.text = pending
         onDeliveryLabel.text = onDelivery
         forFeedbackLabel.text = forFeedback
+        noTransactionLabel.text = noTransaction
+        noTransactionLabel.hidden = true
         //supportLabel.text = support
             
         addViewsActions()
@@ -91,6 +95,7 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
     
     override func viewDidAppear(animated: Bool) {
         println("view did appear")
+        noTransactionLabel.hidden = true
         self.tableData.removeAll(keepCapacity: false)
         page = 0
         self.isPageEnd = false
@@ -165,6 +170,7 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
     func allAction(gesture: UIGestureRecognizer) {
         if allView.tag == 0 {
             selectView(allView, label: allLabel, imageView: allImageView, imageName: "all2")
+            noTransactionLabel.hidden = true
             self.tableData.removeAll(keepCapacity: false)
             page = 0
             self.isPageEnd = false
@@ -177,6 +183,7 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
     func pendingAction(gesture: UIGestureRecognizer) {
         if pendingView.tag == 0 {
             selectView(pendingView, label: pendingLabel, imageView: pendingImageView, imageName: "time")
+            noTransactionLabel.hidden = true
             self.tableData.removeAll(keepCapacity: false)
             page = 0
             self.isPageEnd = false
@@ -189,6 +196,7 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
     func onDeliveryAction(gesture: UIGestureRecognizer) {
         if onDeliveryView.tag == 0 {
             selectView(onDeliveryView, label: onDeliveryLabel, imageView: onDeliveryImageView, imageName: "onDelivery2")
+            noTransactionLabel.hidden = true
             self.tableData.removeAll(keepCapacity: false)
             page = 0
             self.isPageEnd = false
@@ -200,6 +208,7 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
     
     func forFeedbackAction(gesture: UIGestureRecognizer) {
         if forFeedbackView.tag == 0 {
+            noTransactionLabel.hidden = true
             selectView(forFeedbackView, label: forFeedbackLabel, imageView: forFeedbackImageView, imageName: "forFeedback2")
             self.tableData.removeAll(keepCapacity: false)
             page = 0
@@ -213,6 +222,7 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
     func supportAction(gesture: UIGestureRecognizer) {
         if supportView.tag == 0 {
             selectView(supportView, label: supportLabel, imageView: supportImageView, imageName: "support2")
+            noTransactionLabel.hidden = true
             self.query = "support"
             deselectOtherViews(supportView)
         }
@@ -278,7 +288,8 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
                         self.isPageEnd = true
                     }
                 } else {
-                    self.addEmptyView()
+                    //self.addEmptyView()
+                    self.noTransactionLabel.hidden = false
                 }
                
                 self.tableView.reloadData()
@@ -305,6 +316,7 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
                     } else {
                         self.showAlert(title: Constants.Localized.someThingWentWrong, message: nil)
                         self.hud?.hide(true)
+                        self.addEmptyView()
                     }
                     println(error.userInfo)
                     
@@ -340,6 +352,7 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
                 let defaultAction = UIAlertAction(title: Constants.Localized.ok, style: .Default, handler: nil)
                 alertController.addAction(defaultAction)
                 self.presentViewController(alertController, animated: true, completion: nil)
+                self.addEmptyView()
         })
     }
     
