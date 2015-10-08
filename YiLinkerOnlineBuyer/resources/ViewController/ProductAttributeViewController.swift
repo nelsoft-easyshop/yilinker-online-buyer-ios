@@ -564,6 +564,12 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
         for i in 0..<self.productDetailsModel.productUnits.count {
             if self.productDetailsModel.productUnits[i].combination == selectedId {
                 unitId = self.productDetailsModel.productUnits[i].productUnitId
+                
+                if self.productDetailsModel.productUnits[i].discountedPrice.floatValue != 0 {
+                    self.price = productDetailsModel.productUnits[i].price
+                } else {
+                    self.price = productDetailsModel.productUnits[i].discountedPrice
+                }
             }
         }
         
