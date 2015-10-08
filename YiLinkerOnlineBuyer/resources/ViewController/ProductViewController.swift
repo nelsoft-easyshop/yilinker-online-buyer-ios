@@ -835,7 +835,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
                 }
             }
         }
-        
+
         createAttributesLabel(selectedName.count, name: selectedName, value: selectedValue)
     }
     
@@ -847,27 +847,40 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         var labelWidth = (self.view.frame.size.width / 3)
         
         for i in 0..<numberOfAttributes {
-            if i % 3 == 0 && i != 0 {
-                topMargin += 23
-                reseter = 0
-                counter += 1
-            }
+//            if i % 3 == 0 && i != 0 {
+//                topMargin += 23
+//                reseter = 0
+//                counter += 1
+//            }
             
-            leftMargin = CGFloat(reseter * Int(labelWidth))
-            reseter += 1
+//            leftMargin = CGFloat(reseter * Int(labelWidth))
+//            reseter += 1
             
-            var attributesLabel = UILabel(frame: CGRectMake(leftMargin + 10, topMargin + 50, labelWidth - 12, 23))
+            var attributesLabel = UILabel(frame: CGRectMake(leftMargin + 10, topMargin + 50, 0, 23))
             attributesLabel.font = UIFont.systemFontOfSize(14.0)
             attributesLabel.textColor = .grayColor()
             
             var attributedCategory = NSMutableAttributedString(string: "\(name[i]): ")
             var font = [NSFontAttributeName : UIFont.boldSystemFontOfSize(14.0)]
-            var attributeItem = NSMutableAttributedString(string: value[i] as! String, attributes: font)
+            var attributeItem = NSMutableAttributedString(string: "\(value[i])          ", attributes: font)
             attributedCategory.appendAttributedString(attributeItem)
             
             attributesLabel.attributedText = attributedCategory
-            
+            attributesLabel.sizeToFit()
             self.productAttributeView.addSubview(attributesLabel)
+            
+            leftMargin += attributesLabel.frame.size.width
+            if leftMargin > self.view.frame.size.width {
+                counter++
+                leftMargin = 0.0
+                topMargin += 23
+                attributesLabel.frame = CGRectMake(leftMargin + 10, topMargin + 50, 0, 23)
+                attributesLabel.sizeToFit()
+                if attributesLabel.frame.size.width > self.view.frame.size.width - 20 {
+                    attributesLabel.frame.size.width = self.view.frame.size.width - 20
+                }
+                leftMargin += attributesLabel.frame.size.width
+            }
         }
         
         newFrame = self.productAttributeView.frame

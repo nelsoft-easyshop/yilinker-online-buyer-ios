@@ -62,6 +62,7 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
     var price: String = ""
     
     var hud: MBProgressHUD?
+    var isEditingAttributes: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -132,6 +133,7 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
         cell.tag = indexPath.row
 //        println(selectedValue)
         listAvailableCombinations()
+        cell.isEditingAttribute = isEditingAttributes
         cell.setAttribute(self.productDetailsModel.attributes[indexPath.row], availableCombination: self.availableCombination, selectedValue: self.selectedValue, selectedId: self.selectedId, width: self.view.frame.size.width)
         
         return cell
@@ -557,6 +559,7 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
     }
     
     func selectedAttribute(controller: ProductAttributeTableViewCell, attributeIndex: Int, attributeValue: String!, attributeId: Int) {
+        self.isEditingAttributes = true
         self.selectedId[attributeIndex] = String(attributeId)
         self.selectedValue[attributeIndex] = String(attributeValue)
         self.selectedCombination[attributeIndex] = String(attributeId)
@@ -564,6 +567,12 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
         for i in 0..<self.productDetailsModel.productUnits.count {
             if self.productDetailsModel.productUnits[i].combination == selectedId {
                 unitId = self.productDetailsModel.productUnits[i].productUnitId
+                
+                if self.productDetailsModel.productUnits[i].discountedPrice.floatValue != 0 {
+                    self.price = productDetailsModel.productUnits[i].price
+                } else {
+                    self.price = productDetailsModel.productUnits[i].discountedPrice
+                }
             }
         }
         
