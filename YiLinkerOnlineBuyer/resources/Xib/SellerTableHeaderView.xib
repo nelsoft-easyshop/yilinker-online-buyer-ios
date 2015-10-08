@@ -16,7 +16,7 @@
                         <constraint firstAttribute="height" constant="185" id="BZ5-ss-dNq"/>
                     </constraints>
                 </imageView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Ayala Ave. Makati City" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="6" translatesAutoresizingMaskIntoConstraints="NO" id="JAF-ug-Wnz">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Ayala Ave. Makati City" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" minimumFontSize="6" translatesAutoresizingMaskIntoConstraints="NO" id="JAF-ug-Wnz">
                     <rect key="frame" x="112" y="138" width="268" height="41"/>
                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="11"/>
                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
