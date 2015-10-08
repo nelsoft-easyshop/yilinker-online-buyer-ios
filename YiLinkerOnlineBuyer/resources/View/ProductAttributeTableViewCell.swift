@@ -34,6 +34,8 @@ class ProductAttributeTableViewCell: UITableViewCell, UIScrollViewDelegate {
     var productDetailModel: ProductDetailsModel!
     
     var scrollPosition: CGFloat = 0.0
+    var buttonWidths: [CGFloat] = []
+    var isEditingAttribute: Bool = true
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -92,6 +94,8 @@ class ProductAttributeTableViewCell: UITableViewCell, UIScrollViewDelegate {
             button.addTarget(self, action: "clickedAttriubte:", forControlEvents: .TouchUpInside)
             button.tag = attributesId[i].toInt()!
             
+            self.buttonWidths.append(button.frame.size.width)
+            
             leftMargin += buttonWidth + 10
 
             if availableCombinationString.rangeOfString(attributesId[i]) == nil {
@@ -104,14 +108,24 @@ class ProductAttributeTableViewCell: UITableViewCell, UIScrollViewDelegate {
                     button.layer.borderColor = Constants.Colors.appTheme.CGColor
                     button.backgroundColor = Constants.Colors.appTheme
                     button.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+                    
+                    if !self.isEditingAttribute {
+                        for j in 0..<i {
+                            self.scrollPosition += self.buttonWidths[j]
+                        }
+                    }
+
                 }
             }
             
             scroll.addSubview(button)
             scroll.contentSize = CGSize(width: CGFloat(leftMargin), height: scroll.frame.size.height)
         }
-//        scroll.backgroundColor = .greenColor()
+
         self.addSubview(scroll)
+        if self.scrollPosition > self.scroll.contentSize.width - self.frame.size.width {
+            self.scrollPosition = self.scroll.contentSize.width - self.frame.size.width
+        }
         self.scroll.contentOffset.x = self.scrollPosition
     }
     
