@@ -203,8 +203,8 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
     
     func passCategoryID(id: Int) {
         if Reachability.isConnectedToNetwork() {
-            requestSuggestionSearchUrl = "\(APIAtlas.productList)?categoryId=\(id)"
-            requestSearchDetails("\(APIAtlas.productList)?categoryId=\(id)", params: nil)
+            requestSuggestionSearchUrl = "\(APIAtlas.productList)?categoryIds=\(id)"
+            requestSearchDetails("\(APIAtlas.productList)?categoryIds=\(id)", params: nil)
         } else {
             UIAlertController.displayNoInternetConnectionError(self)
         }
