@@ -34,6 +34,8 @@ struct RegisterStrings {
     static let numbersAndLettersOnly: String = StringHelper.localizedStringWithKey("NUMBER_LETTERS_LOCALIZE_KEY")
     static let successRegister: String = StringHelper.localizedStringWithKey("SUCCESS_REGISTER_LOCALIZED_KEY")
     static let thankyou: String = StringHelper.localizedStringWithKey("THANKYOU_LOCALIZED_KEY")
+    
+    static let eightCharacters: String = StringHelper.localizedStringWithKey("EIGHT_CHARACTERS_LOCALIZED_KEY")
 }
 
 class RegisterViewController: UIViewController, UITextFieldDelegate {
@@ -242,13 +244,15 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
             errorMessage = RegisterStrings.illegalPassword
         } else if !self.passwordTextField.isValidPassword() {
             errorMessage = RegisterStrings.numbersAndLettersOnly
+        } else if !self.passwordTextField.isGreaterThanEightCharacters() {
+            errorMessage = RegisterStrings.eightCharacters
         } else if !self.reTypePasswordTextField.isNotEmpty() {
             errorMessage = RegisterStrings.reTypePasswordError
         } else if self.passwordTextField.text != self.reTypePasswordTextField.text {
             errorMessage = RegisterStrings.passwordNotMatch
         } else if self.mobileNumberTextField.text == "" {
             errorMessage = RegisterStrings.contactRequired
-        }
+        } 
         
         if errorMessage != "" {
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorMessage)
