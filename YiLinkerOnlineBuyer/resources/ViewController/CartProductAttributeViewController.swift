@@ -57,10 +57,10 @@ class CartProductAttributeViewController: UIViewController, UITableViewDelegate,
         let nib = UINib(nibName: "CartProductAttributeTableViewCell", bundle: nil)
         self.tableView.registerNib(nib, forCellReuseIdentifier: "CartProductAttributeTableViewCell")
         
-        let tap = UITapGestureRecognizer()
-        tap.numberOfTapsRequired = 1
-        tap.addTarget(self, action: "dimViewAction:")
-        self.dimView.addGestureRecognizer(tap)
+//        let tap = UITapGestureRecognizer()
+//        tap.numberOfTapsRequired = 1
+//        tap.addTarget(self, action: "dimViewAction:")
+//        self.dimView.addGestureRecognizer(tap)
         self.dimView.backgroundColor = .clearColor()
         
         initializeLocalizedString()
@@ -238,7 +238,7 @@ class CartProductAttributeViewController: UIViewController, UITableViewDelegate,
         
         productImageView.sd_setImageWithURL(NSURL(string: image), placeholderImage: UIImage(named: "dummy-placeholder"))
         nameLabel.text = title
-        priceLabel.text = price
+        priceLabel.text = price.formatToTwoDecimal()
     }
     
     func disableButton(button: UIButton) {
