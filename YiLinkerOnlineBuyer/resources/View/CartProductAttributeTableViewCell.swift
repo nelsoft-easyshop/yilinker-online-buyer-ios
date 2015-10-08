@@ -99,7 +99,8 @@ class CartProductAttributeTableViewCell: UITableViewCell {
                     if selectedAttributes.count < 2 {
                         tempSelectedAttributes.append(attributeIDs[i])
                     } else {
-                        tempSelectedAttributes[selectedAttributeIDIndex] = attributeIDs[i]
+                        //tempSelectedAttributes[selectedAttributeIDIndex] = attributeIDs[i]
+                        tempSelectedAttributes.append(attributeIDs[i])
                     }
                     println("Combination count \(availableCombinations.count)")
                     println("unitIDs \(unitIDs)")

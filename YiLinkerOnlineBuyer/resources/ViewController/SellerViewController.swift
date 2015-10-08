@@ -708,6 +708,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     func redirectToProductpageWithProductID(productID: String) {
         let productViewController: ProductViewController = ProductViewController(nibName: "ProductViewController", bundle: nil)
+        productViewController.tabController = self.tabBarController as! CustomTabBarController
         productViewController.productId = productID
         self.navigationController?.pushViewController(productViewController, animated: true)
     }

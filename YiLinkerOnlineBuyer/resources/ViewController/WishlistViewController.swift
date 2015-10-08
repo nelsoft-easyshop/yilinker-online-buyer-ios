@@ -108,7 +108,8 @@ class WishlistViewController: UIViewController, UITableViewDelegate, UITableView
                     } else {
                         (self.tabBarController!.tabBar.items![4] as! UITabBarItem).badgeValue = nil
                     }
-                    self.populateTableView(responseObject)
+                    //self.populateTableView(responseObject)
+                    self.getWishlistData()
                 }
                 self.dismissLoader()
             }, failure: {
