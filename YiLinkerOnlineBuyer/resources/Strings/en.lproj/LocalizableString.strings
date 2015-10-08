@@ -99,6 +99,8 @@ REGISTER_ME_NOW_LOCALIZE_KEY = "REGISTER ME NOW";
 NUMBER_LETTERS_LOCALIZE_KEY = "Password must be a combination of letters and numbers.";
 SUCCESS_REGISTER_LOCALIZED_KEY = "Successfully registered.";
 THANKYOU_LOCALIZED_KEY = "Thank you";
+MOBILE_LOCALIZED_KEY = "Mobile Number";
+REFERRAL_LOCALIZED_KEY = "Referral Code";
 
 // MARK: - Register Error
 FIRST_NAME_REQUIRED_LOCALIZE_KEY = "First name is required";
