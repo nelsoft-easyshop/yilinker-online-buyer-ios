@@ -615,6 +615,7 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
     func redirectToResultView(target: String, targetType: TargetType) {
         let resultViewController: ResultViewController = ResultViewController(nibName: "ResultViewController", bundle: nil)
         resultViewController.targetType = targetType
+        resultViewController.passModel(SearchSuggestionModel(suggestion: "", imageURL: "", searchUrl: target))
         self.navigationController!.pushViewController(resultViewController, animated: true)
     }
     
@@ -624,11 +625,15 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
     }
     
     func redirectToProductpageWithProductID(productID: String) {
-        println("product id: \(productID)")
-        let productViewController: ProductViewController = ProductViewController(nibName: "ProductViewController", bundle: nil)
-        productViewController.tabController = self.tabBarController as! CustomTabBarController
-        productViewController.productId = productID
-        self.navigationController?.pushViewController(productViewController, animated: true)
+        if productID.toInt() != nil {
+            let productViewController: ProductViewController = ProductViewController(nibName: "ProductViewController", bundle: nil)
+            productViewController.tabController = self.tabBarController as! CustomTabBarController
+            productViewController.productId = productID
+            self.navigationController?.pushViewController(productViewController, animated: true)
+        } else {
+            self.redirectToResultView(productID, targetType: TargetType.CategoryViewMoreItems)
+        }
+      
     }
     
     func redirectToSellerWithID(sellerID: Int) {
