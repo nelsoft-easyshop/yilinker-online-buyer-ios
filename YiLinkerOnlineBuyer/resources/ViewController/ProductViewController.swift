@@ -10,6 +10,7 @@ import UIKit
 
 struct ProductStrings {
     static let freeShipping = StringHelper.localizedStringWithKey("FREE_SHIPPING_LOCALIZE_KEY")
+    static let sevenDayReturn = StringHelper.localizedStringWithKey("SEVEN_DAY_RETURN_LOCALIZE_KEY")
     static let details = StringHelper.localizedStringWithKey("DETAILS_LOCALIZE_KEY")
     static let quantity = StringHelper.localizedStringWithKey("QUANTITY_LOCALIZE_KEY")
     static let description = StringHelper.localizedStringWithKey("DESCRIPTION_LOCALIZE_KEY")
@@ -38,6 +39,7 @@ struct ProductStrings {
     static let alertError = StringHelper.localizedStringWithKey("ERROR_LOCALIZE_KEY")
     static let alertFailed = StringHelper.localizedStringWithKey("FAILED_LOCALIZE_KEY")
     static let alertNoReviews = StringHelper.localizedStringWithKey("NO_REVIEWS_LOCALIZE_KEY")
+    static let cannotMessage = StringHelper.localizedStringWithKey("VENDOR_PAGE_CANNOT_MESSAGE_LOCALIZE_KEY")
 }
 
 protocol ProductViewControllerDelegate {
@@ -94,11 +96,14 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     
     var emptyView: EmptyView?
     var hud: MBProgressHUD?
-    
     var tabController = CustomTabBarController()
     
     var unitIdIndex: Int = 0
+    var isExiting: Bool = true
     
+    // Messaging
+    var selectedContact : W_Contact?
+    var contacts = [W_Contact()]
     // MARK: Parameters
     
     var unitId: String = "0"
@@ -132,6 +137,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     }
     
     override func viewWillAppear(animated: Bool) {
+        isExiting = true
         UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.Default
         self.navigationController?.navigationBar.barTintColor = .whiteColor()
         self.navigationController?.navigationBar.tintColor = .grayColor()
@@ -149,11 +155,13 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     }
     
     override func viewWillDisappear(animated: Bool) {
-        self.navigationController?.navigationBar.alpha = 1.0
-        self.navigationController?.navigationBar.barTintColor = Constants.Colors.appTheme
-        UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.LightContent
-        self.hud?.hide(true)
         super.viewWillDisappear(animated)
+        if isExiting {
+            self.navigationController?.navigationBar.alpha = 1.0
+            self.navigationController?.navigationBar.barTintColor = Constants.Colors.appTheme
+            UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.LightContent
+        }
+        self.hud?.hide(true)
     }
     
     // MARK: - Table View Data Source and Delegates
@@ -326,14 +334,21 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
             
             var seeMoreLabel = UILabel(frame: self.productReviewFooterView.frame)
             seeMoreLabel.frame.size.width = 90
-            seeMoreLabel.text = ProductStrings.seeMore
-            seeMoreLabel.textColor = .blueColor()
             seeMoreLabel.font = UIFont.systemFontOfSize(15.0)
             seeMoreLabel.textAlignment = .Center
             
-            var seeMoreImageView = UIImageView(frame: CGRectMake(seeMoreLabel.frame.size.width, (seeMoreLabel.frame.size.height / 2) - 6, 8, 12))
-            seeMoreImageView.image = UIImage(named: "seeMore")
-            seeMoreLabel.addSubview(seeMoreImageView)
+            if self.productReviewModel != nil && self.productReviewModel.reviews.count != 0 {
+                seeMoreLabel.text = ProductStrings.seeMore
+                seeMoreLabel.textColor = .blueColor()
+                
+                var seeMoreImageView = UIImageView(frame: CGRectMake(seeMoreLabel.frame.size.width, (seeMoreLabel.frame.size.height / 2) - 6, 8, 12))
+                seeMoreImageView.image = UIImage(named: "seeMore")
+                seeMoreLabel.addSubview(seeMoreImageView)
+            } else {
+                seeMoreLabel.frame.size.width = self.productReviewFooterView.frame.size.width
+                seeMoreLabel.text = ProductStrings.alertNoReviews
+                seeMoreLabel.textColor = .grayColor()
+            }
             
             seeMoreLabel.center.x = self.view.center.x - 5
             self.productReviewFooterView.addSubview(seeMoreLabel)
@@ -358,7 +373,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         
         manager.GET(APIAtlas.productDetails + id, parameters: nil, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            
+            println(responseObject)
             if responseObject["isSuccessful"] as! Bool {
                 self.productDetailsModel = ProductDetailsModel.parseDataWithDictionary(responseObject)
                 self.productId = self.productDetailsModel.id
@@ -368,8 +383,18 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
                 
                 self.attributes = self.productDetailsModel.attributes
                 self.requestSellerDetails()
+                self.requestContactsFromEndpoint()
             } else {
-                self.showAlert(title: ProductStrings.alertError, message: responseObject["message"] as! String)
+                let alert = UIAlertController(title: ProductStrings.alertError,
+                                            message: responseObject["message"] as? String,
+                                     preferredStyle: UIAlertControllerStyle.Alert)
+                let okButton = UIAlertAction(title: ProductStrings.alertOk,
+                                             style: UIAlertActionStyle.Cancel) { (alert) -> Void in
+                    self.barCloseAction()
+                }
+                alert.addAction(okButton)
+                self.presentViewController(alert, animated: true, completion: nil)
+                
                 self.hud?.hide(true)
                 self.addEmptyView()
             }
@@ -544,7 +569,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
                 if task.statusCode == 401 {
                     self.requestRefreshToken("cart")
                 } else {
-                    println(error)
+                    self.showAlert(title: ProductStrings.alertWentWrong, message: nil)
                     self.hud?.hide(true)
                 }
         })
@@ -600,18 +625,57 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
                 self.requestAddCartItem("")
             } else if type == "wishlist" {
                 self.requestUpdateWishlistItem()
-            } else {
+            } else if type == "message" {
+                self.requestContactsFromEndpoint()
+            }else {
                 println("else in product view refresh token")
             }
             
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 self.hud?.hide(true)
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                
                 self.showAlert(title: ProductStrings.alertWentWrong, message: nil)
-                
         })
+    }
+    
+    func requestContactsFromEndpoint(){
+            if (Reachability.isConnectedToNetwork()) {
+                self.showHUD()
+                
+                let manager: APIManager = APIManager.sharedInstance
+                manager.requestSerializer = AFHTTPRequestSerializer()
+                
+                let parameters: NSDictionary = [
+                    "page"          : "1",
+                    "limit"         : "30",
+                    "keyword"       : "",
+                    "access_token"  : SessionManager.accessToken()
+                    ]   as Dictionary<String, String>
+                
+                let url = APIAtlas.baseUrl + APIAtlas.ACTION_GET_CONTACTS
+                
+                manager.POST(url, parameters: parameters, success: {
+                    (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+                    self.contacts = W_Contact.parseContacts(responseObject as! NSDictionary)
+                    self.hud?.hide(true)
+                    }, failure: {
+                        (task: NSURLSessionDataTask!, error: NSError!) in
+                        let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                        
+                        if task.statusCode == 401 {
+                            if (SessionManager.isLoggedIn()){
+                                self.requestRefreshToken("message")
+                            }
+                        } else {
+                            if (SessionManager.isLoggedIn()){
+                                self.showAlert(title: Constants.Localized.error, message: Constants.Localized.someThingWentWrong)
+                            }
+                        }
+                        
+                        self.contacts = Array<W_Contact>()
+                        self.hud?.hide(true)
+                })
+            }
     }
     
     // MARK: - Methods
@@ -683,7 +747,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         
         self.productImagesView.setDetails(self.productDetailsModel, unitId: unitIdIndex, width: self.view.frame.size.width)
         //        self.setDetails(productDetailsModel.details)
-        self.setDetails([ProductStrings.freeShipping])
+        self.setDetails([ProductStrings.freeShipping, ProductStrings.sevenDayReturn])
         
         self.setAttributes(self.productDetailsModel.attributes, productUnits: self.productDetailsModel.productUnits, unitId: self.unitId, quantity: 1)
         self.productDescriptionView.setDescription(productDetailsModel.shortDescription, full: productDetailsModel.fullDescription)
@@ -771,7 +835,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
                 }
             }
         }
-        
+
         createAttributesLabel(selectedName.count, name: selectedName, value: selectedValue)
     }
     
@@ -783,27 +847,40 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         var labelWidth = (self.view.frame.size.width / 3)
         
         for i in 0..<numberOfAttributes {
-            if i % 3 == 0 && i != 0 {
-                topMargin += 23
-                reseter = 0
-                counter += 1
-            }
+//            if i % 3 == 0 && i != 0 {
+//                topMargin += 23
+//                reseter = 0
+//                counter += 1
+//            }
             
-            leftMargin = CGFloat(reseter * Int(labelWidth))
-            reseter += 1
+//            leftMargin = CGFloat(reseter * Int(labelWidth))
+//            reseter += 1
             
-            var attributesLabel = UILabel(frame: CGRectMake(leftMargin + 10, topMargin + 50, labelWidth - 12, 23))
+            var attributesLabel = UILabel(frame: CGRectMake(leftMargin + 10, topMargin + 50, 0, 23))
             attributesLabel.font = UIFont.systemFontOfSize(14.0)
             attributesLabel.textColor = .grayColor()
             
             var attributedCategory = NSMutableAttributedString(string: "\(name[i]): ")
             var font = [NSFontAttributeName : UIFont.boldSystemFontOfSize(14.0)]
-            var attributeItem = NSMutableAttributedString(string: value[i] as! String, attributes: font)
+            var attributeItem = NSMutableAttributedString(string: "\(value[i])          ", attributes: font)
             attributedCategory.appendAttributedString(attributeItem)
             
             attributesLabel.attributedText = attributedCategory
-            
+            attributesLabel.sizeToFit()
             self.productAttributeView.addSubview(attributesLabel)
+            
+            leftMargin += attributesLabel.frame.size.width
+            if leftMargin > self.view.frame.size.width {
+                counter++
+                leftMargin = 0.0
+                topMargin += 23
+                attributesLabel.frame = CGRectMake(leftMargin + 10, topMargin + 50, 0, 23)
+                attributesLabel.sizeToFit()
+                if attributesLabel.frame.size.width > self.view.frame.size.width - 20 {
+                    attributesLabel.frame.size.width = self.view.frame.size.width - 20
+                }
+                leftMargin += attributesLabel.frame.size.width
+            }
         }
         
         newFrame = self.productAttributeView.frame
@@ -892,6 +969,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     }
     
     func seeMoreAttribute(title: String) {
+        
         var attributeModal = ProductAttributeViewController(nibName: "ProductAttributeViewController", bundle: nil)
         attributeModal.delegate = self
         attributeModal.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
@@ -899,7 +977,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         attributeModal.definesPresentationContext = true
         attributeModal.view.backgroundColor = UIColor.clearColor()
         attributeModal.view.frame.origin.y = attributeModal.view.frame.size.height
-        attributeModal.passModel(productDetailsModel: productDetailsModel, selectedValue: selectedValue, selectedId: selectedId, unitIdIndex: unitIdIndex, quantity: self.quantity)
+        attributeModal.passModel(productDetailsModel: productDetailsModel, selectedValue: selectedValue, selectedId: selectedId, unitIdIndex: unitIdIndex, quantity: self.quantity, price: self.productImagesView.priceLabel.text!, imageIndex: self.productImagesView.pageControl.currentPage)
         attributeModal.setTitle = title
         attributeModal.tabController = self.tabController
         attributeModal.screenWidth = self.view.frame.width
@@ -916,9 +994,12 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     // MARK: - Product Description Delegate
     
     func seeMoreDescription(controller: ProductDescriptionView) {
+        isExiting = false
         let description = ProductDescriptionViewController(nibName: "ProductDescriptionViewController", bundle: nil)
         description.url = self.productDetailsModel.fullDescription
-        self.tabBarController?.presentViewController(description, animated: true, completion: nil)
+        description.title = self.productDetailsModel.title
+        let root: UINavigationController = UINavigationController(rootViewController: description)
+        self.tabBarController?.presentViewController(root, animated: true, completion: nil)
     }
     
     // MARK: - Product Attribute Delegate
@@ -941,11 +1022,12 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         
     }
     
-    func doneActionPassDetailsToProductView(controller: ProductAttributeViewController, unitId: String, quantity: Int, selectedId: NSArray) {
+    func doneActionPassDetailsToProductView(controller: ProductAttributeViewController, unitId: String, quantity: Int, selectedId: NSArray, images: [String]) {
         self.unitId = unitId
         self.selectedId = selectedId as! [String]
         self.quantity = quantity
         self.setAttributes(self.productDetailsModel.attributes, productUnits: self.productDetailsModel.productUnits, unitId: unitId, quantity: quantity)
+        self.productImagesView.updateDetails(self.productDetailsModel, unitId: unitIdIndex, images: images)
     }
     
     func gotoCheckoutFromAttributes(controller: ProductAttributeViewController) {
@@ -1056,18 +1138,39 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
                 self.view.transform = CGAffineTransformMakeScale(0.92, 0.93)
                 self.navigationController?.navigationBar.alpha = 0.0
             })
-        } else {
-            self.showAlert(title: ProductStrings.alertNoReviews, message: nil)
         }
+//        else {
+//            self.showAlert(title: ProductStrings.alertNoReviews, message: nil)
+//        }
     }
     
     func barMessageAction() {
-        //        let messaging = ConversationVC(nibName: "MessagingViewController", bundle: nil)
-        //        self.navigationController?.pushViewController(messaging, animated: true)
-        
         let storyBoard: UIStoryboard = UIStoryboard(name: "HomeStoryBoard", bundle: nil)
-        let messagingViewController: ConversationVC = (storyBoard.instantiateViewControllerWithIdentifier("ConversationVC") as? ConversationVC)!
-        self.navigationController?.pushViewController(messagingViewController, animated: true)
+        let messagingViewController: MessageThreadVC = (storyBoard.instantiateViewControllerWithIdentifier("MessageThreadVC") as? MessageThreadVC)!
+        
+        var canMessage: Bool = false
+        for var i = 0; i < self.contacts.count; i++ {
+            if "\(self.productDetailsModel.sellerId)" == contacts[i].userId {
+                self.selectedContact = contacts[i]
+                canMessage = true
+            }
+        }
+        
+        var isOnline = "-1"
+        if (SessionManager.isLoggedIn()){
+            isOnline = "1"
+        } else {
+            isOnline = "0"
+        }
+        messagingViewController.sender = W_Contact(fullName: SessionManager.userFullName() , userRegistrationIds: "", userIdleRegistrationIds: "", userId: SessionManager.accessToken(), profileImageUrl: SessionManager.profileImageStringUrl(), isOnline: isOnline)
+        messagingViewController.recipient = selectedContact
+        
+        if canMessage {
+            self.navigationController?.pushViewController(messagingViewController, animated: true)
+        } else {
+            self.showAlert(title: Constants.Localized.error, message: ProductStrings.cannotMessage)
+            //UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "You're allowed to message this seller. Please login first.", title: "Error")
+        }
     }
     
     func barShareAction() {

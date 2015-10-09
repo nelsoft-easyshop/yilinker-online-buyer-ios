@@ -16,33 +16,21 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ggd-0M-b5P">
-                    <rect key="frame" x="0.0" y="61" width="375" height="606"/>
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <connections>
                         <outlet property="delegate" destination="i5M-Pr-FkT" id="rjS-zI-QvT"/>
                     </connections>
                 </webView>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S04-DG-gIt">
-                    <rect key="frame" x="18" y="18" width="25" height="26"/>
-                    <state key="normal" backgroundImage="close">
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                    <connections>
-                        <action selector="closeAction:" destination="-1" eventType="touchUpInside" id="KdG-iz-724"/>
-                    </connections>
-                </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="Ggd-0M-b5P" secondAttribute="trailing" id="8Nj-1p-85w"/>
                 <constraint firstAttribute="bottom" secondItem="Ggd-0M-b5P" secondAttribute="bottom" id="KIQ-Up-1ex"/>
                 <constraint firstItem="Ggd-0M-b5P" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="KtM-4R-Fyd"/>
-                <constraint firstItem="Ggd-0M-b5P" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="61" id="i5J-YD-2JL"/>
+                <constraint firstItem="Ggd-0M-b5P" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="i5J-YD-2JL"/>
             </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
         </view>
     </objects>
-    <resources>
-        <image name="close" width="22" height="22"/>
-    </resources>
 </document>

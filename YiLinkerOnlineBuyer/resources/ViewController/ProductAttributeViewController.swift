@@ -10,7 +10,7 @@ import UIKit
 
 protocol ProductAttributeViewControllerDelegate {
     func dissmissAttributeViewController(controller: ProductAttributeViewController, type: String)
-    func doneActionPassDetailsToProductView(controller: ProductAttributeViewController, unitId: String, quantity: Int, selectedId: NSArray)
+    func doneActionPassDetailsToProductView(controller: ProductAttributeViewController, unitId: String, quantity: Int, selectedId: NSArray, images: [String])
     func gotoCheckoutFromAttributes(controller: ProductAttributeViewController)
 }
 
@@ -38,6 +38,7 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
     var minimumStock = 1
     var maximumStock = 1
     var stocks: Int = 0
+    var imageUrls: [String] = []
     
     var productDetailsModel: ProductDetailsModel!
     var attributes: [ProductAttributeModel] = []
@@ -58,8 +59,10 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
     var accessToken = ""
     var quantity: Int = 1
     var unitId: String = ""
+    var price: String = ""
     
     var hud: MBProgressHUD?
+    var isEditingAttributes: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -128,15 +131,16 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
         cell.delegate = self
         cell.passProductDetailModel(self.productDetailsModel)
         cell.tag = indexPath.row
-        println(selectedValue)
+//        println(selectedValue)
         listAvailableCombinations()
+        cell.isEditingAttribute = isEditingAttributes
         cell.setAttribute(self.productDetailsModel.attributes[indexPath.row], availableCombination: self.availableCombination, selectedValue: self.selectedValue, selectedId: self.selectedId, width: self.view.frame.size.width)
         
         return cell
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        println(indexPath.row)
+//        println(indexPath.row)
     }
     
     // MARK: - Actions
@@ -168,8 +172,8 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
             hideSelf("done")
             if let delegate = self.delegate {
                 let quantity: Int = stocksLabel.text!.toInt()!
-                println(unitId)
-                delegate.doneActionPassDetailsToProductView(self, unitId: unitId, quantity: quantity, selectedId: selectedId)
+//                println(unitId)
+                delegate.doneActionPassDetailsToProductView(self, unitId: unitId, quantity: quantity, selectedId: selectedId, images: self.imageUrls)
             }
         } else {
             hideSelf("cancel")
@@ -286,12 +290,12 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
         }
         
         regex += ")"
-        println(regex)
+//        println(regex)
         
         let re = NSRegularExpression(pattern: regex, options: nil, error: nil)!
         let matches = re.matchesInString(combinationString, options: nil, range: NSRange(location: 0, length: count(combinationString.utf16)))
         
-        println("number of matches: \(matches.count)")
+//        println("number of matches: \(matches.count)")
         
         for match in matches as! [NSTextCheckingResult] {
             let substring = (combinationString as NSString).substringWithRange(match.rangeAtIndex(1))
@@ -322,6 +326,8 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
             stocksLabel.text = String(stringInterpolationSegment: stocks)
         }
         
+        priceLabel.text = "₱" + (price.floatValue * self.stocksLabel.text!.floatValue).string(2)
+        
         if stocks == 0 {
             disableButton(increaseButton)
             disableButton(decreaseButton)
@@ -342,11 +348,10 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
         
     }
     
-    func setDetail(image: String, title: String, price: String) {
+    func setDetail(#image: String, title: String, price: String) {
         
-        productImageView.sd_setImageWithURL(NSURL(string: image), placeholderImage: UIImage(named: "dummy-placeholder"))
+//        productImageView.sd_setImageWithURL(NSURL(string: image), placeholderImage: UIImage(named: "dummy-placeholder"))
         nameLabel.text = title
-        priceLabel.text = price
     }
     
     func disableButton(button: UIButton) {
@@ -433,7 +438,10 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
                     self.requestRefreshToken()
                 } else {
                     println(error)
-                    self.hud?.hide(true)
+                    let alertController = UIAlertController(title: ProductStrings.alertWentWrong, message: nil, preferredStyle: .Alert)
+                    let defaultAction = UIAlertAction(title: ProductStrings.alertOk, style: .Default, handler: nil)
+                    alertController.addAction(defaultAction)
+                    self.presentViewController(alertController, animated: true, completion: nil)
                 }
         })
     }
@@ -492,15 +500,44 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
     
     // MARK: - Delegates
     
-    func passModel(#productDetailsModel: ProductDetailsModel, selectedValue: NSArray, selectedId: NSArray, unitIdIndex: Int, quantity: Int) {
+    func passModel(#productDetailsModel: ProductDetailsModel, selectedValue: NSArray, selectedId: NSArray, unitIdIndex: Int, quantity: Int, price: String, imageIndex: Int) {
         
-        setDetail("", title: productDetailsModel.title, price: productDetailsModel.productUnits[unitIdIndex].price)
-        self.productDetailsModel = productDetailsModel
         self.attributes = productDetailsModel.attributes as [ProductAttributeModel]
         self.selectedId = selectedId as! [String]
         self.selectedValue = selectedValue as! [String]
         self.unitId = productDetailsModel.productUnits[unitIdIndex].productUnitId
         self.selectedCombination = productDetailsModel.productUnits[unitIdIndex].combination
+        
+//        setDetail(image: productDetailsModel.images[unitIdIndex].imageLocation, title: productDetailsModel.title, price: price)
+        self.productDetailsModel = productDetailsModel
+        self.nameLabel.text = productDetailsModel.title
+        if productDetailsModel.productUnits[unitIdIndex].discount == 0 {
+            self.price = productDetailsModel.productUnits[unitIdIndex].price
+        } else {
+            self.price = productDetailsModel.productUnits[unitIdIndex].discountedPrice
+        }
+        
+        self.imageUrls = []
+        for i in 0..<self.productDetailsModel.productUnits.count {
+            if selectedCombination == self.productDetailsModel.productUnits[i].combination {
+                if self.productDetailsModel.productUnits[i].imageIds.count != 0 {
+                    for j in 0..<self.productDetailsModel.productUnits[i].imageIds.count {
+                        for l in 0..<self.productDetailsModel.images.count {
+                            if self.productDetailsModel.productUnits[i].imageIds[j] == self.productDetailsModel.images[l].id {
+                                self.imageUrls.append(self.productDetailsModel.images[l].imageLocation)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
+        if self.imageUrls.count != 0 {
+            println(self.imageUrls[0])
+            self.productImageView.sd_setImageWithURL(NSURL(string: self.imageUrls[0]), placeholderImage: UIImage(named: "dummy-placeholder"))
+        }
+        
+        
         
         self.maximumStock = productDetailsModel.productUnits[unitIdIndex].quantity
         self.availabilityStocksLabel.text = ProductStrings.availableStocks + " : \(productDetailsModel.productUnits[unitIdIndex].quantity)"
@@ -522,6 +559,7 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
     }
     
     func selectedAttribute(controller: ProductAttributeTableViewCell, attributeIndex: Int, attributeValue: String!, attributeId: Int) {
+        self.isEditingAttributes = true
         self.selectedId[attributeIndex] = String(attributeId)
         self.selectedValue[attributeIndex] = String(attributeValue)
         self.selectedCombination[attributeIndex] = String(attributeId)
@@ -529,14 +567,42 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
         for i in 0..<self.productDetailsModel.productUnits.count {
             if self.productDetailsModel.productUnits[i].combination == selectedId {
                 unitId = self.productDetailsModel.productUnits[i].productUnitId
+                
+                if self.productDetailsModel.productUnits[i].discountedPrice.floatValue != 0 {
+                    self.price = productDetailsModel.productUnits[i].price
+                } else {
+                    self.price = productDetailsModel.productUnits[i].discountedPrice
+                }
             }
+        }
+        
+        var index: Int = 0
+        self.imageUrls = []
+        for i in 0..<self.productDetailsModel.productUnits.count {
+            if selectedCombination == self.productDetailsModel.productUnits[i].combination {
+                index = i
+                if self.productDetailsModel.productUnits[i].imageIds.count != 0 {
+                    for j in 0..<self.productDetailsModel.productUnits[i].imageIds.count {
+                        for l in 0..<self.productDetailsModel.images.count {
+                            if self.productDetailsModel.productUnits[i].imageIds[j] == self.productDetailsModel.images[l].id {
+                                self.imageUrls.append(self.productDetailsModel.images[l].imageLocation)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
+        if self.imageUrls.count != 0 {
+            println(self.imageUrls[0])
+            self.productImageView.sd_setImageWithURL(NSURL(string: self.imageUrls[0]), placeholderImage: UIImage(named: "dummy-placeholder"))
         }
         
         maximumStock = availableStock(selectedCombination)
         self.availabilityStocksLabel.text = "Available stocks : " + String(maximumStock)
         
         listAvailableCombinations()
-        println(self.availableCombination)
+//        println(self.availableCombination)
         self.tableView.reloadData()
         
         if self.maximumStock != 0 {

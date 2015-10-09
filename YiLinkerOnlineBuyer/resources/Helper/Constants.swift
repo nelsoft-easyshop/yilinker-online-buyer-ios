@@ -17,7 +17,7 @@ struct Constants {
         static let serverError: String = StringHelper.localizedStringWithKey("SERVER_ERROR_LOCALIZE_KEY")
         static let next: String = StringHelper.localizedStringWithKey("NEXT_LOCALIZE_KEY")
         static let previous: String = StringHelper.localizedStringWithKey("PREVIOUS_LOCALIZE_KEY")
-        
+        static let information: String = StringHelper.localizedStringWithKey("INFORMATION_LOCALIZE_KEY")
         static let noInternet: String = StringHelper.localizedStringWithKey("NO_INTERNET_LOCALIZE_KEY")
         static let noInternetErrorMessage: String = StringHelper.localizedStringWithKey("NO_INTERNET_ERROR_MESSAGE_LOCALIZE_KEY")
     }
@@ -66,6 +66,7 @@ struct Constants {
         static let clientSecret = "317eq8nohry84ooc0o8woo8000c0k844c4cggws84g80scwwog"
         static let grantRefreshToken = "refresh_token"
         static let grantBuyer = "http://yilinker-online.com/grant/buyer"
+        static let gmailCredential = "77221172849-n36r30ej3j5dna4rfvldrjrt9oo7jl94.apps.googleusercontent.com"
     }
 
     struct Seller {

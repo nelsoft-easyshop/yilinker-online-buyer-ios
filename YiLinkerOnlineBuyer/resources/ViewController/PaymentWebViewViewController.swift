@@ -19,6 +19,7 @@ class PaymentWebViewViewController: UIViewController, UIWebViewDelegate {
 
     @IBOutlet weak var webView: UIWebView!
     
+    var counter: Int = 0
     var pesoPayModel: PesoPayModel!
     var delegate: PaymentWebViewViewControllerDelegate?
     var hud: MBProgressHUD?
@@ -78,21 +79,29 @@ class PaymentWebViewViewController: UIViewController, UIWebViewDelegate {
     func webView(webView: UIWebView, shouldStartLoadWithRequest request: NSURLRequest, navigationType: UIWebViewNavigationType) -> Bool {
         var isContinue: Bool = true
         var url: NSURL = request.mainDocumentURL!
-        if "\(url)".contains("checkout/overview?Ref=") && "\(url)" != "\(self.pesoPayModel.paymentUrl)" {
-            var stringUrl: String = "\(url)"
-            let array: [String] = stringUrl.componentsSeparatedByString("Ref=")
-            
-            let referenceNumber: String = array[1]
-            self.done(referenceNumber)
-            isContinue = false
-        } else if url == self.pesoPayModel.cancelUrl {
-            self.dismissViewControllerAnimated(true, completion: nil)
-            isContinue = false
-        } else if url == self.pesoPayModel.failUrl {
-            self.dismissViewControllerAnimated(true, completion: nil)
-            isContinue = false
+        println(counter)
+        if counter != 0 {
+            println("cancel url: \(self.pesoPayModel.cancelUrl)")
+            if "\(url)".contains("checkout/overview?Ref=") && "\(url)" != "\(self.pesoPayModel.paymentUrl)" {
+                var stringUrl: String = "\(url)"
+                let array: [String] = stringUrl.componentsSeparatedByString("Ref=")
+                
+                let referenceNumber: String = array[1]
+                self.done(referenceNumber)
+                isContinue = false
+            } else if "\(url)".contains("\(pesoPayModel.cancelUrl)") && "\(url)" != "\(self.pesoPayModel.cancelUrl)" {
+                counter = 0
+                self.dismissViewControllerAnimated(true, completion: nil)
+                isContinue = false
+            } else if url == self.pesoPayModel.failUrl {
+                counter = 0
+                self.dismissViewControllerAnimated(true, completion: nil)
+                isContinue = false
+            } else {
+                self.showHUD()
+            }
         } else {
-            self.showHUD()
+            counter++
         }
         
         return isContinue
@@ -102,7 +111,7 @@ class PaymentWebViewViewController: UIViewController, UIWebViewDelegate {
     func fireOverView(transactionId: String) {
         self.showHUD()
         let manager: APIManager = APIManager.sharedInstance
-        let parameters: NSDictionary = ["access_token": SessionManager.accessToken(), "transactionId": transactionId]
+        let parameters: NSDictionary = ["access_token": SessionManager.accessToken(), "transactionId": transactionId, "transactionClear": true]
         manager.POST(APIAtlas.overViewUrl, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             self.hud?.hide(true)

@@ -42,7 +42,7 @@ class ProfileTableViewCell: UITableViewCell {
     @IBOutlet weak var editProfileButton: UIButton!
     @IBOutlet weak var transactionsButton: UIButton!
     @IBOutlet weak var activityLogButton: UIButton!
-    @IBOutlet weak var myPointsButton: UIButton!
+//    @IBOutlet weak var myPointsButton: UIButton!
     @IBOutlet weak var resolutionButton: UIButton!
     @IBOutlet weak var settingsButton: UIButton!
     
@@ -60,7 +60,7 @@ class ProfileTableViewCell: UITableViewCell {
         editProfileButton.layer.cornerRadius = editProfileButton.frame.height / 2
         transactionsButton.layer.cornerRadius = transactionsButton.frame.height / 2
         activityLogButton.layer.cornerRadius = activityLogButton.frame.height / 2
-        myPointsButton.layer.cornerRadius = myPointsButton.frame.height / 2
+        //myPointsButton.layer.cornerRadius = myPointsButton.frame.height / 2
         resolutionButton.layer.cornerRadius = resolutionButton.frame.height / 2
         settingsButton.layer.cornerRadius = settingsButton.frame.height / 2
     }
@@ -70,7 +70,7 @@ class ProfileTableViewCell: UITableViewCell {
         let transactionsLocalizeString: String = StringHelper.localizedStringWithKey("TRANSACTIONS_LOCALIZE_KEY")
         let editProfileLocalizeString: String = StringHelper.localizedStringWithKey("EDITPROFILE_LOCALIZE_KEY")
         let activityLogsLocalizeString: String = StringHelper.localizedStringWithKey("ACTIVITYLOGS_LOCALIZE_KEY")
-        let myPointsLocalizeString: String = StringHelper.localizedStringWithKey("MYPOINTS_LOCALIZE_KEY")
+//        let myPointsLocalizeString: String = StringHelper.localizedStringWithKey("MYPOINTS_LOCALIZE_KEY")
         let resolutionCenterLocalizeString: String = StringHelper.localizedStringWithKey("RESOLUTIONCENTER_LOCALIZE_KEY")
         let settingssLocalizeString: String = StringHelper.localizedStringWithKey("SETTINGS_LOCALIZE_KEY")
         
@@ -79,7 +79,7 @@ class ProfileTableViewCell: UITableViewCell {
         editProfileLabel.text = editProfileLocalizeString
         transactionButtonLabel.text = transactionsLocalizeString
         activityLogsLabel.text = activityLogsLocalizeString
-        myPointsLabel.text = myPointsLocalizeString
+//        myPointsLabel.text = myPointsLocalizeString
         resolutionCenterLabel.text = resolutionCenterLocalizeString
         settingsLabel.text = settingssLocalizeString
     }
@@ -94,8 +94,8 @@ class ProfileTableViewCell: UITableViewCell {
         var activityLog = UITapGestureRecognizer(target:self, action:"tapActivityLogViewAction")
         activityLogView.addGestureRecognizer(activityLog)
         
-        var myPoints = UITapGestureRecognizer(target:self, action:"tapMyPointsViewAction")
-        myPointsView.addGestureRecognizer(myPoints)
+//        var myPoints = UITapGestureRecognizer(target:self, action:"tapMyPointsViewAction")
+//        myPointsView.addGestureRecognizer(myPoints)
         
         var resolution = UITapGestureRecognizer(target:self, action:"tapResolutionViewAction")
         resolutionView.addGestureRecognizer(resolution)

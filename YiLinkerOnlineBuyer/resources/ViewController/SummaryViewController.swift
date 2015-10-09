@@ -134,7 +134,7 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
         if indexPath.section == 0 {
             let product: CartProductDetailsModel = self.cartItems[indexPath.row]
             let orderSummaryCell: OrderSummaryTableViewCell = tableView.dequeueReusableCellWithIdentifier(Constants.Checkout.orderSummaryTableViewCellNibNameAndIdentifier) as! OrderSummaryTableViewCell
-            orderSummaryCell.productImageView.sd_setImageWithURL(NSURL(string: product.image)!, placeholderImage: UIImage(named: "dummy-placeholder"))
+            orderSummaryCell.productImageView.sd_setImageWithURL(NSURL(string: product.images[0])!, placeholderImage: UIImage(named: "dummy-placeholder"))
             orderSummaryCell.itemTitleLabel.text = product.title
             orderSummaryCell.quantityLabel.text = "\(product.quantity)"
             

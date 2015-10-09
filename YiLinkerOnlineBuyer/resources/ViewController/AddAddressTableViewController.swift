@@ -99,7 +99,6 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
             } else if indexPath.row == 3 {
                 
                 cell.rowTextField.text = self.addressModel.streetNumber
-                cell.rowTitleLabel.required()
             } else if indexPath.row == 4 {
                 
                 cell.rowTextField.text = self.addressModel.streetName
@@ -270,8 +269,6 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
         
         if self.addressModel.title == "" {
            showAlert(title: AddressStrings.incompleteInformation, message: AddressStrings.addressTitleRequired)
-        } else if self.addressModel.streetNumber == "" {
-            showAlert(title: AddressStrings.incompleteInformation, message: AddressStrings.streetNumberRequired)
         } else if self.addressModel.streetName == "" {
             showAlert(title: AddressStrings.incompleteInformation, message: AddressStrings.streetNameRequired)
         } else if self.addressModel.zipCode == "" {

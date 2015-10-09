@@ -57,10 +57,10 @@ class CartProductAttributeViewController: UIViewController, UITableViewDelegate,
         let nib = UINib(nibName: "CartProductAttributeTableViewCell", bundle: nil)
         self.tableView.registerNib(nib, forCellReuseIdentifier: "CartProductAttributeTableViewCell")
         
-        let tap = UITapGestureRecognizer()
-        tap.numberOfTapsRequired = 1
-        tap.addTarget(self, action: "dimViewAction:")
-        self.dimView.addGestureRecognizer(tap)
+//        let tap = UITapGestureRecognizer()
+//        tap.numberOfTapsRequired = 1
+//        tap.addTarget(self, action: "dimViewAction:")
+//        self.dimView.addGestureRecognizer(tap)
         self.dimView.backgroundColor = .clearColor()
         
         initializeLocalizedString()
@@ -186,15 +186,17 @@ class CartProductAttributeViewController: UIViewController, UITableViewDelegate,
                 }
             }
             
+            priceLabel.text = selectedProductUnit.price.formatToTwoDecimal()
             self.maximumStock = selectedProductUnit.quantity
             stocks = productDetailModel!.quantity
             checkStock(stocks)
-            self.availabilityStocksLabel.text = availableLocalizeString + String(maximumStock)
+            self.availabilityStocksLabel.text = availableLocalizeString + ": " + String(maximumStock)
         } else {
+            priceLabel.text = "0".formatToTwoDecimal()
             self.maximumStock = 0
             stocks = 0
             checkStock(stocks)
-            self.availabilityStocksLabel.text = availableLocalizeString + String(0)
+            self.availabilityStocksLabel.text = availableLocalizeString + ": " + String(0)
         }
         
     }
@@ -236,7 +238,7 @@ class CartProductAttributeViewController: UIViewController, UITableViewDelegate,
         
         productImageView.sd_setImageWithURL(NSURL(string: image), placeholderImage: UIImage(named: "dummy-placeholder"))
         nameLabel.text = title
-        priceLabel.text = price
+        priceLabel.text = price.formatToTwoDecimal()
     }
     
     func disableButton(button: UIButton) {

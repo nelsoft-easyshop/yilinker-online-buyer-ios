@@ -13,7 +13,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GGLInstanceIDDelegate {
 
     var window: UIWindow?
     var gcmSenderID = "976304473940"
-    var connectedToGCM = false
+    var connectedToGCM = false 
     var registrationToken: String?
     var registrationOptions = [String: AnyObject]()
     
@@ -234,12 +234,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GGLInstanceIDDelegate {
         openURL url: NSURL,
         sourceApplication: String?,
         annotation: AnyObject?) -> Bool {
-
-        return FBSDKApplicationDelegate.sharedInstance().application(
-            application,
-            openURL: url,
-            sourceApplication: sourceApplication,
-            annotation: annotation)
+            
+            let sessionManager: SessionManager = SessionManager.sharedInstance
+           
+            if sessionManager.loginType == LoginType.FacebookLogin {
+                return FBSDKApplicationDelegate.sharedInstance().application(
+                    application,
+                    openURL: url,
+                    sourceApplication: sourceApplication,
+                    annotation: annotation)
+            } else {
+                return GPPURLHandler.handleURL(url, sourceApplication: sourceApplication, annotation: annotation)
+            }
     }
 
     func signIn(signIn: GIDSignIn!, didDisconnectWithUser user:GIDGoogleUser!,

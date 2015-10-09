@@ -13,4 +13,12 @@ class StringHelper: NSObject {
         let string: String = NSLocalizedString(key, tableName: "LocalizableString", comment: "comment")
         return string
     }
+    
+    class func required(text: String) -> NSAttributedString {
+        var string = "\(text)*"
+        var myMutableString = NSMutableAttributedString(string: string)
+        let stringCount: Int = count(string)
+        myMutableString.addAttribute(NSForegroundColorAttributeName, value: UIColor.redColor(), range: NSRange(location: stringCount - 1,length:1))
+        return myMutableString
+    }
 }

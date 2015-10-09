@@ -30,12 +30,14 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
     var transactionId: String = ""
     var totalProducts: String = ""
     var orderStatus: String = ""
+    var orderStatusId: String = ""
     var paymentType: String = ""
     var dateCreated: String = ""
     var totalQuantity: String = ""
     var totalUnitCost: String = ""
     var shippingFee: String = ""
     var totalCost: String = ""
+    var orderId: String = ""
     
     var total_unit_price: Float = 0.0
     var total_handling_fee: Float = 0.0
@@ -82,6 +84,13 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
     var viewFeedback = StringHelper.localizedStringWithKey("TRANSACTION_DETAILS_VIEW_FEEDBACK_LOCALIZE_KEY")
     var leaveFeedback = StringHelper.localizedStringWithKey("TRANSACTION_DETAILS_LEAVE_FEEDBACK_LOCALIZE_KEY")
     var message = StringHelper.localizedStringWithKey("TRANSACTION_DETAILS_MESSAGE_LOCALIZE_KEY")
+    
+    //Error messages
+    let ok: String = StringHelper.localizedStringWithKey("OKBUTTON_LOCALIZE_KEY")
+    let somethingWentWrong: String = StringHelper.localizedStringWithKey("SOMETHINGWENTWRONG_LOCALIZE_KEY")
+    let error: String = StringHelper.localizedStringWithKey("ERROR_LOCALIZE_KEY")
+    let errorFeedback: String = StringHelper.localizedStringWithKey("TRANSACTION_DETAILS_NOT_ALLOWED_FEEDBACK_LOCALIZE_KEY")
+    let errorMessage: String = StringHelper.localizedStringWithKey("TRANSACTION_DETAILS_NOT_ALLOWED_FEEDBACK_LOCALIZE_KEY")
     
     var selectedContact : W_Contact?
     var emptyView : EmptyView?
@@ -193,14 +202,14 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
         return self.transactionSectionView
         
     }
-    
+    /*
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         //self.transactionIdView =
         
         
         return XibHelper.puffViewWithNibName("TransactionViews", index: 8) as! TransactionSectionHeaderView
     }
-    
+    */
     func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return 140
     }
@@ -252,9 +261,9 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
             transactionDetailsView.paymentTypeLabel.text = self.paymentType
             transactionDetailsView.dateCreatedLabel.text = self.dateCreated
             transactionDetailsView.quantityLabel.text = self.totalQuantity
-            transactionDetailsView.unitCostLabel.text = self.total_unit_price.stringToFormat(2)
-            transactionDetailsView.shippingFeeLabel.text = self.total_handling_fee.stringToFormat(2)
-            transactionDetailsView.totalCostLabel.text = ((self.totalCost as NSString).floatValue).stringToFormat(2)
+            transactionDetailsView.unitCostLabel.text = "\((self.totalUnitCost).formatToTwoDecimal())"
+            transactionDetailsView.shippingFeeLabel.text = "\((self.shippingFee).formatToTwoDecimal())"
+            transactionDetailsView.totalCostLabel.text = "\((self.totalCost).formatToTwoDecimal())"
             
             self.transactionDetailsView.frame.size.width = self.view.frame.size.width
         }
@@ -385,6 +394,7 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
         let feedbackView = TransactionLeaveSellerFeedbackViewController(nibName: "TransactionLeaveSellerFeedbackViewController", bundle: nil)
         feedbackView.edgesForExtendedLayout = UIRectEdge.None
         feedbackView.sellerId = tag
+        feedbackView.orderId = self.orderId.toInt()!
         self.navigationController?.pushViewController(feedbackView, animated: true)
     }
     
@@ -412,17 +422,21 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
         if self.canMessage {
             self.navigationController?.pushViewController(messagingViewController, animated: true)
         } else {
-            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "You cannot allowed to message this seller.", title: "Error")
+            self.showAlert(title: self.error, message: self.errorMessage)
         }
         
     }
     
     //MARK: View sellers feedback
     func leaveSellerFeedback(title: String, tag: Int) {
-        println("\(self.transactionSectionView.leaveFeedbackButton.titleLabel?.text) \(tag)")
+        println("\(self.transactionSectionView.leaveFeedbackButton.titleLabel?.text) \(tag) orderStatusId \(self.orderStatusId )")
         if title == self.leaveFeedback {
-            self.leaveFeedback(tag)
-            println("leave feedback \(tag)")
+            if self.orderStatusId == "3" || self.orderStatusId == "6"{
+                self.leaveFeedback(tag)
+            } else {
+                self.showAlert(title: self.error, message: self.errorFeedback)
+            }
+             println("leave feedback \(tag)")
         } else {
             self.showView()
             var attributeModal = ViewFeedBackViewController(nibName: "ViewFeedBackViewController", bundle: nil)
@@ -503,10 +517,11 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
                         
                         if task.statusCode == 401 {
                             if (SessionManager.isLoggedIn()){
-                                self.fireRefreshToken()
+                                //self.fireRefreshToken()
                             }
+                            self.fireRefreshToken()
                         } else {
-                            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+                            self.showAlert(title: self.error, message: self.somethingWentWrong)
                         }
                         
                         self.contacts = Array<W_Contact>()
@@ -528,9 +543,16 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                 self.hud?.hide(true)
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+               self.showAlert(title: self.error, message: self.somethingWentWrong)
         })
         
+    }
+    
+    func showAlert(#title: String!, message: String!) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+        let defaultAction = UIAlertAction(title: self.ok, style: .Default, handler: nil)
+        alertController.addAction(defaultAction)
+        presentViewController(alertController, animated: true, completion: nil)
     }
     
     //MARK: Show HUD

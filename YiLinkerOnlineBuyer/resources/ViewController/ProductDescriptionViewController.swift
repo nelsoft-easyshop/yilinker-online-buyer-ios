@@ -19,9 +19,16 @@ class ProductDescriptionViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         webView.loadHTMLString(url, baseURL: nil)
+        
+        self.navigationController?.navigationBar.barTintColor = .whiteColor()
+        self.navigationController?.navigationBar.tintColor = .grayColor()
+        self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.grayColor()]
+//        self.navigationController?.navigationBar.barTintColor = Constants.Colors.appTheme
+//        self.navigationController?.navigationBar.tintColor = .whiteColor()
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Stop, target: self, action: "closeAction")
     }
 
-    @IBAction func closeAction(sender: AnyObject) {
+    func closeAction() {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
 }

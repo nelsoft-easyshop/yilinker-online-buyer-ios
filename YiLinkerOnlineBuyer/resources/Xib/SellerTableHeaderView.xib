@@ -16,8 +16,8 @@
                         <constraint firstAttribute="height" constant="185" id="BZ5-ss-dNq"/>
                     </constraints>
                 </imageView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Ayala Ave. Makati City" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JAF-ug-Wnz">
-                    <rect key="frame" x="112" y="153" width="268" height="26"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Ayala Ave. Makati City" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" minimumFontSize="6" translatesAutoresizingMaskIntoConstraints="NO" id="JAF-ug-Wnz">
+                    <rect key="frame" x="112" y="138" width="268" height="41"/>
                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="11"/>
                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
@@ -109,12 +109,6 @@
                         <action selector="message:" destination="iN0-l3-epB" eventType="touchUpInside" id="70T-q1-Wsz"/>
                     </connections>
                 </button>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tech Hub Store" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="7" translatesAutoresizingMaskIntoConstraints="NO" id="PUQ-0I-66E">
-                    <rect key="frame" x="112" y="135" width="252" height="17"/>
-                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
-                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                    <nil key="highlightedColor"/>
-                </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="d0d-dF-wyT" customClass="RoundedButton" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
                     <rect key="frame" x="381" y="145" width="30" height="30"/>
                     <constraints>
@@ -160,6 +154,12 @@
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
                 </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tech Hub Store" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="7" translatesAutoresizingMaskIntoConstraints="NO" id="PUQ-0I-66E">
+                    <rect key="frame" x="112" y="120" width="252" height="17"/>
+                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" red="0.88235294117647056" green="0.88235294117647056" blue="0.88235294117647056" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
@@ -171,7 +171,7 @@
                 <constraint firstItem="M7F-7d-VWr" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="128" id="DUg-5b-QIS"/>
                 <constraint firstItem="PUQ-0I-66E" firstAttribute="leading" secondItem="M7F-7d-VWr" secondAttribute="trailing" constant="8" id="HOX-DO-aPh"/>
                 <constraint firstItem="ZNJ-PV-8GZ" firstAttribute="top" secondItem="j46-sZ-G8t" secondAttribute="bottom" constant="12" id="IW3-bt-Hql"/>
-                <constraint firstItem="PUQ-0I-66E" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="135" id="LwG-Dy-k0V"/>
+                <constraint firstItem="PUQ-0I-66E" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="120" id="LwG-Dy-k0V"/>
                 <constraint firstAttribute="trailing" secondItem="b4p-tQ-XcN" secondAttribute="trailing" id="N8o-al-jXq"/>
                 <constraint firstItem="A7W-DK-e0C" firstAttribute="top" secondItem="b4p-tQ-XcN" secondAttribute="bottom" constant="15" id="OjP-er-JKr"/>
                 <constraint firstItem="d0d-dF-wyT" firstAttribute="leading" secondItem="JAF-ug-Wnz" secondAttribute="trailing" constant="1" id="PDe-PV-Lqv"/>

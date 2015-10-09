@@ -11,3 +11,5 @@
 #import <TTRangeSlider/TTRangeSlider.h>
 #import <MBProgressHUD.h>
 #import <Google/CloudMessaging.h>
+#import <GooglePlus/GooglePlus.h>
+#import <GoogleOpenSource/GoogleOpenSource.h>

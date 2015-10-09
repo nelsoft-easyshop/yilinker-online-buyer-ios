@@ -93,6 +93,7 @@ class ProductUnitsModel {
             
             if let tempVar = dictionary["imageIds"] as? NSArray {
                 model.imageIds = tempVar as! [String]
+                println(model.imageIds)
             }
             
             if let tempVar = dictionary["combination"] as? NSArray {
