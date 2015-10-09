@@ -270,9 +270,10 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
         
         manager.POST(APIAtlas.loginUrl, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
-            self.hud?.hide(true)
-            self.showSuccessMessage()
+                SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+                self.hud?.hide(true)
+                self.showSuccessMessage()
+                self.fireCreateRegistration(SessionManager.gcmToken())
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
@@ -292,6 +293,31 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
                 
                 self.hud?.hide(true)
         })
+    }
+    
+    func fireCreateRegistration(registrationID : String) {
+        println("fireCreateRegistration")
+        if(SessionManager.isLoggedIn()){
+            
+            let manager: APIManager = APIManager.sharedInstance
+            //seller@easyshop.ph
+            //password
+            let parameters: NSDictionary = [
+                "registrationId": "\(registrationID)",
+                "access_token"  : SessionManager.accessToken()
+                ]   as Dictionary<String, String>
+            
+            let url = APIAtlas.baseUrl + APIAtlas.ACTION_GCM_CREATE
+            
+            manager.POST(url, parameters: parameters, success: {
+                (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+                println("Registration successful!")
+                }, failure: {
+                    (task: NSURLSessionDataTask!, error: NSError!) in
+                    
+                    println("Registration unsuccessful!")
+            })
+        }
     }
     
     //MARK: - Success Message
