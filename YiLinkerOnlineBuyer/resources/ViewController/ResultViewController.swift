@@ -106,6 +106,7 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
             initializeTapGestures()
         } else {
             actionViewHeight.constant = 0
+            page = 1
         }
     }
     
@@ -231,10 +232,13 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
     func requestSearchDetails(url: String, params: NSDictionary!) {
         println("URL \(url)\nPARAMS:\(params)")
         if isSellerSearch {
-            if sellerCollectionViewData.count != (totalResultCount + 15){
+            if (sellerCollectionViewData.count % 15) == 0 || page == 0 {
                 println("\(collectionViewData.count) \(totalResultCount)")
                 
-                page++
+                if page == 0 {
+                    page = 1
+                }
+                
                 
                 if( initialParameters == nil ) {
                     initialParameters = (targetUrl: url, parameters: params)
@@ -250,6 +254,7 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
                         self.requestRefreshToken(url, params: params)
                     } else {
                         self.populateSellerTableView(responseObject)
+                        self.page++
                     }
                     }, failure: {
                         (task: NSURLSessionDataTask!, error: NSError!) in
@@ -270,10 +275,12 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
                 UIAlertController.displayErrorMessageWithTarget(self, errorMessage: noMoreLocalizeString, title: resultsLocalizeString)
             }
         } else {
-            if collectionViewData.count != (totalResultCount + 15){
+            if (collectionViewData.count % 15) == 0 || page == 0 {
                 println("\(collectionViewData.count) \(totalResultCount)")
                 
-                page++
+                if page == 0 {
+                    page = 1
+                }
                 
                 if( initialParameters == nil ) {
                     initialParameters = (targetUrl: url, parameters: params)
@@ -289,6 +296,7 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
                         self.requestRefreshToken(url, params: params)
                     } else {
                         self.populateTableView(responseObject)
+                        self.page++
                     }
                     }, failure: {
                         (task: NSURLSessionDataTask!, error: NSError!) in
