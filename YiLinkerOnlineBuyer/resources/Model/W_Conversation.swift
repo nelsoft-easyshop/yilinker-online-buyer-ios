@@ -17,8 +17,9 @@ class W_Conversation: NSObject {
     var lastLoginDate : NSDate?
     var sender : String
     var hasUnreadMessage : String
+    var isImage : String
     
-    init(contact : W_Contact, lastMessage : NSString, lastMessageDt: NSDate, lastLoginDate : NSDate?, sender : String, hasUnreadMessage : String)
+    init(contact : W_Contact, lastMessage : NSString, lastMessageDt: NSDate, lastLoginDate : NSDate?, sender : String, hasUnreadMessage : String, isImage : String)
     {
         self.contact = contact
         self.lastMessage = lastMessage
@@ -29,6 +30,7 @@ class W_Conversation: NSObject {
         }
         self.sender = sender
         self.hasUnreadMessage = hasUnreadMessage
+        self.isImage = isImage
     }
     
     override init ()
@@ -39,6 +41,7 @@ class W_Conversation: NSObject {
         self.lastLoginDate = NSDate(dateString: "2015-08-02 20:28:00")
         self.sender = "0"
         self.hasUnreadMessage = "0"
+        self.isImage = "0"
     }
     
     
@@ -65,6 +68,7 @@ class W_Conversation: NSObject {
                     var lastLoginDate           : String = ""
                     var sender                  : String = ""
                     var hasUnreadMessage        : String = ""
+                    var isImage                 : String = ""
                     
                     if let tempVar = conversation["fullName"] as? String {
                         fullName = tempVar
@@ -102,13 +106,17 @@ class W_Conversation: NSObject {
                         hasUnreadMessage = tempVar
                     }
                     
+                    if let tempVar = conversation["isImage"] as? String {
+                        isImage = tempVar
+                    }
+                    
                     var temp : NSDate? = nil
                     if (lastLoginDate != ""){
                         temp = NSDate(dateString: lastLoginDate)
                     }
                     println("ONLINE : \(isOnline)")
                     println("USER ID : \(userId)")
-                    parsedConversations.append(W_Conversation(contact: W_Contact(fullName: fullName, userRegistrationIds: userRegistrationIds, userIdleRegistrationIds: userIdleRegistrationIds, userId: userId, profileImageUrl: profileImageUrl, isOnline: isOnline), lastMessage: lastMessage, lastMessageDt: NSDate(dateString: lastMessageDt), lastLoginDate: temp, sender: sender, hasUnreadMessage: hasUnreadMessage))
+                    parsedConversations.append(W_Conversation(contact: W_Contact(fullName: fullName, userRegistrationIds: userRegistrationIds, userIdleRegistrationIds: userIdleRegistrationIds, userId: userId, profileImageUrl: profileImageUrl, isOnline: isOnline), lastMessage: lastMessage, lastMessageDt: NSDate(dateString: lastMessageDt), lastLoginDate: temp, sender: sender, hasUnreadMessage: hasUnreadMessage, isImage : isImage))
                 }
                 
             }

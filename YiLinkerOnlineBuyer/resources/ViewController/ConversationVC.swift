@@ -10,7 +10,7 @@ import UIKit
 
 struct LocalizedStrings{
     static let title = StringHelper.localizedStringWithKey("MESSAGING_TITLE")
-    static let errorMessage = StringHelper.localizedStringWithKey("MESSAGING_ERROR_MESSAGE")
+    static let errorMessage = StringHelper.localizedStringWithKey("MESSAGING_SOMETHING_WENT_WRONG")
     static let errorTitle = StringHelper.localizedStringWithKey("MESSAGING_ERROR_TITLE")
     static let titleNewMessage = StringHelper.localizedStringWithKey("MESSAGING_NEW")
     static let online = StringHelper.localizedStringWithKey("MESSAGING_ONLINE")
@@ -29,6 +29,7 @@ struct LocalizedStrings{
     static let typeYourMessage = StringHelper.localizedStringWithKey("MESSAGING_TYPE_YOUR_MESSAGE")
     
     static let seen = StringHelper.localizedStringWithKey("MESSAGING_SEEN")
+    static let photoMessage = StringHelper.localizedStringWithKey("MESSAGING_PHOTO_MESSAGE")
 }
 
 class ConversationVC: UIViewController, EmptyViewDelegate{
@@ -74,7 +75,7 @@ class ConversationVC: UIViewController, EmptyViewDelegate{
     }
     
     override func viewDidLoad() {
-        
+        println(" access token \(SessionManager.accessToken())")
         var test = W_Conversation()
         //conversations = test.testData()
         //self.placeCustomBackImage()
@@ -84,7 +85,7 @@ class ConversationVC: UIViewController, EmptyViewDelegate{
         super.viewDidLoad()
         
         var locX = UIScreen.mainScreen().bounds.size.width * 0.75
-        var locY = UIScreen.mainScreen().bounds.size.height * 0.80
+        var locY = UIScreen.mainScreen().bounds.size.height * 0.70
         
         let createMessageButton = UIButton()
         createMessageButton.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
@@ -370,6 +371,12 @@ extension ConversationVC : UITableViewDataSource{
             let convoCell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath : indexPath) as! ConversationTVC
             
             convoCell.user_name.text = filteredConversations[indexPath.row].contact.fullName as String
+            
+            if (filteredConversations[indexPath.row].isImage == "1"){
+                convoCell.user_message.text = LocalizedStrings.photoMessage
+            } else {
+                convoCell.user_message.text = filteredConversations[indexPath.row].lastMessage as String
+            }
             convoCell.user_message.text = filteredConversations[indexPath.row].lastMessage as String
             convoCell.user_dt.text = DateUtility.convertDateToString(filteredConversations[indexPath.row].lastMessageDt) as String
             //convoCell.user_thumbnail.image = filteredConversations[indexPath.row].contact.profileImageUrl
@@ -382,7 +389,11 @@ extension ConversationVC : UITableViewDataSource{
             let convoCell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath : indexPath) as! ConversationTVC
             
             convoCell.user_name.text = conversations[indexPath.row].contact.fullName as String
-            convoCell.user_message.text = conversations[indexPath.row].lastMessage as String
+            if (conversations[indexPath.row].isImage == "1"){
+                convoCell.user_message.text = LocalizedStrings.photoMessage
+            } else {
+                convoCell.user_message.text = conversations[indexPath.row].lastMessage as String
+            }
             convoCell.user_dt.text = DateUtility.convertDateToString(conversations[indexPath.row].lastMessageDt) as String
             //convoCell.user_thumbnail.image = conversations[indexPath.row].contact.profileImageUrl
             let url = NSURL(string: conversations[indexPath.row].contact.profileImageUrl)
