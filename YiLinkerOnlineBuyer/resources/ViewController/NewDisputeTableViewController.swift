@@ -338,15 +338,15 @@ class NewDisputeTableViewController: UITableViewController, UIPickerViewDataSour
     func requestGetCaseDetails() {
         self.showHUD()
         let manager = APIManager.sharedInstance
-        manager.GET(APIAtlas.transactionLogs + "\(SessionManager.accessToken())"/* + "&orderStatusId=3"*/, parameters: nil, success: {
+        manager.GET(APIAtlas.transactionLogs + "\(SessionManager.accessToken())" + "&perPage=999", parameters: nil, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             self.transactionModel = TransactionModel.parseDataFromDictionary(responseObject as! NSDictionary)
-//            self.transactionIds = self.transactionModel.invoice_number
-            for i in 0..<self.transactionModel.order_id.count {
-                if self.transactionModel.order_status_id[i] == "3" || self.transactionModel.order_status_id[i] == "6" {
-                    self.transactionIds.append(self.transactionModel.invoice_number[i])
-                }
-            }
+            self.transactionIds = self.transactionModel.invoice_number
+//            for i in 0..<self.transactionModel.order_id.count {
+//                if self.transactionModel.order_status_id[i] == "3" || self.transactionModel.order_status_id[i] == "6" {
+//                    self.transactionIds.append(self.transactionModel.invoice_number[i])
+//                }
+//            }
 //            self.tableView.reloadData()
             
 //            self.hud?.hide(true)
