@@ -14,6 +14,12 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text="Proin gravida nibh vel velit auctor aliquet. Aenean solicitudin, lorem quis bibendum auctir, nisi elit consequat ipsum." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l9A-Vf-OxS">
+                        <rect key="frame" x="10" y="65" width="355" height="29"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="L3C-R2-Int">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="65"/>
                         <subviews>
@@ -75,9 +81,9 @@
                             <constraint firstItem="mpf-pr-45S" firstAttribute="top" secondItem="L3C-R2-Int" secondAttribute="top" constant="15" id="54F-34-dOe"/>
                             <constraint firstItem="pOx-cc-5pl" firstAttribute="leading" secondItem="EiI-0v-uvQ" secondAttribute="trailing" constant="13" id="7GA-H3-CMf"/>
                             <constraint firstItem="T9P-qq-NPd" firstAttribute="top" secondItem="L3C-R2-Int" secondAttribute="top" constant="28" id="7Gp-8L-7TK"/>
-                            <constraint firstAttribute="width" constant="375" id="Fwg-hM-zT8"/>
                             <constraint firstItem="CbV-6U-HUb" firstAttribute="leading" secondItem="pOx-cc-5pl" secondAttribute="trailing" constant="1" id="IJc-ow-Odv"/>
                             <constraint firstItem="T9P-qq-NPd" firstAttribute="leading" secondItem="CbV-6U-HUb" secondAttribute="trailing" constant="1" id="JI2-oJ-fDV"/>
+                            <constraint firstAttribute="height" constant="65" id="JSa-sm-n1z"/>
                             <constraint firstItem="EiI-0v-uvQ" firstAttribute="leading" secondItem="mpf-pr-45S" secondAttribute="trailing" constant="11" id="L2h-xy-tqe"/>
                             <constraint firstItem="boz-ul-nUo" firstAttribute="leading" secondItem="wLB-jI-IOl" secondAttribute="trailing" constant="1" id="O78-HV-wXg"/>
                             <constraint firstItem="wLB-jI-IOl" firstAttribute="leading" secondItem="T9P-qq-NPd" secondAttribute="trailing" constant="1" id="WD4-7t-TDg"/>
@@ -88,17 +94,10 @@
                             <constraint firstItem="CbV-6U-HUb" firstAttribute="top" secondItem="L3C-R2-Int" secondAttribute="top" constant="28" id="t0Q-TU-xva"/>
                         </constraints>
                     </view>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text="Proin gravida nibh vel velit auctor aliquet. Aenean solicitudin, lorem quis bibendum auctir, nisi elit consequat ipsum." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l9A-Vf-OxS">
-                        <rect key="frame" x="10" y="65" width="355" height="29"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="29" id="VJu-J4-RVG"/>
-                        </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                        <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
-                        <nil key="highlightedColor"/>
-                    </label>
                 </subviews>
                 <constraints>
+                    <constraint firstAttribute="centerX" secondItem="l9A-Vf-OxS" secondAttribute="centerX" id="0ZV-hx-Of8"/>
+                    <constraint firstAttribute="centerX" secondItem="L3C-R2-Int" secondAttribute="centerX" id="Hpc-lG-4PD"/>
                     <constraint firstItem="l9A-Vf-OxS" firstAttribute="top" secondItem="L3C-R2-Int" secondAttribute="bottom" id="JBZ-UP-QBq"/>
                     <constraint firstAttribute="trailingMargin" secondItem="l9A-Vf-OxS" secondAttribute="trailing" constant="2" id="KKg-rP-MPW"/>
                     <constraint firstItem="L3C-R2-Int" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="Re6-Xb-5L3"/>

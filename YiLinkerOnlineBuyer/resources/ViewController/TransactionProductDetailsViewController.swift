@@ -340,7 +340,7 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
     
     // MARK: - Actions
     func leaveFeedback() {
-        let feedbackView = TransactionLeaveFeedbackViewController(nibName: "TransactionLeaveFeedbackViewController", bundle: nil)
+        let feedbackView = TransactionLeaveSellerFeedbackTableViewController(nibName: "TransactionLeaveSellerFeedbackTableViewController", bundle: nil)
         feedbackView.edgesForExtendedLayout = UIRectEdge.None
         self.navigationController?.pushViewController(feedbackView, animated: true)
     }
@@ -453,6 +453,7 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
         println("orderProductId \(self.orderProductId)")
         manager.GET(APIAtlas.transactionProductDetails+"\(SessionManager.accessToken())&orderProductId=\(self.orderProductId)", parameters: nil, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            println(responseObject)
             self.transactionProductDetailsModel = TransactionProductDetailsModel.parseFromDataDictionary(responseObject as! NSDictionary)
             //for var i: Int = 0; i < self.name.count; i++ {
             //SKU", "Brand", "Weight (kg)", "Height (mm)", "Width (cm)", "Length (cm)"

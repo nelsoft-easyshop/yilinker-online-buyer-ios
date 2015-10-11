@@ -119,6 +119,7 @@ class TransactionLeaveSellerFeedbackViewController: UIViewController {
     @IBAction func sendAction(sender: AnyObject) {
         if rate == 0 {
             showAlert("Rate", message: "Please select a rating.")
+            
         } else if self.inputTextField.text == "" {
             showAlert("Feedback", message: "Please send a feedback.")
         } else {
