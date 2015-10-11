@@ -24,6 +24,7 @@ class MessageThreadVC: UIViewController {
     @IBOutlet weak var composeViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var composeTextView: TextViewAutoHeight!
     @IBOutlet weak var composeTVConstraint: NSLayoutConstraint!
+    @IBOutlet weak var sendButton: UIButton!
     
     let composeViewHeight : CGFloat = 50.0
     
@@ -44,7 +45,6 @@ class MessageThreadVC: UIViewController {
     
     @IBOutlet weak var cameraButton: UIButton!
     
-    @IBOutlet weak var sendButton: UIButton!
     @IBOutlet weak var bottomLayoutConstraint: NSLayoutConstraint!
     
     var imagePlaced : Bool = false
@@ -82,15 +82,15 @@ class MessageThreadVC: UIViewController {
         var ref = W_Messages()
         //messages = ref.testData()
         var r_temp = recipient?.userId ?? ""
+        println(recipient)
         println("recipient id \(r_temp)")
         self.getMessagesFromEndpoint("1", limit: "30", userId: r_temp)
-        configureTableView()
+        self.configureTableView()
         
         var imageStringRecipient = recipient!.profileImageUrl
         var urlRecipient : NSURL = NSURL(string: imageStringRecipient)!
         recipientImage = UIImageView()
         recipientImage!.sd_setImageWithURL(urlRecipient, placeholderImage: UIImage(named: "Male-50.png"))
-        recipientImage!.image = UIImage(named: "Male-50.png")
         
         senderImage = UIImageView()
         var imageStringSender = sender!.profileImageUrl
@@ -142,38 +142,54 @@ class MessageThreadVC: UIViewController {
     }
     
     func onSeenMessage(notification : NSNotification){
-        println("onSeenMessage")
-        /* check if recipient id is the same as notification's recipient id */
-        if let info = notification.userInfo as? Dictionary<String,String> {
-            if let error = info["error"] {
-                println("Error with seen message on GCM \(error)")
-            } else if let recipientId = info["body"] {
-                if (recipientId == recipient?.userId){
-                    var s_temp = sender?.userId ?? ""
-                    self.getMessagesFromEndpoint("1", limit: "30", userId: s_temp)
+        if let info = notification.userInfo as? Dictionary<String, AnyObject> {
+            if let aps = info["aps"] as? Dictionary<String, AnyObject>{
+                if let alert = aps["alert"] as? Dictionary<String, AnyObject>{
+                    if let error = alert["error"] as? String{
+                        println("error with notification \(error)")
+                    }
+                    if let recipientId = alert["body"] as? String {
+                        if (recipientId == recipient?.userId){
+                            var r_temp = recipient?.userId ?? ""
+                            self.getMessagesFromEndpoint("1", limit: "30", userId: r_temp)
+                        }
+                    }
+                    
                 }
             }
+        } else {
+            println("userInfo is null")
         }
     }
     
     func onReceiveNewMessage(notification : NSNotification){
-        println("onReceiveNewMessage")
-        /* check if recipient id is the same as notification's recipient id */
-        if let info = notification.userInfo as? Dictionary<String,String> {
-            if let error = info["error"] {
-                println("Error with seen message on GCM \(error)")
-            } else if let recipientId = info["body"] {
-                if (recipientId == recipient?.userId){
-                    var s_temp = sender?.userId ?? ""
-                    self.getMessagesFromEndpoint("1", limit: "30", userId: s_temp)
+        if let info = notification.userInfo as? Dictionary<String, AnyObject> {
+            if let aps = info["aps"] as? Dictionary<String, AnyObject>{
+                if let alert = aps["alert"] as? Dictionary<String, AnyObject>{
+                    if let error = alert["error"] as? String{
+                        println("error with notification \(error)")
+                    }
+                    if let recipientId = alert["body"] as? String {
+                        if (recipientId == recipient?.userId){
+                            var r_temp = recipient?.userId ?? ""
+                            self.getMessagesFromEndpoint("1", limit: "30", userId: r_temp)
+                        }
+                    }
+                    
                 }
             }
+        } else {
+            println("userInfo is null")
         }
     }
     
     override func viewDidAppear(animated: Bool) {
+        self.clearProfileView()
+        
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWasShown:"), name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWasHidden:"), name: UIKeyboardWillHideNotification, object: nil)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWasChanged:"), name: UIKeyboardDidChangeFrameNotification, object: nil)
         
         self.placeCustomBackImage()
         self.placeRightNavigationControllerDetails()
@@ -183,6 +199,7 @@ class MessageThreadVC: UIViewController {
         /* set message as read */
         var r_temp = recipient?.userId ?? ""
         self.setConversationAsReadFromEndpoint(r_temp)
+        self.sendButton.titleLabel?.text = LocalizedStrings.send
     }
     
     func tableTapped(tap : UITapGestureRecognizer){
@@ -193,6 +210,7 @@ class MessageThreadVC: UIViewController {
     override func viewWillDisappear(animated: Bool) {
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardDidChangeFrameNotification, object: nil)
         
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         
@@ -215,7 +233,11 @@ class MessageThreadVC: UIViewController {
         var rightPadding3 : CGFloat = 4.0
         
         onlineLabel = UILabel()
-        onlineLabel.text = "Online"
+        if (recipient?.isOnline == "1"){
+            onlineLabel.text = LocalizedStrings.online
+        } else {
+            onlineLabel.text = LocalizedStrings.offline
+        }
         onlineLabel.font = UIFont(name: onlineLabel.font.fontName, size: 11.0)
         onlineLabel.textColor = UIColor.whiteColor()
         onlineLabel.sizeToFit()
@@ -282,10 +304,18 @@ class MessageThreadVC: UIViewController {
     }
     
     func clearProfileView(){
-        profileImageView.removeFromSuperview()
-        onlineView.removeFromSuperview()
-        profileNameLabel.removeFromSuperview()
-        onlineLabel.removeFromSuperview()
+        if (profileImageView != nil){
+            profileImageView.removeFromSuperview()
+        }
+        if (onlineView != nil){
+            onlineView.removeFromSuperview()
+        }
+        if (profileNameLabel != nil){
+            profileNameLabel.removeFromSuperview()
+        }
+        if (onlineLabel != nil){
+            onlineLabel.removeFromSuperview()
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -311,17 +341,34 @@ class MessageThreadVC: UIViewController {
             var newTableFrame : CGRect = self.threadTableView.frame
             
             UIView.animateWithDuration(0.25, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
-                //self.threadTableView.setContentOffset(UIEdgeInsetsZero, animated: true)
                 self.threadTableView.contentInset = UIEdgeInsetsMake(60, 0, self.tabBarHeight, 0)
                 
                 self.composeView.frame = newFrame
                 self.composeViewBottomLayout.constant -= (keyFrame.size.height - self.tabBarHeight)
                 
-                /*
-                self.threadTableView.frame = CGRectMake(0, 0, newTableFrame.height + keyFrame.size.height, newTableFrame.width)
-                self.threadTableViewConstraint.constant = newTableFrame.height + keyFrame.size.height
-                */
                 self.goToBottomTableView()
+                }, completion: nil)
+            
+        }
+    }
+    
+    func keyboardWasChanged(notification: NSNotification) {
+        if (keyboardIsShown){
+            var info = notification.userInfo!
+            var oldFrame : CGRect = (info [UIKeyboardFrameBeginUserInfoKey])!.CGRectValue()
+            var updatedFrame : CGRect = (info [UIKeyboardFrameEndUserInfoKey])!.CGRectValue()
+            
+            var updatedH = updatedFrame.height - oldFrame.height
+            
+            var newFrame : CGRect = self.composeView.frame
+            
+            UIView.animateWithDuration(0.25, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+                self.composeView.frame = CGRectMake(newFrame.origin.x, newFrame.origin.y - updatedH, newFrame.width, newFrame.height)
+                self.composeViewBottomLayout.constant += (updatedH)
+                self.threadTableView.contentInset = UIEdgeInsetsMake(60, 0, updatedFrame.size.height, 0)
+                self.goToBottomTableView()
+                
+                
                 }, completion: nil)
             
         }
@@ -336,17 +383,11 @@ class MessageThreadVC: UIViewController {
             var keyFrame : CGRect = (info [UIKeyboardFrameEndUserInfoKey])!.CGRectValue()
             
             var newFrame : CGRect = self.composeView.frame
-            var newTableFrame : CGRect = self.threadTableView.frame
             
             UIView.animateWithDuration(0.25, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
                 self.composeView.frame = CGRectMake(newFrame.origin.x, newFrame.origin.y - keyFrame.size.height, newFrame.width, newFrame.height)
                 self.composeViewBottomLayout.constant += (keyFrame.size.height - self.tabBarHeight)
                 self.threadTableView.contentInset = UIEdgeInsetsMake(60, 0, keyFrame.size.height, 0)
-                /*self.threadTableView.frame = CGRectMake(0, 0, newTableFrame.height - keyFrame.size.height, newTableFrame.width)
-                self.threadTableViewConstraint.constant = newTableFrame.height - keyFrame.size.height
-                self.view.setNeedsLayout()
-                self.view.setNeedsUpdateConstraints()
-                */
                 self.goToBottomTableView()
                 
                 
@@ -362,10 +403,10 @@ class MessageThreadVC: UIViewController {
     func createMessage(lastMessage: String, isImage : String){
         var dateSeen : NSDate? = nil
         
-        var recipientId = recipient?.userId ?? ""
-        var senderId = self.sender?.userId ?? ""
+        var recipientId = recipient?.userId ?? "0"
+        var senderId = self.sender?.userId ?? "0"
         
-        self.messages.append(W_Messages(message_id: 0, senderId: senderId, recipientId: recipientId, message: lastMessage, isImage: isImage, timeSent: NSDate(), isSeen: "0", timeSeen: dateSeen, isSent : "1"))
+        self.messages.append(W_Messages(message_id: 0, senderId: 0 , recipientId: recipientId.toInt()!, message: lastMessage, isImage: isImage, timeSent: NSDate(), isSeen: "0", timeSeen: dateSeen, isSent : "1"))
         self.threadTableView.reloadData()
         self.goToBottomTableView()
         self.sendMessageToEndpoint(lastMessage, recipientId: recipientId, isImage: isImage)
@@ -402,12 +443,12 @@ class MessageThreadVC: UIViewController {
                             self.fireRefreshToken()
                         }
                     } else {
-                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: LocalizedStrings.errorMessage, title: LocalizedStrings.errorTitle)
                     }
                     
                     self.messages[self.messages.count-1].isSent = "0"
                 } else {
-                    self.showAlert("Connection Unreachable", message: "Cannot retrieve data. Please check your internet connection.")
+                    self.showAlert(LocalizedStrings.connectionUnreachableTitle, message: LocalizedStrings.connectionUnreachableMessage)
                 }
         })
         self.composeTextView.text = ""
@@ -420,51 +461,51 @@ class MessageThreadVC: UIViewController {
         userId: String){
             //SVProgressHUD.show()
             
-                self.showHUD()
-                
-                let manager: APIManager = APIManager.sharedInstance
-                manager.requestSerializer = AFHTTPRequestSerializer()
-                
-                let parameters: NSDictionary = [
-                    "page"          : "\(page)",
-                    "limit"         : "\(limit)",
-                    "userId"        : "\(userId)", //get user id from somewhere
-                    "access_token"  : SessionManager.accessToken()
-                    ]   as Dictionary<String, String>
-                
-                let url = APIAtlas.baseUrl + APIAtlas.ACTION_GET_CONVERSATION_MESSAGES
-                
-                manager.POST(url, parameters: parameters, success: {
-                    (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-                    self.messages = W_Messages.parseMessages(responseObject as! NSDictionary)
-                    self.threadTableView.reloadData()
-                    self.goToBottomTableView()
-                    self.hud?.hide(true)
-                    //SVProgressHUD.dismiss()
-                    }, failure: {
-                        (task: NSURLSessionDataTask!, error: NSError!) in
-                        
-                        if (Reachability.isConnectedToNetwork()) {
-                            let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                            if task.statusCode == 401 {
-                                if (SessionManager.isLoggedIn()){
-                                    self.fireRefreshToken()
-                                }
-                            } else {
-                                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+            self.showHUD()
+            
+            let manager: APIManager = APIManager.sharedInstance
+            manager.requestSerializer = AFHTTPRequestSerializer()
+            
+            let parameters: NSDictionary = [
+                "page"          : "\(page)",
+                "limit"         : "\(limit)",
+                "userId"        : userId, //get user id from somewhere
+                "access_token"  : SessionManager.accessToken()
+                ]   as Dictionary<String, AnyObject>
+            println(parameters)
+            let url = APIAtlas.baseUrl + APIAtlas.ACTION_GET_CONVERSATION_MESSAGES
+            
+            manager.POST(url, parameters: parameters, success: {
+                (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+                self.messages = W_Messages.parseMessages(responseObject as! NSDictionary)
+                self.threadTableView.reloadData()
+                self.goToBottomTableView()
+                self.hud?.hide(true)
+                //SVProgressHUD.dismiss()
+                }, failure: {
+                    (task: NSURLSessionDataTask!, error: NSError!) in
+                    
+                    if (Reachability.isConnectedToNetwork()) {
+                        let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                        if task.statusCode == 401 {
+                            if (SessionManager.isLoggedIn()){
+                                self.fireRefreshToken()
                             }
                         } else {
-                            self.showAlert("Connection Unreachable", message: "Cannot retrieve data. Please check your internet connection.")
+                            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: LocalizedStrings.errorMessage, title: LocalizedStrings.errorTitle)
                         }
-                        
-                        self.messages = Array<W_Messages>()
-                        self.threadTableView.reloadData()
-                        
-                        self.hud?.hide(true)
-                        //SVProgressHUD.dismiss()
-                })
-                
-                self.goToBottomTableView()
+                    } else {
+                        self.showAlert(LocalizedStrings.connectionUnreachableTitle, message: LocalizedStrings.connectionUnreachableMessage)
+                    }
+                    
+                    self.messages = Array<W_Messages>()
+                    self.threadTableView.reloadData()
+                    
+                    self.hud?.hide(true)
+                    //SVProgressHUD.dismiss()
+            })
+            
+            self.goToBottomTableView()
     }
     
     func showAlert(title: String, message: String) {
@@ -502,13 +543,12 @@ class MessageThreadVC: UIViewController {
         let parameters: NSDictionary = ["client_id": Constants.Credentials.clientID, "client_secret": Constants.Credentials.clientSecret, "grant_type": Constants.Credentials.grantRefreshToken, "refresh_token":  SessionManager.refreshToken()]
         manager.POST(APIAtlas.refreshTokenUrl, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            SVProgressHUD.dismiss()
             SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                 
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: LocalizedStrings.errorMessage, title: LocalizedStrings.errorTitle)
         })
         
     }
@@ -548,7 +588,7 @@ extension MessageThreadVC : UITextViewDelegate{
         // and set the cursor to the beginning of the text view
         if updatedText.isEmpty {
             
-            textView.text = "Enter Your Message"
+            textView.text = LocalizedStrings.typeYourMessage
             textView.textColor = UIColor.lightGrayColor()
             
             textView.selectedTextRange = textView.textRangeFromPosition(textView.beginningOfDocument, toPosition: textView.beginningOfDocument)
@@ -588,7 +628,7 @@ extension MessageThreadVC : UITableViewDataSource, UITableViewDelegate{
         if (!indexPath.isEqual(nil)) {
             if (messages[indexPath.row].isImage == "0") {
                 let cell = self.threadTableView.cellForRowAtIndexPath(indexPath) as! MessageThreadTVC
-                self.sendMessageToEndpoint(cell.message_label.text!, recipientId: messages[indexPath.row].recipientId, isImage: "0")
+                self.sendMessageToEndpoint(cell.message_label.text!, recipientId: String(messages[indexPath.row].recipientId), isImage: "0")
             }
         }
     }
@@ -628,16 +668,18 @@ extension MessageThreadVC : UITableViewDataSource, UITableViewDelegate{
         }
         
         var index : Int = indexPath.row
-        //index = (messages.count - indexPath.row) - 1
-        
         if (messages[index].isImage == "1"){
-            if (recipient?.userId != messages[index].senderId){
+            if (recipient?.userId != String(messages[index].senderId)){
                 let cell = tableView.dequeueReusableCellWithIdentifier(senderImageIndentifier) as! MessageThreadImageTVC
                 
+                
                 if(!imagePlaced){
+                    cell.contact_image.layer.cornerRadius = cell.contact_image.bounds.width/2
+                    cell.contact_image.layer.masksToBounds = true
                     cell.contact_image.image = senderImage!.image
                     imagePlaced = true
                 }
+                
                 
                 let url = NSURL(string: messages[index].message)
                 cell.message_image.sd_setImageWithURL(url, placeholderImage: nil)
@@ -668,10 +710,14 @@ extension MessageThreadVC : UITableViewDataSource, UITableViewDelegate{
             } else {
                 let cell = tableView.dequeueReusableCellWithIdentifier(receiverImageIndentifier) as! MessageThreadImageTVC
                 
+                
                 if(!imagePlaced){
+                    cell.contact_image.layer.cornerRadius = cell.contact_image.bounds.width/2
+                    cell.contact_image.layer.masksToBounds = true
                     cell.contact_image.image = recipientImage!.image
                     imagePlaced = true
                 }
+                
                 cell.timestamp_label.text = DateUtility.convertDateToString(NSDate()) as String
                 
                 let url = NSURL(string: messages[index].message)
@@ -686,15 +732,17 @@ extension MessageThreadVC : UITableViewDataSource, UITableViewDelegate{
                 return cell
             }
         } else {
-            if (recipient?.userId != messages[index].senderId){
+            if (recipient?.userId != String(messages[index].senderId)){
                 let cell = tableView.dequeueReusableCellWithIdentifier(senderIdentifier) as! MessageThreadTVC
                 
                 cell.message_label.text = messages[index].message as String
                 
-                //if(!imagePlaced){
+                if(!imagePlaced){
+                    cell.contact_image.layer.cornerRadius = cell.contact_image.bounds.width/2
+                    cell.contact_image.layer.masksToBounds = true
                     cell.contact_image.image = senderImage!.image
-                    //imagePlaced = true
-                //}
+                    imagePlaced = true
+                }
                 
                 cell.message_label.superview?.layer.cornerRadius = 5.0
                 
@@ -725,6 +773,8 @@ extension MessageThreadVC : UITableViewDataSource, UITableViewDelegate{
                 
                 cell.message_label.text = messages[index].message as String
                 if(!imagePlaced){
+                    cell.contact_image.layer.cornerRadius = cell.contact_image.bounds.width/2
+                    cell.contact_image.layer.masksToBounds = true
                     cell.contact_image.image = recipientImage!.image
                     imagePlaced = true
                 }

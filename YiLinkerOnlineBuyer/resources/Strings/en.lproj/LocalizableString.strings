@@ -99,6 +99,8 @@ REGISTER_ME_NOW_LOCALIZE_KEY = "REGISTER ME NOW";
 NUMBER_LETTERS_LOCALIZE_KEY = "Password must be a combination of letters and numbers.";
 SUCCESS_REGISTER_LOCALIZED_KEY = "Successfully registered.";
 THANKYOU_LOCALIZED_KEY = "Thank you";
+MOBILE_LOCALIZED_KEY = "Mobile Number";
+REFERRAL_LOCALIZED_KEY = "Referral Code";
 
 // MARK: - Register Error
 FIRST_NAME_REQUIRED_LOCALIZE_KEY = "First name is required";
@@ -112,6 +114,7 @@ ILLEGAL_PASSWORD_LOCALIZE_KEY = "Password contains illegal characters. It can on
 RETYPE_REQUIRED_LOCALIZE_KEY = "Re-type password is required.";
 PASSWORD_NOT_MATCH_LOCALIZE_KEY = "The password does not match.";
 CONTACT_REQUIRED_LOCALIZE_KEY = "Contact number is required.";
+EIGHT_CHARACTERS_LOCALIZED_KEY = "Password must be eight characters.";
 
 // MARK: - Customize Shopping
 CATEGORIES_CS_LOCALIZE_KEY = "Categories";
@@ -193,6 +196,27 @@ NO_LOCALIZE_KEY = "NO";
 CONNECTION_TITLE_LOCALIZE_KEY = "Connection Unreachable";
 CONNECTION_MESSAGE_LOCALIZE_KEY = "Cannot retrieve data. Please check your internet connection.";
 CONNECTION_TAP_TO_RELOAD_LOCALIZE_KEY = "Tap to reloadtitletitme";
+
+// MESSAGES
+
+// MESSAGES
+MESSAGING_TITLE = "Message";
+MESSAGING_NEW = "New Message";
+MESSAGING_ONLINE = "Online";
+MESSAGING_OFFLINE = "Offline";
+MESSAGING_SEND = "Send";
+MESSAGING_WRITE = "Write to...";
+MESSAGING_ERROR_PHOTO = "Error loading photo";
+MESSAGING_TYPE_YOUR_MESSAGE = "Type Your Message";
+MESSAGING_SOMETHING_WENT_WRONG = "Something went wrong";
+MESSAGING_ERROR_TITLE = "Error";
+MESSAGING_SEEN = "Seen";
+MESSAGING_CAMERA = "Camera";
+MESSAGING_CAMERA_ROLL = "Camera Roll";
+MESSAGING_PICK_IMAGE_ERROR = "Please pick or upload an image first.";
+MESSAGING_SAVE_FAILED = "Save Failed.";
+MESSAGING_SAVE_FAILED_MESSAGE = "Failed to save image";
+MESSAGING_PHOTO_MESSAGE = "You sent/received a photo";
 
 // MARK: - Rj's Modules
 

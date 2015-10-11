@@ -59,6 +59,7 @@ class TransactionModel: NSObject {
     var product_name2: String = ""
     var product_count2: String = ""
     var order_count: Int = 0
+    var unique_order_product_statuses: String = ""
     
     init(order_id: NSArray, date_added: NSArray, invoice_number: NSArray, payment_type: NSArray, payment_method_id: NSArray, order_status: NSArray, order_status_id: NSArray, total_price: NSArray, total_unit_price: NSArray, total_item_price: NSArray, total_handling_fee: NSArray, total_quantity: NSArray, product_name: NSArray, product_count: NSArray, is_successful: Bool){
         
@@ -132,31 +133,35 @@ class TransactionModel: NSObject {
                 let orders: NSArray = value["orders"] as! NSArray
                 for order in orders as! [NSDictionary] {
                     
-                    let dateComponents = NSDateComponents()
-                    
-                    var dates = order["date_added"] as! String
-                    let dateFormatter = NSDateFormatter()
-                    dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-                    let date: NSDate = dateFormatter.dateFromString(dates)!
-                    
-                    let dateFormatter1 = NSDateFormatter()
-                    dateFormatter1.dateFormat = "MMMM dd, yyyy"
-                    let dateAdded = dateFormatter1.stringFromDate(date)
-                    
-                    order_id.append(order["order_id"] as! String)
-                    date_added.append(dateAdded)
-                    invoice_number.append(order["invoice_number"] as! String)
-                    payment_type.append(order["payment_type"] as! String)
-                    payment_method_id.append(order["payment_method_id"] as! String)
-                    order_status.append(order["order_status"] as! String)
-                    order_status_id.append(order["order_status_id"] as! String)
-                    total_price.append(order["total_price"] as! String)
-                    total_unit_price.append(order["total_unit_price"] as! String)
-                    total_item_price.append(order["total_item_price"] as! String)
-                    total_handling_fee.append(order["total_handling_fee"] as! String)
-                    total_quantity.append(order["total_quantity"] as! String)
-                    product_name.append(order["product_names"] as! String)
-                    product_count.append(order["product_count"] as! String)
+                    for product_status in order["unique_order_product_statuses"] as! NSArray {
+                        if product_status["name"] as! String == "Item Received by Buyer" {
+                            let dateComponents = NSDateComponents()
+                            
+                            var dates = order["date_added"] as! String
+                            let dateFormatter = NSDateFormatter()
+                            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+                            let date: NSDate = dateFormatter.dateFromString(dates)!
+                            
+                            let dateFormatter1 = NSDateFormatter()
+                            dateFormatter1.dateFormat = "MMMM dd, yyyy"
+                            let dateAdded = dateFormatter1.stringFromDate(date)
+                            
+                            order_id.append(order["order_id"] as! String)
+                            date_added.append(dateAdded)
+                            invoice_number.append(order["invoice_number"] as! String)
+                            payment_type.append(order["payment_type"] as! String)
+                            payment_method_id.append(order["payment_method_id"] as! String)
+                            order_status.append(order["order_status"] as! String)
+                            order_status_id.append(order["order_status_id"] as! String)
+                            total_price.append(order["total_price"] as! String)
+                            total_unit_price.append(order["total_unit_price"] as! String)
+                            total_item_price.append(order["total_item_price"] as! String)
+                            total_handling_fee.append(order["total_handling_fee"] as! String)
+                            total_quantity.append(order["total_quantity"] as! String)
+                            product_name.append(order["product_names"] as! String)
+                            product_count.append(order["product_count"] as! String)
+                        }
+                    }
                 }
             }
         }

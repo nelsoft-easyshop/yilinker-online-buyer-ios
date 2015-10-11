@@ -12,6 +12,10 @@ struct RegisterStrings {
     static let lastName: String = StringHelper.localizedStringWithKey("LAST_NAME_LOCALIZE_KEY")
     static let emailAddress: String = StringHelper.localizedStringWithKey("EMAIL_ADDRESS_LOCALIZE_KEY")
     static let password: String = StringHelper.localizedStringWithKey("PASSWORD_LOCALIZE_KEY")
+    
+    static let mobileNumber: String = StringHelper.localizedStringWithKey("MOBILE_LOCALIZED_KEY")
+    static let referral: String = StringHelper.localizedStringWithKey("REFERRAL_LOCALIZED_KEY")
+    
     static let reTypePassword: String = StringHelper.localizedStringWithKey("RE_TYPE_PASSWORD_LOCALIZE_KEY")
     static let registerMeNow: String = StringHelper.localizedStringWithKey("REGISTER_ME_NOW_LOCALIZE_KEY")
     
@@ -30,6 +34,8 @@ struct RegisterStrings {
     static let numbersAndLettersOnly: String = StringHelper.localizedStringWithKey("NUMBER_LETTERS_LOCALIZE_KEY")
     static let successRegister: String = StringHelper.localizedStringWithKey("SUCCESS_REGISTER_LOCALIZED_KEY")
     static let thankyou: String = StringHelper.localizedStringWithKey("THANKYOU_LOCALIZED_KEY")
+    
+    static let eightCharacters: String = StringHelper.localizedStringWithKey("EIGHT_CHARACTERS_LOCALIZED_KEY")
 }
 
 class RegisterViewController: UIViewController, UITextFieldDelegate {
@@ -41,6 +47,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var reTypePasswordTextField: UITextField!
     @IBOutlet weak var registerButton: DynamicRoundedButton!
     @IBOutlet weak var mobileNumberTextField: UITextField!
+    @IBOutlet weak var referralCodeTextField: UITextField!
     
     var currentTextFieldTag: Int = 1
     var hud: MBProgressHUD?
@@ -64,12 +71,14 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         self.setUpTextFields()
         self.registerButton.addTarget(self, action: "register", forControlEvents: UIControlEvents.TouchUpInside)
         
-        self.firstNameTextField.placeholder = RegisterStrings.firstName
-        self.lastNameTextField.placeholder = RegisterStrings.lastName
-        self.emailAddressTextField.placeholder = RegisterStrings.emailAddress
-        self.passwordTextField.placeholder = RegisterStrings.password
-        self.reTypePasswordTextField.placeholder = RegisterStrings.reTypePassword
+        self.firstNameTextField.attributedPlaceholder = StringHelper.required(RegisterStrings.firstName)
+        self.lastNameTextField.attributedPlaceholder = StringHelper.required(RegisterStrings.lastName)
+        self.emailAddressTextField.attributedPlaceholder = StringHelper.required(RegisterStrings.emailAddress)
+        self.passwordTextField.attributedPlaceholder = StringHelper.required(RegisterStrings.password)
+        self.reTypePasswordTextField.attributedPlaceholder = StringHelper.required(RegisterStrings.reTypePassword)
+        self.mobileNumberTextField.attributedPlaceholder = StringHelper.required(RegisterStrings.mobileNumber)
         
+        self.registerButton.setTitle(RegisterStrings.registerMeNow, forState: UIControlState.Normal)
         self.registerButton.setTitle(RegisterStrings.registerMeNow, forState: UIControlState.Normal)
     }
     
@@ -104,6 +113,8 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         self.reTypePasswordTextField.addToolBarWithTarget(self, next: "next", previous: "previous", done: "done")
         self.mobileNumberTextField.addToolBarWithTarget(self, next: "next", previous: "previous", done: "done")
         self.mobileNumberTextField.delegate = self
+        self.referralCodeTextField.addToolBarWithTarget(self, next: "next", previous: "previous", done: "done")
+        self.referralCodeTextField.delegate = self
     }
     
     
@@ -233,13 +244,15 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
             errorMessage = RegisterStrings.illegalPassword
         } else if !self.passwordTextField.isValidPassword() {
             errorMessage = RegisterStrings.numbersAndLettersOnly
+        } else if !self.passwordTextField.isGreaterThanEightCharacters() {
+            errorMessage = RegisterStrings.eightCharacters
         } else if !self.reTypePasswordTextField.isNotEmpty() {
             errorMessage = RegisterStrings.reTypePasswordError
         } else if self.passwordTextField.text != self.reTypePasswordTextField.text {
             errorMessage = RegisterStrings.passwordNotMatch
         } else if self.mobileNumberTextField.text == "" {
             errorMessage = RegisterStrings.contactRequired
-        }
+        } 
         
         if errorMessage != "" {
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorMessage)

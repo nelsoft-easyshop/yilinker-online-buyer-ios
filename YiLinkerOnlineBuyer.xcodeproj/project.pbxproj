@@ -115,6 +115,7 @@
 		0C574A281BC5175000913F29 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C574A271BC5175000913F29 /* UIKit.framework */; };
 		0C574A2B1BC5176C00913F29 /* GoogleOpenSource.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C574A291BC5176C00913F29 /* GoogleOpenSource.framework */; };
 		0C574A2C1BC5176C00913F29 /* GooglePlus.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C574A2A1BC5176C00913F29 /* GooglePlus.framework */; };
+		0C574A341BC6A81C00913F29 /* GooglePlus.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0C574A331BC6A81C00913F29 /* GooglePlus.bundle */; };
 		0C5926011B8327BA0021EA76 /* ResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5925FF1B8327BA0021EA76 /* ResultViewController.swift */; };
 		0C5926041B836C670021EA76 /* ProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5926031B836C670021EA76 /* ProfileModel.swift */; };
 		0C5926061B836EA30021EA76 /* AddressModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5926051B836EA30021EA76 /* AddressModel.swift */; };
@@ -549,6 +550,7 @@
 		0C574A271BC5175000913F29 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		0C574A291BC5176C00913F29 /* GoogleOpenSource.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleOpenSource.framework; sourceTree = "<group>"; };
 		0C574A2A1BC5176C00913F29 /* GooglePlus.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GooglePlus.framework; sourceTree = "<group>"; };
+		0C574A331BC6A81C00913F29 /* GooglePlus.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = GooglePlus.bundle; sourceTree = "<group>"; };
 		0C5925FF1B8327BA0021EA76 /* ResultViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultViewController.swift; sourceTree = "<group>"; };
 		0C5926031B836C670021EA76 /* ProfileModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileModel.swift; sourceTree = "<group>"; };
 		0C5926051B836EA30021EA76 /* AddressModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressModel.swift; sourceTree = "<group>"; };
@@ -1015,6 +1017,7 @@
 		0C9936FB1B750583000D6074 /* External */ = {
 			isa = PBXGroup;
 			children = (
+				0C574A331BC6A81C00913F29 /* GooglePlus.bundle */,
 				0C574A291BC5176C00913F29 /* GoogleOpenSource.framework */,
 				0C574A2A1BC5176C00913F29 /* GooglePlus.framework */,
 				0C2F44AF1B8576FE00021F45 /* Font */,
@@ -1678,6 +1681,7 @@
 				0C9937691B750583000D6074 /* ScrollableCollectionViewCell.xib in Resources */,
 				26AFB3C01B79DE5600E50926 /* ProductViewsViewController.xib in Resources */,
 				0C9937391B750583000D6074 /* dummyHome.json in Resources */,
+				0C574A341BC6A81C00913F29 /* GooglePlus.bundle in Resources */,
 				79F2F55C1B85FD9D00F57E4B /* FilterViewController.xib in Resources */,
 				797D49111B7A50BA00617F6B /* CartTableViewCell.xib in Resources */,
 				F7DC7EDF1BA141AF004F7FD4 /* SellerSubCategoryTableViewCell.xib in Resources */,

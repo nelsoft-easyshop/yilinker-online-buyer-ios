@@ -12,6 +12,11 @@ class SessionManager {
 
     var loginType: LoginType = LoginType.GoogleLogin
     
+    class func setGcmToken(accessToken: String) {
+        NSUserDefaults.standardUserDefaults().setObject(accessToken, forKey: "gcmToken")
+        NSUserDefaults.standardUserDefaults().synchronize()
+    }
+    
     class func setAccessToken(accessToken: String) {
         NSUserDefaults.standardUserDefaults().setObject(accessToken, forKey: "accessToken")
         NSUserDefaults.standardUserDefaults().synchronize()
@@ -102,6 +107,16 @@ class SessionManager {
     class func profileImageStringUrl() -> String {
         var result: String = ""
         if let val: AnyObject = NSUserDefaults.standardUserDefaults().objectForKey("profileImageUrlString") as? String {
+            result = val as! String
+        }
+        
+        return result
+    }
+    
+    class func gcmToken() -> String {
+        var result : String = ""
+        
+        if let val : AnyObject = NSUserDefaults.standardUserDefaults().objectForKey("gcmToken") as? String {
             result = val as! String
         }
         
@@ -253,14 +268,9 @@ class SessionManager {
         }
     }
     
-    class func setUnReadMessagesCount(messageCount: Int) {
-        NSUserDefaults.standardUserDefaults().setObject("\(messageCount)", forKey: "messageCount")
-        NSUserDefaults.standardUserDefaults().synchronize()
-    }
-    
-    class func unreadMessageCount() -> String {
+    class func getUnReadMessagesCount() -> Int{
         var messageCount: Int = 0
-
+        
         if let val: AnyObject = NSUserDefaults.standardUserDefaults().objectForKey("messageCount") as? String {
             let result = val as! String
             if result != "" {
@@ -272,6 +282,15 @@ class SessionManager {
             messageCount = 0
         }
         
-        return "You have \(messageCount) unread messages"
+        return messageCount
+    }
+    
+    class func setUnReadMessagesCount(messageCount: Int) {
+        NSUserDefaults.standardUserDefaults().setObject("\(messageCount)", forKey: "messageCount")
+        NSUserDefaults.standardUserDefaults().synchronize()
+    }
+    
+    class func unreadMessageCount() -> String {
+        return "You have \(self.getUnReadMessagesCount()) unread messages"
     }
 }

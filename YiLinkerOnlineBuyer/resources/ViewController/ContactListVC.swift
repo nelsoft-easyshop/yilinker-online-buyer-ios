@@ -30,7 +30,6 @@ class ContactListVC: UIViewController, EmptyViewDelegate{
     var contentViewFrame: CGRect?
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        println(segue.identifier)
         if (segue.identifier == messageThreadSegueIdentifier){
             println("PREPARE FOR SEGUE CONTACT")
             var messageThreadVC = segue.destinationViewController as! MessageThreadVC
@@ -54,7 +53,6 @@ class ContactListVC: UIViewController, EmptyViewDelegate{
     override func viewDidLoad() {
         super.viewDidLoad()
         var ref = W_Contact()
-        //contacts = ref.testData()
         self.contentViewFrame = self.view.frame
         
         self.getContactsFromEndpoint("1", limit: "30", keyword: "")
@@ -69,7 +67,7 @@ class ContactListVC: UIViewController, EmptyViewDelegate{
             return controller
         })()
         
-        self.navigationItem.title = "New Message"
+        self.navigationItem.title = LocalizedStrings.titleNewMessage
         self.placeCustomBackImage()
         
         // Do any additional setup after loading the view.
@@ -137,7 +135,7 @@ class ContactListVC: UIViewController, EmptyViewDelegate{
                                 self.fireRefreshToken()
                             }
                         } else {
-                            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+                            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: LocalizedStrings.errorMessage, title: LocalizedStrings.errorTitle)
                         }
                         
                         self.contacts = Array<W_Contact>()
@@ -165,7 +163,7 @@ class ContactListVC: UIViewController, EmptyViewDelegate{
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                 
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: LocalizedStrings.errorMessage, title: LocalizedStrings.errorTitle)
         })
         
     }
@@ -235,10 +233,10 @@ extension ContactListVC : UITableViewDataSource, UITableViewDelegate{
             cell.profile_image.layer.masksToBounds = true
             cell.user_name.text = filteredContacts[indexPath.row].fullName
             if (filteredContacts[indexPath.row].isOnline == "1"){
-                cell.online_text.text = "Online"
+                cell.online_text.text = LocalizedStrings.online
                 cell.online_view.backgroundColor = onlineColor
             } else {
-                cell.online_text.text = "Offline"
+                cell.online_text.text = LocalizedStrings.offline
                 cell.online_view.backgroundColor = offlineColor
             }
         } else {
@@ -252,10 +250,10 @@ extension ContactListVC : UITableViewDataSource, UITableViewDelegate{
             cell.profile_image.layer.masksToBounds = true
             cell.user_name.text = contacts[indexPath.row].fullName
             if (contacts[indexPath.row].isOnline == "1"){
-                cell.online_text.text = "Online"
+                cell.online_text.text = LocalizedStrings.online
                 cell.online_view.backgroundColor = onlineColor
             } else {
-                cell.online_text.text = "Offline"
+                cell.online_text.text = LocalizedStrings.offline
                 cell.online_view.backgroundColor = offlineColor
             }
         }
