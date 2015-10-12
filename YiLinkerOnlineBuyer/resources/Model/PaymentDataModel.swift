@@ -44,14 +44,8 @@ class PaymentDataModel: NSObject {
         }
         
         if let val: AnyObject = dictionary["totalPrice"] {
-            if let tempVal = dictionary["totalPrice"] as? Int {
-                totalPriceString = ("\(tempVal)")
-            }
-        }
-        
-        if let val: AnyObject = dictionary["totalPrice"] {
             if let tempVal = dictionary["totalPrice"] as? String {
-                totalPriceString = tempVal
+                totalPriceString = ("\(tempVal)")
             }
         }
         
@@ -60,7 +54,7 @@ class PaymentDataModel: NSObject {
         for productDictionary in orderProducts {
             orderedProductsModel.append(OrderedProductsModel.parseDataWithDictionary(productDictionary))
         }
-        
+
         return PaymentDataModel(orderId: orderId, invoiceNumber: invoiceNumber, totalPrice: totalPriceString, orderedProductsModel: orderedProductsModel)
     }
 }
