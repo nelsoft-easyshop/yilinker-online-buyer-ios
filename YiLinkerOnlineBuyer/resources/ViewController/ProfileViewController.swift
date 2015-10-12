@@ -67,11 +67,12 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         manager.GET(url, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in print(responseObject as! NSDictionary)
             if responseObject.objectForKey("error") != nil {
-                self.requestRefreshToken("getWishlist", url: url, params: params, showLoader: showLoader)
+                self.requestRefreshToken("requestProfileDetails", url: url, params: params, showLoader: showLoader)
             } else {
                 if let value: AnyObject = responseObject["data"] {
                     self.profileDetails = ProfileUserDetailsModel.parseDataWithDictionary(value as! NSDictionary)
                 }
+                
                 self.tableView.reloadData()
                 self.dismissLoader()
             }
