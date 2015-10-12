@@ -84,7 +84,6 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "onNewMessage:",
             name: appDelegate.messageKey, object: nil)
         self.initDimView()
-        self.fireGetCode()
     }
     
     func onRegistration(notification: NSNotification){
@@ -422,7 +421,12 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             SessionManager.setCartCount(self.profileModel.cartCount)
             SessionManager.setWishlistCount(self.profileModel.wishlistCount)
             self.updateTabBarBadge()
-                
+            
+            
+            if !SessionManager.isMobileVerified() {
+                self.fireGetCode()
+            }
+            
             self.hud?.hide(true)
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
@@ -511,7 +515,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         verifyNumberModal.view.backgroundColor = UIColor.clearColor()
         verifyNumberModal.view.frame.origin.y = 0
         self.parentViewController!.presentViewController(verifyNumberModal, animated: true, completion: nil)
-        
+        self.tabBarController?.tabBar.userInteractionEnabled = false
         self.dimView!.hidden = false
         UIView.animateWithDuration(0.3, animations: {
             self.dimView!.alpha = 1
@@ -560,8 +564,9 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     func hideDimView() {
         UIView.animateWithDuration(0.3, animations: {
             self.dimView!.alpha = 0
+            self.tabBarController?.tabBar.userInteractionEnabled = true
             }, completion: { finished in
-                self.fireGetCode()
+                
         })
     }
 }
