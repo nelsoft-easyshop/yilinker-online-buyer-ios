@@ -35,7 +35,7 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
     var labelsInArray: [UILabel] = []
     var deselectedImages: [String] = []
     
-    var query: String = ""
+    var query: String = "all"
     
     var hud: MBProgressHUD?
     
@@ -273,16 +273,22 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
             println(APIAtlas.transactionLogs+"\(SessionManager.accessToken())&type=\(queryType)&perPage=15&page=\(page)")
             manager.GET(APIAtlas.transactionLogs+"\(SessionManager.accessToken())&type=\(queryType)&perPage=15&page=\(page)", parameters: nil, success: {
                 (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-                let trans: TransactionModel = TransactionModel.parseDataFromDictionary(responseObject as! NSDictionary)
-                println(responseObject)
-                if trans.order_id.count != 0 {
-                    if trans.order_id.count < 15 {
+                var trans: TransactionModel?
+                
+                if queryType == "for-feedback" {
+                    trans = TransactionModel.parseDataFromDictionary(responseObject as! NSDictionary)
+                } else {
+                    trans = TransactionModel.parseDataFromDictionary3(responseObject as! NSDictionary)
+                }
+                
+                if trans!.product_name.count != 0 {
+                    if trans!.order_id.count < 15 {
                         self.isPageEnd = true
                         
                     }
-                    if trans.is_successful {
-                        for var i = 0; i < trans.order_id.count; i++ {
-                            self.tableData.append(TransactionModel(order_id: trans.order_id[i], date_added: trans.date_added[i], invoice_number: trans.invoice_number[i], payment_type: trans.payment_type[i], payment_method_id: trans.payment_method_id[i], order_status: trans.order_status[i], order_status_id: trans.order_status_id[i], total_price: trans.total_price[i], total_unit_price: trans.total_unit_price[i], total_item_price: trans.total_item_price[i], total_handling_fee: trans.total_handling_fee[i], total_quantity: trans.total_quantity[i], product_name: trans.product_name[i], product_count: trans.product_count[i], is_successful: trans.is_successful, order_count: trans.order_count))
+                    if trans!.is_successful {
+                        for var i = 0; i < trans!.order_id.count; i++ {
+                            self.tableData.append(TransactionModel(order_id: trans!.order_id[i], date_added: trans!.date_added[i], invoice_number: trans!.invoice_number[i], payment_type: trans!.payment_type[i], payment_method_id: trans!.payment_method_id[i], order_status: trans!.order_status[i], order_status_id: trans!.order_status_id[i], total_price: trans!.total_price[i], total_unit_price: trans!.total_unit_price[i], total_item_price: trans!.total_item_price[i], total_handling_fee: trans!.total_handling_fee[i], total_quantity: trans!.total_quantity[i], product_name: trans!.product_name[i], product_count: trans!.product_count[i], is_successful: trans!.is_successful, order_count: trans!.order_count))
                         }
                     } else {
                         self.isPageEnd = true
@@ -298,7 +304,7 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
                     self.hud?.hide(true)
                     let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                     
-                        if self.query == "all" {if error.userInfo != nil {
+                    if self.query == "all" {if error.userInfo != nil {
                         let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
                         let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
                         UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: Constants.Localized.someThingWentWrong)

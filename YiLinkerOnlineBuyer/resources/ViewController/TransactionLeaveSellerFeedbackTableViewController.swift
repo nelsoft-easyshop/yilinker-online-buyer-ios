@@ -118,7 +118,9 @@ class TransactionLeaveSellerFeedbackTableViewController: UITableViewController, 
                     "rating": String(rateCommunication)
                 ]]
         ]
-        println("\(jsonObject2 as NSDictionary)")
+        let data2 = NSJSONSerialization.dataWithJSONObject(jsonObject2, options: nil, error: nil)
+        let string2 = NSString(data: data2!, encoding: NSUTF8StringEncoding)
+        println(string2)
         let manager = APIManager.sharedInstance
         manager.POST(APIAtlas.transactionLeaveSellerFeedback+"\(SessionManager.accessToken())", parameters: jsonObject2 as NSDictionary, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
