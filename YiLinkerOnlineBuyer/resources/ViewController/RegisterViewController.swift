@@ -92,7 +92,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         self.hud = MBProgressHUD(view: self.view)
         self.hud?.removeFromSuperViewOnHide = true
         self.hud?.dimBackground = false
-        self.navigationController?.view.addSubview(self.hud!)
+        self.view.addSubview(self.hud!)
         self.hud?.show(true)
     }
     
@@ -321,8 +321,8 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         manager.POST(APIAtlas.loginUrl, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
-            self.showSuccessMessage()
             self.hud?.hide(true)
+            self.showSuccessMessage()
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)

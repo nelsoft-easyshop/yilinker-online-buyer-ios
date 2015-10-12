@@ -160,6 +160,8 @@ struct APIAtlas {
     
     static let facebookUrl = "facebook/auth"
     static let googleUrl = "google/auth"
+    
+    static let verificationGetCodeUrl = "auth/sms/getCode"
 }
 
 class APIManager: AFHTTPSessionManager {
