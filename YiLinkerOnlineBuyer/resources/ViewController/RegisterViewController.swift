@@ -38,7 +38,7 @@ struct RegisterStrings {
     static let eightCharacters: String = StringHelper.localizedStringWithKey("EIGHT_CHARACTERS_LOCALIZED_KEY")
 }
 
-class RegisterViewController: UIViewController, UITextFieldDelegate, VerifyMobileNumberViewControllerDelegate {
+class RegisterViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var firstNameTextField: UITextField!
     @IBOutlet weak var lastNameTextField: UITextField!
@@ -51,7 +51,6 @@ class RegisterViewController: UIViewController, UITextFieldDelegate, VerifyMobil
     
     var currentTextFieldTag: Int = 1
     var hud: MBProgressHUD?
-    var dimView: UIView?
     
     @IBOutlet weak var orLabel: UILabel!
     override func viewDidAppear(animated: Bool) {
@@ -81,18 +80,6 @@ class RegisterViewController: UIViewController, UITextFieldDelegate, VerifyMobil
         
         self.registerButton.setTitle(RegisterStrings.registerMeNow, forState: UIControlState.Normal)
         self.registerButton.setTitle(RegisterStrings.registerMeNow, forState: UIControlState.Normal)
-        
-        self.initDimView()
-    }
-    
-    //Dim View
-    func initDimView() {
-        dimView = UIView(frame: self.view.bounds)
-        dimView?.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
-        self.parentViewController!.view.addSubview(dimView!)
-        //self.view.addSubview(dimView!)
-        dimView?.hidden = true
-        dimView?.alpha = 0
     }
     
     //Show HUD
@@ -335,7 +322,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate, VerifyMobil
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
             self.hud?.hide(true)
-            self.fireGetCode()
+            self.showSuccessMessage()
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
@@ -357,61 +344,5 @@ class RegisterViewController: UIViewController, UITextFieldDelegate, VerifyMobil
         self.presentViewController(alertController, animated: true) {
             
         }
-    }
-    
-    //MARK: Verification
-    func displayCodeDialog() {
-        var verifyNumberModal = VerifyMobileNumberViewController(nibName: "VerifyMobileNumberViewController", bundle: nil)
-        verifyNumberModal.delegate = self
-        verifyNumberModal.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
-        verifyNumberModal.providesPresentationContextTransitionStyle = true
-        verifyNumberModal.definesPresentationContext = true
-        verifyNumberModal.view.backgroundColor = UIColor.clearColor()
-        verifyNumberModal.view.frame.origin.y = 0
-        self.parentViewController!.presentViewController(verifyNumberModal, animated: true, completion: nil)
-        
-        self.dimView!.hidden = false
-        UIView.animateWithDuration(0.3, animations: {
-            self.dimView!.alpha = 1
-            }, completion: { finished in
-        })
-    }
-    
-    // MARK: GET CODE
-    
-    func fireGetCode() {
-        let manager: APIManager = APIManager.sharedInstance
-        //seller@easyshop.ph
-        //password
-        let parameters: NSDictionary = ["access_token": SessionManager.accessToken()]
-        self.showHUD()
-        manager.POST(APIAtlas.verificationGetCodeUrl, parameters: parameters, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            println(responseObject)
-            self.displayCodeDialog()
-            self.hud?.hide(true)
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
-                self.hud?.hide(true)
-        })
-    }
-    
-    //MARK: - Verification Delegate
-    func closeVerifyMobileNumberViewController() {
-        
-    }
-    
-    func verifyMobileNumberAction(isSuccessful: Bool) {
-        self.showSuccessMessage()
-    }
-    
-    func requestNewCodeAction() {
-        self.dimView!.hidden = false
-        UIView.animateWithDuration(0.3, animations: {
-            self.dimView!.alpha = 0
-            }, completion: { finished in
-                self.fireGetCode()
-        })
     }
 }
