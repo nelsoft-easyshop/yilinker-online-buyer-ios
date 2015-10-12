@@ -308,11 +308,17 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
 //                    cell.productItemImageView.sd_setImageWithURL(NSURL(string: tempProductUnit.imageIds[0]), placeholderImage: UIImage(named: "dummy-placeholder"))
 //                }
                 
-                if tempModel.images.count != 0 {
-                    cell.productItemImageView.sd_setImageWithURL(NSURL(string: tempModel.images[0]), placeholderImage: UIImage(named: "dummy-placeholder"))
+                
+                if tempProductUnit.primaryImage.isNotEmpty() {
+                    cell.productItemImageView.sd_setImageWithURL(NSURL(string: "http://online.api.easydeal.ph/assets/images/uploads/products/\(tempProductUnit.primaryImage)"), placeholderImage: UIImage(named: "dummy-placeholder"))
                 } else {
-                    cell.productItemImageView.image = UIImage(named: "dummy-placeholder")
-                }
+                    if tempModel.images.count != 0 {
+                        cell.productItemImageView.sd_setImageWithURL(NSURL(string: tempModel.images[0]), placeholderImage: UIImage(named: "dummy-placeholder"))
+                    } else {
+                        cell.productItemImageView.image = UIImage(named: "dummy-placeholder")
+                    }
+
+                }                
                 
                 var tempAttributesText: String = ""
                 for tempId in tempProductUnit.combination {
