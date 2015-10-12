@@ -44,7 +44,7 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
             self.tableView.layoutIfNeeded()
             self.tableView.tableFooterView = self.tableFooterView()
             self.tableView.tableFooterView!.frame = CGRectMake(0, 0, 0, self.tableView.tableFooterView!.frame.size.height)
-            self.fireSetCheckoutAddress(SessionManager.addressId())
+            self.fireSetCheckoutAddress("\(SessionManager.addressId())")
         } else {
             self.requestGetProvince()
         }
@@ -103,7 +103,7 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func changeAddressViewController(didSelectAddress address: String) {
-        self.fireSetCheckoutAddress(SessionManager.addressId())
+        self.fireSetCheckoutAddress("\(SessionManager.addressId())")
         self.tableView.tableFooterView = self.tableFooterView()
     }
 
@@ -123,7 +123,7 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
     func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         if section == 0 {
             let footerView: CheckoutViews = XibHelper.puffViewWithNibName("CheckoutViews", index: 1) as! CheckoutViews
-            footerView.totalPricelabel?.text = self.totalPrice
+            footerView.totalPricelabel?.text = self.totalPrice.formatToTwoDecimal()
             return footerView
         } else {
             return UIView(frame: CGRectZero)
@@ -140,7 +140,7 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
             
             for tempProductUnit in product.productUnits {
                 if product.unitId == tempProductUnit.productUnitId {
-                    orderSummaryCell.priceLabel.text = "P " + tempProductUnit.discountedPrice
+                    orderSummaryCell.priceLabel.text = tempProductUnit.discountedPrice.formatToTwoDecimal()
                     break
                 }
             }
@@ -227,7 +227,7 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
         self.navigationController!.pushViewController(changeAddressViewController, animated: true)
     }
     
-    func fireSetCheckoutAddress(addressId: Int) {
+    func fireSetCheckoutAddress(addressId: String) {
         self.showHUD()
         let manager: APIManager = APIManager.sharedInstance
         let parameters: NSDictionary = ["access_token": SessionManager.accessToken(), "address_id": "\(addressId)"]
