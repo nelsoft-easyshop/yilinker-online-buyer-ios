@@ -29,8 +29,10 @@ class ProfileUserDetailsModel: NSObject {
     var followingCount: Int = 0
     var isEmailSubscribed: Bool = false
     var isSmsSubscribed: Bool = false
+    var isEmailVerified: Bool = false
+    var isMobileVerified: Bool = false
     
-    init(fullName: String, firstName: String, lastName: String, email: String, contactNumber: String, profileImageUrl: String, coverPhoto: String, gender: String, birthdate: String, address: AddressModelV2, transactionCount: Int, wishlistCount: Int, cartCount: Int, messageCount: Int, followingCount: Int, isEmailSubscribed: Bool, isSmsSubscribed: Bool){
+    init(fullName: String, firstName: String, lastName: String, email: String, contactNumber: String, profileImageUrl: String, coverPhoto: String, gender: String, birthdate: String, address: AddressModelV2, transactionCount: Int, wishlistCount: Int, cartCount: Int, messageCount: Int, followingCount: Int, isEmailSubscribed: Bool, isSmsSubscribed: Bool, isEmailVerified: Bool, isMobileVerified: Bool){
         self.fullName = fullName
         self.firstName = firstName
         self.lastName = lastName
@@ -48,6 +50,8 @@ class ProfileUserDetailsModel: NSObject {
         self.followingCount = followingCount
         self.isEmailSubscribed = isEmailSubscribed
         self.isSmsSubscribed = isSmsSubscribed
+        self.isEmailVerified = isEmailVerified
+        self.isMobileVerified = isMobileVerified
     }
     
     override init() {
@@ -74,6 +78,8 @@ class ProfileUserDetailsModel: NSObject {
         var followingCount: Int = 0
         var isEmailSubscribed: Bool = false
         var isSmsSubscribed: Bool = false
+        var isEmailVerified: Bool = false
+        var isMobileVerified: Bool = false
     
         if let value: AnyObject = dictionary["fullName"] {
             if value as! NSObject != NSNull() {
@@ -178,6 +184,20 @@ class ProfileUserDetailsModel: NSObject {
             }
         }
         
+        if let value: AnyObject = dictionary["isEmailVerified"] {
+            if value as! NSObject != NSNull() {
+                isEmailVerified = value as! Bool
+                SessionManager.setIsEmailVerified(isEmailVerified)
+            }
+        }
+        
+        if let value: AnyObject = dictionary["isMobileVerified"] {
+            if value as! NSObject != NSNull() {
+                isMobileVerified = value as! Bool
+                SessionManager.setIsMobileVerified(isMobileVerified)
+            }
+        }
+        
         return ProfileUserDetailsModel(fullName: fullName,
             firstName: firstName,
             lastName: lastName,
@@ -194,7 +214,9 @@ class ProfileUserDetailsModel: NSObject {
             messageCount: messageCount,
             followingCount: followingCount,
             isEmailSubscribed: isEmailSubscribed,
-            isSmsSubscribed: isSmsSubscribed)
+            isSmsSubscribed: isSmsSubscribed,
+            isEmailVerified: isEmailVerified,
+            isMobileVerified: isMobileVerified)
     }
     
 
