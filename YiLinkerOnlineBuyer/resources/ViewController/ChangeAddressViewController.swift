@@ -244,6 +244,11 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
             
             self.collectionView.reloadData()
             self.hud?.hide(true)
+            
+            if self.getAddressModel.listOfAddress.count == 1 {
+                self.fireSetDefaultAddressWithAddressId("\(self.getAddressModel.listOfAddress[0].userAddressId)", indexPath: NSIndexPath(forItem: 0, inSection: 0)!)
+            }
+            
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
