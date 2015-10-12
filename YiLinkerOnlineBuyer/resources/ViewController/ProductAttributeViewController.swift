@@ -11,7 +11,7 @@ import UIKit
 protocol ProductAttributeViewControllerDelegate {
     func dissmissAttributeViewController(controller: ProductAttributeViewController, type: String)
     func doneActionPassDetailsToProductView(controller: ProductAttributeViewController, unitId: String, quantity: Int, selectedId: NSArray, images: [String])
-    func gotoCheckoutFromAttributes(controller: ProductAttributeViewController)
+    func gotoCheckoutFromAttributes(controller: ProductAttributeViewController, unitId: String, quantity: Int)
 }
 
 class ProductAttributeViewController: UIViewController, UITableViewDelegate, ProductAttributeTableViewCellDelegate {
@@ -184,7 +184,7 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
     @IBAction func checkoutAction(sender: AnyObject) {
         hideSelf("buy")
         if let delegate = self.delegate {
-            delegate.gotoCheckoutFromAttributes(self)
+             delegate.gotoCheckoutFromAttributes(self, unitId: self.unitId, quantity: quantity)
         }
     }
     
@@ -234,7 +234,8 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
         }
         
         hideSelf("buy")
-        delegate!.gotoCheckoutFromAttributes(self)
+        let quantity: Int = stocksLabel.text!.toInt()!
+        delegate!.gotoCheckoutFromAttributes(self, unitId: self.unitId, quantity: quantity)
 
     }
     
