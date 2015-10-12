@@ -174,6 +174,32 @@ class SessionManager {
         }
     }
     
+    class func setIsEmailVerified(isEmailVerified: Bool) {
+        NSUserDefaults.standardUserDefaults().setBool(isEmailVerified, forKey: "isEmailVerified")
+        NSUserDefaults.standardUserDefaults().synchronize()
+    }
+    
+    class func isEmailVerified() -> Bool {
+        var result: Bool = false
+        if let val: AnyObject = NSUserDefaults.standardUserDefaults().boolForKey("isEmailVerified") as? Bool {
+            result = val as! Bool
+        }
+        return result
+    }
+    
+    class func setIsMobileVerified(isMobileVerified: Bool) {
+        NSUserDefaults.standardUserDefaults().setBool(isMobileVerified, forKey: "isMobileVerified")
+        NSUserDefaults.standardUserDefaults().synchronize()
+    }
+    
+    class func isMobileVerified() -> Bool {
+        var result: Bool = false
+        if let val: AnyObject = NSUserDefaults.standardUserDefaults().boolForKey("isMobileVerified") as? Bool {
+            result = val as! Bool
+        }
+        return result
+    }
+    
     class func parseTokensFromResponseObject(dictionary: NSDictionary) {
         if dictionary.isKindOfClass(NSDictionary) {
             var accessToken: String = ""

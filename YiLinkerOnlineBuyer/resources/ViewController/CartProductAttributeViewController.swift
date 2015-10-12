@@ -128,7 +128,7 @@ class CartProductAttributeViewController: UIViewController, UITableViewDelegate,
     
     func passModel(#cartModel: CartProductDetailsModel, selectedProductUnits: ProductUnitsModel) {
         productDetailModel = cartModel
-        setDetail(productDetailModel!.image, title: productDetailModel!.title, price: selectedProductUnits.discountedPrice)
+        setDetail("http://online.api.easydeal.ph/assets/images/uploads/products/\(selectedProductUnits.primaryImage)", title: productDetailModel!.title, price: selectedProductUnits.discountedPrice)
         self.maximumStock = selectedProductUnits.quantity
         stocks = cartModel.quantity
         checkStock(stocks)
@@ -186,11 +186,14 @@ class CartProductAttributeViewController: UIViewController, UITableViewDelegate,
                 }
             }
             
+            setDetail("http://online.api.easydeal.ph/assets/images/uploads/products/\(selectedProductUnit.primaryImage)", title: productDetailModel!.title, price: selectedProductUnit.discountedPrice)
+            
             priceLabel.text = selectedProductUnit.price.formatToTwoDecimal()
             self.maximumStock = selectedProductUnit.quantity
             stocks = productDetailModel!.quantity
             checkStock(stocks)
             self.availabilityStocksLabel.text = availableLocalizeString + ": " + String(maximumStock)
+            
         } else {
             priceLabel.text = "0".formatToTwoDecimal()
             self.maximumStock = 0

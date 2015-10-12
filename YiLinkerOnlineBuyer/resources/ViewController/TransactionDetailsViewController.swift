@@ -391,10 +391,12 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
     // MARK: - Actions
     
     func leaveFeedback(tag: Int) {
-        let feedbackView = TransactionLeaveSellerFeedbackViewController(nibName: "TransactionLeaveSellerFeedbackViewController", bundle: nil)
-        feedbackView.edgesForExtendedLayout = UIRectEdge.None
+        //let feedbackView = TransactionLeaveSellerFeedbackViewController(nibName: "TransactionLeaveSellerFeedbackViewController", bundle: nil)
+        //feedbackView.edgesForExtendedLayout = UIRectEdge.None
+        let feedbackView = TransactionLeaveSellerFeedbackTableViewController(nibName: "TransactionLeaveSellerFeedbackTableViewController", bundle: nil)
         feedbackView.sellerId = tag
         feedbackView.orderId = self.orderId.toInt()!
+        feedbackView.edgesForExtendedLayout = UIRectEdge.None
         self.navigationController?.pushViewController(feedbackView, animated: true)
     }
     

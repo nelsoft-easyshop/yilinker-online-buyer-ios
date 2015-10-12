@@ -513,6 +513,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
             "productId": self.productDetailsModel.id,
             "unitId": self.unitId,
             "quantity": quantity]
+        println(params)
         
         manager.POST(APIAtlas.updateCart(), parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
@@ -749,7 +750,12 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         //        self.setDetails(productDetailsModel.details)
         self.setDetails([ProductStrings.freeShipping, ProductStrings.sevenDayReturn])
         
-        self.setAttributes(self.productDetailsModel.attributes, productUnits: self.productDetailsModel.productUnits, unitId: self.unitId, quantity: 1)
+        var productQuantity: Int = self.productDetailsModel.productUnits[0].quantity
+        if productQuantity != 0 {
+            productQuantity = 1
+        }
+        
+        self.setAttributes(self.productDetailsModel.attributes, productUnits: self.productDetailsModel.productUnits, unitId: self.unitId, quantity: productQuantity)
         self.productDescriptionView.setDescription(productDetailsModel.shortDescription, full: productDetailsModel.fullDescription)
         
         
@@ -1030,7 +1036,9 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         self.productImagesView.updateDetails(self.productDetailsModel, unitId: unitIdIndex, images: images)
     }
     
-    func gotoCheckoutFromAttributes(controller: ProductAttributeViewController) {
+    func gotoCheckoutFromAttributes(controller: ProductAttributeViewController, unitId: String, quantity: Int) {
+        self.unitId = unitId
+        self.quantity = quantity
         self.buyItNowAction(UIGestureRecognizer())
     }
     

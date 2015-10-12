@@ -337,6 +337,12 @@
 		B77B8DDC1B9B588A0002C513 /* DateUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = B77B8DDB1B9B588A0002C513 /* DateUtility.swift */; };
 		B7B1D8321BA15B0C006A5DF5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B7B1D8311BA15B0C006A5DF5 /* GoogleService-Info.plist */; };
 		BE00C15B75D7E76D254AAEC1 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D038C18A7712E626564D2D3 /* libPods.a */; };
+		F70EFB1F1BC6BEB80077B8ED /* TransactionLeaveFeedbackFieldTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F70EFB1D1BC6BEB80077B8ED /* TransactionLeaveFeedbackFieldTableViewCell.swift */; };
+		F70EFB201BC6BEB80077B8ED /* TransactionLeaveFeedbackFieldTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F70EFB1E1BC6BEB80077B8ED /* TransactionLeaveFeedbackFieldTableViewCell.xib */; };
+		F70EFB231BC6BF190077B8ED /* TransactionLeaveFeedbackRateTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F70EFB211BC6BF190077B8ED /* TransactionLeaveFeedbackRateTableViewCell.swift */; };
+		F70EFB241BC6BF190077B8ED /* TransactionLeaveFeedbackRateTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F70EFB221BC6BF190077B8ED /* TransactionLeaveFeedbackRateTableViewCell.xib */; };
+		F70EFB271BC6BFB40077B8ED /* TransactionLeaveSellerFeedbackTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F70EFB251BC6BFB40077B8ED /* TransactionLeaveSellerFeedbackTableViewController.swift */; };
+		F70EFB281BC6BFB40077B8ED /* TransactionLeaveSellerFeedbackTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F70EFB261BC6BFB40077B8ED /* TransactionLeaveSellerFeedbackTableViewController.xib */; };
 		F740F08D1B90CBC900D23A34 /* CreateAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F740F08B1B90CBC900D23A34 /* CreateAccountViewController.swift */; };
 		F740F08E1B90CBC900D23A34 /* CreateAccountViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F740F08C1B90CBC900D23A34 /* CreateAccountViewController.xib */; };
 		F740F0901B90D1D800D23A34 /* address.png in Resources */ = {isa = PBXBuildFile; fileRef = F740F08F1B90D1D800D23A34 /* address.png */; };
@@ -771,6 +777,12 @@
 		B77B8DD01B9B554A0002C513 /* TextViewAutoHeight.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextViewAutoHeight.swift; sourceTree = "<group>"; };
 		B77B8DDB1B9B588A0002C513 /* DateUtility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateUtility.swift; sourceTree = "<group>"; };
 		B7B1D8311BA15B0C006A5DF5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		F70EFB1D1BC6BEB80077B8ED /* TransactionLeaveFeedbackFieldTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TransactionLeaveFeedbackFieldTableViewCell.swift; path = YiLinkerOnlineBuyer/resources/ViewController/TransactionLeaveFeedbackFieldTableViewCell.swift; sourceTree = SOURCE_ROOT; };
+		F70EFB1E1BC6BEB80077B8ED /* TransactionLeaveFeedbackFieldTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TransactionLeaveFeedbackFieldTableViewCell.xib; path = YiLinkerOnlineBuyer/resources/ViewController/TransactionLeaveFeedbackFieldTableViewCell.xib; sourceTree = SOURCE_ROOT; };
+		F70EFB211BC6BF190077B8ED /* TransactionLeaveFeedbackRateTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TransactionLeaveFeedbackRateTableViewCell.swift; path = YiLinkerOnlineBuyer/resources/ViewController/TransactionLeaveFeedbackRateTableViewCell.swift; sourceTree = SOURCE_ROOT; };
+		F70EFB221BC6BF190077B8ED /* TransactionLeaveFeedbackRateTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TransactionLeaveFeedbackRateTableViewCell.xib; path = YiLinkerOnlineBuyer/resources/ViewController/TransactionLeaveFeedbackRateTableViewCell.xib; sourceTree = SOURCE_ROOT; };
+		F70EFB251BC6BFB40077B8ED /* TransactionLeaveSellerFeedbackTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TransactionLeaveSellerFeedbackTableViewController.swift; path = YiLinkerOnlineBuyer/resources/ViewController/TransactionLeaveSellerFeedbackTableViewController.swift; sourceTree = SOURCE_ROOT; };
+		F70EFB261BC6BFB40077B8ED /* TransactionLeaveSellerFeedbackTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TransactionLeaveSellerFeedbackTableViewController.xib; path = YiLinkerOnlineBuyer/resources/ViewController/TransactionLeaveSellerFeedbackTableViewController.xib; sourceTree = SOURCE_ROOT; };
 		F740F08B1B90CBC900D23A34 /* CreateAccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CreateAccountViewController.swift; path = YiLinkerOnlineBuyer/resources/Xib/CreateAccountViewController.swift; sourceTree = SOURCE_ROOT; };
 		F740F08C1B90CBC900D23A34 /* CreateAccountViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CreateAccountViewController.xib; path = YiLinkerOnlineBuyer/resources/Xib/CreateAccountViewController.xib; sourceTree = SOURCE_ROOT; };
 		F740F08F1B90D1D800D23A34 /* address.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = address.png; sourceTree = "<group>"; };
@@ -1233,6 +1245,8 @@
 				F7C569F11BB1790A004740E1 /* TransactionLeaveFeedbackViewController.xib */,
 				F7C569F21BB1790A004740E1 /* TransactionLeaveSellerFeedbackViewController.swift */,
 				F7C569F31BB1790A004740E1 /* TransactionLeaveSellerFeedbackViewController.xib */,
+				F70EFB251BC6BFB40077B8ED /* TransactionLeaveSellerFeedbackTableViewController.swift */,
+				F70EFB261BC6BFB40077B8ED /* TransactionLeaveSellerFeedbackTableViewController.xib */,
 				F7C569F41BB1790A004740E1 /* TransactionProductDetailsViewController.swift */,
 				F7C569F51BB1790A004740E1 /* TransactionViewController.swift */,
 				F7C569F61BB1790A004740E1 /* TransactionViews.swift */,
@@ -1300,6 +1314,10 @@
 				793A899C1BA004550030FDC7 /* VerifyMobileNumberStatusViewController.swift */,
 				793A89981BA001AE0030FDC7 /* VerifyMobileNumberViewController.swift */,
 				0C9937281B750583000D6074 /* WishlistViewController.swift */,
+				F70EFB1D1BC6BEB80077B8ED /* TransactionLeaveFeedbackFieldTableViewCell.swift */,
+				F70EFB1E1BC6BEB80077B8ED /* TransactionLeaveFeedbackFieldTableViewCell.xib */,
+				F70EFB211BC6BF190077B8ED /* TransactionLeaveFeedbackRateTableViewCell.swift */,
+				F70EFB221BC6BF190077B8ED /* TransactionLeaveFeedbackRateTableViewCell.xib */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -1602,6 +1620,7 @@
 				F7CC68F41BA295A2009168D7 /* message2.png in Resources */,
 				0C2F44CD1B8576FE00021F45 /* Panton Light Italic.otf in Resources */,
 				0C8A7C7B1B6772670039F013 /* Images.xcassets in Resources */,
+				F70EFB281BC6BFB40077B8ED /* TransactionLeaveSellerFeedbackTableViewController.xib in Resources */,
 				F7DC84E11BA00F7300D3878B /* SellerTableHeaderView.xib in Resources */,
 				0C374F311B88E3790050AE1D /* OrderSummaryTableViewCell.xib in Resources */,
 				F7CCDA8D1B943CBB000F5AD4 /* FollowedSellerTableViewCell.xib in Resources */,
@@ -1680,6 +1699,7 @@
 				0C9937671B750583000D6074 /* ProductItemWithVerticalDisplayCollectionViewCell.xib in Resources */,
 				0C2F44CE1B8576FE00021F45 /* Panton Light.otf in Resources */,
 				26AFB3C31B79DE5600E50926 /* ProductDescriptionViewController.xib in Resources */,
+				F70EFB241BC6BF190077B8ED /* TransactionLeaveFeedbackRateTableViewCell.xib in Resources */,
 				0C374F4D1B8998F30050AE1D /* CustomizeShoppingCollectionViewCell.xib in Resources */,
 				F7CCDA891B943CBB000F5AD4 /* CategoriesTableViewCell.xib in Resources */,
 				F7C569E11BB1776F004740E1 /* TransactionProductDetailsViewController.xib in Resources */,
@@ -1727,6 +1747,7 @@
 				266A5C651BB003B400343DB4 /* DisputeAddItemTableViewCell.xib in Resources */,
 				0C2F44CB1B8576FE00021F45 /* Panton Heavy Italic.otf in Resources */,
 				79E68B9D1B8B4270008626E4 /* ProfileSettingsTableViewCell.xib in Resources */,
+				F70EFB201BC6BEB80077B8ED /* TransactionLeaveFeedbackFieldTableViewCell.xib in Resources */,
 				0C9937661B750583000D6074 /* NewSellerScrollableCollectionViewCell.xib in Resources */,
 				B7B1D8321BA15B0C006A5DF5 /* GoogleService-Info.plist in Resources */,
 			);
@@ -1887,12 +1908,14 @@
 				26AFB3AF1B79DE2900E50926 /* ProductSellerViewCollectionViewCell.swift in Sources */,
 				0C329E931B7B7B2F005BE2B6 /* HiddenViewController.swift in Sources */,
 				0C9937581B750583000D6074 /* TwoColumnGridCollectionViewCell.swift in Sources */,
+				F70EFB231BC6BF190077B8ED /* TransactionLeaveFeedbackRateTableViewCell.swift in Sources */,
 				0C99375A1B750583000D6074 /* ViewMoreFooterCollectionViewCell.swift in Sources */,
 				79A1C6ED1B8329200043AA36 /* SearchSuggestionModel.swift in Sources */,
 				0C9937561B750583000D6074 /* SellerCollectionViewCell.swift in Sources */,
 				79E68BB31B8B5862008626E4 /* EditProfileAddressTableViewCell.swift in Sources */,
 				26AFB3B61B79DE3800E50926 /* ProductViewsViewController.swift in Sources */,
 				0C9937471B750583000D6074 /* DynamicRoundedLabel.swift in Sources */,
+				F70EFB1F1BC6BEB80077B8ED /* TransactionLeaveFeedbackFieldTableViewCell.swift in Sources */,
 				0C5007691B861B1600BC0445 /* ChangeAddressFooterCollectionViewCell.swift in Sources */,
 				0C374F081B88DC440050AE1D /* TotalTableViewCell.swift in Sources */,
 				2632F5211B7F8690006931E4 /* FollowedSellerTableViewCell.swift in Sources */,
@@ -2017,6 +2040,7 @@
 				0C99375B1B750583000D6074 /* CartViewController.swift in Sources */,
 				79F2F55B1B85FD9D00F57E4B /* FilterViewController.swift in Sources */,
 				0C9937571B750583000D6074 /* SemiRoundedButton.swift in Sources */,
+				F70EFB271BC6BFB40077B8ED /* TransactionLeaveSellerFeedbackTableViewController.swift in Sources */,
 				2689FBFC1B81856B007BEA68 /* ProductUnitsModel.swift in Sources */,
 				F7C569F71BB1790A004740E1 /* TransactionCancelOrderStatusViewController.swift in Sources */,
 				0C9937491B750583000D6074 /* GenericCollectionViewCell.swift in Sources */,

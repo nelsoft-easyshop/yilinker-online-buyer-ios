@@ -20,12 +20,12 @@
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="667" id="FrN-Y1-JQi"/>
-                        <constraint firstAttribute="width" constant="375" id="iSM-Ti-0WO"/>
                     </constraints>
                 </tableView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
+                <constraint firstAttribute="centerX" secondItem="y66-gR-lQH" secondAttribute="centerX" id="2pP-X0-RZc"/>
                 <constraint firstItem="y66-gR-lQH" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="5t1-sf-1wg"/>
                 <constraint firstAttribute="bottom" secondItem="y66-gR-lQH" secondAttribute="bottom" id="Bj1-1S-CuX"/>
                 <constraint firstItem="y66-gR-lQH" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Exl-Km-aTA"/>

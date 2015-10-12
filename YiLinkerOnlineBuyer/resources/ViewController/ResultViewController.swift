@@ -85,6 +85,11 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
         self.initializeViews()
         self.initializeLocalizedString()
         self.registerNibs()
+        
+        if targetType == TargetType.TodaysPromo {
+            requestSuggestionSearchUrl = APIAtlas.todaysPromo
+            requestSearchDetails(requestSuggestionSearchUrl, params: nil)
+        }
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -222,7 +227,7 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
         
         if Reachability.isConnectedToNetwork() {
             requestSuggestionSearchUrl = searchSuggestion.searchUrl
-           requestSearchDetails(requestSuggestionSearchUrl, params: nil)
+            requestSearchDetails(requestSuggestionSearchUrl, params: nil)
         } else {
             UIAlertController.displayNoInternetConnectionError(self)
         }
