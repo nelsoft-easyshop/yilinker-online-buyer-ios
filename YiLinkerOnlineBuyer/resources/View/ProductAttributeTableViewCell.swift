@@ -109,11 +109,11 @@ class ProductAttributeTableViewCell: UITableViewCell, UIScrollViewDelegate {
                     button.backgroundColor = Constants.Colors.appTheme
                     button.setTitleColor(UIColor.whiteColor(), forState: .Normal)
                     
-                    if !self.isEditingAttribute {
-                        for j in 0..<i {
-                            self.scrollPosition += self.buttonWidths[j]
-                        }
-                    }
+//                    if !self.isEditingAttribute {
+//                        for j in 0..<i {
+//                            self.scrollPosition += self.buttonWidths[j]
+//                        }
+//                    }
 
                 }
             }
@@ -123,9 +123,9 @@ class ProductAttributeTableViewCell: UITableViewCell, UIScrollViewDelegate {
         }
 
         self.addSubview(scroll)
-        if self.scrollPosition > self.scroll.contentSize.width - self.frame.size.width {
-            self.scrollPosition = self.scroll.contentSize.width - self.frame.size.width
-        }
+//        if self.scrollPosition > self.scroll.contentSize.width - self.frame.size.width {
+//            self.scrollPosition = self.scroll.contentSize.width - self.frame.size.width
+//        }
         self.scroll.contentOffset.x = self.scrollPosition
     }
     
