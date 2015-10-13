@@ -810,7 +810,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         }
         
         newFrame = self.productDetailsView.frame
-        newFrame.size.height = CGFloat(self.productDetailsView.frame.size.height * CGFloat(list.count)) + 20
+        newFrame.size.height = 70.0//CGFloat(self.productDetailsView.frame.size.height * CGFloat(list.count)) + 20
         self.productDetailsView.frame = newFrame
     }
     
