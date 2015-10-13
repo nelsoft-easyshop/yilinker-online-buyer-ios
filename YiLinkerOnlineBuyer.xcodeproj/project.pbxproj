@@ -409,6 +409,7 @@
 		F7CCDAA61B943CF7000F5AD4 /* ProductsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7CCDA9E1B943CF7000F5AD4 /* ProductsTableViewCell.swift */; };
 		F7CCDAA71B943CF7000F5AD4 /* SeeMoreTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7CCDA9F1B943CF7000F5AD4 /* SeeMoreTableViewCell.swift */; };
 		F7CCDB441BCCD1070078209A /* TransactionProductDetailsDeliveryStatusModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7CCDB431BCCD1070078209A /* TransactionProductDetailsDeliveryStatusModel.swift */; };
+		F7CCDB461BCD228B0078209A /* MessageComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7CCDB451BCD228B0078209A /* MessageComposer.swift */; };
 		F7D37CA11B92B09100FA7B16 /* ViewFeedBackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D37C9F1B92B09100FA7B16 /* ViewFeedBackViewController.swift */; };
 		F7D37CA21B92B09100FA7B16 /* ViewFeedBackViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7D37CA01B92B09100FA7B16 /* ViewFeedBackViewController.xib */; };
 		F7D8C9051BBC056200305EF2 /* SellerCategoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D8C9041BBC056100305EF2 /* SellerCategoryModel.swift */; };
@@ -851,6 +852,7 @@
 		F7CCDA9E1B943CF7000F5AD4 /* ProductsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProductsTableViewCell.swift; path = YiLinkerOnlineBuyer/resources/View/ProductsTableViewCell.swift; sourceTree = SOURCE_ROOT; };
 		F7CCDA9F1B943CF7000F5AD4 /* SeeMoreTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SeeMoreTableViewCell.swift; path = YiLinkerOnlineBuyer/resources/View/SeeMoreTableViewCell.swift; sourceTree = SOURCE_ROOT; };
 		F7CCDB431BCCD1070078209A /* TransactionProductDetailsDeliveryStatusModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TransactionProductDetailsDeliveryStatusModel.swift; path = YiLinkerOnlineBuyer/resources/Model/TransactionProductDetailsDeliveryStatusModel.swift; sourceTree = SOURCE_ROOT; };
+		F7CCDB451BCD228B0078209A /* MessageComposer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MessageComposer.swift; path = YiLinkerOnlineBuyer/resources/Model/MessageComposer.swift; sourceTree = SOURCE_ROOT; };
 		F7D37C9F1B92B09100FA7B16 /* ViewFeedBackViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ViewFeedBackViewController.swift; path = YiLinkerOnlineBuyer/resources/Xib/ViewFeedBackViewController.swift; sourceTree = SOURCE_ROOT; };
 		F7D37CA01B92B09100FA7B16 /* ViewFeedBackViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ViewFeedBackViewController.xib; path = YiLinkerOnlineBuyer/resources/Xib/ViewFeedBackViewController.xib; sourceTree = SOURCE_ROOT; };
 		F7D8C9041BBC056100305EF2 /* SellerCategoryModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SellerCategoryModel.swift; path = YiLinkerOnlineBuyer/resources/Model/SellerCategoryModel.swift; sourceTree = SOURCE_ROOT; };
@@ -1105,6 +1107,7 @@
 				266BE1E91BC3B0B300BB6642 /* DisputeReasonsModel.swift */,
 				0C35A5CE1BC425AE006C0A65 /* LoginModel.swift */,
 				F7CCDB431BCCD1070078209A /* TransactionProductDetailsDeliveryStatusModel.swift */,
+				F7CCDB451BCD228B0078209A /* MessageComposer.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1822,6 +1825,7 @@
 				79E8F1531B9035D9009CE450 /* SearchResultModel.swift in Sources */,
 				0CC8A63F1B7B9BF600C91425 /* ProfileViewController.swift in Sources */,
 				0C538AE11B99EFC000EB64AB /* PaymentSuccessModel.swift in Sources */,
+				F7CCDB461BCD228B0078209A /* MessageComposer.swift in Sources */,
 				F7C569BC1BB1762C004740E1 /* TransactionProductImagesView.swift in Sources */,
 				0C2F44DC1B8583EF00021F45 /* CheckoutViews.swift in Sources */,
 				96DEBC6D1B9F2731000ACFE7 /* ResolutionCenterModel.swift in Sources */,

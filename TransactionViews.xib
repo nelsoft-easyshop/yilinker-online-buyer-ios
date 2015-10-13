@@ -668,7 +668,7 @@ Phiippines</string>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="deliveryCall" destination="cJd-fb-MZu" id="dAC-zn-0Zz"/>
-                <outlet property="deliveryRiderLabel" destination="YHa-Hz-Wbm" id="Z0k-xm-SmZ"/>
+                <outlet property="deliveryRiderLabel" destination="h47-5W-Ndm" id="tLL-4E-KQY"/>
                 <outlet property="deliveryRiderTitleLabel" destination="YHa-Hz-Wbm" id="pCd-x7-xbU"/>
                 <outlet property="deliverySms" destination="XMI-n2-oX4" id="aZq-HQ-McT"/>
                 <outlet property="deliveryStatusLabel" destination="owQ-FA-h7I" id="ScL-VS-DTc"/>

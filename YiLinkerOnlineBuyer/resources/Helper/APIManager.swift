@@ -149,6 +149,8 @@ struct APIAtlas {
     static let transactionCancellation = "auth/cancellation/reasons"
     static let postTransactionCancellation = "auth/transaction/cancel"
     static let getReasons = "auth/dispute/get-seller-reasons?access_token="
+    static let transactionDeliveryStatus = "auth/getTransactionDeliveryOverview?access_token="
+    
     //Resolution Center
     static let getResolutionCenterCases = "/api/v1/auth/dispute/get-case"
     static let getResolutionCenterCaseDetails = "/api/v1/auth/dispute/get-case-detail"
