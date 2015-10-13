@@ -19,10 +19,12 @@ struct LoginStrings {
     
     static let successMessage: String = StringHelper.localizedStringWithKey("SUCCESS_LOGIN_LOCALIZE_KEY")
     static let or: String = StringHelper.localizedStringWithKey("OR_LOCALIZE_KEY")
+    static let forgotPasswordd: String = StringHelper.localizedStringWithKey("FORGOT_PASSWORD_LOCALIZE_KEY")
 }
 
 class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFieldDelegate, GPPSignInDelegate {
     
+    @IBOutlet weak var forgotPasswordButton: UIButton!
     @IBOutlet weak var facebookButtonHeightConstraints: NSLayoutConstraint!
     @IBOutlet weak var facebookButton: FBSDKLoginButton!
     
@@ -47,6 +49,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
         self.passwordTextField.placeholder = LoginStrings.enterPassword
         self.orLabel.text = LoginStrings.or
         self.signInButton.setTitle(FABStrings.signIn, forState: UIControlState.Normal)
+        self.forgotPasswordButton.setTitle(LoginStrings.forgotPasswordd, forState: UIControlState.Normal)
     }
     
     //MARK: - ViewDidDisappear
@@ -83,6 +86,9 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
         signIn.scopes = [kGTLAuthScopePlusLogin, kGTLAuthScopePlusMe, kGTLAuthScopePlusUserinfoEmail]
         signIn.delegate = self
         self.gmailLoginButton.layer.cornerRadius = 5
+    }
+    @IBAction func forgotPassword(sender: AnyObject) {
+        UIApplication.sharedApplication().openURL(NSURL(string: "http://online.api.easydeal.ph/forgot-password-request")!)
     }
     
     //MARK: - HUD
