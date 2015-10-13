@@ -408,6 +408,7 @@
 		F7CCDAA51B943CF7000F5AD4 /* ProductImagesViewCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7CCDA9D1B943CF7000F5AD4 /* ProductImagesViewCollectionViewCell.swift */; };
 		F7CCDAA61B943CF7000F5AD4 /* ProductsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7CCDA9E1B943CF7000F5AD4 /* ProductsTableViewCell.swift */; };
 		F7CCDAA71B943CF7000F5AD4 /* SeeMoreTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7CCDA9F1B943CF7000F5AD4 /* SeeMoreTableViewCell.swift */; };
+		F7CCDB441BCCD1070078209A /* TransactionProductDetailsDeliveryStatusModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7CCDB431BCCD1070078209A /* TransactionProductDetailsDeliveryStatusModel.swift */; };
 		F7D37CA11B92B09100FA7B16 /* ViewFeedBackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D37C9F1B92B09100FA7B16 /* ViewFeedBackViewController.swift */; };
 		F7D37CA21B92B09100FA7B16 /* ViewFeedBackViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7D37CA01B92B09100FA7B16 /* ViewFeedBackViewController.xib */; };
 		F7D8C9051BBC056200305EF2 /* SellerCategoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D8C9041BBC056100305EF2 /* SellerCategoryModel.swift */; };
@@ -849,6 +850,7 @@
 		F7CCDA9D1B943CF7000F5AD4 /* ProductImagesViewCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProductImagesViewCollectionViewCell.swift; path = YiLinkerOnlineBuyer/resources/View/ProductImagesViewCollectionViewCell.swift; sourceTree = SOURCE_ROOT; };
 		F7CCDA9E1B943CF7000F5AD4 /* ProductsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProductsTableViewCell.swift; path = YiLinkerOnlineBuyer/resources/View/ProductsTableViewCell.swift; sourceTree = SOURCE_ROOT; };
 		F7CCDA9F1B943CF7000F5AD4 /* SeeMoreTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SeeMoreTableViewCell.swift; path = YiLinkerOnlineBuyer/resources/View/SeeMoreTableViewCell.swift; sourceTree = SOURCE_ROOT; };
+		F7CCDB431BCCD1070078209A /* TransactionProductDetailsDeliveryStatusModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TransactionProductDetailsDeliveryStatusModel.swift; path = YiLinkerOnlineBuyer/resources/Model/TransactionProductDetailsDeliveryStatusModel.swift; sourceTree = SOURCE_ROOT; };
 		F7D37C9F1B92B09100FA7B16 /* ViewFeedBackViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ViewFeedBackViewController.swift; path = YiLinkerOnlineBuyer/resources/Xib/ViewFeedBackViewController.swift; sourceTree = SOURCE_ROOT; };
 		F7D37CA01B92B09100FA7B16 /* ViewFeedBackViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ViewFeedBackViewController.xib; path = YiLinkerOnlineBuyer/resources/Xib/ViewFeedBackViewController.xib; sourceTree = SOURCE_ROOT; };
 		F7D8C9041BBC056100305EF2 /* SellerCategoryModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SellerCategoryModel.swift; path = YiLinkerOnlineBuyer/resources/Model/SellerCategoryModel.swift; sourceTree = SOURCE_ROOT; };
@@ -1102,6 +1104,7 @@
 				79F9FC4B1BC022FB00B3E0DA /* SearchSellerModel.swift */,
 				266BE1E91BC3B0B300BB6642 /* DisputeReasonsModel.swift */,
 				0C35A5CE1BC425AE006C0A65 /* LoginModel.swift */,
+				F7CCDB431BCCD1070078209A /* TransactionProductDetailsDeliveryStatusModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1967,6 +1970,7 @@
 				7985D3611BB037DD0060E5F5 /* DeactivateModalViewController.swift in Sources */,
 				0C99374B1B750583000D6074 /* HomePageCollectionViewLayout.swift in Sources */,
 				F7DC7EE21BA1421F004F7FD4 /* SellerSubCategoryViewController.swift in Sources */,
+				F7CCDB441BCCD1070078209A /* TransactionProductDetailsDeliveryStatusModel.swift in Sources */,
 				79E68B9B1B8B4239008626E4 /* ProfileSettingsTableViewCell.swift in Sources */,
 				79E68BB71B8B5C58008626E4 /* EditProfileAccountInformationTableViewCell.swift in Sources */,
 				0CD103EC1B8B4769002E15F4 /* DynamicRoundedView.swift in Sources */,

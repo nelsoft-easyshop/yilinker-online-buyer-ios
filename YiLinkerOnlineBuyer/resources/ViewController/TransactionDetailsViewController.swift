@@ -463,7 +463,7 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
         println(urlEncoded)
         manager.GET(urlEncoded!, parameters: nil, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            self.transactionDetailsModel = TransactionDetailsModel.parseDataFromDictionary(responseObject as! NSDictionary)
+            self.transactionDetailsModel = TransactionDetailsModel.parseDataFromDictionary2(responseObject as! NSDictionary)
             
             println(responseObject.description)
             

@@ -270,11 +270,16 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
             page++
             self.showHUD()
             let manager = APIManager.sharedInstance
-            println(APIAtlas.transactionLogs+"\(SessionManager.accessToken())&type=\(queryType)&perPage=15&page=\(page)")
+            var url: String = APIAtlas.transactionLogs+"\(SessionManager.accessToken())&type=\(queryType)&perPage=15&page=\(page)"
+    
+            println(url)
             manager.GET(APIAtlas.transactionLogs+"\(SessionManager.accessToken())&type=\(queryType)&perPage=15&page=\(page)", parameters: nil, success: {
                 (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
                 var trans: TransactionModel?
-                
+                let data2 = NSJSONSerialization.dataWithJSONObject(responseObject, options: nil, error: nil)
+                let string2 = NSString(data: data2!, encoding: NSUTF8StringEncoding)
+                println(string2)
+
                 if queryType == "for-feedback" {
                     trans = TransactionModel.parseDataFromDictionary(responseObject as! NSDictionary)
                 } else {
