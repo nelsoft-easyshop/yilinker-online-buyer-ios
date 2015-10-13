@@ -328,7 +328,12 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
             stocksLabel.text = String(stringInterpolationSegment: stocks)
         }
         
-        priceLabel.text = "₱" + (price.floatValue * self.stocksLabel.text!.floatValue).string(2)
+        let priceWithoutComma = price.stringByReplacingOccurrencesOfString(",", withString: "")
+        
+        var priceDouble: Float = NSString(string: priceWithoutComma).floatValue
+        var stockDouble: Float = NSString(string: self.stocksLabel.text!).floatValue
+        
+        priceLabel.text = "₱" + (priceDouble * stockDouble).string(2)
         
         if stocks == 0 {
             disableButton(increaseButton)
