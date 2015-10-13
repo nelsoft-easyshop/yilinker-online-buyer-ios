@@ -140,12 +140,12 @@ class ProductImagesView: UIView, UICollectionViewDataSource, UICollectionViewDel
         self.nameLabel.text = model.title
 
         if model.productUnits[unitId].discountedPrice.floatValue != 0 {
-            self.priceCustomLabel.text = "₱" + (model.productUnits[unitId].price).floatValue.string(2)
+            self.priceCustomLabel.text = "₱" + model.productUnits[unitId].price
             self.priceCustomLabel.drawDiscountLine(true)
-            self.priceLabel.text = "₱" + (model.productUnits[unitId].discountedPrice).floatValue.string(2)
+            self.priceLabel.text = "₱" + model.productUnits[unitId].discountedPrice
         } else {
             self.priceCustomLabel.hidden = true
-            self.priceLabel.text = "₱" + (model.productUnits[unitId].price).floatValue.string(2)
+            self.priceLabel.text = "₱" + model.productUnits[unitId].price
         }
         
         self.width = width
