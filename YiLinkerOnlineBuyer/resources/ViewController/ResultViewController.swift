@@ -439,8 +439,8 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
             var tempModel: SearchResultModel = collectionViewData[indexPath.row]
             cell.setProductImage(tempModel.imageUrl)
             cell.setProductName(tempModel.productName)
-            cell.setOriginalPrice(tempModel.originalPrice)
-            cell.setNewPrice(tempModel.newPrice)
+            cell.setOriginalPrice(tempModel.originalPrice.formatToPeso())
+            cell.setNewPrice(tempModel.newPrice.formatToPeso())
             cell.setDiscount("\(tempModel.discount)")
             return cell
         } else if type == list {
@@ -448,8 +448,8 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
             var tempModel: SearchResultModel = collectionViewData[indexPath.row]
             cell.setProductImage(tempModel.imageUrl)
             cell.setProductName(tempModel.productName)
-            cell.setOriginalPrice(tempModel.originalPrice)
-            cell.setNewPrice(tempModel.newPrice)
+            cell.setOriginalPrice(tempModel.originalPrice.formatToPeso())
+            cell.setNewPrice(tempModel.newPrice.formatToPeso())
             cell.setDiscount("\(tempModel.discount)")
             return cell
         } else{
