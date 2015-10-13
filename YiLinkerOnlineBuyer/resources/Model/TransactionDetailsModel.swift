@@ -178,5 +178,82 @@ class TransactionDetailsModel: NSObject {
         
         return transactionDetailsModel
     }
+    
+    class func parseDataFromDictionary2(dictionary: AnyObject) -> TransactionDetailsModel {
+        var sellerId: [Int] = []
+        var sellerId2: [Int] = []
+        var sellerStore: [String] = []
+        var sellerContactNumber: [String] = []
+        var hasFeedback: [Bool] = []
+        var isSuccessful: Bool = false
+        var orderProductId: [String] = []
+        var productId: [String] = []
+        var quantity: [Int] = []
+        var unitPrice: [String] = []
+        var totalPrice: [String] = []
+        var productName: [String] = []
+        var handlingFee: [String] = []
+        var orderProductStatusId: [Int] = []
+        var name: [String] = []
+        var productDescription: [String] = []
+        var productImage: [String] = []
+        var isCancellable: [Bool] = []
+        
+        if dictionary.isKindOfClass(NSDictionary) {
+            println(dictionary)
+            if let tempVar = dictionary["isSuccessful"] as? Bool {
+                isSuccessful = tempVar
+            }
+            
+            if let value: AnyObject = dictionary["data"] {
+                let transactions: NSArray = value["transactionItems"] as! NSArray
+                for transaction in transactions as! [NSDictionary] {
+                    
+                    sellerId.append(transaction["sellerId"] as! Int)
+                    if value["sellerStore"] is NSNull {
+                        sellerStore.append("No Store Name")
+                    } else {
+                        sellerStore.append(transaction["sellerStore"] as! String)
+                    }
+                    
+                    sellerContactNumber.append(transaction["sellerContactNumber"] as! String)
+                    hasFeedback.append(transaction["hasFeedback"] as! Bool)
+                    
+                    let products: NSArray = transaction["products"] as! NSArray
+                    for product in products as! [NSDictionary] {
+                        if let orderProductStatus: AnyObject = product["orderProductStatus"] {
+                            //if orderProductStatus["orderProductStatusId"] as! Int == 4 {
+                            orderProductId.append(product["orderProductId"] as! String)
+                            productId.append(product["productId"] as! String)
+                            quantity.append(product["quantity"] as! Int)
+                            unitPrice.append(product["unitPrice"] as! String)
+                            totalPrice.append(product["totalPrice"] as! String)
+                            productName.append(product["productName"] as! String)
+                            handlingFee.append(product["handlingFee"] as! String)
+                            sellerId2.append(transaction["sellerId"] as! Int)
+                            if let orderProductStatus: AnyObject = product["orderProductStatus"] {
+                                orderProductStatusId.append(orderProductStatus["orderProductStatusId"] as! Int)
+                                name.append(orderProductStatus["name"] as! String)
+                                productDescription.append(orderProductStatus["description"] as! String)
+                            }
+                            
+                            if (product["productImage"] as! String) != "" {
+                                productImage.append(product["productImage"] as! String)
+                            } else {
+                                productImage.append("")
+                            }
+                            
+                            isCancellable.append(product["isCancellable"] as! Bool)
+                            //}
+                        }
+                    }
+                }
+            }
+        }
+        
+        let transactionDetailsModel = TransactionDetailsModel(isSuccessful: isSuccessful, sellerId: sellerId, sellerId2: sellerId2, sellerStore: sellerStore, sellerContactNumber: sellerContactNumber, hasFeedback: hasFeedback, orderProductId: orderProductId, productId: productId, quantity: quantity, unitPrice: unitPrice, totalPrice: totalPrice, productName: productName, handlingFee: handlingFee, orderProductStatusId: orderProductStatusId, name: name, productDescription: productDescription, productImage: productImage, isCancellable: isCancellable)
+        
+        return transactionDetailsModel
+    }
 
 }

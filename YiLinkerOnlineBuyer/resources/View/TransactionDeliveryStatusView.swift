@@ -28,6 +28,8 @@ class TransactionDeliveryStatusView: UIView {
     @IBOutlet weak var pickupRiderTitleLabel: UILabel!
     @IBOutlet weak var deliveryRiderTitleLabel: UILabel!
     
+    @IBOutlet var deliveryContactLabel: UILabel!
+    @IBOutlet var riderContactLabel: UILabel!
     @IBOutlet weak var pickupSms: UIImageView!
     @IBOutlet weak var pickupCall: UIImageView!
     
