@@ -40,6 +40,7 @@ struct ProductStrings {
     static let alertFailed = StringHelper.localizedStringWithKey("FAILED_LOCALIZE_KEY")
     static let alertNoReviews = StringHelper.localizedStringWithKey("NO_REVIEWS_LOCALIZE_KEY")
     static let cannotMessage = StringHelper.localizedStringWithKey("VENDOR_PAGE_CANNOT_MESSAGE_LOCALIZE_KEY")
+    static let avoidIssues = StringHelper.localizedStringWithKey("ALERT_AVOID_ISSUES_LOCALIZE_KEY")
 }
 
 protocol ProductViewControllerDelegate {
@@ -635,7 +636,11 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 self.hud?.hide(true)
-                self.showAlert(title: ProductStrings.alertWentWrong, message: nil)
+                if SessionManager.isLoggedIn() {
+                    self.showAlert(title: ProductStrings.alertWentWrong, message: nil)
+                } else {
+                    self.showAlert(title: ProductStrings.alertWentWrong, message: ProductStrings.avoidIssues)
+                }
         })
     }
     
