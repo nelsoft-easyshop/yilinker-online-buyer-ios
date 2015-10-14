@@ -554,6 +554,9 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     
     func verifyMobileNumberAction(isSuccessful: Bool) {
         self.hideDimView()
+        if !isSuccessful {
+            self.fireGetCode()
+        }
     }
     
     func requestNewCodeAction() {
