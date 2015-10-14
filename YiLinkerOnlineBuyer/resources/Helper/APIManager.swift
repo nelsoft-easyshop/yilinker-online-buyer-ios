@@ -127,6 +127,7 @@ struct APIAtlas {
     static let postEmailNotif = "auth/email/subscription"
     static let postSMSNotif = "auth/sms/subscription"
     static let deactivate = "auth/account/disable"
+    static let todaysPromo = "product/getPromoProducts"
     static let baseUrl = APIEnvironment.baseUrl()
     
     /* MESSAGING CONSTANTS */
@@ -161,6 +162,8 @@ struct APIAtlas {
     
     static let facebookUrl = "facebook/auth"
     static let googleUrl = "google/auth"
+    
+    static let verificationGetCodeUrl = "auth/sms/getCode"
 }
 
 class APIManager: AFHTTPSessionManager {

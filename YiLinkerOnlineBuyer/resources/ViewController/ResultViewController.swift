@@ -85,6 +85,11 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
         self.initializeViews()
         self.initializeLocalizedString()
         self.registerNibs()
+        
+        if targetType == TargetType.TodaysPromo {
+            requestSuggestionSearchUrl = APIAtlas.todaysPromo
+            requestSearchDetails(requestSuggestionSearchUrl, params: nil)
+        }
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -222,7 +227,7 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
         
         if Reachability.isConnectedToNetwork() {
             requestSuggestionSearchUrl = searchSuggestion.searchUrl
-           requestSearchDetails(requestSuggestionSearchUrl, params: nil)
+            requestSearchDetails(requestSuggestionSearchUrl, params: nil)
         } else {
             UIAlertController.displayNoInternetConnectionError(self)
         }
@@ -434,8 +439,8 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
             var tempModel: SearchResultModel = collectionViewData[indexPath.row]
             cell.setProductImage(tempModel.imageUrl)
             cell.setProductName(tempModel.productName)
-            cell.setOriginalPrice(tempModel.originalPrice)
-            cell.setNewPrice(tempModel.newPrice)
+            cell.setOriginalPrice(tempModel.originalPrice.formatToPeso())
+            cell.setNewPrice(tempModel.newPrice.formatToPeso())
             cell.setDiscount("\(tempModel.discount)")
             return cell
         } else if type == list {
@@ -443,8 +448,8 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
             var tempModel: SearchResultModel = collectionViewData[indexPath.row]
             cell.setProductImage(tempModel.imageUrl)
             cell.setProductName(tempModel.productName)
-            cell.setOriginalPrice(tempModel.originalPrice)
-            cell.setNewPrice(tempModel.newPrice)
+            cell.setOriginalPrice(tempModel.originalPrice.formatToPeso())
+            cell.setNewPrice(tempModel.newPrice.formatToPeso())
             cell.setDiscount("\(tempModel.discount)")
             return cell
         } else{

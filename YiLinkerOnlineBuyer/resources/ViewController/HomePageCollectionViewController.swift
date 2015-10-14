@@ -615,7 +615,7 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
     func redirectToResultView(target: String, targetType: TargetType) {
         let resultViewController: ResultViewController = ResultViewController(nibName: "ResultViewController", bundle: nil)
         resultViewController.targetType = targetType
-        resultViewController.passModel(SearchSuggestionModel(suggestion: "", imageURL: "", searchUrl: target))
+//        resultViewController.passModel(SearchSuggestionModel(suggestion: "", imageURL: "", searchUrl: target))
         self.navigationController!.pushViewController(resultViewController, animated: true)
     }
     

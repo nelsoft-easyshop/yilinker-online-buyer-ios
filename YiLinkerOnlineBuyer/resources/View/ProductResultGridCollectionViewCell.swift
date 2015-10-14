@@ -34,7 +34,8 @@ class ProductResultGridCollectionViewCell: UICollectionViewCell {
     }
     
     func setOriginalPrice(text: String) {
-        originalPriceLabel.text = text
+        let attrString = NSAttributedString(string: text, attributes: [NSStrikethroughStyleAttributeName: NSUnderlineStyle.StyleSingle.rawValue])
+        originalPriceLabel.attributedText = attrString
     }
     
     func setNewPrice(text: String) {

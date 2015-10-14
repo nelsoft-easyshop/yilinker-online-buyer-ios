@@ -291,12 +291,13 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
         }
         
         regex += ")"
-//        println(regex)
+        if regex == "()" {
+            regex = "(" + not + ")"
+        }
+        println(regex)
         
         let re = NSRegularExpression(pattern: regex, options: nil, error: nil)!
         let matches = re.matchesInString(combinationString, options: nil, range: NSRange(location: 0, length: count(combinationString.utf16)))
-        
-//        println("number of matches: \(matches.count)")
         
         for match in matches as! [NSTextCheckingResult] {
             let substring = (combinationString as NSString).substringWithRange(match.rangeAtIndex(1))
@@ -327,7 +328,12 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
             stocksLabel.text = String(stringInterpolationSegment: stocks)
         }
         
-        priceLabel.text = "₱" + (price.floatValue * self.stocksLabel.text!.floatValue).string(2)
+        let priceWithoutComma = price.stringByReplacingOccurrencesOfString(",", withString: "")
+        
+        var priceDouble: Float = NSString(string: priceWithoutComma).floatValue
+        var stockDouble: Float = NSString(string: self.stocksLabel.text!).floatValue
+        
+        priceLabel.text = "₱" + (priceDouble * stockDouble).string(2)
         
         if stocks == 0 {
             disableButton(increaseButton)

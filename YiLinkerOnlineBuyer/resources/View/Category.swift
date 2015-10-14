@@ -278,6 +278,10 @@ extension String {
         formatter.numberStyle = .CurrencyStyle
         return "\(formatter.stringFromNumber((self as NSString).doubleValue)!)"
     }
+    
+    func formatToPeso() -> String {
+        return "₱\(self)"
+    }
 }
 
 extension NSURL {

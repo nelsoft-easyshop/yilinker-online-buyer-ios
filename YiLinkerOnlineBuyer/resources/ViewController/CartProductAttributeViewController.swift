@@ -130,6 +130,10 @@ class CartProductAttributeViewController: UIViewController, UITableViewDelegate,
         productDetailModel = cartModel
         setDetail("http://online.api.easydeal.ph/assets/images/uploads/products/\(selectedProductUnits.primaryImage)", title: productDetailModel!.title, price: selectedProductUnits.discountedPrice)
         self.maximumStock = selectedProductUnits.quantity
+        if maximumStock < 0 {
+            maximumStock = 0
+        }
+        
         stocks = cartModel.quantity
         checkStock(stocks)
         selectedProductUnit = selectedProductUnits
@@ -190,6 +194,9 @@ class CartProductAttributeViewController: UIViewController, UITableViewDelegate,
             
             priceLabel.text = selectedProductUnit.price.formatToTwoDecimal()
             self.maximumStock = selectedProductUnit.quantity
+            if maximumStock < 0 {
+                maximumStock = 0
+            }
             stocks = productDetailModel!.quantity
             checkStock(stocks)
             self.availabilityStocksLabel.text = availableLocalizeString + ": " + String(maximumStock)

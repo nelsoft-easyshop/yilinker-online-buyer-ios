@@ -40,6 +40,7 @@ struct ProductStrings {
     static let alertFailed = StringHelper.localizedStringWithKey("FAILED_LOCALIZE_KEY")
     static let alertNoReviews = StringHelper.localizedStringWithKey("NO_REVIEWS_LOCALIZE_KEY")
     static let cannotMessage = StringHelper.localizedStringWithKey("VENDOR_PAGE_CANNOT_MESSAGE_LOCALIZE_KEY")
+    static let avoidIssues = StringHelper.localizedStringWithKey("ALERT_AVOID_ISSUES_LOCALIZE_KEY")
 }
 
 protocol ProductViewControllerDelegate {
@@ -635,7 +636,11 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 self.hud?.hide(true)
-                self.showAlert(title: ProductStrings.alertWentWrong, message: nil)
+                if SessionManager.isLoggedIn() {
+                    self.showAlert(title: ProductStrings.alertWentWrong, message: nil)
+                } else {
+                    self.showAlert(title: ProductStrings.alertWentWrong, message: ProductStrings.avoidIssues)
+                }
         })
     }
     
@@ -805,7 +810,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         }
         
         newFrame = self.productDetailsView.frame
-        newFrame.size.height = CGFloat(self.productDetailsView.frame.size.height * CGFloat(list.count)) + 20
+        newFrame.size.height = 70.0//CGFloat(self.productDetailsView.frame.size.height * CGFloat(list.count)) + 20
         self.productDetailsView.frame = newFrame
     }
     

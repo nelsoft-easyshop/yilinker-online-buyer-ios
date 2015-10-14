@@ -4,6 +4,11 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Panton.otf">
+            <string>Panton-Regular</string>
+        </mutableArray>
+    </customFonts>
     <scenes>
         <!--Start Page View Controller-->
         <scene sceneID="B9m-V8-sQ5">
@@ -159,14 +164,14 @@
                                 <textInputTraits key="textInputTraits" returnKeyType="next"/>
                             </textField>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="C4q-lA-2QX">
-                                <rect key="frame" x="16" y="170" width="345" height="1"/>
+                                <rect key="frame" x="16" y="178" width="345" height="1"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="1" id="9gH-ig-hVf"/>
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="or" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="2O9-6l-JXq">
-                                <rect key="frame" x="172" y="160" width="30" height="21"/>
+                                <rect key="frame" x="172" y="168" width="30" height="21"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="NiI-hG-AgN"/>
@@ -177,7 +182,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tHe-hv-xQq" customClass="FBSDKLoginButton">
-                                <rect key="frame" x="17" y="188" width="340" height="35"/>
+                                <rect key="frame" x="17" y="196" width="340" height="35"/>
                                 <color key="backgroundColor" red="0.2196078431372549" green="0.32156862745098042" blue="0.60392156862745094" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="35" id="Bvi-3c-rx2"/>
@@ -200,7 +205,7 @@
                                 <textInputTraits key="textInputTraits" returnKeyType="go" secureTextEntry="YES"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="A9t-oa-0dv">
-                                <rect key="frame" x="16" y="118" width="343" height="35"/>
+                                <rect key="frame" x="16" y="126" width="343" height="35"/>
                                 <color key="backgroundColor" red="0.27450980392156865" green="0.66274509803921566" blue="0.58823529411764708" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="35" id="aSh-Y7-6qo"/>
@@ -222,12 +227,26 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ARp-5K-ovg" customClass="GPPSignInButton">
-                                <rect key="frame" x="17" y="236" width="340" height="42"/>
+                                <rect key="frame" x="17" y="244" width="340" height="42"/>
                                 <color key="backgroundColor" red="0.89631470960000004" green="0.029226388759999999" blue="0.12704667019999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="42" id="w1S-YM-ynF"/>
                                 </constraints>
                                 <state key="normal" title="Log in with google plus"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hn7-YU-Oc0">
+                                <rect key="frame" x="251" y="107" width="108" height="15"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="108" id="0Bi-oE-zF3"/>
+                                    <constraint firstAttribute="height" constant="15" id="HjE-dQ-QYx"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="9"/>
+                                <state key="normal" title="Forgot your password?">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="forgotPassword:" destination="O08-Ch-JVM" eventType="touchUpInside" id="1nB-y1-L8I"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -237,9 +256,11 @@
                             <constraint firstAttribute="centerX" secondItem="2O9-6l-JXq" secondAttribute="centerX" id="A3b-dN-Wzj"/>
                             <constraint firstItem="tHe-hv-xQq" firstAttribute="top" secondItem="2O9-6l-JXq" secondAttribute="bottom" constant="7" id="Bgo-nX-KVt"/>
                             <constraint firstAttribute="trailingMargin" secondItem="tHe-hv-xQq" secondAttribute="trailing" constant="2" id="EcI-qZ-Mjj"/>
+                            <constraint firstItem="Hn7-YU-Oc0" firstAttribute="trailing" secondItem="NOX-vm-tZ2" secondAttribute="trailingMargin" id="H4x-me-mBa"/>
                             <constraint firstItem="ARp-5K-ovg" firstAttribute="leading" secondItem="NOX-vm-tZ2" secondAttribute="leadingMargin" constant="1" id="H8k-HD-5GT"/>
                             <constraint firstItem="C4q-lA-2QX" firstAttribute="leading" secondItem="NOX-vm-tZ2" secondAttribute="leadingMargin" id="Mdk-wg-fgo"/>
-                            <constraint firstItem="A9t-oa-0dv" firstAttribute="top" secondItem="xzl-Np-eOe" secondAttribute="bottom" constant="15" id="NKk-Iu-bWE"/>
+                            <constraint firstItem="A9t-oa-0dv" firstAttribute="top" secondItem="xzl-Np-eOe" secondAttribute="bottom" constant="23" id="NKk-Iu-bWE"/>
+                            <constraint firstItem="Hn7-YU-Oc0" firstAttribute="top" secondItem="xzl-Np-eOe" secondAttribute="bottom" constant="4" id="SgQ-Kn-s2h"/>
                             <constraint firstItem="tHe-hv-xQq" firstAttribute="leading" secondItem="NOX-vm-tZ2" secondAttribute="leadingMargin" constant="1" id="TdH-jd-lBL"/>
                             <constraint firstItem="xzl-Np-eOe" firstAttribute="leading" secondItem="NOX-vm-tZ2" secondAttribute="leadingMargin" id="XKf-a4-GGO"/>
                             <constraint firstItem="gbM-PH-QcJ" firstAttribute="trailing" secondItem="NOX-vm-tZ2" secondAttribute="trailingMargin" id="XuT-PD-RnD"/>
@@ -259,6 +280,7 @@
                         <outlet property="emailAddressTextField" destination="gbM-PH-QcJ" id="HMq-JW-Ryg"/>
                         <outlet property="facebookButton" destination="tHe-hv-xQq" id="B5e-ok-F74"/>
                         <outlet property="facebookButtonHeightConstraints" destination="Bvi-3c-rx2" id="jij-gm-8H7"/>
+                        <outlet property="forgotPasswordButton" destination="Hn7-YU-Oc0" id="l3o-Vn-KnV"/>
                         <outlet property="gmailLoginButton" destination="ARp-5K-ovg" id="UfW-Xd-wu6"/>
                         <outlet property="orLabel" destination="2O9-6l-JXq" id="FM6-gC-iio"/>
                         <outlet property="passwordTextField" destination="xzl-Np-eOe" id="GFw-Jc-OXJ"/>
@@ -746,7 +768,7 @@
                                     <action selector="register:" destination="A4b-5R-jjS" eventType="touchUpInside" id="cFc-rR-mvO"/>
                                 </connections>
                             </button>
-                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hFg-DD-m5g" customClass="DynamicRoundedButton" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hFg-DD-m5g" customClass="DynamicRoundedButton" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
                                 <rect key="frame" x="274" y="28" width="46" height="30"/>
                                 <state key="normal" title="Button">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
