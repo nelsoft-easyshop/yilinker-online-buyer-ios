@@ -35,6 +35,7 @@ class SellerResultCollectionViewCell: UICollectionViewCell, UICollectionViewDele
     func intializeViews() {
         sellerImageView.layer.cornerRadius = sellerImageView.frame.size.height / 2
         followButton.layer.cornerRadius = followButton.frame.size.height / 2
+        followButton.hidden = true
     }
     
     func regsterNib() {
