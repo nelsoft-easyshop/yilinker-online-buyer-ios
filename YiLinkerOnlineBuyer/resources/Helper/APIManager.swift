@@ -128,6 +128,7 @@ struct APIAtlas {
     static let postSMSNotif = "auth/sms/subscription"
     static let deactivate = "auth/account/disable"
     static let todaysPromo = "product/getPromoProducts"
+    static let cartImage = "assets/images/uploads/products/"
     static let baseUrl = APIEnvironment.baseUrl()
     
     /* MESSAGING CONSTANTS */
