@@ -107,16 +107,17 @@ class TransactionLeaveSellerFeedbackTableViewController: UITableViewController, 
         //[{"rateType":"1", "rating":"2.50"},{"rateType":"2", "rating":"4.50"}]
         let jsonObject2: [String: AnyObject] = [
             "sellerId": String(self.sellerId),
-            "orderId": String(self.orderId),
-            "title": "Seller Feedback",
-            "feedback": "\(feedback)",
             "ratings": [[
                 "rateType": "1",
                 "rating": String(rateItemQuality)
                 ], [
                     "rateType": "2",
                     "rating": String(rateCommunication)
-                ]]
+                ]],
+            "title": "Seller Feedback",
+            "feedback": "\(feedback)",
+            "access_token": "\(SessionManager.accessToken())",
+            "orderId": String(self.orderId)
         ]
         let data2 = NSJSONSerialization.dataWithJSONObject(jsonObject2, options: nil, error: nil)
         let string2 = NSString(data: data2!, encoding: NSUTF8StringEncoding)

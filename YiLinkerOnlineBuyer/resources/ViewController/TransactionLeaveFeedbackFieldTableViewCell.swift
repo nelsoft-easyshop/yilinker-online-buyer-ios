@@ -30,7 +30,7 @@ class TransactionLeaveFeedbackFieldTableViewCell: UITableViewCell {
         
         self.inputTextField.placeholder = typeFeedback
         self.sendButton.setTitle(sendTitle, forState: UIControlState.Normal)
-        
+        self.cameraView.hidden = true
         self.typingAreaView.layer.borderWidth = 1.0
         self.typingAreaView.layer.borderColor = UIColor.lightGrayColor().CGColor
         self.inputTextField.becomeFirstResponder()
