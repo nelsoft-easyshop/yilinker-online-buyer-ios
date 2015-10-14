@@ -171,8 +171,20 @@ class VerifyMobileNumberViewController: UIViewController {
             println(responseObject)
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                self.showAlert(title: "Error", message: "Something went wrong. . .")
-                self.dismissLoader()
+                if Reachability.isConnectedToNetwork() {
+                    if error.userInfo != nil {
+                        if let jsonResult = error.userInfo as? Dictionary<String, AnyObject> {
+                            let errorDescription: String = jsonResult["message"] as! String
+                            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorDescription)
+                        }
+                    } else {
+                        UIAlertController.displaySomethingWentWrongError(self)
+                    }
+                    self.dismissLoader()
+                } else {
+                    UIAlertController.displaySomethingWentWrongError(self)
+                }
+                
                 println(error)
         })
         
