@@ -334,7 +334,7 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
                 }
                 
                 cell.productDetailsLabel?.text = tempAttributesText
-                cell.productPriceLabel.text = tempProductUnit.discountedPrice.formatToTwoDecimal() + " x \(tempModel.quantity)"
+                cell.productPriceLabel.text = tempProductUnit.discountedPrice.formatToPeso() + " x \(tempModel.quantity)"
             }
         }
         
@@ -474,7 +474,8 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
             if tempModel.selected {
                 for tempProductUnit in tempModel.productUnits {
                     if tempModel.unitId == tempProductUnit.productUnitId {
-                        let discountedPrice = (tempProductUnit.discountedPrice as NSString).doubleValue
+                        let price: String = tempProductUnit.discountedPrice.stringByReplacingOccurrencesOfString(",", withString: "")
+                        let discountedPrice = (price as NSString).doubleValue
                         let quantity = Double(tempModel.quantity)
                         totalPrice = totalPrice + (quantity * discountedPrice)
                     }
