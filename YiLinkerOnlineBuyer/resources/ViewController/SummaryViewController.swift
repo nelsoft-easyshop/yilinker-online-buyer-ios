@@ -123,7 +123,7 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
     func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         if section == 0 {
             let footerView: CheckoutViews = XibHelper.puffViewWithNibName("CheckoutViews", index: 1) as! CheckoutViews
-            footerView.totalPricelabel?.text = self.totalPrice.formatToTwoDecimal()
+            footerView.totalPricelabel?.text = self.totalPrice
             return footerView
         } else {
             return UIView(frame: CGRectZero)
