@@ -128,7 +128,8 @@ class CartProductAttributeViewController: UIViewController, UITableViewDelegate,
     
     func passModel(#cartModel: CartProductDetailsModel, selectedProductUnits: ProductUnitsModel) {
         productDetailModel = cartModel
-        setDetail("http://online.api.easydeal.ph/assets/images/uploads/products/\(selectedProductUnits.primaryImage)", title: productDetailModel!.title, price: selectedProductUnits.discountedPrice)
+        let url = APIAtlas.baseUrl.stringByReplacingOccurrencesOfString("api/v1", withString: "")
+        setDetail("\(url)\(APIAtlas.cartImage)\(selectedProductUnits.primaryImage)", title: productDetailModel!.title, price: selectedProductUnits.discountedPrice)
         self.maximumStock = selectedProductUnits.quantity
         if maximumStock < 0 {
             maximumStock = 0
@@ -190,7 +191,8 @@ class CartProductAttributeViewController: UIViewController, UITableViewDelegate,
                 }
             }
             
-            setDetail("http://online.api.easydeal.ph/assets/images/uploads/products/\(selectedProductUnit.primaryImage)", title: productDetailModel!.title, price: selectedProductUnit.discountedPrice)
+            let url = APIAtlas.baseUrl.stringByReplacingOccurrencesOfString("api/v1", withString: "")
+            setDetail("\(url)\(APIAtlas.cartImage)\(selectedProductUnit.primaryImage)", title: productDetailModel!.title, price: selectedProductUnit.discountedPrice)
             
             priceLabel.text = selectedProductUnit.price.formatToPeso()
             self.maximumStock = selectedProductUnit.quantity

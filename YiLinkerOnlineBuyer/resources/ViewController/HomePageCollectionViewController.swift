@@ -178,11 +178,12 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
             if let val: AnyObject = self.dictionary["promos"] {
                 productArray = dictionary["promos"] as! NSArray
                 var homeProductModels: [HomePageProductModel] = [HomePageProductModel]()
-                homeProductModels = HomePageProductModel.parseDataWithArray(productArray)
-                if indexPath.row < homeProductModels.count {
-                    homeProductModel  = homeProductModels[indexPath.row]
+                if productArray.count != 0 {
+                    homeProductModels = HomePageProductModel.parseDataWithArray(productArray)
+                    if indexPath.row < homeProductModels.count {
+                        homeProductModel  = homeProductModels[indexPath.row]
+                    }
                 }
-                
             } else {
                 if let val: AnyObject = self.dictionary["categories"] {
                     let arrayDictionary: NSArray = self.dictionary["categories"] as! NSArray
@@ -198,20 +199,23 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
             
             if indexPath.row == 0 {
                 let fourImageCollectionViewCell: VerticalImageCollectionViewCell = self.collectionView?.dequeueReusableCellWithReuseIdentifier("VerticalImageCollectionViewCell", forIndexPath: indexPath) as! VerticalImageCollectionViewCell
-                fourImageCollectionViewCell.productItemImageView.sd_setImageWithURL(homeProductModel!.imageURL, placeholderImage: UIImage(named: "dummy-placeholder"))
-                fourImageCollectionViewCell.productNameLabel.text = homeProductModel!.name
-                
-                if homeProductModel!.discountedPrice != ""  && homeProductModel!.discountPercentage.toInt() != nil {
-                    fourImageCollectionViewCell.discountedPriceLabel.text = "P \(homeProductModel!.discountedPrice)"
-                    fourImageCollectionViewCell.discountPercentageLabel.text = "\(homeProductModel!.discountPercentage) %"
-                } else {
-                    fourImageCollectionViewCell.discountedPriceLabel.hidden = true
-                    fourImageCollectionViewCell.discountPercentageLabel.hidden = true
+                if homeProductModel != nil {
+                    fourImageCollectionViewCell.productItemImageView.sd_setImageWithURL(homeProductModel!.imageURL, placeholderImage: UIImage(named: "dummy-placeholder"))
+                    fourImageCollectionViewCell.productNameLabel.text = homeProductModel!.name
+                    
+                    if homeProductModel!.discountedPrice != ""  && homeProductModel!.discountPercentage.toInt() != nil {
+                        fourImageCollectionViewCell.discountedPriceLabel.text = "P \(homeProductModel!.discountedPrice)"
+                        fourImageCollectionViewCell.discountPercentageLabel.text = "\(homeProductModel!.discountPercentage) %"
+                    } else {
+                        fourImageCollectionViewCell.discountedPriceLabel.hidden = true
+                        fourImageCollectionViewCell.discountPercentageLabel.hidden = true
+                    }
+                    
+                    fourImageCollectionViewCell.targetType = homeProductModel!.targetType
+                    fourImageCollectionViewCell.target = homeProductModel!.target
+                    fourImageCollectionViewCell.discountedPriceLabel.drawDiscountLine(false)
                 }
                 
-                fourImageCollectionViewCell.targetType = homeProductModel!.targetType
-                fourImageCollectionViewCell.target = homeProductModel!.target
-                fourImageCollectionViewCell.discountedPriceLabel.drawDiscountLine(false)
                 
                 return fourImageCollectionViewCell
             } else {
