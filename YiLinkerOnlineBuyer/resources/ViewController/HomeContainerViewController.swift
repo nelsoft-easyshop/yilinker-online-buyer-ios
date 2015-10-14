@@ -422,8 +422,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             SessionManager.setWishlistCount(self.profileModel.wishlistCount)
             self.updateTabBarBadge()
             
-            
-            if !SessionManager.isMobileVerified() {
+            if !SessionManager.isMobileVerified() && !SessionManager.isEmailVerified() {
                 self.fireGetCode()
             }
             
