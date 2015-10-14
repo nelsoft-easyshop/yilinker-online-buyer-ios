@@ -338,7 +338,7 @@ class NewDisputeTableViewController: UITableViewController, UIPickerViewDataSour
     func requestGetCaseDetails() {
         self.showHUD()
         let manager = APIManager.sharedInstance
-        manager.GET(APIAtlas.transactionLogs + "\(SessionManager.accessToken())" + "&perPage=999", parameters: nil, success: {
+        manager.GET(APIAtlas.transactionLogs + "\(SessionManager.accessToken())" + "&perPage=999" + "&type=for-resolution", parameters: nil, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             self.transactionModel = TransactionModel.parseDataFromDictionary(responseObject as! NSDictionary)
             self.transactionIds = self.transactionModel.invoice_number
