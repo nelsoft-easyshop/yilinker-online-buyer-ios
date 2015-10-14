@@ -310,7 +310,8 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
                 
                 
                 if tempProductUnit.primaryImage.isNotEmpty() {
-                    cell.productItemImageView.sd_setImageWithURL(NSURL(string: "http://online.api.easydeal.ph/assets/images/uploads/products/\(tempProductUnit.primaryImage)"), placeholderImage: UIImage(named: "dummy-placeholder"))
+                    let url = APIAtlas.baseUrl.stringByReplacingOccurrencesOfString("api/v1", withString: "")
+                    cell.productItemImageView.sd_setImageWithURL(NSURL(string: "\(url)\(APIAtlas.cartImage)\(tempProductUnit.primaryImage)"), placeholderImage: UIImage(named: "dummy-placeholder"))
                 } else {
                     if tempModel.images.count != 0 {
                         cell.productItemImageView.sd_setImageWithURL(NSURL(string: tempModel.images[0]), placeholderImage: UIImage(named: "dummy-placeholder"))
