@@ -192,7 +192,7 @@ class CartProductAttributeViewController: UIViewController, UITableViewDelegate,
             
             setDetail("http://online.api.easydeal.ph/assets/images/uploads/products/\(selectedProductUnit.primaryImage)", title: productDetailModel!.title, price: selectedProductUnit.discountedPrice)
             
-            priceLabel.text = selectedProductUnit.price.formatToTwoDecimal()
+            priceLabel.text = selectedProductUnit.price.formatToPeso()
             self.maximumStock = selectedProductUnit.quantity
             if maximumStock < 0 {
                 maximumStock = 0
@@ -248,7 +248,7 @@ class CartProductAttributeViewController: UIViewController, UITableViewDelegate,
         
         productImageView.sd_setImageWithURL(NSURL(string: image), placeholderImage: UIImage(named: "dummy-placeholder"))
         nameLabel.text = title
-        priceLabel.text = price.formatToTwoDecimal()
+        priceLabel.text = price.formatToPeso()
     }
     
     func disableButton(button: UIButton) {
