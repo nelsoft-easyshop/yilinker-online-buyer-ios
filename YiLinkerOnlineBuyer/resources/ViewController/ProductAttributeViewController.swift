@@ -454,14 +454,13 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
     }
     
     func requestRefreshToken() {
-        let url: String = "http://online.api.easydeal.ph/api/v1/login"
         let params: NSDictionary = ["client_id": Constants.Credentials.clientID,
             "client_secret": Constants.Credentials.clientSecret,
             "grant_type": Constants.Credentials.grantRefreshToken,
             "refresh_token": SessionManager.refreshToken()]
         
         let manager = APIManager.sharedInstance
-        manager.POST(url, parameters: params, success: {
+        manager.POST(APIAtlas.loginUrl, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
             self.hud?.hide(true)
@@ -472,7 +471,7 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
                     if tempVar {
                         SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
                         
-                        let url: String = "http://online.api.easydeal.ph/api/v1/auth/cart/updateCartItem"
+                        let url: String = APIAtlas.updateCart()
                         let quantity: String = String(stringInterpolationSegment: self.stocksLabel.text?.toInt())
                         
                         let params: NSDictionary = ["access_token": SessionManager.accessToken(),
