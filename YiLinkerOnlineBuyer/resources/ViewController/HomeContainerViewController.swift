@@ -423,7 +423,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             self.updateTabBarBadge()
             
             
-            if !SessionManager.isMobileVerified() {
+            if !SessionManager.isMobileVerified() && !SessionManager.isEmailVerified() {
                 self.fireGetCode()
             }
             
