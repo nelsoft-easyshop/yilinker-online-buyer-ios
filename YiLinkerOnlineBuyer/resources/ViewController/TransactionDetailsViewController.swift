@@ -261,9 +261,9 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
             transactionDetailsView.paymentTypeLabel.text = self.paymentType
             transactionDetailsView.dateCreatedLabel.text = self.dateCreated
             transactionDetailsView.quantityLabel.text = self.totalQuantity
-            transactionDetailsView.unitCostLabel.text = "\((self.totalUnitCost).formatToTwoDecimal())"
-            transactionDetailsView.shippingFeeLabel.text = "\((self.shippingFee).formatToTwoDecimal())"
-            transactionDetailsView.totalCostLabel.text = "\((self.totalCost).formatToTwoDecimal())"
+            transactionDetailsView.unitCostLabel.text = "\((self.totalUnitCost).formatToPeso())"
+            transactionDetailsView.shippingFeeLabel.text = "\((self.shippingFee).formatToPeso())"
+            transactionDetailsView.totalCostLabel.text = "\((self.totalCost).formatToPeso())"
             
             self.transactionDetailsView.frame.size.width = self.view.frame.size.width
         }
