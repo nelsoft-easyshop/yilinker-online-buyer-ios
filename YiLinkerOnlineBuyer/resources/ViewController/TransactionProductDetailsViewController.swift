@@ -217,9 +217,13 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
             self.transactionDeliveryStatusView.delegate = self
             
             if self.transactionDeliveryStatus != nil {
-                self.transactionDeliveryStatusView.nameAndPlaceLabel.text = self.transactionDeliveryStatus.lastCheckedInBy + ", " + self.transactionDeliveryStatus.lastCheckedInLocation
+                self.transactionDeliveryStatusView.nameAndPlaceLabel.text = self.transactionDeliveryStatus.lastCheckedInBy + " - " + self.transactionDeliveryStatus.lastCheckedInLocation
                 self.transactionDeliveryStatusView.pickupRiderLabel.text = self.transactionDeliveryStatus.pickupRider
                 self.transactionDeliveryStatusView.deliveryRiderLabel.text = self.transactionDeliveryStatus.deliveryRider
+            } else {
+                self.transactionDeliveryStatusView.nameAndPlaceLabel.text = "-"
+                self.transactionDeliveryStatusView.pickupRiderLabel.text = "-"
+                self.transactionDeliveryStatusView.deliveryRiderLabel.text = "-"
             }
             
             self.transactionDeliveryStatusView.frame.size.width = self.view.frame.size.width

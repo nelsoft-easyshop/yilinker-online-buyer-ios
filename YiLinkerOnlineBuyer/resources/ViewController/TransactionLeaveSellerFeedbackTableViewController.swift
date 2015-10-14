@@ -122,7 +122,7 @@ class TransactionLeaveSellerFeedbackTableViewController: UITableViewController, 
         let string2 = NSString(data: data2!, encoding: NSUTF8StringEncoding)
         println(string2)
         let manager = APIManager.sharedInstance
-        manager.POST(APIAtlas.transactionLeaveSellerFeedback+"\(SessionManager.accessToken())", parameters: jsonObject2 as NSDictionary, success: {
+        manager.POST(APIAtlas.transactionLeaveSellerFeedback+"\(SessionManager.accessToken())", parameters: string2, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             println(responseObject.description)
             if responseObject["isSuccessful"] as! Bool {
