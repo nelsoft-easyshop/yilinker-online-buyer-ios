@@ -21,6 +21,7 @@ class PaymentViewController: UIViewController, PaymentTableViewCellDelegate {
     @IBOutlet weak var tableView: UITableView!
     var paymentType: PaymentType?
     var paymentHeader: PaymentTableViewCell?
+    var paymentFooterView: DeliverToTableViewCell?
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
@@ -37,6 +38,9 @@ class PaymentViewController: UIViewController, PaymentTableViewCellDelegate {
             } else {
                 self.paymentHeader!.selectPaymentType(Constants.Checkout.Payment.touchabelTagCreditCard)
             }
+          
+            paymentFooterView!.userNameLabel.text = SessionManager.userFullName()
+            paymentFooterView!.addressLabel.text = SessionManager.userFullAddress()
         }
     }
     
@@ -79,9 +83,9 @@ class PaymentViewController: UIViewController, PaymentTableViewCellDelegate {
             }
         }
         
-        let paymentFooterView: DeliverToTableViewCell = XibHelper.puffViewWithNibName("DeliverToTableViewCell", index: 0) as! DeliverToTableViewCell
-        paymentFooterView.userNameLabel.text = SessionManager.userFullName()
-        paymentFooterView.addressLabel.text = SessionManager.userFullAddress()
+        paymentFooterView = XibHelper.puffViewWithNibName("DeliverToTableViewCell", index: 0) as? DeliverToTableViewCell
+        paymentFooterView!.userNameLabel.text = SessionManager.userFullName()
+        paymentFooterView!.addressLabel.text = SessionManager.userFullAddress()
         
         self.tableView.tableFooterView = paymentFooterView
     }
