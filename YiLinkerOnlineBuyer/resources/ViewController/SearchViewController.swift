@@ -126,10 +126,10 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         if searchBar.selectedScopeButtonIndex == 0 {
             resultController.isSellerSearch = false
-            resultController.passModel(SearchSuggestionModel(suggestion: searchBar.text, imageURL: "", searchUrl: "http://online.api.easydeal.ph/api/v1/product/getProductList?query=\(newString)"))
+            resultController.passModel(SearchSuggestionModel(suggestion: searchBar.text, imageURL: "", searchUrl: "\(APIAtlas.searchBuyer)\(newString)"))
         } else {
             resultController.isSellerSearch = true
-            resultController.passModel(SearchSuggestionModel(suggestion: searchBar.text, imageURL: "", searchUrl: "http://online.api.easydeal.ph/api/v1/store/search?queryString=\(newString)"))
+            resultController.passModel(SearchSuggestionModel(suggestion: searchBar.text, imageURL: "", searchUrl: "\(APIAtlas.searchSeller)\(newString)"))
         }
         
         self.navigationController?.pushViewController(resultController, animated:true);

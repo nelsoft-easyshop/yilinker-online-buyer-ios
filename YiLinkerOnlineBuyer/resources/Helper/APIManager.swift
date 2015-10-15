@@ -8,9 +8,9 @@
 
 struct APIEnvironment {
     
-    static var development = true
+    static var development = false
     static var staging = false
-    static var production = false
+    static var production = true
     
     static func baseUrl() -> String {
         if development {
@@ -129,6 +129,8 @@ struct APIAtlas {
     static let deactivate = "auth/account/disable"
     static let todaysPromo = "product/getPromoProducts"
     static let cartImage = "assets/images/uploads/products/"
+    static let searchBuyer = "product/getProductList?query="
+    static let searchSeller = "store/search?queryString="
     static let baseUrl = APIEnvironment.baseUrl()
     
     /* MESSAGING CONSTANTS */
