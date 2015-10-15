@@ -50,7 +50,7 @@
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Product Rating &amp; Feedback" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="lVA-hm-qeQ">
-                        <rect key="frame" x="14" y="5" width="200" height="31"/>
+                        <rect key="frame" x="14" y="5" width="242" height="31"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="31" id="aWT-3e-fC9"/>
                         </constraints>
@@ -71,7 +71,7 @@
                     <constraint firstItem="6Eu-6C-Ipl" firstAttribute="leading" secondItem="INl-Q8-m3w" secondAttribute="trailing" constant="2" id="dkV-lf-XiO"/>
                     <constraint firstItem="ouV-b5-Ibe" firstAttribute="leading" secondItem="6Eu-6C-Ipl" secondAttribute="trailing" constant="1" id="h4l-BV-KPw"/>
                     <constraint firstItem="ouV-b5-Ibe" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="3" id="jVi-cc-NCm"/>
-                    <constraint firstItem="INl-Q8-m3w" firstAttribute="leading" secondItem="lVA-hm-qeQ" secondAttribute="trailing" constant="50" id="nb6-f6-fCz"/>
+                    <constraint firstItem="INl-Q8-m3w" firstAttribute="leading" secondItem="lVA-hm-qeQ" secondAttribute="trailing" constant="8" id="nb6-f6-fCz"/>
                     <constraint firstItem="mgF-Kr-lDQ" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="3" id="xP6-KX-wf0"/>
                 </constraints>
             </tableViewCellContentView>
