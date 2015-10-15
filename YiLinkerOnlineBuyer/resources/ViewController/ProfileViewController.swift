@@ -67,11 +67,12 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         manager.GET(url, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in print(responseObject as! NSDictionary)
             if responseObject.objectForKey("error") != nil {
-                self.requestRefreshToken("getWishlist", url: url, params: params, showLoader: showLoader)
+                self.requestRefreshToken("requestProfileDetails", url: url, params: params, showLoader: showLoader)
             } else {
                 if let value: AnyObject = responseObject["data"] {
                     self.profileDetails = ProfileUserDetailsModel.parseDataWithDictionary(value as! NSDictionary)
                 }
+                
                 self.tableView.reloadData()
                 self.dismissLoader()
             }
@@ -185,7 +186,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     }
 
     func requestRefreshToken(type: String, url: String, params: NSDictionary!, showLoader: Bool) {
-        let url: String = "http://online.api.easydeal.ph/api/v1/login"
+        let url: String = APIAtlas.refreshTokenUrl
         let params: NSDictionary = ["client_id": Constants.Credentials.clientID,
             "client_secret": Constants.Credentials.clientSecret,
             "grant_type": Constants.Credentials.grantRefreshToken,

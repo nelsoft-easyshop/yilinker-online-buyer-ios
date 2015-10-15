@@ -44,7 +44,7 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
             self.tableView.layoutIfNeeded()
             self.tableView.tableFooterView = self.tableFooterView()
             self.tableView.tableFooterView!.frame = CGRectMake(0, 0, 0, self.tableView.tableFooterView!.frame.size.height)
-            self.fireSetCheckoutAddress(SessionManager.addressId())
+            self.fireSetCheckoutAddress("\(SessionManager.addressId())")
         } else {
             self.requestGetProvince()
         }
@@ -103,7 +103,7 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func changeAddressViewController(didSelectAddress address: String) {
-        self.fireSetCheckoutAddress(SessionManager.addressId())
+        self.fireSetCheckoutAddress("\(SessionManager.addressId())")
         self.tableView.tableFooterView = self.tableFooterView()
     }
 
@@ -134,13 +134,13 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
         if indexPath.section == 0 {
             let product: CartProductDetailsModel = self.cartItems[indexPath.row]
             let orderSummaryCell: OrderSummaryTableViewCell = tableView.dequeueReusableCellWithIdentifier(Constants.Checkout.orderSummaryTableViewCellNibNameAndIdentifier) as! OrderSummaryTableViewCell
-            orderSummaryCell.productImageView.sd_setImageWithURL(NSURL(string: product.image)!, placeholderImage: UIImage(named: "dummy-placeholder"))
+            orderSummaryCell.productImageView.sd_setImageWithURL(NSURL(string: product.images[0])!, placeholderImage: UIImage(named: "dummy-placeholder"))
             orderSummaryCell.itemTitleLabel.text = product.title
             orderSummaryCell.quantityLabel.text = "\(product.quantity)"
             
             for tempProductUnit in product.productUnits {
                 if product.unitId == tempProductUnit.productUnitId {
-                    orderSummaryCell.priceLabel.text = "P " + tempProductUnit.discountedPrice
+                    orderSummaryCell.priceLabel.text = tempProductUnit.discountedPrice.formatToTwoDecimal()
                     break
                 }
             }
@@ -227,7 +227,7 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
         self.navigationController!.pushViewController(changeAddressViewController, animated: true)
     }
     
-    func fireSetCheckoutAddress(addressId: Int) {
+    func fireSetCheckoutAddress(addressId: String) {
         self.showHUD()
         let manager: APIManager = APIManager.sharedInstance
         let parameters: NSDictionary = ["access_token": SessionManager.accessToken(), "address_id": "\(addressId)"]

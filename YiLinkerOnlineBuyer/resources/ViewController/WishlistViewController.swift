@@ -97,6 +97,7 @@ class WishlistViewController: UIViewController, UITableViewDelegate, UITableView
         showLoader()
         manager.POST(url, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in print(responseObject as! NSDictionary)
+                println(responseObject)
                 if responseObject.objectForKey("error") != nil {
                     self.requestRefreshToken("addToCart", url: url, params: params)
                 } else{
@@ -107,10 +108,13 @@ class WishlistViewController: UIViewController, UITableViewDelegate, UITableView
                     } else {
                         (self.tabBarController!.tabBar.items![4] as! UITabBarItem).badgeValue = nil
                     }
+                    //self.populateTableView(responseObject)
+                    self.getWishlistData()
                 }
                 self.dismissLoader()
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
+                println(error)
                 if task.response as? NSHTTPURLResponse != nil {
                     let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                     
@@ -151,7 +155,7 @@ class WishlistViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func requestRefreshToken(type: String, url: String, params: NSDictionary!) {
-        let url: String = "http://online.api.easydeal.ph/api/v1/login"
+        let url: String = APIAtlas.refreshTokenUrl
         let params: NSDictionary = ["client_id": Constants.Credentials.clientID,
             "client_secret": Constants.Credentials.clientSecret,
             "grant_type": Constants.Credentials.grantRefreshToken,
@@ -191,11 +195,21 @@ class WishlistViewController: UIViewController, UITableViewDelegate, UITableView
         wishlistTableView.reloadData()
         wishListCounterLabel.text = ""
         if let value: AnyObject = responseObject["data"] {
-            for subValue in value["items"] as! NSArray {
-                println(subValue)
-                let model: WishlistProductDetailsModel = WishlistProductDetailsModel.parseDataWithDictionary(subValue as! NSDictionary)
-                
-                self.tableData.append(model)
+            if let tempVar = value["items"] as? NSArray {
+                for subValue in tempVar {
+                    println(subValue)
+                    let model: WishlistProductDetailsModel = WishlistProductDetailsModel.parseDataWithDictionary(subValue as! NSDictionary)
+                    
+                    self.tableData.append(model)
+                }
+
+            } else if let tempVar = value["wishlist"] as? NSArray {
+                for subValue in tempVar {
+                    println(subValue)
+                    let model: WishlistProductDetailsModel = WishlistProductDetailsModel.parseDataWithDictionary(subValue as! NSDictionary)
+                    
+                    self.tableData.append(model)
+                }
             }
             self.wishlistTableView.reloadData()
         }
@@ -263,7 +277,7 @@ class WishlistViewController: UIViewController, UITableViewDelegate, UITableView
                     }
                 }
                 cell.productDetailsLabel?.text = tempAttributesText
-                cell.productPriceLabel.text = tempProductUnit.discountedPrice.formatToTwoDecimal() + " x \(tempModel.quantity)"
+                cell.productPriceLabel.text = tempProductUnit.discountedPrice.formatToPeso() + " x \(tempModel.quantity)"
             }
         }
         
@@ -313,13 +327,17 @@ class WishlistViewController: UIViewController, UITableViewDelegate, UITableView
             
             let tempModel: WishlistProductDetailsModel = tableData[rowOfTheCell]
             
+//            var params: NSDictionary = ["access_token": SessionManager.accessToken(),
+//                "productId": tempModel.id,
+//                "unitId": tempModel.unitId,
+//                "quantity": tempModel.quantity
+//            ]
+            
             var params: NSDictionary = ["access_token": SessionManager.accessToken(),
-                "productId": tempModel.id,
-                "unitId": tempModel.unitId,
-                "quantity": tempModel.quantity
+                "itemIds[]": tempModel.itemId
             ]
             
-            fireAddToCartItem(APIAtlas.updateWishlistUrl, params: params)
+            fireAddToCartItem(APIAtlas.addWishlistToCartUrl, params: params)
         } else {
             UIAlertController.displayNoInternetConnectionError(self)
         }

@@ -413,6 +413,8 @@ class CircularMenuViewController: UIViewController {
     
     func logout() {
         SessionManager.logout()
+        FBSDKLoginManager().logOut()
+        GPPSignIn.sharedInstance().signOut()
         self.dissmissViewControllerAnimated()
         let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         appDelegate.changeRootToHomeView()

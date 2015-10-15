@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="TransactionLeaveFeedbackRateTableViewCell" rowHeight="280" id="KGk-i7-Jjw" customClass="TransactionLeaveFeedbackRateTableViewCell" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="280"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="EoR-LX-ZtL">
+                        <rect key="frame" x="55" y="8" width="265" height="114"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="114" id="ccK-j3-kwv"/>
+                        </constraints>
+                        <string key="text">We'd love to know how we can make
+Yilinker even better - and would really
+appreciate if you left a review on this
+product.</string>
+                        <fontDescription key="fontDescription" type="system" weight="thin" pointSize="17"/>
+                        <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qy8-Ib-kq0" userLabel="Star Container">
+                        <rect key="frame" x="51" y="235" width="272" height="30"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qRV-jT-VJK" userLabel="star1">
+                                <rect key="frame" x="20" y="0.0" width="40" height="30"/>
+                                <state key="normal" image="rating">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="rateComm1Action:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="vhg-I1-DhP"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e7X-9x-TSv" userLabel="star2">
+                                <rect key="frame" x="68" y="0.0" width="40" height="30"/>
+                                <state key="normal" image="rating">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="rateComm2Action:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="9Sn-wO-pYV"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cEH-Dn-tJr" userLabel="star3">
+                                <rect key="frame" x="116" y="0.0" width="40" height="30"/>
+                                <state key="normal" image="rating">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="rateComm3Action:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="3AQ-nk-27C"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IIn-I1-vDb" userLabel="star4">
+                                <rect key="frame" x="164" y="0.0" width="40" height="30"/>
+                                <state key="normal" image="rating">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="rateComm4Action:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Fpl-ZK-AuG"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="G9T-oV-Eun" userLabel="star5">
+                                <rect key="frame" x="212" y="0.0" width="40" height="30"/>
+                                <state key="normal" image="rating">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="rateComm5Action:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="NDa-kZ-0XM"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="272" id="vEp-Cu-mH5"/>
+                            <constraint firstAttribute="height" constant="30" id="x1d-UD-4eL"/>
+                        </constraints>
+                    </view>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="l1y-zG-hWl" userLabel="Star Container">
+                        <rect key="frame" x="51" y="156" width="272" height="30"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5sF-B7-Y6t" userLabel="star1">
+                                <rect key="frame" x="20" y="0.0" width="40" height="30"/>
+                                <state key="normal" image="rating">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="rate1Action:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="EmU-ce-Tbt"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bay-Lw-TAh" userLabel="star2">
+                                <rect key="frame" x="68" y="0.0" width="40" height="30"/>
+                                <state key="normal" image="rating">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="rate2Action:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="eSL-PY-GPf"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Cl-t8-gzu" userLabel="star4">
+                                <rect key="frame" x="164" y="0.0" width="40" height="30"/>
+                                <state key="normal" image="rating">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="rate4Action:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="HKI-k7-Y2h"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dBj-Cw-88C" userLabel="star5">
+                                <rect key="frame" x="212" y="0.0" width="40" height="30"/>
+                                <state key="normal" image="rating">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="rate5Action:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="y9g-Qr-e3A"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="13O-vV-xKU" userLabel="star3">
+                                <rect key="frame" x="116" y="0.0" width="40" height="30"/>
+                                <state key="normal" image="rating">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="rate3Action:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="JOK-vc-MD1"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="30" id="N2E-yZ-Hii"/>
+                            <constraint firstAttribute="width" constant="272" id="gKi-gP-Edf"/>
+                        </constraints>
+                    </view>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Communication" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KKz-9Z-HDj">
+                        <rect key="frame" x="0.0" y="206" width="373" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="LvW-4w-8eh"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
+                        <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Item Quality" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yCw-a8-O5l">
+                        <rect key="frame" x="8" y="127" width="359" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="359" id="kT6-mo-2aT"/>
+                            <constraint firstAttribute="height" constant="21" id="oJW-SG-CoN"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
+                        <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailingMargin" secondItem="KKz-9Z-HDj" secondAttribute="trailing" constant="-6" id="Che-BB-b4U"/>
+                    <constraint firstItem="l1y-zG-hWl" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="F5u-Oo-cZ8"/>
+                    <constraint firstItem="l1y-zG-hWl" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="156" id="Hfn-z7-ORU"/>
+                    <constraint firstItem="yCw-a8-O5l" firstAttribute="top" secondItem="EoR-LX-ZtL" secondAttribute="bottom" constant="5" id="JCx-lO-K9y"/>
+                    <constraint firstItem="KKz-9Z-HDj" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="-8" id="ZDN-wr-5bR"/>
+                    <constraint firstItem="l1y-zG-hWl" firstAttribute="centerX" secondItem="EoR-LX-ZtL" secondAttribute="centerX" id="adr-Ul-Wwl"/>
+                    <constraint firstItem="qy8-Ib-kq0" firstAttribute="top" secondItem="KKz-9Z-HDj" secondAttribute="bottom" constant="8" id="f3b-Ax-v7s"/>
+                    <constraint firstItem="l1y-zG-hWl" firstAttribute="top" secondItem="yCw-a8-O5l" secondAttribute="bottom" constant="8" id="fpl-cw-V0n"/>
+                    <constraint firstItem="KKz-9Z-HDj" firstAttribute="top" secondItem="l1y-zG-hWl" secondAttribute="bottom" constant="20" id="lYu-fG-Ibz"/>
+                    <constraint firstItem="l1y-zG-hWl" firstAttribute="centerX" secondItem="yCw-a8-O5l" secondAttribute="centerX" id="u7R-3G-YHZ"/>
+                    <constraint firstItem="l1y-zG-hWl" firstAttribute="top" secondItem="yCw-a8-O5l" secondAttribute="bottom" constant="8" id="uB4-F3-0fb"/>
+                    <constraint firstItem="l1y-zG-hWl" firstAttribute="leading" secondItem="qy8-Ib-kq0" secondAttribute="leading" id="ztO-K1-6XN"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="itemQualityLabel" destination="yCw-a8-O5l" id="Pyx-aY-yzZ"/>
+                <outlet property="messageLabel" destination="EoR-LX-ZtL" id="gQh-rB-zpQ"/>
+                <outlet property="rateThisLabel" destination="KKz-9Z-HDj" id="Rui-ba-JT3"/>
+                <outlet property="star1Button" destination="5sF-B7-Y6t" id="hag-j0-Bu6"/>
+                <outlet property="star2Button" destination="Bay-Lw-TAh" id="tk0-Er-wZj"/>
+                <outlet property="star3Button" destination="13O-vV-xKU" id="eRt-3E-uPH"/>
+                <outlet property="star4Button" destination="4Cl-t8-gzu" id="DQC-49-BX4"/>
+                <outlet property="star5Button" destination="dBj-Cw-88C" id="The-bT-cu2"/>
+                <outlet property="starComm1Button" destination="qRV-jT-VJK" id="Pgf-51-voJ"/>
+                <outlet property="starComm2Button" destination="e7X-9x-TSv" id="2ce-6u-uH3"/>
+                <outlet property="starComm3Button" destination="cEH-Dn-tJr" id="apt-om-I8t"/>
+                <outlet property="starComm4Button" destination="IIn-I1-vDb" id="YlU-eX-BQD"/>
+                <outlet property="starComm5Button" destination="G9T-oV-Eun" id="jl3-5N-BRq"/>
+            </connections>
+            <point key="canvasLocation" x="249.5" y="170"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="rating" width="22" height="21"/>
+    </resources>
+</document>

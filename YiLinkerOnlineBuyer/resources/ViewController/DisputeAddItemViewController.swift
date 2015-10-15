@@ -108,6 +108,7 @@ class DisputeAddItemViewController: UIViewController {
         manager.GET(urlEncoded!, parameters: nil, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             self.transactionDetailsModel = TransactionDetailsModel.parseDataFromDictionary(responseObject as! NSDictionary)
+            
             self.tableView.reloadData()
             self.hud?.hide(true)
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
@@ -132,7 +133,7 @@ class DisputeAddItemViewController: UIViewController {
         
         cell.setProductImage(self.transactionDetailsModel.productImage[indexPath.row])
         cell.itemNameLabel.text = self.transactionDetailsModel.productName[indexPath.row]
-        cell.vendorLabel.text = self.transactionDetailsModel.sellerStore[indexPath.row]
+        cell.vendorLabel.text = self.transactionDetailsModel.sellerStore[0]
         
         if (find(selectedTransactionIDIndex, indexPath.row) != nil) {
             cell.updateStatusImage(true)

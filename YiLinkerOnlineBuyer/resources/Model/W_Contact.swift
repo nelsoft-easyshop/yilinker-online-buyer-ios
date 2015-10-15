@@ -57,7 +57,7 @@ class W_Contact: NSObject {
                     var userIdleRegistrationIds : String = ""
                     var userId                  : String = ""
                     var profileImageUrl         : String = ""
-                    var isOnline                : String = "0"
+                    var isOnline                : String = ""
                     
                     if let tempVar = contact["fullName"] as? String {
                         fullName = tempVar
@@ -97,13 +97,5 @@ class W_Contact: NSObject {
         
         return parsedContacts
     } // parse
-    
-    func testData() -> Array<W_Contact>{
-        return [
-            W_Contact(fullName : "Jan Dennis Nora", userRegistrationIds : "", userIdleRegistrationIds : "", userId : "1", profileImageUrl: "http://someurl/api/method", isOnline : "0"),
-            W_Contact(fullName : "Bogs Borja", userRegistrationIds : "", userIdleRegistrationIds : "",userId : "2", profileImageUrl: "http://someurl/api/method", isOnline : "1"),
-            W_Contact(fullName : "John Doe", userRegistrationIds : "", userIdleRegistrationIds : "", userId : "3", profileImageUrl: "http://someurl/api/method", isOnline : "1")
-        ]
-    }
     
 }

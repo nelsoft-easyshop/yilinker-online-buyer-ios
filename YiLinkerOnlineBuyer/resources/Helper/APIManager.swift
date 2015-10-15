@@ -87,6 +87,7 @@ struct APIAtlas {
     static let cartUrl = "auth/cart/getCart"
     static let wishlistUrl = "auth/cart/getCart"
     static let updateWishlistUrl = "auth/cart/updateCartItem"
+    static let addWishlistToCartUrl = "auth/wishlistToCart"
     static let updateCartUrl = "auth/cart/updateCartItem"
     static let getSellerUrl = "v1/get-seller"
     static let buyerSellerFeedbacks = "feedback/getUserFeedbacks"
@@ -126,6 +127,8 @@ struct APIAtlas {
     static let postEmailNotif = "auth/email/subscription"
     static let postSMSNotif = "auth/sms/subscription"
     static let deactivate = "auth/account/disable"
+    static let todaysPromo = "product/getPromoProducts"
+    static let cartImage = "assets/images/uploads/products/"
     static let baseUrl = APIEnvironment.baseUrl()
     
     /* MESSAGING CONSTANTS */
@@ -147,6 +150,8 @@ struct APIAtlas {
     static let transactionProductDetails = "auth/getOrderProductDetail?access_token="
     static let transactionCancellation = "auth/cancellation/reasons"
     static let postTransactionCancellation = "auth/transaction/cancel"
+    static let getReasons = "auth/dispute/get-seller-reasons?access_token="
+    static let transactionDeliveryStatus = "auth/getTransactionDeliveryOverview?access_token="
     
     //Resolution Center
     static let getResolutionCenterCases = "/api/v1/auth/dispute/get-case"
@@ -155,6 +160,11 @@ struct APIAtlas {
     
     //Seller Category
     static let sellerCategory = "category/getCustomCategories?sellerId="
+    
+    static let facebookUrl = "facebook/auth"
+    static let googleUrl = "google/auth"
+    
+    static let verificationGetCodeUrl = "auth/sms/getCode"
 }
 
 class APIManager: AFHTTPSessionManager {

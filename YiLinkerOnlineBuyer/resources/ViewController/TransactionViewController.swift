@@ -28,13 +28,14 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
     @IBOutlet weak var onDeliveryLabel: UILabel!
     @IBOutlet weak var forFeedbackLabel: UILabel!
     @IBOutlet weak var supportLabel: UILabel!
+    @IBOutlet var noTransactionLabel: UILabel!
     
     var viewsInArray: [UIView] = []
     var imagesInArray: [UIImageView] = []
     var labelsInArray: [UILabel] = []
     var deselectedImages: [String] = []
     
-    var query: String = ""
+    var query: String = "all"
     
     var hud: MBProgressHUD?
     
@@ -49,6 +50,7 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
     var support = StringHelper.localizedStringWithKey("TRANSACTION_SUPPORT_LOCALIZE_KEY")
     var product = StringHelper.localizedStringWithKey("TRANSACTION_PRODUCT_LOCALIZE_KEY")
     var products = StringHelper.localizedStringWithKey("TRANSACTION_PRODUCTS_LOCALIZE_KEY")
+    var noTransaction = StringHelper.localizedStringWithKey("TRANSACTION_NO_TRANSACTION_LOCALIZE_KEY")
     
     var isPageEnd: Bool = false
     var page: Int = 0
@@ -67,23 +69,38 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
         let nib = UINib(nibName: "TransactionTableViewCell", bundle: nil)
         self.tableView.registerNib(nib, forCellReuseIdentifier: "TransactionIdentifier")
         
-        viewsInArray = [allView, pendingView, onDeliveryView, forFeedbackView, supportView]
+        viewsInArray = [allView, pendingView, onDeliveryView, forFeedbackView]
+        imagesInArray = [allImageView, pendingImageView, onDeliveryImageView, forFeedbackImageView]
+        labelsInArray = [allLabel, pendingLabel, onDeliveryLabel, forFeedbackLabel]
+        deselectedImages = ["all", "pending", "onDelivery", "forFeedback"]
+        /*viewsInArray = [allView, pendingView, onDeliveryView, forFeedbackView, supportView]
         imagesInArray = [allImageView, pendingImageView, onDeliveryImageView, forFeedbackImageView, supportImageView]
         labelsInArray = [allLabel, pendingLabel, onDeliveryLabel, forFeedbackLabel, supportLabel]
-        deselectedImages = ["all", "pending", "onDelivery", "forFeedback", "support"]
-        
+        deselectedImages = ["all", "pending", "onDelivery", "forFeedback", "support"]*/
         allLabel.text = all
         pendingLabel.text = pending
         onDeliveryLabel.text = onDelivery
         forFeedbackLabel.text = forFeedback
-        supportLabel.text = support
+        noTransactionLabel.text = noTransaction
+        noTransactionLabel.hidden = true
+        //supportLabel.text = support
             
         addViewsActions()
     
-        self.fireTransaction("all")
-        self.query = "all"
+        //self.fireTransaction("all")
+        //self.query = "all"
         self.backButton()
-        
+
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        println("view did appear")
+        noTransactionLabel.hidden = true
+        self.tableData.removeAll(keepCapacity: false)
+        page = 0
+        self.isPageEnd = false
+        self.fireTransaction(self.query)
+        //return true
     }
     
     // MARK: - Table View Data Source
@@ -101,7 +118,7 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
         
         if self.tableData.count != 0 {
             var price: Float = (tableData[indexPath.row].total_price2 as NSString).floatValue
-            cell.priceLabel.text = "P \(price.string(2))"//NSString(format:"%.2f", self.transactionModel!.total_item_price[indexPath.row]) as String
+            cell.priceLabel.text = "\((tableData[indexPath.row].total_price2).formatToPeso())"//"P \(price.string(2))"//NSString(format:"%.2f", self.transactionModel!.total_item_price[indexPath.row]) as String
             cell.dateLabel.text = tableData[indexPath.row].date_added2
             if tableData[indexPath.row].product_count2.toInt() < 2 {
                 cell.numberLabel.text =  "\(tableData[indexPath.row].total_quantity2) \(product)"
@@ -129,6 +146,7 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
         transactionDetails.totalUnitCost = tableData[indexPath.row].total_unit_price2
         transactionDetails.shippingFee = tableData[indexPath.row].total_handling_fee2
         transactionDetails.totalCost = tableData[indexPath.row].total_price2
+        transactionDetails.orderId = tableData[indexPath.row].order_id2
         transactionDetails.orderStatusId = tableData[indexPath.row].order_status_id2
         self.navigationController?.pushViewController(transactionDetails, animated: true)
     }
@@ -152,6 +170,7 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
     func allAction(gesture: UIGestureRecognizer) {
         if allView.tag == 0 {
             selectView(allView, label: allLabel, imageView: allImageView, imageName: "all2")
+            noTransactionLabel.hidden = true
             self.tableData.removeAll(keepCapacity: false)
             page = 0
             self.isPageEnd = false
@@ -164,6 +183,7 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
     func pendingAction(gesture: UIGestureRecognizer) {
         if pendingView.tag == 0 {
             selectView(pendingView, label: pendingLabel, imageView: pendingImageView, imageName: "time")
+            noTransactionLabel.hidden = true
             self.tableData.removeAll(keepCapacity: false)
             page = 0
             self.isPageEnd = false
@@ -176,19 +196,25 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
     func onDeliveryAction(gesture: UIGestureRecognizer) {
         if onDeliveryView.tag == 0 {
             selectView(onDeliveryView, label: onDeliveryLabel, imageView: onDeliveryImageView, imageName: "onDelivery2")
+            noTransactionLabel.hidden = true
             self.tableData.removeAll(keepCapacity: false)
             page = 0
             self.isPageEnd = false
-            self.fireTransaction("completed")
-            self.query = "completed"
+            self.fireTransaction("on-delivery")
+            self.query = "on-delivery"
             deselectOtherViews(onDeliveryView)
         }
     }
     
     func forFeedbackAction(gesture: UIGestureRecognizer) {
         if forFeedbackView.tag == 0 {
+            noTransactionLabel.hidden = true
             selectView(forFeedbackView, label: forFeedbackLabel, imageView: forFeedbackImageView, imageName: "forFeedback2")
-            self.query = "forFeedback"
+            self.tableData.removeAll(keepCapacity: false)
+            page = 0
+            self.isPageEnd = false
+            self.fireTransaction("for-feedback")
+            self.query = "for-feedback"
             deselectOtherViews(forFeedbackView)
         }
     }
@@ -196,6 +222,7 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
     func supportAction(gesture: UIGestureRecognizer) {
         if supportView.tag == 0 {
             selectView(supportView, label: supportLabel, imageView: supportImageView, imageName: "support2")
+            noTransactionLabel.hidden = true
             self.query = "support"
             deselectOtherViews(supportView)
         }
@@ -208,7 +235,7 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
         self.pendingView.addGestureRecognizer(tap("pendingAction:"))
         self.onDeliveryView.addGestureRecognizer(tap("onDeliveryAction:"))
         self.forFeedbackView.addGestureRecognizer(tap("forFeedbackAction:"))
-        self.supportView.addGestureRecognizer(tap("supportAction:"))
+        //self.supportView.addGestureRecognizer(tap("supportAction:"))
     }
     
     func tap(action: Selector) -> UITapGestureRecognizer {
@@ -243,25 +270,37 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
             page++
             self.showHUD()
             let manager = APIManager.sharedInstance
-            println(APIAtlas.transactionLogs+"\(SessionManager.accessToken())&type=\(queryType)&perPage=15&page=\(page)")
+            var url: String = APIAtlas.transactionLogs+"\(SessionManager.accessToken())&type=\(queryType)&perPage=15&page=\(page)"
+    
+            println(url)
             manager.GET(APIAtlas.transactionLogs+"\(SessionManager.accessToken())&type=\(queryType)&perPage=15&page=\(page)", parameters: nil, success: {
                 (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-                let trans: TransactionModel = TransactionModel.parseDataFromDictionary(responseObject as! NSDictionary)
-                println(responseObject)
-                if trans.order_id.count != 0 {
-                    if trans.order_id.count < 15 {
+                var trans: TransactionModel?
+                let data2 = NSJSONSerialization.dataWithJSONObject(responseObject, options: nil, error: nil)
+                let string2 = NSString(data: data2!, encoding: NSUTF8StringEncoding)
+                println(string2)
+
+                if queryType == "for-feedback" {
+                    trans = TransactionModel.parseDataFromDictionary(responseObject as! NSDictionary)
+                } else {
+                    trans = TransactionModel.parseDataFromDictionary3(responseObject as! NSDictionary)
+                }
+                
+                if trans!.product_name.count != 0 {
+                    if trans!.order_id.count < 15 {
                         self.isPageEnd = true
                         
                     }
-                    if trans.is_successful {
-                        for var i = 0; i < trans.order_id.count; i++ {
-                            self.tableData.append(TransactionModel(order_id: trans.order_id[i], date_added: trans.date_added[i], invoice_number: trans.invoice_number[i], payment_type: trans.payment_type[i], payment_method_id: trans.payment_method_id[i], order_status: trans.order_status[i], order_status_id: trans.order_status_id[i], total_price: trans.total_price[i], total_unit_price: trans.total_unit_price[i], total_item_price: trans.total_item_price[i], total_handling_fee: trans.total_handling_fee[i], total_quantity: trans.total_quantity[i], product_name: trans.product_name[i], product_count: trans.product_count[i], is_successful: trans.is_successful, order_count: trans.order_count))
+                    if trans!.is_successful {
+                        for var i = 0; i < trans!.order_id.count; i++ {
+                            self.tableData.append(TransactionModel(order_id: trans!.order_id[i], date_added: trans!.date_added[i], invoice_number: trans!.invoice_number[i], payment_type: trans!.payment_type[i], payment_method_id: trans!.payment_method_id[i], order_status: trans!.order_status[i], order_status_id: trans!.order_status_id[i], total_price: trans!.total_price[i], total_unit_price: trans!.total_unit_price[i], total_item_price: trans!.total_item_price[i], total_handling_fee: trans!.total_handling_fee[i], total_quantity: trans!.total_quantity[i], product_name: trans!.product_name[i], product_count: trans!.product_count[i], is_successful: trans!.is_successful, order_count: trans!.order_count))
                         }
                     } else {
                         self.isPageEnd = true
                     }
                 } else {
-                    self.addEmptyView()
+                    //self.addEmptyView()
+                    self.noTransactionLabel.hidden = false
                 }
                
                 self.tableView.reloadData()
@@ -269,18 +308,18 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
                 }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
                     self.hud?.hide(true)
                     let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                    if error.userInfo != nil {
+                    
+                    if self.query == "all" {if error.userInfo != nil {
                         let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
                         let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
                         UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: Constants.Localized.someThingWentWrong)
                     } else if task.statusCode == 401 {
-                        if self.query == "all" {
                             self.requestRefreshToken(TransactionRefreshType.All)
-                        } else if self.query == "ongoing" {
+                        } else if self.query == "on-delivery" {
                             self.requestRefreshToken(TransactionRefreshType.OnGoing)
                         } else if self.query == "pending" {
                             self.requestRefreshToken(TransactionRefreshType.Pending)
-                        } else if self.query == "forFeedback" {
+                        } else if self.query == "for-feedback" {
                             self.requestRefreshToken(TransactionRefreshType.ForFeedback)
                         } else {
                             self.requestRefreshToken(TransactionRefreshType.Support)
@@ -288,6 +327,7 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
                     } else {
                         self.showAlert(title: Constants.Localized.someThingWentWrong, message: nil)
                         self.hud?.hide(true)
+                        self.addEmptyView()
                     }
                     println(error.userInfo)
                     
@@ -308,11 +348,11 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
             if type == TransactionRefreshType.All {
                 self.fireTransaction("all")
             } else if type == TransactionRefreshType.OnGoing {
-                self.fireTransaction("ongoing")
+                self.fireTransaction("on-delivery")
             } else if type == TransactionRefreshType.Pending {
                 self.fireTransaction("pending")
             } else if type == TransactionRefreshType.ForFeedback {
-                self.fireTransaction("forfeedback")
+                self.fireTransaction("for-feedback")
             } else {
                 self.fireTransaction("support")
             }
@@ -323,6 +363,7 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
                 let defaultAction = UIAlertAction(title: Constants.Localized.ok, style: .Default, handler: nil)
                 alertController.addAction(defaultAction)
                 self.presentViewController(alertController, animated: true, completion: nil)
+                self.addEmptyView()
         })
     }
     
@@ -397,9 +438,15 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
         if self.query == "all" {
             self.fireTransaction("all")
             self.query = "all"
-        } else if self.query == "completed"{
-            self.fireTransaction("completed")
-            self.query = "completed"
+        } else if self.query == "on-delivery"{
+            self.fireTransaction("on-delivery")
+            self.query = "on-delivery"
+        }  else if self.query == "for-feedback"{
+            self.fireTransaction("for-feedback")
+            self.query = "for-feedback"
+        } else {
+            self.fireTransaction("pending")
+            self.query = "pending"
         }
         
         self.emptyView?.hidden = true

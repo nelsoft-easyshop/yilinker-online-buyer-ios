@@ -4,6 +4,11 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Panton SemiBold.otf">
+            <string>Panton-SemiBold</string>
+        </mutableArray>
+    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -49,13 +54,12 @@
                             <constraint firstAttribute="width" constant="20" id="psO-nf-PiR"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Product Rating &amp; Feedback" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lVA-hm-qeQ">
-                        <rect key="frame" x="14" y="5" width="200" height="31"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Product Rating &amp; Feedback" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="lVA-hm-qeQ">
+                        <rect key="frame" x="14" y="5" width="242" height="31"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="31" id="aWT-3e-fC9"/>
-                            <constraint firstAttribute="width" constant="200" id="lOg-xl-4RC"/>
                         </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="15"/>
                         <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
@@ -72,6 +76,7 @@
                     <constraint firstItem="6Eu-6C-Ipl" firstAttribute="leading" secondItem="INl-Q8-m3w" secondAttribute="trailing" constant="2" id="dkV-lf-XiO"/>
                     <constraint firstItem="ouV-b5-Ibe" firstAttribute="leading" secondItem="6Eu-6C-Ipl" secondAttribute="trailing" constant="1" id="h4l-BV-KPw"/>
                     <constraint firstItem="ouV-b5-Ibe" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="3" id="jVi-cc-NCm"/>
+                    <constraint firstItem="INl-Q8-m3w" firstAttribute="leading" secondItem="lVA-hm-qeQ" secondAttribute="trailing" constant="8" id="nb6-f6-fCz"/>
                     <constraint firstItem="mgF-Kr-lDQ" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="3" id="xP6-KX-wf0"/>
                 </constraints>
             </tableViewCellContentView>

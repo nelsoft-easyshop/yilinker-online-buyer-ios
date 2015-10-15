@@ -45,6 +45,8 @@ class TransactionLeaveSellerFeedbackViewController: UIViewController {
     var typeFeedback = StringHelper.localizedStringWithKey("TRANSACTION_LEAVE_FEEDBACK_TYPE_LOCALIZE_KEY")
     var sendTitle = StringHelper.localizedStringWithKey("TRANSACTION_LEAVE_FEEDBACK_SEND_LOCALIZE_KEY")
     
+    var hud: MBProgressHUD?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -57,12 +59,13 @@ class TransactionLeaveSellerFeedbackViewController: UIViewController {
         self.itemQualityLabel.text = itemQualityTitle
         self.rateThisLabel.text = communicationTitle
         self.sendButton.setTitle(sendTitle, forState: UIControlState.Normal)
-        println("\(self.sellerId)")
+        println("\(self.sellerId) \(self.orderId)")
         
         self.typingAreaView.layer.borderWidth = 1.0
         self.typingAreaView.layer.borderColor = UIColor.lightGrayColor().CGColor
         self.inputTextField.becomeFirstResponder()
 
+        self.backButton()
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -116,6 +119,7 @@ class TransactionLeaveSellerFeedbackViewController: UIViewController {
     @IBAction func sendAction(sender: AnyObject) {
         if rate == 0 {
             showAlert("Rate", message: "Please select a rating.")
+            
         } else if self.inputTextField.text == "" {
             showAlert("Feedback", message: "Please send a feedback.")
         } else {
@@ -126,11 +130,28 @@ class TransactionLeaveSellerFeedbackViewController: UIViewController {
         
     }
     
+    //MARK: Navigation bar
+    func backButton() {
+        var backButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
+        backButton.frame = CGRectMake(0, 0, 40, 40)
+        backButton.addTarget(self, action: "back", forControlEvents: UIControlEvents.TouchUpInside)
+        backButton.setImage(UIImage(named: "back-white"), forState: UIControlState.Normal)
+        var customBackButton:UIBarButtonItem = UIBarButtonItem(customView: backButton)
+        
+        let navigationSpacer: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
+        navigationSpacer.width = -20
+        self.navigationItem.leftBarButtonItems = [navigationSpacer, customBackButton]
+    }
+    
+    func back() {
+        self.navigationController!.popViewControllerAnimated(true)
+    }
+    
     // MARK: - Methods
     
     func showAlert(title: String, message: String) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
-        let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+        let defaultAction = UIAlertAction(title: Constants.Localized.ok, style: .Default, handler: nil)
         alertController.addAction(defaultAction)
         presentViewController(alertController, animated: true, completion: nil)
     }
@@ -168,21 +189,22 @@ class TransactionLeaveSellerFeedbackViewController: UIViewController {
     }
     
     func fireSellerFeedback() {
-        
+        self.showHUD()
+        //[{"rateType":"1", "rating":"2.50"},{"rateType":"2", "rating":"4.50"}]
         let jsonObject2: [String: AnyObject] = [
-            "sellerId": "\(2)",
-            "orderId": "\(176)",
+            "sellerId": String(self.sellerId),
+            "orderId": String(self.orderId),
             "title": "Seller Feedback",
-            "feedback": self.inputTextField.text,
+            "feedback": "\(self.inputTextField.text)",
             "ratings": [[
-                "rateType": 1,
-                "rating": "\(self.rate)"
+                "rateType": "1",
+                "rating": String(self.rate)
                 ], [
-                    "rateType": 2,
-                    "rating": "\(self.rateComm)"
+                    "rateType": "2",
+                    "rating": String(self.rateComm)
                 ]]
         ]
-        
+        println("\(jsonObject2 as NSDictionary)")
         let manager = APIManager.sharedInstance
         manager.POST(APIAtlas.transactionLeaveSellerFeedback+"\(SessionManager.accessToken())", parameters: jsonObject2 as NSDictionary, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
@@ -192,23 +214,62 @@ class TransactionLeaveSellerFeedbackViewController: UIViewController {
                 } else {
                     self.showAlert(title: "Feedback", message: responseObject["message"] as! String)
                 }
+                self.hud?.hide(true)
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
                 println(error.description)
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                if task.statusCode == 404 || task.statusCode == 400 {
-                    let data = error.userInfo as! Dictionary<String, AnyObject>
-                    self.showAlert(title: "Feedback", message: data["message"] as! String)
+                if error.userInfo != nil {
+                    let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: Constants.Localized.someThingWentWrong)
+                } else if task.statusCode == 401 {
+                    self.requestRefreshToken()
                 } else {
-                   self.showAlert(title: "Feedback", message: "Something went wrong.")
+                   self.showAlert(title: Constants.Localized.error, message: Constants.Localized.someThingWentWrong)
                 }
+                
+                self.hud?.hide(true)
+        })
+    }
+    
+    func requestRefreshToken() {
+        let params: NSDictionary = ["client_id": Constants.Credentials.clientID,
+            "client_secret": Constants.Credentials.clientSecret,
+            "grant_type": Constants.Credentials.grantRefreshToken,
+            "refresh_token": SessionManager.refreshToken()]
+        self.showHUD()
+        let manager = APIManager.sharedInstance
+        manager.POST(APIAtlas.loginUrl, parameters: params, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+          
+            self.fireSellerFeedback()
+            
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                self.hud?.hide(true)
+                self.showAlert(title: Constants.Localized.error, message: Constants.Localized.someThingWentWrong)
         })
     }
     
     func showAlert(#title: String!, message: String!) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
-        let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+        let defaultAction = UIAlertAction(title: Constants.Localized.ok, style: .Default, handler: nil)
         alertController.addAction(defaultAction)
         presentViewController(alertController, animated: true, completion: nil)
+    }
+    
+    //MARK: Show HUD
+    func showHUD() {
+        if self.hud != nil {
+            self.hud!.hide(true)
+            self.hud = nil
+        }
+        
+        self.hud = MBProgressHUD(view: self.view)
+        self.hud?.removeFromSuperViewOnHide = true
+        self.hud?.dimBackground = false
+        self.navigationController?.view.addSubview(self.hud!)
+        self.hud?.show(true)
     }
 
 }

@@ -29,6 +29,7 @@ class ProductImagesView: UIView, UICollectionViewDataSource, UICollectionViewDel
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var priceLabel: UILabel!
     @IBOutlet weak var originalPrice: UILabel!
+    @IBOutlet weak var priceCustomLabel: DiscountLabel!
     
     var imagesModel: [ProductImagesModel]!
     
@@ -58,8 +59,6 @@ class ProductImagesView: UIView, UICollectionViewDataSource, UICollectionViewDel
         addTapTo(self.rateContainerView, action: "rateAction:")
         addTapTo(self.messageContainerView, action: "messageAction:")
         addTapTo(self.shareContainerView, action: "shareAction:")
-        
-        priceLabel.textColor = Constants.Colors.productPrice
     }
     
     func addTapTo(view: UIView, action: Selector) {
@@ -72,7 +71,9 @@ class ProductImagesView: UIView, UICollectionViewDataSource, UICollectionViewDel
     // MARK: - Collection View Data Source
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if self.imagesModel != nil {
+        if self.images.count != 0 {
+            return self.images.count
+        } else if self.imagesModel != nil {
             return self.imagesModel.count
         }
         return 0
@@ -80,8 +81,11 @@ class ProductImagesView: UIView, UICollectionViewDataSource, UICollectionViewDel
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell: ProductSellerViewCollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier("productSellerIdentifier", forIndexPath: indexPath) as! ProductSellerViewCollectionViewCell
-        
-        cell.setImage(self.imagesModel[indexPath.row].imageLocation)
+        if self.images.count != 0 {
+            cell.setImage(self.images[indexPath.row])
+        } else if self.imagesModel != nil {
+            cell.setImage(self.imagesModel[indexPath.row].imageLocation)
+        }
         
         return cell
     }
@@ -135,12 +139,13 @@ class ProductImagesView: UIView, UICollectionViewDataSource, UICollectionViewDel
 
         self.nameLabel.text = model.title
 
-        if model.productUnits[unitId].discount == 0 {
-            self.originalPrice.hidden = true
-            self.priceLabel.text = "P" + model.productUnits[unitId].price
+        if model.productUnits[unitId].discountedPrice.floatValue != 0 {
+            self.priceCustomLabel.text = "₱" + model.productUnits[unitId].price
+            self.priceCustomLabel.drawDiscountLine(true)
+            self.priceLabel.text = "₱" + model.productUnits[unitId].discountedPrice
         } else {
-            self.originalPrice.text = "P" + model.productUnits[unitId].price
-            self.priceLabel.text = "P" + model.productUnits[unitId].discountedPrice
+            self.priceCustomLabel.hidden = true
+            self.priceLabel.text = "₱" + model.productUnits[unitId].price
         }
         
         self.width = width
@@ -150,5 +155,30 @@ class ProductImagesView: UIView, UICollectionViewDataSource, UICollectionViewDel
         self.pageControl.numberOfPages = self.imagesModel.count
         self.collectionView.reloadData()
     }
-    
+
+    func updateDetails(model: ProductDetailsModel, unitId: Int, images: [String]) {
+        
+        if model.productUnits[unitId].discountedPrice.floatValue != 0 {
+            self.priceCustomLabel.text = "₱" + (model.productUnits[unitId].price).floatValue.string(2)
+            self.priceCustomLabel.drawDiscountLine(true)
+            self.priceLabel.text = "₱" + (model.productUnits[unitId].discountedPrice).floatValue.string(2)
+        } else {
+            self.priceCustomLabel.hidden = true
+            self.priceLabel.text = "₱" + (model.productUnits[unitId].price).floatValue.string(2)
+        }
+        
+        self.images = images
+        
+        self.pageControl.numberOfPages = self.images.count
+        self.collectionView.reloadData()
+    }
 }
+
+// MARK: Extentions
+
+extension String {
+    var floatValue: Float {
+        return (self as NSString).floatValue
+    }
+}
+

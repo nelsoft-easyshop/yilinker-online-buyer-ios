@@ -167,7 +167,7 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
                 if responseObject.objectForKey("error") != nil {
                     self.requestRefreshToken("editToCart", url: url, params: params)
                 } else {
-                    self.getCartData()
+                    self.populateTableView(responseObject)
                 }
                 self.dismissLoader()
             }, failure: {
@@ -233,11 +233,9 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
             
             if let value: Int = value["total"] as? Int {
                 self.badgeCount = value
+                SessionManager.setCartCount(value)
             }
         }
-        self.updateCounterLabel()
-        self.calculateTotalPrice()
-        self.dismissLoader()
         
         if badgeCount != 0 {
             let badgeValue = (self.tabBarController!.tabBar.items![4] as! UITabBarItem).badgeValue?.toInt()
@@ -246,11 +244,13 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
             (self.tabBarController!.tabBar.items![4] as! UITabBarItem).badgeValue = nil
         }
         
-        SessionManager.setCartCount(badgeCount)
+        self.updateCounterLabel()
+        self.calculateTotalPrice()
+        self.dismissLoader()
     }
     
     func requestRefreshToken(type: String, url: String, params: NSDictionary!) {
-        let url: String = "http://online.api.easydeal.ph/api/v1/login"
+        let url: String = APIAtlas.refreshTokenUrl
         let params: NSDictionary = ["client_id": Constants.Credentials.clientID,
             "client_secret": Constants.Credentials.clientSecret,
             "grant_type": Constants.Credentials.grantRefreshToken,
@@ -308,11 +308,18 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
 //                    cell.productItemImageView.sd_setImageWithURL(NSURL(string: tempProductUnit.imageIds[0]), placeholderImage: UIImage(named: "dummy-placeholder"))
 //                }
                 
-                if tempModel.images.count != 0 {
-                    cell.productItemImageView.sd_setImageWithURL(NSURL(string: tempModel.images[0]), placeholderImage: UIImage(named: "dummy-placeholder"))
+                
+                if tempProductUnit.primaryImage.isNotEmpty() {
+                    let url = APIAtlas.baseUrl.stringByReplacingOccurrencesOfString("api/v1", withString: "")
+                    cell.productItemImageView.sd_setImageWithURL(NSURL(string: "\(url)\(APIAtlas.cartImage)\(tempProductUnit.primaryImage)"), placeholderImage: UIImage(named: "dummy-placeholder"))
                 } else {
-                    cell.productItemImageView.image = UIImage(named: "dummy-placeholder")
-                }
+                    if tempModel.images.count != 0 {
+                        cell.productItemImageView.sd_setImageWithURL(NSURL(string: tempModel.images[0]), placeholderImage: UIImage(named: "dummy-placeholder"))
+                    } else {
+                        cell.productItemImageView.image = UIImage(named: "dummy-placeholder")
+                    }
+
+                }                
                 
                 var tempAttributesText: String = ""
                 for tempId in tempProductUnit.combination {
@@ -328,7 +335,7 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
                 }
                 
                 cell.productDetailsLabel?.text = tempAttributesText
-                cell.productPriceLabel.text = tempProductUnit.discountedPrice.formatToTwoDecimal() + " x \(tempModel.quantity)"
+                cell.productPriceLabel.text = tempProductUnit.discountedPrice.formatToPeso() + " x \(tempModel.quantity)"
             }
         }
         
@@ -429,15 +436,17 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     // MARK: - METHODS
     func updateCounterLabel() {
+        let cartCount = SessionManager.cartCount()
+        
         let youHaveLocalizeString: String = StringHelper.localizedStringWithKey("YOU_HAVE_LOCALIZE_KEY")
         let itemsLocalizeString: String = StringHelper.localizedStringWithKey("ITEMS_IN_CART_LOCALIZE_KEY")
         
-        if tableData.count < 2 {
+        if cartCount < 2 {
             let itemString: String = StringHelper.localizedStringWithKey("ITEM_LOCALIZE_KEY")
-            cartCounterLabel.text = "\(youHaveLocalizeString) \(tableData.count) \(itemString) \(itemsLocalizeString)"
+            cartCounterLabel.text = "\(youHaveLocalizeString) \(cartCount) \(itemString) \(itemsLocalizeString)"
         } else {
             let itemString: String = StringHelper.localizedStringWithKey("ITEMS_LOCALIZE_KEY")
-            cartCounterLabel.text = "\(youHaveLocalizeString) \(tableData.count) \(itemString) \(itemsLocalizeString)"
+            cartCounterLabel.text = "\(youHaveLocalizeString) \(cartCount) \(itemString) \(itemsLocalizeString)"
         }
     }
     
@@ -466,7 +475,8 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
             if tempModel.selected {
                 for tempProductUnit in tempModel.productUnits {
                     if tempModel.unitId == tempProductUnit.productUnitId {
-                        let discountedPrice = (tempProductUnit.discountedPrice as NSString).doubleValue
+                        let price: String = tempProductUnit.discountedPrice.stringByReplacingOccurrencesOfString(",", withString: "")
+                        let discountedPrice = (price as NSString).doubleValue
                         let quantity = Double(tempModel.quantity)
                         totalPrice = totalPrice + (quantity * discountedPrice)
                     }

@@ -33,9 +33,10 @@ struct FABStrings {
     static let profile: String = StringHelper.localizedStringWithKey("PROFILE_LOCALIZE_KEY")
 }
 
-class HomeContainerViewController: UIViewController, UITabBarControllerDelegate, EmptyViewDelegate {
+class HomeContainerViewController: UIViewController, UITabBarControllerDelegate, EmptyViewDelegate, VerifyMobileNumberViewControllerDelegate {
     
     @IBOutlet weak var contentView: UIView!
+    var dimView: UIView?
     
     let viewControllerIndex = 0
     var searchViewContoller: SearchViewController?
@@ -82,6 +83,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             name: appDelegate.registrationKey, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "onNewMessage:",
             name: appDelegate.messageKey, object: nil)
+        self.initDimView()
     }
     
     func onRegistration(notification: NSNotification){
@@ -419,7 +421,11 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             SessionManager.setCartCount(self.profileModel.cartCount)
             SessionManager.setWishlistCount(self.profileModel.wishlistCount)
             self.updateTabBarBadge()
-                
+            
+            if !SessionManager.isMobileVerified() && !SessionManager.isEmailVerified() {
+                self.fireGetCode()
+            }
+            
             self.hud?.hide(true)
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
@@ -482,7 +488,87 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         self.hud = MBProgressHUD(view: self.view)
         self.hud?.removeFromSuperViewOnHide = true
         self.hud?.dimBackground = false
-        self.view.addSubview(self.hud!)
+        self.tabBarController!.view.addSubview(self.hud!)
         self.hud?.show(true)
+    }
+    
+    
+    
+    //MARK: - Dim View
+    func initDimView() {
+        dimView = UIView(frame: self.view.bounds)
+        dimView?.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
+        self.parentViewController!.view.addSubview(dimView!)
+        //self.view.addSubview(dimView!)
+        dimView?.hidden = true
+        dimView?.alpha = 0
+    }
+    
+    //MARK: - Verification
+    func displayCodeDialog() {
+        var verifyNumberModal = VerifyMobileNumberViewController(nibName: "VerifyMobileNumberViewController", bundle: nil)
+        verifyNumberModal.delegate = self
+        verifyNumberModal.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
+        verifyNumberModal.providesPresentationContextTransitionStyle = true
+        verifyNumberModal.definesPresentationContext = true
+        verifyNumberModal.view.backgroundColor = UIColor.clearColor()
+        verifyNumberModal.view.frame.origin.y = 0
+        self.parentViewController!.presentViewController(verifyNumberModal, animated: true, completion: nil)
+        self.tabBarController?.tabBar.userInteractionEnabled = false
+        self.dimView!.hidden = false
+        UIView.animateWithDuration(0.3, animations: {
+            self.dimView!.alpha = 1
+            }, completion: { finished in
+        })
+    }
+    
+    
+    // MARK: - GET CODE
+    
+    func fireGetCode() {
+        let manager: APIManager = APIManager.sharedInstance
+        //seller@easyshop.ph
+        //password
+        let parameters: NSDictionary = ["access_token": SessionManager.accessToken()]
+        self.showHUD()
+        manager.POST(APIAtlas.verificationGetCodeUrl, parameters: parameters, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            println(responseObject)
+            self.displayCodeDialog()
+            self.hud?.hide(true)
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
+                self.hud?.hide(true)
+        })
+    }
+    
+    //MARK: - Verification Delegate
+    func closeVerifyMobileNumberViewController() {
+        self.hideDimView()
+        SessionManager.logout()
+        let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        appDelegate.changeRootToHomeView()
+    }
+    
+    func verifyMobileNumberAction(isSuccessful: Bool) {
+        self.hideDimView()
+        if !isSuccessful {
+            self.fireGetCode()
+        }
+    }
+    
+    func requestNewCodeAction() {
+        self.hideDimView()
+        self.fireGetCode()
+    }
+    
+    func hideDimView() {
+        UIView.animateWithDuration(0.3, animations: {
+            self.dimView!.alpha = 0
+            self.tabBarController?.tabBar.userInteractionEnabled = true
+            }, completion: { finished in
+                
+        })
     }
 }

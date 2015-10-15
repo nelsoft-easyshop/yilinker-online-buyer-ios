@@ -39,6 +39,14 @@ extension UITextField {
         return emailTest.evaluateWithObject(self.text)
     }
     
+    func isValidPassword() -> Bool {
+        // println("validate calendar: \(testStr)")
+        let emailRegEx = "^(?=.*\\d)(?=.*[a-zA-Z])[^ ]{0,}$"
+        
+        let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
+        return emailTest.evaluateWithObject(self.text)
+    }
+    
     func isAlphaNumeric() -> Bool {
         let passwordRegEx = "[A-Za-z0-9_]*"
         let passwordTest = NSPredicate(format: "SELF MATCHES %@", passwordRegEx)
@@ -121,7 +129,7 @@ extension UITextView {
 extension UIAlertController {
     
     class func displayErrorMessageWithTarget(target: AnyObject, errorMessage: String) {
-        let alert = UIAlertController(title: Constants.Localized.someThingWentWrong, message: errorMessage, preferredStyle: UIAlertControllerStyle.Alert)
+        let alert = UIAlertController(title: Constants.Localized.error, message: errorMessage, preferredStyle: UIAlertControllerStyle.Alert)
         let OKAction = UIAlertAction(title: Constants.Localized.ok, style: .Default) { (action) in }
         alert.addAction(OKAction)
         target.presentViewController(alert, animated: true, completion: nil)
@@ -270,6 +278,10 @@ extension String {
         formatter.numberStyle = .CurrencyStyle
         return "\(formatter.stringFromNumber((self as NSString).doubleValue)!)"
     }
+    
+    func formatToPeso() -> String {
+        return "₱\(self)"
+    }
 }
 
 extension NSURL {
@@ -285,6 +297,7 @@ extension NSURL {
             }
             
         }
+
         return results
     }
     

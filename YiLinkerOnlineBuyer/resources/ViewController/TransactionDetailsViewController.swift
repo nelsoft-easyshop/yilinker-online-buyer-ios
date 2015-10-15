@@ -37,6 +37,7 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
     var totalUnitCost: String = ""
     var shippingFee: String = ""
     var totalCost: String = ""
+    var orderId: String = ""
     
     var total_unit_price: Float = 0.0
     var total_handling_fee: Float = 0.0
@@ -201,14 +202,14 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
         return self.transactionSectionView
         
     }
-    
+    /*
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         //self.transactionIdView =
         
         
         return XibHelper.puffViewWithNibName("TransactionViews", index: 8) as! TransactionSectionHeaderView
     }
-    
+    */
     func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return 140
     }
@@ -259,10 +260,10 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
             transactionDetailsView.statusLabel.text = self.orderStatus
             transactionDetailsView.paymentTypeLabel.text = self.paymentType
             transactionDetailsView.dateCreatedLabel.text = self.dateCreated
-            transactionDetailsView.quantityLabel.text = self.totalQuantity+"x"
-            transactionDetailsView.unitCostLabel.text = "P \(self.total_unit_price.stringToFormat(2))"
-            transactionDetailsView.shippingFeeLabel.text = "P \(self.total_handling_fee.stringToFormat(2))"
-            transactionDetailsView.totalCostLabel.text = "P \(((self.totalCost as NSString).floatValue).stringToFormat(2))"
+            transactionDetailsView.quantityLabel.text = self.totalQuantity
+            transactionDetailsView.unitCostLabel.text = "\((self.totalUnitCost).formatToPeso())"
+            transactionDetailsView.shippingFeeLabel.text = "\((self.shippingFee).formatToPeso())"
+            transactionDetailsView.totalCostLabel.text = "\((self.totalCost).formatToPeso())"
             
             self.transactionDetailsView.frame.size.width = self.view.frame.size.width
         }
@@ -390,9 +391,12 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
     // MARK: - Actions
     
     func leaveFeedback(tag: Int) {
-        let feedbackView = TransactionLeaveSellerFeedbackViewController(nibName: "TransactionLeaveSellerFeedbackViewController", bundle: nil)
-        feedbackView.edgesForExtendedLayout = UIRectEdge.None
+        //let feedbackView = TransactionLeaveSellerFeedbackViewController(nibName: "TransactionLeaveSellerFeedbackViewController", bundle: nil)
+        //feedbackView.edgesForExtendedLayout = UIRectEdge.None
+        let feedbackView = TransactionLeaveSellerFeedbackTableViewController(nibName: "TransactionLeaveSellerFeedbackTableViewController", bundle: nil)
         feedbackView.sellerId = tag
+        feedbackView.orderId = self.orderId.toInt()!
+        feedbackView.edgesForExtendedLayout = UIRectEdge.None
         self.navigationController?.pushViewController(feedbackView, animated: true)
     }
     
@@ -427,9 +431,9 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
     
     //MARK: View sellers feedback
     func leaveSellerFeedback(title: String, tag: Int) {
-        println("\(self.transactionSectionView.leaveFeedbackButton.titleLabel?.text) \(tag)")
+        println("\(self.transactionSectionView.leaveFeedbackButton.titleLabel?.text) \(tag) orderStatusId \(self.orderStatusId )")
         if title == self.leaveFeedback {
-            if self.orderStatusId == "3" {
+            if self.orderStatusId == "3" || self.orderStatusId == "6"{
                 self.leaveFeedback(tag)
             } else {
                 self.showAlert(title: self.error, message: self.errorFeedback)
@@ -459,7 +463,7 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
         println(urlEncoded)
         manager.GET(urlEncoded!, parameters: nil, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            self.transactionDetailsModel = TransactionDetailsModel.parseDataFromDictionary(responseObject as! NSDictionary)
+            self.transactionDetailsModel = TransactionDetailsModel.parseDataFromDictionary2(responseObject as! NSDictionary)
             
             println(responseObject.description)
             

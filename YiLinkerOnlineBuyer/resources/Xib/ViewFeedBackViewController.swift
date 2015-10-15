@@ -115,6 +115,7 @@ class ViewFeedBackViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     func fireSellerFeedback() {
+        self.cancelButton.enabled = false
         self.showHUD()
         let manager = APIManager.sharedInstance
         println("seller id view feedback \(sellerId)")
@@ -124,17 +125,21 @@ class ViewFeedBackViewController: UIViewController, UITableViewDelegate, UITable
             println(responseObject["isSuccessful"])
             if responseObject["isSuccessful"] as! Bool {
                 self.sellerModel = SellerModel.parseSellerReviewsDataFromDictionary(responseObject as! NSDictionary)
-                println(self.sellerModel?.reviews[1].fullName)
+                //println(self.sellerModel?.reviews[1].fullName)
                 self.setRating(self.sellerModel!.rating)
                 self.generalRatingLabel.text = "\(self.sellerModel!.rating)"
                 self.numberOfPeopleLabel.text = "\(self.sellerModel!.reviews.count)"
                 self.ratingAndReviewsTableView.reloadData()
                 self.hud?.hide(true)
+                if self.sellerModel!.reviews.count == 0 {
+                    self.showAlert(title: ProductStrings.alertNoReviews, message: nil)
+                }
             } else {
                 self.showAlert(title: "Error", message: responseObject["message"] as! String)
                 self.hud?.hide(true)
             }
-            
+            self.ratingAndReviewsTableView.reloadData()
+            self.cancelButton.enabled = true
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 if error.userInfo != nil {
@@ -145,16 +150,17 @@ class ViewFeedBackViewController: UIViewController, UITableViewDelegate, UITable
                             self.hud?.hide(true)
                             
                         } else {
-                            self.showAlert(title: "Something went wrong", message: nil)
+                            self.showAlert(title: Constants.Localized.someThingWentWrong, message: nil)
                             self.hud?.hide(true)
                         }
                     }
                 } else  {
-                    self.showAlert(title: "Error", message: "Something went wrong.")
+                    self.showAlert(title: Constants.Localized.error, message: Constants.Localized.someThingWentWrong)
                     self.hud?.hide(true)
                 }
+                self.cancelButton.enabled = true
         })
-        self.ratingAndReviewsTableView.reloadData()
+        
     }
     
     func showHUD() {

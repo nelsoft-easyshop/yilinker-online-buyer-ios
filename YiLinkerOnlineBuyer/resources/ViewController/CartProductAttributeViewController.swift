@@ -57,10 +57,10 @@ class CartProductAttributeViewController: UIViewController, UITableViewDelegate,
         let nib = UINib(nibName: "CartProductAttributeTableViewCell", bundle: nil)
         self.tableView.registerNib(nib, forCellReuseIdentifier: "CartProductAttributeTableViewCell")
         
-        let tap = UITapGestureRecognizer()
-        tap.numberOfTapsRequired = 1
-        tap.addTarget(self, action: "dimViewAction:")
-        self.dimView.addGestureRecognizer(tap)
+//        let tap = UITapGestureRecognizer()
+//        tap.numberOfTapsRequired = 1
+//        tap.addTarget(self, action: "dimViewAction:")
+//        self.dimView.addGestureRecognizer(tap)
         self.dimView.backgroundColor = .clearColor()
         
         initializeLocalizedString()
@@ -128,8 +128,13 @@ class CartProductAttributeViewController: UIViewController, UITableViewDelegate,
     
     func passModel(#cartModel: CartProductDetailsModel, selectedProductUnits: ProductUnitsModel) {
         productDetailModel = cartModel
-        setDetail(productDetailModel!.image, title: productDetailModel!.title, price: selectedProductUnits.discountedPrice)
+        let url = APIAtlas.baseUrl.stringByReplacingOccurrencesOfString("api/v1", withString: "")
+        setDetail("\(url)\(APIAtlas.cartImage)\(selectedProductUnits.primaryImage)", title: productDetailModel!.title, price: selectedProductUnits.discountedPrice)
         self.maximumStock = selectedProductUnits.quantity
+        if maximumStock < 0 {
+            maximumStock = 0
+        }
+        
         stocks = cartModel.quantity
         checkStock(stocks)
         selectedProductUnit = selectedProductUnits
@@ -186,15 +191,24 @@ class CartProductAttributeViewController: UIViewController, UITableViewDelegate,
                 }
             }
             
+            let url = APIAtlas.baseUrl.stringByReplacingOccurrencesOfString("api/v1", withString: "")
+            setDetail("\(url)\(APIAtlas.cartImage)\(selectedProductUnit.primaryImage)", title: productDetailModel!.title, price: selectedProductUnit.discountedPrice)
+            
+            priceLabel.text = selectedProductUnit.price.formatToPeso()
             self.maximumStock = selectedProductUnit.quantity
+            if maximumStock < 0 {
+                maximumStock = 0
+            }
             stocks = productDetailModel!.quantity
             checkStock(stocks)
-            self.availabilityStocksLabel.text = availableLocalizeString + String(maximumStock)
+            self.availabilityStocksLabel.text = availableLocalizeString + ": " + String(maximumStock)
+            
         } else {
+            priceLabel.text = "0".formatToTwoDecimal()
             self.maximumStock = 0
             stocks = 0
             checkStock(stocks)
-            self.availabilityStocksLabel.text = availableLocalizeString + String(0)
+            self.availabilityStocksLabel.text = availableLocalizeString + ": " + String(0)
         }
         
     }
@@ -236,7 +250,7 @@ class CartProductAttributeViewController: UIViewController, UITableViewDelegate,
         
         productImageView.sd_setImageWithURL(NSURL(string: image), placeholderImage: UIImage(named: "dummy-placeholder"))
         nameLabel.text = title
-        priceLabel.text = price
+        priceLabel.text = price.formatToPeso()
     }
     
     func disableButton(button: UIButton) {

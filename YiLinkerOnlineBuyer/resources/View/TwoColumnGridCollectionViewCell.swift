@@ -10,12 +10,12 @@ import UIKit
 
 class TwoColumnGridCollectionViewCell: UICollectionViewCell {
     
-    @IBOutlet weak var originalPriceLabel: DynamicRoundedLabel!
+    @IBOutlet weak var originalPriceLabel: UILabel!
     @IBOutlet weak var discountedPriceLabel: DiscountLabel!
     @IBOutlet weak var productNameLabel: UILabel!
     
     @IBOutlet weak var productItemImageView: UIImageView!
-    @IBOutlet weak var discountPercentageLabel: DynamicRoundedLabel!
+    @IBOutlet weak var discountPercentageLabel: UILabel!
     
     var productModel: HomePageProductModel?
     
@@ -24,6 +24,7 @@ class TwoColumnGridCollectionViewCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        discountPercentageLabel.layer.cornerRadius = 3
+        originalPriceLabel.layer.cornerRadius = 12
     }
-
 }
