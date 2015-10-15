@@ -73,6 +73,8 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         let sellerLocalizeString: String = StringHelper.localizedStringWithKey("SELLER_LOCALIZE_KEY")
         let productLocalizeString: String = StringHelper.localizedStringWithKey("PRODUCT_LOCALIZE_KEY")
         searchBar.scopeButtonTitles = [productLocalizeString, sellerLocalizeString]
+        
+        UITextField.my_appearanceWhenContainedIn(SearchViewController.self).tintColor = Constants.Colors.grayLine
     }
     
     func initializeLocalizedString() {
