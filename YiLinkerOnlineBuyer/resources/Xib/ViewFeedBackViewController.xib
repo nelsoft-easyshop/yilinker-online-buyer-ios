@@ -4,6 +4,18 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Panton Bold.otf">
+            <string>Panton-Bold</string>
+        </mutableArray>
+        <mutableArray key="Panton.otf">
+            <string>Panton-Regular</string>
+            <string>Panton-Regular</string>
+            <string>Panton-Regular</string>
+            <string>Panton-Regular</string>
+            <string>Panton-Regular</string>
+        </mutableArray>
+    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ViewFeedBackViewController" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
             <connections>
@@ -58,7 +70,7 @@
                                                 <constraint firstAttribute="height" constant="21" id="2D5-yB-8KO"/>
                                                 <constraint firstAttribute="width" constant="152" id="2ov-Vf-Ksm"/>
                                             </constraints>
-                                            <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
+                                            <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="14"/>
                                             <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
@@ -68,7 +80,7 @@
                                                 <constraint firstAttribute="width" constant="29" id="Btv-v9-m5t"/>
                                                 <constraint firstAttribute="height" constant="21" id="oGV-Gc-bel"/>
                                             </constraints>
-                                            <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
+                                            <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="14"/>
                                             <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
@@ -164,7 +176,7 @@
                                                 <constraint firstAttribute="width" constant="31" id="NVt-p9-kTg"/>
                                                 <constraint firstAttribute="height" constant="64" id="dYC-4w-4TO"/>
                                             </constraints>
-                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="39"/>
+                                            <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="39"/>
                                             <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
@@ -174,7 +186,7 @@
                                                 <constraint firstAttribute="height" constant="64" id="E1f-rh-c05"/>
                                                 <constraint firstAttribute="width" constant="30" id="dhf-SO-0Wc"/>
                                             </constraints>
-                                            <fontDescription key="fontDescription" type="system" weight="light" pointSize="21"/>
+                                            <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="21"/>
                                             <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
@@ -197,7 +209,7 @@
                                     <constraints>
                                         <constraint firstAttribute="height" constant="21" id="YKt-So-fXe"/>
                                     </constraints>
-                                    <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
+                                    <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="14"/>
                                     <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
@@ -223,7 +235,7 @@
                                 <constraint firstAttribute="width" constant="67" id="Dcp-le-S0Y"/>
                                 <constraint firstAttribute="height" constant="30" id="mTV-qW-Gg0"/>
                             </constraints>
-                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
+                            <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="14"/>
                             <state key="normal" title="CANCEL">
                                 <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>

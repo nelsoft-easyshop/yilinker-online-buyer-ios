@@ -4,6 +4,12 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Panton SemiBold.otf">
+            <string>Panton-SemiBold</string>
+            <string>Panton-SemiBold</string>
+        </mutableArray>
+    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -42,6 +48,7 @@
                         <constraints>
                             <constraint firstAttribute="height" constant="42" id="A3I-6w-s0j"/>
                         </constraints>
+                        <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="15"/>
                         <state key="normal" title="MORE SELLER'S PRODUCT">
                             <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -66,7 +73,7 @@
                         <constraints>
                             <constraint firstAttribute="height" constant="21" id="KpU-9z-UJ8"/>
                         </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                        <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="16"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
