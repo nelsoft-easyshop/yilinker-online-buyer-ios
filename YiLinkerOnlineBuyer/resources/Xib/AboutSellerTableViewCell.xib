@@ -7,6 +7,7 @@
     <customFonts key="customFonts">
         <mutableArray key="Panton SemiBold.otf">
             <string>Panton-SemiBold</string>
+            <string>Panton-SemiBold</string>
         </mutableArray>
     </customFonts>
     <objects>
@@ -60,7 +61,7 @@
                             <constraint firstAttribute="width" constant="94" id="2uH-op-xlb"/>
                             <constraint firstAttribute="height" constant="21" id="4bl-w0-ema"/>
                         </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                        <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="16"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
