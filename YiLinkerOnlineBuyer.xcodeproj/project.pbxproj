@@ -306,6 +306,7 @@
 		79F2F5541B859AD100F57E4B /* WishlistProductDetailsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F2F5531B859AD100F57E4B /* WishlistProductDetailsModel.swift */; };
 		79F2F55B1B85FD9D00F57E4B /* FilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F2F5591B85FD9D00F57E4B /* FilterViewController.swift */; };
 		79F2F55C1B85FD9D00F57E4B /* FilterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79F2F55A1B85FD9D00F57E4B /* FilterViewController.xib */; };
+		79F40FD51BCF99F100E5D70E /* UIAppearance+Swift.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F40FD41BCF99F100E5D70E /* UIAppearance+Swift.m */; };
 		79F417761B7C3ADB0047D02D /* CartProductAttributeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F417741B7C3ADB0047D02D /* CartProductAttributeViewController.swift */; };
 		79F9FC4C1BC022FB00B3E0DA /* SearchSellerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F9FC4B1BC022FB00B3E0DA /* SearchSellerModel.swift */; };
 		961BE59C1B9948C100E8631A /* DisputeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 961BE59B1B9948C100E8631A /* DisputeViewController.xib */; };
@@ -748,6 +749,8 @@
 		79F2F5531B859AD100F57E4B /* WishlistProductDetailsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WishlistProductDetailsModel.swift; path = YiLinkerOnlineBuyer/resources/Model/WishlistProductDetailsModel.swift; sourceTree = SOURCE_ROOT; };
 		79F2F5591B85FD9D00F57E4B /* FilterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FilterViewController.swift; path = YiLinkerOnlineBuyer/resources/ViewController/FilterViewController.swift; sourceTree = SOURCE_ROOT; };
 		79F2F55A1B85FD9D00F57E4B /* FilterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = FilterViewController.xib; path = YiLinkerOnlineBuyer/resources/ViewController/FilterViewController.xib; sourceTree = SOURCE_ROOT; };
+		79F40FD31BCF99F100E5D70E /* UIAppearance+Swift.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIAppearance+Swift.h"; path = "YiLinkerOnlineBuyer/resources/Helper/UIAppearance+Swift.h"; sourceTree = SOURCE_ROOT; };
+		79F40FD41BCF99F100E5D70E /* UIAppearance+Swift.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIAppearance+Swift.m"; path = "YiLinkerOnlineBuyer/resources/Helper/UIAppearance+Swift.m"; sourceTree = SOURCE_ROOT; };
 		79F417741B7C3ADB0047D02D /* CartProductAttributeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CartProductAttributeViewController.swift; path = YiLinkerOnlineBuyer/resources/ViewController/CartProductAttributeViewController.swift; sourceTree = SOURCE_ROOT; };
 		79F9FC4B1BC022FB00B3E0DA /* SearchSellerModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SearchSellerModel.swift; path = YiLinkerOnlineBuyer/resources/Model/SearchSellerModel.swift; sourceTree = SOURCE_ROOT; };
 		9140515446F9D97EC8790C7B /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
@@ -1049,6 +1052,8 @@
 				0C329E721B7B2A71005BE2B6 /* Reachability.swift */,
 				0C1C3A841B9406BD00E6180D /* JSONResponseSerializer.swift */,
 				0C11794A1BA98EFE00AA1554 /* StringHelper.swift */,
+				79F40FD31BCF99F100E5D70E /* UIAppearance+Swift.h */,
+				79F40FD41BCF99F100E5D70E /* UIAppearance+Swift.m */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -1954,6 +1959,7 @@
 				79F9FC4C1BC022FB00B3E0DA /* SearchSellerModel.swift in Sources */,
 				26C285441B8FADE3005EBD3A /* AddressModelV2.swift in Sources */,
 				961BE5A61B994BF000E8631A /* ResolutionCenterCell.swift in Sources */,
+				79F40FD51BCF99F100E5D70E /* UIAppearance+Swift.m in Sources */,
 				0C99374D1B750583000D6074 /* NewSellerCollectionViewCell.swift in Sources */,
 				26AFB39B1B79DDEA00E50926 /* ProductAttributeModel.swift in Sources */,
 				0C99373D1B750583000D6074 /* IPhoneType.swift in Sources */,
