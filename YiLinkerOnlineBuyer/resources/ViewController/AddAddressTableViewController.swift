@@ -268,7 +268,7 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
 
         
         if self.addressModel.title == "" {
-           showAlert(title: AddressStrings.incompleteInformation, message: AddressStrings.addressTitleRequired)
+            showAlert(title: AddressStrings.incompleteInformation, message: AddressStrings.addressTitleRequired)
         } else if self.addressModel.streetName == "" {
             showAlert(title: AddressStrings.incompleteInformation, message: AddressStrings.streetNameRequired)
         } else if self.addressModel.zipCode == "" {
@@ -483,12 +483,8 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
                 self.hud?.hide(true)
                 self.barangayModel = BarangayModel.parseDataWithDictionary(responseObject)
-            
-                if self.addressModel.barangayId == 0 {
                     self.addressModel.barangayId = self.barangayModel.barangayId[0]
                     self.addressModel.barangay = self.barangayModel.location[0]
-                }
-            
                 self.tableView.reloadData()
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
