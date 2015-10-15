@@ -45,9 +45,6 @@
                         <tableView contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="U8v-F3-mgJ">
                             <rect key="frame" x="0.0" y="193" width="375" height="278"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            <constraints>
-                                <constraint firstAttribute="width" constant="375" id="yuf-ES-lX3"/>
-                            </constraints>
                         </tableView>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oBD-Vp-Y5a">
                             <rect key="frame" x="1" y="53" width="374" height="132"/>
@@ -198,7 +195,6 @@
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Seller's rating &amp; feedback" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c7Z-Ed-9kq">
                                     <rect key="frame" x="8" y="0.0" width="347" height="21"/>
                                     <constraints>
-                                        <constraint firstAttribute="width" constant="347" id="6OQ-Jj-1Py"/>
                                         <constraint firstAttribute="height" constant="21" id="YKt-So-fXe"/>
                                     </constraints>
                                     <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
@@ -218,7 +214,6 @@
                                 <constraint firstItem="FiL-TI-0MD" firstAttribute="top" secondItem="c7Z-Ed-9kq" secondAttribute="bottom" constant="4" id="dW9-M0-Io7"/>
                                 <constraint firstAttribute="trailing" secondItem="c7Z-Ed-9kq" secondAttribute="trailing" constant="19" id="dao-Z7-3nX"/>
                                 <constraint firstItem="duf-5x-53L" firstAttribute="top" secondItem="c7Z-Ed-9kq" secondAttribute="bottom" constant="4" id="gZS-py-RvW"/>
-                                <constraint firstAttribute="width" constant="374" id="qQ3-fD-1Ro"/>
                                 <constraint firstItem="duf-5x-53L" firstAttribute="top" secondItem="oBD-Vp-Y5a" secondAttribute="top" constant="25" id="ro5-Kc-m6P"/>
                             </constraints>
                         </view>
