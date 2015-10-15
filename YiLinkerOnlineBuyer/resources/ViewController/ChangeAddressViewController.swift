@@ -86,7 +86,7 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
     }
     
     func back() {
-        self.navigationController!.popViewControllerAnimated(true)
+        self.done()
     }
     
     func done() {
@@ -118,12 +118,13 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
         let cell : ChangeAddressCollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier(Constants.Checkout.changeAddressCollectionViewCellNibNameAndIdentifier, forIndexPath: indexPath) as! ChangeAddressCollectionViewCell
         cell.titleLabel.text = self.getAddressModel.listOfAddress[indexPath.row].title
         cell.addressLabel.text = self.getAddressModel.listOfAddress[indexPath.row].fullLocation
-
+        
         if  indexPath.row == self.selectedIndex {
             cell.layer.borderWidth = 1
             cell.layer.borderColor = Constants.Colors.selectedGreenColor.CGColor
             cell.checkBoxButton.setImage(UIImage(named: "checkBox"), forState: UIControlState.Normal)
             cell.checkBoxButton.backgroundColor = Constants.Colors.selectedGreenColor
+            SessionManager.setFullAddress(self.getAddressModel.listOfAddress[indexPath.row].fullLocation)
         } else {
             cell.checkBoxButton.setImage(nil, forState: UIControlState.Normal)
             cell.checkBoxButton.layer.borderWidth = 1
