@@ -33,12 +33,12 @@
                                 </connections>
                             </button>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Type your feedback here" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="MW1-gy-FCy">
-                                <rect key="frame" x="59" y="0.0" width="241" height="50"/>
+                                <rect key="frame" x="8" y="0.0" width="292" height="50"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no"/>
                             </textField>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CV1-4K-e20" userLabel="Camera container">
-                                <rect key="frame" x="0.0" y="0.0" width="59" height="50"/>
+                                <rect key="frame" x="0.0" y="0.0" width="4" height="50"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="picture" translatesAutoresizingMaskIntoConstraints="NO" id="m1r-w2-FRl">
                                         <rect key="frame" x="17" y="15" width="25" height="20"/>
@@ -46,7 +46,7 @@
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="59" id="8uo-oc-l3w"/>
+                                    <constraint firstAttribute="width" constant="4" id="8uo-oc-l3w"/>
                                     <constraint firstAttribute="height" constant="50" id="loz-ib-wEY"/>
                                 </constraints>
                             </view>
@@ -54,7 +54,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="MW1-gy-FCy" firstAttribute="top" secondItem="q2R-6e-z7q" secondAttribute="top" id="6y1-l5-DqP"/>
-                            <constraint firstItem="MW1-gy-FCy" firstAttribute="leading" secondItem="CV1-4K-e20" secondAttribute="trailing" id="9pY-Hn-O0g"/>
+                            <constraint firstItem="MW1-gy-FCy" firstAttribute="leading" secondItem="CV1-4K-e20" secondAttribute="trailing" constant="4" id="9pY-Hn-O0g"/>
                             <constraint firstItem="CV1-4K-e20" firstAttribute="top" secondItem="q2R-6e-z7q" secondAttribute="top" id="GZj-LT-9Ci"/>
                             <constraint firstAttribute="bottom" secondItem="Ghz-uB-OPS" secondAttribute="bottom" id="KwJ-i8-ZhU"/>
                             <constraint firstAttribute="trailing" secondItem="Ghz-uB-OPS" secondAttribute="trailing" id="Tye-0v-vcO"/>
