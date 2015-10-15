@@ -18,7 +18,7 @@ struct APIEnvironment {
         } else if staging {
             return ""
         } else  {
-            return ""
+            return "http://www.yilinker.com/api/v1"
         }
     }
 }
