@@ -125,6 +125,14 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         sellerTableHeaderView.profileImageView.addSubview(imageView)
         sellerTableHeaderView.sellernameLabel.text = sellerModel!.store_name
         sellerTableHeaderView.addressLabel.text = sellerModel!.store_address
+        if self.sellerModel!.isAffiliated {
+            sellerTableHeaderView.addressLabel.hidden = true
+            sellerTableHeaderView.callButton.hidden = true
+        } else  {
+            sellerTableHeaderView.addressLabel.hidden = false
+            sellerTableHeaderView.callButton.hidden = false
+        }
+        
         self.sellerName = self.sellerModel!.store_name
         self.sellerContactNumber = sellerModel!.contact_number
         
