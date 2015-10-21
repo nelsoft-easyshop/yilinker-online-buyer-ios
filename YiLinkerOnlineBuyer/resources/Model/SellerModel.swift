@@ -32,6 +32,7 @@ class SellerModel: NSObject {
     var store_description = ""
     var is_allowed: Bool = false
     var store_address: String = ""
+    var isAffiliated: Bool = false
     
     //For feed back seller reviews
     var rating: Int = 0
@@ -71,7 +72,7 @@ class SellerModel: NSObject {
             self.reviews = reviews
     }
     
-    init(name : String, email : String, gender : String, nickname : String, contact_number : String, specialty : String, birthdate : String, store_name : String, store_description : String, avatar : NSURL, cover_photo : NSURL, is_allowed : Bool, store_address: String, products : [HomePageProductModel], reviews : [ProductReviewsModel]) {
+    init(name : String, email : String, gender : String, nickname : String, contact_number : String, specialty : String, birthdate : String, store_name : String, store_description : String, avatar : NSURL, cover_photo : NSURL, is_allowed : Bool, store_address: String, products : [HomePageProductModel], reviews : [ProductReviewsModel], isAffiliated: Bool) {
         self.name = name
         self.email = email
         self.gender = gender
@@ -87,6 +88,7 @@ class SellerModel: NSObject {
         self.products = products
         self.reviews = reviews
         self.store_address = store_address
+        self.isAffiliated = isAffiliated
     }
     
     init(rating : Int, product_reviews: [ProductReviewsModel]){
@@ -111,6 +113,8 @@ class SellerModel: NSObject {
         var sellerProductModel: [HomePageProductModel] = [HomePageProductModel]()
         var productReviews: [ProductReviewsModel] = [ProductReviewsModel]()
         var store_address: String = ""
+        var isAffiliated: Bool = false
+        
         if let value: AnyObject = dictionary["data"] {
             
             if let sellerName = value["fullName"] as? String {
@@ -183,6 +187,12 @@ class SellerModel: NSObject {
                 is_followed = sellerIsFollowed
             } else {
                 is_followed = false
+            }
+            
+            if let affiliated = value["isAffiliate"] as? Bool {
+                isAffiliated = affiliated
+            } else {
+                isAffiliated = false
             }
             
             var myArrayOfDictProducts: NSArray = [
@@ -297,7 +307,7 @@ class SellerModel: NSObject {
             
         }
         
-        let sellerModel: SellerModel = SellerModel(name: name, email: email, gender: gender, nickname: nickname, contact_number: contact_number, specialty: contact_number, birthdate: birthdate, store_name: store_name, store_description: store_description, avatar: avatar, cover_photo: cover_photo, is_allowed: is_followed, store_address: store_address, products:sellerProductModel, reviews: productReviews)
+        let sellerModel: SellerModel = SellerModel(name: name, email: email, gender: gender, nickname: nickname, contact_number: contact_number, specialty: contact_number, birthdate: birthdate, store_name: store_name, store_description: store_description, avatar: avatar, cover_photo: cover_photo, is_allowed: is_followed, store_address: store_address, products:sellerProductModel, reviews: productReviews, isAffiliated: isAffiliated)
         
         return sellerModel
     }
