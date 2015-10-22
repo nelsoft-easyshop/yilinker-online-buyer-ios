@@ -27,6 +27,10 @@ class TransactionLeaveFeedbackRateTableViewCell: UITableViewCell {
     @IBOutlet weak var starComm4Button: UIButton!
     @IBOutlet weak var starComm5Button: UIButton!
     
+    @IBOutlet weak var itemQualityLabel: UILabel!
+    @IBOutlet weak var messageLabel: UILabel!
+    @IBOutlet weak var rateThisLabel: UILabel!
+    
     var titleLabelTitle = StringHelper.localizedStringWithKey("TRANSACTION_LEAVE_FEEDBACK_INFO_LOCALIZE_KEY")
     var itemQualityTitle = StringHelper.localizedStringWithKey("TRANSACTION_LEAVE_FEEDBACK_QUALITY_LOCALIZE_KEY")
     var communicationTitle = StringHelper.localizedStringWithKey("TRANSACTION_LEAVE_FEEDBACK_COMMUNICATION_LOCALIZE_KEY")
@@ -35,11 +39,7 @@ class TransactionLeaveFeedbackRateTableViewCell: UITableViewCell {
     var rateCommButtons: [UIButton] = []
     var rate: Int = 0
     var rateComm: Int = 0
- 
-    @IBOutlet weak var itemQualityLabel: UILabel!
-    @IBOutlet weak var messageLabel: UILabel!
-    @IBOutlet weak var rateThisLabel: UILabel!
-    
+
     var delegate: TransactionLeaveFeedbackRateTableViewCellDelegate?
     
     override func awakeFromNib() {

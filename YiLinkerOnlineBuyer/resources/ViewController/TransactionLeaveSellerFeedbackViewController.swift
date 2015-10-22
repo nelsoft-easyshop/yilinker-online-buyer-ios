@@ -27,6 +27,7 @@ class TransactionLeaveSellerFeedbackViewController: UIViewController {
     @IBOutlet weak var itemQualityLabel: UILabel!
     @IBOutlet weak var messageLabel: UILabel!
     @IBOutlet weak var rateThisLabel: UILabel!
+    
     @IBOutlet weak var typingAreaView: UIView!
     @IBOutlet weak var cameraView: UIView!
     @IBOutlet weak var inputTextField: UITextField!
@@ -51,20 +52,21 @@ class TransactionLeaveSellerFeedbackViewController: UIViewController {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
-        
         rateButtons = [star1Button, star2Button, star3Button, star4Button, star5Button]
         rateCommButtons = [starComm1Button, starComm2Button, starComm3Button, starComm4Button, starComm5Button]
-        self.title = feedbackTitle
+        
         self.inputTextField.placeholder = typeFeedback
         self.itemQualityLabel.text = itemQualityTitle
         self.rateThisLabel.text = communicationTitle
         self.sendButton.setTitle(sendTitle, forState: UIControlState.Normal)
-        println("\(self.sellerId) \(self.orderId)")
         
         self.typingAreaView.layer.borderWidth = 1.0
         self.typingAreaView.layer.borderColor = UIColor.lightGrayColor().CGColor
         self.inputTextField.becomeFirstResponder()
-
+        
+        //Set navigation bar title
+        self.title = feedbackTitle
+        //Customize navigation bar
         self.backButton()
     }
     
@@ -125,9 +127,7 @@ class TransactionLeaveSellerFeedbackViewController: UIViewController {
         } else {
             self.fireSellerFeedback()
             //            showAlert(String(rate), message: self.inputTextField.text)
-           
         }
-        
     }
     
     //MARK: Navigation bar
@@ -143,12 +143,13 @@ class TransactionLeaveSellerFeedbackViewController: UIViewController {
         self.navigationItem.leftBarButtonItems = [navigationSpacer, customBackButton]
     }
     
+    //MARK: Back button action
     func back() {
         self.navigationController!.popViewControllerAnimated(true)
     }
     
     // MARK: - Methods
-    
+    //MARK: Show alert dialog box
     func showAlert(title: String, message: String) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
         let defaultAction = UIAlertAction(title: Constants.Localized.ok, style: .Default, handler: nil)
@@ -182,15 +183,16 @@ class TransactionLeaveSellerFeedbackViewController: UIViewController {
             } else {
                 self.rateCommButtons[i].setImage(UIImage(named: "rating"), forState: .Normal)
             }
-            
-            
+
             self.rateCommButtons[i].frame.size = CGSize(width: 35, height: 30)
         }
     }
     
+    //MARK: Add seller feedback
     func fireSellerFeedback() {
+        
         self.showHUD()
-        //[{"rateType":"1", "rating":"2.50"},{"rateType":"2", "rating":"4.50"}]
+        
         let jsonObject2: [String: AnyObject] = [
             "sellerId": String(self.sellerId),
             "orderId": String(self.orderId),
@@ -204,20 +206,22 @@ class TransactionLeaveSellerFeedbackViewController: UIViewController {
                     "rating": String(self.rateComm)
                 ]]
         ]
-        println("\(jsonObject2 as NSDictionary)")
+        
         let manager = APIManager.sharedInstance
         manager.POST(APIAtlas.transactionLeaveSellerFeedback+"\(SessionManager.accessToken())", parameters: jsonObject2 as NSDictionary, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            println(responseObject.description)
-                if responseObject["isSuccessful"] as! Bool {
-                    self.navigationController?.popViewControllerAnimated(true)
-                } else {
-                    self.showAlert(title: "Feedback", message: responseObject["message"] as! String)
-                }
-                self.hud?.hide(true)
+            
+            if responseObject["isSuccessful"] as! Bool {
+                self.navigationController?.popViewControllerAnimated(true)
+            } else {
+                self.showAlert(title: "Feedback", message: responseObject["message"] as! String)
+            }
+            
+            self.hud?.hide(true)
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
-                println(error.description)
+                
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                
                 if error.userInfo != nil {
                     let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
                     let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
@@ -232,13 +236,17 @@ class TransactionLeaveSellerFeedbackViewController: UIViewController {
         })
     }
     
+    //MARK: Refresh token
     func requestRefreshToken() {
-        let params: NSDictionary = ["client_id": Constants.Credentials.clientID,
-            "client_secret": Constants.Credentials.clientSecret,
-            "grant_type": Constants.Credentials.grantRefreshToken,
-            "refresh_token": SessionManager.refreshToken()]
+        
         self.showHUD()
+        
         let manager = APIManager.sharedInstance
+        let params: NSDictionary = ["client_id": Constants.Credentials.clientID,
+        "client_secret": Constants.Credentials.clientSecret,
+        "grant_type": Constants.Credentials.grantRefreshToken,
+        "refresh_token": SessionManager.refreshToken()]
+        
         manager.POST(APIAtlas.loginUrl, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
           
@@ -251,6 +259,7 @@ class TransactionLeaveSellerFeedbackViewController: UIViewController {
         })
     }
     
+    //MARK: Show alert dialog box
     func showAlert(#title: String!, message: String!) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
         let defaultAction = UIAlertAction(title: Constants.Localized.ok, style: .Default, handler: nil)

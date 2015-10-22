@@ -34,7 +34,9 @@ class TransactionLeaveSellerFeedbackTableViewController: UITableViewController, 
         let feedbackNib: UINib = UINib(nibName: "TransactionLeaveFeedbackFieldTableViewCell", bundle: nil)
         self.tableView.registerNib(feedbackNib, forCellReuseIdentifier: "TransactionLeaveFeedbackFieldTableViewCell")
         
+        //Customize navigation bar
         self.backButton()
+        //Set title of navigation bar
         self.title = feedbackTitle
         
     }
@@ -85,6 +87,7 @@ class TransactionLeaveSellerFeedbackTableViewController: UITableViewController, 
         
     }
 
+    //MARK: Customize navigation bar
     func backButton() {
         var backButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
         backButton.frame = CGRectMake(0, 0, 40, 40)
@@ -98,13 +101,17 @@ class TransactionLeaveSellerFeedbackTableViewController: UITableViewController, 
         self.navigationItem.leftBarButtonItems = [navigationSpacer, customBackButton]
     }
     
+    //MARK: Back button action
     func back() {
         self.navigationController!.popViewControllerAnimated(true)
     }
     
+    //MARK: Add seller feedback
     func fireSellerFeedback(feedback: String, rateItemQuality: Int, rateCommunication: Int) {
+       
         self.showHUD()
-        //[{"rateType":"1", "rating":"2.50"},{"rateType":"2", "rating":"4.50"}]
+        
+        let manager = APIManager.sharedInstance
         let jsonObject2: [String: AnyObject] = [
             "sellerId": self.sellerId,
             "ratings": [[
@@ -119,20 +126,21 @@ class TransactionLeaveSellerFeedbackTableViewController: UITableViewController, 
             "access_token": "\(SessionManager.accessToken())",
             "orderId": self.orderId
         ]
+        
         var a: NSDictionary = jsonObject2 as NSDictionary
         let sortedKeys = (a.allKeys as! [String]).sorted(>)
         let data2 = NSJSONSerialization.dataWithJSONObject(jsonObject2, options: nil, error: nil)
         let string2 = NSString(data: data2!, encoding: NSUTF8StringEncoding)
-        println(string2)
-        let manager = APIManager.sharedInstance
+
         manager.POST(APIAtlas.transactionLeaveSellerFeedback+"\(SessionManager.accessToken())", parameters: string2, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            println(responseObject.description)
+          
             if responseObject["isSuccessful"] as! Bool {
                 self.navigationController?.popViewControllerAnimated(true)
             } else {
                 self.showAlert(title: "Feedback", message: responseObject["message"] as! String)
             }
+            
             self.hud?.hide(true)
             self.tableView.reloadData()
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
@@ -141,18 +149,8 @@ class TransactionLeaveSellerFeedbackTableViewController: UITableViewController, 
                 if error.userInfo != nil {
                     let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
                     let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
-                   UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: Constants.Localized.someThingWentWrong)
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: Constants.Localized.someThingWentWrong)
                     self.tableView.reloadData()
-                    /*let alert = UIAlertController(title: Constants.Localized.someThingWentWrong,
-                        message: errorModel.message,
-                        preferredStyle: UIAlertControllerStyle.Alert)
-                    let okButton = UIAlertAction(title: ProductStrings.alertOk,
-                        style: UIAlertActionStyle.Cancel) { (alert) -> Void in
-                            self.navigationController?.popViewControllerAnimated(true)
-                    }
-                    alert.addAction(okButton)
-                    self.presentViewController(alert, animated: true, completion: nil)
-                    */
                 } else if task.statusCode == 401 {
                     self.requestRefreshToken()
                     self.tableView.reloadData()
@@ -165,13 +163,17 @@ class TransactionLeaveSellerFeedbackTableViewController: UITableViewController, 
         })
     }
     
+    //MARK: Refresh token
     func requestRefreshToken() {
+        
+        self.showHUD()
+        
+        let manager = APIManager.sharedInstance
         let params: NSDictionary = ["client_id": Constants.Credentials.clientID,
             "client_secret": Constants.Credentials.clientSecret,
             "grant_type": Constants.Credentials.grantRefreshToken,
             "refresh_token": SessionManager.refreshToken()]
-        self.showHUD()
-        let manager = APIManager.sharedInstance
+        
         manager.POST(APIAtlas.loginUrl, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
@@ -179,8 +181,9 @@ class TransactionLeaveSellerFeedbackTableViewController: UITableViewController, 
             
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                self.hud?.hide(true)
                 self.showAlert(title: Constants.Localized.error, message: Constants.Localized.someThingWentWrong)
+                
+                self.hud?.hide(true)
         })
     }
     
@@ -196,9 +199,7 @@ class TransactionLeaveSellerFeedbackTableViewController: UITableViewController, 
              showAlert(title: "Feedback", message: "Please send a feedback.")
             self.tableView.reloadData()
         } else {
-            //println("\(feedback) \(self.rate) \(self.rateComm)")
             self.fireSellerFeedback(feedback, rateItemQuality: self.rate, rateCommunication: self.rateComm)
-            //            showAlert(String(rate), message: self.inputTextField.text)
             self.tableView.reloadData()
         }
     }
@@ -225,6 +226,7 @@ class TransactionLeaveSellerFeedbackTableViewController: UITableViewController, 
         self.hud?.show(true)
     }
     
+    //MARK: Show alert dialog box
     func showAlert(#title: String!, message: String!) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
         let defaultAction = UIAlertAction(title: Constants.Localized.ok, style: .Default, handler: nil)
