@@ -65,7 +65,7 @@ struct AddressStrings {
     static let zipCodeRequired: String = StringHelper.localizedStringWithKey("ZIP_CODE_REQUIRED_LOCALIZE_KEY")
 }
 
-class CheckoutContainerViewController: UIViewController, PaymentWebViewViewControllerDelegate, RegisterModalViewControllerDelegate {
+class CheckoutContainerViewController: UIViewController, PaymentWebViewViewControllerDelegate, RegisterModalViewControllerDelegate, VerifyMobileNumberInputViewControllerDelegate, VerifyMobileNumberViewControllerDelegate {
     
     var summaryViewController: SummaryViewController?
     var paymentViewController: PaymentViewController?
@@ -103,6 +103,8 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
     
     var guestRegisterModel: RegisterModel = RegisterModel()
     
+    var dimView: UIView?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -121,6 +123,12 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
         self.overViewLabel.text = CheckoutStrings.overView
         
         self.continueButton.setTitle(CheckoutStrings.saveAndContinue, forState: UIControlState.Normal)
+        
+        self.initDimView()
+        
+        if !SessionManager.isMobileVerified() {
+            self.displayDialog()
+        }
     }
     
     func showHUD() {
@@ -572,5 +580,89 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
         }
         registerViewController?.registerModel = self.guestRegisterModel
         self.navigationController?.presentViewController(registerViewController!, animated: true, completion: nil)
+    }
+    
+    //MARK: - Dim View
+    func initDimView() {
+        dimView = UIView(frame: self.view.bounds)
+        dimView?.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
+        self.navigationController!.view.addSubview(dimView!)
+        //self.view.addSubview(dimView!)
+        dimView?.hidden = true
+        dimView?.alpha = 0
+    }
+    
+    func hideDimView() {
+        UIView.animateWithDuration(0.3, animations: {
+            self.dimView!.alpha = 0
+            }, completion: { finished in
+                
+        })
+    }
+    
+    //MARK: - Verify Mobile Input Delegate
+    func closeVerifyMobileNumberInputViewController() {
+        self.hideDimView()
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func sendCodeAction() {
+        self.displayCodeDialog()
+    }
+    
+    
+    func displayDialog() {
+        let verifyNumberModal: VerifyMobileNumberInputViewController = VerifyMobileNumberInputViewController(nibName: "VerifyMobileNumberInputViewController", bundle: nil)
+        
+        verifyNumberModal.delegate = self
+        verifyNumberModal.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
+        verifyNumberModal.providesPresentationContextTransitionStyle = true
+        verifyNumberModal.definesPresentationContext = true
+        verifyNumberModal.view.backgroundColor = UIColor.clearColor()
+        verifyNumberModal.view.frame.origin.y = 0
+        self.navigationController!.presentViewController(verifyNumberModal, animated: true, completion: nil)
+        
+        self.dimView!.hidden = false
+        UIView.animateWithDuration(0.3, animations: {
+            self.dimView!.alpha = 1
+            }, completion: { finished in
+        })
+    }
+    
+    func displayCodeDialog() {
+        var verifyNumberModal = VerifyMobileNumberViewController(nibName: "VerifyMobileNumberViewController", bundle: nil)
+        verifyNumberModal.delegate = self
+        verifyNumberModal.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
+        verifyNumberModal.providesPresentationContextTransitionStyle = true
+        verifyNumberModal.definesPresentationContext = true
+        verifyNumberModal.view.backgroundColor = UIColor.clearColor()
+        verifyNumberModal.view.frame.origin.y = 0
+        self.parentViewController!.presentViewController(verifyNumberModal, animated: true, completion: nil)
+        self.tabBarController?.tabBar.userInteractionEnabled = false
+        self.dimView!.hidden = false
+        UIView.animateWithDuration(0.3, animations: {
+            self.dimView!.alpha = 1
+            }, completion: { finished in
+        })
+    }
+    
+    //MARK: - Verify Mobile Number Delegate
+    func closeVerifyMobileNumberViewController() {
+        self.hideDimView()
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func verifyMobileNumberAction(isSuccessful: Bool) {
+        self.hideDimView()
+        if !isSuccessful {
+            self.displayDialog()
+        } else {
+            self.summaryViewController?.fireSetCheckoutAddress("\(SessionManager.addressId())")
+        }
+    }
+    
+    func requestNewCodeAction() {
+        self.hideDimView()
+        self.displayDialog()
     }
 }
