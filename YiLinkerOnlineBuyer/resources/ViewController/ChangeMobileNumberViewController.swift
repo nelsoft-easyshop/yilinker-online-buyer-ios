@@ -46,6 +46,8 @@ class ChangeMobileNumberViewController: UIViewController {
     
     var errorLocalizeString: String  = ""
     var somethingWrongLocalizeString: String = ""
+    
+    var isFromCheckout: Bool = false
 
     
     override func viewDidLoad() {
@@ -78,12 +80,17 @@ class ChangeMobileNumberViewController: UIViewController {
         
         topMarginConstraint.constant = (screenHeight! / 2) - (mainView.frame.height / 2)
         
-        if SessionManager.mobileNumber().isEmpty {
+        if SessionManager.mobileNumber().isEmpty{
             oldNumberTextField.hidden = true
             oldNumberLabel.hidden = true
             oldNumberConstant.constant = 0
             oldNumberTextConstant.constant = 0
             mainViewConstant.constant = mainViewConstant.constant - 50
+        } else {
+            if isFromCheckout {
+                newNumberTextField.text = mobileNumber
+                newNumberTextField.enabled = false
+            }
         }
     }
     
