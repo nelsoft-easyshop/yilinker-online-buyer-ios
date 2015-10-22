@@ -14,4 +14,3 @@
 #import <GooglePlus/GooglePlus.h>
 #import <GoogleOpenSource/GoogleOpenSource.h>
 #import "UIAppearance+Swift.h"
-#import "WToast.h"
