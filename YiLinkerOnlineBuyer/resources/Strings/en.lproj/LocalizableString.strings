@@ -416,6 +416,7 @@ MOBILE_LOCALIZE_KEY = "Mobile Phone";
 
 //Change Mobile Number
 CHANGEMOBILE_LOCALIZE_KEY = "Change Mobile Number";
+YOUR_MOBILE_LOCALIZE_KEY = "Your Mobile Number";
 OLDNUMBER_LOCALIZE_KEY = "Old Number";
 NEWNUMBER_LOCALIZE_KEY = "New Number";
 SUBMIT_LOCALIZE_KEY = "Submit";
