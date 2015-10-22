@@ -409,7 +409,7 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
         hideDimView()
     }
     
-    func continueVerifyMobileNumberAction() {
+    func continueVerifyMobileNumberAction(isSuccessful: Bool) {
         hideDimView()
     }
     
