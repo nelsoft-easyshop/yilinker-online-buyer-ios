@@ -609,6 +609,7 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
         changeNumberModal.view.backgroundColor = UIColor.clearColor()
         changeNumberModal.view.frame.origin.y = 0
         changeNumberModal.mobileNumber = SessionManager.mobileNumber()
+        changeNumberModal.isFromCheckout = true
         
         self.navigationController!.presentViewController(changeNumberModal, animated: true, completion: nil)
         
@@ -622,6 +623,7 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
     // MARK: - ChangeMobileNumberViewControllerDelegate
     func closeChangeNumbderViewController(){
         hideDimView()
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
     
     func submitChangeNumberViewController(){
@@ -644,6 +646,7 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
     // MARK: - VerifyMobileNumberViewControllerDelegate
     func closeVerifyMobileNumberViewController() {
         hideDimView()
+        self.changeMobileNumberAction()
     }
     
     func verifyMobileNumberAction(isSuccessful: Bool) {
@@ -671,10 +674,16 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
     // MARK: - VerifyMobileNumberStatusViewControllerDelegate
     func closeVerifyMobileNumberStatusViewController() {
         hideDimView()
+        self.changeMobileNumberAction()
     }
     
-    func continueVerifyMobileNumberAction() {
+    func continueVerifyMobileNumberAction(isSuccessful: Bool) {
         hideDimView()
+        if isSuccessful {
+            self.summaryViewController?.fireSetCheckoutAddress("\(SessionManager.addressId())")
+        } else {
+            self.dismissViewControllerAnimated(true, completion: nil)
+        }
     }
     
     func requestNewVerificationCodeAction() {
