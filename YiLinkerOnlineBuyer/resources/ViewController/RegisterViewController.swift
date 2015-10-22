@@ -80,6 +80,18 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         
         self.registerButton.setTitle(RegisterStrings.registerMeNow, forState: UIControlState.Normal)
         self.registerButton.setTitle(RegisterStrings.registerMeNow, forState: UIControlState.Normal)
+        
+        self.populateDefautData()
+    }
+    
+    // MARK: Populate Default Data
+    func populateDefautData() {
+        let parentViewController: LoginAndRegisterContentViewController = self.parentViewController as! LoginAndRegisterContentViewController
+        
+        self.firstNameTextField.text = parentViewController.registerModel.firstName
+        self.lastNameTextField.text = parentViewController.registerModel.lastName
+        self.emailAddressTextField.text = parentViewController.registerModel.emailAddress
+        self.mobileNumberTextField.text = parentViewController.registerModel.mobileNumber
     }
     
     //Show HUD
@@ -289,7 +301,17 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
 
         let parameters: NSDictionary = ["email": self.emailAddressTextField.text,"password": self.passwordTextField.text, "firstName": self.firstNameTextField.text, "lastName": self.lastNameTextField.text, "contactNumber": self.mobileNumberTextField.text]
         
-        manager.POST(APIAtlas.registerUrl, parameters: parameters, success: {
+        let loginRegisterParentViewController: LoginAndRegisterContentViewController = self.parentViewController as! LoginAndRegisterContentViewController
+        
+        var url: String = ""
+        
+        if loginRegisterParentViewController.registerModel.firstName == "" {
+            url = APIAtlas.registerUrl
+        } else {
+            url = APIAtlas.guestUserRegisterUrl
+        }
+        
+        manager.POST(url, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
                 let registerModel: RegisterModel = RegisterModel.parseDataFromDictionary(responseObject as! NSDictionary)
                 if registerModel.isSuccessful {

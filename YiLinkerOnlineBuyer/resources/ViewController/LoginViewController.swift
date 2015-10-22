@@ -87,6 +87,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
         signIn.delegate = self
         self.gmailLoginButton.layer.cornerRadius = 5
     }
+    
     @IBAction func forgotPassword(sender: AnyObject) {
         UIApplication.sharedApplication().openURL(NSURL(string: "http://online.api.easydeal.ph/forgot-password-request")!)
     }

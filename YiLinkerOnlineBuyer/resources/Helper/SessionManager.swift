@@ -41,7 +41,7 @@ class SessionManager {
         NSUserDefaults.standardUserDefaults().setObject(userAddress, forKey: "userAddress")
         NSUserDefaults.standardUserDefaults().synchronize()
     }
-    
+        
     class func setAddressId(addressId: Int) {
         NSUserDefaults.standardUserDefaults().setObject("\(addressId)", forKey: "addressId")
         NSUserDefaults.standardUserDefaults().synchronize()

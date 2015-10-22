@@ -13,6 +13,23 @@ class RegisterModel {
     var refreshToken: String = ""
     var data: NSArray = []
     
+    
+    var firstName: String = ""
+    var lastName: String = ""
+    var emailAddress: String = ""
+    var mobileNumber: String = ""
+    
+    init(firstName: String, lastName: String, emailAddress: String, mobileNumber: String) {
+        self.firstName = firstName
+        self.lastName = lastName
+        self.emailAddress = emailAddress
+        self.mobileNumber = mobileNumber
+    }
+    
+    init() {
+        
+    }
+    
     init (isSuccessful: Bool, message: String, data: NSArray) {
         self.isSuccessful = isSuccessful
         self.message = message

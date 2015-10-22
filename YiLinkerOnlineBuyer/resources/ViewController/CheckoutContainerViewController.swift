@@ -101,6 +101,8 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
     
     var alertHasShown: Bool = false
     
+    var guestRegisterModel: RegisterModel = RegisterModel()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -173,6 +175,12 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
                     self.guestEmail = self.summaryViewController!.guestCheckoutTableViewCell.emailTextField.text
                     self.guestFirstName = self.summaryViewController!.guestCheckoutTableViewCell.firstNameTextField.text
                     self.guestLastName = self.summaryViewController!.guestCheckoutTableViewCell.lastNameTextField.text
+                    
+                    guestRegisterModel = RegisterModel(firstName: self.summaryViewController!.guestCheckoutTableViewCell.firstNameTextField.text,
+                        lastName: self.summaryViewController!.guestCheckoutTableViewCell.lastNameTextField.text,
+                        emailAddress: self.summaryViewController!.guestCheckoutTableViewCell.emailTextField.text,
+                        mobileNumber: self.summaryViewController!.guestCheckoutTableViewCell.mobileNumberTextField.text)
+                    
                     self.summaryViewController!.fireGuestUser()
                 }
 
@@ -559,12 +567,10 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
             registerViewController = storyBoard.instantiateViewControllerWithIdentifier("LoginAndRegisterContentViewController5") as? LoginAndRegisterContentViewController
         } else if IphoneType.isIphone4() {
             registerViewController = storyBoard.instantiateViewControllerWithIdentifier("LoginAndRegisterContentViewController4") as? LoginAndRegisterContentViewController
-            
         } else {
             registerViewController = storyBoard.instantiateViewControllerWithIdentifier("LoginAndRegisterContentViewController") as? LoginAndRegisterContentViewController
-            
         }
-        
+        registerViewController?.registerModel = self.guestRegisterModel
         self.navigationController?.presentViewController(registerViewController!, animated: true, completion: nil)
     }
 }
