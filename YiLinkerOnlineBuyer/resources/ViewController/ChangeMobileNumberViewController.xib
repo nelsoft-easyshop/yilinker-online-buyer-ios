@@ -14,9 +14,12 @@
                 <outlet property="changeMobileLabel" destination="yWG-vM-FhP" id="xSx-tn-a24"/>
                 <outlet property="closeButton" destination="kDE-y6-aq1" id="h4J-0T-hfj"/>
                 <outlet property="mainView" destination="Qcp-z0-MeU" id="TFq-y7-Ggr"/>
+                <outlet property="mainViewConstant" destination="jEa-E6-eG0" id="LdO-s6-WIk"/>
                 <outlet property="newNumberLabel" destination="XPa-bB-HhQ" id="gCl-pc-VSk"/>
                 <outlet property="newNumberTextField" destination="8Je-p4-s9S" id="bHJ-xA-H55"/>
+                <outlet property="oldNumberConstant" destination="5ad-Xl-WxR" id="BtD-rS-ndg"/>
                 <outlet property="oldNumberLabel" destination="NCp-CO-zK4" id="nD6-Bl-tpN"/>
+                <outlet property="oldNumberTextConstant" destination="ewn-aE-qIR" id="png-p9-ul6"/>
                 <outlet property="oldNumberTextField" destination="2Mf-Jk-kbQ" id="a93-ou-cMO"/>
                 <outlet property="submitButton" destination="0NV-2B-UV2" id="E8M-fv-deR"/>
                 <outlet property="tapView" destination="Ki8-IY-jlt" id="e1C-pz-Een"/>
