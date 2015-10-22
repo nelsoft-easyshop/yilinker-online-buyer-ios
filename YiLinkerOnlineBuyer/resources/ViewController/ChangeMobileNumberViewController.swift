@@ -32,7 +32,10 @@ class ChangeMobileNumberViewController: UIViewController {
     @IBOutlet weak var changeMobileLabel: UILabel!
     @IBOutlet weak var oldNumberLabel: UILabel!
     @IBOutlet weak var newNumberLabel: UILabel!
+    @IBOutlet weak var oldNumberConstant: NSLayoutConstraint!
+    @IBOutlet weak var oldNumberTextConstant: NSLayoutConstraint!
     
+    @IBOutlet weak var mainViewConstant: NSLayoutConstraint!
     var mainViewOriginalFrame: CGRect?
     
     var screenHeight: CGFloat?
@@ -43,6 +46,7 @@ class ChangeMobileNumberViewController: UIViewController {
     
     var errorLocalizeString: String  = ""
     var somethingWrongLocalizeString: String = ""
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -73,6 +77,14 @@ class ChangeMobileNumberViewController: UIViewController {
         screenHeight = screenSize.height
         
         topMarginConstraint.constant = (screenHeight! / 2) - (mainView.frame.height / 2)
+        
+        if SessionManager.mobileNumber().isEmpty {
+            oldNumberTextField.hidden = true
+            oldNumberLabel.hidden = true
+            oldNumberConstant.constant = 0
+            oldNumberTextConstant.constant = 0
+            mainViewConstant.constant = mainViewConstant.constant - 50
+        }
     }
     
     func initializeLocalizedString() {
@@ -90,6 +102,11 @@ class ChangeMobileNumberViewController: UIViewController {
         changeMobileLabel.text = changeMobileLocalizeString
         oldNumberLabel.text = oldNumberLocalizeString
         newNumberLabel.text = newNumberLocalizeString
+        
+        if SessionManager.mobileNumber().isEmpty {
+            newNumberLabel.text = StringHelper.localizedStringWithKey("MOBILE_LOCALIZED_KEY")
+            submitButton.setTitle(StringHelper.localizedStringWithKey("SEND_CODE_LOCALIZED_KEY"), forState: UIControlState.Normal)
+        }
     }
     
     @IBAction func editBegin(sender: AnyObject) {
@@ -133,17 +150,28 @@ class ChangeMobileNumberViewController: UIViewController {
             oldNumberTextField.resignFirstResponder()
             newNumberTextField.resignFirstResponder()
             
-            if oldNumberTextField.text.isEmpty ||  newNumberTextField.text.isEmpty{
-                var completeLocalizeString = StringHelper.localizedStringWithKey("COMPLETEFIELDS_LOCALIZE_KEY")
-                showAlert(title: errorLocalizeString, message: completeLocalizeString)
-            } else if oldNumberTextField.text != mobileNumber {
-                var incorrectLocalizeString = StringHelper.localizedStringWithKey("INCORRECTMOBILE_LOCALIZE_KEY")
-                showAlert(title: errorLocalizeString, message: incorrectLocalizeString)
+            if SessionManager.mobileNumber().isEmpty {
+                if newNumberTextField.text.isEmpty{
+                    var completeLocalizeString = StringHelper.localizedStringWithKey("COMPLETEFIELDS_LOCALIZE_KEY")
+                    showAlert(title: errorLocalizeString, message: completeLocalizeString)
+                } else {
+                    fireUpdateProfile(APIAtlas.updateMobileNumber, params: NSDictionary(dictionary: ["access_token" : SessionManager.accessToken(),
+                        "newContactNumber": newNumberTextField.text]))
+                }
             } else {
-                fireUpdateProfile(APIAtlas.updateMobileNumber, params: NSDictionary(dictionary: ["access_token" : SessionManager.accessToken(),
-                    "oldContactNumber": oldNumberTextField.text,
-                    "newContactNumber": newNumberTextField.text]))
+                if oldNumberTextField.text.isEmpty ||  newNumberTextField.text.isEmpty{
+                    var completeLocalizeString = StringHelper.localizedStringWithKey("COMPLETEFIELDS_LOCALIZE_KEY")
+                    showAlert(title: errorLocalizeString, message: completeLocalizeString)
+                } else if oldNumberTextField.text != mobileNumber {
+                    var incorrectLocalizeString = StringHelper.localizedStringWithKey("INCORRECTMOBILE_LOCALIZE_KEY")
+                    showAlert(title: errorLocalizeString, message: incorrectLocalizeString)
+                } else {
+                    fireUpdateProfile(APIAtlas.updateMobileNumber, params: NSDictionary(dictionary: ["access_token" : SessionManager.accessToken(),
+                        "oldContactNumber": oldNumberTextField.text,
+                        "newContactNumber": newNumberTextField.text]))
+                }
             }
+            
         }
     }
 
