@@ -603,13 +603,13 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
     func changeMobileNumberAction(){
         var changeNumberModal = ChangeMobileNumberViewController(nibName: "ChangeMobileNumberViewController", bundle: nil)
         changeNumberModal.delegate = self
+        changeNumberModal.mobileNumber = SessionManager.mobileNumber()
+        changeNumberModal.isFromCheckout = true
         changeNumberModal.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
         changeNumberModal.providesPresentationContextTransitionStyle = true
         changeNumberModal.definesPresentationContext = true
         changeNumberModal.view.backgroundColor = UIColor.clearColor()
         changeNumberModal.view.frame.origin.y = 0
-        changeNumberModal.mobileNumber = SessionManager.mobileNumber()
-        changeNumberModal.isFromCheckout = true
         
         self.navigationController!.presentViewController(changeNumberModal, animated: true, completion: nil)
         

@@ -80,18 +80,35 @@ class ChangeMobileNumberViewController: UIViewController {
         
         topMarginConstraint.constant = (screenHeight! / 2) - (mainView.frame.height / 2)
         
-        if SessionManager.mobileNumber().isEmpty{
-            oldNumberTextField.hidden = true
-            oldNumberLabel.hidden = true
-            oldNumberConstant.constant = 0
-            oldNumberTextConstant.constant = 0
-            mainViewConstant.constant = mainViewConstant.constant - 50
-        } else {
+        if !SessionManager.isMobileVerified() {
             if isFromCheckout {
+                oldNumberTextField.hidden = true
+                oldNumberLabel.hidden = true
+                oldNumberConstant.constant = 0
+                oldNumberTextConstant.constant = 0
+                mainViewConstant.constant = mainViewConstant.constant - 50
+
                 newNumberTextField.text = mobileNumber
-                newNumberTextField.enabled = false
+//                newNumberTextField.enabled = false
             }
         }
+        
+//        if SessionManager.mobileNumber().isEmpty || !SessionManager.isMobileVerified(){
+//            oldNumberTextField.hidden = true
+//            oldNumberLabel.hidden = true
+//            oldNumberConstant.constant = 0
+//            oldNumberTextConstant.constant = 0
+//            mainViewConstant.constant = mainViewConstant.constant - 50
+//            if isFromCheckout {
+//                newNumberTextField.text = mobileNumber
+//                newNumberTextField.enabled = false
+//            }
+//        } else {
+//            if isFromCheckout {
+//                newNumberTextField.text = SessionManager.mobileNumber()
+//                newNumberTextField.enabled = false
+//            }
+//        }
     }
     
     func initializeLocalizedString() {
@@ -110,8 +127,15 @@ class ChangeMobileNumberViewController: UIViewController {
         oldNumberLabel.text = oldNumberLocalizeString
         newNumberLabel.text = newNumberLocalizeString
         
-        if SessionManager.mobileNumber().isEmpty {
+//        if SessionManager.mobileNumber().isEmpty || !SessionManager.isMobileVerified(){
+//            newNumberLabel.text = StringHelper.localizedStringWithKey("MOBILE_LOCALIZED_KEY")
+//            newNumberTextField.placeholder = StringHelper.localizedStringWithKey("MOBILE_LOCALIZED_KEY")
+//            submitButton.setTitle(StringHelper.localizedStringWithKey("SEND_CODE_LOCALIZED_KEY"), forState: UIControlState.Normal)
+//        }
+        
+        if !SessionManager.isMobileVerified() {
             newNumberLabel.text = StringHelper.localizedStringWithKey("MOBILE_LOCALIZED_KEY")
+            newNumberTextField.placeholder = StringHelper.localizedStringWithKey("MOBILE_LOCALIZED_KEY")
             submitButton.setTitle(StringHelper.localizedStringWithKey("SEND_CODE_LOCALIZED_KEY"), forState: UIControlState.Normal)
         }
     }
@@ -157,13 +181,24 @@ class ChangeMobileNumberViewController: UIViewController {
             oldNumberTextField.resignFirstResponder()
             newNumberTextField.resignFirstResponder()
             
-            if SessionManager.mobileNumber().isEmpty {
+            if !SessionManager.isMobileVerified(){
                 if newNumberTextField.text.isEmpty{
                     var completeLocalizeString = StringHelper.localizedStringWithKey("COMPLETEFIELDS_LOCALIZE_KEY")
                     showAlert(title: errorLocalizeString, message: completeLocalizeString)
                 } else {
-                    fireUpdateProfile(APIAtlas.updateMobileNumber, params: NSDictionary(dictionary: ["access_token" : SessionManager.accessToken(),
-                        "newContactNumber": newNumberTextField.text]))
+                    if SessionManager.mobileNumber().isEmpty {
+                        fireUpdateProfile(APIAtlas.updateMobileNumber, params: NSDictionary(dictionary: ["access_token" : SessionManager.accessToken(),
+                            "newContactNumber": newNumberTextField.text ]))
+                    } else {
+                        if SessionManager.mobileNumber() == newNumberTextField.text {
+                            fireGetCode()
+                        } else {
+                            fireUpdateProfile(APIAtlas.updateMobileNumber, params: NSDictionary(dictionary: ["access_token" : SessionManager.accessToken(),
+                                "newContactNumber": newNumberTextField.text ,
+                                "oldContactNumber": SessionManager.mobileNumber()]))
+                        }
+                    }
+                    
                 }
             } else {
                 if oldNumberTextField.text.isEmpty ||  newNumberTextField.text.isEmpty{
@@ -214,9 +249,11 @@ class ChangeMobileNumberViewController: UIViewController {
             manager.POST(url, parameters: params, success: {
                 (task: NSURLSessionDataTask!, responseObject: AnyObject!) in print(responseObject as! NSDictionary)
                 if responseObject.objectForKey("error") != nil {
-                    self.requestRefreshToken(url, params: params)
+                    self.requestRefreshToken("change", url: url, params: params)
                 } else {
                     if responseObject["isSuccessful"] as! Bool {
+                        SessionManager.setMobileNumber(self.newNumberTextField.text)
+                        SessionManager.setIsMobileVerified(true)
                         self.dismissViewControllerAnimated(true, completion: nil)
                         self.delegate?.submitChangeNumberViewController()
                         self.dismissLoader()
@@ -235,7 +272,36 @@ class ChangeMobileNumberViewController: UIViewController {
 
     }
     
-    func requestRefreshToken(url: String, params: NSDictionary!) {
+    // MARK: - GET CODE
+    
+    func fireGetCode() {
+        let manager: APIManager = APIManager.sharedInstance
+        //seller@easyshop.ph
+        //password
+        let parameters: NSDictionary = ["access_token": SessionManager.accessToken()]
+        showLoader()
+        manager.POST(APIAtlas.verificationGetCodeUrl, parameters: parameters, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            println(responseObject)
+            if responseObject["isSuccessful"] as! Bool {
+                SessionManager.setMobileNumber(self.newNumberTextField.text)
+                SessionManager.setIsMobileVerified(true)
+                self.dismissViewControllerAnimated(true, completion: nil)
+                self.delegate?.submitChangeNumberViewController()
+                self.dismissLoader()
+            } else {
+                self.showAlert(title: self.errorLocalizeString, message: responseObject["message"] as! String)
+                self.dismissLoader()
+            }
+
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
+                self.hud?.hide(true)
+        })
+    }
+    
+    func requestRefreshToken(type: String, url: String, params: NSDictionary!) {
         let url: String = "http://online.api.easydeal.ph/api/v1/login"
         let params: NSDictionary = ["client_id": Constants.Credentials.clientID,
             "client_secret": Constants.Credentials.clientSecret,
@@ -249,7 +315,12 @@ class ChangeMobileNumberViewController: UIViewController {
             
             if (responseObject["isSuccessful"] as! Bool) {
                 SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
-                self.fireUpdateProfile(url, params: params)
+                if type == "change" {
+                    self.fireUpdateProfile(url, params: params)
+                } else if type == "sms" {
+                    self.fireGetCode()
+                }
+                
             } else {
                 self.showAlert(title: self.errorLocalizeString, message: responseObject["message"] as! String)
             }
