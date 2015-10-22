@@ -394,6 +394,7 @@ PLEASE_ENTER_VERIFY_NUMBER_LOCALIZED_KEY = "Please enter the 6 digit code that w
 TIME_LEFT_LOCALIZED_KEY = "Time Left:";
 VERIFY_NUMBER_LOCALIZED_KEY = "VERIFY";
 REQUEST_NEW_CODE_LOCALIZED_KEY = "Request new verification code";
+SEND_CODE_LOCALIZED_KEY = "SEND CODE";
 
 //Account Information
 ACCOUNTINFO_LOCALIZE_KEY = "Account Information";

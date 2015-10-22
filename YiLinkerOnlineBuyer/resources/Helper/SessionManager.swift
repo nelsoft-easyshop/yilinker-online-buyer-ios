@@ -62,6 +62,19 @@ class SessionManager {
         NSUserDefaults.standardUserDefaults().synchronize()
     }
     
+    class func setMobileNumber(mobileNumber: String) {
+        NSUserDefaults.standardUserDefaults().setObject(mobileNumber, forKey: "mobileNumber")
+        NSUserDefaults.standardUserDefaults().synchronize()
+    }
+    
+    class func mobileNumber() -> String {
+        var result: String = ""
+        if let val: AnyObject = NSUserDefaults.standardUserDefaults().objectForKey("mobileNumber") as? String {
+            result = val as! String
+        }
+        return result
+    }
+    
     class func cartCount() -> Int {
         var result: String = ""
         if let val: AnyObject = NSUserDefaults.standardUserDefaults().objectForKey("cartCount") as? String {
@@ -180,11 +193,12 @@ class SessionManager {
     }
     
     class func isEmailVerified() -> Bool {
-        var result: Bool = false
-        if let val: AnyObject = NSUserDefaults.standardUserDefaults().boolForKey("isEmailVerified") as? Bool {
-            result = val as! Bool
-        }
-        return result
+//        var result: Bool = false
+//        if let val: AnyObject = NSUserDefaults.standardUserDefaults().boolForKey("isEmailVerified"){
+//            result = val as! Bool
+//        }
+//        return result
+        return NSUserDefaults.standardUserDefaults().boolForKey("isEmailVerified")
     }
     
     class func setIsMobileVerified(isMobileVerified: Bool) {
@@ -193,11 +207,12 @@ class SessionManager {
     }
     
     class func isMobileVerified() -> Bool {
-        var result: Bool = false
-        if let val: AnyObject = NSUserDefaults.standardUserDefaults().boolForKey("isMobileVerified") as? Bool {
-            result = val as! Bool
-        }
-        return result
+//        var result: Bool = false
+//        if let val: AnyObject = NSUserDefaults.standardUserDefaults().boolForKey("isMobileVerified"){
+//            result = val as! Bool
+//        }
+//        return result
+        return NSUserDefaults.standardUserDefaults().boolForKey("isMobileVerified")
     }
     
     class func parseTokensFromResponseObject(dictionary: NSDictionary) {
