@@ -81,7 +81,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
         let signIn: GPPSignIn = GPPSignIn.sharedInstance()
         signIn.shouldFetchGooglePlusUser = true
         signIn.shouldFetchGoogleUserEmail = true
-        signIn.homeServerClientID = "77221172849-363vbb5qiucrqhbp8h21454g7nmtnmae.apps.googleusercontent.com"
+        signIn.homeServerClientID = "231249450400-dso2pqhieqta2h78m9shhu8qs7gi3jji.apps.googleusercontent.com"
         signIn.clientID = Constants.Credentials.gmailCredential
         signIn.scopes = [kGTLAuthScopePlusLogin, kGTLAuthScopePlusMe, kGTLAuthScopePlusUserinfoEmail]
         signIn.delegate = self
