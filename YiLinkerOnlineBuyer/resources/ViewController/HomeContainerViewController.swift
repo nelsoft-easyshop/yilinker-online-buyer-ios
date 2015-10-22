@@ -33,7 +33,7 @@ struct FABStrings {
     static let profile: String = StringHelper.localizedStringWithKey("PROFILE_LOCALIZE_KEY")
 }
 
-class HomeContainerViewController: UIViewController, UITabBarControllerDelegate, EmptyViewDelegate, VerifyMobileNumberViewControllerDelegate {
+class HomeContainerViewController: UIViewController, UITabBarControllerDelegate, EmptyViewDelegate {
     
     @IBOutlet weak var contentView: UIView!
     var dimView: UIView?
@@ -60,6 +60,18 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     var hud: MBProgressHUD?
     var profileModel: ProfileUserDetailsModel = ProfileUserDetailsModel()
     var customTabBarController: CustomTabBarController?
+    
+    
+    //MARK: - Life Cycle
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
+    override func viewDidLayoutSubviews() {
+        contentViewFrame = contentView.bounds
+        
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -161,18 +173,8 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             self.emptyView!.hidden = false
         }
     }
-    
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    override func viewDidLayoutSubviews() {
-        contentViewFrame = contentView.bounds
-       
-    }
-    
+
+    //MARK: - Tab Bar Delegate
     func tabBarController(tabBarController: UITabBarController, shouldSelectViewController viewController: UIViewController) -> Bool {
         if viewController == tabBarController.viewControllers![4] as! UIViewController {
             return true
@@ -221,7 +223,8 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         
     }
     
-    // This function is for executing child view logic code
+    //MARK: - Select View Controller with Index
+    //This function is for executing child view logic code
     func setSelectedViewControllerWithIndex(index: Int) {
         if self.viewControllers.count != 0 {
             let viewController: UIViewController = viewControllers[index]
@@ -229,6 +232,8 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         }
     }
     
+    //MARK: - Selected View Controller
+    //Func for view conteinment
     func setSelectedViewController(viewController: UIViewController) {
         if !(selectedChildViewController == viewController) {
             if self.isViewLoaded() {
@@ -245,6 +250,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         selectedChildViewController = viewController
     }
     
+    //MARK: - Init View Controllers
     func initViewControllers() {
         let storyBoard: UIStoryboard = UIStoryboard(name: "HomeStoryBoard", bundle: nil)
         hotItemsCollectionViewController = storyBoard.instantiateViewControllerWithIdentifier("HomePageCollectionViewController") as? HomePageCollectionViewController
@@ -258,6 +264,8 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         viewControllers.append(sellersCollectionViewController!)
     }
     
+    //MARK: - Add Sub Header ScrollView
+    //Function for adding rounded buttons in the navigation bar
     func addSuHeaderScrollView() {
         let scrollView: UIScrollView = UIScrollView(frame: CGRectMake(0, 0, self.view.frame.size.width, 40))
         let titles: [String] = [HomeStrings.featured, HomeStrings.hotItems, HomeStrings.newItem, HomeStrings.seller]
@@ -289,6 +297,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         self.navigationItem.leftBarButtonItems = [navigationSpacer, UIBarButtonItem(customView: scrollView)]
     }
     
+    //MARK: - Click Sub Categories
     @IBAction func clickSubCategories(sender: UIButton) {
         let scrollView: UIScrollView = sender.superview as! UIScrollView
         let subViewsCount: Int = scrollView.subviews.count
@@ -314,6 +323,8 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         }
     }
     
+    //MARK: - Circular Drawer View
+    //Function for changin tabBar item to circle
     func circularDraweView() {
         let unselectedImage: UIImage = UIImage(named: "circular-drawer")!.imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
         let item2: UITabBarItem = self.tabBarController?.tabBar.items![2] as! UITabBarItem
@@ -322,6 +333,8 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         item2.imageInsets = UIEdgeInsets(top: 6, left: 0, bottom: -6, right: 0)
     }
     
+    //MARK: - Fire Get Home Page Data
+    //Request for getting json data for populating homepage
     func fireGetHomePageData() {
         self.showHUD()
         let manager = APIManager.sharedInstance
@@ -343,6 +356,8 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
 
     }
     
+    //MARK: - Populate Home Page With Dictionary
+    //Function for populating dictionary to the collectionview
     func populateHomePageWithDictionary(dictionary: NSDictionary) {
         let storyBoard: UIStoryboard = UIStoryboard(name: "HomeStoryBoard", bundle: nil)
         featuredCollectionViewController = storyBoard.instantiateViewControllerWithIdentifier("HomePageCollectionViewController") as? HomePageCollectionViewController
@@ -399,15 +414,9 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         setSelectedViewControllerWithIndex(self.curentCollectionViewController)
     }
     
-    func didTapReload() {
-        self.fireGetHomePageData()
-        self.emptyView?.hidden = true
-    }
-    
+    //MARK: - Getting User Info
     func fireGetUserInfo() {
         let manager: APIManager = APIManager.sharedInstance
-        //seller@easyshop.ph
-        //password
         let parameters: NSDictionary = ["access_token": SessionManager.accessToken()]
         self.showHUD()
         manager.POST(APIAtlas.getUserInfoUrl, parameters: parameters, success: {
@@ -422,9 +431,9 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             SessionManager.setWishlistCount(self.profileModel.wishlistCount)
             self.updateTabBarBadge()
             
-            if !SessionManager.isMobileVerified() && !SessionManager.isEmailVerified() {
+            /*if !SessionManager.isMobileVerified() && !SessionManager.isEmailVerified() {
                 self.fireGetCode()
-            }
+            }*/
             
             self.hud?.hide(true)
             }, failure: {
@@ -441,6 +450,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         })
     }
     
+    //MARK: - Update Tab Bar Badge
     func updateTabBarBadge() {
         if SessionManager.wishlistCount() != 0 {
             let badgeValue = (self.tabBarController!.tabBar.items![3] as! UITabBarItem).badgeValue?.toInt()
@@ -457,10 +467,9 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         }
     }
     
+    //MARK: - Fire Refresh Token
     func fireRefreshToken() {
         let manager: APIManager = APIManager.sharedInstance
-        //seller@easyshop.ph
-        //password
         let parameters: NSDictionary = ["client_id": Constants.Credentials.clientID, "client_secret": Constants.Credentials.clientSecret, "grant_type": Constants.Credentials.grantRefreshToken, "refresh_token":  SessionManager.refreshToken()]
         self.showHUD()
         manager.POST(APIAtlas.refreshTokenUrl, parameters: parameters, success: {
@@ -478,7 +487,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
 
     }
     
-    //Show HUD
+    //MARK: - Show HUD
     func showHUD() {
         if self.hud != nil {
             self.hud!.hide(true)
@@ -504,8 +513,14 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         dimView?.alpha = 0
     }
     
+    // MARK: - Did Tap Reload
+    func didTapReload() {
+        self.fireGetHomePageData()
+        self.emptyView?.hidden = true
+    }
+    
     //MARK: - Verification
-    func displayCodeDialog() {
+   /* func displayCodeDialog() {
         var verifyNumberModal = VerifyMobileNumberViewController(nibName: "VerifyMobileNumberViewController", bundle: nil)
         verifyNumberModal.delegate = self
         verifyNumberModal.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
@@ -520,12 +535,11 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             self.dimView!.alpha = 1
             }, completion: { finished in
         })
-    }
+    }*/
     
     
     // MARK: - GET CODE
-    
-    func fireGetCode() {
+    /*func fireGetCode() {
         let manager: APIManager = APIManager.sharedInstance
         //seller@easyshop.ph
         //password
@@ -570,5 +584,5 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             }, completion: { finished in
                 
         })
-    }
+    }*/
 }
