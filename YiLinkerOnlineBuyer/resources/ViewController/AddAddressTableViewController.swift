@@ -83,6 +83,10 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
         cell.rowTextField.addToolBarWithTarget(self, next: "next", previous: "previous", done: "done")
         cell.selectionStyle = UITableViewCellSelectionStyle.None
       
+        if indexPath.row == 9 {
+            cell.rowTextField.keyboardType = UIKeyboardType.NumberPad
+        }
+        
         if self.isEdit {
             if indexPath.row == 0 {
                 
@@ -118,7 +122,6 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
                 
                 cell.rowTextField.text = self.addressModel.barangay
             } else if indexPath.row == 9 {
-                
                 cell.rowTextField.text = self.addressModel.zipCode
                 cell.rowTitleLabel.required()
             } else {
