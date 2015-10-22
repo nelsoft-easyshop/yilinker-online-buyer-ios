@@ -134,9 +134,12 @@ class ChangeMobileNumberViewController: UIViewController {
 //        }
         
         if !SessionManager.isMobileVerified() {
+            titleLabel.text = StringHelper.localizedStringWithKey("YOUR_MOBILE_LOCALIZE_KEY")
             newNumberLabel.text = StringHelper.localizedStringWithKey("MOBILE_LOCALIZED_KEY")
             newNumberTextField.placeholder = StringHelper.localizedStringWithKey("MOBILE_LOCALIZED_KEY")
             submitButton.setTitle(StringHelper.localizedStringWithKey("SEND_CODE_LOCALIZED_KEY"), forState: UIControlState.Normal)
+        } else {
+            titleLabel.text = StringHelper.localizedStringWithKey("CHANGEMOBILE_LOCALIZE_KEY")
         }
     }
     
