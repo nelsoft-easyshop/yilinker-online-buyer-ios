@@ -65,7 +65,7 @@ struct AddressStrings {
     static let zipCodeRequired: String = StringHelper.localizedStringWithKey("ZIP_CODE_REQUIRED_LOCALIZE_KEY")
 }
 
-class CheckoutContainerViewController: UIViewController, PaymentWebViewViewControllerDelegate, RegisterModalViewControllerDelegate, VerifyMobileNumberInputViewControllerDelegate, VerifyMobileNumberViewControllerDelegate {
+class CheckoutContainerViewController: UIViewController, PaymentWebViewViewControllerDelegate, RegisterModalViewControllerDelegate, ChangeMobileNumberViewControllerDelegate, VerifyMobileNumberViewControllerDelegate, VerifyMobileNumberStatusViewControllerDelegate {
     
     var summaryViewController: SummaryViewController?
     var paymentViewController: PaymentViewController?
@@ -126,8 +126,8 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
         
         self.initDimView()
         
-        if !SessionManager.isMobileVerified() {
-            self.displayDialog()
+        if !SessionManager.isMobileVerified() && SessionManager.isLoggedIn() {
+            self.changeMobileNumberAction()
         }
     }
     
@@ -600,20 +600,32 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
         })
     }
     
-    //MARK: - Verify Mobile Input Delegate
-    func closeVerifyMobileNumberInputViewController() {
-        self.hideDimView()
-        self.dismissViewControllerAnimated(true, completion: nil)
-    }
-    
-    func sendCodeAction() {
-        self.displayCodeDialog()
-    }
-    
-    
-    func displayDialog() {
-        let verifyNumberModal: VerifyMobileNumberInputViewController = VerifyMobileNumberInputViewController(nibName: "VerifyMobileNumberInputViewController", bundle: nil)
+    func changeMobileNumberAction(){
+        var changeNumberModal = ChangeMobileNumberViewController(nibName: "ChangeMobileNumberViewController", bundle: nil)
+        changeNumberModal.delegate = self
+        changeNumberModal.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
+        changeNumberModal.providesPresentationContextTransitionStyle = true
+        changeNumberModal.definesPresentationContext = true
+        changeNumberModal.view.backgroundColor = UIColor.clearColor()
+        changeNumberModal.view.frame.origin.y = 0
+        changeNumberModal.mobileNumber = SessionManager.mobileNumber()
         
+        self.navigationController!.presentViewController(changeNumberModal, animated: true, completion: nil)
+        
+        self.dimView!.hidden = false
+        UIView.animateWithDuration(0.3, animations: {
+            self.dimView!.alpha = 1
+            }, completion: { finished in
+        })
+    }
+    
+    // MARK: - ChangeMobileNumberViewControllerDelegate
+    func closeChangeNumbderViewController(){
+        hideDimView()
+    }
+    
+    func submitChangeNumberViewController(){
+        var verifyNumberModal = VerifyMobileNumberViewController(nibName: "VerifyMobileNumberViewController", bundle: nil)
         verifyNumberModal.delegate = self
         verifyNumberModal.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
         verifyNumberModal.providesPresentationContextTransitionStyle = true
@@ -629,16 +641,22 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
         })
     }
     
-    func displayCodeDialog() {
-        var verifyNumberModal = VerifyMobileNumberViewController(nibName: "VerifyMobileNumberViewController", bundle: nil)
-        verifyNumberModal.delegate = self
-        verifyNumberModal.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
-        verifyNumberModal.providesPresentationContextTransitionStyle = true
-        verifyNumberModal.definesPresentationContext = true
-        verifyNumberModal.view.backgroundColor = UIColor.clearColor()
-        verifyNumberModal.view.frame.origin.y = 0
-        self.parentViewController!.presentViewController(verifyNumberModal, animated: true, completion: nil)
-        self.tabBarController?.tabBar.userInteractionEnabled = false
+    // MARK: - VerifyMobileNumberViewControllerDelegate
+    func closeVerifyMobileNumberViewController() {
+        hideDimView()
+    }
+    
+    func verifyMobileNumberAction(isSuccessful: Bool) {
+        var verifyStatusModal = VerifyMobileNumberStatusViewController(nibName: "VerifyMobileNumberStatusViewController", bundle: nil)
+        verifyStatusModal.delegate = self
+        verifyStatusModal.isSuccessful = isSuccessful
+        verifyStatusModal.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
+        verifyStatusModal.providesPresentationContextTransitionStyle = true
+        verifyStatusModal.definesPresentationContext = true
+        verifyStatusModal.view.backgroundColor = UIColor.clearColor()
+        verifyStatusModal.view.frame.origin.y = 0
+        self.navigationController!.presentViewController(verifyStatusModal, animated: true, completion: nil)
+        
         self.dimView!.hidden = false
         UIView.animateWithDuration(0.3, animations: {
             self.dimView!.alpha = 1
@@ -646,23 +664,20 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
         })
     }
     
-    //MARK: - Verify Mobile Number Delegate
-    func closeVerifyMobileNumberViewController() {
-        self.hideDimView()
-        self.dismissViewControllerAnimated(true, completion: nil)
-    }
-    
-    func verifyMobileNumberAction(isSuccessful: Bool) {
-        self.hideDimView()
-        if !isSuccessful {
-            self.displayDialog()
-        } else {
-            self.summaryViewController?.fireSetCheckoutAddress("\(SessionManager.addressId())")
-        }
-    }
-    
     func requestNewCodeAction() {
-        self.hideDimView()
-        self.displayDialog()
+        changeMobileNumberAction()
+    }
+    
+    // MARK: - VerifyMobileNumberStatusViewControllerDelegate
+    func closeVerifyMobileNumberStatusViewController() {
+        hideDimView()
+    }
+    
+    func continueVerifyMobileNumberAction() {
+        hideDimView()
+    }
+    
+    func requestNewVerificationCodeAction() {
+        changeMobileNumberAction()
     }
 }
