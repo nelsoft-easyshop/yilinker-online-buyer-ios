@@ -44,7 +44,11 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
             self.tableView.layoutIfNeeded()
             self.tableView.tableFooterView = self.tableFooterView()
             self.tableView.tableFooterView!.frame = CGRectMake(0, 0, 0, self.tableView.tableFooterView!.frame.size.height)
-            self.fireSetCheckoutAddress("\(SessionManager.addressId())")
+            
+            if SessionManager.isMobileVerified() {
+                self.fireSetCheckoutAddress("\(SessionManager.addressId())")
+            }
+            
         } else {
             self.requestGetProvince()
         }
