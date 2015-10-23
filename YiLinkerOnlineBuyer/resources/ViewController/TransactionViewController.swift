@@ -119,9 +119,9 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
             cell.dateLabel.text = tableData[indexPath.row].date_added2
            
             if tableData[indexPath.row].product_count2.toInt() < 2 {
-                cell.numberLabel.text =  "\(tableData[indexPath.row].total_quantity2) \(product)"
+                cell.numberLabel.text =  "\(tableData[indexPath.row].product_count2) \(product)"
             } else {
-                cell.numberLabel.text =  "\(tableData[indexPath.row].total_quantity2) \(products)"
+                cell.numberLabel.text =  "\(tableData[indexPath.row].product_count2) \(products)"
             }
             
             cell.transactionIdLabel.text = tableData[indexPath.row].invoice_number2
