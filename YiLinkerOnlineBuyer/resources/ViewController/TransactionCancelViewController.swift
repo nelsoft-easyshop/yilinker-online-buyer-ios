@@ -251,7 +251,7 @@ class TransactionCancelViewController: UIViewController, UITextViewDelegate, UIP
             
             SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
             
-            self.fireGetTransactionDetails()
+            self.fireGetReasonForCancellation()
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 
