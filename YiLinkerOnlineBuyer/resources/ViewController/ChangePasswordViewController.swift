@@ -124,6 +124,15 @@ class ChangePasswordViewController: UIViewController {
         topMarginConstraint.constant = (screenHeight! / 2) - (mainView.frame.height / 2)
     }
     
+    func showAlert(#title: String!, message: String!) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+        var okLocalizeString = StringHelper.localizedStringWithKey("OKBUTTON_LOCALIZE_KEY")
+        let defaultAction = UIAlertAction(title: okLocalizeString, style: .Default, handler: nil)
+        alertController.addAction(defaultAction)
+        presentViewController(alertController, animated: true, completion: nil)
+    }
+    
+    
     @IBAction func buttonAction(sender: AnyObject) {
         if sender as! UIButton == closeButton {
             self.dismissViewControllerAnimated(true, completion: nil)
@@ -136,6 +145,12 @@ class ChangePasswordViewController: UIViewController {
             } else if newPasswordTextField.text != confirmPasswordTextField.text {
                 var passwordLocalizeString = StringHelper.localizedStringWithKey("PASSWORDMISMATCH_LOCALIZE_KEY")
                 showAlert(title: self.errorLocalizeString, message: passwordLocalizeString)
+            } else if !self.newPasswordTextField.isAlphaNumeric() {
+                var passwordLocalizeString = StringHelper.localizedStringWithKey("ILLEGAL_PASSWORD_LOCALIZE_KEY")
+                showAlert(title: self.errorLocalizeString, message: passwordLocalizeString)
+            } else if !self.newPasswordTextField.isValidPassword() {
+                var passwordLocalizeString = StringHelper.localizedStringWithKey("NUMBER_LETTERS_LOCALIZE_KEY")
+                showAlert(title: self.errorLocalizeString, message: passwordLocalizeString)
             } else {
                 fireUpdateProfile(APIAtlas.changePassword, params: NSDictionary(dictionary: [
                     "access_token": SessionManager.accessToken(),
@@ -146,13 +161,6 @@ class ChangePasswordViewController: UIViewController {
         }
     }
     
-    func showAlert(#title: String!, message: String!) {
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
-        var okLocalizeString = StringHelper.localizedStringWithKey("OKBUTTON_LOCALIZE_KEY")
-        let defaultAction = UIAlertAction(title: okLocalizeString, style: .Default, handler: nil)
-        alertController.addAction(defaultAction)
-        presentViewController(alertController, animated: true, completion: nil)
-    }
     
     //Loader function
     func showLoader() {

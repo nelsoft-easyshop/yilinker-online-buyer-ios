@@ -235,6 +235,8 @@
 		26C285481B8FF546005EBD3A /* CityModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26C285471B8FF546005EBD3A /* CityModel.swift */; };
 		26C2854A1B8FF555005EBD3A /* BarangayModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26C285491B8FF555005EBD3A /* BarangayModel.swift */; };
 		26DB062E1B981CF300D38EA8 /* ProductImagesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26DB062D1B981CF300D38EA8 /* ProductImagesModel.swift */; };
+		790B4BFE1BD8832C00E46AE7 /* VerifyMobileNumberInputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 790B4BFC1BD8832C00E46AE7 /* VerifyMobileNumberInputViewController.swift */; };
+		790B4BFF1BD8832C00E46AE7 /* VerifyMobileNumberInputViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 790B4BFD1BD8832C00E46AE7 /* VerifyMobileNumberInputViewController.xib */; };
 		793A89961B9FFFD80030FDC7 /* ChangeMobileNumberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 793A89941B9FFFD80030FDC7 /* ChangeMobileNumberViewController.swift */; };
 		793A89971B9FFFD80030FDC7 /* ChangeMobileNumberViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 793A89951B9FFFD80030FDC7 /* ChangeMobileNumberViewController.xib */; };
 		793A899A1BA001AE0030FDC7 /* VerifyMobileNumberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 793A89981BA001AE0030FDC7 /* VerifyMobileNumberViewController.swift */; };
@@ -678,6 +680,8 @@
 		26C285491B8FF555005EBD3A /* BarangayModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BarangayModel.swift; path = YiLinkerOnlineBuyer/resources/Model/BarangayModel.swift; sourceTree = SOURCE_ROOT; };
 		26DB062D1B981CF300D38EA8 /* ProductImagesModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProductImagesModel.swift; path = YiLinkerOnlineBuyer/resources/Model/ProductImagesModel.swift; sourceTree = SOURCE_ROOT; };
 		5D038C18A7712E626564D2D3 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		790B4BFC1BD8832C00E46AE7 /* VerifyMobileNumberInputViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VerifyMobileNumberInputViewController.swift; path = YiLinkerOnlineBuyer/resources/ViewController/VerifyMobileNumberInputViewController.swift; sourceTree = SOURCE_ROOT; };
+		790B4BFD1BD8832C00E46AE7 /* VerifyMobileNumberInputViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = VerifyMobileNumberInputViewController.xib; path = YiLinkerOnlineBuyer/resources/ViewController/VerifyMobileNumberInputViewController.xib; sourceTree = SOURCE_ROOT; };
 		793A89941B9FFFD80030FDC7 /* ChangeMobileNumberViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChangeMobileNumberViewController.swift; path = YiLinkerOnlineBuyer/resources/ViewController/ChangeMobileNumberViewController.swift; sourceTree = SOURCE_ROOT; };
 		793A89951B9FFFD80030FDC7 /* ChangeMobileNumberViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ChangeMobileNumberViewController.xib; path = YiLinkerOnlineBuyer/resources/ViewController/ChangeMobileNumberViewController.xib; sourceTree = SOURCE_ROOT; };
 		793A89981BA001AE0030FDC7 /* VerifyMobileNumberViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VerifyMobileNumberViewController.swift; path = YiLinkerOnlineBuyer/resources/ViewController/VerifyMobileNumberViewController.swift; sourceTree = SOURCE_ROOT; };
@@ -1329,6 +1333,7 @@
 				F70EFB1E1BC6BEB80077B8ED /* TransactionLeaveFeedbackFieldTableViewCell.xib */,
 				F70EFB211BC6BF190077B8ED /* TransactionLeaveFeedbackRateTableViewCell.swift */,
 				F70EFB221BC6BF190077B8ED /* TransactionLeaveFeedbackRateTableViewCell.xib */,
+				790B4BFC1BD8832C00E46AE7 /* VerifyMobileNumberInputViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -1336,6 +1341,7 @@
 		0C9937291B750583000D6074 /* Xib */ = {
 			isa = PBXGroup;
 			children = (
+				790B4BFD1BD8832C00E46AE7 /* VerifyMobileNumberInputViewController.xib */,
 				F7D9BABB1BBD70AA0097B76C /* TransactionViews.xib */,
 				F7C569DB1BB1776F004740E1 /* TransactionDetailsViewController.xib */,
 				F7C569DC1BB1776F004740E1 /* TransactionProductDetailsViewController.xib */,
@@ -1732,6 +1738,7 @@
 				F7DC7ED71BA13E3D004F7FD4 /* SellerCategoryViewController.xib in Resources */,
 				26AFB3C81B79DE5C00E50926 /* ReviewTableViewCell.xib in Resources */,
 				961BE5AA1B994C4D00E8631A /* ResolutionCenterCell.xib in Resources */,
+				790B4BFF1BD8832C00E46AE7 /* VerifyMobileNumberInputViewController.xib in Resources */,
 				F7C569B31BB1762C004740E1 /* TransactionDeliveryLog2TableViewCell.xib in Resources */,
 				0C374F2F1B88E3790050AE1D /* TotalTableViewCell.xib in Resources */,
 				0C374F341B88E3790050AE1D /* NewAddressTableViewCell.xib in Resources */,
@@ -1874,6 +1881,7 @@
 				0C2F44A51B848B3A00021F45 /* SummaryViewController.swift in Sources */,
 				26AFB3AE1B79DE2900E50926 /* ProductAttributeTableViewCell.swift in Sources */,
 				2689FBFF1B844A69007BEA68 /* CheckoutContainerViewController.swift in Sources */,
+				790B4BFE1BD8832C00E46AE7 /* VerifyMobileNumberInputViewController.swift in Sources */,
 				F7C569B61BB1762C004740E1 /* TransactionDeliveryStatusView.swift in Sources */,
 				0C9937601B750583000D6074 /* WishlistViewController.swift in Sources */,
 				0C2F44A91B848B5400021F45 /* PaymentViewController.swift in Sources */,
