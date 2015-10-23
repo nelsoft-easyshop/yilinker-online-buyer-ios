@@ -233,10 +233,10 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
             self.transactionIdView = XibHelper.puffViewWithNibName("TransactionViews", index: 0) as! TransactionIdView
             self.transactionIdView.transactionIdLabel.text = self.transactionId
             
-            if self.totalQuantity.toInt() < 2 {
-                self.transactionIdView.numberOfProductsLabel.text = "\(self.totalQuantity) product"
+            if self.totalProducts.toInt() < 2 {
+                self.transactionIdView.numberOfProductsLabel.text = "\(self.totalProducts) product"
             } else {
-                self.transactionIdView.numberOfProductsLabel.text = "\(self.totalQuantity) products"
+                self.transactionIdView.numberOfProductsLabel.text = "\(self.totalProducts) products"
             }
             
             self.transactionIdView.frame.size.width = self.view.frame.size.width
@@ -426,6 +426,12 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
             self.showAlert(title: self.error, message: self.errorMessage)
         }
         
+    }
+    
+    func deliveryLogsAction() {
+        let deliveryLogs = TransactionDeliveryLogViewController(nibName: "TransactionDeliveryLogViewController", bundle: nil)
+        deliveryLogs.edgesForExtendedLayout = UIRectEdge.None
+        self.navigationController?.pushViewController(deliveryLogs, animated: true)
     }
     
     //MARK: View sellers feedback
