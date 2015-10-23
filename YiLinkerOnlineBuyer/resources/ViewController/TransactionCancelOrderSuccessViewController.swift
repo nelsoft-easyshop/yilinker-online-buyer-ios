@@ -17,13 +17,14 @@ class TransactionCancelOrderSuccessViewController: UIViewController {
     
     var delegate: TransactionCancelOrderSuccessViewControllerDelegate?
     
+    @IBOutlet weak var closeButton: UIButton!
+    @IBOutlet weak var returnDashboardButton: UIButton!
+    @IBOutlet weak var returnToDashboardButton: UIButton!
     @IBOutlet weak var successLabel: UILabel!
     @IBOutlet weak var successSubLabel: UILabel!
-    @IBOutlet weak var returnToDashboardButton: UIButton!
-    @IBOutlet weak var closeButton: UIButton!
     @IBOutlet weak var successView: UIView!
-    @IBOutlet weak var returnDashboardButton: UIButton!
     @IBOutlet weak var mainView: UIView!
+   
     var dimView: UIView!
     
     var successTitle = StringHelper.localizedStringWithKey("TRANSACTION_CANCEL_ORDER_SUCCESS_LOCALIZE_KEY")
@@ -33,6 +34,7 @@ class TransactionCancelOrderSuccessViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //Add dimView
         dimView = UIView(frame: UIScreen.mainScreen().bounds)
         dimView.backgroundColor=UIColor.blackColor()
         dimView.alpha = 0.5
@@ -40,6 +42,7 @@ class TransactionCancelOrderSuccessViewController: UIViewController {
         dimView.hidden = true
         
         initializeViews()
+        
         self.successLabel.text = successTitle
         self.successSubLabel.text = successSubTitle
         self.returnDashboardButton.setTitle(returnToDashboard, forState: UIControlState.Normal)
@@ -68,6 +71,7 @@ class TransactionCancelOrderSuccessViewController: UIViewController {
         self.dismissView()
     }
     
+    //MARK: Show dim view
     func showView(){
         UIView.animateWithDuration(0.3, animations: {
             self.dimView.hidden = false

@@ -16,16 +16,16 @@ protocol TransactionCancelViewControllerDelegate {
 class TransactionCancelViewController: UIViewController, UITextViewDelegate, UIPickerViewDataSource, UIPickerViewDelegate {
 
     @IBOutlet weak var topConstraint: NSLayoutConstraint!
-    @IBOutlet weak var closeButton: UIButton!
+    
     @IBOutlet weak var submitButton: DynamicRoundedButton!
-    @IBOutlet weak var remarksTextView: UITextView!
-    @IBOutlet weak var reasonTextField: UITextField!
+    @IBOutlet weak var closeButton: UIButton!
     @IBOutlet weak var reasonOfCancellationLabel: UILabel!
     @IBOutlet weak var typeOfReasonLabel: UILabel!
     @IBOutlet weak var remarksLabel: UILabel!
+    @IBOutlet weak var remarksTextView: UITextView!
+    @IBOutlet weak var reasonTextField: UITextField!
     
     var delegate: TransactionCancelViewControllerDelegate?
-    
     var cancellationModels: [TransactionCancellationModel] = []
     
     var hud: MBProgressHUD?
@@ -45,8 +45,11 @@ class TransactionCancelViewController: UIViewController, UITextViewDelegate, UIP
         
         remarksTextView.layer.cornerRadius = 5.0
         remarksTextView.clipsToBounds = true
+        
+        //Add picker
         addPicker()
         
+        //Set up view
         self.reasonOfCancellationLabel.text = reasonOfCancellation
         self.typeOfReasonLabel.text = typeOfReason
         self.remarksLabel.text = remarks
@@ -57,7 +60,8 @@ class TransactionCancelViewController: UIViewController, UITextViewDelegate, UIP
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        fireGetTransactionDetails()
+        //Get reasons for cancellation
+        fireGetReasonForCancellation()
     }
 
     override func didReceiveMemoryWarning() {
@@ -74,12 +78,13 @@ class TransactionCancelViewController: UIViewController, UITextViewDelegate, UIP
         if self.reasonTextField.text != "" || self.remarksTextView.text != "" {
             self.firePostCancellation()
         } else {
-             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "All fields are required.", title: "Error")
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "All fields are required.", title: Constants.Localized.error)
         }
         
     }
     
     @IBAction func textFieldDidBeginEditing(sender: AnyObject) {
+        //Adjust top constraint based on iphone size
         if IphoneType.isIphone4() {
             topConstraint.constant = 40
         } else if IphoneType.isIphone5() {
@@ -87,7 +92,6 @@ class TransactionCancelViewController: UIViewController, UITextViewDelegate, UIP
         } else {
             topConstraint.constant = 100
         }
-        
     }
     
     // MARK : UIPickerViewDelegate
@@ -129,18 +133,22 @@ class TransactionCancelViewController: UIViewController, UITextViewDelegate, UIP
         return pickerLabel
     }
     
+    //MARK: Textfield delegate method
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         return true
     }
 
-    func fireGetTransactionDetails(){
+    //MARK: Get reasons for cancelling transaction
+    func fireGetReasonForCancellation(){
+        
         self.showHUD()
+        
         let manager = APIManager.sharedInstance
         let parameters: NSDictionary = ["access_token" : SessionManager.accessToken()];
         
         manager.GET(APIAtlas.transactionCancellation, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            println(responseObject)
+            
             var response: NSDictionary = responseObject as! NSDictionary
             if response["isSuccessful"] as! Bool {
                 for subValue in response["data"] as! NSArray {
@@ -151,46 +159,46 @@ class TransactionCancelViewController: UIViewController, UITextViewDelegate, UIP
                 self.dismissViewControllerAnimated(true, completion: nil)
                 self.delegate?.dismissView()
             }
-            
-            
+
             self.hud?.hide(true)
             
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
-                self.hud?.hide(true)
+                
                 if Reachability.isConnectedToNetwork() {
                     let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                     
                     if task.statusCode == 401 {
                         self.fireRefreshToken()
                     } else {
-                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
                         self.dismissViewControllerAnimated(true, completion: nil)
                         self.delegate?.dismissView()
                         
                     }
                 } else {
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Check your internet connection!", title: "Error")
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.noInternet, title: Constants.Localized.error)
                     self.dismissViewControllerAnimated(true, completion: nil)
                     self.delegate?.dismissView()
                 }
                 
-                
-                println(error)
+                self.hud?.hide(true)
         })
     }
     
+    //MARK: Cancel transaction
     func firePostCancellation(){
+        
         self.showHUD()
+        
         let manager = APIManager.sharedInstance
         let parameters: NSDictionary = ["access_token" : SessionManager.accessToken(),
             "transactionId": invoiceNumber,
             "reasonId": cancellationModels[selectedRow].cancellationId,
             "remarks": remarksTextView.text, "orderProductIds": orderProductId];
         
-        println("\(parameters)")
         manager.POST(APIAtlas.postTransactionCancellation, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            println(responseObject)
+           
             var response: NSDictionary = responseObject as! NSDictionary
             if response["isSuccessful"] as! Bool {
                 self.delegate?.dismissView()
@@ -202,35 +210,35 @@ class TransactionCancelViewController: UIViewController, UITextViewDelegate, UIP
                 self.delegate?.dismissView()
             }
             
-            
             self.hud?.hide(true)
-            
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
-                self.hud?.hide(true)
+                
                 if Reachability.isConnectedToNetwork() {
                     let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                     
                     if task.statusCode == 401 {
                         self.fireRefreshToken()
                     } else {
-                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
                         self.dismissViewControllerAnimated(true, completion: nil)
                         self.delegate?.dismissView()
                         
                     }
                 } else {
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Check your internet connection!", title: "Error")
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.noInternet, title: Constants.Localized.error)
                     self.dismissViewControllerAnimated(true, completion: nil)
                     self.delegate?.dismissView()
                 }
                 
-                
-                println(error)
+                self.hud?.hide(true)
         })
     }
     
+    //MARK: Refresh tokens
     func fireRefreshToken() {
+        
         self.showHUD()
+        
         let manager = APIManager.sharedInstance
         let parameters: NSDictionary = [
             "client_id": Constants.Credentials.clientID,
@@ -242,15 +250,17 @@ class TransactionCancelViewController: UIViewController, UITextViewDelegate, UIP
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
             SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
-            self.fireGetTransactionDetails()
+            
+            self.fireGetReasonForCancellation()
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
+                
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                 self.hud?.hide(true)
-        })
-        
+        }) 
     }
     
+    //MARK: Show HUD
     func showHUD() {
         if self.hud != nil {
             self.hud!.hide(true)
@@ -263,7 +273,6 @@ class TransactionCancelViewController: UIViewController, UITextViewDelegate, UIP
         self.view.addSubview(self.hud!)
         self.hud?.show(true)
     }
-
 
     /*
     // MARK: - Navigation

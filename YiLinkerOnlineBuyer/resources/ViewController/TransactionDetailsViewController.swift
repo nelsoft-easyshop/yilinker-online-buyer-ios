@@ -15,18 +15,26 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
     let list = ["North Face Super Uber Traver Bag", "Beats Studio Type 20 Headphones", "Sony Super Bass"]
     
     var newFrame: CGRect!
-    
+  
+    var dimView: UIView!
+    var footerView: UIView!
     var headerView: UIView!
+    var transactionButtonView: UIView!
+    var transactionProductListView: UIView!
+    
     var transactionSectionView: TransactionSectionFooterView!
     var transactionIdView: TransactionIdView!
     var transactionDetailsView: TransactionDetailsView!
-    var transactionProductListView: UIView!
-    
-    var footerView: UIView!
     var transactionDeliveryStatusView: TransactionDeliveryStatusView!
     var transactionSellerView: TransactionSellerView!
-    var transactionButtonView: UIView!
     
+    var viewLeaveFeedback: Bool = false
+    var canMessage: Bool = false
+    var total_unit_price: Float = 0.0
+    var total_handling_fee: Float = 0.0
+    var total_cost: Float = 0.0
+    var cellCount: Int = 0
+    var cellSection: Int = 0
     var transactionId: String = ""
     var totalProducts: String = ""
     var orderStatus: String = ""
@@ -39,29 +47,16 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
     var totalCost: String = ""
     var orderId: String = ""
     
-    var total_unit_price: Float = 0.0
-    var total_handling_fee: Float = 0.0
-    var total_cost: Float = 0.0
-    
     var hud: MBProgressHUD?
     
     var table: [TransactionDetailsModel] = []
     var tableSectionContents: TransactionDetailsProductsModel!
-    
-    var cellCount: Int = 0
-    var cellSection: Int = 0
-    
     var transactionDetailsModel: TransactionDetailsModel!
     
-    var dimView: UIView!
-    
-    var viewLeaveFeedback: Bool = false
-    var canMessage: Bool = false
     var delegate: TransactionSectionFooterViewDelegate?
     
     //Transaction Details
     var transactionDetailsTitle = StringHelper.localizedStringWithKey("TRANSACTION_DETAILS_TITLE_LOCALIZE_KEY")
-    
     var transactionDetails = StringHelper.localizedStringWithKey("TRANSACTION_DETAILS_LOCALIZE_KEY")
     var statusTitle = StringHelper.localizedStringWithKey("TRANSACTION_DETAILS_STATUS_LOCALIZE_KEY")
     var paymentTypeTitle = StringHelper.localizedStringWithKey("TRANSACTION_DETAILS_PAYMENT_LOCALIZE_KEY")
@@ -92,6 +87,7 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
     let errorFeedback: String = StringHelper.localizedStringWithKey("TRANSACTION_DETAILS_NOT_ALLOWED_FEEDBACK_LOCALIZE_KEY")
     let errorMessage: String = StringHelper.localizedStringWithKey("TRANSACTION_DETAILS_NOT_ALLOWED_FEEDBACK_LOCALIZE_KEY")
     
+    //Contacts
     var selectedContact : W_Contact?
     var emptyView : EmptyView?
     var conversations = [W_Conversation]()
@@ -100,25 +96,28 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //Added dimView
         dimView = UIView(frame: UIScreen.mainScreen().bounds)
         dimView.backgroundColor=UIColor.blackColor()
         dimView.alpha = 0.5
         self.navigationController?.view.addSubview(dimView)
         dimView.hidden = true
         
-        self.fireTransactionDetails(self.transactionId)
-        self.getContactsFromEndpoint("1", limit: "30", keyword: "")
-        
         total_unit_price = (self.totalUnitCost as NSString).floatValue
         total_handling_fee = (self.shippingFee as NSString).floatValue
         
+        //Get transaction details
+        self.fireTransactionDetails(self.transactionId)
+        //Get buyer's contacts
+        self.getContactsFromEndpoint("1", limit: "30", keyword: "")
+        //Set title of navigation bar
         self.title = transactionDetailsTitle
+        //Customize navigation bar
         self.backButton()
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        
         if headerView == nil {
             loadViewsWithDetails()
         }
@@ -142,12 +141,11 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
         
         cell.selectionStyle = .None
         cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
+        
         if(self.transactionDetailsModel != nil){
             cell.textLabel?.text = self.table[indexPath.section].transactions[indexPath.row].productName
-            //cell.textLabel?.tag = self.table[indexPath.section].productId[indexPath.row].toInt()!
-            //cell.timeLabel?.text =  self.table[indexPath.section].activities[indexPath.row].time
         }
-        //cell.textLabel?.text = list[indexPath.row]
+        
         cell.textLabel?.font = UIFont.systemFontOfSize(15.0)
         cell.textLabel?.textColor = .darkGrayColor()
         
@@ -165,7 +163,6 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
         productDetails.productName = self.table[indexPath.section].transactions[indexPath.row].productName
         productDetails.transactionId = self.transactionId
         productDetails.isCancellable = self.table[indexPath.section].transactions[indexPath.row].isCancellable
-        println("section \(indexPath.section) product id: \(self.table[indexPath.section].transactions[indexPath.row].orderProductId)")
         self.navigationController?.pushViewController(productDetails, animated: true)
     }
     
@@ -202,6 +199,7 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
         return self.transactionSectionView
         
     }
+    
     /*
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         //self.transactionIdView =
@@ -210,6 +208,7 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
         return XibHelper.puffViewWithNibName("TransactionViews", index: 8) as! TransactionSectionHeaderView
     }
     */
+    
     func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return 140
     }
@@ -431,41 +430,37 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
     
     //MARK: View sellers feedback
     func leaveSellerFeedback(title: String, tag: Int) {
-        println("\(self.transactionSectionView.leaveFeedbackButton.titleLabel?.text) \(tag) orderStatusId \(self.orderStatusId )")
+        
         if title == self.leaveFeedback {
             if self.orderStatusId == "3" || self.orderStatusId == "6"{
                 self.leaveFeedback(tag)
             } else {
                 self.showAlert(title: self.error, message: self.errorFeedback)
             }
-             println("leave feedback \(tag)")
         } else {
             self.showView()
             var attributeModal = ViewFeedBackViewController(nibName: "ViewFeedBackViewController", bundle: nil)
             attributeModal.delegate = self
             attributeModal.sellerId = tag
-            println("view feedback \(tag)")
             attributeModal.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
             attributeModal.providesPresentationContextTransitionStyle = true
             attributeModal.definesPresentationContext = true
             attributeModal.screenWidth = self.view.frame.width
             self.tabBarController?.presentViewController(attributeModal, animated: true, completion: nil)
         }
-        
     }
     
     //MARK: Get transactions details by id
     func fireTransactionDetails(transactionId: String) {
         self.showHUD()
+       
         let manager = APIManager.sharedInstance
         let url = APIAtlas.transactionDetails+"\(SessionManager.accessToken())&transactionId=\(transactionId)" as NSString
         let urlEncoded = url.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)
-        println(urlEncoded)
+        
         manager.GET(urlEncoded!, parameters: nil, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             self.transactionDetailsModel = TransactionDetailsModel.parseDataFromDictionary2(responseObject as! NSDictionary)
-            
-            println(responseObject.description)
             
             self.cellCount = self.transactionDetailsModel!.sellerId.count
             self.cellSection = self.transactionDetailsModel!.sellerId.count
@@ -533,23 +528,26 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
     }
     
     func fireRefreshToken() {
+        
         let manager: APIManager = APIManager.sharedInstance
-        //seller@easyshop.ph
-        //password
         let parameters: NSDictionary = ["client_id": Constants.Credentials.clientID, "client_secret": Constants.Credentials.clientSecret, "grant_type": Constants.Credentials.grantRefreshToken, "refresh_token":  SessionManager.refreshToken()]
+        
         manager.POST(APIAtlas.refreshTokenUrl, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            self.hud?.hide(true)
             SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+            
+            self.hud?.hide(true)
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                self.showAlert(title: self.error, message: self.somethingWentWrong)
+                
                 self.hud?.hide(true)
-               self.showAlert(title: self.error, message: self.somethingWentWrong)
         })
         
     }
     
+    //MARK: Show alert dialog box
     func showAlert(#title: String!, message: String!) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
         let defaultAction = UIAlertAction(title: self.ok, style: .Default, handler: nil)
@@ -572,7 +570,7 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
     }
     
     //MARK: Show and hide dim view
-    
+    //Show
     func showView(){
         UIView.animateWithDuration(0.3, animations: {
             self.dimView.hidden = false
@@ -582,6 +580,7 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
         })
     }
     
+    //Hide
     func dismissDimView() {
         UIView.animateWithDuration(0.3, animations: {
             self.dimView.hidden = true

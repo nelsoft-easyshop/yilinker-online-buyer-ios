@@ -18,16 +18,15 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
     var productReviewModel: ProductReviewsModel?
     var productReviews: [ProductReviewsModel] = [ProductReviewsModel]()
     
-    let sellerTableHeaderView: SellerTableHeaderView = SellerTableHeaderView.loadFromNibNamed("SellerTableHeaderView", bundle: nil) as! SellerTableHeaderView
-    var is_successful: Bool = false
-    
     var hud: MBProgressHUD?
+    var dimView: UIView = UIView()
     
+    var is_successful: Bool = false
     var sellerId: Int = 0
     var sellerContactNumber: String = ""
     var sellerName: String = ""
-    
-    var dimView: UIView = UIView()
+
+    let sellerTableHeaderView: SellerTableHeaderView = SellerTableHeaderView.loadFromNibNamed("SellerTableHeaderView", bundle: nil) as! SellerTableHeaderView
     
     //Localized strings
     let follow: String = StringHelper.localizedStringWithKey("FOLLOW_LOCALIZE_KEY")
@@ -47,6 +46,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
     let somethingWentWrong: String = StringHelper.localizedStringWithKey("SOMETHINGWENTWRONG_LOCALIZE_KEY")
     let error: String = StringHelper.localizedStringWithKey("ERROR_LOCALIZE_KEY")
 
+    //Contacts
     var selectedContact : W_Contact?
     var emptyView : EmptyView?
     var conversations = [W_Conversation]()
@@ -57,27 +57,42 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //Get view frame
         self.contentViewFrame = self.view.frame
         
+        //Adding dimView to the current view
         dimView = UIView(frame: UIScreen.mainScreen().bounds)
         dimView.backgroundColor=UIColor.blackColor()
         dimView.alpha = 0.5
         self.navigationController?.view.addSubview(dimView)
         dimView.hidden = true
         
+        //Customize navigation bar
         self.backButton()
+        //Register nib classes
+        self.registerNib()
+        //Set title of navigation bar
+        self.titleView()
+        //Get seller/store info
+        self.fireSeller()
+        //Get seller ratings and feebback
+        self.fireSellerFeedback()
+        //Get buyer's contacts
+        self.getContactsFromEndpoint("1", limit: "30", keyword: "")
+        
+        //Set footer view frame and row height
         self.tableView.estimatedRowHeight = 112.0
         self.tableView.rowHeight = UITableViewAutomaticDimension
-        self.registerNib()
-        
-        self.titleView()
-        self.fireSeller()
-        self.fireSellerFeedback()
-        self.getContactsFromEndpoint("1", limit: "30", keyword: "")
         let footerView: UIView = UIView(frame: CGRectZero)
         self.tableView.tableFooterView = footerView
     }
     
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        self.tableView.reloadData()
+    }
+    
+    //MARK: Reload tableview
     func populateData() {
         self.tableView.delegate = self
         self.tableView.dataSource = self
@@ -86,6 +101,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.tableView.reloadData()
     }
     
+    //MARK: Set title of navigation bar
     func titleView() {
         let label: UILabel = UILabel(frame: CGRectMake(0, 0, 100, 50))
         label.text = vendorTitle
@@ -93,12 +109,8 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         label.textColor = UIColor.whiteColor()
         self.navigationItem.titleView = label
     }
-    
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-        self.tableView.reloadData()
-    }
-    
+
+    //MARK: Adding header view to tableview
     func headerView() {
         
         sellerTableHeaderView.delegate = self
@@ -106,16 +118,19 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         sellerTableHeaderView.coverPhotoImageView.sd_setImageWithURL(self.sellerModel!.coverPhoto, placeholderImage: UIImage(named: "dummy-placeholder"))
         
         if self.is_successful {
-            //self.sellerTableHeaderView.followButton.layer.borderColor = Constants.Colors.grayLine.CGColor
-            //self.sellerTableHeaderView.followButton.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
             self.sellerTableHeaderView.followButton.borderColor = UIColor.clearColor()
-            //self.sellerTableHeaderView.followButton.backgroundColor = UIColor.clearColor()
             self.sellerTableHeaderView.followButton.setTitle(following, forState: UIControlState.Normal)
         } else if !(self.is_successful){
-            //self.sellerTableHeaderView.followButton.backgroundColor = Constants.Colors.appTheme
             self.sellerTableHeaderView.followButton.borderColor = UIColor.clearColor()
-            //self.sellerTableHeaderView.followButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
             self.sellerTableHeaderView.followButton.setTitle(follow, forState: UIControlState.Normal)
+        }
+        
+        if self.sellerModel!.isAffiliated {
+            sellerTableHeaderView.addressLabel.hidden = true
+            sellerTableHeaderView.callButton.hidden = true
+        } else  {
+            sellerTableHeaderView.addressLabel.hidden = false
+            sellerTableHeaderView.callButton.hidden = false
         }
         
         let imageView: UIImageView = UIImageView(frame: CGRectMake(0, 0, sellerTableHeaderView.profileImageView.frame.width, sellerTableHeaderView.profileImageView.frame.height))
@@ -125,14 +140,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         sellerTableHeaderView.profileImageView.addSubview(imageView)
         sellerTableHeaderView.sellernameLabel.text = sellerModel!.store_name
         sellerTableHeaderView.addressLabel.text = sellerModel!.store_address
-        if self.sellerModel!.isAffiliated {
-            sellerTableHeaderView.addressLabel.hidden = true
-            sellerTableHeaderView.callButton.hidden = true
-        } else  {
-            sellerTableHeaderView.addressLabel.hidden = false
-            sellerTableHeaderView.callButton.hidden = false
-        }
-        
+
         self.sellerName = self.sellerModel!.store_name
         self.sellerContactNumber = sellerModel!.contact_number
         
@@ -140,6 +148,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.tableView.reloadData()
     }
     
+    //MARK: Register nibs for tableview cells
     func registerNib() {
         let sellerNib: UINib = UINib(nibName: Constants.Seller.aboutSellerTableViewCellNibNameAndIdentifier, bundle: nil)
         self.tableView.registerNib(sellerNib, forCellReuseIdentifier: Constants.Seller.aboutSellerTableViewCellNibNameAndIdentifier)
@@ -157,11 +166,14 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.tableView.registerNib(seeMoreNib, forCellReuseIdentifier: Constants.Seller.seeMoreTableViewCellNibNameAndIdentifier)
     }
     
+    //MARK: Get seller/store info
     func fireSeller() {
+        
         self.showHUD()
+        
         let manager = APIManager.sharedInstance
-        println(sellerId)
         let parameters: NSDictionary?
+        
         var url: String = ""
         
         if SessionManager.isLoggedIn() {
@@ -174,7 +186,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         manager.POST(url, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            println(responseObject)
+
             if responseObject["isSuccessful"] as! Bool {
                 self.sellerModel = SellerModel.parseSellerDataFromDictionary(responseObject as! NSDictionary)
                 self.is_successful = self.sellerModel!.is_allowed
@@ -187,7 +199,9 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
             
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
+                
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                
                 if error.userInfo != nil {
                     let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
                     let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
@@ -200,42 +214,24 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
                     self.hud?.hide(true)
                     self.is_successful == self.sellerModel?.is_allowed
                 }
-                /*
-                if error.userInfo != nil {
-                println(error.userInfo)
                 
-                if let jsonResult = error.userInfo as? Dictionary<String, AnyObject> {
-                if jsonResult["message"] != nil {
-                self.showAlert(title: jsonResult["message"] as! String, message: nil)
-                self.hud?.hide(true)
-                
-                } else {
-                self.showAlert(title: "Something went wrong", message: nil)
-                self.hud?.hide(true)
-                self.is_successful == self.sellerModel?.is_allowed
-                }
-                }
-                } else  {
-                self.showAlert(title: "Error", message: "Something went wrong.")
-                self.hud?.hide(true)
-                self.is_successful == self.sellerModel?.is_allowed
-                }
-                */
         })
         self.tableView.reloadData()
     }
     
+    //MARK: Get seller ratings and feedback
     func fireSellerFeedback() {
+        
         self.showHUD()
+        
         let manager = APIManager.sharedInstance
-        println(sellerId)
         let parameters: NSDictionary = ["sellerId" : sellerId];
+        
         manager.POST("\(APIAtlas.buyerSellerFeedbacks)?access_token=\(SessionManager.accessToken())", parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            println(responseObject["isSuccessful"])
+            
             if responseObject["isSuccessful"] as! Bool {
                 self.sellerModel2 = SellerModel.parseSellerReviewsDataFromDictionary(responseObject as! NSDictionary)
-                
                 self.hud?.hide(true)
             } else {
                 self.showAlert(title: Constants.Localized.error, message: responseObject["message"] as! String)
@@ -244,7 +240,9 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
             
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
+                
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                
                 if error.userInfo != nil {
                     let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
                     let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
@@ -256,61 +254,39 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
                     self.showAlert(title: Constants.Localized.someThingWentWrong, message: nil)
                     self.hud?.hide(true)
                 }
-                /*
-                if error.userInfo != nil {
-                println(error.userInfo)
-                if let jsonResult = error.userInfo as? Dictionary<String, AnyObject> {
-                if jsonResult["message"] != nil {
-                self.showAlert(title: jsonResult["message"] as! String, message: nil)
-                self.hud?.hide(true)
                 
-                } else {
-                self.showAlert(title: "Something went wrong", message: nil)
-                self.hud?.hide(true)
-                }
-                }
-                } else  {
-                self.showAlert(title: "Error", message: "Something went wrong.")
-                self.hud?.hide(true)
-                }
-                */
         })
         self.tableView.reloadData()
     }
     
+    //MARK: Follow seller
     func fireFollowSeller() {
         
         self.showHUD()
+        
         let manager = APIManager.sharedInstance
         let parameters: NSDictionary = ["sellerId" : sellerId, "access_token" : SessionManager.accessToken()];
+        
         manager.POST(APIAtlas.followSeller, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            
             self.followSellerModel = FollowedSellerModel.parseFollowSellerDataWithDictionary(responseObject as! NSDictionary)
-            //self.populateData()
             self.is_successful = true
             self.sellerTableHeaderView.followButton.tag = 1
-            println("result after ff: \(self.is_successful)")
-            println("button after ff: \(self.sellerTableHeaderView.followButton.selected)")
-            println(self.followSellerModel?.message)
             
             self.hud?.hide(true)
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 
-                self.hud?.hide(true)
-                
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                
                 if error.userInfo != nil {
                     let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
                     let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
                     UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: Constants.Localized.someThingWentWrong)
                     self.followSellerModel = FollowedSellerModel.parseFollowSellerDataWithDictionary(error.userInfo as! Dictionary<String, AnyObject>)
-                    println(self.followSellerModel?.message)
                     self.is_successful = true
                     self.sellerTableHeaderView.followButton.tag = 1
-                    println("result after ff error block: \(self.is_successful)")
-                    println("button after ff error block: \(self.sellerTableHeaderView.followButton.highlighted)")
-                    
                 } else if task.statusCode == 401 {
                     self.requestRefreshToken(SellerRefreshType.Follow)
                 } else {
@@ -319,55 +295,37 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
                     self.sellerTableHeaderView.followButton.tag = 2
                 }
                 
-                /*
-                //let dictionary: NSDictionary =(data, options: nil, error: nil)
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                if task.statusCode == 400 {
-                let data = error.userInfo as! Dictionary<String, AnyObject>
-                self.followSellerModel = FollowedSellerModel.parseFollowSellerDataWithDictionary(error.userInfo as! Dictionary<String, AnyObject>)
-                println(self.followSellerModel?.message)
-                self.is_successful = true
-                self.sellerTableHeaderView.followButton.tag = 1
-                println("result after ff error block: \(self.is_successful)")
-                println("button after ff error block: \(self.sellerTableHeaderView.followButton.highlighted)")
-                } else {
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
-                self.is_successful = false
-                self.sellerTableHeaderView.followButton.tag = 2
-                }
-                */
+                self.hud?.hide(true)
         })
-        
     }
     
+    //MARK: Unfollow seller
     func fireUnfollowSeller() {
         
         self.showHUD()
+        
         let manager = APIManager.sharedInstance
         let parameters: NSDictionary = ["sellerId" : sellerId, "access_token" : SessionManager.accessToken()];
         
         manager.POST(APIAtlas.unfollowSeller, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            
             self.followSellerModel = FollowedSellerModel.parseFollowSellerDataWithDictionary(responseObject as! NSDictionary)
-            //self.populateData()
-            print(self.followSellerModel?.error_description)
-            self.hud?.hide(true)
             self.is_successful = false
             self.sellerTableHeaderView.followButton.tag = 2
-            println("result after uff: \(self.is_successful)")
-            println("button after uff: \(self.sellerTableHeaderView.followButton.highlighted)")
-            println(self.followSellerModel?.isSuccessful)
+            
+            self.hud?.hide(true)
+            
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
-                self.hud?.hide(true)
                 
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                
                 if error.userInfo != nil {
                     let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
                     let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
                     UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: Constants.Localized.someThingWentWrong)
                     let data = error.userInfo as! Dictionary<String, AnyObject>
                     self.followSellerModel = FollowedSellerModel.parseFollowSellerDataWithDictionary(error.userInfo as! Dictionary<String, AnyObject>)
-                    print(self.followSellerModel?.message)
                     self.is_successful = false
                     self.sellerTableHeaderView.followButton.tag = 2
                 } else if task.statusCode == 401 {
@@ -377,30 +335,22 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
                     self.is_successful = false
                     self.sellerTableHeaderView.followButton.tag = 2
                 }
-                /*
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                if task.statusCode == 400 {
-                let data = error.userInfo as! Dictionary<String, AnyObject>
-                self.followSellerModel = FollowedSellerModel.parseFollowSellerDataWithDictionary(error.userInfo as! Dictionary<String, AnyObject>)
-                print(self.followSellerModel?.message)
-                self.is_successful = false
-                self.sellerTableHeaderView.followButton.tag = 2
-                } else {
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
-                self.is_successful = false
-                self.sellerTableHeaderView.followButton.tag = 2
-                }
-                */
+                
+                self.hud?.hide(true)
         })
     }
     
+    //MARK: Refresh token
     func requestRefreshToken(type: SellerRefreshType) {
+        
+        self.showHUD()
+        
+        let manager = APIManager.sharedInstance
         let params: NSDictionary = ["client_id": Constants.Credentials.clientID,
             "client_secret": Constants.Credentials.clientSecret,
             "grant_type": Constants.Credentials.grantRefreshToken,
             "refresh_token": SessionManager.refreshToken()]
-        self.showHUD()
-        let manager = APIManager.sharedInstance
+
         manager.POST(APIAtlas.loginUrl, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
@@ -416,16 +366,18 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
             
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                self.hud?.hide(true)
+                
                 self.showAlert(title: Constants.Localized.ok, message: Constants.Localized.someThingWentWrong)
+                
+                self.hud?.hide(true)
         })
     }
     
     func didTapReload() {
-        //self.getConversationsFromEndpoint("1", limit: "30")
         self.emptyView?.hidden = true
     }
     
+    //MARK: Customize navigation bar - adding back button
     func backButton() {
         var backButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
         backButton.frame = CGRectMake(0, 0, 40, 40)
@@ -439,6 +391,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.navigationItem.leftBarButtonItems = [navigationSpacer, customBackButton]
     }
     
+    //MARK: Back action for navigation's back button
     func back() {
         self.navigationController!.popViewControllerAnimated(true)
     }
@@ -448,6 +401,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         // Dispose of any resources that can be recreated.
     }
     
+    //MARK: UiTableView delegate methods
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
     }
@@ -458,26 +412,29 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         } else {
             return 1
         }
-        
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
             let aboutSellerTableViewCell: AboutSellerTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(Constants.Seller.aboutSellerTableViewCellNibNameAndIdentifier) as! AboutSellerTableViewCell
-            //                aboutSellerTableViewCell.aboutLabel.text = self.sellerModel!.sellerAbout
+            //aboutSellerTableViewCell.aboutLabel.text = self.sellerModel!.sellerAbout
+            
             aboutSellerTableViewCell.aboutLabel.text = self.sellerModel?.store_description
             aboutSellerTableViewCell.aboutTitleLabel.text = aboutSeller
             
             return aboutSellerTableViewCell
         } else if indexPath.section == 1 {
             let productsTableViewCell: ProductsTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(Constants.Seller.productsTableViewCellNibNameAndIdentifier) as! ProductsTableViewCell
+            
             productsTableViewCell.productModels = sellerModel!.products
             productsTableViewCell.productsLabel.text = productsTitle
             productsTableViewCell.moreSellersProduct.setTitle(moreSellersProduct, forState: UIControlState.Normal)
             productsTableViewCell.delegate = self
+            
             return productsTableViewCell
         } else if indexPath.section == 2 {
             let generalRatingTableViewCell: GeneralRatingTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(Constants.Seller.generalRatingTableViewCellNibNameAndIndentifier) as! GeneralRatingTableViewCell
+            
             generalRatingTableViewCell.productRatingLabel.text = productRatings
             
             if self.sellerModel2 != nil {
@@ -490,16 +447,13 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         } else {
             let index: Int = indexPath.section - 3
             let reviewCell: ReviewTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(Constants.Seller.reviewIdentifier) as! ReviewTableViewCell
-            
             let reviewModel: ProductReviewsModel = self.sellerModel2!.reviews[index]
             
             reviewCell.displayPictureImageView.sd_setImageWithURL(NSURL(string: reviewModel.imageUrl)!, placeholderImage: UIImage(named: "dummy-placeholder"))
-            //            reviewCell.messageLabel.text = reviewModel.message
-            //            reviewCell.nameLabel.text = reviewModel.name
             reviewCell.messageLabel.text = reviewModel.review
             reviewCell.nameLabel.text = reviewModel.fullName
-            println("rating \(self.sellerModel2!.rating)")
             reviewCell.setRating(reviewModel.ratingSellerReview)
+            
             return reviewCell
         }
     }
@@ -537,9 +491,11 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     //MARK: Seller Header View Delegate
+    //Show seller's ratings and feedback
     func sellerTableHeaderViewDidViewFeedBack() {
-        println("view feedback")
+        
         self.showView()
+        
         var attributeModal = ViewFeedBackViewController(nibName: "ViewFeedBackViewController", bundle: nil)
         attributeModal.delegate = self
         attributeModal.sellerId = self.sellerId
@@ -551,34 +507,30 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
     }
     
+    //Follow/Unfollow seller
     func sellerTableHeaderViewDidFollow() {
-        //println("follow")
         
         sellerTableHeaderView.delegate = self
-        println("result: \(self.is_successful)")
-        println("button: \(self.sellerTableHeaderView.followButton.selected)")
+        
         if SessionManager.isLoggedIn() {
+            
             if self.is_successful {
                 self.sellerTableHeaderView.followButton.tag = 1
             } else {
                 self.sellerTableHeaderView.followButton.tag = 2
             }
+            
             if self.sellerTableHeaderView.followButton.tag == 1 {
                 self.sellerTableHeaderView.followButton.tag = 2
-                //self.sellerTableHeaderView.followButton.backgroundColor = Constants.Colors.appTheme
                 self.sellerTableHeaderView.followButton.borderColor = UIColor.clearColor()
-                // self.sellerTableHeaderView.followButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
-                
                 self.sellerTableHeaderView.followButton.setTitle(follow, forState: UIControlState.Normal)
+                
                 fireUnfollowSeller()
             } else {
                 self.sellerTableHeaderView.followButton.tag = 1
-                //self.sellerTableHeaderView.followButton.layer.borderColor = Constants.Colors.grayLine.CGColor
                 self.sellerTableHeaderView.followButton.borderColor = UIColor.clearColor()
-                //self.sellerTableHeaderView.followButton.setTitleColor(UIColor.grayColor(), forState: UIControlState.Normal)
-                //self.sellerTableHeaderView.followButton.backgroundColor = UIColor.clearColor()
-                
                 self.sellerTableHeaderView.followButton.setTitle(following, forState: UIControlState.Normal)
+                
                 fireFollowSeller()
             }
         } else {
@@ -586,11 +538,12 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         }
     }
     
+    //MARK: Message seller
     func sellerTableHeaderViewDidMessage() {
-        println("message")
-        //UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Send message to seller \(self.sellerName).", title: "Message Seller")
+        
         let storyBoard: UIStoryboard = UIStoryboard(name: "HomeStoryBoard", bundle: nil)
         let messagingViewController: MessageThreadVC = (storyBoard.instantiateViewControllerWithIdentifier("MessageThreadVC") as? MessageThreadVC)!
+        
         for var i = 0; i < self.contacts.count; i++ {
             if "\(self.sellerId)" == contacts[i].userId {
                 self.selectedContact = contacts[i]
@@ -604,6 +557,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         } else {
             isOnline = "0"
         }
+        
         messagingViewController.sender = W_Contact(fullName: SessionManager.userFullName() , userRegistrationIds: "", userIdleRegistrationIds: "", userId: SessionManager.accessToken(), profileImageUrl: SessionManager.profileImageStringUrl(), isOnline: isOnline)
         messagingViewController.recipient = selectedContact
         
@@ -611,15 +565,27 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
             self.navigationController?.pushViewController(messagingViewController, animated: true)
         } else {
             self.showAlert(title: Constants.Localized.error, message: self.cannotMessage)
-            //UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "You're allowed to message this seller. Please login first.", title: "Error")
         }
         
     }
     
+    //MARK: Call seller
+    func sellerTableHeaderViewDidCall() {
+        if UIApplication.sharedApplication().canOpenURL(NSURL(string: "tel://\(self.sellerContactNumber)" )!) {
+            let url = NSURL(string: "tel://\(self.sellerContactNumber)")
+            UIApplication.sharedApplication().openURL(url!)
+        } else {
+            self.showAlert(title: Constants.Localized.error, message: self.cannotCall + " \(self.sellerContactNumber)")
+        }
+        
+    }
+    
+    //MARK: Get buyer's contacts
     func getContactsFromEndpoint(
         page : String,
         limit : String,
         keyword: String){
+            
             if (Reachability.isConnectedToNetwork()) {
                 self.showHUD()
                 
@@ -657,10 +623,11 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
                         self.hud?.hide(true)
                 })
             }
+            
     }
     
+    //MARK: Add empty view on the current view
     func addEmptyView() {
-        println(self.emptyView)
         if self.emptyView == nil {
             self.emptyView = UIView.loadFromNibNamed("EmptyView", bundle: nil) as? EmptyView
             self.emptyView?.frame = self.contentViewFrame!
@@ -671,25 +638,9 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         }
     }
     
-    func sellerTableHeaderViewDidCall() {
-        println("call")
-        if UIApplication.sharedApplication().canOpenURL(NSURL(string: "tel://\(self.sellerContactNumber)" )!) {
-            println("can call")
-            let url = NSURL(string: "tel://\(self.sellerContactNumber)")
-            UIApplication.sharedApplication().openURL(url!)
-            //UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Calling number action \(self.sellerContactNumber).", title: "Call Seller")
-        } else {
-            println("cant make a call")
-             self.showAlert(title: Constants.Localized.error, message: self.cannotCall + " \(self.sellerContactNumber)")
-            //UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Cannot make a call to \(self.sellerContactNumber).", title: "Call Seller")
-        }
-        
-    }
-    
+    //MARK: Refresh token
     func fireRefreshToken() {
         let manager: APIManager = APIManager.sharedInstance
-        //seller@easyshop.ph
-        //password
         let parameters: NSDictionary = ["client_id": Constants.Credentials.clientID, "client_secret": Constants.Credentials.clientSecret, "grant_type": Constants.Credentials.grantRefreshToken, "refresh_token":  SessionManager.refreshToken()]
         manager.POST(APIAtlas.refreshTokenUrl, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
@@ -698,15 +649,12 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                
                 self.showAlert(title: Constants.Localized.error, message: Constants.Localized.someThingWentWrong)
-                //UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
         })
         
     }
     
     func productstableViewCellDidTapMoreProductWithTarget(target: String) {
-        println("Target: \(target)")
         self.redirectToResultView("target")
     }
     
@@ -722,9 +670,6 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func redirectToResultView(target: String) {
-        /*let resultViewController: ResultViewController = ResultViewController(nibName: "ResultViewController", bundle: nil)
-        self.navigationController!.pushViewController(resultViewController, animated: true)
-        */
         let sellerCategoryViewController: SellerCategoryViewController = SellerCategoryViewController(nibName: "SellerCategoryViewController", bundle: nil)
         sellerCategoryViewController.sellerId = self.sellerId
         self.navigationController!.pushViewController(sellerCategoryViewController, animated: true)
@@ -746,7 +691,6 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     
     //MARK: Show and hide dim view
-    
     func showView(){
         UIView.animateWithDuration(0.3, animations: {
             self.dimView.hidden = false
@@ -765,11 +709,11 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         })
     }
     
-   func showAlert(#title: String!, message: String!) {
+    //MARK: Show alert dialog box
+    func showAlert(#title: String!, message: String!) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
         let defaultAction = UIAlertAction(title: self.ok, style: .Default, handler: nil)
         alertController.addAction(defaultAction)
         presentViewController(alertController, animated: true, completion: nil)
     }
-    
 }

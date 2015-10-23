@@ -15,8 +15,10 @@ protocol ReviewTableViewCellDelegate{
 class ReviewTableViewCell: UITableViewCell {
 
     @IBOutlet weak var displayPictureImageView: UIImageView!
+    
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var messageLabel: UILabel!
+    
     @IBOutlet weak var rateImageView1: UIImageView!
     @IBOutlet weak var rateImageView2: UIImageView!
     @IBOutlet weak var rateImageView3: UIImageView!
@@ -28,19 +30,23 @@ class ReviewTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
 
+        //Set corner radius of imageview - circle shape
         displayPictureImageView.layer.cornerRadius = displayPictureImageView.frame.size.width / 2
         displayPictureImageView.clipsToBounds = true
     }
 
+    //MARK: Set image to imageview
     func setDisplayPicture(text: String) {
         let imageUrl: NSURL = NSURL(string: text)!
         displayPictureImageView.sd_setImageWithURL(imageUrl, placeholderImage: UIImage(named: "dummy-placeholder"))
     }
     
+    //MARK: Set name of buyer's feedbacks
     func setName(text: String) {
         nameLabel.text = text
     }
     
+    //MARK: Set rating
     func setRating(rate: String) {
         
         var r: Int = NSString(string: rate).integerValue
@@ -66,10 +72,12 @@ class ReviewTableViewCell: UITableViewCell {
         }
     }
     
+    //MARK: Set image of imageview
     func rateImage(ctr: UIImageView) {
         ctr.image = UIImage(named: "rating2")
     }
     
+    //MARK: Set message
     func setMessage(text: String) {
         self.messageLabel.text = text
     }
