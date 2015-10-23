@@ -364,6 +364,10 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
                 self.addressModel.province = self.provinceModel.location[0]
                 self.addressModel.provinceId = self.provinceModel.provinceId[0]
                 self.requestGetCities(self.provinceModel.provinceId[0])
+                
+                self.guestCheckoutTableViewCell.cityTextField.text = ""
+                self.guestCheckoutTableViewCell.barangayTextField.text = ""
+                self.guestCheckoutTableViewCell.provinceTextField.text = self.provinceModel.location[0]
                 self.provinceRow = 0
             } else {
                 if self.addressModel.provinceId != 0 {
@@ -384,9 +388,10 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
         let manager = APIManager.sharedInstance
         let params = ["provinceId": String(id)]
         
+        self.guestCheckoutTableViewCell.barangayTextField.text = ""
+        
         manager.POST(APIAtlas.citiesUrl, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            
             self.cityModel = CityModel.parseDataWithDictionary(responseObject)
             self.hud?.hide(true)
             //get all cities and assign get the id and title of the first city
@@ -395,6 +400,7 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
                 self.addressModel.cityId = self.cityModel.cityId[0]
                 self.requestGetBarangay(self.addressModel.cityId)
                 self.addressModel.barangay = ""
+                self.guestCheckoutTableViewCell.cityTextField.text = self.cityModel.location[0]
                 self.cityRow = 0
                 self.barangayRow = 0
             } else {
@@ -421,10 +427,9 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
             self.hud?.hide(true)
             self.barangayModel = BarangayModel.parseDataWithDictionary(responseObject)
             
-            if self.addressModel.barangayId == 0 {
-                self.addressModel.barangayId = self.barangayModel.barangayId[0]
-                self.addressModel.barangay = self.barangayModel.location[0]
-            }
+            self.addressModel.barangayId = self.barangayModel.barangayId[0]
+            self.addressModel.barangay = self.barangayModel.location[0]
+            self.guestCheckoutTableViewCell.barangayTextField.text = self.barangayModel.location[0]
             
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
@@ -469,17 +474,20 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
         if self.addressPickerType == AddressPickerType.Barangay {
             self.barangayRow = row
             self.addressModel.barangayId = self.barangayModel.barangayId[row]
+            self.addressModel.barangay = self.barangayModel.location[row]
             self.guestCheckoutTableViewCell.barangayTextField.text = self.barangayModel.location[row]
         } else if self.addressPickerType == AddressPickerType.Province  {
             self.addressModel.provinceId = self.provinceModel.provinceId[row]
             self.provinceRow = row
             self.requestGetCities(self.addressModel.provinceId)
+            self.addressModel.province = self.provinceModel.location[row]
             self.guestCheckoutTableViewCell.provinceTextField.text = self.provinceModel.location[row]
         } else {
             self.addressModel.cityId = self.cityModel.cityId[row]
             self.cityRow = row
             self.requestGetBarangay(self.addressModel.cityId)
             self.guestCheckoutTableViewCell.cityTextField.text = self.cityModel.location[row]
+            self.addressModel.city = self.cityModel.location[row]
         }
     }
     
