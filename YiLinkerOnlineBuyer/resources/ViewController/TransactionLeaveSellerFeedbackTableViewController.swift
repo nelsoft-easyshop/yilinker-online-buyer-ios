@@ -112,18 +112,18 @@ class TransactionLeaveSellerFeedbackTableViewController: UITableViewController, 
         self.showHUD()
         
         let manager = APIManager.sharedInstance
+        println("\(APIManager.sharedInstance.baseURL) \(APIManager.sharedInstance)")
         let jsonObject2: [String: AnyObject] = [
             "sellerId": self.sellerId,
-            "ratings": [[
+            "ratings": ([[
                 "rateType": "1",
                 "rating": String(rateItemQuality)
                 ], [
                     "rateType": "2",
                     "rating": String(rateCommunication)
-                ]],
+                ]]),
             "title": "Seller Feedback",
             "feedback": "\(feedback)",
-            "access_token": "\(SessionManager.accessToken())",
             "orderId": self.orderId
         ]
         
@@ -131,7 +131,7 @@ class TransactionLeaveSellerFeedbackTableViewController: UITableViewController, 
         let sortedKeys = (a.allKeys as! [String]).sorted(>)
         let data2 = NSJSONSerialization.dataWithJSONObject(jsonObject2, options: nil, error: nil)
         let string2 = NSString(data: data2!, encoding: NSUTF8StringEncoding)
-
+        println(string2)
         manager.POST(APIAtlas.transactionLeaveSellerFeedback+"\(SessionManager.accessToken())", parameters: string2, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
           
