@@ -287,7 +287,18 @@ class ResolutionFilterViewController: UITableViewController {
         self.delegate!.currentSelectedFilter.time = self.timeFilter
         self.delegate!.currentSelectedFilter.status = self.statusFilter
         self.dismissViewControllerAnimated(true, completion: nil)
-        self.delegate!.applyFilter()
+//        self.delegate!.applyFilter()
+        
+        switch self.statusFilter {
+        case .Both:
+            self.delegate!.setSelectedTab(0)
+        case .Open:
+            self.delegate!.setSelectedTab(1)
+        case .Closed:
+            self.delegate!.setSelectedTab(2)
+        default:
+            self.delegate!.setSelectedTab(0)
+        }
     }
     
 }
