@@ -45,9 +45,10 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var emailAddressTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var reTypePasswordTextField: UITextField!
-    @IBOutlet weak var registerButton: DynamicRoundedButton!
     @IBOutlet weak var mobileNumberTextField: UITextField!
     @IBOutlet weak var referralCodeTextField: UITextField!
+    
+    @IBOutlet weak var registerButton: DynamicRoundedButton!
     
     var currentTextFieldTag: Int = 1
     var hud: MBProgressHUD?
@@ -299,7 +300,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         self.showHUD()
         let manager: APIManager = APIManager.sharedInstance
 
-        let parameters: NSDictionary = ["email": self.emailAddressTextField.text,"password": self.passwordTextField.text, "firstName": self.firstNameTextField.text, "lastName": self.lastNameTextField.text, "contactNumber": self.mobileNumberTextField.text]
+        var parameters: NSDictionary?
         
         let loginRegisterParentViewController: LoginAndRegisterContentViewController = self.parentViewController as! LoginAndRegisterContentViewController
         
@@ -307,8 +308,10 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         
         if loginRegisterParentViewController.registerModel.firstName == "" {
             url = APIAtlas.registerUrl
+            parameters = ["email": self.emailAddressTextField.text,"password": self.passwordTextField.text, "firstName": self.firstNameTextField.text, "lastName": self.lastNameTextField.text, "contactNumber": self.mobileNumberTextField.text]
         } else {
             url = APIAtlas.guestUserRegisterUrl
+            parameters = ["user_guest[plainPassword][first]": self.passwordTextField.text, "user_guest[plainPassword][second]": self.passwordTextField.text, "user_guest[referralCode]" : self.referralCodeTextField.text]
         }
         
         manager.POST(url, parameters: parameters, success: {
