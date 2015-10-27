@@ -23,7 +23,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GGLInstanceIDDelegate {
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
-        
+
+        //self.toastStyle()
         if SessionManager.accessToken() == "" {
             let startingPageStoryBoard: UIStoryboard = UIStoryboard(name: "StartPageStoryBoard", bundle: nil)
             let startingPageViewController: StartPageViewController = startingPageStoryBoard.instantiateViewControllerWithIdentifier("StartPageViewController") as! StartPageViewController
@@ -288,5 +289,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GGLInstanceIDDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
     
+    func toastStyle() {
+        let style: CSToastStyle = CSToastStyle(defaultStyle:())
+        style.messageColor = UIColor.whiteColor()
+        style.backgroundColor = Constants.Colors.appTheme
+        CSToastManager.setSharedStyle(style)
+        CSToastManager.setTapToDismissEnabled(true)
+    }
 }
 
