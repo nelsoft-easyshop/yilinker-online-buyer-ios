@@ -79,6 +79,7 @@ PODS:
     - SDWebImage/Core (= 3.7.3)
   - SDWebImage/Core (3.7.3)
   - SVProgressHUD (1.1.3)
+  - Toast (3.0)
   - TTRangeSlider (1.0.3)
 
 DEPENDENCIES:
@@ -90,6 +91,7 @@ DEPENDENCIES:
   - MBProgressHUD
   - SDWebImage
   - SVProgressHUD
+  - Toast
   - TTRangeSlider
 
 SPEC CHECKSUMS:
@@ -110,6 +112,7 @@ SPEC CHECKSUMS:
   MBProgressHUD: c47f2c166c126cf2ce36498d80f33e754d4e93ad
   SDWebImage: 1d2b1a1efda1ade1b00b6f8498865f8ddedc8a84
   SVProgressHUD: 748080e4f36e603f6c02aec292664239df5279c1
+  Toast: 32c59229abfcf41850162b83bb9259dc84372473
   TTRangeSlider: a12d0ac242a785cf96d4c7dacfe07e42a161251e
 
-COCOAPODS: 0.38.2
+COCOAPODS: 0.39.0
