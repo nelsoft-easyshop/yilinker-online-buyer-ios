@@ -12,7 +12,7 @@ protocol AddAddressTableViewControllerDelegate {
     func addAddressTableViewController(didAddAddressSucceed addAddressTableViewController: AddAddressTableViewController)
 }
 
-class AddAddressTableViewController: UITableViewController, UITableViewDelegate, UITableViewDataSource, NewAddressTableViewCellDelegate {
+class AddAddressTableViewController: UITableViewController, UITableViewDelegate, UITableViewDataSource, NewAddressTableViewCellDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
     
     let titles: [String] = ["\(AddressStrings.addressTitle):", "\(AddressStrings.unitNo):", "\(AddressStrings.buildingName):", "\(AddressStrings.streetNo):", "\(AddressStrings.streetName):", "\(AddressStrings.subdivision):", "\(AddressStrings.province):", "\(AddressStrings.city):", "\(AddressStrings.barangay):", "\(AddressStrings.zipCode):", "\(AddressStrings.additionalInfo):"]
     
@@ -37,6 +37,7 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
     
     var isEdit: Bool = true
     var isEdit2: Bool = true
+    var isIndexReady: Bool = false
     
     var pickerView: UIPickerView = UIPickerView()
     var addressCellReference = [NewAddressTableViewCell?]()
@@ -116,10 +117,10 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
                 cell.rowTextField.text = self.addressModel.province
                 cell.rowTitleLabel.required()
             } else if indexPath.row == 7 {
-                
+                 cell.rowTitleLabel.required()
                 cell.rowTextField.text = self.addressModel.city
             } else if indexPath.row == 8 {
-                
+                 cell.rowTitleLabel.required()
                 cell.rowTextField.text = self.addressModel.barangay
             } else if indexPath.row == 9 {
                 cell.rowTextField.text = self.addressModel.zipCode
@@ -131,73 +132,77 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
             }
         }
         
-        if indexPath.row == 0 {
-            cell.rowTitleLabel.required()
-        } else if indexPath.row == 4 {
-            cell.rowTitleLabel.required()
-        } else if indexPath.row == 9 {
-            cell.rowTitleLabel.required()
-        }
-        
-        if indexPath.row == 6 || indexPath.row == 7 || indexPath.row == 8 {
-            cell.rowTitleLabel.required()
-            var selected: Int = 0
-            var titles: [String] = []
-            if indexPath.row == 6 {
-                if self.provinceModel.location.count != 0 {
-                    for (index, uid) in enumerate(self.provinceModel.provinceId) {
-                        if uid == self.addressModel.provinceId {
-                            selected = index
-                            titles = self.provinceModel.location
-                            cell.rowTextField.text = self.provinceModel.location[index]
-                        }
-                    }
-                }
-            } else if indexPath.row == 7 {
-                if self.cityModel.location.count != 0 {
-                    for (index, uid) in enumerate(self.cityModel.cityId) {
-                        if uid == self.addressModel.cityId {
-                            selected = index
-                            titles = self.cityModel.location
-                            cell.rowTextField.text = self.cityModel.location[index]
-                        }
-                    }
-                }
-            } else if indexPath.row == 8 {
-                if self.cityModel.location.count != 0 {
-                    for (index, uid) in enumerate(self.barangayModel.barangayId) {
-                        if uid == self.addressModel.barangayId {
-                            selected = index
-                            titles = self.barangayModel.location
-                            cell.rowTextField.text = self.barangayModel.location[index]
-                        }
-                    }
-                }
-            }
-            
-            
-            cell.titles = titles
-            cell.addPicker(selected)
-
-            
-            if indexPath.row == 6 {
-                cell.titles = self.provinceModel.location
-            } else if indexPath.row == 7 {
-                cell.titles = self.cityModel.location
-            } else {
-                cell.titles = self.barangayModel.location
-            }
-        }
-        
-        if indexPath.row == self.activeTextField {
-            cell.rowTextField.becomeFirstResponder()
-        }
-        
         addressCellReference.append(cell)
-        assert(addressCellReference[indexPath.row] == cell)
         
         return cell
     }
+    
+    //MARK: - Add Picker
+    func addPicker(selectedIndex: Int, textField: UITextField) {
+        let screenSize: CGRect = UIScreen.mainScreen().bounds
+        let pickerView: UIPickerView = UIPickerView(frame:CGRectMake(0, 0, screenSize.width, 225))
+        pickerView.delegate = self
+        pickerView.dataSource = self
+        pickerView.selectRow(selectedIndex, inComponent: 0, animated: false)
+        textField.inputView = pickerView
+    }
+    
+    //MARK: - Picker Data Source
+    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        if self.activeTextField == 6 {
+            return self.provinceModel.location.count
+        } else if self.activeTextField == 7 {
+            return self.cityModel.location.count
+        } else {
+            return self.barangayModel.location.count
+        }
+    }
+    
+    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String! {
+        if self.activeTextField == 6 {
+            return self.provinceModel.location[row]
+        } else if self.activeTextField == 7 {
+            return self.cityModel.location[row]
+        } else {
+            return self.barangayModel.location[row]
+        }
+    }
+    
+    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        if activeTextField == 6 {
+            //get province title and id
+            self.addressModel.provinceId = self.provinceModel.provinceId[row]
+            self.addressModel.province = self.provinceModel.location[row]
+            self.addressModel.city = ""
+            //request for new city data model and reload tableview
+            self.requestGetCities(self.addressModel.provinceId)
+            
+            //save current row and reset dependent values
+            self.provinceRow = row
+            self.cityRow = 0
+            self.barangayRow = 0
+            self.setTextAtIndex(6, text: self.provinceModel.location[row])
+        } else if activeTextField == 7 {
+            self.addressModel.cityId = self.cityModel.cityId[row]
+            self.requestGetBarangay(self.addressModel.cityId)
+            self.addressModel.city = self.cityModel.location[row]
+            //save current row and reset dependent values
+            self.cityRow = row
+            self.barangayRow = 0
+            self.setTextAtIndex(7, text: self.cityModel.location[row])
+        } else if activeTextField == 8 {
+            self.setTextAtIndex(activeTextField, text: self.barangayModel.location[row])
+            self.addressModel.barangay = self.barangayModel.location[row]
+            self.addressModel.barangayId = self.barangayModel.barangayId[row]
+            self.barangayRow = row
+            self.setTextAtIndex(8, text: self.barangayModel.location[row])
+        }
+    }
+    
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.titles.count
@@ -214,8 +219,17 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
             let nextIndexPath: NSIndexPath = NSIndexPath(forItem: indexPath.row + 1, inSection: indexPath.section)
             let cell: NewAddressTableViewCell = self.tableView.cellForRowAtIndexPath(nextIndexPath) as! NewAddressTableViewCell
             cell.rowTextField.becomeFirstResponder()
+            
+            if indexPath.row == 6 {
+                self.addPicker(self.provinceRow, textField: cell.rowTextField)
+            } else if indexPath.row == 7 {
+                self.addPicker(self.cityRow, textField: cell.rowTextField)
+            } else if indexPath.row == 8 {
+                self.addPicker(self.barangayRow, textField: cell.rowTextField)
+            }
+            
         } else {
-            self.tableView.endEditing(true)
+            
         }
         
     }
@@ -234,6 +248,18 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
     
     func newAddressTableViewCell(didBeginEditing newAddressTableViewCell: NewAddressTableViewCell, index: Int) {
         activeTextField = index
+        
+        let indexPath: NSIndexPath = self.tableView.indexPathForCell(newAddressTableViewCell)!
+        
+        let cell: NewAddressTableViewCell = self.tableView.cellForRowAtIndexPath(indexPath) as! NewAddressTableViewCell
+        
+        if indexPath.row == 6 {
+            self.addPicker(self.provinceRow, textField: cell.rowTextField)
+        } else if indexPath.row == 7 {
+            self.addPicker(self.cityRow, textField: cell.rowTextField)
+        } else if indexPath.row == 8 {
+            self.addPicker(self.barangayRow, textField: cell.rowTextField)
+        }
     }
     
     func backButton() {
@@ -314,7 +340,6 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
     }
     
     // MARK: - Requests
-    
    func requestAddAddress() {
         self.showHUD()
     
@@ -428,6 +453,7 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
                 self.addressModel.provinceId = self.provinceModel.provinceId[0]
                 self.requestGetCities(self.provinceModel.provinceId[0])
                 self.provinceRow = 0
+                self.setTextAtIndex(6, text: self.provinceModel.location[0])
             } else {
                 if self.addressModel.provinceId != 0 {
                     self.requestGetCities(self.addressModel.provinceId)
@@ -462,6 +488,7 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
                     self.addressModel.barangay = ""
                     self.cityRow = 0
                     self.barangayRow = 0
+                    self.setTextAtIndex(7, text: self.cityModel.location[0])
                 } else {
                     if self.addressModel.cityId != 0 {
                         self.requestGetBarangay(self.addressModel.cityId)
@@ -486,47 +513,27 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
                 self.hud?.hide(true)
                 self.barangayModel = BarangayModel.parseDataWithDictionary(responseObject)
+            
+                if self.barangayModel.barangayId.count != 0 && self.addressModel.barangayId == 0 {
                     self.addressModel.barangayId = self.barangayModel.barangayId[0]
                     self.addressModel.barangay = self.barangayModel.location[0]
-                self.tableView.reloadData()
+                    self.setTextAtIndex(8, text: self.barangayModel.location[0])
+                }
+            
+            if self.isIndexReady == false && self.isEdit2 {
+                self.isIndexReady = true
+                self.defaultIndexes()
+            }
+            
+            
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 self.hud?.hide(true)
                 self.showAlert(title: Constants.Localized.someThingWentWrong, message: nil)
         })
     }
-
-    func newAddressTableViewCell(didSelectRow row: Int, cell: NewAddressTableViewCell) {
-        if activeTextField == 6 {
-            //get province title and id
-            self.addressModel.provinceId = self.provinceModel.provinceId[row]
-            self.addressModel.province = self.provinceModel.location[row]
-            self.addressModel.city = ""
-            //request for new city data model and reload tableview
-            self.requestGetCities(self.addressModel.provinceId)
-
-            //save current row and reset dependent values
-            self.provinceRow = row
-            self.cityRow = 0
-            self.barangayRow = 0
-        } else if activeTextField == 7 {
-            self.addressModel.cityId = self.cityModel.cityId[row]
-            self.requestGetBarangay(self.addressModel.cityId)
-            self.addressModel.city = self.cityModel.location[row]
-            //save current row and reset dependent values
-            self.cityRow = row
-            self.barangayRow = 0
-        } else if activeTextField == 8 {
-            self.setTextAtIndex(activeTextField, text: self.barangayModel.location[row])
-            self.addressModel.barangay = self.barangayModel.location[row]
-            self.addressModel.barangayId = self.barangayModel.barangayId[row]
-            self.barangayRow = row
-        }
-
-    }
     
     // MARK: - Keyboard Toolbar Actions 
-    
     func next() {
         if activeTextField + 1 != self.titles.count {
             let indexPath = NSIndexPath(forItem: activeTextField + 1, inSection: 0)
@@ -547,4 +554,24 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
         }
     }
 
+    //MARK: - Default Indexes
+    func defaultIndexes() {
+        for (index, uid) in enumerate(self.provinceModel.provinceId) {
+            if uid == self.addressModel.provinceId {
+                self.provinceRow = index
+            }
+        }
+        
+        for (index, uid) in enumerate(self.cityModel.cityId) {
+            if uid == self.addressModel.cityId {
+                self.cityRow = index
+            }
+        }
+        
+        for (i, location) in enumerate(self.barangayModel.location) {
+            if location == self.addressModel.barangay {
+                self.barangayRow = i
+            }
+        }
+    }
 }
