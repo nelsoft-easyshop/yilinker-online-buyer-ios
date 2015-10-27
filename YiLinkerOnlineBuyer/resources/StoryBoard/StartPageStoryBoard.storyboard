@@ -181,21 +181,6 @@
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tHe-hv-xQq" customClass="FBSDKLoginButton">
-                                <rect key="frame" x="17" y="196" width="340" height="35"/>
-                                <color key="backgroundColor" red="0.2196078431372549" green="0.32156862745098042" blue="0.60392156862745094" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="35" id="Bvi-3c-rx2"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
-                                <state key="normal" title="facebook connect">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="facebookLogin:" destination="O08-Ch-JVM" eventType="touchUpInside" id="dyi-sX-ZLU"/>
-                                </connections>
-                            </button>
                             <textField opaque="NO" clipsSubviews="YES" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="xzl-Np-eOe">
                                 <rect key="frame" x="16" y="73" width="343" height="30"/>
                                 <constraints>
@@ -214,25 +199,16 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="5"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                        <real key="value" value="0.0"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
                                 <connections>
                                     <action selector="signIn:" destination="O08-Ch-JVM" eventType="touchUpInside" id="YB8-aZ-ROI"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ARp-5K-ovg" customClass="GPPSignInButton">
                                 <rect key="frame" x="17" y="244" width="340" height="42"/>
-                                <color key="backgroundColor" red="0.89631470960000004" green="0.029226388759999999" blue="0.12704667019999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.792156862745098" green="0.2196078431372549" blue="0.15686274509803921" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="42" id="w1S-YM-ynF"/>
+                                    <constraint firstAttribute="height" constant="42" id="qPg-Mh-PPn"/>
                                 </constraints>
-                                <state key="normal" title="Log in with google plus"/>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hn7-YU-Oc0">
                                 <rect key="frame" x="251" y="107" width="108" height="15"/>
@@ -248,29 +224,44 @@
                                     <action selector="forgotPassword:" destination="O08-Ch-JVM" eventType="touchUpInside" id="1nB-y1-L8I"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tHe-hv-xQq" customClass="FBSDKLoginButton">
+                                <rect key="frame" x="17" y="196" width="340" height="40"/>
+                                <color key="backgroundColor" red="0.2196078431372549" green="0.32156862745098042" blue="0.60392156862745094" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="ewR-5O-OxO"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
+                                <state key="normal" title="facebook connect">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="facebookLogin:" destination="O08-Ch-JVM" eventType="touchUpInside" id="dyi-sX-ZLU"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="tHe-hv-xQq" firstAttribute="top" secondItem="2O9-6l-JXq" secondAttribute="bottom" constant="7" id="1Iy-A4-tZF"/>
                             <constraint firstAttribute="trailingMargin" secondItem="C4q-lA-2QX" secondAttribute="trailing" constant="-2" id="3yD-Ea-EPW"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="ARp-5K-ovg" secondAttribute="trailing" constant="2" id="5rj-fR-sH6"/>
                             <constraint firstAttribute="centerX" secondItem="2O9-6l-JXq" secondAttribute="centerX" id="A3b-dN-Wzj"/>
-                            <constraint firstItem="tHe-hv-xQq" firstAttribute="top" secondItem="2O9-6l-JXq" secondAttribute="bottom" constant="7" id="Bgo-nX-KVt"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="tHe-hv-xQq" secondAttribute="trailing" constant="2" id="EcI-qZ-Mjj"/>
                             <constraint firstItem="Hn7-YU-Oc0" firstAttribute="trailing" secondItem="NOX-vm-tZ2" secondAttribute="trailingMargin" id="H4x-me-mBa"/>
-                            <constraint firstItem="ARp-5K-ovg" firstAttribute="leading" secondItem="NOX-vm-tZ2" secondAttribute="leadingMargin" constant="1" id="H8k-HD-5GT"/>
                             <constraint firstItem="C4q-lA-2QX" firstAttribute="leading" secondItem="NOX-vm-tZ2" secondAttribute="leadingMargin" id="Mdk-wg-fgo"/>
                             <constraint firstItem="A9t-oa-0dv" firstAttribute="top" secondItem="xzl-Np-eOe" secondAttribute="bottom" constant="23" id="NKk-Iu-bWE"/>
                             <constraint firstItem="Hn7-YU-Oc0" firstAttribute="top" secondItem="xzl-Np-eOe" secondAttribute="bottom" constant="4" id="SgQ-Kn-s2h"/>
-                            <constraint firstItem="tHe-hv-xQq" firstAttribute="leading" secondItem="NOX-vm-tZ2" secondAttribute="leadingMargin" constant="1" id="TdH-jd-lBL"/>
+                            <constraint firstItem="ARp-5K-ovg" firstAttribute="leading" secondItem="NOX-vm-tZ2" secondAttribute="leadingMargin" constant="1" id="Txf-zp-2ay"/>
                             <constraint firstItem="xzl-Np-eOe" firstAttribute="leading" secondItem="NOX-vm-tZ2" secondAttribute="leadingMargin" id="XKf-a4-GGO"/>
                             <constraint firstItem="gbM-PH-QcJ" firstAttribute="trailing" secondItem="NOX-vm-tZ2" secondAttribute="trailingMargin" id="XuT-PD-RnD"/>
                             <constraint firstItem="gbM-PH-QcJ" firstAttribute="leading" secondItem="NOX-vm-tZ2" secondAttribute="leadingMargin" id="a2W-9I-NQd"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="ARp-5K-ovg" secondAttribute="trailing" constant="2" id="aq6-9f-jZi"/>
                             <constraint firstItem="A9t-oa-0dv" firstAttribute="leading" secondItem="NOX-vm-tZ2" secondAttribute="leadingMargin" id="fHy-dj-i98"/>
                             <constraint firstItem="xzl-Np-eOe" firstAttribute="top" secondItem="gbM-PH-QcJ" secondAttribute="bottom" constant="15" id="gA5-mp-E0w"/>
                             <constraint firstItem="A9t-oa-0dv" firstAttribute="trailing" secondItem="NOX-vm-tZ2" secondAttribute="trailingMargin" id="hxv-8J-Kca"/>
                             <constraint firstItem="2O9-6l-JXq" firstAttribute="top" secondItem="A9t-oa-0dv" secondAttribute="bottom" constant="7" id="kan-QA-lDF"/>
                             <constraint firstItem="xzl-Np-eOe" firstAttribute="trailing" secondItem="NOX-vm-tZ2" secondAttribute="trailingMargin" id="nd8-nO-I1x"/>
-                            <constraint firstItem="ARp-5K-ovg" firstAttribute="top" secondItem="tHe-hv-xQq" secondAttribute="bottom" constant="13" id="oVz-ow-7Hq"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="tHe-hv-xQq" secondAttribute="trailing" constant="2" id="vIh-MD-5z0"/>
+                            <constraint firstItem="ARp-5K-ovg" firstAttribute="top" secondItem="tHe-hv-xQq" secondAttribute="bottom" constant="8" id="x6B-jM-3Sf"/>
+                            <constraint firstItem="tHe-hv-xQq" firstAttribute="leading" secondItem="NOX-vm-tZ2" secondAttribute="leadingMargin" constant="1" id="xkR-DV-ApA"/>
                             <constraint firstItem="gbM-PH-QcJ" firstAttribute="top" secondItem="Vii-Fa-HzU" secondAttribute="bottom" constant="8" id="zJN-QT-lYm"/>
                             <constraint firstItem="C4q-lA-2QX" firstAttribute="top" secondItem="A9t-oa-0dv" secondAttribute="bottom" constant="17" id="zz2-58-ZRo"/>
                         </constraints>
@@ -279,7 +270,6 @@
                     <connections>
                         <outlet property="emailAddressTextField" destination="gbM-PH-QcJ" id="HMq-JW-Ryg"/>
                         <outlet property="facebookButton" destination="tHe-hv-xQq" id="B5e-ok-F74"/>
-                        <outlet property="facebookButtonHeightConstraints" destination="Bvi-3c-rx2" id="jij-gm-8H7"/>
                         <outlet property="forgotPasswordButton" destination="Hn7-YU-Oc0" id="l3o-Vn-KnV"/>
                         <outlet property="gmailLoginButton" destination="ARp-5K-ovg" id="UfW-Xd-wu6"/>
                         <outlet property="orLabel" destination="2O9-6l-JXq" id="FM6-gC-iio"/>
@@ -289,7 +279,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8Fy-E8-Z0l" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1331.5" y="186.5"/>
+            <point key="canvasLocation" x="1371.5" y="130.5"/>
         </scene>
         <!--Login And Register Content View Controller-->
         <scene sceneID="Q6y-Qz-O6e">
@@ -573,17 +563,6 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                        <color key="value" red="0.35294117650000001" green="0.1215686275" blue="0.45882352939999999" alpha="1" colorSpace="calibratedRGB"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="20"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                        <real key="value" value="1"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
                                 <connections>
                                     <action selector="signIn:" destination="k5R-W5-4Hy" eventType="touchUpInside" id="6hB-wW-e5w"/>
                                 </connections>
@@ -598,17 +577,6 @@
                                     <color key="titleColor" red="0.35294117650000001" green="0.1215686275" blue="0.45882352939999999" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                        <color key="value" red="0.35294117650000001" green="0.1215686275" blue="0.45882352939999999" alpha="1" colorSpace="calibratedRGB"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="20"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                        <real key="value" value="1"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
                                 <connections>
                                     <action selector="register:" destination="k5R-W5-4Hy" eventType="touchUpInside" id="syU-b0-jv2"/>
                                 </connections>
@@ -727,6 +695,43 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="11s-pE-ETE">
+                                <rect key="frame" x="164" y="6" width="146" height="28"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="146" id="CPJ-rs-ema"/>
+                                    <constraint firstAttribute="height" constant="28" id="ZP4-Lw-deS"/>
+                                </constraints>
+                                <state key="normal" title="REGISTER">
+                                    <color key="titleColor" red="0.35294117650000001" green="0.1215686275" blue="0.45882352939999999" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="register:" destination="A4b-5R-jjS" eventType="touchUpInside" id="cFc-rR-mvO"/>
+                                </connections>
+                            </button>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hFg-DD-m5g" customClass="DynamicRoundedButton" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
+                                <rect key="frame" x="274" y="28" width="46" height="30"/>
+                                <state key="normal" title="Button">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="q78-Vl-Veg">
+                                <rect key="frame" x="10" y="38" width="300" height="1"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="1" id="0Kt-FQ-vVs"/>
+                                    <constraint firstAttribute="width" constant="300" id="GhP-1Q-4OX"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pTz-y6-iR0">
+                                <rect key="frame" x="0.0" y="40" width="320" height="440"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="440" id="oEd-MR-WeP"/>
+                                    <constraint firstAttribute="width" constant="320" id="sMy-2u-9BV"/>
+                                </constraints>
+                            </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="omu-KJ-QTf">
                                 <rect key="frame" x="10" y="6" width="146" height="28"/>
                                 <color key="backgroundColor" red="0.35294117650000001" green="0.1215686275" blue="0.45882352939999999" alpha="1" colorSpace="calibratedRGB"/>
@@ -753,43 +758,6 @@
                                     <action selector="signIn:" destination="A4b-5R-jjS" eventType="touchUpInside" id="Mf9-ye-SQK"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="11s-pE-ETE">
-                                <rect key="frame" x="164" y="6" width="146" height="28"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="146" id="CPJ-rs-ema"/>
-                                    <constraint firstAttribute="height" constant="28" id="ZP4-Lw-deS"/>
-                                </constraints>
-                                <state key="normal" title="REGISTER">
-                                    <color key="titleColor" red="0.35294117650000001" green="0.1215686275" blue="0.45882352939999999" alpha="1" colorSpace="calibratedRGB"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="register:" destination="A4b-5R-jjS" eventType="touchUpInside" id="cFc-rR-mvO"/>
-                                </connections>
-                            </button>
-                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hFg-DD-m5g" customClass="DynamicRoundedButton" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
-                                <rect key="frame" x="274" y="28" width="46" height="30"/>
-                                <state key="normal" title="Button">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                            </button>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="q78-Vl-Veg">
-                                <rect key="frame" x="10" y="38" width="300" height="1"/>
-                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="1" id="0Kt-FQ-vVs"/>
-                                    <constraint firstAttribute="width" constant="300" id="GhP-1Q-4OX"/>
-                                </constraints>
-                            </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pTz-y6-iR0">
-                                <rect key="frame" x="0.0" y="40" width="320" height="440"/>
-                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="440" id="oEd-MR-WeP"/>
-                                    <constraint firstAttribute="width" constant="320" id="sMy-2u-9BV"/>
-                                </constraints>
-                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
