@@ -113,6 +113,11 @@ class TransactionLeaveSellerFeedbackTableViewController: UITableViewController, 
         
         let manager = APIManager.sharedInstance
         println("\(APIManager.sharedInstance.baseURL) \(APIManager.sharedInstance)")
+        
+        var dictionary: NSMutableDictionary = NSMutableDictionary()
+        dictionary["rateType"] = "1"
+        dictionary["rating"] = String(rateItemQuality)
+        
         let jsonObject2: [String: AnyObject] = [
             "sellerId": self.sellerId,
             "ratings": ([[
@@ -130,9 +135,10 @@ class TransactionLeaveSellerFeedbackTableViewController: UITableViewController, 
         var a: NSDictionary = jsonObject2 as NSDictionary
         let sortedKeys = (a.allKeys as! [String]).sorted(>)
         let data2 = NSJSONSerialization.dataWithJSONObject(jsonObject2, options: nil, error: nil)
-        let string2 = NSString(data: data2!, encoding: NSUTF8StringEncoding)
-        println(string2)
-        manager.POST(APIAtlas.transactionLeaveSellerFeedback+"\(SessionManager.accessToken())", parameters: string2, success: {
+        let string2: String = NSString(data: data2!, encoding: NSUTF8StringEncoding)! as! String
+        let finalJsonString: String = string2.stringByReplacingOccurrencesOfString("\\", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
+        println(finalJsonString)
+        manager.POST(APIAtlas.transactionLeaveSellerFeedback+"\(SessionManager.accessToken())", parameters: finalJsonString, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
           
             if responseObject["isSuccessful"] as! Bool {
