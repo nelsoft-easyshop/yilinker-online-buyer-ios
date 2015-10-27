@@ -112,27 +112,33 @@ class TransactionLeaveSellerFeedbackTableViewController: UITableViewController, 
         self.showHUD()
         
         let manager = APIManager.sharedInstance
+        println("\(APIManager.sharedInstance.baseURL) \(APIManager.sharedInstance)")
+        
+        var dictionary: NSMutableDictionary = NSMutableDictionary()
+        dictionary["rateType"] = "1"
+        dictionary["rating"] = String(rateItemQuality)
+        
         let jsonObject2: [String: AnyObject] = [
             "sellerId": self.sellerId,
-            "ratings": [[
+            "ratings": ([[
                 "rateType": "1",
                 "rating": String(rateItemQuality)
                 ], [
                     "rateType": "2",
                     "rating": String(rateCommunication)
-                ]],
+                ]]),
             "title": "Seller Feedback",
             "feedback": "\(feedback)",
-            "access_token": "\(SessionManager.accessToken())",
             "orderId": self.orderId
         ]
         
         var a: NSDictionary = jsonObject2 as NSDictionary
         let sortedKeys = (a.allKeys as! [String]).sorted(>)
         let data2 = NSJSONSerialization.dataWithJSONObject(jsonObject2, options: nil, error: nil)
-        let string2 = NSString(data: data2!, encoding: NSUTF8StringEncoding)
-
-        manager.POST(APIAtlas.transactionLeaveSellerFeedback+"\(SessionManager.accessToken())", parameters: string2, success: {
+        let string2: String = NSString(data: data2!, encoding: NSUTF8StringEncoding)! as! String
+        let finalJsonString: String = string2.stringByReplacingOccurrencesOfString("\\", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
+        println(finalJsonString)
+        manager.POST(APIAtlas.transactionLeaveSellerFeedback+"\(SessionManager.accessToken())", parameters: finalJsonString, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
           
             if responseObject["isSuccessful"] as! Bool {

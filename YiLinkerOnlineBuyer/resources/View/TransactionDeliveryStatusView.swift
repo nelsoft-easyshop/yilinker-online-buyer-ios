@@ -13,6 +13,7 @@ protocol TransactionDeliveryStatusViewDelegate {
     func pickupCallAction()
     func deliverySmsAction()
     func deliveryCallAction()
+    func deliveryLogsAction()
 }
 
 class TransactionDeliveryStatusView: UIView {
@@ -35,6 +36,7 @@ class TransactionDeliveryStatusView: UIView {
     
     @IBOutlet weak var deliverySms: UIImageView!
     @IBOutlet weak var deliveryCall: UIImageView!
+    @IBOutlet weak var deliveryLogs: UIImageView!
     
     //@IBOutlet weak var arrowImageView: UIImageView!
 
@@ -70,6 +72,7 @@ class TransactionDeliveryStatusView: UIView {
     
     func arrowImageViewAction(gesture: UIGestureRecognizer) {
         println("arrow action")
+        self.delegate?.deliveryLogsAction()
     }
     
     
@@ -81,6 +84,8 @@ class TransactionDeliveryStatusView: UIView {
         self.pickupCall.addGestureRecognizer(tap("pickupCallAction:"))
         self.deliverySms.addGestureRecognizer(tap("deliverySmsAction:"))
         self.deliveryCall.addGestureRecognizer(tap("deliveryCallAction:"))
+        
+        self.deliveryLogs.addGestureRecognizer(tap("arrowImageViewAction:"))
        // self.arrowImageView.addGestureRecognizer(tap("arrowImageViewAction:"))
     }
     

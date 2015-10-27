@@ -395,6 +395,13 @@
 		F7C56A051BB1790A004740E1 /* TransactionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C569F51BB1790A004740E1 /* TransactionViewController.swift */; };
 		F7C56A061BB1790A004740E1 /* TransactionViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C569F61BB1790A004740E1 /* TransactionViews.swift */; };
 		F7C56A081BB179FF004740E1 /* TransactionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C56A071BB179FF004740E1 /* TransactionTableViewCell.swift */; };
+		F7C637C21BD9EC3D00C29C47 /* DeliveryLogsItemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C637C11BD9EC3D00C29C47 /* DeliveryLogsItemModel.swift */; };
+		F7C637C41BD9EC5A00C29C47 /* DeliveryLogsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C637C31BD9EC5A00C29C47 /* DeliveryLogsModel.swift */; };
+		F7C637C61BD9EC8200C29C47 /* DeliveryLogsSectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C637C51BD9EC8200C29C47 /* DeliveryLogsSectionModel.swift */; };
+		F7C637C91BD9F6FC00C29C47 /* TransactionDeliveryLogSignatureTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C637C71BD9F6FC00C29C47 /* TransactionDeliveryLogSignatureTableViewCell.swift */; };
+		F7C637CA1BD9F6FC00C29C47 /* TransactionDeliveryLogSignatureTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7C637C81BD9F6FC00C29C47 /* TransactionDeliveryLogSignatureTableViewCell.xib */; };
+		F7C637CF1BD9F81A00C29C47 /* TransactionDeliveryLogTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C637CD1BD9F81A00C29C47 /* TransactionDeliveryLogTableViewController.swift */; };
+		F7C637D01BD9F81A00C29C47 /* TransactionDeliveryLogTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7C637CE1BD9F81A00C29C47 /* TransactionDeliveryLogTableViewController.xib */; };
 		F7CC68F41BA295A2009168D7 /* message2.png in Resources */ = {isa = PBXBuildFile; fileRef = F7CC68F31BA295A2009168D7 /* message2.png */; };
 		F7CCDA881B943CBB000F5AD4 /* CartProductAttributeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7CCDA781B943CBB000F5AD4 /* CartProductAttributeViewController.xib */; };
 		F7CCDA891B943CBB000F5AD4 /* CategoriesTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7CCDA791B943CBB000F5AD4 /* CategoriesTableViewCell.xib */; };
@@ -843,6 +850,13 @@
 		F7C569F51BB1790A004740E1 /* TransactionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionViewController.swift; sourceTree = "<group>"; };
 		F7C569F61BB1790A004740E1 /* TransactionViews.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionViews.swift; sourceTree = "<group>"; };
 		F7C56A071BB179FF004740E1 /* TransactionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionTableViewCell.swift; sourceTree = "<group>"; };
+		F7C637C11BD9EC3D00C29C47 /* DeliveryLogsItemModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DeliveryLogsItemModel.swift; path = YiLinkerOnlineBuyer/resources/Model/DeliveryLogsItemModel.swift; sourceTree = SOURCE_ROOT; };
+		F7C637C31BD9EC5A00C29C47 /* DeliveryLogsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DeliveryLogsModel.swift; path = YiLinkerOnlineBuyer/resources/Model/DeliveryLogsModel.swift; sourceTree = SOURCE_ROOT; };
+		F7C637C51BD9EC8200C29C47 /* DeliveryLogsSectionModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DeliveryLogsSectionModel.swift; path = YiLinkerOnlineBuyer/resources/Model/DeliveryLogsSectionModel.swift; sourceTree = SOURCE_ROOT; };
+		F7C637C71BD9F6FC00C29C47 /* TransactionDeliveryLogSignatureTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TransactionDeliveryLogSignatureTableViewCell.swift; path = YiLinkerOnlineBuyer/resources/View/TransactionDeliveryLogSignatureTableViewCell.swift; sourceTree = SOURCE_ROOT; };
+		F7C637C81BD9F6FC00C29C47 /* TransactionDeliveryLogSignatureTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TransactionDeliveryLogSignatureTableViewCell.xib; path = YiLinkerOnlineBuyer/resources/View/TransactionDeliveryLogSignatureTableViewCell.xib; sourceTree = SOURCE_ROOT; };
+		F7C637CD1BD9F81A00C29C47 /* TransactionDeliveryLogTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TransactionDeliveryLogTableViewController.swift; path = YiLinkerOnlineBuyer/resources/ViewController/TransactionDeliveryLogTableViewController.swift; sourceTree = SOURCE_ROOT; };
+		F7C637CE1BD9F81A00C29C47 /* TransactionDeliveryLogTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TransactionDeliveryLogTableViewController.xib; path = YiLinkerOnlineBuyer/resources/ViewController/TransactionDeliveryLogTableViewController.xib; sourceTree = SOURCE_ROOT; };
 		F7CC68F31BA295A2009168D7 /* message2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = message2.png; sourceTree = "<group>"; };
 		F7CCDA451B940268000F5AD4 /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = "Pods/../build/Debug-iphoneos/libPods.a"; sourceTree = "<group>"; };
 		F7CCDA781B943CBB000F5AD4 /* CartProductAttributeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CartProductAttributeViewController.xib; path = YiLinkerOnlineBuyer/resources/ViewController/CartProductAttributeViewController.xib; sourceTree = SOURCE_ROOT; };
@@ -1123,6 +1137,9 @@
 				0C35A5CE1BC425AE006C0A65 /* LoginModel.swift */,
 				F7CCDB431BCCD1070078209A /* TransactionProductDetailsDeliveryStatusModel.swift */,
 				F7CCDB451BCD228B0078209A /* MessageComposer.swift */,
+				F7C637C11BD9EC3D00C29C47 /* DeliveryLogsItemModel.swift */,
+				F7C637C31BD9EC5A00C29C47 /* DeliveryLogsModel.swift */,
+				F7C637C51BD9EC8200C29C47 /* DeliveryLogsSectionModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1146,6 +1163,8 @@
 				F7C569A31BB1762C004740E1 /* TransactionDeliveryLog2TableViewCell.xib */,
 				F7C569A41BB1762C004740E1 /* TransactionDeliveryLogTableViewCell.swift */,
 				F7C569A51BB1762C004740E1 /* TransactionDeliveryLogTableViewCell.xib */,
+				F7C637C71BD9F6FC00C29C47 /* TransactionDeliveryLogSignatureTableViewCell.swift */,
+				F7C637C81BD9F6FC00C29C47 /* TransactionDeliveryLogSignatureTableViewCell.xib */,
 				F7C569A61BB1762C004740E1 /* TransactionDeliveryStatusView.swift */,
 				F7C569A71BB1762C004740E1 /* TransactionDescriptionView.swift */,
 				F7C569A81BB1762C004740E1 /* TransactionDetailsView.swift */,
@@ -1260,6 +1279,8 @@
 				F7C569EB1BB1790A004740E1 /* TransactionCancelViewController.swift */,
 				F7C569EC1BB1790A004740E1 /* TransactionCancelViewController.xib */,
 				F7C569ED1BB1790A004740E1 /* TransactionDeliveryLogViewController.swift */,
+				F7C637CD1BD9F81A00C29C47 /* TransactionDeliveryLogTableViewController.swift */,
+				F7C637CE1BD9F81A00C29C47 /* TransactionDeliveryLogTableViewController.xib */,
 				F7C569EE1BB1790A004740E1 /* TransactionDeliveryLogViewController.xib */,
 				F7C569EF1BB1790A004740E1 /* TransactionDetailsViewController.swift */,
 				F7C569F01BB1790A004740E1 /* TransactionLeaveFeedbackViewController.swift */,
@@ -1542,7 +1563,6 @@
 				0C8A7C6B1B6772670039F013 /* Frameworks */,
 				0C8A7C6C1B6772670039F013 /* Resources */,
 				15458B67C73D196045380AA0 /* Copy Pods Resources */,
-				1E9B4E4EB4BA6DD1636349FF /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1624,6 +1644,7 @@
 				F7CCDA901B943CBB000F5AD4 /* MessagingViewController.xib in Resources */,
 				F7C56A011BB1790A004740E1 /* TransactionLeaveFeedbackViewController.xib in Resources */,
 				0C374F301B88E3790050AE1D /* OverViewViewController.xib in Resources */,
+				F7C637CA1BD9F6FC00C29C47 /* TransactionDeliveryLogSignatureTableViewCell.xib in Resources */,
 				79E68B731B8AB900008626E4 /* ActivityLogTableViewCell.xib in Resources */,
 				79E85FC01B89DE1C00428AA1 /* ProfileTableViewCell.xib in Resources */,
 				F7C569B51BB1762C004740E1 /* TransactionDeliveryLogTableViewCell.xib in Resources */,
@@ -1680,6 +1701,7 @@
 				79E85FCC1B8A1E0800428AA1 /* ActivityLogTableViewController.xib in Resources */,
 				79E68B8B1B8B02C0008626E4 /* PointsBreakdownTableViewCell.xib in Resources */,
 				0C374F381B88E3790050AE1D /* PaymentWebViewViewController.xib in Resources */,
+				F7C637D01BD9F81A00C29C47 /* TransactionDeliveryLogTableViewController.xib in Resources */,
 				0C9937611B750583000D6074 /* FullImageCollectionViewCell.xib in Resources */,
 				F740F0901B90D1D800D23A34 /* address.png in Resources */,
 				0C374F3B1B88E3790050AE1D /* GeneralRatingTableViewCell.xib in Resources */,
@@ -1803,21 +1825,6 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		1E9B4E4EB4BA6DD1636349FF /* Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		2719B810AD2A7AD762A0703D /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1846,6 +1853,7 @@
 				0C374F4C1B8998F30050AE1D /* CustomizeShoppingCollectionViewCell.swift in Sources */,
 				0C5926061B836EA30021EA76 /* AddressModel.swift in Sources */,
 				0CB9DB3B1B6A3EA100F2CA13 /* StarterContentPageViewController.swift in Sources */,
+				F7C637C91BD9F6FC00C29C47 /* TransactionDeliveryLogSignatureTableViewCell.swift in Sources */,
 				2632F5241B7F8EFF006931E4 /* FollwedSellerModel.swift in Sources */,
 				0CDA117A1B760E1A007B5DED /* LoginViewController.swift in Sources */,
 				B77B8DC61B9B54E80002C513 /* RoundedView.swift in Sources */,
@@ -1868,6 +1876,7 @@
 				0C9937541B750583000D6074 /* RoundedLabel.swift in Sources */,
 				F7C569BD1BB1762C004740E1 /* TransactionPurchaseDetailsView.swift in Sources */,
 				0C4E5CD31BA1873E0098224A /* RegisterModalViewController.swift in Sources */,
+				F7C637CF1BD9F81A00C29C47 /* TransactionDeliveryLogTableViewController.swift in Sources */,
 				0C1003F41B87629400CAA17A /* NewAddressTableViewCell.swift in Sources */,
 				79E68B911B8B0AE9008626E4 /* PointModel.swift in Sources */,
 				0C2670CF1B772E4B00394E29 /* Enums.swift in Sources */,
@@ -1948,6 +1957,7 @@
 				79E85FCB1B8A1E0800428AA1 /* ActivityLogTableViewController.swift in Sources */,
 				79E8F1511B8FC1B8009CE450 /* ProfileUserDetailsModel.swift in Sources */,
 				26AFB3AF1B79DE2900E50926 /* ProductSellerViewCollectionViewCell.swift in Sources */,
+				F7C637C21BD9EC3D00C29C47 /* DeliveryLogsItemModel.swift in Sources */,
 				0C329E931B7B7B2F005BE2B6 /* HiddenViewController.swift in Sources */,
 				0C9937581B750583000D6074 /* TwoColumnGridCollectionViewCell.swift in Sources */,
 				F70EFB231BC6BF190077B8ED /* TransactionLeaveFeedbackRateTableViewCell.swift in Sources */,
@@ -2023,6 +2033,7 @@
 				0C329E881B7B73A4005BE2B6 /* TodaysPromoViewController.swift in Sources */,
 				0C1C3A851B9406BD00E6180D /* JSONResponseSerializer.swift in Sources */,
 				0C1004301B87AB9100CAA17A /* PaymentTableViewCell.swift in Sources */,
+				F7C637C61BD9EC8200C29C47 /* DeliveryLogsSectionModel.swift in Sources */,
 				961BE5A01B994B7D00E8631A /* DisputeViewController.swift in Sources */,
 				0CFF5EA71B98590200F13699 /* ErrorModel.swift in Sources */,
 				26AFB3AB1B79DE2900E50926 /* ProductReviewFooterView.swift in Sources */,
@@ -2064,6 +2075,7 @@
 				961BE5A21B994B9500E8631A /* CaseDetailsTableViewController.swift in Sources */,
 				268C1BBB1B865B13009FA106 /* TransactionButtons.swift in Sources */,
 				F7C569B41BB1762C004740E1 /* TransactionDeliveryLogTableViewCell.swift in Sources */,
+				F7C637C41BD9EC5A00C29C47 /* DeliveryLogsModel.swift in Sources */,
 				0C9937521B750583000D6074 /* RoundedButton.swift in Sources */,
 				0C374EFB1B8862E10050AE1D /* SuccessTableHeaderViewCell.swift in Sources */,
 				0C9937411B750583000D6074 /* ProductModel.swift in Sources */,

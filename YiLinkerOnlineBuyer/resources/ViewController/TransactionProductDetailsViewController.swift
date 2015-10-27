@@ -41,7 +41,9 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
     var imageUrl: String = ""
     var isCancellable: Bool = false
     var refreshtag: Int = 1001
+    var time: Int = 0
     
+    var myTimer: NSTimer?
     var hud: MBProgressHUD?
     var transactionProductDetailsModel: TransactionProductDetailsModel!
     var transactionDeliveryStatus: TransactionProductDetailsDeliveryStatusModel!
@@ -374,6 +376,7 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
     
     func back() {
         self.navigationController!.popViewControllerAnimated(true)
+        self.myTimer?.invalidate()
     }
     
     //MARK: Delivery Status
@@ -447,6 +450,14 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
         }
     }
     
+    func deliveryLogsAction() {
+        let deliveryLogs = TransactionDeliveryLogTableViewController(nibName: "TransactionDeliveryLogTableViewController", bundle: nil)
+        deliveryLogs.edgesForExtendedLayout = UIRectEdge.None
+        deliveryLogs.orderProductId = orderProductId
+        deliveryLogs.transactionId = transactionId
+        self.navigationController?.pushViewController(deliveryLogs, animated: true)
+    }
+    
     func messageComposeViewController(controller: MFMessageComposeViewController!, didFinishWithResult result: MessageComposeResult) {
         
         if (result.value == MessageComposeResultCancelled.value) {
@@ -509,6 +520,7 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
         cancelOrder.definesPresentationContext = true
         cancelOrder.view.frame.origin.y = cancelOrder.view.frame.size.height
         self.tabBarController?.presentViewController(cancelOrder, animated: true, completion: nil)
+        self.myTimer?.invalidate()
     }
     
     func showView(){
@@ -539,6 +551,7 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
         successController.definesPresentationContext = true
         successController.view.backgroundColor = UIColor.clearColor()
         self.tabBarController?.presentViewController(successController, animated: true, completion: nil)
+        self.myTimer?.invalidate()
     }
     
     // MARK: - TransactionCancelOrderSuccessViewControllerDelegate
@@ -549,6 +562,7 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
     func returnToDashboardAction() {
         self.dismissView()
         self.navigationController?.popToRootViewControllerAnimated(true)
+        self.myTimer?.invalidate()
     }
     
     //MARK: Get transactions details by id
@@ -615,9 +629,9 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
         let manager = APIManager.sharedInstance
         manager.GET(APIAtlas.transactionDeliveryStatus+"\(SessionManager.accessToken())&transactionId=\(self.transactionId)", parameters: nil, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            println(responseObject)
+            println("timer \(self.time) \(self.transactionId) \(responseObject)")
             self.transactionDeliveryStatus = TransactionProductDetailsDeliveryStatusModel.parseDataFromDictionary(responseObject as! NSDictionary)
-  
+            self.timerRefresh()
             //self.tableView.reloadData()
             self.hud?.hide(true)
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
@@ -650,6 +664,48 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
                 
         })
     }
+    
+    //MARK: Get transactions details by id
+    func fireTransactionProductDetailsDeliveryStatusRefresh() {
+        //self.showHUD()
+        let manager = APIManager.sharedInstance
+        manager.GET(APIAtlas.transactionDeliveryStatus+"\(SessionManager.accessToken())&transactionId=\(self.transactionId)", parameters: nil, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            println("timer \(self.time) \(self.transactionId) \(responseObject)")
+            self.transactionDeliveryStatus = TransactionProductDetailsDeliveryStatusModel.parseDataFromDictionary(responseObject as! NSDictionary)
+            //self.tableView.reloadData()
+            //self.hud?.hide(true)
+            }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
+                //self.hud?.hide(true)
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                if error.userInfo != nil {
+                    let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: Constants.Localized.someThingWentWrong)
+                    self.tableView.reloadData()
+                    /*let alert = UIAlertController(title: Constants.Localized.someThingWentWrong,
+                    message: errorModel.message,
+                    preferredStyle: UIAlertControllerStyle.Alert)
+                    let okButton = UIAlertAction(title: ProductStrings.alertOk,
+                    style: UIAlertActionStyle.Cancel) { (alert) -> Void in
+                    self.navigationController?.popViewControllerAnimated(true)
+                    }
+                    alert.addAction(okButton)
+                    self.presentViewController(alert, animated: true, completion: nil)
+                    */
+                } else if task.statusCode == 401 {
+                    self.fireRefreshToken()
+                    self.tableView.reloadData()
+                } else {
+                    self.showAlert(title: Constants.Localized.error, message: Constants.Localized.someThingWentWrong)
+                    self.tableView.reloadData()
+                }
+                self.refreshtag = 1002
+                println(error.userInfo)
+                
+        })
+    }
+
     
     func fireRefreshToken() {
         let manager: APIManager = APIManager.sharedInstance
@@ -698,5 +754,14 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
     }
     
     
+    //You can create a scheduled timer which automatically adds itself to the runloop and starts firing:
+    //NSTimer.scheduledTimerWithTimeInterval(0.5, target: self, selector: "timerDidFire:", userInfo: userInfo, repeats: true)
+    func timerRefresh(){
+        time++
+        //Or, you can keep your current code, and add the timer to the runloop when you're ready for it:
+        myTimer = NSTimer(timeInterval: 10, target: self, selector: "fireTransactionProductDetailsDeliveryStatusRefresh", userInfo: nil, repeats: true)
+        NSRunLoop.currentRunLoop().addTimer(myTimer!, forMode: NSRunLoopCommonModes)
+    }
 }
+
 

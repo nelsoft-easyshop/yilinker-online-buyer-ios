@@ -10,27 +10,19 @@ import UIKit
 
 class TransactionDeliveryLogTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var containerView: UIView!
-    @IBOutlet weak var processImageView: UIView!
-    @IBOutlet weak var processLabel: UIView!
-    @IBOutlet weak var timeLabel: UIView!
-    @IBOutlet weak var dateLabel: UIView!
-    @IBOutlet weak var locationLabel: UIView!
-    @IBOutlet weak var riderLabel: UIView!
-    
+    @IBOutlet weak var mainView: UIView!
+    @IBOutlet weak var typeLabel: UILabel!
+    @IBOutlet weak var timeLabel: UILabel!
+    @IBOutlet weak var dateLabel: UILabel!
+    @IBOutlet weak var locationLabel: UILabel!
+    @IBOutlet weak var riderLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
-        
-        self.backgroundColor = Constants.Colors.backgroundGray
-        self.containerView.layer.cornerRadius = 8
-    }
-
-    override func setSelected(selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+        initializeViews()
     }
     
+    func initializeViews() {
+        mainView.layer.cornerRadius = 8
+    }
 }
