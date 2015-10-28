@@ -135,9 +135,9 @@ class ChangeMobileNumberViewController: UIViewController {
         
         if !SessionManager.isMobileVerified() {
             titleLabel.text = StringHelper.localizedStringWithKey("YOUR_MOBILE_LOCALIZE_KEY")
-            newNumberLabel.text = StringHelper.localizedStringWithKey("MOBILE_LOCALIZED_KEY")
+            newNumberLabel.text = StringHelper.localizedStringWithKey("PLEASE_ENTER_NUMBER_LOCALIZE_KEY")
             newNumberTextField.placeholder = StringHelper.localizedStringWithKey("MOBILE_LOCALIZED_KEY")
-            submitButton.setTitle(StringHelper.localizedStringWithKey("SEND_CODE_LOCALIZED_KEY"), forState: UIControlState.Normal)
+            submitButton.setTitle(StringHelper.localizedStringWithKey("SUBMIT_CAPS_LOCALIZE_KEY"), forState: UIControlState.Normal)
         } else {
             titleLabel.text = StringHelper.localizedStringWithKey("CHANGEMOBILE_LOCALIZE_KEY")
         }
@@ -268,9 +268,32 @@ class ChangeMobileNumberViewController: UIViewController {
                 println(responseObject)
                 }, failure: {
                     (task: NSURLSessionDataTask!, error: NSError!) in
-                    self.showAlert(title: self.errorLocalizeString, message: self.somethingWrongLocalizeString)
-                    self.dismissLoader()
+                    
                     println(error)
+                    if Reachability.isConnectedToNetwork() {
+                        var info = error.userInfo!
+                        
+                        if let data = info["data"] as? NSDictionary {
+                            if let errors = data["errors"] as? NSArray {
+                                if errors.count == 0 {
+                                    if let message = info["message"] as? NSString {
+                                        self.showAlert(title: self.errorLocalizeString, message: message as String)
+                                    }
+                                    
+                                } else {
+                                    self.showAlert(title: self.errorLocalizeString, message: errors[0] as! String)
+                                }
+                            }
+                        } else {
+                            UIAlertController.displaySomethingWentWrongError(self)
+                        }
+                        
+                    } else {
+                        UIAlertController.displayNoInternetConnectionError(self)
+                    }
+                    
+                    self.dismissLoader()
+                    
             })
 
     }
@@ -305,7 +328,7 @@ class ChangeMobileNumberViewController: UIViewController {
     }
     
     func requestRefreshToken(type: String, url: String, params: NSDictionary!) {
-        let url: String = "http://online.api.easydeal.ph/api/v1/login"
+        let url: String = APIAtlas.loginUrl
         let params: NSDictionary = ["client_id": Constants.Credentials.clientID,
             "client_secret": Constants.Credentials.clientSecret,
             "grant_type": Constants.Credentials.grantRefreshToken,
