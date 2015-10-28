@@ -421,6 +421,8 @@ NEWNUMBER_LOCALIZE_KEY = "新联系电话";
 SUBMIT_LOCALIZE_KEY = "提";
 COMPLETEFIELDS_LOCALIZE_KEY = "完成必要的字段!"; //No Chinese String
 INCORRECTMOBILE_LOCALIZE_KEY = "不正确的旧手机号码!"; //No Chinese String
+SUBMIT_CAPS_LOCALIZE_KEY = "提"; //No Chinese String
+PLEASE_ENTER_NUMBER_LOCALIZE_KEY = "请输入您所需的号码。"; //No Chinese String
 
 //Change Password
 CHANGEPASSWORD_LOCALIZE_KEY = "更改密码";
