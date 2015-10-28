@@ -14,7 +14,7 @@ protocol AddAddressTableViewControllerDelegate {
 
 class AddAddressTableViewController: UITableViewController, UITableViewDelegate, UITableViewDataSource, NewAddressTableViewCellDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
     
-    let titles: [String] = ["\(AddressStrings.addressTitle):", "\(AddressStrings.unitNo):", "\(AddressStrings.buildingName):", "\(AddressStrings.streetNo):", "\(AddressStrings.streetName):", "\(AddressStrings.subdivision):", "\(AddressStrings.province):", "\(AddressStrings.city):", "\(AddressStrings.barangay):", "\(AddressStrings.zipCode):", "\(AddressStrings.additionalInfo):"]
+    let titles: [String] = ["\(AddressStrings.addressTitle):", "\(AddressStrings.unitNo):", "\(AddressStrings.buildingName):", "\(AddressStrings.streetNo):", "\(AddressStrings.streetName):", "\(AddressStrings.subdivision):", "\(AddressStrings.province):", "\(AddressStrings.city):", "\(AddressStrings.barangay):", "\(AddressStrings.zipCode):"]
     
     var delegate: AddAddressTableViewControllerDelegate?
     
@@ -129,6 +129,18 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
                 
                 cell.rowTextField.text = self.addressModel.additionalInfo
                 isEdit = false
+            }
+        } else {
+            if indexPath.row == 0 {
+                cell.rowTitleLabel.required()
+            } else if indexPath.row == 6 {
+                cell.rowTitleLabel.required()
+            } else if indexPath.row == 7 {
+                cell.rowTitleLabel.required()
+            } else if indexPath.row == 8 {
+                cell.rowTitleLabel.required()
+            } else if indexPath.row == 9 {
+                cell.rowTitleLabel.required()
             }
         }
         
@@ -354,7 +366,6 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
             "city": getTextAtIndex(7),
             "barangay": getTextAtIndex(8),
             "zipCode": getTextAtIndex(9),
-            "addtionalInfo": getTextAtIndex(10),
             "locationId": self.addressModel.barangayId
         ]
         
@@ -389,7 +400,6 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
             "city": getTextAtIndex(7),
             "barangay": getTextAtIndex(8),
             "zipCode": getTextAtIndex(9),
-            "addtionalInfo": getTextAtIndex(10),
             "locationId": self.addressModel.barangayId,
             "userAddressId": self.addressModel.userAddressId
         ]
