@@ -422,6 +422,8 @@ NEWNUMBER_LOCALIZE_KEY = "New Number";
 SUBMIT_LOCALIZE_KEY = "Submit";
 COMPLETEFIELDS_LOCALIZE_KEY = "Complete necessary fields!";
 INCORRECTMOBILE_LOCALIZE_KEY = "Incorrect old mobile number!";
+SUBMIT_CAPS_LOCALIZE_KEY = "SUBMIT";
+PLEASE_ENTER_NUMBER_LOCALIZE_KEY = "Please enter your desired number.";
 
 //Change Password
 CHANGEPASSWORD_LOCALIZE_KEY = "Change Password";
