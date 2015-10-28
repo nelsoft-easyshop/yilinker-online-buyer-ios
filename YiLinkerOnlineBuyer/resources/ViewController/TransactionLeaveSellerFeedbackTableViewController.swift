@@ -114,22 +114,20 @@ class TransactionLeaveSellerFeedbackTableViewController: UITableViewController, 
         let manager = APIManager.sharedInstance
         println("\(APIManager.sharedInstance.baseURL) \(APIManager.sharedInstance)")
         
-        var dictionary: NSMutableDictionary = NSMutableDictionary()
-        dictionary["rateType"] = "1"
-        dictionary["rating"] = String(rateItemQuality)
+        /*
         
         let jsonObject2: [String: AnyObject] = [
-            "sellerId": self.sellerId,
-            "ratings": ([[
-                "rateType": "1",
-                "rating": String(rateItemQuality)
-                ], [
-                    "rateType": "2",
-                    "rating": String(rateCommunication)
-                ]]),
-            "title": "Seller Feedback",
-            "feedback": "\(feedback)",
-            "orderId": self.orderId
+        "sellerId": self.sellerId,
+        "ratings": ([[
+        "rateType": "1",
+        "rating": String(rateItemQuality)
+        ], [
+        "rateType": "2",
+        "rating": String(rateCommunication)
+        ]]),
+        "title": "Seller Feedback",
+        "feedback": "\(feedback)",
+        "orderId": self.orderId
         ]
         
         var a: NSDictionary = jsonObject2 as NSDictionary
@@ -138,7 +136,49 @@ class TransactionLeaveSellerFeedbackTableViewController: UITableViewController, 
         let string2: String = NSString(data: data2!, encoding: NSUTF8StringEncoding)! as! String
         let finalJsonString: String = string2.stringByReplacingOccurrencesOfString("\\", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
         println(finalJsonString)
-        manager.POST(APIAtlas.transactionLeaveSellerFeedback+"\(SessionManager.accessToken())", parameters: finalJsonString, success: {
+        */
+        
+        var dictionary: NSMutableDictionary = NSMutableDictionary()
+        dictionary["rateType"] = "1"
+        dictionary["rating"] = "sasasas"
+        
+        let data1 = NSJSONSerialization.dataWithJSONObject(dictionary, options: nil, error: nil)
+        var formattedRating1: String = NSString(data: data1!, encoding: NSUTF8StringEncoding) as! String
+        println(formattedRating1)
+        var dictionary2: NSMutableDictionary = NSMutableDictionary()
+        dictionary2["rateType"] = "2"
+        dictionary2["rating"] = "asdasdsdd"
+        
+        let data3 = NSJSONSerialization.dataWithJSONObject(dictionary2, options: nil, error: nil)
+        var formattedRating2: String = NSString(data: data3!, encoding: NSUTF8StringEncoding) as! String
+        println(formattedRating2)
+        var feedback: [String] = []
+        feedback.append(formattedRating1)
+        feedback.append(formattedRating2)
+        
+        let data4 = NSJSONSerialization.dataWithJSONObject(feedback, options: nil, error: nil)
+        var formattedRating3: String = NSString(data: data4!, encoding: NSUTF8StringEncoding) as! String
+        
+        println(formattedRating3)
+        
+        let jsonObject2: [String: AnyObject] = [
+            "sellerId": "id",
+            "ratings": formattedRating3,
+            "title": "Seller Feedback",
+            "feedback": "feedback",
+            "orderId": "order id"
+        ]
+        
+        let data2 = NSJSONSerialization.dataWithJSONObject(jsonObject2, options: nil, error: nil)
+        var formattedRating4: String = NSString(data: data2!, encoding: NSUTF8StringEncoding) as! String
+        
+        let finalJsonString: String = formattedRating4.stringByReplacingOccurrencesOfString("\\", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
+        let finalJsonString2: String = finalJsonString.stringByReplacingOccurrencesOfString("\"{", withString: "{", options: NSStringCompareOptions.LiteralSearch, range: nil)
+        let finalJsonString3: String = finalJsonString2.stringByReplacingOccurrencesOfString("\"]", withString: "]", options: NSStringCompareOptions.LiteralSearch, range: nil)
+        
+        println(finalJsonString3)
+        
+        manager.POST(APIAtlas.transactionLeaveSellerFeedback+"\(SessionManager.accessToken())", parameters: finalJsonString3, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
           
             if responseObject["isSuccessful"] as! Bool {
