@@ -2451,10 +2451,10 @@
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Seller" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h5t-a6-8z9" userLabel="otherParty">
-                                            <rect key="frame" x="104" y="9" width="201" height="21"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Seller" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="12" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="h5t-a6-8z9" userLabel="otherParty">
+                                            <rect key="frame" x="104" y="0.0" width="201" height="40"/>
                                             <constraints>
-                                                <constraint firstAttribute="height" constant="21" id="3NJ-Hv-Cns"/>
+                                                <constraint firstAttribute="height" constant="40" id="3NJ-Hv-Cns"/>
                                                 <constraint firstAttribute="width" constant="201" id="H7K-yP-rs2"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="17"/>
