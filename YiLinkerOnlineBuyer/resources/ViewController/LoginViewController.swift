@@ -310,7 +310,8 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
             //password
             let parameters: NSDictionary = [
                 "registrationId": "\(registrationID)",
-                "access_token"  : SessionManager.accessToken()
+                "access_token"  : SessionManager.accessToken(),
+                "deviceType"    : "1"
                 ]   as Dictionary<String, String>
             
             let url = APIAtlas.baseUrl + APIAtlas.ACTION_GCM_CREATE
@@ -403,6 +404,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
             if loginModel.isSuccessful {
                 SessionManager.parseTokensFromResponseObject(loginModel.dataDictionary)
                 self.showSuccessMessage()
+                self.fireCreateRegistration(SessionManager.gcmToken())
             } else {
                 FBSDKLoginManager().logOut()
                 UIAlertController.displayErrorMessageWithTarget(self, errorMessage: loginModel.message, title: Constants.Localized.error)
@@ -444,6 +446,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
             if loginModel.isSuccessful {
                 SessionManager.parseTokensFromResponseObject(loginModel.dataDictionary)
                 self.showSuccessMessage()
+                self.fireCreateRegistration(SessionManager.gcmToken())
             } else {
                 UIAlertController.displayErrorMessageWithTarget(self, errorMessage: loginModel.message, title: Constants.Localized.error)
             }
