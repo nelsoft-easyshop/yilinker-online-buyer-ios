@@ -380,7 +380,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             let categoryDictionary: NSDictionary = category as! NSDictionary
             let layoutId: Int = categoryDictionary["categoryId"] as! Int
             var layout: String = ""
-            if layoutId == 1 {
+            if index == 0 {
                 layout = Constants.HomePage.layoutFiveKeyWithFooter
             } else {
                 layout = Constants.HomePage.layoutFiveKey2
