@@ -415,7 +415,7 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
             let sellerDictionary: NSDictionary = sellerArray[indexPath.row] as! NSDictionary
             
             let sellerModel: SellerModel = SellerModel.parseDataFromDictionary(sellerDictionary)
-            
+            sellerCollectionView.target = "\(sellerModel.userId)"
             sellerCollectionView.sellerTitleLabel.text = sellerModel.name
             sellerCollectionView.sellerSubTitleLabel.text = sellerModel.specialty
             sellerCollectionView.sellerProfileImageView.sd_setImageWithURL(sellerModel.avatar, placeholderImage: UIImage(named: "dummy-placeholder"))
@@ -592,6 +592,7 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
             let sellerCollectionViewCell: SellerCollectionViewCell = cell as! SellerCollectionViewCell
             println("Target: \(sellerCollectionViewCell.target)")
             println("Target type: \(sellerCollectionViewCell.targetType)")
+            self.redirectToSellerWithID(sellerCollectionViewCell.userId)
         }
     }
     
@@ -634,10 +635,14 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
             productViewController.tabController = self.tabBarController as! CustomTabBarController
             productViewController.productId = productID
             self.navigationController?.pushViewController(productViewController, animated: true)
+        } else if productID.rangeOfString("getProductDetail?") != nil {
+            let productViewController: ProductViewController = ProductViewController(nibName: "ProductViewController", bundle: nil)
+            productViewController.tabController = self.tabBarController as! CustomTabBarController
+            productViewController.productId = productID
+            self.navigationController?.pushViewController(productViewController, animated: true)
         } else {
             self.redirectToResultView(productID, targetType: TargetType.CategoryViewMoreItems)
         }
-      
     }
     
     func redirectToSellerWithID(sellerID: Int) {
