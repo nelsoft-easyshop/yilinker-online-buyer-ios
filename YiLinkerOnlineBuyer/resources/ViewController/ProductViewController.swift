@@ -370,8 +370,11 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     
     func requestProductDetails() {
         self.showHUD()
-        let id: String = "?productId=" + productId
         
+        productId = productId.stringByReplacingOccurrencesOfString("/api/v1/product/getProductDetail?productId=", withString: "", options: nil, range: nil)
+        
+        let id: String = "?productId=" + productId
+        println(APIAtlas.productDetails)
         manager.GET(APIAtlas.productDetails + id, parameters: nil, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             println(responseObject)
