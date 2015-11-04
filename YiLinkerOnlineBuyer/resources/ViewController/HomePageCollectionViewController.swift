@@ -634,10 +634,14 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
             productViewController.tabController = self.tabBarController as! CustomTabBarController
             productViewController.productId = productID
             self.navigationController?.pushViewController(productViewController, animated: true)
+        } else if productID.rangeOfString("getProductDetail?") != nil {
+            let productViewController: ProductViewController = ProductViewController(nibName: "ProductViewController", bundle: nil)
+            productViewController.tabController = self.tabBarController as! CustomTabBarController
+            productViewController.productId = productID
+            self.navigationController?.pushViewController(productViewController, animated: true)
         } else {
             self.redirectToResultView(productID, targetType: TargetType.CategoryViewMoreItems)
         }
-      
     }
     
     func redirectToSellerWithID(sellerID: Int) {
