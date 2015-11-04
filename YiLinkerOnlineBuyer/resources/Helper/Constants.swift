@@ -65,7 +65,7 @@ struct Constants {
     struct Credentials {
         //development
         static let clientID = "1_167rxzqvid8g8swggwokcoswococscocc8ck44wo0g88owgkcc"
-        static let clientSecret = " "
+        static let clientSecret = "317eq8nohry84ooc0o8woo8000c0k844c4cggws84g80scwwog"
         
         //production
 //        static let clientID = "1_9t2337riou0wsws84ckw8gkck8os8skw8cokoooc04gc0kssc"
