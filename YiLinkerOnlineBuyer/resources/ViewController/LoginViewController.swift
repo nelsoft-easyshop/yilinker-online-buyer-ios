@@ -314,12 +314,12 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
                             let errorDescription: String = jsonResult["error_description"] as! String
                             Toast.displayToastWithMessage(errorDescription, duration: 3.0, view: self.view)
                         }
-                    }
-                    
-                    if task.statusCode == 401 {
-                        Toast.displayToastWithMessage(LoginStrings.mismatch, duration: 3.0, view: self.view)
                     } else {
-                        Toast.displayToastWithMessage(Constants.Localized.someThingWentWrong, duration: 3.0, view: self.view)
+                        if task.statusCode == 401 {
+                            Toast.displayToastWithMessage(LoginStrings.mismatch, duration: 3.0, view: self.view)
+                        } else {
+                            Toast.displayToastWithMessage(Constants.Localized.someThingWentWrong, duration: 3.0, view: self.view)
+                        }
                     }
                     
                     self.hud?.hide(true)
