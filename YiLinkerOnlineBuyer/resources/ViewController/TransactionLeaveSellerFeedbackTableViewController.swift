@@ -159,11 +159,12 @@ class TransactionLeaveSellerFeedbackTableViewController: UITableViewController, 
         var formattedRating3: String = NSString(data: data4!, encoding: NSUTF8StringEncoding) as! String
         
         let jsonObject2: [String: AnyObject] = [
-            "sellerId": "\(self.sellerId)",
+            "sellerId": self.sellerId,
             "ratings": formattedRating3,
             "title": "Seller Feedback",
             "feedback": "\(feedback2)",
-            "orderId": "\(self.orderId)"
+            "orderId": self.orderId,
+            "access_token" : "\(SessionManager.accessToken())"
         ]
         
         let data2 = NSJSONSerialization.dataWithJSONObject(jsonObject2, options: nil, error: nil)
@@ -176,7 +177,7 @@ class TransactionLeaveSellerFeedbackTableViewController: UITableViewController, 
         let finalJsonString5: String = finalJsonString4.stringByReplacingOccurrencesOfString("\"[", withString: "[", options: NSStringCompareOptions.LiteralSearch, range: nil)
         let finalJsonString6: String = finalJsonString5.stringByReplacingOccurrencesOfString("]\"", withString: "]", options: NSStringCompareOptions.LiteralSearch, range: nil)
         
-        manager.POST(APIAtlas.transactionLeaveSellerFeedback+"\(SessionManager.accessToken())", parameters: finalJsonString6, success: {
+        manager.POST(APIAtlas.transactionLeaveSellerFeedback, parameters: finalJsonString6, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
           
             if responseObject["isSuccessful"] as! Bool {
@@ -217,7 +218,7 @@ class TransactionLeaveSellerFeedbackTableViewController: UITableViewController, 
             "client_secret": Constants.Credentials.clientSecret,
             "grant_type": Constants.Credentials.grantRefreshToken,
             "refresh_token": SessionManager.refreshToken()]
-        
+       
         manager.POST(APIAtlas.loginUrl, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
