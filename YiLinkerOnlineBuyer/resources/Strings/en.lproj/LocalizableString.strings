@@ -105,9 +105,9 @@ REFERRAL_LOCALIZED_KEY = "Referral Code";
 
 // MARK: - Register Error
 FIRST_NAME_REQUIRED_LOCALIZE_KEY = "First name is required";
-FIRST_NAME_ILLEGAL_LOCALIZE_KEY = "First name contains illegal characters. It can only contain letters, numbers and underscores.";
+FIRST_NAME_ILLEGAL_LOCALIZE_KEY = "First name contains illegal characters.";
 LAST_NAME_REQUIRED_LOCALIZE_KEY = "Last name is required";
-INVALID_LAST_NAME_LOCALIZE_KEY = "Last name contains illegal characters. It can only contain letters, numbers and underscores.";
+INVALID_LAST_NAME_LOCALIZE_KEY = "Last name contains illegal characters.";
 EMAIL_REQUIRED_LOCALIZE_KEY = "Email is required.";
 INVALID_EMAIL_LOCALIZE_KEY = "The email address you enter is not a valid email address.";
 PASSWORD_REQUIRED_LOCALIZE_KEY = "Password is required.";

@@ -133,6 +133,8 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
         } else {
             if indexPath.row == 0 {
                 cell.rowTitleLabel.required()
+            } else if indexPath.row == 4 {
+                cell.rowTitleLabel.required()
             } else if indexPath.row == 6 {
                 cell.rowTitleLabel.required()
             } else if indexPath.row == 7 {

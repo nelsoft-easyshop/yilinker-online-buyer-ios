@@ -62,7 +62,10 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     func requestProfileDetails(url: String, params: NSDictionary!, showLoader: Bool) {
         if showLoader {
             self.showLoader()
+        } else {
+            UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         }
+        
         
         manager.GET(url, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in print(responseObject as! NSDictionary)
@@ -183,6 +186,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     
     func dismissLoader() {
         self.hud?.hide(true)
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
     }
 
     func requestRefreshToken(type: String, url: String, params: NSDictionary!, showLoader: Bool) {
