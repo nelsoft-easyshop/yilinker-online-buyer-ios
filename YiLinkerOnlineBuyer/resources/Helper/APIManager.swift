@@ -148,7 +148,7 @@ struct APIAtlas {
     //Transactions
     static let transactionLogs = "auth/getTransactionList?access_token="
     static let transactionDetails = "auth/getTransaction?access_token="
-    static let transactionLeaveSellerFeedback = "auth/feedback/addUserFeedback?access_token="
+    static let transactionLeaveSellerFeedback = "auth/feedback/addUserFeedback"
     static let transactionProductDetails = "auth/getOrderProductDetail?access_token="
     static let transactionCancellation = "auth/cancellation/reasons"
     static let postTransactionCancellation = "auth/transaction/cancel"
