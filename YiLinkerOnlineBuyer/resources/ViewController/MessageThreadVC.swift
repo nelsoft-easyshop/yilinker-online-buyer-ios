@@ -217,6 +217,8 @@ class MessageThreadVC: UIViewController {
         NSNotificationCenter.defaultCenter().removeObserver(self, name: appDelegate.seenMessageKey, object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: appDelegate.messageKey, object: nil)
         
+        self.clearProfileView()
+        
     }
     
     override func viewDidDisappear(animated: Bool) {
@@ -691,7 +693,7 @@ extension MessageThreadVC : UITableViewDataSource, UITableViewDelegate{
                 cell.message_image.superview?.layer.shadowOffset = CGSizeMake(1, 1)
                 
                 if (messages[index].isSent == "1") {
-                    cell.timestamp_label.text = DateUtility.convertDateToString(NSDate()) as String
+                    cell.timestamp_label.text = DateUtility.getTimeFromDate(messages[index].timeSent) as String
                     cell.resendButton.hidden = true
                     cell.timestamp_label.hidden = false
                     cell.timestamp_image.hidden = false
@@ -718,7 +720,7 @@ extension MessageThreadVC : UITableViewDataSource, UITableViewDelegate{
                     imagePlaced = true
                 }
                 
-                cell.timestamp_label.text = DateUtility.convertDateToString(NSDate()) as String
+                cell.timestamp_label.text = DateUtility.getTimeFromDate(messages[index].timeSent) as String
                 
                 let url = NSURL(string: messages[index].message)
                 cell.message_image.sd_setImageWithURL(url, placeholderImage: nil)
@@ -752,7 +754,7 @@ extension MessageThreadVC : UITableViewDataSource, UITableViewDelegate{
                 cell.message_label.superview?.layer.shadowOffset = CGSizeMake(1, 1)
                 
                 if (messages[index].isSent == "1") {
-                    cell.timestamp_label.text = DateUtility.convertDateToString(NSDate()) as String
+                    cell.timestamp_label.text = DateUtility.getTimeFromDate(messages[index].timeSent) as String
                     cell.resendButton.hidden = true
                     cell.timestamp_label.hidden = false
                     cell.timestamp_image.hidden = false
@@ -779,7 +781,9 @@ extension MessageThreadVC : UITableViewDataSource, UITableViewDelegate{
                     imagePlaced = true
                 }
                 
-                cell.timestamp_label.text = DateUtility.convertDateToString(NSDate()) as String
+                
+                
+                cell.timestamp_label.text = DateUtility.getTimeFromDate(messages[index].timeSent) as String
                 
                 cell.message_label.superview?.layer.cornerRadius = 5.0
                 
