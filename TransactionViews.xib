@@ -965,7 +965,6 @@ Phiippines</string>
                     <rect key="frame" x="0.0" y="72" width="375" height="1"/>
                     <color key="backgroundColor" red="0.7019608021" green="0.7019608021" blue="0.7019608021" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="375" id="EPR-1j-B2Z"/>
                         <constraint firstAttribute="height" constant="1" id="iIN-NQ-mKC"/>
                     </constraints>
                 </view>
