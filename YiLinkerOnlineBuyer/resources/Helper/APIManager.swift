@@ -8,9 +8,9 @@
 
 struct APIEnvironment {
     
-    static var development = true
+    static var development = false
     static var staging = false
-    static var production = false   
+    static var production = true
     
     static func baseUrl() -> String {
         if development {
@@ -18,7 +18,7 @@ struct APIEnvironment {
         } else if staging {
             return ""
         } else  {
-            return "http://www.yilinker.com/api/v1"
+            return "https://www.yilinker.com/api/v1"
         }
     }
 }
@@ -184,7 +184,14 @@ class APIManager: AFHTTPSessionManager {
         dispatch_once(&Static.token) {
             let url: NSURL! = NSURL(string: APIAtlas.baseUrl)
             Static.instance = APIManager(baseURL: url)
+            
+            Static.instance?.securityPolicy = AFSecurityPolicy(pinningMode: AFSSLPinningMode.Certificate)
+            let certificatePath = NSBundle.mainBundle().pathForResource("yilinker_pinned_certificate", ofType: "cer")!
+            let certificateData = NSData(contentsOfFile: certificatePath)!
+            Static.instance?.securityPolicy.pinnedCertificates = [certificateData];
+            Static.instance?.securityPolicy.validatesDomainName = true
             Static.instance?.securityPolicy.allowInvalidCertificates = true
+
             Static.instance?.responseSerializer = JSONResponseSerializer()
         }
         

@@ -325,6 +325,7 @@
 		962595331BAB1BF500A118C0 /* CaseDetailsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 962595321BAB1BF500A118C0 /* CaseDetailsModel.swift */; };
 		964B8E921BAB1A3F002E7B4A /* NewDisputeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 964B8E911BAB1A3F002E7B4A /* NewDisputeTableViewController.swift */; };
 		96DEBC6D1B9F2731000ACFE7 /* ResolutionCenterModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96DEBC6C1B9F2731000ACFE7 /* ResolutionCenterModel.swift */; };
+		9F7BC2CF1BF124C100218E10 /* yilinker_pinned_certificate.cer in Resources */ = {isa = PBXBuildFile; fileRef = 9F7BC2CE1BF124C100218E10 /* yilinker_pinned_certificate.cer */; };
 		B77B8DC21B9B54B40002C513 /* W_Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = B77B8DBF1B9B54B40002C513 /* W_Contact.swift */; };
 		B77B8DC31B9B54B40002C513 /* W_Conversation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B77B8DC01B9B54B40002C513 /* W_Conversation.swift */; };
 		B77B8DC41B9B54B40002C513 /* W_Messages.swift in Sources */ = {isa = PBXBuildFile; fileRef = B77B8DC11B9B54B40002C513 /* W_Messages.swift */; };
@@ -781,6 +782,7 @@
 		962595321BAB1BF500A118C0 /* CaseDetailsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CaseDetailsModel.swift; path = YiLinkerOnlineBuyer/resources/Model/CaseDetailsModel.swift; sourceTree = SOURCE_ROOT; };
 		964B8E911BAB1A3F002E7B4A /* NewDisputeTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NewDisputeTableViewController.swift; path = YiLinkerOnlineBuyer/resources/ViewController/NewDisputeTableViewController.swift; sourceTree = SOURCE_ROOT; };
 		96DEBC6C1B9F2731000ACFE7 /* ResolutionCenterModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ResolutionCenterModel.swift; path = YiLinkerOnlineBuyer/resources/Model/ResolutionCenterModel.swift; sourceTree = SOURCE_ROOT; };
+		9F7BC2CE1BF124C100218E10 /* yilinker_pinned_certificate.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = yilinker_pinned_certificate.cer; sourceTree = "<group>"; };
 		B77B8DBF1B9B54B40002C513 /* W_Contact.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = W_Contact.swift; sourceTree = "<group>"; };
 		B77B8DC01B9B54B40002C513 /* W_Conversation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = W_Conversation.swift; sourceTree = "<group>"; };
 		B77B8DC11B9B54B40002C513 /* W_Messages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = W_Messages.swift; sourceTree = "<group>"; };
@@ -1002,6 +1004,7 @@
 		0C8A7C711B6772670039F013 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				9F7BC2CE1BF124C100218E10 /* yilinker_pinned_certificate.cer */,
 				F7CC68F31BA295A2009168D7 /* message2.png */,
 				F740F0911B90D1E200D23A34 /* close2.png */,
 				F740F08F1B90D1D800D23A34 /* address.png */,
@@ -1672,6 +1675,7 @@
 				F7CCDA8D1B943CBB000F5AD4 /* FollowedSellerTableViewCell.xib in Resources */,
 				0C2F44C41B8576FE00021F45 /* Panton Black.otf in Resources */,
 				0C2F44D21B8576FE00021F45 /* Panton Thin Italic.otf in Resources */,
+				9F7BC2CF1BF124C100218E10 /* yilinker_pinned_certificate.cer in Resources */,
 				0C2F44C31B8576FE00021F45 /* Black Italic.otf in Resources */,
 				0CB9DB071B6A1E6600F2CA13 /* StartPageStoryBoard.storyboard in Resources */,
 				79A1C6F31B83574A0043AA36 /* ProductResultListCollectionViewCell.xib in Resources */,
@@ -2261,7 +2265,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: NELSON LIAO (XY4U9PK7G5)";
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2270,7 +2274,7 @@
 				INFOPLIST_FILE = YiLinkerOnlineBuyer/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "2dd3d9c4-793a-4d99-9d55-59a22f313cdc";
 				SWIFT_OBJC_BRIDGING_HEADER = "YiLinkerOnlineBuyer/Resources/Helper/YiLinkerOnlineBuyer-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -2283,7 +2287,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: NELSON LIAO (XY4U9PK7G5)";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2297,7 +2301,7 @@
 					"\"${PODS_ROOT}/Google/Libraries” $(inherited) \"${PODS_ROOT}/GoogleAppUtilities/Libraries\" $(inherited) \"${PODS_ROOT}/GoogleAuthUtilities/Libraries\" $(inherited) \"${PODS_ROOT}/GoogleInterchangeUtilities/Libraries\" $(inherited) \"${PODS_ROOT}/GoogleNetworkingUtilities/Libraries\" $(inherited) \"${PODS_ROOT}/GoogleSignIn/Libraries\" $(inherited) \"${PODS_ROOT}/GoogleSymbolUtilities/Libraries\" $(inherited) \"${PODS_ROOT}/GoogleUtilities/Libraries\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "2dd3d9c4-793a-4d99-9d55-59a22f313cdc";
 				SWIFT_OBJC_BRIDGING_HEADER = "YiLinkerOnlineBuyer/Resources/Helper/YiLinkerOnlineBuyer-Bridging-Header.h";
 			};
 			name = Release;
