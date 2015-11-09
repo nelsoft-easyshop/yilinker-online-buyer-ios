@@ -196,7 +196,7 @@ NO_LOCALIZE_KEY = "NO";
 // MARK: - Empty View
 CONNECTION_TITLE_LOCALIZE_KEY = "Connection Unreachable";
 CONNECTION_MESSAGE_LOCALIZE_KEY = "Cannot retrieve data. Please check your internet connection.";
-CONNECTION_TAP_TO_RELOAD_LOCALIZE_KEY = "Tap to reloadtitletitme";
+CONNECTION_TAP_TO_RELOAD_LOCALIZE_KEY = "Tap to reload.";
 
 // MESSAGES
 
