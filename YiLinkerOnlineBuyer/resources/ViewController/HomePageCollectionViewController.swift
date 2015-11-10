@@ -315,13 +315,22 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
                     let productArray: NSArray = categoryDictionary["images"] as! NSArray
                     var homeProductModels: [HomePageProductModel] = [HomePageProductModel]()
                     homeProductModels = HomePageProductModel.parseDataWithArray(productArray)
-                    let homeProductModel: HomePageProductModel  = homeProductModels[indexPath.row]
                     
-                    let fullImageColectionViewCell: FullImageCollectionViewCell = self.collectionView?.dequeueReusableCellWithReuseIdentifier("FullImageCollectionViewCell", forIndexPath: indexPath) as! FullImageCollectionViewCell
-                    fullImageColectionViewCell.itemProductImageView.sd_setImageWithURL(homeProductModel.imageURL, placeholderImage: UIImage(named: "dummy-placeholder"))
-                    fullImageColectionViewCell.targetType = homeProductModel.target
-                    fullImageColectionViewCell.target = homeProductModel.targetType
-                    return fullImageColectionViewCell
+                    if indexPath.row < homeProductModels.count {
+                        let homeProductModel: HomePageProductModel  = homeProductModels[indexPath.row]
+                        
+                        let fullImageColectionViewCell: FullImageCollectionViewCell = self.collectionView?.dequeueReusableCellWithReuseIdentifier("FullImageCollectionViewCell", forIndexPath: indexPath) as! FullImageCollectionViewCell
+                        fullImageColectionViewCell.itemProductImageView.sd_setImageWithURL(homeProductModel.imageURL, placeholderImage: UIImage(named: "dummy-placeholder"))
+                        fullImageColectionViewCell.targetType = homeProductModel.target
+                        fullImageColectionViewCell.target = homeProductModel.targetType
+                        
+                        return fullImageColectionViewCell
+                    } else {
+                        let fullImageColectionViewCell: FullImageCollectionViewCell = self.collectionView?.dequeueReusableCellWithReuseIdentifier("FullImageCollectionViewCell", forIndexPath: indexPath) as! FullImageCollectionViewCell
+                        
+                        return fullImageColectionViewCell
+                    }
+                    
                 } else {
                     let productDictionary: NSArray = dictionary["trendingItems"] as! NSArray
                     let fullImageColectionViewCell: FullImageCollectionViewCell = self.collectionView?.dequeueReusableCellWithReuseIdentifier("FullImageCollectionViewCell", forIndexPath: indexPath) as! FullImageCollectionViewCell
