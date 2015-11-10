@@ -76,14 +76,18 @@ class HomePageProductModel: ProductModel {
             if let val: AnyObject = dictionary["originalPrice"] {
                 if let tempProductOriginalPrice = dictionary["originalPrice"] as? String {
                     originalPrice = tempProductOriginalPrice
+                } else if let tempProductOriginalPrice = dictionary["originalPrice"] as? NSNumber {
+                    originalPrice = "\(tempProductOriginalPrice)"
                 } else {
                     originalPrice = ""
                 }
             }
-
+            
             if let val: AnyObject = dictionary["discountedPrice"] {
                 if let tempDiscountedPrice = dictionary["discountedPrice"] as? String {
                     discountedPrice = tempDiscountedPrice
+                } else if let tempDiscountedPrice = dictionary["discountedPrice"] as? NSNumber {
+                    discountedPrice = "\(tempDiscountedPrice)"
                 } else {
                     discountedPrice = ""
                 }
@@ -92,6 +96,8 @@ class HomePageProductModel: ProductModel {
             if let val: AnyObject = dictionary["discountedPercentage"] {
                 if let tempDiscountPercentege = dictionary["discountedPercentage"] as? String {
                     discountPercentage = tempDiscountPercentege
+                } else if let tempDiscountPercentege = dictionary["discountedPercentage"] as? NSNumber {
+                    discountPercentage = "\(tempDiscountPercentege)"
                 } else {
                     discountPercentage = ""
                 }
@@ -176,6 +182,8 @@ class HomePageProductModel: ProductModel {
             if let val: AnyObject = dictionary["originalPrice"] {
                 if let tempProductOriginalPrice = dictionary["originalPrice"] as? String {
                     originalPrice = tempProductOriginalPrice
+                } else if let tempProductOriginalPrice = dictionary["originalPrice"] as? NSNumber {
+                    originalPrice = "\(tempProductOriginalPrice)"
                 } else {
                     originalPrice = ""
                 }
@@ -184,6 +192,8 @@ class HomePageProductModel: ProductModel {
             if let val: AnyObject = dictionary["discountedPrice"] {
                 if let tempDiscountedPrice = dictionary["discountedPrice"] as? String {
                     discountedPrice = tempDiscountedPrice
+                } else if let tempDiscountedPrice = dictionary["discountedPrice"] as? NSNumber {
+                    discountedPrice = "\(tempDiscountedPrice)"
                 } else {
                     discountedPrice = ""
                 }
@@ -192,6 +202,8 @@ class HomePageProductModel: ProductModel {
             if let val: AnyObject = dictionary["discountedPercentage"] {
                 if let tempDiscountPercentege = dictionary["discountedPercentage"] as? String {
                     discountPercentage = tempDiscountPercentege
+                } else if let tempDiscountPercentege = dictionary["discountedPercentage"] as? NSNumber {
+                    discountPercentage = "\(tempDiscountPercentege)"
                 } else {
                     discountPercentage = ""
                 }

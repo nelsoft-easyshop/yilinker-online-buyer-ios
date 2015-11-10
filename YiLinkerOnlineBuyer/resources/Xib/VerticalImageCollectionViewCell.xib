@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
@@ -88,8 +88,8 @@
             <size key="customSize" width="202" height="245"/>
             <connections>
                 <outlet property="discountPercentageLabel" destination="Lbh-CJ-22K" id="5Ke-kI-md4"/>
-                <outlet property="discountedPriceLabel" destination="0p9-52-dFh" id="VLN-VO-JeZ"/>
-                <outlet property="originalPriceLabel" destination="wQZ-G9-bat" id="4qm-H4-cNE"/>
+                <outlet property="discountedPriceLabel" destination="wQZ-G9-bat" id="IRX-J6-P6Z"/>
+                <outlet property="originalPriceLabel" destination="0p9-52-dFh" id="Wi1-1F-EUs"/>
                 <outlet property="productItemImageView" destination="5ia-Jp-qLe" id="yt7-lp-VXi"/>
                 <outlet property="productNameLabel" destination="zbT-pN-AHE" id="Otx-Ja-WwZ"/>
             </connections>
@@ -97,6 +97,6 @@
         </collectionViewCell>
     </objects>
     <resources>
-        <image name="dummy-placeholder" width="300" height="188"/>
+        <image name="dummy-placeholder" width="1280" height="800"/>
     </resources>
 </document>

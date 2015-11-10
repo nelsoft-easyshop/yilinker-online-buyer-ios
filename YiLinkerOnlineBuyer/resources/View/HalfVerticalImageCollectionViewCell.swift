@@ -10,9 +10,9 @@ import UIKit
 
 class HalfVerticalImageCollectionViewCell: UICollectionViewCell {
     
-    @IBOutlet weak var originalPriceLabel: DynamicRoundedLabel!
+    @IBOutlet weak var discountedPriceLabel: DynamicRoundedLabel!
     
-    @IBOutlet weak var discountedPriceLabel: DiscountLabel!
+    @IBOutlet weak var originalPriceLabel: DiscountLabel!
     @IBOutlet weak var productNameLabel: UILabel!
     
     @IBOutlet weak var discountPercentageLabel: DynamicRoundedLabel!
@@ -25,7 +25,11 @@ class HalfVerticalImageCollectionViewCell: UICollectionViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        
+        self.discountedPriceLabel.text = ""
+        self.originalPriceLabel.text = ""
+        self.discountedPriceLabel.text = ""
+        self.discountPercentageLabel.text = ""
     }
 
 }
