@@ -12,7 +12,7 @@ struct HomeStrings {
     static let featured: String = StringHelper.localizedStringWithKey("FEATURED_LOCALIZE_KEY")
     static let hotItems: String = StringHelper.localizedStringWithKey("HOT_ITEMS_LOCALIZE_KEY")
     static let newItem: String = StringHelper.localizedStringWithKey("NEW_ITEMS_LOCALIZE_KEY")
-    static let seller: String = StringHelper.localizedStringWithKey("SELLER_LOCALIZE_KEY")
+    static let seller: String = StringHelper.localizedStringWithKey("SELLERS_LOCALIZE_KEY")
     
     static let wishlistError: String = StringHelper.localizedStringWithKey("WISHLIST_ERROR_LOCALIZE_KEY")
     static let error: String = StringHelper.localizedStringWithKey("ERROR_LOCALIZE_KEY")

@@ -205,7 +205,14 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
                     
                     if homeProductModel!.discountedPrice != ""  && homeProductModel!.discountPercentage.toInt() != nil {
                         fourImageCollectionViewCell.discountedPriceLabel.text = "P \(homeProductModel!.discountedPrice)"
-                        fourImageCollectionViewCell.discountPercentageLabel.text = "\(homeProductModel!.discountPercentage) %"
+                        fourImageCollectionViewCell.originalPriceLabel.text = "P \(homeProductModel!.originalPrice)"
+                        if homeProductModel!.discountPercentage.toInt() != 0 {
+                            fourImageCollectionViewCell.discountPercentageLabel.text = "\(homeProductModel!.discountPercentage) %"
+                        } else {
+                            fourImageCollectionViewCell.discountPercentageLabel.hidden = true
+                            fourImageCollectionViewCell.originalPriceLabel.hidden = true
+                        }
+                        
                     } else {
                         fourImageCollectionViewCell.discountedPriceLabel.hidden = true
                         fourImageCollectionViewCell.discountPercentageLabel.hidden = true
@@ -213,7 +220,7 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
                     
                     fourImageCollectionViewCell.targetType = homeProductModel!.targetType
                     fourImageCollectionViewCell.target = homeProductModel!.target
-                    fourImageCollectionViewCell.discountedPriceLabel.drawDiscountLine(false)
+                    
                 }
                 
                 
@@ -230,14 +237,24 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
                     
                     if homeProductModel!.discountedPrice != "" && homeProductModel!.discountPercentage.toInt() != nil {
                         fourImageCollectionViewCell.discountedPriceLabel.text = "P \(homeProductModel!.discountedPrice)"
-                        fourImageCollectionViewCell.discountPercentageLabel.text = "\(homeProductModel!.discountPercentage) %"
+                        
+                        if homeProductModel!.discountPercentage.toInt() != 0 {
+                            fourImageCollectionViewCell.discountPercentageLabel.text = "\(homeProductModel!.discountPercentage) %"
+                            fourImageCollectionViewCell.originalPriceLabel.hidden = true
+                        } else {
+                            fourImageCollectionViewCell.discountPercentageLabel.hidden = true
+                        }
+                        
                     } else {
                         fourImageCollectionViewCell.discountedPriceLabel.hidden = true
                         fourImageCollectionViewCell.discountPercentageLabel.hidden = true
                     }
+                    
                     fourImageCollectionViewCell.targetType = homeProductModel!.targetType
                     fourImageCollectionViewCell.target = homeProductModel!.target
-                    fourImageCollectionViewCell.discountedPriceLabel.drawDiscountLine(false)
+                    
+                    fourImageCollectionViewCell.originalPriceLabel.drawDiscountLine(false)
+                    fourImageCollectionViewCell.discountedPriceLabel.text = homeProductModel!.discountedPrice
                 }
                 
                 
@@ -298,13 +315,22 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
                     let productArray: NSArray = categoryDictionary["images"] as! NSArray
                     var homeProductModels: [HomePageProductModel] = [HomePageProductModel]()
                     homeProductModels = HomePageProductModel.parseDataWithArray(productArray)
-                    let homeProductModel: HomePageProductModel  = homeProductModels[indexPath.row]
                     
-                    let fullImageColectionViewCell: FullImageCollectionViewCell = self.collectionView?.dequeueReusableCellWithReuseIdentifier("FullImageCollectionViewCell", forIndexPath: indexPath) as! FullImageCollectionViewCell
-                    fullImageColectionViewCell.itemProductImageView.sd_setImageWithURL(homeProductModel.imageURL, placeholderImage: UIImage(named: "dummy-placeholder"))
-                    fullImageColectionViewCell.targetType = homeProductModel.target
-                    fullImageColectionViewCell.target = homeProductModel.targetType
-                    return fullImageColectionViewCell
+                    if indexPath.row < homeProductModels.count {
+                        let homeProductModel: HomePageProductModel  = homeProductModels[indexPath.row]
+                        
+                        let fullImageColectionViewCell: FullImageCollectionViewCell = self.collectionView?.dequeueReusableCellWithReuseIdentifier("FullImageCollectionViewCell", forIndexPath: indexPath) as! FullImageCollectionViewCell
+                        fullImageColectionViewCell.itemProductImageView.sd_setImageWithURL(homeProductModel.imageURL, placeholderImage: UIImage(named: "dummy-placeholder"))
+                        fullImageColectionViewCell.targetType = homeProductModel.target
+                        fullImageColectionViewCell.target = homeProductModel.targetType
+                        
+                        return fullImageColectionViewCell
+                    } else {
+                        let fullImageColectionViewCell: FullImageCollectionViewCell = self.collectionView?.dequeueReusableCellWithReuseIdentifier("FullImageCollectionViewCell", forIndexPath: indexPath) as! FullImageCollectionViewCell
+                        
+                        return fullImageColectionViewCell
+                    }
+                    
                 } else {
                     let productDictionary: NSArray = dictionary["trendingItems"] as! NSArray
                     let fullImageColectionViewCell: FullImageCollectionViewCell = self.collectionView?.dequeueReusableCellWithReuseIdentifier("FullImageCollectionViewCell", forIndexPath: indexPath) as! FullImageCollectionViewCell
@@ -335,6 +361,8 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
                 let homeProductModels: [HomePageProductModel] = HomePageProductModel.parseDataWithArray(productArray)
                 homeProductModel = homeProductModels[indexPath.row]
             }
+            
+            
             twoColumnGridCollectionViewCell.productNameLabel.text = homeProductModel?.name
             twoColumnGridCollectionViewCell.targetType = homeProductModel!.targetType
             twoColumnGridCollectionViewCell.target = homeProductModel!.target
@@ -348,8 +376,9 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
             twoColumnGridCollectionViewCell.layoutSubviews()
             twoColumnGridCollectionViewCell.discountedPriceLabel.drawDiscountLine(false)
             
-            if homeProductModel!.discountPercentage != "0" {
+            if homeProductModel!.discountPercentage.toInt() == nil || homeProductModel!.discountPercentage.toInt() == 0 {
                 twoColumnGridCollectionViewCell.discountPercentageLabel.hidden = true
+                twoColumnGridCollectionViewCell.discountedPriceLabel.hidden = true
             }
             
             return twoColumnGridCollectionViewCell
