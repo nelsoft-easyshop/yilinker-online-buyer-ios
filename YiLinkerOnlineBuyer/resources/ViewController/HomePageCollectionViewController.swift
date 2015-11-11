@@ -35,8 +35,22 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
     var dictionary: NSDictionary = NSDictionary()
     var layouts: [String] = []
     
+    // Temporay Category Titles
+    var temporaryCategoryTitles: [String] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
+        if let temp = self.dictionary["categories"] as? NSArray {
+            let arrayDictionary: NSArray = self.dictionary["categories"] as! NSArray
+            //hard coded for now
+            var categoryDictionary: NSDictionary
+          
+            for category in arrayDictionary {
+               self.temporaryCategoryTitles.append(category["categoryName"] as! String)
+            }
+        }
     }
     
     override func viewDidLayoutSubviews() {
@@ -567,9 +581,9 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
                 headerView.titleLabel.text = HomeCollectionViewStrings.newSeller
                 headerView.backgroundColor = UIColor.clearColor()
             } else if self.layouts[indexPath.section] == Constants.HomePage.layoutFiveKeyWithFooter {
-                headerView.titleLabel.text = HomeCollectionViewStrings.watches
+                headerView.titleLabel.text = self.temporaryCategoryTitles[0]
             } else if self.layouts[indexPath.section] == Constants.HomePage.layoutFiveKey2 {
-                headerView.titleLabel.text = HomeCollectionViewStrings.electronics
+                headerView.titleLabel.text = self.temporaryCategoryTitles[1]
             }
             
             headerView.updateTitleLine()
