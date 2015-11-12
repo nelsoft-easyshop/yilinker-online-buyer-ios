@@ -119,8 +119,16 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     }
     
     func onNewMessage(notification : NSNotification){
-        //action here to open messaging
-        //add count in messaging
+        if let info = notification.userInfo as? Dictionary<String, AnyObject> {
+            if let data = info["data"] as? String{
+                if let data2 = data.dataUsingEncoding(NSUTF8StringEncoding){
+                    if let json = NSJSONSerialization.JSONObjectWithData(data2, options: .MutableContainers, error: nil) as? [String:AnyObject] {
+                        var count = SessionManager.getUnReadMessagesCount() + 1
+                        SessionManager.setUnReadMessagesCount(count)
+                    }
+                }
+            }
+        }
     }
     
     func fireCreateRegistration(registrationID : String) {
@@ -132,7 +140,8 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         //password
         let parameters: NSDictionary = [
             "registrationId": "\(registrationID)",
-            "access_token"  : SessionManager.accessToken()
+            "access_token"  : SessionManager.accessToken(),
+            "deviceType"    : "1"
             ]   as Dictionary<String, String>
         
         let url = APIAtlas.baseUrl + APIAtlas.ACTION_GCM_CREATE
