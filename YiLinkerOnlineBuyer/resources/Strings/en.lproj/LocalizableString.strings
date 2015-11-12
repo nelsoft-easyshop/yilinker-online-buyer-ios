@@ -301,6 +301,9 @@ DISPUTE_NO_AVAILABLE_TRANSACTION_LOCALIZE_KEY = "No Available Transaction";
 DISPUTE_NO_REASON_TRANSACTION_LOCALIZE_KEY = "No Available Reason";
 DISPUTE_CHOOSE_TRANSACTION_NUMBER_TRANSACTION_LOCALIZE_KEY = "Please choose a transaction number before adding a product.";
 
+CUSTOMIZE_SHOPPING_ALERT_TITLE_LOCALIZE_KEY = "Feature Not Available";
+CUSTOMIZE_SHOPPING_ALERT_MESSAGE_LOCALIZE_KEY = "Customize shopping will be available on the next release.";
+
 
 //Vendor Page
 VENDOR_PAGE_TITLE_LOCALIZE_KEY = "Vendor Page";
