@@ -1088,8 +1088,17 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     }
     
     func buyItNowAction(gesture: UIGestureRecognizer) {
-        requestAddCartItem("buyitnow")
+//        requestAddCartItem("buyitnow")
+        let alertController = UIAlertController(title: "Feature Not Available", message: "Check-out not available in Beta Testing", preferredStyle: .Alert)
         
+        let OKAction = UIAlertAction(title: "OK", style: .Default) { (action) in
+            
+        }
+        alertController.addAction(OKAction)
+        
+        self.presentViewController(alertController, animated: true) {
+            // ...
+        }
     }
     
     func showAlert(#title: String!, message: String!) {
