@@ -82,8 +82,10 @@ class FollowedSellerModel {
                         profileImageUrl.append(tempVar)
                     }
                     
-                    if let tempVar = category["specialty"] as? String {
-                        specialty.append(tempVar)
+                    if !(category["specialty"] is NSNull) {
+                        specialty.append(category["specialty"] as! String)
+                    } else {
+                        specialty.append("")
                     }
                     
                     if let tempVar = category["rating"] as? Int {
