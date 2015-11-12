@@ -391,21 +391,33 @@ class CircularMenuViewController: UIViewController {
             }
         }
         
-        if !SessionManager.isLoggedIn() && index == 3 {
-            self.customTabBarController?.isValidToSwitchToMenuTabBarItems = false
-            self.dissmissViewControllerAnimated()
-        } else {
+//        if !SessionManager.isLoggedIn() && index == 3 {
+//            self.customTabBarController?.isValidToSwitchToMenuTabBarItems = false
+//            self.dissmissViewControllerAnimated()
+//        } else {
             println(index)
-            self.customTabBarController?.selectedIndex = 2
-            
-            let navigationController: UINavigationController = self.customTabBarController!.viewControllers![2] as! UINavigationController
-            navigationController.popToRootViewControllerAnimated(false)
-            let hiddenViewController: HiddenViewController = navigationController.viewControllers[0] as! HiddenViewController
-            hiddenViewController.selectViewControllerAtIndex(index)
-            
-            self.customTabBarController?.isValidToSwitchToMenuTabBarItems = false
-            self.dissmissViewControllerAnimated()
-        }
+            if (SessionManager.isLoggedIn() && index == 3) || (!SessionManager.isLoggedIn() && index == 4) {
+                let alertController = UIAlertController(title: StringHelper.localizedStringWithKey("CUSTOMIZE_SHOPPING_ALERT_TITLE_LOCALIZE_KEY"),
+                    message: StringHelper.localizedStringWithKey("CUSTOMIZE_SHOPPING_ALERT_MESSAGE_LOCALIZE_KEY"), preferredStyle: .Alert)
+                let OKAction = UIAlertAction(title: "OK", style: .Default) { (action) in
+                }
+                alertController.addAction(OKAction)
+                self.presentViewController(alertController, animated: true) {
+                    // ...
+                }
+                self.customTabBarController?.isValidToSwitchToMenuTabBarItems = false
+            } else {
+                self.customTabBarController?.selectedIndex = 2
+                
+                let navigationController: UINavigationController = self.customTabBarController!.viewControllers![2] as! UINavigationController
+                navigationController.popToRootViewControllerAnimated(false)
+                let hiddenViewController: HiddenViewController = navigationController.viewControllers[0] as! HiddenViewController
+                hiddenViewController.selectViewControllerAtIndex(index)
+                
+                self.customTabBarController?.isValidToSwitchToMenuTabBarItems = false
+                self.dissmissViewControllerAnimated()
+            }
+//        }
         
     }
     
