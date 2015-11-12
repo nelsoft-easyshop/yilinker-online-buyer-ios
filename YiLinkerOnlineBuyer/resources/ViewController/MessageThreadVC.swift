@@ -55,6 +55,7 @@ class MessageThreadVC: UIViewController {
     var messages = [W_Messages()]
     
     var onlineColor = UIColor(red: 84/255, green: 182/255, blue: 167/255, alpha: 1.0)
+    var offlineColor = UIColor(red: 218/255, green: 32/255, blue: 43/255, alpha: 1.0)
     
     let receiverIdentifier = "MessageBubbleReceiver"
     let senderIdentifier = "MessageBubbleSender"
@@ -131,55 +132,65 @@ class MessageThreadVC: UIViewController {
         var tap = UITapGestureRecognizer (target: self, action: Selector("tableTapped:"))
         self.threadTableView.addGestureRecognizer(tap)
         
-        
-        /* GCM */
-        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-        
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "onSeenMessage:",
-            name: appDelegate.seenMessageKey, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "onReceiveNewMessage:",
-            name: appDelegate.messageKey, object: nil)
+    }
+    
+    func onStatusUpdate(notification: NSNotification){
+        if let info = notification.userInfo as? Dictionary<String, AnyObject> {
+            if let data = info["data"] as? String{
+                if let data2 = data.dataUsingEncoding(NSUTF8StringEncoding){
+                    if let json = NSJSONSerialization.JSONObjectWithData(data2, options: .MutableContainers, error: nil) as? [String:AnyObject] {
+                        println("json \(json)")
+                        if let userId = json["userId"] as? Int{
+                            if (String(userId) == recipient?.userId){
+                                if let status = json["isOnline"] as? String{
+                                    recipient?.isOnline = status
+                                    if (status == "false"){
+                                        onlineView.backgroundColor = offlineColor
+                                        onlineLabel.text = LocalizedStrings.offline
+                                    } else {
+                                        onlineView.backgroundColor = onlineColor
+                                        onlineLabel.text = LocalizedStrings.online
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
     
     func onSeenMessage(notification : NSNotification){
         if let info = notification.userInfo as? Dictionary<String, AnyObject> {
-            if let aps = info["aps"] as? Dictionary<String, AnyObject>{
-                if let alert = aps["alert"] as? Dictionary<String, AnyObject>{
-                    if let error = alert["error"] as? String{
-                        println("error with notification \(error)")
-                    }
-                    if let recipientId = alert["body"] as? String {
-                        if (recipientId == recipient?.userId){
-                            var r_temp = recipient?.userId ?? ""
-                            self.getMessagesFromEndpoint("1", limit: "30", userId: r_temp)
+            if let data = info["data"] as? String{
+                if let data2 = data.dataUsingEncoding(NSUTF8StringEncoding){
+                    if let json = NSJSONSerialization.JSONObjectWithData(data2, options: .MutableContainers, error: nil) as? [String:AnyObject] {
+                        if let userId = json["userId"] as? Int{
+                            if (String(userId) == recipient?.userId){
+                                var r_temp = recipient?.userId ?? ""
+                                self.getMessagesFromEndpoint("1", limit: "30", userId: r_temp)
+                            }
                         }
                     }
-                    
                 }
             }
-        } else {
-            println("userInfo is null")
         }
     }
     
     func onReceiveNewMessage(notification : NSNotification){
         if let info = notification.userInfo as? Dictionary<String, AnyObject> {
-            if let aps = info["aps"] as? Dictionary<String, AnyObject>{
-                if let alert = aps["alert"] as? Dictionary<String, AnyObject>{
-                    if let error = alert["error"] as? String{
-                        println("error with notification \(error)")
-                    }
-                    if let recipientId = alert["body"] as? String {
-                        if (recipientId == recipient?.userId){
-                            var r_temp = recipient?.userId ?? ""
-                            self.getMessagesFromEndpoint("1", limit: "30", userId: r_temp)
+            if let data = info["data"] as? String{
+                if let data2 = data.dataUsingEncoding(NSUTF8StringEncoding){
+                    if let json = NSJSONSerialization.JSONObjectWithData(data2, options: .MutableContainers, error: nil) as? [String:AnyObject] {
+                        if let userId = json["senderUid"] as? Int{
+                            if (String(userId) == recipient?.userId){
+                                var r_temp = recipient?.userId ?? ""
+                                self.getMessagesFromEndpoint("1", limit: "30", userId: r_temp)
+                            }
                         }
                     }
-                    
                 }
             }
-        } else {
-            println("userInfo is null")
         }
     }
     
@@ -200,6 +211,16 @@ class MessageThreadVC: UIViewController {
         var r_temp = recipient?.userId ?? ""
         self.setConversationAsReadFromEndpoint(r_temp)
         self.sendButton.titleLabel?.text = LocalizedStrings.send
+        
+        /* GCM */
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "onStatusUpdate:",
+            name: appDelegate.statusKey, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "onSeenMessage:",
+            name: appDelegate.seenMessageKey, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "onReceiveNewMessage:",
+            name: appDelegate.messageKey, object: nil)
     }
     
     func tableTapped(tap : UITapGestureRecognizer){
@@ -216,6 +237,7 @@ class MessageThreadVC: UIViewController {
         
         NSNotificationCenter.defaultCenter().removeObserver(self, name: appDelegate.seenMessageKey, object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: appDelegate.messageKey, object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: appDelegate.statusKey, object: nil)
         
         self.clearProfileView()
         
@@ -235,11 +257,6 @@ class MessageThreadVC: UIViewController {
         var rightPadding3 : CGFloat = 4.0
         
         onlineLabel = UILabel()
-        if (recipient?.isOnline == "1"){
-            onlineLabel.text = LocalizedStrings.online
-        } else {
-            onlineLabel.text = LocalizedStrings.offline
-        }
         onlineLabel.font = UIFont(name: onlineLabel.font.fontName, size: 11.0)
         onlineLabel.textColor = UIColor.whiteColor()
         onlineLabel.sizeToFit()
@@ -267,7 +284,15 @@ class MessageThreadVC: UIViewController {
         profileImageView.layer.masksToBounds = true
         
         onlineView = RoundedView(frame: CGRectMake(navBarWidth-profileImageDimension - rightPadding - onlineLabel.frame.width - rightPadding2 - 10 - rightPadding3, 8, 10, 10))
-        onlineView.backgroundColor = onlineColor
+        
+        
+        if (recipient?.isOnline == "1"){
+            onlineLabel.text = LocalizedStrings.online
+            onlineView.backgroundColor = onlineColor
+        } else {
+            onlineLabel.text = LocalizedStrings.offline
+            onlineView.backgroundColor = offlineColor
+        }
         
         onlineView.layer.cornerRadius = onlineView.frame.height/2
         onlineView.layer.masksToBounds = true

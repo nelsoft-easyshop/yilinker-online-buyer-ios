@@ -69,8 +69,48 @@ class ContactListVC: UIViewController, EmptyViewDelegate{
         
         self.navigationItem.title = LocalizedStrings.titleNewMessage
         self.placeCustomBackImage()
-        
         // Do any additional setup after loading the view.
+    }
+    
+    func onStatusUpdate(notification: NSNotification){
+        if let info = notification.userInfo as? Dictionary<String, AnyObject> {
+            if let data = info["data"] as? String{
+                if let data2 = data.dataUsingEncoding(NSUTF8StringEncoding){
+                    if let json = NSJSONSerialization.JSONObjectWithData(data2, options: .MutableContainers, error: nil) as? [String:AnyObject] {
+                        if let userId = json["userId"] as? Int{
+                            for contact in contacts{
+                                if (contact.userId == String(userId)) {
+                                    if let status = json["isOnline"] as? String{
+                                        if (status == "false"){
+                                            contact.isOnline = "0"
+                                        } else {
+                                            contact.isOnline = "1"
+                                        }
+                                        self.contactTableView.reloadData()
+                                        break
+                                    }
+                                }
+                            }
+                            
+                            for contact in filteredContacts{
+                                if (contact.userId == String(userId)) {
+                                    if let status = json["isOnline"] as? String{
+                                        if (status == "false"){
+                                            contact.isOnline = "0"
+                                        } else {
+                                            contact.isOnline = "1"
+                                        }
+                                        self.contactTableView.reloadData()
+                                        break
+                                    }
+                                }
+                            }
+                            
+                        }
+                    }
+                }
+            }
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -78,8 +118,20 @@ class ContactListVC: UIViewController, EmptyViewDelegate{
         // Dispose of any resources that can be recreated.
     }
     
+    override func viewWillAppear(animated: Bool) {
+        
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "onStatusUpdate:",
+            name: appDelegate.statusKey, object: nil)
+    }
+    
     override func viewWillDisappear(animated: Bool) {
         self.resultSearchController.active = false
+        
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: appDelegate.statusKey, object: nil)
     }
     
     func placeCustomBackImage(){

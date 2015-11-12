@@ -336,7 +336,8 @@
 		B77B8DD91B9B554A0002C513 /* MessageThreadVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B77B8DCF1B9B554A0002C513 /* MessageThreadVC.swift */; };
 		B77B8DDA1B9B554A0002C513 /* TextViewAutoHeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = B77B8DD01B9B554A0002C513 /* TextViewAutoHeight.swift */; };
 		B77B8DDC1B9B588A0002C513 /* DateUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = B77B8DDB1B9B588A0002C513 /* DateUtility.swift */; };
-		B7B1D8321BA15B0C006A5DF5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B7B1D8311BA15B0C006A5DF5 /* GoogleService-Info.plist */; };
+		B7B1D8321BA15B0C006A5DF5 /* old_GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B7B1D8311BA15B0C006A5DF5 /* old_GoogleService-Info.plist */; };
+		B7EE726C1BF1DD5D003724CB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B7EE726B1BF1DD5D003724CB /* GoogleService-Info.plist */; };
 		BE00C15B75D7E76D254AAEC1 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D038C18A7712E626564D2D3 /* libPods.a */; };
 		F70EFB1F1BC6BEB80077B8ED /* TransactionLeaveFeedbackFieldTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F70EFB1D1BC6BEB80077B8ED /* TransactionLeaveFeedbackFieldTableViewCell.swift */; };
 		F70EFB201BC6BEB80077B8ED /* TransactionLeaveFeedbackFieldTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F70EFB1E1BC6BEB80077B8ED /* TransactionLeaveFeedbackFieldTableViewCell.xib */; };
@@ -781,7 +782,8 @@
 		B77B8DCF1B9B554A0002C513 /* MessageThreadVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageThreadVC.swift; sourceTree = "<group>"; };
 		B77B8DD01B9B554A0002C513 /* TextViewAutoHeight.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextViewAutoHeight.swift; sourceTree = "<group>"; };
 		B77B8DDB1B9B588A0002C513 /* DateUtility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateUtility.swift; sourceTree = "<group>"; };
-		B7B1D8311BA15B0C006A5DF5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		B7B1D8311BA15B0C006A5DF5 /* old_GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "old_GoogleService-Info.plist"; sourceTree = "<group>"; };
+		B7EE726B1BF1DD5D003724CB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F70EFB1D1BC6BEB80077B8ED /* TransactionLeaveFeedbackFieldTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TransactionLeaveFeedbackFieldTableViewCell.swift; path = YiLinkerOnlineBuyer/resources/ViewController/TransactionLeaveFeedbackFieldTableViewCell.swift; sourceTree = SOURCE_ROOT; };
 		F70EFB1E1BC6BEB80077B8ED /* TransactionLeaveFeedbackFieldTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TransactionLeaveFeedbackFieldTableViewCell.xib; path = YiLinkerOnlineBuyer/resources/ViewController/TransactionLeaveFeedbackFieldTableViewCell.xib; sourceTree = SOURCE_ROOT; };
 		F70EFB211BC6BF190077B8ED /* TransactionLeaveFeedbackRateTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TransactionLeaveFeedbackRateTableViewCell.swift; path = YiLinkerOnlineBuyer/resources/ViewController/TransactionLeaveFeedbackRateTableViewCell.swift; sourceTree = SOURCE_ROOT; };
@@ -1024,11 +1026,12 @@
 		0C9936FB1B750583000D6074 /* External */ = {
 			isa = PBXGroup;
 			children = (
+				B7EE726B1BF1DD5D003724CB /* GoogleService-Info.plist */,
 				0C574A331BC6A81C00913F29 /* GooglePlus.bundle */,
 				0C574A291BC5176C00913F29 /* GoogleOpenSource.framework */,
 				0C574A2A1BC5176C00913F29 /* GooglePlus.framework */,
 				0C2F44AF1B8576FE00021F45 /* Font */,
-				B7B1D8311BA15B0C006A5DF5 /* GoogleService-Info.plist */,
+				B7B1D8311BA15B0C006A5DF5 /* old_GoogleService-Info.plist */,
 				0C9936FC1B750583000D6074 /* dummyHome.json */,
 			);
 			path = External;
@@ -1679,6 +1682,7 @@
 				F7C569E61BB17823004740E1 /* TransactionProductDetailsTableViewCell.xib in Resources */,
 				0C9937641B750583000D6074 /* LayoutHeaderCollectionViewCell.xib in Resources */,
 				79E68B831B8AEC85008626E4 /* PointsEarnedTableViewCell.xib in Resources */,
+				B7EE726C1BF1DD5D003724CB /* GoogleService-Info.plist in Resources */,
 				79E68B8F1B8B0717008626E4 /* PointsTableViewCell.xib in Resources */,
 				F740F0921B90D1E200D23A34 /* close2.png in Resources */,
 				F7C569FA1BB1790A004740E1 /* TransactionCancelOrderSuccessViewController.xib in Resources */,
@@ -1760,7 +1764,7 @@
 				79E68B9D1B8B4270008626E4 /* ProfileSettingsTableViewCell.xib in Resources */,
 				F70EFB201BC6BEB80077B8ED /* TransactionLeaveFeedbackFieldTableViewCell.xib in Resources */,
 				0C9937661B750583000D6074 /* NewSellerScrollableCollectionViewCell.xib in Resources */,
-				B7B1D8321BA15B0C006A5DF5 /* GoogleService-Info.plist in Resources */,
+				B7B1D8321BA15B0C006A5DF5 /* old_GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
