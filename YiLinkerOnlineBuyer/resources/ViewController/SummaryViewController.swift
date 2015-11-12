@@ -39,7 +39,7 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
     override func viewDidLoad() {
         super.viewDidLoad()
         self.registerNib()
-        
+        /*
         let alertController = UIAlertController(title: "Feature Not Available", message: "Check-out not available in Beta Testing", preferredStyle: .Alert)
         
         let OKAction = UIAlertAction(title: "OK", style: .Default) { (action) in
@@ -50,7 +50,7 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
         self.presentViewController(alertController, animated: true) {
             // ...
         }
-        
+        */
         if SessionManager.isLoggedIn() {
             self.tableView.layoutIfNeeded()
             self.tableView.tableFooterView = self.tableFooterView()
