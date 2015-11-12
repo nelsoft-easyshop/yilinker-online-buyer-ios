@@ -605,7 +605,7 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
         if cell.isKindOfClass(FullImageCollectionViewCell) {
             let fullImageCollectionViewCell: FullImageCollectionViewCell = self.collectionView!.cellForItemAtIndexPath(indexPath) as! FullImageCollectionViewCell
             
-            if fullImageCollectionViewCell.targetType == "web" {
+            if fullImageCollectionViewCell.targetType == "webview" {
                 self.redirectToWebViewWithUrl(fullImageCollectionViewCell.target)
             } else {
                 self.redirectToProductpageWithProductID(fullImageCollectionViewCell.target)
