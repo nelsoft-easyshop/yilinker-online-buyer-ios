@@ -95,6 +95,10 @@ class CartTableViewCell: UITableViewCell, UIScrollViewDelegate {
         cellContentView.frame = CGRectMake(0, 0, width, CGRectGetHeight(self.bounds))
         swipeIndicatorView.frame = CGRectMake((width - 25), 0, 25, CGRectGetHeight(self.bounds))
         
+        productNameLabel.frame = CGRectMake(productNameLabel.frame.origin.x, productNameLabel.frame.origin.y, (width - 187), productNameLabel.frame.height)
+        productDetailsLabel.frame = CGRectMake(productDetailsLabel.frame.origin.x, productDetailsLabel.frame.origin.y, (width - 187), productDetailsLabel.frame.height)
+        productPriceLabel.frame = CGRectMake(productPriceLabel.frame.origin.x, productPriceLabel.frame.origin.y, (width - 187), productPriceLabel.frame.height)
+        
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "enclosingTableViewDidScroll", name: swipeForOptionsCellEnclosingTableViewDidBeginScrollingNotification, object: nil)
 
         var contentTap = UITapGestureRecognizer(target:self, action:"contentTapAction")

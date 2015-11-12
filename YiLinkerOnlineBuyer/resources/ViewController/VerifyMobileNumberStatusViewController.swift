@@ -10,7 +10,7 @@ import UIKit
 
 protocol VerifyMobileNumberStatusViewControllerDelegate {
     func closeVerifyMobileNumberStatusViewController()
-    func continueVerifyMobileNumberAction()
+    func continueVerifyMobileNumberAction(isSuccessful: Bool)
     func requestNewVerificationCodeAction()
 }
 
@@ -69,7 +69,7 @@ class VerifyMobileNumberStatusViewController: UIViewController {
             delegate?.closeVerifyMobileNumberStatusViewController()
         } else if sender as! UIButton == continueButton {
             self.dismissViewControllerAnimated(true, completion: nil)
-            delegate?.continueVerifyMobileNumberAction()
+            delegate?.continueVerifyMobileNumberAction(isSuccessful)
         }else if sender as! UIButton == requestButton {
             self.dismissViewControllerAnimated(true, completion: nil)
             delegate?.requestNewVerificationCodeAction()

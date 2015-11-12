@@ -16,7 +16,6 @@ protocol ProductsTableViewCellDelegate {
 class ProductsTableViewCell: UITableViewCell, UICollectionViewDelegate, UICollectionViewDataSource {
 
     @IBOutlet weak var collectionView: UICollectionView!
-    
     @IBOutlet weak var productsLabel: UILabel!
     @IBOutlet weak var moreSellersProduct: DynamicRoundedButton!
     
@@ -25,9 +24,11 @@ class ProductsTableViewCell: UITableViewCell, UICollectionViewDelegate, UICollec
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        //Register nib
         self.regsterNib()
     }
     
+    //MARK: Register nib class for collectionview cell
     func regsterNib() {
         let cellNib: UINib = UINib(nibName: "FullImageCollectionViewCell", bundle: nil)
         self.collectionView.registerNib(cellNib, forCellWithReuseIdentifier: "FullImageCollectionViewCell")
@@ -39,6 +40,7 @@ class ProductsTableViewCell: UITableViewCell, UICollectionViewDelegate, UICollec
         super.setSelected(selected, animated: animated)
     }
     
+    //MARK: Collectionview delegate methods
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         return 1
     }

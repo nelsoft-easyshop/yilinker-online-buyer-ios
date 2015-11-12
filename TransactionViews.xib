@@ -496,7 +496,7 @@ Phiippines</string>
                     <rect key="frame" x="0.0" y="37" width="375" height="182"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bogz Borja, Manila" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bbn-ft-Jy2">
-                            <rect key="frame" x="9" y="31" width="330" height="21"/>
+                            <rect key="frame" x="9" y="31" width="325" height="21"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="21" id="4fQ-3H-2SS"/>
                             </constraints>
@@ -591,6 +591,12 @@ Phiippines</string>
                                 <constraint firstAttribute="width" constant="20" id="xW7-nM-ja7"/>
                             </constraints>
                         </imageView>
+                        <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="right-gray" translatesAutoresizingMaskIntoConstraints="NO" id="i4C-Xs-3KZ">
+                            <rect key="frame" x="348" y="32" width="9" height="20"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="9" id="Ytk-jL-WtY"/>
+                            </constraints>
+                        </imageView>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
@@ -607,10 +613,13 @@ Phiippines</string>
                         <constraint firstItem="iuS-Dw-7Fc" firstAttribute="top" secondItem="ej9-dX-Ui8" secondAttribute="bottom" constant="21" id="Kfi-Og-mMl"/>
                         <constraint firstItem="TPx-1b-Ida" firstAttribute="leading" secondItem="iuS-Dw-7Fc" secondAttribute="trailing" constant="20" id="LoD-tk-ayk"/>
                         <constraint firstItem="mr3-vS-KA3" firstAttribute="top" secondItem="sMK-Ta-LV4" secondAttribute="top" constant="10" id="Mlu-6P-582"/>
+                        <constraint firstAttribute="trailing" secondItem="i4C-Xs-3KZ" secondAttribute="trailing" constant="18" id="Mt7-e9-E0X"/>
                         <constraint firstItem="5om-iF-rnT" firstAttribute="leading" secondItem="sMK-Ta-LV4" secondAttribute="leading" constant="9" id="NWz-Y7-SYz"/>
+                        <constraint firstItem="i4C-Xs-3KZ" firstAttribute="top" secondItem="mr3-vS-KA3" secondAttribute="bottom" constant="1" id="OYO-tU-2RU"/>
                         <constraint firstItem="XMI-n2-oX4" firstAttribute="top" secondItem="KaX-3x-6wG" secondAttribute="bottom" constant="20" id="QIt-Uq-UF1"/>
                         <constraint firstItem="iuS-Dw-7Fc" firstAttribute="leading" secondItem="S4E-Ye-PKY" secondAttribute="trailing" constant="8" id="Qda-tX-lRz"/>
                         <constraint firstItem="bbn-ft-Jy2" firstAttribute="leading" secondItem="sMK-Ta-LV4" secondAttribute="leading" constant="9" id="Qiu-Ow-isA"/>
+                        <constraint firstItem="ej9-dX-Ui8" firstAttribute="top" secondItem="i4C-Xs-3KZ" secondAttribute="bottom" constant="8" id="YNd-5S-JhN"/>
                         <constraint firstItem="XMI-n2-oX4" firstAttribute="leading" secondItem="h47-5W-Ndm" secondAttribute="trailing" constant="8" id="b1C-Kv-Mp4"/>
                         <constraint firstAttribute="trailing" secondItem="KaX-3x-6wG" secondAttribute="trailing" id="c3R-1y-Y0c"/>
                         <constraint firstAttribute="trailing" secondItem="cJd-fb-MZu" secondAttribute="trailing" constant="13" id="clP-gA-a8m"/>
@@ -622,9 +631,9 @@ Phiippines</string>
                         <constraint firstItem="S4E-Ye-PKY" firstAttribute="leading" secondItem="sMK-Ta-LV4" secondAttribute="leading" constant="8" id="qDK-8w-LCF"/>
                         <constraint firstAttribute="trailing" secondItem="mr3-vS-KA3" secondAttribute="trailing" constant="37" id="qNJ-dI-GH9"/>
                         <constraint firstItem="iuS-Dw-7Fc" firstAttribute="leading" secondItem="5om-iF-rnT" secondAttribute="trailing" constant="8" id="two-wV-5OE"/>
-                        <constraint firstAttribute="trailing" secondItem="bbn-ft-Jy2" secondAttribute="trailing" constant="36" id="txe-0A-xoD"/>
                         <constraint firstItem="h47-5W-Ndm" firstAttribute="top" secondItem="KaX-3x-6wG" secondAttribute="bottom" constant="24" id="uf8-MK-S7w"/>
                         <constraint firstItem="bbn-ft-Jy2" firstAttribute="top" secondItem="mr3-vS-KA3" secondAttribute="bottom" id="w6F-sj-jwm"/>
+                        <constraint firstItem="i4C-Xs-3KZ" firstAttribute="leading" secondItem="bbn-ft-Jy2" secondAttribute="trailing" constant="14" id="wAS-pz-Qer"/>
                         <constraint firstItem="S4E-Ye-PKY" firstAttribute="top" secondItem="ej9-dX-Ui8" secondAttribute="bottom" constant="25" id="yh6-yD-H8H"/>
                     </constraints>
                 </view>
@@ -650,6 +659,7 @@ Phiippines</string>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="deliveryCall" destination="cJd-fb-MZu" id="dAC-zn-0Zz"/>
+                <outlet property="deliveryLogs" destination="i4C-Xs-3KZ" id="Niq-YF-NZf"/>
                 <outlet property="deliveryRiderLabel" destination="h47-5W-Ndm" id="I8J-r2-cie"/>
                 <outlet property="deliveryRiderTitleLabel" destination="YHa-Hz-Wbm" id="Ean-SV-4yg"/>
                 <outlet property="deliverySms" destination="XMI-n2-oX4" id="aZq-HQ-McT"/>
@@ -788,23 +798,23 @@ Phiippines</string>
                         <constraint firstAttribute="height" constant="1" id="o0a-SP-G4F"/>
                     </constraints>
                 </view>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Total Cost" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mby-OV-re4">
-                    <rect key="frame" x="8" y="125" width="89" height="43"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="43" id="dbK-un-7O7"/>
-                        <constraint firstAttribute="width" constant="89" id="gfN-LT-E6L"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
-                    <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
-                    <nil key="highlightedColor"/>
-                </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="P54,000" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gej-q6-EGy">
-                    <rect key="frame" x="183" y="125" width="184" height="42"/>
+                    <rect key="frame" x="113" y="125" width="254" height="42"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="42" id="w3R-AR-waL"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="25"/>
                     <color key="textColor" red="0.50122048590000001" green="0.0" blue="0.7202493687" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Total Cost" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mby-OV-re4">
+                    <rect key="frame" x="8" y="125" width="89" height="43"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="89" id="Xga-M9-vsn"/>
+                        <constraint firstAttribute="height" constant="43" id="dbK-un-7O7"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
+                    <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
             </subviews>
@@ -826,13 +836,13 @@ Phiippines</string>
                 <constraint firstItem="bRU-O1-z6h" firstAttribute="top" secondItem="Mt9-WX-Xay" secondAttribute="bottom" id="SCr-0Z-vKx"/>
                 <constraint firstItem="8c9-sE-GfM" firstAttribute="leading" secondItem="Fk7-wz-MaE" secondAttribute="leading" id="SEX-x1-Kft"/>
                 <constraint firstItem="cXH-uQ-i0g" firstAttribute="top" secondItem="Fk7-wz-MaE" secondAttribute="top" constant="41" id="UhP-bZ-N03"/>
-                <constraint firstItem="gej-q6-EGy" firstAttribute="leading" secondItem="Mby-OV-re4" secondAttribute="trailing" constant="86" id="edo-HL-MBC"/>
                 <constraint firstItem="cXH-uQ-i0g" firstAttribute="leading" secondItem="Fk7-wz-MaE" secondAttribute="leading" constant="8" id="fUN-my-m8I"/>
                 <constraint firstAttribute="trailing" secondItem="Mt9-WX-Xay" secondAttribute="trailing" constant="8" id="fgI-dj-SNF"/>
                 <constraint firstItem="kpH-dG-Fyi" firstAttribute="top" secondItem="Fk7-wz-MaE" secondAttribute="top" id="ieo-vu-pUv"/>
                 <constraint firstItem="LH8-16-ORE" firstAttribute="top" secondItem="Fk7-wz-MaE" secondAttribute="top" constant="41" id="j2G-h7-JgF"/>
                 <constraint firstItem="8c9-sE-GfM" firstAttribute="top" secondItem="Fk7-wz-MaE" secondAttribute="top" constant="41" id="jzx-TR-BZs"/>
                 <constraint firstAttribute="trailing" secondItem="bRU-O1-z6h" secondAttribute="trailing" id="lES-ZL-kVn"/>
+                <constraint firstItem="gej-q6-EGy" firstAttribute="leading" secondItem="Mby-OV-re4" secondAttribute="trailing" constant="16" id="oxu-zL-d2c"/>
                 <constraint firstItem="bRU-O1-z6h" firstAttribute="leading" secondItem="Fk7-wz-MaE" secondAttribute="leading" id="ps5-rc-Skb"/>
                 <constraint firstAttribute="trailing" secondItem="kpH-dG-Fyi" secondAttribute="trailing" id="r6D-uA-DdW"/>
                 <constraint firstAttribute="trailing" secondItem="6HO-eM-3iX" secondAttribute="trailing" id="sQ5-wB-Ymw"/>
@@ -955,7 +965,6 @@ Phiippines</string>
                     <rect key="frame" x="0.0" y="72" width="375" height="1"/>
                     <color key="backgroundColor" red="0.7019608021" green="0.7019608021" blue="0.7019608021" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="375" id="EPR-1j-B2Z"/>
                         <constraint firstAttribute="height" constant="1" id="iIN-NQ-mKC"/>
                     </constraints>
                 </view>
@@ -1148,6 +1157,7 @@ Phiippines</string>
         <image name="call-gray" width="200" height="200"/>
         <image name="cancelled" width="200" height="200"/>
         <image name="message2.png" width="200" height="200"/>
+        <image name="right-gray" width="97" height="200"/>
         <image name="seeMoreViolet" width="100" height="200"/>
         <image name="sms" width="134" height="200"/>
     </resources>

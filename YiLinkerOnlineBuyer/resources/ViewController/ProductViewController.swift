@@ -370,8 +370,11 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     
     func requestProductDetails() {
         self.showHUD()
-        let id: String = "?productId=" + productId
         
+        productId = productId.stringByReplacingOccurrencesOfString("/api/v1/product/getProductDetail?productId=", withString: "", options: nil, range: nil)
+        
+        let id: String = "?productId=" + productId
+        println(APIAtlas.productDetails)
         manager.GET(APIAtlas.productDetails + id, parameters: nil, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             println(responseObject)
@@ -1086,7 +1089,17 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     
     func buyItNowAction(gesture: UIGestureRecognizer) {
         requestAddCartItem("buyitnow")
+        /*let alertController = UIAlertController(title: "Feature Not Available", message: "Check-out not available in Beta Testing", preferredStyle: .Alert)
         
+        let OKAction = UIAlertAction(title: "OK", style: .Default) { (action) in
+            
+        }
+        alertController.addAction(OKAction)
+        
+        self.presentViewController(alertController, animated: true) {
+            // ...
+        }
+        */
     }
     
     func showAlert(#title: String!, message: String!) {

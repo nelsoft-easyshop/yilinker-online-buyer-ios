@@ -13,11 +13,11 @@ protocol TransactionLeaveFeedbackFieldTableViewCellDelegate {
 }
 
 class TransactionLeaveFeedbackFieldTableViewCell: UITableViewCell {
-
+    
+    @IBOutlet weak var sendButton: UIButton!
+    @IBOutlet weak var inputTextField: UITextField!
     @IBOutlet weak var typingAreaView: UIView!
     @IBOutlet weak var cameraView: UIView!
-    @IBOutlet weak var inputTextField: UITextField!
-    @IBOutlet weak var sendButton: UIButton!
     
     var typeFeedback = StringHelper.localizedStringWithKey("TRANSACTION_LEAVE_FEEDBACK_TYPE_LOCALIZE_KEY")
     var sendTitle = StringHelper.localizedStringWithKey("TRANSACTION_LEAVE_FEEDBACK_SEND_LOCALIZE_KEY")

@@ -10,8 +10,9 @@ import UIKit
 
 class VerticalImageCollectionViewCell: UICollectionViewCell {
 
-    @IBOutlet weak var originalPriceLabel: DynamicRoundedLabel!
-    @IBOutlet weak var discountedPriceLabel: DiscountLabel!
+    @IBOutlet weak var discountedPriceLabel: DynamicRoundedLabel!
+    @IBOutlet weak var originalPriceLabel: DiscountLabel!
+    
     @IBOutlet weak var productNameLabel: UILabel!
     
     @IBOutlet weak var productItemImageView: UIImageView!

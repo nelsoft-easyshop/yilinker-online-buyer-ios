@@ -34,7 +34,9 @@ class TransactionLeaveSellerFeedbackTableViewController: UITableViewController, 
         let feedbackNib: UINib = UINib(nibName: "TransactionLeaveFeedbackFieldTableViewCell", bundle: nil)
         self.tableView.registerNib(feedbackNib, forCellReuseIdentifier: "TransactionLeaveFeedbackFieldTableViewCell")
         
+        //Customize navigation bar
         self.backButton()
+        //Set title of navigation bar
         self.title = feedbackTitle
         
     }
@@ -85,6 +87,7 @@ class TransactionLeaveSellerFeedbackTableViewController: UITableViewController, 
         
     }
 
+    //MARK: Customize navigation bar
     func backButton() {
         var backButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
         backButton.frame = CGRectMake(0, 0, 40, 40)
@@ -98,41 +101,159 @@ class TransactionLeaveSellerFeedbackTableViewController: UITableViewController, 
         self.navigationItem.leftBarButtonItems = [navigationSpacer, customBackButton]
     }
     
+    //MARK: Back button action
     func back() {
         self.navigationController!.popViewControllerAnimated(true)
     }
     
-    func fireSellerFeedback(feedback: String, rateItemQuality: Int, rateCommunication: Int) {
+    //MARK: Add seller feedback
+    func fireSellerFeedback(feedback2: String, rateItemQuality: Int, rateCommunication: Int) {
+       
         self.showHUD()
-        //[{"rateType":"1", "rating":"2.50"},{"rateType":"2", "rating":"4.50"}]
+        
+        let manager = APIManager.sharedInstance
+        println("\(APIManager.sharedInstance.baseURL) \(APIManager.sharedInstance)")
+        
+        /*  
         let jsonObject2: [String: AnyObject] = [
-            "sellerId": self.sellerId,
-            "ratings": [[
-                "rateType": "1",
-                "rating": String(rateItemQuality)
-                ], [
-                    "rateType": "2",
-                    "rating": String(rateCommunication)
-                ]],
-            "title": "Seller Feedback",
-            "feedback": "\(feedback)",
-            "access_token": "\(SessionManager.accessToken())",
-            "orderId": self.orderId
+        "sellerId": self.sellerId,
+        "ratings": ([[
+        "rateType": "1",
+        "rating": String(rateItemQuality)
+        ], [
+        "rateType": "2",
+        "rating": String(rateCommunication)
+        ]]),
+        "title": "Seller Feedback",
+        "feedback": "\(feedback)",
+        "orderId": self.orderId
         ]
+        
         var a: NSDictionary = jsonObject2 as NSDictionary
         let sortedKeys = (a.allKeys as! [String]).sorted(>)
         let data2 = NSJSONSerialization.dataWithJSONObject(jsonObject2, options: nil, error: nil)
-        let string2 = NSString(data: data2!, encoding: NSUTF8StringEncoding)
-        println(string2)
-        let manager = APIManager.sharedInstance
-        manager.POST(APIAtlas.transactionLeaveSellerFeedback+"\(SessionManager.accessToken())", parameters: string2, success: {
+        let string2: String = NSString(data: data2!, encoding: NSUTF8StringEncoding)! as! String
+        let finalJsonString: String = string2.stringByReplacingOccurrencesOfString("\\", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
+        println(finalJsonString)
+        */
+        
+        /*
+        var dictionary: NSMutableDictionary = NSMutableDictionary()
+        dictionary["rateType"] = "1"
+        dictionary["rating"] = String(rateItemQuality)
+        
+        let data1 = NSJSONSerialization.dataWithJSONObject(dictionary, options: nil, error: nil)
+        var formattedRating1: String = NSString(data: data1!, encoding: NSUTF8StringEncoding) as! String
+
+        var dictionary2: NSMutableDictionary = NSMutableDictionary()
+        dictionary2["rateType"] = "2"
+        dictionary2["rating"] = String(rateCommunication)
+        
+        let data3 = NSJSONSerialization.dataWithJSONObject(dictionary2, options: nil, error: nil)
+        var formattedRating2: String = NSString(data: data3!, encoding: NSUTF8StringEncoding) as! String
+
+        var feedback: [String] = []
+        feedback.append(formattedRating1)
+        feedback.append(formattedRating2)
+        
+        let data4 = NSJSONSerialization.dataWithJSONObject(feedback, options: nil, error: nil)
+        var formattedRating3: String = NSString(data: data4!, encoding: NSUTF8StringEncoding) as! String
+        
+        var parameters: NSMutableDictionary = ["sellerId" : self.sellerId, "orderId" : self.orderId, "ratings" : formattedRating3, "title" : "Seller Feedback", "feedback" : "\(feedback2)", "access_token" : SessionManager.accessToken()]
+        
+        let jsonObject2: [String: AnyObject] = [
+            "sellerId": self.sellerId,
+            "ratings": formattedRating3,
+            "title": "Seller Feedback",
+            "feedback": "\(feedback2)",
+            "orderId": self.orderId,
+            "access_token" : "\(SessionManager.accessToken())"
+        ]
+        
+        let data2 = NSJSONSerialization.dataWithJSONObject(jsonObject2, options: nil, error: nil)
+        var formattedRating4: String = NSString(data: data2!, encoding: NSUTF8StringEncoding) as! String
+        
+        let finalJsonString: String = formattedRating4.stringByReplacingOccurrencesOfString("\\", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
+        let finalJsonString2: String = finalJsonString.stringByReplacingOccurrencesOfString("\"{", withString: "{", options: NSStringCompareOptions.LiteralSearch, range: nil)
+        let finalJsonString3: String = finalJsonString2.stringByReplacingOccurrencesOfString("}\"", withString: "}", options: NSStringCompareOptions.LiteralSearch, range: nil)
+        let finalJsonString4: String = finalJsonString3.stringByReplacingOccurrencesOfString("\"]", withString: "]", options: NSStringCompareOptions.LiteralSearch, range: nil)
+        let finalJsonString5: String = finalJsonString4.stringByReplacingOccurrencesOfString("\"[", withString: "[", options: NSStringCompareOptions.LiteralSearch, range: nil)
+        let finalJsonString6: String = finalJsonString5.stringByReplacingOccurrencesOfString("]\"", withString: "]", options: NSStringCompareOptions.LiteralSearch, range: nil)
+        */
+        
+        /*
+        var dictionary: NSMutableDictionary = NSMutableDictionary()
+        dictionary["rateType"] = "1"
+        dictionary["rating"] = String(rateItemQuality)
+        
+        let data1 = NSJSONSerialization.dataWithJSONObject(dictionary, options: nil, error: nil)
+        var formattedRating1: String = NSString(data: data1!, encoding: NSUTF8StringEncoding) as! String
+        
+        var dictionary2: NSMutableDictionary = NSMutableDictionary()
+        dictionary2["rateType"] = "2"
+        dictionary2["rating"] = String(rateCommunication)
+        
+        let data3 = NSJSONSerialization.dataWithJSONObject(dictionary2, options: nil, error: nil)
+        var formattedRating2: String = NSString(data: data3!, encoding: NSUTF8StringEncoding) as! String
+        
+        var feedback: [NSDictionary] = []
+        feedback.append(dictionary)
+        feedback.append(dictionary2)
+        
+        let data4 = NSJSONSerialization.dataWithJSONObject(feedback, options: nil, error: nil)
+        var formattedRating3: String = NSString(data: data4!, encoding: NSUTF8StringEncoding) as! String
+        let finalJsonString: String = formattedRating3.stringByReplacingOccurrencesOfString("\\", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
+        let finalJsonString7: String = finalJsonString.stringByReplacingOccurrencesOfString("\\\"", withString: "\"", options: NSStringCompareOptions.LiteralSearch, range: nil)
+        println("---> \(finalJsonString7)")
+        
+        var parameters: NSMutableDictionary = ["sellerId" : self.sellerId, "orderId" : self.orderId, "ratings" : finalJsonString, "title" : "Seller Feedback", "feedback" : "feedback2", "access_token" : SessionManager.accessToken()]
+        
+        let data5 = NSJSONSerialization.dataWithJSONObject(parameters, options: nil, error: nil)
+        var formattedRating5: String = NSString(data: data5!, encoding: NSUTF8StringEncoding) as! String
+        let finalJsonString5: String = formattedRating5.stringByReplacingOccurrencesOfString("\"[", withString: "[", options: NSStringCompareOptions.LiteralSearch, range: nil)
+        let finalJsonString6: String = finalJsonString5.stringByReplacingOccurrencesOfString("]\"", withString: "]", options: NSStringCompareOptions.LiteralSearch, range: nil)
+        
+        println("\(finalJsonString7)")
+        */
+        
+        var rating1: NSDictionary = ["rateType" : "1", "rating" : String(rateItemQuality)]
+        var rating2: NSDictionary = ["rateType" : "2", "rating" : String(rateCommunication)]
+        
+        let data1 = NSJSONSerialization.dataWithJSONObject(rating1, options: nil, error: nil)
+        var formattedRating1: String = NSString(data: data1!, encoding: NSUTF8StringEncoding) as! String
+        
+        let data2 = NSJSONSerialization.dataWithJSONObject(rating2, options: nil, error: nil)
+        var formattedRating2: String = NSString(data: data2!, encoding: NSUTF8StringEncoding) as! String
+        
+        var ratings: [NSDictionary] = []
+        ratings.append(rating1)
+        ratings.append(rating2)
+        let data3 = NSJSONSerialization.dataWithJSONObject(ratings, options: nil, error: nil)
+        var formattedRating3: String = NSString(data: data3!, encoding: NSUTF8StringEncoding) as! String
+        let finalJsonString: String = formattedRating3.stringByReplacingOccurrencesOfString("\\", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
+        let finalJsonString2: String = finalJsonString.stringByReplacingOccurrencesOfString("\"{", withString: "{", options: NSStringCompareOptions.LiteralSearch, range: nil)
+        let finalJsonString3: String = finalJsonString2.stringByReplacingOccurrencesOfString("}\"", withString: "}", options: NSStringCompareOptions.LiteralSearch, range: nil)
+        println(finalJsonString3)
+        
+        var parameters: NSMutableDictionary = ["sellerId" : self.sellerId, "orderId" : self.orderId, "title" : "Seller Feedback", "feedback" : "feedback2", "access_token" : SessionManager.accessToken()]
+        
+        parameters["ratings"] = finalJsonString3.stringByReplacingOccurrencesOfString("\\", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
+        let data4 = NSJSONSerialization.dataWithJSONObject(parameters, options: nil, error: nil)
+        var formattedRating4: String = NSString(data: data4!, encoding: NSUTF8StringEncoding) as! String
+        let finalJsonString4: String = formattedRating4.stringByReplacingOccurrencesOfString("\\", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
+        
+        println("\(parameters) \(finalJsonString4)")
+        
+        
+        manager.POST(APIAtlas.transactionLeaveSellerFeedback, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            println(responseObject.description)
+          
             if responseObject["isSuccessful"] as! Bool {
                 self.navigationController?.popViewControllerAnimated(true)
             } else {
                 self.showAlert(title: "Feedback", message: responseObject["message"] as! String)
             }
+            
             self.hud?.hide(true)
             self.tableView.reloadData()
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
@@ -141,18 +262,8 @@ class TransactionLeaveSellerFeedbackTableViewController: UITableViewController, 
                 if error.userInfo != nil {
                     let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
                     let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
-                   UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: Constants.Localized.someThingWentWrong)
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: Constants.Localized.someThingWentWrong)
                     self.tableView.reloadData()
-                    /*let alert = UIAlertController(title: Constants.Localized.someThingWentWrong,
-                        message: errorModel.message,
-                        preferredStyle: UIAlertControllerStyle.Alert)
-                    let okButton = UIAlertAction(title: ProductStrings.alertOk,
-                        style: UIAlertActionStyle.Cancel) { (alert) -> Void in
-                            self.navigationController?.popViewControllerAnimated(true)
-                    }
-                    alert.addAction(okButton)
-                    self.presentViewController(alert, animated: true, completion: nil)
-                    */
                 } else if task.statusCode == 401 {
                     self.requestRefreshToken()
                     self.tableView.reloadData()
@@ -165,13 +276,17 @@ class TransactionLeaveSellerFeedbackTableViewController: UITableViewController, 
         })
     }
     
+    //MARK: Refresh token
     func requestRefreshToken() {
+        
+        self.showHUD()
+        
+        let manager = APIManager.sharedInstance
         let params: NSDictionary = ["client_id": Constants.Credentials.clientID,
             "client_secret": Constants.Credentials.clientSecret,
             "grant_type": Constants.Credentials.grantRefreshToken,
             "refresh_token": SessionManager.refreshToken()]
-        self.showHUD()
-        let manager = APIManager.sharedInstance
+       
         manager.POST(APIAtlas.loginUrl, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
@@ -179,8 +294,9 @@ class TransactionLeaveSellerFeedbackTableViewController: UITableViewController, 
             
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                self.hud?.hide(true)
                 self.showAlert(title: Constants.Localized.error, message: Constants.Localized.someThingWentWrong)
+                
+                self.hud?.hide(true)
         })
     }
     
@@ -196,9 +312,7 @@ class TransactionLeaveSellerFeedbackTableViewController: UITableViewController, 
              showAlert(title: "Feedback", message: "Please send a feedback.")
             self.tableView.reloadData()
         } else {
-            //println("\(feedback) \(self.rate) \(self.rateComm)")
             self.fireSellerFeedback(feedback, rateItemQuality: self.rate, rateCommunication: self.rateComm)
-            //            showAlert(String(rate), message: self.inputTextField.text)
             self.tableView.reloadData()
         }
     }
@@ -225,6 +339,7 @@ class TransactionLeaveSellerFeedbackTableViewController: UITableViewController, 
         self.hud?.show(true)
     }
     
+    //MARK: Show alert dialog box
     func showAlert(#title: String!, message: String!) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
         let defaultAction = UIAlertAction(title: Constants.Localized.ok, style: .Default, handler: nil)

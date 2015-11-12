@@ -108,6 +108,7 @@ class ProfileUserDetailsModel: NSObject {
         if let value: AnyObject = dictionary["contactNumber"] {
             if value as! NSObject != NSNull() {
                 contactNumber = value as! String
+                SessionManager.setMobileNumber(contactNumber)
             }
         }
         

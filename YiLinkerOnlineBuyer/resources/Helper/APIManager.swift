@@ -18,7 +18,7 @@ struct APIEnvironment {
         } else if staging {
             return ""
         } else  {
-            return "http://www.yilinker.com/api/v1"
+            return "https://www.yilinker.com/api/v1"
         }
     }
 }
@@ -148,12 +148,13 @@ struct APIAtlas {
     //Transactions
     static let transactionLogs = "auth/getTransactionList?access_token="
     static let transactionDetails = "auth/getTransaction?access_token="
-    static let transactionLeaveSellerFeedback = "auth/feedback/addUserFeedback?access_token="
+    static let transactionLeaveSellerFeedback = "auth/feedback/addUserFeedback"
     static let transactionProductDetails = "auth/getOrderProductDetail?access_token="
     static let transactionCancellation = "auth/cancellation/reasons"
     static let postTransactionCancellation = "auth/transaction/cancel"
     static let getReasons = "auth/dispute/get-seller-reasons?access_token="
     static let transactionDeliveryStatus = "auth/getTransactionDeliveryOverview?access_token="
+    static let getDeliveryLogs = "auth/getTransactionDeliveryLogs"
     
     //Resolution Center
     static let getResolutionCenterCases = "/api/v1/auth/dispute/get-case"
@@ -167,6 +168,9 @@ struct APIAtlas {
     static let googleUrl = "google/auth"
     
     static let verificationGetCodeUrl = "auth/sms/getCode"
+    
+    //Guest Register
+    static let guestUserRegisterUrl = "registerGuestUser"
 }
 
 class APIManager: AFHTTPSessionManager {
@@ -180,7 +184,14 @@ class APIManager: AFHTTPSessionManager {
         dispatch_once(&Static.token) {
             let url: NSURL! = NSURL(string: APIAtlas.baseUrl)
             Static.instance = APIManager(baseURL: url)
+            
+            Static.instance?.securityPolicy = AFSecurityPolicy(pinningMode: AFSSLPinningMode.Certificate)
+            let certificatePath = NSBundle.mainBundle().pathForResource("yilinker_pinned_certificate", ofType: "cer")!
+            let certificateData = NSData(contentsOfFile: certificatePath)!
+            Static.instance?.securityPolicy.pinnedCertificates = [certificateData];
+            Static.instance?.securityPolicy.validatesDomainName = true
             Static.instance?.securityPolicy.allowInvalidCertificates = true
+
             Static.instance?.responseSerializer = JSONResponseSerializer()
         }
         

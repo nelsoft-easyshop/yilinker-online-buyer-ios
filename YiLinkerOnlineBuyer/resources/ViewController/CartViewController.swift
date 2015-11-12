@@ -81,6 +81,19 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
             } else {
                 firePassCartItem(APIAtlas.updateCheckout(), params: NSDictionary(dictionary: ["cart": selectedItemIDs, "access_token": SessionManager.accessToken()]))
             }
+            
+            /*
+            let alertController = UIAlertController(title: "Feature Not Available", message: "Check-out not available in Beta Testing", preferredStyle: .Alert)
+            
+            let OKAction = UIAlertAction(title: "OK", style: .Default) { (action) in
+                
+            }
+            alertController.addAction(OKAction)
+            
+            self.presentViewController(alertController, animated: true) {
+                // ...
+            }
+            */
         }
     }
     

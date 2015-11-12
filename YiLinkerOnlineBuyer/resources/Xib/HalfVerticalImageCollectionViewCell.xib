@@ -47,7 +47,7 @@
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="F-Stop Watch" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="6" translatesAutoresizingMaskIntoConstraints="NO" id="pbc-g9-8rb">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="F-Stop Watch" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="pbc-g9-8rb">
                         <rect key="frame" x="137" y="20" width="60" height="21"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="21" id="1eK-fS-FFV"/>
@@ -88,12 +88,12 @@
             <size key="customSize" width="202" height="98"/>
             <connections>
                 <outlet property="discountPercentageLabel" destination="kcv-hj-ten" id="9YL-7A-5JG"/>
-                <outlet property="discountedPriceLabel" destination="KnZ-NC-aQ1" id="Nfh-rx-T18"/>
-                <outlet property="originalPriceLabel" destination="3ln-bJ-Yvq" id="1ze-aA-ubD"/>
+                <outlet property="discountedPriceLabel" destination="3ln-bJ-Yvq" id="1Z6-1L-cRs"/>
+                <outlet property="originalPriceLabel" destination="KnZ-NC-aQ1" id="0da-Dq-C5T"/>
                 <outlet property="productItemImageView" destination="lrX-WJ-zSN" id="IPK-NG-19Y"/>
                 <outlet property="productNameLabel" destination="pbc-g9-8rb" id="DWx-Wj-Jbj"/>
             </connections>
-            <point key="canvasLocation" x="354" y="479"/>
+            <point key="canvasLocation" x="550" y="498"/>
         </collectionViewCell>
     </objects>
     <resources>

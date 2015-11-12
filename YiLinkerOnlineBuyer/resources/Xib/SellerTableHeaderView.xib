@@ -119,30 +119,6 @@
                         <action selector="message:" destination="iN0-l3-epB" eventType="touchUpInside" id="70T-q1-Wsz"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="d0d-dF-wyT" customClass="RoundedButton" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
-                    <rect key="frame" x="381" y="145" width="30" height="30"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="30" id="1nR-6x-LJm"/>
-                        <constraint firstAttribute="height" constant="30" id="mTI-JE-TDd"/>
-                    </constraints>
-                    <state key="normal" backgroundImage="call">
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                    <userDefinedRuntimeAttributes>
-                        <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                            <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                        </userDefinedRuntimeAttribute>
-                        <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                            <real key="value" value="1"/>
-                        </userDefinedRuntimeAttribute>
-                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                            <real key="value" value="1"/>
-                        </userDefinedRuntimeAttribute>
-                    </userDefinedRuntimeAttributes>
-                    <connections>
-                        <action selector="call:" destination="iN0-l3-epB" eventType="touchUpInside" id="lgp-Pt-sZW"/>
-                    </connections>
-                </button>
                 <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M7F-7d-VWr" customClass="RoundedButton" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
                     <rect key="frame" x="8" y="128" width="96" height="96"/>
                     <constraints>
@@ -170,6 +146,30 @@
                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="d0d-dF-wyT" customClass="RoundedButton" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
+                    <rect key="frame" x="381" y="145" width="30" height="30"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="30" id="1nR-6x-LJm"/>
+                        <constraint firstAttribute="height" constant="30" id="mTI-JE-TDd"/>
+                    </constraints>
+                    <state key="normal" backgroundImage="call">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                            <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                            <real key="value" value="1"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                            <real key="value" value="1"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                    <connections>
+                        <action selector="call:" destination="iN0-l3-epB" eventType="touchUpInside" id="lgp-Pt-sZW"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" red="0.88235294117647056" green="0.88235294117647056" blue="0.88235294117647056" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
@@ -203,8 +203,10 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="addressLabel" destination="JAF-ug-Wnz" id="B5j-H7-xx3"/>
+                <outlet property="callButton" destination="d0d-dF-wyT" id="lI2-if-aQA"/>
                 <outlet property="coverPhotoImageView" destination="b4p-tQ-XcN" id="5Ue-cJ-1yA"/>
                 <outlet property="followButton" destination="FVH-bQ-Krq" id="kz3-g9-aDS"/>
+                <outlet property="messageButton" destination="j46-sZ-G8t" id="Wg3-jM-plN"/>
                 <outlet property="profileImageView" destination="M7F-7d-VWr" id="yEf-zn-FEE"/>
                 <outlet property="sellernameLabel" destination="PUQ-0I-66E" id="WYm-MO-LTd"/>
                 <outlet property="viewFeedbackButton" destination="A7W-DK-e0C" id="md0-od-vfZ"/>

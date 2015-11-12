@@ -372,21 +372,27 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
                     
                     if let subValue: AnyObject = aggregations["maxPrice"] {
                         if subValue as! NSObject != NSNull() {
-                            maxPrice = subValue as! Double
+                            if maxPrice == 0{
+                                maxPrice = subValue as! Double
+                            }
                         }
                     }
                     
                     if let subValue: AnyObject = aggregations["minPrice"] {
                         if subValue as! NSObject != NSNull() {
-                            minPrice = subValue as! Double
+                            if maxPrice == 0{
+                                minPrice = subValue as! Double
+                            }
                         }
                     }
                     
                     if let attributes: AnyObject = aggregations["attributes"] {
-                        filterAtributes.removeAll(keepCapacity: false)
-                        if attributes as! NSObject != NSNull() {
-                            for attribute in attributes as! NSArray {
-                                filterAtributes.append(FilterAttributeModel.parseDataWithDictionary(attribute as! NSDictionary))
+                        if filterAtributes.count == 0 {
+                            filterAtributes.removeAll(keepCapacity: false)
+                            if attributes as! NSObject != NSNull() {
+                                for attribute in attributes as! NSArray {
+                                    filterAtributes.append(FilterAttributeModel.parseDataWithDictionary(attribute as! NSDictionary))
+                                }
                             }
                         }
                     }

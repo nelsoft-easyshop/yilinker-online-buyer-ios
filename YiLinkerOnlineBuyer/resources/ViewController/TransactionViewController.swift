@@ -34,9 +34,7 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
     var imagesInArray: [UIImageView] = []
     var labelsInArray: [UILabel] = []
     var deselectedImages: [String] = []
-    
-    var query: String = "all"
-    
+
     var hud: MBProgressHUD?
     
     var transactionModel: TransactionModel?
@@ -54,6 +52,7 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
     
     var isPageEnd: Bool = false
     var page: Int = 0
+    var query: String = "all"
     var transactionArray: NSArray?
     
     var emptyView : EmptyView?
@@ -94,7 +93,6 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
     }
     
     override func viewDidAppear(animated: Bool) {
-        println("view did appear")
         noTransactionLabel.hidden = true
         self.tableData.removeAll(keepCapacity: false)
         page = 0
@@ -104,7 +102,6 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
     }
     
     // MARK: - Table View Data Source
-    
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if self.tableData.count != 0 {
             return self.tableData.count
@@ -118,13 +115,15 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
         
         if self.tableData.count != 0 {
             var price: Float = (tableData[indexPath.row].total_price2 as NSString).floatValue
-            cell.priceLabel.text = "\((tableData[indexPath.row].total_price2).formatToPeso())"//"P \(price.string(2))"//NSString(format:"%.2f", self.transactionModel!.total_item_price[indexPath.row]) as String
+            cell.priceLabel.text = "\((tableData[indexPath.row].total_price2).formatToPeso())"
             cell.dateLabel.text = tableData[indexPath.row].date_added2
+           
             if tableData[indexPath.row].product_count2.toInt() < 2 {
-                cell.numberLabel.text =  "\(tableData[indexPath.row].total_quantity2) \(product)"
+                cell.numberLabel.text =  "\(tableData[indexPath.row].product_count2) \(product)"
             } else {
-                cell.numberLabel.text =  "\(tableData[indexPath.row].total_quantity2) \(products)"
+                cell.numberLabel.text =  "\(tableData[indexPath.row].product_count2) \(products)"
             }
+            
             cell.transactionIdLabel.text = tableData[indexPath.row].invoice_number2
         }
         
@@ -134,7 +133,6 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
     }
 
     // MARK: - Table View Delegate
-    
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let transactionDetails = TransactionDetailsViewController(nibName: "TransactionDetailsViewController", bundle: nil)
         transactionDetails.transactionId = tableData[indexPath.row].invoice_number2
@@ -165,8 +163,7 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
         }
     }
     
-    // Actions
-    
+    //MARK: Actions
     func allAction(gesture: UIGestureRecognizer) {
         if allView.tag == 0 {
             selectView(allView, label: allLabel, imageView: allImageView, imageName: "all2")
@@ -229,7 +226,6 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
     }
     
     // Methods
-    
     func addViewsActions() {
         self.allView.addGestureRecognizer(tap("allAction:"))
         self.pendingView.addGestureRecognizer(tap("pendingAction:"))
@@ -266,20 +262,21 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
     //MARK: Get transactions by type
     func fireTransaction(queryType: String) {
         if !isPageEnd {
-        //self.clearModel()
             page++
+            
             self.showHUD()
+            
             let manager = APIManager.sharedInstance
             var url: String = APIAtlas.transactionLogs+"\(SessionManager.accessToken())&type=\(queryType)&perPage=15&page=\(page)"
-    
-            println(url)
+            
             manager.GET(APIAtlas.transactionLogs+"\(SessionManager.accessToken())&type=\(queryType)&perPage=15&page=\(page)", parameters: nil, success: {
                 (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+                
                 var trans: TransactionModel?
+                
                 let data2 = NSJSONSerialization.dataWithJSONObject(responseObject, options: nil, error: nil)
                 let string2 = NSString(data: data2!, encoding: NSUTF8StringEncoding)
-                println(string2)
-
+   
                 if queryType == "for-feedback" {
                     trans = TransactionModel.parseDataFromDictionary(responseObject as! NSDictionary)
                 } else {
@@ -289,7 +286,6 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
                 if trans!.product_name.count != 0 {
                     if trans!.order_id.count < 15 {
                         self.isPageEnd = true
-                        
                     }
                     if trans!.is_successful {
                         for var i = 0; i < trans!.order_id.count; i++ {
@@ -299,14 +295,14 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
                         self.isPageEnd = true
                     }
                 } else {
-                    //self.addEmptyView()
                     self.noTransactionLabel.hidden = false
                 }
                
                 self.tableView.reloadData()
                 self.hud?.hide(true)
+                
                 }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
-                    self.hud?.hide(true)
+
                     let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                     
                     if self.query == "all" {if error.userInfo != nil {
@@ -326,22 +322,25 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
                         }
                     } else {
                         self.showAlert(title: Constants.Localized.someThingWentWrong, message: nil)
-                        self.hud?.hide(true)
                         self.addEmptyView()
                     }
-                    println(error.userInfo)
                     
+                    self.hud?.hide(true)
             })
         }
     }
     
+    //MARK: Refresh token
     func requestRefreshToken(type: TransactionRefreshType) {
+        
+        self.showHUD()
+        
+        let manager = APIManager.sharedInstance
         let params: NSDictionary = ["client_id": Constants.Credentials.clientID,
             "client_secret": Constants.Credentials.clientSecret,
             "grant_type": Constants.Credentials.grantRefreshToken,
             "refresh_token": SessionManager.refreshToken()]
-        self.showHUD()
-        let manager = APIManager.sharedInstance
+        
         manager.POST(APIAtlas.loginUrl, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
@@ -356,6 +355,7 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
             } else {
                 self.fireTransaction("support")
             }
+            
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 self.hud?.hide(true)
@@ -367,6 +367,7 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
         })
     }
     
+    //MARK: Show alert dialog
     func showAlert(#title: String!, message: String!) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
         let defaultAction = UIAlertAction(title: Constants.Localized.ok, style: .Default, handler: nil)
@@ -405,7 +406,7 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
         self.transactionModel?.product_count.removeAll(keepCapacity: false)
     }
     
-    //MARK: Navigation bar
+    //MARK: Customize navigation bar
     func backButton() {
         var backButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
         backButton.frame = CGRectMake(0, 0, 40, 40)
@@ -418,10 +419,12 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
         self.navigationItem.leftBarButtonItems = [navigationSpacer, customBackButton]
     }
     
+    //MARK: Back button action
     func back() {
         self.navigationController!.popViewControllerAnimated(true)
     }
     
+    //MARK: Add empty view to the current view
     func addEmptyView() {
         if self.emptyView == nil {
             self.emptyView = UIView.loadFromNibNamed("EmptyView", bundle: nil) as? EmptyView

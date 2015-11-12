@@ -206,7 +206,7 @@ class VerifyMobileNumberViewController: UIViewController {
                 SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
                 self.fireVerify(url, params: params)
             } else {
-                self.showAlert(title: "Error", message: responseObject["message"] as! String)
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: responseObject["message"] as! String)
             }
             
             }, failure: {
@@ -214,16 +214,9 @@ class VerifyMobileNumberViewController: UIViewController {
                 self.dismissLoader()
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                 
-                self.showAlert(title: "Something went wrong", message: "")
+                UIAlertController.displaySomethingWentWrongError(self)
                 
         })
-    }
-    
-    func showAlert(#title: String!, message: String!) {
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
-        let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
-        alertController.addAction(defaultAction)
-        presentViewController(alertController, animated: true, completion: nil)
     }
 
 }

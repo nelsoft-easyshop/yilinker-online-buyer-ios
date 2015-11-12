@@ -27,6 +27,8 @@ class LoginAndRegisterContentViewController: UIViewController {
     @IBOutlet weak var logoHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var verticalSpaceConstraint: NSLayoutConstraint!
     
+    var registerModel: RegisterModel = RegisterModel()
+    
     var defaultViewControllerIndex: Int = 0
     
     override func viewWillAppear(animated: Bool) {

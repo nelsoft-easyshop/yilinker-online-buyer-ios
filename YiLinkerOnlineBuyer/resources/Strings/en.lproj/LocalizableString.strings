@@ -43,8 +43,8 @@ PROFILE_LOCALIZE_KEY = "PROFILE";
 // MARK: - Home Banner
 FEATURED_LOCALIZE_KEY = "FEATURED";
 HOT_ITEMS_LOCALIZE_KEY = "HOT ITEMS";
-NEW_ITEMS_LOCALIZE_KEY = "NEW ITEM";
-SELLER_LOCALIZE_KEY = "SELLER";
+NEW_ITEMS_LOCALIZE_KEY = "NEW ITEMS";
+SELLERS_LOCALIZE_KEY = "SELLERS";
 
 // MARK: - Home Section Header
 TODAYS_PROMO_FOOTER_LOCALIZE_KEY = "Today's Promo";
@@ -105,9 +105,9 @@ REFERRAL_LOCALIZED_KEY = "Referral Code";
 
 // MARK: - Register Error
 FIRST_NAME_REQUIRED_LOCALIZE_KEY = "First name is required";
-FIRST_NAME_ILLEGAL_LOCALIZE_KEY = "First name contains illegal characters. It can only contain letters, numbers and underscores.";
+FIRST_NAME_ILLEGAL_LOCALIZE_KEY = "First name contains illegal characters.";
 LAST_NAME_REQUIRED_LOCALIZE_KEY = "Last name is required";
-INVALID_LAST_NAME_LOCALIZE_KEY = "Last name contains illegal characters. It can only contain letters, numbers and underscores.";
+INVALID_LAST_NAME_LOCALIZE_KEY = "Last name contains illegal characters.";
 EMAIL_REQUIRED_LOCALIZE_KEY = "Email is required.";
 INVALID_EMAIL_LOCALIZE_KEY = "The email address you enter is not a valid email address.";
 PASSWORD_REQUIRED_LOCALIZE_KEY = "Password is required.";
@@ -196,7 +196,7 @@ NO_LOCALIZE_KEY = "NO";
 // MARK: - Empty View
 CONNECTION_TITLE_LOCALIZE_KEY = "Connection Unreachable";
 CONNECTION_MESSAGE_LOCALIZE_KEY = "Cannot retrieve data. Please check your internet connection.";
-CONNECTION_TAP_TO_RELOAD_LOCALIZE_KEY = "Tap to reloadtitletitme";
+CONNECTION_TAP_TO_RELOAD_LOCALIZE_KEY = "Tap to reload.";
 
 // MESSAGES
 
@@ -394,6 +394,7 @@ PLEASE_ENTER_VERIFY_NUMBER_LOCALIZED_KEY = "Please enter the 6 digit code that w
 TIME_LEFT_LOCALIZED_KEY = "Time Left:";
 VERIFY_NUMBER_LOCALIZED_KEY = "VERIFY";
 REQUEST_NEW_CODE_LOCALIZED_KEY = "Request new verification code";
+SEND_CODE_LOCALIZED_KEY = "SEND CODE";
 
 //Account Information
 ACCOUNTINFO_LOCALIZE_KEY = "Account Information";
@@ -415,11 +416,14 @@ MOBILE_LOCALIZE_KEY = "Mobile Phone";
 
 //Change Mobile Number
 CHANGEMOBILE_LOCALIZE_KEY = "Change Mobile Number";
+YOUR_MOBILE_LOCALIZE_KEY = "Your Mobile Number";
 OLDNUMBER_LOCALIZE_KEY = "Old Number";
 NEWNUMBER_LOCALIZE_KEY = "New Number";
 SUBMIT_LOCALIZE_KEY = "Submit";
 COMPLETEFIELDS_LOCALIZE_KEY = "Complete necessary fields!";
 INCORRECTMOBILE_LOCALIZE_KEY = "Incorrect old mobile number!";
+SUBMIT_CAPS_LOCALIZE_KEY = "SUBMIT";
+PLEASE_ENTER_NUMBER_LOCALIZE_KEY = "Please enter your desired number.";
 
 //Change Password
 CHANGEPASSWORD_LOCALIZE_KEY = "Change Password";

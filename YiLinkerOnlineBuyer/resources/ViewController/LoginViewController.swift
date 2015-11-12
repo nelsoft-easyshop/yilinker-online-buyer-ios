@@ -22,10 +22,26 @@ struct LoginStrings {
     static let forgotPasswordd: String = StringHelper.localizedStringWithKey("FORGOT_PASSWORD_LOCALIZE_KEY")
 }
 
+
+private struct LoginConstants {
+    static let homeServerClientID = "231249450400-dso2pqhieqta2h78m9shhu8qs7gi3jji.apps.googleusercontent.com"
+    static let forgotPasswordUrlString = "http://online.api.easydeal.ph/forgot-password-request"
+    
+    static let emailKey = "email"
+    static let passwordKey = "password"
+    static let clientIdKey = "client_id"
+    static let clientSecretKey = "client_secret"
+    static let grantTypeKey = "grant_type"
+    
+    static let registrationIdKey = "registrationId"
+    static let accessTokenKey = "access_token"
+    
+    static let tokenKey = "token"
+}
+
 class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFieldDelegate, GPPSignInDelegate {
     
     @IBOutlet weak var forgotPasswordButton: UIButton!
-    @IBOutlet weak var facebookButtonHeightConstraints: NSLayoutConstraint!
     @IBOutlet weak var facebookButton: FBSDKLoginButton!
     
     @IBOutlet weak var gmailLoginButton: GPPSignInButton!
@@ -48,7 +64,6 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
         self.emailAddressTextField.placeholder = LoginStrings.enterEmailAddress
         self.passwordTextField.placeholder = LoginStrings.enterPassword
         self.orLabel.text = LoginStrings.or
-        self.signInButton.setTitle(FABStrings.signIn, forState: UIControlState.Normal)
         self.forgotPasswordButton.setTitle(LoginStrings.forgotPasswordd, forState: UIControlState.Normal)
     }
     
@@ -64,7 +79,6 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
     //MARK: - ViewDidLoad
     override func viewDidLoad() {
         self.facebookButton.layer.cornerRadius = 5
-        self.facebookButtonHeightConstraints.constant = 40
         self.view.needsUpdateConstraints()
         self.view.layoutIfNeeded()
         
@@ -75,20 +89,32 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
             self.facebookButton.delegate = self
         }
         
-        
+        self.setupSignInButton()
         self.setUpTextFields()
-        
+        self.setUpGmailLogin()
+    }
+    
+    //MARK: Setup Signin Button
+    func setupSignInButton() {
+        self.signInButton.layer.cornerRadius = 5
+        self.signInButton.setTitle(FABStrings.signIn, forState: UIControlState.Normal)
+    }
+    
+    //MARK: - Gmail Login
+    func setUpGmailLogin() {
         let signIn: GPPSignIn = GPPSignIn.sharedInstance()
         signIn.shouldFetchGooglePlusUser = true
         signIn.shouldFetchGoogleUserEmail = true
-        signIn.homeServerClientID = "77221172849-363vbb5qiucrqhbp8h21454g7nmtnmae.apps.googleusercontent.com"
+        signIn.homeServerClientID = LoginConstants.homeServerClientID
         signIn.clientID = Constants.Credentials.gmailCredential
         signIn.scopes = [kGTLAuthScopePlusLogin, kGTLAuthScopePlusMe, kGTLAuthScopePlusUserinfoEmail]
         signIn.delegate = self
         self.gmailLoginButton.layer.cornerRadius = 5
     }
+    
+    //MARK: - Forgot Password Action
     @IBAction func forgotPassword(sender: AnyObject) {
-        UIApplication.sharedApplication().openURL(NSURL(string: "http://online.api.easydeal.ph/forgot-password-request")!)
+        UIApplication.sharedApplication().openURL(NSURL(string: LoginConstants.forgotPasswordUrlString)!)
     }
     
     //MARK: - HUD
@@ -185,6 +211,8 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
     
     //MARK: - Done
     func done() {
+        let manager = APIManager.sharedInstance
+        manager.operationQueue.cancelAllOperations()
         self.view.endEditing(true)
         self.adjustTextFieldYInsetWithInset(0)
         self.showCloseButton()
@@ -245,7 +273,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
         return true
     }
     
-    //MARK: - Login
+    //MARK: - Login Validation
     func login() {
         var errorMessage: String = ""
         
@@ -256,23 +284,20 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
         } else if !self.passwordTextField.isNotEmpty() {
             errorMessage = LoginStrings.passwordIsRequired
         }
-        
+        self.view.endEditing(true)
+        self.adjustTextFieldYInsetWithInset(0)
         if errorMessage != "" {
-            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorMessage)
+            self.view.makeToast(errorMessage, duration: 3.0, position: CSToastPositionBottom, style: CSToastManager.sharedStyle())
         } else {
             fireLogin()
         }
-        
-        self.view.endEditing(true)
-        self.adjustTextFieldYInsetWithInset(0)
     }
     
+    //MARK: - Fire Login
     func fireLogin() {
         self.showHUD()
         let manager: APIManager = APIManager.sharedInstance
-        //seller@easyshop.ph
-        //password
-        let parameters: NSDictionary = ["email": self.emailAddressTextField.text,"password": self.passwordTextField.text, "client_id": Constants.Credentials.clientID, "client_secret": Constants.Credentials.clientSecret, "grant_type": Constants.Credentials.grantBuyer]
+        let parameters: NSDictionary = [LoginConstants.emailKey: self.emailAddressTextField.text, LoginConstants.passwordKey: self.passwordTextField.text, LoginConstants.clientIdKey: Constants.Credentials.clientID, LoginConstants.clientSecretKey: Constants.Credentials.clientSecret, LoginConstants.grantTypeKey: Constants.Credentials.grantBuyer]
         
         manager.POST(APIAtlas.loginUrl, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
@@ -282,33 +307,35 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
                 self.fireCreateRegistration(SessionManager.gcmToken())
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                 
-                if error.userInfo != nil {
-                    if let jsonResult = error.userInfo as? Dictionary<String, AnyObject> {
-                        let errorDescription: String = jsonResult["error_description"] as! String
-                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorDescription)
+                if let task = task.response as? NSHTTPURLResponse {
+                    if error.userInfo != nil {
+                        if let jsonResult = error.userInfo as? Dictionary<String, AnyObject> {
+                            let errorDescription: String = jsonResult["error_description"] as! String
+                            Toast.displayToastWithMessage(errorDescription, duration: 3.0, view: self.view)
+                        }
+                    } else {
+                        if task.statusCode == 401 {
+                            Toast.displayToastWithMessage(LoginStrings.mismatch, duration: 3.0, view: self.view)
+                        } else {
+                            Toast.displayToastWithMessage(Constants.Localized.someThingWentWrong, duration: 3.0, view: self.view)
+                        }
                     }
-                }
-                
-                if task.statusCode == 401 {
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: LoginStrings.mismatch, title: LoginStrings.loginFailed)
+                    
+                    self.hud?.hide(true)
                 } else {
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 3.0, view: self.view)
                 }
-                
                 self.hud?.hide(true)
         })
     }
     
+    //MARK: - Fire Registration GCM
     func fireCreateRegistration(registrationID : String) {
-        println("fireCreateRegistration")
         if(SessionManager.isLoggedIn()){
-            
             let manager: APIManager = APIManager.sharedInstance
-            //seller@easyshop.ph
-            //password
             let parameters: NSDictionary = [
+
                 "registrationId": "\(registrationID)",
                 "access_token"  : SessionManager.accessToken(),
                 "deviceType"    : "1"
@@ -321,7 +348,6 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
                 println("Registration successful!")
                 }, failure: {
                     (task: NSURLSessionDataTask!, error: NSError!) in
-                    
                     println("Registration unsuccessful!")
             })
         }
@@ -329,20 +355,12 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
     
     //MARK: - Success Message
     func showSuccessMessage() {
-        let alertController = UIAlertController(title: Constants.Localized.success, message: LoginStrings.successMessage, preferredStyle: .Alert)
+        Toast.displayToastWithMessage( LoginStrings.successMessage, duration: 3.0, view: self.view)
         
-        let OKAction = UIAlertAction(title: Constants.Localized.ok, style: .Default) { (action) in
-            alertController.dismissViewControllerAnimated(true, completion: nil)
-            
+        Delay.delayWithDuration(3.0, completionHandler: { (success) -> Void in
             let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
             appDelegate.changeRootToHomeView()
-        }
-        
-        alertController.addAction(OKAction)
-        
-        self.presentViewController(alertController, animated: true) {
-            
-        }
+        })
     }
     
     //MARK: - Adjust Y Inset
@@ -390,9 +408,8 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
     func fireFacebookLoginWithToken(token: String) {
         self.showHUD()
         let manager: APIManager = APIManager.sharedInstance
-        //seller@easyshop.ph
-        //password
-        let parameters: NSDictionary = ["token": token, "client_id": Constants.Credentials.clientID, "client_secret": Constants.Credentials.clientSecret, "grant_type": Constants.Credentials.grantBuyer]
+        
+        let parameters: NSDictionary = [LoginConstants.tokenKey: token, LoginConstants.clientIdKey: Constants.Credentials.clientID, LoginConstants.clientSecretKey: Constants.Credentials.clientSecret, LoginConstants.grantTypeKey: Constants.Credentials.grantBuyer]
         
         manager.POST(APIAtlas.facebookUrl, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
@@ -407,22 +424,12 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
                 self.fireCreateRegistration(SessionManager.gcmToken())
             } else {
                 FBSDKLoginManager().logOut()
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: loginModel.message, title: Constants.Localized.error)
+                Toast.displayToastWithMessage(loginModel.message, view: self.view)
             }
-            
             
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                
-                println(task.statusCode)
-                
-                if task.statusCode == 401 {
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: LoginStrings.mismatch, title: LoginStrings.loginFailed)
-                } else {
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
-                }
-                
+                Toast.displayToastWithMessage(Constants.Localized.someThingWentWrong, view: self.view)
                 self.hud?.hide(true)
         })
         
@@ -432,15 +439,13 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
     func fireGooglePlusLoginWithToken(token: String) {
         self.showHUD()
         let manager: APIManager = APIManager.sharedInstance
-        //seller@easyshop.ph
-        //password
-        let parameters: NSDictionary = ["token": token, "client_id": Constants.Credentials.clientID, "client_secret": Constants.Credentials.clientSecret, "grant_type": Constants.Credentials.grantBuyer]
+        
+        let parameters: NSDictionary = [LoginConstants.tokenKey: token, LoginConstants.clientIdKey: Constants.Credentials.clientID, LoginConstants.clientSecretKey: Constants.Credentials.clientSecret, LoginConstants.clientSecretKey: Constants.Credentials.grantBuyer]
         
         manager.POST(APIAtlas.googleUrl, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
             self.hud?.hide(true)
-            println(responseObject.description)
             
             let loginModel: LoginModel = LoginModel.parseDataFromDictionary(responseObject as! NSDictionary)
             if loginModel.isSuccessful {
@@ -448,22 +453,14 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
                 self.showSuccessMessage()
                 self.fireCreateRegistration(SessionManager.gcmToken())
             } else {
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: loginModel.message, title: Constants.Localized.error)
+                Toast.displayToastWithMessage(loginModel.message, view: self.view)
             }
             
             
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                
-                println(task.statusCode)
-                  println(error.userInfo)
-                if task.statusCode == 401 {
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: LoginStrings.mismatch, title: LoginStrings.loginFailed)
-                } else {
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
-                }
-                
+                Toast.displayToastWithMessage(Constants.Localized.someThingWentWrong, view: self.view)
                 self.hud?.hide(true)
         })
         

@@ -17,20 +17,20 @@ protocol SellerTableHeaderViewDelegate {
 
 class SellerTableHeaderView: UIView {
 
-    @IBOutlet weak var coverPhotoImageView: UIImageView!
     @IBOutlet weak var viewFeedbackButton: DynamicRoundedButton!
     @IBOutlet weak var followButton: DynamicRoundedButton!
     
-    @IBOutlet weak var sellernameLabel: UILabel!
-    @IBOutlet weak var addressLabel: UILabel!
     @IBOutlet weak var profileImageView: RoundedButton!
-    
-    var delegate: SellerTableHeaderViewDelegate?
-    
     @IBOutlet weak var callButton: RoundedButton!
-    
     @IBOutlet weak var messageButton: RoundedButton!
     
+    @IBOutlet weak var coverPhotoImageView: UIImageView!
+    
+    @IBOutlet weak var sellernameLabel: UILabel!
+    @IBOutlet weak var addressLabel: UILabel!
+    
+    var delegate: SellerTableHeaderViewDelegate?
+ 
     override func awakeFromNib() {
       self.gradient()
             

@@ -65,7 +65,7 @@ struct AddressStrings {
     static let zipCodeRequired: String = StringHelper.localizedStringWithKey("ZIP_CODE_REQUIRED_LOCALIZE_KEY")
 }
 
-class CheckoutContainerViewController: UIViewController, PaymentWebViewViewControllerDelegate, RegisterModalViewControllerDelegate {
+class CheckoutContainerViewController: UIViewController, PaymentWebViewViewControllerDelegate, RegisterModalViewControllerDelegate, ChangeMobileNumberViewControllerDelegate, VerifyMobileNumberViewControllerDelegate, VerifyMobileNumberStatusViewControllerDelegate {
     
     var summaryViewController: SummaryViewController?
     var paymentViewController: PaymentViewController?
@@ -101,6 +101,10 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
     
     var alertHasShown: Bool = false
     
+    var guestRegisterModel: RegisterModel = RegisterModel()
+    
+    var dimView: UIView?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -119,6 +123,12 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
         self.overViewLabel.text = CheckoutStrings.overView
         
         self.continueButton.setTitle(CheckoutStrings.saveAndContinue, forState: UIControlState.Normal)
+        
+        self.initDimView()
+        
+        if !SessionManager.isMobileVerified() && SessionManager.isLoggedIn() {
+            self.changeMobileNumberAction()
+        }
     }
     
     func showHUD() {
@@ -161,9 +171,13 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
                 self.selectedIndex--
                 if self.summaryViewController!.guestCheckoutTableViewCell.firstNameTextField.text!.isEmpty {
                     UIAlertController.displayErrorMessageWithTarget(self, errorMessage: RegisterStrings.firstNameRequired, title: AddressStrings.incompleteInformation)
+                } else if self.summaryViewController!.guestCheckoutTableViewCell.firstNameTextField.text!.isValidName() {
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: RegisterStrings.illegalFirstName, title: AddressStrings.incompleteInformation)
                 } else if self.summaryViewController!.guestCheckoutTableViewCell.lastNameTextField.text!.isEmpty {
                     UIAlertController.displayErrorMessageWithTarget(self, errorMessage: RegisterStrings.lastNameRequired, title: AddressStrings.incompleteInformation)
-                } else if self.summaryViewController!.guestCheckoutTableViewCell.mobileNumberTextField.text!.isEmpty {
+                } else if self.summaryViewController!.guestCheckoutTableViewCell.lastNameTextField.text!.isValidName() {
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: RegisterStrings.invalidLastName, title: AddressStrings.incompleteInformation)
+                }  else if self.summaryViewController!.guestCheckoutTableViewCell.mobileNumberTextField.text!.isEmpty {
                     UIAlertController.displayErrorMessageWithTarget(self, errorMessage: AddressStrings.mobileNumberIsRequired, title: AddressStrings.incompleteInformation)
                 } else if self.summaryViewController!.guestCheckoutTableViewCell.emailTextField.text!.isEmpty {
                     UIAlertController.displayErrorMessageWithTarget(self, errorMessage: RegisterStrings.emailRequired, title: AddressStrings.incompleteInformation)
@@ -173,6 +187,12 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
                     self.guestEmail = self.summaryViewController!.guestCheckoutTableViewCell.emailTextField.text
                     self.guestFirstName = self.summaryViewController!.guestCheckoutTableViewCell.firstNameTextField.text
                     self.guestLastName = self.summaryViewController!.guestCheckoutTableViewCell.lastNameTextField.text
+                    
+                    guestRegisterModel = RegisterModel(firstName: self.summaryViewController!.guestCheckoutTableViewCell.firstNameTextField.text,
+                        lastName: self.summaryViewController!.guestCheckoutTableViewCell.lastNameTextField.text,
+                        emailAddress: self.summaryViewController!.guestCheckoutTableViewCell.emailTextField.text,
+                        mobileNumber: self.summaryViewController!.guestCheckoutTableViewCell.mobileNumberTextField.text)
+                    
                     self.summaryViewController!.fireGuestUser()
                 }
 
@@ -559,12 +579,118 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
             registerViewController = storyBoard.instantiateViewControllerWithIdentifier("LoginAndRegisterContentViewController5") as? LoginAndRegisterContentViewController
         } else if IphoneType.isIphone4() {
             registerViewController = storyBoard.instantiateViewControllerWithIdentifier("LoginAndRegisterContentViewController4") as? LoginAndRegisterContentViewController
-            
         } else {
             registerViewController = storyBoard.instantiateViewControllerWithIdentifier("LoginAndRegisterContentViewController") as? LoginAndRegisterContentViewController
-            
         }
-        
+        registerViewController?.registerModel = self.guestRegisterModel
         self.navigationController?.presentViewController(registerViewController!, animated: true, completion: nil)
+    }
+    
+    //MARK: - Dim View
+    func initDimView() {
+        dimView = UIView(frame: self.view.bounds)
+        dimView?.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
+        self.navigationController!.view.addSubview(dimView!)
+        //self.view.addSubview(dimView!)
+        dimView?.hidden = true
+        dimView?.alpha = 0
+    }
+    
+    func hideDimView() {
+        UIView.animateWithDuration(0.3, animations: {
+            self.dimView!.alpha = 0
+            }, completion: { finished in
+                
+        })
+    }
+    
+    func changeMobileNumberAction(){
+        var changeNumberModal = ChangeMobileNumberViewController(nibName: "ChangeMobileNumberViewController", bundle: nil)
+        changeNumberModal.delegate = self
+        changeNumberModal.mobileNumber = SessionManager.mobileNumber()
+        changeNumberModal.isFromCheckout = true
+        changeNumberModal.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
+        changeNumberModal.providesPresentationContextTransitionStyle = true
+        changeNumberModal.definesPresentationContext = true
+        changeNumberModal.view.backgroundColor = UIColor.clearColor()
+        changeNumberModal.view.frame.origin.y = 0
+        
+        self.navigationController!.presentViewController(changeNumberModal, animated: true, completion: nil)
+        
+        self.dimView!.hidden = false
+        UIView.animateWithDuration(0.3, animations: {
+            self.dimView!.alpha = 1
+            }, completion: { finished in
+        })
+    }
+    
+    // MARK: - ChangeMobileNumberViewControllerDelegate
+    func closeChangeNumbderViewController(){
+        hideDimView()
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func submitChangeNumberViewController(){
+        var verifyNumberModal = VerifyMobileNumberViewController(nibName: "VerifyMobileNumberViewController", bundle: nil)
+        verifyNumberModal.delegate = self
+        verifyNumberModal.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
+        verifyNumberModal.providesPresentationContextTransitionStyle = true
+        verifyNumberModal.definesPresentationContext = true
+        verifyNumberModal.view.backgroundColor = UIColor.clearColor()
+        verifyNumberModal.view.frame.origin.y = 0
+        self.navigationController!.presentViewController(verifyNumberModal, animated: true, completion: nil)
+        
+        self.dimView!.hidden = false
+        UIView.animateWithDuration(0.3, animations: {
+            self.dimView!.alpha = 1
+            }, completion: { finished in
+        })
+    }
+    
+    // MARK: - VerifyMobileNumberViewControllerDelegate
+    func closeVerifyMobileNumberViewController() {
+        hideDimView()
+        self.changeMobileNumberAction()
+    }
+    
+    func verifyMobileNumberAction(isSuccessful: Bool) {
+        var verifyStatusModal = VerifyMobileNumberStatusViewController(nibName: "VerifyMobileNumberStatusViewController", bundle: nil)
+        verifyStatusModal.delegate = self
+        verifyStatusModal.isSuccessful = isSuccessful
+        verifyStatusModal.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
+        verifyStatusModal.providesPresentationContextTransitionStyle = true
+        verifyStatusModal.definesPresentationContext = true
+        verifyStatusModal.view.backgroundColor = UIColor.clearColor()
+        verifyStatusModal.view.frame.origin.y = 0
+        self.navigationController!.presentViewController(verifyStatusModal, animated: true, completion: nil)
+        
+        self.dimView!.hidden = false
+        UIView.animateWithDuration(0.3, animations: {
+            self.dimView!.alpha = 1
+            }, completion: { finished in
+        })
+    }
+    
+    func requestNewCodeAction() {
+        changeMobileNumberAction()
+    }
+    
+    // MARK: - VerifyMobileNumberStatusViewControllerDelegate
+    func closeVerifyMobileNumberStatusViewController() {
+        hideDimView()
+        self.changeMobileNumberAction()
+    }
+    
+    func continueVerifyMobileNumberAction(isSuccessful: Bool) {
+        hideDimView()
+        if isSuccessful {
+            self.summaryViewController?.fireSetCheckoutAddress("\(SessionManager.addressId())")
+        } else {
+            self.dismissViewControllerAnimated(true, completion: nil)
+        }
+    }
+    
+    func requestNewVerificationCodeAction() {
+        changeMobileNumberAction()
     }
 }
