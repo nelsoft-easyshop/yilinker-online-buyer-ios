@@ -8,6 +8,17 @@
 
 import UIKit
 
+struct CircularMenuString {
+    static let notYetAvailableTitle: String = StringHelper.localizedStringWithKey("CUSTOMIZE_SHOPPING_ALERT_TITLE_LOCALIZE_KEY")
+    static let notYetAvailableMessage: String = StringHelper.localizedStringWithKey("CUSTOMIZE_SHOPPING_ALERT_MESSAGE_LOCALIZE_KEY")
+    
+    static let cantProceedTitle: String = StringHelper.localizedStringWithKey("MESSAGE_LOGIN_ERROR_TITLE_LOCALIZE_KEY")
+    static let cantProceedMessage: String = StringHelper.localizedStringWithKey("MESSAGE_LOGIN_ERROR_MESSAGE_LOCALIZE_KEY")
+    
+    static let helpMessage: String = StringHelper.localizedStringWithKey("HELP_ALERT_MESSAGE_LOCALIZE_KEY")
+}
+
+
 class CircularMenuViewController: UIViewController {
     
     @IBOutlet weak var roundedButton: RoundedButton!
@@ -391,34 +402,64 @@ class CircularMenuViewController: UIViewController {
             }
         }
         
-//        if !SessionManager.isLoggedIn() && index == 3 {
-//            self.customTabBarController?.isValidToSwitchToMenuTabBarItems = false
-//            self.dissmissViewControllerAnimated()
-//        } else {
-            println(index)
-            if (SessionManager.isLoggedIn() && index == 3) || (!SessionManager.isLoggedIn() && index == 4) {
-                let alertController = UIAlertController(title: StringHelper.localizedStringWithKey("CUSTOMIZE_SHOPPING_ALERT_TITLE_LOCALIZE_KEY"),
-                    message: StringHelper.localizedStringWithKey("CUSTOMIZE_SHOPPING_ALERT_MESSAGE_LOCALIZE_KEY"), preferredStyle: .Alert)
+        if (!SessionManager.isLoggedIn() && index == 3) || (!SessionManager.isLoggedIn() && index == 4) {
+            if index == 3 {
+                let alertController = UIAlertController(title: CircularMenuString.cantProceedTitle, message: CircularMenuString.cantProceedMessage, preferredStyle: .Alert)
+                
                 let OKAction = UIAlertAction(title: "OK", style: .Default) { (action) in
+                    self.customTabBarController?.isValidToSwitchToMenuTabBarItems = false
+                    self.dissmissViewControllerAnimated()
                 }
+                    
                 alertController.addAction(OKAction)
                 self.presentViewController(alertController, animated: true) {
                     // ...
                 }
-                self.customTabBarController?.isValidToSwitchToMenuTabBarItems = false
             } else {
-                self.customTabBarController?.selectedIndex = 2
+                let alertController = UIAlertController(title: CircularMenuString.notYetAvailableTitle, message: CircularMenuString.notYetAvailableMessage, preferredStyle: .Alert)
                 
-                let navigationController: UINavigationController = self.customTabBarController!.viewControllers![2] as! UINavigationController
-                navigationController.popToRootViewControllerAnimated(false)
-                let hiddenViewController: HiddenViewController = navigationController.viewControllers[0] as! HiddenViewController
-                hiddenViewController.selectViewControllerAtIndex(index)
+                let OKAction = UIAlertAction(title: "OK", style: .Default) { (action) in
+                    self.customTabBarController?.isValidToSwitchToMenuTabBarItems = false
+                    self.dissmissViewControllerAnimated()
+                }
                 
+                alertController.addAction(OKAction)
+                self.presentViewController(alertController, animated: true) {
+                    // ...
+                }
+            }
+            
+        } else if index == 3 && SessionManager.isLoggedIn() || index == 0 {
+            var message: String = ""
+            
+            if index == 0 {
+                message = CircularMenuString.helpMessage
+            } else {
+                message = CircularMenuString.notYetAvailableMessage
+            }
+            
+            let alertController = UIAlertController(title: CircularMenuString.notYetAvailableTitle, message: message, preferredStyle: .Alert)
+            
+            let OKAction = UIAlertAction(title: "OK", style: .Default) { (action) in
                 self.customTabBarController?.isValidToSwitchToMenuTabBarItems = false
                 self.dissmissViewControllerAnimated()
             }
-//        }
-        
+            
+            alertController.addAction(OKAction)
+            self.presentViewController(alertController, animated: true) {
+                // ...
+            }
+
+        } else {
+            self.customTabBarController?.selectedIndex = 2
+            let navigationController: UINavigationController = self.customTabBarController!.viewControllers![2] as! UINavigationController
+            navigationController.popToRootViewControllerAnimated(false)
+            let hiddenViewController: HiddenViewController = navigationController.viewControllers[0] as! HiddenViewController
+            hiddenViewController.selectViewControllerAtIndex(index)
+            
+            self.customTabBarController?.isValidToSwitchToMenuTabBarItems = false
+            self.dissmissViewControllerAnimated()
+        }
     }
     
     //logout
