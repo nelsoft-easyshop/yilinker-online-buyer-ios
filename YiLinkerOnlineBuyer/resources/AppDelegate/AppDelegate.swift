@@ -18,8 +18,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GGLInstanceIDDelegate {
     var registrationOptions = [String: AnyObject]()
     
     var registrationKey = "onRegistration"
+    
+    struct responseType {
+        static let Status = "USER_ONLINE_STATUS"
+        static let New = "NEW_MESSAGE"
+        static let Seen = "CONVERSATION_SEEN"
+    }
     var messageKey = "onMessage"
     var seenMessageKey = "seenMessage"
+    var statusKey = "userOnlineStatus"
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
@@ -127,25 +134,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GGLInstanceIDDelegate {
         
         GCMService.sharedInstance().appDidReceiveMessage(userInfo);
         
-        if let info = userInfo["aps"] as? NSDictionary {
-            if let alert = info["alert"] as? NSDictionary{
-                if let error = alert["error"] as? NSString{
-                    println("Notification failed with error: \(error)")
-                } else if let title = alert["title"] as? NSString{
-                    /* title will dictate what type of notification this will be */
-                    /* title value should be aligned to backend */
-                    println("Notification received with title: \(title)")
-                    if(title == "seenMessage") {
-                        NSNotificationCenter.defaultCenter().postNotificationName(seenMessageKey, object: nil,
-                            userInfo: userInfo)
-                    } else if (title == "newMessage") {
-                        NSNotificationCenter.defaultCenter().postNotificationName(messageKey, object: nil, userInfo: userInfo)
-                    }
-                }
+        if let info = userInfo["responseType"] as? NSString {
+            switch info {
+                case responseType.Seen:                    NSNotificationCenter.defaultCenter().postNotificationName(seenMessageKey, object: nil, userInfo: userInfo)
+                case responseType.Status:
+                    NSNotificationCenter.defaultCenter().postNotificationName(statusKey, object: nil, userInfo: userInfo)
+                case responseType.New:
+                    NSNotificationCenter.defaultCenter().postNotificationName(messageKey, object: nil, userInfo: userInfo)
+                default:
+                    println("RESPONSE TYPE INVALID")
             }
+            
         } else {
-            println("userInfo not a dictionary")
+            println("userInfo not a string")
         }
+        
     }
     
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject], fetchCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void) {
@@ -153,60 +156,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GGLInstanceIDDelegate {
         
         GCMService.sharedInstance().appDidReceiveMessage(userInfo);
         
-        
-        /*
-        TO TEST:
-        
-        IN HEADER:
-        
-        POST : https://gcm-http.googleapis.com/gcm/send
-        Authorization : key=AIzaSyDAlP85iUepL1LEhvB4tVrkyTnINCZTv7Q
-        Content-Type  : application/json
-        
-        IN BODY:
-        
-        {
-        
-        "collapse_key" : "dennis",
-        "delay_while_idle" : true,
-        "notification" : {
-        "title" : "seenMessage",
-        OR
-        "title" : "newMessage",
-        BODY CONTAINS THE RECIPIENT ID
-        "body" : "68"
-        },
-        
-        place registration token generated in console here
-        "to" :
-        <registration token>
-        sample: "lhdfgScdMso:APA91bFFtTz3yzMTP5ObsTGMrtOqMtV1dtMImOCJ16ARJCixgwmX0NTOAogiwMjwhtBHOAKjBGbzRzAdGfcO4MelzpJ2DUxC4GXFr7eb7z-uwZjNLTv9L61ooAcY2wQfznEkT3Mey7Gr"
-        
-        }
-        
-        */
-        
-        if let info = userInfo["aps"] as? NSDictionary {
-            if let alert = info["alert"] as? NSDictionary {
-                if let error = alert["error"] as? NSString {
-                    println("Notification failed with error: \(error)")
-                } else if let title = alert["title"] as? NSString {
-                    /* title will dictate what type of notification this will be */
-                    /* title value should be aligned to backend */
-                    println("Notification received with title: \(title)")
-                    /* THIS IS STILL SUBJECT FOR CHANGE - FOR ALIGNMENT WITH BACKEND */
-                    if(title == "seenMessage") {
-                        NSNotificationCenter.defaultCenter().postNotificationName(seenMessageKey, object: nil,
-                            userInfo: userInfo)
-                        /* THIS IS STILL SUBJECT FOR CHANGE - FOR ALIGNMENT WITH BACKEND */
-                    } else if (title == "newMessage") {
-                        NSNotificationCenter.defaultCenter().postNotificationName(messageKey, object: nil, userInfo: userInfo)
-                    }
-                }
+        if let info = userInfo["responseType"] as? NSString {
+            switch info {
+            case responseType.Seen:
+                NSNotificationCenter.defaultCenter().postNotificationName(seenMessageKey, object: nil, userInfo: userInfo)
+            case responseType.Status:
+                NSNotificationCenter.defaultCenter().postNotificationName(statusKey, object: nil, userInfo: userInfo)
+            case responseType.New:
+                NSNotificationCenter.defaultCenter().postNotificationName(messageKey, object: nil, userInfo: userInfo)
+            default:
+                println("RESPONSE TYPE INVALID")
             }
+            
         } else {
-            println("userInfo not a dictionary")
+            println("userInfo not a string")
         }
+        
         completionHandler(UIBackgroundFetchResult.NoData);
         
         

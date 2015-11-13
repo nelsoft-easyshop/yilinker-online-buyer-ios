@@ -335,8 +335,10 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
         if(SessionManager.isLoggedIn()){
             let manager: APIManager = APIManager.sharedInstance
             let parameters: NSDictionary = [
-                LoginConstants.registrationIdKey: "\(registrationID)",
-                LoginConstants.accessTokenKey: SessionManager.accessToken()
+
+                "registrationId": "\(registrationID)",
+                "access_token"  : SessionManager.accessToken(),
+                "deviceType"    : "1"
                 ]   as Dictionary<String, String>
             
             let url = APIAtlas.baseUrl + APIAtlas.ACTION_GCM_CREATE
@@ -419,6 +421,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
             if loginModel.isSuccessful {
                 SessionManager.parseTokensFromResponseObject(loginModel.dataDictionary)
                 self.showSuccessMessage()
+                self.fireCreateRegistration(SessionManager.gcmToken())
             } else {
                 FBSDKLoginManager().logOut()
                 Toast.displayToastWithMessage(loginModel.message, view: self.view)
@@ -448,6 +451,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
             if loginModel.isSuccessful {
                 SessionManager.parseTokensFromResponseObject(loginModel.dataDictionary)
                 self.showSuccessMessage()
+                self.fireCreateRegistration(SessionManager.gcmToken())
             } else {
                 Toast.displayToastWithMessage(loginModel.message, view: self.view)
             }

@@ -18,7 +18,12 @@ TODAYS_PROMO_LOCALIZE_KEY = "TODAYS PROMO";
 CATEGORIES_LOCALIZE_KEY = "CATEGORIES";
 
 CUSTOMIZE_SHOPPING_ALERT_TITLE_LOCALIZE_KEY = "Feature Not Available";
-CUSTOMIZE_SHOPPING_ALERT_MESSAGE_LOCALIZE_KEY = "Customize shopping will be available on the next release.";
+CUSTOMIZE_SHOPPING_ALERT_MESSAGE_LOCALIZE_KEY = "Customized shopping will be available on the next release.";
+
+HELP_ALERT_MESSAGE_LOCALIZE_KEY = "Help will be available on the next release.";
+
+MESSAGE_LOGIN_ERROR_TITLE_LOCALIZE_KEY = "Unable to Proceed";
+MESSAGE_LOGIN_ERROR_MESSAGE_LOCALIZE_KEY = "You must be logged in to send a message";
 
 // Global
 SOMETHINGWENTWRONG_LOCALIZE_KEY = "Something Went Wrong";
@@ -303,6 +308,9 @@ DISPUTE_SUBMIT_CASE_LOCALIZE_KEY = "SUBMIT CASE";
 DISPUTE_NO_AVAILABLE_TRANSACTION_LOCALIZE_KEY = "No Available Transaction";
 DISPUTE_NO_REASON_TRANSACTION_LOCALIZE_KEY = "No Available Reason";
 DISPUTE_CHOOSE_TRANSACTION_NUMBER_TRANSACTION_LOCALIZE_KEY = "Please choose a transaction number before adding a product.";
+
+CUSTOMIZE_SHOPPING_ALERT_TITLE_LOCALIZE_KEY = "Feature Not Available";
+CUSTOMIZE_SHOPPING_ALERT_MESSAGE_LOCALIZE_KEY = "Customize shopping will be available on the next release.";
 
 
 //Vendor Page

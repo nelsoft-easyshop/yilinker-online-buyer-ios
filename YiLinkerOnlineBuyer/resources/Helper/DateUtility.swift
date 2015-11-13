@@ -41,4 +41,13 @@ class DateUtility: NSObject {
         
     }
     
+    class func getTimeFromDate(tempDT : NSDate) -> NSString {
+        
+        let dateStringFormatter = NSDateFormatter()
+        dateStringFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
+        
+        dateStringFormatter.dateFormat = hourFormat
+        return dateStringFormatter.stringFromDate(tempDT)
+    }
+    
 }

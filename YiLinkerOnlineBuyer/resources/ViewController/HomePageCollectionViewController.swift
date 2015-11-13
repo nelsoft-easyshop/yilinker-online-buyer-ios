@@ -73,6 +73,7 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
         UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.LightContent
     }
     
+    //MARK: - Register Cell's
     func registerCells() {
         var fullImageCollectionViewNib: UINib = UINib(nibName: "FullImageCollectionViewCell", bundle:nil)
         collectionView?.registerNib(fullImageCollectionViewNib, forCellWithReuseIdentifier: "FullImageCollectionViewCell")
@@ -176,15 +177,15 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
                 productDictionary = self.dictionary["bottomBanners"] as! NSArray
             }
             
-            let fullImageColectionViewCell: FullImageCollectionViewCell = self.collectionView?.dequeueReusableCellWithReuseIdentifier("FullImageCollectionViewCell", forIndexPath: indexPath) as! FullImageCollectionViewCell
+            let fullImageCollectionViewCell: FullImageCollectionViewCell = self.collectionView?.dequeueReusableCellWithReuseIdentifier("FullImageCollectionViewCell", forIndexPath: indexPath) as! FullImageCollectionViewCell
             let homeProductModels: [HomePageProductModel] = HomePageProductModel.parseDataWithArray(productDictionary)
             
             let homeProductModel: HomePageProductModel = homeProductModels[indexPath.row]
-            fullImageColectionViewCell.itemProductImageView.sd_setImageWithURL(homeProductModel.imageURL, placeholderImage: UIImage(named: "dummy-placeholder"))
-            fullImageColectionViewCell.targetType = homeProductModel.targetType
-            fullImageColectionViewCell.target = homeProductModel.target
+            fullImageCollectionViewCell.itemProductImageView.sd_setImageWithURL(homeProductModel.imageURL, placeholderImage: UIImage(named: "dummy-placeholder"))
+            fullImageCollectionViewCell.targetType = homeProductModel.targetType
+            fullImageCollectionViewCell.target = homeProductModel.target
             
-            return fullImageColectionViewCell
+            return fullImageCollectionViewCell
             
         } else if self.layouts[indexPath.section] == Constants.HomePage.layoutThreeKey {
             var homeProductModel: HomePageProductModel?
@@ -603,38 +604,29 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
         
         if cell.isKindOfClass(FullImageCollectionViewCell) {
             let fullImageCollectionViewCell: FullImageCollectionViewCell = self.collectionView!.cellForItemAtIndexPath(indexPath) as! FullImageCollectionViewCell
-            println("Target: \(fullImageCollectionViewCell.target)")
-            println("Target type: \(fullImageCollectionViewCell.targetType)")
-            self.redirectToProductpageWithProductID(fullImageCollectionViewCell.target)
+            
+            if fullImageCollectionViewCell.targetType == "webview" {
+                self.redirectToWebViewWithUrl(fullImageCollectionViewCell.target)
+            } else {
+                self.redirectToProductpageWithProductID(fullImageCollectionViewCell.target)
+            }
         } else if cell.isKindOfClass(HalfVerticalImageCollectionViewCell) {
             let halfVerticalImageCollectionViewCell: HalfVerticalImageCollectionViewCell = self.collectionView!.cellForItemAtIndexPath(indexPath) as! HalfVerticalImageCollectionViewCell
-            println("Target: \(halfVerticalImageCollectionViewCell.target)")
-            println("Target type: \(halfVerticalImageCollectionViewCell.targetType)")
             self.redirectToProductpageWithProductID(halfVerticalImageCollectionViewCell.target)
         } else if cell.isKindOfClass(ProductItemWithVerticalDisplayCollectionViewCell) {
             let productItemWithVerticalDisplayCollectionViewCell: ProductItemWithVerticalDisplayCollectionViewCell = cell as! ProductItemWithVerticalDisplayCollectionViewCell
-            println("Target: \(productItemWithVerticalDisplayCollectionViewCell.target)")
-            println("Target type: \(productItemWithVerticalDisplayCollectionViewCell.targetType)")
             self.redirectToProductpageWithProductID(productItemWithVerticalDisplayCollectionViewCell.target)
         } else if cell.isKindOfClass(ProductWithCenterNameCollectionViewCell) {
             let productWithCenterNameCollectionViewCell: ProductWithCenterNameCollectionViewCell = cell as! ProductWithCenterNameCollectionViewCell
-            println("Target: \(productWithCenterNameCollectionViewCell.target)")
-            println("Target type: \(productWithCenterNameCollectionViewCell.targetType)")
             self.redirectToProductpageWithProductID(productWithCenterNameCollectionViewCell.target)
         } else if cell.isKindOfClass(TwoColumnGridCollectionViewCell) {
             let twoColumnGridCollectionViewCell: TwoColumnGridCollectionViewCell = cell as! TwoColumnGridCollectionViewCell
-            println("Target: \(twoColumnGridCollectionViewCell.target)")
-            println("Target type: \(twoColumnGridCollectionViewCell.targetType)")
             self.redirectToProductpageWithProductID(twoColumnGridCollectionViewCell.target)
         } else if cell.isKindOfClass(VerticalImageCollectionViewCell) {
             let verticalImageCollectionViewCell: VerticalImageCollectionViewCell = cell as! VerticalImageCollectionViewCell
-            println("Target: \(verticalImageCollectionViewCell.target)")
-            println("Target type: \(verticalImageCollectionViewCell.targetType)")
             self.redirectToProductpageWithProductID(verticalImageCollectionViewCell.target)
         } else if cell.isKindOfClass(SellerCollectionViewCell) {
             let sellerCollectionViewCell: SellerCollectionViewCell = cell as! SellerCollectionViewCell
-            println("Target: \(sellerCollectionViewCell.target)")
-            println("Target type: \(sellerCollectionViewCell.targetType)")
             self.redirectToSellerWithID(sellerCollectionViewCell.userId)
         }
     }
@@ -667,11 +659,13 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
         self.navigationController!.pushViewController(resultViewController, animated: true)
     }
     
+    //MARK: - Did Select Product With Target
     func didSelectProductWithTarget(target: String, targetType: String) {
         println("target: \(target) \ntarget type:\(targetType)")
         self.redirectToProductpageWithProductID(target)
     }
     
+    //MARK: - Redirect To Product Page With Product ID
     func redirectToProductpageWithProductID(productID: String) {
         if productID.toInt() != nil {
             let productViewController: ProductViewController = ProductViewController(nibName: "ProductViewController", bundle: nil)
@@ -688,9 +682,17 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
         }
     }
     
+    //MARK: - Redirect To Seller With ID
     func redirectToSellerWithID(sellerID: Int) {
         let sellerViewController: SellerViewController = SellerViewController(nibName: "SellerViewController", bundle: nil)
         sellerViewController.sellerId = sellerID
         self.navigationController!.pushViewController(sellerViewController, animated: true)
+    }
+    
+    //MARK: - Redirect To Web View With Url
+    func redirectToWebViewWithUrl(urlString: String) {
+        let webViewController: WebViewController = WebViewController(nibName: "WebViewController", bundle: nil)
+        webViewController.urlString = urlString
+        self.navigationController!.pushViewController(webViewController, animated: true)
     }
 }

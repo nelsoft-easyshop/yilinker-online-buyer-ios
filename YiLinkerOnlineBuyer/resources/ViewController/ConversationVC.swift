@@ -111,48 +111,77 @@ class ConversationVC: UIViewController, EmptyViewDelegate{
         
         self.contentViewFrame = self.view.frame
         
-        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-        
         self.navigationItem.title = LocalizedStrings.title
-        /*
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "onRegistration:",
-        name: appDelegate.registrationKey, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "receivedMessage:",
-        name: appDelegate.messageKey, object: nil)
-        */
         
     }
     
-    /*
-    func onRegistration(notification: NSNotification){
-    if let info = notification.userInfo as? Dictionary<String,String> {
-    if let error = info["error"] {
-    showAlert("Error registering with GCM", message: error)
-    } else if let registrationToken = info["registrationToken"] {
-    let message = "Check the xcode debug console for the registration token for the server to send notifications to your device"
-    self.fireCreateRegistration(registrationToken)
-    showAlert("Registration Successful!", message: message)
-    }
-    }
-    }
-    
-    func showAlert(title:String, message:String) {
-    let alert = UIAlertController(title: title,
-    message: message, preferredStyle: .Alert)
-    let dismissAction = UIAlertAction(title: "Dismiss", style: .Destructive, handler: nil)
-    alert.addAction(dismissAction)
-    self.presentViewController(alert, animated: true, completion: nil)
+    func onStatusUpdate(notification: NSNotification){
+        if let info = notification.userInfo as? Dictionary<String, AnyObject> {
+            if let data = info["data"] as? String{
+                if let data2 = data.dataUsingEncoding(NSUTF8StringEncoding){
+                    if let json = NSJSONSerialization.JSONObjectWithData(data2, options: .MutableContainers, error: nil) as? [String:AnyObject] {
+                        if let userId = json["userId"] as? Int{
+                            for (index,convo) in enumerate(conversations){
+                                if (convo.contact.userId == String(userId)) {
+                                    if let status = json["isOnline"] as? String{
+                                        if (status == "false"){
+                                            convo.contact.isOnline = "0"
+                                        } else {
+                                            convo.contact.isOnline = "1"
+                                        }
+                                        self.conversationTableView.reloadData()
+                                        break
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
     
     func receivedMessage(notification : NSNotification){
-    //action here to open messaging
+        if let info = notification.userInfo as? Dictionary<String, AnyObject> {
+            if let data = info["data"] as? String{
+                if let data2 = data.dataUsingEncoding(NSUTF8StringEncoding){
+                    if let json = NSJSONSerialization.JSONObjectWithData(data2, options: .MutableContainers, error: nil) as? [String:AnyObject] {
+                        if let userId = json["senderUid"] as? Int{
+                            for (index,convo) in enumerate(conversations){
+                                if (convo.contact.userId == String(userId)) {
+                                    if let newMessage = info["message"] as? String {
+                                        convo.lastMessage = newMessage
+                                    }
+                                    self.conversationTableView.reloadData()
+                                    break
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
-    */
     
     override func viewWillAppear(animated: Bool) {
         //self.fireLogin()
         self.getConversationsFromEndpoint("1", limit: "10")
         SessionManager.setUnReadMessagesCount(0)
+        
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "onStatusUpdate:",
+            name: appDelegate.statusKey, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "receivedMessage:",
+            name: appDelegate.messageKey, object: nil)
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: appDelegate.statusKey, object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: appDelegate.messageKey, object: nil)
     }
     
     func addEmptyView() {
