@@ -8,6 +8,12 @@
 
 import UIKit
 
+struct CircularMenuString {
+    static let notYetAvailableTitle: String = StringHelper.localizedStringWithKey("CUSTOMIZE_SHOPPING_ALERT_TITLE_LOCALIZE_KEY")
+    static let notYetAvailableMessage: String = StringHelper.localizedStringWithKey("CUSTOMIZE_SHOPPING_ALERT_MESSAGE_LOCALIZE_KEY")
+}
+
+
 class CircularMenuViewController: UIViewController {
     
     @IBOutlet weak var roundedButton: RoundedButton!
@@ -391,9 +397,24 @@ class CircularMenuViewController: UIViewController {
             }
         }
         
-        if !SessionManager.isLoggedIn() && index == 3 {
-            self.customTabBarController?.isValidToSwitchToMenuTabBarItems = false
-            self.dissmissViewControllerAnimated()
+        if (!SessionManager.isLoggedIn() && index == 3) || index == 3 || (!SessionManager.isLoggedIn() && index == 4) {
+            if index == 3 || (!SessionManager.isLoggedIn() && index == 4) {
+                let alertController = UIAlertController(title: CircularMenuString.notYetAvailableTitle, message: CircularMenuString.notYetAvailableMessage, preferredStyle: .Alert)
+                
+                let OKAction = UIAlertAction(title: "OK", style: .Default) { (action) in
+                    self.customTabBarController?.isValidToSwitchToMenuTabBarItems = false
+                    self.dissmissViewControllerAnimated()
+                }
+                    
+                alertController.addAction(OKAction)
+                self.presentViewController(alertController, animated: true) {
+                    // ...
+                }
+            } else {
+                self.customTabBarController?.isValidToSwitchToMenuTabBarItems = false
+                self.dissmissViewControllerAnimated()
+            }
+            
         } else {
             println(index)
             self.customTabBarController?.selectedIndex = 2
