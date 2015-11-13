@@ -235,7 +235,7 @@ class TransactionLeaveSellerFeedbackTableViewController: UITableViewController, 
         let finalJsonString3: String = finalJsonString2.stringByReplacingOccurrencesOfString("}\"", withString: "}", options: NSStringCompareOptions.LiteralSearch, range: nil)
         println(finalJsonString3)
         
-        var parameters: NSMutableDictionary = ["sellerId" : self.sellerId, "orderId" : self.orderId, "title" : "Seller Feedback", "feedback" : "feedback2", "access_token" : SessionManager.accessToken()]
+        var parameters: NSMutableDictionary = ["sellerId" : self.sellerId, "orderId" : self.orderId, "title" : "Seller Feedback", "feedback" : feedback2, "access_token" : SessionManager.accessToken()]
         
         parameters["ratings"] = finalJsonString3.stringByReplacingOccurrencesOfString("\\", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
         let data4 = NSJSONSerialization.dataWithJSONObject(parameters, options: nil, error: nil)
@@ -243,8 +243,7 @@ class TransactionLeaveSellerFeedbackTableViewController: UITableViewController, 
         let finalJsonString4: String = formattedRating4.stringByReplacingOccurrencesOfString("\\", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
         
         println("\(parameters) \(finalJsonString4)")
-        
-        
+
         manager.POST(APIAtlas.transactionLeaveSellerFeedback, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
           

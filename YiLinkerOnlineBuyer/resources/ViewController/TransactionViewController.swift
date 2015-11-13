@@ -61,7 +61,7 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.contentViewFrame = self.view.frame
+        self.contentViewFrame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)
         
         self.title = transactionTitle
         
@@ -272,6 +272,7 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
             manager.GET(APIAtlas.transactionLogs+"\(SessionManager.accessToken())&type=\(queryType)&perPage=15&page=\(page)", parameters: nil, success: {
                 (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
                 
+                println(responseObject)
                 var trans: TransactionModel?
                 
                 let data2 = NSJSONSerialization.dataWithJSONObject(responseObject, options: nil, error: nil)
@@ -321,6 +322,8 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
                             self.requestRefreshToken(TransactionRefreshType.Support)
                         }
                     } else {
+                        self.tableData.removeAll(keepCapacity: false)
+                        self.tableView.reloadData()
                         self.showAlert(title: Constants.Localized.someThingWentWrong, message: nil)
                         self.addEmptyView()
                     }
