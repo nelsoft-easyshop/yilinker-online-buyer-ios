@@ -649,7 +649,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     
     func requestContactsFromEndpoint(){
             if (Reachability.isConnectedToNetwork()) {
-                self.showHUD()
+//                self.showHUD()
                 
                 let manager: APIManager = APIManager.sharedInstance
                 manager.requestSerializer = AFHTTPRequestSerializer()
@@ -666,7 +666,6 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
                 manager.POST(url, parameters: parameters, success: {
                     (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
                     self.contacts = W_Contact.parseContacts(responseObject as! NSDictionary)
-                    self.hud?.hide(true)
                     }, failure: {
                         (task: NSURLSessionDataTask!, error: NSError!) in
                         let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
