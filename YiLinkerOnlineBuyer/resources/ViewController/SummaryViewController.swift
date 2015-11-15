@@ -217,7 +217,7 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
         if indexPath.section == 0 {
             return 71
         } else {
-            return 812
+            return 730
         }
     }
     
