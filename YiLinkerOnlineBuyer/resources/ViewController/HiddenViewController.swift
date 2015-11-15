@@ -119,9 +119,15 @@ class HiddenViewController: UIViewController {
                 selectedChildViewController?.removeFromParentViewController()
             }
         }
+       
         self.view.layoutIfNeeded()
         self.addChildViewController(viewController)
         viewController.view.frame = contentViewFrame!
+        
+        if viewController.isKindOfClass(LoginAndRegisterContentViewController) {
+            viewController.view.frame = CGRectMake(0, 20, viewController.view.frame.size.width, viewController.view.frame.size.height)
+        }
+        
         contentView.addSubview(viewController.view)
         viewController.didMoveToParentViewController(self)
         selectedChildViewController = viewController

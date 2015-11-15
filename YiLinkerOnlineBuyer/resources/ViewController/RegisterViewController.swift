@@ -83,6 +83,18 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         self.registerButton.setTitle(RegisterStrings.registerMeNow, forState: UIControlState.Normal)
         
         self.populateDefautData()
+       
+        let loginRegisterParentViewController: LoginAndRegisterContentViewController = self.parentViewController as! LoginAndRegisterContentViewController
+        if loginRegisterParentViewController.registerModel.firstName != "" {
+            self.firstNameTextField.enabled = false
+            self.lastNameTextField.enabled = false
+            self.emailAddressTextField.enabled = false
+            self.passwordTextField.enabled = false
+            self.reTypePasswordTextField.enabled = false
+            
+            self.mobileNumberTextField.enabled = false
+            self.referralCodeTextField.enabled = false
+        }
     }
     
     // MARK: Populate Default Data
@@ -165,8 +177,8 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         self.currentTextFieldTag = textField.tag
         let textFieldHeightWithInset: CGFloat = -30
         if IphoneType.isIphone6Plus() {
-            if textField == self.passwordTextField || textField == self.reTypePasswordTextField {
-                self.adjustTextFieldYInsetWithInset(textFieldHeightWithInset)
+            if textField == self.passwordTextField || textField == self.reTypePasswordTextField || textField == self.mobileNumberTextField || textField == self.referralCodeTextField {
+                self.adjustTextFieldYInsetWithInset(CGFloat(self.currentTextFieldTag) * textFieldHeightWithInset)
             } else {
                 self.adjustTextFieldYInsetWithInset(0)
             }
@@ -176,6 +188,8 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
             } else if textField == self.lastNameTextField {
                 self.adjustTextFieldYInsetWithInset(textFieldHeightWithInset)
             } else if textField == self.emailAddressTextField {
+                self.adjustTextFieldYInsetWithInset(CGFloat(textField.tag) * textFieldHeightWithInset)
+            } else if textField == self.referralCodeTextField {
                 self.adjustTextFieldYInsetWithInset(CGFloat(textField.tag) * textFieldHeightWithInset)
             } else {
                 self.adjustTextFieldYInsetWithInset(3 * textFieldHeightWithInset)

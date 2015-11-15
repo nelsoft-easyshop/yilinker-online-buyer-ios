@@ -223,6 +223,7 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
                         fourImageCollectionViewCell.originalPriceLabel.text = "P \(homeProductModel!.originalPrice)"
                         if homeProductModel!.discountPercentage.toInt() != 0 {
                             fourImageCollectionViewCell.discountPercentageLabel.text = "\(homeProductModel!.discountPercentage) %"
+                            fourImageCollectionViewCell.originalPriceLabel.drawDiscountLine(false)
                         } else {
                             fourImageCollectionViewCell.discountPercentageLabel.hidden = true
                             fourImageCollectionViewCell.originalPriceLabel.hidden = true
@@ -255,7 +256,8 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
                         
                         if homeProductModel!.discountPercentage.toInt() != 0 {
                             fourImageCollectionViewCell.discountPercentageLabel.text = "\(homeProductModel!.discountPercentage) %"
-                            fourImageCollectionViewCell.originalPriceLabel.hidden = true
+                            fourImageCollectionViewCell.originalPriceLabel.hidden = false
+                            fourImageCollectionViewCell.originalPriceLabel.drawDiscountLine(false)
                         } else {
                             fourImageCollectionViewCell.discountPercentageLabel.hidden = true
                         }
