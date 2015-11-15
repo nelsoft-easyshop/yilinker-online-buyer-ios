@@ -105,6 +105,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
     func titleView() {
         let label: UILabel = UILabel(frame: CGRectMake(0, 0, 100, 50))
         label.text = vendorTitle
+        label.font = UIFont (name: "Panton", size: 20)
         label.textAlignment = NSTextAlignment.Center
         label.textColor = UIColor.whiteColor()
         self.navigationItem.titleView = label
@@ -190,13 +191,12 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
             if responseObject["isSuccessful"] as! Bool {
                 self.sellerModel = SellerModel.parseSellerDataFromDictionary(responseObject as! NSDictionary)
                 self.is_successful = self.sellerModel!.is_allowed
-                self.populateData()
                 self.hud?.hide(true)
             } else {
                 self.showAlert(title: "Error", message: responseObject["message"] as! String)
                 self.hud?.hide(true)
             }
-            
+            self.populateData()
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 
@@ -261,8 +261,8 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     //MARK: Follow seller
     func fireFollowSeller() {
-        
-        self.showHUD()
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+        //self.showHUD()
         
         let manager = APIManager.sharedInstance
         let parameters: NSDictionary = ["sellerId" : sellerId, "access_token" : SessionManager.accessToken()];
@@ -274,9 +274,12 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
             self.is_successful = true
             self.sellerTableHeaderView.followButton.tag = 1
             
-            self.hud?.hide(true)
+            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+            //self.hud?.hide(true)
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
+                
+                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                 
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                 
@@ -295,14 +298,14 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
                     self.sellerTableHeaderView.followButton.tag = 2
                 }
                 
-                self.hud?.hide(true)
+                //self.hud?.hide(true)
         })
     }
     
     //MARK: Unfollow seller
     func fireUnfollowSeller() {
-        
-        self.showHUD()
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+        //self.showHUD()
         
         let manager = APIManager.sharedInstance
         let parameters: NSDictionary = ["sellerId" : sellerId, "access_token" : SessionManager.accessToken()];
@@ -314,11 +317,15 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
             self.is_successful = false
             self.sellerTableHeaderView.followButton.tag = 2
             
-            self.hud?.hide(true)
+            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+            
+            //self.hud?.hide(true)
             
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
                 
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                
+                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                 
                 if error.userInfo != nil {
                     let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
@@ -336,7 +343,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
                     self.sellerTableHeaderView.followButton.tag = 2
                 }
                 
-                self.hud?.hide(true)
+                //self.hud?.hide(true)
         })
     }
     
