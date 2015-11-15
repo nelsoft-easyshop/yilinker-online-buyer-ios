@@ -79,6 +79,8 @@ class GuestCheckoutTableViewCell: UITableViewCell, UITextFieldDelegate {
         self.barangayLabel.required()
         
         self.zipCodelabel.required()
+        
+        self.clipsToBounds = true
     }
     
     func localizedLabels() {
