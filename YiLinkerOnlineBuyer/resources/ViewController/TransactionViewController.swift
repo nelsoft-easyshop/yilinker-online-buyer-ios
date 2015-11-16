@@ -124,7 +124,7 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
                 cell.numberLabel.text =  "\(tableData[indexPath.row].product_count2) \(products)"
             }
             
-            cell.transactionIdLabel.text = tableData[indexPath.row].invoice_number2
+            cell.transactionIdLabel.text = "TID-\(tableData[indexPath.row].invoice_number2)"
         }
         
         cell.selectionStyle = .None
