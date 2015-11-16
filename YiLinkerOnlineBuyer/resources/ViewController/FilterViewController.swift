@@ -31,6 +31,9 @@ class FilterViewController: UIViewController, FilterTableViewCellDelegate {
     
     var maxPrice: Double = 0
     var minPrice: Double = 0
+    var selectedMaxPrice: Double = 0
+    var selectedMinPrice: Double = 0
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,8 +45,8 @@ class FilterViewController: UIViewController, FilterTableViewCellDelegate {
         rangeBar.minValue = Float(minPrice)
         rangeBar.maxValue = Float(maxPrice)
         
-        rangeBar.selectedMinimum = Float(minPrice)
-        rangeBar.selectedMaximum = Float(maxPrice)
+        rangeBar.selectedMinimum = Float(selectedMinPrice)
+        rangeBar.selectedMaximum = Float(selectedMaxPrice)
         
         initializeLocalizedString()
     }
