@@ -191,10 +191,10 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
             if responseObject["isSuccessful"] as! Bool {
                 self.sellerModel = SellerModel.parseSellerDataFromDictionary(responseObject as! NSDictionary)
                 self.is_successful = self.sellerModel!.is_allowed
-                self.hud?.hide(true)
+                //self.hud?.hide(true)
             } else {
                 self.showAlert(title: "Error", message: responseObject["message"] as! String)
-                self.hud?.hide(true)
+                //self.hud?.hide(true)
             }
             self.populateData()
             }, failure: {
@@ -222,7 +222,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
     //MARK: Get seller ratings and feedback
     func fireSellerFeedback() {
         
-        self.showHUD()
+        //self.showHUD()
         
         let manager = APIManager.sharedInstance
         let parameters: NSDictionary = ["sellerId" : sellerId];
@@ -232,10 +232,10 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
             
             if responseObject["isSuccessful"] as! Bool {
                 self.sellerModel2 = SellerModel.parseSellerReviewsDataFromDictionary(responseObject as! NSDictionary)
-                self.hud?.hide(true)
+                //self.hud?.hide(true)
             } else {
                 self.showAlert(title: Constants.Localized.error, message: responseObject["message"] as! String)
-                self.hud?.hide(true)
+                //self.hud?.hide(true)
             }
             
             }, failure: {
