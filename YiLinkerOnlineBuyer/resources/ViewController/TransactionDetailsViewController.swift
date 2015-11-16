@@ -115,72 +115,6 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
         //Customize navigation bar
         self.backButton()
         
-        var rating1: NSDictionary = ["rateType" : "1", "rating" : "4"]
-        var rating2: NSDictionary = ["rateType" : "2", "rating" : "3"]
-        
-        let data1 = NSJSONSerialization.dataWithJSONObject(rating1, options: nil, error: nil)
-        var formattedRating1: String = NSString(data: data1!, encoding: NSUTF8StringEncoding) as! String
-        
-        let data2 = NSJSONSerialization.dataWithJSONObject(rating2, options: nil, error: nil)
-        var formattedRating2: String = NSString(data: data2!, encoding: NSUTF8StringEncoding) as! String
-        
-        var ratings: [NSDictionary] = []
-        ratings.append(rating1)
-        ratings.append(rating2)
-        let data3 = NSJSONSerialization.dataWithJSONObject(ratings, options: nil, error: nil)
-        var formattedRating3: String = NSString(data: data3!, encoding: NSUTF8StringEncoding) as! String
-        let finalJsonString: String = formattedRating3.stringByReplacingOccurrencesOfString("\\", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
-        let finalJsonString2: String = finalJsonString.stringByReplacingOccurrencesOfString("\"{", withString: "{", options: NSStringCompareOptions.LiteralSearch, range: nil)
-        let finalJsonString3: String = finalJsonString2.stringByReplacingOccurrencesOfString("}\"", withString: "}", options: NSStringCompareOptions.LiteralSearch, range: nil)
-        println(finalJsonString3)
-        
-        var parameters: NSMutableDictionary = ["sellerId" : 1234, "orderId" : 4567, "title" : "Seller Feedback", "feedback" : "feedback2", "access_token" : SessionManager.accessToken()]
-        parameters["ratings"] = finalJsonString3.stringByReplacingOccurrencesOfString("\\", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
-        let data4 = NSJSONSerialization.dataWithJSONObject(parameters, options: nil, error: nil)
-        var formattedRating4: String = NSString(data: data4!, encoding: NSUTF8StringEncoding) as! String
-        let finalJsonString4: String = formattedRating4.stringByReplacingOccurrencesOfString("\\", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
-        
-        println("\(parameters) \(finalJsonString4)")
-        /*
-        var dictionary: NSMutableDictionary = NSMutableDictionary()
-        dictionary["rateType"] = "1"
-        dictionary["rating"] = "3"
-        
-        let data1 = NSJSONSerialization.dataWithJSONObject(dictionary, options: nil, error: nil)
-        var formattedRating1: String = NSString(data: data1!, encoding: NSUTF8StringEncoding) as! String
-        
-        var dictionary2: NSMutableDictionary = NSMutableDictionary()
-        dictionary2["rateType"] = "2"
-        dictionary2["rating"] = "4"
-       
-        let data3 = NSJSONSerialization.dataWithJSONObject(dictionary2, options: nil, error: nil)
-        var formattedRating2: String = NSString(data: data3!, encoding: NSUTF8StringEncoding) as! String
-        
-        var feedback: [String] = []
-        feedback.append(formattedRating1)
-        feedback.append(formattedRating2)
-        
-        let data4 = NSJSONSerialization.dataWithJSONObject(feedback, options: nil, error: nil)
-        var formattedRating3: String = NSString(data: data4!, encoding: NSUTF8StringEncoding) as! String
-       
-        let finalJsonString: String = formattedRating3.stringByReplacingOccurrencesOfString("\\", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
-        
-        var parameters: NSDictionary = ["sellerId" : 1234, "orderId" : 4567, "ratings" : finalJsonString, "title" : "Seller Feedback", "feedback" : "feedback2", "access_token" : SessionManager.accessToken()]
-        
-        let data2 = NSJSONSerialization.dataWithJSONObject(parameters, options: nil, error: nil)
-        var formattedRating4: String = NSString(data: data2!, encoding: NSUTF8StringEncoding) as! String
-        
-        let finalJsonString2: String = formattedRating4.stringByReplacingOccurrencesOfString("\"{", withString: "{", options: NSStringCompareOptions.LiteralSearch, range: nil)
-        let finalJsonString3: String = finalJsonString2.stringByReplacingOccurrencesOfString("}\"", withString: "}", options: NSStringCompareOptions.LiteralSearch, range: nil)
-        let finalJsonString4: String = finalJsonString3.stringByReplacingOccurrencesOfString("\"]", withString: "]", options: NSStringCompareOptions.LiteralSearch, range: nil)
-        let finalJsonString5: String = finalJsonString4.stringByReplacingOccurrencesOfString("[\\", withString: "[", options: NSStringCompareOptions.LiteralSearch, range: nil)
-        let finalJsonString6: String = finalJsonString5.stringByReplacingOccurrencesOfString("\\]", withString: "]", options: NSStringCompareOptions.LiteralSearch, range: nil)
-        let finalJsonString7: String = finalJsonString6.stringByReplacingOccurrencesOfString("\\\"", withString: "\"", options: NSStringCompareOptions.LiteralSearch, range: nil)
-        let finalJsonString8: String = finalJsonString7.stringByReplacingOccurrencesOfString("\\{", withString: "{", options: NSStringCompareOptions.LiteralSearch, range: nil)
-        let finalJsonString9: String = finalJsonString8.stringByReplacingOccurrencesOfString("}\"", withString: "}", options: NSStringCompareOptions.LiteralSearch, range: nil)
-        println("---> \(finalJsonString9)")
-        */
-
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -228,7 +162,7 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
         productDetails.unitPrice = self.table[indexPath.section].transactions[indexPath.row].unitPrice
         productDetails.totalPrice = self.table[indexPath.section].transactions[indexPath.row].totalPrice
         productDetails.productName = self.table[indexPath.section].transactions[indexPath.row].productName
-        productDetails.transactionId = self.transactionId
+        productDetails.transactionId = "TID-\(self.transactionId)"
         productDetails.isCancellable = self.table[indexPath.section].transactions[indexPath.row].isCancellable
         self.navigationController?.pushViewController(productDetails, animated: true)
     }
@@ -508,7 +442,7 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
             if self.orderStatusId == "3" || self.orderStatusId == "6"{
                 self.leaveFeedback(tag)
             } else {
-                self.showAlert(title: self.error, message: self.errorFeedback)
+                self.showAlert(title: self.errorFeedback, message: "")
             }
         } else {
             self.showView()

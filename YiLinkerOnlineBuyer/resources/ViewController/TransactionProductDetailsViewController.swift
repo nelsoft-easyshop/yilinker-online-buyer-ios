@@ -199,7 +199,7 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
             self.transactionDescriptionView.seeMoreLabel.text = self.seeMore
             self.transactionDescriptionView.delegate = self
             if self.transactionProductDetailsModel != nil {
-                self.transactionDescriptionView.descriptionLabel.text = self.transactionProductDetailsModel.longDescription
+                self.transactionDescriptionView.descriptionLabel.text = self.transactionProductDetailsModel.shortDescription
             }
             self.transactionDescriptionView.frame.size.width = self.view.frame.size.width
             self.transactionDescriptionView.frame.origin.y += CGFloat(20)
@@ -271,7 +271,12 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
     
     //MARK: Transaction Description Delegate Method
     func getProductDescription(desc: String) {
-        self.showView()
+        let description = ProductDescriptionViewController(nibName: "ProductDescriptionViewController", bundle: nil)
+        description.url = desc
+        description.title = self.descriptionProductTitle
+        let root: UINavigationController = UINavigationController(rootViewController: description)
+        self.tabBarController?.presentViewController(root, animated: true, completion: nil)
+        /*
         var productDescription = TransactionProductDetailsDescriptionViewController(nibName: "TransactionProductDetailsDescriptionViewController", bundle: nil)
         productDescription.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
         productDescription.providesPresentationContextTransitionStyle = true
@@ -285,6 +290,7 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
         productDescription.delegate = self
         self.tabBarController?.presentViewController(productDescription, animated: true, completion:
             nil)
+        */
     }
     
     //MARK: TransactionProductDetailsDescriptionViewController delegate method
