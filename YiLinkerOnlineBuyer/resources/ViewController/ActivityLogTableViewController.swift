@@ -10,9 +10,9 @@ import UIKit
 
 class ActivityLogTableViewController: UITableViewController {
     
-    var tableData:[ActivityLogModel] = [
-        ActivityLogModel(text: "MM-DD-YYYY", activities: [ActivityModel(time: "0:00 AM/PM", details: "No Activity logs yet.")])
-    ]
+//    var tableData:[ActivityLogModel] = [
+//        ActivityLogModel(text: "MM-DD-YYYY", activities: [ActivityModel(time: "0:00 AM/PM", details: "No Activity logs yet.")])
+//    ]
     
     var activityModel: ActivityModel?
     var activityLogsModel: ActivityLogModel!
@@ -23,6 +23,13 @@ class ActivityLogTableViewController: UITableViewController {
     
     var cellCount: Int = 0
     var cellSection: Int = 0
+    
+    var tableData:[ActivityLogModel] = []
+    
+    var activities: ActivityLogItemsModel = ActivityLogItemsModel(isSuccessful: false, message: "", activities: [])
+    
+    var isPageEnd: Bool = false
+    var page: Int = 1
     var logsDictionary = Dictionary<String, String>()
     
     var hud: MBProgressHUD?
@@ -36,6 +43,7 @@ class ActivityLogTableViewController: UITableViewController {
         titleView()
         backButton()
         registerNibs()
+        page = 0
         fireActivityLog()
     }
 
@@ -86,15 +94,17 @@ class ActivityLogTableViewController: UITableViewController {
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Potentially incomplete method implementation.
         // Return the number of sections.
-        return self.table.count
+        //return self.table.count
+        return tableData.count
         //return 1
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete method implementation.
         // Return the number of rows in the section.
-        if self.cellCount != 0 {
-            return self.table[section].activities.count
+        if self.tableData.count != 0 {
+            //return self.table[section].activities.count
+            return tableData[section].activities.count
         } else {
             return 0
         }
@@ -103,19 +113,21 @@ class ActivityLogTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("ActivityLogTableViewCell", forIndexPath: indexPath) as! ActivityLogTableViewCell
       
-        if(self.activityLogsModel != nil){
-            cell.detailsLabel?.text = self.table[indexPath.section].activities[indexPath.row].details
-            cell.timeLabel?.text =  self.table[indexPath.section].activities[indexPath.row].time
+        if (self.tableData.count != 0) {
+//            cell.detailsLabel?.text = self.table[indexPath.section].activities[indexPath.row].details
+//            cell.timeLabel?.text =  self.table[indexPath.section].activities[indexPath.row].time
+            cell.detailsLabel?.text = tableData[indexPath.section].activities[indexPath.row].details
+            cell.timeLabel?.text =  tableData[indexPath.section].activities[indexPath.row].time
         }
        
         return cell
     }
     
     override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        if self.cellSection != 0 {
-            return setSectionHeader(self.table[section].text)
+        if self.tableData.count != 0 {
+            return setSectionHeader(tableData[section].date)
         } else {
-            return setSectionHeader(tableData[section].text)
+            return setSectionHeader("MM-DD-YYYY")
         }
     }
     
@@ -123,46 +135,116 @@ class ActivityLogTableViewController: UITableViewController {
         return 30.0
     }
     
+    override func scrollViewDidEndDragging(aScrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        var offset: CGPoint = aScrollView.contentOffset
+        var bounds: CGRect = aScrollView.bounds
+        var size: CGSize = aScrollView.contentSize
+        var inset: UIEdgeInsets = aScrollView.contentInset
+        var y: CGFloat = offset.y + bounds.size.height - inset.bottom
+        var h: CGFloat = size.height
+        var reload_distance: CGFloat = 10
+        var temp: CGFloat = h + reload_distance
+        if y > temp {
+            self.fireActivityLog()
+        }
+    }
+    
+    func initializeActivityLogsItem() {
+        tableData.removeAll(keepCapacity: false)
+        var tempDates: [String] = []
+        
+        for subValue in activities.activities {
+            if !contains(tempDates, formatDateToCompleteString(formatStringToDate(subValue.date))) {
+                tempDates.append(formatDateToCompleteString(formatStringToDate(subValue.date)))
+                tableData.append(ActivityLogModel(date: formatDateToCompleteString(formatStringToDate(subValue.date)), activities: []))
+            }
+        }
+        
+        println(tempDates)
+        
+        for var i = 0; i < tableData.count; i++ {
+            for subValue in activities.activities {
+                if formatDateToCompleteString(formatStringToDate(subValue.date)) == tableData[i].date {
+                    tableData[i].activities.append(ActivityModel(time: formatDateToTimeString(formatStringToDate(subValue.date)), details: subValue.text))
+                }
+            }
+        }
+        
+        self.tableView.reloadData()
+    }
 
     func fireActivityLog(){
-        self.showHUD()
-        let manager = APIManager.sharedInstance
-        manager.GET(APIAtlas.activityLogs+"\(SessionManager.accessToken())", parameters: nil, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+        
+        if !isPageEnd {
+            
+            self.showHUD()
+            let manager = APIManager.sharedInstance
+            
+            page++
+            
+            manager.GET(APIAtlas.activityLogs+"\(SessionManager.accessToken())&perPage=15&page=\(page)", parameters: nil, success: {
+                (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+                
+                /*
                 self.activityLogsModel = ActivityLogModel.parsaActivityLogsDataFromDictionary(responseObject as! NSDictionary)
                 self.cellCount = self.activityLogsModel!.text_array.count
                 self.cellSection = self.activityLogsModel!.date_section_array.count
-            
-                for var a = 0; a < self.activityLogsModel.date_section_array.count; a++ {
-                    //println("dates \(self.formatDateToCompleteString(self.formatStringToDate(self.activityLogsModel!.date_section_array[a])))")
-                    var arr = [ActivityModel]()
-                    for var b = 0; b < self.activityLogsModel.text_array.count; b++ {
-                        if self.formatDateToCompleteString(self.formatStringToDate(self.activityLogsModel!.date_section_array[a])) == self.formatDateToCompleteString(self.formatStringToDate(self.activityLogsModel!.all_date_section_array[b])) {
-                            //println("date section \(self.formatDateToCompleteString(self.formatStringToDate(self.activityLogsModel!.date_section_array[a]))) date all \(self.formatDateToCompleteString(self.formatStringToDate(self.activityLogsModel!.all_date_section_array[b])))")
-                            //println("time \(self.formatDateToTimeString(self.formatStringToDate(self.activityLogsModel!.date_array[b])))")
-                            self.tableSectionContents = ActivityModel(time: self.formatDateToTimeString(self.formatStringToDate(self.activityLogsModel!.date_array[b])), details: self.activityLogsModel!.text_array[b])
-                            arr.append(self.tableSectionContents)
-                        }
-                    }
-                    self.table.append(ActivityLogModel(text: self.formatDateToCompleteString(self.formatStringToDate(self.activityLogsModel!.date_section_array[a])), activities: arr))
+                if self.table.count < 15 {
+                    self.isPageEnd = true
                 }
+                
+                if responseObject["isSuccessful"] as! Bool {
+                    for var a = 0; a < self.activityLogsModel.date_section_array.count; a++ {
+                        var arr = [ActivityModel]()
+                        for var b = 0; b < self.activityLogsModel.text_array.count; b++ {
+                            if self.formatDateToCompleteString(self.formatStringToDate(self.activityLogsModel!.date_section_array[a])) == self.formatDateToCompleteString(self.formatStringToDate(self.activityLogsModel!.all_date_section_array[b])) {
+                                self.tableSectionContents = ActivityModel(time: self.formatDateToTimeString(self.formatStringToDate(self.activityLogsModel!.date_array[b])), details: self.activityLogsModel!.text_array[b])
+                                arr.append(self.tableSectionContents)
+                            }
+                        }
+                        self.table.append(ActivityLogModel(text: self.formatDateToCompleteString(self.formatStringToDate(self.activityLogsModel!.date_section_array[a])), activities: arr))
+                    }
+
+                } else {
+                    self.isPageEnd = true
+                }*/
+                let activityLogs: ActivityLogItemsModel = ActivityLogItemsModel.parseDataWithDictionary(responseObject as! NSDictionary)
+                
+                if activityLogs.activities.count < 15 {
+                    self.isPageEnd = true
+                }
+                
+                if activityLogs.isSuccessful {
+                    self.activities.activities += activityLogs.activities
+                    self.initializeActivityLogsItem()
+                } else {
+                    self.isPageEnd = true
+                }
+                
                 self.hud?.hide(true)
                 self.tableView.reloadData()
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                if error.userInfo != nil {
-                    let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
-                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: Constants.Localized.someThingWentWrong)
-                } else if task.statusCode == 401 {
-                    self.requestRefreshToken()
-                } else {
-                    self.showAlert(title: Constants.Localized.someThingWentWrong, message: nil)
+                }, failure: {
+                    (task: NSURLSessionDataTask!, error: NSError!) in
+                    let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                    if error.userInfo != nil {
+                        let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
+                        let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
+                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: Constants.Localized.someThingWentWrong)
+                    } else if task.statusCode == 401 {
+                        self.requestRefreshToken()
+                    } else {
+                        self.showAlert(title: Constants.Localized.someThingWentWrong, message: nil)
+                        self.hud?.hide(true)
+                    }
                     self.hud?.hide(true)
-                }
-                self.hud?.hide(true)
-        })
+            })
+        
+        } else {
+            self.hud?.hide(true)
+            let titleString = StringHelper.localizedStringWithKey("ACTIVITY_LOGS_TITLE_LOCALIZE_KEY")
+            let noMoreDataString = StringHelper.localizedStringWithKey("NO_MORE_DATA_LOCALIZE_KEY")
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: noMoreDataString, title: titleString)
+        }
     }
     
     
