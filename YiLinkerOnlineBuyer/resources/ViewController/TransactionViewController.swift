@@ -83,7 +83,7 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
         noTransactionLabel.text = noTransaction
         noTransactionLabel.hidden = true
         //supportLabel.text = support
-            
+        self.tableView.hidden = true
         addViewsActions()
     
         //self.fireTransaction("all")
@@ -295,7 +295,10 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
                     } else {
                         self.isPageEnd = true
                     }
+                    
+                    self.tableView.hidden = false
                 } else {
+                    self.tableView.hidden = true
                     self.noTransactionLabel.hidden = false
                 }
                
@@ -328,6 +331,7 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
                         self.addEmptyView()
                     }
                     
+                    self.tableView.hidden = true
                     self.hud?.hide(true)
             })
         }
@@ -367,6 +371,7 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
                 alertController.addAction(defaultAction)
                 self.presentViewController(alertController, animated: true, completion: nil)
                 self.addEmptyView()
+                self.tableView.hidden = true
         })
     }
     
