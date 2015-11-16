@@ -67,6 +67,8 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
     var requestSuggestionSearchUrl: String = ""
     var maxPrice: Double = 0
     var minPrice: Double = 0
+    var selectedMaxPrice: Double = 0
+    var selectedMinPrice: Double = 0
     
     var listLocalizeString: String = ""
     var gridMessageLocalizeString: String = ""
@@ -374,6 +376,7 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
                         if subValue as! NSObject != NSNull() {
                             if maxPrice == 0{
                                 maxPrice = subValue as! Double
+                                selectedMaxPrice = maxPrice
                             }
                         }
                     }
@@ -382,6 +385,7 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
                         if subValue as! NSObject != NSNull() {
                             if maxPrice == 0{
                                 minPrice = subValue as! Double
+                                selectedMinPrice = minPrice
                             }
                         }
                     }
@@ -591,6 +595,8 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
             "priceFrom": minPrice,
             "priceTo": maxPrice,
             "filters": [filters]]))
+        selectedMaxPrice = maxPrice
+        selectedMinPrice = minPrice
     }
     
     // MARK : - Functions 
@@ -669,6 +675,8 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
         attributeModal.passFilter(filterAtributes, maxPrice: maxPrice, minPrice: minPrice)
         attributeModal.maxPrice = maxPrice
         attributeModal.minPrice = minPrice
+        attributeModal.selectedMaxPrice = selectedMaxPrice
+        attributeModal.selectedMinPrice = selectedMinPrice
         self.tabBarController?.presentViewController(attributeModal, animated: true, completion: nil)
         
         self.fullDimView!.hidden = false
