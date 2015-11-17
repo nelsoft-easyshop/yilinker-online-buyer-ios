@@ -55,6 +55,8 @@ class ChangeMobileNumberViewController: UIViewController {
 
         initializeViews()
         initializeLocalizedString()
+        
+        oldNumberTextField.text = mobileNumber
     }
 
     override func didReceiveMemoryWarning() {
