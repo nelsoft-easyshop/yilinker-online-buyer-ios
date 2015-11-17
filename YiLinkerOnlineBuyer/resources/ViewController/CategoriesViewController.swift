@@ -44,6 +44,8 @@ class CategoriesViewController: UIViewController, EmptyViewDelegate {
     }
     
     func configureNavigationBar() {
+        self.title = StringHelper.localizedStringWithKey("CATEGORIES_LOCALIZE_KEY")
+        
         var backButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
         backButton.frame = CGRectMake(0, 0, 40, 40)
         backButton.addTarget(self, action: "back", forControlEvents: UIControlEvents.TouchUpInside)

@@ -117,7 +117,7 @@ class FollowedSellerViewController: UIViewController, EmptyViewDelegate {
         
         manager.POST(APIAtlas.getFollowedSellers, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            
+            println(responseObject)
             self.followedSellerModel = FollowedSellerModel.parseDataWithDictionary(responseObject)
             
             if self.followedSellerModel.id.count != 0 {
