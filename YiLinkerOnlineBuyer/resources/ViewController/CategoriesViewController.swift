@@ -23,6 +23,8 @@ class CategoriesViewController: UIViewController, EmptyViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.view.backgroundColor = UIColor.lightGrayColor()
+        
         if self.respondsToSelector("edgesForExtendedLayout") {
             self.edgesForExtendedLayout = UIRectEdge.None
         }
@@ -44,7 +46,7 @@ class CategoriesViewController: UIViewController, EmptyViewDelegate {
     }
     
     func configureNavigationBar() {
-        self.title = StringHelper.localizedStringWithKey("CATEGORIES_LOCALIZE_KEY")
+        self.title = StringHelper.localizedStringWithKey("CATEGORIES_CS_LOCALIZE_KEY")
         
         var backButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
         backButton.frame = CGRectMake(0, 0, 40, 40)
@@ -107,6 +109,9 @@ class CategoriesViewController: UIViewController, EmptyViewDelegate {
             } else {
                 gotoSearch(categoryModel.id[indexPath.row])
             }
+        } else {
+            self.tableView.hidden = true
+            addEmptyView()
         }
     }
     
@@ -211,6 +216,7 @@ class CategoriesViewController: UIViewController, EmptyViewDelegate {
             self.categoryModel = CategoryModel.parseCategories(responseObject)
             
             if self.tableView != nil {
+                self.tableView.hidden = false
                 self.tableView.reloadData()
             }
         
