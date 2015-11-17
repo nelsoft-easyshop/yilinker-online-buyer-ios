@@ -231,7 +231,7 @@ MESSAGING_PHOTO_MESSAGE = "You sent/received a photo";
 
 // MARK: - Followed Sellers
 FOLLOWED_SELLERS_LOCALIZE_KEY = "Followed Sellers";
-FOLLOWED_SELLERS_EMPTY_LOCALIZE_KEY = "You didn't followed any sellers yet";
+FOLLOWED_SELLERS_EMPTY_LOCALIZE_KEY = "You didn't follow any sellers yet";
 
 // MARK: - Customized Categories
 CATEGORY_LOCALIZE_KEY = "Category";
@@ -262,7 +262,7 @@ PEOPLE_RATE_LOCALIZE_KEY = "people rate this product";
 
 ALERT_ADDED_TO_WISHLIST_LOCALIZE_KEY = "This item has been added to your wishlist.";
 ALERT_ADDED_TO_CART_LOCALIZE_KEY = "This item has been added to your cart.";
-ALERT_PLEASE_LOGIN_LOCALIZE_KEY = "Please logged-in to add item in your wishlist.";
+ALERT_PLEASE_LOGIN_LOCALIZE_KEY = "Please login to add item in your wishlist.";
 ALERT_PLEASE_COMPLETE_LOCALIZE_KEY = "Please complete the attributes.";
 ALERT_AVOID_ISSUES_LOCALIZE_KEY = "To avoid issues, please login.";
 

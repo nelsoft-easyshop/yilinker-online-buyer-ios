@@ -27,6 +27,10 @@ class ResolutionCenterViewController: UIViewController, UITableViewDataSource, U
     
     @IBOutlet weak var resolutionTableView: UITableView!
     var tableData = [ResolutionCenterElement]()
+    
+    var transactionIds: [String] = []
+    var transactionModel: TransactionModel!
+    
     /*: [(ResolutionCenterElement)] =
     [ ("7889360001", "Open"  , "December 12, 2015", "Seller", "Not Happy", "It's okay")
     ,("7889360002", "Closed", "January 2, 2016"  , "Buyer" , "Yo wassup", "Go voltron!")
@@ -225,10 +229,12 @@ class ResolutionCenterViewController: UIViewController, UITableViewDataSource, U
     
     // Mark: - New Dispute View Controller
     func disputePressed() {
-        let newDispute = self.storyboard?.instantiateViewControllerWithIdentifier("NewDisputeTableViewController")
-            as! NewDisputeTableViewController
+        if Reachability.isConnectedToNetwork() {
+            self.requestGetTransactionsIds()
+        } else {
+            
+        }
         
-        self.navigationController?.pushViewController(newDispute, animated:true);
     }
     
     // Mark: - OLD VERSION FOR MODAL File a Dispute
@@ -421,5 +427,29 @@ class ResolutionCenterViewController: UIViewController, UITableViewDataSource, U
                 self.hud?.hide(true)
         })
         
+    }
+    
+    // Get Transaction ids
+    
+    func requestGetTransactionsIds() {
+        self.showHUD()
+        let manager = APIManager.sharedInstance
+        manager.GET(APIAtlas.transactionLogs + "\(SessionManager.accessToken())" + "&perPage=999" + "&type=for-resolution", parameters: nil, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            self.transactionModel = TransactionModel.parseDataFromDictionary(responseObject as! NSDictionary)
+            self.transactionIds = self.transactionModel.invoice_number
+            
+            if self.transactionIds.count != 0 {
+                let newDispute = self.storyboard?.instantiateViewControllerWithIdentifier("NewDisputeTableViewController")
+                    as! NewDisputeTableViewController
+                newDispute.transactionIds = self.transactionIds
+                self.navigationController?.pushViewController(newDispute, animated:true)
+            } else {
+                self.view.makeToast(DisputeStrings.noAvailableTransaction, duration: 3.0, position: CSToastPositionBottom, style: CSToastManager.sharedStyle())
+            }
+
+            }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
+                println(error.userInfo)
+        })
     }
 }

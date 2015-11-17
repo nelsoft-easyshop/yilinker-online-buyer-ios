@@ -30,7 +30,12 @@ class FollowedSellerTableViewCell: UITableViewCell {
     }
     
     func setRating(rating: Int) {
-        let size = self.ratingsView.frame.size.height
+        
+        for view in self.ratingsView.subviews {
+            view.removeFromSuperview()
+        }
+        
+        let size: CGFloat = 20.0//self.ratingsView.frame.size.height
         
         for i in 0..<5 {
             

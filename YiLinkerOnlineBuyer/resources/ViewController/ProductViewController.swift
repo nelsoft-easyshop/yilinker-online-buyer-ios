@@ -84,7 +84,6 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     var lastContentOffset: CGFloat = 0.0
     
     // MARK: Request Checker
-    
     var productRequest = false
     var reviewRequest = false
     var sellerRequest = false
@@ -102,11 +101,13 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     var unitIdIndex: Int = 0
     var isExiting: Bool = true
     
+    @IBOutlet weak var closeButton: UIView!
+    
     // Messaging
     var selectedContact : W_Contact?
     var contacts = [W_Contact()]
-    // MARK: Parameters
     
+    // MARK: Parameters
     var unitId: String = "0"
     var productId: String = "0"
     var quantity: Int = 1
@@ -135,6 +136,16 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         
         addToCartButton.setTitle(ProductStrings.addToCart, forState: .Normal)
         buyItNowLabel.text = ProductStrings.buytItNow
+        
+//        self.closeButton.layer.zPosition = 2
+        self.closeButton.layer.cornerRadius = self.closeButton.frame.size.width / 2
+        self.closeButton.layer.borderWidth  = 1.5
+        self.closeButton.layer.borderColor = UIColor.grayColor().CGColor
+        let tap = UITapGestureRecognizer()
+        tap.numberOfTapsRequired = 1
+        tap.addTarget(self, action: "closeAction:")
+        self.closeButton.addGestureRecognizer(tap)
+//        self.closeButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "closeAction:"))
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -374,7 +385,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         productId = productId.stringByReplacingOccurrencesOfString("/api/v1/product/getProductDetail?productId=", withString: "", options: nil, range: nil)
         
         let id: String = "?productId=" + productId
-        println(APIAtlas.productDetails)
+
         manager.GET(APIAtlas.productDetails + id, parameters: nil, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             println(responseObject)
@@ -740,7 +751,9 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     }
     
     func loadViewsWithDetails() {
-        
+        if self.closeButton != nil {
+            self.closeButton.removeFromSuperview()
+        }
         self.tableView.hidden = false
         self.buttonsContainer.hidden = false
         
@@ -905,11 +918,14 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     
     func checkRequests() {
         
-        if productRequest && reviewRequest && sellerRequest {
-            if productSuccess {
+        if productRequest && reviewRequest {
+            if productSuccess && reviewSuccess && sellerSuccess {
+                self.emptyView?.hidden = true
                 self.loadViewsWithDetails()
             } else {
-                addEmptyView()
+                if sellerRequest {
+                    addEmptyView()
+                }
                 self.hud?.hide(true)
             }
         }
@@ -917,10 +933,17 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     }
     
     func addEmptyView() {
-        self.emptyView = UIView.loadFromNibNamed("EmptyView", bundle: nil) as? EmptyView
-        self.emptyView!.delegate = self
-        self.emptyView!.frame = self.view.bounds
-        self.view.addSubview(self.emptyView!)
+        if self.emptyView == nil {
+            self.emptyView = UIView.loadFromNibNamed("EmptyView", bundle: nil) as? EmptyView
+            self.emptyView!.delegate = self
+            self.emptyView!.frame = self.view.bounds
+            self.closeButton.removeFromSuperview()
+            self.emptyView?.addSubview(self.closeButton)
+            self.closeButton.transform = CGAffineTransformMakeTranslation(8.0, 34.0)
+            self.view.addSubview(self.emptyView!)
+        } else {
+            self.emptyView!.hidden = false
+        }
     }
     
     func addWishlistBadge(items: Int) {
@@ -939,6 +962,9 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         self.hud?.dimBackground = false
         self.view.addSubview(self.hud!)
         self.hud?.show(true)
+        if self.closeButton != nil {
+            self.view.bringSubviewToFront(self.closeButton)
+        }
     }
     
     func addBadge(type: String) {
@@ -970,7 +996,11 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     }
     
     func rate(controller: ProductImagesView) {
-        self.barRateAction()
+        if self.productReviewModel != nil && self.productReviewModel.reviews.count != 0 {
+            self.barRateAction()
+        } else {
+            self.showAlert(title: ProductStrings.alertNoReviews, message: nil)
+        }
     }
     
     func message(controller: ProductImagesView) {
@@ -1122,12 +1152,14 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     
     func didTapReload() {
         if Reachability.isConnectedToNetwork() {
+            self.emptyView?.hidden = true
             requestProductDetails()
             requestReviewDetails()
-        } else {
-            addEmptyView()
         }
-        self.emptyView?.removeFromSuperview()
+    }
+    
+    func closeAction(gesture: UIGestureRecognizer) {
+        self.barCloseAction()
     }
     
     // MARK: - Navigation Bar Actions
