@@ -572,7 +572,7 @@
 		0C5925FF1B8327BA0021EA76 /* ResultViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultViewController.swift; sourceTree = "<group>"; };
 		0C5926031B836C670021EA76 /* ProfileModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileModel.swift; sourceTree = "<group>"; };
 		0C5926051B836EA30021EA76 /* AddressModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressModel.swift; sourceTree = "<group>"; };
-		0C6490751B7781E400F88F92 /* Category.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
+		0C6490751B7781E400F88F92 /* Category.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Category.swift; path = ../View/Category.swift; sourceTree = "<group>"; };
 		0C677BCF1BA03EFA007D8E03 /* GuestCheckoutTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuestCheckoutTableViewCell.swift; sourceTree = "<group>"; };
 		0C677BD01BA03EFA007D8E03 /* GuestCheckoutTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = GuestCheckoutTableViewCell.xib; path = ../View/GuestCheckoutTableViewCell.xib; sourceTree = "<group>"; };
 		0C6D45DB1BF4692900D330DB /* WebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
@@ -1146,6 +1146,7 @@
 		0C9936FD1B750583000D6074 /* Helper */ = {
 			isa = PBXGroup;
 			children = (
+				0C6490751B7781E400F88F92 /* Category.swift */,
 				961BE5AB1B9958BC00E8631A /* CheckBox.swift */,
 				B77B8DDB1B9B588A0002C513 /* DateUtility.swift */,
 				961BE5A71B994C1000E8631A /* ButtonToTabBehaviorizer.swift */,
@@ -1269,7 +1270,6 @@
 				79E68B741B8AC390008626E4 /* ActivityLogTableViewCell.swift */,
 				79AA08321B8F4DCF00AF3AA4 /* CartProductAttributeTableViewCell.swift */,
 				797D490E1B7A509300617F6B /* CartTableViewCell.swift */,
-				0C6490751B7781E400F88F92 /* Category.swift */,
 				0C2F45271B85E95D00021F45 /* ChangeAddressCollectionViewCell.swift */,
 				0C5007671B861B1600BC0445 /* ChangeAddressFooterCollectionViewCell.swift */,
 				0C2F44DB1B8583EF00021F45 /* CheckoutViews.swift */,
@@ -1920,7 +1920,7 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		ECD1D1A3195847A197789A2E /* Embed Pods Frameworks */ = {
+		76BD0A0DA7E436CFA20E444A /* Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (

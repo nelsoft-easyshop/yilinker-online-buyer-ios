@@ -63,6 +63,10 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         checkoutButton.layer.cornerRadius = 5
         
+        self.navigationController?.navigationBar.titleTextAttributes =
+            [NSForegroundColorAttributeName: UIColor.whiteColor(),
+                NSFontAttributeName: UIFont(name: "Panton-Regular", size: 21)!]
+        
         self.title = StringHelper.localizedStringWithKey("CART_TITLE_LOCALIZE_KEY")
     }
     
@@ -75,7 +79,7 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     @IBAction func buttonClicked(sender: AnyObject) {
         if sender as! UIButton == checkoutButton {
-            if selectedItemIDs.count == 0 {
+            if selectedItemIDs.count == 0 || tableData.count == 0 {
                 let chooseItemLocalizeString: String = StringHelper.localizedStringWithKey("CHOOSE_ITEM_FROM_CART_LOCALIZE_KEY")
                 UIAlertController.displayErrorMessageWithTarget(self, errorMessage: chooseItemLocalizeString, title: Constants.Localized.error)
             } else {

@@ -677,15 +677,15 @@ class HomePageCollectionViewLayout: UICollectionViewLayout {
         
         let multiplier: Int = Int(((CGFloat(numberOfItems!) + 1) / 2))
         let insets: CGFloat = (CGFloat(numberOfItems!) + 1) * verticalInset
-        let decorationViewHeight: CGFloat = 287 * CGFloat(multiplier) + insets
-        
-        //Add decoration view
-        let decorationViewAttribute: UICollectionViewLayoutAttributes = UICollectionViewLayoutAttributes(forDecorationViewOfKind: "SectionBackground", withIndexPath: path)
-        decorationViewAttribute.frame = CGRectMake(0, defaultYPosition, screenRect!.width, decorationViewHeight)
-        decorationViewAttribute.zIndex = -1
-        
-        let decorationKey: String = self.layoutKeyForDecorationViewAtIndexPath(path)
-        self.layoutAttributes[decorationKey] = decorationViewAttribute
+//        let decorationViewHeight: CGFloat = 287 * CGFloat(multiplier) + insets
+//        
+//        //Add decoration view
+//        let decorationViewAttribute: UICollectionViewLayoutAttributes = UICollectionViewLayoutAttributes(forDecorationViewOfKind: "SectionBackground", withIndexPath: path)
+//        decorationViewAttribute.frame = CGRectMake(0, defaultYPosition, screenRect!.width, decorationViewHeight)
+//        decorationViewAttribute.zIndex = -1
+//        
+//        let decorationKey: String = self.layoutKeyForDecorationViewAtIndexPath(path)
+//        self.layoutAttributes[decorationKey] = decorationViewAttribute
     }
     
     func fourImageLayout(section: Int) {

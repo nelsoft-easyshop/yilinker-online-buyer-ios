@@ -36,6 +36,7 @@
                         <color key="backgroundColor" red="0.35294117650000001" green="0.1215686275" blue="0.45882352939999999" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="58" id="HIu-Sm-VzN"/>
+                            <constraint firstAttribute="width" constant="58" id="c5B-ar-7i1"/>
                             <constraint firstAttribute="height" constant="18" id="kIr-qs-Pmj"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="11"/>
@@ -46,23 +47,24 @@
                                 <real key="value" value="8"/>
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="HIu-Sm-VzN"/>
+                            </mask>
+                        </variation>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="F-Stop Watch" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="pbc-g9-8rb">
-                        <rect key="frame" x="137" y="20" width="60" height="21"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="P 3,000" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="6" translatesAutoresizingMaskIntoConstraints="NO" id="KnZ-NC-aQ1" customClass="DiscountLabel" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
+                        <rect key="frame" x="137" y="42" width="56" height="21"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="21" id="1eK-fS-FFV"/>
-                            <constraint firstAttribute="width" constant="60" id="Sch-aG-GvN"/>
+                            <constraint firstAttribute="height" constant="21" id="1gh-ec-odW"/>
+                            <constraint firstAttribute="width" constant="56" id="6Vw-84-FFt"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="P 3,000" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="6" translatesAutoresizingMaskIntoConstraints="NO" id="KnZ-NC-aQ1" customClass="DiscountLabel" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
-                        <rect key="frame" x="137" y="39" width="56" height="21"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="21" id="1gh-ec-odW"/>
-                            <constraint firstAttribute="width" constant="56" id="6Vw-84-FFt"/>
-                        </constraints>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="F-Stop Watch" lineBreakMode="tailTruncation" numberOfLines="10" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="pbc-g9-8rb">
+                        <rect key="frame" x="137" y="8" width="60" height="38"/>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
@@ -72,24 +74,26 @@
             </view>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="lrX-WJ-zSN" firstAttribute="leading" secondItem="Aty-ir-lnn" secondAttribute="leading" constant="6" id="3i3-5h-94a"/>
-                <constraint firstAttribute="bottom" secondItem="lrX-WJ-zSN" secondAttribute="bottom" id="3vv-sZ-aqD"/>
-                <constraint firstItem="pbc-g9-8rb" firstAttribute="leading" secondItem="lrX-WJ-zSN" secondAttribute="trailing" constant="8" id="BrI-Gc-6wJ"/>
+                <constraint firstItem="lrX-WJ-zSN" firstAttribute="leading" secondItem="Aty-ir-lnn" secondAttribute="leading" constant="6" id="Bpd-Bm-aqd"/>
+                <constraint firstItem="lrX-WJ-zSN" firstAttribute="top" secondItem="Aty-ir-lnn" secondAttribute="top" constant="3" id="CrC-Os-qUs"/>
+                <constraint firstItem="pbc-g9-8rb" firstAttribute="leading" secondItem="lrX-WJ-zSN" secondAttribute="trailing" constant="8" id="OSH-dm-no4"/>
                 <constraint firstAttribute="trailing" secondItem="KnZ-NC-aQ1" secondAttribute="trailing" constant="9" id="PYd-kV-di0"/>
                 <constraint firstAttribute="bottom" secondItem="3ln-bJ-Yvq" secondAttribute="bottom" constant="16" id="RNH-68-MNL"/>
-                <constraint firstItem="lrX-WJ-zSN" firstAttribute="leading" secondItem="kcv-hj-ten" secondAttribute="trailing" constant="-71" id="UaP-a7-h8B"/>
-                <constraint firstItem="lrX-WJ-zSN" firstAttribute="top" secondItem="kcv-hj-ten" secondAttribute="bottom" constant="-35" id="akJ-bR-R8H"/>
-                <constraint firstAttribute="trailing" secondItem="pbc-g9-8rb" secondAttribute="trailing" constant="5" id="dZB-8t-Z91"/>
+                <constraint firstAttribute="bottom" secondItem="lrX-WJ-zSN" secondAttribute="bottom" id="Y3a-ej-mgX"/>
+                <constraint firstItem="pbc-g9-8rb" firstAttribute="top" secondItem="Aty-ir-lnn" secondAttribute="top" constant="8" id="a2j-ZS-qvT"/>
+                <constraint firstAttribute="trailing" secondItem="pbc-g9-8rb" secondAttribute="trailing" constant="5" id="eie-gv-xI3"/>
+                <constraint firstItem="kcv-hj-ten" firstAttribute="leading" secondItem="Aty-ir-lnn" secondAttribute="leading" constant="16" id="h0K-c8-38Q"/>
                 <constraint firstAttribute="trailing" secondItem="3ln-bJ-Yvq" secondAttribute="trailing" constant="7" id="jTS-IM-LZs"/>
-                <constraint firstItem="lrX-WJ-zSN" firstAttribute="top" secondItem="Aty-ir-lnn" secondAttribute="top" constant="3" id="p2W-G9-RSQ"/>
-                <constraint firstItem="3ln-bJ-Yvq" firstAttribute="top" secondItem="KnZ-NC-aQ1" secondAttribute="bottom" constant="4" id="qFY-Fq-v0s"/>
-                <constraint firstItem="3ln-bJ-Yvq" firstAttribute="top" secondItem="pbc-g9-8rb" secondAttribute="bottom" constant="23" id="tLd-Tc-LOP"/>
+                <constraint firstItem="3ln-bJ-Yvq" firstAttribute="leading" secondItem="lrX-WJ-zSN" secondAttribute="trailing" constant="8" id="l7w-Yw-4uC"/>
+                <constraint firstItem="3ln-bJ-Yvq" firstAttribute="top" secondItem="KnZ-NC-aQ1" secondAttribute="bottom" constant="1" id="qFY-Fq-v0s"/>
+                <constraint firstItem="kcv-hj-ten" firstAttribute="top" secondItem="Aty-ir-lnn" secondAttribute="top" constant="20" id="vFk-GA-O9Y"/>
+                <constraint firstItem="KnZ-NC-aQ1" firstAttribute="top" secondItem="pbc-g9-8rb" secondAttribute="bottom" constant="-4" id="ybk-Yg-3Z1"/>
             </constraints>
             <size key="customSize" width="202" height="98"/>
             <connections>
                 <outlet property="discountPercentageLabel" destination="kcv-hj-ten" id="9YL-7A-5JG"/>
                 <outlet property="discountedPriceLabel" destination="3ln-bJ-Yvq" id="1Z6-1L-cRs"/>
-                <outlet property="originalPriceLabel" destination="KnZ-NC-aQ1" id="0da-Dq-C5T"/>
+                <outlet property="originalPriceLabel" destination="KnZ-NC-aQ1" id="Usi-ef-sj6"/>
                 <outlet property="productItemImageView" destination="lrX-WJ-zSN" id="IPK-NG-19Y"/>
                 <outlet property="productNameLabel" destination="pbc-g9-8rb" id="DWx-Wj-Jbj"/>
             </connections>
