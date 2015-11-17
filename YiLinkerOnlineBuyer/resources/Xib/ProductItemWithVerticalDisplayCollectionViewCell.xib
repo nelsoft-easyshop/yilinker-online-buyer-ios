@@ -13,7 +13,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="233" height="230"/>
                 <subviews>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dummy-placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="zZw-Ck-UbU">
-                        <rect key="frame" x="0.0" y="0.0" width="233" height="168"/>
+                        <rect key="frame" x="0.0" y="0.0" width="233" height="157"/>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="P 2,500" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="6" translatesAutoresizingMaskIntoConstraints="NO" id="QPJ-Yi-w7v" customClass="DynamicRoundedLabel" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
                         <rect key="frame" x="8" y="197" width="76" height="18"/>
@@ -41,12 +41,12 @@
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="F-Stop Watch" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="6" translatesAutoresizingMaskIntoConstraints="NO" id="nh6-uz-CLV">
-                        <rect key="frame" x="8" y="173" width="217" height="21"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="F-Stop Watch" lineBreakMode="tailTruncation" numberOfLines="10" baselineAdjustment="alignBaselines" minimumFontSize="6" translatesAutoresizingMaskIntoConstraints="NO" id="nh6-uz-CLV">
+                        <rect key="frame" x="8" y="157" width="217" height="37"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="21" id="He5-x4-Lzp"/>
+                            <constraint firstAttribute="height" constant="37" id="He5-x4-Lzp"/>
                         </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
@@ -73,7 +73,7 @@
                 <constraint firstItem="zZw-Ck-UbU" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="61y-3C-PdE"/>
                 <constraint firstAttribute="bottom" secondItem="QPJ-Yi-w7v" secondAttribute="bottom" constant="15" id="7sR-OW-upI"/>
                 <constraint firstItem="BGN-cG-IEZ" firstAttribute="leading" secondItem="QPJ-Yi-w7v" secondAttribute="trailing" constant="13" id="8vP-Jj-QAh"/>
-                <constraint firstItem="nh6-uz-CLV" firstAttribute="top" secondItem="zZw-Ck-UbU" secondAttribute="bottom" constant="5" id="BvV-nB-1XX"/>
+                <constraint firstItem="nh6-uz-CLV" firstAttribute="top" secondItem="zZw-Ck-UbU" secondAttribute="bottom" id="BvV-nB-1XX"/>
                 <constraint firstItem="BZ1-g8-7Td" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="12" id="CFN-iV-yt5"/>
                 <constraint firstAttribute="trailing" secondItem="zZw-Ck-UbU" secondAttribute="trailing" id="KT3-OI-XjJ"/>
                 <constraint firstItem="zZw-Ck-UbU" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="LTs-l8-vbq"/>
