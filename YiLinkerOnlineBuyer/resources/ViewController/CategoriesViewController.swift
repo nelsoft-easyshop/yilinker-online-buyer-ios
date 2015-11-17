@@ -168,14 +168,18 @@ class CategoriesViewController: UIViewController, EmptyViewDelegate {
     }
     
     func addEmptyView() {
-        self.emptyView = UIView.loadFromNibNamed("EmptyView", bundle: nil) as? EmptyView
-        self.emptyView!.delegate = self
-        self.emptyView!.frame = self.view.bounds
-        self.view.addSubview(self.emptyView!)
+        if self.emptyView == nil {
+            self.emptyView = UIView.loadFromNibNamed("EmptyView", bundle: nil) as? EmptyView
+            self.emptyView!.delegate = self
+            self.emptyView!.frame = self.view.bounds
+            self.view.addSubview(self.emptyView!)
+        } else {
+            self.emptyView?.hidden = false
+        }
     }
     
     func didTapReload() {
-        self.emptyView?.removeFromSuperview()
+        self.emptyView?.hidden = true
         if firstLoad {
             requestMainCategories()
         }
