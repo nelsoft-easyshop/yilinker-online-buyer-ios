@@ -231,7 +231,7 @@ MESSAGING_PHOTO_MESSAGE = "You sent/received a photo";
 
 // MARK: - Followed Sellers
 FOLLOWED_SELLERS_LOCALIZE_KEY = "Followed Sellers";
-FOLLOWED_SELLERS_EMPTY_LOCALIZE_KEY = "You didn't followed any sellers yet";
+FOLLOWED_SELLERS_EMPTY_LOCALIZE_KEY = "You didn't follow any sellers yet";
 
 // MARK: - Customized Categories
 CATEGORY_LOCALIZE_KEY = "Category";
