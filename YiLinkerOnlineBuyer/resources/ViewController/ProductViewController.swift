@@ -985,7 +985,11 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     }
     
     func rate(controller: ProductImagesView) {
-        self.barRateAction()
+        if self.productReviewModel != nil && self.productReviewModel.reviews.count != 0 {
+            self.barRateAction()
+        } else {
+            self.showAlert(title: ProductStrings.alertNoReviews, message: nil)
+        }
     }
     
     func message(controller: ProductImagesView) {
