@@ -64,7 +64,7 @@ class NewDisputeTableViewController: UITableViewController, UIPickerViewDataSour
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        requestGetCaseDetails()
+//        requestGetCaseDetails()
         requestGetReasons()
         setupRoundedCorners()
         setupNavigationBar()
@@ -367,16 +367,15 @@ class NewDisputeTableViewController: UITableViewController, UIPickerViewDataSour
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             self.disputeReasonModel = DisputeReasonsModel.parseDataWithDictionary(responseObject)
             
-//            self.tableView.reloadData()
-            
-//            self.hud?.hide(true)
-            self.isReasonsDone = true
-            self.requestChecker()
+            self.tableView.reloadData()
+            self.hud?.hide(true)
+//            self.isReasonsDone = true
+//            self.requestChecker()
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
 //                self.hud?.hide(true)
                 println(error.userInfo)
-                self.isReasonsDone = true
-                self.requestChecker()
+//                self.isReasonsDone = true
+//                self.requestChecker()
         })
     }
     

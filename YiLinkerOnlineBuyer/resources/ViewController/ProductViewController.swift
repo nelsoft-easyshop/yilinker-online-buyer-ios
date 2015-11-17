@@ -751,7 +751,9 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     }
     
     func loadViewsWithDetails() {
-        self.closeButton.removeFromSuperview()
+        if self.closeButton != nil {
+            self.closeButton.removeFromSuperview()
+        }
         self.tableView.hidden = false
         self.buttonsContainer.hidden = false
         
