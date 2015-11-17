@@ -960,7 +960,9 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         self.hud?.dimBackground = false
         self.view.addSubview(self.hud!)
         self.hud?.show(true)
-        self.view.bringSubviewToFront(self.closeButton)
+        if self.closeButton != nil {
+            self.view.bringSubviewToFront(self.closeButton)
+        }
     }
     
     func addBadge(type: String) {
