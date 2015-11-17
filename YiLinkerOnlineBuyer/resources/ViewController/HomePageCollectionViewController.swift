@@ -219,8 +219,8 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
                     fourImageCollectionViewCell.productNameLabel.text = homeProductModel!.name
                     
                     if homeProductModel!.discountedPrice != ""  && homeProductModel!.discountPercentage.toInt() != nil {
-                        fourImageCollectionViewCell.discountedPriceLabel.text = "P \(homeProductModel!.discountedPrice)"
-                        fourImageCollectionViewCell.originalPriceLabel.text = "P \(homeProductModel!.originalPrice)"
+                        fourImageCollectionViewCell.discountedPriceLabel.text = "\(homeProductModel!.discountedPrice)"
+                        fourImageCollectionViewCell.originalPriceLabel.text = "\(homeProductModel!.originalPrice)"
                         if homeProductModel!.discountPercentage.toInt() != 0 {
                             fourImageCollectionViewCell.discountPercentageLabel.text = "\(homeProductModel!.discountPercentage) %"
                             fourImageCollectionViewCell.originalPriceLabel.drawDiscountLine(false)
