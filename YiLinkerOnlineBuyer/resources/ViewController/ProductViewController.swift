@@ -916,11 +916,14 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     
     func checkRequests() {
         
-        if productRequest && reviewRequest && sellerRequest {
-            if productSuccess {
+        if productRequest && reviewRequest {
+            if productSuccess && reviewSuccess && sellerSuccess {
+                self.emptyView?.hidden = true
                 self.loadViewsWithDetails()
             } else {
-                addEmptyView()
+                if sellerRequest {
+                    addEmptyView()
+                }
                 self.hud?.hide(true)
             }
         }
@@ -928,13 +931,17 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     }
     
     func addEmptyView() {
-        self.emptyView = UIView.loadFromNibNamed("EmptyView", bundle: nil) as? EmptyView
-        self.emptyView!.delegate = self
-        self.emptyView!.frame = self.view.bounds
-        self.closeButton.removeFromSuperview()
-        self.emptyView?.addSubview(self.closeButton)
-        self.closeButton.transform = CGAffineTransformMakeTranslation(8.0, 34.0)
-        self.view.addSubview(self.emptyView!)
+        if self.emptyView == nil {
+            self.emptyView = UIView.loadFromNibNamed("EmptyView", bundle: nil) as? EmptyView
+            self.emptyView!.delegate = self
+            self.emptyView!.frame = self.view.bounds
+            self.closeButton.removeFromSuperview()
+            self.emptyView?.addSubview(self.closeButton)
+            self.closeButton.transform = CGAffineTransformMakeTranslation(8.0, 34.0)
+            self.view.addSubview(self.emptyView!)
+        } else {
+            self.emptyView!.hidden = false
+        }
     }
     
     func addWishlistBadge(items: Int) {
@@ -1141,12 +1148,10 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     
     func didTapReload() {
         if Reachability.isConnectedToNetwork() {
+            self.emptyView?.hidden = true
             requestProductDetails()
             requestReviewDetails()
-        } else {
-            addEmptyView()
         }
-        self.emptyView?.removeFromSuperview()
     }
     
     func closeAction(gesture: UIGestureRecognizer) {
