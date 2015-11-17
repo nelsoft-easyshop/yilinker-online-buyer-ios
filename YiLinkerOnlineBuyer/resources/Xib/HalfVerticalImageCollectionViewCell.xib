@@ -93,7 +93,7 @@
             <connections>
                 <outlet property="discountPercentageLabel" destination="kcv-hj-ten" id="9YL-7A-5JG"/>
                 <outlet property="discountedPriceLabel" destination="3ln-bJ-Yvq" id="1Z6-1L-cRs"/>
-                <outlet property="originalPriceLabel" destination="KnZ-NC-aQ1" id="0da-Dq-C5T"/>
+                <outlet property="originalPriceLabel" destination="KnZ-NC-aQ1" id="Usi-ef-sj6"/>
                 <outlet property="productItemImageView" destination="lrX-WJ-zSN" id="IPK-NG-19Y"/>
                 <outlet property="productNameLabel" destination="pbc-g9-8rb" id="DWx-Wj-Jbj"/>
             </connections>
