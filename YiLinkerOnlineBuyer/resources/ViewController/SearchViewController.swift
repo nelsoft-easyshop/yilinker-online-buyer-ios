@@ -29,8 +29,8 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.initializeViews()
         self.initializeLocalizedString()
+        self.initializeViews()
         self.addBrowseCategory()
     }
     
@@ -75,6 +75,12 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         searchBar.scopeButtonTitles = [productLocalizeString, sellerLocalizeString]
         
         UITextField.my_appearanceWhenContainedIn(SearchViewController.self).tintColor = Constants.Colors.grayLine
+        
+        self.navigationController?.navigationBar.titleTextAttributes =
+            [NSForegroundColorAttributeName: UIColor.whiteColor(),
+                NSFontAttributeName: UIFont(name: "Panton-Regular", size: 21)!]
+        
+        self.title = searchLocalizeString
     }
     
     func initializeLocalizedString() {
@@ -254,10 +260,10 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
             self.searchResultTableView.reloadData()
         }
         
-        if tableData.count == 0 && !isQueueCancelled {
-            let noResultLocalizeString = StringHelper.localizedStringWithKey("NORESULT_LOCALIZE_KEY")
-            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: noResultLocalizeString, title: searchLocalizeString)
-        }
+//        if tableData.count == 0 && !isQueueCancelled {
+//            let noResultLocalizeString = StringHelper.localizedStringWithKey("NORESULT_LOCALIZE_KEY")
+//            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: noResultLocalizeString, title: searchLocalizeString)
+//        }
         
         addBrowseCategory()
     }
