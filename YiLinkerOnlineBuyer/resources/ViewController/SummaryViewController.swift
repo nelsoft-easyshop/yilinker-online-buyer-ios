@@ -148,8 +148,9 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
             let product: CartProductDetailsModel = self.cartItems[indexPath.row]
+            let url = APIAtlas.baseUrl.stringByReplacingOccurrencesOfString("api/v1", withString: "")
             let orderSummaryCell: OrderSummaryTableViewCell = tableView.dequeueReusableCellWithIdentifier(Constants.Checkout.orderSummaryTableViewCellNibNameAndIdentifier) as! OrderSummaryTableViewCell
-            orderSummaryCell.productImageView.sd_setImageWithURL(NSURL(string: product.images[0])!, placeholderImage: UIImage(named: "dummy-placeholder"))
+            orderSummaryCell.productImageView.sd_setImageWithURL(NSURL(string: "\(url)\(APIAtlas.cartImage)\(product.selectedUnitImage)")!, placeholderImage: UIImage(named: "dummy-placeholder"))
             orderSummaryCell.itemTitleLabel.text = product.title
             orderSummaryCell.quantityLabel.text = "\(product.quantity)"
             
