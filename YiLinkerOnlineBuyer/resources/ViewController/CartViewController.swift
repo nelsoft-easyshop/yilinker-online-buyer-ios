@@ -120,6 +120,23 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
                 if let value: AnyObject = responseObject["data"] {
                     for subValue in responseObject["data"] as! NSArray {
                         let model: CartProductDetailsModel = CartProductDetailsModel.parseDataWithDictionary(subValue as! NSDictionary)
+                        
+                        for tempProductUnit in model.productUnits {
+                            if model.unitId == tempProductUnit.productUnitId {
+                                
+                                if tempProductUnit.primaryImage.isNotEmpty() {
+                                    model.selectedUnitImage = tempProductUnit.primaryImage
+                                } else {
+                                    if model.images.count != 0 {
+                                        model.selectedUnitImage = model.images[0]
+                                    }
+                                }
+                                
+    
+                            }
+                        }
+
+                        
                         array.append(model)
                     }
                 }

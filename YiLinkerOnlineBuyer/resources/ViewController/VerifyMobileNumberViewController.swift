@@ -47,14 +47,20 @@ class VerifyMobileNumberViewController: UIViewController {
 
         initializeViews()
         initializeLocalizeStrings()
+        fireGetCode()
     }
 
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: Selector("subtractTime"), userInfo: nil, repeats: true)
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+    }
+    
+    func startTimer() {
+        seconds = 300
+        timer.invalidate()
+        timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: Selector("subtractTime"), userInfo: nil, repeats: true)
     }
 
     func initializeViews() {
@@ -128,8 +134,7 @@ class VerifyMobileNumberViewController: UIViewController {
                 "access_token": SessionManager.accessToken(),
                 "code": codeTextField.text]))
         } else if sender as! UIButton == requestButton {
-            self.dismissViewControllerAnimated(true, completion: nil)
-            delegate?.requestNewCodeAction()
+            self.fireGetCode()
         }
     }
     
@@ -150,6 +155,33 @@ class VerifyMobileNumberViewController: UIViewController {
     func dismissLoader() {
         self.hud?.hide(true)
     }
+    
+    // MARK: - GET CODE
+    
+    func fireGetCode() {
+        let manager: APIManager = APIManager.sharedInstance
+        //seller@easyshop.ph
+        //password
+        let parameters: NSDictionary = ["access_token": SessionManager.accessToken()]
+        showLoader()
+        manager.POST(APIAtlas.verificationGetCodeUrl, parameters: parameters, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            println(responseObject)
+            if responseObject["isSuccessful"] as! Bool {
+                self.startTimer()
+                self.dismissLoader()
+            } else {
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: responseObject["message"] as! String)
+                self.dismissLoader()
+            }
+            
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
+                self.hud?.hide(true)
+        })
+    }
+
     
     func fireVerify(url: String, params: NSDictionary!) {
         showLoader()
