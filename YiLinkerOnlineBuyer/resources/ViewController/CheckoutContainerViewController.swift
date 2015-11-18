@@ -583,6 +583,7 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
             registerViewController = storyBoard.instantiateViewControllerWithIdentifier("LoginAndRegisterContentViewController") as? LoginAndRegisterContentViewController
         }
         registerViewController?.registerModel = self.guestRegisterModel
+        registerViewController!.defaultViewControllerIndex = 1
         self.navigationController?.presentViewController(registerViewController!, animated: true, completion: nil)
     }
     
