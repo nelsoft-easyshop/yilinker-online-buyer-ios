@@ -171,13 +171,13 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
                 self.selectedIndex--
                 if self.summaryViewController!.guestCheckoutTableViewCell.firstNameTextField.text!.isEmpty {
                     UIAlertController.displayErrorMessageWithTarget(self, errorMessage: RegisterStrings.firstNameRequired, title: AddressStrings.incompleteInformation)
-                } else if self.summaryViewController!.guestCheckoutTableViewCell.firstNameTextField.text!.isValidName() {
+                } else if !self.summaryViewController!.guestCheckoutTableViewCell.firstNameTextField.text!.isValidName() {
                     UIAlertController.displayErrorMessageWithTarget(self, errorMessage: RegisterStrings.illegalFirstName, title: AddressStrings.incompleteInformation)
                 } else if self.summaryViewController!.guestCheckoutTableViewCell.lastNameTextField.text!.isEmpty {
                     UIAlertController.displayErrorMessageWithTarget(self, errorMessage: RegisterStrings.lastNameRequired, title: AddressStrings.incompleteInformation)
-                } else if self.summaryViewController!.guestCheckoutTableViewCell.lastNameTextField.text!.isValidName() {
+                } else if !self.summaryViewController!.guestCheckoutTableViewCell.lastNameTextField.text!.isValidName() {
                     UIAlertController.displayErrorMessageWithTarget(self, errorMessage: RegisterStrings.invalidLastName, title: AddressStrings.incompleteInformation)
-                }  else if self.summaryViewController!.guestCheckoutTableViewCell.mobileNumberTextField.text!.isEmpty {
+                } else if self.summaryViewController!.guestCheckoutTableViewCell.mobileNumberTextField.text!.isEmpty {
                     UIAlertController.displayErrorMessageWithTarget(self, errorMessage: AddressStrings.mobileNumberIsRequired, title: AddressStrings.incompleteInformation)
                 } else if self.summaryViewController!.guestCheckoutTableViewCell.emailTextField.text!.isEmpty {
                     UIAlertController.displayErrorMessageWithTarget(self, errorMessage: RegisterStrings.emailRequired, title: AddressStrings.incompleteInformation)
