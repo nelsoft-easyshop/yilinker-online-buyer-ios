@@ -519,6 +519,7 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
         "user_address[streetName]": self.guestCheckoutTableViewCell.streetNameTextField.text,
         "user_address[subdivision]": self.guestCheckoutTableViewCell.subdivisionTextField.text,
         "user_address[zipCode]": self.guestCheckoutTableViewCell.zipCodeTextField.text,
+        "user_address[location]": "\(self.addressModel.barangayId)",
         "user_address[isDefault]": true]
         
         self.showHUD()
@@ -532,7 +533,7 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
             let isSuccessful: Bool = dictionary["isSuccessful"] as! Bool
             
             if isSuccessful {
-                let address: String = "\(self.addressModel.unitNumber) \(self.addressModel.buildingName) \(self.addressModel.streetNumber), \(self.addressModel.streetName) \(self.addressModel.subdivision) \(self.addressModel.barangay) \(self.addressModel.city) \(self.addressModel.province)"
+                let address: String = "\(self.guestCheckoutTableViewCell.unitNumberTextField.text) \(self.guestCheckoutTableViewCell.buildingNumberTextField.text) \(self.guestCheckoutTableViewCell.streetNumberTextField.text), \(self.guestCheckoutTableViewCell.streetNameTextField.text) \(self.guestCheckoutTableViewCell.subdivisionTextField.text) \(self.addressModel.barangay) \(self.addressModel.city) \(self.addressModel.province)"
                 let fullName: String = "\(self.guestCheckoutTableViewCell.firstNameTextField.text) \(self.guestCheckoutTableViewCell.lastNameTextField.text)"
                 SessionManager.setUserFullName(fullName)
                 SessionManager.setFullAddress(address)
