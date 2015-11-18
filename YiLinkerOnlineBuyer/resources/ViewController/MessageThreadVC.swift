@@ -82,10 +82,7 @@ class MessageThreadVC: UIViewController {
         super.viewDidLoad()
         var ref = W_Messages()
         //messages = ref.testData()
-        var r_temp = recipient?.userId ?? ""
-        println(recipient)
-        println("recipient id \(r_temp)")
-        self.getMessagesFromEndpoint("1", limit: "30", userId: r_temp)
+        
         self.configureTableView()
         
         var imageStringRecipient = recipient!.profileImageUrl
@@ -142,12 +139,13 @@ class MessageThreadVC: UIViewController {
                         println("json \(json)")
                         if let userId = json["userId"] as? Int{
                             if (String(userId) == recipient?.userId){
-                                if let status = json["isOnline"] as? String{
-                                    recipient?.isOnline = status
-                                    if (status == "false"){
+                                if let status = json["isOnline"] as? Bool{
+                                    if (!status){
+                                        recipient?.isOnline = "false"
                                         onlineView.backgroundColor = offlineColor
                                         onlineLabel.text = LocalizedStrings.offline
                                     } else {
+                                        recipient?.isOnline = "true"
                                         onlineView.backgroundColor = onlineColor
                                         onlineLabel.text = LocalizedStrings.online
                                     }
@@ -197,6 +195,13 @@ class MessageThreadVC: UIViewController {
     override func viewDidAppear(animated: Bool) {
         self.clearProfileView()
         
+        var r_temp = recipient?.userId ?? ""
+        messages.removeAll(keepCapacity: false)
+        self.threadTableView.reloadData()
+        println(recipient)
+        println("recipient id \(r_temp)")
+        self.getMessagesFromEndpoint("1", limit: "30", userId: r_temp)
+        
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWasShown:"), name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWasHidden:"), name: UIKeyboardWillHideNotification, object: nil)
         
@@ -208,7 +213,6 @@ class MessageThreadVC: UIViewController {
         self.composeTextView.becomeFirstResponder()
         
         /* set message as read */
-        var r_temp = recipient?.userId ?? ""
         self.setConversationAsReadFromEndpoint(r_temp)
         self.sendButton.titleLabel?.text = LocalizedStrings.send
         

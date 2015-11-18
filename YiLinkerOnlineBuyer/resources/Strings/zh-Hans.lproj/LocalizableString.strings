@@ -216,6 +216,7 @@ MESSAGING_PICK_IMAGE_ERROR = "请挑选或者先上传图片";
 MESSAGING_SAVE_FAILED = "保存失败.";
 MESSAGING_SAVE_FAILED_MESSAGE = "无法保存图像";
 MESSAGING_PHOTO_MESSAGE = "您发送/接收照片";
+MESSAGING_NEW_MESSAGE = "你有一个新的消息!";
 
 // MARK: - Rj's Modules
 
