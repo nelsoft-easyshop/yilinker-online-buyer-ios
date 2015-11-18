@@ -279,7 +279,7 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
         
         profileImage = image
         
-        imageData = UIImagePNGRepresentation(image)
+        imageData = UIImageJPEGRepresentation(image, 0.25)
     }
     
     func actionSheet(actionSheet: UIActionSheet, clickedButtonAtIndex buttonIndex: Int) {
