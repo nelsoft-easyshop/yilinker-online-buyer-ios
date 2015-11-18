@@ -443,7 +443,7 @@
                                     <constraint firstAttribute="height" constant="30" id="VOA-On-2V3"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" returnKeyType="next"/>
+                                <textInputTraits key="textInputTraits" keyboardType="emailAddress" returnKeyType="next"/>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ZC1-il-o21">
                                 <rect key="frame" x="16" y="77" width="343" height="30"/>
@@ -459,7 +459,7 @@
                                     <constraint firstAttribute="height" constant="30" id="wD7-pJ-KUb"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" returnKeyType="next"/>
+                                <textInputTraits key="textInputTraits" keyboardType="phonePad" returnKeyType="next"/>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" tag="7" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Referral code" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="OEN-PK-f3l">
                                 <rect key="frame" x="16" y="191" width="343" height="30"/>
@@ -736,8 +736,8 @@
                                 <rect key="frame" x="10" y="6" width="146" height="28"/>
                                 <color key="backgroundColor" red="0.35294117650000001" green="0.1215686275" blue="0.45882352939999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="146" id="MKV-8P-MXc"/>
-                                    <constraint firstAttribute="height" constant="28" id="bhH-lc-mAz"/>
+                                    <constraint firstAttribute="width" constant="146" id="CHR-nf-1sz"/>
+                                    <constraint firstAttribute="height" constant="28" id="KqP-CM-Q1H"/>
                                 </constraints>
                                 <state key="normal" title="SIGN IN">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -761,14 +761,14 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="q78-Vl-Veg" firstAttribute="top" secondItem="omu-KJ-QTf" secondAttribute="bottom" constant="4" id="FBt-tL-Wwu"/>
                             <constraint firstItem="11s-pE-ETE" firstAttribute="top" secondItem="lkh-qA-grD" secondAttribute="topMargin" constant="6" id="Qud-Nd-vxk"/>
+                            <constraint firstItem="omu-KJ-QTf" firstAttribute="leading" secondItem="lkh-qA-grD" secondAttribute="leadingMargin" constant="-6" id="SiS-eh-ken"/>
                             <constraint firstItem="q78-Vl-Veg" firstAttribute="top" secondItem="11s-pE-ETE" secondAttribute="bottom" constant="4" id="ZJU-dK-POj"/>
-                            <constraint firstItem="11s-pE-ETE" firstAttribute="leading" secondItem="omu-KJ-QTf" secondAttribute="trailing" constant="8" id="gGY-VH-kty"/>
                             <constraint firstItem="q78-Vl-Veg" firstAttribute="leading" secondItem="lkh-qA-grD" secondAttribute="leadingMargin" constant="-6" id="jqK-6U-hHy"/>
-                            <constraint firstItem="omu-KJ-QTf" firstAttribute="leading" secondItem="lkh-qA-grD" secondAttribute="leadingMargin" constant="-6" id="lEp-vi-1Rz"/>
-                            <constraint firstItem="omu-KJ-QTf" firstAttribute="top" secondItem="lkh-qA-grD" secondAttribute="topMargin" constant="6" id="m1u-Mn-1MP"/>
                             <constraint firstItem="pTz-y6-iR0" firstAttribute="leading" secondItem="lkh-qA-grD" secondAttribute="leadingMargin" constant="-16" id="rlb-AY-SLa"/>
                             <constraint firstItem="pTz-y6-iR0" firstAttribute="top" secondItem="q78-Vl-Veg" secondAttribute="bottom" constant="1" id="sp1-xF-CDk"/>
+                            <constraint firstItem="11s-pE-ETE" firstAttribute="leading" secondItem="omu-KJ-QTf" secondAttribute="trailing" constant="8" id="vyS-if-RLz"/>
                         </constraints>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
