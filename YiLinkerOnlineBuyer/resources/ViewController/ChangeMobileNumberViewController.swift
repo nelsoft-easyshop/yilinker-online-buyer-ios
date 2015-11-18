@@ -71,10 +71,10 @@ class ChangeMobileNumberViewController: UIViewController {
         mainViewOriginalFrame = mainView.frame
         
         // Add tap event to Sort View
-        var viewType = UITapGestureRecognizer(target:self, action:"tapMainViewAction")
+        let viewType = UITapGestureRecognizer(target:self, action:"tapMainViewAction")
         self.tapView.addGestureRecognizer(viewType)
         
-        var view = UITapGestureRecognizer(target:self, action:"tapMainAction")
+        let view = UITapGestureRecognizer(target:self, action:"tapMainAction")
         self.mainView.addGestureRecognizer(view)
         
         let screenSize: CGRect = UIScreen.mainScreen().bounds
@@ -196,7 +196,8 @@ class ChangeMobileNumberViewController: UIViewController {
                             "newContactNumber": newNumberTextField.text ]))
                     } else {
                         if SessionManager.mobileNumber() == newNumberTextField.text {
-                            fireGetCode()
+                            self.dismissViewControllerAnimated(true, completion: nil)
+                            self.delegate?.submitChangeNumberViewController()
                         } else {
                             fireUpdateProfile(APIAtlas.updateMobileNumber, params: NSDictionary(dictionary: ["access_token" : SessionManager.accessToken(),
                                 "newContactNumber": newNumberTextField.text ,
@@ -300,34 +301,6 @@ class ChangeMobileNumberViewController: UIViewController {
 
     }
     
-    // MARK: - GET CODE
-    
-    func fireGetCode() {
-        let manager: APIManager = APIManager.sharedInstance
-        //seller@easyshop.ph
-        //password
-        let parameters: NSDictionary = ["access_token": SessionManager.accessToken()]
-        showLoader()
-        manager.POST(APIAtlas.verificationGetCodeUrl, parameters: parameters, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            println(responseObject)
-            if responseObject["isSuccessful"] as! Bool {
-                SessionManager.setMobileNumber(self.newNumberTextField.text)
-                SessionManager.setIsMobileVerified(true)
-                self.dismissViewControllerAnimated(true, completion: nil)
-                self.delegate?.submitChangeNumberViewController()
-                self.dismissLoader()
-            } else {
-                self.showAlert(title: self.errorLocalizeString, message: responseObject["message"] as! String)
-                self.dismissLoader()
-            }
-
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
-                self.hud?.hide(true)
-        })
-    }
     
     func requestRefreshToken(type: String, url: String, params: NSDictionary!) {
         let url: String = APIAtlas.loginUrl
@@ -345,9 +318,7 @@ class ChangeMobileNumberViewController: UIViewController {
                 SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
                 if type == "change" {
                     self.fireUpdateProfile(url, params: params)
-                } else if type == "sms" {
-                    self.fireGetCode()
-                }
+                } 
                 
             } else {
                 self.showAlert(title: self.errorLocalizeString, message: responseObject["message"] as! String)

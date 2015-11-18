@@ -650,7 +650,7 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
     // MARK: - VerifyMobileNumberViewControllerDelegate
     func closeVerifyMobileNumberViewController() {
         hideDimView()
-        self.changeMobileNumberAction()
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
     
     func verifyMobileNumberAction(isSuccessful: Bool) {
