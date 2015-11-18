@@ -1225,7 +1225,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         if canMessage {
             self.navigationController?.pushViewController(messagingViewController, animated: true)
         } else {
-            self.showAlert(title: Constants.Localized.error, message: ProductStrings.cannotMessage)
+            self.showAlert(title: StringHelper.localizedStringWithKey("MESSAGING_TITLE"), message: ProductStrings.cannotMessage)
             //UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "You're allowed to message this seller. Please login first.", title: "Error")
         }
     }
