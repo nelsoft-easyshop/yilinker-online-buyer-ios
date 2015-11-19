@@ -25,13 +25,27 @@ class FollowedSellerViewController: UIViewController, EmptyViewDelegate {
         let nib = UINib(nibName: "FollowedSellerTableViewCell", bundle: nil)
         self.tableView.registerNib(nib, forCellReuseIdentifier: "FollowedSellerIdentifier")
         
+        customizedNavigationBar()
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if followedSellerModel != nil {
+            if followedSellerModel.id.count == 0 {
+                self.showHUD()
+            } else {
+                UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+            }
+        } else {
+            self.showHUD()
+        }
+        
         if Reachability.isConnectedToNetwork() {
             requestFollowedSelers()
         } else {
             addEmptyView()
         }
-        
-        customizedNavigationBar()
     }
     
     // MARK: - Methods
@@ -97,15 +111,13 @@ class FollowedSellerViewController: UIViewController, EmptyViewDelegate {
     // MARK: - Request
     
     func requestFollowedSelers() {
-        self.showHUD()
-        
         let manager = APIManager.sharedInstance
         let params = ["access_token": SessionManager.accessToken(),
             "page": "1", "limit": "999"]
         
         manager.POST(APIAtlas.getFollowedSellers, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            
+            println(responseObject)
             self.followedSellerModel = FollowedSellerModel.parseDataWithDictionary(responseObject)
             
             if self.followedSellerModel.id.count != 0 {
@@ -114,7 +126,7 @@ class FollowedSellerViewController: UIViewController, EmptyViewDelegate {
                 self.emptyLabel.hidden = false
             }
             self.hud?.hide(true)
-            
+            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
@@ -123,6 +135,7 @@ class FollowedSellerViewController: UIViewController, EmptyViewDelegate {
                 } else {
                     self.addEmptyView()
                     self.hud?.hide(true)
+                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                 }
         })
     }

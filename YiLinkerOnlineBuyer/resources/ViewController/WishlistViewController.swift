@@ -54,6 +54,9 @@ class WishlistViewController: UIViewController, UITableViewDelegate, UITableView
         
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
         
+        self.navigationController?.navigationBar.titleTextAttributes =
+            [NSForegroundColorAttributeName: UIColor.whiteColor(),
+                NSFontAttributeName: UIFont(name: "Panton-Regular", size: 21)!]
         self.title = StringHelper.localizedStringWithKey("WISHLISTTITLE_LOCALIZE_KEY")
     }
     

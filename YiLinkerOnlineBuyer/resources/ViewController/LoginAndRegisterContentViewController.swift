@@ -42,16 +42,6 @@ class LoginAndRegisterContentViewController: UIViewController {
             }
         }
         
-        if IphoneType.isIphone6() && IphoneType.isIphone6Plus() {
-            self.signInButton.layer.cornerRadius = 20
-            self.registerButton.layer.cornerRadius = 20
-        } else {
-            self.signInButton.layer.cornerRadius = 15
-            self.registerButton.layer.cornerRadius = 15
-        }
-
-        
-        
         self.signInButton.layer.borderColor = Constants.Colors.appTheme.CGColor
         
         self.signInButton.layer.borderWidth = 1
@@ -76,10 +66,17 @@ class LoginAndRegisterContentViewController: UIViewController {
         
         self.setSelectedViewControllerWithIndex(self.defaultViewControllerIndex)
         
-        if self.defaultViewControllerIndex == 0 {
-            self.signIn(self.signInButton)
+        self.roundSignInAndRegisterButton()
+    }
+    
+    //MARK: - Round Sign In And Register Button
+    func roundSignInAndRegisterButton() {
+        if IphoneType.isIphone6() || IphoneType.isIphone6Plus() {
+            self.signInButton.layer.cornerRadius = 20
+            self.registerButton.layer.cornerRadius = 20
         } else {
-            self.register(self.registerButton)
+            self.signInButton.layer.cornerRadius = 15
+            self.registerButton.layer.cornerRadius = 15
         }
     }
     

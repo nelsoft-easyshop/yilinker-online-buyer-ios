@@ -233,9 +233,16 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
             }
         }
         
-        hideSelf("buy")
-        let quantity: Int = stocksLabel.text!.toInt()!
-        delegate!.gotoCheckoutFromAttributes(self, unitId: self.unitId, quantity: quantity)
+        if selectionComplete {
+            hideSelf("buy")
+            let quantity: Int = stocksLabel.text!.toInt()!
+            delegate!.gotoCheckoutFromAttributes(self, unitId: self.unitId, quantity: quantity)
+        } else {
+            let alertController = UIAlertController(title: ProductStrings.alertError, message: ProductStrings.alertComplete, preferredStyle: .Alert)
+            let defaultAction = UIAlertAction(title: ProductStrings.alertOk, style: .Default, handler: nil)
+            alertController.addAction(defaultAction)
+            self.presentViewController(alertController, animated: true, completion: nil)
+        }
 
     }
     

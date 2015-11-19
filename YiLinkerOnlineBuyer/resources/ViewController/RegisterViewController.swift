@@ -70,6 +70,8 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         self.view.needsUpdateConstraints()
         self.view.layoutIfNeeded()
         self.setUpTextFields()
+        self.roundRegisterButton()
+        
         self.registerButton.addTarget(self, action: "register", forControlEvents: UIControlEvents.TouchUpInside)
         
         self.firstNameTextField.attributedPlaceholder = StringHelper.required(RegisterStrings.firstName)
@@ -95,6 +97,12 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
             self.mobileNumberTextField.enabled = false
             self.referralCodeTextField.enabled = false
         }
+    }
+    
+    //MARK: - Round Register Button
+    func roundRegisterButton() {
+        self.registerButton.layer.cornerRadius = 5
+        self.registerButton.clipsToBounds = true
     }
     
     // MARK: Populate Default Data
@@ -177,33 +185,16 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         self.currentTextFieldTag = textField.tag
         let textFieldHeightWithInset: CGFloat = -30
         if IphoneType.isIphone6Plus() {
-            if textField == self.passwordTextField || textField == self.reTypePasswordTextField || textField == self.mobileNumberTextField || textField == self.referralCodeTextField {
-                self.adjustTextFieldYInsetWithInset(CGFloat(self.currentTextFieldTag) * textFieldHeightWithInset)
-            } else {
-                self.adjustTextFieldYInsetWithInset(0)
+            if textField == self.referralCodeTextField {
+                self.adjustTextFieldYInsetWithInset(textFieldHeightWithInset - 55)
             }
         } else if IphoneType.isIphone6() {
-            if textField == self.firstNameTextField {
-                self.adjustTextFieldYInsetWithInset(textFieldHeightWithInset)
-            } else if textField == self.lastNameTextField {
-                self.adjustTextFieldYInsetWithInset(textFieldHeightWithInset)
-            } else if textField == self.emailAddressTextField {
-                self.adjustTextFieldYInsetWithInset(CGFloat(textField.tag) * textFieldHeightWithInset)
-            } else if textField == self.referralCodeTextField {
-                self.adjustTextFieldYInsetWithInset(CGFloat(textField.tag) * textFieldHeightWithInset)
-            } else {
-                self.adjustTextFieldYInsetWithInset(3 * textFieldHeightWithInset)
+            if textField == self.mobileNumberTextField || textField == self.referralCodeTextField || textField == self.reTypePasswordTextField {
+                self.adjustTextFieldYInsetWithInset(textFieldHeightWithInset + CGFloat((textField.tag - 5) * -55))
             }
         } else if IphoneType.isIphone5() {
-            if textField == self.firstNameTextField || textField == self.lastNameTextField {
-                self.showCloseButton()
-                self.adjustTextFieldYInsetWithInset(0)
-            } else if textField == self.emailAddressTextField {
-                self.showCloseButton()
-                self.adjustTextFieldYInsetWithInset(-50)
-            } else if textField == self.passwordTextField  || textField == self.reTypePasswordTextField {
-                self.hideCloseButton()
-                self.adjustTextFieldYInsetWithInset(-70)
+            if textField == self.mobileNumberTextField || textField == self.referralCodeTextField || textField == self.reTypePasswordTextField {
+                self.adjustTextFieldYInsetWithInset(textFieldHeightWithInset + CGFloat((textField.tag - 5) * -45))
             }
         } else if IphoneType.isIphone4() {
             self.hideCloseButton()

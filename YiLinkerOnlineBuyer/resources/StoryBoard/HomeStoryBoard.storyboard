@@ -121,7 +121,7 @@
             </objects>
             <point key="canvasLocation" x="538.5" y="-287.5"/>
         </scene>
-        <!--Search-->
+        <!--Search View Controller-->
         <scene sceneID="sOP-GE-LsJ">
             <objects>
                 <viewController storyboardIdentifier="SearchViewController" id="qKJ-E3-g51" customClass="SearchViewController" customModule="YiLinkerOnlineBuyer" customModuleProvider="target" sceneMemberID="viewController">
@@ -163,7 +163,7 @@
                             <constraint firstItem="g03-j7-I0r" firstAttribute="top" secondItem="au9-A8-A7j" secondAttribute="bottom" id="wve-YR-ADx"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Search" id="911-y2-xae"/>
+                    <navigationItem key="navigationItem" id="911-y2-xae"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="searchBar" destination="g03-j7-I0r" id="0Ul-br-1N7"/>
@@ -266,7 +266,7 @@
             </objects>
             <point key="canvasLocation" x="-2140.5" y="1424.5"/>
         </scene>
-        <!--Wishlist-->
+        <!--Wishlist View Controller-->
         <scene sceneID="w4B-f7-lDi">
             <objects>
                 <viewController storyboardIdentifier="WishlistViewController" id="JPs-GR-MAc" customClass="WishlistViewController" customModule="YiLinkerOnlineBuyer" customModuleProvider="target" sceneMemberID="viewController">
@@ -313,7 +313,7 @@
                             <constraint firstItem="QM6-3q-0fn" firstAttribute="leading" secondItem="U4b-3y-sJx" secondAttribute="leadingMargin" constant="-16" id="w43-Pn-QBn"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Wishlist" id="mec-SK-MXQ"/>
+                    <navigationItem key="navigationItem" id="mec-SK-MXQ"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="wishListCounterLabel" destination="M20-0g-60V" id="X22-4s-vbA"/>
@@ -324,7 +324,7 @@
             </objects>
             <point key="canvasLocation" x="-1577.5" y="624.5"/>
         </scene>
-        <!--Cart-->
+        <!--Cart View Controller-->
         <scene sceneID="2ww-zW-8F6">
             <objects>
                 <viewController storyboardIdentifier="CartViewController" id="Y5w-eS-nUZ" customClass="CartViewController" customModule="YiLinkerOnlineBuyer" customModuleProvider="target" sceneMemberID="viewController">
@@ -451,7 +451,7 @@
                             <constraint firstItem="Flk-HZ-Njb" firstAttribute="top" secondItem="fCv-gF-g2z" secondAttribute="top" id="zfC-Aj-7Cb"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Cart" id="ECi-yG-sDA"/>
+                    <navigationItem key="navigationItem" id="ECi-yG-sDA"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="cartCounterLabel" destination="PGR-Y7-dO2" id="WGL-Iz-Se7"/>

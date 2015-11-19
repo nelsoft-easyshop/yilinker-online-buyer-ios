@@ -14,7 +14,7 @@ HELP_LOCALIZE_KEY = "HELP";
 REGISTER_LOCALIZE_KEY = "REGISTER";
 MESSAGING_LOCALIZE_KEY = "MESSAGING";
 CUSTOMIZE_SHOPPING_LOCALIZE_KEY = "CUSTOMIZE SHOPPING";
-TODAYS_PROMO_LOCALIZE_KEY = "TODAYS PROMO";
+TODAYS_PROMO_LOCALIZE_KEY = "TODAY'S PROMO";
 CATEGORIES_LOCALIZE_KEY = "CATEGORIES";
 
 CUSTOMIZE_SHOPPING_ALERT_TITLE_LOCALIZE_KEY = "Feature Not Available";
@@ -58,7 +58,7 @@ SELLERS_LOCALIZE_KEY = "SELLERS";
 TODAYS_PROMO_FOOTER_LOCALIZE_KEY = "Today's Promo";
 POPULAR_CATEGORIES_LOCALIZE_KEY = "Popular Categories";
 TRENDING_ITEMS_LOCALIZE_KEY = "Trending Items";
-ITEMS_YOU_MY_LIKE_LOCALIZE_KEY = "Items you my like";
+ITEMS_YOU_MY_LIKE_LOCALIZE_KEY = "Items you may like";
 
 TOP_PICKS_LOCALIZE_KEY = "Top Picks";
 WATCHES_LOCALIZE_KEY = "Watches";
@@ -231,7 +231,7 @@ MESSAGING_PHOTO_MESSAGE = "You sent/received a photo";
 
 // MARK: - Followed Sellers
 FOLLOWED_SELLERS_LOCALIZE_KEY = "Followed Sellers";
-FOLLOWED_SELLERS_EMPTY_LOCALIZE_KEY = "You didn't followed any sellers yet";
+FOLLOWED_SELLERS_EMPTY_LOCALIZE_KEY = "You didn't follow any sellers yet";
 
 // MARK: - Customized Categories
 CATEGORY_LOCALIZE_KEY = "Category";
@@ -262,7 +262,7 @@ PEOPLE_RATE_LOCALIZE_KEY = "people rate this product";
 
 ALERT_ADDED_TO_WISHLIST_LOCALIZE_KEY = "This item has been added to your wishlist.";
 ALERT_ADDED_TO_CART_LOCALIZE_KEY = "This item has been added to your cart.";
-ALERT_PLEASE_LOGIN_LOCALIZE_KEY = "Please logged-in to add item in your wishlist.";
+ALERT_PLEASE_LOGIN_LOCALIZE_KEY = "Please login to add item in your wishlist.";
 ALERT_PLEASE_COMPLETE_LOCALIZE_KEY = "Please complete the attributes.";
 ALERT_AVOID_ISSUES_LOCALIZE_KEY = "To avoid issues, please login.";
 
@@ -323,7 +323,7 @@ PRODUCTS_SELLER_LOCALIZE_KEY = "Products";
 MORE_SELLERS_PRODUCT_LOCALIZE_KEY = "MORE SELLER'S PRODUCT";
 PRODUCT_RATINGS_AND_FEEDBACK_LOCALIZE_KEY = "Product Rating & Feedback";
 VENDOR_PAGE_CANNOT_FOLLOW_LOCALIZE_KEY = "Please login to follow this seller.";
-VENDOR_PAGE_CANNOT_MESSAGE_LOCALIZE_KEY = "You're allowed to message this seller. Please login first.";
+VENDOR_PAGE_CANNOT_MESSAGE_LOCALIZE_KEY = "You're not allowed to message this seller. Please login first.";
 VENDOR_PAGE_CANNOT_CALL_LOCALIZE_KEY = "Cannot make a call to";
 //Vendor View Feedback
 CANCEL_LOCALIZE_KEY = "CANCEL";
