@@ -14,8 +14,8 @@ class ContactListVC: UIViewController, EmptyViewDelegate{
     
     var resultSearchController = UISearchController()
     
-    var contacts = [W_Contact()]
-    var filteredContacts = [W_Contact()]
+    var contacts = [W_Contact]()
+    var filteredContacts = [W_Contact]()
     
     let contactIdentifier = "contactCell"
     let messageThreadSegueIdentifier = "message_thread"
