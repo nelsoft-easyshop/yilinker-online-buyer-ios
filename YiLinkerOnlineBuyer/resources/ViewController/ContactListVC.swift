@@ -80,8 +80,8 @@ class ContactListVC: UIViewController, EmptyViewDelegate{
                         if let userId = json["userId"] as? Int{
                             for contact in contacts{
                                 if (contact.userId == String(userId)) {
-                                    if let status = json["isOnline"] as? String{
-                                        if (status == "false"){
+                                    if let status = json["isOnline"] as? Bool{
+                                        if (!status){
                                             contact.isOnline = "0"
                                         } else {
                                             contact.isOnline = "1"
@@ -94,8 +94,8 @@ class ContactListVC: UIViewController, EmptyViewDelegate{
                             
                             for contact in filteredContacts{
                                 if (contact.userId == String(userId)) {
-                                    if let status = json["isOnline"] as? String{
-                                        if (status == "false"){
+                                    if let status = json["isOnline"] as? Bool{
+                                        if (!status){
                                             contact.isOnline = "0"
                                         } else {
                                             contact.isOnline = "1"

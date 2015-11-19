@@ -226,6 +226,8 @@ MESSAGING_PICK_IMAGE_ERROR = "Please pick or upload an image first.";
 MESSAGING_SAVE_FAILED = "Save Failed.";
 MESSAGING_SAVE_FAILED_MESSAGE = "Failed to save image";
 MESSAGING_PHOTO_MESSAGE = "You sent/received a photo";
+MESSAGING_NEW_MESSAGE = "You have a new message!";
+
 
 // MARK: - Rj's Modules
 
