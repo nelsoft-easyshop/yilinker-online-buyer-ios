@@ -232,7 +232,7 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
     func getTransactionIdView() -> TransactionIdView {
         if self.transactionIdView == nil {
             self.transactionIdView = XibHelper.puffViewWithNibName("TransactionViews", index: 0) as! TransactionIdView
-            self.transactionIdView.transactionIdLabel.text = self.transactionId
+            self.transactionIdView.transactionIdLabel.text = "TID-" + self.transactionId
             
             if self.totalProducts.toInt() < 2 {
                 self.transactionIdView.numberOfProductsLabel.text = "\(self.totalProducts) product"

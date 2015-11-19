@@ -531,7 +531,7 @@ ACTIVITY_LOGS_TITLE_LOCALIZE_KEY = "Activity Logs";
 NO_MORE_DATA_LOCALIZE_KEY = "No more data!";
 
 //Success/Fail Cancellation
-TRANSACTION_CANCEL_ORDER_SUCCESS_LOCALIZE_KEY = "This order has been successfully beeb cancelled";
+TRANSACTION_CANCEL_ORDER_SUCCESS_LOCALIZE_KEY = "This order has been successfully been cancelled";
 TRANSACTION_CANCEL_ORDER_SUCCESS_SUB_LOCALIZE_KEY = "A Customer Service Representative will contact you shortly to ask how we can help you from losing more orders";
 TRANSACTION_CANCEL_ORDER_RETURN_LOCALIZE_KEY = "Return to Dashboard";
 

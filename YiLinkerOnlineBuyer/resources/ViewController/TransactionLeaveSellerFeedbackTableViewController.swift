@@ -304,10 +304,11 @@ class TransactionLeaveSellerFeedbackTableViewController: UITableViewController, 
         
         self.feedback = feedback
         
-        if rate == 0 || rateComm == 0 {
-            showAlert(title: "Rate", message: "Please select a rating.")
+        /*if rate == 0 || rateComm == 0 {
+            //showAlert(title: "Rate", message: "Please select a rating.")
             self.tableView.reloadData()
-        } else if feedback == "" {
+        } else*/
+        if feedback == "" {
              showAlert(title: "Feedback", message: "Please send a feedback.")
             self.tableView.reloadData()
         } else {
