@@ -70,6 +70,8 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         self.view.needsUpdateConstraints()
         self.view.layoutIfNeeded()
         self.setUpTextFields()
+        self.roundRegisterButton()
+        
         self.registerButton.addTarget(self, action: "register", forControlEvents: UIControlEvents.TouchUpInside)
         
         self.firstNameTextField.attributedPlaceholder = StringHelper.required(RegisterStrings.firstName)
@@ -95,6 +97,12 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
             self.mobileNumberTextField.enabled = false
             self.referralCodeTextField.enabled = false
         }
+    }
+    
+    //MARK: - Round Register Button
+    func roundRegisterButton() {
+        self.registerButton.layer.cornerRadius = 5
+        self.registerButton.clipsToBounds = true
     }
     
     // MARK: Populate Default Data
