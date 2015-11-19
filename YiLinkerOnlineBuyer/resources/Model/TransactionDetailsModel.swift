@@ -231,10 +231,15 @@ class TransactionDetailsModel: NSObject {
                             productName.append(product["productName"] as! String)
                             handlingFee.append(product["handlingFee"] as! String)
                             sellerId2.append(transaction["sellerId"] as! Int)
-                            if let orderProductStatus: AnyObject = product["orderProductStatus"] {
-                                orderProductStatusId.append(orderProductStatus["orderProductStatusId"] as! Int)
-                                name.append(orderProductStatus["name"] as! String)
-                                productDescription.append(orderProductStatus["description"] as! String)
+                            println(product["orderProductStatus"]?.count)
+                            if product["orderProductStatus"]?.count != 0 {
+                                if let orderProductStatus: AnyObject = product["orderProductStatus"] {
+                                    println(orderProductStatus)
+                                    orderProductStatusId.append(orderProductStatus["orderProductStatusId"] as! Int)
+                                    name.append(orderProductStatus["name"] as! String)
+                                    productDescription.append(orderProductStatus["description"] as! String)
+                                    
+                                }
                             }
                             
                             if (product["productImage"] as! String) != "" {
