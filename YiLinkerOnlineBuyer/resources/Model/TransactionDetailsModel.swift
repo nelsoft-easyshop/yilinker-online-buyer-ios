@@ -141,10 +141,10 @@ class TransactionDetailsModel: NSObject {
                    
                     sellerContactNumber.append(transaction["sellerContactNumber"] as! String)
                     
-                    if !(transaction["hasFeedback"] is NSNull) {
-                        hasFeedback.append(transaction["hasFeedback"] as! Bool)
-                    } else {
+                    if transaction["sellerHasFeedback"] is NSNull {
                         hasFeedback.append(false)
+                    } else {
+                        hasFeedback.append(transaction["sellerHasFeedback"] as! Bool)
                     }
                     
                     let products: NSArray = transaction["products"] as! NSArray
