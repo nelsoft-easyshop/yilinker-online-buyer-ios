@@ -298,7 +298,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
         self.showHUD()
         let manager: APIManager = APIManager.sharedInstance
         let parameters: NSDictionary = [LoginConstants.emailKey: self.emailAddressTextField.text, LoginConstants.passwordKey: self.passwordTextField.text, LoginConstants.clientIdKey: Constants.Credentials.clientID, LoginConstants.clientSecretKey: Constants.Credentials.clientSecret, LoginConstants.grantTypeKey: Constants.Credentials.grantBuyer]
-        
+        println(parameters)
         manager.POST(APIAtlas.loginUrl, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
                 SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
@@ -324,7 +324,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
                     
                     self.hud?.hide(true)
                 } else {
-                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 3.0, view: self.view)
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage + "asdasd", duration: 3.0, view: self.view)
                 }
                 self.hud?.hide(true)
         })

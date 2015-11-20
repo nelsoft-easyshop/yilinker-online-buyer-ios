@@ -164,6 +164,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GGLInstanceIDDelegate {
                 NSNotificationCenter.defaultCenter().postNotificationName(statusKey, object: nil, userInfo: userInfo)
             case responseType.New:
                 NSNotificationCenter.defaultCenter().postNotificationName(messageKey, object: nil, userInfo: userInfo)
+                if application.applicationState == UIApplicationState.Active {
+                    UIApplication.sharedApplication().applicationIconBadgeNumber = 0
+                    let alertController = UIAlertController(title: "YiLinker", message:
+                        LocalizedStrings.newMessage , preferredStyle: .Alert)
+                    alertController.addAction(UIAlertAction(title: ProductStrings.alertOk, style: .Default, handler: nil))
+                    self.window?.rootViewController?.presentViewController(alertController, animated: true, completion: nil)
+                }
             default:
                 println("RESPONSE TYPE INVALID")
             }
@@ -179,7 +186,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GGLInstanceIDDelegate {
         if application.applicationState == UIApplicationState.Active {
             UIApplication.sharedApplication().applicationIconBadgeNumber = 0
             var body: NSDictionary = userInfo["aps"] as! NSDictionary
-            let alertController = UIAlertController(title: "YiLinker", message: body["alert"] as? String, preferredStyle: .Alert)
+            let alertController = UIAlertController(title: "YiLinkeraa", message: body["alert"] as? String, preferredStyle: .Alert)
             alertController.addAction(UIAlertAction(title: ProductStrings.alertOk, style: .Default, handler: nil))
             self.window?.rootViewController?.presentViewController(alertController, animated: true, completion: nil)
         }

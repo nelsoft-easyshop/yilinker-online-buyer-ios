@@ -52,7 +52,7 @@ class MessageThreadVC: UIViewController {
     var keyboardIsShown : Bool = false
     var minimumYComposeView : CGFloat = 0.0
     var maximumXComposeTextView : CGFloat = 0.0
-    var messages = [W_Messages()]
+    var messages = [W_Messages]()
     
     var onlineColor = UIColor(red: 84/255, green: 182/255, blue: 167/255, alpha: 1.0)
     var offlineColor = UIColor(red: 218/255, green: 32/255, blue: 43/255, alpha: 1.0)
@@ -81,12 +81,6 @@ class MessageThreadVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         var ref = W_Messages()
-        //messages = ref.testData()
-        var r_temp = recipient?.userId ?? ""
-        println(recipient)
-        println("recipient id \(r_temp)")
-        self.getMessagesFromEndpoint("1", limit: "30", userId: r_temp)
-        self.configureTableView()
         
         var imageStringRecipient = recipient!.profileImageUrl
         var urlRecipient : NSURL = NSURL(string: imageStringRecipient)!
@@ -142,12 +136,13 @@ class MessageThreadVC: UIViewController {
                         println("json \(json)")
                         if let userId = json["userId"] as? Int{
                             if (String(userId) == recipient?.userId){
-                                if let status = json["isOnline"] as? String{
-                                    recipient?.isOnline = status
-                                    if (status == "false"){
+                                if let status = json["isOnline"] as? Bool{
+                                    if (!status){
+                                        recipient?.isOnline = "false"
                                         onlineView.backgroundColor = offlineColor
                                         onlineLabel.text = LocalizedStrings.offline
                                     } else {
+                                        recipient?.isOnline = "true"
                                         onlineView.backgroundColor = onlineColor
                                         onlineLabel.text = LocalizedStrings.online
                                     }
@@ -197,6 +192,13 @@ class MessageThreadVC: UIViewController {
     override func viewDidAppear(animated: Bool) {
         self.clearProfileView()
         
+        //messages = ref.testData()
+        var r_temp = recipient?.userId ?? ""
+        println(recipient)
+        println("recipient id \(r_temp)")
+        self.getMessagesFromEndpoint("1", limit: "30", userId: r_temp)
+        self.configureTableView()
+        
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWasShown:"), name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWasHidden:"), name: UIKeyboardWillHideNotification, object: nil)
         
@@ -208,7 +210,6 @@ class MessageThreadVC: UIViewController {
         self.composeTextView.becomeFirstResponder()
         
         /* set message as read */
-        var r_temp = recipient?.userId ?? ""
         self.setConversationAsReadFromEndpoint(r_temp)
         self.sendButton.titleLabel?.text = LocalizedStrings.send
         
