@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
@@ -11,6 +11,7 @@
                 <outlet property="buttonsContainer" destination="C60-aW-ouZ" id="GzR-X4-rmh"/>
                 <outlet property="buyItNowLabel" destination="fhZ-EI-5fo" id="pCb-Qh-OLt"/>
                 <outlet property="buyItNowView" destination="IQR-t4-99U" id="VGI-gN-oqo"/>
+                <outlet property="closeButton" destination="J2h-LG-jYM" id="rLc-tT-Nsd"/>
                 <outlet property="dimView" destination="E51-2e-Dng" id="BEl-KQ-PAN"/>
                 <outlet property="tableView" destination="r01-f0-aka" id="6la-mP-bFW"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -33,6 +34,18 @@
                         <outlet property="delegate" destination="-1" id="FVY-ai-ilb"/>
                     </connections>
                 </tableView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="J2h-LG-jYM" userLabel="close">
+                    <rect key="frame" x="8" y="34" width="40" height="40"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="close" translatesAutoresizingMaskIntoConstraints="NO" id="Xe0-Nx-PdV">
+                            <rect key="frame" x="11" y="11" width="18" height="18"/>
+                        </imageView>
+                    </subviews>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="40" id="dDz-Yn-Jdw"/>
+                        <constraint firstAttribute="height" constant="40" id="lXG-Bl-4eO"/>
+                    </constraints>
+                </view>
                 <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="C60-aW-ouZ" userLabel="buttons container">
                     <rect key="frame" x="0.0" y="553" width="375" height="65"/>
                     <subviews>
@@ -99,6 +112,7 @@
             <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
                 <constraint firstItem="r01-f0-aka" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="0iG-8i-uX9"/>
+                <constraint firstItem="J2h-LG-jYM" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="8PP-O9-zGA"/>
                 <constraint firstAttribute="bottom" secondItem="E51-2e-Dng" secondAttribute="bottom" id="8ys-zX-9tR"/>
                 <constraint firstAttribute="bottom" secondItem="C60-aW-ouZ" secondAttribute="bottom" constant="49" id="9AK-Ha-GgR"/>
                 <constraint firstAttribute="trailing" secondItem="C60-aW-ouZ" secondAttribute="trailing" id="A8d-5d-r4C"/>
@@ -109,6 +123,7 @@
                 <constraint firstItem="C60-aW-ouZ" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="mFv-c3-H4k"/>
                 <constraint firstItem="C60-aW-ouZ" firstAttribute="top" secondItem="r01-f0-aka" secondAttribute="bottom" id="sBK-uj-Xic"/>
                 <constraint firstAttribute="trailing" secondItem="r01-f0-aka" secondAttribute="trailing" id="urd-hL-Pgj"/>
+                <constraint firstItem="J2h-LG-jYM" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="34" id="xSZ-Cx-l58"/>
             </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
             <point key="canvasLocation" x="352.5" y="339.5"/>
@@ -116,5 +131,6 @@
     </objects>
     <resources>
         <image name="buy" width="192" height="180"/>
+        <image name="close" width="22" height="22"/>
     </resources>
 </document>

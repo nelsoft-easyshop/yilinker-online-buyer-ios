@@ -67,6 +67,8 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
     var requestSuggestionSearchUrl: String = ""
     var maxPrice: Double = 0
     var minPrice: Double = 0
+    var selectedMaxPrice: Double = 0
+    var selectedMinPrice: Double = 0
     
     var listLocalizeString: String = ""
     var gridMessageLocalizeString: String = ""
@@ -83,6 +85,7 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
         super.viewDidLoad()
 
         self.initializeViews()
+        self.backButton()
         self.initializeLocalizedString()
         self.registerNibs()
         
@@ -154,14 +157,12 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
             self.edgesForExtendedLayout = UIRectEdge.None
         }
         
+        self.navigationController?.navigationBar.titleTextAttributes =
+            [NSForegroundColorAttributeName: UIColor.whiteColor(),
+                NSFontAttributeName: UIFont(name: "Panton-Regular", size: 21)!]
+        
         let resultsLocalizeString: String = StringHelper.localizedStringWithKey("RESULTS_LOCALIZE_KEY")
         self.title = resultsLocalizeString
-        
-        // Back Button
-        let backButton = UIBarButtonItem(title:" ", style:.Plain, target: self, action:"goBack")
-        backButton.image = UIImage(named: "back-white")
-        //backButton.tintColor = UIColor.whiteColor()
-        self.navigationItem.leftBarButtonItem = backButton
         
         
         //hide dimview
@@ -176,6 +177,23 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
 
         noResultLabel.hidden = true
     }
+    
+    func backButton() {
+        var backButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
+        backButton.frame = CGRectMake(0, 0, 40, 40)
+        backButton.addTarget(self, action: "back", forControlEvents: UIControlEvents.TouchUpInside)
+        backButton.setImage(UIImage(named: "back-white"), forState: UIControlState.Normal)
+        var customBackButton:UIBarButtonItem = UIBarButtonItem(customView: backButton)
+        
+        let navigationSpacer: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
+        navigationSpacer.width = -20
+        self.navigationItem.leftBarButtonItems = [navigationSpacer, customBackButton]
+    }
+    
+    func back() {
+        self.navigationController!.popViewControllerAnimated(true)
+    }
+
     
     
     func initializeTapGestures() {
@@ -374,6 +392,7 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
                         if subValue as! NSObject != NSNull() {
                             if maxPrice == 0{
                                 maxPrice = subValue as! Double
+                                selectedMaxPrice = maxPrice
                             }
                         }
                     }
@@ -382,6 +401,7 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
                         if subValue as! NSObject != NSNull() {
                             if maxPrice == 0{
                                 minPrice = subValue as! Double
+                                selectedMinPrice = minPrice
                             }
                         }
                     }
@@ -591,6 +611,8 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
             "priceFrom": minPrice,
             "priceTo": maxPrice,
             "filters": [filters]]))
+        selectedMaxPrice = maxPrice
+        selectedMinPrice = minPrice
     }
     
     // MARK : - Functions 
@@ -669,6 +691,8 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
         attributeModal.passFilter(filterAtributes, maxPrice: maxPrice, minPrice: minPrice)
         attributeModal.maxPrice = maxPrice
         attributeModal.minPrice = minPrice
+        attributeModal.selectedMaxPrice = selectedMaxPrice
+        attributeModal.selectedMinPrice = selectedMinPrice
         self.tabBarController?.presentViewController(attributeModal, animated: true, completion: nil)
         
         self.fullDimView!.hidden = false

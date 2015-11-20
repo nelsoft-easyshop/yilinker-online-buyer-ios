@@ -31,6 +31,11 @@ class ActivityLogModel: NSObject {
         self.text = text
     }
     
+    init(date: String, activities: [ActivityModel]) {
+        self.date = date
+        self.activities = activities
+    }
+    
     init(date: NSArray, details: NSArray, date_section: NSArray, all_date_section: NSArray) {
         self.date_array = date as! [String]
         self.text_array = details as! [String]

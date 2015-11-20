@@ -32,7 +32,7 @@ class StartPageViewController: UIViewController, UIPageViewControllerDataSource,
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        UIApplication.sharedApplication().statusBarStyle = .Default
         if IphoneType.isIphone4() {
             self.pageControlVerticalConstraint.constant = 10
         }

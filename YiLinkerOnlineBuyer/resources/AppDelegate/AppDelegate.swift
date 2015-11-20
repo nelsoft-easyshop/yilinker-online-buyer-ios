@@ -42,7 +42,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GGLInstanceIDDelegate {
         
         UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: true)
         self.window?.makeKeyAndVisible()
-        
+        self.window!.backgroundColor = UIColor.whiteColor()
         //Google Sign In
         // Initialize sign-in
         var configureError: NSError?
@@ -198,6 +198,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GGLInstanceIDDelegate {
     }
     
     func changeRootToHomeView() {
+        for view in self.window!.subviews {
+            view.removeFromSuperview()
+        }
+        
         let storyBoard: UIStoryboard = UIStoryboard(name: "HomeStoryBoard", bundle: nil)
         let tabBarController: UITabBarController = storyBoard.instantiateViewControllerWithIdentifier("TabBarController") as! UITabBarController
         self.window?.rootViewController = tabBarController

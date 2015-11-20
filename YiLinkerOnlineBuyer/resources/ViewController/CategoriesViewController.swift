@@ -23,6 +23,8 @@ class CategoriesViewController: UIViewController, EmptyViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.view.backgroundColor = UIColor.lightGrayColor()
+        
         if self.respondsToSelector("edgesForExtendedLayout") {
             self.edgesForExtendedLayout = UIRectEdge.None
         }
@@ -44,6 +46,8 @@ class CategoriesViewController: UIViewController, EmptyViewDelegate {
     }
     
     func configureNavigationBar() {
+        self.title = StringHelper.localizedStringWithKey("CATEGORIES_CS_LOCALIZE_KEY")
+        
         var backButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
         backButton.frame = CGRectMake(0, 0, 40, 40)
         backButton.addTarget(self, action: "back", forControlEvents: UIControlEvents.TouchUpInside)
@@ -105,6 +109,9 @@ class CategoriesViewController: UIViewController, EmptyViewDelegate {
             } else {
                 gotoSearch(categoryModel.id[indexPath.row])
             }
+        } else {
+            self.tableView.hidden = true
+            addEmptyView()
         }
     }
     
@@ -166,14 +173,18 @@ class CategoriesViewController: UIViewController, EmptyViewDelegate {
     }
     
     func addEmptyView() {
-        self.emptyView = UIView.loadFromNibNamed("EmptyView", bundle: nil) as? EmptyView
-        self.emptyView!.delegate = self
-        self.emptyView!.frame = self.view.bounds
-        self.view.addSubview(self.emptyView!)
+        if self.emptyView == nil {
+            self.emptyView = UIView.loadFromNibNamed("EmptyView", bundle: nil) as? EmptyView
+            self.emptyView!.delegate = self
+            self.emptyView!.frame = self.view.bounds
+            self.view.addSubview(self.emptyView!)
+        } else {
+            self.emptyView?.hidden = false
+        }
     }
     
     func didTapReload() {
-        self.emptyView?.removeFromSuperview()
+        self.emptyView?.hidden = true
         if firstLoad {
             requestMainCategories()
         }
@@ -205,6 +216,7 @@ class CategoriesViewController: UIViewController, EmptyViewDelegate {
             self.categoryModel = CategoryModel.parseCategories(responseObject)
             
             if self.tableView != nil {
+                self.tableView.hidden = false
                 self.tableView.reloadData()
             }
         

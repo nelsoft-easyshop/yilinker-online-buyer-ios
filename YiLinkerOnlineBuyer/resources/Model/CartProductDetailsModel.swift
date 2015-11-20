@@ -16,6 +16,7 @@ class CartProductDetailsModel {
     var title: String = ""
     var slug: String = ""
     var image: String = ""
+    var selectedUnitImage: String = ""
     var images: [String] = []
     var shortDescription: String = ""
     var fullDescription: String = ""
@@ -31,13 +32,14 @@ class CartProductDetailsModel {
     //DETAILS ???
     //BADGES  ???
     
-    init(selected: Bool, id: String, title: String, slug: String, image: String, images: NSArray, shortDescription: String, fullDescription: String, sellerId: Int, attributes: NSArray, productUnits: NSArray, unitId: String, itemId: Int, quantity: Int) {
+    init(selected: Bool, id: String, title: String, slug: String, image: String, images: NSArray, selectedUnitImage: String, shortDescription: String, fullDescription: String, sellerId: Int, attributes: NSArray, productUnits: NSArray, unitId: String, itemId: Int, quantity: Int) {
         self.selected = selected
         self.id = id
         self.title = title
         self.slug = slug
         self.image = image
         self.images = images as! [String]
+        self.selectedUnitImage = selectedUnitImage
         self.shortDescription = shortDescription
         self.fullDescription = fullDescription
         self.sellerId = sellerId
@@ -58,6 +60,7 @@ class CartProductDetailsModel {
         var slug: String = ""
         var image: String = ""
         var images: [String] = []
+        var selectedUnitImage: String = ""
         var shortDescription: String = ""
         var fullDescription: String = ""
         var sellerId: Int = 0
@@ -148,6 +151,7 @@ class CartProductDetailsModel {
             slug: slug,
             image: image,
             images: images,
+            selectedUnitImage: selectedUnitImage,
             shortDescription: shortDescription,
             fullDescription: fullDescription,
             sellerId: sellerId,

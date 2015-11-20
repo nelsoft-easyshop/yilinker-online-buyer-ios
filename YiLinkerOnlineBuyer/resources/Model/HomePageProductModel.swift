@@ -18,9 +18,18 @@ class HomePageProductModel: ProductModel {
         
         self.name = name
         self.imageURL = imageURL
-        self.originalPrice = originalPrice
-        self.discountedPrice = discountedPrice
+        
+        let decimalOrginalPrice = originalPrice.formatToPeso()
+        
+        let formatedOriginalPrice = decimalOrginalPrice.stringByReplacingOccurrencesOfString(".00", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
+        self.originalPrice = formatedOriginalPrice
+        
+        let decimalDiscountedPrice = discountedPrice.formatToPeso()
+        let formatedDiscountedPrice = decimalDiscountedPrice.stringByReplacingOccurrencesOfString(".00", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
+        
+        self.discountedPrice = formatedDiscountedPrice
         self.discountPercentage = discountPercentage
+        
         self.target = target
         self.targetType = targetType
         self.targetUrl = targetUrl

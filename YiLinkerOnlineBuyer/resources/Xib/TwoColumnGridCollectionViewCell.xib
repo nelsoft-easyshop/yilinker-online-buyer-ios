@@ -14,12 +14,12 @@
                 <rect key="frame" x="0.0" y="0.0" width="202" height="253"/>
                 <subviews>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dummy-placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="cjA-HH-cIs">
-                        <rect key="frame" x="-3" y="0.0" width="209" height="187"/>
+                        <rect key="frame" x="-3" y="0.0" width="209" height="174"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="187" id="bSu-pi-97D"/>
+                            <constraint firstAttribute="height" constant="174" id="bSu-pi-97D"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10 % OFF" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="6" translatesAutoresizingMaskIntoConstraints="NO" id="l3P-Ax-TG6" customClass="DynamicRoundedLabel" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10 % OFF" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="6" translatesAutoresizingMaskIntoConstraints="NO" id="l3P-Ax-TG6">
                         <rect key="frame" x="7" y="10" width="68" height="26"/>
                         <color key="backgroundColor" red="0.78823529410000004" green="0.062745098040000002" blue="0.38431372549999998" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -29,22 +29,17 @@
                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="11"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
-                        <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                <real key="value" value="3"/>
-                            </userDefinedRuntimeAttribute>
-                        </userDefinedRuntimeAttributes>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="iPhone 6 Gold" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="G8N-KU-BLz">
-                        <rect key="frame" x="8" y="199" width="186" height="21"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="iPhone 6 Gold" lineBreakMode="tailTruncation" numberOfLines="10" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="G8N-KU-BLz">
+                        <rect key="frame" x="8" y="176" width="186" height="44"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="21" id="xpf-Ei-2Pk"/>
+                            <constraint firstAttribute="height" constant="44" id="xpf-Ei-2Pk"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="P 22,500" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="7" translatesAutoresizingMaskIntoConstraints="NO" id="Pv5-v6-Srr" customClass="DynamicRoundedLabel" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="P 22,500" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="7" translatesAutoresizingMaskIntoConstraints="NO" id="Pv5-v6-Srr">
                         <rect key="frame" x="8" y="224" width="84" height="24"/>
                         <color key="backgroundColor" red="0.35294117650000001" green="0.1215686275" blue="0.45882352939999999" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -54,11 +49,6 @@
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
-                        <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                <real key="value" value="12"/>
-                            </userDefinedRuntimeAttribute>
-                        </userDefinedRuntimeAttributes>
                     </label>
                     <label autoresizesSubviews="NO" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="P 3,000" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="6" translatesAutoresizingMaskIntoConstraints="NO" id="wEB-Zw-B48" customClass="DiscountLabel" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
                         <rect key="frame" x="114" y="224" width="80" height="21"/>
@@ -91,9 +81,9 @@
             </constraints>
             <size key="customSize" width="202" height="253"/>
             <connections>
-                <outlet property="discountPercentageLabel" destination="l3P-Ax-TG6" id="8Ak-fZ-3RJ"/>
-                <outlet property="discountedPriceLabel" destination="wEB-Zw-B48" id="FVG-7F-vaI"/>
-                <outlet property="originalPriceLabel" destination="Pv5-v6-Srr" id="8N6-O9-kd8"/>
+                <outlet property="discountPercentageLabel" destination="l3P-Ax-TG6" id="97S-xQ-jLs"/>
+                <outlet property="discountedPriceLabel" destination="Pv5-v6-Srr" id="kHw-tG-BZ0"/>
+                <outlet property="originalPriceLabel" destination="wEB-Zw-B48" id="12r-Md-M38"/>
                 <outlet property="productItemImageView" destination="cjA-HH-cIs" id="AZW-s8-W0I"/>
                 <outlet property="productNameLabel" destination="G8N-KU-BLz" id="GTW-Li-h6d"/>
             </connections>

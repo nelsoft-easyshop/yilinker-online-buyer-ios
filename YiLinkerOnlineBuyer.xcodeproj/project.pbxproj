@@ -440,6 +440,8 @@
 		F7DC7EE21BA1421F004F7FD4 /* SellerSubCategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7DC7EE01BA1421F004F7FD4 /* SellerSubCategoryViewController.swift */; };
 		F7DC7EE31BA1421F004F7FD4 /* SellerSubCategoryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7DC7EE11BA1421F004F7FD4 /* SellerSubCategoryViewController.xib */; };
 		F7DC84E11BA00F7300D3878B /* SellerTableHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7DC84E01BA00F7300D3878B /* SellerTableHeaderView.xib */; };
+		F7E294851BFA278900A465A9 /* ActivityLogItemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E294841BFA278800A465A9 /* ActivityLogItemModel.swift */; };
+		F7E294871BFA27AC00A465A9 /* ActivityLogItemsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E294861BFA27AC00A465A9 /* ActivityLogItemsModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -570,7 +572,7 @@
 		0C5925FF1B8327BA0021EA76 /* ResultViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultViewController.swift; sourceTree = "<group>"; };
 		0C5926031B836C670021EA76 /* ProfileModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileModel.swift; sourceTree = "<group>"; };
 		0C5926051B836EA30021EA76 /* AddressModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressModel.swift; sourceTree = "<group>"; };
-		0C6490751B7781E400F88F92 /* Category.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
+		0C6490751B7781E400F88F92 /* Category.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Category.swift; path = ../View/Category.swift; sourceTree = "<group>"; };
 		0C677BCF1BA03EFA007D8E03 /* GuestCheckoutTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuestCheckoutTableViewCell.swift; sourceTree = "<group>"; };
 		0C677BD01BA03EFA007D8E03 /* GuestCheckoutTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = GuestCheckoutTableViewCell.xib; path = ../View/GuestCheckoutTableViewCell.xib; sourceTree = "<group>"; };
 		0C6D45DB1BF4692900D330DB /* WebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
@@ -898,6 +900,8 @@
 		F7DC7EE01BA1421F004F7FD4 /* SellerSubCategoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SellerSubCategoryViewController.swift; path = YiLinkerOnlineBuyer/resources/ViewController/SellerSubCategoryViewController.swift; sourceTree = SOURCE_ROOT; };
 		F7DC7EE11BA1421F004F7FD4 /* SellerSubCategoryViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SellerSubCategoryViewController.xib; path = YiLinkerOnlineBuyer/resources/ViewController/SellerSubCategoryViewController.xib; sourceTree = SOURCE_ROOT; };
 		F7DC84E01BA00F7300D3878B /* SellerTableHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SellerTableHeaderView.xib; sourceTree = "<group>"; };
+		F7E294841BFA278800A465A9 /* ActivityLogItemModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ActivityLogItemModel.swift; path = YiLinkerOnlineBuyer/resources/Model/ActivityLogItemModel.swift; sourceTree = SOURCE_ROOT; };
+		F7E294861BFA27AC00A465A9 /* ActivityLogItemsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ActivityLogItemsModel.swift; path = YiLinkerOnlineBuyer/resources/Model/ActivityLogItemsModel.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1142,6 +1146,7 @@
 		0C9936FD1B750583000D6074 /* Helper */ = {
 			isa = PBXGroup;
 			children = (
+				0C6490751B7781E400F88F92 /* Category.swift */,
 				961BE5AB1B9958BC00E8631A /* CheckBox.swift */,
 				B77B8DDB1B9B588A0002C513 /* DateUtility.swift */,
 				961BE5A71B994C1000E8631A /* ButtonToTabBehaviorizer.swift */,
@@ -1223,6 +1228,8 @@
 				F7C637C11BD9EC3D00C29C47 /* DeliveryLogsItemModel.swift */,
 				F7C637C31BD9EC5A00C29C47 /* DeliveryLogsModel.swift */,
 				F7C637C51BD9EC8200C29C47 /* DeliveryLogsSectionModel.swift */,
+				F7E294841BFA278800A465A9 /* ActivityLogItemModel.swift */,
+				F7E294861BFA27AC00A465A9 /* ActivityLogItemsModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1263,7 +1270,6 @@
 				79E68B741B8AC390008626E4 /* ActivityLogTableViewCell.swift */,
 				79AA08321B8F4DCF00AF3AA4 /* CartProductAttributeTableViewCell.swift */,
 				797D490E1B7A509300617F6B /* CartTableViewCell.swift */,
-				0C6490751B7781E400F88F92 /* Category.swift */,
 				0C2F45271B85E95D00021F45 /* ChangeAddressCollectionViewCell.swift */,
 				0C5007671B861B1600BC0445 /* ChangeAddressFooterCollectionViewCell.swift */,
 				0C2F44DB1B8583EF00021F45 /* CheckoutViews.swift */,
@@ -1980,6 +1986,7 @@
 				266BE1EA1BC3B0B300BB6642 /* DisputeReasonsModel.swift in Sources */,
 				0C2F45251B85E7CA00021F45 /* ChangeAddressViewController.swift in Sources */,
 				F7DC7EDA1BA13FAC004F7FD4 /* SellerCategoryTableViewCell.swift in Sources */,
+				F7E294851BFA278900A465A9 /* ActivityLogItemModel.swift in Sources */,
 				26AFB3931B79DD9100E50926 /* XibHelper.swift in Sources */,
 				0C374F4F1B89A4B70050AE1D /* CustomizeShoppingCollectionViewLayout.swift in Sources */,
 				0C2F44A51B848B3A00021F45 /* SummaryViewController.swift in Sources */,
@@ -2167,6 +2174,7 @@
 				0C1003F81B87690300CAA17A /* AddAddressTableViewController.swift in Sources */,
 				B77B8DD31B9B554A0002C513 /* ConversationTVC.swift in Sources */,
 				961BE5A41B994BB600E8631A /* ResolutionFilterViewController.swift in Sources */,
+				F7E294871BFA27AC00A465A9 /* ActivityLogItemsModel.swift in Sources */,
 				F7CCDAA31B943CF7000F5AD4 /* SellerTableHeaderView.swift in Sources */,
 				0C99375B1B750583000D6074 /* CartViewController.swift in Sources */,
 				79F2F55B1B85FD9D00F57E4B /* FilterViewController.swift in Sources */,

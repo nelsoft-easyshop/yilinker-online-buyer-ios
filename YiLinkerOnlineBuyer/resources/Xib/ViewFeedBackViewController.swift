@@ -26,6 +26,7 @@ class ViewFeedBackViewController: UIViewController, UITableViewDelegate, UITable
     @IBOutlet weak var sellerRatingLabel: UILabel!
     @IBOutlet weak var ratingView: UIView!
     @IBOutlet weak var numberOfPeopleLabel: UILabel!
+    @IBOutlet weak var loadingLabel: UILabel!
     @IBOutlet weak var ratingAndReviewsTableView: UITableView!
     
     let reviewTableViewCellIdentifier: String = "reviewIdentifier"
@@ -58,7 +59,8 @@ class ViewFeedBackViewController: UIViewController, UITableViewDelegate, UITable
         self.cancelButton.setTitle(cancelTitle, forState: UIControlState.Normal)
         self.sellerRatingLabel.text = sellerRating
         self.ratingLabel.text = ratingTitle
-        
+        self.ratingAndReviewsTableView.hidden = true
+        self.loadingLabel.hidden = false
         self.fireSellerFeedback()
         // Do any additional setup after loading the view.
     }
@@ -115,8 +117,9 @@ class ViewFeedBackViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     func fireSellerFeedback() {
-        self.cancelButton.enabled = false
-        self.showHUD()
+        //self.cancelButton.enabled = false
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+        //self.showHUD()
         let manager = APIManager.sharedInstance
         println("seller id view feedback \(sellerId)")
         let parameters: NSDictionary = ["sellerId" : self.sellerId];
@@ -130,16 +133,25 @@ class ViewFeedBackViewController: UIViewController, UITableViewDelegate, UITable
                 self.generalRatingLabel.text = "\(self.sellerModel!.rating)"
                 self.numberOfPeopleLabel.text = "\(self.sellerModel!.reviews.count)"
                 self.ratingAndReviewsTableView.reloadData()
-                self.hud?.hide(true)
+                //self.hud?.hide(true)
                 if self.sellerModel!.reviews.count == 0 {
                     self.showAlert(title: ProductStrings.alertNoReviews, message: nil)
+                    self.ratingAndReviewsTableView.hidden = true
+                    self.loadingLabel.hidden = false
+                    self.loadingLabel.text = "No reviews available."
+                } else {
+                    self.ratingAndReviewsTableView.hidden = false
                 }
             } else {
                 self.showAlert(title: "Error", message: responseObject["message"] as! String)
-                self.hud?.hide(true)
+                //self.hud?.hide(true)
+                self.ratingAndReviewsTableView.hidden = true
+                self.loadingLabel.hidden = false
+                self.loadingLabel.text = "No reviews available."
             }
+            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
             self.ratingAndReviewsTableView.reloadData()
-            self.cancelButton.enabled = true
+            //self.cancelButton.enabled = true
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 if error.userInfo != nil {
@@ -147,18 +159,22 @@ class ViewFeedBackViewController: UIViewController, UITableViewDelegate, UITable
                     if let jsonResult = error.userInfo as? Dictionary<String, AnyObject> {
                         if jsonResult["message"] != nil {
                             self.showAlert(title: jsonResult["message"] as! String, message: nil)
-                            self.hud?.hide(true)
+                            //self.hud?.hide(true)
                             
                         } else {
                             self.showAlert(title: Constants.Localized.someThingWentWrong, message: nil)
-                            self.hud?.hide(true)
+                            //self.hud?.hide(true)
                         }
                     }
                 } else  {
                     self.showAlert(title: Constants.Localized.error, message: Constants.Localized.someThingWentWrong)
-                    self.hud?.hide(true)
+                    //self.hud?.hide(true)
                 }
-                self.cancelButton.enabled = true
+                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                self.ratingAndReviewsTableView.hidden = true
+                self.loadingLabel.hidden = true
+                //self.loadingLabel.text = "Ooops! So"
+                //self.cancelButton.enabled = true
         })
         
     }
