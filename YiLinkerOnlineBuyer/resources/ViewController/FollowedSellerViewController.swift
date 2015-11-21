@@ -30,7 +30,7 @@ class FollowedSellerViewController: UIViewController, EmptyViewDelegate {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        
+
         if followedSellerModel != nil {
             if followedSellerModel.id.count == 0 {
                 self.showHUD()
