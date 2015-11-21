@@ -218,7 +218,7 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
         if indexPath.section == 0 {
             return 71
         } else {
-            return 730
+            return 480
         }
     }
     
@@ -301,10 +301,13 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
                 if textfieldTag == 13 {
                     contentInset.top = contentInset.top - (60 * CGFloat(textfieldTag))
                 } else {
-                    contentInset.top = contentInset.top - (60 * CGFloat(textfieldTag + 1))
+                    if self.currentTextFieldTag == 0 {
+                        contentInset.top = contentInset.top - (60 * CGFloat(textfieldTag + 1))
+                    } else {
+                        contentInset.top = contentInset.top - (60 * CGFloat(textfieldTag))
+                    }
+                    
                 }
-                
-                
             } else if IphoneType.isIphone5() {
                 if textfieldTag == 3 {
                     contentInset.top = contentInset.top - (50 * CGFloat(textfieldTag - 1)) - 120
@@ -509,19 +512,16 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     func fireGuestUser() {
         let manager = APIManager.sharedInstance
+        
         let params = ["user_guest[firstName]": self.guestCheckoutTableViewCell.firstNameTextField.text,
-        "user_guest[lastName]": self.guestCheckoutTableViewCell.lastNameTextField.text,
-        "user_guest[email]": self.guestCheckoutTableViewCell.emailTextField.text,
-        "user_guest[contactNumber]": self.guestCheckoutTableViewCell.mobileNumberTextField.text,
-        "user_address[title]": "Default Address",
-        "user_address[unitNumber]": self.guestCheckoutTableViewCell.unitNumberTextField.text,
-        "user_address[buildingName]": self.guestCheckoutTableViewCell.buildingNumberTextField.text,
-        "user_address[streetNumber]": self.guestCheckoutTableViewCell.streetNumberTextField.text,
-        "user_address[streetName]": self.guestCheckoutTableViewCell.streetNameTextField.text,
-        "user_address[subdivision]": self.guestCheckoutTableViewCell.subdivisionTextField.text,
-        "user_address[zipCode]": self.guestCheckoutTableViewCell.zipCodeTextField.text,
-        "user_address[location]": "\(self.addressModel.barangayId)",
-        "user_address[isDefault]": true]
+            "user_guest[lastName]": self.guestCheckoutTableViewCell.lastNameTextField.text,
+            "user_guest[email]": self.guestCheckoutTableViewCell.emailTextField.text,
+            "user_guest[contactNumber]": self.guestCheckoutTableViewCell.mobileNumberTextField.text,
+            "user_address[title]": "Guest Address",
+            "user_address[streetName]": self.guestCheckoutTableViewCell.streetNameTextField.text,
+            "user_address[zipCode]": self.guestCheckoutTableViewCell.zipCodeTextField.text,
+            "user_address[location]": "\(self.addressModel.barangayId)",
+            "user_address[isDefault]": true]
         
         self.showHUD()
         SessionManager.loadCookies()
@@ -534,7 +534,7 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
             let isSuccessful: Bool = dictionary["isSuccessful"] as! Bool
             
             if isSuccessful {
-                let address: String = "\(self.guestCheckoutTableViewCell.unitNumberTextField.text) \(self.guestCheckoutTableViewCell.buildingNumberTextField.text) \(self.guestCheckoutTableViewCell.streetNumberTextField.text), \(self.guestCheckoutTableViewCell.streetNameTextField.text) \(self.guestCheckoutTableViewCell.subdivisionTextField.text) \(self.addressModel.barangay) \(self.addressModel.city) \(self.addressModel.province)"
+                let address: String = "\(self.guestCheckoutTableViewCell.streetNameTextField.text) \(self.addressModel.barangay) \(self.addressModel.city) \(self.addressModel.province)"
                 let fullName: String = "\(self.guestCheckoutTableViewCell.firstNameTextField.text) \(self.guestCheckoutTableViewCell.lastNameTextField.text)"
                 SessionManager.setUserFullName(fullName)
                 SessionManager.setFullAddress(address)
