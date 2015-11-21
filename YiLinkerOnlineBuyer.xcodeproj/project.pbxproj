@@ -192,8 +192,11 @@
 		0CDA117E1B764B79007B5DED /* DynamicRoundedTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CDA117D1B764B79007B5DED /* DynamicRoundedTextField.swift */; };
 		0CE35EB81B76711400AAA8F1 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CE35EB71B76711400AAA8F1 /* RegisterViewController.swift */; };
 		0CFF5EA71B98590200F13699 /* ErrorModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CFF5EA61B98590200F13699 /* ErrorModel.swift */; };
+		262626B71C00D28E0068E876 /* UserMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 262626B61C00D28E0068E876 /* UserMapView.swift */; };
 		2632F5211B7F8690006931E4 /* FollowedSellerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2632F51F1B7F8690006931E4 /* FollowedSellerTableViewCell.swift */; };
 		2632F5241B7F8EFF006931E4 /* FollwedSellerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2632F5231B7F8EFF006931E4 /* FollwedSellerModel.swift */; };
+		2666F52C1C003CF600BABA82 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2666F52A1C003CF600BABA82 /* MapViewController.swift */; };
+		2666F52D1C003CF600BABA82 /* MapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2666F52B1C003CF600BABA82 /* MapViewController.xib */; };
 		266A5C601BB0029200343DB4 /* DisputeAddItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 266A5C5E1BB0029200343DB4 /* DisputeAddItemViewController.swift */; };
 		266A5C611BB0029200343DB4 /* DisputeAddItemViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 266A5C5F1BB0029200343DB4 /* DisputeAddItemViewController.xib */; };
 		266A5C641BB003B400343DB4 /* DisputeAddItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 266A5C621BB003B400343DB4 /* DisputeAddItemTableViewCell.swift */; };
@@ -649,8 +652,11 @@
 		0CDA117D1B764B79007B5DED /* DynamicRoundedTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DynamicRoundedTextField.swift; sourceTree = "<group>"; };
 		0CE35EB71B76711400AAA8F1 /* RegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		0CFF5EA61B98590200F13699 /* ErrorModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorModel.swift; sourceTree = "<group>"; };
+		262626B61C00D28E0068E876 /* UserMapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserMapView.swift; path = YiLinkerOnlineBuyer/resources/ViewController/UserMapView.swift; sourceTree = SOURCE_ROOT; };
 		2632F51F1B7F8690006931E4 /* FollowedSellerTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FollowedSellerTableViewCell.swift; path = YiLinkerOnlineBuyer/resources/ViewController/FollowedSellerTableViewCell.swift; sourceTree = SOURCE_ROOT; };
 		2632F5231B7F8EFF006931E4 /* FollwedSellerModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FollwedSellerModel.swift; path = YiLinkerOnlineBuyer/resources/Model/FollwedSellerModel.swift; sourceTree = SOURCE_ROOT; };
+		2666F52A1C003CF600BABA82 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MapViewController.swift; path = YiLinkerOnlineBuyer/resources/ViewController/MapViewController.swift; sourceTree = SOURCE_ROOT; };
+		2666F52B1C003CF600BABA82 /* MapViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MapViewController.xib; path = YiLinkerOnlineBuyer/resources/ViewController/MapViewController.xib; sourceTree = SOURCE_ROOT; };
 		266A5C5E1BB0029200343DB4 /* DisputeAddItemViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisputeAddItemViewController.swift; sourceTree = "<group>"; };
 		266A5C5F1BB0029200343DB4 /* DisputeAddItemViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DisputeAddItemViewController.xib; path = ../ViewController/DisputeAddItemViewController.xib; sourceTree = "<group>"; };
 		266A5C621BB003B400343DB4 /* DisputeAddItemTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisputeAddItemTableViewCell.swift; sourceTree = "<group>"; };
@@ -1414,6 +1420,9 @@
 				F70EFB211BC6BF190077B8ED /* TransactionLeaveFeedbackRateTableViewCell.swift */,
 				F7D37C9F1B92B09100FA7B16 /* ViewFeedBackViewController.swift */,
 				790B4BFC1BD8832C00E46AE7 /* VerifyMobileNumberInputViewController.swift */,
+				2666F52A1C003CF600BABA82 /* MapViewController.swift */,
+				2666F52B1C003CF600BABA82 /* MapViewController.xib */,
+				262626B61C00D28E0068E876 /* UserMapView.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -1639,7 +1648,7 @@
 				0C8A7C6B1B6772670039F013 /* Frameworks */,
 				0C8A7C6C1B6772670039F013 /* Resources */,
 				15458B67C73D196045380AA0 /* Copy Pods Resources */,
-				70E66A2311EB0621B0B867E9 /* Embed Pods Frameworks */,
+				D136ECEEA1E2E7C39FEBA21E /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1721,6 +1730,7 @@
 				0C9937431B750583000D6074 /* HomeStoryBoard.storyboard in Resources */,
 				F7CCDA901B943CBB000F5AD4 /* MessagingViewController.xib in Resources */,
 				F7C56A011BB1790A004740E1 /* TransactionLeaveFeedbackViewController.xib in Resources */,
+				2666F52D1C003CF600BABA82 /* MapViewController.xib in Resources */,
 				0C374F301B88E3790050AE1D /* OverViewViewController.xib in Resources */,
 				F7C637CA1BD9F6FC00C29C47 /* TransactionDeliveryLogSignatureTableViewCell.xib in Resources */,
 				79E68B731B8AB900008626E4 /* ActivityLogTableViewCell.xib in Resources */,
@@ -2041,6 +2051,7 @@
 				B77B8DD61B9B554A0002C513 /* ImageVC.swift in Sources */,
 				F7CCDAA01B943CF7000F5AD4 /* ProductResultGridCollectionViewCell.swift in Sources */,
 				0C9937481B750583000D6074 /* FullImageCollectionViewCell.swift in Sources */,
+				2666F52C1C003CF600BABA82 /* MapViewController.swift in Sources */,
 				B77B8DD41B9B554A0002C513 /* ConversationVC.swift in Sources */,
 				F7DC7EDE1BA141AF004F7FD4 /* SellerSubCategoryTableViewCell.swift in Sources */,
 				964B8E921BAB1A3F002E7B4A /* NewDisputeTableViewController.swift in Sources */,
@@ -2125,6 +2136,7 @@
 				79AA08331B8F4DCF00AF3AA4 /* CartProductAttributeTableViewCell.swift in Sources */,
 				961BE5AC1B9958BC00E8631A /* CheckBox.swift in Sources */,
 				0C374F5D1B8A2DBF0050AE1D /* CustomizeShoppingFlowLayout.swift in Sources */,
+				262626B71C00D28E0068E876 /* UserMapView.swift in Sources */,
 				B77B8DD21B9B554A0002C513 /* ContactListVC.swift in Sources */,
 				0C329E881B7B73A4005BE2B6 /* TodaysPromoViewController.swift in Sources */,
 				0C1C3A851B9406BD00E6180D /* JSONResponseSerializer.swift in Sources */,

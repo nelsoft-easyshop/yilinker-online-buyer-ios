@@ -395,7 +395,7 @@ class CircularMenuViewController: UIViewController {
     
         self.customTabBarController?.isValidToSwitchToMenuTabBarItems = true
         if SessionManager.isLoggedIn() {
-            
+
         } else {
             if index == 0 {
                 
