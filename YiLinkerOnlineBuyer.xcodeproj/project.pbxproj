@@ -194,6 +194,8 @@
 		0CFF5EA71B98590200F13699 /* ErrorModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CFF5EA61B98590200F13699 /* ErrorModel.swift */; };
 		2632F5211B7F8690006931E4 /* FollowedSellerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2632F51F1B7F8690006931E4 /* FollowedSellerTableViewCell.swift */; };
 		2632F5241B7F8EFF006931E4 /* FollwedSellerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2632F5231B7F8EFF006931E4 /* FollwedSellerModel.swift */; };
+		2666F5281C0022CD00BABA82 /* ProductFullScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2666F5261C0022CD00BABA82 /* ProductFullScreenViewController.swift */; };
+		2666F5291C0022CD00BABA82 /* ProductFullScreenViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2666F5271C0022CD00BABA82 /* ProductFullScreenViewController.xib */; };
 		266A5C601BB0029200343DB4 /* DisputeAddItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 266A5C5E1BB0029200343DB4 /* DisputeAddItemViewController.swift */; };
 		266A5C611BB0029200343DB4 /* DisputeAddItemViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 266A5C5F1BB0029200343DB4 /* DisputeAddItemViewController.xib */; };
 		266A5C641BB003B400343DB4 /* DisputeAddItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 266A5C621BB003B400343DB4 /* DisputeAddItemTableViewCell.swift */; };
@@ -651,6 +653,8 @@
 		0CFF5EA61B98590200F13699 /* ErrorModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorModel.swift; sourceTree = "<group>"; };
 		2632F51F1B7F8690006931E4 /* FollowedSellerTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FollowedSellerTableViewCell.swift; path = YiLinkerOnlineBuyer/resources/ViewController/FollowedSellerTableViewCell.swift; sourceTree = SOURCE_ROOT; };
 		2632F5231B7F8EFF006931E4 /* FollwedSellerModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FollwedSellerModel.swift; path = YiLinkerOnlineBuyer/resources/Model/FollwedSellerModel.swift; sourceTree = SOURCE_ROOT; };
+		2666F5261C0022CD00BABA82 /* ProductFullScreenViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProductFullScreenViewController.swift; path = YiLinkerOnlineBuyer/resources/ViewController/ProductFullScreenViewController.swift; sourceTree = SOURCE_ROOT; };
+		2666F5271C0022CD00BABA82 /* ProductFullScreenViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProductFullScreenViewController.xib; path = YiLinkerOnlineBuyer/resources/ViewController/ProductFullScreenViewController.xib; sourceTree = SOURCE_ROOT; };
 		266A5C5E1BB0029200343DB4 /* DisputeAddItemViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisputeAddItemViewController.swift; sourceTree = "<group>"; };
 		266A5C5F1BB0029200343DB4 /* DisputeAddItemViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DisputeAddItemViewController.xib; path = ../ViewController/DisputeAddItemViewController.xib; sourceTree = "<group>"; };
 		266A5C621BB003B400343DB4 /* DisputeAddItemTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisputeAddItemTableViewCell.swift; sourceTree = "<group>"; };
@@ -1414,6 +1418,8 @@
 				F70EFB211BC6BF190077B8ED /* TransactionLeaveFeedbackRateTableViewCell.swift */,
 				F7D37C9F1B92B09100FA7B16 /* ViewFeedBackViewController.swift */,
 				790B4BFC1BD8832C00E46AE7 /* VerifyMobileNumberInputViewController.swift */,
+				2666F5261C0022CD00BABA82 /* ProductFullScreenViewController.swift */,
+				2666F5271C0022CD00BABA82 /* ProductFullScreenViewController.xib */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -1639,6 +1645,7 @@
 				0C8A7C6B1B6772670039F013 /* Frameworks */,
 				0C8A7C6C1B6772670039F013 /* Resources */,
 				15458B67C73D196045380AA0 /* Copy Pods Resources */,
+				6E0A684296392B140AA040EB /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1876,6 +1883,7 @@
 				F70EFB201BC6BEB80077B8ED /* TransactionLeaveFeedbackFieldTableViewCell.xib in Resources */,
 				0C9937661B750583000D6074 /* NewSellerScrollableCollectionViewCell.xib in Resources */,
 				B7B1D8321BA15B0C006A5DF5 /* old_GoogleService-Info.plist in Resources */,
+				2666F5291C0022CD00BABA82 /* ProductFullScreenViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1917,6 +1925,21 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		6E0A684296392B140AA040EB /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -1991,6 +2014,7 @@
 				0C374F4F1B89A4B70050AE1D /* CustomizeShoppingCollectionViewLayout.swift in Sources */,
 				0C2F44A51B848B3A00021F45 /* SummaryViewController.swift in Sources */,
 				26AFB3AE1B79DE2900E50926 /* ProductAttributeTableViewCell.swift in Sources */,
+				2666F5281C0022CD00BABA82 /* ProductFullScreenViewController.swift in Sources */,
 				2689FBFF1B844A69007BEA68 /* CheckoutContainerViewController.swift in Sources */,
 				790B4BFE1BD8832C00E46AE7 /* VerifyMobileNumberInputViewController.swift in Sources */,
 				F7C569B61BB1762C004740E1 /* TransactionDeliveryStatusView.swift in Sources */,
