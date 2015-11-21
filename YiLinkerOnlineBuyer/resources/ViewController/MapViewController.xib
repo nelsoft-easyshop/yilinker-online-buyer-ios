@@ -4,9 +4,9 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MapViewController" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="UserMapView" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
             <connections>
-                <outlet property="mapView" destination="jde-po-Akj" id="DzW-j0-n5D"/>
+                <outlet property="mapView" destination="jde-po-Akj" id="0sW-e6-rXR"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
