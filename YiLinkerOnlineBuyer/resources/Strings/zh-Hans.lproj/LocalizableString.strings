@@ -403,6 +403,10 @@ TIME_LEFT_LOCALIZED_KEY = "剩余时间:";
 VERIFY_NUMBER_LOCALIZED_KEY = "验证";
 REQUEST_NEW_CODE_LOCALIZED_KEY = "重新发送验证码";
 SEND_CODE_LOCALIZED_KEY = "发送代码";
+VALID_ID_LOCALIZED_KEY = "有效的身份证明"; //No Chinese String
+VALID_ID_PLACEHOLDER_LOCALIZED_KEY = "驾照护照"; //No Chinese String
+VIEW_IMAGE_LOCALIZED_KEY = "查看图像"; //No Chinese String
+ADD_LOCALIZED_KEY = "添加"; //No Chinese String
 
 //Account Information
 ACCOUNTINFO_LOCALIZE_KEY = "账户信息";
