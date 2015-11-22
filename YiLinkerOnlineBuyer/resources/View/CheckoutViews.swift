@@ -28,7 +28,7 @@ class CheckoutViews: UIView {
                 label.text = CheckoutStrings.free
             } else if view.tag == 50 {
                 let label: UILabel = view as! UILabel
-                label.text = CheckoutStrings.shipTo
+                label.text = ""//CheckoutStrings.shipTo
             }
         }
     }
