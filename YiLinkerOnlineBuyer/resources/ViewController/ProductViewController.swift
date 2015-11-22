@@ -47,7 +47,7 @@ protocol ProductViewControllerDelegate {
     func pressedDimViewFromProductPage(controller: ProductViewController)
 }
 
-class ProductViewController: UIViewController, ProductImagesViewDelegate, ProductDescriptionViewDelegate, ProductReviewFooterViewDelegate, ProductSellerViewDelegate, ProductReviewViewControllerDelegate, ProductAttributeViewControllerDelegate, EmptyViewDelegate {
+class ProductViewController: UIViewController, ProductImagesViewDelegate, ProductDescriptionViewDelegate, ProductReviewFooterViewDelegate, ProductSellerViewDelegate, ProductReviewViewControllerDelegate, ProductAttributeViewControllerDelegate, EmptyViewDelegate, ProductDetailsExtendedViewControllerDelegate {
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var dimView: UIView!
@@ -67,6 +67,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     var productReviewHeaderView: ProductReviewHeaderView!
     var productReviewFooterView: ProductReviewFooterView!
     var productSellerView: ProductSellerView!
+    var productDetailsBottomView: ProductDetailsBottomView!
     
     let manager = APIManager.sharedInstance
     var productDetailsModel: ProductDetailsModel!
@@ -375,6 +376,15 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
             self.productSellerView.sellerLabel.text = ProductStrings.seller
         }
         return self.productSellerView
+    }
+    
+    func getProductDetailsBottomView() -> ProductDetailsBottomView {
+        if self.productDetailsBottomView == nil {
+            self.productDetailsBottomView = XibHelper.puffViewWithNibName("ProductViewsViewController", index: 5) as! ProductDetailsBottomView
+            self.productDetailsBottomView.frame.size.width = self.view.frame.size.width
+//            self.productDetailsBottomView.sellerLabel.text = ProductStrings.seller
+        }
+        return self.productDetailsBottomView
     }
     
     // MARK: - Requests
@@ -720,16 +730,17 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     func setUpViews() {
         self.setPosition(self.productDetailsView, from: self.productImagesView)
         self.setPosition(self.productAttributeView, from: self.productDetailsView)
-        self.setPosition(self.productDescriptionView, from: self.productAttributeView)
-        self.setPosition(self.productReviewHeaderView, from: self.productDescriptionView)
+        self.setPosition(self.productReviewHeaderView, from: self.productAttributeView)
         self.setPosition(self.productSellerView, from: self.productReviewFooterView)
+        self.setPosition(self.productDescriptionView, from: self.productSellerView)
+        self.setPosition(self.productDetailsBottomView, from: self.productDescriptionView)
         
         newFrame = self.headerView.frame
         newFrame.size.height = CGRectGetMaxY(self.productReviewHeaderView.frame)
         self.headerView.frame = newFrame
         
         newFrame = self.footerView.frame
-        newFrame.size.height = CGRectGetMaxY(self.productSellerView.frame)
+        newFrame.size.height = CGRectGetMaxY(self.productDetailsBottomView.frame)
         self.footerView.frame = newFrame
         
         self.tableView.tableFooterView = nil
@@ -760,11 +771,12 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         self.getHeaderView().addSubview(self.getProductImagesView())
         self.getHeaderView().addSubview(self.getProductDetailsView())
         self.getHeaderView().addSubview(self.getProductAttributeView())
-        self.getHeaderView().addSubview(self.getProductDescriptionView())
         self.getHeaderView().addSubview(self.getProductReviewHeaderView())
         
         self.getFooterView().addSubview(self.getProductReviewFooterView())
         self.getFooterView().addSubview(self.getProductSellerView())
+        self.getFooterView().addSubview(self.getProductDescriptionView())
+        self.getFooterView().addSubview(self.getProductDetailsBottomView())
         
         self.productImagesView.setDetails(self.productDetailsModel, unitId: unitIdIndex, width: self.view.frame.size.width)
         //        self.setDetails(productDetailsModel.details)
@@ -1045,7 +1057,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
 //        self.tabBarController?.presentViewController(root, animated: true, completion: nil)
         
         var extendedProductDetails = ProductDetailsExtendedViewController(nibName: "ProductDetailsExtendedViewController", bundle: nil)
-//        extendedProductDetails.delegate = self
+        extendedProductDetails.delegate = self
         extendedProductDetails.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
         extendedProductDetails.providesPresentationContextTransitionStyle = true
         extendedProductDetails.definesPresentationContext = true
@@ -1110,6 +1122,17 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     
     func seeMoreReview(controller: ProductReviewFooterView) {
         self.barRateAction()
+    }
+    
+    // MARK: - Product Details Extended Delegate
+    
+    func closedExtendedDetails(controller: ProductDetailsExtendedViewController) {
+        UIView.animateWithDuration(0.3, animations: {
+            self.view.transform = CGAffineTransformMakeTranslation(1, 1)
+            self.dimView.alpha = 0
+            self.dimView.layer.zPosition = -1
+            self.navigationController?.navigationBar.alpha = CGFloat(self.visibility)
+        })
     }
     
     // MARK: - Product Seller Delegate

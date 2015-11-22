@@ -512,6 +512,27 @@
             </connections>
             <point key="canvasLocation" x="364.5" y="1364.5"/>
         </view>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="PFD-Af-ybP" customClass="ProductDetailsBottomView" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="41"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You already reach the bottom." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vzj-kt-fCk">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="41"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" red="0.50122048590000001" green="0.0" blue="0.7202493687" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="vzj-kt-fCk" firstAttribute="leading" secondItem="PFD-Af-ybP" secondAttribute="leading" id="GED-5o-PvG"/>
+                <constraint firstAttribute="bottom" secondItem="vzj-kt-fCk" secondAttribute="bottom" id="XbS-ze-z6V"/>
+                <constraint firstItem="vzj-kt-fCk" firstAttribute="top" secondItem="PFD-Af-ybP" secondAttribute="top" id="he5-VA-lAn"/>
+                <constraint firstAttribute="trailing" secondItem="vzj-kt-fCk" secondAttribute="trailing" id="pWT-eG-LwP"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="364.5" y="1578.5"/>
+        </view>
     </objects>
     <resources>
         <image name="close" width="22" height="22"/>
