@@ -42,6 +42,7 @@ class ProductDetailsExtendedViewController: UIViewController, UIScrollViewDelega
             self.view.transform = CGAffineTransformMakeTranslation(0.0, self.view.frame.size.height)
             }, completion: { (value: Bool) in
                 self.dismissViewControllerAnimated(false, completion: nil)
+                self.delegate?.closedExtendedDetails(self)
         })
     }
     

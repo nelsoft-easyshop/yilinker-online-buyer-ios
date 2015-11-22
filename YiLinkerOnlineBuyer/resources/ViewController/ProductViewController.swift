@@ -238,6 +238,16 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
             visibility = 0.0
         } else if scrollView.contentOffset.y + scrollView.frame.size.height == scrollView.contentSize.height {
             visibility = 1.0
+            
+//            var scrollViewHeight: CGFloat = scrollView.frame.size.height
+//            var scrollContentSizeHeight: CGFloat = scrollView.contentSize.height
+//            var scrollOffset: CGFloat = scrollView.contentOffset.y
+//            
+//            if (scrollOffset + scrollViewHeight <= scrollContentSizeHeight) {
+//                if scrollOffset >= 160 {
+//                    openExtendedProductDetails()
+//                }
+//            }
         }
         
         self.navigationController?.navigationBar.alpha = CGFloat(visibility)
@@ -724,7 +734,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         negativeSpacer.width = -10
         
         self.navigationItem.setLeftBarButtonItem(close, animated: false)
-        self.navigationItem.setRightBarButtonItems([share, negativeSpacer, message, negativeSpacer, rate, negativeSpacer, wishlist], animated: true)
+        self.navigationItem.setRightBarButtonItems([share, negativeSpacer, message, /*negativeSpacer, rate,*/ negativeSpacer, wishlist], animated: true)
     }
     
     func setUpViews() {
@@ -1054,25 +1064,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         description.url = self.productDetailsModel.fullDescription
         description.title = self.productDetailsModel.title
         let root: UINavigationController = UINavigationController(rootViewController: description)
-//        self.tabBarController?.presentViewController(root, animated: true, completion: nil)
-        
-        var extendedProductDetails = ProductDetailsExtendedViewController(nibName: "ProductDetailsExtendedViewController", bundle: nil)
-        extendedProductDetails.delegate = self
-        extendedProductDetails.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
-        extendedProductDetails.providesPresentationContextTransitionStyle = true
-        extendedProductDetails.definesPresentationContext = true
-        extendedProductDetails.view.backgroundColor = UIColor.clearColor()
-        extendedProductDetails.url = self.productDetailsModel.fullDescription
-//        attributeModal.view.frame.origin.y = attributeModal.view.frame.size.height
-//        extendedProductDetails.passModel(productDetailsModel: productDetailsModel, selectedValue: selectedValue, selectedId: selectedId, unitIdIndex: unitIdIndex, quantity: self.quantity, price: self.productImagesView.priceLabel.text!, imageIndex: self.productImagesView.pageControl.currentPage)
-        self.tabBarController?.presentViewController(extendedProductDetails, animated: true, completion: nil)
-        
-        UIView.animateWithDuration(0.3, animations: {
-            self.dimView.alpha = 0.5
-            self.dimView.layer.zPosition = 2
-            self.view.transform = CGAffineTransformMakeScale(0.92, 0.95)
-            self.navigationController?.navigationBar.alpha = 0.0
-        })
+        self.tabBarController?.presentViewController(root, animated: true, completion: nil)
     }
     
     // MARK: - Product Attribute Delegate
@@ -1201,6 +1193,26 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     
     func closeAction(gesture: UIGestureRecognizer) {
         self.barCloseAction()
+    }
+    
+    func openExtendedProductDetails() {
+        var extendedProductDetails = ProductDetailsExtendedViewController(nibName: "ProductDetailsExtendedViewController", bundle: nil)
+        extendedProductDetails.delegate = self
+        extendedProductDetails.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
+        extendedProductDetails.providesPresentationContextTransitionStyle = true
+        extendedProductDetails.definesPresentationContext = true
+        extendedProductDetails.view.backgroundColor = UIColor.clearColor()
+        extendedProductDetails.url = self.productDetailsModel.fullDescription
+        //        attributeModal.view.frame.origin.y = attributeModal.view.frame.size.height
+        //        extendedProductDetails.passModel(productDetailsModel: productDetailsModel, selectedValue: selectedValue, selectedId: selectedId, unitIdIndex: unitIdIndex, quantity: self.quantity, price: self.productImagesView.priceLabel.text!, imageIndex: self.productImagesView.pageControl.currentPage)
+        self.tabBarController?.presentViewController(extendedProductDetails, animated: true, completion: nil)
+        
+        UIView.animateWithDuration(0.3, animations: {
+            self.dimView.alpha = 0.5
+            self.dimView.layer.zPosition = 2
+            self.view.transform = CGAffineTransformMakeScale(0.92, 0.95)
+            self.navigationController?.navigationBar.alpha = 0.0
+        })
     }
     
     // MARK: - Navigation Bar Actions
