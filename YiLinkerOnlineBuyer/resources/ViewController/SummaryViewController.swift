@@ -60,7 +60,6 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
         }
         
         self.tableView.tableFooterView = self.userMapView()
-        self.tableView.tableFooterView!.frame.size.height = CGFloat(280)
     }
     
     //Show HUD
@@ -743,11 +742,13 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     //MARK: - Add User Map
-    func userMapView() -> UserMapView {
+    func userMapView() -> UIView {
+        let containerView: UIView = UIView(frame: CGRectMake(0, 0, self.view.frame.size.width, 300))
         let userMapView: UserMapView = XibHelper.puffViewWithNibName("UserMapView", index: 0) as! UserMapView
         userMapView.sendSubviewToBack(userMapView.mapView)
-        userMapView.frame = CGRectMake(0, 100, self.view.frame.size.width, 184)
-        return userMapView
+        userMapView.frame = CGRectMake(0, 40, self.view.frame.size.width, 184)
+        containerView.addSubview(userMapView)
+        return containerView
     }
     
 }
