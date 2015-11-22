@@ -47,18 +47,7 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
     override func viewDidLoad() {
         super.viewDidLoad()
         self.registerNib()
-        /*
-        let alertController = UIAlertController(title: "Feature Not Available", message: "Check-out not available in Beta Testing", preferredStyle: .Alert)
-        
-        let OKAction = UIAlertAction(title: "OK", style: .Default) { (action) in
-            self.dismissViewControllerAnimated(true, completion: nil)
-        }
-        alertController.addAction(OKAction)
-        
-        self.presentViewController(alertController, animated: true) {
-            // ...
-        }
-        */
+
         if SessionManager.isLoggedIn() {
             self.tableView.layoutIfNeeded()
             
@@ -69,6 +58,8 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
         } else {
             self.requestGetProvince()
         }
+        
+        self.tableView.tableFooterView = self.userMapView()
     }
     
     //Show HUD
@@ -716,6 +707,7 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
         })
     }
     
+    //MARK: - Voucher Table View Cell
     func voucherTableViewCell(textFieldDidChange cell: VoucherTableViewCell) {
         if count(cell.voucherTextField.text) >= 6 {
             self.activateAddButton(cell.addButton)
@@ -725,6 +717,7 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
         
     }
     
+    //MARK: - Change Button State
     func changeButtonState(button: UIButton) {
         if button.titleLabel!.text == "Add" {
             button.setTitle("Remove", forState: UIControlState.Normal)
@@ -735,16 +728,24 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
         }
     }
     
+    //MARK: - Activate Button
     func activateAddButton(button: UIButton) {
         button.setTitle("Add", forState: UIControlState.Normal)
         button.backgroundColor = Constants.Colors.appTheme
         button.enabled = true
     }
     
+    //MARK: - DeActivate Button
     func deActivateAddButton(button: UIButton) {
         button.setTitle("Add", forState: UIControlState.Normal)
         button.backgroundColor = UIColor.lightGrayColor()
         button.enabled = false
+    }
+    
+    //MARK: - Add User Map
+    func userMapView() -> UserMapView {
+        let userMapView: UserMapView = XibHelper.puffViewWithNibName("MapViewController", index: 0) as! UserMapView
+        return userMapView
     }
     
 }
