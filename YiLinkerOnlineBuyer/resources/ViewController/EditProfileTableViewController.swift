@@ -8,7 +8,7 @@
 
 import UIKit
 
-class EditProfileTableViewController: UITableViewController, UINavigationControllerDelegate, EditProfileAddPhotoTableViewCellDelegate, EditProfileAddressTableViewCellDelegate, EditProfileAccountInformationTableViewCellDelegate, UIImagePickerControllerDelegate, UIActionSheetDelegate, EditProfilePersonalInformationTableViewCellDelegate, ChangePasswordViewControllerDelegate, ChangeAddressViewControllerDelegate, ChangeMobileNumberViewControllerDelegate, VerifyMobileNumberViewControllerDelegate, VerifyMobileNumberStatusViewControllerDelegate, ViewImageViewControllerDelegate {
+class EditProfileTableViewController: UITableViewController, UINavigationControllerDelegate, EditProfileAddPhotoTableViewCellDelegate, EditProfileAddressTableViewCellDelegate, EditProfileAccountInformationTableViewCellDelegate, UIImagePickerControllerDelegate, UIActionSheetDelegate, EditProfilePersonalInformationTableViewCellDelegate, ChangePasswordViewControllerDelegate, ChangeAddressViewControllerDelegate, ChangeMobileNumberViewControllerDelegate, VerifyMobileNumberViewControllerDelegate, VerifyMobileNumberStatusViewControllerDelegate {
     
     let manager = APIManager.sharedInstance
     
@@ -35,16 +35,13 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
     var emailAddress: String = ""
     var password: String = ""
     
-    var profileImageData: NSData?
-    var validIDImageData: NSData?
+    var imageData: NSData?
     
     var dimView: UIView?
     
     var hud: MBProgressHUD?
     
     var profileImage: UIImage?
-    var validIDImage: UIImage?
-    var isForProfilePicture: Bool = false
     
     var errorLocalizeString: String  = ""
     var somethingWrongLocalizeString: String = ""
@@ -191,20 +188,6 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
             cell.firstNameTextField.text = profileUserDetailsModel.firstName
             cell.lastNameTextField.text = profileUserDetailsModel.lastName
             cell.mobilePhoneTextField.text = profileUserDetailsModel.contactNumber
-        
-//            if profileUserDetailsModel.userDocuments.isEmpty  {
-//                cell.addIDButton.setTitle(cell.addLocalizeString, forState: UIControlState.Normal)
-//            } else {
-//                cell.addIDButton.setTitle(cell.viewImageLocalizeString, forState: UIControlState.Normal)
-//            }
-            
-            if !profileUserDetailsModel.userDocuments.isEmpty || validIDImage != nil {
-                cell.addIDButton.setTitle(cell.viewImageLocalizeString, forState: UIControlState.Normal)
-                
-            } else {
-                cell.addIDButton.setTitle(cell.addLocalizeString, forState: UIControlState.Normal)
-            }
-            
             cell.delegate = self
             personalIndexPath = indexPath
             
@@ -228,7 +211,7 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
         if indexPath.row == 0 {
             return 150
         } else if indexPath.row == 1 {
-            return 225
+            return 175
         }  else if indexPath.row == 2 {
             return 145
         } else {
@@ -238,16 +221,8 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
     
     // MARK: - EditProfileAddPhotoTableViewCellDelegate
     func addPhotoAction(sender: AnyObject) {
-        isForProfilePicture = true
-        openImageActionSheet()
-    }
-    
-    // MARK: - ViewImageViewControllerDelegate
-    func dismissViewImageViewController() {
-        hideDimView()
-    }
-    
-    func openImageActionSheet(){
+        println("addPhotoAction")
+        /* Supports UIAlert Controller */
         if( controllerAvailable()){
             handleIOS8()
         } else {
@@ -296,23 +271,15 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
     func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage!, editingInfo: [NSObject : AnyObject]!) {
         self.dismissViewControllerAnimated(true, completion: nil)
         
-        if isForProfilePicture {
-            addPhotoCell = self.tableView.cellForRowAtIndexPath(photoIndexPath!) as? EditProfileAddPhotoTableViewCell
-            
-            addPhotoCell!.profileImageView.hidden = false
-            addPhotoCell!.profileImageView.image = image
-            addPhotoCell!.addPhotoLabel.text = editPhotoLocalizeString
-            
-            profileImage = image
-            
-            profileImageData = UIImageJPEGRepresentation(image, 0.25)
-        } else {
-            validIDImage = image
-            validIDImageData = UIImageJPEGRepresentation(image, 0.25)
-            
-            personalInfoCell = self.tableView.cellForRowAtIndexPath(personalIndexPath!) as? EditProfilePersonalInformationTableViewCell
-            personalInfoCell?.addIDButton.setTitle(personalInfoCell?.viewImageLocalizeString, forState: UIControlState.Normal)
-        }
+        addPhotoCell = self.tableView.cellForRowAtIndexPath(photoIndexPath!) as? EditProfileAddPhotoTableViewCell
+        
+        addPhotoCell!.profileImageView.hidden = false
+        addPhotoCell!.profileImageView.image = image
+        addPhotoCell!.addPhotoLabel.text = editPhotoLocalizeString
+        
+        profileImage = image
+        
+        imageData = UIImageJPEGRepresentation(image, 0.25)
     }
     
     func actionSheet(actionSheet: UIActionSheet, clickedButtonAtIndex buttonIndex: Int) {
@@ -390,33 +357,6 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
             self.dimView!.alpha = 1
             }, completion: { finished in
         })
-    }
-    
-    func addValidIDAction() {
-        isForProfilePicture = false
-        if validIDImageData != nil || !profileUserDetailsModel.userDocuments.isEmpty {
-            var viewImageModal = ViewImageViewController(nibName: "ViewImageViewController", bundle: nil)
-            viewImageModal.delegate = self
-            if validIDImage != nil {
-                viewImageModal.image = validIDImage
-            } else {
-                viewImageModal.url = profileUserDetailsModel.userDocuments
-            }
-            viewImageModal.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
-            viewImageModal.providesPresentationContextTransitionStyle = true
-            viewImageModal.definesPresentationContext = true
-            viewImageModal.view.backgroundColor = UIColor.clearColor()
-            viewImageModal.view.frame.origin.y = 0
-            self.tabBarController?.presentViewController(viewImageModal, animated: true, completion: nil)
-            
-            self.dimView!.hidden = false
-            UIView.animateWithDuration(0.3, animations: {
-                self.dimView!.alpha = 1
-                }, completion: { finished in
-            })
-        } else {
-            openImageActionSheet()
-        }
     }
     
     // MARK: - ChangeMobileNumberViewControllerDelegate
@@ -531,7 +471,7 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorMessage)
         } else {
             if Reachability.isConnectedToNetwork(){
-                if profileImageData != nil || validIDImageData != nil{
+                if imageData != nil{
                     var params: NSDictionary = [
                         "firstName": firstName as String,
                         "lastName": lastName as String]
@@ -541,8 +481,7 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
                     var params: NSDictionary = [
                         "firstName": firstName as String,
                         "lastName": lastName as String,
-                        "profilePhoto": profileUserDetailsModel.profileImageUrl as String,
-                        "userDocument": profileUserDetailsModel.profileImageUrl as String]
+                        "profilePhoto": profileUserDetailsModel.profileImageUrl as String]
                     
                     fireUpdateProfile(APIAtlas.editProfileUrl + "?access_token=" + SessionManager.accessToken(), params: params, withImage: false)
                 }
@@ -577,14 +516,7 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
         if withImage {
             manager.POST(url, parameters: params, constructingBodyWithBlock: { (data: AFMultipartFormData!) in
                 println("")
-                if self.profileImageData != nil {
-                    data.appendPartWithFileData(self.profileImageData!, name: "profilePhoto", fileName: "photo", mimeType: "image/jpeg")
-                }
-                
-                if self.validIDImageData != nil {
-                    data.appendPartWithFileData(self.validIDImageData!, name: "userDocument", fileName: "photo", mimeType: "image/jpeg")
-                }
-                
+                data.appendPartWithFileData(self.imageData!, name: "profilePhoto", fileName: "photo", mimeType: "image/jpeg")
                 }, success: {
                     (task: NSURLSessionDataTask!, responseObject: AnyObject!) in print(responseObject as! NSDictionary)
                     
@@ -597,7 +529,7 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
                     var changeLocalizeString = StringHelper.localizedStringWithKey("SUCCESS_LOCALIZE_KEY")
                     var successLocalizeString = StringHelper.localizedStringWithKey("SUCCESSUPDATEPROFILE_LOCALIZE_KEY")
                     self.showAlert(changeLocalizeString, message: successLocalizeString)
-                    self.profileImageData = nil
+                    self.imageData = nil
                     self.profileImage = nil
                 }, failure: {
                     (task: NSURLSessionDataTask!, error: NSError!) in
