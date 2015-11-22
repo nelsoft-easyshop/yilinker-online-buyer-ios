@@ -79,6 +79,16 @@ struct APIAtlas {
         }
     }
     
+    
+    static func voucher() -> String {
+        if SessionManager.isLoggedIn() {
+            return "auth/cart/applyVoucher"
+        } else {
+            SessionManager.loadCookies()
+            return "cart/applyVoucher"
+        }
+    }
+    
     static let refreshTokenUrl = "login"
     static let loginUrl = "login"
     static let registerUrl = "user/register"
@@ -171,6 +181,9 @@ struct APIAtlas {
     
     //Guest Register
     static let guestUserRegisterUrl = "registerGuestUser"
+    
+    //Voucher Url
+    static let voucherUrl = APIAtlas.voucher()
 }
 
 class APIManager: AFHTTPSessionManager {
