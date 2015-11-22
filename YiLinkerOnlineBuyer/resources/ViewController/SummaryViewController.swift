@@ -60,7 +60,7 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
         }
         
         self.tableView.tableFooterView = self.userMapView()
-        self.tableView.tableFooterView!.frame.size.height = CGFloat(300)
+        self.tableView.tableFooterView!.frame.size.height = CGFloat(280)
     }
     
     //Show HUD
