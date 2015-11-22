@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="UserMapView" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="184"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="LHx-65-glT">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="184"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="375" id="EZo-ek-b5N"/>
+                        <constraint firstAttribute="height" constant="184" id="OIO-sN-w0K"/>
+                    </constraints>
+                </mapView>
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MapPin" translatesAutoresizingMaskIntoConstraints="NO" id="utL-7y-LJD">
+                    <rect key="frame" x="171" y="59" width="33" height="33"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="33" id="U5u-zn-kLb"/>
+                        <constraint firstAttribute="width" constant="33" id="ii1-dr-qfc"/>
+                    </constraints>
+                </imageView>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="centerY" secondItem="LHx-65-glT" secondAttribute="centerY" id="4GV-Zp-6cI"/>
+                <constraint firstAttribute="centerX" secondItem="LHx-65-glT" secondAttribute="centerX" id="9Uz-Xh-i7M"/>
+                <constraint firstAttribute="centerX" secondItem="utL-7y-LJD" secondAttribute="centerX" id="mr2-HA-BpW"/>
+                <constraint firstItem="utL-7y-LJD" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="59" id="ybZ-Pl-3Zk"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="mapView" destination="LHx-65-glT" id="Q1G-zj-Bc6"/>
+            </connections>
+        </view>
+    </objects>
+    <resources>
+        <image name="MapPin" width="25" height="31"/>
+    </resources>
+</document>
