@@ -267,6 +267,8 @@
 		79A1C6F31B83574A0043AA36 /* ProductResultListCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79A1C6F21B83574A0043AA36 /* ProductResultListCollectionViewCell.xib */; };
 		79A1C6F71B835A090043AA36 /* ProductResultGridCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79A1C6F61B835A090043AA36 /* ProductResultGridCollectionViewCell.xib */; };
 		79A1C6FB1B83787B0043AA36 /* SellerResultCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79A1C6FA1B83787B0043AA36 /* SellerResultCollectionViewCell.xib */; };
+		79A66A6D1C01A176003D62AD /* ViewImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79A66A6B1C01A176003D62AD /* ViewImageViewController.swift */; };
+		79A66A6E1C01A176003D62AD /* ViewImageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79A66A6C1C01A176003D62AD /* ViewImageViewController.xib */; };
 		79AA08331B8F4DCF00AF3AA4 /* CartProductAttributeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79AA08321B8F4DCF00AF3AA4 /* CartProductAttributeTableViewCell.swift */; };
 		79AA08351B8F4E6300AF3AA4 /* CartProductAttributeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79AA08341B8F4E6300AF3AA4 /* CartProductAttributeTableViewCell.xib */; };
 		79E68B731B8AB900008626E4 /* ActivityLogTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79E68B721B8AB900008626E4 /* ActivityLogTableViewCell.xib */; };
@@ -728,6 +730,8 @@
 		79A1C6F21B83574A0043AA36 /* ProductResultListCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProductResultListCollectionViewCell.xib; sourceTree = "<group>"; };
 		79A1C6F61B835A090043AA36 /* ProductResultGridCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProductResultGridCollectionViewCell.xib; sourceTree = "<group>"; };
 		79A1C6FA1B83787B0043AA36 /* SellerResultCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SellerResultCollectionViewCell.xib; sourceTree = "<group>"; };
+		79A66A6B1C01A176003D62AD /* ViewImageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ViewImageViewController.swift; path = YiLinkerOnlineBuyer/resources/ViewController/ViewImageViewController.swift; sourceTree = SOURCE_ROOT; };
+		79A66A6C1C01A176003D62AD /* ViewImageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ViewImageViewController.xib; path = YiLinkerOnlineBuyer/resources/ViewController/ViewImageViewController.xib; sourceTree = SOURCE_ROOT; };
 		79AA08321B8F4DCF00AF3AA4 /* CartProductAttributeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CartProductAttributeTableViewCell.swift; path = YiLinkerOnlineBuyer/resources/View/CartProductAttributeTableViewCell.swift; sourceTree = SOURCE_ROOT; };
 		79AA08341B8F4E6300AF3AA4 /* CartProductAttributeTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CartProductAttributeTableViewCell.xib; path = YiLinkerOnlineBuyer/resources/Xib/CartProductAttributeTableViewCell.xib; sourceTree = SOURCE_ROOT; };
 		79E68B721B8AB900008626E4 /* ActivityLogTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ActivityLogTableViewCell.xib; path = YiLinkerOnlineBuyer/resources/Xib/ActivityLogTableViewCell.xib; sourceTree = SOURCE_ROOT; };
@@ -1423,6 +1427,8 @@
 				2666F52A1C003CF600BABA82 /* MapViewController.swift */,
 				2666F52B1C003CF600BABA82 /* MapViewController.xib */,
 				262626B61C00D28E0068E876 /* UserMapView.swift */,
+				79A66A6B1C01A176003D62AD /* ViewImageViewController.swift */,
+				79A66A6C1C01A176003D62AD /* ViewImageViewController.xib */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -1648,7 +1654,6 @@
 				0C8A7C6B1B6772670039F013 /* Frameworks */,
 				0C8A7C6C1B6772670039F013 /* Resources */,
 				15458B67C73D196045380AA0 /* Copy Pods Resources */,
-				D136ECEEA1E2E7C39FEBA21E /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1803,6 +1808,7 @@
 				F7C569E61BB17823004740E1 /* TransactionProductDetailsTableViewCell.xib in Resources */,
 				0C9937641B750583000D6074 /* LayoutHeaderCollectionViewCell.xib in Resources */,
 				79E68B831B8AEC85008626E4 /* PointsEarnedTableViewCell.xib in Resources */,
+				79A66A6E1C01A176003D62AD /* ViewImageViewController.xib in Resources */,
 				B7EE726C1BF1DD5D003724CB /* GoogleService-Info.plist in Resources */,
 				79E68B8F1B8B0717008626E4 /* PointsTableViewCell.xib in Resources */,
 				F740F0921B90D1E200D23A34 /* close2.png in Resources */,
@@ -1928,21 +1934,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		70E66A2311EB0621B0B867E9 /* Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -2213,6 +2204,7 @@
 				0C9937491B750583000D6074 /* GenericCollectionViewCell.swift in Sources */,
 				F7C5699F1BB175F1004740E1 /* TransactionModel.swift in Sources */,
 				0C9937461B750583000D6074 /* DynamicRoundedButton.swift in Sources */,
+				79A66A6D1C01A176003D62AD /* ViewImageViewController.swift in Sources */,
 				B77B8DD51B9B554A0002C513 /* DummyNavigationController.swift in Sources */,
 				26AFB3AA1B79DE2900E50926 /* ProductReviewHeaderView.swift in Sources */,
 			);
