@@ -21,7 +21,7 @@ class ProfileUserDetailsModel: NSObject {
     var birthdate: String = ""
     
     var address: AddressModelV2 = AddressModelV2()
-    
+    var userDocuments: String = ""
     var transactionCount: Int = 0
     var wishlistCount: Int = 0
     var cartCount: Int = 0
@@ -32,7 +32,7 @@ class ProfileUserDetailsModel: NSObject {
     var isEmailVerified: Bool = false
     var isMobileVerified: Bool = false
     
-    init(fullName: String, firstName: String, lastName: String, email: String, contactNumber: String, profileImageUrl: String, coverPhoto: String, gender: String, birthdate: String, address: AddressModelV2, transactionCount: Int, wishlistCount: Int, cartCount: Int, messageCount: Int, followingCount: Int, isEmailSubscribed: Bool, isSmsSubscribed: Bool, isEmailVerified: Bool, isMobileVerified: Bool){
+    init(fullName: String, firstName: String, lastName: String, email: String, contactNumber: String, profileImageUrl: String, coverPhoto: String, gender: String, birthdate: String, address: AddressModelV2, userDocuments: String, transactionCount: Int, wishlistCount: Int, cartCount: Int, messageCount: Int, followingCount: Int, isEmailSubscribed: Bool, isSmsSubscribed: Bool, isEmailVerified: Bool, isMobileVerified: Bool){
         self.fullName = fullName
         self.firstName = firstName
         self.lastName = lastName
@@ -43,6 +43,7 @@ class ProfileUserDetailsModel: NSObject {
         self.gender = gender
         self.birthdate = birthdate
         self.address = address
+        self.userDocuments = userDocuments
         self.transactionCount = transactionCount
         self.wishlistCount = wishlistCount
         self.cartCount = cartCount
@@ -70,7 +71,7 @@ class ProfileUserDetailsModel: NSObject {
         var birthdate: String = ""
 
         var address: AddressModelV2 = AddressModelV2()
-        
+        var userDocuments: String = ""
         var transactionCount: Int = 0
         var wishlistCount: Int = 0
         var cartCount: Int = 0
@@ -143,6 +144,25 @@ class ProfileUserDetailsModel: NSObject {
             }
         }
         
+        if let value: AnyObject = dictionary["userDocuments"] {
+            if value as! NSObject != NSNull() {
+                if let tempDict = value as? NSArray {
+                    if tempDict.count > 0 {
+                        if let file = tempDict[0]["file"] as? String {
+                            userDocuments = file
+                        }
+                    }
+                }
+                
+                if let tempDict = value as? NSDictionary {
+                    if let file = tempDict["file"] as? String {
+                        userDocuments = file
+                    }
+                }
+                
+            }
+        }
+        
         if let value: AnyObject = dictionary["transactionCount"] {
             if value as! NSObject != NSNull() {
                 transactionCount = value as! Int
@@ -209,6 +229,7 @@ class ProfileUserDetailsModel: NSObject {
             gender: gender,
             birthdate: birthdate,
             address: address,
+            userDocuments: userDocuments,
             transactionCount: transactionCount,
             wishlistCount: wishlistCount,
             cartCount: cartCount,

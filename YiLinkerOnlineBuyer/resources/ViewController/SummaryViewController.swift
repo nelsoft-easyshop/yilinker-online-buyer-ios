@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, ShipToTableViewCellDelegate, ChangeAddressViewControllerDelegate, GuestCheckoutTableViewCellDelegate, UIScrollViewDelegate, UIPickerViewDataSource, UIPickerViewDelegate {
+class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, ShipToTableViewCellDelegate, ChangeAddressViewControllerDelegate, GuestCheckoutTableViewCellDelegate, UIScrollViewDelegate, UIPickerViewDataSource, UIPickerViewDelegate, VoucherTableViewCellDelegate {
 
     @IBOutlet weak var tableView: UITableView!
     var shipToTableViewCell: ShipToTableViewCell = ShipToTableViewCell()
@@ -20,6 +20,10 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     let guestCheckoutCellIdentifier = "GuestCheckoutTableViewCell"
     let guestCheckoutCellNibName = "GuestCheckoutTableViewCell"
+    let voucherCellNibName = "VoucherTableViewCell"
+    let totalCellNibName = "TotalSummaryPriceTableViewCell"
+    let discountVouncherNibName = "DicountVoucherTableViewCell"
+    let netTotalCellNibName = "NetTotalTableViewCell"
     
     var currentTextFieldTag: Int = 0
     
@@ -36,25 +40,16 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     var addressModel: AddressModelV2 = AddressModelV2()
     
+    var additionalCellCount: Int = 2
+    
+    var voucherModel: VoucherModel = VoucherModel()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.registerNib()
-        /*
-        let alertController = UIAlertController(title: "Feature Not Available", message: "Check-out not available in Beta Testing", preferredStyle: .Alert)
-        
-        let OKAction = UIAlertAction(title: "OK", style: .Default) { (action) in
-            self.dismissViewControllerAnimated(true, completion: nil)
-        }
-        alertController.addAction(OKAction)
-        
-        self.presentViewController(alertController, animated: true) {
-            // ...
-        }
-        */
+
         if SessionManager.isLoggedIn() {
             self.tableView.layoutIfNeeded()
-            self.tableView.tableFooterView = self.tableFooterView()
-            self.tableView.tableFooterView!.frame = CGRectMake(0, 0, 0, self.tableView.tableFooterView!.frame.size.height)
             
             if SessionManager.isMobileVerified() {
                 self.fireSetCheckoutAddress("\(SessionManager.addressId())")
@@ -63,6 +58,8 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
         } else {
             self.requestGetProvince()
         }
+        
+        self.tableView.tableFooterView = self.userMapView()
     }
     
     //Show HUD
@@ -84,6 +81,7 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
         super.viewDidLayoutSubviews()
     }
     
+    //MARK: - Register Nib
     func registerNib() {
         let orderSummaryNib: UINib = UINib(nibName: Constants.Checkout.orderSummaryTableViewCellNibNameAndIdentifier, bundle: nil)
         self.tableView.registerNib(orderSummaryNib, forCellReuseIdentifier: Constants.Checkout.orderSummaryTableViewCellNibNameAndIdentifier)
@@ -93,6 +91,18 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         let guestCheckoutNib: UINib = UINib(nibName: self.guestCheckoutCellNibName, bundle: nil)
         self.tableView.registerNib(guestCheckoutNib, forCellReuseIdentifier: self.guestCheckoutCellNibName)
+        
+        let voucherNib: UINib = UINib(nibName: self.voucherCellNibName, bundle: nil)
+        self.tableView.registerNib(voucherNib, forCellReuseIdentifier: self.voucherCellNibName)
+        
+        let totalNib: UINib = UINib(nibName: self.totalCellNibName, bundle: nil)
+        self.tableView.registerNib(totalNib, forCellReuseIdentifier: self.totalCellNibName)
+        
+        let discountVouncherNib: UINib = UINib(nibName: self.discountVouncherNibName, bundle: nil)
+        self.tableView.registerNib(discountVouncherNib, forCellReuseIdentifier: self.discountVouncherNibName)
+        
+        let netTotalNib: UINib = UINib(nibName: self.netTotalCellNibName, bundle: nil)
+        self.tableView.registerNib(netTotalNib, forCellReuseIdentifier: self.netTotalCellNibName)
     }
     
     override func didReceiveMemoryWarning() {
@@ -100,26 +110,19 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
         // Dispose of any resources that can be recreated.
     }
     
-
+    //MARK: - Height For Header
     func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return 58
+        return 0
     }
     
+    //MARK: - Height For Header
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 41
     }
     
-    func tableFooterView() -> UIView {
-        self.shipToTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(Constants.Checkout.shipToTableViewCellNibNameAndIdentifier) as! ShipToTableViewCell
-        shipToTableViewCell.frame = CGRectMake(0, 0, self.tableView.frame.size.width, shipToTableViewCell.frame.size.height)
-        shipToTableViewCell.delegate = self
-        shipToTableViewCell.addressLabel.text = SessionManager.userFullAddress()
-        return shipToTableViewCell
-    }
-    
     func changeAddressViewController(didSelectAddress address: String) {
         self.fireSetCheckoutAddress("\(SessionManager.addressId())")
-        self.tableView.tableFooterView = self.tableFooterView()
+        self.tableView.reloadData()
     }
 
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -137,44 +140,88 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         if section == 0 {
-            let footerView: CheckoutViews = XibHelper.puffViewWithNibName("CheckoutViews", index: 1) as! CheckoutViews
-            footerView.totalPricelabel?.text = self.totalPrice
-            return footerView
+//            let footerView: VoucherTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(self.voucherCellNibName) as! VoucherTa
+//            footerView.totalPricelabel?.text = self.totalPrice
+//            return footerView
+            
+            return UIView(frame: CGRectMake(0, 0, 0, 0))
         } else {
             return UIView(frame: CGRectZero)
         }
     }
 
+    //MARK: - Cell For Row At IndexPath
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
-            let product: CartProductDetailsModel = self.cartItems[indexPath.row]
-            let url = APIAtlas.baseUrl.stringByReplacingOccurrencesOfString("api/v1", withString: "")
-            let orderSummaryCell: OrderSummaryTableViewCell = tableView.dequeueReusableCellWithIdentifier(Constants.Checkout.orderSummaryTableViewCellNibNameAndIdentifier) as! OrderSummaryTableViewCell
-            orderSummaryCell.productImageView.sd_setImageWithURL(NSURL(string: "\(url)\(APIAtlas.cartImage)\(product.selectedUnitImage)")!, placeholderImage: UIImage(named: "dummy-placeholder"))
-            orderSummaryCell.itemTitleLabel.text = product.title
-            orderSummaryCell.quantityLabel.text = "\(product.quantity)"
-            
-            for tempProductUnit in product.productUnits {
-                if product.unitId == tempProductUnit.productUnitId {
-                    orderSummaryCell.priceLabel.text = tempProductUnit.discountedPrice.formatToTwoDecimal()
-                    break
+            if indexPath.row < self.cartItems.count {
+                let product: CartProductDetailsModel = self.cartItems[indexPath.row]
+                let url = APIAtlas.baseUrl.stringByReplacingOccurrencesOfString("api/v1", withString: "")
+                let orderSummaryCell: OrderSummaryTableViewCell = tableView.dequeueReusableCellWithIdentifier(Constants.Checkout.orderSummaryTableViewCellNibNameAndIdentifier) as! OrderSummaryTableViewCell
+                orderSummaryCell.productImageView.sd_setImageWithURL(NSURL(string: "\(url)\(APIAtlas.cartImage)\(product.selectedUnitImage)")!, placeholderImage: UIImage(named: "dummy-placeholder"))
+                orderSummaryCell.itemTitleLabel.text = product.title
+                orderSummaryCell.quantityLabel.text = "\(product.quantity)"
+                
+                for tempProductUnit in product.productUnits {
+                    if product.unitId == tempProductUnit.productUnitId {
+                        orderSummaryCell.priceLabel.text = tempProductUnit.discountedPrice.formatToTwoDecimal()
+                        break
+                    }
                 }
+                
+                return orderSummaryCell
+            } else if indexPath.row == ((self.cartItems.count - 1) + 1) {// 1 = to cell below the cart items
+                let totalCell: TotalSummaryPriceTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(self.totalCellNibName) as! TotalSummaryPriceTableViewCell
+                totalCell.totalPriceValueLabel.text = self.totalPrice
+                
+                 totalCell.separatorInset = UIEdgeInsetsMake(0, 1000, 0, 1000)
+                return totalCell
+            } else if indexPath.row == ((self.cartItems.count - 1) + 2)  {
+                let voucherCell: VoucherTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(self.voucherCellNibName) as! VoucherTableViewCell
+                voucherCell.delegate = self
+                voucherCell.selectionStyle = UITableViewCellSelectionStyle.None
+                return voucherCell
+            } else if indexPath.row == ((self.cartItems.count - 1) + 3) {
+                let discountTotalCell: DicountVoucherTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(self.discountVouncherNibName) as! DicountVoucherTableViewCell
+                
+                if self.voucherModel.isSuccessful {
+                    println("Discount Value: ₱ \(self.voucherModel.less)")
+                    discountTotalCell.discountVoucherLabel.text = "Discount Value: ₱ \(self.voucherModel.less)"
+                } else {
+                    discountTotalCell.discountVoucherLabel.text = "\(self.voucherModel.message)"
+                    discountTotalCell.discountVoucherLabel.textAlignment = NSTextAlignment.Right
+                    discountTotalCell.discountVoucherLabel.textColor = UIColor.redColor()
+                }
+                discountTotalCell.separatorInset = UIEdgeInsetsMake(0, 1000, 0, 1000)
+                
+                return discountTotalCell
+            } else {
+                let netTotalTableViewCell: NetTotalTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(self.netTotalCellNibName) as! NetTotalTableViewCell
+                netTotalTableViewCell.netTotalValueLabel.text = self.voucherModel.voucherPrice
+                return netTotalTableViewCell
             }
-            
-            return orderSummaryCell
         } else {
-            self.guestCheckoutTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(self.guestCheckoutCellIdentifier) as! GuestCheckoutTableViewCell
-            self.guestCheckoutTableViewCell.delegate = self
-            self.guestCheckoutTableViewCell.selectionStyle = UITableViewCellSelectionStyle.None
-            
-            for view in self.guestCheckoutTableViewCell.contentView.subviews {
-                if view.isKindOfClass(UITextField) {
-                    let textField: UITextField = view as! UITextField
-                    if !IphoneType.isIphone4() {
-                        textField.addToolBarWithTarget(self, next: "next", previous: "previous:", done: "done")
+            if SessionManager.isLoggedIn() {
+                self.shipToTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(Constants.Checkout.shipToTableViewCellNibNameAndIdentifier) as! ShipToTableViewCell
+                shipToTableViewCell.frame = CGRectMake(0, 0, self.tableView.frame.size.width, shipToTableViewCell.frame.size.height)
+                shipToTableViewCell.delegate = self
+                shipToTableViewCell.addressLabel.text = SessionManager.userFullAddress()
+                return shipToTableViewCell
+            } else {
+                self.guestCheckoutTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(self.guestCheckoutCellIdentifier) as! GuestCheckoutTableViewCell
+                self.guestCheckoutTableViewCell.delegate = self
+                self.guestCheckoutTableViewCell.selectionStyle = UITableViewCellSelectionStyle.None
+                
+                for view in self.guestCheckoutTableViewCell.contentView.subviews {
+                    if view.isKindOfClass(UITextField) {
+                        let textField: UITextField = view as! UITextField
+                        if !IphoneType.isIphone4() {
+                            textField.addToolBarWithTarget(self, next: "next", previous: "previous:", done: "done")
+                        }
                     }
                 }
             }
+            
+            
             
             return guestCheckoutTableViewCell
         }
@@ -198,17 +245,23 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
         })
     }
     
+    //MARK: - Number Of Rows
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
-            return cartItems.count
+            return cartItems.count + additionalCellCount
         } else {
-            return 1
+            if SessionManager.isLoggedIn() {
+                return 1
+            } else {
+                return 1
+            }
         }
     }
     
+    //MARK: - Number Of Sections
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         if SessionManager.isLoggedIn() {
-            return 1
+            return 2
         } else {
             return 2
         }
@@ -216,9 +269,20 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if indexPath.section == 0 {
-            return 71
+            if indexPath.row == ((self.cartItems.count - 1) + 2) {
+                return 59
+            } else if indexPath.row == ((self.cartItems.count - 1) + 3) {
+                return 34
+            } else {
+                return 71
+            }
+
         } else {
-            return 480
+            if SessionManager.isLoggedIn() {
+                return 140
+            } else {
+                return 480
+            }
         }
     }
     
@@ -551,6 +615,140 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 self.hud?.hide(true)
         })
+    }
+    
+    //MARK: - Voucher Table View Cell Delegate
+    func voucherTableViewCell(didTapAddButton cell: VoucherTableViewCell) {
+        if cell.addButton.titleLabel!.text == "Add" {
+            self.fireVoucher(cell)
+        } else {
+            self.voucherRequestNotSuccessful(cell)
+        }
+    }
+    
+    //MARK: Voucher Request Not Successful
+    func voucherRequestNotSuccessful(cell: VoucherTableViewCell) {
+        let rowCount: Int = self.additionalCellCount + self.cartItems.count
+        cell.voucherTextField.enabled = true
+        var indexPaths: [NSIndexPath] = []
+        let totalCellAndVoucherIndexCount: Int = 2
+        for var row = rowCount; row > self.cartItems.count + totalCellAndVoucherIndexCount; row-- {
+            let indexPath: NSIndexPath = NSIndexPath(forRow: row - 1, inSection: 0)
+            indexPaths.append(indexPath)
+            self.additionalCellCount--
+        }
+        
+        cell.voucherTextField.text = ""
+        self.deActivateAddButton(cell.addButton)
+        self.tableView.deleteRowsAtIndexPaths(indexPaths, withRowAnimation: UITableViewRowAnimation.Left)
+    }
+    
+    //MARK: Voucher Request Successful
+    func voucherRequestIsSuccessful(cell: VoucherTableViewCell, voucherModel: VoucherModel) {
+        cell.voucherTextField.enabled = false
+        self.additionalCellCount++
+        //Add Discount Value
+        let cell: DicountVoucherTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(self.discountVouncherNibName) as! DicountVoucherTableViewCell
+        
+        
+        var indexPaths: [NSIndexPath] = []
+        let indexPath: NSIndexPath = NSIndexPath(forRow: self.additionalCellCount + (self.cartItems.count - 1), inSection: 0)
+        indexPaths.append(indexPath)
+        
+        if self.voucherModel.isSuccessful || self.voucherModel.voucherPrice != "" {
+            self.additionalCellCount++
+            let indexPath2: NSIndexPath = NSIndexPath(forRow: self.additionalCellCount + (self.cartItems.count - 1), inSection: 0)
+            indexPaths.append(indexPath2)
+        }
+        
+        self.tableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: UITableViewRowAnimation.Left)
+    }
+    
+    //MARK: Fire Voucher
+    func fireVoucher(cell: VoucherTableViewCell) {
+        self.showHUD()
+        let manager: APIManager = APIManager.sharedInstance
+        
+        var parameters: NSDictionary = NSDictionary()
+        
+        if SessionManager.isLoggedIn() {
+            parameters = ["access_token": SessionManager.accessToken(), "voucherCode": cell.voucherTextField.text]
+        } else {
+            parameters = ["voucherCode": cell.voucherTextField.text]
+        }
+        
+        manager.GET(APIAtlas.voucherUrl, parameters: parameters, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            println(responseObject)
+            self.voucherModel = VoucherModel.parseDataFromDictionary(responseObject as! NSDictionary)
+            self.voucherRequestIsSuccessful(cell, voucherModel: self.voucherModel)
+            self.changeButtonState(cell.addButton)
+            
+            self.hud?.hide(true)
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                
+                if error.userInfo != nil {
+                    if let jsonResult = error.userInfo as? Dictionary<String, AnyObject> {
+                        let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(jsonResult)
+                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message)
+                    }
+                }
+                
+                if task.statusCode == 401 {
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Mismatch username and password", title: "Login Failed")
+                } else {
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+                }
+                
+                self.hud?.hide(true)
+        })
+    }
+    
+    //MARK: - Voucher Table View Cell
+    func voucherTableViewCell(textFieldDidChange cell: VoucherTableViewCell) {
+        if count(cell.voucherTextField.text) >= 6 {
+            self.activateAddButton(cell.addButton)
+        } else {
+            self.deActivateAddButton(cell.addButton)
+        }
+        
+    }
+    
+    //MARK: - Change Button State
+    func changeButtonState(button: UIButton) {
+        if button.titleLabel!.text == "Add" {
+            button.setTitle("Remove", forState: UIControlState.Normal)
+            button.backgroundColor = UIColor.redColor()
+        } else {
+            button.setTitle("Add", forState: UIControlState.Normal)
+            button.backgroundColor = Constants.Colors.appTheme
+        }
+    }
+    
+    //MARK: - Activate Button
+    func activateAddButton(button: UIButton) {
+        button.setTitle("Add", forState: UIControlState.Normal)
+        button.backgroundColor = Constants.Colors.appTheme
+        button.enabled = true
+    }
+    
+    //MARK: - DeActivate Button
+    func deActivateAddButton(button: UIButton) {
+        button.setTitle("Add", forState: UIControlState.Normal)
+        button.backgroundColor = UIColor.lightGrayColor()
+        button.enabled = false
+    }
+    
+    //MARK: - Add User Map
+    func userMapView() -> UIView {
+        let containerView: UIView = UIView(frame: CGRectMake(0, 0, self.view.frame.size.width, 300))
+        let userMapView: UserMapView = XibHelper.puffViewWithNibName("UserMapView", index: 0) as! UserMapView
+        userMapView.sendSubviewToBack(userMapView.mapView)
+        userMapView.frame = CGRectMake(0, 40, self.view.frame.size.width, 184)
+        containerView.addSubview(userMapView)
+        return containerView
     }
     
 }
