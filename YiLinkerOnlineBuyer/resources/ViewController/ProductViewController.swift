@@ -1042,7 +1042,25 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         description.url = self.productDetailsModel.fullDescription
         description.title = self.productDetailsModel.title
         let root: UINavigationController = UINavigationController(rootViewController: description)
-        self.tabBarController?.presentViewController(root, animated: true, completion: nil)
+//        self.tabBarController?.presentViewController(root, animated: true, completion: nil)
+        
+        var extendedProductDetails = ProductDetailsExtendedViewController(nibName: "ProductDetailsExtendedViewController", bundle: nil)
+//        extendedProductDetails.delegate = self
+        extendedProductDetails.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
+        extendedProductDetails.providesPresentationContextTransitionStyle = true
+        extendedProductDetails.definesPresentationContext = true
+        extendedProductDetails.view.backgroundColor = UIColor.clearColor()
+        extendedProductDetails.url = self.productDetailsModel.fullDescription
+//        attributeModal.view.frame.origin.y = attributeModal.view.frame.size.height
+//        extendedProductDetails.passModel(productDetailsModel: productDetailsModel, selectedValue: selectedValue, selectedId: selectedId, unitIdIndex: unitIdIndex, quantity: self.quantity, price: self.productImagesView.priceLabel.text!, imageIndex: self.productImagesView.pageControl.currentPage)
+        self.tabBarController?.presentViewController(extendedProductDetails, animated: true, completion: nil)
+        
+        UIView.animateWithDuration(0.3, animations: {
+            self.dimView.alpha = 0.5
+            self.dimView.layer.zPosition = 2
+            self.view.transform = CGAffineTransformMakeScale(0.92, 0.95)
+            self.navigationController?.navigationBar.alpha = 0.0
+        })
     }
     
     // MARK: - Product Attribute Delegate
