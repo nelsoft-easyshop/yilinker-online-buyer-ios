@@ -8,28 +8,40 @@
 
 import UIKit
 
-class ViewImageViewController: UIViewController {
+protocol ViewImageViewControllerDelegate {
+    func dismissViewImageViewController()
+}
 
+class ViewImageViewController: UIViewController {
+    
+    var delegate: ViewImageViewControllerDelegate?
+
+    @IBOutlet weak var closeView: UIView!
+    @IBOutlet weak var imageView: UIImageView!
+    
+    var image: UIImage?
+    var url: String = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if image != nil {
+            imageView.image = image
+        } else {
+            imageView.sd_setImageWithURL(NSURL(string: url), placeholderImage: UIImage(named: "dummy-placeholder"))
+        }
+        
+        // Add tap event to Sort View
+        var viewTypeTapGesture: UITapGestureRecognizer = UITapGestureRecognizer(target:self, action:"dismiss")
+        closeView.addGestureRecognizer(viewTypeTapGesture)
 
-        // Do any additional setup after loading the view.
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        self.closeView.layer.cornerRadius = self.closeView.frame.size.width / 2
+        self.closeView.layer.borderWidth  = 1.5
+        self.closeView.layer.borderColor = UIColor.whiteColor().CGColor
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    func dismiss(){
+        delegate?.dismissViewImageViewController()
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
-    */
-
 }
