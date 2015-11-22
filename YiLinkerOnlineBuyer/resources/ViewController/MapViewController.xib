@@ -4,9 +4,8 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="UserMapView" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MapViewController" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
             <connections>
-                <outlet property="mapView" destination="jde-po-Akj" id="0sW-e6-rXR"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -15,23 +14,23 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="184"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="jde-po-Akj">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="184"/>
-                </mapView>
-                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="myPoints" translatesAutoresizingMaskIntoConstraints="NO" id="wIR-3s-JZB">
-                    <rect key="frame" x="171" y="75" width="33" height="33"/>
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MapPin" translatesAutoresizingMaskIntoConstraints="NO" id="wIR-3s-JZB">
+                    <rect key="frame" x="171" y="57" width="33" height="33"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="33" id="Ags-HU-AET"/>
                         <constraint firstAttribute="width" constant="33" id="E5k-Ne-h0K"/>
                     </constraints>
                 </imageView>
+                <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="jde-po-Akj">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="184"/>
+                </mapView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstAttribute="centerX" secondItem="wIR-3s-JZB" secondAttribute="centerX" id="8Aa-Fz-mNo"/>
                 <constraint firstAttribute="bottom" secondItem="jde-po-Akj" secondAttribute="bottom" id="DhE-yA-KpZ"/>
                 <constraint firstItem="jde-po-Akj" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="LX5-ow-cZj"/>
-                <constraint firstAttribute="centerY" secondItem="wIR-3s-JZB" secondAttribute="centerY" id="Ndv-hU-t38"/>
+                <constraint firstAttribute="centerY" secondItem="wIR-3s-JZB" secondAttribute="centerY" constant="18.5" id="Ndv-hU-t38"/>
                 <constraint firstAttribute="trailing" secondItem="jde-po-Akj" secondAttribute="trailing" id="uEr-ev-S2g"/>
                 <constraint firstItem="jde-po-Akj" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="uUy-dZ-wqZ"/>
             </constraints>
@@ -40,6 +39,6 @@
         </view>
     </objects>
     <resources>
-        <image name="myPoints" width="200" height="177"/>
+        <image name="MapPin" width="25" height="31"/>
     </resources>
 </document>

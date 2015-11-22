@@ -204,8 +204,6 @@
 		262626B71C00D28E0068E876 /* UserMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 262626B61C00D28E0068E876 /* UserMapView.swift */; };
 		2632F5211B7F8690006931E4 /* FollowedSellerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2632F51F1B7F8690006931E4 /* FollowedSellerTableViewCell.swift */; };
 		2632F5241B7F8EFF006931E4 /* FollwedSellerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2632F5231B7F8EFF006931E4 /* FollwedSellerModel.swift */; };
-		2666F52C1C003CF600BABA82 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2666F52A1C003CF600BABA82 /* MapViewController.swift */; };
-		2666F52D1C003CF600BABA82 /* MapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2666F52B1C003CF600BABA82 /* MapViewController.xib */; };
 		266A5C601BB0029200343DB4 /* DisputeAddItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 266A5C5E1BB0029200343DB4 /* DisputeAddItemViewController.swift */; };
 		266A5C611BB0029200343DB4 /* DisputeAddItemViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 266A5C5F1BB0029200343DB4 /* DisputeAddItemViewController.xib */; };
 		266A5C641BB003B400343DB4 /* DisputeAddItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 266A5C621BB003B400343DB4 /* DisputeAddItemTableViewCell.swift */; };
@@ -250,6 +248,7 @@
 		26C285461B8FEE42005EBD3A /* ProvinceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26C285451B8FEE42005EBD3A /* ProvinceModel.swift */; };
 		26C285481B8FF546005EBD3A /* CityModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26C285471B8FF546005EBD3A /* CityModel.swift */; };
 		26C2854A1B8FF555005EBD3A /* BarangayModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26C285491B8FF555005EBD3A /* BarangayModel.swift */; };
+		26D688BF1C01B848003ED151 /* UserMapView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26D688BE1C01B848003ED151 /* UserMapView.xib */; };
 		26DB062E1B981CF300D38EA8 /* ProductImagesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26DB062D1B981CF300D38EA8 /* ProductImagesModel.swift */; };
 		790B4BFE1BD8832C00E46AE7 /* VerifyMobileNumberInputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 790B4BFC1BD8832C00E46AE7 /* VerifyMobileNumberInputViewController.swift */; };
 		790B4BFF1BD8832C00E46AE7 /* VerifyMobileNumberInputViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 790B4BFD1BD8832C00E46AE7 /* VerifyMobileNumberInputViewController.xib */; };
@@ -675,8 +674,6 @@
 		262626B61C00D28E0068E876 /* UserMapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserMapView.swift; path = YiLinkerOnlineBuyer/resources/ViewController/UserMapView.swift; sourceTree = SOURCE_ROOT; };
 		2632F51F1B7F8690006931E4 /* FollowedSellerTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FollowedSellerTableViewCell.swift; path = YiLinkerOnlineBuyer/resources/ViewController/FollowedSellerTableViewCell.swift; sourceTree = SOURCE_ROOT; };
 		2632F5231B7F8EFF006931E4 /* FollwedSellerModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FollwedSellerModel.swift; path = YiLinkerOnlineBuyer/resources/Model/FollwedSellerModel.swift; sourceTree = SOURCE_ROOT; };
-		2666F52A1C003CF600BABA82 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MapViewController.swift; path = YiLinkerOnlineBuyer/resources/ViewController/MapViewController.swift; sourceTree = SOURCE_ROOT; };
-		2666F52B1C003CF600BABA82 /* MapViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MapViewController.xib; path = YiLinkerOnlineBuyer/resources/ViewController/MapViewController.xib; sourceTree = SOURCE_ROOT; };
 		266A5C5E1BB0029200343DB4 /* DisputeAddItemViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisputeAddItemViewController.swift; sourceTree = "<group>"; };
 		266A5C5F1BB0029200343DB4 /* DisputeAddItemViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DisputeAddItemViewController.xib; path = ../ViewController/DisputeAddItemViewController.xib; sourceTree = "<group>"; };
 		266A5C621BB003B400343DB4 /* DisputeAddItemTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisputeAddItemTableViewCell.swift; sourceTree = "<group>"; };
@@ -721,6 +718,7 @@
 		26C285451B8FEE42005EBD3A /* ProvinceModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProvinceModel.swift; path = YiLinkerOnlineBuyer/resources/Model/ProvinceModel.swift; sourceTree = SOURCE_ROOT; };
 		26C285471B8FF546005EBD3A /* CityModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CityModel.swift; path = YiLinkerOnlineBuyer/resources/Model/CityModel.swift; sourceTree = SOURCE_ROOT; };
 		26C285491B8FF555005EBD3A /* BarangayModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BarangayModel.swift; path = YiLinkerOnlineBuyer/resources/Model/BarangayModel.swift; sourceTree = SOURCE_ROOT; };
+		26D688BE1C01B848003ED151 /* UserMapView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = UserMapView.xib; path = YiLinkerOnlineBuyer/resources/ViewController/UserMapView.xib; sourceTree = SOURCE_ROOT; };
 		26DB062D1B981CF300D38EA8 /* ProductImagesModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProductImagesModel.swift; path = YiLinkerOnlineBuyer/resources/Model/ProductImagesModel.swift; sourceTree = SOURCE_ROOT; };
 		5D038C18A7712E626564D2D3 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		790B4BFC1BD8832C00E46AE7 /* VerifyMobileNumberInputViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VerifyMobileNumberInputViewController.swift; path = YiLinkerOnlineBuyer/resources/ViewController/VerifyMobileNumberInputViewController.swift; sourceTree = SOURCE_ROOT; };
@@ -1451,11 +1449,10 @@
 				F70EFB211BC6BF190077B8ED /* TransactionLeaveFeedbackRateTableViewCell.swift */,
 				F7D37C9F1B92B09100FA7B16 /* ViewFeedBackViewController.swift */,
 				790B4BFC1BD8832C00E46AE7 /* VerifyMobileNumberInputViewController.swift */,
-				2666F52A1C003CF600BABA82 /* MapViewController.swift */,
-				2666F52B1C003CF600BABA82 /* MapViewController.xib */,
 				262626B61C00D28E0068E876 /* UserMapView.swift */,
 				79A66A6B1C01A176003D62AD /* ViewImageViewController.swift */,
 				79A66A6C1C01A176003D62AD /* ViewImageViewController.xib */,
+				26D688BE1C01B848003ED151 /* UserMapView.xib */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -1762,7 +1759,6 @@
 				0C9937431B750583000D6074 /* HomeStoryBoard.storyboard in Resources */,
 				F7CCDA901B943CBB000F5AD4 /* MessagingViewController.xib in Resources */,
 				F7C56A011BB1790A004740E1 /* TransactionLeaveFeedbackViewController.xib in Resources */,
-				2666F52D1C003CF600BABA82 /* MapViewController.xib in Resources */,
 				0C374F301B88E3790050AE1D /* OverViewViewController.xib in Resources */,
 				F7C637CA1BD9F6FC00C29C47 /* TransactionDeliveryLogSignatureTableViewCell.xib in Resources */,
 				79E68B731B8AB900008626E4 /* ActivityLogTableViewCell.xib in Resources */,
@@ -1883,6 +1879,7 @@
 				0C374F391B88E3790050AE1D /* ShipToTableViewCell.xib in Resources */,
 				0C2F44C61B8576FE00021F45 /* Panton Bold.otf in Resources */,
 				F7CCDA951B943CBB000F5AD4 /* SellerViewController.xib in Resources */,
+				26D688BF1C01B848003ED151 /* UserMapView.xib in Resources */,
 				0C374F2E1B88E3790050AE1D /* PlainTableViewCell.xib in Resources */,
 				F7D9BABA1BBD70830097B76C /* TransactionProductDetailsDescriptionViewController.xib in Resources */,
 				79E68BAB1B8B4EB9008626E4 /* EditProfilePersonalInformationTableViewCell.xib in Resources */,
@@ -2075,7 +2072,6 @@
 				B77B8DD61B9B554A0002C513 /* ImageVC.swift in Sources */,
 				F7CCDAA01B943CF7000F5AD4 /* ProductResultGridCollectionViewCell.swift in Sources */,
 				0C9937481B750583000D6074 /* FullImageCollectionViewCell.swift in Sources */,
-				2666F52C1C003CF600BABA82 /* MapViewController.swift in Sources */,
 				B77B8DD41B9B554A0002C513 /* ConversationVC.swift in Sources */,
 				F7DC7EDE1BA141AF004F7FD4 /* SellerSubCategoryTableViewCell.swift in Sources */,
 				964B8E921BAB1A3F002E7B4A /* NewDisputeTableViewController.swift in Sources */,

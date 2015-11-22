@@ -60,6 +60,7 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
         }
         
         self.tableView.tableFooterView = self.userMapView()
+        self.tableView.tableFooterView!.frame.size.height = CGFloat(300)
     }
     
     //Show HUD
@@ -643,7 +644,6 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
         self.tableView.deleteRowsAtIndexPaths(indexPaths, withRowAnimation: UITableViewRowAnimation.Left)
     }
     
-    
     //MARK: Voucher Request Successful
     func voucherRequestIsSuccessful(cell: VoucherTableViewCell, voucherModel: VoucherModel) {
         cell.voucherTextField.enabled = false
@@ -744,7 +744,9 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     //MARK: - Add User Map
     func userMapView() -> UserMapView {
-        let userMapView: UserMapView = XibHelper.puffViewWithNibName("MapViewController", index: 0) as! UserMapView
+        let userMapView: UserMapView = XibHelper.puffViewWithNibName("UserMapView", index: 0) as! UserMapView
+        userMapView.sendSubviewToBack(userMapView.mapView)
+        userMapView.frame = CGRectMake(0, 100, self.view.frame.size.width, 184)
         return userMapView
     }
     
