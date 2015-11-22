@@ -138,7 +138,7 @@
                         <constraint firstAttribute="height" constant="1" id="fyv-Lv-k5Q"/>
                     </constraints>
                 </view>
-                <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" hidesForSinglePage="YES" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="aWQ-Wr-v5c">
+                <pageControl opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" hidesForSinglePage="YES" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="aWQ-Wr-v5c">
                     <rect key="frame" x="0.0" y="452" width="375" height="37"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="37" id="LGf-Th-TQO"/>
