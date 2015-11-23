@@ -117,41 +117,35 @@ class ViewFeedBackViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     func fireSellerFeedback() {
-        //self.cancelButton.enabled = false
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
-        //self.showHUD()
         let manager = APIManager.sharedInstance
-        println("seller id view feedback \(sellerId)")
         let parameters: NSDictionary = ["sellerId" : self.sellerId];
         manager.POST("\(APIAtlas.buyerSellerFeedbacks)?access_token=\(SessionManager.accessToken())", parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             println(responseObject["isSuccessful"])
             if responseObject["isSuccessful"] as! Bool {
                 self.sellerModel = SellerModel.parseSellerReviewsDataFromDictionary(responseObject as! NSDictionary)
-                //println(self.sellerModel?.reviews[1].fullName)
                 self.setRating(self.sellerModel!.rating)
                 self.generalRatingLabel.text = "\(self.sellerModel!.rating)"
                 self.numberOfPeopleLabel.text = "\(self.sellerModel!.reviews.count)"
                 self.ratingAndReviewsTableView.reloadData()
-                //self.hud?.hide(true)
                 if self.sellerModel!.reviews.count == 0 {
                     self.showAlert(title: ProductStrings.alertNoReviews, message: nil)
                     self.ratingAndReviewsTableView.hidden = true
                     self.loadingLabel.hidden = false
-                    self.loadingLabel.text = "No reviews available."
+                    self.loadingLabel.text = StringHelper.localizedStringWithKey("TRANSACTION_NO_REVIEWS_LOCALIZE_KEY")
                 } else {
                     self.ratingAndReviewsTableView.hidden = false
+                    self.loadingLabel.hidden = true
                 }
             } else {
-                self.showAlert(title: "Error", message: responseObject["message"] as! String)
-                //self.hud?.hide(true)
+                self.showAlert(title: Constants.Localized.error, message: responseObject["message"] as! String)
                 self.ratingAndReviewsTableView.hidden = true
                 self.loadingLabel.hidden = false
-                self.loadingLabel.text = "No reviews available."
+                self.loadingLabel.text = StringHelper.localizedStringWithKey("TRANSACTION_NO_REVIEWS_LOCALIZE_KEY")
             }
             UIApplication.sharedApplication().networkActivityIndicatorVisible = false
             self.ratingAndReviewsTableView.reloadData()
-            //self.cancelButton.enabled = true
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 if error.userInfo != nil {
@@ -159,22 +153,16 @@ class ViewFeedBackViewController: UIViewController, UITableViewDelegate, UITable
                     if let jsonResult = error.userInfo as? Dictionary<String, AnyObject> {
                         if jsonResult["message"] != nil {
                             self.showAlert(title: jsonResult["message"] as! String, message: nil)
-                            //self.hud?.hide(true)
-                            
                         } else {
                             self.showAlert(title: Constants.Localized.someThingWentWrong, message: nil)
-                            //self.hud?.hide(true)
                         }
                     }
                 } else  {
                     self.showAlert(title: Constants.Localized.error, message: Constants.Localized.someThingWentWrong)
-                    //self.hud?.hide(true)
                 }
                 UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                 self.ratingAndReviewsTableView.hidden = true
                 self.loadingLabel.hidden = true
-                //self.loadingLabel.text = "Ooops! So"
-                //self.cancelButton.enabled = true
         })
         
     }
@@ -194,7 +182,7 @@ class ViewFeedBackViewController: UIViewController, UITableViewDelegate, UITable
     
     func showAlert(#title: String!, message: String!) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
-        let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+        let defaultAction = UIAlertAction(title: Constants.Localized.ok, style: .Default, handler: nil)
         alertController.addAction(defaultAction)
         presentViewController(alertController, animated: true, completion: nil)
     }
