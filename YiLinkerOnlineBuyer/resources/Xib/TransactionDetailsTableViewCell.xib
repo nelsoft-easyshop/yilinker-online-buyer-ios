@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Panton.otf">
+            <string>Panton-Regular</string>
+        </mutableArray>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="TransactionDetailsTableViewCell" rowHeight="84" id="KGk-i7-Jjw" customClass="TransactionDetailsTableViewCell" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="84"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Order Product Status" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4eL-Fu-yw7">
+                        <rect key="frame" x="8" y="41" width="152" height="37"/>
+                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
+                        <color key="textColor" red="0.29803922770000002" green="0.29803922770000002" blue="0.29803922770000002" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Product Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cCi-fa-VYc">
+                        <rect key="frame" x="8" y="8" width="329" height="37"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="37" id="MTM-0s-6qn"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
+                        <color key="textColor" red="0.29803922770000002" green="0.29803922770000002" blue="0.29803922770000002" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="right-gray" translatesAutoresizingMaskIntoConstraints="NO" id="NqS-oF-APy">
+                        <rect key="frame" x="358" y="17" width="9" height="20"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="9" id="EnK-d9-M0E"/>
+                            <constraint firstAttribute="height" constant="20" id="fP1-Ev-B27"/>
+                        </constraints>
+                    </imageView>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8PV-nH-XPM" customClass="DynamicRoundedView" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
+                        <rect key="frame" x="218" y="47" width="149" height="26"/>
+                        <subviews>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NEW ORDER" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pfB-qR-fzu">
+                                <rect key="frame" x="8" y="3" width="133" height="20"/>
+                                <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="11"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" red="0.87843137250000003" green="0.62352941179999999" blue="0.035294117649999998" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="pfB-qR-fzu" secondAttribute="bottom" constant="3" id="IBG-BG-EB1"/>
+                            <constraint firstAttribute="trailing" secondItem="pfB-qR-fzu" secondAttribute="trailing" constant="8" id="JnU-uL-LSb"/>
+                            <constraint firstItem="pfB-qR-fzu" firstAttribute="leading" secondItem="8PV-nH-XPM" secondAttribute="leading" constant="8" id="N0w-Ic-xsT"/>
+                            <constraint firstItem="pfB-qR-fzu" firstAttribute="top" secondItem="8PV-nH-XPM" secondAttribute="top" constant="3" id="R6M-Yb-0ri"/>
+                            <constraint firstAttribute="width" constant="149" id="mVd-Uv-v8T"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                <real key="value" value="13"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="NqS-oF-APy" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="5Kj-40-oeQ"/>
+                    <constraint firstItem="cCi-fa-VYc" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="I0D-0A-ySM"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="4eL-Fu-yw7" secondAttribute="bottom" constant="-3" id="OHU-85-Hza"/>
+                    <constraint firstItem="4eL-Fu-yw7" firstAttribute="top" secondItem="cCi-fa-VYc" secondAttribute="bottom" constant="-4" id="ONr-Ac-BzC"/>
+                    <constraint firstItem="NqS-oF-APy" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="9" id="PJD-b9-dAH"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="8PV-nH-XPM" secondAttribute="bottom" constant="2" id="UbT-DO-9YQ"/>
+                    <constraint firstItem="8PV-nH-XPM" firstAttribute="top" secondItem="NqS-oF-APy" secondAttribute="bottom" constant="10" id="Wxc-Ay-CXF"/>
+                    <constraint firstItem="cCi-fa-VYc" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="aNk-2e-Wbh"/>
+                    <constraint firstItem="NqS-oF-APy" firstAttribute="leading" secondItem="cCi-fa-VYc" secondAttribute="trailing" constant="21" id="caH-sZ-b4r"/>
+                    <constraint firstItem="8PV-nH-XPM" firstAttribute="leading" secondItem="4eL-Fu-yw7" secondAttribute="trailing" constant="58" id="jEx-Z4-Zua"/>
+                    <constraint firstItem="4eL-Fu-yw7" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="nsn-gj-TnQ"/>
+                    <constraint firstItem="8PV-nH-XPM" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="w5k-ar-9gE"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="productNameLabel" destination="cCi-fa-VYc" id="8KD-rJ-LEW"/>
+                <outlet property="productStatusLabel" destination="pfB-qR-fzu" id="5Ps-Ej-Guc"/>
+            </connections>
+            <point key="canvasLocation" x="254.5" y="271"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="right-gray" width="97" height="200"/>
+    </resources>
+</document>
