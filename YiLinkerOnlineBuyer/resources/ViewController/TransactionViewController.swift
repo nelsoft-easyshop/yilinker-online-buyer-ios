@@ -54,6 +54,7 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
     var isPageEnd: Bool = false
     var page: Int = 0
     var query: String = "all"
+    var transactionType: String = ""
     var transactionArray: NSArray?
     
     var emptyView : EmptyView?
@@ -146,6 +147,7 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
         transactionDetails.totalCost = tableData[indexPath.row].total_price2
         transactionDetails.orderId = tableData[indexPath.row].order_id2
         transactionDetails.orderStatusId = tableData[indexPath.row].order_status_id2
+        transactionDetails.transactionType = self.transactionType
         self.navigationController?.pushViewController(transactionDetails, animated: true)
     }
     
@@ -173,6 +175,7 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
             self.isPageEnd = false
             self.fireTransaction("all")
             self.query = "all"
+            self.transactionType = "ALL"
             deselectOtherViews(allView)
         }
     }
@@ -186,6 +189,7 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
             self.isPageEnd = false
             self.fireTransaction("pending")
             self.query = "pending"
+            self.transactionType = "PENDING"
             deselectOtherViews(pendingView)
         }
     }
@@ -199,6 +203,7 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
             self.isPageEnd = false
             self.fireTransaction("on-delivery")
             self.query = "on-delivery"
+            self.transactionType = "ON DELIVERY"
             deselectOtherViews(onDeliveryView)
         }
     }
@@ -212,6 +217,7 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
             self.isPageEnd = false
             self.fireTransaction("for-feedback")
             self.query = "for-feedback"
+            self.transactionType = "FOR FEEDBACK"
             deselectOtherViews(forFeedbackView)
         }
     }
