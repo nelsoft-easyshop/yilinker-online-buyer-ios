@@ -12,7 +12,7 @@ class TransactionDetailsTableViewCell: UITableViewCell {
 
     @IBOutlet weak var productNameLabel: UILabel!
     @IBOutlet weak var productStatusLabel: UILabel!
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
