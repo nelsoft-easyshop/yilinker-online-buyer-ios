@@ -1007,7 +1007,30 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         }
     }
     
-    // MARK: - Product View Delegate
+    func seeMoreAttribute(title: String) {
+        
+        var attributeModal = ProductAttributeViewController(nibName: "ProductAttributeViewController", bundle: nil)
+        attributeModal.delegate = self
+        attributeModal.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
+        attributeModal.providesPresentationContextTransitionStyle = true
+        attributeModal.definesPresentationContext = true
+        attributeModal.view.backgroundColor = UIColor.clearColor()
+        attributeModal.view.frame.origin.y = attributeModal.view.frame.size.height
+        attributeModal.passModel(productDetailsModel: productDetailsModel, selectedValue: selectedValue, selectedId: selectedId, unitIdIndex: unitIdIndex, quantity: self.quantity, price: self.productImagesView.priceLabel.text!, imageIndex: self.productImagesView.pageControl.currentPage)
+        attributeModal.setTitle = title
+        attributeModal.tabController = self.tabController
+        attributeModal.screenWidth = self.view.frame.width
+        self.tabBarController?.presentViewController(attributeModal, animated: true, completion: nil)
+        
+        UIView.animateWithDuration(0.3, animations: {
+            self.dimView.alpha = 0.5
+            self.dimView.layer.zPosition = 2
+            self.view.transform = CGAffineTransformMakeScale(0.92, 0.95)
+            self.navigationController?.navigationBar.alpha = 0.0
+        })
+    }
+    
+    // MARK: - Product Images Delegate
     
     func close(controller: ProductImagesView) {
         self.barCloseAction()
@@ -1033,27 +1056,12 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         self.barShareAction()
     }
     
-    func seeMoreAttribute(title: String) {
-        
-        var attributeModal = ProductAttributeViewController(nibName: "ProductAttributeViewController", bundle: nil)
-        attributeModal.delegate = self
-        attributeModal.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
-        attributeModal.providesPresentationContextTransitionStyle = true
-        attributeModal.definesPresentationContext = true
-        attributeModal.view.backgroundColor = UIColor.clearColor()
-        attributeModal.view.frame.origin.y = attributeModal.view.frame.size.height
-        attributeModal.passModel(productDetailsModel: productDetailsModel, selectedValue: selectedValue, selectedId: selectedId, unitIdIndex: unitIdIndex, quantity: self.quantity, price: self.productImagesView.priceLabel.text!, imageIndex: self.productImagesView.pageControl.currentPage)
-        attributeModal.setTitle = title
-        attributeModal.tabController = self.tabController
-        attributeModal.screenWidth = self.view.frame.width
-        self.tabBarController?.presentViewController(attributeModal, animated: true, completion: nil)
-        
-        UIView.animateWithDuration(0.3, animations: {
-            self.dimView.alpha = 0.5
-            self.dimView.layer.zPosition = 2
-            self.view.transform = CGAffineTransformMakeScale(0.92, 0.95)
-            self.navigationController?.navigationBar.alpha = 0.0
-        })
+    func fullScreen(controller: ProductImagesView) {
+        let productFullScreen: ProductFullScreenViewController = ProductFullScreenViewController(nibName: "ProductFullScreenViewController", bundle: nil)
+        for image in productDetailsModel.images {
+            println(image.imageLocation)
+        }
+        self.navigationController?.presentViewController(productFullScreen, animated: true, completion: nil)
     }
     
     // MARK: - Product Description Delegate

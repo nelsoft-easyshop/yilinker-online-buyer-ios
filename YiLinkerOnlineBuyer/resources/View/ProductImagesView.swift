@@ -14,7 +14,7 @@ protocol ProductImagesViewDelegate {
     func rate(controller: ProductImagesView)
     func message(controller: ProductImagesView)
     func share(controller: ProductImagesView)
-    
+    func fullScreen(controller: ProductImagesView)
 }
 
 class ProductImagesView: UIView, UICollectionViewDataSource, UICollectionViewDelegate {
@@ -59,6 +59,7 @@ class ProductImagesView: UIView, UICollectionViewDataSource, UICollectionViewDel
         addTapTo(self.rateContainerView, action: "rateAction:")
         addTapTo(self.messageContainerView, action: "messageAction:")
         addTapTo(self.shareContainerView, action: "shareAction:")
+        addTapTo(self.collectionView, action: "fullScreenAction:")
     }
     
     func addTapTo(view: UIView, action: Selector) {
@@ -130,6 +131,12 @@ class ProductImagesView: UIView, UICollectionViewDataSource, UICollectionViewDel
     func shareAction(gesture: UIGestureRecognizer) {
         if let delegate = self.delegate {
             delegate.share(self)
+        }
+    }
+    
+    func fullScreenAction(gesture: UIGestureRecognizer) {
+        if let delegate = self.delegate {
+            delegate.fullScreen(self)
         }
     }
     
