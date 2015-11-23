@@ -19,7 +19,7 @@
                 <outlet property="dataSource" destination="-1" id="HxJ-9B-vqs"/>
                 <outlet property="delegate" destination="-1" id="qKe-GB-H1s"/>
             </connections>
-            <point key="canvasLocation" x="592" y="232"/>
+            <point key="canvasLocation" x="362.5" y="199.5"/>
         </tableView>
     </objects>
 </document>
