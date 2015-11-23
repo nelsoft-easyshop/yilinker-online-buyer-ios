@@ -49,6 +49,12 @@ enum TransactionRefreshType {
     case Support
 }
 
+enum TransactionDetailsType {
+    case Details
+    case Seller
+    case Contacts
+}
+
 enum CheckoutRefreshType {
     case COD
     case Credit
