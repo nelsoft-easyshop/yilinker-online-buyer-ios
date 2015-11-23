@@ -7,7 +7,8 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ProductFullScreenViewController" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
             <connections>
                 <outlet property="closeButton" destination="sme-wh-uiZ" id="rX7-AR-g1n"/>
-                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+                <outlet property="collectionView" destination="Kfr-c7-bqc" id="smK-mo-McN"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="JnA-xt-dSp"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -15,6 +16,15 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" indicatorStyle="white" minimumZoomScale="0.25" maximumZoomScale="4" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="Kfr-c7-bqc">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                    <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="HdU-8N-q5P">
+                        <size key="itemSize" width="375" height="666"/>
+                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                        <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    </collectionViewFlowLayout>
+                </collectionView>
                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sme-wh-uiZ">
                     <rect key="frame" x="8" y="8" width="40" height="30"/>
                     <state key="normal" title="Close">
@@ -26,6 +36,12 @@
                 </button>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="Kfr-c7-bqc" secondAttribute="trailing" id="6Tj-iy-obu"/>
+                <constraint firstAttribute="bottom" secondItem="Kfr-c7-bqc" secondAttribute="bottom" id="9lq-Qi-LFX"/>
+                <constraint firstItem="Kfr-c7-bqc" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="hJ8-8y-7lL"/>
+                <constraint firstItem="Kfr-c7-bqc" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="m3z-yV-DaV"/>
+            </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
         </view>
     </objects>

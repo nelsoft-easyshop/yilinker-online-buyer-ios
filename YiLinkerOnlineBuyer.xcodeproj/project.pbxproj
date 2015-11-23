@@ -254,6 +254,8 @@
 		26D688C21C021614003ED151 /* ProductDetailsExtendedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26D688C01C021614003ED151 /* ProductDetailsExtendedViewController.swift */; };
 		26D688C31C021614003ED151 /* ProductDetailsExtendedViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26D688C11C021614003ED151 /* ProductDetailsExtendedViewController.xib */; };
 		26D688C91C022E54003ED151 /* ProductDetailsBottomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26D688C81C022E54003ED151 /* ProductDetailsBottomView.swift */; };
+		26D688CC1C02E92D003ED151 /* FullScreenImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26D688CA1C02E92D003ED151 /* FullScreenImageCollectionViewCell.swift */; };
+		26D688CD1C02E92D003ED151 /* FullScreenImageCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26D688CB1C02E92D003ED151 /* FullScreenImageCollectionViewCell.xib */; };
 		26DB062E1B981CF300D38EA8 /* ProductImagesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26DB062D1B981CF300D38EA8 /* ProductImagesModel.swift */; };
 		790B4BFE1BD8832C00E46AE7 /* VerifyMobileNumberInputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 790B4BFC1BD8832C00E46AE7 /* VerifyMobileNumberInputViewController.swift */; };
 		790B4BFF1BD8832C00E46AE7 /* VerifyMobileNumberInputViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 790B4BFD1BD8832C00E46AE7 /* VerifyMobileNumberInputViewController.xib */; };
@@ -729,6 +731,8 @@
 		26D688C01C021614003ED151 /* ProductDetailsExtendedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProductDetailsExtendedViewController.swift; path = YiLinkerOnlineBuyer/resources/ViewController/ProductDetailsExtendedViewController.swift; sourceTree = SOURCE_ROOT; };
 		26D688C11C021614003ED151 /* ProductDetailsExtendedViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProductDetailsExtendedViewController.xib; path = YiLinkerOnlineBuyer/resources/ViewController/ProductDetailsExtendedViewController.xib; sourceTree = SOURCE_ROOT; };
 		26D688C81C022E54003ED151 /* ProductDetailsBottomView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProductDetailsBottomView.swift; path = YiLinkerOnlineBuyer/resources/ViewController/ProductDetailsBottomView.swift; sourceTree = SOURCE_ROOT; };
+		26D688CA1C02E92D003ED151 /* FullScreenImageCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FullScreenImageCollectionViewCell.swift; path = YiLinkerOnlineBuyer/resources/ViewController/FullScreenImageCollectionViewCell.swift; sourceTree = SOURCE_ROOT; };
+		26D688CB1C02E92D003ED151 /* FullScreenImageCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = FullScreenImageCollectionViewCell.xib; path = YiLinkerOnlineBuyer/resources/ViewController/FullScreenImageCollectionViewCell.xib; sourceTree = SOURCE_ROOT; };
 		26DB062D1B981CF300D38EA8 /* ProductImagesModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProductImagesModel.swift; path = YiLinkerOnlineBuyer/resources/Model/ProductImagesModel.swift; sourceTree = SOURCE_ROOT; };
 		5D038C18A7712E626564D2D3 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		790B4BFC1BD8832C00E46AE7 /* VerifyMobileNumberInputViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VerifyMobileNumberInputViewController.swift; path = YiLinkerOnlineBuyer/resources/ViewController/VerifyMobileNumberInputViewController.swift; sourceTree = SOURCE_ROOT; };
@@ -1468,6 +1472,8 @@
 				26D688C81C022E54003ED151 /* ProductDetailsBottomView.swift */,
 				2666F5261C0022CD00BABA82 /* ProductFullScreenViewController.swift */,
 				2666F5271C0022CD00BABA82 /* ProductFullScreenViewController.xib */,
+				26D688CA1C02E92D003ED151 /* FullScreenImageCollectionViewCell.swift */,
+				26D688CB1C02E92D003ED151 /* FullScreenImageCollectionViewCell.xib */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -1831,6 +1837,7 @@
 				F7CCDA8E1B943CBB000F5AD4 /* FollowedSellerViewController.xib in Resources */,
 				793A89971B9FFFD80030FDC7 /* ChangeMobileNumberViewController.xib in Resources */,
 				0C374F461B88E3790050AE1D /* CustomizeShoppingViewController.xib in Resources */,
+				26D688CD1C02E92D003ED151 /* FullScreenImageCollectionViewCell.xib in Resources */,
 				0C374F471B88E3790050AE1D /* HelpViewController.xib in Resources */,
 				79E85FCC1B8A1E0800428AA1 /* ActivityLogTableViewController.xib in Resources */,
 				79E68B8B1B8B02C0008626E4 /* PointsBreakdownTableViewCell.xib in Resources */,
@@ -2163,6 +2170,7 @@
 				26D688C21C021614003ED151 /* ProductDetailsExtendedViewController.swift in Sources */,
 				79F9FC4C1BC022FB00B3E0DA /* SearchSellerModel.swift in Sources */,
 				26C285441B8FADE3005EBD3A /* AddressModelV2.swift in Sources */,
+				26D688CC1C02E92D003ED151 /* FullScreenImageCollectionViewCell.swift in Sources */,
 				961BE5A61B994BF000E8631A /* ResolutionCenterCell.swift in Sources */,
 				79F40FD51BCF99F100E5D70E /* UIAppearance+Swift.m in Sources */,
 				0C99374D1B750583000D6074 /* NewSellerCollectionViewCell.swift in Sources */,

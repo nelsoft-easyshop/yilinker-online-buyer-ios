@@ -37,9 +37,7 @@ class ProductDetailsExtendedViewController: UIViewController, UIScrollViewDelega
         webView.backgroundColor = .clearColor()
         webView.scrollView.showsVerticalScrollIndicator = false
 
-        let url = NSURL (string: "https://www.yilinker.com/")
-        let requestObj = NSURLRequest(URL: url!)
-        webView.loadRequest(requestObj)
+        webView.loadRequest(NSURLRequest(URL: NSURL(string: "https://www.yilinker.com/")!))
     }
     
     func webViewDidFinishLoad(webView: UIWebView) {

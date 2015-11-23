@@ -1072,9 +1072,12 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     
     func fullScreen(controller: ProductImagesView) {
         let productFullScreen: ProductFullScreenViewController = ProductFullScreenViewController(nibName: "ProductFullScreenViewController", bundle: nil)
+        
         for image in productDetailsModel.images {
             println(image.imageLocation)
+            productFullScreen.images.append(image.imageLocation)
         }
+
         self.navigationController?.presentViewController(productFullScreen, animated: true, completion: nil)
     }
     
