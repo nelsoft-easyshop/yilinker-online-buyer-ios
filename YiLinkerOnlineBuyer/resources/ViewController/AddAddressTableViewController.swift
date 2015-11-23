@@ -174,7 +174,7 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
             self.provinceRow = row
             self.cityRow = 0
             self.barangayRow = 0
-            self.setTextAtIndex(6, text: self.provinceModel.location[row])
+            self.setTextAtIndex(2, text: self.provinceModel.location[row])
         } else if activeTextField == 3 {
             self.addressModel.cityId = self.cityModel.cityId[row]
             self.requestGetBarangay(self.addressModel.cityId)
@@ -182,13 +182,13 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
             //save current row and reset dependent values
             self.cityRow = row
             self.barangayRow = 0
-            self.setTextAtIndex(7, text: self.cityModel.location[row])
+            self.setTextAtIndex(3, text: self.cityModel.location[row])
         } else if activeTextField == 4 {
             self.setTextAtIndex(activeTextField, text: self.barangayModel.location[row])
             self.addressModel.barangay = self.barangayModel.location[row]
             self.addressModel.barangayId = self.barangayModel.barangayId[row]
             self.barangayRow = row
-            self.setTextAtIndex(8, text: self.barangayModel.location[row])
+            self.setTextAtIndex(4, text: self.barangayModel.location[row])
         }
     }
     
@@ -288,8 +288,6 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
             showAlert(title: AddressStrings.incompleteInformation, message: AddressStrings.addressTitleRequired)
         } else if self.addressModel.streetName == "" {
             showAlert(title: AddressStrings.incompleteInformation, message: AddressStrings.streetNameRequired)
-        } else if self.addressModel.zipCode == "" {
-            showAlert(title: AddressStrings.incompleteInformation, message: AddressStrings.zipCode)
         } else {
             if self.isEdit2 {
                 self.fireEditAddress()
@@ -331,6 +329,9 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
    func requestAddAddress() {
         self.showHUD()
     
+        let indexPath: NSIndexPath = NSIndexPath(forRow: 6, inSection: 0)
+        let cell: MapTableViewCell = self.tableView.cellForRowAtIndexPath(indexPath) as! MapTableViewCell
+    
         let params = ["access_token": SessionManager.accessToken(),
             "title": getTextAtIndex(0),
             "streetName": getTextAtIndex(1),
@@ -338,7 +339,9 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
             "city": getTextAtIndex(3),
             "barangay": getTextAtIndex(4),
             "zipCode": getTextAtIndex(5),
-            "locationId": self.addressModel.barangayId
+            "locationId": self.addressModel.barangayId,
+            "longitude":cell.longitude(),
+            "latitude":cell.latitude()
         ]
         
         manager.POST(APIAtlas.addAddressUrl, parameters: params, success: {

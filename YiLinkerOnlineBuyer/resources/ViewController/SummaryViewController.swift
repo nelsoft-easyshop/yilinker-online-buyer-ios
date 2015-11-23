@@ -340,12 +340,6 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
                     }
                 }
                 
-                if task.statusCode == 401 {
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Mismatch username and password", title: "Login Failed")
-                } else {
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
-                }
-                
                 self.hud?.hide(true)
         })
     }
@@ -672,6 +666,7 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     //MARK: Fire Voucher
+    //f0150b95
     func fireVoucher(cell: VoucherTableViewCell) {
         self.showHUD()
         let manager: APIManager = APIManager.sharedInstance
@@ -701,12 +696,8 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
                         let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(jsonResult)
                         UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message)
                     }
-                }
-                
-                if task.statusCode == 401 {
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Mismatch username and password", title: "Login Failed")
                 } else {
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Error", title: "Something went wrong.")
                 }
                 
                 self.hud?.hide(true)
