@@ -95,6 +95,9 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
     var contactsNotFollowed = [W_Contact()]
     var arrayContacts: [String] = []
     
+    //Strings
+    var sellerId: String = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -444,6 +447,8 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
         
         self.showHUD()
         
+        self.sellerId = sellerId
+        
         let manager = APIManager.sharedInstance
         let parameters: NSDictionary?
         
@@ -487,12 +492,11 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
                     UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: Constants.Localized.someThingWentWrong)
                     self.hud?.hide(true)
                 } else if task.statusCode == 401 {
-                    //self.requestRefreshToken(SellerRefreshType.Get)
+                    self.fireRefreshToken(TransactionDetailsType.Seller)
                 } else {
                     self.showAlert(title: Constants.Localized.someThingWentWrong, message: nil)
                     self.hud?.hide(true)
                 }
-                
         })
     }
     
@@ -553,9 +557,16 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
             self.tableView.reloadData()
             self.hud?.hide(true)
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
-                self.hud?.hide(true)
-                println(error.userInfo)
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                 
+                if task.statusCode == 401 {
+                    if (SessionManager.isLoggedIn()){
+                        //self.fireRefreshToken()
+                    }
+                    self.fireRefreshToken(TransactionDetailsType.Details)
+                } else {
+                    self.showAlert(title: self.error, message: self.somethingWentWrong)
+                }
         })
     }
     
@@ -596,7 +607,7 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
                             if (SessionManager.isLoggedIn()){
                                 //self.fireRefreshToken()
                             }
-                            self.fireRefreshToken()
+                            self.fireRefreshToken(TransactionDetailsType.Contacts)
                         } else {
                             self.showAlert(title: self.error, message: self.somethingWentWrong)
                         }
@@ -607,7 +618,7 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
             }
     }
     
-    func fireRefreshToken() {
+    func fireRefreshToken(type: TransactionDetailsType) {
         
         let manager: APIManager = APIManager.sharedInstance
         let parameters: NSDictionary = ["client_id": Constants.Credentials.clientID, "client_secret": Constants.Credentials.clientSecret, "grant_type": Constants.Credentials.grantRefreshToken, "refresh_token":  SessionManager.refreshToken()]
@@ -615,6 +626,14 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
         manager.POST(APIAtlas.refreshTokenUrl, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+            
+            if type == TransactionDetailsType.Details {
+                self.fireTransactionDetails(self.transactionId)
+            } else if type == TransactionDetailsType.Seller {
+                self.fireSeller(self.sellerId)
+            } else {
+                self.getContactsFromEndpoint("1", limit: "30", keyword: "")
+            }
             
             self.hud?.hide(true)
             }, failure: {
