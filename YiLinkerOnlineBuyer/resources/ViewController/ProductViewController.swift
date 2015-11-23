@@ -1074,10 +1074,10 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         let productFullScreen: ProductFullScreenViewController = ProductFullScreenViewController(nibName: "ProductFullScreenViewController", bundle: nil)
         
         for image in productDetailsModel.images {
-            println(image.imageLocation)
             productFullScreen.images.append(image.imageLocation)
         }
-
+        productFullScreen.index = productImagesView.pageControl.currentPage
+        
         self.navigationController?.presentViewController(productFullScreen, animated: true, completion: nil)
     }
     

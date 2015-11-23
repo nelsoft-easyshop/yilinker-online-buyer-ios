@@ -6,8 +6,9 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ProductFullScreenViewController" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
             <connections>
+                <outlet property="carouselScrollView" destination="cEG-aZ-5dT" id="X1e-fg-37I"/>
                 <outlet property="closeButton" destination="sme-wh-uiZ" id="rX7-AR-g1n"/>
-                <outlet property="collectionView" destination="Kfr-c7-bqc" id="smK-mo-McN"/>
+                <outlet property="pageLabel" destination="znx-mY-qhg" id="bnM-pi-Wtz"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="JnA-xt-dSp"/>
             </connections>
         </placeholder>
@@ -16,15 +17,9 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" indicatorStyle="white" minimumZoomScale="0.25" maximumZoomScale="4" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="Kfr-c7-bqc">
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cEG-aZ-5dT">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                    <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="HdU-8N-q5P">
-                        <size key="itemSize" width="375" height="666"/>
-                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                        <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                    </collectionViewFlowLayout>
-                </collectionView>
+                </scrollView>
                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sme-wh-uiZ">
                     <rect key="frame" x="8" y="8" width="40" height="30"/>
                     <state key="normal" title="Close">
@@ -34,13 +29,21 @@
                         <action selector="closeAction:" destination="-1" eventType="touchUpInside" id="kPa-oz-tcS"/>
                     </connections>
                 </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0 of 0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="znx-mY-qhg">
+                    <rect key="frame" x="0.0" y="627" width="375" height="40"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="40" id="hyO-mP-T51"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstAttribute="trailing" secondItem="Kfr-c7-bqc" secondAttribute="trailing" id="6Tj-iy-obu"/>
-                <constraint firstAttribute="bottom" secondItem="Kfr-c7-bqc" secondAttribute="bottom" id="9lq-Qi-LFX"/>
-                <constraint firstItem="Kfr-c7-bqc" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="hJ8-8y-7lL"/>
-                <constraint firstItem="Kfr-c7-bqc" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="m3z-yV-DaV"/>
+                <constraint firstAttribute="trailing" secondItem="znx-mY-qhg" secondAttribute="trailing" id="U11-wX-4yp"/>
+                <constraint firstAttribute="bottom" secondItem="znx-mY-qhg" secondAttribute="bottom" id="dhx-r3-IXw"/>
+                <constraint firstItem="znx-mY-qhg" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="rk9-mr-Kgf"/>
             </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
         </view>
