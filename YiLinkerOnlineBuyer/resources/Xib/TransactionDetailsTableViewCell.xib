@@ -19,13 +19,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Order Product Status" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4eL-Fu-yw7">
-                        <rect key="frame" x="8" y="41" width="152" height="37"/>
-                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
-                        <color key="textColor" red="0.29803922770000002" green="0.29803922770000002" blue="0.29803922770000002" alpha="1" colorSpace="calibratedRGB"/>
-                        <nil key="highlightedColor"/>
-                    </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Product Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cCi-fa-VYc">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Product Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="329" translatesAutoresizingMaskIntoConstraints="NO" id="cCi-fa-VYc">
                         <rect key="frame" x="8" y="8" width="329" height="37"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="37" id="MTM-0s-6qn"/>
@@ -34,18 +28,11 @@
                         <color key="textColor" red="0.29803922770000002" green="0.29803922770000002" blue="0.29803922770000002" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="right-gray" translatesAutoresizingMaskIntoConstraints="NO" id="NqS-oF-APy">
-                        <rect key="frame" x="358" y="17" width="9" height="20"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="9" id="EnK-d9-M0E"/>
-                            <constraint firstAttribute="height" constant="20" id="fP1-Ev-B27"/>
-                        </constraints>
-                    </imageView>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8PV-nH-XPM" customClass="DynamicRoundedView" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
-                        <rect key="frame" x="218" y="47" width="149" height="26"/>
+                        <rect key="frame" x="203" y="47" width="164" height="26"/>
                         <subviews>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NEW ORDER" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pfB-qR-fzu">
-                                <rect key="frame" x="8" y="3" width="133" height="20"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NEW ORDER" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="6" translatesAutoresizingMaskIntoConstraints="NO" id="pfB-qR-fzu">
+                                <rect key="frame" x="8" y="3" width="148" height="20"/>
                                 <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="11"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
@@ -57,7 +44,6 @@
                             <constraint firstAttribute="trailing" secondItem="pfB-qR-fzu" secondAttribute="trailing" constant="8" id="JnU-uL-LSb"/>
                             <constraint firstItem="pfB-qR-fzu" firstAttribute="leading" secondItem="8PV-nH-XPM" secondAttribute="leading" constant="8" id="N0w-Ic-xsT"/>
                             <constraint firstItem="pfB-qR-fzu" firstAttribute="top" secondItem="8PV-nH-XPM" secondAttribute="top" constant="3" id="R6M-Yb-0ri"/>
-                            <constraint firstAttribute="width" constant="149" id="mVd-Uv-v8T"/>
                         </constraints>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -65,6 +51,22 @@
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </view>
+                    <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="right-gray" translatesAutoresizingMaskIntoConstraints="NO" id="NqS-oF-APy">
+                        <rect key="frame" x="358" y="17" width="9" height="20"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="9" id="EnK-d9-M0E"/>
+                            <constraint firstAttribute="height" constant="20" id="fP1-Ev-B27"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Order Product Status" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="4eL-Fu-yw7">
+                        <rect key="frame" x="8" y="41" width="142" height="37"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="142" id="xmI-Zj-J8a"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
+                        <color key="textColor" red="0.29803922770000002" green="0.29803922770000002" blue="0.29803922770000002" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <constraints>
                     <constraint firstItem="NqS-oF-APy" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="5Kj-40-oeQ"/>
@@ -76,7 +78,7 @@
                     <constraint firstItem="8PV-nH-XPM" firstAttribute="top" secondItem="NqS-oF-APy" secondAttribute="bottom" constant="10" id="Wxc-Ay-CXF"/>
                     <constraint firstItem="cCi-fa-VYc" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="aNk-2e-Wbh"/>
                     <constraint firstItem="NqS-oF-APy" firstAttribute="leading" secondItem="cCi-fa-VYc" secondAttribute="trailing" constant="21" id="caH-sZ-b4r"/>
-                    <constraint firstItem="8PV-nH-XPM" firstAttribute="leading" secondItem="4eL-Fu-yw7" secondAttribute="trailing" constant="58" id="jEx-Z4-Zua"/>
+                    <constraint firstItem="8PV-nH-XPM" firstAttribute="leading" secondItem="4eL-Fu-yw7" secondAttribute="trailing" constant="53" id="jEx-Z4-Zua"/>
                     <constraint firstItem="4eL-Fu-yw7" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="nsn-gj-TnQ"/>
                     <constraint firstItem="8PV-nH-XPM" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="w5k-ar-9gE"/>
                 </constraints>
