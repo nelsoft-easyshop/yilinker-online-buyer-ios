@@ -97,6 +97,7 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
     
     //Strings
     var sellerId: String = ""
+    var transactionType: String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -141,8 +142,13 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
             return 0
         }
     }
-    
+
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 84
+    }
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        
+        /*
         let cell = UITableViewCell(style: .Default, reuseIdentifier: "identifier")
         
         cell.selectionStyle = .None
@@ -154,8 +160,15 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
         
         cell.textLabel?.font = UIFont.systemFontOfSize(15.0)
         cell.textLabel?.textColor = .darkGrayColor()
+        */
+        let transactionDetailsTableViewCell: TransactionDetailsTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("TransactionDetailsTableViewCell") as! TransactionDetailsTableViewCell
+        transactionDetailsTableViewCell.selectionStyle = UITableViewCellSelectionStyle.None
+        if(self.transactionDetailsModel != nil){
+            transactionDetailsTableViewCell.productNameLabel.text = self.table[indexPath.section].transactions[indexPath.row].productName
+            transactionDetailsTableViewCell.productStatusLabel.text = self.orderStatus
+        }
         
-        return cell
+        return transactionDetailsTableViewCell
     }
     
     // MARK: - Table View Delegate
@@ -197,7 +210,6 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
             self.transactionSectionView.leaveFeedbackButton.tag = self.table[section].sellerIdForFeedback
             self.transactionSectionView.messageButton.backgroundColor = Constants.Colors.appTheme
             self.transactionSectionView.messageButton.tag = self.table[section].sellerIdForFeedback
-            println("seller ids \(self.table[section].sellerIdForFeedback)")
             self.transactionSectionView.sellerNameLabel.text = self.table[section].sellerName
             self.transactionSectionView.sellerNameLabel.tag = self.table[section].sellerIdForFeedback
             self.transactionSectionView.sellerContactNumber.text = self.table[section].sellerContact
@@ -221,7 +233,7 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
     }
     
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 25
+        return 0
     }
     
     // MARK: - Init Views
@@ -263,7 +275,7 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
             transactionDetailsView.shippingFeeTitleLabel.text = self.shippingFeeTitle
             transactionDetailsView.totalCostTitleLabel.text = self.totalCostTitle
             
-            transactionDetailsView.statusLabel.text = self.orderStatus
+            transactionDetailsView.statusLabel.text = self.transactionType
             transactionDetailsView.paymentTypeLabel.text = self.paymentType
             transactionDetailsView.dateCreatedLabel.text = self.dateCreated
             transactionDetailsView.quantityLabel.text = self.totalQuantity
@@ -344,6 +356,11 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
     // MARK: - Methods
     
     func loadViewsWithDetails() {
+        
+        //CELL
+        let transactionNib: UINib = UINib(nibName: "TransactionDetailsTableViewCell", bundle: nil)
+        self.tableView.registerNib(transactionNib, forCellReuseIdentifier: "TransactionDetailsTableViewCell")
+        
         // HEADERS
         self.getHeaderView().addSubview(self.getTransactionIdView())
         self.getHeaderView().addSubview(self.getTransactionDetailsView())

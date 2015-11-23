@@ -369,6 +369,8 @@
 		F70EFB281BC6BFB40077B8ED /* TransactionLeaveSellerFeedbackTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F70EFB261BC6BFB40077B8ED /* TransactionLeaveSellerFeedbackTableViewController.xib */; };
 		F740F0901B90D1D800D23A34 /* address.png in Resources */ = {isa = PBXBuildFile; fileRef = F740F08F1B90D1D800D23A34 /* address.png */; };
 		F740F0921B90D1E200D23A34 /* close2.png in Resources */ = {isa = PBXBuildFile; fileRef = F740F0911B90D1E200D23A34 /* close2.png */; };
+		F7A66B261C03195200D8E688 /* TransactionDetailsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7A66B241C03195200D8E688 /* TransactionDetailsTableViewCell.swift */; };
+		F7A66B271C03195200D8E688 /* TransactionDetailsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7A66B251C03195200D8E688 /* TransactionDetailsTableViewCell.xib */; };
 		F7C5699C1BB175F1004740E1 /* TransactionCancellationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C569971BB175F1004740E1 /* TransactionCancellationModel.swift */; };
 		F7C5699D1BB175F1004740E1 /* TransactionDetailsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C569981BB175F1004740E1 /* TransactionDetailsModel.swift */; };
 		F7C5699E1BB175F1004740E1 /* TransactionDetailsProductsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C569991BB175F1004740E1 /* TransactionDetailsProductsModel.swift */; };
@@ -843,6 +845,8 @@
 		F70EFB261BC6BFB40077B8ED /* TransactionLeaveSellerFeedbackTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TransactionLeaveSellerFeedbackTableViewController.xib; path = YiLinkerOnlineBuyer/resources/ViewController/TransactionLeaveSellerFeedbackTableViewController.xib; sourceTree = SOURCE_ROOT; };
 		F740F08F1B90D1D800D23A34 /* address.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = address.png; sourceTree = "<group>"; };
 		F740F0911B90D1E200D23A34 /* close2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = close2.png; sourceTree = "<group>"; };
+		F7A66B241C03195200D8E688 /* TransactionDetailsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TransactionDetailsTableViewCell.swift; path = YiLinkerOnlineBuyer/resources/Xib/TransactionDetailsTableViewCell.swift; sourceTree = SOURCE_ROOT; };
+		F7A66B251C03195200D8E688 /* TransactionDetailsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TransactionDetailsTableViewCell.xib; path = YiLinkerOnlineBuyer/resources/Xib/TransactionDetailsTableViewCell.xib; sourceTree = SOURCE_ROOT; };
 		F7C569971BB175F1004740E1 /* TransactionCancellationModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionCancellationModel.swift; sourceTree = "<group>"; };
 		F7C569981BB175F1004740E1 /* TransactionDetailsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionDetailsModel.swift; sourceTree = "<group>"; };
 		F7C569991BB175F1004740E1 /* TransactionDetailsProductsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionDetailsProductsModel.swift; sourceTree = "<group>"; };
@@ -1386,6 +1390,7 @@
 				0C65BBAE1C019A0800C66C39 /* NetTotalTableViewCell.xib */,
 				26D688C41C021DA7003ED151 /* MapTableViewCell.swift */,
 				26D688C51C021DA7003ED151 /* MapTableViewCell.xib */,
+				F7A66B241C03195200D8E688 /* TransactionDetailsTableViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1596,6 +1601,7 @@
 				F7D37CA01B92B09100FA7B16 /* ViewFeedBackViewController.xib */,
 				0C9937371B750583000D6074 /* ViewMoreFooterCollectionViewCell.xib */,
 				7987F3191B7B746000B02DF4 /* WishlistTableViewCell.xib */,
+				F7A66B251C03195200D8E688 /* TransactionDetailsTableViewCell.xib */,
 			);
 			path = Xib;
 			sourceTree = "<group>";
@@ -1684,7 +1690,6 @@
 				0C8A7C6B1B6772670039F013 /* Frameworks */,
 				0C8A7C6C1B6772670039F013 /* Resources */,
 				15458B67C73D196045380AA0 /* Copy Pods Resources */,
-				13BEABE6D6F94B7E9434EBCA /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1816,6 +1821,7 @@
 				26AFB3BF1B79DE5600E50926 /* ProductViewController.xib in Resources */,
 				0C10042D1B877F8400CAA17A /* AddAddressTableViewController.xib in Resources */,
 				0C374F2D1B88E3790050AE1D /* PaymentTableViewCell.xib in Resources */,
+				F7A66B271C03195200D8E688 /* TransactionDetailsTableViewCell.xib in Resources */,
 				0C374F481B88E3790050AE1D /* MessagingViewController.xib in Resources */,
 				0C99376A1B750583000D6074 /* SectionBackground.xib in Resources */,
 				F7CCDA8E1B943CBB000F5AD4 /* FollowedSellerViewController.xib in Resources */,
@@ -1942,21 +1948,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		13BEABE6D6F94B7E9434EBCA /* Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		15458B67C73D196045380AA0 /* Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -2191,6 +2182,7 @@
 				961BE5A01B994B7D00E8631A /* DisputeViewController.swift in Sources */,
 				0CFF5EA71B98590200F13699 /* ErrorModel.swift in Sources */,
 				26AFB3AB1B79DE2900E50926 /* ProductReviewFooterView.swift in Sources */,
+				F7A66B261C03195200D8E688 /* TransactionDetailsTableViewCell.swift in Sources */,
 				F7C56A041BB1790A004740E1 /* TransactionProductDetailsViewController.swift in Sources */,
 				B77B8DC21B9B54B40002C513 /* W_Contact.swift in Sources */,
 				0C99373B1B750583000D6074 /* Constants.swift in Sources */,
