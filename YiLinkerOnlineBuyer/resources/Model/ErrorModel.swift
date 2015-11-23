@@ -53,6 +53,14 @@ class ErrorModel: NSObject {
             }
         }
         
+        if let value: AnyObject = dictionary["error_description"] {
+            if (value as! NSObject != NSNull() && value as? String != nil) {
+                if message == "" {
+                    message = value as! String
+                }
+            }
+        }
+        
         return ErrorModel(message: message, title: title, isSuccessful: isSuccessful)
     }
 }
