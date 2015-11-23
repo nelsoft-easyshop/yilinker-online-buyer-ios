@@ -122,7 +122,7 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
         if section == 0 {
             return 41
         } else {
-            return 0
+            return 17
         }
     }
     
@@ -322,8 +322,8 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             let jsonResult: Dictionary = responseObject as! Dictionary<String, AnyObject>!
             if jsonResult["isSuccessful"] as! Bool != true {
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: jsonResult["message"] as! String)
                 self.isValidToSelectPayment = false
+                self.displayAlertAndRedirectToChangeAddressWithMessage(jsonResult["message"] as! String)
             } else {
                 self.isValidToSelectPayment = true
             }
@@ -342,6 +342,24 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
                 
                 self.hud?.hide(true)
         })
+    }
+    
+    //MARK: - Display Alert and Redirect to Address
+    func displayAlertAndRedirectToChangeAddressWithMessage(message: String) {
+        let alertController = UIAlertController(title: Constants.Localized.error, message: message, preferredStyle: .Alert)
+        let OKAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default) { (action) in
+            Delay.delayWithDuration(1.0, completionHandler: { (success) -> Void in
+                let changeAddressViewController: ChangeAddressViewController = ChangeAddressViewController(nibName: "ChangeAddressViewController", bundle: nil)
+                changeAddressViewController.delegate = self
+                self.navigationController!.pushViewController(changeAddressViewController, animated: true)
+            })
+        }
+        
+        alertController.addAction(OKAction)
+        
+        self.presentViewController(alertController, animated: true) {
+            
+        }
     }
     
     //Guest Checkout Delegate
