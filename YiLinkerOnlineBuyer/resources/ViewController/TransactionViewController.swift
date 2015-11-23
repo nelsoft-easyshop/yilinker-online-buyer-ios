@@ -78,6 +78,7 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
         imagesInArray = [allImageView, pendingImageView, onDeliveryImageView, forFeedbackImageView, supportImageView]
         labelsInArray = [allLabel, pendingLabel, onDeliveryLabel, forFeedbackLabel, supportLabel]
         deselectedImages = ["all", "pending", "onDelivery", "forFeedback", "support"]*/
+        self.transactionType = "ALL"
         allLabel.text = all
         pendingLabel.text = pending
         onDeliveryLabel.text = onDelivery
