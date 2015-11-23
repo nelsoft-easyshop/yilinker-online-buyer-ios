@@ -543,7 +543,7 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
                     }
                 }
             }
-            footerView.cellButton.setTitle(HomeCollectionViewStrings.viewMoreItems, forState: UIControlState.Normal)
+           
             footerView.delegate = self
             return footerView
         } else {
