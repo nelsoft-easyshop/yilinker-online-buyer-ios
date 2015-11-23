@@ -278,6 +278,7 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
         self.navigationController!.popViewControllerAnimated(true)
     }
     
+    //MARK: - Check
     func check() {
         self.addressModel.title = getTextAtIndex(0)
         self.addressModel.streetName =  getTextAtIndex(1)
