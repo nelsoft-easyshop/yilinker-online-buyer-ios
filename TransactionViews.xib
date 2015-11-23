@@ -80,17 +80,10 @@
                                 <constraint firstAttribute="height" constant="1" id="50e-LA-YSt"/>
                             </constraints>
                         </view>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Payment Type" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DKl-6I-Lxr">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Payment Type" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DKl-6I-Lxr">
                             <rect key="frame" x="8" y="36" width="101" height="37"/>
-                            <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
-                            <color key="textColor" red="0.29803922770000002" green="0.29803922770000002" blue="0.29803922770000002" alpha="1" colorSpace="calibratedRGB"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="YiLinker Wallet" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n0j-Cp-vbq">
-                            <rect key="frame" x="122" y="36" width="245" height="37"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="37" id="7Zf-yl-Ilu"/>
-                                <constraint firstAttribute="width" priority="500" constant="245" id="QTw-78-djT"/>
+                                <constraint firstAttribute="width" constant="101" id="OtL-gf-uL0"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
                             <color key="textColor" red="0.29803922770000002" green="0.29803922770000002" blue="0.29803922770000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -237,6 +230,15 @@
                                 </userDefinedRuntimeAttribute>
                             </userDefinedRuntimeAttributes>
                         </view>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="YiLinker Wallet" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="n0j-Cp-vbq">
+                            <rect key="frame" x="121" y="36" width="246" height="37"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="37" id="7Zf-yl-Ilu"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
+                            <color key="textColor" red="0.29803922770000002" green="0.29803922770000002" blue="0.29803922770000002" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
@@ -245,6 +247,7 @@
                         <constraint firstItem="H9s-gu-IdM" firstAttribute="leading" secondItem="hLe-9L-Eym" secondAttribute="leading" id="3Zp-Qf-qox"/>
                         <constraint firstAttribute="trailing" secondItem="doo-Qd-627" secondAttribute="trailing" constant="8" id="6ac-Bx-Vip"/>
                         <constraint firstItem="yvF-Mf-Lji" firstAttribute="leading" secondItem="hLe-9L-Eym" secondAttribute="leading" id="7EB-jq-mdV"/>
+                        <constraint firstItem="DKl-6I-Lxr" firstAttribute="leading" secondItem="hLe-9L-Eym" secondAttribute="leading" constant="8" id="APU-eG-t3q"/>
                         <constraint firstItem="fdg-L4-usM" firstAttribute="top" secondItem="H9s-gu-IdM" secondAttribute="bottom" constant="35" id="DiI-Sc-AzK"/>
                         <constraint firstItem="ti5-qQ-tXu" firstAttribute="top" secondItem="zdI-YP-Yve" secondAttribute="bottom" constant="35" id="I6n-Iw-Ry3"/>
                         <constraint firstItem="doo-Qd-627" firstAttribute="top" secondItem="hLe-9L-Eym" secondAttribute="top" constant="6" id="MAr-0l-5xT"/>
@@ -261,6 +264,8 @@
                         <constraint firstAttribute="trailing" secondItem="yvF-Mf-Lji" secondAttribute="trailing" id="dgh-FL-qtu"/>
                         <constraint firstAttribute="trailing" secondItem="fdg-L4-usM" secondAttribute="trailing" constant="8" id="fni-ao-UM4"/>
                         <constraint firstAttribute="trailing" secondItem="K5P-w6-iC7" secondAttribute="trailing" constant="8" id="fqi-Wv-X1s"/>
+                        <constraint firstItem="zdI-YP-Yve" firstAttribute="top" secondItem="DKl-6I-Lxr" secondAttribute="bottom" constant="-1" id="fsF-dr-5bM"/>
+                        <constraint firstItem="DKl-6I-Lxr" firstAttribute="top" secondItem="DBP-d3-FFt" secondAttribute="bottom" constant="-1" id="gfy-hO-gWm"/>
                         <constraint firstItem="zdI-YP-Yve" firstAttribute="top" secondItem="DBP-d3-FFt" secondAttribute="bottom" constant="35" id="hZX-bU-j08"/>
                         <constraint firstItem="zdI-YP-Yve" firstAttribute="leading" secondItem="hLe-9L-Eym" secondAttribute="leading" id="iEK-sx-YOq"/>
                         <constraint firstItem="DBP-d3-FFt" firstAttribute="top" secondItem="doo-Qd-627" secondAttribute="bottom" constant="4" id="jIb-hT-LlA"/>
@@ -268,6 +273,7 @@
                         <constraint firstItem="Dpg-kW-cES" firstAttribute="top" secondItem="Pac-fx-ROp" secondAttribute="bottom" constant="35" id="m5J-EU-Sq6"/>
                         <constraint firstAttribute="trailing" secondItem="n0j-Cp-vbq" secondAttribute="trailing" constant="8" id="meR-w8-LJh"/>
                         <constraint firstAttribute="trailing" secondItem="zdI-YP-Yve" secondAttribute="trailing" id="meZ-m1-m15"/>
+                        <constraint firstItem="n0j-Cp-vbq" firstAttribute="leading" secondItem="DKl-6I-Lxr" secondAttribute="trailing" constant="12" id="o5m-cp-4Ao"/>
                         <constraint firstAttribute="trailing" secondItem="H9s-gu-IdM" secondAttribute="trailing" id="omv-Ck-tKR"/>
                         <constraint firstAttribute="trailing" secondItem="DBP-d3-FFt" secondAttribute="trailing" id="qb9-JA-snz"/>
                         <constraint firstItem="doo-Qd-627" firstAttribute="top" secondItem="hLe-9L-Eym" secondAttribute="top" constant="6" id="t1i-9V-WyX"/>
