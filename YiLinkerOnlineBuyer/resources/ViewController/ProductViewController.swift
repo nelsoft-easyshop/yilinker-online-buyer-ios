@@ -84,6 +84,8 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     var visibility = 0.0
     var lastContentOffset: CGFloat = 0.0
     
+    var canShowExtendedDetails: Bool = false
+    
     // MARK: Request Checker
     var productRequest = false
     var reviewRequest = false
@@ -107,6 +109,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     // Messaging
     var selectedContact : W_Contact?
     var contacts = [W_Contact()]
+    var kChrisTableViewAnimationThreshold: Float = 30.0
     
     // MARK: Parameters
     var unitId: String = "0"
@@ -215,7 +218,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     }
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
-        
+
         if self.lastContentOffset > scrollView.contentOffset.y && scrollView.contentOffset.y <= 140.0 { // hide
             if visibility >= 0.0 && visibility <= 1.0 {
                 visibility -= Double(scrollView.contentOffset.y / 14) * 0.005
@@ -231,27 +234,38 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         } else if visibility < 0.0 {
             visibility = 0.0
         }
-        
+
         // reached top or bottom
-        
         if scrollView.contentOffset.y <= 0.0 {
             visibility = 0.0
+            canShowExtendedDetails = false
         } else if scrollView.contentOffset.y + scrollView.frame.size.height == scrollView.contentSize.height {
             visibility = 1.0
-            
-//            var scrollViewHeight: CGFloat = scrollView.frame.size.height
-//            var scrollContentSizeHeight: CGFloat = scrollView.contentSize.height
-//            var scrollOffset: CGFloat = scrollView.contentOffset.y
-//            
-//            if (scrollOffset + scrollViewHeight <= scrollContentSizeHeight) {
-//                if scrollOffset >= 160 {
-//                    openExtendedProductDetails()
-//                }
-//            }
+            canShowExtendedDetails = true
         }
-        
+
         self.navigationController?.navigationBar.alpha = CGFloat(visibility)
         self.lastContentOffset = scrollView.contentOffset.y
+        
+//        var scrollViewHeight: CGFloat = scrollView.frame.size.height
+//        var scrollContentSizeHeight: CGFloat = scrollView.contentSize.height
+//        var scrollOffset: CGFloat = scrollView.contentOffset.y
+//        
+//        if (scrollOffset + scrollViewHeight <= scrollContentSizeHeight && canShowExtendedDetails) {
+//            if scrollOffset >= 160 {
+//                openExtendedProductDetails()
+//            }
+//        }
+        
+        if scrollView == self.tableView {
+            if self.scrolledPastBottomThresholdInTableView(self.tableView) && canShowExtendedDetails{
+                openExtendedProductDetails()
+            }
+        }
+    }
+    
+    func scrolledPastBottomThresholdInTableView(tableView: UITableView) -> Bool {
+        return (tableView.contentOffset.y - 30.0 >= (tableView.contentSize.height - tableView.frame.size.height))
     }
     
     // MARK: - Init Views
@@ -1127,12 +1141,12 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     // MARK: - Product Details Extended Delegate
     
     func closedExtendedDetails(controller: ProductDetailsExtendedViewController) {
-        UIView.animateWithDuration(0.3, animations: {
-            self.view.transform = CGAffineTransformMakeTranslation(1, 1)
-            self.dimView.alpha = 0
-            self.dimView.layer.zPosition = -1
-            self.navigationController?.navigationBar.alpha = CGFloat(self.visibility)
-        })
+//        UIView.animateWithDuration(0.3, animations: {
+//            self.view.transform = CGAffineTransformMakeTranslation(1, 1)
+//            self.dimView.alpha = 0
+//            self.dimView.layer.zPosition = -1
+//            self.navigationController?.navigationBar.alpha = CGFloat(self.visibility)
+//        })
     }
     
     // MARK: - Product Seller Delegate
@@ -1215,12 +1229,12 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         //        extendedProductDetails.passModel(productDetailsModel: productDetailsModel, selectedValue: selectedValue, selectedId: selectedId, unitIdIndex: unitIdIndex, quantity: self.quantity, price: self.productImagesView.priceLabel.text!, imageIndex: self.productImagesView.pageControl.currentPage)
         self.tabBarController?.presentViewController(extendedProductDetails, animated: true, completion: nil)
         
-        UIView.animateWithDuration(0.3, animations: {
-            self.dimView.alpha = 0.5
-            self.dimView.layer.zPosition = 2
-            self.view.transform = CGAffineTransformMakeScale(0.92, 0.95)
-            self.navigationController?.navigationBar.alpha = 0.0
-        })
+//        UIView.animateWithDuration(0.3, animations: {
+//            self.dimView.alpha = 0.5
+//            self.dimView.layer.zPosition = 2
+//            self.view.transform = CGAffineTransformMakeScale(0.92, 0.95)
+//            self.navigationController?.navigationBar.alpha = 0.0
+//        })
     }
     
     // MARK: - Navigation Bar Actions
