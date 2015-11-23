@@ -46,7 +46,7 @@ class ProductFullScreenViewController: UIViewController, UIScrollViewDelegate {
     func generateScrollViewWithImageView() {
         var carouselWidth: CGFloat = 0.0
         
-        for i in 0..<self.images.count {
+        for i in 0..<self.images.count + 2 {
             
             // Creating scrollView inside carouselScrollView
             self.scrollView = UIScrollView(frame: CGRectMake(CGFloat(i) * self.view.frame.size.width, 0, self.view.frame.size.width, self.view.frame.size.height))
@@ -65,7 +65,14 @@ class ProductFullScreenViewController: UIViewController, UIScrollViewDelegate {
             let imageViewHeight = self.view.frame.size.width * (self.view.frame.size.width / 320)
             self.imageView = UIImageView(frame: CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height))
             self.imageView.center = self.view.center
-            self.imageView.sd_setImageWithURL(NSURL(string: images[i])!, placeholderImage: UIImage(named: "dummy-placeholder"))
+
+            if i == 0 {
+                self.imageView.sd_setImageWithURL(NSURL(string: images[self.images.count - 1])!, placeholderImage: UIImage(named: "dummy-placeholder"))
+            } else if i == self.images.count + 1 {
+                self.imageView.sd_setImageWithURL(NSURL(string: images[0])!, placeholderImage: UIImage(named: "dummy-placeholder"))
+            } else {
+                self.imageView.sd_setImageWithURL(NSURL(string: images[i - 1])!, placeholderImage: UIImage(named: "dummy-placeholder"))
+            }
 //            self.imageView.backgroundColor = UIColor.whiteColor()
             self.imageView.contentMode = UIViewContentMode.ScaleAspectFit
             self.imageView.userInteractionEnabled = true
@@ -78,7 +85,7 @@ class ProductFullScreenViewController: UIViewController, UIScrollViewDelegate {
         }
         
         self.carouselScrollView.contentSize = CGSizeMake(carouselWidth, 0)
-        self.carouselScrollView.setContentOffset(CGPointMake(self.carouselScrollView.frame.size.width * CGFloat(index), 0), animated: false)
+        self.carouselScrollView.setContentOffset(CGPointMake(self.carouselScrollView.frame.size.width * CGFloat(index + 1), 0), animated: false)
         
         self.view.sendSubviewToBack(self.scrollView)
         self.view.sendSubviewToBack(self.carouselScrollView)
@@ -129,6 +136,15 @@ class ProductFullScreenViewController: UIViewController, UIScrollViewDelegate {
             
         } else {
             
+        }
+    }
+    
+    func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+        
+        if scrollView.contentOffset.x == 0 {
+            self.carouselScrollView.setContentOffset(CGPointMake(self.view.frame.size.width * CGFloat(self.images.count), 0), animated: false)
+        } else if scrollView.contentOffset.x == self.view.frame.size.width * CGFloat(self.images.count + 1) {
+            self.carouselScrollView.setContentOffset(CGPointMake(self.view.frame.size.width, 0), animated: false)
         }
     }
     
