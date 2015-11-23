@@ -24,6 +24,7 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
     let totalCellNibName = "TotalSummaryPriceTableViewCell"
     let discountVouncherNibName = "DicountVoucherTableViewCell"
     let netTotalCellNibName = "NetTotalTableViewCell"
+    let mapCellNibName = "MapTableViewCell"
     
     var currentTextFieldTag: Int = 0
     
@@ -58,8 +59,6 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
         } else {
             self.requestGetProvince()
         }
-        
-        self.tableView.tableFooterView = self.userMapView()
     }
     
     //Show HUD
@@ -103,6 +102,9 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         let netTotalNib: UINib = UINib(nibName: self.netTotalCellNibName, bundle: nil)
         self.tableView.registerNib(netTotalNib, forCellReuseIdentifier: self.netTotalCellNibName)
+        
+        let mapNib: UINib = UINib(nibName: self.mapCellNibName, bundle: nil)
+        self.tableView.registerNib(mapNib, forCellReuseIdentifier: self.mapCellNibName)
     }
     
     override func didReceiveMemoryWarning() {
@@ -140,11 +142,7 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         if section == 0 {
-//            let footerView: VoucherTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(self.voucherCellNibName) as! VoucherTa
-//            footerView.totalPricelabel?.text = self.totalPrice
-//            return footerView
-            
-            return UIView(frame: CGRectMake(0, 0, 0, 0))
+            return UIView(frame: CGRectZero)
         } else {
             return UIView(frame: CGRectZero)
         }
@@ -200,30 +198,34 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
                 return netTotalTableViewCell
             }
         } else {
-            if SessionManager.isLoggedIn() {
-                self.shipToTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(Constants.Checkout.shipToTableViewCellNibNameAndIdentifier) as! ShipToTableViewCell
-                shipToTableViewCell.frame = CGRectMake(0, 0, self.tableView.frame.size.width, shipToTableViewCell.frame.size.height)
-                shipToTableViewCell.delegate = self
-                shipToTableViewCell.addressLabel.text = SessionManager.userFullAddress()
-                return shipToTableViewCell
-            } else {
-                self.guestCheckoutTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(self.guestCheckoutCellIdentifier) as! GuestCheckoutTableViewCell
-                self.guestCheckoutTableViewCell.delegate = self
-                self.guestCheckoutTableViewCell.selectionStyle = UITableViewCellSelectionStyle.None
-                
-                for view in self.guestCheckoutTableViewCell.contentView.subviews {
-                    if view.isKindOfClass(UITextField) {
-                        let textField: UITextField = view as! UITextField
-                        if !IphoneType.isIphone4() {
-                            textField.addToolBarWithTarget(self, next: "next", previous: "previous:", done: "done")
+            
+            if indexPath.row == 0 {
+                if SessionManager.isLoggedIn() {
+                    self.shipToTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(Constants.Checkout.shipToTableViewCellNibNameAndIdentifier) as! ShipToTableViewCell
+                    shipToTableViewCell.frame = CGRectMake(0, 0, self.tableView.frame.size.width, shipToTableViewCell.frame.size.height)
+                    shipToTableViewCell.delegate = self
+                    shipToTableViewCell.addressLabel.text = SessionManager.userFullAddress()
+                    return shipToTableViewCell
+                } else {
+                    self.guestCheckoutTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(self.guestCheckoutCellIdentifier) as! GuestCheckoutTableViewCell
+                    self.guestCheckoutTableViewCell.delegate = self
+                    self.guestCheckoutTableViewCell.selectionStyle = UITableViewCellSelectionStyle.None
+                    self.guestCheckoutTableViewCell.separatorInset = UIEdgeInsetsMake(0, 1000, 0, 1000)
+                    for view in self.guestCheckoutTableViewCell.contentView.subviews {
+                        if view.isKindOfClass(UITextField) {
+                            let textField: UITextField = view as! UITextField
+                            if !IphoneType.isIphone4() {
+                                textField.addToolBarWithTarget(self, next: "next", previous: "previous:", done: "done")
+                            }
                         }
                     }
                 }
+                
+                return guestCheckoutTableViewCell
+            } else {
+                let mapCell: MapTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(self.mapCellNibName) as! MapTableViewCell
+                return mapCell
             }
-            
-            
-            
-            return guestCheckoutTableViewCell
         }
     }
     
@@ -250,11 +252,7 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
         if section == 0 {
             return cartItems.count + additionalCellCount
         } else {
-            if SessionManager.isLoggedIn() {
-                return 1
-            } else {
-                return 1
-            }
+           return 2
         }
     }
     
@@ -278,11 +276,16 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
             }
 
         } else {
-            if SessionManager.isLoggedIn() {
-                return 140
+            if indexPath.row == 0 {
+                if SessionManager.isLoggedIn() {
+                    return 140
+                } else {
+                    return 480
+                }
             } else {
-                return 480
+                return 199
             }
+           
         }
     }
     
