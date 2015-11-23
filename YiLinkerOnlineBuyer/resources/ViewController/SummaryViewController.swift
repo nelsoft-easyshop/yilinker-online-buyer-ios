@@ -119,7 +119,11 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     //MARK: - Height For Header
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 41
+        if section == 0 {
+            return 41
+        } else {
+            return 0
+        }
     }
     
     func changeAddressViewController(didSelectAddress address: String) {
@@ -194,7 +198,7 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
                 return discountTotalCell
             } else {
                 let netTotalTableViewCell: NetTotalTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(self.netTotalCellNibName) as! NetTotalTableViewCell
-                netTotalTableViewCell.netTotalValueLabel.text = self.voucherModel.voucherPrice
+                netTotalTableViewCell.netTotalValueLabel.text = self.voucherModel.voucherPrice.formatToPeso()
                 return netTotalTableViewCell
             }
         } else {
