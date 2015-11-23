@@ -16,9 +16,9 @@ struct APIEnvironment {
         if development {
             return "http://online.api.easydeal.ph/api/v1"
         } else if staging {
-            return ""
+            return "http://online.api.easydeal.ph/api/v1"
         } else  {
-            return "https://www.yilinker.com/api/v1"
+            return "http://online.api.easydeal.ph/api/v1"
         }
     }
 }

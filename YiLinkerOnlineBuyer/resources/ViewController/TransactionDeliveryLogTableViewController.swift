@@ -56,7 +56,7 @@ class TransactionDeliveryLogTableViewController: UITableViewController {
         tidLabel = UILabel(frame: CGRectMake(16, 10, (self.view.bounds.width - 32), 20))
         tidLabel.textColor = Constants.Colors.grayText
         tidLabel.font = UIFont(name: "Panton-Bold", size: CGFloat(14))
-        tidLabel.text = "TID-\(transactionId)"
+        tidLabel.text = "\(transactionId)"
         tableHeaderView.addSubview(tidLabel)
         
         self.tableView.tableHeaderView = tableHeaderView

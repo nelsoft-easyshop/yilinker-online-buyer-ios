@@ -50,6 +50,7 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
     var products = StringHelper.localizedStringWithKey("TRANSACTION_PRODUCTS_LOCALIZE_KEY")
     var noTransaction = StringHelper.localizedStringWithKey("TRANSACTION_NO_TRANSACTION_LOCALIZE_KEY")
     
+    var refreshPage: Bool = false
     var isPageEnd: Bool = false
     var page: Int = 0
     var query: String = "all"
@@ -89,7 +90,6 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
         //self.fireTransaction("all")
         //self.query = "all"
         self.backButton()
-
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -264,14 +264,17 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
         if !isPageEnd {
             page++
             
-            self.showHUD()
+            if self.refreshPage {
+                UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+            } else {
+                self.showHUD()
+            }
             
             let manager = APIManager.sharedInstance
             var url: String = APIAtlas.transactionLogs+"\(SessionManager.accessToken())&type=\(queryType)&perPage=15&page=\(page)"
             
             manager.GET(APIAtlas.transactionLogs+"\(SessionManager.accessToken())&type=\(queryType)&perPage=15&page=\(page)", parameters: nil, success: {
                 (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-                
                 println(responseObject)
                 var trans: TransactionModel?
                 
@@ -303,7 +306,14 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
                 }
                
                 self.tableView.reloadData()
-                self.hud?.hide(true)
+                
+                if self.refreshPage {
+                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                } else {
+                  self.hud?.hide(true)
+                }
+                
+                self.refreshPage = true
                 
                 }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
 
@@ -332,7 +342,11 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
                     }
                     
                     self.tableView.hidden = true
-                    self.hud?.hide(true)
+                    if self.refreshPage {
+                        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                    } else {
+                        self.hud?.hide(true)
+                    }
             })
         }
     }
