@@ -46,7 +46,7 @@ class TransactionSectionFooterView: UIView {
     }
     
     @IBAction func message(sender: AnyObject) {
-        println("message")
+        println("message \(sender.tag)")
         var tag = sender.tag
         self.delegate?.messageSeller(tag)
     }

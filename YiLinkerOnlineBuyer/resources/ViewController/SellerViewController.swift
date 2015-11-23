@@ -361,6 +361,8 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         manager.POST(APIAtlas.loginUrl, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
+            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+            
             if type == SellerRefreshType.Follow {
                 self.fireFollowSeller()
             } else if type == SellerRefreshType.Unfollow {
