@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import CoreLocation
 
-class EditProfileTableViewController: UITableViewController, UINavigationControllerDelegate, EditProfileAddPhotoTableViewCellDelegate, EditProfileAddressTableViewCellDelegate, EditProfileAccountInformationTableViewCellDelegate, UIImagePickerControllerDelegate, UIActionSheetDelegate, EditProfilePersonalInformationTableViewCellDelegate, ChangePasswordViewControllerDelegate, ChangeAddressViewControllerDelegate, ChangeMobileNumberViewControllerDelegate, VerifyMobileNumberViewControllerDelegate, VerifyMobileNumberStatusViewControllerDelegate {
+class EditProfileTableViewController: UITableViewController, UINavigationControllerDelegate, EditProfileAddPhotoTableViewCellDelegate, EditProfileAddressTableViewCellDelegate, EditProfileAccountInformationTableViewCellDelegate, UIImagePickerControllerDelegate, UIActionSheetDelegate, EditProfilePersonalInformationTableViewCellDelegate, ChangePasswordViewControllerDelegate, ChangeAddressViewControllerDelegate, ChangeMobileNumberViewControllerDelegate, VerifyMobileNumberViewControllerDelegate, VerifyMobileNumberStatusViewControllerDelegate, ViewImageViewControllerDelegate, CLLocationManagerDelegate {
     
     let manager = APIManager.sharedInstance
     
@@ -34,14 +35,19 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
     var mobileNumber: String = ""
     var emailAddress: String = ""
     var password: String = ""
+    var latitude: String = ""
+    var longitude: String = ""
     
-    var imageData: NSData?
+    var profileImageData: NSData?
+    var validIDImageData: NSData?
     
     var dimView: UIView?
     
     var hud: MBProgressHUD?
     
     var profileImage: UIImage?
+    var validIDImage: UIImage?
+    var isForProfilePicture: Bool = false
     
     var errorLocalizeString: String  = ""
     var somethingWrongLocalizeString: String = ""
@@ -53,7 +59,7 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
     var selectPhotoLocalizeString: String  = ""
     var takePhotoLocalizeString: String  = ""
     var cancelLocalizeString: String  = ""
-    
+    //var locationManager: CLLocationManager?
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -62,6 +68,14 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
         backButton()
         titleView()
         registerNibs()
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        let locationManager = CLLocationManager()
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.startUpdatingLocation()
     }
     
     override func didReceiveMemoryWarning() {
@@ -146,6 +160,19 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
         var nibAccount = UINib(nibName: accountCellIdentifier, bundle: nil)
         self.tableView.registerNib(nibAccount, forCellReuseIdentifier: accountCellIdentifier)
     }
+    
+    // MARK: - CLLocationManagerDelegate
+    func locationManager(manager: CLLocationManager!, didFailWithError error: NSError!) {
+        println("Error while updating location " + error.localizedDescription)
+    }
+    
+    func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
+        if let var location: CLLocation = locations.last as? CLLocation {
+            latitude = "\(location.coordinate.latitude)"
+            longitude = "\(location.coordinate.longitude)"
+        }
+    }
+    
     // MARK: - Table view data source
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -188,6 +215,15 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
             cell.firstNameTextField.text = profileUserDetailsModel.firstName
             cell.lastNameTextField.text = profileUserDetailsModel.lastName
             cell.mobilePhoneTextField.text = profileUserDetailsModel.contactNumber
+        
+            if profileUserDetailsModel.userDocuments.isEmpty  {
+                cell.addIDButton.setTitle(cell.addLocalizeString, forState: UIControlState.Normal)
+                cell.viewImageConstraint.constant = 0
+            } else {
+                cell.addIDButton.setTitle(cell.changeLocalizeString, forState: UIControlState.Normal)
+                cell.viewImageConstraint.constant = 75
+            }
+            
             cell.delegate = self
             personalIndexPath = indexPath
             
@@ -211,7 +247,7 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
         if indexPath.row == 0 {
             return 150
         } else if indexPath.row == 1 {
-            return 175
+            return 200
         }  else if indexPath.row == 2 {
             return 145
         } else {
@@ -221,8 +257,17 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
     
     // MARK: - EditProfileAddPhotoTableViewCellDelegate
     func addPhotoAction(sender: AnyObject) {
-        println("addPhotoAction")
-        /* Supports UIAlert Controller */
+        isForProfilePicture = true
+        openImageActionSheet()
+    }
+    
+    
+    // MARK: - ViewImageViewControllerDelegate
+    func dismissViewImageViewController() {
+        hideDimView()
+    }
+    
+    func openImageActionSheet(){
         if( controllerAvailable()){
             handleIOS8()
         } else {
@@ -271,15 +316,23 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
     func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage!, editingInfo: [NSObject : AnyObject]!) {
         self.dismissViewControllerAnimated(true, completion: nil)
         
-        addPhotoCell = self.tableView.cellForRowAtIndexPath(photoIndexPath!) as? EditProfileAddPhotoTableViewCell
-        
-        addPhotoCell!.profileImageView.hidden = false
-        addPhotoCell!.profileImageView.image = image
-        addPhotoCell!.addPhotoLabel.text = editPhotoLocalizeString
-        
-        profileImage = image
-        
-        imageData = UIImageJPEGRepresentation(image, 0.25)
+        if isForProfilePicture {
+            addPhotoCell = self.tableView.cellForRowAtIndexPath(photoIndexPath!) as? EditProfileAddPhotoTableViewCell
+            
+            addPhotoCell!.profileImageView.hidden = false
+            addPhotoCell!.profileImageView.image = image
+            addPhotoCell!.addPhotoLabel.text = editPhotoLocalizeString
+            
+            profileImage = image
+            
+            profileImageData = UIImageJPEGRepresentation(image, 0.25)
+        } else {
+            validIDImage = image
+            validIDImageData = UIImageJPEGRepresentation(image, 0.25)
+            personalInfoCell = self.tableView.cellForRowAtIndexPath(personalIndexPath!) as? EditProfilePersonalInformationTableViewCell
+            personalInfoCell?.addIDButton.setTitle(personalInfoCell?.changeLocalizeString, forState: UIControlState.Normal)
+            personalInfoCell?.viewImageConstraint.constant = 75
+        }
     }
     
     func actionSheet(actionSheet: UIActionSheet, clickedButtonAtIndex buttonIndex: Int) {
@@ -357,6 +410,35 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
             self.dimView!.alpha = 1
             }, completion: { finished in
         })
+    }
+    
+    func addValidIDAction() {
+        isForProfilePicture = false
+        openImageActionSheet()
+    }
+    
+    func viewImageAction() {
+        if validIDImageData != nil || !profileUserDetailsModel.userDocuments.isEmpty {
+            var viewImageModal = ViewImageViewController(nibName: "ViewImageViewController", bundle: nil)
+            viewImageModal.delegate = self
+            if validIDImage != nil {
+                viewImageModal.image = validIDImage
+            } else {
+                viewImageModal.url = profileUserDetailsModel.userDocuments
+            }
+            viewImageModal.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
+            viewImageModal.providesPresentationContextTransitionStyle = true
+            viewImageModal.definesPresentationContext = true
+            viewImageModal.view.backgroundColor = UIColor.clearColor()
+            viewImageModal.view.frame.origin.y = 0
+            self.tabBarController?.presentViewController(viewImageModal, animated: true, completion: nil)
+            
+            self.dimView!.hidden = false
+            UIView.animateWithDuration(0.3, animations: {
+                self.dimView!.alpha = 1
+                }, completion: { finished in
+            })
+        }
     }
     
     // MARK: - ChangeMobileNumberViewControllerDelegate
@@ -471,17 +553,22 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorMessage)
         } else {
             if Reachability.isConnectedToNetwork(){
-                if imageData != nil{
+                if profileImageData != nil || validIDImageData != nil{
                     var params: NSDictionary = [
                         "firstName": firstName as String,
-                        "lastName": lastName as String]
+                        "lastName": lastName as String,
+                        "latitude": latitude,
+                        "longitude": longitude]
                     
                     fireUpdateProfile(APIAtlas.editProfileUrl + "?access_token=" + SessionManager.accessToken(), params: params, withImage: true)
                 } else {
                     var params: NSDictionary = [
                         "firstName": firstName as String,
                         "lastName": lastName as String,
-                        "profilePhoto": profileUserDetailsModel.profileImageUrl as String]
+                        "latitude": latitude,
+                        "longitude": longitude,
+                        "profilePhoto": profileUserDetailsModel.profileImageUrl as String,
+                        "userDocument": profileUserDetailsModel.profileImageUrl as String]
                     
                     fireUpdateProfile(APIAtlas.editProfileUrl + "?access_token=" + SessionManager.accessToken(), params: params, withImage: false)
                 }
@@ -516,11 +603,16 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
         if withImage {
             manager.POST(url, parameters: params, constructingBodyWithBlock: { (data: AFMultipartFormData!) in
                 println("")
-                data.appendPartWithFileData(self.imageData!, name: "profilePhoto", fileName: "photo", mimeType: "image/jpeg")
+                if self.profileImageData != nil {
+                    data.appendPartWithFileData(self.profileImageData!, name: "profilePhoto", fileName: "photo", mimeType: "image/jpeg")
+                }
+                
+                if self.validIDImageData != nil {
+                    data.appendPartWithFileData(self.validIDImageData!, name: "userDocument", fileName: "photo", mimeType: "image/jpeg")
+                }
+                
                 }, success: {
                     (task: NSURLSessionDataTask!, responseObject: AnyObject!) in print(responseObject as! NSDictionary)
-                    
-                    println(responseObject)
                     
                     if responseObject.objectForKey("error") != nil {
                         self.requestRefreshToken("updateProfile", url: url, params: params, withImage: withImage)
@@ -529,7 +621,7 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
                     var changeLocalizeString = StringHelper.localizedStringWithKey("SUCCESS_LOCALIZE_KEY")
                     var successLocalizeString = StringHelper.localizedStringWithKey("SUCCESSUPDATEPROFILE_LOCALIZE_KEY")
                     self.showAlert(changeLocalizeString, message: successLocalizeString)
-                    self.imageData = nil
+                    self.profileImageData = nil
                     self.profileImage = nil
                 }, failure: {
                     (task: NSURLSessionDataTask!, error: NSError!) in
