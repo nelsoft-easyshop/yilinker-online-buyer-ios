@@ -52,7 +52,7 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
     var table: [TransactionDetailsModel] = []
     var tableSectionContents: TransactionDetailsProductsModel!
     var transactionDetailsModel: TransactionDetailsModel!
-    
+    var sellerModel: SellerModel!
     var delegate: TransactionSectionFooterViewDelegate?
     
     //Transaction Details
@@ -92,6 +92,8 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
     var emptyView : EmptyView?
     var conversations = [W_Conversation]()
     var contacts = [W_Contact()]
+    var contactsNotFollowed = [W_Contact()]
+    var arrayContacts: [String] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -192,6 +194,7 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
             self.transactionSectionView.leaveFeedbackButton.tag = self.table[section].sellerIdForFeedback
             self.transactionSectionView.messageButton.backgroundColor = Constants.Colors.appTheme
             self.transactionSectionView.messageButton.tag = self.table[section].sellerIdForFeedback
+            println("seller ids \(self.table[section].sellerIdForFeedback)")
             self.transactionSectionView.sellerNameLabel.text = self.table[section].sellerName
             self.transactionSectionView.sellerNameLabel.tag = self.table[section].sellerIdForFeedback
             self.transactionSectionView.sellerContactNumber.text = self.table[section].sellerContact
@@ -401,16 +404,23 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
     }
     
     func messageSeller(sellerId: Int) {
+        self.canMessage = false
+        if contains(self.arrayContacts, "\(sellerId)") {
+            for var i = 0; i < self.contacts.count; i++ {
+                if "\(sellerId)" == contacts[i].userId {
+                    self.selectedContact = contacts[i]
+                    self.canMessage = true
+                    self.showMessaging()
+                }
+            }
+        } else {
+            self.fireSeller("\(sellerId)")
+        }
+    }
+    
+    func showMessaging(){
         let storyBoard: UIStoryboard = UIStoryboard(name: "HomeStoryBoard", bundle: nil)
         let messagingViewController: MessageThreadVC = (storyBoard.instantiateViewControllerWithIdentifier("MessageThreadVC") as? MessageThreadVC)!
-        for var i = 0; i < self.contacts.count; i++ {
-            if "\(sellerId)" == contacts[i].userId {
-                self.selectedContact = contacts[i]
-                self.canMessage = true
-            } else {
-                //self.canMessage = false
-            }
-        }
         
         var isOnline = "-1"
         if (SessionManager.isLoggedIn()){
@@ -418,6 +428,7 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
         } else {
             isOnline = "0"
         }
+        
         messagingViewController.sender = W_Contact(fullName: SessionManager.userFullName() , userRegistrationIds: "", userIdleRegistrationIds: "", userId: SessionManager.accessToken(), profileImageUrl: SessionManager.profileImageStringUrl(), isOnline: isOnline)
         messagingViewController.recipient = selectedContact
         
@@ -426,7 +437,63 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
         } else {
             self.showAlert(title: self.error, message: self.errorMessage)
         }
+    }
+    
+    //MARK: Get seller/store info
+    func fireSeller(sellerId: String) {
         
+        self.showHUD()
+        
+        let manager = APIManager.sharedInstance
+        let parameters: NSDictionary?
+        
+        var url: String = ""
+        
+        if SessionManager.isLoggedIn() {
+            url = APIAtlas.getSellerInfoLoggedIn
+            parameters = ["userId" : sellerId, "access_token" : SessionManager.accessToken()] as NSDictionary
+        } else {
+            url = APIAtlas.getSellerInfo
+            parameters = ["userId" : sellerId] as NSDictionary
+        }
+        
+        manager.POST(url, parameters: parameters, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            
+            if responseObject["isSuccessful"] as! Bool {
+                self.sellerModel = SellerModel.parseSellerDataFromDictionary(responseObject as! NSDictionary)
+                self.contactsNotFollowed.append(W_Contact(fullName: self.sellerModel.store_name, userRegistrationIds: "", userIdleRegistrationIds: "", userId: sellerId, profileImageUrl: "\(self.sellerModel.avatar)", isOnline: "1"))
+                
+                for var i = 0; i < self.contactsNotFollowed.count; i++ {
+                    if "\(sellerId)" == self.contactsNotFollowed[i].userId {
+                        self.selectedContact = self.contactsNotFollowed[i]
+                        self.canMessage = true
+                        self.showMessaging()
+                    }
+                }
+                
+            } else {
+                self.showAlert(title: "Error", message: responseObject["message"] as! String)
+            }
+            self.hud?.hide(true)
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                
+                if error.userInfo != nil {
+                    let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: Constants.Localized.someThingWentWrong)
+                    self.hud?.hide(true)
+                } else if task.statusCode == 401 {
+                    //self.requestRefreshToken(SellerRefreshType.Get)
+                } else {
+                    self.showAlert(title: Constants.Localized.someThingWentWrong, message: nil)
+                    self.hud?.hide(true)
+                }
+                
+        })
     }
     
     func deliveryLogsAction() {
@@ -513,7 +580,13 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
                 
                 manager.POST(url, parameters: parameters, success: {
                     (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+                    println(responseObject)
                     self.contacts = W_Contact.parseContacts(responseObject as! NSDictionary)
+                    
+                    for var i = 0; i < self.contacts.count; i++ {
+                        self.arrayContacts.append(self.contacts[i].userId)
+                    }
+                    
                     self.hud?.hide(true)
                     }, failure: {
                         (task: NSURLSessionDataTask!, error: NSError!) in
