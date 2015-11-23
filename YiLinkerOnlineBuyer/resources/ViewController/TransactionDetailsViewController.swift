@@ -97,6 +97,7 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
     
     //Strings
     var sellerId: String = ""
+    var transactionType: String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -143,6 +144,8 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        
+        /*
         let cell = UITableViewCell(style: .Default, reuseIdentifier: "identifier")
         
         cell.selectionStyle = .None
@@ -154,8 +157,15 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
         
         cell.textLabel?.font = UIFont.systemFontOfSize(15.0)
         cell.textLabel?.textColor = .darkGrayColor()
+        */
+        let transactionDetailsTableViewCell: TransactionDetailsTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("TransactionDetailsTableViewCell") as! TransactionDetailsTableViewCell
         
-        return cell
+        if(self.transactionDetailsModel != nil){
+            transactionDetailsTableViewCell.productNameLabel.text = self.table[indexPath.section].transactions[indexPath.row].productName
+            transactionDetailsTableViewCell.productStatusLabel.text = self.statusTitle
+        }
+        
+        return transactionDetailsTableViewCell
     }
     
     // MARK: - Table View Delegate
@@ -197,7 +207,6 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
             self.transactionSectionView.leaveFeedbackButton.tag = self.table[section].sellerIdForFeedback
             self.transactionSectionView.messageButton.backgroundColor = Constants.Colors.appTheme
             self.transactionSectionView.messageButton.tag = self.table[section].sellerIdForFeedback
-            println("seller ids \(self.table[section].sellerIdForFeedback)")
             self.transactionSectionView.sellerNameLabel.text = self.table[section].sellerName
             self.transactionSectionView.sellerNameLabel.tag = self.table[section].sellerIdForFeedback
             self.transactionSectionView.sellerContactNumber.text = self.table[section].sellerContact
@@ -255,7 +264,7 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
         if self.transactionDetailsView == nil {
             self.transactionDetailsView = XibHelper.puffViewWithNibName("TransactionViews", index: 1) as! TransactionDetailsView
             transactionDetailsView.transactionDetails.text  = self.transactionDetails
-            transactionDetailsView.statusTitleLabel.text = self.statusTitle
+            transactionDetailsView.statusTitleLabel.text = self.transactionType
             transactionDetailsView.paymentTypeTitleLabel.text = self.paymentTypeTitle
             transactionDetailsView.dateCreatedTitleLabel.text = self.dateCreatedTitle
             transactionDetailsView.quantityTitleLabel.text = self.totalQuantityTitle
