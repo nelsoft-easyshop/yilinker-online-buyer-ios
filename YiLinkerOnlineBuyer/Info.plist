@@ -48,7 +48,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>5</string>
+	<string>6</string>
 	<key>FacebookAppID</key>
 	<string>513031082205702</string>
 	<key>FacebookDisplayName</key>
@@ -57,6 +57,8 @@
 	<string></string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>YiLinker requires access to your phone’s location.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Black Italic.otf</string>
@@ -96,8 +98,6 @@
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 	</array>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>YiLinker requires access to your phone’s location.</string>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
 </dict>
