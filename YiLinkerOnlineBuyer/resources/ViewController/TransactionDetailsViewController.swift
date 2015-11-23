@@ -142,7 +142,10 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
             return 0
         }
     }
-    
+
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 84
+    }
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         /*
@@ -159,10 +162,10 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
         cell.textLabel?.textColor = .darkGrayColor()
         */
         let transactionDetailsTableViewCell: TransactionDetailsTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("TransactionDetailsTableViewCell") as! TransactionDetailsTableViewCell
-        
+        transactionDetailsTableViewCell.selectionStyle = UITableViewCellSelectionStyle.None
         if(self.transactionDetailsModel != nil){
             transactionDetailsTableViewCell.productNameLabel.text = self.table[indexPath.section].transactions[indexPath.row].productName
-            transactionDetailsTableViewCell.productStatusLabel.text = self.statusTitle
+            transactionDetailsTableViewCell.productStatusLabel.text = self.orderStatus
         }
         
         return transactionDetailsTableViewCell
@@ -230,7 +233,7 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
     }
     
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 25
+        return 0
     }
     
     // MARK: - Init Views
@@ -264,7 +267,7 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
         if self.transactionDetailsView == nil {
             self.transactionDetailsView = XibHelper.puffViewWithNibName("TransactionViews", index: 1) as! TransactionDetailsView
             transactionDetailsView.transactionDetails.text  = self.transactionDetails
-            transactionDetailsView.statusTitleLabel.text = self.transactionType
+            transactionDetailsView.statusTitleLabel.text = self.statusTitle
             transactionDetailsView.paymentTypeTitleLabel.text = self.paymentTypeTitle
             transactionDetailsView.dateCreatedTitleLabel.text = self.dateCreatedTitle
             transactionDetailsView.quantityTitleLabel.text = self.totalQuantityTitle
@@ -272,7 +275,7 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
             transactionDetailsView.shippingFeeTitleLabel.text = self.shippingFeeTitle
             transactionDetailsView.totalCostTitleLabel.text = self.totalCostTitle
             
-            transactionDetailsView.statusLabel.text = self.orderStatus
+            transactionDetailsView.statusLabel.text = self.transactionType
             transactionDetailsView.paymentTypeLabel.text = self.paymentType
             transactionDetailsView.dateCreatedLabel.text = self.dateCreated
             transactionDetailsView.quantityLabel.text = self.totalQuantity
@@ -353,6 +356,11 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
     // MARK: - Methods
     
     func loadViewsWithDetails() {
+        
+        //CELL
+        let transactionNib: UINib = UINib(nibName: "TransactionDetailsTableViewCell", bundle: nil)
+        self.tableView.registerNib(transactionNib, forCellReuseIdentifier: "TransactionDetailsTableViewCell")
+        
         // HEADERS
         self.getHeaderView().addSubview(self.getTransactionIdView())
         self.getHeaderView().addSubview(self.getTransactionDetailsView())
