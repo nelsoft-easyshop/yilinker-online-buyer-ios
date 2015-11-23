@@ -141,6 +141,7 @@ class ViewFeedBackViewController: UIViewController, UITableViewDelegate, UITable
                     self.loadingLabel.text = "No reviews available."
                 } else {
                     self.ratingAndReviewsTableView.hidden = false
+                    self.loadingLabel.hidden = true
                 }
             } else {
                 self.showAlert(title: "Error", message: responseObject["message"] as! String)
