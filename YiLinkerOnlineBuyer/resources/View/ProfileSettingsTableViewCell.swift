@@ -18,6 +18,7 @@ class ProfileSettingsTableViewCell: UITableViewCell {
     
     @IBOutlet weak var settingsLabel: UILabel!
     @IBOutlet weak var settingsSwitch: UISwitch!
+    @IBOutlet weak var switchContraint: NSLayoutConstraint!
 
     override func awakeFromNib() {
         super.awakeFromNib()
