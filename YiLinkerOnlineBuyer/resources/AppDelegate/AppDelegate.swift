@@ -164,13 +164,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GGLInstanceIDDelegate {
                 NSNotificationCenter.defaultCenter().postNotificationName(statusKey, object: nil, userInfo: userInfo)
             case responseType.New:
                 NSNotificationCenter.defaultCenter().postNotificationName(messageKey, object: nil, userInfo: userInfo)
-                if application.applicationState == UIApplicationState.Active {
-                    UIApplication.sharedApplication().applicationIconBadgeNumber = 0
-                    let alertController = UIAlertController(title: "YiLinker", message:
-                        LocalizedStrings.newMessage , preferredStyle: .Alert)
-                    alertController.addAction(UIAlertAction(title: ProductStrings.alertOk, style: .Default, handler: nil))
-                    self.window?.rootViewController?.presentViewController(alertController, animated: true, completion: nil)
-                }
             default:
                 println("RESPONSE TYPE INVALID")
             }
