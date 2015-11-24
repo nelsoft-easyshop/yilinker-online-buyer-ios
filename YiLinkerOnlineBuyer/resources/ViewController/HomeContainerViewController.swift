@@ -34,33 +34,15 @@ struct FABStrings {
 }
 
 class HomeContainerViewController: UIViewController, UITabBarControllerDelegate, EmptyViewDelegate {
-    
-    @IBOutlet weak var contentView: UIView!
-    var dimView: UIView?
-    
-    let viewControllerIndex = 0
     var searchViewContoller: SearchViewController?
     var circularMenuViewController: CircularMenuViewController?
     var wishlisViewController: WishlistViewController?
     var cartViewController: CartViewController?
     
-    var viewControllers = [UIViewController]()
-    
-    var selectedChildViewController: UIViewController?
-    var contentViewFrame: CGRect?
-    
-    var hotItemsCollectionViewController: HomePageCollectionViewController?
-    var featuredCollectionViewController: HomePageCollectionViewController?
-    var newItemsCollectionViewController: HomePageCollectionViewController?
-    var sellersCollectionViewController: HomePageCollectionViewController?
-    
-    var curentCollectionViewController: Int = 0
-    
     var emptyView: EmptyView?
     var hud: MBProgressHUD?
     var profileModel: ProfileUserDetailsModel = ProfileUserDetailsModel()
     var customTabBarController: CustomTabBarController?
-    
     
     //MARK: - Life Cycle
     override func didReceiveMemoryWarning() {
@@ -69,25 +51,27 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     }
     
     override func viewDidLayoutSubviews() {
-        contentViewFrame = contentView.bounds
         
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        UIApplication.sharedApplication().statusBarStyle = .LightContent
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         //set customTabbar
         self.view.layoutIfNeeded()
-        self.contentViewFrame = self.view.frame
         self.customTabBarController = self.tabBarController as? CustomTabBarController
         self.customTabBarController?.isValidToSwitchToMenuTabBarItems = false
         self.circularDraweView()
         self.tabBarController!.delegate = self
-        self.addSuHeaderScrollView()
-        if Reachability.isConnectedToNetwork() {
+
+        /*if Reachability.isConnectedToNetwork() {
             self.fireGetHomePageData()
         } else {
             self.addEmptyView()
-        }
+        }*/
         
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         
@@ -95,10 +79,11 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             name: appDelegate.registrationKey, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "onNewMessage:",
             name: appDelegate.messageKey, object: nil)
-        self.initDimView()
     }
     
-    func onRegistration(notification: NSNotification){
+    //MARK: On Registration
+    //On Registration
+    func onRegistration(notification: NSNotification) {
         if let info = notification.userInfo as? Dictionary<String,String> {
             if let error = info["error"] {
                 showAlert("Error registering with GCM", message: error)
@@ -110,6 +95,8 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         }
     }
     
+    //MARK: Show Alert
+    //For GCM Alert
     func showAlert(title:String, message:String) {
         let alert = UIAlertController(title: title,
             message: message, preferredStyle: .Alert)
@@ -118,10 +105,12 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         self.presentViewController(alert, animated: true, completion: nil)
     }
     
-    func onNewMessage(notification : NSNotification){
+    //MARK: On Message
+    //For GCM Message
+    func onNewMessage(notification : NSNotification) {
         if let info = notification.userInfo as? Dictionary<String, AnyObject> {
             if let data = info["data"] as? String{
-                if let data2 = data.dataUsingEncoding(NSUTF8StringEncoding){
+                if let data2 = data.dataUsingEncoding(NSUTF8StringEncoding) {
                     if let json = NSJSONSerialization.JSONObjectWithData(data2, options: .MutableContainers, error: nil) as? [String:AnyObject] {
                         var count = SessionManager.getUnReadMessagesCount() + 1
                         SessionManager.setUnReadMessagesCount(count)
@@ -131,13 +120,11 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         }
     }
     
+    //MARK: Fire Create Registration
+    //For GCM Registration
     func fireCreateRegistration(registrationID : String) {
-        
         self.showHUD()
-        
         let manager: APIManager = APIManager.sharedInstance
-        //seller@easyshop.ph
-        //password
         let parameters: NSDictionary = [
             "registrationId": "\(registrationID)",
             "access_token"  : SessionManager.accessToken(),
@@ -149,9 +136,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         manager.POST(url, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
-            //SVProgressHUD.dismiss()
             self.hud?.hide(true)
-            //self.showSuccessMessage()
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 
@@ -167,15 +152,17 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                         UIAlertController.displayErrorMessageWithTarget(self, errorMessage: HomeStrings.somethingWentWrong, title: HomeStrings.error)
                     }
                 }
-                //SVProgressHUD.dismiss()
                 self.hud?.hide(true)
         })
     }
     
+    //MARK: - Add Empty View
+    //Show this view if theres no internet connection
     func addEmptyView() {
         if self.emptyView == nil {
             self.emptyView = UIView.loadFromNibNamed("EmptyView", bundle: nil) as? EmptyView
-            self.emptyView?.frame = self.contentViewFrame!
+            self.view.layoutIfNeeded()
+            self.emptyView?.frame = self.view.frame
             self.emptyView!.delegate = self
             self.view.addSubview(self.emptyView!)
         } else {
@@ -233,106 +220,6 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         
     }
     
-    //MARK: - Select View Controller with Index
-    //This function is for executing child view logic code
-    func setSelectedViewControllerWithIndex(index: Int) {
-        if self.viewControllers.count != 0 {
-            let viewController: UIViewController = viewControllers[index]
-            setSelectedViewController(viewController)
-        }
-    }
-    
-    //MARK: - Selected View Controller
-    //Func for view conteinment
-    func setSelectedViewController(viewController: UIViewController) {
-        if !(selectedChildViewController == viewController) {
-            if self.isViewLoaded() {
-                selectedChildViewController?.willMoveToParentViewController(self)
-                selectedChildViewController?.view.removeFromSuperview()
-                selectedChildViewController?.removeFromParentViewController()
-            }
-        }
-        self.view.layoutIfNeeded()
-        self.addChildViewController(viewController)
-        viewController.view.frame = contentViewFrame!
-        contentView.addSubview(viewController.view)
-        viewController.didMoveToParentViewController(self)
-        selectedChildViewController = viewController
-    }
-    
-    //MARK: - Init View Controllers
-    func initViewControllers() {
-        let storyBoard: UIStoryboard = UIStoryboard(name: "HomeStoryBoard", bundle: nil)
-        hotItemsCollectionViewController = storyBoard.instantiateViewControllerWithIdentifier("HomePageCollectionViewController") as? HomePageCollectionViewController
-        featuredCollectionViewController = storyBoard.instantiateViewControllerWithIdentifier("HomePageCollectionViewController") as? HomePageCollectionViewController
-        newItemsCollectionViewController = storyBoard.instantiateViewControllerWithIdentifier("HomePageCollectionViewController") as? HomePageCollectionViewController
-        sellersCollectionViewController = storyBoard.instantiateViewControllerWithIdentifier("HomePageCollectionViewController") as? HomePageCollectionViewController
-    
-        viewControllers.append(hotItemsCollectionViewController!)
-        viewControllers.append(featuredCollectionViewController!)
-        viewControllers.append(newItemsCollectionViewController!)
-        viewControllers.append(sellersCollectionViewController!)
-    }
-    
-    //MARK: - Add Sub Header ScrollView
-    //Function for adding rounded buttons in the navigation bar
-    func addSuHeaderScrollView() {
-        let scrollView: UIScrollView = UIScrollView(frame: CGRectMake(0, 0, self.view.frame.size.width, 40))
-        let titles: [String] = [HomeStrings.featured, HomeStrings.hotItems, HomeStrings.newItem, HomeStrings.seller]
-        var xPosition: CGFloat = 10
-        var counter = 0
-        for title in titles {
-            let button: UIButton = UIButton(frame: CGRectMake(xPosition, 5, 90, 30))
-            button.setTitle(title, forState: UIControlState.Normal)
-            button.titleLabel!.font =  UIFont(name: "HelveticaNeue", size: 10)
-            button.layer.cornerRadius = 15
-            button.layer.borderWidth = 1
-            button.layer.borderColor = UIColor.whiteColor().CGColor
-            button.tag = counter
-            button.addTarget(self, action: "clickSubCategories:", forControlEvents: .TouchUpInside)
-            scrollView.addSubview(button)
-            xPosition = xPosition + button.frame.size.width + 30
-            scrollView.contentSize = CGSizeMake(xPosition, 0)
-            
-            if title == "FEATURED" {
-                button.backgroundColor = UIColor.whiteColor()
-                button.setTitleColor(HexaColor.colorWithHexa(0x5A1F75), forState: UIControlState.Normal)
-            }
-            counter++
-        }
-        scrollView.showsHorizontalScrollIndicator = false
-        let navigationSpacer: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
-        navigationSpacer.width = -20
-        
-        self.navigationItem.leftBarButtonItems = [navigationSpacer, UIBarButtonItem(customView: scrollView)]
-    }
-    
-    //MARK: - Click Sub Categories
-    @IBAction func clickSubCategories(sender: UIButton) {
-        let scrollView: UIScrollView = sender.superview as! UIScrollView
-        let subViewsCount: Int = scrollView.subviews.count
-        
-        for button in scrollView.subviews  {
-            if (button.isKindOfClass(UIButton)) {
-                let tempButton: UIButton = button as! UIButton
-                if tempButton.tag == sender.tag {
-                    tempButton.backgroundColor = UIColor.whiteColor()
-                    tempButton.setTitleColor(HexaColor.colorWithHexa(0x5A1F75), forState: UIControlState.Normal)
-                    if tempButton.tag != 0 {
-                        curentCollectionViewController = tempButton.tag
-                    } else {
-                        curentCollectionViewController = tempButton.tag
-                    }
-                    setSelectedViewControllerWithIndex(curentCollectionViewController)
-                } else {
-                    tempButton.backgroundColor = UIColor.clearColor()
-                    tempButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
-                }
-            }
-            
-        }
-    }
-    
     //MARK: - Circular Drawer View
     //Function for changin tabBar item to circle
     func circularDraweView() {
@@ -350,7 +237,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         let manager = APIManager.sharedInstance
         manager.GET(APIAtlas.homeUrl, parameters: nil, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-                self.populateHomePageWithDictionary(responseObject as! NSDictionary)
+            
                 self.hud?.hide(true)
                 //get user info
                 if SessionManager.isLoggedIn() {
@@ -363,66 +250,9 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                 self.hud?.hide(true)
                 self.addEmptyView()
         })
-
     }
     
-    //MARK: - Populate Home Page With Dictionary
-    //Function for populating dictionary to the collectionview
-    func populateHomePageWithDictionary(dictionary: NSDictionary) {
-        let storyBoard: UIStoryboard = UIStoryboard(name: "HomeStoryBoard", bundle: nil)
-        featuredCollectionViewController = storyBoard.instantiateViewControllerWithIdentifier("HomePageCollectionViewController") as? HomePageCollectionViewController
-        
-        let dataDictionary: NSDictionary = dictionary["data"] as! NSDictionary
-        
-        var featuredDictionary: NSDictionary = dataDictionary["featured"] as! NSDictionary
-        var featuredLayouts: [String] = [Constants.HomePage.layoutOneKey, Constants.HomePage.layoutTwoKey, Constants.HomePage.layoutThreeKey, Constants.HomePage.layoutFourKey, Constants.HomePage.layoutFiveKey, Constants.HomePage.layoutSixKey]
-        
-        featuredCollectionViewController?.dictionary = featuredDictionary
-        featuredCollectionViewController?.layouts = featuredLayouts
-        
-        hotItemsCollectionViewController = storyBoard.instantiateViewControllerWithIdentifier("HomePageCollectionViewController") as? HomePageCollectionViewController
-        let hotItemsDictionary: NSDictionary = dataDictionary["hotItems"] as! NSDictionary
-        var hotItemLayouts: [String] = [Constants.HomePage.layoutTwoKey, Constants.HomePage.layoutSevenKey]
-        
-        let categories: NSArray = hotItemsDictionary["categories"] as! NSArray
-        
-        for (index, category) in enumerate(categories) {
-            let categoryDictionary: NSDictionary = category as! NSDictionary
-            let layoutId: Int = categoryDictionary["categoryId"] as! Int
-            var layout: String = ""
-            if index == 0 {
-                layout = Constants.HomePage.layoutFiveKeyWithFooter
-            } else {
-                layout = Constants.HomePage.layoutFiveKey2
-            }
-            
-            hotItemLayouts.append(layout)
-        }
-        
-        hotItemLayouts.append(Constants.HomePage.layoutTwoKey)
-        hotItemsCollectionViewController?.dictionary = hotItemsDictionary
-        hotItemsCollectionViewController?.layouts = hotItemLayouts
-        
-        
-        newItemsCollectionViewController = storyBoard.instantiateViewControllerWithIdentifier("HomePageCollectionViewController") as? HomePageCollectionViewController
-        let newItemsDictionary: NSDictionary = dataDictionary["newItems"] as! NSDictionary
-        var newItemslayout: [String] = [Constants.HomePage.layoutEightKey, Constants.HomePage.layoutSixKey]
-        newItemsCollectionViewController?.dictionary = newItemsDictionary
-        newItemsCollectionViewController?.layouts = newItemslayout
-        
-        sellersCollectionViewController = storyBoard.instantiateViewControllerWithIdentifier("HomePageCollectionViewController") as? HomePageCollectionViewController
-        let sellerDictionary: NSDictionary = dataDictionary["sellers"] as! NSDictionary
-        let sellerLayouts: [String] = [Constants.HomePage.layoutNineKey, Constants.HomePage.layoutTenKey]
-        sellersCollectionViewController?.dictionary = sellerDictionary
-        sellersCollectionViewController?.layouts = sellerLayouts
-        
-        viewControllers.append(featuredCollectionViewController!)
-        viewControllers.append(hotItemsCollectionViewController!)
-        viewControllers.append(newItemsCollectionViewController!)
-        viewControllers.append(sellersCollectionViewController!)
-        
-        setSelectedViewControllerWithIndex(self.curentCollectionViewController)
-    }
+
     
     //MARK: - Getting User Info
     func fireGetUserInfo() {
@@ -433,6 +263,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             let dictionary: NSDictionary = responseObject as! NSDictionary
             self.profileModel = ProfileUserDetailsModel.parseDataWithDictionary(dictionary["data"]!)
+            
             //Insert Data to Session Manager
             SessionManager.setFullAddress(self.profileModel.address.fullLocation)
             SessionManager.setUserFullName(self.profileModel.fullName)
@@ -441,9 +272,6 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             SessionManager.setWishlistCount(self.profileModel.wishlistCount)
             self.updateTabBarBadge()
             
-            /*if !SessionManager.isMobileVerified() && !SessionManager.isEmailVerified() {
-                self.fireGetCode()
-            }*/
             
             self.hud?.hide(true)
             }, failure: {
@@ -511,88 +339,9 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         self.hud?.show(true)
     }
     
-    
-    
-    //MARK: - Dim View
-    func initDimView() {
-        dimView = UIView(frame: self.view.bounds)
-        dimView?.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
-        self.parentViewController!.view.addSubview(dimView!)
-        //self.view.addSubview(dimView!)
-        dimView?.hidden = true
-        dimView?.alpha = 0
-    }
-    
     // MARK: - Did Tap Reload
     func didTapReload() {
         self.fireGetHomePageData()
         self.emptyView?.hidden = true
     }
-    
-    //MARK: - Verification
-   /* func displayCodeDialog() {
-        var verifyNumberModal = VerifyMobileNumberViewController(nibName: "VerifyMobileNumberViewController", bundle: nil)
-        verifyNumberModal.delegate = self
-        verifyNumberModal.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
-        verifyNumberModal.providesPresentationContextTransitionStyle = true
-        verifyNumberModal.definesPresentationContext = true
-        verifyNumberModal.view.backgroundColor = UIColor.clearColor()
-        verifyNumberModal.view.frame.origin.y = 0
-        self.parentViewController!.presentViewController(verifyNumberModal, animated: true, completion: nil)
-        self.tabBarController?.tabBar.userInteractionEnabled = false
-        self.dimView!.hidden = false
-        UIView.animateWithDuration(0.3, animations: {
-            self.dimView!.alpha = 1
-            }, completion: { finished in
-        })
-    }*/
-    
-    
-    // MARK: - GET CODE
-    /*func fireGetCode() {
-        let manager: APIManager = APIManager.sharedInstance
-        //seller@easyshop.ph
-        //password
-        let parameters: NSDictionary = ["access_token": SessionManager.accessToken()]
-        self.showHUD()
-        manager.POST(APIAtlas.verificationGetCodeUrl, parameters: parameters, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            println(responseObject)
-            self.displayCodeDialog()
-            self.hud?.hide(true)
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
-                self.hud?.hide(true)
-        })
-    }
-    
-    //MARK: - Verification Delegate
-    func closeVerifyMobileNumberViewController() {
-        self.hideDimView()
-        SessionManager.logout()
-        let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-        appDelegate.changeRootToHomeView()
-    }
-    
-    func verifyMobileNumberAction(isSuccessful: Bool) {
-        self.hideDimView()
-        if !isSuccessful {
-            self.fireGetCode()
-        }
-    }
-    
-    func requestNewCodeAction() {
-        self.hideDimView()
-        self.fireGetCode()
-    }
-    
-    func hideDimView() {
-        UIView.animateWithDuration(0.3, animations: {
-            self.dimView!.alpha = 0
-            self.tabBarController?.tabBar.userInteractionEnabled = true
-            }, completion: { finished in
-                
-        })
-    }*/
 }
