@@ -4,12 +4,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ProductDetailsExtendedViewController" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
-            <connections>
-                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
-                <outlet property="webView" destination="MO6-LR-Ntd" id="x6N-jk-bTD"/>
-            </connections>
-        </placeholder>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ProductDetailsExtendedViewController" customModule="YiLinkerOnlineBuyer" customModuleProvider="target"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
@@ -19,11 +14,21 @@
                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </webView>
+                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="pNx-a0-mTD">
+                    <rect key="frame" x="169" y="315" width="37" height="37"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="37" id="Rf0-YC-pTL"/>
+                        <constraint firstAttribute="height" constant="37" id="lwi-yk-IWu"/>
+                    </constraints>
+                    <color key="color" red="0.50122048590000001" green="0.0" blue="0.7202493687" alpha="1" colorSpace="calibratedRGB"/>
+                </activityIndicatorView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
+                <constraint firstAttribute="centerX" secondItem="pNx-a0-mTD" secondAttribute="centerX" id="K19-7l-QVK"/>
                 <constraint firstItem="MO6-LR-Ntd" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Uph-nX-MB5"/>
                 <constraint firstItem="MO6-LR-Ntd" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="bYL-nv-Aji"/>
+                <constraint firstAttribute="centerY" secondItem="pNx-a0-mTD" secondAttribute="centerY" id="iWn-Av-NUw"/>
                 <constraint firstAttribute="bottom" secondItem="MO6-LR-Ntd" secondAttribute="bottom" id="kcb-UL-2er"/>
                 <constraint firstAttribute="trailing" secondItem="MO6-LR-Ntd" secondAttribute="trailing" id="lNe-5w-4Az"/>
             </constraints>

@@ -47,7 +47,7 @@ protocol ProductViewControllerDelegate {
     func pressedDimViewFromProductPage(controller: ProductViewController)
 }
 
-class ProductViewController: UIViewController, ProductImagesViewDelegate, ProductDescriptionViewDelegate, ProductReviewFooterViewDelegate, ProductSellerViewDelegate, ProductReviewViewControllerDelegate, ProductAttributeViewControllerDelegate, EmptyViewDelegate, ProductDetailsExtendedViewControllerDelegate {
+class ProductViewController: UIViewController, ProductImagesViewDelegate, ProductDescriptionViewDelegate, ProductReviewFooterViewDelegate, ProductSellerViewDelegate, ProductReviewViewControllerDelegate, ProductAttributeViewControllerDelegate, EmptyViewDelegate, ProductDetailsExtendedViewDelegate {
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var dimView: UIView!
@@ -68,6 +68,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     var productReviewFooterView: ProductReviewFooterView!
     var productSellerView: ProductSellerView!
     var productDetailsBottomView: ProductDetailsBottomView!
+    var productDetailsExtendedView = ProductDetailsExtendedView()
     
     let manager = APIManager.sharedInstance
     var productDetailsModel: ProductDetailsModel!
@@ -837,6 +838,9 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         self.productSellerView.delegate = self
         
         self.hud?.hide(true)
+        
+        addExtendedView()
+        self.buttonsContainer.layer.zPosition = 2
     }
     
     func setDetails(list: NSArray) {
@@ -1044,6 +1048,14 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         })
     }
     
+    func addExtendedView() {
+        self.productDetailsExtendedView = XibHelper.puffViewWithNibName("ProductDetailsExtendedView", index: 0) as! ProductDetailsExtendedView
+        self.productDetailsExtendedView.frame = self.productImagesView.bounds
+        self.productDetailsExtendedView.frame.origin.y = self.tableView.frame.size.height
+        self.productDetailsExtendedView.backgroundColor = .clearColor()
+        self.view.addSubview(self.productDetailsExtendedView)
+    }
+    
     // MARK: - Product Images Delegate
     
     func close(controller: ProductImagesView) {
@@ -1143,13 +1155,9 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     
     // MARK: - Product Details Extended Delegate
     
-    func closedExtendedDetails(controller: ProductDetailsExtendedViewController) {
-//        UIView.animateWithDuration(0.3, animations: {
-//            self.view.transform = CGAffineTransformMakeTranslation(1, 1)
-//            self.dimView.alpha = 0
-//            self.dimView.layer.zPosition = -1
-//            self.navigationController?.navigationBar.alpha = CGFloat(self.visibility)
-//        })
+    func closedExtendedDetails() {
+        self.navigationController?.navigationBarHidden = false
+        UIApplication.sharedApplication().statusBarHidden = false
     }
     
     // MARK: - Product Seller Delegate
@@ -1221,23 +1229,20 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     }
     
     func openExtendedProductDetails() {
-        var extendedProductDetails = ProductDetailsExtendedViewController(nibName: "ProductDetailsExtendedViewController", bundle: nil)
-        extendedProductDetails.delegate = self
-        extendedProductDetails.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
-        extendedProductDetails.providesPresentationContextTransitionStyle = true
-        extendedProductDetails.definesPresentationContext = true
-        extendedProductDetails.view.backgroundColor = UIColor.clearColor()
-        extendedProductDetails.url = self.productDetailsModel.fullDescription
-        //        attributeModal.view.frame.origin.y = attributeModal.view.frame.size.height
-        //        extendedProductDetails.passModel(productDetailsModel: productDetailsModel, selectedValue: selectedValue, selectedId: selectedId, unitIdIndex: unitIdIndex, quantity: self.quantity, price: self.productImagesView.priceLabel.text!, imageIndex: self.productImagesView.pageControl.currentPage)
-        self.tabBarController?.presentViewController(extendedProductDetails, animated: true, completion: nil)
-        
-//        UIView.animateWithDuration(0.3, animations: {
-//            self.dimView.alpha = 0.5
-//            self.dimView.layer.zPosition = 2
-//            self.view.transform = CGAffineTransformMakeScale(0.92, 0.95)
-//            self.navigationController?.navigationBar.alpha = 0.0
-//        })
+//        var extendedProductDetails = ProductDetailsExtendedViewController(nibName: "ProductDetailsExtendedViewController", bundle: nil)
+//        extendedProductDetails.delegate = self
+//        extendedProductDetails.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
+//        extendedProductDetails.providesPresentationContextTransitionStyle = true
+//        extendedProductDetails.definesPresentationContext = true
+//        extendedProductDetails.view.backgroundColor = UIColor.clearColor()
+//        extendedProductDetails.url = self.productDetailsModel.fullDescription
+//        self.tabBarController?.presentViewController(extendedProductDetails, animated: true, completion: nil)
+        self.navigationController?.navigationBarHidden = true
+        UIApplication.sharedApplication().statusBarHidden = true
+        self.productDetailsExtendedView.setDelegate()
+        UIView.animateWithDuration(0.5, animations: {
+            self.productDetailsExtendedView.frame.origin.y = 0.0
+        })
     }
     
     // MARK: - Navigation Bar Actions
@@ -1314,5 +1319,6 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         
         let shareViewController = UIActivityViewController(activityItems: sharingItems, applicationActivities: nil)
         self.presentViewController(shareViewController, animated: true, completion: nil)
-    }   
+    }
+
 }
