@@ -96,7 +96,13 @@ class ProductFullScreenViewController: UIViewController, UIScrollViewDelegate {
     func scrollViewDidScroll(scrollView: UIScrollView) {
         let pageWidth: CGFloat = self.carouselScrollView.frame.size.width
         let page: Int = Int((self.carouselScrollView.contentOffset.x - pageWidth / 2) / pageWidth) + 1
-        self.pageLabel.text = "\(page + 1) of \(self.images.count)"
+        if page == 0 {
+            self.pageLabel.text = "\(1) of \(self.images.count)"
+        } else if page == self.images.count + 1 {
+            self.pageLabel.text = "\(self.images.count) of \(self.images.count)"
+        } else {
+            self.pageLabel.text = "\(page) of \(self.images.count)"
+        }
     }
     
     func viewForZoomingInScrollView(scrollView: UIScrollView) -> UIView? {
@@ -140,6 +146,12 @@ class ProductFullScreenViewController: UIViewController, UIScrollViewDelegate {
     }
     
     func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+        
+        for subview in self.carouselScrollView.subviews {
+            if let view = subview as? UIScrollView {
+                view.zoomScale = 1.0
+            }
+        }
         
         if scrollView.contentOffset.x == 0 {
             self.carouselScrollView.setContentOffset(CGPointMake(self.view.frame.size.width * CGFloat(self.images.count), 0), animated: false)

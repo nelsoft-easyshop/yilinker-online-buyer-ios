@@ -73,9 +73,9 @@ class ProductImagesView: UIView, UICollectionViewDataSource, UICollectionViewDel
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if self.images.count != 0 {
-            return self.images.count
+            return self.images.count + 2
         } else if self.imagesModel != nil {
-            return self.imagesModel.count
+            return self.imagesModel.count + 2
         }
         return 0
     }
@@ -91,6 +91,10 @@ class ProductImagesView: UIView, UICollectionViewDataSource, UICollectionViewDel
         return cell
     }
 
+    func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+        
+    }
+    
     // MARK: - Collection View Delegate
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
