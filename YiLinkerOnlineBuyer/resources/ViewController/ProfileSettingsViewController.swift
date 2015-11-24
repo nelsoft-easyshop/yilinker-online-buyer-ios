@@ -112,15 +112,27 @@ class ProfileSettingsViewController: UIViewController, UITableViewDataSource, UI
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete method implementation.
         // Return the number of rows in the section.
-        return tableData.count
+        return tableData.count + 1
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(profileSettingsIdentifier, forIndexPath: indexPath) as! ProfileSettingsTableViewCell
         
         cell.delegate = self
-        cell.settingsLabel.text = tableData[indexPath.row]
-        cell.settingsSwitch.setOn(tableDataStatus[indexPath.row], animated: true)
+        if indexPath.row == tableData.count {
+            cell.settingsLabel.textColor = UIColor.redColor()
+            cell.settingsLabel.textAlignment = NSTextAlignment.Center
+            cell.settingsLabel.text = StringHelper.localizedStringWithKey("LOGOUT_LOCALIZE_KEY")
+            cell.switchContraint.constant = 0
+            cell.settingsSwitch.hidden = true
+        } else {
+            cell.settingsLabel.text = tableData[indexPath.row]
+            cell.settingsSwitch.setOn(tableDataStatus[indexPath.row], animated: true)
+            cell.settingsLabel?.textColor = Constants.Colors.grayText
+            cell.settingsLabel?.textAlignment = NSTextAlignment.Left
+            cell.switchContraint.constant = 49
+        }
+        
         
         return cell
     }
@@ -128,6 +140,21 @@ class ProfileSettingsViewController: UIViewController, UITableViewDataSource, UI
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return 50
     }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        if indexPath.row == tableData.count {
+            SessionManager.logout()
+            FBSDKLoginManager().logOut()
+            GPPSignIn.sharedInstance().signOut()
+            self.dismissViewControllerAnimated(false, completion: nil)
+            let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+            appDelegate.changeRootToHomeView()
+            
+        }
+    }
+    
+
     
     // MARK: - ProfileSettingsTableViewCellDelegate
     func settingsSwitchAction(sender: AnyObject, value: Bool) {
