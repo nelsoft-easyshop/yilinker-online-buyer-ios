@@ -180,7 +180,7 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
         productDetails.unitPrice = self.table[indexPath.section].transactions[indexPath.row].unitPrice
         productDetails.totalPrice = self.table[indexPath.section].transactions[indexPath.row].totalPrice
         productDetails.productName = self.table[indexPath.section].transactions[indexPath.row].productName
-        productDetails.transactionId = "TID-\(self.transactionId)"
+        productDetails.transactionId = self.transactionId
         productDetails.isCancellable = self.table[indexPath.section].transactions[indexPath.row].isCancellable
         self.navigationController?.pushViewController(productDetails, animated: true)
     }
