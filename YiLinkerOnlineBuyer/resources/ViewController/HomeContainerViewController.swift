@@ -33,7 +33,7 @@ struct FABStrings {
     static let profile: String = StringHelper.localizedStringWithKey("PROFILE_LOCALIZE_KEY")
 }
 
-class HomeContainerViewController: UIViewController, UITabBarControllerDelegate, EmptyViewDelegate, CarouselCollectionViewCellDataSource, CarouselCollectionViewCellDelegate, DailyLoginCollectionViewCellDelegate {
+class HomeContainerViewController: UIViewController, UITabBarControllerDelegate, EmptyViewDelegate, CarouselCollectionViewCellDataSource, CarouselCollectionViewCellDelegate, DailyLoginCollectionViewCellDelegate, HalfPagerCollectionViewCellDelegate, HalfPagerCollectionViewCellDataSource {
     var searchViewContoller: SearchViewController?
     var circularMenuViewController: CircularMenuViewController?
     var wishlisViewController: WishlistViewController?
@@ -44,7 +44,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     var profileModel: ProfileUserDetailsModel = ProfileUserDetailsModel()
     var customTabBarController: CustomTabBarController?
     
-    var layouts: [String] = ["1", "2"]
+    var layouts: [String] = ["1", "2", "3"]
     
     @IBOutlet weak var collectionView: UICollectionView!
     
@@ -52,6 +52,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     
     let carouselCellNibName = "CarouselCollectionViewCell"
     let dailyLoginNibName = "DailyLoginCollectionViewCell"
+    let halfPagerCellNibName = "HalfPagerCollectionViewCell"
     
     //MARK: - Life Cycle
     override func didReceiveMemoryWarning() {
@@ -72,6 +73,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         
         self.registerCellWithNibName(self.carouselCellNibName)
         self.registerCellWithNibName(self.dailyLoginNibName)
+        self.registerCellWithNibName(self.halfPagerCellNibName)
         
         //set customTabbar
         self.view.layoutIfNeeded()
@@ -386,6 +388,8 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             return 1
         case 2:
             return 1
+        case 3:
+            return 1
         default:
             return 1
         }
@@ -396,12 +400,20 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             let carouselCell: CarouselCollectionViewCell = self.collectionView.dequeueReusableCellWithReuseIdentifier(self.carouselCellNibName, forIndexPath: indexPath) as! CarouselCollectionViewCell
             carouselCell.dataSource = self
             carouselCell.delegate = self
+            
             return carouselCell
-        } else {
+        } else if self.layouts[indexPath.section] == "2" {
             let dailyLoginCell: DailyLoginCollectionViewCell = self.collectionView.dequeueReusableCellWithReuseIdentifier(self.dailyLoginNibName, forIndexPath: indexPath) as! DailyLoginCollectionViewCell
             dailyLoginCell.productImageView.sd_setImageWithURL(NSURL(string: self.images[4]), placeholderImage: UIImage(named: "dummy-placeholder"))
             dailyLoginCell.delegate = self
+            
             return dailyLoginCell
+        } else {
+            let halfPager: HalfPagerCollectionViewCell = self.collectionView.dequeueReusableCellWithReuseIdentifier(self.halfPagerCellNibName, forIndexPath: indexPath) as! HalfPagerCollectionViewCell
+            halfPager.delegate = self
+            halfPager.dataSource = self
+            
+            return halfPager
         }
     }
     
@@ -421,9 +433,8 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     }
     
     func itemWidthInCarouselCollectionViewCell(carouselCollectionViewCell: CarouselCollectionViewCell) -> CGFloat {
-        let inset: Int = 20
-        self.view.layoutIfNeeded()
-        return self.view.frame.size.width - CGFloat(inset)
+        carouselCollectionViewCell.layoutIfNeeded()
+        return carouselCollectionViewCell.collectionView.frame.size.width
     }
     
     //MARK: - Carousel Delegate
@@ -432,9 +443,8 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     }
     
     func carouselCollectionViewCellDidEndDecelerating(carouselCollectionViewCell: CarouselCollectionViewCell) {
-        self.view.layoutIfNeeded()
-        let inset: Int = 20
-        let pageWidth: CGFloat = self.view.frame.size.width - CGFloat(inset)
+        carouselCollectionViewCell.layoutIfNeeded()
+        let pageWidth: CGFloat = carouselCollectionViewCell.collectionView.frame.size.width
         let currentPage: CGFloat = carouselCollectionViewCell.collectionView.contentOffset.x / pageWidth
         
         if 0.0 != fmodf(Float(currentPage), 1.0) {
@@ -443,11 +453,63 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         else {
             carouselCollectionViewCell.pageControl.currentPage = Int(currentPage)
         }
-        
     }
     
     //MARK: - Daily Login Delegate
     func dailyLoginCollectionViewCellDidTapCell(dailyLoginCollectionViewCell: DailyLoginCollectionViewCell) {
         println("daily login clicked!")
     }
+    
+    //MARK: - Half Pager Data Source
+    func halfPagerCollectionViewCell(halfPagerCollectionViewCell: HalfPagerCollectionViewCell, numberOfItemsInSection section: Int) -> Int {
+        return self.images.count
+    }
+    
+    func halfPagerCollectionViewCellnumberOfDotsInPageControl(halfPagerCollectionViewCell: HalfPagerCollectionViewCell) -> Int {
+        var numberOfPages: CGFloat = CGFloat(self.images.count / 2)
+        
+        if fmod(numberOfPages, 1.0) == 0.0 {
+            numberOfPages = numberOfPages + 1
+        }
+        
+        return Int(numberOfPages)
+    }
+    
+    func halfPagerCollectionViewCell(halfPagerCollectionViewCell: HalfPagerCollectionViewCell, cellForRowAtIndexPath indexPath: NSIndexPath) -> FullImageCollectionViewCell {
+        let fullImageCell: FullImageCollectionViewCell = halfPagerCollectionViewCell.collectionView.dequeueReusableCellWithReuseIdentifier(halfPagerCollectionViewCell.fullImageCellNib, forIndexPath: indexPath) as! FullImageCollectionViewCell
+        fullImageCell.itemProductImageView.sd_setImageWithURL(NSURL(string: self.images[indexPath.row]), placeholderImage: UIImage(named: "dummy-placeholder"))
+        fullImageCell.layer.cornerRadius = 5
+        fullImageCell.clipsToBounds = true
+        return fullImageCell
+    }
+    
+    func itemWidthHalfPagerCollectionViewCell(halfPagerCollectionViewCell: HalfPagerCollectionViewCell) -> CGFloat {
+        let rightInset: Int = 15
+        self.view.layoutIfNeeded()
+        
+        if IphoneType.isIphone6() || IphoneType.isIphone6Plus() {
+            return (self.view.frame.size.width / 2) - CGFloat(rightInset)
+        } else {
+            return (self.view.frame.size.width / 2) - CGFloat(rightInset)
+        }
+    }
+    
+     //MARK: - Half Pager Delegate
+    func halfPagerCollectionViewCell(halfPagerCollectionViewCell: HalfPagerCollectionViewCell, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        println("Did select item \(indexPath.row)")
+    }
+    
+    func halfPagerCollectionViewCellDidEndDecelerating(halfPagerCollectionViewCell: HalfPagerCollectionViewCell) {
+        halfPagerCollectionViewCell.layoutIfNeeded()
+        let pageWidth: CGFloat = halfPagerCollectionViewCell.collectionView.frame.size.width
+        let currentPage: CGFloat = halfPagerCollectionViewCell.collectionView.contentOffset.x / pageWidth
+        
+        if 0.0 != fmodf(Float(currentPage), 1.0) {
+            halfPagerCollectionViewCell.pageControl.currentPage = Int(currentPage) + 1
+        }
+        else {
+            halfPagerCollectionViewCell.pageControl.currentPage = Int(currentPage)
+        }
+    }
+
 }

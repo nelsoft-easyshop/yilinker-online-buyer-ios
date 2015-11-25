@@ -188,6 +188,8 @@
 		0C9937711B75063B000D6074 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C9937701B75063B000D6074 /* AppDelegate.swift */; };
 		0CB333661C05720D00625903 /* DailyLoginCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CB333641C05720D00625903 /* DailyLoginCollectionViewCell.swift */; };
 		0CB333671C05720D00625903 /* DailyLoginCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CB333651C05720D00625903 /* DailyLoginCollectionViewCell.xib */; };
+		0CB3336A1C05845D00625903 /* HalfPagerCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CB333681C05845D00625903 /* HalfPagerCollectionViewCell.swift */; };
+		0CB3336B1C05845D00625903 /* HalfPagerCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CB333691C05845D00625903 /* HalfPagerCollectionViewCell.xib */; };
 		0CB9DB071B6A1E6600F2CA13 /* StartPageStoryBoard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0CB9DB061B6A1E6600F2CA13 /* StartPageStoryBoard.storyboard */; };
 		0CB9DB391B6A3DC700F2CA13 /* StartPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CB9DB381B6A3DC700F2CA13 /* StartPageViewController.swift */; };
 		0CB9DB3B1B6A3EA100F2CA13 /* StarterContentPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CB9DB3A1B6A3EA100F2CA13 /* StarterContentPageViewController.swift */; };
@@ -667,6 +669,8 @@
 		0C9937701B75063B000D6074 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0CB333641C05720D00625903 /* DailyLoginCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DailyLoginCollectionViewCell.swift; sourceTree = "<group>"; };
 		0CB333651C05720D00625903 /* DailyLoginCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DailyLoginCollectionViewCell.xib; sourceTree = "<group>"; };
+		0CB333681C05845D00625903 /* HalfPagerCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HalfPagerCollectionViewCell.swift; sourceTree = "<group>"; };
+		0CB333691C05845D00625903 /* HalfPagerCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HalfPagerCollectionViewCell.xib; sourceTree = "<group>"; };
 		0CB9DB061B6A1E6600F2CA13 /* StartPageStoryBoard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = StartPageStoryBoard.storyboard; sourceTree = "<group>"; };
 		0CB9DB381B6A3DC700F2CA13 /* StartPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartPageViewController.swift; sourceTree = "<group>"; };
 		0CB9DB3A1B6A3EA100F2CA13 /* StarterContentPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StarterContentPageViewController.swift; sourceTree = "<group>"; };
@@ -995,6 +999,8 @@
 				0C1777FE1C045B6600C310D9 /* CarouselCollectionViewCell.xib */,
 				0CB333641C05720D00625903 /* DailyLoginCollectionViewCell.swift */,
 				0CB333651C05720D00625903 /* DailyLoginCollectionViewCell.xib */,
+				0CB333681C05845D00625903 /* HalfPagerCollectionViewCell.swift */,
+				0CB333691C05845D00625903 /* HalfPagerCollectionViewCell.xib */,
 			);
 			name = Home;
 			sourceTree = "<group>";
@@ -1899,6 +1905,7 @@
 				0C99376B1B750583000D6074 /* SellerCollectionViewCell.xib in Resources */,
 				79A1C6F71B835A090043AA36 /* ProductResultGridCollectionViewCell.xib in Resources */,
 				F7C569E21BB1776F004740E1 /* TransactionTableViewCell.xib in Resources */,
+				0CB3336B1C05845D00625903 /* HalfPagerCollectionViewCell.xib in Resources */,
 				0C374F361B88E3790050AE1D /* SeeMoreTableViewCell.xib in Resources */,
 				79E68B811B8AEC00008626E4 /* MyPointsTableViewController.xib in Resources */,
 				0C9937671B750583000D6074 /* ProductItemWithVerticalDisplayCollectionViewCell.xib in Resources */,
@@ -2151,6 +2158,7 @@
 				79A1C6ED1B8329200043AA36 /* SearchSuggestionModel.swift in Sources */,
 				0C9937561B750583000D6074 /* SellerCollectionViewCell.swift in Sources */,
 				79E68BB31B8B5862008626E4 /* EditProfileAddressTableViewCell.swift in Sources */,
+				0CB3336A1C05845D00625903 /* HalfPagerCollectionViewCell.swift in Sources */,
 				26AFB3B61B79DE3800E50926 /* ProductViewsViewController.swift in Sources */,
 				0C9937471B750583000D6074 /* DynamicRoundedLabel.swift in Sources */,
 				F70EFB1F1BC6BEB80077B8ED /* TransactionLeaveFeedbackFieldTableViewCell.swift in Sources */,

@@ -60,8 +60,7 @@ class CarouselCollectionViewCell: UICollectionViewCell, UIScrollViewDelegate {
         return self.dataSource!.carouselCollectionViewCell(self, cellForRowAtIndexPath: indexPath)
     }
     
-    func collectionView(collectionView : UICollectionView,layout collectionViewLayout:UICollectionViewLayout,sizeForItemAtIndexPath indexPath:NSIndexPath) -> CGSize
-    {
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
         var cellSize:CGSize = CGSizeMake(self.dataSource!.itemWidthInCarouselCollectionViewCell(self), SectionHeight.sectionOne)
         return cellSize
     }

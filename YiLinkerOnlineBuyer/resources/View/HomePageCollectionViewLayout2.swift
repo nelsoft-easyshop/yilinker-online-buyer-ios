@@ -11,6 +11,7 @@ import UIKit
 struct SectionHeight {
     static let sectionOne: CGFloat = 200.0
     static let sectionTwo: CGFloat = 70.0
+    static let sectionThree: CGFloat = 170.0
 }
 
 class HomePageCollectionViewLayout2: UICollectionViewLayout {
@@ -36,6 +37,8 @@ class HomePageCollectionViewLayout2: UICollectionViewLayout {
                 self.layoutOne(index)
             } else if layout == "2" {
                 self.layoutTwo(index)
+            } else if layout == "3" {
+                self.layoutThree(index)
             }
         }
     }
@@ -64,12 +67,28 @@ class HomePageCollectionViewLayout2: UICollectionViewLayout {
         self.layoutAttributes[key] = attributes
     }
     
+    //MARK: Layout Three
+    func layoutThree(section: Int) {
+        let numberOfItems = self.collectionView?.numberOfItemsInSection(section)
+        let indexPath = NSIndexPath(forItem: 0, inSection: section)
+        let attributes = UICollectionViewLayoutAttributes(forCellWithIndexPath: indexPath)
+        
+        attributes.frame = CGRectMake(0, self.sectionYOffsetWithSectionNumber(section), screenRect!.width , SectionHeight.sectionThree)
+        
+        let key = self.layoutKeyForIndexPath(indexPath)
+        self.layoutAttributes[key] = attributes
+    }
+    
     //MARK: - Section Y Offset With Section Number
     func sectionYOffsetWithSectionNumber(section: Int) -> CGFloat {
         var occupiedSpace: CGFloat = 0.0
         for var x = 0; x < section; x++ {
             if self.layouts[x] == "1" {
                 occupiedSpace = occupiedSpace + SectionHeight.sectionOne + sectionVerticalInset
+            } else if self.layouts[x] == "2" {
+                occupiedSpace = occupiedSpace + SectionHeight.sectionTwo + sectionVerticalInset
+            } else if self.layouts[x] == "3" {
+                occupiedSpace = occupiedSpace + SectionHeight.sectionThree + sectionVerticalInset
             } else {
                 occupiedSpace = 0.0
             }
