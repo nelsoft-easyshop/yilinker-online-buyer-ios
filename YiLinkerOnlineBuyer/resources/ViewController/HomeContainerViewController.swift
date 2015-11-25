@@ -33,7 +33,7 @@ struct FABStrings {
     static let profile: String = StringHelper.localizedStringWithKey("PROFILE_LOCALIZE_KEY")
 }
 
-class HomeContainerViewController: UIViewController, UITabBarControllerDelegate, EmptyViewDelegate, CarouselCollectionViewCellDataSource, CarouselCollectionViewCellDelegate {
+class HomeContainerViewController: UIViewController, UITabBarControllerDelegate, EmptyViewDelegate, CarouselCollectionViewCellDataSource, CarouselCollectionViewCellDelegate, DailyLoginCollectionViewCellDelegate {
     var searchViewContoller: SearchViewController?
     var circularMenuViewController: CircularMenuViewController?
     var wishlisViewController: WishlistViewController?
@@ -44,13 +44,14 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     var profileModel: ProfileUserDetailsModel = ProfileUserDetailsModel()
     var customTabBarController: CustomTabBarController?
     
-    var layouts: [String] = ["1"]
+    var layouts: [String] = ["1", "2"]
     
     @IBOutlet weak var collectionView: UICollectionView!
     
-    var images: [String] = ["http://www.nognoginthecity.com/wp-content/uploads/2014/11/20141023_BRA_NA_Penshoppe-CB-women_NA_penshoppe-1.jpg", "http://www.manilaonsale.com/wp-content/uploads/2013/03/Penshoppe-Sale-March-2013.jpg", "http://www.manilaonsale.com/wp-content/uploads/2013/07/Penshoppe-Mid-Year-Clearance-Sale-July-2013.jpg"]
+    var images: [String] = ["http://www.nognoginthecity.com/wp-content/uploads/2014/11/20141023_BRA_NA_Penshoppe-CB-women_NA_penshoppe-1.jpg", "http://www.manilaonsale.com/wp-content/uploads/2013/03/Penshoppe-Sale-March-2013.jpg", "http://www.manilaonsale.com/wp-content/uploads/2013/07/Penshoppe-Mid-Year-Clearance-Sale-July-2013.jpg", "http://cdn.soccerbible.com/media/8733/adidas-hunt-pack-supplied-img4.jpg", "http://demandware.edgesuite.net/sits_pod14-adidas/dw/image/v2/aagl_prd/on/demandware.static/-/Sites-adidas-AME-Library/default/dw2ec04560/brand/images/2015/06/adidas-originals-fw15-xeno-zx-flux-fc-double_70190.jpg?sw=470&sh=264&sm=fit&cx=10&cy=0&cw=450&ch=254&sfrm=jpg"]
     
     let carouselCellNibName = "CarouselCollectionViewCell"
+    let dailyLoginNibName = "DailyLoginCollectionViewCell"
     
     //MARK: - Life Cycle
     override func didReceiveMemoryWarning() {
@@ -70,6 +71,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         super.viewDidLoad()
         
         self.registerCellWithNibName(self.carouselCellNibName)
+        self.registerCellWithNibName(self.dailyLoginNibName)
         
         //set customTabbar
         self.view.layoutIfNeeded()
@@ -379,14 +381,28 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 1
+        switch (self.layouts[section].toInt()!) {
+        case 1:
+            return 1
+        case 2:
+            return 1
+        default:
+            return 1
+        }
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let carouselCell: CarouselCollectionViewCell = self.collectionView.dequeueReusableCellWithReuseIdentifier(self.carouselCellNibName, forIndexPath: indexPath) as! CarouselCollectionViewCell
-        carouselCell.dataSource = self
-        carouselCell.delegate = self
-        return carouselCell
+        if self.layouts[indexPath.section] == "1" {
+            let carouselCell: CarouselCollectionViewCell = self.collectionView.dequeueReusableCellWithReuseIdentifier(self.carouselCellNibName, forIndexPath: indexPath) as! CarouselCollectionViewCell
+            carouselCell.dataSource = self
+            carouselCell.delegate = self
+            return carouselCell
+        } else {
+            let dailyLoginCell: DailyLoginCollectionViewCell = self.collectionView.dequeueReusableCellWithReuseIdentifier(self.dailyLoginNibName, forIndexPath: indexPath) as! DailyLoginCollectionViewCell
+            dailyLoginCell.productImageView.sd_setImageWithURL(NSURL(string: self.images[4]), placeholderImage: UIImage(named: "dummy-placeholder"))
+            dailyLoginCell.delegate = self
+            return dailyLoginCell
+        }
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
@@ -405,8 +421,9 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     }
     
     func itemWidthInCarouselCollectionViewCell(carouselCollectionViewCell: CarouselCollectionViewCell) -> CGFloat {
-        carouselCollectionViewCell.collectionView.layoutIfNeeded()
-        return carouselCollectionViewCell.frame.size.width
+        let inset: Int = 20
+        self.view.layoutIfNeeded()
+        return self.view.frame.size.width - CGFloat(inset)
     }
     
     //MARK: - Carousel Delegate
@@ -415,8 +432,9 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     }
     
     func carouselCollectionViewCellDidEndDecelerating(carouselCollectionViewCell: CarouselCollectionViewCell) {
-        carouselCollectionViewCell.collectionView.layoutIfNeeded()
-        let pageWidth: CGFloat = carouselCollectionViewCell.frame.size.width
+        self.view.layoutIfNeeded()
+        let inset: Int = 20
+        let pageWidth: CGFloat = self.view.frame.size.width - CGFloat(inset)
         let currentPage: CGFloat = carouselCollectionViewCell.collectionView.contentOffset.x / pageWidth
         
         if 0.0 != fmodf(Float(currentPage), 1.0) {
@@ -426,5 +444,10 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             carouselCollectionViewCell.pageControl.currentPage = Int(currentPage)
         }
         
+    }
+    
+    //MARK: - Daily Login Delegate
+    func dailyLoginCollectionViewCellDidTapCell(dailyLoginCollectionViewCell: DailyLoginCollectionViewCell) {
+        println("daily login clicked!")
     }
 }

@@ -10,6 +10,7 @@ import UIKit
 
 struct SectionHeight {
     static let sectionOne: CGFloat = 200.0
+    static let sectionTwo: CGFloat = 70.0
 }
 
 class HomePageCollectionViewLayout2: UICollectionViewLayout {
@@ -33,6 +34,8 @@ class HomePageCollectionViewLayout2: UICollectionViewLayout {
         for (index, layout) in enumerate(self.layouts) {
             if layout == "1" {
                 self.layoutOne(index)
+            } else if layout == "2" {
+                self.layoutTwo(index)
             }
         }
     }
@@ -44,6 +47,18 @@ class HomePageCollectionViewLayout2: UICollectionViewLayout {
         let attributes = UICollectionViewLayoutAttributes(forCellWithIndexPath: indexPath)
         
         attributes.frame = CGRectMake(0, self.sectionYOffsetWithSectionNumber(section), screenRect!.width , SectionHeight.sectionOne)
+        
+        let key = self.layoutKeyForIndexPath(indexPath)
+        self.layoutAttributes[key] = attributes
+    }
+    
+    //MARK: Layout Two
+    func layoutTwo(section: Int) {
+        let numberOfItems = self.collectionView?.numberOfItemsInSection(section)
+        let indexPath = NSIndexPath(forItem: 0, inSection: section)
+        let attributes = UICollectionViewLayoutAttributes(forCellWithIndexPath: indexPath)
+        
+        attributes.frame = CGRectMake(0, self.sectionYOffsetWithSectionNumber(section), screenRect!.width , SectionHeight.sectionTwo)
         
         let key = self.layoutKeyForIndexPath(indexPath)
         self.layoutAttributes[key] = attributes
