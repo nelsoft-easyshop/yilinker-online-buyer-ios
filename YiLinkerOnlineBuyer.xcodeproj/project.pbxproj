@@ -14,6 +14,9 @@
 		0C1179391BA8291900AA1554 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C11793B1BA8291900AA1554 /* LaunchScreen.xib */; };
 		0C1179461BA82BE700AA1554 /* LocalizableString.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0C1179481BA82BE700AA1554 /* LocalizableString.strings */; };
 		0C11794B1BA98EFE00AA1554 /* StringHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C11794A1BA98EFE00AA1554 /* StringHelper.swift */; };
+		0C1777FF1C045B6600C310D9 /* CarouselCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C1777FD1C045B6600C310D9 /* CarouselCollectionViewCell.swift */; };
+		0C1778001C045B6600C310D9 /* CarouselCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C1777FE1C045B6600C310D9 /* CarouselCollectionViewCell.xib */; };
+		0C1778031C045FB800C310D9 /* HomePageCollectionViewLayout2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C1778021C045FB800C310D9 /* HomePageCollectionViewLayout2.swift */; };
 		0C1C3A851B9406BD00E6180D /* JSONResponseSerializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C1C3A841B9406BD00E6180D /* JSONResponseSerializer.swift */; };
 		0C2670CF1B772E4B00394E29 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C2670CE1B772E4B00394E29 /* Enums.swift */; };
 		0C2E8A271B9AA3EE00D50455 /* PesoPayModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C2E8A261B9AA3EE00D50455 /* PesoPayModel.swift */; };
@@ -482,6 +485,9 @@
 		0C1179471BA82BE700AA1554 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/LocalizableString.strings; sourceTree = "<group>"; };
 		0C1179491BA82BE800AA1554 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LocalizableString.strings"; sourceTree = "<group>"; };
 		0C11794A1BA98EFE00AA1554 /* StringHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringHelper.swift; sourceTree = "<group>"; };
+		0C1777FD1C045B6600C310D9 /* CarouselCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarouselCollectionViewCell.swift; sourceTree = "<group>"; };
+		0C1777FE1C045B6600C310D9 /* CarouselCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CarouselCollectionViewCell.xib; sourceTree = "<group>"; };
+		0C1778021C045FB800C310D9 /* HomePageCollectionViewLayout2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomePageCollectionViewLayout2.swift; sourceTree = "<group>"; };
 		0C1C3A841B9406BD00E6180D /* JSONResponseSerializer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONResponseSerializer.swift; sourceTree = "<group>"; };
 		0C25D94D1B76F81A00E9EFA6 /* YiLinkerOnlineBuyer-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "YiLinkerOnlineBuyer-Bridging-Header.h"; sourceTree = "<group>"; };
 		0C2670CE1B772E4B00394E29 /* Enums.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
@@ -978,6 +984,15 @@
 			path = Strings;
 			sourceTree = "<group>";
 		};
+		0C1778011C045B7200C310D9 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				0C1777FD1C045B6600C310D9 /* CarouselCollectionViewCell.swift */,
+				0C1777FE1C045B6600C310D9 /* CarouselCollectionViewCell.xib */,
+			);
+			name = Home;
+			sourceTree = "<group>";
+		};
 		0C2F44AF1B8576FE00021F45 /* Font */ = {
 			isa = PBXGroup;
 			children = (
@@ -1281,6 +1296,7 @@
 		0C99370B1B750583000D6074 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				0C1778011C045B7200C310D9 /* Home */,
 				2689FBF51B80412D007BEA68 /* CategoriesTableViewCell.swift */,
 				F7C56A071BB179FF004740E1 /* TransactionTableViewCell.swift */,
 				F7C569A11BB1762C004740E1 /* TransactionCancelOrderView.swift */,
@@ -1391,6 +1407,7 @@
 				26D688C41C021DA7003ED151 /* MapTableViewCell.swift */,
 				26D688C51C021DA7003ED151 /* MapTableViewCell.xib */,
 				F7A66B241C03195200D8E688 /* TransactionDetailsTableViewCell.swift */,
+				0C1778021C045FB800C310D9 /* HomePageCollectionViewLayout2.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1837,6 +1854,7 @@
 				F740F0901B90D1D800D23A34 /* address.png in Resources */,
 				0C374F3B1B88E3790050AE1D /* GeneralRatingTableViewCell.xib in Resources */,
 				0C2F44C71B8576FE00021F45 /* Panton ExtraBold Italic.otf in Resources */,
+				0C1778001C045B6600C310D9 /* CarouselCollectionViewCell.xib in Resources */,
 				0C65BBB01C019A0800C66C39 /* NetTotalTableViewCell.xib in Resources */,
 				79E85FBC1B89DC1500428AA1 /* ProfileHeaderTableViewCell.xib in Resources */,
 				F7DC7EE31BA1421F004F7FD4 /* SellerSubCategoryViewController.xib in Resources */,
@@ -2207,6 +2225,7 @@
 				B77B8DD81B9B554A0002C513 /* MessageThreadTVC.swift in Sources */,
 				F7C569A01BB175F1004740E1 /* TransactionProductDetailsModel.swift in Sources */,
 				0C99373F1B750583000D6074 /* SessionManager.swift in Sources */,
+				0C1777FF1C045B6600C310D9 /* CarouselCollectionViewCell.swift in Sources */,
 				79E85FBF1B89DE1C00428AA1 /* ProfileTableViewCell.swift in Sources */,
 				26AFB39C1B79DDEA00E50926 /* ProductAvailableAttributeCombinationModel.swift in Sources */,
 				F7C569B11BB1762C004740E1 /* TransactionCancelOrderView.swift in Sources */,
@@ -2227,6 +2246,7 @@
 				0C65BBAF1C019A0800C66C39 /* NetTotalTableViewCell.swift in Sources */,
 				0C99375D1B750583000D6074 /* HomeContainerViewController.swift in Sources */,
 				79E85FCE1B8A1F5800428AA1 /* ActivityLogModel.swift in Sources */,
+				0C1778031C045FB800C310D9 /* HomePageCollectionViewLayout2.swift in Sources */,
 				26C285421B8FAA48005EBD3A /* GetAddressesModel.swift in Sources */,
 				0C2F45291B85E95D00021F45 /* ChangeAddressCollectionViewCell.swift in Sources */,
 				79E68B931B8B0B8D008626E4 /* PointsTableViewCell.swift in Sources */,

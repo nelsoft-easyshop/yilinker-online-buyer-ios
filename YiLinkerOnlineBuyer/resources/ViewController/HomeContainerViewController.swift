@@ -33,7 +33,7 @@ struct FABStrings {
     static let profile: String = StringHelper.localizedStringWithKey("PROFILE_LOCALIZE_KEY")
 }
 
-class HomeContainerViewController: UIViewController, UITabBarControllerDelegate, EmptyViewDelegate {
+class HomeContainerViewController: UIViewController, UITabBarControllerDelegate, EmptyViewDelegate, CarouselCollectionViewCellDataSource, CarouselCollectionViewCellDelegate {
     var searchViewContoller: SearchViewController?
     var circularMenuViewController: CircularMenuViewController?
     var wishlisViewController: WishlistViewController?
@@ -43,6 +43,14 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     var hud: MBProgressHUD?
     var profileModel: ProfileUserDetailsModel = ProfileUserDetailsModel()
     var customTabBarController: CustomTabBarController?
+    
+    var layouts: [String] = ["1"]
+    
+    @IBOutlet weak var collectionView: UICollectionView!
+    
+    var images: [String] = ["http://www.nognoginthecity.com/wp-content/uploads/2014/11/20141023_BRA_NA_Penshoppe-CB-women_NA_penshoppe-1.jpg", "http://www.manilaonsale.com/wp-content/uploads/2013/03/Penshoppe-Sale-March-2013.jpg", "http://www.manilaonsale.com/wp-content/uploads/2013/07/Penshoppe-Mid-Year-Clearance-Sale-July-2013.jpg"]
+    
+    let carouselCellNibName = "CarouselCollectionViewCell"
     
     //MARK: - Life Cycle
     override func didReceiveMemoryWarning() {
@@ -60,13 +68,16 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.registerCellWithNibName(self.carouselCellNibName)
+        
         //set customTabbar
         self.view.layoutIfNeeded()
         self.customTabBarController = self.tabBarController as? CustomTabBarController
         self.customTabBarController?.isValidToSwitchToMenuTabBarItems = false
         self.circularDraweView()
         self.tabBarController!.delegate = self
-
+        
         /*if Reachability.isConnectedToNetwork() {
             self.fireGetHomePageData()
         } else {
@@ -79,9 +90,25 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             name: appDelegate.registrationKey, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "onNewMessage:",
             name: appDelegate.messageKey, object: nil)
+        
+        self.collectionViewLayout()
     }
     
-    //MARK: On Registration
+    //MARK: collectionViewLayout()
+    func collectionViewLayout() {
+        let homePageCollectionViewLayout: HomePageCollectionViewLayout2 = HomePageCollectionViewLayout2()
+        homePageCollectionViewLayout.layouts = self.layouts
+        self.collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        self.collectionView.collectionViewLayout = homePageCollectionViewLayout
+    }
+    
+    //MARK: - Register Cell
+    func registerCellWithNibName(nibName: String) {
+        let nib: UINib = UINib(nibName: nibName, bundle: nil)
+        self.collectionView.registerNib(nib, forCellWithReuseIdentifier: nibName)
+    }
+    
+    //MARK: - On Registration
     //On Registration
     func onRegistration(notification: NSNotification) {
         if let info = notification.userInfo as? Dictionary<String,String> {
@@ -343,5 +370,61 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     func didTapReload() {
         self.fireGetHomePageData()
         self.emptyView?.hidden = true
+    }
+    
+    //MARK: - UICollectionView Data Source
+    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+        //#warning Incomplete method implementation -- Return the number of sections
+        return self.layouts.count
+    }
+    
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 1
+    }
+    
+    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        let carouselCell: CarouselCollectionViewCell = self.collectionView.dequeueReusableCellWithReuseIdentifier(self.carouselCellNibName, forIndexPath: indexPath) as! CarouselCollectionViewCell
+        carouselCell.dataSource = self
+        carouselCell.delegate = self
+        return carouselCell
+    }
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
+        return UIEdgeInsetsMake(0, 0, 0, 0)
+    }
+    
+    //MARK: - Carousel Data Source
+    func carouselCollectionViewCell(carouselCollectionViewCell: CarouselCollectionViewCell, numberOfItemsInSection section: Int) -> Int {
+        return self.images.count
+    }
+    
+    func carouselCollectionViewCell(carouselCollectionViewCell: CarouselCollectionViewCell, cellForRowAtIndexPath indexPath: NSIndexPath) -> FullImageCollectionViewCell {
+        let fullImageCollectionViewCell: FullImageCollectionViewCell = carouselCollectionViewCell.collectionView.dequeueReusableCellWithReuseIdentifier(carouselCollectionViewCell.fullImageCellNib, forIndexPath: indexPath) as! FullImageCollectionViewCell
+        fullImageCollectionViewCell.itemProductImageView.sd_setImageWithURL(NSURL(string: self.images[indexPath.row]), placeholderImage: UIImage(named: "dummy-placeholder"))
+        return fullImageCollectionViewCell
+    }
+    
+    func itemWidthInCarouselCollectionViewCell(carouselCollectionViewCell: CarouselCollectionViewCell) -> CGFloat {
+        carouselCollectionViewCell.collectionView.layoutIfNeeded()
+        return carouselCollectionViewCell.frame.size.width
+    }
+    
+    //MARK: - Carousel Delegate
+    func carouselCollectionViewCell(carouselCollectionViewCell: CarouselCollectionViewCell, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        println("Did select item \(indexPath.row)")
+    }
+    
+    func carouselCollectionViewCellDidEndDecelerating(carouselCollectionViewCell: CarouselCollectionViewCell) {
+        carouselCollectionViewCell.collectionView.layoutIfNeeded()
+        let pageWidth: CGFloat = carouselCollectionViewCell.frame.size.width
+        let currentPage: CGFloat = carouselCollectionViewCell.collectionView.contentOffset.x / pageWidth
+        
+        if 0.0 != fmodf(Float(currentPage), 1.0) {
+            carouselCollectionViewCell.pageControl.currentPage = Int(currentPage) + 1
+        }
+        else {
+            carouselCollectionViewCell.pageControl.currentPage = Int(currentPage)
+        }
+        
     }
 }

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CarouselCollectionViewCell" id="gTV-IL-0wX" customClass="CarouselCollectionViewCell" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="392" height="200"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="392" height="200"/>
+                <subviews>
+                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="YIe-7I-dDv">
+                        <rect key="frame" x="10" y="9" width="370" height="182"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="iwS-Lp-AUP">
+                            <size key="itemSize" width="50" height="200"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <cells/>
+                        <connections>
+                            <outlet property="dataSource" destination="gTV-IL-0wX" id="X7k-aj-ym5"/>
+                            <outlet property="delegate" destination="gTV-IL-0wX" id="tPI-kM-ySU"/>
+                        </connections>
+                    </collectionView>
+                    <pageControl opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="DlP-SB-GWN">
+                        <rect key="frame" x="8" y="165" width="376" height="37"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="37" id="vN5-Aa-avc"/>
+                        </constraints>
+                        <color key="pageIndicatorTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </pageControl>
+                </subviews>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            </view>
+            <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="DlP-SB-GWN" secondAttribute="bottom" constant="-2" id="2yR-3D-5tV"/>
+                <constraint firstItem="YIe-7I-dDv" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="9" id="6Xl-CX-w0T"/>
+                <constraint firstAttribute="bottom" secondItem="YIe-7I-dDv" secondAttribute="bottom" constant="9" id="N3T-Os-Ibs"/>
+                <constraint firstAttribute="trailing" secondItem="DlP-SB-GWN" secondAttribute="trailing" constant="8" id="PQq-bm-fYM"/>
+                <constraint firstAttribute="trailing" secondItem="YIe-7I-dDv" secondAttribute="trailing" constant="12" id="Wkv-WR-anW"/>
+                <constraint firstItem="YIe-7I-dDv" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="10" id="b1o-Jx-420"/>
+                <constraint firstItem="DlP-SB-GWN" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="8" id="blZ-Jb-hGj"/>
+            </constraints>
+            <size key="customSize" width="392" height="200"/>
+            <connections>
+                <outlet property="collectionView" destination="YIe-7I-dDv" id="99b-5M-Tzs"/>
+                <outlet property="pageControl" destination="DlP-SB-GWN" id="itR-IC-jai"/>
+            </connections>
+            <point key="canvasLocation" x="288" y="429"/>
+        </collectionViewCell>
+    </objects>
+</document>

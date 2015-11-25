@@ -77,10 +77,41 @@
                     <view key="view" clipsSubviews="YES" contentMode="scaleToFill" id="kh9-bI-dsS">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Lxq-mx-A8I">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="618"/>
+                                <color key="backgroundColor" red="1" green="0.89177344680000004" blue="0.51266724220000004" alpha="1" colorSpace="calibratedRGB"/>
+                                <collectionViewLayout key="collectionViewLayout" id="r9I-KX-X6d"/>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="7K4-VP-ZjT">
+                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                    </collectionViewCell>
+                                </cells>
+                                <connections>
+                                    <outlet property="dataSource" destination="vXZ-lx-hvc" id="lHP-RB-60I"/>
+                                    <outlet property="delegate" destination="vXZ-lx-hvc" id="ii6-gD-PgM"/>
+                                </connections>
+                            </collectionView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Lxq-mx-A8I" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="2ho-rM-ruR"/>
+                            <constraint firstItem="Lxq-mx-A8I" firstAttribute="top" secondItem="kh9-bI-dsS" secondAttribute="top" id="b94-zX-wMy"/>
+                            <constraint firstItem="1tV-ne-YDq" firstAttribute="top" secondItem="Lxq-mx-A8I" secondAttribute="bottom" id="vQh-6W-1S2"/>
+                            <constraint firstAttribute="trailing" secondItem="Lxq-mx-A8I" secondAttribute="trailing" id="vm6-cu-Jjq"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="DKy-sG-2VX"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <connections>
+                        <outlet property="collectionView" destination="Lxq-mx-A8I" id="aqm-iG-nDV"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
