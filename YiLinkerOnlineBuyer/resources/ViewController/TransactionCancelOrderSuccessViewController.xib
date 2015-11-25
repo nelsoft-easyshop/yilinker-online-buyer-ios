@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
@@ -62,7 +62,7 @@
                             </constraints>
                         </view>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="A Customer Service Representative will contact you shortly to ask how we can help you from losing more orders" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gij-eX-9ke">
-                            <rect key="frame" x="8" y="136" width="327" height="56"/>
+                            <rect key="frame" x="8" y="143" width="327" height="56"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="56" id="bc0-hv-Hc9"/>
                             </constraints>
@@ -105,10 +105,10 @@
                                 <constraint firstAttribute="centerY" secondItem="lZi-ne-zZx" secondAttribute="centerY" id="zzb-Gj-g2t"/>
                             </constraints>
                         </view>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This order has been successfully been cancelled" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tqm-hR-rje">
-                            <rect key="frame" x="8" y="108" width="327" height="21"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This order has been successfully been cancelled" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tqm-hR-rje">
+                            <rect key="frame" x="8" y="108" width="327" height="36"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="21" id="LVr-LO-vjs"/>
+                                <constraint firstAttribute="height" constant="36" id="tnB-R1-gRQ"/>
                             </constraints>
                             <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="14"/>
                             <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -126,7 +126,7 @@
                         <constraint firstAttribute="trailing" secondItem="Tqm-hR-rje" secondAttribute="trailing" constant="8" id="EA5-gp-19Q"/>
                         <constraint firstItem="Tqm-hR-rje" firstAttribute="top" secondItem="mDj-3Z-5dA" secondAttribute="bottom" constant="8" id="EKZ-Ir-BVE"/>
                         <constraint firstItem="Gij-eX-9ke" firstAttribute="leading" secondItem="5ec-i9-RyD" secondAttribute="leading" constant="8" id="QNj-Pl-UAx"/>
-                        <constraint firstItem="Gij-eX-9ke" firstAttribute="top" secondItem="Tqm-hR-rje" secondAttribute="bottom" constant="7" id="UIR-WG-HrH"/>
+                        <constraint firstItem="Gij-eX-9ke" firstAttribute="top" secondItem="Tqm-hR-rje" secondAttribute="bottom" constant="-1" id="UIR-WG-HrH"/>
                         <constraint firstItem="mDj-3Z-5dA" firstAttribute="top" secondItem="5ec-i9-RyD" secondAttribute="top" constant="35" id="XFy-ex-ElF"/>
                         <constraint firstItem="eag-0V-x8d" firstAttribute="leading" secondItem="5ec-i9-RyD" secondAttribute="leading" id="Zpn-ym-Co5"/>
                         <constraint firstAttribute="centerX" secondItem="mDj-3Z-5dA" secondAttribute="centerX" id="g34-QI-zSl"/>
