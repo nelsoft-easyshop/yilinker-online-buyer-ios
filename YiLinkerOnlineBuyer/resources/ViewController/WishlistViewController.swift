@@ -100,11 +100,13 @@ class WishlistViewController: UIViewController, UITableViewDelegate, UITableView
         showLoader()
         manager.POST(url, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in print(responseObject as! NSDictionary)
+                var data: NSDictionary = responseObject["data"] as! NSDictionary
+                var cart: NSArray = data["cart"] as! NSArray
                 println(responseObject)
                 if responseObject.objectForKey("error") != nil {
                     self.requestRefreshToken("addToCart", url: url, params: params)
                 } else{
-                    SessionManager.setCartCount(SessionManager.cartCount() + 1)
+                    SessionManager.setCartCount(cart.count)
                     if SessionManager.cartCount() != 0 {
                         let badgeValue = (self.tabBarController!.tabBar.items![4] as! UITabBarItem).badgeValue?.toInt()
                         (self.tabBarController!.tabBar.items![4] as! UITabBarItem).badgeValue = String(SessionManager.cartCount())
