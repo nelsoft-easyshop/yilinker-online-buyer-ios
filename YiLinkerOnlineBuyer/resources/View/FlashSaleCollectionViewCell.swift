@@ -74,7 +74,6 @@ class FlashSaleCollectionViewCell: UICollectionViewCell {
         imageView.addSubview(triangle)
     }
     
-    
     //MARK: - Add Tap Recognizer
     func addTapRecognizer(productImageView: UIImageView) {
         let tapGestureRecognizer: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "didTapItem:")

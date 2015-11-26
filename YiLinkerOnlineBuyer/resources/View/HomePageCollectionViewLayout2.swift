@@ -16,7 +16,7 @@ struct SectionHeight {
     static let sectionFive: CGFloat = 230.0
     static let sectionSix: CGFloat = 240.0
     static let sectionEight: CGFloat = 338
-    
+    static let sectionNine: CGFloat = 355
     static let layoutHeader: CGFloat = 40.0
 }
 
@@ -55,6 +55,8 @@ class HomePageCollectionViewLayout2: UICollectionViewLayout {
                 self.layoutSeven(index)
             } else if layout == "8" {
                 self.layoutEight(index)
+            } else if layout == "9" {
+                self.layoutNine(index)
             }
         }
     }
@@ -249,52 +251,25 @@ class HomePageCollectionViewLayout2: UICollectionViewLayout {
         self.layoutAttributes[key] = attributes
     }
     
-    func layoutTen(section: Int) {
-        var defaultYPosition = self.sectionYOffsetWithSectionNumber(section)
-        
-        let path = NSIndexPath(forItem: 0, inSection: section)
-        
-//        //Add Decoration View
-//        let decorationView: (attribute: UICollectionViewLayoutAttributes, key: String) = decorationViewWithYPosition(defaultYPosition + self.headerViewHeight, path: path)
-//        
-//        self.layoutAttributes[decorationView.key] = decorationView.attribute
-//        
-//        //Add Header View
-//        let headerView: (attribute: UICollectionViewLayoutAttributes, key: String) = headerViewWithYPosition(defaultYPosition, path: path)
-//        self.layoutAttributes[headerView.key] = headerView.attribute
-        
-        
-        let verticalInset: CGFloat = 5.0
-        let horizontalInset: CGFloat = 5.0
-        //Add cells
-        var xPosition: CGFloat = horizontalInset
-        //defaultYPosition = defaultYPosition + headerViewHeight
-        var yPosition: CGFloat = defaultYPosition + verticalInset
-        
+    //MARK: Layout Nine
+    func layoutNine(section: Int) {
         let numberOfItems = self.collectionView?.numberOfItemsInSection(section)
-        let initialMargin: CGFloat = 8
+        let indexPath = NSIndexPath(forItem: 0, inSection: section)
+        let attributes = UICollectionViewLayoutAttributes(forCellWithIndexPath: indexPath)
         
-        let fullSectionItemHeight: CGFloat = 230
-        var itemSize: CGSize = CGSizeZero
+        //Add Header View
+        let headerView: (attribute: UICollectionViewLayoutAttributes, key: String) = headerViewWithYPosition(self.sectionYOffsetWithSectionNumber(section), path: indexPath)
+        self.layoutAttributes[headerView.key] = headerView.attribute
         
-        let screenWidth: CGFloat =  ((screenRect!.width - (horizontalInset * 4)) /  3)
+        attributes.frame = CGRectMake(0, self.sectionYOffsetWithSectionNumber(section) + SectionHeight.layoutHeader, screenRect!.width , SectionHeight.sectionNine)
         
-        for var item = 0; item < numberOfItems; item++ {
-            let indexPath = NSIndexPath(forItem: item, inSection: section)
-            let attribute = UICollectionViewLayoutAttributes(forCellWithIndexPath: indexPath)
-            let cellHeight: CGFloat = 100
-            
-            if item == 1 || item == 2 {
-                xPosition = xPosition + horizontalInset + screenWidth
-            }
-            
-            itemSize = CGSizeMake(screenWidth, cellHeight)
-            
-            attribute.frame = CGRectMake(xPosition, yPosition, itemSize.width, itemSize.height)
-            
-            let key: String = self.layoutKeyForIndexPath(indexPath)
-            self.layoutAttributes[key] = attribute
-        }
+        let key = self.layoutKeyForIndexPath(indexPath)
+        self.layoutAttributes[key] = attributes
+    }
+    
+    func layoutTen(section: Int) {
+    
+    
     }
     
     //MARK: - Section Y Offset With Section Number
@@ -317,6 +292,8 @@ class HomePageCollectionViewLayout2: UICollectionViewLayout {
                 occupiedSpace = occupiedSpace + SectionHeight.sectionFive + sectionVerticalInset + SectionHeight.layoutHeader
             } else if self.layouts[x] == "8" {
                 occupiedSpace = occupiedSpace + SectionHeight.sectionEight + sectionVerticalInset + SectionHeight.layoutHeader
+            } else if self.layouts[x] == "9" {
+                occupiedSpace = occupiedSpace + SectionHeight.sectionNine + sectionVerticalInset + SectionHeight.layoutHeader
             } else {
                 occupiedSpace = 0.0
             }

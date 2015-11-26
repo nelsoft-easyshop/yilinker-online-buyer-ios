@@ -206,6 +206,8 @@
 		0CC53C871C018289002361D4 /* VoucherModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CC53C861C018289002361D4 /* VoucherModel.swift */; };
 		0CC8A63B1B7B9BBF00C91425 /* FollowedSellerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CC8A6391B7B9BBF00C91425 /* FollowedSellerViewController.swift */; };
 		0CC8A63F1B7B9BF600C91425 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CC8A63D1B7B9BF600C91425 /* ProfileViewController.swift */; };
+		0CCA7DF51C0736A100071DD4 /* LayoutNineCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CCA7DF31C0736A100071DD4 /* LayoutNineCollectionViewCell.swift */; };
+		0CCA7DF61C0736A100071DD4 /* LayoutNineCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CCA7DF41C0736A100071DD4 /* LayoutNineCollectionViewCell.xib */; };
 		0CD103EC1B8B4769002E15F4 /* DynamicRoundedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CD103EB1B8B4769002E15F4 /* DynamicRoundedView.swift */; };
 		0CDA117A1B760E1A007B5DED /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CDA11791B760E1A007B5DED /* LoginViewController.swift */; };
 		0CDA117C1B764015007B5DED /* LoginAndRegisterContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CDA117B1B764015007B5DED /* LoginAndRegisterContentViewController.swift */; };
@@ -691,6 +693,8 @@
 		0CC53C861C018289002361D4 /* VoucherModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VoucherModel.swift; sourceTree = "<group>"; };
 		0CC8A6391B7B9BBF00C91425 /* FollowedSellerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FollowedSellerViewController.swift; sourceTree = "<group>"; };
 		0CC8A63D1B7B9BF600C91425 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		0CCA7DF31C0736A100071DD4 /* LayoutNineCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayoutNineCollectionViewCell.swift; sourceTree = "<group>"; };
+		0CCA7DF41C0736A100071DD4 /* LayoutNineCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LayoutNineCollectionViewCell.xib; sourceTree = "<group>"; };
 		0CD103EB1B8B4769002E15F4 /* DynamicRoundedView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DynamicRoundedView.swift; sourceTree = "<group>"; };
 		0CDA11791B760E1A007B5DED /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		0CDA117B1B764015007B5DED /* LoginAndRegisterContentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginAndRegisterContentViewController.swift; sourceTree = "<group>"; };
@@ -1013,6 +1017,8 @@
 				0CAE2F761C05B5400019165A /* FlashSaleCollectionViewCell.xib */,
 				0CAE2F791C070DB10019165A /* SellerCarouselCollectionViewCell.swift */,
 				0CAE2F7A1C070DB10019165A /* SellerCarouselCollectionViewCell.xib */,
+				0CCA7DF31C0736A100071DD4 /* LayoutNineCollectionViewCell.swift */,
+				0CCA7DF41C0736A100071DD4 /* LayoutNineCollectionViewCell.xib */,
 			);
 			name = Home;
 			sourceTree = "<group>";
@@ -1873,6 +1879,7 @@
 				0C374F471B88E3790050AE1D /* HelpViewController.xib in Resources */,
 				79E85FCC1B8A1E0800428AA1 /* ActivityLogTableViewController.xib in Resources */,
 				79E68B8B1B8B02C0008626E4 /* PointsBreakdownTableViewCell.xib in Resources */,
+				0CCA7DF61C0736A100071DD4 /* LayoutNineCollectionViewCell.xib in Resources */,
 				0C374F381B88E3790050AE1D /* PaymentWebViewViewController.xib in Resources */,
 				F7C637D01BD9F81A00C29C47 /* TransactionDeliveryLogTableViewController.xib in Resources */,
 				0C9937611B750583000D6074 /* FullImageCollectionViewCell.xib in Resources */,
@@ -2125,6 +2132,7 @@
 				F7C5699E1BB175F1004740E1 /* TransactionDetailsProductsModel.swift in Sources */,
 				26AFB39E1B79DDEA00E50926 /* ProductReviewsModel.swift in Sources */,
 				0C99375F1B750583000D6074 /* SearchViewController.swift in Sources */,
+				0CCA7DF51C0736A100071DD4 /* LayoutNineCollectionViewCell.swift in Sources */,
 				F7C56A051BB1790A004740E1 /* TransactionViewController.swift in Sources */,
 				0C6D45DD1BF4692900D330DB /* WebViewController.swift in Sources */,
 				0C538AE71B99F37D00EB64AB /* OrderedProductsModel.swift in Sources */,

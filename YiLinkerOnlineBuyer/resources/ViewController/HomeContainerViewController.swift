@@ -33,7 +33,7 @@ struct FABStrings {
     static let profile: String = StringHelper.localizedStringWithKey("PROFILE_LOCALIZE_KEY")
 }
 
-class HomeContainerViewController: UIViewController, UITabBarControllerDelegate, EmptyViewDelegate, CarouselCollectionViewCellDataSource, CarouselCollectionViewCellDelegate, DailyLoginCollectionViewCellDelegate, HalfPagerCollectionViewCellDelegate, HalfPagerCollectionViewCellDataSource, FlashSaleCollectionViewCellDelegate, LayoutHeaderCollectionViewCellDelegate, SellerCarouselCollectionViewCellDataSource, SellerCarouselCollectionViewCellDelegate {
+class HomeContainerViewController: UIViewController, UITabBarControllerDelegate, EmptyViewDelegate, CarouselCollectionViewCellDataSource, CarouselCollectionViewCellDelegate, DailyLoginCollectionViewCellDelegate, HalfPagerCollectionViewCellDelegate, HalfPagerCollectionViewCellDataSource, FlashSaleCollectionViewCellDelegate, LayoutHeaderCollectionViewCellDelegate, SellerCarouselCollectionViewCellDataSource, SellerCarouselCollectionViewCellDelegate, LayoutNineCollectionViewCellDelegate, LayoutNineCollectionViewCellDataSource {
     
     var searchViewContoller: SearchViewController?
     var circularMenuViewController: CircularMenuViewController?
@@ -45,7 +45,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     var profileModel: ProfileUserDetailsModel = ProfileUserDetailsModel()
     var customTabBarController: CustomTabBarController?
     
-    var layouts: [String] = ["1", "2", "3", "4", "5", "6", "7", "8", "8"]
+    var layouts: [String] = ["1", "2", "3", "4", "5", "6", "7", "8", "8", "9"]
     
     @IBOutlet weak var collectionView: UICollectionView!
     
@@ -62,6 +62,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     let fullImageCellNib = "FullImageCollectionViewCell"
     let sellerNibName = "SellerCollectionViewCell"
     let sellerCarouselNibName = "SellerCarouselCollectionViewCell"
+    let layoutNineNibName = "LayoutNineCollectionViewCell"
     
     var timeRemaining: Int = 20000
     
@@ -106,6 +107,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         self.registerCellWithNibName(self.fullImageCellNib)
         self.registerCellWithNibName(self.sellerNibName)
         self.registerCellWithNibName(self.sellerCarouselNibName)
+        self.registerCellWithNibName(self.layoutNineNibName)
         
         //set customTabbar
         self.view.layoutIfNeeded()
@@ -448,6 +450,8 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             return 3
         case 8:
             return 1
+        case 9:
+            return 1
         default:
             return 1
         }
@@ -488,7 +492,9 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             }
         } else if self.layouts[indexPath.section] == "8" {
             return self.sellerCarouselWithIndexPath(indexPath)
-        }  else {
+        } else if self.layouts[indexPath.section] == "9" {
+            return self.layoutNineCollectionViewCellWithIndexPath(indexPath)
+        } else {
             return self.fullImageCollectionViewCellWithIndexPath(indexPath)
         }
     }
@@ -660,6 +666,53 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         flashSaleCell.productThreeImageView.sd_setImageWithURL(NSURL(string: self.images[2]), placeholderImage: UIImage(named: "dummy-placeholder"))
         
         return flashSaleCell
+    }
+    
+    //MARK: - Layout Nine Collection View Cell With IndexPath
+    func layoutNineCollectionViewCellWithIndexPath(indexPath: NSIndexPath) -> LayoutNineCollectionViewCell {
+        let layoutNineCollectionViewCell: LayoutNineCollectionViewCell = self.collectionView.dequeueReusableCellWithReuseIdentifier(self.layoutNineNibName, forIndexPath: indexPath) as! LayoutNineCollectionViewCell
+        layoutNineCollectionViewCell.delegate = self
+        layoutNineCollectionViewCell.dataSource = self
+        return layoutNineCollectionViewCell
+    }
+    
+    //MARK: - Layout Nine Collection View Cell Datasource
+    func layoutNineCollectionViewCell(layoutNineCollectionViewCell: LayoutNineCollectionViewCell, numberOfItemsInSection section: Int) -> Int {
+        return self.images.count
+    }
+    
+    func layoutNineCollectionViewCell(layoutNineCollectionViewCell: LayoutNineCollectionViewCell, cellForRowAtIndexPath indexPath: NSIndexPath) -> FullImageCollectionViewCell {
+        let fullImageCell: FullImageCollectionViewCell = layoutNineCollectionViewCell.collectionView.dequeueReusableCellWithReuseIdentifier(layoutNineCollectionViewCell.fullImageCellNib, forIndexPath: indexPath) as! FullImageCollectionViewCell
+        fullImageCell.itemProductImageView.sd_setImageWithURL(NSURL(string: self.images[indexPath.row]), placeholderImage: UIImage(named: "dummy-placeholder"))
+        fullImageCell.layer.cornerRadius = 5
+        fullImageCell.clipsToBounds = true
+        return fullImageCell
+    }
+    
+    func layoutNineCollectionViewCell(layoutNineCollectionViewCell: LayoutNineCollectionViewCell) -> CGFloat {
+        layoutNineCollectionViewCell.layoutIfNeeded()
+        return layoutNineCollectionViewCell.collectionView.frame.size.width
+    }
+    
+    //MARK: - Layout Nine Collection View Cell Delegate
+    func layoutNineCollectionViewCellDidClickProductImage(productImage: ProductImageView) {
+        
+    }
+    
+    func layoutNineCollectionViewCell(layoutNineCollectionViewCell: LayoutNineCollectionViewCell, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        
+    }
+    
+    func layoutNineCollectionViewCellDidEndDecelerating(layoutNineCollectionViewCell: LayoutNineCollectionViewCell) {
+        layoutNineCollectionViewCell.layoutIfNeeded()
+        let pageWidth: CGFloat = layoutNineCollectionViewCell.collectionView.frame.size.width
+        let currentPage: CGFloat = layoutNineCollectionViewCell.collectionView.contentOffset.x / pageWidth
+        
+        if 0.0 != fmodf(Float(currentPage), 1.0) {
+            layoutNineCollectionViewCell.pageControl.currentPage = Int(currentPage) + 1
+        } else {
+            layoutNineCollectionViewCell.pageControl.currentPage = Int(currentPage)
+        }
     }
     
     //MARK: - Vertical Image Collection View Cell With IndexPath
