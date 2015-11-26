@@ -11,9 +11,10 @@ import UIKit
 struct SectionHeight {
     static let sectionOne: CGFloat = 180.0
     static let sectionTwo: CGFloat = 70.0
-    static let sectionThree: CGFloat = 130.0
+    static let sectionThree: CGFloat = 120.0
     static let sectionFour: CGFloat = 170.0
     static let sectionFive: CGFloat = 230.0
+    static let sectionSix: CGFloat = 240.0
     
     static let layoutHeader: CGFloat = 40.0
 }
@@ -26,7 +27,7 @@ class HomePageCollectionViewLayout2: UICollectionViewLayout {
     var numberOfSections: Int?
     var layouts: [String] = []
 
-    let sectionVerticalInset: CGFloat = 5
+    let sectionVerticalInset: CGFloat = 10
     
     //MARK: Prepare Layout
     override func prepareLayout() {
@@ -47,6 +48,8 @@ class HomePageCollectionViewLayout2: UICollectionViewLayout {
                 self.layoutFour(index)
             } else if layout == "5" {
                 self.layoutFive(index)
+            } else if layout == "6" {
+                self.layoutSix(index)
             }
         }
     }
@@ -148,14 +151,77 @@ class HomePageCollectionViewLayout2: UICollectionViewLayout {
             let key: String = self.layoutKeyForIndexPath(indexPath)
             self.layoutAttributes[key] = attribute
         }
+    }
+    
+    
+    //MARK: - Layout Six
+    func layoutSix(section: Int) {
+        let horizontalInset: CGFloat = 5
         
-      /*  //Add Footer View
-        let footerView: (attribute: UICollectionViewLayoutAttributes, key: String) = footerViewWithYPosition(yPosition, path: path)
-        self.layoutAttributes[footerView.key] = footerView.attribute
+        for var x = 0; x < 3; x++ {
+            let indexPath = NSIndexPath(forItem: x, inSection: section)
+            let attributes = UICollectionViewLayoutAttributes(forCellWithIndexPath: indexPath)
+            if x == 0 {
+                attributes.frame = CGRectMake(horizontalInset, self.sectionYOffsetWithSectionNumber(section), screenRect!.width / 3, SectionHeight.sectionSix)
+            } else if x == 1 {
+                attributes.frame = CGRectMake((screenRect!.width / 3) + (horizontalInset * 2), self.sectionYOffsetWithSectionNumber(section), ((screenRect!.width) - (screenRect!.width / 3)) - (horizontalInset * 3), (SectionHeight.sectionSix -  horizontalInset) / 2)
+            } else {
+                let extraSpace: CGFloat = 2.0
+                 attributes.frame = CGRectMake((screenRect!.width / 3) + (horizontalInset * 2), self.sectionYOffsetWithSectionNumber(section) + (SectionHeight.sectionSix / 2) + extraSpace, ((screenRect!.width) - (screenRect!.width / 3)) - (horizontalInset * 3), (SectionHeight.sectionSix -  horizontalInset) / 2)
+            }
+            
+            let key = self.layoutKeyForIndexPath(indexPath)
+            self.layoutAttributes[key] = attributes
+        }
+    }
+    
+    
+    func layoutTen(section: Int) {
+        var defaultYPosition = self.sectionYOffsetWithSectionNumber(section)
         
-        let height: CGFloat = yPosition + self.footerHeight
-        self.currentScreenHeigth = height
-        self.contentSize = CGSizeMake(screenRect!.width, self.currentScreenHeigth)*/
+        let path = NSIndexPath(forItem: 0, inSection: section)
+        
+//        //Add Decoration View
+//        let decorationView: (attribute: UICollectionViewLayoutAttributes, key: String) = decorationViewWithYPosition(defaultYPosition + self.headerViewHeight, path: path)
+//        
+//        self.layoutAttributes[decorationView.key] = decorationView.attribute
+//        
+//        //Add Header View
+//        let headerView: (attribute: UICollectionViewLayoutAttributes, key: String) = headerViewWithYPosition(defaultYPosition, path: path)
+//        self.layoutAttributes[headerView.key] = headerView.attribute
+        
+        
+        let verticalInset: CGFloat = 5.0
+        let horizontalInset: CGFloat = 5.0
+        //Add cells
+        var xPosition: CGFloat = horizontalInset
+        //defaultYPosition = defaultYPosition + headerViewHeight
+        var yPosition: CGFloat = defaultYPosition + verticalInset
+        
+        let numberOfItems = self.collectionView?.numberOfItemsInSection(section)
+        let initialMargin: CGFloat = 8
+        
+        let fullSectionItemHeight: CGFloat = 230
+        var itemSize: CGSize = CGSizeZero
+        
+        let screenWidth: CGFloat =  ((screenRect!.width - (horizontalInset * 4)) /  3)
+        
+        for var item = 0; item < numberOfItems; item++ {
+            let indexPath = NSIndexPath(forItem: item, inSection: section)
+            let attribute = UICollectionViewLayoutAttributes(forCellWithIndexPath: indexPath)
+            let cellHeight: CGFloat = 100
+            
+            if item == 1 || item == 2 {
+                xPosition = xPosition + horizontalInset + screenWidth
+            }
+            
+            itemSize = CGSizeMake(screenWidth, cellHeight)
+            
+            attribute.frame = CGRectMake(xPosition, yPosition, itemSize.width, itemSize.height)
+            
+            let key: String = self.layoutKeyForIndexPath(indexPath)
+            self.layoutAttributes[key] = attribute
+        }
     }
     
     //MARK: - Section Y Offset With Section Number
@@ -172,6 +238,8 @@ class HomePageCollectionViewLayout2: UICollectionViewLayout {
                  occupiedSpace = occupiedSpace + SectionHeight.sectionFour + sectionVerticalInset
             } else if self.layouts[x] == "5" {
                 occupiedSpace = occupiedSpace + SectionHeight.sectionFive + sectionVerticalInset + SectionHeight.layoutHeader
+            } else if self.layouts[x] == "6" {
+                occupiedSpace = occupiedSpace + SectionHeight.sectionSix + sectionVerticalInset
             } else {
                 occupiedSpace = 0.0
             }

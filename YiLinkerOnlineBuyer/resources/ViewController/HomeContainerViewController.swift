@@ -44,7 +44,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     var profileModel: ProfileUserDetailsModel = ProfileUserDetailsModel()
     var customTabBarController: CustomTabBarController?
     
-    var layouts: [String] = ["1", "2", "3", "4", "5", "1", "5", "5"]
+    var layouts: [String] = ["1", "2", "3", "4", "5", "6"]
     
     @IBOutlet weak var collectionView: UICollectionView!
     
@@ -58,6 +58,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     let halfVerticalNibName = "HalfVerticalImageCollectionViewCell"
     let sectionBackgroundNibName = "SectionBackground"
     let sectionHeaderNibName = "LayoutHeaderCollectionViewCell"
+    let fullImageCellNib = "FullImageCollectionViewCell"
     
     var timeRemaining: Int = 20000
     
@@ -99,6 +100,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         self.registerCellWithNibName(self.flashSaleNibName)
         self.registerCellWithNibName(self.verticalImageNibName)
         self.registerCellWithNibName(self.halfVerticalNibName)
+        self.registerCellWithNibName(self.fullImageCellNib)
         
         //set customTabbar
         self.view.layoutIfNeeded()
@@ -435,6 +437,8 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             return 1
         case 5:
             return 3
+        case 6:
+            return 3
         default:
             return 1
         }
@@ -468,7 +472,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                 return self.halfVerticalImageCollectionViewCellWithIndexPath(indexPath)
             }
         } else {
-            return self.flashSaleCollectionViewCellWithIndexPath(indexPath)
+            return self.fullImageCollectionViewCellWithIndexPath(indexPath)
         }
     }
     
@@ -662,4 +666,9 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         println("view more selected!!!")
     }
     
+    //MARK: - Full Image Collection View Cell
+    func fullImageCollectionViewCellWithIndexPath(indexPath: NSIndexPath) -> FullImageCollectionViewCell {
+        let fullImageCollectionViewCell: FullImageCollectionViewCell = self.collectionView.dequeueReusableCellWithReuseIdentifier(self.fullImageCellNib, forIndexPath: indexPath) as! FullImageCollectionViewCell
+        return fullImageCollectionViewCell
+    }
 }
