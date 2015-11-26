@@ -18,6 +18,7 @@ class ProductFullScreenViewController: UIViewController, UIScrollViewDelegate {
     
     var images: [String] = []
     var index: Int = 0
+    var page: Int = 0
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
@@ -46,7 +47,7 @@ class ProductFullScreenViewController: UIViewController, UIScrollViewDelegate {
     func generateScrollViewWithImageView() {
         var carouselWidth: CGFloat = 0.0
         
-        for i in 0..<self.images.count + 2 {
+        for i in 0..<self.images.count {
             
             // Creating scrollView inside carouselScrollView
             self.scrollView = UIScrollView(frame: CGRectMake(CGFloat(i) * self.view.frame.size.width, 0, self.view.frame.size.width, self.view.frame.size.height))
@@ -65,14 +66,8 @@ class ProductFullScreenViewController: UIViewController, UIScrollViewDelegate {
             let imageViewHeight = self.view.frame.size.width * (self.view.frame.size.width / 320)
             self.imageView = UIImageView(frame: CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height))
             self.imageView.center = self.view.center
-
-            if i == 0 {
-                self.imageView.sd_setImageWithURL(NSURL(string: images[self.images.count - 1])!, placeholderImage: UIImage(named: "dummy-placeholder"))
-            } else if i == self.images.count + 1 {
-                self.imageView.sd_setImageWithURL(NSURL(string: images[0])!, placeholderImage: UIImage(named: "dummy-placeholder"))
-            } else {
-                self.imageView.sd_setImageWithURL(NSURL(string: images[i - 1])!, placeholderImage: UIImage(named: "dummy-placeholder"))
-            }
+            println(images[i])
+            self.imageView.sd_setImageWithURL(NSURL(string: images[i])!, placeholderImage: UIImage(named: "dummy-placeholder"))
 //            self.imageView.backgroundColor = UIColor.whiteColor()
             self.imageView.contentMode = UIViewContentMode.ScaleAspectFit
             self.imageView.userInteractionEnabled = true
@@ -85,7 +80,7 @@ class ProductFullScreenViewController: UIViewController, UIScrollViewDelegate {
         }
         
         self.carouselScrollView.contentSize = CGSizeMake(carouselWidth, 0)
-        self.carouselScrollView.setContentOffset(CGPointMake(self.carouselScrollView.frame.size.width * CGFloat(index + 1), 0), animated: false)
+        self.carouselScrollView.setContentOffset(CGPointMake(self.carouselScrollView.frame.size.width * CGFloat(index), 0), animated: false)
         
         self.view.sendSubviewToBack(self.scrollView)
         self.view.sendSubviewToBack(self.carouselScrollView)
@@ -95,14 +90,8 @@ class ProductFullScreenViewController: UIViewController, UIScrollViewDelegate {
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
         let pageWidth: CGFloat = self.carouselScrollView.frame.size.width
-        let page: Int = Int((self.carouselScrollView.contentOffset.x - pageWidth / 2) / pageWidth) + 1
-        if page == 0 {
-            self.pageLabel.text = "\(1) of \(self.images.count)"
-        } else if page == self.images.count + 1 {
-            self.pageLabel.text = "\(self.images.count) of \(self.images.count)"
-        } else {
-            self.pageLabel.text = "\(page) of \(self.images.count)"
-        }
+        page = Int((self.carouselScrollView.contentOffset.x / pageWidth) + 1)
+        self.pageLabel.text = "\(page) of \(self.images.count)"
     }
     
     func viewForZoomingInScrollView(scrollView: UIScrollView) -> UIView? {
@@ -146,18 +135,21 @@ class ProductFullScreenViewController: UIViewController, UIScrollViewDelegate {
     }
     
     func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
-        
+        var index: Int = 0
         for subview in self.carouselScrollView.subviews {
             if let view = subview as? UIScrollView {
-                view.zoomScale = 1.0
+                index++
+                if index != page {
+                    view.zoomScale = 1.0
+                }
             }
         }
         
-        if scrollView.contentOffset.x == 0 {
-            self.carouselScrollView.setContentOffset(CGPointMake(self.view.frame.size.width * CGFloat(self.images.count), 0), animated: false)
-        } else if scrollView.contentOffset.x == self.view.frame.size.width * CGFloat(self.images.count + 1) {
-            self.carouselScrollView.setContentOffset(CGPointMake(self.view.frame.size.width, 0), animated: false)
-        }
+//        if scrollView.contentOffset.x == 0 {
+//            self.carouselScrollView.setContentOffset(CGPointMake(self.view.frame.size.width * CGFloat(self.images.count), 0), animated: false)
+//        } else if scrollView.contentOffset.x == self.view.frame.size.width * CGFloat(self.images.count + 1) {
+//            self.carouselScrollView.setContentOffset(CGPointMake(self.view.frame.size.width, 0), animated: false)
+//        }
     }
     
     // MARK: - Gesture Recognizers

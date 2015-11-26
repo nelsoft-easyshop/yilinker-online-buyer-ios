@@ -1052,7 +1052,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         self.productDetailsExtendedView = XibHelper.puffViewWithNibName("ProductDetailsExtendedView", index: 0) as! ProductDetailsExtendedView
         self.productDetailsExtendedView.delegate = self
         self.productDetailsExtendedView.frame = self.productImagesView.bounds
-        self.productDetailsExtendedView.frame.origin.y = self.tableView.frame.size.height
+        self.productDetailsExtendedView.frame.origin.y = self.view.frame.size.height
         self.productDetailsExtendedView.backgroundColor = .clearColor()
         self.view.addSubview(self.productDetailsExtendedView)
     }
