@@ -50,6 +50,8 @@ class HomePageCollectionViewLayout2: UICollectionViewLayout {
                 self.layoutFive(index)
             } else if layout == "6" {
                 self.layoutSix(index)
+            } else if layout == "7" {
+                self.layoutSeven(index)
             }
         }
     }
@@ -175,6 +177,58 @@ class HomePageCollectionViewLayout2: UICollectionViewLayout {
         }
     }
     
+    //MARK: Layout Seven
+    func layoutSeven(section: Int) {
+        let path = NSIndexPath(forItem: 0, inSection: section)
+        
+        //Add Decoration View
+        let decorationView: (attribute: UICollectionViewLayoutAttributes, key: String) = self.decorationViewWithYPosition(self.sectionYOffsetWithSectionNumber(section), sectionHeight: SectionHeight.sectionFive + SectionHeight.layoutHeader, path: path)
+        
+        self.layoutAttributes[decorationView.key] = decorationView.attribute
+        
+        //Add Header View
+        let headerView: (attribute: UICollectionViewLayoutAttributes, key: String) = headerViewWithYPosition(self.sectionYOffsetWithSectionNumber(section), path: path)
+        self.layoutAttributes[headerView.key] = headerView.attribute
+        
+        //Add cells
+        var xPosition: CGFloat = 0
+        let verticalInset: CGFloat = 5.0
+        
+        let defaultYPosition: CGFloat = self.sectionYOffsetWithSectionNumber(section) + SectionHeight.layoutHeader
+        
+        var yPosition: CGFloat = defaultYPosition + verticalInset
+        
+        let numberOfItems = self.collectionView?.numberOfItemsInSection(section)
+        
+        var itemSize: CGSize = CGSizeZero
+        let firstItemHeight: CGFloat = 220
+        for var item = 0; item < numberOfItems; item++ {
+            let indexPath = NSIndexPath(forItem: item, inSection: section)
+            let attribute = UICollectionViewLayoutAttributes(forCellWithIndexPath: indexPath)
+            
+            if item == 2 {
+                let halfScreenWidth: CGFloat =  (screenRect!.width / 2)
+                itemSize = CGSizeMake(halfScreenWidth, firstItemHeight)
+                xPosition = halfScreenWidth
+            } else {
+                let rowHeight: CGFloat = (SectionHeight.sectionFive / 2) - (verticalInset * 2)
+                let halfScreenWidth: CGFloat =  ( (screenRect!.width) / 2)
+                itemSize = CGSizeMake(halfScreenWidth, rowHeight)
+                xPosition = verticalInset
+                if item == 0 {
+                    yPosition = yPosition + rowHeight + verticalInset
+                } else {
+                    yPosition = defaultYPosition + verticalInset
+                }
+            }
+            
+            attribute.frame = CGRectMake(xPosition, yPosition, itemSize.width, itemSize.height)
+            
+            let key: String = self.layoutKeyForIndexPath(indexPath)
+            self.layoutAttributes[key] = attribute
+        }
+    }
+    
     
     func layoutTen(section: Int) {
         var defaultYPosition = self.sectionYOffsetWithSectionNumber(section)
@@ -240,6 +294,8 @@ class HomePageCollectionViewLayout2: UICollectionViewLayout {
                 occupiedSpace = occupiedSpace + SectionHeight.sectionFive + sectionVerticalInset + SectionHeight.layoutHeader
             } else if self.layouts[x] == "6" {
                 occupiedSpace = occupiedSpace + SectionHeight.sectionSix + sectionVerticalInset
+            } else if self.layouts[x] == "7" {
+                occupiedSpace = occupiedSpace + SectionHeight.sectionFive + sectionVerticalInset + SectionHeight.layoutHeader
             } else {
                 occupiedSpace = 0.0
             }

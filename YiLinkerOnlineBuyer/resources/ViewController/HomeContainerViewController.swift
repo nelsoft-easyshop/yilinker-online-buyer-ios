@@ -44,7 +44,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     var profileModel: ProfileUserDetailsModel = ProfileUserDetailsModel()
     var customTabBarController: CustomTabBarController?
     
-    var layouts: [String] = ["1", "2", "3", "4", "5", "6"]
+    var layouts: [String] = ["1", "2", "3", "4", "5", "6", "7"]
     
     @IBOutlet weak var collectionView: UICollectionView!
     
@@ -439,6 +439,8 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             return 3
         case 6:
             return 3
+        case 7:
+            return 3
         default:
             return 1
         }
@@ -470,6 +472,12 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                 return self.verticalImageCollectionViewCellWithIndexPath(indexPath)
             } else {
                 return self.halfVerticalImageCollectionViewCellWithIndexPath(indexPath)
+            }
+        } else if self.layouts[indexPath.section] == "7" {
+            if indexPath.row == 0 || indexPath.row == 1 {
+                return self.halfVerticalImageCollectionViewCellWithIndexPath(indexPath)
+            } else {
+                return self.verticalImageCollectionViewCellWithIndexPath(indexPath)
             }
         } else {
             return self.fullImageCollectionViewCellWithIndexPath(indexPath)
