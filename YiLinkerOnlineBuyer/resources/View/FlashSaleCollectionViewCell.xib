@@ -85,96 +85,95 @@
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Flash Sales" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XXY-F7-6S5">
-                        <rect key="frame" x="92" y="20" width="89" height="21"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Flash Sales" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="XXY-F7-6S5">
+                        <rect key="frame" x="12" y="20" width="183" height="21"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="89" id="P4Z-Lo-liU"/>
-                            <constraint firstAttribute="height" constant="21" id="ovb-BQ-vaD"/>
+                            <constraint firstAttribute="height" constant="21" id="6mR-gE-lVM"/>
                         </constraints>
                         <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="17"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D1E-FT-KvA">
-                        <rect key="frame" x="187" y="15" width="28" height="28"/>
+                        <rect key="frame" x="203" y="15" width="28" height="28"/>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="28" id="6NW-hd-kRD"/>
-                            <constraint firstAttribute="height" constant="28" id="H1G-Lu-gPI"/>
+                            <constraint firstAttribute="width" constant="28" id="GMj-nk-96x"/>
+                            <constraint firstAttribute="height" constant="28" id="w6N-7J-e01"/>
                         </constraints>
                         <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="17"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wgj-fp-onA">
-                        <rect key="frame" x="219" y="15" width="28" height="28"/>
+                        <rect key="frame" x="235" y="15" width="28" height="28"/>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="28" id="7gG-1v-Jmm"/>
-                            <constraint firstAttribute="height" constant="28" id="Ctw-lB-lIl"/>
+                            <constraint firstAttribute="height" constant="28" id="5gx-3X-l9X"/>
+                            <constraint firstAttribute="width" constant="28" id="IHg-QZ-UHz"/>
                         </constraints>
                         <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="17"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=":" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vnE-fi-XY8">
-                        <rect key="frame" x="247" y="17" width="15" height="22"/>
+                        <rect key="frame" x="263" y="17" width="15" height="22"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="15" id="Bbb-U8-imS"/>
-                            <constraint firstAttribute="height" constant="22" id="amt-aH-oXO"/>
+                            <constraint firstAttribute="width" constant="15" id="PNE-1g-wp2"/>
+                            <constraint firstAttribute="height" constant="22" id="Qko-lY-cm8"/>
                         </constraints>
                         <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="27"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ndv-v5-mZb">
-                        <rect key="frame" x="262" y="15" width="28" height="28"/>
+                        <rect key="frame" x="278" y="15" width="28" height="28"/>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="28" id="pL5-Tv-GLd"/>
-                            <constraint firstAttribute="width" constant="28" id="wfw-7d-DfN"/>
+                            <constraint firstAttribute="height" constant="28" id="IfJ-wI-Opc"/>
+                            <constraint firstAttribute="width" constant="28" id="Vfx-Jc-94E"/>
                         </constraints>
                         <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="17"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UIp-JL-Dm3">
-                        <rect key="frame" x="294" y="15" width="28" height="28"/>
+                        <rect key="frame" x="310" y="15" width="28" height="28"/>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="28" id="F4z-Dc-eaB"/>
-                            <constraint firstAttribute="height" constant="28" id="Mbq-kR-6cu"/>
+                            <constraint firstAttribute="height" constant="28" id="C68-Jw-Yf9"/>
+                            <constraint firstAttribute="width" constant="28" id="WId-um-M1u"/>
                         </constraints>
                         <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="17"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zs7-SD-WBL">
-                        <rect key="frame" x="338" y="15" width="28" height="28"/>
+                        <rect key="frame" x="354" y="15" width="28" height="28"/>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="28" id="PI8-WC-0me"/>
-                            <constraint firstAttribute="width" constant="28" id="xZB-se-P69"/>
+                            <constraint firstAttribute="height" constant="28" id="5m2-TV-j49"/>
+                            <constraint firstAttribute="width" constant="28" id="UPb-k3-lOy"/>
                         </constraints>
                         <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="17"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XP7-Ug-ZMP">
-                        <rect key="frame" x="371" y="15" width="28" height="28"/>
+                        <rect key="frame" x="387" y="15" width="28" height="28"/>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="28" id="9g7-sC-6kp"/>
-                            <constraint firstAttribute="height" constant="28" id="VQ3-P9-Uqu"/>
+                            <constraint firstAttribute="width" constant="28" id="3i6-xL-GqX"/>
+                            <constraint firstAttribute="height" constant="28" id="Szg-dM-2Q2"/>
                         </constraints>
                         <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="17"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=":" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WQy-r1-dKA">
-                        <rect key="frame" x="323" y="18" width="15" height="21"/>
+                        <rect key="frame" x="339" y="18" width="15" height="21"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="15" id="dZs-F7-fWL"/>
-                            <constraint firstAttribute="height" constant="21" id="oB7-o7-fPu"/>
+                            <constraint firstAttribute="height" constant="21" id="2Ui-eZ-Uij"/>
+                            <constraint firstAttribute="width" constant="15" id="om6-Pt-8vN"/>
                         </constraints>
                         <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="27"/>
                         <nil key="highlightedColor"/>
@@ -183,27 +182,26 @@
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </view>
             <constraints>
-                <constraint firstItem="ndv-v5-mZb" firstAttribute="leading" secondItem="vnE-fi-XY8" secondAttribute="trailing" id="0St-2W-SID"/>
                 <constraint firstItem="HPg-kW-7jB" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="8" id="0qd-fE-dkN"/>
-                <constraint firstAttribute="trailing" secondItem="XP7-Ug-ZMP" secondAttribute="trailing" constant="31" id="10W-YL-7Rb"/>
-                <constraint firstItem="vnE-fi-XY8" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="17" id="1C4-i3-FvM"/>
-                <constraint firstItem="XP7-Ug-ZMP" firstAttribute="leading" secondItem="zs7-SD-WBL" secondAttribute="trailing" constant="5" id="2Mm-S3-CmW"/>
+                <constraint firstItem="D1E-FT-KvA" firstAttribute="leading" secondItem="XXY-F7-6S5" secondAttribute="trailing" constant="8" id="1wP-Iz-E4C"/>
+                <constraint firstItem="zs7-SD-WBL" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="15" id="271-xU-V7t"/>
                 <constraint firstItem="HPg-kW-7jB" firstAttribute="height" secondItem="q7f-51-8Cv" secondAttribute="height" id="3Vn-po-roj"/>
                 <constraint firstItem="wzS-od-qmT" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="58" id="3zI-yv-apA"/>
                 <constraint firstItem="wzS-od-qmT" firstAttribute="leading" secondItem="q7f-51-8Cv" secondAttribute="trailing" constant="8" id="5tW-t3-hgJ"/>
                 <constraint firstItem="HPg-kW-7jB" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="12" id="6jc-1p-B86"/>
-                <constraint firstItem="D1E-FT-KvA" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="15" id="8gl-bx-fn6"/>
+                <constraint firstItem="XXY-F7-6S5" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="20" id="7Rc-e1-RFE"/>
                 <constraint firstAttribute="bottom" secondItem="R9V-zd-eln" secondAttribute="bottom" constant="10" id="A1k-ie-FaF"/>
                 <constraint firstItem="HPg-kW-7jB" firstAttribute="width" secondItem="wzS-od-qmT" secondAttribute="width" id="B4q-zc-8pf"/>
                 <constraint firstItem="s5S-bZ-bgT" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="1" id="BjM-3c-r5Z"/>
                 <constraint firstAttribute="bottom" secondItem="GVs-FO-mIG" secondAttribute="bottom" constant="10" id="BkZ-NA-nnO"/>
+                <constraint firstItem="XP7-Ug-ZMP" firstAttribute="leading" secondItem="zs7-SD-WBL" secondAttribute="trailing" constant="5" id="CO5-Aq-BbF"/>
                 <constraint firstItem="R9V-zd-eln" firstAttribute="top" secondItem="q7f-51-8Cv" secondAttribute="bottom" id="DYm-Ht-LZs"/>
-                <constraint firstItem="WQy-r1-dKA" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="18" id="FVM-je-gKf"/>
-                <constraint firstItem="vnE-fi-XY8" firstAttribute="leading" secondItem="Wgj-fp-onA" secondAttribute="trailing" id="G3X-3P-XOh"/>
+                <constraint firstItem="XXY-F7-6S5" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="12" id="EpS-nE-sfE"/>
+                <constraint firstAttribute="trailing" secondItem="XP7-Ug-ZMP" secondAttribute="trailing" constant="15" id="FrN-Lu-djT"/>
+                <constraint firstItem="UIp-JL-Dm3" firstAttribute="leading" secondItem="ndv-v5-mZb" secondAttribute="trailing" constant="4" id="GWL-5b-YUX"/>
                 <constraint firstItem="HPg-kW-7jB" firstAttribute="height" secondItem="wzS-od-qmT" secondAttribute="height" id="Iy4-xF-6Fo"/>
                 <constraint firstItem="HPg-kW-7jB" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="58" id="IyL-kl-8Uh"/>
-                <constraint firstItem="Wgj-fp-onA" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="15" id="J6m-6Q-9ra"/>
-                <constraint firstItem="XP7-Ug-ZMP" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="15" id="JSX-Vx-lvV"/>
+                <constraint firstItem="WQy-r1-dKA" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="18" id="Jtu-77-7cQ"/>
                 <constraint firstItem="R9V-zd-eln" firstAttribute="width" secondItem="q7f-51-8Cv" secondAttribute="width" id="PY4-2l-Tfh"/>
                 <constraint firstAttribute="trailing" secondItem="wzS-od-qmT" secondAttribute="trailing" constant="12" id="RcN-Pz-ZuI"/>
                 <constraint firstItem="GVs-FO-mIG" firstAttribute="width" secondItem="HPg-kW-7jB" secondAttribute="width" id="SMG-kg-eVM"/>
@@ -211,23 +209,25 @@
                 <constraint firstItem="FjS-R7-Mia" firstAttribute="top" secondItem="wzS-od-qmT" secondAttribute="bottom" id="Ttr-eF-ia6"/>
                 <constraint firstAttribute="bottom" secondItem="FjS-R7-Mia" secondAttribute="bottom" constant="10" id="UIe-4u-PrW"/>
                 <constraint firstItem="HPg-kW-7jB" firstAttribute="width" secondItem="q7f-51-8Cv" secondAttribute="width" id="UoQ-n4-cuu"/>
+                <constraint firstItem="zs7-SD-WBL" firstAttribute="leading" secondItem="WQy-r1-dKA" secondAttribute="trailing" id="V11-ES-2Qq"/>
                 <constraint firstItem="FjS-R7-Mia" firstAttribute="width" secondItem="wzS-od-qmT" secondAttribute="width" id="W84-Lu-ZsE"/>
-                <constraint firstItem="XXY-F7-6S5" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="20" id="Y0z-bU-yyf"/>
-                <constraint firstItem="D1E-FT-KvA" firstAttribute="leading" secondItem="XXY-F7-6S5" secondAttribute="trailing" constant="6" id="ZGM-1Q-1er"/>
                 <constraint firstItem="q7f-51-8Cv" firstAttribute="leading" secondItem="HPg-kW-7jB" secondAttribute="trailing" constant="8" id="ZNk-Tq-Bnb"/>
-                <constraint firstItem="UIp-JL-Dm3" firstAttribute="leading" secondItem="ndv-v5-mZb" secondAttribute="trailing" constant="4" id="elw-7B-7qA"/>
+                <constraint firstItem="Wgj-fp-onA" firstAttribute="leading" secondItem="D1E-FT-KvA" secondAttribute="trailing" constant="4" id="ZP7-Qc-uCg"/>
+                <constraint firstItem="XP7-Ug-ZMP" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="15" id="aRN-en-Z4X"/>
+                <constraint firstItem="vnE-fi-XY8" firstAttribute="leading" secondItem="Wgj-fp-onA" secondAttribute="trailing" id="aSA-2w-aRW"/>
+                <constraint firstItem="Wgj-fp-onA" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="15" id="au6-7b-6LW"/>
+                <constraint firstItem="WQy-r1-dKA" firstAttribute="leading" secondItem="UIp-JL-Dm3" secondAttribute="trailing" constant="1" id="bWv-QZ-oen"/>
+                <constraint firstItem="ndv-v5-mZb" firstAttribute="leading" secondItem="vnE-fi-XY8" secondAttribute="trailing" id="e1c-A6-Txk"/>
                 <constraint firstItem="FjS-R7-Mia" firstAttribute="leading" secondItem="wzS-od-qmT" secondAttribute="leading" id="fIS-Lu-IsX"/>
                 <constraint firstItem="R9V-zd-eln" firstAttribute="leading" secondItem="q7f-51-8Cv" secondAttribute="leading" id="gJG-VS-TJg"/>
+                <constraint firstItem="vnE-fi-XY8" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="17" id="iWR-RM-le5"/>
                 <constraint firstItem="GVs-FO-mIG" firstAttribute="leading" secondItem="HPg-kW-7jB" secondAttribute="leading" id="knu-Du-SF5"/>
                 <constraint firstAttribute="trailing" secondItem="s5S-bZ-bgT" secondAttribute="trailing" constant="5" id="mAO-0l-cNY"/>
-                <constraint firstItem="Wgj-fp-onA" firstAttribute="leading" secondItem="D1E-FT-KvA" secondAttribute="trailing" constant="4" id="rFX-RX-9Je"/>
-                <constraint firstItem="zs7-SD-WBL" firstAttribute="leading" secondItem="WQy-r1-dKA" secondAttribute="trailing" id="t6k-P3-tR2"/>
-                <constraint firstItem="ndv-v5-mZb" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="15" id="tDi-eQ-zk9"/>
-                <constraint firstItem="WQy-r1-dKA" firstAttribute="leading" secondItem="UIp-JL-Dm3" secondAttribute="trailing" constant="1" id="tZo-0w-8qw"/>
-                <constraint firstItem="UIp-JL-Dm3" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="15" id="uIP-Nb-MEG"/>
+                <constraint firstItem="ndv-v5-mZb" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="15" id="nuu-Oz-ERf"/>
+                <constraint firstItem="D1E-FT-KvA" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="15" id="pMi-p0-0ug"/>
+                <constraint firstItem="UIp-JL-Dm3" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="15" id="qF9-YX-guL"/>
                 <constraint firstAttribute="bottom" secondItem="s5S-bZ-bgT" secondAttribute="bottom" constant="1" id="uRF-vT-7hb"/>
                 <constraint firstItem="q7f-51-8Cv" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="58" id="uxw-dx-lEO"/>
-                <constraint firstItem="zs7-SD-WBL" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="15" id="vmD-zY-5im"/>
             </constraints>
             <size key="customSize" width="367" height="147"/>
             <variation key="default">

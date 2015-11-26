@@ -188,6 +188,8 @@
 		0C9937711B75063B000D6074 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C9937701B75063B000D6074 /* AppDelegate.swift */; };
 		0CAE2F771C05B5400019165A /* FlashSaleCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAE2F751C05B5400019165A /* FlashSaleCollectionViewCell.swift */; };
 		0CAE2F781C05B5400019165A /* FlashSaleCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CAE2F761C05B5400019165A /* FlashSaleCollectionViewCell.xib */; };
+		0CAE2F7B1C070DB10019165A /* SellerCarouselCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAE2F791C070DB10019165A /* SellerCarouselCollectionViewCell.swift */; };
+		0CAE2F7C1C070DB10019165A /* SellerCarouselCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CAE2F7A1C070DB10019165A /* SellerCarouselCollectionViewCell.xib */; };
 		0CB333661C05720D00625903 /* DailyLoginCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CB333641C05720D00625903 /* DailyLoginCollectionViewCell.swift */; };
 		0CB333671C05720D00625903 /* DailyLoginCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CB333651C05720D00625903 /* DailyLoginCollectionViewCell.xib */; };
 		0CB3336A1C05845D00625903 /* HalfPagerCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CB333681C05845D00625903 /* HalfPagerCollectionViewCell.swift */; };
@@ -671,6 +673,8 @@
 		0C9937701B75063B000D6074 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0CAE2F751C05B5400019165A /* FlashSaleCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlashSaleCollectionViewCell.swift; sourceTree = "<group>"; };
 		0CAE2F761C05B5400019165A /* FlashSaleCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FlashSaleCollectionViewCell.xib; sourceTree = "<group>"; };
+		0CAE2F791C070DB10019165A /* SellerCarouselCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SellerCarouselCollectionViewCell.swift; sourceTree = "<group>"; };
+		0CAE2F7A1C070DB10019165A /* SellerCarouselCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SellerCarouselCollectionViewCell.xib; sourceTree = "<group>"; };
 		0CB333641C05720D00625903 /* DailyLoginCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DailyLoginCollectionViewCell.swift; sourceTree = "<group>"; };
 		0CB333651C05720D00625903 /* DailyLoginCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DailyLoginCollectionViewCell.xib; sourceTree = "<group>"; };
 		0CB333681C05845D00625903 /* HalfPagerCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HalfPagerCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -1007,6 +1011,8 @@
 				0CB333691C05845D00625903 /* HalfPagerCollectionViewCell.xib */,
 				0CAE2F751C05B5400019165A /* FlashSaleCollectionViewCell.swift */,
 				0CAE2F761C05B5400019165A /* FlashSaleCollectionViewCell.xib */,
+				0CAE2F791C070DB10019165A /* SellerCarouselCollectionViewCell.swift */,
+				0CAE2F7A1C070DB10019165A /* SellerCarouselCollectionViewCell.xib */,
 			);
 			name = Home;
 			sourceTree = "<group>";
@@ -1909,6 +1915,7 @@
 				0C2F44CC1B8576FE00021F45 /* Panton Heavy.otf in Resources */,
 				793A899B1BA001AE0030FDC7 /* VerifyMobileNumberViewController.xib in Resources */,
 				0C374F531B89EC4D0050AE1D /* CustomizeSelectedCollectionViewCell.xib in Resources */,
+				0CAE2F7C1C070DB10019165A /* SellerCarouselCollectionViewCell.xib in Resources */,
 				0C99376B1B750583000D6074 /* SellerCollectionViewCell.xib in Resources */,
 				79A1C6F71B835A090043AA36 /* ProductResultGridCollectionViewCell.xib in Resources */,
 				F7C569E21BB1776F004740E1 /* TransactionTableViewCell.xib in Resources */,
@@ -2225,6 +2232,7 @@
 				F7DC7EE21BA1421F004F7FD4 /* SellerSubCategoryViewController.swift in Sources */,
 				F7CCDB441BCCD1070078209A /* TransactionProductDetailsDeliveryStatusModel.swift in Sources */,
 				79E68B9B1B8B4239008626E4 /* ProfileSettingsTableViewCell.swift in Sources */,
+				0CAE2F7B1C070DB10019165A /* SellerCarouselCollectionViewCell.swift in Sources */,
 				79E68BB71B8B5C58008626E4 /* EditProfileAccountInformationTableViewCell.swift in Sources */,
 				0CD103EC1B8B4769002E15F4 /* DynamicRoundedView.swift in Sources */,
 				0C9937451B750583000D6074 /* DiscountLabel.swift in Sources */,

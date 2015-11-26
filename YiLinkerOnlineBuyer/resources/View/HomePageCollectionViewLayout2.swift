@@ -15,6 +15,7 @@ struct SectionHeight {
     static let sectionFour: CGFloat = 170.0
     static let sectionFive: CGFloat = 230.0
     static let sectionSix: CGFloat = 240.0
+    static let sectionEight: CGFloat = 338
     
     static let layoutHeader: CGFloat = 40.0
 }
@@ -52,6 +53,8 @@ class HomePageCollectionViewLayout2: UICollectionViewLayout {
                 self.layoutSix(index)
             } else if layout == "7" {
                 self.layoutSeven(index)
+            } else if layout == "8" {
+                self.layoutEight(index)
             }
         }
     }
@@ -229,6 +232,22 @@ class HomePageCollectionViewLayout2: UICollectionViewLayout {
         }
     }
     
+    //MARK: - Layout Eight
+    func layoutEight(section: Int) {
+        let numberOfItems = self.collectionView?.numberOfItemsInSection(section)
+        let indexPath = NSIndexPath(forItem: 0, inSection: section)
+        
+        //Add Header View
+        let headerView: (attribute: UICollectionViewLayoutAttributes, key: String) = headerViewWithYPosition(self.sectionYOffsetWithSectionNumber(section), path: indexPath)
+        self.layoutAttributes[headerView.key] = headerView.attribute
+        
+        let attributes = UICollectionViewLayoutAttributes(forCellWithIndexPath: indexPath)
+        
+        attributes.frame = CGRectMake(0, self.sectionYOffsetWithSectionNumber(section) + SectionHeight.layoutHeader, screenRect!.width , SectionHeight.sectionEight)
+        
+        let key = self.layoutKeyForIndexPath(indexPath)
+        self.layoutAttributes[key] = attributes
+    }
     
     func layoutTen(section: Int) {
         var defaultYPosition = self.sectionYOffsetWithSectionNumber(section)
@@ -296,6 +315,8 @@ class HomePageCollectionViewLayout2: UICollectionViewLayout {
                 occupiedSpace = occupiedSpace + SectionHeight.sectionSix + sectionVerticalInset
             } else if self.layouts[x] == "7" {
                 occupiedSpace = occupiedSpace + SectionHeight.sectionFive + sectionVerticalInset + SectionHeight.layoutHeader
+            } else if self.layouts[x] == "8" {
+                occupiedSpace = occupiedSpace + SectionHeight.sectionEight + sectionVerticalInset + SectionHeight.layoutHeader
             } else {
                 occupiedSpace = 0.0
             }

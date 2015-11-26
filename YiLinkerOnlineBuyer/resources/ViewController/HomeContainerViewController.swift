@@ -33,7 +33,8 @@ struct FABStrings {
     static let profile: String = StringHelper.localizedStringWithKey("PROFILE_LOCALIZE_KEY")
 }
 
-class HomeContainerViewController: UIViewController, UITabBarControllerDelegate, EmptyViewDelegate, CarouselCollectionViewCellDataSource, CarouselCollectionViewCellDelegate, DailyLoginCollectionViewCellDelegate, HalfPagerCollectionViewCellDelegate, HalfPagerCollectionViewCellDataSource, FlashSaleCollectionViewCellDelegate, LayoutHeaderCollectionViewCellDelegate {
+class HomeContainerViewController: UIViewController, UITabBarControllerDelegate, EmptyViewDelegate, CarouselCollectionViewCellDataSource, CarouselCollectionViewCellDelegate, DailyLoginCollectionViewCellDelegate, HalfPagerCollectionViewCellDelegate, HalfPagerCollectionViewCellDataSource, FlashSaleCollectionViewCellDelegate, LayoutHeaderCollectionViewCellDelegate, SellerCarouselCollectionViewCellDataSource, SellerCarouselCollectionViewCellDelegate {
+    
     var searchViewContoller: SearchViewController?
     var circularMenuViewController: CircularMenuViewController?
     var wishlisViewController: WishlistViewController?
@@ -44,7 +45,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     var profileModel: ProfileUserDetailsModel = ProfileUserDetailsModel()
     var customTabBarController: CustomTabBarController?
     
-    var layouts: [String] = ["1", "2", "3", "4", "5", "6", "7"]
+    var layouts: [String] = ["1", "2", "3", "4", "5", "6", "7", "8", "8"]
     
     @IBOutlet weak var collectionView: UICollectionView!
     
@@ -59,6 +60,8 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     let sectionBackgroundNibName = "SectionBackground"
     let sectionHeaderNibName = "LayoutHeaderCollectionViewCell"
     let fullImageCellNib = "FullImageCollectionViewCell"
+    let sellerNibName = "SellerCollectionViewCell"
+    let sellerCarouselNibName = "SellerCarouselCollectionViewCell"
     
     var timeRemaining: Int = 20000
     
@@ -101,6 +104,8 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         self.registerCellWithNibName(self.verticalImageNibName)
         self.registerCellWithNibName(self.halfVerticalNibName)
         self.registerCellWithNibName(self.fullImageCellNib)
+        self.registerCellWithNibName(self.sellerNibName)
+        self.registerCellWithNibName(self.sellerCarouselNibName)
         
         //set customTabbar
         self.view.layoutIfNeeded()
@@ -441,6 +446,8 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             return 3
         case 7:
             return 3
+        case 8:
+            return 1
         default:
             return 1
         }
@@ -479,7 +486,9 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             } else {
                 return self.verticalImageCollectionViewCellWithIndexPath(indexPath)
             }
-        } else {
+        } else if self.layouts[indexPath.section] == "8" {
+            return self.sellerCarouselWithIndexPath(indexPath)
+        }  else {
             return self.fullImageCollectionViewCellWithIndexPath(indexPath)
         }
     }
@@ -629,7 +638,6 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         
         if let indexPath: NSIndexPath = NSIndexPath(forItem: 0, inSection: 3) {
             self.collectionView.reloadItemsAtIndexPaths([indexPath])
-            UIView.setAnimationsEnabled(false)
         }
     }
     
@@ -678,5 +686,90 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     func fullImageCollectionViewCellWithIndexPath(indexPath: NSIndexPath) -> FullImageCollectionViewCell {
         let fullImageCollectionViewCell: FullImageCollectionViewCell = self.collectionView.dequeueReusableCellWithReuseIdentifier(self.fullImageCellNib, forIndexPath: indexPath) as! FullImageCollectionViewCell
         return fullImageCollectionViewCell
+    }
+    
+    //MARK: - Seller Collection View Cell With Index Path
+    func sellerCollectionViewCellWithIndexPath(indexPath: NSIndexPath) -> SellerCollectionViewCell {
+        let sellerCollectionView: SellerCollectionViewCell = self.collectionView?.dequeueReusableCellWithReuseIdentifier(self.sellerNibName, forIndexPath: indexPath) as! SellerCollectionViewCell
+        
+        return sellerCollectionView
+    }
+    
+    //MARK: - Seller Carousel
+    func sellerCarouselWithIndexPath(indexPath: NSIndexPath) -> SellerCarouselCollectionViewCell {
+        let sellerCarosuel: SellerCarouselCollectionViewCell = self.collectionView.dequeueReusableCellWithReuseIdentifier(self.sellerCarouselNibName, forIndexPath: indexPath) as! SellerCarouselCollectionViewCell
+        
+        sellerCarosuel.delegate = self
+        sellerCarosuel.dataSource = self
+        return sellerCarosuel
+    }
+    
+    //MARK: - Seller Carousel Data Source
+    func sellerCarouselCollectionViewCell(sellerCarouselCollectionViewCell: SellerCarouselCollectionViewCell, numberOfItemsInSection section: Int) -> Int {
+        return 5
+    }
+    
+    func sellerCarouselCollectionViewCell(sellerCarouselCollectionViewCell: SellerCarouselCollectionViewCell, cellForRowAtIndexPath indexPath: NSIndexPath) -> SellerCollectionViewCell {
+        
+        let sellerCollectionView: SellerCollectionViewCell = sellerCarouselCollectionViewCell.collectionView?.dequeueReusableCellWithReuseIdentifier(self.sellerNibName, forIndexPath: indexPath) as! SellerCollectionViewCell
+        
+        sellerCollectionView.productOneImageView.target = "target: 1"
+        sellerCollectionView.productTwoImageView.target = "target: 2"
+        sellerCollectionView.productThreeImageView.target = "target 3"
+        
+        sellerCollectionView.sellerProfileImageView.userInteractionEnabled = false
+        
+        self.addGestureToSellerProduct(sellerCollectionView.productOneImageView)
+        self.addGestureToSellerProduct(sellerCollectionView.productTwoImageView)
+        self.addGestureToSellerProduct(sellerCollectionView.productThreeImageView)
+        
+        return sellerCollectionView
+    }
+    
+    func itemWidthInSellerCarouselCollectionViewCell(sellerCarouselCollectionViewCell: SellerCarouselCollectionViewCell) -> CGFloat {
+        sellerCarouselCollectionViewCell.layoutIfNeeded()
+        
+        return sellerCarouselCollectionViewCell.collectionView.frame.size.width / 2
+    }
+    
+    func sellerCarouselCollectionViewCellnumberOfDotsInPageControl(sellerCarouselCollectionViewCell: SellerCarouselCollectionViewCell) -> Int {
+        var numberOfPages: CGFloat = CGFloat(5 / 2)
+        
+        if fmod(numberOfPages, 1.0) == 0.0 {
+            numberOfPages = numberOfPages + 1
+        }
+        
+        return Int(numberOfPages)
+    }
+    
+    //MARK: - Seller Carousel Delegate
+    func sellerCarouselCollectionViewCell(sellerCarouselCollectionViewCell: SellerCarouselCollectionViewCell, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        println("select index: \(indexPath.row)")
+    }
+    
+    func sellerCarouselCollectionViewCellDidEndDecelerating(sellerCarouselCollectionViewCell: SellerCarouselCollectionViewCell) {
+        sellerCarouselCollectionViewCell.layoutIfNeeded()
+        let pageWidth: CGFloat = sellerCarouselCollectionViewCell.collectionView.frame.size.width
+        let currentPage: CGFloat = sellerCarouselCollectionViewCell.collectionView.contentOffset.x / pageWidth
+        
+        if 0.0 != fmodf(Float(currentPage), 1.0) {
+            sellerCarouselCollectionViewCell.pageControl.currentPage = Int(currentPage) + 1
+        }
+        else {
+            sellerCarouselCollectionViewCell.pageControl.currentPage = Int(currentPage)
+        }
+    }
+    
+    //MARK: - Add Gesture To Seller Product
+    func addGestureToSellerProduct(productImageView: ProductImageView) {
+        let tapGestureRecognizer: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "didTapItem:")
+        productImageView.userInteractionEnabled = true
+        productImageView.addGestureRecognizer(tapGestureRecognizer)
+    }
+    
+    //MARK: - Did Tap Item
+    func didTapItem(tap: UITapGestureRecognizer) {
+        let itemImageView: ProductImageView = tap.view as! ProductImageView
+        println(itemImageView.target)
     }
 }
