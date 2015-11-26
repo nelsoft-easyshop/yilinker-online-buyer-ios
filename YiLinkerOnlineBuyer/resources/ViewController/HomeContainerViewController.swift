@@ -33,7 +33,7 @@ struct FABStrings {
     static let profile: String = StringHelper.localizedStringWithKey("PROFILE_LOCALIZE_KEY")
 }
 
-class HomeContainerViewController: UIViewController, UITabBarControllerDelegate, EmptyViewDelegate, CarouselCollectionViewCellDataSource, CarouselCollectionViewCellDelegate, DailyLoginCollectionViewCellDelegate, HalfPagerCollectionViewCellDelegate, HalfPagerCollectionViewCellDataSource {
+class HomeContainerViewController: UIViewController, UITabBarControllerDelegate, EmptyViewDelegate, CarouselCollectionViewCellDataSource, CarouselCollectionViewCellDelegate, DailyLoginCollectionViewCellDelegate, HalfPagerCollectionViewCellDelegate, HalfPagerCollectionViewCellDataSource, FlashSaleCollectionViewCellDelegate {
     var searchViewContoller: SearchViewController?
     var circularMenuViewController: CircularMenuViewController?
     var wishlisViewController: WishlistViewController?
@@ -44,7 +44,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     var profileModel: ProfileUserDetailsModel = ProfileUserDetailsModel()
     var customTabBarController: CustomTabBarController?
     
-    var layouts: [String] = ["1", "2", "3"]
+    var layouts: [String] = ["1", "2", "3", "4"]
     
     @IBOutlet weak var collectionView: UICollectionView!
     
@@ -53,6 +53,18 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     let carouselCellNibName = "CarouselCollectionViewCell"
     let dailyLoginNibName = "DailyLoginCollectionViewCell"
     let halfPagerCellNibName = "HalfPagerCollectionViewCell"
+    let flashSaleNibName = "FlashSaleCollectionViewCell"
+    
+    var timeRemaining: Int = 20000
+    
+    var firstHourString: String = ""
+    var secondHourString: String = ""
+    
+    var firstMinString: String = ""
+    var secondMinString: String = ""
+    
+    var firstSecondsString: String = ""
+    var secondSecondsString: String = ""
     
     //MARK: - Life Cycle
     override func didReceiveMemoryWarning() {
@@ -74,6 +86,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         self.registerCellWithNibName(self.carouselCellNibName)
         self.registerCellWithNibName(self.dailyLoginNibName)
         self.registerCellWithNibName(self.halfPagerCellNibName)
+        self.registerCellWithNibName(self.flashSaleNibName)
         
         //set customTabbar
         self.view.layoutIfNeeded()
@@ -96,6 +109,8 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             name: appDelegate.messageKey, object: nil)
         
         self.collectionViewLayout()
+        
+        var timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "updateTime", userInfo: nil, repeats: true)
     }
     
     //MARK: collectionViewLayout()
@@ -408,12 +423,14 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             dailyLoginCell.delegate = self
             
             return dailyLoginCell
-        } else {
+        } else if self.layouts[indexPath.section] == "3" {
             let halfPager: HalfPagerCollectionViewCell = self.collectionView.dequeueReusableCellWithReuseIdentifier(self.halfPagerCellNibName, forIndexPath: indexPath) as! HalfPagerCollectionViewCell
             halfPager.delegate = self
             halfPager.dataSource = self
             
             return halfPager
+        } else {
+            return self.flashSaleCollectionViewCellWithIndexPath(indexPath)
         }
     }
     
@@ -511,5 +528,73 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             halfPagerCollectionViewCell.pageControl.currentPage = Int(currentPage)
         }
     }
-
+    
+    //MARK: - Flash Collection View Delegate
+    func flashSaleCollectionViewCell(didTapFlashSaleItemIndex index: Int) {
+        println(index)
+    }
+    
+    //MARK: - Seconds To Hours Minutes Seconds
+    func secondsToHoursMinutesSeconds (seconds : Int) -> (Int, Int, Int) {
+        return (seconds / 3600, (seconds % 3600) / 60, (seconds % 3600) % 60)
+    }
+    
+    //MARK: - Update Time
+    func updateTime() {
+        self.timeRemaining--
+        let (hour, min, seconds): (Int, Int, Int) = self.secondsToHoursMinutesSeconds(self.timeRemaining)
+        
+        var sampleDate: String = "\(hour) Hours, \(min) Minutes, \(seconds) Seconds"
+        
+        if hour < 10 {
+            firstHourString = "\(hour)"
+            secondHourString = "0"
+        } else {
+            firstHourString = "\(hour)".stringCharacterAtIndex(1)
+            secondHourString = "\(hour)".stringCharacterAtIndex(0)
+        }
+        
+        if min < 10 {
+            firstMinString = "\(min)"
+            secondMinString = "0"
+        } else {
+            firstMinString = "\(min)".stringCharacterAtIndex(1)
+            secondMinString = "\(min)".stringCharacterAtIndex(0)
+        }
+        
+        println(seconds)
+        if seconds < 10 {
+            firstSecondsString = "\(seconds)"
+            secondSecondsString = "0"
+        } else {
+            firstSecondsString = "\(seconds)".stringCharacterAtIndex(1)
+            secondSecondsString = "\(seconds)".stringCharacterAtIndex(0)
+        }
+        
+        if let indexPath: NSIndexPath = NSIndexPath(forItem: 0, inSection: 3) {
+            self.collectionView.reloadItemsAtIndexPaths([indexPath])
+            UIView.setAnimationsEnabled(false)
+        }
+    }
+    
+    //MARK: - Flash Sale Collection View Cell With IndexPath
+    func flashSaleCollectionViewCellWithIndexPath(indexPath: NSIndexPath) -> FlashSaleCollectionViewCell {
+        let flashSaleCell: FlashSaleCollectionViewCell = self.collectionView.dequeueReusableCellWithReuseIdentifier(self.flashSaleNibName, forIndexPath: indexPath) as! FlashSaleCollectionViewCell
+        flashSaleCell.delegate = self
+        
+        flashSaleCell.hourFirstDigit.text = self.firstHourString
+        flashSaleCell.hourSecondDigit.text = self.secondHourString
+        
+        flashSaleCell.minuteFirstDigit.text = self.firstMinString
+        flashSaleCell.minuteSecondDigit.text = self.secondMinString
+        
+        flashSaleCell.secondFirstDigit.text = self.firstSecondsString
+        flashSaleCell.secondSecondDigit.text = self.secondSecondsString
+        
+        flashSaleCell.productOneImageView.sd_setImageWithURL(NSURL(string: self.images[0]), placeholderImage: UIImage(named: "dummy-placeholder"))
+        flashSaleCell.productTwoImageView.sd_setImageWithURL(NSURL(string: self.images[1]), placeholderImage: UIImage(named: "dummy-placeholder"))
+        flashSaleCell.productThreeImageView.sd_setImageWithURL(NSURL(string: self.images[2]), placeholderImage: UIImage(named: "dummy-placeholder"))
+        
+        return flashSaleCell
+    }
 }

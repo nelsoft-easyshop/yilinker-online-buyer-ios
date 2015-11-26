@@ -9,9 +9,10 @@
 import UIKit
 
 struct SectionHeight {
-    static let sectionOne: CGFloat = 200.0
+    static let sectionOne: CGFloat = 180.0
     static let sectionTwo: CGFloat = 70.0
-    static let sectionThree: CGFloat = 170.0
+    static let sectionThree: CGFloat = 130.0
+    static let sectionFour: CGFloat = 170.0
 }
 
 class HomePageCollectionViewLayout2: UICollectionViewLayout {
@@ -22,7 +23,7 @@ class HomePageCollectionViewLayout2: UICollectionViewLayout {
     var numberOfSections: Int?
     var layouts: [String] = []
 
-    let sectionVerticalInset: CGFloat = 10
+    let sectionVerticalInset: CGFloat = 5
     
     //MARK: Prepare Layout
     override func prepareLayout() {
@@ -39,6 +40,8 @@ class HomePageCollectionViewLayout2: UICollectionViewLayout {
                 self.layoutTwo(index)
             } else if layout == "3" {
                 self.layoutThree(index)
+            } else if layout == "4" {
+                self.layoutFour(index)
             }
         }
     }
@@ -79,6 +82,18 @@ class HomePageCollectionViewLayout2: UICollectionViewLayout {
         self.layoutAttributes[key] = attributes
     }
     
+    //MARK: Layout Four
+    func layoutFour(section: Int) {
+        let numberOfItems = self.collectionView?.numberOfItemsInSection(section)
+        let indexPath = NSIndexPath(forItem: 0, inSection: section)
+        let attributes = UICollectionViewLayoutAttributes(forCellWithIndexPath: indexPath)
+        
+        attributes.frame = CGRectMake(0, self.sectionYOffsetWithSectionNumber(section), screenRect!.width , SectionHeight.sectionFour)
+        
+        let key = self.layoutKeyForIndexPath(indexPath)
+        self.layoutAttributes[key] = attributes
+    }
+    
     //MARK: - Section Y Offset With Section Number
     func sectionYOffsetWithSectionNumber(section: Int) -> CGFloat {
         var occupiedSpace: CGFloat = 0.0
@@ -89,6 +104,8 @@ class HomePageCollectionViewLayout2: UICollectionViewLayout {
                 occupiedSpace = occupiedSpace + SectionHeight.sectionTwo + sectionVerticalInset
             } else if self.layouts[x] == "3" {
                 occupiedSpace = occupiedSpace + SectionHeight.sectionThree + sectionVerticalInset
+            } else if self.layouts[x] == "4" {
+                 occupiedSpace = occupiedSpace + SectionHeight.sectionFour + sectionVerticalInset
             } else {
                 occupiedSpace = 0.0
             }

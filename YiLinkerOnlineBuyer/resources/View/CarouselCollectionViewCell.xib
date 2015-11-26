@@ -13,7 +13,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="392" height="200"/>
                 <subviews>
                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="YIe-7I-dDv">
-                        <rect key="frame" x="10" y="9" width="370" height="190"/>
+                        <rect key="frame" x="5" y="9" width="379" height="190"/>
                         <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="iwS-Lp-AUP">
                             <size key="itemSize" width="50" height="200"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -42,8 +42,8 @@
                 <constraint firstItem="YIe-7I-dDv" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="9" id="6Xl-CX-w0T"/>
                 <constraint firstAttribute="bottom" secondItem="YIe-7I-dDv" secondAttribute="bottom" constant="1" id="N3T-Os-Ibs"/>
                 <constraint firstAttribute="trailing" secondItem="DlP-SB-GWN" secondAttribute="trailing" constant="8" id="PQq-bm-fYM"/>
-                <constraint firstAttribute="trailing" secondItem="YIe-7I-dDv" secondAttribute="trailing" constant="12" id="Wkv-WR-anW"/>
-                <constraint firstItem="YIe-7I-dDv" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="10" id="b1o-Jx-420"/>
+                <constraint firstAttribute="trailing" secondItem="YIe-7I-dDv" secondAttribute="trailing" constant="8" id="Wkv-WR-anW"/>
+                <constraint firstItem="YIe-7I-dDv" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="5" id="b1o-Jx-420"/>
                 <constraint firstItem="DlP-SB-GWN" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="8" id="blZ-Jb-hGj"/>
             </constraints>
             <size key="customSize" width="392" height="200"/>

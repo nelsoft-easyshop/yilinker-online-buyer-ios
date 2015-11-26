@@ -13,15 +13,15 @@
                 <rect key="frame" x="0.0" y="0.0" width="380" height="70"/>
                 <subviews>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="lQD-rw-rVc">
-                        <rect key="frame" x="10" y="0.0" width="360" height="70"/>
+                        <rect key="frame" x="5" y="0.0" width="370" height="70"/>
                     </imageView>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </view>
             <constraints>
                 <constraint firstItem="lQD-rw-rVc" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="Fgt-aY-Qgy"/>
-                <constraint firstAttribute="trailing" secondItem="lQD-rw-rVc" secondAttribute="trailing" constant="10" id="JlO-t3-lgn"/>
-                <constraint firstItem="lQD-rw-rVc" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="10" id="Xfk-Ez-I10"/>
+                <constraint firstAttribute="trailing" secondItem="lQD-rw-rVc" secondAttribute="trailing" constant="5" id="JlO-t3-lgn"/>
+                <constraint firstItem="lQD-rw-rVc" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="5" id="Xfk-Ez-I10"/>
                 <constraint firstAttribute="bottom" secondItem="lQD-rw-rVc" secondAttribute="bottom" id="amJ-fs-Enf"/>
             </constraints>
             <size key="customSize" width="388" height="70"/>

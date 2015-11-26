@@ -13,7 +13,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="400" height="170"/>
                 <subviews>
                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="D20-ET-fQ0">
-                        <rect key="frame" x="10" y="0.0" width="387" height="150"/>
+                        <rect key="frame" x="5" y="0.0" width="394" height="150"/>
                         <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
                         <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="5" minimumInteritemSpacing="0.0" id="boE-nb-HIl">
                             <size key="itemSize" width="50" height="150"/>
@@ -42,8 +42,8 @@
                 <constraint firstItem="D20-ET-fQ0" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="AlY-Vo-7uR"/>
                 <constraint firstAttribute="trailing" secondItem="keP-Fz-2Z7" secondAttribute="trailing" constant="3" id="BgX-Wr-6mb"/>
                 <constraint firstItem="keP-Fz-2Z7" firstAttribute="top" secondItem="D20-ET-fQ0" secondAttribute="bottom" constant="-7" id="FvT-WL-efb"/>
-                <constraint firstItem="D20-ET-fQ0" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="10" id="Hth-CX-JvM"/>
-                <constraint firstAttribute="trailing" secondItem="D20-ET-fQ0" secondAttribute="trailing" constant="3" id="KT0-qW-XGL"/>
+                <constraint firstItem="D20-ET-fQ0" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="5" id="Hth-CX-JvM"/>
+                <constraint firstAttribute="trailing" secondItem="D20-ET-fQ0" secondAttribute="trailing" constant="1" id="KT0-qW-XGL"/>
                 <constraint firstItem="keP-Fz-2Z7" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="3" id="NHX-Co-1Wv"/>
                 <constraint firstAttribute="bottom" secondItem="keP-Fz-2Z7" secondAttribute="bottom" constant="-10" id="f1a-2T-OCg"/>
             </constraints>

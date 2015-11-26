@@ -186,6 +186,8 @@
 		0C99376D1B750583000D6074 /* VerticalImageCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C9937361B750583000D6074 /* VerticalImageCollectionViewCell.xib */; };
 		0C99376E1B750583000D6074 /* ViewMoreFooterCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C9937371B750583000D6074 /* ViewMoreFooterCollectionViewCell.xib */; };
 		0C9937711B75063B000D6074 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C9937701B75063B000D6074 /* AppDelegate.swift */; };
+		0CAE2F771C05B5400019165A /* FlashSaleCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAE2F751C05B5400019165A /* FlashSaleCollectionViewCell.swift */; };
+		0CAE2F781C05B5400019165A /* FlashSaleCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CAE2F761C05B5400019165A /* FlashSaleCollectionViewCell.xib */; };
 		0CB333661C05720D00625903 /* DailyLoginCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CB333641C05720D00625903 /* DailyLoginCollectionViewCell.swift */; };
 		0CB333671C05720D00625903 /* DailyLoginCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CB333651C05720D00625903 /* DailyLoginCollectionViewCell.xib */; };
 		0CB3336A1C05845D00625903 /* HalfPagerCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CB333681C05845D00625903 /* HalfPagerCollectionViewCell.swift */; };
@@ -667,6 +669,8 @@
 		0C9937361B750583000D6074 /* VerticalImageCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VerticalImageCollectionViewCell.xib; sourceTree = "<group>"; };
 		0C9937371B750583000D6074 /* ViewMoreFooterCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ViewMoreFooterCollectionViewCell.xib; sourceTree = "<group>"; };
 		0C9937701B75063B000D6074 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		0CAE2F751C05B5400019165A /* FlashSaleCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlashSaleCollectionViewCell.swift; sourceTree = "<group>"; };
+		0CAE2F761C05B5400019165A /* FlashSaleCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FlashSaleCollectionViewCell.xib; sourceTree = "<group>"; };
 		0CB333641C05720D00625903 /* DailyLoginCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DailyLoginCollectionViewCell.swift; sourceTree = "<group>"; };
 		0CB333651C05720D00625903 /* DailyLoginCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DailyLoginCollectionViewCell.xib; sourceTree = "<group>"; };
 		0CB333681C05845D00625903 /* HalfPagerCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HalfPagerCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -1001,6 +1005,8 @@
 				0CB333651C05720D00625903 /* DailyLoginCollectionViewCell.xib */,
 				0CB333681C05845D00625903 /* HalfPagerCollectionViewCell.swift */,
 				0CB333691C05845D00625903 /* HalfPagerCollectionViewCell.xib */,
+				0CAE2F751C05B5400019165A /* FlashSaleCollectionViewCell.swift */,
+				0CAE2F761C05B5400019165A /* FlashSaleCollectionViewCell.xib */,
 			);
 			name = Home;
 			sourceTree = "<group>";
@@ -1818,6 +1824,7 @@
 				0C9937621B750583000D6074 /* HalfVerticalImageCollectionViewCell.xib in Resources */,
 				961BE59C1B9948C100E8631A /* DisputeViewController.xib in Resources */,
 				0C2F44C81B8576FE00021F45 /* Panton ExtraBold.otf in Resources */,
+				0CAE2F781C05B5400019165A /* FlashSaleCollectionViewCell.xib in Resources */,
 				79E68B871B8AFD22008626E4 /* PointsDetailsTableViewCell.xib in Resources */,
 				0C9937651B750583000D6074 /* NewSellerCollectionViewCell.xib in Resources */,
 				F7CC68F41BA295A2009168D7 /* message2.png in Resources */,
@@ -2045,6 +2052,7 @@
 				B77B8DC61B9B54E80002C513 /* RoundedView.swift in Sources */,
 				F7CCDAA41B943CF7000F5AD4 /* GeneralRatingTableViewCell.swift in Sources */,
 				0C99373A1B750583000D6074 /* APIManager.swift in Sources */,
+				0CAE2F771C05B5400019165A /* FlashSaleCollectionViewCell.swift in Sources */,
 				0CB333661C05720D00625903 /* DailyLoginCollectionViewCell.swift in Sources */,
 				F7C569FB1BB1790A004740E1 /* TransactionCancelViewController.swift in Sources */,
 				0C9937501B750583000D6074 /* ProductitemWithVerticalDisplayCollectionViewCell.swift in Sources */,
