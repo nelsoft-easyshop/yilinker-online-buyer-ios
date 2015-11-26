@@ -44,17 +44,21 @@ class VerifyMobileNumberViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        initializeViews()
-        initializeLocalizeStrings()
-        fireGetCode()
     }
 
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
+        
+        initializeViews()
+        initializeLocalizeStrings()
+        fireGetCode()
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+    }
+    
+    override func viewDidDisappear(animated: Bool) {
+        timer.invalidate()
     }
     
     func startTimer() {
@@ -173,11 +177,13 @@ class VerifyMobileNumberViewController: UIViewController {
             } else {
                 UIAlertController.displayErrorMessageWithTarget(self, errorMessage: responseObject["message"] as! String)
                 self.dismissLoader()
+                self.delegate?.closeVerifyMobileNumberViewController()
             }
             
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
+                self.delegate?.closeVerifyMobileNumberViewController()
                 self.hud?.hide(true)
         })
     }
