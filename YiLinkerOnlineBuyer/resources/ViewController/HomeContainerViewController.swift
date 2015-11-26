@@ -33,7 +33,7 @@ struct FABStrings {
     static let profile: String = StringHelper.localizedStringWithKey("PROFILE_LOCALIZE_KEY")
 }
 
-class HomeContainerViewController: UIViewController, UITabBarControllerDelegate, EmptyViewDelegate, CarouselCollectionViewCellDataSource, CarouselCollectionViewCellDelegate, DailyLoginCollectionViewCellDelegate, HalfPagerCollectionViewCellDelegate, HalfPagerCollectionViewCellDataSource, FlashSaleCollectionViewCellDelegate {
+class HomeContainerViewController: UIViewController, UITabBarControllerDelegate, EmptyViewDelegate, CarouselCollectionViewCellDataSource, CarouselCollectionViewCellDelegate, DailyLoginCollectionViewCellDelegate, HalfPagerCollectionViewCellDelegate, HalfPagerCollectionViewCellDataSource, FlashSaleCollectionViewCellDelegate, LayoutHeaderCollectionViewCellDelegate {
     var searchViewContoller: SearchViewController?
     var circularMenuViewController: CircularMenuViewController?
     var wishlisViewController: WishlistViewController?
@@ -44,7 +44,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     var profileModel: ProfileUserDetailsModel = ProfileUserDetailsModel()
     var customTabBarController: CustomTabBarController?
     
-    var layouts: [String] = ["1", "2", "3", "4"]
+    var layouts: [String] = ["1", "2", "3", "4", "5", "1", "5", "5"]
     
     @IBOutlet weak var collectionView: UICollectionView!
     
@@ -54,6 +54,10 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     let dailyLoginNibName = "DailyLoginCollectionViewCell"
     let halfPagerCellNibName = "HalfPagerCollectionViewCell"
     let flashSaleNibName = "FlashSaleCollectionViewCell"
+    let verticalImageNibName = "VerticalImageCollectionViewCell"
+    let halfVerticalNibName = "HalfVerticalImageCollectionViewCell"
+    let sectionBackgroundNibName = "SectionBackground"
+    let sectionHeaderNibName = "LayoutHeaderCollectionViewCell"
     
     var timeRemaining: Int = 20000
     
@@ -80,13 +84,21 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         UIApplication.sharedApplication().statusBarStyle = .LightContent
     }
     
+    deinit {
+        // perform the deinitialization
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        //header
+        self.registerHeaderCollectionView(self.sectionHeaderNibName)
         
         self.registerCellWithNibName(self.carouselCellNibName)
         self.registerCellWithNibName(self.dailyLoginNibName)
         self.registerCellWithNibName(self.halfPagerCellNibName)
         self.registerCellWithNibName(self.flashSaleNibName)
+        self.registerCellWithNibName(self.verticalImageNibName)
+        self.registerCellWithNibName(self.halfVerticalNibName)
         
         //set customTabbar
         self.view.layoutIfNeeded()
@@ -111,14 +123,28 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         self.collectionViewLayout()
         
         var timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "updateTime", userInfo: nil, repeats: true)
+        //decoration view
+        self.registerDecorationView(self.sectionBackgroundNibName)
     }
     
-    //MARK: collectionViewLayout()
+    //MARK: - collectionViewLayout()
     func collectionViewLayout() {
         let homePageCollectionViewLayout: HomePageCollectionViewLayout2 = HomePageCollectionViewLayout2()
         homePageCollectionViewLayout.layouts = self.layouts
         self.collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         self.collectionView.collectionViewLayout = homePageCollectionViewLayout
+    }
+    
+    //MARK: - Register Header Collection View
+    func registerHeaderCollectionView(nibName: String) {
+        var layoutHeaderCollectionViewNib: UINib = UINib(nibName: nibName, bundle: nil)
+        collectionView!.registerNib(layoutHeaderCollectionViewNib, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: nibName)
+    }
+    
+    //MARK: - Register Decoration View
+    func registerDecorationView(nibName: String) {
+        var decorationViewNib: UINib = UINib(nibName: nibName, bundle: nil)
+        self.collectionView?.collectionViewLayout.registerNib(decorationViewNib, forDecorationViewOfKind: nibName)
     }
     
     //MARK: - Register Cell
@@ -405,6 +431,10 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             return 1
         case 3:
             return 1
+        case 4:
+            return 1
+        case 5:
+            return 3
         default:
             return 1
         }
@@ -429,6 +459,14 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             halfPager.dataSource = self
             
             return halfPager
+        } else if self.layouts[indexPath.section] == "4" {
+            return self.flashSaleCollectionViewCellWithIndexPath(indexPath)
+        } else if self.layouts[indexPath.section] == "5" {
+            if indexPath.row == 0 {
+                return self.verticalImageCollectionViewCellWithIndexPath(indexPath)
+            } else {
+                return self.halfVerticalImageCollectionViewCellWithIndexPath(indexPath)
+            }
         } else {
             return self.flashSaleCollectionViewCellWithIndexPath(indexPath)
         }
@@ -436,6 +474,12 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
         return UIEdgeInsetsMake(0, 0, 0, 0)
+    }
+    
+    func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
+        let headerView: LayoutHeaderCollectionViewCell = self.collectionView?.dequeueReusableSupplementaryViewOfKind(UICollectionElementKindSectionHeader, withReuseIdentifier: self.sectionHeaderNibName, forIndexPath: indexPath) as! LayoutHeaderCollectionViewCell
+        headerView.delegate = self
+        return headerView
     }
     
     //MARK: - Carousel Data Source
@@ -597,4 +641,25 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         
         return flashSaleCell
     }
+    
+    //MARK: - Vertical Image Collection View Cell With IndexPath
+    func verticalImageCollectionViewCellWithIndexPath(indexPath: NSIndexPath) -> VerticalImageCollectionViewCell {
+         let verticalImageCollectionViewCell: VerticalImageCollectionViewCell = self.collectionView?.dequeueReusableCellWithReuseIdentifier(self.verticalImageNibName
+            , forIndexPath: indexPath) as! VerticalImageCollectionViewCell
+        
+        return verticalImageCollectionViewCell
+    }
+    
+    //MARK: - Half Vertical Image Collection View Cell With IndexPath
+    func halfVerticalImageCollectionViewCellWithIndexPath(indexPath: NSIndexPath) -> HalfVerticalImageCollectionViewCell {
+        let halfVerticalImageCollectionViewCell: HalfVerticalImageCollectionViewCell = self.collectionView?.dequeueReusableCellWithReuseIdentifier(self.halfVerticalNibName, forIndexPath: indexPath) as! HalfVerticalImageCollectionViewCell
+        
+        return halfVerticalImageCollectionViewCell
+    }
+    
+    //MARK: - Header View Delegate
+    func layoutHeaderCollectionViewCellDidSelectViewMore(layoutHeaderCollectionViewCell: LayoutHeaderCollectionViewCell) {
+        println("view more selected!!!")
+    }
+    
 }
