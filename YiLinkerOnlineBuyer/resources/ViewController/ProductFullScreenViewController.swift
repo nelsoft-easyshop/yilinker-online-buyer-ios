@@ -33,7 +33,7 @@ class ProductFullScreenViewController: UIViewController, UIScrollViewDelegate {
         // Do any additional setup after loading the view.
         
         self.carouselScrollView.pagingEnabled = true
-//        self.carouselScrollView.bounces = false
+        self.carouselScrollView.bounces = false
         
         self.view.addSubview(self.carouselScrollView)
         generateScrollViewWithImageView()
@@ -41,7 +41,7 @@ class ProductFullScreenViewController: UIViewController, UIScrollViewDelegate {
     }
     
     @IBAction func closeAction(sender: AnyObject) {
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.dismissViewControllerAnimated(false, completion: nil)
     }
     
     func generateScrollViewWithImageView() {
@@ -64,9 +64,8 @@ class ProductFullScreenViewController: UIViewController, UIScrollViewDelegate {
             imageTap.addTarget(self, action: "tapRecognizer:")
             
             let imageViewHeight = self.view.frame.size.width * (self.view.frame.size.width / 320)
-            self.imageView = UIImageView(frame: CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height))
+            self.imageView = UIImageView(frame: CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.width))
             self.imageView.center = self.view.center
-            println(images[i])
             self.imageView.sd_setImageWithURL(NSURL(string: images[i])!, placeholderImage: UIImage(named: "dummy-placeholder"))
 //            self.imageView.backgroundColor = UIColor.whiteColor()
             self.imageView.contentMode = UIViewContentMode.ScaleAspectFit
@@ -128,9 +127,11 @@ class ProductFullScreenViewController: UIViewController, UIScrollViewDelegate {
         }
         
         if scrollView.zoomScale > 1.0 {
-            
+            self.closeButton.hidden = true
+            self.pageLabel.hidden = true
         } else {
-            
+            self.closeButton.hidden = false
+            self.pageLabel.hidden = false
         }
     }
     
@@ -157,7 +158,13 @@ class ProductFullScreenViewController: UIViewController, UIScrollViewDelegate {
     func recognizerForScrollView(gesture: UITapGestureRecognizer) {
         for subview in self.carouselScrollView.subviews {
             if let view = subview as? UIScrollView {
-                
+                if self.closeButton.hidden {
+                    self.closeButton.hidden = false
+                    self.pageLabel.hidden = false
+                } else {
+                    self.closeButton.hidden = true
+                    self.pageLabel.hidden = true
+                }
             }
         }
     }

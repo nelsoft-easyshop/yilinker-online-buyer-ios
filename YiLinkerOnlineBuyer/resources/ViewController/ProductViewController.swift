@@ -1091,7 +1091,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         }
         productFullScreen.index = productImagesView.pageControl.currentPage
         
-        self.navigationController?.presentViewController(productFullScreen, animated: true, completion: nil)
+        self.navigationController?.presentViewController(productFullScreen, animated: false, completion: nil)
     }
     
     // MARK: - Product Description Delegate
