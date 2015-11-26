@@ -13,7 +13,7 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
     var manager = APIManager.sharedInstance
     
     @IBOutlet var cartTableView: UITableView!
-    @IBOutlet weak var dimView: UIView!
+    var dimView: UIView?
     @IBOutlet var totalPriceLabel: UILabel!
     @IBOutlet weak var totalLabel: UILabel!
     @IBOutlet var cartCounterLabel: UILabel!
@@ -68,6 +68,11 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
                 NSFontAttributeName: UIFont(name: "Panton-Regular", size: 21)!]
         
         self.title = StringHelper.localizedStringWithKey("CART_TITLE_LOCALIZE_KEY")
+        
+        dimView = UIView(frame: self.view.bounds)
+        dimView?.backgroundColor = UIColor.blackColor()
+        dimView?.alpha = 0
+        self.navigationController?.view.addSubview(dimView!)
     }
     
     func initializeLocalizedString() {
@@ -320,6 +325,13 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     // MARK: - Table View Delegate
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if self.tableData.count == 0 {
+            checkoutButton.titleLabel?.textColor = UIColor.grayColor()
+            checkoutButton.enabled = false
+        } else {
+            checkoutButton.titleLabel?.textColor = UIColor.whiteColor()
+            checkoutButton.enabled = true
+        }
         return self.tableData.count
     }
     
@@ -433,11 +445,21 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
         NSNotificationCenter.defaultCenter().postNotificationName("SwipeForOptionsCellEnclosingTableViewDidBeginScrollingNotification", object: self)
     }
     
+    func tapDetails(sender: AnyObject) {
+        var pathOfTheCell: NSIndexPath = cartTableView.indexPathForCell(sender as! UITableViewCell)!
+        var rowOfTheCell: Int = pathOfTheCell.row
+        
+        let productViewController: ProductViewController = ProductViewController(nibName: "ProductViewController", bundle: nil)
+        productViewController.tabController = self.tabBarController as! CustomTabBarController
+        productViewController.productId = tableData[rowOfTheCell].id
+        self.navigationController?.pushViewController(productViewController, animated: true)
+    }
+    
     // MARK: - Cart Product Attribute View Controller Delegate
     func pressedCancelAttribute(controller: CartProductAttributeViewController) {
         UIView.animateWithDuration(0.3, animations: {
             self.view.transform = CGAffineTransformMakeTranslation(1, 1)
-            self.dimView.alpha = 0
+            self.dimView!.alpha = 0
             self.navigationController?.navigationBar.alpha = 1.0
         })
     }
@@ -458,7 +480,7 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         UIView.animateWithDuration(0.3, animations: {
             self.view.transform = CGAffineTransformMakeTranslation(1, 1)
-            self.dimView.alpha = 0
+            self.dimView!.alpha = 0
             self.navigationController?.navigationBar.alpha = 1.0
         })
     }
@@ -543,7 +565,7 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
         self.tabBarController?.presentViewController(attributeModal, animated: true, completion: nil)
         
         UIView.animateWithDuration(0.3, animations: {
-            self.dimView.alpha = 0.5
+            self.dimView!.alpha = 0.5
             self.view.transform = CGAffineTransformMakeScale(0.92, 0.95)
             self.navigationController?.navigationBar.alpha = 0.0
         })

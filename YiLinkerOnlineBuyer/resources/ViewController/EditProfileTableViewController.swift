@@ -71,11 +71,13 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
     }
     
     override func viewDidAppear(animated: Bool) {
-        let locationManager = CLLocationManager()
-        locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.requestWhenInUseAuthorization()
-        locationManager.startUpdatingLocation()
+//        let locationManager = CLLocationManager()
+//        locationManager.delegate = self
+//        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+//        locationManager.requestWhenInUseAuthorization()
+//        locationManager.startUpdatingLocation()
+        
+        self.tableView.reloadData()
     }
     
     override func didReceiveMemoryWarning() {

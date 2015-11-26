@@ -424,10 +424,6 @@
                                     <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 </view>
                             </tableView>
-                            <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Flk-HZ-Njb" userLabel="Dim View">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                            </view>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -435,20 +431,12 @@
                             <constraint firstItem="mFe-cC-ywX" firstAttribute="leading" secondItem="fCv-gF-g2z" secondAttribute="leading" id="C9N-Lg-FM3"/>
                             <constraint firstItem="mFe-cC-ywX" firstAttribute="top" secondItem="DP3-44-XbQ" secondAttribute="bottom" id="Fcf-qz-Eem"/>
                             <constraint firstItem="vgh-W9-rFp" firstAttribute="top" secondItem="mFe-cC-ywX" secondAttribute="bottom" constant="1" id="Of9-KH-4gm"/>
-                            <constraint firstAttribute="trailing" secondItem="Flk-HZ-Njb" secondAttribute="trailing" id="Rep-DD-p3d"/>
                             <constraint firstItem="DP3-44-XbQ" firstAttribute="top" secondItem="Q5h-SR-VNN" secondAttribute="bottom" id="Ubm-9I-AXE"/>
-                            <constraint firstItem="Flk-HZ-Njb" firstAttribute="leading" secondItem="fCv-gF-g2z" secondAttribute="leading" id="UoZ-jy-Lxv"/>
                             <constraint firstItem="DP3-44-XbQ" firstAttribute="leading" secondItem="fCv-gF-g2z" secondAttribute="leading" id="bHD-Yc-aBB"/>
                             <constraint firstAttribute="trailing" secondItem="mFe-cC-ywX" secondAttribute="trailing" id="dfx-rA-3Fc"/>
-                            <constraint firstAttribute="bottom" secondItem="Flk-HZ-Njb" secondAttribute="bottom" id="jCG-Bv-COW"/>
-                            <constraint firstItem="Flk-HZ-Njb" firstAttribute="leading" secondItem="fCv-gF-g2z" secondAttribute="leading" id="lYM-D0-vcr"/>
-                            <constraint firstAttribute="bottom" secondItem="Flk-HZ-Njb" secondAttribute="bottom" id="onQ-K8-2kI"/>
-                            <constraint firstItem="Flk-HZ-Njb" firstAttribute="top" secondItem="fCv-gF-g2z" secondAttribute="top" id="spV-fZ-1h3"/>
-                            <constraint firstAttribute="trailing" secondItem="Flk-HZ-Njb" secondAttribute="trailing" id="tAT-6Y-RfG"/>
                             <constraint firstAttribute="trailing" secondItem="vgh-W9-rFp" secondAttribute="trailing" id="wXE-EN-end"/>
                             <constraint firstItem="vgh-W9-rFp" firstAttribute="leading" secondItem="fCv-gF-g2z" secondAttribute="leading" id="wgO-br-uqL"/>
                             <constraint firstItem="9HC-u3-3mw" firstAttribute="top" secondItem="vgh-W9-rFp" secondAttribute="bottom" id="y92-hO-jNf"/>
-                            <constraint firstItem="Flk-HZ-Njb" firstAttribute="top" secondItem="fCv-gF-g2z" secondAttribute="top" id="zfC-Aj-7Cb"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="ECi-yG-sDA"/>
@@ -457,7 +445,6 @@
                         <outlet property="cartCounterLabel" destination="PGR-Y7-dO2" id="WGL-Iz-Se7"/>
                         <outlet property="cartTableView" destination="mFe-cC-ywX" id="GdG-2D-8Wv"/>
                         <outlet property="checkoutButton" destination="QsH-XS-WrT" id="vXL-p5-paz"/>
-                        <outlet property="dimView" destination="Flk-HZ-Njb" id="ljs-fY-8c3"/>
                         <outlet property="totalLabel" destination="R5e-rH-Gus" id="IGw-fY-4Fh"/>
                         <outlet property="totalPriceLabel" destination="d0X-nt-S88" id="kH7-C0-0gX"/>
                     </connections>
