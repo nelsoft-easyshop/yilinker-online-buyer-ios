@@ -320,6 +320,13 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     // MARK: - Table View Delegate
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if self.tableData.count == 0 {
+            checkoutButton.titleLabel?.textColor = UIColor.grayColor()
+            checkoutButton.enabled = false
+        } else {
+            checkoutButton.titleLabel?.textColor = UIColor.whiteColor()
+            checkoutButton.enabled = true
+        }
         return self.tableData.count
     }
     
