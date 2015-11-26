@@ -91,6 +91,15 @@
                                             <action selector="buttonClicked:" destination="4k9-dh-HWa" eventType="touchUpInside" id="HzL-eq-CTl"/>
                                         </connections>
                                     </button>
+                                    <view contentMode="scaleToFill" id="VWi-LY-0gL">
+                                        <rect key="frame" x="36" y="0.0" width="313" height="105"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    </view>
+                                    <view contentMode="scaleToFill" id="h4f-a1-nIO">
+                                        <rect key="frame" x="0.0" y="0.0" width="36" height="105"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
@@ -149,11 +158,13 @@
                 <outlet property="cellContentView" destination="as5-mn-CZG" id="NuH-Zd-n0X"/>
                 <outlet property="cellScrollView" destination="uoe-4c-vuG" id="w9G-cy-7cM"/>
                 <outlet property="checkBox" destination="fqn-Gd-wkj" id="9qB-tS-tGl"/>
+                <outlet property="checkBoxView" destination="h4f-a1-nIO" id="UwK-Zz-94g"/>
                 <outlet property="deleteButton" destination="YGY-8T-CvA" id="kIJ-2d-kyZ"/>
                 <outlet property="deleteLabel" destination="PE3-ZC-Ttn" id="Y87-T4-kQE"/>
                 <outlet property="editButton" destination="zGA-R0-sbK" id="xmo-mP-5XD"/>
                 <outlet property="editLabel" destination="cTa-7b-a23" id="npI-kQ-mxi"/>
                 <outlet property="productDetailsLabel" destination="eg5-B1-pGL" id="rFV-Cu-BrS"/>
+                <outlet property="productDetailsView" destination="VWi-LY-0gL" id="Lul-2u-RbO"/>
                 <outlet property="productItemImageView" destination="bLm-e4-ynS" id="nuo-3G-Zub"/>
                 <outlet property="productNameLabel" destination="Fgx-8P-g7b" id="wSU-VC-Tf6"/>
                 <outlet property="productPriceLabel" destination="AwX-GA-C9j" id="GJb-PO-MKw"/>
