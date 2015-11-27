@@ -17,6 +17,7 @@ struct SectionHeight {
     static let sectionSix: CGFloat = 240.0
     static let sectionEight: CGFloat = 338
     static let sectionNine: CGFloat = 355
+    static let sectionTen: CGFloat = 287
     static let layoutHeader: CGFloat = 40.0
 }
 
@@ -57,6 +58,8 @@ class HomePageCollectionViewLayout2: UICollectionViewLayout {
                 self.layoutEight(index)
             } else if layout == "9" {
                 self.layoutNine(index)
+            } else if layout == "10" {
+                self.layoutTen(index)
             }
         }
     }
@@ -268,8 +271,49 @@ class HomePageCollectionViewLayout2: UICollectionViewLayout {
     }
     
     func layoutTen(section: Int) {
-    
-    
+        let horizontalInset: CGFloat = 5.0
+        var defaultYPosition = self.sectionYOffsetWithSectionNumber(section) + SectionHeight.layoutHeader + horizontalInset
+        let path = NSIndexPath(forItem: 0, inSection: section)
+        
+        //Add Header View
+        let headerView: (attribute: UICollectionViewLayoutAttributes, key: String) = headerViewWithYPosition(self.sectionYOffsetWithSectionNumber(section), path: path)
+        self.layoutAttributes[headerView.key] = headerView.attribute
+        //Add cells
+        var xPosition: CGFloat = horizontalInset
+        var yPosition: CGFloat = defaultYPosition
+        
+        let numberOfItems = self.collectionView?.numberOfItemsInSection(section)
+        let initialMargin: CGFloat = 8
+        
+        let fullSectionItemHeight: CGFloat = 230
+        var itemSize: CGSize = CGSizeZero
+        
+        let screenWidth: CGFloat =  ((screenRect!.width - (horizontalInset * 3)) /  2)
+        
+        for var item = 0; item < numberOfItems; item++ {
+            let indexPath = NSIndexPath(forItem: item, inSection: section)
+            let attribute = UICollectionViewLayoutAttributes(forCellWithIndexPath: indexPath)
+            let cellHeight: CGFloat = 287
+            
+            itemSize = CGSizeMake(screenWidth, cellHeight)
+            
+            if (item + 1) % 2 != 0 {
+                if (item + 1) != 1 {
+                    xPosition = horizontalInset
+                    yPosition = yPosition + cellHeight + horizontalInset
+                }
+            } else {
+                if item != 0 {
+                    xPosition = xPosition + screenWidth + horizontalInset
+                }
+                
+            }
+            
+            attribute.frame = CGRectMake(xPosition, yPosition, itemSize.width, itemSize.height)
+            
+            let key: String = self.layoutKeyForIndexPath(indexPath)
+            self.layoutAttributes[key] = attribute
+        }
     }
     
     //MARK: - Section Y Offset With Section Number
@@ -294,7 +338,18 @@ class HomePageCollectionViewLayout2: UICollectionViewLayout {
                 occupiedSpace = occupiedSpace + SectionHeight.sectionEight + sectionVerticalInset + SectionHeight.layoutHeader
             } else if self.layouts[x] == "9" {
                 occupiedSpace = occupiedSpace + SectionHeight.sectionNine + sectionVerticalInset + SectionHeight.layoutHeader
-            } else {
+            } else if self.layouts[x] == "10" {
+                var numberOfItems: CGFloat = CGFloat(self.collectionView!.numberOfItemsInSection(section - 1))
+                numberOfItems = numberOfItems / 2
+                
+                if (numberOfItems - floor(numberOfItems) > 0.000001) { // 0.000001 can be changed depending on the level of precision you need
+                    let items: Int = Int(numberOfItems)
+                    occupiedSpace = occupiedSpace + (SectionHeight.sectionTen * CGFloat(items + 1)) + (sectionVerticalInset * CGFloat(items)) + SectionHeight.layoutHeader
+                } else {
+                    let items: Int = Int(numberOfItems)
+                    occupiedSpace = occupiedSpace + (SectionHeight.sectionTen * CGFloat(items + 0)) + (sectionVerticalInset * CGFloat(items)) + SectionHeight.layoutHeader
+                }
+            }  else {
                 occupiedSpace = 0.0
             }
         }

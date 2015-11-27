@@ -45,7 +45,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     var profileModel: ProfileUserDetailsModel = ProfileUserDetailsModel()
     var customTabBarController: CustomTabBarController?
     
-    var layouts: [String] = ["1", "2", "3", "4", "5", "6", "7", "8", "8", "9"]
+    var layouts: [String] = ["1", "2", "3", "4", "5", "6", "7", "8", "8", "9", "10"]
     
     @IBOutlet weak var collectionView: UICollectionView!
     
@@ -63,6 +63,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     let sellerNibName = "SellerCollectionViewCell"
     let sellerCarouselNibName = "SellerCarouselCollectionViewCell"
     let layoutNineNibName = "LayoutNineCollectionViewCell"
+    let twoColumnGridCell = "TwoColumnGridCollectionViewCell"
     
     var timeRemaining: Int = 20000
     
@@ -108,6 +109,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         self.registerCellWithNibName(self.sellerNibName)
         self.registerCellWithNibName(self.sellerCarouselNibName)
         self.registerCellWithNibName(self.layoutNineNibName)
+        self.registerCellWithNibName(self.twoColumnGridCell)
         
         //set customTabbar
         self.view.layoutIfNeeded()
@@ -452,6 +454,8 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             return 1
         case 9:
             return 1
+        case 10:
+            return 10
         default:
             return 1
         }
@@ -494,6 +498,8 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             return self.sellerCarouselWithIndexPath(indexPath)
         } else if self.layouts[indexPath.section] == "9" {
             return self.layoutNineCollectionViewCellWithIndexPath(indexPath)
+        } else if self.layouts[indexPath.section] == "10" {
+            return self.twoColumnGridCollectionViewCellWithIndexPath(indexPath)
         } else {
             return self.fullImageCollectionViewCellWithIndexPath(indexPath)
         }
@@ -666,6 +672,12 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         flashSaleCell.productThreeImageView.sd_setImageWithURL(NSURL(string: self.images[2]), placeholderImage: UIImage(named: "dummy-placeholder"))
         
         return flashSaleCell
+    }
+    
+    //MARK: - Grid Layout
+    func twoColumnGridCollectionViewCellWithIndexPath(indexPath: NSIndexPath) -> TwoColumnGridCollectionViewCell {
+        let twoColumnGridCollectionViewCell: TwoColumnGridCollectionViewCell = self.collectionView?.dequeueReusableCellWithReuseIdentifier("TwoColumnGridCollectionViewCell", forIndexPath: indexPath) as! TwoColumnGridCollectionViewCell
+        return twoColumnGridCollectionViewCell
     }
     
     //MARK: - Layout Nine Collection View Cell With IndexPath
