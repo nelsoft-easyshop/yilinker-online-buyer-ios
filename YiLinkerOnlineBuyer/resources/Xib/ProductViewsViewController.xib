@@ -531,6 +531,9 @@
                 <constraint firstAttribute="trailing" secondItem="vzj-kt-fCk" secondAttribute="trailing" id="pWT-eG-LwP"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="textLabel" destination="vzj-kt-fCk" id="7WL-mv-nxu"/>
+            </connections>
             <point key="canvasLocation" x="364.5" y="1578.5"/>
         </view>
     </objects>

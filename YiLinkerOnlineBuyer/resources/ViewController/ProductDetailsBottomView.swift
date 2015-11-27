@@ -10,6 +10,11 @@ import UIKit
 
 class ProductDetailsBottomView: UIView {
 
-
-
+    @IBOutlet weak var textLabel: UILabel!
+    
+    override func awakeFromNib() {
+        
+        self.textLabel.text = ProductStrings.reachedBottom
+    }
+    
 }

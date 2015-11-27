@@ -17,7 +17,7 @@ struct ProductStrings {
     static let seeMore = StringHelper.localizedStringWithKey("SEE_MORE_LOCALIZE_KEY")
     static let ratingFeedback = StringHelper.localizedStringWithKey("RATING_FEEDBACK_LOCALIZE_KEY")
     static let seller = StringHelper.localizedStringWithKey("SELLER_LOCALIZE_KEY")
-
+    static let reachedBottom = StringHelper.localizedStringWithKey("REACHED_BOTTOM_LOCALIZE_KEY")
     static let addToCart = StringHelper.localizedStringWithKey("ADD_TO_CART_LOCALIZE_KEY")
     static let buytItNow = StringHelper.localizedStringWithKey("BUY_IT_NOW_LOCALIZE_KEY")
     

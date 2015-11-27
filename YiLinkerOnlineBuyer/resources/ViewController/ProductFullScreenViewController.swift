@@ -24,6 +24,8 @@ class ProductFullScreenViewController: UIViewController, UIScrollViewDelegate {
         super.viewWillAppear(animated)
         
         self.navigationController?.navigationBarHidden = true
+        UIApplication.sharedApplication().statusBarHidden = true
+        
         self.carouselScrollView.delegate = self
     }
     
@@ -41,6 +43,7 @@ class ProductFullScreenViewController: UIViewController, UIScrollViewDelegate {
     }
     
     @IBAction func closeAction(sender: AnyObject) {
+        UIApplication.sharedApplication().statusBarHidden = false
         self.dismissViewControllerAnimated(false, completion: nil)
     }
     
@@ -64,7 +67,7 @@ class ProductFullScreenViewController: UIViewController, UIScrollViewDelegate {
             imageTap.addTarget(self, action: "tapRecognizer:")
             
             let imageViewHeight = self.view.frame.size.width * (self.view.frame.size.width / 320)
-            self.imageView = UIImageView(frame: CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.width))
+            self.imageView = UIImageView(frame: CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height))
             self.imageView.center = self.view.center
             self.imageView.sd_setImageWithURL(NSURL(string: images[i])!, placeholderImage: UIImage(named: "dummy-placeholder"))
 //            self.imageView.backgroundColor = UIColor.whiteColor()
