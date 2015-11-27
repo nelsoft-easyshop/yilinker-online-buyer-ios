@@ -39,6 +39,7 @@ class CategoriesViewController: UIViewController, EmptyViewDelegate, UIWebViewDe
 //            requestMainCategories()
 //        }
         loadWebView()
+        webView.delegate = self
     }
 
     override func viewWillAppear(animated: Bool) {
