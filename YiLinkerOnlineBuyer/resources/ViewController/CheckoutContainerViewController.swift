@@ -673,13 +673,13 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
     }
     
     func requestNewCodeAction() {
-        changeMobileNumberAction()
+        submitChangeNumberViewController()
     }
     
     // MARK: - VerifyMobileNumberStatusViewControllerDelegate
     func closeVerifyMobileNumberStatusViewController() {
         hideDimView()
-        self.changeMobileNumberAction()
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
     
     func continueVerifyMobileNumberAction(isSuccessful: Bool) {
@@ -692,6 +692,6 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
     }
     
     func requestNewVerificationCodeAction() {
-        changeMobileNumberAction()
+        submitChangeNumberViewController()
     }
 }
