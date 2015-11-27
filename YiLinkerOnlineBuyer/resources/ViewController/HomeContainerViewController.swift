@@ -45,11 +45,13 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     var profileModel: ProfileUserDetailsModel = ProfileUserDetailsModel()
     var customTabBarController: CustomTabBarController?
     
-    var layouts: [String] = ["1", "2", "3", "4", "5", "6", "7", "8", "8", "9", "10"]
+    var layouts: [String] = []
     
     @IBOutlet weak var collectionView: UICollectionView!
     
     var images: [String] = ["http://www.nognoginthecity.com/wp-content/uploads/2014/11/20141023_BRA_NA_Penshoppe-CB-women_NA_penshoppe-1.jpg", "http://www.manilaonsale.com/wp-content/uploads/2013/03/Penshoppe-Sale-March-2013.jpg", "http://www.manilaonsale.com/wp-content/uploads/2013/07/Penshoppe-Mid-Year-Clearance-Sale-July-2013.jpg", "http://cdn.soccerbible.com/media/8733/adidas-hunt-pack-supplied-img4.jpg", "http://demandware.edgesuite.net/sits_pod14-adidas/dw/image/v2/aagl_prd/on/demandware.static/-/Sites-adidas-AME-Library/default/dw2ec04560/brand/images/2015/06/adidas-originals-fw15-xeno-zx-flux-fc-double_70190.jpg?sw=470&sh=264&sm=fit&cx=10&cy=0&cw=450&ch=254&sfrm=jpg"]
+    
+    let placeHolder: String = "dummy-placeholder"
     
     let carouselCellNibName = "CarouselCollectionViewCell"
     let dailyLoginNibName = "DailyLoginCollectionViewCell"
@@ -75,6 +77,8 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     
     var firstSecondsString: String = ""
     var secondSecondsString: String = ""
+    
+    var homePageModel: HomePageModel = HomePageModel()
     
     //MARK: - Life Cycle
     override func didReceiveMemoryWarning() {
@@ -111,17 +115,10 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         self.registerCellWithNibName(self.layoutNineNibName)
         self.registerCellWithNibName(self.twoColumnGridCell)
         
-        //set customTabbar
-        self.view.layoutIfNeeded()
-        self.customTabBarController = self.tabBarController as? CustomTabBarController
-        self.customTabBarController?.isValidToSwitchToMenuTabBarItems = false
-        self.circularDraweView()
-        self.tabBarController!.delegate = self
-        
         /*if Reachability.isConnectedToNetwork() {
-            self.fireGetHomePageData()
+        self.fireGetHomePageData()
         } else {
-            self.addEmptyView()
+        self.addEmptyView()
         }*/
         
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
@@ -131,11 +128,27 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "onNewMessage:",
             name: appDelegate.messageKey, object: nil)
         
-        self.collectionViewLayout()
-        
-        var timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "updateTime", userInfo: nil, repeats: true)
+        //var timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "updateTime", userInfo: nil, repeats: true)
         //decoration view
         self.registerDecorationView(self.sectionBackgroundNibName)
+        
+        let dictionary: NSDictionary = ParseLocalJSON.fileName("dummyHomePage") as NSDictionary
+        self.homePageModel = HomePageModel.parseDataFromDictionary(dictionary)
+        
+        for model in self.homePageModel.data {
+            if model.isKindOfClass(LayoutOneModel) {
+                self.layouts.append("1")
+            }
+        }
+        
+        self.collectionViewLayout()
+        
+        self.view.layoutIfNeeded()
+        //set customTabbar
+        self.customTabBarController = self.tabBarController as? CustomTabBarController
+        self.customTabBarController?.isValidToSwitchToMenuTabBarItems = false
+        self.circularDraweView()
+        self.tabBarController!.delegate = self
     }
     
     //MARK: - collectionViewLayout()
@@ -228,7 +241,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                 println(error.description)
                 if (Reachability.isConnectedToNetwork()) {
                     let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                
+                    
                     if task.statusCode == 401 {
                         self.fireRefreshToken()
                     } else {
@@ -252,7 +265,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             self.emptyView!.hidden = false
         }
     }
-
+    
     //MARK: - Tab Bar Delegate
     func tabBarController(tabBarController: UITabBarController, shouldSelectViewController viewController: UIViewController) -> Bool {
         if viewController == tabBarController.viewControllers![4] as! UIViewController {
@@ -321,13 +334,13 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         manager.GET(APIAtlas.homeUrl, parameters: nil, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
-                self.hud?.hide(true)
-                //get user info
-                if SessionManager.isLoggedIn() {
-                    self.fireGetUserInfo()
-                } else {
-                    SessionManager.saveCookies()
-                }
+            self.hud?.hide(true)
+            //get user info
+            if SessionManager.isLoggedIn() {
+                self.fireGetUserInfo()
+            } else {
+                SessionManager.saveCookies()
+            }
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 self.hud?.hide(true)
@@ -335,7 +348,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         })
     }
     
-
+    
     
     //MARK: - Getting User Info
     func fireGetUserInfo() {
@@ -400,12 +413,12 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-            
+                
                 UIAlertController.displayErrorMessageWithTarget(self, errorMessage: HomeStrings.somethingWentWrong, title: HomeStrings.error)
                 
                 self.hud?.hide(true)
         })
-
+        
     }
     
     //MARK: - Show HUD
@@ -464,6 +477,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         if self.layouts[indexPath.section] == "1" {
             let carouselCell: CarouselCollectionViewCell = self.collectionView.dequeueReusableCellWithReuseIdentifier(self.carouselCellNibName, forIndexPath: indexPath) as! CarouselCollectionViewCell
+            
             carouselCell.dataSource = self
             carouselCell.delegate = self
             
@@ -501,7 +515,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         } else if self.layouts[indexPath.section] == "10" {
             return self.twoColumnGridCollectionViewCellWithIndexPath(indexPath)
         } else {
-            return self.fullImageCollectionViewCellWithIndexPath(indexPath)
+           return self.twoColumnGridCollectionViewCellWithIndexPath(indexPath)
         }
     }
     
@@ -517,13 +531,17 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     
     //MARK: - Carousel Data Source
     func carouselCollectionViewCell(carouselCollectionViewCell: CarouselCollectionViewCell, numberOfItemsInSection section: Int) -> Int {
-        return self.images.count
+        let parentIndexPath: NSIndexPath = self.collectionView.indexPathForCell(carouselCollectionViewCell)!
+        let layoutOneModel: LayoutOneModel = self.homePageModel.data[parentIndexPath.section] as! LayoutOneModel
+        
+        return layoutOneModel.data.count
     }
     
     func carouselCollectionViewCell(carouselCollectionViewCell: CarouselCollectionViewCell, cellForRowAtIndexPath indexPath: NSIndexPath) -> FullImageCollectionViewCell {
-        let fullImageCollectionViewCell: FullImageCollectionViewCell = carouselCollectionViewCell.collectionView.dequeueReusableCellWithReuseIdentifier(carouselCollectionViewCell.fullImageCellNib, forIndexPath: indexPath) as! FullImageCollectionViewCell
-        fullImageCollectionViewCell.itemProductImageView.sd_setImageWithURL(NSURL(string: self.images[indexPath.row]), placeholderImage: UIImage(named: "dummy-placeholder"))
-        return fullImageCollectionViewCell
+        let parentIndexPath: NSIndexPath = self.collectionView.indexPathForCell(carouselCollectionViewCell)!
+        let layoutOneModel: LayoutOneModel = self.homePageModel.data[parentIndexPath.section] as! LayoutOneModel
+        
+        return self.fullImageCollectionViewCellWithIndexPath(indexPath, fullImageCollectionView: carouselCollectionViewCell.collectionView)
     }
     
     func itemWidthInCarouselCollectionViewCell(carouselCollectionViewCell: CarouselCollectionViewCell) -> CGFloat {
@@ -533,7 +551,10 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     
     //MARK: - Carousel Delegate
     func carouselCollectionViewCell(carouselCollectionViewCell: CarouselCollectionViewCell, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        println("Did select item \(indexPath.row)")
+        let fullImageCell: FullImageCollectionViewCell = carouselCollectionViewCell.collectionView.cellForItemAtIndexPath(indexPath) as! FullImageCollectionViewCell
+        
+        println("Target: \(fullImageCell.target)")
+        println("Target: \(fullImageCell.targetType)")
     }
     
     func carouselCollectionViewCellDidEndDecelerating(carouselCollectionViewCell: CarouselCollectionViewCell) {
@@ -588,7 +609,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         }
     }
     
-     //MARK: - Half Pager Delegate
+    //MARK: - Half Pager Delegate
     func halfPagerCollectionViewCell(halfPagerCollectionViewCell: HalfPagerCollectionViewCell, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         println("Did select item \(indexPath.row)")
     }
@@ -729,7 +750,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     
     //MARK: - Vertical Image Collection View Cell With IndexPath
     func verticalImageCollectionViewCellWithIndexPath(indexPath: NSIndexPath) -> VerticalImageCollectionViewCell {
-         let verticalImageCollectionViewCell: VerticalImageCollectionViewCell = self.collectionView?.dequeueReusableCellWithReuseIdentifier(self.verticalImageNibName
+        let verticalImageCollectionViewCell: VerticalImageCollectionViewCell = self.collectionView?.dequeueReusableCellWithReuseIdentifier(self.verticalImageNibName
             , forIndexPath: indexPath) as! VerticalImageCollectionViewCell
         
         return verticalImageCollectionViewCell
@@ -748,8 +769,15 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     }
     
     //MARK: - Full Image Collection View Cell
-    func fullImageCollectionViewCellWithIndexPath(indexPath: NSIndexPath) -> FullImageCollectionViewCell {
-        let fullImageCollectionViewCell: FullImageCollectionViewCell = self.collectionView.dequeueReusableCellWithReuseIdentifier(self.fullImageCellNib, forIndexPath: indexPath) as! FullImageCollectionViewCell
+    func fullImageCollectionViewCellWithIndexPath(indexPath: NSIndexPath, fullImageCollectionView: UICollectionView) -> FullImageCollectionViewCell {
+        let fullImageCollectionViewCell: FullImageCollectionViewCell = fullImageCollectionView.dequeueReusableCellWithReuseIdentifier(self.fullImageCellNib, forIndexPath: indexPath) as! FullImageCollectionViewCell
+        
+        let layoutOneModel: LayoutOneModel = self.homePageModel.data[indexPath.section] as! LayoutOneModel
+        
+        fullImageCollectionViewCell.target = layoutOneModel.data[indexPath.row].target.targetUrl
+        fullImageCollectionViewCell.targetType = layoutOneModel.data[indexPath.row].target.targetType
+        fullImageCollectionViewCell.itemProductImageView.sd_setImageWithURL(NSURL(string: layoutOneModel.data[indexPath.row].image), placeholderImage: UIImage(named: placeHolder))
+        
         return fullImageCollectionViewCell
     }
     
