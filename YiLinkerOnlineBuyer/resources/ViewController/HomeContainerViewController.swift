@@ -138,6 +138,10 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         for model in self.homePageModel.data {
             if model.isKindOfClass(LayoutOneModel) {
                 self.layouts.append("1")
+            } else if model.isKindOfClass(LayoutTwoModel) {
+                self.layouts.append("2")
+            } else if model.isKindOfClass(LayoutThreeModel) {
+                self.layouts.append("3")
             }
         }
         
@@ -483,17 +487,9 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             
             return carouselCell
         } else if self.layouts[indexPath.section] == "2" {
-            let dailyLoginCell: DailyLoginCollectionViewCell = self.collectionView.dequeueReusableCellWithReuseIdentifier(self.dailyLoginNibName, forIndexPath: indexPath) as! DailyLoginCollectionViewCell
-            dailyLoginCell.productImageView.sd_setImageWithURL(NSURL(string: self.images[4]), placeholderImage: UIImage(named: "dummy-placeholder"))
-            dailyLoginCell.delegate = self
-            
-            return dailyLoginCell
+            return self.dailyLoginWithWIndexpath(indexPath)
         } else if self.layouts[indexPath.section] == "3" {
-            let halfPager: HalfPagerCollectionViewCell = self.collectionView.dequeueReusableCellWithReuseIdentifier(self.halfPagerCellNibName, forIndexPath: indexPath) as! HalfPagerCollectionViewCell
-            halfPager.delegate = self
-            halfPager.dataSource = self
-            
-            return halfPager
+            return self.halfPagerWithIndexPath(indexPath)
         } else if self.layouts[indexPath.section] == "4" {
             return self.flashSaleCollectionViewCellWithIndexPath(indexPath)
         } else if self.layouts[indexPath.section] == "5" {
@@ -572,16 +568,23 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     
     //MARK: - Daily Login Delegate
     func dailyLoginCollectionViewCellDidTapCell(dailyLoginCollectionViewCell: DailyLoginCollectionViewCell) {
-        println("daily login clicked!")
+        println("target: \(dailyLoginCollectionViewCell.target)")
+        println("targetType: \(dailyLoginCollectionViewCell.targetType)")
     }
     
     //MARK: - Half Pager Data Source
     func halfPagerCollectionViewCell(halfPagerCollectionViewCell: HalfPagerCollectionViewCell, numberOfItemsInSection section: Int) -> Int {
-        return self.images.count
+        let parentIndexPath: NSIndexPath = self.collectionView.indexPathForCell(halfPagerCollectionViewCell)!
+        let layoutThreeModel: LayoutThreeModel = self.homePageModel.data[parentIndexPath.section] as! LayoutThreeModel
+        
+        return layoutThreeModel.data.count
     }
     
     func halfPagerCollectionViewCellnumberOfDotsInPageControl(halfPagerCollectionViewCell: HalfPagerCollectionViewCell) -> Int {
-        var numberOfPages: CGFloat = CGFloat(self.images.count / 2)
+        let parentIndexPath: NSIndexPath = self.collectionView.indexPathForCell(halfPagerCollectionViewCell)!
+        let layoutThreeModel: LayoutThreeModel = self.homePageModel.data[parentIndexPath.section] as! LayoutThreeModel
+        
+        var numberOfPages: CGFloat = CGFloat(layoutThreeModel.data.count / 2)
         
         if fmod(numberOfPages, 1.0) == 0.0 {
             numberOfPages = numberOfPages + 1
@@ -591,10 +594,13 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     }
     
     func halfPagerCollectionViewCell(halfPagerCollectionViewCell: HalfPagerCollectionViewCell, cellForRowAtIndexPath indexPath: NSIndexPath) -> FullImageCollectionViewCell {
+        
+        
         let fullImageCell: FullImageCollectionViewCell = halfPagerCollectionViewCell.collectionView.dequeueReusableCellWithReuseIdentifier(halfPagerCollectionViewCell.fullImageCellNib, forIndexPath: indexPath) as! FullImageCollectionViewCell
         fullImageCell.itemProductImageView.sd_setImageWithURL(NSURL(string: self.images[indexPath.row]), placeholderImage: UIImage(named: "dummy-placeholder"))
         fullImageCell.layer.cornerRadius = 5
         fullImageCell.clipsToBounds = true
+        
         return fullImageCell
     }
     
@@ -779,6 +785,28 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         fullImageCollectionViewCell.itemProductImageView.sd_setImageWithURL(NSURL(string: layoutOneModel.data[indexPath.row].image), placeholderImage: UIImage(named: placeHolder))
         
         return fullImageCollectionViewCell
+    }
+    
+    //MARK: - Daily Login With Index Path
+    func dailyLoginWithWIndexpath(indexPath: NSIndexPath) -> DailyLoginCollectionViewCell {
+        let layoutTwoModel: LayoutTwoModel = self.homePageModel.data[indexPath.section] as! LayoutTwoModel
+        
+        let dailyLoginCell: DailyLoginCollectionViewCell = self.collectionView.dequeueReusableCellWithReuseIdentifier(self.dailyLoginNibName, forIndexPath: indexPath) as! DailyLoginCollectionViewCell
+        
+        dailyLoginCell.productImageView.sd_setImageWithURL(NSURL(string: layoutTwoModel.data[0].image), placeholderImage: UIImage(named: self.placeHolder))
+        dailyLoginCell.target = layoutTwoModel.data[0].target.targetUrl
+        dailyLoginCell.targetType = layoutTwoModel.data[0].target.targetType
+        dailyLoginCell.delegate = self
+        
+        return dailyLoginCell
+    }
+    
+    //MAMRK: - Half Pager With IndexPath
+    func halfPagerWithIndexPath(indexPath: NSIndexPath) -> HalfPagerCollectionViewCell {
+        let halfPager: HalfPagerCollectionViewCell = self.collectionView.dequeueReusableCellWithReuseIdentifier(self.halfPagerCellNibName, forIndexPath: indexPath) as! HalfPagerCollectionViewCell
+        halfPager.delegate = self
+        halfPager.dataSource = self
+        return halfPager
     }
     
     //MARK: - Seller Collection View Cell With Index Path

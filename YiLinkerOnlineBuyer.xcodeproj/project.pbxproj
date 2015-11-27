@@ -19,6 +19,8 @@
 		0C144DD81C0803C7000728B4 /* TargetModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C144DD71C0803C7000728B4 /* TargetModel.swift */; };
 		0C144DDB1C080786000728B4 /* DataImageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C144DDA1C080786000728B4 /* DataImageModel.swift */; };
 		0C144DDD1C080F10000728B4 /* dummyHomePage.json in Resources */ = {isa = PBXBuildFile; fileRef = 0C144DDC1C080F10000728B4 /* dummyHomePage.json */; };
+		0C144DDF1C082EDA000728B4 /* LayoutTwoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C144DDE1C082EDA000728B4 /* LayoutTwoModel.swift */; };
+		0C144DE11C083694000728B4 /* LayoutThreeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C144DE01C083694000728B4 /* LayoutThreeModel.swift */; };
 		0C1777FF1C045B6600C310D9 /* CarouselCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C1777FD1C045B6600C310D9 /* CarouselCollectionViewCell.swift */; };
 		0C1778001C045B6600C310D9 /* CarouselCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C1777FE1C045B6600C310D9 /* CarouselCollectionViewCell.xib */; };
 		0C1778031C045FB800C310D9 /* HomePageCollectionViewLayout2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C1778021C045FB800C310D9 /* HomePageCollectionViewLayout2.swift */; };
@@ -505,6 +507,8 @@
 		0C144DD71C0803C7000728B4 /* TargetModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TargetModel.swift; sourceTree = "<group>"; };
 		0C144DDA1C080786000728B4 /* DataImageModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataImageModel.swift; sourceTree = "<group>"; };
 		0C144DDC1C080F10000728B4 /* dummyHomePage.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = dummyHomePage.json; sourceTree = "<group>"; };
+		0C144DDE1C082EDA000728B4 /* LayoutTwoModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayoutTwoModel.swift; sourceTree = "<group>"; };
+		0C144DE01C083694000728B4 /* LayoutThreeModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayoutThreeModel.swift; sourceTree = "<group>"; };
 		0C1777FD1C045B6600C310D9 /* CarouselCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarouselCollectionViewCell.swift; sourceTree = "<group>"; };
 		0C1777FE1C045B6600C310D9 /* CarouselCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CarouselCollectionViewCell.xib; sourceTree = "<group>"; };
 		0C1778021C045FB800C310D9 /* HomePageCollectionViewLayout2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomePageCollectionViewLayout2.swift; sourceTree = "<group>"; };
@@ -1021,6 +1025,8 @@
 				0C144DD51C080350000728B4 /* LayoutOneModel.swift */,
 				0C144DD71C0803C7000728B4 /* TargetModel.swift */,
 				0C144DDA1C080786000728B4 /* DataImageModel.swift */,
+				0C144DDE1C082EDA000728B4 /* LayoutTwoModel.swift */,
+				0C144DE01C083694000728B4 /* LayoutThreeModel.swift */,
 			);
 			name = HomeModel;
 			sourceTree = "<group>";
@@ -2111,6 +2117,7 @@
 				F7C569BD1BB1762C004740E1 /* TransactionPurchaseDetailsView.swift in Sources */,
 				0C4E5CD31BA1873E0098224A /* RegisterModalViewController.swift in Sources */,
 				F7C637CF1BD9F81A00C29C47 /* TransactionDeliveryLogTableViewController.swift in Sources */,
+				0C144DE11C083694000728B4 /* LayoutThreeModel.swift in Sources */,
 				26D688C61C021DA7003ED151 /* MapTableViewCell.swift in Sources */,
 				0C1003F41B87629400CAA17A /* NewAddressTableViewCell.swift in Sources */,
 				79E68B911B8B0AE9008626E4 /* PointModel.swift in Sources */,
@@ -2332,6 +2339,7 @@
 				0C9937411B750583000D6074 /* ProductModel.swift in Sources */,
 				79E68B801B8AEC00008626E4 /* MyPointsTableViewController.swift in Sources */,
 				79F0DD9C1B7B17D500EB8053 /* CartModel.swift in Sources */,
+				0C144DDF1C082EDA000728B4 /* LayoutTwoModel.swift in Sources */,
 				0C74406C1BDF42EB0019792A /* Toast.swift in Sources */,
 				0C374F5A1B8A03CC0050AE1D /* CustomizeShoppingTableViewCell.swift in Sources */,
 				F7CCDAA11B943CF7000F5AD4 /* ProductResultListCollectionViewCell.swift in Sources */,

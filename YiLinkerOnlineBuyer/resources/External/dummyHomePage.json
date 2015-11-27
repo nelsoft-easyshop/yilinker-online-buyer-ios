@@ -40,14 +40,30 @@
       "isViewMoreAvailable": false,
       "viewMoreTarget": {},
       "data": [
-        {
-          "image": "www.yilinker.com/assets/images/apple.jpg",
-          "target": {
-            "targetUrl": "http://www.jsoneditoronline.org/",
-            "targetType": "webView",
-            "isAuthenticated": true
-          }
-        }
+               {
+               "image": "http://e27.co/wp-content/uploads/2013/12/citibank-omg-sale.png",
+               "target": {
+               "targetUrl": "target 1",
+               "targetType": "webView",
+               "isAuthenticated": false
+               }
+               },
+               {
+               "image": "https://blog.bankbazaar.com/wp-content/uploads/2014/10/Online-Shopping.jpg",
+               "target": {
+               "targetUrl": "target 2",
+               "targetType": "webView2",
+               "isAuthenticated": false
+               }
+               },
+               {
+               "image": "https://media.licdn.com/media/p/8/005/06a/353/295cf90.png",
+               "target": {
+               "targetUrl": "https://www.yilinker.com/item/asus-zenfone-selfie-32gb-zd551kl-blue-1",
+               "targetType": "webView",
+               "isAuthenticated": false
+               }
+               }
       ]
     },
     {
@@ -56,22 +72,30 @@
       "isViewMoreAvailable": false,
       "viewMoreTarget": {},
       "data": [
-        {
-          "image": "www.yilinker.com/assets/images/apple.jpg",
-          "target": {
-            "targetUrl": "http://www.jsoneditoronline.org/",
-            "targetType": "webView",
-            "isAuthenticated": false
-          }
-        },
-        {
-          "image": "www.yilinker.com/assets/images/apple.jpg",
-          "target": {
-            "targetUrl": "http://www.jsoneditoronline.org/",
-            "targetType": "webView",
-            "isAuthenticated": false
-          }
-        }
+               {
+               "image": "http://e27.co/wp-content/uploads/2013/12/citibank-omg-sale.png",
+               "target": {
+               "targetUrl": "target 1",
+               "targetType": "webView",
+               "isAuthenticated": false
+               }
+               },
+               {
+               "image": "https://blog.bankbazaar.com/wp-content/uploads/2014/10/Online-Shopping.jpg",
+               "target": {
+               "targetUrl": "target 2",
+               "targetType": "webView2",
+               "isAuthenticated": false
+               }
+               },
+               {
+               "image": "https://media.licdn.com/media/p/8/005/06a/353/295cf90.png",
+               "target": {
+               "targetUrl": "https://www.yilinker.com/item/asus-zenfone-selfie-32gb-zd551kl-blue-1",
+               "targetType": "webView",
+               "isAuthenticated": false
+               }
+               }
       ]
     },
     {

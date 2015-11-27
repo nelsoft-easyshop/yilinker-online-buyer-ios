@@ -32,11 +32,15 @@ class HomePageModel: NSObject {
         
         arrays = dictionary["data"] as! [NSDictionary]
         
-        for arrayDictionary in arrays {
-            let layoutId: Int = arrayDictionary["layoutId"] as! Int
+        for sectionDictionary in arrays {
+            let layoutId: Int = sectionDictionary["layoutId"] as! Int
             
             if layoutId == 1 {
-                data.append(LayoutOneModel.parseDataFromDictionary(arrayDictionary))
+                data.append(LayoutOneModel.parseDataFromDictionary(sectionDictionary))
+            } else if layoutId == 2 {
+                data.append(LayoutTwoModel.parseDataFromDictionary(sectionDictionary))
+            } else if layoutId == 3 {
+                data.append(LayoutThreeModel.parseDataFromDictionary(sectionDictionary))
             }
         }
         

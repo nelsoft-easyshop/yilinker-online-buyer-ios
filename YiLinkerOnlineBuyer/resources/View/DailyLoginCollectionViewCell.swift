@@ -18,6 +18,9 @@ class DailyLoginCollectionViewCell: UICollectionViewCell {
     
     var delegate: DailyLoginCollectionViewCellDelegate?
     
+    var target: String = ""
+    var targetType: String = ""
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         self.productImageView.layer.cornerRadius = 5
