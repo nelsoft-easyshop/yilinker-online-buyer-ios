@@ -965,8 +965,8 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
             } else {
                 if sellerRequest {
                     addEmptyView()
+                    self.hud?.hide(true)
                 }
-                self.hud?.hide(true)
             }
         }
         
