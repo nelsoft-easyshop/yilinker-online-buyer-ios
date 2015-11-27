@@ -16,6 +16,8 @@ class ProductDetailsExtendedView: UIView, UIScrollViewDelegate, UIWebViewDelegat
 
     @IBOutlet weak var webView: UIWebView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var closeButton: UIButton!
+    
     var url: String = ""
     var delegate: ProductDetailsExtendedViewDelegate?
     
@@ -25,6 +27,8 @@ class ProductDetailsExtendedView: UIView, UIScrollViewDelegate, UIWebViewDelegat
         webView.scrollView.showsVerticalScrollIndicator = false
         
         webView.loadRequest(NSURLRequest(URL: NSURL(string: "https://www.yilinker.com/")!))
+        
+        self.webView.scrollView.showsHorizontalScrollIndicator = false
     }
 
     func setDelegate() {
@@ -40,24 +44,30 @@ class ProductDetailsExtendedView: UIView, UIScrollViewDelegate, UIWebViewDelegat
         var scrollViewHeight: CGFloat = scrollView.frame.size.height
         var scrollContentSizeHeight: CGFloat = scrollView.contentSize.height
         var scrollOffset: CGFloat = scrollView.contentOffset.y
-        
-        if (scrollOffset >= 0) {
-            
+        self.closeButton.hidden = true
+        if scrollOffset >= 0 {
+            if (scrollView.contentSize.height - self.frame.size.height < scrollView.contentOffset.y) {
+                self.frame.origin.y = ((scrollOffset - scrollView.contentSize.height) * -1) - self.frame.size.height
+            }
         } else if (scrollOffset + scrollViewHeight <= scrollContentSizeHeight) {
             self.frame.origin.y = scrollOffset * -1
         }
-        
-        if scrollView == self.webView.scrollView {
-            if self.scrolledPastBottomThresholdInTableView(self.webView.scrollView) {
-                dismissMe()
-            }
-        }
+//        if scrollView == self.webView.scrollView {
+//            if self.scrolledPastBottomThresholdInTableView(self.webView.scrollView) {
+//                dismissMe()
+//            }
+//        }
+    }
+    
+    func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+        self.closeButton.hidden = false
     }
     
     func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        
         if scrollView.contentOffset.y <= -100 {
-            dismissMe()
+            dismissMe("down")
+        } else if scrollView.contentOffset.y > (scrollView.contentSize.height - self.frame.size.height) + 100 {
+            dismissMe("top")
         }
     }
     
@@ -66,13 +76,25 @@ class ProductDetailsExtendedView: UIView, UIScrollViewDelegate, UIWebViewDelegat
         return scrollView.contentOffset.y <= -100
     }
     
-    func dismissMe() {
+    func dismissMe(direction: String) {
         webView.scrollView.delegate = nil
         UIView.animateWithDuration(0.3, animations: {
-            self.frame.origin.y = self.frame.size.height
+
+            if direction == "down" {
+                self.frame.origin.y = self.frame.size.height
+            } else if direction == "top" {
+                self.frame.origin.y = self.frame.size.height * -1
+            }
+
             }, completion: { (value: Bool) in
                 self.delegate?.closedExtendedDetails()
+                self.frame.origin.y = self.frame.size.height
         })
+    }
+    
+    @IBAction func closeAction(sender: AnyObject) {
+        UIApplication.sharedApplication().statusBarHidden = false
+        dismissMe("down")
     }
     
 }

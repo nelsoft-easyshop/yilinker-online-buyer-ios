@@ -14,6 +14,15 @@
                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                     <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                 </webView>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QPz-Re-wvx">
+                    <rect key="frame" x="2" y="2" width="32" height="34"/>
+                    <state key="normal" image="close">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="closeAction:" destination="iN0-l3-epB" eventType="touchUpInside" id="wSh-85-uoM"/>
+                    </connections>
+                </button>
                 <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="44i-8Y-980">
                     <rect key="frame" x="169" y="315" width="37" height="37"/>
                     <color key="color" red="0.50122048590000001" green="0.0" blue="0.7202493687" alpha="1" colorSpace="calibratedRGB"/>
@@ -31,8 +40,12 @@
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
             <connections>
                 <outlet property="activityIndicator" destination="44i-8Y-980" id="9Ab-dc-cNV"/>
+                <outlet property="closeButton" destination="QPz-Re-wvx" id="Kam-Kf-BtH"/>
                 <outlet property="webView" destination="GaC-aD-6Aa" id="tEy-N7-3ki"/>
             </connections>
         </view>
     </objects>
+    <resources>
+        <image name="close" width="22" height="22"/>
+    </resources>
 </document>

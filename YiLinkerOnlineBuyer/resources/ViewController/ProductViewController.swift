@@ -1241,6 +1241,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         self.navigationController?.navigationBarHidden = true
         UIApplication.sharedApplication().statusBarHidden = true
         self.productDetailsExtendedView.setDelegate()
+
         UIView.animateWithDuration(0.5, animations: {
             self.productDetailsExtendedView.frame.origin.y = 0.0
         })
