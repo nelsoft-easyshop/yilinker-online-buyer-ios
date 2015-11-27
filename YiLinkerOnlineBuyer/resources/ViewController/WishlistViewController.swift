@@ -258,15 +258,23 @@ class WishlistViewController: UIViewController, UITableViewDelegate, UITableView
         
         for tempProductUnit in tempModel.productUnits {
             if tempModel.unitId == tempProductUnit.productUnitId {
-//                if tempProductUnit.imageIds.count == 0 {
-//                    cell.productItemImageView.sd_setImageWithURL(NSURL(string: tempModel.image), placeholderImage: UIImage(named: "dummy-placeholder"))
-//                } else {
-//                    cell.productItemImageView.sd_setImageWithURL(NSURL(string: tempProductUnit.imageIds[0]), placeholderImage: UIImage(named: "dummy-placeholder"))
-//                }
-                if tempModel.images.count != 0 {
-                    cell.productItemImageView.sd_setImageWithURL(NSURL(string: tempModel.images[0]), placeholderImage: UIImage(named: "dummy-placeholder"))
+                //                if tempProductUnit.imageIds.count == 0 {
+                //                    cell.productItemImageView.sd_setImageWithURL(NSURL(string: tempModel.image), placeholderImage: UIImage(named: "dummy-placeholder"))
+                //                } else {
+                //                    cell.productItemImageView.sd_setImageWithURL(NSURL(string: tempProductUnit.imageIds[0]), placeholderImage: UIImage(named: "dummy-placeholder"))
+                //                }
+                
+                
+                if tempProductUnit.primaryImage.isNotEmpty() {
+                    let url = APIAtlas.baseUrl.stringByReplacingOccurrencesOfString("api/v1", withString: "")
+                    cell.productItemImageView.sd_setImageWithURL(NSURL(string: "\(url)\(APIAtlas.cartImage)\(tempProductUnit.primaryImage)"), placeholderImage: UIImage(named: "dummy-placeholder"))
                 } else {
-                    cell.productItemImageView.image = UIImage(named: "dummy-placeholder")
+                    if tempModel.images.count != 0 {
+                        cell.productItemImageView.sd_setImageWithURL(NSURL(string: tempModel.images[0]), placeholderImage: UIImage(named: "dummy-placeholder"))
+                    } else {
+                        cell.productItemImageView.image = UIImage(named: "dummy-placeholder")
+                    }
+                    
                 }
                 
                 var tempAttributesText: String = ""
@@ -281,6 +289,7 @@ class WishlistViewController: UIViewController, UITableViewDelegate, UITableView
                         }
                     }
                 }
+                
                 cell.productDetailsLabel?.text = tempAttributesText
                 cell.productPriceLabel.text = tempProductUnit.discountedPrice.formatToPeso() + " x \(tempModel.quantity)"
             }
