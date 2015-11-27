@@ -138,7 +138,7 @@ class VerifyMobileNumberViewController: UIViewController {
                 "access_token": SessionManager.accessToken(),
                 "code": codeTextField.text]))
         } else if sender as! UIButton == requestButton {
-            self.fireGetCode()
+            self.getCode()
         }
     }
     
