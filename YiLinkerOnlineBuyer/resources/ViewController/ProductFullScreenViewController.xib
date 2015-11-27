@@ -6,7 +6,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ProductFullScreenViewController" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
             <connections>
-                <outlet property="carouselScrollView" destination="cEG-aZ-5dT" id="X1e-fg-37I"/>
+                <outlet property="carouselScrollView" destination="cEG-aZ-5dT" id="zxN-bO-3Ep"/>
                 <outlet property="closeButton" destination="sme-wh-uiZ" id="rX7-AR-g1n"/>
                 <outlet property="pageLabel" destination="znx-mY-qhg" id="bnM-pi-Wtz"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="JnA-xt-dSp"/>

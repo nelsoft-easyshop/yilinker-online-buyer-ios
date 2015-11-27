@@ -19,6 +19,7 @@ class ProductFullScreenViewController: UIViewController, UIScrollViewDelegate {
     var images: [String] = []
     var index: Int = 0
     var page: Int = 0
+    var screenSize: CGRect!
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
@@ -33,13 +34,17 @@ class ProductFullScreenViewController: UIViewController, UIScrollViewDelegate {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        
+        self.carouselScrollView.backgroundColor = .redColor()
         self.carouselScrollView.pagingEnabled = true
-        self.carouselScrollView.bounces = false
+//        self.carouselScrollView.bounces = false
+        self.carouselScrollView.frame = screenSize
         
-        self.view.addSubview(self.carouselScrollView)
         generateScrollViewWithImageView()
         self.pageLabel.text = "\(index + 1) of \(self.images.count)"
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+
     }
     
     @IBAction func closeAction(sender: AnyObject) {
@@ -48,12 +53,11 @@ class ProductFullScreenViewController: UIViewController, UIScrollViewDelegate {
     }
     
     func generateScrollViewWithImageView() {
-        var carouselWidth: CGFloat = 0.0
         
         for i in 0..<self.images.count {
             
             // Creating scrollView inside carouselScrollView
-            self.scrollView = UIScrollView(frame: CGRectMake(CGFloat(i) * self.view.frame.size.width, 0, self.view.frame.size.width, self.view.frame.size.height))
+            self.scrollView = UIScrollView(frame: CGRectMake(CGFloat(i) * screenSize.size.width, 0, screenSize.size.width, screenSize.size.height))
             self.scrollView.delegate = self
             self.scrollView.bounces = false
             self.scrollView.maximumZoomScale = 4.0
@@ -66,31 +70,36 @@ class ProductFullScreenViewController: UIViewController, UIScrollViewDelegate {
             imageTap.numberOfTapsRequired = 2
             imageTap.addTarget(self, action: "tapRecognizer:")
             
-            let imageViewHeight = self.view.frame.size.width * (self.view.frame.size.width / 320)
-            self.imageView = UIImageView(frame: CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height))
-            self.imageView.center = self.view.center
+            let imageViewHeight = self.scrollView.frame.size.width * (self.scrollView.frame.size.width / 320)
+            self.imageView = UIImageView(frame: CGRectMake(0, 0, self.scrollView.frame.size.width, self.scrollView.frame.size.width))
             self.imageView.sd_setImageWithURL(NSURL(string: images[i])!, placeholderImage: UIImage(named: "dummy-placeholder"))
-//            self.imageView.backgroundColor = UIColor.whiteColor()
+//            self.imageView.backgroundColor = UIColor.greenColor()
             self.imageView.contentMode = UIViewContentMode.ScaleAspectFit
             self.imageView.userInteractionEnabled = true
             self.imageView.addGestureRecognizer(imageTap)
+            self.imageView.center = self.scrollView.center
             
             self.scrollView.addSubview(self.imageView)
             self.carouselScrollView.addSubview(self.scrollView)
-            carouselWidth += self.view.frame.size.width
             scrollViewDidZoom(self.scrollView)
         }
         
-        self.carouselScrollView.contentSize = CGSizeMake(carouselWidth, 0)
-        self.carouselScrollView.setContentOffset(CGPointMake(self.carouselScrollView.frame.size.width * CGFloat(index), 0), animated: false)
+        self.carouselScrollView.contentSize = CGSizeMake(CGFloat(self.images.count) * screenSize.size.width, 0)
+        self.carouselScrollView.setContentOffset(CGPointMake(screenSize.size.width * CGFloat(index), 0), animated: false)
         
         self.view.sendSubviewToBack(self.scrollView)
         self.view.sendSubviewToBack(self.carouselScrollView)
+        
+//        println(screenSize.size.width)
+//        println(self.carouselScrollView.contentSize)
     }
     
     // MARK: - Scroll View Delegate
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
+        println(self.carouselScrollView.contentOffset.x)
+        println(self.carouselScrollView.contentOffset.x / screenSize.size.width)
+        
         let pageWidth: CGFloat = self.carouselScrollView.frame.size.width
         page = Int((self.carouselScrollView.contentOffset.x / pageWidth) + 1)
         self.pageLabel.text = "\(page) of \(self.images.count)"
@@ -148,12 +157,6 @@ class ProductFullScreenViewController: UIViewController, UIScrollViewDelegate {
                 }
             }
         }
-        
-//        if scrollView.contentOffset.x == 0 {
-//            self.carouselScrollView.setContentOffset(CGPointMake(self.view.frame.size.width * CGFloat(self.images.count), 0), animated: false)
-//        } else if scrollView.contentOffset.x == self.view.frame.size.width * CGFloat(self.images.count + 1) {
-//            self.carouselScrollView.setContentOffset(CGPointMake(self.view.frame.size.width, 0), animated: false)
-//        }
     }
     
     // MARK: - Gesture Recognizers

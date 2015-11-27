@@ -1090,6 +1090,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
             productFullScreen.images.append(image.imageLocation)
         }
         productFullScreen.index = productImagesView.pageControl.currentPage
+        productFullScreen.screenSize = self.view.frame
         
         self.navigationController?.presentViewController(productFullScreen, animated: false, completion: nil)
     }
