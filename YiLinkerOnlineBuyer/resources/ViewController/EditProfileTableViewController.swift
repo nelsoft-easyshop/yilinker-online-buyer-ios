@@ -489,7 +489,7 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
     }
     
     func requestNewCodeAction() {
-        changeMobileNumberAction()
+        submitChangeNumberViewController()
     }
     
     // MARK: - VerifyMobileNumberStatusViewControllerDelegate
@@ -502,7 +502,15 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
     }
     
     func requestNewVerificationCodeAction() {
-        changeMobileNumberAction()
+        submitChangeNumberViewController()
+    }
+    
+    func getNewMobileNumber() -> String {
+        var result: String = ""
+        if let val: AnyObject = NSUserDefaults.standardUserDefaults().objectForKey("newMobileNumber") as? String {
+            result = val as! String
+        }
+        return result
     }
     
     

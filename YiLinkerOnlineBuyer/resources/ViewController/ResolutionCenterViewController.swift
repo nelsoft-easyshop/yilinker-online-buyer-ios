@@ -446,9 +446,11 @@ class ResolutionCenterViewController: UIViewController, UITableViewDataSource, U
                 self.navigationController?.pushViewController(newDispute, animated:true)
             } else {
                 self.view.makeToast(DisputeStrings.noAvailableTransaction, duration: 3.0, position: CSToastPositionBottom, style: CSToastManager.sharedStyle())
+                self.hud?.hide(true)
             }
 
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
+                self.hud?.hide(true)
                 println(error.userInfo)
         })
     }

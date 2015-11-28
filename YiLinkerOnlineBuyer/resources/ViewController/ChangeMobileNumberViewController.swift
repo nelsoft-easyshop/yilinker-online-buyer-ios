@@ -192,19 +192,23 @@ class ChangeMobileNumberViewController: UIViewController {
                     showAlert(title: errorLocalizeString, message: completeLocalizeString)
                 } else {
                     if SessionManager.mobileNumber().isEmpty {
-                        fireUpdateProfile(APIAtlas.updateMobileNumber, params: NSDictionary(dictionary: ["access_token" : SessionManager.accessToken(),
-                            "newContactNumber": newNumberTextField.text ]))
+                        SessionManager.setMobileNumber(newNumberTextField.text)
+                        setNewMobileNumber(newNumberTextField.text)
+//                        fireUpdateProfile(APIAtlas.updateMobileNumber, params: NSDictionary(dictionary: ["access_token" : SessionManager.accessToken(),
+//                            "newContactNumber": newNumberTextField.text ]))
                     } else {
                         if SessionManager.mobileNumber() == newNumberTextField.text {
-                            self.dismissViewControllerAnimated(true, completion: nil)
-                            self.delegate?.submitChangeNumberViewController()
+                            SessionManager.setMobileNumber(SessionManager.mobileNumber())
+                            setNewMobileNumber(SessionManager.mobileNumber())
                         } else {
-                            fireUpdateProfile(APIAtlas.updateMobileNumber, params: NSDictionary(dictionary: ["access_token" : SessionManager.accessToken(),
-                                "newContactNumber": newNumberTextField.text ,
-                                "oldContactNumber": SessionManager.mobileNumber()]))
+                            setNewMobileNumber(newNumberTextField.text)
+//                            fireUpdateProfile(APIAtlas.updateMobileNumber, params: NSDictionary(dictionary: ["access_token" : SessionManager.accessToken(),
+//                                "newContactNumber": newNumberTextField.text ,
+//                                "oldContactNumber": SessionManager.mobileNumber()]))
                         }
                     }
-                    
+                    self.dismissViewControllerAnimated(true, completion: nil)
+                    self.delegate?.submitChangeNumberViewController()
                 }
             } else {
                 if oldNumberTextField.text.isEmpty ||  newNumberTextField.text.isEmpty{
@@ -214,13 +218,21 @@ class ChangeMobileNumberViewController: UIViewController {
                     var incorrectLocalizeString = StringHelper.localizedStringWithKey("INCORRECTMOBILE_LOCALIZE_KEY")
                     showAlert(title: errorLocalizeString, message: incorrectLocalizeString)
                 } else {
-                    fireUpdateProfile(APIAtlas.updateMobileNumber, params: NSDictionary(dictionary: ["access_token" : SessionManager.accessToken(),
-                        "oldContactNumber": oldNumberTextField.text,
-                        "newContactNumber": newNumberTextField.text]))
+                    SessionManager.setMobileNumber(oldNumberTextField.text)
+                    setNewMobileNumber(newNumberTextField.text)
+                    self.dismissViewControllerAnimated(true, completion: nil)
+                    self.delegate?.submitChangeNumberViewController()
+//                    fireUpdateProfile(APIAtlas.updateMobileNumber, params: NSDictionary(dictionary: ["access_token" : SessionManager.accessToken(),
+//                        "oldContactNumber": oldNumberTextField.text,
+//                        "newContactNumber": newNumberTextField.text]))
                 }
             }
-            
         }
+    }
+    
+    func setNewMobileNumber(newMobileNumber: String) {
+        NSUserDefaults.standardUserDefaults().setObject(newMobileNumber, forKey: "newMobileNumber")
+        NSUserDefaults.standardUserDefaults().synchronize()
     }
 
     func showAlert(#title: String!, message: String!) {
