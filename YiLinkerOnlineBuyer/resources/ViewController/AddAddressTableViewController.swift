@@ -16,7 +16,7 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
     
     let mapCellNibName = "MapTableViewCell"
     
-    let titles: [String] = ["\(AddressStrings.addressTitle):", "\(AddressStrings.streetName):", "\(AddressStrings.province):", "\(AddressStrings.city):", "\(AddressStrings.barangay):", "\(AddressStrings.zipCode):"]
+    let titles: [String] = ["\(AddressStrings.addressTitle):", "\(AddressStrings.address):", "\(AddressStrings.province):", "\(AddressStrings.city):", "\(AddressStrings.barangay):", "\(AddressStrings.zipCode):"]
     
     var delegate: AddAddressTableViewControllerDelegate?
     
@@ -105,6 +105,10 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
                 } else if indexPath.row == 5 {
                     cell.rowTextField.text = self.addressModel.zipCode
                 }
+            }
+            
+            if indexPath.row != 5 {
+               cell.rowTitleLabel.required()
             }
             
             addressCellReference.append(cell)
