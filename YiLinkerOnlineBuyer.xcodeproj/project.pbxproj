@@ -459,6 +459,8 @@
 		F7DC84E11BA00F7300D3878B /* SellerTableHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7DC84E01BA00F7300D3878B /* SellerTableHeaderView.xib */; };
 		F7E294851BFA278900A465A9 /* ActivityLogItemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E294841BFA278800A465A9 /* ActivityLogItemModel.swift */; };
 		F7E294871BFA27AC00A465A9 /* ActivityLogItemsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E294861BFA27AC00A465A9 /* ActivityLogItemsModel.swift */; };
+		F7F082B61C0988BF00761072 /* NoReviewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7F082B41C0988BF00761072 /* NoReviewTableViewCell.swift */; };
+		F7F082B71C0988BF00761072 /* NoReviewTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7F082B51C0988BF00761072 /* NoReviewTableViewCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -936,6 +938,8 @@
 		F7DC84E01BA00F7300D3878B /* SellerTableHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SellerTableHeaderView.xib; sourceTree = "<group>"; };
 		F7E294841BFA278800A465A9 /* ActivityLogItemModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ActivityLogItemModel.swift; path = YiLinkerOnlineBuyer/resources/Model/ActivityLogItemModel.swift; sourceTree = SOURCE_ROOT; };
 		F7E294861BFA27AC00A465A9 /* ActivityLogItemsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ActivityLogItemsModel.swift; path = YiLinkerOnlineBuyer/resources/Model/ActivityLogItemsModel.swift; sourceTree = SOURCE_ROOT; };
+		F7F082B41C0988BF00761072 /* NoReviewTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NoReviewTableViewCell.swift; path = YiLinkerOnlineBuyer/resources/View/NoReviewTableViewCell.swift; sourceTree = SOURCE_ROOT; };
+		F7F082B51C0988BF00761072 /* NoReviewTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = NoReviewTableViewCell.xib; path = YiLinkerOnlineBuyer/resources/View/NoReviewTableViewCell.xib; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1360,6 +1364,8 @@
 				79E68B9A1B8B4239008626E4 /* ProfileSettingsTableViewCell.swift */,
 				79E85FBD1B89DE1C00428AA1 /* ProfileTableViewCell.swift */,
 				26AFB3A51B79DE2900E50926 /* ReviewTableViewCell.swift */,
+				F7F082B41C0988BF00761072 /* NoReviewTableViewCell.swift */,
+				F7F082B51C0988BF00761072 /* NoReviewTableViewCell.xib */,
 				0C9937191B750583000D6074 /* RoundedButton.swift */,
 				0C99371A1B750583000D6074 /* RoundedImageView.swift */,
 				0C99371B1B750583000D6074 /* RoundedLabel.swift */,
@@ -1868,6 +1874,7 @@
 				0C2F44D01B8576FE00021F45 /* Panton SemiBold Italic.otf in Resources */,
 				F7C56A031BB1790A004740E1 /* TransactionLeaveSellerFeedbackViewController.xib in Resources */,
 				0C2F44C51B8576FE00021F45 /* Panton Bold Italic.otf in Resources */,
+				F7F082B71C0988BF00761072 /* NoReviewTableViewCell.xib in Resources */,
 				0C2F44CC1B8576FE00021F45 /* Panton Heavy.otf in Resources */,
 				793A899B1BA001AE0030FDC7 /* VerifyMobileNumberViewController.xib in Resources */,
 				0C374F531B89EC4D0050AE1D /* CustomizeSelectedCollectionViewCell.xib in Resources */,
@@ -1988,6 +1995,7 @@
 				F7C56A021BB1790A004740E1 /* TransactionLeaveSellerFeedbackViewController.swift in Sources */,
 				0CB9DB391B6A3DC700F2CA13 /* StartPageViewController.swift in Sources */,
 				79A1C6EF1B8329390043AA36 /* SearchSuggestionTableViewCell.swift in Sources */,
+				F7F082B61C0988BF00761072 /* NoReviewTableViewCell.swift in Sources */,
 				0C374F4C1B8998F30050AE1D /* CustomizeShoppingCollectionViewCell.swift in Sources */,
 				0C5926061B836EA30021EA76 /* AddressModel.swift in Sources */,
 				0CB9DB3B1B6A3EA100F2CA13 /* StarterContentPageViewController.swift in Sources */,
