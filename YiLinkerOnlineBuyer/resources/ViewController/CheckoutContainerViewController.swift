@@ -37,6 +37,7 @@ struct AddressStrings {
     static let buildingName: String = StringHelper.localizedStringWithKey("BUILDING_NAME_LOCALIZE_KEY")
     static let streetNo: String = StringHelper.localizedStringWithKey("STREET_NO_LOCALIZE_KEY")
     static let streetName: String = StringHelper.localizedStringWithKey("STREET_NAME_LOCALIZE_KEY")
+    static let address: String = StringHelper.localizedStringWithKey("ADDRESS_LOCALIZE_KEY")
 
     static let subdivision: String = StringHelper.localizedStringWithKey("SUBDIVISION_LOCALIZE_KEY")
     static let province: String = StringHelper.localizedStringWithKey("PROVINCE_LOCALIZE_KEY")
