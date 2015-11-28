@@ -250,9 +250,9 @@
                             </constraints>
                         </view>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lVi-l6-TcM">
-                            <rect key="frame" x="0.0" y="6" width="97" height="20"/>
+                            <rect key="frame" x="0.0" y="6" width="64" height="20"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="97" id="Dcp-le-S0Y"/>
+                                <constraint firstAttribute="width" constant="64" id="Dcp-le-S0Y"/>
                                 <constraint firstAttribute="height" constant="20" id="mzR-H3-UXw"/>
                             </constraints>
                             <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="14"/>
