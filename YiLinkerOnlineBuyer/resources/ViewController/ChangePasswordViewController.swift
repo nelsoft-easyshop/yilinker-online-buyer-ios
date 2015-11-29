@@ -102,11 +102,14 @@ class ChangePasswordViewController: UIViewController {
         if IphoneType.isIphone4() || IphoneType.isIphone5() {
             topMarginConstraint.constant = screenHeight! / 10
         }
+        else if IphoneType.isIphone6() {
+            topMarginConstraint.constant = screenHeight! / 4
+        }
     }
     
     func tapMainViewAction() {
         if IphoneType.isIphone4() || IphoneType.isIphone5() {
-            if topMarginConstraint.constant == screenHeight! / 10 {
+            if topMarginConstraint.constant == screenHeight! / 10 ||  topMarginConstraint.constant == screenHeight! / 4 {
                 tapMainAction()
             } else {
                 buttonAction(closeButton)
