@@ -36,6 +36,24 @@ class CircularMenuViewController: UIViewController {
         super.viewDidLoad()
         self.initDimView()
         self.view.bringSubviewToFront(self.roundedButton)
+        
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "onNewMessage:",
+            name: appDelegate.messageKey, object: nil)
+    }
+    
+    func onNewMessage(notification : NSNotification){
+        if let info = notification.userInfo as? Dictionary<String, AnyObject> {
+            if let data = info["data"] as? String{
+                if let data2 = data.dataUsingEncoding(NSUTF8StringEncoding){
+                    if let json = NSJSONSerialization.JSONObjectWithData(data2, options: .MutableContainers, error: nil) as? [String:AnyObject] {
+                        var count = SessionManager.getUnReadMessagesCount() + 1
+                        SessionManager.setUnReadMessagesCount(count)
+                    }
+                }
+            }
+        }
     }
     
     override func viewDidLayoutSubviews() {
