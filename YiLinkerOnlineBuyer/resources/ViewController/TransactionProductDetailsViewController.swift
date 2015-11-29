@@ -562,6 +562,8 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
     
     // MARK: - TransactionCancelOrderSuccessViewControllerDelegate
     func closeCancelOrderSuccessViewController() {
+        self.navigationController?.popToRootViewControllerAnimated(true)
+        self.myTimer?.invalidate()
         self.dismissView()
     }
     
