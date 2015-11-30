@@ -72,7 +72,7 @@ class TransactionDeliveryLogTableViewController: UITableViewController {
         noDeliveryLabel.textColor = Constants.Colors.grayText
         noDeliveryLabel.textAlignment = NSTextAlignment.Center
         noDeliveryLabel.font = UIFont(name: "Panton-Bold", size: CGFloat(14))
-        noDeliveryLabel.text = "No delivery logs found."
+        noDeliveryLabel.text = StringHelper.localizedStringWithKey("TRANSACTION_NO_DELIVERY_STATUS_LOCALIZE_KEY")
         noDeliveryLog.addSubview(noDeliveryLabel)
         
         self.tableView.addSubview(noDeliveryLog)
