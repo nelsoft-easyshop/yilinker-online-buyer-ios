@@ -165,6 +165,10 @@ class TransactionDetailsModel: NSObject {
                                     orderProductStatusId.append(orderProductStatus["orderProductStatusId"] as! Int)
                                     name.append(orderProductStatus["name"] as! String)
                                     productDescription.append(orderProductStatus["description"] as! String)
+                                } else {
+                                    orderProductStatusId.append(0)
+                                    name.append("")
+                                    productDescription.append("")
                                 }
                                 
                                 if (product["productImage"] as! String) != "" {
