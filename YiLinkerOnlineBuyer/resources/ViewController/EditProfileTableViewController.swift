@@ -330,7 +330,13 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
             profileImageData = UIImageJPEGRepresentation(image, 0.25)
         } else {
             validIDImage = image
-            validIDImageData = UIImageJPEGRepresentation(image, 0.25)
+            if image.imageOrientation == UIImageOrientation.Right {
+                validIDImageData = UIImageJPEGRepresentation(image.normalizedImage(), 0.25)
+            } else {
+                validIDImageData = UIImageJPEGRepresentation(image, 0.25)
+            }
+            
+            profileUserDetailsModel.userDocuments = " "
             personalInfoCell = self.tableView.cellForRowAtIndexPath(personalIndexPath!) as? EditProfilePersonalInformationTableViewCell
             personalInfoCell?.addIDButton.setTitle(personalInfoCell?.changeLocalizeString, forState: UIControlState.Normal)
             personalInfoCell?.viewImageConstraint.constant = 75
