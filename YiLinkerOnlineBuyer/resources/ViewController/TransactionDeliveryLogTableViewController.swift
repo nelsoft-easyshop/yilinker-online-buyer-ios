@@ -19,7 +19,8 @@ class TransactionDeliveryLogTableViewController: UITableViewController {
     var hud: MBProgressHUD?
     var tableHeaderView: UIView!
     var tidLabel: UILabel!
-    
+    var noDeliveryLog: UIView!
+    var noDeliveryLabel: UILabel!
     var deliveryLogs: DeliveryLogsModel!
     var tableData: [DeliveryLogsSectionModel] = []
     
@@ -56,10 +57,25 @@ class TransactionDeliveryLogTableViewController: UITableViewController {
         tidLabel = UILabel(frame: CGRectMake(16, 10, (self.view.bounds.width - 32), 20))
         tidLabel.textColor = Constants.Colors.grayText
         tidLabel.font = UIFont(name: "Panton-Bold", size: CGFloat(14))
-        tidLabel.text = "\(transactionId)"
+        tidLabel.text = "TID-\(transactionId)"
         tableHeaderView.addSubview(tidLabel)
         
         self.tableView.tableHeaderView = tableHeaderView
+        self.tableView.tableFooterView = UIView(frame: CGRectZero)
+    }
+    
+    func noDeliveryLogsView() {
+        noDeliveryLog = UIView(frame: CGRectMake(0, tableHeaderView.bounds.height, self.view.bounds.width, self.view.bounds.height - tableHeaderView.bounds.height))
+        noDeliveryLog.backgroundColor = UIColor.whiteColor()
+        
+        noDeliveryLabel = UILabel(frame: CGRectMake(0, noDeliveryLog.bounds.height/2, self.view.bounds.width, 20))
+        noDeliveryLabel.textColor = Constants.Colors.grayText
+        noDeliveryLabel.textAlignment = NSTextAlignment.Center
+        noDeliveryLabel.font = UIFont(name: "Panton-Bold", size: CGFloat(14))
+        noDeliveryLabel.text = "No delivery logs found."
+        noDeliveryLog.addSubview(noDeliveryLabel)
+        
+        self.tableView.addSubview(noDeliveryLog)
         self.tableView.tableFooterView = UIView(frame: CGRectZero)
     }
     
@@ -180,24 +196,29 @@ class TransactionDeliveryLogTableViewController: UITableViewController {
         tableData.removeAll(keepCapacity: false)
         var tempDates: [String] = []
         
-        for subValue in deliveryLogs.deliveryLogs {
-            if !contains(tempDates, formatDateToCompleteString(formatStringToDate(subValue.date))) {
-                tempDates.append(formatDateToCompleteString(formatStringToDate(subValue.date)))
-                tableData.append(DeliveryLogsSectionModel(date: formatDateToCompleteString(formatStringToDate(subValue.date)), deliveryLogs: []))
-            }
-        }
-        
-        println(tempDates)
-        
-        for var i = 0; i < tableData.count; i++ {
+        if deliveryLogs.deliveryLogs.count != 0 {
             for subValue in deliveryLogs.deliveryLogs {
-                if formatDateToCompleteString(formatStringToDate(subValue.date)) == tableData[i].date {
-                    tableData[i].deliveryLogs.append(DeliveryLogsItemModel(actionType: subValue.actionType, date: subValue.date, location: subValue.location, riderName: subValue.riderName, clientSignature: subValue.clientSignature))
+                if !contains(tempDates, formatDateToCompleteString(formatStringToDate(subValue.date))) {
+                    tempDates.append(formatDateToCompleteString(formatStringToDate(subValue.date)))
+                    tableData.append(DeliveryLogsSectionModel(date: formatDateToCompleteString(formatStringToDate(subValue.date)), deliveryLogs: []))
                 }
             }
+            
+            println(tempDates)
+            
+            for var i = 0; i < tableData.count; i++ {
+                for subValue in deliveryLogs.deliveryLogs {
+                    if formatDateToCompleteString(formatStringToDate(subValue.date)) == tableData[i].date {
+                        tableData[i].deliveryLogs.append(DeliveryLogsItemModel(actionType: subValue.actionType, date: subValue.date, location: subValue.location, riderName: subValue.riderName, clientSignature: subValue.clientSignature))
+                    }
+                }
+            }
+            
+            self.tableView.reloadData()
+        } else {
+            self.noDeliveryLogsView()
         }
         
-        self.tableView.reloadData()
     }
     
     func fireGetDeliveryLogs() {
