@@ -162,7 +162,7 @@ struct APIAtlas {
     static let transactionProductDetails = "auth/getOrderProductDetail?access_token="
     static let transactionCancellation = "auth/cancellation/reasons"
     static let postTransactionCancellation = "auth/transaction/cancel"
-    static let getReasons = "auth/dispute/get-seller-reasons?access_token="
+    static let getReasons = "auth/dispute/get-buyer-reasons?access_token="
     static let transactionDeliveryStatus = "auth/getTransactionDeliveryOverview?access_token="
     static let getDeliveryLogs = "auth/getTransactionDeliveryLogs"
     
