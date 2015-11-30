@@ -502,7 +502,7 @@ Phiippines</string>
                     <rect key="frame" x="0.0" y="37" width="375" height="182"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bogz Borja, Manila" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bbn-ft-Jy2">
-                            <rect key="frame" x="9" y="31" width="325" height="21"/>
+                            <rect key="frame" x="9" y="31" width="313" height="21"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="21" id="4fQ-3H-2SS"/>
                             </constraints>
@@ -603,9 +603,22 @@ Phiippines</string>
                                 <constraint firstAttribute="width" constant="9" id="Ytk-jL-WtY"/>
                             </constraints>
                         </imageView>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9c9-xp-0G1">
+                            <rect key="frame" x="330" y="32" width="45" height="25"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="45" id="Ixp-Vj-iie"/>
+                            </constraints>
+                            <state key="normal">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="deliveryLogs:" destination="LRr-bJ-2sh" eventType="touchUpInside" id="TGF-DV-W8f"/>
+                            </connections>
+                        </button>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
+                        <constraint firstItem="9c9-xp-0G1" firstAttribute="top" secondItem="mr3-vS-KA3" secondAttribute="bottom" constant="1" id="1zt-W5-SrL"/>
                         <constraint firstItem="YHa-Hz-Wbm" firstAttribute="leading" secondItem="sMK-Ta-LV4" secondAttribute="leading" constant="9" id="31m-82-vsQ"/>
                         <constraint firstItem="5om-iF-rnT" firstAttribute="top" secondItem="ej9-dX-Ui8" secondAttribute="bottom" constant="5" id="3kJ-3h-4wD"/>
                         <constraint firstItem="ej9-dX-Ui8" firstAttribute="top" secondItem="bbn-ft-Jy2" secondAttribute="bottom" constant="8" id="65z-QJ-Fnb"/>
@@ -617,6 +630,7 @@ Phiippines</string>
                         <constraint firstAttribute="trailing" secondItem="ej9-dX-Ui8" secondAttribute="trailing" id="Fj8-cm-Imv"/>
                         <constraint firstItem="TPx-1b-Ida" firstAttribute="top" secondItem="ej9-dX-Ui8" secondAttribute="bottom" constant="21" id="Fwn-kn-OB1"/>
                         <constraint firstItem="iuS-Dw-7Fc" firstAttribute="top" secondItem="ej9-dX-Ui8" secondAttribute="bottom" constant="21" id="Kfi-Og-mMl"/>
+                        <constraint firstItem="9c9-xp-0G1" firstAttribute="leading" secondItem="bbn-ft-Jy2" secondAttribute="trailing" constant="8" id="LDK-Lh-3mB"/>
                         <constraint firstItem="TPx-1b-Ida" firstAttribute="leading" secondItem="iuS-Dw-7Fc" secondAttribute="trailing" constant="20" id="LoD-tk-ayk"/>
                         <constraint firstItem="mr3-vS-KA3" firstAttribute="top" secondItem="sMK-Ta-LV4" secondAttribute="top" constant="10" id="Mlu-6P-582"/>
                         <constraint firstAttribute="trailing" secondItem="i4C-Xs-3KZ" secondAttribute="trailing" constant="18" id="Mt7-e9-E0X"/>
@@ -627,11 +641,13 @@ Phiippines</string>
                         <constraint firstItem="bbn-ft-Jy2" firstAttribute="leading" secondItem="sMK-Ta-LV4" secondAttribute="leading" constant="9" id="Qiu-Ow-isA"/>
                         <constraint firstItem="ej9-dX-Ui8" firstAttribute="top" secondItem="i4C-Xs-3KZ" secondAttribute="bottom" constant="8" id="YNd-5S-JhN"/>
                         <constraint firstItem="XMI-n2-oX4" firstAttribute="leading" secondItem="h47-5W-Ndm" secondAttribute="trailing" constant="8" id="b1C-Kv-Mp4"/>
+                        <constraint firstAttribute="trailing" secondItem="9c9-xp-0G1" secondAttribute="trailing" id="by4-fY-sIS"/>
                         <constraint firstAttribute="trailing" secondItem="KaX-3x-6wG" secondAttribute="trailing" id="c3R-1y-Y0c"/>
                         <constraint firstAttribute="trailing" secondItem="cJd-fb-MZu" secondAttribute="trailing" constant="13" id="clP-gA-a8m"/>
                         <constraint firstAttribute="trailing" secondItem="TPx-1b-Ida" secondAttribute="trailing" constant="13" id="ggL-4w-fRO"/>
                         <constraint firstItem="YHa-Hz-Wbm" firstAttribute="top" secondItem="KaX-3x-6wG" secondAttribute="bottom" constant="5" id="k6s-Io-9Zo"/>
                         <constraint firstItem="cJd-fb-MZu" firstAttribute="leading" secondItem="XMI-n2-oX4" secondAttribute="trailing" constant="20" id="lBg-Wo-FQS"/>
+                        <constraint firstItem="ej9-dX-Ui8" firstAttribute="top" secondItem="9c9-xp-0G1" secondAttribute="bottom" constant="3" id="n5r-vE-bdZ"/>
                         <constraint firstItem="KaX-3x-6wG" firstAttribute="top" secondItem="S4E-Ye-PKY" secondAttribute="bottom" constant="10" id="p6c-8S-fYn"/>
                         <constraint firstItem="cJd-fb-MZu" firstAttribute="top" secondItem="KaX-3x-6wG" secondAttribute="bottom" constant="20" id="pfX-cN-XKj"/>
                         <constraint firstItem="S4E-Ye-PKY" firstAttribute="leading" secondItem="sMK-Ta-LV4" secondAttribute="leading" constant="8" id="qDK-8w-LCF"/>
@@ -639,7 +655,7 @@ Phiippines</string>
                         <constraint firstItem="iuS-Dw-7Fc" firstAttribute="leading" secondItem="5om-iF-rnT" secondAttribute="trailing" constant="8" id="two-wV-5OE"/>
                         <constraint firstItem="h47-5W-Ndm" firstAttribute="top" secondItem="KaX-3x-6wG" secondAttribute="bottom" constant="24" id="uf8-MK-S7w"/>
                         <constraint firstItem="bbn-ft-Jy2" firstAttribute="top" secondItem="mr3-vS-KA3" secondAttribute="bottom" id="w6F-sj-jwm"/>
-                        <constraint firstItem="i4C-Xs-3KZ" firstAttribute="leading" secondItem="bbn-ft-Jy2" secondAttribute="trailing" constant="14" id="wAS-pz-Qer"/>
+                        <constraint firstItem="i4C-Xs-3KZ" firstAttribute="leading" secondItem="bbn-ft-Jy2" secondAttribute="trailing" constant="26" id="wAS-pz-Qer"/>
                         <constraint firstItem="S4E-Ye-PKY" firstAttribute="top" secondItem="ej9-dX-Ui8" secondAttribute="bottom" constant="25" id="yh6-yD-H8H"/>
                     </constraints>
                 </view>
@@ -666,6 +682,7 @@ Phiippines</string>
             <connections>
                 <outlet property="deliveryCall" destination="cJd-fb-MZu" id="dAC-zn-0Zz"/>
                 <outlet property="deliveryLogs" destination="i4C-Xs-3KZ" id="Niq-YF-NZf"/>
+                <outlet property="deliveryLogsButton" destination="9c9-xp-0G1" id="72t-go-2fv"/>
                 <outlet property="deliveryRiderLabel" destination="h47-5W-Ndm" id="I8J-r2-cie"/>
                 <outlet property="deliveryRiderTitleLabel" destination="YHa-Hz-Wbm" id="Ean-SV-4yg"/>
                 <outlet property="deliverySms" destination="XMI-n2-oX4" id="aZq-HQ-McT"/>

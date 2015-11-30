@@ -287,7 +287,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
         self.view.endEditing(true)
         self.adjustTextFieldYInsetWithInset(0)
         if errorMessage != "" {
-            self.view.makeToast(errorMessage, duration: 3.0, position: CSToastPositionBottom, style: CSToastManager.sharedStyle())
+           
         } else {
             fireLogin()
         }

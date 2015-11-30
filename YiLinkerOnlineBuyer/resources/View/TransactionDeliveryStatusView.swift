@@ -38,6 +38,7 @@ class TransactionDeliveryStatusView: UIView {
     @IBOutlet weak var deliveryCall: UIImageView!
     @IBOutlet weak var deliveryLogs: UIImageView!
     
+    @IBOutlet weak var deliveryLogsButton: UIButton!
     //@IBOutlet weak var arrowImageView: UIImageView!
 
     var delegate: TransactionDeliveryStatusViewDelegate?
@@ -96,4 +97,7 @@ class TransactionDeliveryStatusView: UIView {
         return tap
     }
     
+    @IBAction func deliveryLogs(sender: UIButton){
+        self.delegate?.deliveryLogsAction()
+    }
 }
