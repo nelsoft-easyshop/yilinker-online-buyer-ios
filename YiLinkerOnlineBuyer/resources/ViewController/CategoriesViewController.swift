@@ -35,10 +35,10 @@ class CategoriesViewController: UIViewController, EmptyViewDelegate, UIWebViewDe
         let nib = UINib(nibName: "CategoriesTableViewCell", bundle: nil)
         self.tableView.registerNib(nib, forCellReuseIdentifier: "CategoryIdentifier")
 
-//        if firstLoad {
-//            requestMainCategories()
-//        }
-        loadWebView()
+        if firstLoad {
+            requestMainCategories()
+        }
+//        loadWebView()
         webView.delegate = self
     }
 
