@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="MapTableViewCell" rowHeight="193" id="KGk-i7-Jjw" customClass="MapTableViewCell" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="193"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="TaT-mw-7Ps">
+                        <rect key="frame" x="0.0" y="15" width="320" height="179"/>
+                    </mapView>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MapPin" translatesAutoresizingMaskIntoConstraints="NO" id="mKf-qJ-Tbc">
+                        <rect key="frame" x="146" y="70" width="28" height="35"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="35" id="35N-vG-fBi"/>
+                        </constraints>
+                    </imageView>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="TaT-mw-7Ps" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="15" id="7dT-yC-oEz"/>
+                    <constraint firstAttribute="bottom" secondItem="TaT-mw-7Ps" secondAttribute="bottom" constant="-2" id="Nr0-7H-Ezo"/>
+                    <constraint firstItem="mKf-qJ-Tbc" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="146" id="PHd-O6-nIe"/>
+                    <constraint firstItem="mKf-qJ-Tbc" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="70" id="Vyy-za-wND"/>
+                    <constraint firstAttribute="trailing" secondItem="mKf-qJ-Tbc" secondAttribute="trailing" constant="146" id="hn7-ZL-sJt"/>
+                    <constraint firstAttribute="trailing" secondItem="TaT-mw-7Ps" secondAttribute="trailing" id="tCU-LG-Dyd"/>
+                    <constraint firstItem="TaT-mw-7Ps" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="wLT-Nr-P97"/>
+                </constraints>
+            </tableViewCellContentView>
+            <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
+            <connections>
+                <outlet property="mapView" destination="TaT-mw-7Ps" id="rmg-vJ-JVG"/>
+            </connections>
+            <point key="canvasLocation" x="327" y="364.5"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="MapPin" width="25" height="31"/>
+    </resources>
+</document>

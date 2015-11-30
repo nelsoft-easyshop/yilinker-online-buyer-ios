@@ -50,9 +50,11 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
     var products = StringHelper.localizedStringWithKey("TRANSACTION_PRODUCTS_LOCALIZE_KEY")
     var noTransaction = StringHelper.localizedStringWithKey("TRANSACTION_NO_TRANSACTION_LOCALIZE_KEY")
     
+    var refreshPage: Bool = false
     var isPageEnd: Bool = false
     var page: Int = 0
     var query: String = "all"
+    var transactionType: String = ""
     var transactionArray: NSArray?
     
     var emptyView : EmptyView?
@@ -76,6 +78,7 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
         imagesInArray = [allImageView, pendingImageView, onDeliveryImageView, forFeedbackImageView, supportImageView]
         labelsInArray = [allLabel, pendingLabel, onDeliveryLabel, forFeedbackLabel, supportLabel]
         deselectedImages = ["all", "pending", "onDelivery", "forFeedback", "support"]*/
+        self.transactionType = "ALL"
         allLabel.text = all
         pendingLabel.text = pending
         onDeliveryLabel.text = onDelivery
@@ -89,7 +92,6 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
         //self.fireTransaction("all")
         //self.query = "all"
         self.backButton()
-
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -146,6 +148,7 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
         transactionDetails.totalCost = tableData[indexPath.row].total_price2
         transactionDetails.orderId = tableData[indexPath.row].order_id2
         transactionDetails.orderStatusId = tableData[indexPath.row].order_status_id2
+        transactionDetails.transactionType = self.transactionType
         self.navigationController?.pushViewController(transactionDetails, animated: true)
     }
     
@@ -173,6 +176,7 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
             self.isPageEnd = false
             self.fireTransaction("all")
             self.query = "all"
+            self.transactionType = "ALL"
             deselectOtherViews(allView)
         }
     }
@@ -186,6 +190,7 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
             self.isPageEnd = false
             self.fireTransaction("pending")
             self.query = "pending"
+            self.transactionType = "PENDING"
             deselectOtherViews(pendingView)
         }
     }
@@ -199,6 +204,7 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
             self.isPageEnd = false
             self.fireTransaction("on-delivery")
             self.query = "on-delivery"
+            self.transactionType = "ON DELIVERY"
             deselectOtherViews(onDeliveryView)
         }
     }
@@ -212,6 +218,7 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
             self.isPageEnd = false
             self.fireTransaction("for-feedback")
             self.query = "for-feedback"
+            self.transactionType = "FOR FEEDBACK"
             deselectOtherViews(forFeedbackView)
         }
     }
@@ -264,14 +271,17 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
         if !isPageEnd {
             page++
             
-            self.showHUD()
+            if self.refreshPage {
+                UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+            } else {
+                self.showHUD()
+            }
             
             let manager = APIManager.sharedInstance
             var url: String = APIAtlas.transactionLogs+"\(SessionManager.accessToken())&type=\(queryType)&perPage=15&page=\(page)"
             
             manager.GET(APIAtlas.transactionLogs+"\(SessionManager.accessToken())&type=\(queryType)&perPage=15&page=\(page)", parameters: nil, success: {
                 (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-                
                 println(responseObject)
                 var trans: TransactionModel?
                 
@@ -303,7 +313,14 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
                 }
                
                 self.tableView.reloadData()
-                self.hud?.hide(true)
+                
+                if self.refreshPage {
+                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                } else {
+                  self.hud?.hide(true)
+                }
+                
+                self.refreshPage = true
                 
                 }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
 
@@ -332,7 +349,11 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
                     }
                     
                     self.tableView.hidden = true
-                    self.hud?.hide(true)
+                    if self.refreshPage {
+                        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                    } else {
+                        self.hud?.hide(true)
+                    }
             })
         }
     }

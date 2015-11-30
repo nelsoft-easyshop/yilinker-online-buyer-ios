@@ -17,7 +17,7 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
     @IBOutlet weak var collectionView: UICollectionView!
    
     var cellCount: Int = 0
-    var selectedIndex: Int = 0
+    var selectedIndex: Int = 10000
     
     var getAddressModel: GetAddressesModel!
     var emptyView: EmptyView?

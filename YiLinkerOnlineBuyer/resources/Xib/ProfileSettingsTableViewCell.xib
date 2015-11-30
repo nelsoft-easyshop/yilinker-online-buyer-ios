@@ -14,32 +14,37 @@
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tsz-gT-R7d">
                         <rect key="frame" x="8" y="14" width="302" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="kPM-Kl-Gk6"/>
+                        </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7hT-sp-cYW">
                         <rect key="frame" x="318" y="9" width="51" height="31"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="31" id="TAu-j7-PN5"/>
+                            <constraint firstAttribute="width" constant="49" id="ner-tk-aYg"/>
+                        </constraints>
                         <connections>
                             <action selector="switchAction:" destination="mem-P3-Fxh" eventType="valueChanged" id="HPU-zG-E6m"/>
                         </connections>
                     </switch>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="trailing" secondItem="7hT-sp-cYW" secondAttribute="trailing" constant="8" id="BiS-6Y-FJK"/>
-                    <constraint firstAttribute="bottom" secondItem="7hT-sp-cYW" secondAttribute="bottom" constant="9" id="Bzm-ds-S6L"/>
-                    <constraint firstItem="7hT-sp-cYW" firstAttribute="leading" secondItem="Tsz-gT-R7d" secondAttribute="trailing" constant="8" id="ERQ-u0-iXP"/>
-                    <constraint firstItem="7hT-sp-cYW" firstAttribute="top" secondItem="W8x-10-zIh" secondAttribute="top" constant="9" id="ETn-wr-CA7"/>
-                    <constraint firstItem="7hT-sp-cYW" firstAttribute="leading" secondItem="Tsz-gT-R7d" secondAttribute="trailing" constant="8" id="LRG-aS-G7H"/>
-                    <constraint firstItem="Tsz-gT-R7d" firstAttribute="top" secondItem="W8x-10-zIh" secondAttribute="top" constant="14" id="UEf-tI-3eb"/>
-                    <constraint firstAttribute="bottom" secondItem="Tsz-gT-R7d" secondAttribute="bottom" constant="14" id="iZE-VM-djF"/>
-                    <constraint firstItem="Tsz-gT-R7d" firstAttribute="leading" secondItem="W8x-10-zIh" secondAttribute="leading" constant="8" id="jvk-Ju-hUS"/>
+                    <constraint firstItem="Tsz-gT-R7d" firstAttribute="top" secondItem="W8x-10-zIh" secondAttribute="top" constant="14" id="By8-Bk-GZo"/>
+                    <constraint firstItem="7hT-sp-cYW" firstAttribute="top" secondItem="W8x-10-zIh" secondAttribute="top" constant="9" id="J49-P4-cQ1"/>
+                    <constraint firstItem="Tsz-gT-R7d" firstAttribute="leading" secondItem="W8x-10-zIh" secondAttribute="leading" constant="8" id="Phc-Ga-BbH"/>
+                    <constraint firstAttribute="trailing" secondItem="7hT-sp-cYW" secondAttribute="trailing" constant="8" id="bjB-DA-jlc"/>
+                    <constraint firstItem="7hT-sp-cYW" firstAttribute="leading" secondItem="Tsz-gT-R7d" secondAttribute="trailing" constant="8" id="fFn-Gz-hMx"/>
                 </constraints>
             </tableViewCellContentView>
             <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
             <connections>
                 <outlet property="settingsLabel" destination="Tsz-gT-R7d" id="ZMe-a2-SXG"/>
                 <outlet property="settingsSwitch" destination="7hT-sp-cYW" id="gqs-G9-1Ee"/>
+                <outlet property="switchContraint" destination="ner-tk-aYg" id="Ku9-Xm-LHG"/>
             </connections>
             <point key="canvasLocation" x="325.5" y="392"/>
         </tableViewCell>

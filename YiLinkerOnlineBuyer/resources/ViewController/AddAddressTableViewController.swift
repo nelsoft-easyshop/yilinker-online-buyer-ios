@@ -14,7 +14,9 @@ protocol AddAddressTableViewControllerDelegate {
 
 class AddAddressTableViewController: UITableViewController, UITableViewDelegate, UITableViewDataSource, NewAddressTableViewCellDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
     
-    let titles: [String] = ["\(AddressStrings.addressTitle):", "\(AddressStrings.unitNo):", "\(AddressStrings.buildingName):", "\(AddressStrings.streetNo):", "\(AddressStrings.streetName):", "\(AddressStrings.subdivision):", "\(AddressStrings.province):", "\(AddressStrings.city):", "\(AddressStrings.barangay):", "\(AddressStrings.zipCode):"]
+    let mapCellNibName = "MapTableViewCell"
+    
+    let titles: [String] = ["\(AddressStrings.addressTitle):", "\(AddressStrings.address):", "\(AddressStrings.province):", "\(AddressStrings.city):", "\(AddressStrings.barangay):", "\(AddressStrings.zipCode):"]
     
     var delegate: AddAddressTableViewControllerDelegate?
     
@@ -74,81 +76,58 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
     func registerNib() {
         let nib: UINib = UINib(nibName: Constants.Checkout.newAddressTableViewCellNibNameAndIdentifier, bundle: nil)
         self.tableView.registerNib(nib, forCellReuseIdentifier: Constants.Checkout.newAddressTableViewCellNibNameAndIdentifier)
+        
+        let mapNib: UINib = UINib(nibName: self.mapCellNibName, bundle: nil)
+        self.tableView.registerNib(mapNib, forCellReuseIdentifier: self.mapCellNibName)
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell: NewAddressTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(Constants.Checkout.newAddressTableViewCellNibNameAndIdentifier) as! NewAddressTableViewCell
-        cell.rowTitleLabel.text = titles[indexPath.row]
-        cell.tag = indexPath.row
-        cell.delegate = self
-        cell.rowTextField.addToolBarWithTarget(self, next: "next", previous: "previous", done: "done")
-        cell.selectionStyle = UITableViewCellSelectionStyle.None
-      
-        if indexPath.row == 9 {
-            cell.rowTextField.keyboardType = UIKeyboardType.NumberPad
-        }
-        
-        if self.isEdit {
-            if indexPath.row == 0 {
-                
-                cell.rowTextField.text = self.addressModel.title
-                cell.rowTitleLabel.required()
-            } else if indexPath.row == 1 {
-                
-                cell.rowTextField.text = self.addressModel.unitNumber
-                
-            } else if indexPath.row == 2 {
-                
-                cell.rowTextField.text = self.addressModel.buildingName
-                
-            } else if indexPath.row == 3 {
-                
-                cell.rowTextField.text = self.addressModel.streetNumber
-            } else if indexPath.row == 4 {
-                
-                cell.rowTextField.text = self.addressModel.streetName
-                cell.rowTitleLabel.required()
-            } else if indexPath.row == 5 {
-                
-                cell.rowTextField.text = self.addressModel.subdivision
-                
-            } else if indexPath.row == 6 {
-                
-                cell.rowTextField.text = self.addressModel.province
-                cell.rowTitleLabel.required()
-            } else if indexPath.row == 7 {
-                 cell.rowTitleLabel.required()
-                cell.rowTextField.text = self.addressModel.city
-            } else if indexPath.row == 8 {
-                 cell.rowTitleLabel.required()
-                cell.rowTextField.text = self.addressModel.barangay
-            } else if indexPath.row == 9 {
-                cell.rowTextField.text = self.addressModel.zipCode
-                cell.rowTitleLabel.required()
-            } else {
-                
-                cell.rowTextField.text = self.addressModel.additionalInfo
-                isEdit = false
+        if indexPath.row < 6 {
+            let cell: NewAddressTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(Constants.Checkout.newAddressTableViewCellNibNameAndIdentifier) as! NewAddressTableViewCell
+            cell.rowTitleLabel.text = titles[indexPath.row]
+            cell.tag = indexPath.row
+            cell.delegate = self
+            cell.rowTextField.addToolBarWithTarget(self, next: "next", previous: "previous", done: "done")
+            cell.selectionStyle = UITableViewCellSelectionStyle.None
+            
+            
+            if self.isEdit {
+                if indexPath.row == 0 {
+                    cell.rowTextField.text = self.addressModel.title
+                } else if indexPath.row == 1 {
+                    cell.rowTextField.text = self.addressModel.streetName
+                } else if indexPath.row == 2 {
+                    cell.rowTextField.text = self.addressModel.province
+                } else if indexPath.row == 3 {
+                    cell.rowTextField.text = self.addressModel.city
+                } else if indexPath.row == 4 {
+                    cell.rowTextField.text = self.addressModel.barangay
+                } else if indexPath.row == 5 {
+                    cell.rowTextField.text = self.addressModel.zipCode
+                }
             }
+            
+            if indexPath.row != 5 {
+               cell.rowTitleLabel.required()
+            }
+            
+            addressCellReference.append(cell)
+            
+            return cell
         } else {
-            if indexPath.row == 0 {
-                cell.rowTitleLabel.required()
-            } else if indexPath.row == 4 {
-                cell.rowTitleLabel.required()
-            } else if indexPath.row == 6 {
-                cell.rowTitleLabel.required()
-            } else if indexPath.row == 7 {
-                cell.rowTitleLabel.required()
-            } else if indexPath.row == 8 {
-                cell.rowTitleLabel.required()
-            } else if indexPath.row == 9 {
-                cell.rowTitleLabel.required()
-            }
+            let mapCell: MapTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(self.mapCellNibName) as! MapTableViewCell
+            return mapCell
         }
-        
-        addressCellReference.append(cell)
-        
-        return cell
+    }
+    
+    //MARK: - Height For Row At Index Path
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        if indexPath.row < 6 {
+            return 41
+        } else {
+            //map height
+            return 199
+        }
     }
     
     //MARK: - Add Picker
@@ -163,9 +142,9 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
     
     //MARK: - Picker Data Source
     func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        if self.activeTextField == 6 {
+        if self.activeTextField == 2 {
             return self.provinceModel.location.count
-        } else if self.activeTextField == 7 {
+        } else if self.activeTextField == 3 {
             return self.cityModel.location.count
         } else {
             return self.barangayModel.location.count
@@ -173,9 +152,9 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
     }
     
     func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String! {
-        if self.activeTextField == 6 {
+        if self.activeTextField == 2 {
             return self.provinceModel.location[row]
-        } else if self.activeTextField == 7 {
+        } else if self.activeTextField == 3 {
             return self.cityModel.location[row]
         } else {
             return self.barangayModel.location[row]
@@ -187,7 +166,7 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
     }
     
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        if activeTextField == 6 {
+        if activeTextField == 2 {
             //get province title and id
             self.addressModel.provinceId = self.provinceModel.provinceId[row]
             self.addressModel.province = self.provinceModel.location[row]
@@ -199,27 +178,27 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
             self.provinceRow = row
             self.cityRow = 0
             self.barangayRow = 0
-            self.setTextAtIndex(6, text: self.provinceModel.location[row])
-        } else if activeTextField == 7 {
+            self.setTextAtIndex(2, text: self.provinceModel.location[row])
+        } else if activeTextField == 3 {
             self.addressModel.cityId = self.cityModel.cityId[row]
             self.requestGetBarangay(self.addressModel.cityId)
             self.addressModel.city = self.cityModel.location[row]
             //save current row and reset dependent values
             self.cityRow = row
             self.barangayRow = 0
-            self.setTextAtIndex(7, text: self.cityModel.location[row])
-        } else if activeTextField == 8 {
+            self.setTextAtIndex(3, text: self.cityModel.location[row])
+        } else if activeTextField == 4 {
             self.setTextAtIndex(activeTextField, text: self.barangayModel.location[row])
             self.addressModel.barangay = self.barangayModel.location[row]
             self.addressModel.barangayId = self.barangayModel.barangayId[row]
             self.barangayRow = row
-            self.setTextAtIndex(8, text: self.barangayModel.location[row])
+            self.setTextAtIndex(4, text: self.barangayModel.location[row])
         }
     }
     
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.titles.count
+        return self.titles.count + 1// + mapCell
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -234,11 +213,11 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
             let cell: NewAddressTableViewCell = self.tableView.cellForRowAtIndexPath(nextIndexPath) as! NewAddressTableViewCell
             cell.rowTextField.becomeFirstResponder()
             
-            if indexPath.row == 6 {
+            if indexPath.row == 2 {
                 self.addPicker(self.provinceRow, textField: cell.rowTextField)
-            } else if indexPath.row == 7 {
+            } else if indexPath.row == 3 {
                 self.addPicker(self.cityRow, textField: cell.rowTextField)
-            } else if indexPath.row == 8 {
+            } else if indexPath.row == 4 {
                 self.addPicker(self.barangayRow, textField: cell.rowTextField)
             }
             
@@ -267,11 +246,11 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
         
         let cell: NewAddressTableViewCell = self.tableView.cellForRowAtIndexPath(indexPath) as! NewAddressTableViewCell
         
-        if indexPath.row == 6 {
+        if indexPath.row == 2 {
             self.addPicker(self.provinceRow, textField: cell.rowTextField)
-        } else if indexPath.row == 7 {
+        } else if indexPath.row == 3 {
             self.addPicker(self.cityRow, textField: cell.rowTextField)
-        } else if indexPath.row == 8 {
+        } else if indexPath.row == 4 {
             self.addPicker(self.barangayRow, textField: cell.rowTextField)
         }
     }
@@ -303,19 +282,17 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
         self.navigationController!.popViewControllerAnimated(true)
     }
     
+    //MARK: - Check
     func check() {
         self.addressModel.title = getTextAtIndex(0)
-        self.addressModel.streetNumber = getTextAtIndex(3)
-        self.addressModel.streetName =  getTextAtIndex(4)
-        self.addressModel.zipCode = getTextAtIndex(9)
+        self.addressModel.streetName =  getTextAtIndex(1)
+        self.addressModel.zipCode = getTextAtIndex(5)
 
         
         if self.addressModel.title == "" {
             showAlert(title: AddressStrings.incompleteInformation, message: AddressStrings.addressTitleRequired)
         } else if self.addressModel.streetName == "" {
             showAlert(title: AddressStrings.incompleteInformation, message: AddressStrings.streetNameRequired)
-        } else if self.addressModel.zipCode == "" {
-            showAlert(title: AddressStrings.incompleteInformation, message: AddressStrings.zipCode)
         } else {
             if self.isEdit2 {
                 self.fireEditAddress()
@@ -357,18 +334,19 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
    func requestAddAddress() {
         self.showHUD()
     
+        let indexPath: NSIndexPath = NSIndexPath(forRow: 6, inSection: 0)
+        let cell: MapTableViewCell = self.tableView.cellForRowAtIndexPath(indexPath) as! MapTableViewCell
+    
         let params = ["access_token": SessionManager.accessToken(),
             "title": getTextAtIndex(0),
-            "unitNumber": getTextAtIndex(1),
-            "buildingName": getTextAtIndex(2),
-            "streetNumber": getTextAtIndex(3),
-            "streetName": getTextAtIndex(4),
-            "subdivision": getTextAtIndex(5),
-            "province": getTextAtIndex(6),
-            "city": getTextAtIndex(7),
-            "barangay": getTextAtIndex(8),
-            "zipCode": getTextAtIndex(9),
-            "locationId": self.addressModel.barangayId
+            "streetName": getTextAtIndex(1),
+            "province": getTextAtIndex(2),
+            "city": getTextAtIndex(3),
+            "barangay": getTextAtIndex(4),
+            "zipCode": getTextAtIndex(5),
+            "locationId": self.addressModel.barangayId,
+            "longitude":cell.longitude(),
+            "latitude":cell.latitude()
         ]
         
         manager.POST(APIAtlas.addAddressUrl, parameters: params, success: {
@@ -393,15 +371,11 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
         
         let params = ["access_token": SessionManager.accessToken(),
             "title": getTextAtIndex(0),
-            "unitNumber": getTextAtIndex(1),
-            "buildingName": getTextAtIndex(2),
-            "streetNumber": getTextAtIndex(3),
-            "streetName": getTextAtIndex(4),
-            "subdivision": getTextAtIndex(5),
-            "province": getTextAtIndex(6),
-            "city": getTextAtIndex(7),
-            "barangay": getTextAtIndex(8),
-            "zipCode": getTextAtIndex(9),
+            "streetName": getTextAtIndex(1),
+            "province": getTextAtIndex(2),
+            "city": getTextAtIndex(3),
+            "barangay": getTextAtIndex(4),
+            "zipCode": getTextAtIndex(5),
             "locationId": self.addressModel.barangayId,
             "userAddressId": self.addressModel.userAddressId
         ]
@@ -465,7 +439,7 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
                 self.addressModel.provinceId = self.provinceModel.provinceId[0]
                 self.requestGetCities(self.provinceModel.provinceId[0])
                 self.provinceRow = 0
-                self.setTextAtIndex(6, text: self.provinceModel.location[0])
+                self.setTextAtIndex(2, text: self.provinceModel.location[0])
             } else {
                 if self.addressModel.provinceId != 0 {
                     self.requestGetCities(self.addressModel.provinceId)
@@ -500,7 +474,7 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
                     self.addressModel.barangay = ""
                     self.cityRow = 0
                     self.barangayRow = 0
-                    self.setTextAtIndex(7, text: self.cityModel.location[0])
+                    self.setTextAtIndex(3, text: self.cityModel.location[0])
                 } else {
                     if self.addressModel.cityId != 0 {
                         self.requestGetBarangay(self.addressModel.cityId)
@@ -529,7 +503,7 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
                 if self.barangayModel.barangayId.count != 0 && self.addressModel.barangayId == 0 {
                     self.addressModel.barangayId = self.barangayModel.barangayId[0]
                     self.addressModel.barangay = self.barangayModel.location[0]
-                    self.setTextAtIndex(8, text: self.barangayModel.location[0])
+                    self.setTextAtIndex(4, text: self.barangayModel.location[0])
                 }
             
             if self.isIndexReady == false && self.isEdit2 {

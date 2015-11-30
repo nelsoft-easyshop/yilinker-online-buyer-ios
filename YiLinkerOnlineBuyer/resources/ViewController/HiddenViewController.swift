@@ -55,48 +55,34 @@ class HiddenViewController: UIViewController {
     func setSelectedViewControllerWithIndex(index: Int) {
         if self.viewControllers.count != 0 {
             let viewController: UIViewController = viewControllers[index]
-            if !SessionManager.isLoggedIn() && index == 3 {
-                
-            } else {
-                setSelectedViewController(viewController)
-            }
+            setSelectedViewController(viewController)
         }
         
         
         if SessionManager.isLoggedIn() {
             if index == 0 {
-                self.setNavigationBarTitle(HiddenStrings.help)
-            } else if index == 1 {
                 self.setNavigationBarTitle(HiddenStrings.followedSeller)
-            } else if index == 2 {
+            } else if index == 1 {
                 self.setNavigationBarTitle(HiddenStrings.messaging)
-            } else if index == 3 {
-                self.setNavigationBarTitle(HiddenStrings.customizeShopping)
-            } else if index == 4 {
+            } else if index == 2 {
                 self.setNavigationBarTitle(HiddenStrings.todaysPromo)
-            } else if index == 5 {
+            } else if index == 3 {
                 self.setNavigationBarTitle(HiddenStrings.categories)
-            } else if index == 6 {
+            } else if index == 4 {
                 self.setNavigationBarTitle(HiddenStrings.profile)
             }
         } else {
             if index == 0 {
-                self.setNavigationBarTitle(HiddenStrings.help)
-            } else if index == 1 {
                 self.setNavigationBarTitle(HiddenStrings.register)
                 self.registerViewController?.defaultViewControllerIndex = 1
                 self.registerViewController?.closeButton.hidden = true
-            } else if index == 2 {
+            } else if index == 1 {
                 self.setNavigationBarTitle(HiddenStrings.signIn)
                 self.loginViewController?.defaultViewControllerIndex = 0
                 self.loginViewController?.closeButton.hidden = true
-            } else if index == 3 {
-                self.setNavigationBarTitle(HiddenStrings.messaging)
-            } else if index == 4 {
-                self.setNavigationBarTitle(HiddenStrings.customizeShopping)
-            } else if index == 5 {
+            } else if index == 2 {
                 self.setNavigationBarTitle(HiddenStrings.todaysPromo)
-            } else if index == 6 {
+            } else if index == 3 {
                 self.setNavigationBarTitle(HiddenStrings.categories)
             }
         }
@@ -147,10 +133,8 @@ class HiddenViewController: UIViewController {
             self.profileViewController = ProfileViewController(nibName: "ProfileViewController", bundle: nil)
             //ConversationVC
             
-            self.viewControllers.append(self.helpViewController!)
             self.viewControllers.append(self.followedSellerViewController!)
             self.viewControllers.append(self.messagingViewController!)
-            self.viewControllers.append(self.customizeShoppingViewController!)
             self.viewControllers.append(self.resultViewController!)
             self.viewControllers.append(self.categoriesViewController!)
             self.viewControllers.append(self.profileViewController!)
@@ -181,11 +165,8 @@ class HiddenViewController: UIViewController {
             self.resultViewController = ResultViewController(nibName: "ResultViewController", bundle: nil)
             self.categoriesViewController = CategoriesViewController(nibName: "CategoriesViewController", bundle: nil)
             
-            self.viewControllers.append(self.helpViewController!)
             self.viewControllers.append(self.registerViewController!)
             self.viewControllers.append(self.loginViewController!)
-            self.viewControllers.append(self.messagingViewController!)
-            self.viewControllers.append(self.customizeShoppingViewController!)
             self.viewControllers.append(self.resultViewController!)
             self.viewControllers.append(self.categoriesViewController!)
         }

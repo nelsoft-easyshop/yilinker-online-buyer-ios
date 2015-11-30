@@ -254,6 +254,8 @@ BUY_IT_NOW_LOCALIZE_KEY = "BUY IT NOW";
 NO_REVIEWS_LOCALIZE_KEY = "No Available Reviews";
 REACHED_BOTTOM_LOCALIZE_KEY = "You already reached the bottom.";
 
+OUT_OF_STOCK_LOCALIZE_KEY = "Out of stock";
+ALERT_OUT_OF_STOCK_LOCALIZE_KEY = "Product is out of stock";
 
 CANCEL_LOCALIZE_KEY = "CANCEL";
 DONE_LOCALIZE_KEY = "DONE";
@@ -325,7 +327,7 @@ VIEW_FEEDBACK_LOCALIZE_KEY = "VIEW FEEDBACK";
 ABOUT_SELLER_LOCALIZE_KEY = "About Seller";
 PRODUCTS_SELLER_LOCALIZE_KEY = "Products";
 MORE_SELLERS_PRODUCT_LOCALIZE_KEY = "MORE SELLER'S PRODUCT";
-PRODUCT_RATINGS_AND_FEEDBACK_LOCALIZE_KEY = "Product Rating & Feedback";
+PRODUCT_RATINGS_AND_FEEDBACK_LOCALIZE_KEY = "Seller's Rating and Feedback";
 VENDOR_PAGE_CANNOT_FOLLOW_LOCALIZE_KEY = "Please login to follow this seller.";
 VENDOR_PAGE_CANNOT_MESSAGE_LOCALIZE_KEY = "You're not allowed to message this seller. Please login first.";
 VENDOR_PAGE_CANNOT_CALL_LOCALIZE_KEY = "Cannot make a call to";
@@ -411,7 +413,7 @@ VERIFY_NUMBER_LOCALIZED_KEY = "VERIFY";
 REQUEST_NEW_CODE_LOCALIZED_KEY = "Request new verification code";
 SEND_CODE_LOCALIZED_KEY = "SEND CODE";
 VALID_ID_LOCALIZED_KEY = "Valid ID";
-VALID_ID_PLACEHOLDER_LOCALIZED_KEY = "Driver's license, Passport, etc.";
+VALID_ID_PLACEHOLDER_LOCALIZED_KEY = "Upload Identification Photo";
 VIEW_IMAGE_LOCALIZED_KEY = "View Image";
 ADD_LOCALIZED_KEY = "ADD";
 
@@ -473,6 +475,7 @@ TRANSACTION_PRODUCT_LOCALIZE_KEY = "product";
 TRANSACTION_PRODUCTS_LOCALIZE_KEY = "products";
 TRANSACTION_NO_TRANSACTION_LOCALIZE_KEY = "No transactions available";
 TRANSACTION_DETAILS_TITLE_LOCALIZE_KEY = "Transaction Details";
+TRANSACTION_NO_DELIVERY_STATUS_LOCALIZE_KEY = "No delivery data found.";
 
 TRANSACTION_DETAILS_LOCALIZE_KEY = "DETAILS";
 TRANSACTION_DETAILS_STATUS_LOCALIZE_KEY = "Status";
@@ -496,6 +499,7 @@ TRANSACTION_DETAILS_PICKUP_LOCALIZE_KEY = "pickup rider";
 TRANSACTION_DETAILS_DELIVERY_LOCALIZE_KEY = "delivery rider";
 TRANSACTION_DETAILS_NOT_ALLOWED_FEEDBACK_LOCALIZE_KEY = "You're not allowed to leave feedback to this seller unless your transaction status is completed.";
 TRANSACTION_DETAILS_NOT_ALLOWED_MESSAGE_LOCALIZE_KEY = "You're not allowed to message this seller.";
+TRANSACTION_NO_REVIEWS_LOCALIZE_KEY = "No reviews available.";
 
 //Transaction Product Details
 TRANSACTION_PRODUCT_DETAILS_TITLE_LOCALIZE_KEY = "Product Details";
@@ -539,7 +543,7 @@ ACTIVITY_LOGS_TITLE_LOCALIZE_KEY = "Activity Logs";
 NO_MORE_DATA_LOCALIZE_KEY = "No more data!";
 
 //Success/Fail Cancellation
-TRANSACTION_CANCEL_ORDER_SUCCESS_LOCALIZE_KEY = "This order has been successfully been cancelled";
+TRANSACTION_CANCEL_ORDER_SUCCESS_LOCALIZE_KEY = "This order has been successfully cancelled.";
 TRANSACTION_CANCEL_ORDER_SUCCESS_SUB_LOCALIZE_KEY = "A Customer Service Representative will contact you shortly to ask how we can help you from losing more orders";
 TRANSACTION_CANCEL_ORDER_RETURN_LOCALIZE_KEY = "Return to Dashboard";
 
@@ -551,7 +555,7 @@ TRANSACTION_PRODUCT_DESCRIPTION_LOCALIZE_KEY= "Product Description";
 SOMETHING_WENT_WRONG_LOCALIZE_KEY = "Something Went Wrong";
 OK_BUTTON_LOCALIZE_KEY = "OK";
 SUCCESS_LOCALIZE_KEY = "Success";
-ERROR_LOCALIZE_KEY = "Error";
+ERROR_LOCALIZE_KEY = "Unable to proceed";
 FAILED_LOCALIZE_KEY = "Failed";
 TOOLBAR_DONE_LOCALIZE_KEY = "Done";
 SERVER_ERROR_LOCALIZE_KEY = "Server Error";

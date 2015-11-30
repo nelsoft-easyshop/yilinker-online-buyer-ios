@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
@@ -100,25 +100,6 @@
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                         </textView>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="45Q-yG-XsU" customClass="DynamicRoundedButton" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
-                            <rect key="frame" x="243" y="244" width="100" height="30"/>
-                            <color key="backgroundColor" red="0.2666666667" green="0.64313725489999995" blue="0.56862745100000001" alpha="1" colorSpace="calibratedRGB"/>
-                            <constraints>
-                                <constraint firstAttribute="width" constant="100" id="D6E-gu-KQe"/>
-                            </constraints>
-                            <state key="normal" title="Submit">
-                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                            </state>
-                            <userDefinedRuntimeAttributes>
-                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                    <real key="value" value="5"/>
-                                </userDefinedRuntimeAttribute>
-                            </userDefinedRuntimeAttributes>
-                            <connections>
-                                <action selector="submitAction:" destination="-1" eventType="touchUpInside" id="v6V-cm-DC4"/>
-                            </connections>
-                        </button>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Select Reason" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="skx-DG-oe2">
                             <rect key="frame" x="16" y="77" width="327" height="30"/>
                             <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
@@ -131,6 +112,7 @@
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jds-7u-g5d">
                             <rect key="frame" x="16" y="48" width="87" height="21"/>
                             <constraints>
+                                <constraint firstAttribute="width" constant="87" id="7YS-nx-oez"/>
                                 <constraint firstAttribute="height" constant="21" id="wDG-JA-Hfe"/>
                             </constraints>
                             <attributedString key="attributedText">
@@ -153,6 +135,25 @@
                             <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="45Q-yG-XsU" customClass="DynamicRoundedButton" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
+                            <rect key="frame" x="243" y="244" width="100" height="30"/>
+                            <color key="backgroundColor" red="0.2666666667" green="0.64313725489999995" blue="0.56862745100000001" alpha="1" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="100" id="D6E-gu-KQe"/>
+                            </constraints>
+                            <state key="normal" title="Submit">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                    <real key="value" value="5"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                            <connections>
+                                <action selector="submitAction:" destination="-1" eventType="touchUpInside" id="v6V-cm-DC4"/>
+                            </connections>
+                        </button>
                     </subviews>
                     <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
@@ -174,7 +175,6 @@
                         <constraint firstAttribute="trailing" secondItem="4S6-yG-y9n" secondAttribute="trailing" id="gjj-1F-4Vm"/>
                         <constraint firstAttribute="trailing" secondItem="yM0-jV-wwB" secondAttribute="trailing" constant="16" id="hIU-CG-8SO"/>
                         <constraint firstAttribute="trailing" secondItem="skx-DG-oe2" secondAttribute="trailing" constant="16" id="jjw-kv-jNU"/>
-                        <constraint firstAttribute="trailing" secondItem="wpW-IC-yif" secondAttribute="trailing" constant="249" id="lgh-aj-efA"/>
                         <constraint firstItem="Jds-7u-g5d" firstAttribute="leading" secondItem="6yO-C8-DuY" secondAttribute="leading" constant="16" id="mPn-57-ICa"/>
                         <constraint firstItem="yM0-jV-wwB" firstAttribute="top" secondItem="rjr-aU-SF0" secondAttribute="bottom" constant="2" id="mbi-HU-ql9"/>
                         <constraint firstItem="skx-DG-oe2" firstAttribute="top" secondItem="wpW-IC-yif" secondAttribute="bottom" constant="8" id="sGq-ky-50Y"/>

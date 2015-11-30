@@ -341,9 +341,8 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
                         
                         let fullImageColectionViewCell: FullImageCollectionViewCell = self.collectionView?.dequeueReusableCellWithReuseIdentifier("FullImageCollectionViewCell", forIndexPath: indexPath) as! FullImageCollectionViewCell
                         fullImageColectionViewCell.itemProductImageView.sd_setImageWithURL(homeProductModel.imageURL, placeholderImage: UIImage(named: "dummy-placeholder"))
-                        fullImageColectionViewCell.targetType = homeProductModel.target
-                        fullImageColectionViewCell.target = homeProductModel.targetType
-                        
+                        fullImageColectionViewCell.target = homeProductModel.target
+                        fullImageColectionViewCell.targetType = homeProductModel.targetType
                         return fullImageColectionViewCell
                     } else {
                         let fullImageColectionViewCell: FullImageCollectionViewCell = self.collectionView?.dequeueReusableCellWithReuseIdentifier("FullImageCollectionViewCell", forIndexPath: indexPath) as! FullImageCollectionViewCell
@@ -360,6 +359,7 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
                     fullImageColectionViewCell.itemProductImageView.sd_setImageWithURL(homeProductModel.imageURL, placeholderImage: UIImage(named: "dummy-placeholder"))
                     fullImageColectionViewCell.targetType = homeProductModel.targetType
                     fullImageColectionViewCell.target = homeProductModel.target
+                    println("1 \(homeProductModel.target)")
                     return fullImageColectionViewCell
                 }
                 
@@ -543,7 +543,7 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
                     }
                 }
             }
-            footerView.cellButton.setTitle(HomeCollectionViewStrings.viewMoreItems, forState: UIControlState.Normal)
+           
             footerView.delegate = self
             return footerView
         } else {
@@ -636,6 +636,8 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
         } else if cell.isKindOfClass(SellerCollectionViewCell) {
             let sellerCollectionViewCell: SellerCollectionViewCell = cell as! SellerCollectionViewCell
             self.redirectToSellerWithID(sellerCollectionViewCell.userId)
+        } else {
+            
         }
     }
     

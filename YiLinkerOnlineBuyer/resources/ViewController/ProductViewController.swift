@@ -18,6 +18,8 @@ struct ProductStrings {
     static let ratingFeedback = StringHelper.localizedStringWithKey("RATING_FEEDBACK_LOCALIZE_KEY")
     static let seller = StringHelper.localizedStringWithKey("SELLER_LOCALIZE_KEY")
     static let reachedBottom = StringHelper.localizedStringWithKey("REACHED_BOTTOM_LOCALIZE_KEY")
+    static let outOfStock = StringHelper.localizedStringWithKey("OUT_OF_STOCK_LOCALIZE_KEY")
+    
     static let addToCart = StringHelper.localizedStringWithKey("ADD_TO_CART_LOCALIZE_KEY")
     static let buytItNow = StringHelper.localizedStringWithKey("BUY_IT_NOW_LOCALIZE_KEY")
     
@@ -41,6 +43,8 @@ struct ProductStrings {
     static let alertNoReviews = StringHelper.localizedStringWithKey("NO_REVIEWS_LOCALIZE_KEY")
     static let cannotMessage = StringHelper.localizedStringWithKey("VENDOR_PAGE_CANNOT_MESSAGE_LOCALIZE_KEY")
     static let avoidIssues = StringHelper.localizedStringWithKey("ALERT_AVOID_ISSUES_LOCALIZE_KEY")
+    static let alertOutOfStock = StringHelper.localizedStringWithKey("ALERT_OUT_OF_STOCK_LOCALIZE_KEY")
+    
 }
 
 protocol ProductViewControllerDelegate {
@@ -886,7 +890,8 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         selectedId = []
         selectedName.append(ProductStrings.quantity)
         if quantity == 0 {
-            selectedValue.append(String(self.quantity) + "x")
+            selectedValue.append(ProductStrings.outOfStock)
+            self.quantity = 0
         } else {
             selectedValue.append(String(quantity) + "x")
         }
@@ -1179,13 +1184,20 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     // MARK: Actions
     
     @IBAction func addToCartAction(sender: AnyObject) {
-        
-        requestAddCartItem("cart")
-        
+        if self.quantity == 0 {
+            self.showAlert(title: ProductStrings.alertFailed, message: ProductStrings.alertOutOfStock)
+        } else {
+            requestAddCartItem("cart")
+        }
     }
     
     func buyItNowAction(gesture: UIGestureRecognizer) {
-        requestAddCartItem("buyitnow")
+        if self.quantity == 0 {
+            self.showAlert(title: ProductStrings.alertFailed, message: ProductStrings.alertOutOfStock)
+        } else {
+            requestAddCartItem("buyitnow")
+        }
+        
         /*let alertController = UIAlertController(title: "Feature Not Available", message: "Check-out not available in Beta Testing", preferredStyle: .Alert)
         
         let OKAction = UIAlertAction(title: "OK", style: .Default) { (action) in

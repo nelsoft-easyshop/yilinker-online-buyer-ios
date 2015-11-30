@@ -100,11 +100,13 @@ class WishlistViewController: UIViewController, UITableViewDelegate, UITableView
         showLoader()
         manager.POST(url, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in print(responseObject as! NSDictionary)
+                var data: NSDictionary = responseObject["data"] as! NSDictionary
+                var cart: NSArray = data["cart"] as! NSArray
                 println(responseObject)
                 if responseObject.objectForKey("error") != nil {
                     self.requestRefreshToken("addToCart", url: url, params: params)
                 } else{
-                    SessionManager.setCartCount(SessionManager.cartCount() + 1)
+                    SessionManager.setCartCount(cart.count)
                     if SessionManager.cartCount() != 0 {
                         let badgeValue = (self.tabBarController!.tabBar.items![4] as! UITabBarItem).badgeValue?.toInt()
                         (self.tabBarController!.tabBar.items![4] as! UITabBarItem).badgeValue = String(SessionManager.cartCount())
@@ -256,15 +258,23 @@ class WishlistViewController: UIViewController, UITableViewDelegate, UITableView
         
         for tempProductUnit in tempModel.productUnits {
             if tempModel.unitId == tempProductUnit.productUnitId {
-//                if tempProductUnit.imageIds.count == 0 {
-//                    cell.productItemImageView.sd_setImageWithURL(NSURL(string: tempModel.image), placeholderImage: UIImage(named: "dummy-placeholder"))
-//                } else {
-//                    cell.productItemImageView.sd_setImageWithURL(NSURL(string: tempProductUnit.imageIds[0]), placeholderImage: UIImage(named: "dummy-placeholder"))
-//                }
-                if tempModel.images.count != 0 {
-                    cell.productItemImageView.sd_setImageWithURL(NSURL(string: tempModel.images[0]), placeholderImage: UIImage(named: "dummy-placeholder"))
+                //                if tempProductUnit.imageIds.count == 0 {
+                //                    cell.productItemImageView.sd_setImageWithURL(NSURL(string: tempModel.image), placeholderImage: UIImage(named: "dummy-placeholder"))
+                //                } else {
+                //                    cell.productItemImageView.sd_setImageWithURL(NSURL(string: tempProductUnit.imageIds[0]), placeholderImage: UIImage(named: "dummy-placeholder"))
+                //                }
+                
+                
+                if tempProductUnit.primaryImage.isNotEmpty() {
+                    let url = APIAtlas.baseUrl.stringByReplacingOccurrencesOfString("api/v1", withString: "")
+                    cell.productItemImageView.sd_setImageWithURL(NSURL(string: "\(url)\(APIAtlas.cartImage)\(tempProductUnit.primaryImage)"), placeholderImage: UIImage(named: "dummy-placeholder"))
                 } else {
-                    cell.productItemImageView.image = UIImage(named: "dummy-placeholder")
+                    if tempModel.images.count != 0 {
+                        cell.productItemImageView.sd_setImageWithURL(NSURL(string: tempModel.images[0]), placeholderImage: UIImage(named: "dummy-placeholder"))
+                    } else {
+                        cell.productItemImageView.image = UIImage(named: "dummy-placeholder")
+                    }
+                    
                 }
                 
                 var tempAttributesText: String = ""
@@ -279,6 +289,7 @@ class WishlistViewController: UIViewController, UITableViewDelegate, UITableView
                         }
                     }
                 }
+                
                 cell.productDetailsLabel?.text = tempAttributesText
                 cell.productPriceLabel.text = tempProductUnit.discountedPrice.formatToPeso() + " x \(tempModel.quantity)"
             }

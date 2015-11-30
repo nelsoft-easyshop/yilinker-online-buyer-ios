@@ -258,6 +258,8 @@
 		26D688CD1C02E92D003ED151 /* FullScreenImageCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26D688CB1C02E92D003ED151 /* FullScreenImageCollectionViewCell.xib */; };
 		26D688CF1C047389003ED151 /* ProductDetailsExtendedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26D688CE1C047389003ED151 /* ProductDetailsExtendedView.swift */; };
 		26D688D11C0475C4003ED151 /* ProductDetailsExtendedView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26D688D01C0475C4003ED151 /* ProductDetailsExtendedView.xib */; };
+		26D688C61C021DA7003ED151 /* MapTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26D688C41C021DA7003ED151 /* MapTableViewCell.swift */; };
+		26D688C71C021DA7003ED151 /* MapTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26D688C51C021DA7003ED151 /* MapTableViewCell.xib */; };
 		26DB062E1B981CF300D38EA8 /* ProductImagesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26DB062D1B981CF300D38EA8 /* ProductImagesModel.swift */; };
 		790B4BFE1BD8832C00E46AE7 /* VerifyMobileNumberInputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 790B4BFC1BD8832C00E46AE7 /* VerifyMobileNumberInputViewController.swift */; };
 		790B4BFF1BD8832C00E46AE7 /* VerifyMobileNumberInputViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 790B4BFD1BD8832C00E46AE7 /* VerifyMobileNumberInputViewController.xib */; };
@@ -376,6 +378,8 @@
 		F70EFB281BC6BFB40077B8ED /* TransactionLeaveSellerFeedbackTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F70EFB261BC6BFB40077B8ED /* TransactionLeaveSellerFeedbackTableViewController.xib */; };
 		F740F0901B90D1D800D23A34 /* address.png in Resources */ = {isa = PBXBuildFile; fileRef = F740F08F1B90D1D800D23A34 /* address.png */; };
 		F740F0921B90D1E200D23A34 /* close2.png in Resources */ = {isa = PBXBuildFile; fileRef = F740F0911B90D1E200D23A34 /* close2.png */; };
+		F7A66B261C03195200D8E688 /* TransactionDetailsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7A66B241C03195200D8E688 /* TransactionDetailsTableViewCell.swift */; };
+		F7A66B271C03195200D8E688 /* TransactionDetailsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7A66B251C03195200D8E688 /* TransactionDetailsTableViewCell.xib */; };
 		F7C5699C1BB175F1004740E1 /* TransactionCancellationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C569971BB175F1004740E1 /* TransactionCancellationModel.swift */; };
 		F7C5699D1BB175F1004740E1 /* TransactionDetailsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C569981BB175F1004740E1 /* TransactionDetailsModel.swift */; };
 		F7C5699E1BB175F1004740E1 /* TransactionDetailsProductsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C569991BB175F1004740E1 /* TransactionDetailsProductsModel.swift */; };
@@ -464,6 +468,8 @@
 		F7DC84E11BA00F7300D3878B /* SellerTableHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7DC84E01BA00F7300D3878B /* SellerTableHeaderView.xib */; };
 		F7E294851BFA278900A465A9 /* ActivityLogItemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E294841BFA278800A465A9 /* ActivityLogItemModel.swift */; };
 		F7E294871BFA27AC00A465A9 /* ActivityLogItemsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E294861BFA27AC00A465A9 /* ActivityLogItemsModel.swift */; };
+		F7F082B61C0988BF00761072 /* NoReviewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7F082B41C0988BF00761072 /* NoReviewTableViewCell.swift */; };
+		F7F082B71C0988BF00761072 /* NoReviewTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7F082B51C0988BF00761072 /* NoReviewTableViewCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -737,6 +743,8 @@
 		26D688CB1C02E92D003ED151 /* FullScreenImageCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = FullScreenImageCollectionViewCell.xib; path = YiLinkerOnlineBuyer/resources/ViewController/FullScreenImageCollectionViewCell.xib; sourceTree = SOURCE_ROOT; };
 		26D688CE1C047389003ED151 /* ProductDetailsExtendedView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProductDetailsExtendedView.swift; path = YiLinkerOnlineBuyer/resources/ViewController/ProductDetailsExtendedView.swift; sourceTree = SOURCE_ROOT; };
 		26D688D01C0475C4003ED151 /* ProductDetailsExtendedView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProductDetailsExtendedView.xib; path = YiLinkerOnlineBuyer/resources/ViewController/ProductDetailsExtendedView.xib; sourceTree = SOURCE_ROOT; };
+		26D688C41C021DA7003ED151 /* MapTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MapTableViewCell.swift; path = YiLinkerOnlineBuyer/resources/View/MapTableViewCell.swift; sourceTree = SOURCE_ROOT; };
+		26D688C51C021DA7003ED151 /* MapTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MapTableViewCell.xib; path = YiLinkerOnlineBuyer/resources/View/MapTableViewCell.xib; sourceTree = SOURCE_ROOT; };
 		26DB062D1B981CF300D38EA8 /* ProductImagesModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProductImagesModel.swift; path = YiLinkerOnlineBuyer/resources/Model/ProductImagesModel.swift; sourceTree = SOURCE_ROOT; };
 		5D038C18A7712E626564D2D3 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		790B4BFC1BD8832C00E46AE7 /* VerifyMobileNumberInputViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VerifyMobileNumberInputViewController.swift; path = YiLinkerOnlineBuyer/resources/ViewController/VerifyMobileNumberInputViewController.swift; sourceTree = SOURCE_ROOT; };
@@ -857,6 +865,8 @@
 		F70EFB261BC6BFB40077B8ED /* TransactionLeaveSellerFeedbackTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TransactionLeaveSellerFeedbackTableViewController.xib; path = YiLinkerOnlineBuyer/resources/ViewController/TransactionLeaveSellerFeedbackTableViewController.xib; sourceTree = SOURCE_ROOT; };
 		F740F08F1B90D1D800D23A34 /* address.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = address.png; sourceTree = "<group>"; };
 		F740F0911B90D1E200D23A34 /* close2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = close2.png; sourceTree = "<group>"; };
+		F7A66B241C03195200D8E688 /* TransactionDetailsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TransactionDetailsTableViewCell.swift; path = YiLinkerOnlineBuyer/resources/Xib/TransactionDetailsTableViewCell.swift; sourceTree = SOURCE_ROOT; };
+		F7A66B251C03195200D8E688 /* TransactionDetailsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TransactionDetailsTableViewCell.xib; path = YiLinkerOnlineBuyer/resources/Xib/TransactionDetailsTableViewCell.xib; sourceTree = SOURCE_ROOT; };
 		F7C569971BB175F1004740E1 /* TransactionCancellationModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionCancellationModel.swift; sourceTree = "<group>"; };
 		F7C569981BB175F1004740E1 /* TransactionDetailsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionDetailsModel.swift; sourceTree = "<group>"; };
 		F7C569991BB175F1004740E1 /* TransactionDetailsProductsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionDetailsProductsModel.swift; sourceTree = "<group>"; };
@@ -946,6 +956,8 @@
 		F7DC84E01BA00F7300D3878B /* SellerTableHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SellerTableHeaderView.xib; sourceTree = "<group>"; };
 		F7E294841BFA278800A465A9 /* ActivityLogItemModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ActivityLogItemModel.swift; path = YiLinkerOnlineBuyer/resources/Model/ActivityLogItemModel.swift; sourceTree = SOURCE_ROOT; };
 		F7E294861BFA27AC00A465A9 /* ActivityLogItemsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ActivityLogItemsModel.swift; path = YiLinkerOnlineBuyer/resources/Model/ActivityLogItemsModel.swift; sourceTree = SOURCE_ROOT; };
+		F7F082B41C0988BF00761072 /* NoReviewTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NoReviewTableViewCell.swift; path = YiLinkerOnlineBuyer/resources/View/NoReviewTableViewCell.swift; sourceTree = SOURCE_ROOT; };
+		F7F082B51C0988BF00761072 /* NoReviewTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = NoReviewTableViewCell.xib; path = YiLinkerOnlineBuyer/resources/View/NoReviewTableViewCell.xib; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -953,6 +965,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0C574A1A1BC5171900913F29 /* CoreLocation.framework in Frameworks */,
 				0C574A281BC5175000913F29 /* UIKit.framework in Frameworks */,
 				0C574A261BC5174900913F29 /* SystemConfiguration.framework in Frameworks */,
 				0C574A2B1BC5176C00913F29 /* GoogleOpenSource.framework in Frameworks */,
@@ -961,7 +974,6 @@
 				0C574A201BC5172F00913F29 /* CoreText.framework in Frameworks */,
 				0C574A1E1BC5172800913F29 /* CoreGraphics.framework in Frameworks */,
 				0C574A1C1BC5172100913F29 /* CoreMotion.framework in Frameworks */,
-				0C574A1A1BC5171900913F29 /* CoreLocation.framework in Frameworks */,
 				0C574A2C1BC5176C00913F29 /* GooglePlus.framework in Frameworks */,
 				0C574A181BC5171100913F29 /* Foundation.framework in Frameworks */,
 				0C574A161BC5170400913F29 /* AssetsLibrary.framework in Frameworks */,
@@ -1370,6 +1382,8 @@
 				79E68B9A1B8B4239008626E4 /* ProfileSettingsTableViewCell.swift */,
 				79E85FBD1B89DE1C00428AA1 /* ProfileTableViewCell.swift */,
 				26AFB3A51B79DE2900E50926 /* ReviewTableViewCell.swift */,
+				F7F082B41C0988BF00761072 /* NoReviewTableViewCell.swift */,
+				F7F082B51C0988BF00761072 /* NoReviewTableViewCell.xib */,
 				0C9937191B750583000D6074 /* RoundedButton.swift */,
 				0C99371A1B750583000D6074 /* RoundedImageView.swift */,
 				0C99371B1B750583000D6074 /* RoundedLabel.swift */,
@@ -1398,6 +1412,9 @@
 				0CC53C831C00D345002361D4 /* DicountVoucherTableViewCell.xib */,
 				0C65BBAD1C019A0800C66C39 /* NetTotalTableViewCell.swift */,
 				0C65BBAE1C019A0800C66C39 /* NetTotalTableViewCell.xib */,
+				26D688C41C021DA7003ED151 /* MapTableViewCell.swift */,
+				26D688C51C021DA7003ED151 /* MapTableViewCell.xib */,
+				F7A66B241C03195200D8E688 /* TransactionDetailsTableViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1617,6 +1634,7 @@
 				F7D37CA01B92B09100FA7B16 /* ViewFeedBackViewController.xib */,
 				0C9937371B750583000D6074 /* ViewMoreFooterCollectionViewCell.xib */,
 				7987F3191B7B746000B02DF4 /* WishlistTableViewCell.xib */,
+				F7A66B251C03195200D8E688 /* TransactionDetailsTableViewCell.xib */,
 			);
 			path = Xib;
 			sourceTree = "<group>";
@@ -1705,7 +1723,7 @@
 				0C8A7C6B1B6772670039F013 /* Frameworks */,
 				0C8A7C6C1B6772670039F013 /* Resources */,
 				15458B67C73D196045380AA0 /* Copy Pods Resources */,
-				6E0A684296392B140AA040EB /* Embed Pods Frameworks */,
+				2AB39E6226169D21E84E7662 /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1755,6 +1773,7 @@
 					};
 					0C8A7C821B6772670039F013 = {
 						CreatedOnToolsVersion = 6.4;
+						DevelopmentTeam = XY4U9PK7G5;
 						TestTargetID = 0C8A7C6D1B6772670039F013;
 					};
 				};
@@ -1838,6 +1857,7 @@
 				26AFB3BF1B79DE5600E50926 /* ProductViewController.xib in Resources */,
 				0C10042D1B877F8400CAA17A /* AddAddressTableViewController.xib in Resources */,
 				0C374F2D1B88E3790050AE1D /* PaymentTableViewCell.xib in Resources */,
+				F7A66B271C03195200D8E688 /* TransactionDetailsTableViewCell.xib in Resources */,
 				0C374F481B88E3790050AE1D /* MessagingViewController.xib in Resources */,
 				0C99376A1B750583000D6074 /* SectionBackground.xib in Resources */,
 				F7CCDA8E1B943CBB000F5AD4 /* FollowedSellerViewController.xib in Resources */,
@@ -1886,6 +1906,7 @@
 				0C2F44D01B8576FE00021F45 /* Panton SemiBold Italic.otf in Resources */,
 				F7C56A031BB1790A004740E1 /* TransactionLeaveSellerFeedbackViewController.xib in Resources */,
 				0C2F44C51B8576FE00021F45 /* Panton Bold Italic.otf in Resources */,
+				F7F082B71C0988BF00761072 /* NoReviewTableViewCell.xib in Resources */,
 				0C2F44CC1B8576FE00021F45 /* Panton Heavy.otf in Resources */,
 				793A899B1BA001AE0030FDC7 /* VerifyMobileNumberViewController.xib in Resources */,
 				0C374F531B89EC4D0050AE1D /* CustomizeSelectedCollectionViewCell.xib in Resources */,
@@ -1903,6 +1924,7 @@
 				F7C569E11BB1776F004740E1 /* TransactionProductDetailsViewController.xib in Resources */,
 				F7C569E01BB1776F004740E1 /* TransactionDetailsViewController.xib in Resources */,
 				26AFB3CB1B79DE5C00E50926 /* ProductSellerViewCollectionViewCell.xib in Resources */,
+				26D688C71C021DA7003ED151 /* MapTableViewCell.xib in Resources */,
 				79E85FD21B8A230500428AA1 /* ActivityLogHeaderTableViewCell.xib in Resources */,
 				79E68BA11B8B428B008626E4 /* ProfileSettingsViewController.xib in Resources */,
 				0C677BD21BA03EFA007D8E03 /* GuestCheckoutTableViewCell.xib in Resources */,
@@ -1996,7 +2018,7 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		6E0A684296392B140AA040EB /* Embed Pods Frameworks */ = {
+		2AB39E6226169D21E84E7662 /* Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -2021,6 +2043,7 @@
 				F7C56A021BB1790A004740E1 /* TransactionLeaveSellerFeedbackViewController.swift in Sources */,
 				0CB9DB391B6A3DC700F2CA13 /* StartPageViewController.swift in Sources */,
 				79A1C6EF1B8329390043AA36 /* SearchSuggestionTableViewCell.swift in Sources */,
+				F7F082B61C0988BF00761072 /* NoReviewTableViewCell.swift in Sources */,
 				0C374F4C1B8998F30050AE1D /* CustomizeShoppingCollectionViewCell.swift in Sources */,
 				0C5926061B836EA30021EA76 /* AddressModel.swift in Sources */,
 				0CB9DB3B1B6A3EA100F2CA13 /* StarterContentPageViewController.swift in Sources */,
@@ -2048,6 +2071,7 @@
 				F7C569BD1BB1762C004740E1 /* TransactionPurchaseDetailsView.swift in Sources */,
 				0C4E5CD31BA1873E0098224A /* RegisterModalViewController.swift in Sources */,
 				F7C637CF1BD9F81A00C29C47 /* TransactionDeliveryLogTableViewController.swift in Sources */,
+				26D688C61C021DA7003ED151 /* MapTableViewCell.swift in Sources */,
 				0C1003F41B87629400CAA17A /* NewAddressTableViewCell.swift in Sources */,
 				79E68B911B8B0AE9008626E4 /* PointModel.swift in Sources */,
 				0C2670CF1B772E4B00394E29 /* Enums.swift in Sources */,
@@ -2218,6 +2242,7 @@
 				961BE5A01B994B7D00E8631A /* DisputeViewController.swift in Sources */,
 				0CFF5EA71B98590200F13699 /* ErrorModel.swift in Sources */,
 				26AFB3AB1B79DE2900E50926 /* ProductReviewFooterView.swift in Sources */,
+				F7A66B261C03195200D8E688 /* TransactionDetailsTableViewCell.swift in Sources */,
 				F7C56A041BB1790A004740E1 /* TransactionProductDetailsViewController.swift in Sources */,
 				B77B8DC21B9B54B40002C513 /* W_Contact.swift in Sources */,
 				0C99373B1B750583000D6074 /* Constants.swift in Sources */,
@@ -2360,7 +2385,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -2382,6 +2408,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -2404,7 +2431,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -2419,6 +2447,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -2440,7 +2469,7 @@
 				INFOPLIST_FILE = YiLinkerOnlineBuyer/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "496e1c12-7e93-4944-8aab-308d1147ec5d";
 				SWIFT_OBJC_BRIDGING_HEADER = "YiLinkerOnlineBuyer/Resources/Helper/YiLinkerOnlineBuyer-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -2467,7 +2496,7 @@
 					"\"${PODS_ROOT}/Google/Libraries” $(inherited) \"${PODS_ROOT}/GoogleAppUtilities/Libraries\" $(inherited) \"${PODS_ROOT}/GoogleAuthUtilities/Libraries\" $(inherited) \"${PODS_ROOT}/GoogleInterchangeUtilities/Libraries\" $(inherited) \"${PODS_ROOT}/GoogleNetworkingUtilities/Libraries\" $(inherited) \"${PODS_ROOT}/GoogleSignIn/Libraries\" $(inherited) \"${PODS_ROOT}/GoogleSymbolUtilities/Libraries\" $(inherited) \"${PODS_ROOT}/GoogleUtilities/Libraries\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "496e1c12-7e93-4944-8aab-308d1147ec5d";
 				SWIFT_OBJC_BRIDGING_HEADER = "YiLinkerOnlineBuyer/Resources/Helper/YiLinkerOnlineBuyer-Bridging-Header.h";
 			};
 			name = Release;
@@ -2476,6 +2505,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -2487,6 +2518,7 @@
 				INFOPLIST_FILE = YiLinkerOnlineBuyerTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/YiLinkerOnlineBuyer.app/YiLinkerOnlineBuyer";
 			};
 			name = Debug;
@@ -2495,6 +2527,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -2502,6 +2536,7 @@
 				INFOPLIST_FILE = YiLinkerOnlineBuyerTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/YiLinkerOnlineBuyer.app/YiLinkerOnlineBuyer";
 			};
 			name = Release;

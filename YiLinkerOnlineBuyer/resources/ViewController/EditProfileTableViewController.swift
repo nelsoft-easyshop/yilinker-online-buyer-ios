@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import CoreLocation
 
-class EditProfileTableViewController: UITableViewController, UINavigationControllerDelegate, EditProfileAddPhotoTableViewCellDelegate, EditProfileAddressTableViewCellDelegate, EditProfileAccountInformationTableViewCellDelegate, UIImagePickerControllerDelegate, UIActionSheetDelegate, EditProfilePersonalInformationTableViewCellDelegate, ChangePasswordViewControllerDelegate, ChangeAddressViewControllerDelegate, ChangeMobileNumberViewControllerDelegate, VerifyMobileNumberViewControllerDelegate, VerifyMobileNumberStatusViewControllerDelegate, ViewImageViewControllerDelegate {
+class EditProfileTableViewController: UITableViewController, UINavigationControllerDelegate, EditProfileAddPhotoTableViewCellDelegate, EditProfileAddressTableViewCellDelegate, EditProfileAccountInformationTableViewCellDelegate, UIImagePickerControllerDelegate, UIActionSheetDelegate, EditProfilePersonalInformationTableViewCellDelegate, ChangePasswordViewControllerDelegate, ChangeAddressViewControllerDelegate, ChangeMobileNumberViewControllerDelegate, VerifyMobileNumberViewControllerDelegate, VerifyMobileNumberStatusViewControllerDelegate, ViewImageViewControllerDelegate, CLLocationManagerDelegate {
     
     let manager = APIManager.sharedInstance
     
@@ -34,6 +35,8 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
     var mobileNumber: String = ""
     var emailAddress: String = ""
     var password: String = ""
+    var latitude: String = ""
+    var longitude: String = ""
     
     var profileImageData: NSData?
     var validIDImageData: NSData?
@@ -56,7 +59,7 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
     var selectPhotoLocalizeString: String  = ""
     var takePhotoLocalizeString: String  = ""
     var cancelLocalizeString: String  = ""
-    
+    //var locationManager: CLLocationManager?
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -65,6 +68,16 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
         backButton()
         titleView()
         registerNibs()
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+//        let locationManager = CLLocationManager()
+//        locationManager.delegate = self
+//        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+//        locationManager.requestWhenInUseAuthorization()
+//        locationManager.startUpdatingLocation()
+        
+        self.tableView.reloadData()
     }
     
     override func didReceiveMemoryWarning() {
@@ -149,6 +162,19 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
         var nibAccount = UINib(nibName: accountCellIdentifier, bundle: nil)
         self.tableView.registerNib(nibAccount, forCellReuseIdentifier: accountCellIdentifier)
     }
+    
+    // MARK: - CLLocationManagerDelegate
+    func locationManager(manager: CLLocationManager!, didFailWithError error: NSError!) {
+        println("Error while updating location " + error.localizedDescription)
+    }
+    
+    func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
+        if let var location: CLLocation = locations.last as? CLLocation {
+            latitude = "\(location.coordinate.latitude)"
+            longitude = "\(location.coordinate.longitude)"
+        }
+    }
+    
     // MARK: - Table view data source
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -192,17 +218,12 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
             cell.lastNameTextField.text = profileUserDetailsModel.lastName
             cell.mobilePhoneTextField.text = profileUserDetailsModel.contactNumber
         
-//            if profileUserDetailsModel.userDocuments.isEmpty  {
-//                cell.addIDButton.setTitle(cell.addLocalizeString, forState: UIControlState.Normal)
-//            } else {
-//                cell.addIDButton.setTitle(cell.viewImageLocalizeString, forState: UIControlState.Normal)
-//            }
-            
-            if !profileUserDetailsModel.userDocuments.isEmpty || validIDImage != nil {
-                cell.addIDButton.setTitle(cell.viewImageLocalizeString, forState: UIControlState.Normal)
-                
-            } else {
+            if profileUserDetailsModel.userDocuments.isEmpty  {
                 cell.addIDButton.setTitle(cell.addLocalizeString, forState: UIControlState.Normal)
+                cell.viewImageConstraint.constant = 0
+            } else {
+                cell.addIDButton.setTitle(cell.changeLocalizeString, forState: UIControlState.Normal)
+                cell.viewImageConstraint.constant = 75
             }
             
             cell.delegate = self
@@ -228,7 +249,7 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
         if indexPath.row == 0 {
             return 150
         } else if indexPath.row == 1 {
-            return 225
+            return 200
         }  else if indexPath.row == 2 {
             return 145
         } else {
@@ -241,6 +262,7 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
         isForProfilePicture = true
         openImageActionSheet()
     }
+    
     
     // MARK: - ViewImageViewControllerDelegate
     func dismissViewImageViewController() {
@@ -308,10 +330,16 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
             profileImageData = UIImageJPEGRepresentation(image, 0.25)
         } else {
             validIDImage = image
-            validIDImageData = UIImageJPEGRepresentation(image, 0.25)
+            if image.imageOrientation == UIImageOrientation.Right {
+                validIDImageData = UIImageJPEGRepresentation(image.normalizedImage(), 0.25)
+            } else {
+                validIDImageData = UIImageJPEGRepresentation(image, 0.25)
+            }
             
+            profileUserDetailsModel.userDocuments = " "
             personalInfoCell = self.tableView.cellForRowAtIndexPath(personalIndexPath!) as? EditProfilePersonalInformationTableViewCell
-            personalInfoCell?.addIDButton.setTitle(personalInfoCell?.viewImageLocalizeString, forState: UIControlState.Normal)
+            personalInfoCell?.addIDButton.setTitle(personalInfoCell?.changeLocalizeString, forState: UIControlState.Normal)
+            personalInfoCell?.viewImageConstraint.constant = 75
         }
     }
     
@@ -394,6 +422,10 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
     
     func addValidIDAction() {
         isForProfilePicture = false
+        openImageActionSheet()
+    }
+    
+    func viewImageAction() {
         if validIDImageData != nil || !profileUserDetailsModel.userDocuments.isEmpty {
             var viewImageModal = ViewImageViewController(nibName: "ViewImageViewController", bundle: nil)
             viewImageModal.delegate = self
@@ -414,8 +446,6 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
                 self.dimView!.alpha = 1
                 }, completion: { finished in
             })
-        } else {
-            openImageActionSheet()
         }
     }
     
@@ -465,7 +495,7 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
     }
     
     func requestNewCodeAction() {
-        changeMobileNumberAction()
+        submitChangeNumberViewController()
     }
     
     // MARK: - VerifyMobileNumberStatusViewControllerDelegate
@@ -478,7 +508,15 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
     }
     
     func requestNewVerificationCodeAction() {
-        changeMobileNumberAction()
+        submitChangeNumberViewController()
+    }
+    
+    func getNewMobileNumber() -> String {
+        var result: String = ""
+        if let val: AnyObject = NSUserDefaults.standardUserDefaults().objectForKey("newMobileNumber") as? String {
+            result = val as! String
+        }
+        return result
     }
     
     
@@ -534,13 +572,17 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
                 if profileImageData != nil || validIDImageData != nil{
                     var params: NSDictionary = [
                         "firstName": firstName as String,
-                        "lastName": lastName as String]
+                        "lastName": lastName as String,
+                        "latitude": latitude,
+                        "longitude": longitude]
                     
                     fireUpdateProfile(APIAtlas.editProfileUrl + "?access_token=" + SessionManager.accessToken(), params: params, withImage: true)
                 } else {
                     var params: NSDictionary = [
                         "firstName": firstName as String,
                         "lastName": lastName as String,
+                        "latitude": latitude,
+                        "longitude": longitude,
                         "profilePhoto": profileUserDetailsModel.profileImageUrl as String,
                         "userDocument": profileUserDetailsModel.profileImageUrl as String]
                     
@@ -587,8 +629,6 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
                 
                 }, success: {
                     (task: NSURLSessionDataTask!, responseObject: AnyObject!) in print(responseObject as! NSDictionary)
-                    
-                    println(responseObject)
                     
                     if responseObject.objectForKey("error") != nil {
                         self.requestRefreshToken("updateProfile", url: url, params: params, withImage: withImage)

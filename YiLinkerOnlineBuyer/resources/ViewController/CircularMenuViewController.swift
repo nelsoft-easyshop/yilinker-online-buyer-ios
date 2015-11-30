@@ -25,6 +25,8 @@ class CircularMenuViewController: UIViewController {
     
     @IBOutlet weak var dimView: UIView!
     
+    var profileImageIndex: Int = 4
+    
     var buttonImages: [String] = []
     var buttonTitles: [String] = []
     var buttonRightText: [String] = []
@@ -34,12 +36,30 @@ class CircularMenuViewController: UIViewController {
         super.viewDidLoad()
         self.initDimView()
         self.view.bringSubviewToFront(self.roundedButton)
+        
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "onNewMessage:",
+            name: appDelegate.messageKey, object: nil)
+    }
+    
+    func onNewMessage(notification : NSNotification){
+        if let info = notification.userInfo as? Dictionary<String, AnyObject> {
+            if let data = info["data"] as? String{
+                if let data2 = data.dataUsingEncoding(NSUTF8StringEncoding){
+                    if let json = NSJSONSerialization.JSONObjectWithData(data2, options: .MutableContainers, error: nil) as? [String:AnyObject] {
+                        var count = SessionManager.getUnReadMessagesCount() + 1
+                        SessionManager.setUnReadMessagesCount(count)
+                    }
+                }
+            }
+        }
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         let screenSize: CGRect = UIScreen.mainScreen().bounds
-        if self.view.subviews.count <= 4 {
+        if self.view.subviews.count <= self.profileImageIndex {
             let xPosition: CGFloat = (self.view.frame.size.width / 2) - 25
             var yPosition: CGFloat = self.roundedButton.frame.origin.y - 70
             for (index, imageName) in enumerate(self.buttonImages) {
@@ -50,7 +70,7 @@ class CircularMenuViewController: UIViewController {
                 button.layer.cornerRadius = button.frame.size.width / CGFloat(2)
                 button.tag = index + 1
                 
-                if index == 6 && SessionManager.isLoggedIn() {
+                if index == self.profileImageIndex && SessionManager.isLoggedIn() {
                     let profileImageView: UIImageView = UIImageView(frame: CGRectMake(0, 0, button.frame.size.width, button.frame.size.height))
                     button.addSubview(profileImageView)
                     button.clipsToBounds = true
@@ -93,7 +113,7 @@ class CircularMenuViewController: UIViewController {
                 }
                 
                 var labelPosition: CGFloat = xPosition - (stringSize.width + 30)
-                if index != 6 {
+                if index != self.profileImageIndex {
                     var width: CGFloat = stringSize.width + 20
                     if IphoneType.isIphone6() {
                         if stringSize.width > 137 {
@@ -126,7 +146,7 @@ class CircularMenuViewController: UIViewController {
                     label.alpha = 0
                     self.view.addSubview(label)
                     
-                    if self.buttonRightText[index] != "" && index != 6 {
+                    if self.buttonRightText[index] != "" && index != self.profileImageIndex {
                         
                         var labelWidth: CGFloat = 150
                         var fontSize: CGFloat = 10.0
@@ -158,7 +178,7 @@ class CircularMenuViewController: UIViewController {
                         label.tag = 100 + index
                         label.alpha = 0
                         
-                        if SessionManager.isLoggedIn() && index == 2 {
+                        if SessionManager.isLoggedIn() && index == 1 {
                             label.backgroundColor = UIColor.redColor()
                             
                             if SessionManager.unreadMessageCount() == "" || SessionManager.unreadMessageCount() == "You have 0 unread messages" {
@@ -306,16 +326,16 @@ class CircularMenuViewController: UIViewController {
                     //adjust the vertical margin of last button if the user is login
                     if SessionManager.isLoggedIn() {
                         if IphoneType.isIphone4() {
-                            if tempView.tag == 7 {
+                            if tempView.tag == self.profileImageIndex + 1{
                                 yPosition = yPosition - 20
                             }
                         } else {
-                            if tempView.tag == 7 {
+                            if tempView.tag == self.profileImageIndex + 1 {
                                 yPosition = yPosition - 15
                             }
                         }
                     }
-             
+                    
                     buttonView.frame = CGRectMake(xPosition, yPosition, 50, 50)
                     yPosition = yPosition - buttonView.frame.size.height - verticalMargin
                 } else if tempView.tag > 99 {
@@ -341,7 +361,7 @@ class CircularMenuViewController: UIViewController {
             for tempView in self.view.subviews {
                 if tempView.tag != 0 && tempView.tag < 99 {
                     let buttonView: UIButton = tempView as! UIButton
-                    if tempView.tag == 7 {
+                    if tempView.tag == 5 {
                         buttonView.transform = CGAffineTransformMakeScale(1.6, 1.6)
                     }
                 }
@@ -402,64 +422,14 @@ class CircularMenuViewController: UIViewController {
             }
         }
         
-        if (!SessionManager.isLoggedIn() && index == 3) || (!SessionManager.isLoggedIn() && index == 4) {
-            if index == 3 {
-                let alertController = UIAlertController(title: CircularMenuString.cantProceedTitle, message: CircularMenuString.cantProceedMessage, preferredStyle: .Alert)
-                
-                let OKAction = UIAlertAction(title: "OK", style: .Default) { (action) in
-                    self.customTabBarController?.isValidToSwitchToMenuTabBarItems = false
-                    self.dissmissViewControllerAnimated()
-                }
-                    
-                alertController.addAction(OKAction)
-                self.presentViewController(alertController, animated: true) {
-                    // ...
-                }
-            } else {
-                let alertController = UIAlertController(title: CircularMenuString.notYetAvailableTitle, message: CircularMenuString.notYetAvailableMessage, preferredStyle: .Alert)
-                
-                let OKAction = UIAlertAction(title: "OK", style: .Default) { (action) in
-                    self.customTabBarController?.isValidToSwitchToMenuTabBarItems = false
-                    self.dissmissViewControllerAnimated()
-                }
-                
-                alertController.addAction(OKAction)
-                self.presentViewController(alertController, animated: true) {
-                    // ...
-                }
-            }
-            
-        } else if index == 3 && SessionManager.isLoggedIn() || index == 0 {
-            var message: String = ""
-            
-            if index == 0 {
-                message = CircularMenuString.helpMessage
-            } else {
-                message = CircularMenuString.notYetAvailableMessage
-            }
-            
-            let alertController = UIAlertController(title: CircularMenuString.notYetAvailableTitle, message: message, preferredStyle: .Alert)
-            
-            let OKAction = UIAlertAction(title: "OK", style: .Default) { (action) in
-                self.customTabBarController?.isValidToSwitchToMenuTabBarItems = false
-                self.dissmissViewControllerAnimated()
-            }
-            
-            alertController.addAction(OKAction)
-            self.presentViewController(alertController, animated: true) {
-                // ...
-            }
-
-        } else {
-            self.customTabBarController?.selectedIndex = 2
-            let navigationController: UINavigationController = self.customTabBarController!.viewControllers![2] as! UINavigationController
-            navigationController.popToRootViewControllerAnimated(false)
-            let hiddenViewController: HiddenViewController = navigationController.viewControllers[0] as! HiddenViewController
-            hiddenViewController.selectViewControllerAtIndex(index)
-            
-            self.customTabBarController?.isValidToSwitchToMenuTabBarItems = false
-            self.dissmissViewControllerAnimated()
-        }
+        self.customTabBarController?.selectedIndex = 2
+        let navigationController: UINavigationController = self.customTabBarController!.viewControllers![2] as! UINavigationController
+        navigationController.popToRootViewControllerAnimated(false)
+        let hiddenViewController: HiddenViewController = navigationController.viewControllers[0] as! HiddenViewController
+        hiddenViewController.selectViewControllerAtIndex(index)
+        
+        self.customTabBarController?.isValidToSwitchToMenuTabBarItems = false
+        self.dissmissViewControllerAnimated()
     }
     
     //logout

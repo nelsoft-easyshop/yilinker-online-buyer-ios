@@ -141,10 +141,10 @@ class TransactionDetailsModel: NSObject {
                    
                     sellerContactNumber.append(transaction["sellerContactNumber"] as! String)
                     
-                    if !(transaction["hasFeedback"] is NSNull) {
-                        hasFeedback.append(transaction["hasFeedback"] as! Bool)
-                    } else {
+                    if transaction["sellerHasFeedback"] is NSNull {
                         hasFeedback.append(false)
+                    } else {
+                        hasFeedback.append(transaction["sellerHasFeedback"] as! Bool)
                     }
                     
                     let products: NSArray = transaction["products"] as! NSArray
@@ -211,6 +211,11 @@ class TransactionDetailsModel: NSObject {
             }
             
             if let value: AnyObject = dictionary["data"] {
+                
+                /*if let cancellable = value["isCancellable"] as? Bool{
+                    isCancellable.append(cancellable)
+                }*/
+                
                 let transactions: NSArray = value["transactionItems"] as! NSArray
                 for transaction in transactions as! [NSDictionary] {
                     
@@ -253,7 +258,9 @@ class TransactionDetailsModel: NSObject {
                                 productImage.append("")
                             }
                             
-                            isCancellable.append(product["isCancellable"] as! Bool)
+                            if let cancellable = product["isCancellable"] as? Bool{
+                                isCancellable.append(cancellable)
+                            }
                             //}
                         }
                     }

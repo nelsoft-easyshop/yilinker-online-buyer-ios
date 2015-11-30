@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Panton.otf">
+            <string>Panton-Regular</string>
+        </mutableArray>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="NoReviewTableViewCell" id="KGk-i7-Jjw" customClass="NoReviewTableViewCell" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No reviews available" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZKj-3v-aFo">
+                        <rect key="frame" x="51" y="11" width="217" height="21"/>
+                        <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="14"/>
+                        <color key="textColor" red="0.098039217289999994" green="0.098039217289999994" blue="0.098039217289999994" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="ZKj-3v-aFo" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="51" id="czm-nb-Qjk"/>
+                    <constraint firstItem="ZKj-3v-aFo" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="11" id="eAP-7i-sTP"/>
+                    <constraint firstAttribute="trailing" secondItem="ZKj-3v-aFo" secondAttribute="trailing" constant="52" id="hc4-BN-xwJ"/>
+                    <constraint firstAttribute="bottom" secondItem="ZKj-3v-aFo" secondAttribute="bottom" constant="11" id="o8h-jw-7ev"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="noReviewsLabel" destination="ZKj-3v-aFo" id="dn9-Td-bqv"/>
+            </connections>
+        </tableViewCell>
+    </objects>
+</document>

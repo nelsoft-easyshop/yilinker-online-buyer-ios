@@ -52,7 +52,7 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
     var table: [TransactionDetailsModel] = []
     var tableSectionContents: TransactionDetailsProductsModel!
     var transactionDetailsModel: TransactionDetailsModel!
-    
+    var sellerModel: SellerModel!
     var delegate: TransactionSectionFooterViewDelegate?
     
     //Transaction Details
@@ -92,6 +92,12 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
     var emptyView : EmptyView?
     var conversations = [W_Conversation]()
     var contacts = [W_Contact()]
+    var contactsNotFollowed = [W_Contact()]
+    var arrayContacts: [String] = []
+    
+    //Strings
+    var sellerId: String = ""
+    var transactionType: String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -136,8 +142,13 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
             return 0
         }
     }
-    
+
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 84
+    }
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        
+        /*
         let cell = UITableViewCell(style: .Default, reuseIdentifier: "identifier")
         
         cell.selectionStyle = .None
@@ -149,8 +160,15 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
         
         cell.textLabel?.font = UIFont.systemFontOfSize(15.0)
         cell.textLabel?.textColor = .darkGrayColor()
+        */
+        let transactionDetailsTableViewCell: TransactionDetailsTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("TransactionDetailsTableViewCell") as! TransactionDetailsTableViewCell
+        transactionDetailsTableViewCell.selectionStyle = UITableViewCellSelectionStyle.None
+        if(self.transactionDetailsModel != nil){
+            transactionDetailsTableViewCell.productNameLabel.text = self.table[indexPath.section].transactions[indexPath.row].productName
+            transactionDetailsTableViewCell.productStatusLabel.text = self.orderStatus
+        }
         
-        return cell
+        return transactionDetailsTableViewCell
     }
     
     // MARK: - Table View Delegate
@@ -162,7 +180,7 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
         productDetails.unitPrice = self.table[indexPath.section].transactions[indexPath.row].unitPrice
         productDetails.totalPrice = self.table[indexPath.section].transactions[indexPath.row].totalPrice
         productDetails.productName = self.table[indexPath.section].transactions[indexPath.row].productName
-        productDetails.transactionId = "TID-\(self.transactionId)"
+        productDetails.transactionId = self.transactionId
         productDetails.isCancellable = self.table[indexPath.section].transactions[indexPath.row].isCancellable
         self.navigationController?.pushViewController(productDetails, animated: true)
     }
@@ -215,7 +233,7 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
     }
     
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 25
+        return 0
     }
     
     // MARK: - Init Views
@@ -257,7 +275,7 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
             transactionDetailsView.shippingFeeTitleLabel.text = self.shippingFeeTitle
             transactionDetailsView.totalCostTitleLabel.text = self.totalCostTitle
             
-            transactionDetailsView.statusLabel.text = self.orderStatus
+            transactionDetailsView.statusLabel.text = self.transactionType
             transactionDetailsView.paymentTypeLabel.text = self.paymentType
             transactionDetailsView.dateCreatedLabel.text = self.dateCreated
             transactionDetailsView.quantityLabel.text = self.totalQuantity
@@ -338,6 +356,11 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
     // MARK: - Methods
     
     func loadViewsWithDetails() {
+        
+        //CELL
+        let transactionNib: UINib = UINib(nibName: "TransactionDetailsTableViewCell", bundle: nil)
+        self.tableView.registerNib(transactionNib, forCellReuseIdentifier: "TransactionDetailsTableViewCell")
+        
         // HEADERS
         self.getHeaderView().addSubview(self.getTransactionIdView())
         self.getHeaderView().addSubview(self.getTransactionDetailsView())
@@ -401,16 +424,23 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
     }
     
     func messageSeller(sellerId: Int) {
+        self.canMessage = false
+        if contains(self.arrayContacts, "\(sellerId)") {
+            for var i = 0; i < self.contacts.count; i++ {
+                if "\(sellerId)" == contacts[i].userId {
+                    self.selectedContact = contacts[i]
+                    self.canMessage = true
+                    self.showMessaging()
+                }
+            }
+        } else {
+            self.fireSeller("\(sellerId)")
+        }
+    }
+    
+    func showMessaging(){
         let storyBoard: UIStoryboard = UIStoryboard(name: "HomeStoryBoard", bundle: nil)
         let messagingViewController: MessageThreadVC = (storyBoard.instantiateViewControllerWithIdentifier("MessageThreadVC") as? MessageThreadVC)!
-        for var i = 0; i < self.contacts.count; i++ {
-            if "\(sellerId)" == contacts[i].userId {
-                self.selectedContact = contacts[i]
-                self.canMessage = true
-            } else {
-                //self.canMessage = false
-            }
-        }
         
         var isOnline = "-1"
         if (SessionManager.isLoggedIn()){
@@ -418,6 +448,7 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
         } else {
             isOnline = "0"
         }
+        
         messagingViewController.sender = W_Contact(fullName: SessionManager.userFullName() , userRegistrationIds: "", userIdleRegistrationIds: "", userId: SessionManager.accessToken(), profileImageUrl: SessionManager.profileImageStringUrl(), isOnline: isOnline)
         messagingViewController.recipient = selectedContact
         
@@ -426,7 +457,64 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
         } else {
             self.showAlert(title: self.error, message: self.errorMessage)
         }
+    }
+    
+    //MARK: Get seller/store info
+    func fireSeller(sellerId: String) {
         
+        self.showHUD()
+        
+        self.sellerId = sellerId
+        
+        let manager = APIManager.sharedInstance
+        let parameters: NSDictionary?
+        
+        var url: String = ""
+        
+        if SessionManager.isLoggedIn() {
+            url = APIAtlas.getSellerInfoLoggedIn
+            parameters = ["userId" : sellerId, "access_token" : SessionManager.accessToken()] as NSDictionary
+        } else {
+            url = APIAtlas.getSellerInfo
+            parameters = ["userId" : sellerId] as NSDictionary
+        }
+        
+        manager.POST(url, parameters: parameters, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            
+            if responseObject["isSuccessful"] as! Bool {
+                self.sellerModel = SellerModel.parseSellerDataFromDictionary(responseObject as! NSDictionary)
+                self.contactsNotFollowed.append(W_Contact(fullName: self.sellerModel.store_name, userRegistrationIds: "", userIdleRegistrationIds: "", userId: sellerId, profileImageUrl: "\(self.sellerModel.avatar)", isOnline: "1"))
+                
+                for var i = 0; i < self.contactsNotFollowed.count; i++ {
+                    if "\(sellerId)" == self.contactsNotFollowed[i].userId {
+                        self.selectedContact = self.contactsNotFollowed[i]
+                        self.canMessage = true
+                        self.showMessaging()
+                    }
+                }
+                
+            } else {
+                self.showAlert(title: "Error", message: responseObject["message"] as! String)
+            }
+            self.hud?.hide(true)
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                
+                if error.userInfo != nil {
+                    let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: Constants.Localized.someThingWentWrong)
+                    self.hud?.hide(true)
+                } else if task.statusCode == 401 {
+                    self.fireRefreshToken(TransactionDetailsType.Seller)
+                } else {
+                    self.showAlert(title: Constants.Localized.someThingWentWrong, message: nil)
+                    self.hud?.hide(true)
+                }
+        })
     }
     
     func deliveryLogsAction() {
@@ -486,9 +574,16 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
             self.tableView.reloadData()
             self.hud?.hide(true)
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
-                self.hud?.hide(true)
-                println(error.userInfo)
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                 
+                if task.statusCode == 401 {
+                    if (SessionManager.isLoggedIn()){
+                        //self.fireRefreshToken()
+                    }
+                    self.fireRefreshToken(TransactionDetailsType.Details)
+                } else {
+                    self.showAlert(title: self.error, message: self.somethingWentWrong)
+                }
         })
     }
     
@@ -513,7 +608,13 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
                 
                 manager.POST(url, parameters: parameters, success: {
                     (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+                    println(responseObject)
                     self.contacts = W_Contact.parseContacts(responseObject as! NSDictionary)
+                    
+                    for var i = 0; i < self.contacts.count; i++ {
+                        self.arrayContacts.append(self.contacts[i].userId)
+                    }
+                    
                     self.hud?.hide(true)
                     }, failure: {
                         (task: NSURLSessionDataTask!, error: NSError!) in
@@ -523,7 +624,7 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
                             if (SessionManager.isLoggedIn()){
                                 //self.fireRefreshToken()
                             }
-                            self.fireRefreshToken()
+                            self.fireRefreshToken(TransactionDetailsType.Contacts)
                         } else {
                             self.showAlert(title: self.error, message: self.somethingWentWrong)
                         }
@@ -534,7 +635,7 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
             }
     }
     
-    func fireRefreshToken() {
+    func fireRefreshToken(type: TransactionDetailsType) {
         
         let manager: APIManager = APIManager.sharedInstance
         let parameters: NSDictionary = ["client_id": Constants.Credentials.clientID, "client_secret": Constants.Credentials.clientSecret, "grant_type": Constants.Credentials.grantRefreshToken, "refresh_token":  SessionManager.refreshToken()]
@@ -542,6 +643,14 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
         manager.POST(APIAtlas.refreshTokenUrl, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+            
+            if type == TransactionDetailsType.Details {
+                self.fireTransactionDetails(self.transactionId)
+            } else if type == TransactionDetailsType.Seller {
+                self.fireSeller(self.sellerId)
+            } else {
+                self.getContactsFromEndpoint("1", limit: "30", keyword: "")
+            }
             
             self.hud?.hide(true)
             }, failure: {

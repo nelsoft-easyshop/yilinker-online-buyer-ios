@@ -41,20 +41,24 @@ class VerifyMobileNumberViewController: UIViewController {
     var timer = NSTimer()
     
     var hud: MBProgressHUD?
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        initializeViews()
-        initializeLocalizeStrings()
-        fireGetCode()
     }
-
+    
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
+        
+        initializeViews()
+        initializeLocalizeStrings()
+        getCode()
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+    }
+    
+    override func viewDidDisappear(animated: Bool) {
+        timer.invalidate()
     }
     
     func startTimer() {
@@ -62,7 +66,7 @@ class VerifyMobileNumberViewController: UIViewController {
         timer.invalidate()
         timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: Selector("subtractTime"), userInfo: nil, repeats: true)
     }
-
+    
     func initializeViews() {
         mainView.layer.cornerRadius = 8
         verifyButton.layer.cornerRadius = 5
@@ -134,7 +138,7 @@ class VerifyMobileNumberViewController: UIViewController {
                 "access_token": SessionManager.accessToken(),
                 "code": codeTextField.text]))
         } else if sender as! UIButton == requestButton {
-            self.fireGetCode()
+            self.getCode()
         }
     }
     
@@ -156,6 +160,35 @@ class VerifyMobileNumberViewController: UIViewController {
         self.hud?.hide(true)
     }
     
+    func getCode() {
+        if !SessionManager.isMobileVerified(){
+            if SessionManager.mobileNumber().isEmpty {
+                fireUpdateProfile(APIAtlas.updateMobileNumber, params: NSDictionary(dictionary: ["access_token" : SessionManager.accessToken(),
+                    "newContactNumber": getNewMobileNumber()]))
+            } else {
+                if SessionManager.mobileNumber() == getNewMobileNumber() {
+                    fireGetCode()
+                } else {
+                    fireUpdateProfile(APIAtlas.updateMobileNumber, params: NSDictionary(dictionary: ["access_token" : SessionManager.accessToken(),
+                        "newContactNumber": getNewMobileNumber(),
+                        "oldContactNumber": SessionManager.mobileNumber()]))
+                }
+            }
+        } else {
+            fireUpdateProfile(APIAtlas.updateMobileNumber, params: NSDictionary(dictionary: ["access_token" : SessionManager.accessToken(),
+                "oldContactNumber": SessionManager.mobileNumber(),
+                "newContactNumber": getNewMobileNumber()]))
+        }
+    }
+    
+    func getNewMobileNumber() -> String {
+        var result: String = ""
+        if let val: AnyObject = NSUserDefaults.standardUserDefaults().objectForKey("newMobileNumber") as? String {
+            result = val as! String
+        }
+        return result
+    }
+    
     // MARK: - GET CODE
     
     func fireGetCode() {
@@ -167,21 +200,67 @@ class VerifyMobileNumberViewController: UIViewController {
         manager.POST(APIAtlas.verificationGetCodeUrl, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             println(responseObject)
+            self.dismissLoader()
             if responseObject["isSuccessful"] as! Bool {
                 self.startTimer()
-                self.dismissLoader()
             } else {
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: responseObject["message"] as! String)
-                self.dismissLoader()
+               self.showAlertError(responseObject["message"] as! String)
             }
             
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
+                self.delegate?.closeVerifyMobileNumberViewController()
                 self.hud?.hide(true)
         })
     }
-
+    
+    func fireUpdateProfile(url: String, params: NSDictionary!) {
+        showLoader()
+        
+        manager.POST(url, parameters: params, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in print(responseObject as! NSDictionary)
+            
+            self.dismissLoader()
+            if responseObject["isSuccessful"] as! Bool {
+                self.startTimer()
+            } else {
+                self.showAlertError(responseObject["message"] as! String)
+            }
+            
+            println(responseObject)
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                
+                println(error)
+                if Reachability.isConnectedToNetwork() {
+                    var info = error.userInfo!
+                    
+                    if let data = info["data"] as? NSDictionary {
+                        if let errors = data["errors"] as? NSArray {
+                            if errors.count == 0 {
+                                if let message = info["message"] as? NSString {
+                                    self.showAlertError(message as String)
+                                }
+                                
+                            } else {
+                                self.showAlertError(errors[0] as! String)
+                            }
+                        }
+                    } else {
+                        UIAlertController.displaySomethingWentWrongError(self)
+                    }
+                    
+                } else {
+                    UIAlertController.displayNoInternetConnectionError(self)
+                }
+                
+                self.dismissLoader()
+                
+        })
+        
+    }
+    
     
     func fireVerify(url: String, params: NSDictionary!) {
         showLoader()
@@ -192,6 +271,8 @@ class VerifyMobileNumberViewController: UIViewController {
             } else {
                 if responseObject["isSuccessful"] as! Bool {
                     self.dismissViewControllerAnimated(true, completion: nil)
+                    SessionManager.setIsMobileVerified(true)
+                    SessionManager.setMobileNumber(self.getNewMobileNumber())
                     self.delegate?.verifyMobileNumberAction(true)
                     self.dismissLoader()
                 } else {
@@ -214,7 +295,7 @@ class VerifyMobileNumberViewController: UIViewController {
                     }
                     self.dismissLoader()
                 } else {
-                    UIAlertController.displaySomethingWentWrongError(self)
+                    UIAlertController.displayNoInternetConnectionError(self)
                 }
                 
                 println(error)
@@ -250,5 +331,14 @@ class VerifyMobileNumberViewController: UIViewController {
                 
         })
     }
-
+    
+    
+    func showAlertError(error: String) {
+        let alert = UIAlertController(title: Constants.Localized.error, message: error, preferredStyle: UIAlertControllerStyle.Alert)
+        let OKAction = UIAlertAction(title: Constants.Localized.ok, style: .Default) { (action) in self.dismissViewControllerAnimated(true, completion: nil)
+            self.delegate?.closeVerifyMobileNumberViewController()}
+        alert.addAction(OKAction)
+        self.presentViewController(alert, animated: true, completion: nil)
+    }
+    
 }
