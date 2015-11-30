@@ -9,7 +9,7 @@
 import UIKit
 
 protocol FlashSaleCollectionViewCellDelegate {
-    func flashSaleCollectionViewCell(didTapFlashSaleItemIndex index: Int)
+    func flashSaleCollectionViewCell(didTapProductImageView productImageView: ProductImageView)
 }
 
 class FlashSaleCollectionViewCell: UICollectionViewCell {
@@ -25,13 +25,13 @@ class FlashSaleCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var secondSecondDigit: UILabel!
     @IBOutlet weak var secondFirstDigit: UILabel!
     
-    @IBOutlet weak var productOneImageView: UIImageView!
-    @IBOutlet weak var productTwoImageView: UIImageView!
-    @IBOutlet weak var productThreeImageView: UIImageView!
+    @IBOutlet weak var productOneImageView: ProductImageView!
+    @IBOutlet weak var productTwoImageView: ProductImageView!
+    @IBOutlet weak var productThreeImageView: ProductImageView!
     
-    @IBOutlet weak var productOneDiscount: UILabel!
-    @IBOutlet weak var productTwoDiscount: UILabel!
-    @IBOutlet weak var productThreeDiscount: UILabel!
+    @IBOutlet weak var productOneDiscountLabel: UILabel!
+    @IBOutlet weak var productTwoDiscountLabel: UILabel!
+    @IBOutlet weak var productThreeDiscountLabel: UILabel!
     
     var delegate: FlashSaleCollectionViewCellDelegate?
     
@@ -82,8 +82,8 @@ class FlashSaleCollectionViewCell: UICollectionViewCell {
     }
     
     func didTapItem(tap: UITapGestureRecognizer) {
-        let itemImageView: UIImageView = tap.view as! UIImageView
-        self.delegate?.flashSaleCollectionViewCell(didTapFlashSaleItemIndex: itemImageView.tag)
+        let itemImageView: ProductImageView = tap.view as! ProductImageView
+        self.delegate?.flashSaleCollectionViewCell(didTapProductImageView: itemImageView)
     }
     
 }

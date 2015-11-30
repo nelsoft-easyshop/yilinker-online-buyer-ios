@@ -67,7 +67,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     let layoutNineNibName = "LayoutNineCollectionViewCell"
     let twoColumnGridCell = "TwoColumnGridCollectionViewCell"
     
-    var timeRemaining: Int = 20000
+    var remainingTime: Int = 20000
     
     var firstHourString: String = ""
     var secondHourString: String = ""
@@ -128,20 +128,24 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "onNewMessage:",
             name: appDelegate.messageKey, object: nil)
         
-        //var timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "updateTime", userInfo: nil, repeats: true)
         //decoration view
         self.registerDecorationView(self.sectionBackgroundNibName)
         
         let dictionary: NSDictionary = ParseLocalJSON.fileName("dummyHomePage") as NSDictionary
         self.homePageModel = HomePageModel.parseDataFromDictionary(dictionary)
         
-        for model in self.homePageModel.data {
+        for (index, model) in enumerate(self.homePageModel.data) {
             if model.isKindOfClass(LayoutOneModel) {
                 self.layouts.append("1")
             } else if model.isKindOfClass(LayoutTwoModel) {
                 self.layouts.append("2")
             } else if model.isKindOfClass(LayoutThreeModel) {
                 self.layouts.append("3")
+            } else if model.isKindOfClass(LayoutFourModel) {
+                self.layouts.append("4")
+                let layoutFourModel: LayoutFourModel = self.homePageModel.data[index] as! LayoutFourModel
+                self.remainingTime = layoutFourModel.remainingTime.toInt()!
+                var timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "updateTime", userInfo: nil, repeats: true)
             }
         }
         
@@ -584,9 +588,9 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         let parentIndexPath: NSIndexPath = self.collectionView.indexPathForCell(halfPagerCollectionViewCell)!
         let layoutThreeModel: LayoutThreeModel = self.homePageModel.data[parentIndexPath.section] as! LayoutThreeModel
         
-        var numberOfPages: CGFloat = CGFloat(layoutThreeModel.data.count / 2)
+        var numberOfPages: Float = Float(layoutThreeModel.data.count) /  2.0
         
-        if fmod(numberOfPages, 1.0) == 0.0 {
+        if fmod(numberOfPages, 1.0) != 0.0 {
             numberOfPages = numberOfPages + 1
         }
         
@@ -594,10 +598,13 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     }
     
     func halfPagerCollectionViewCell(halfPagerCollectionViewCell: HalfPagerCollectionViewCell, cellForRowAtIndexPath indexPath: NSIndexPath) -> FullImageCollectionViewCell {
-        
+        let parentIndexPath: NSIndexPath = self.collectionView.indexPathForCell(halfPagerCollectionViewCell)!
+        let layoutThreeModel: LayoutThreeModel = self.homePageModel.data[parentIndexPath.section] as! LayoutThreeModel
         
         let fullImageCell: FullImageCollectionViewCell = halfPagerCollectionViewCell.collectionView.dequeueReusableCellWithReuseIdentifier(halfPagerCollectionViewCell.fullImageCellNib, forIndexPath: indexPath) as! FullImageCollectionViewCell
-        fullImageCell.itemProductImageView.sd_setImageWithURL(NSURL(string: self.images[indexPath.row]), placeholderImage: UIImage(named: "dummy-placeholder"))
+        fullImageCell.itemProductImageView.sd_setImageWithURL(NSURL(string: layoutThreeModel.data[indexPath.row].image), placeholderImage: UIImage(named: "dummy-placeholder"))
+        fullImageCell.target = layoutThreeModel.data[indexPath.row].target.targetUrl
+        fullImageCell.targetType = layoutThreeModel.data[indexPath.row].target.targetType
         fullImageCell.layer.cornerRadius = 5
         fullImageCell.clipsToBounds = true
         
@@ -634,8 +641,9 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     }
     
     //MARK: - Flash Collection View Delegate
-    func flashSaleCollectionViewCell(didTapFlashSaleItemIndex index: Int) {
-        println(index)
+    func flashSaleCollectionViewCell(didTapProductImageView productImageView: ProductImageView) {
+        println(productImageView.target)
+        println(productImageView.targetType)
     }
     
     //MARK: - Seconds To Hours Minutes Seconds
@@ -645,8 +653,8 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     
     //MARK: - Update Time
     func updateTime() {
-        self.timeRemaining--
-        let (hour, min, seconds): (Int, Int, Int) = self.secondsToHoursMinutesSeconds(self.timeRemaining)
+        self.remainingTime--
+        let (hour, min, seconds): (Int, Int, Int) = self.secondsToHoursMinutesSeconds(self.remainingTime)
         
         var sampleDate: String = "\(hour) Hours, \(min) Minutes, \(seconds) Seconds"
         
@@ -666,7 +674,6 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             secondMinString = "\(min)".stringCharacterAtIndex(0)
         }
         
-        println(seconds)
         if seconds < 10 {
             firstSecondsString = "\(seconds)"
             secondSecondsString = "0"
@@ -682,6 +689,8 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     
     //MARK: - Flash Sale Collection View Cell With IndexPath
     func flashSaleCollectionViewCellWithIndexPath(indexPath: NSIndexPath) -> FlashSaleCollectionViewCell {
+        let layoutFourModel: LayoutFourModel = self.homePageModel.data[indexPath.section] as! LayoutFourModel
+        
         let flashSaleCell: FlashSaleCollectionViewCell = self.collectionView.dequeueReusableCellWithReuseIdentifier(self.flashSaleNibName, forIndexPath: indexPath) as! FlashSaleCollectionViewCell
         flashSaleCell.delegate = self
         
@@ -694,9 +703,22 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         flashSaleCell.secondFirstDigit.text = self.firstSecondsString
         flashSaleCell.secondSecondDigit.text = self.secondSecondsString
         
-        flashSaleCell.productOneImageView.sd_setImageWithURL(NSURL(string: self.images[0]), placeholderImage: UIImage(named: "dummy-placeholder"))
-        flashSaleCell.productTwoImageView.sd_setImageWithURL(NSURL(string: self.images[1]), placeholderImage: UIImage(named: "dummy-placeholder"))
-        flashSaleCell.productThreeImageView.sd_setImageWithURL(NSURL(string: self.images[2]), placeholderImage: UIImage(named: "dummy-placeholder"))
+        flashSaleCell.productOneImageView.sd_setImageWithURL(NSURL(string: layoutFourModel.data[0].image), placeholderImage: UIImage(named: "dummy-placeholder"))
+        flashSaleCell.productTwoImageView.sd_setImageWithURL(NSURL(string: layoutFourModel.data[1].image), placeholderImage: UIImage(named: "dummy-placeholder"))
+        flashSaleCell.productThreeImageView.sd_setImageWithURL(NSURL(string: layoutFourModel.data[2].image), placeholderImage: UIImage(named: "dummy-placeholder"))
+        
+        flashSaleCell.productOneImageView.target = layoutFourModel.data[0].target.targetUrl
+        flashSaleCell.productOneImageView.targetType = layoutFourModel.data[0].target.targetType
+        
+        flashSaleCell.productTwoImageView.target = layoutFourModel.data[1].target.targetUrl
+        flashSaleCell.productTwoImageView.targetType = layoutFourModel.data[1].target.targetType
+        
+        flashSaleCell.productThreeImageView.target = layoutFourModel.data[2].target.targetUrl
+        flashSaleCell.productThreeImageView.targetType = layoutFourModel.data[2].target.targetType
+        
+        flashSaleCell.productOneDiscountLabel.text = "\(layoutFourModel.data[0].discountPercentage)%"
+        flashSaleCell.productTwoDiscountLabel.text = "\(layoutFourModel.data[1].discountPercentage)%"
+        flashSaleCell.productThreeDiscountLabel.text = "\(layoutFourModel.data[2].discountPercentage)%"
         
         return flashSaleCell
     }

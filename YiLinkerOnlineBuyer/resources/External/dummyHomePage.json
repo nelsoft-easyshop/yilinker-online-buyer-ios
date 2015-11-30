@@ -1,318 +1,748 @@
 {
-  "message": "",
-  "isSuccessful": true,
-  "data": [
-    {
-      "layoutId": 1,
-      "sectionTitle": "Large Slider Banner",
-      "isViewMoreAvailable": false,
-      "viewMoreTarget": {},
-      "data": [
-        {
-          "image": "http://e27.co/wp-content/uploads/2013/12/citibank-omg-sale.png",
-          "target": {
-            "targetUrl": "target 1",
-            "targetType": "webView",
-            "isAuthenticated": false
-          }
-        },
-        {
-          "image": "https://blog.bankbazaar.com/wp-content/uploads/2014/10/Online-Shopping.jpg",
-          "target": {
-            "targetUrl": "target 2",
-            "targetType": "webView2",
-            "isAuthenticated": false
-          }
-        },
-        {
-          "image": "https://media.licdn.com/media/p/8/005/06a/353/295cf90.png",
-          "target": {
-            "targetUrl": "https://www.yilinker.com/item/asus-zenfone-selfie-32gb-zd551kl-blue-1",
-            "targetType": "webView",
-            "isAuthenticated": false
-          }
-        }
-      ]
-    },
-    {
-      "layoutId": 2,
-      "sectionTitle": "Small Slider Banner",
-      "isViewMoreAvailable": false,
-      "viewMoreTarget": {},
-      "data": [
-               {
-               "image": "http://e27.co/wp-content/uploads/2013/12/citibank-omg-sale.png",
-               "target": {
-               "targetUrl": "target 1",
-               "targetType": "webView",
-               "isAuthenticated": false
-               }
-               },
-               {
-               "image": "https://blog.bankbazaar.com/wp-content/uploads/2014/10/Online-Shopping.jpg",
-               "target": {
-               "targetUrl": "target 2",
-               "targetType": "webView2",
-               "isAuthenticated": false
-               }
-               },
-               {
-               "image": "https://media.licdn.com/media/p/8/005/06a/353/295cf90.png",
-               "target": {
-               "targetUrl": "https://www.yilinker.com/item/asus-zenfone-selfie-32gb-zd551kl-blue-1",
-               "targetType": "webView",
-               "isAuthenticated": false
-               }
-               }
-      ]
-    },
-    {
-      "layoutId": 3,
-      "sectionTitle": "Half-view Slider Banner",
-      "isViewMoreAvailable": false,
-      "viewMoreTarget": {},
-      "data": [
-               {
-               "image": "http://e27.co/wp-content/uploads/2013/12/citibank-omg-sale.png",
-               "target": {
-               "targetUrl": "target 1",
-               "targetType": "webView",
-               "isAuthenticated": false
-               }
-               },
-               {
-               "image": "https://blog.bankbazaar.com/wp-content/uploads/2014/10/Online-Shopping.jpg",
-               "target": {
-               "targetUrl": "target 2",
-               "targetType": "webView2",
-               "isAuthenticated": false
-               }
-               },
-               {
-               "image": "https://media.licdn.com/media/p/8/005/06a/353/295cf90.png",
-               "target": {
-               "targetUrl": "https://www.yilinker.com/item/asus-zenfone-selfie-32gb-zd551kl-blue-1",
-               "targetType": "webView",
-               "isAuthenticated": false
-               }
-               }
-      ]
-    },
-    {
-      "layoutId": 4,
-      "sectionTitle": "Sale Section",
-      "isViewMoreAvailable": false,
-      "viewMoreTarget": {},
-      "data": [
-        {
-          "remainingTime": "00:00:00",
-          "data": [
-            {
-              "product": {
-                "name": "IPhone 5S",
-                "originalPrice": "1000.00",
-                "discountedPrice": "800.00",
-                "discountPercentage": "20",
-                "currency": "PHP",
-                "image": "www.yilinker.com/assets/images/apple.jpg"
-              },
-              "target": {
-                "targetUrl": "http://www.jsoneditoronline.org/",
-                "targetType": "webView",
-                "isAuthenticated": false
-              }
-            },
-            {
-              "product": {
-                "name": "Samsung G4",
-                "originalPrice": "1000.00",
-                "discountedPrice": "800.00",
-                "discountPercentage": "20",
-                "currency": "PHP",
-                "image": "www.yilinker.com/assets/images/apple.jpg"
-              },
-              "target": {
-                "targetUrl": "http://www.jsoneditoronline.org/",
-                "targetType": "webView",
-                "isAuthenticated": false
-              }
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "layoutId": 5,
-      "sectionTitle": "Hot Items",
-      "isViewMoreAvailable": true,
-      "viewMoreTarget": {
-        "targetUrl": "http://www.jsoneditoronline.org/",
-        "targetType": "webView",
-        "isAuthenticated": false
-      },
-      "data": [
-        {
-          "data": [
-            {
-              "product": {
-                "name": "IPhone 5S",
-                "originalPrice": "1000.00",
-                "discountedPrice": "800.00",
-                "discountPercentage": "20",
-                "currency": "PHP",
-                "image": "www.yilinker.com/assets/images/apple.jpg"
-              },
-              "target": {
-                "targetUrl": "http://www.jsoneditoronline.org/",
-                "targetType": "webView",
-                "isAuthenticated": false
-              }
-            },
-            {
-              "product": {
-                "name": "Samsung G4",
-                "originalPrice": "1000.00",
-                "discountedPrice": "800.00",
-                "discountPercentage": "20",
-                "currency": "PHP",
-                "image": "www.yilinker.com/assets/images/apple.jpg"
-              },
-              "target": {
-                "targetUrl": "http://www.jsoneditoronline.org/",
-                "targetType": "webView",
-                "isAuthenticated": false
-              }
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "layoutId": 6,
-      "sectionTitle": "Banner Ads",
-      "isViewMoreAvailable": false,
-      "viewMoreTarget": {},
-      "data": [
-        {
-          "data": [
-            {
-              "image": "www.yilinker.com/assets/images/apple.jpg",
-              "target": {
-                "targetUrl": "http://www.jsoneditoronline.org/",
-                "targetType": "webView",
-                "isAuthenticated": false
-              }
-            },
-            {
-              "image": "www.yilinker.com/assets/images/apple.jpg",
-              "target": {
-                "targetUrl": "http://www.jsoneditoronline.org/",
-                "targetType": "webView",
-                "isAuthenticated": false
-              }
-            },
-            {
-              "image": "www.yilinker.com/assets/images/apple.jpg",
-              "target": {
-                "targetUrl": "http://www.jsoneditoronline.org/",
-                "targetType": "webView",
-                "isAuthenticated": false
-              }
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "layoutId": 7,
-      "sectionTitle": "New Stores",
-      "isViewMoreAvailable": true,
-      "viewMoreTarget": {
-        "targetUrl": "http://www.jsoneditoronline.org/",
-        "targetType": "webView",
-        "isAuthenticated": false
-      },
-      "data": [
-        {
-          "store": {
-            "name": "YiStore",
-            "specialty": "Electronics and Gadgets",
-            "image": "www.yilinker.com/assets/images/apple.jpg",
-            "topProduct": [
-              {
-                "product": {
-                  "name": "Samsung G4",
-                  "originalPrice": "1000.00",
-                  "discountedPrice": "800.00",
-                  "discountPercentage": "20",
-                  "currency": "PHP",
-                  "image": "www.yilinker.com/assets/images/apple.jpg"
-                },
-                "target": {
-                  "targetUrl": "http://www.jsoneditoronline.org/",
-                  "targetType": "webView",
-                  "isAuthenticated": false
-                }
-              }
-            ]
-          },
-          "target": {
-            "targetUrl": "http://www.jsoneditoronline.org/",
-            "targetType": "webView",
-            "isAuthenticated": false
-          }
-        }
-      ]
-    },
-    {
-      "layoutId": 8,
-      "sectionTitle": "Categories",
-      "isViewMoreAvailable": true,
-      "viewMoreTarget": {
-        "targetUrl": "http://www.jsoneditoronline.org/",
-        "targetType": "webView",
-        "isAuthenticated": false
-      },
-      "data": [
-        {
-          "category": {
-            "name": "Electronics and Gadgets",
-            "image": ""
-          },
-          "target": {
-            "targetUrl": "http://www.jsoneditoronline.org/",
-            "targetType": "webView",
-            "isAuthenticated": false
-          }
-        }
-      ]
-    },
-    {
-      "layoutId": 9,
-      "sectionTitle": "Items you may like",
-      "isViewMoreAvailable": true,
-      "viewMoreTarget": {
-        "targetUrl": "http://www.jsoneditoronline.org/",
-        "targetType": "webView",
-        "isAuthenticated": false
-      },
-      "data": [
-        {
-          "product": {
-            "name": "Samsung G4",
-            "originalPrice": "1000.00",
-            "discountedPrice": "800.00",
-            "discountPercentage": "20",
-            "currency": "PHP",
-            "image": "www.yilinker.com/assets/images/apple.jpg"
-          },
-          "target": {
-            "targetUrl": "http://www.jsoneditoronline.org/",
-            "targetType": "webView",
-            "isAuthenticated": false
-          }
-        }
-      ]
-    }
-  ]
+    "message": "",
+    "isSuccessful": true,
+    "data": [
+             {
+             "layoutId": 1,
+             "sectionTitle": "Large Slider Banner",
+             "isViewMoreAvailable": false,
+             "viewMoreTarget": {},
+             "data": [
+                      {
+                      "image": "https://blog.sent.ly/wp-content/uploads/2015/02/zalora-retail.jpg",
+                      "target": {
+                      "targetUrl": "http://www.jsoneditoronline.org/",
+                      "targetType": "webView",
+                      "isAuthenticated": false
+                      }
+                      },
+                      {
+                      "image": "http://megastyle.ph/wp-content/uploads/2013/11/20131104_786x300_THE_ChristmasBoutique_MenWomen.jpg",
+                      "target": {
+                      "targetUrl": "http://www.jsoneditoronline.org/",
+                      "targetType": "webView",
+                      "isAuthenticated": false
+                      }
+                      },
+                      {
+                      "image": "https://blog.sent.ly/wp-content/uploads/2015/02/zalora-retail.jpg",
+                      "target": {
+                      "targetUrl": "http://www.jsoneditoronline.org/",
+                      "targetType": "webView",
+                      "isAuthenticated": false
+                      }
+                      }
+                      ]
+             },
+             {
+             "layoutId": 2,
+             "sectionTitle": "Small Slider Banner",
+             "isViewMoreAvailable": false,
+             "viewMoreTarget": {},
+             "data": [
+                      {
+                      "image": "http://cdn2.milled.com/contents/2014-11-24/FO8AT30_0qJGiOKd/jFrAOOOE5J3N.jpg",
+                      "target": {
+                      "targetUrl": "http://www.jsoneditoronline.org/",
+                      "targetType": "webView",
+                      "isAuthenticated": true
+                      }
+                      }
+                      ]
+             },
+             {
+             "layoutId": 3,
+             "sectionTitle": "Half-view Slider Banner",
+             "isViewMoreAvailable": false,
+             "viewMoreTarget": {},
+             "data": [
+                      {
+                      "image": "http://iamflip.net/wp-content/uploads/2015/08/iamflip_onlinefashionshopping_zaloraph.jpg",
+                      "target": {
+                      "targetUrl": "http://www.jsoneditoronline.org/",
+                      "targetType": "webView",
+                      "isAuthenticated": false
+                      }
+                      },
+                      {
+                      "image": "https://i.ytimg.com/vi/xSomYiDe64k/maxresdefault.jpg",
+                      "target": {
+                      "targetUrl": "http://www.jsoneditoronline.org/",
+                      "targetType": "webView",
+                      "isAuthenticated": false
+                      }
+                      },
+                      {
+                      "image": "https://i.ytimg.com/vi/xSomYiDe64k/maxresdefault.jpg",
+                      "target": {
+                      "targetUrl": "http://www.jsoneditoronline.org/",
+                      "targetType": "webView",
+                      "isAuthenticated": false
+                      }
+                      },
+                      {
+                      "image": "https://i.ytimg.com/vi/xSomYiDe64k/maxresdefault.jpg",
+                      "target": {
+                      "targetUrl": "http://www.jsoneditoronline.org/",
+                      "targetType": "webView",
+                      "isAuthenticated": false
+                      }
+                      },
+                      {
+                      "image": "https://i.ytimg.com/vi/xSomYiDe64k/maxresdefault.jpg",
+                      "target": {
+                      "targetUrl": "http://www.jsoneditoronline.org/",
+                      "targetType": "webView",
+                      "isAuthenticated": false
+                      }
+                      },
+                      {
+                      "image": "http://iamflip.net/wp-content/uploads/2015/08/iamflip_onlinefashionshopping_zaloraph.jpg",
+                      "target": {
+                      "targetUrl": "http://www.jsoneditoronline.org/",
+                      "targetType": "webView",
+                      "isAuthenticated": false
+                      }
+                      },
+                      {
+                      "image": "https://i.ytimg.com/vi/xSomYiDe64k/maxresdefault.jpg",
+                      "target": {
+                      "targetUrl": "http://www.jsoneditoronline.org/",
+                      "targetType": "webView",
+                      "isAuthenticated": false
+                      }
+                      },
+                      {
+                      "image": "https://i.ytimg.com/vi/xSomYiDe64k/maxresdefault.jpg",
+                      "target": {
+                      "targetUrl": "http://www.jsoneditoronline.org/",
+                      "targetType": "webView",
+                      "isAuthenticated": false
+                      }
+                      },
+                      {
+                      "image": "https://i.ytimg.com/vi/xSomYiDe64k/maxresdefault.jpg",
+                      "target": {
+                      "targetUrl": "http://www.jsoneditoronline.org/",
+                      "targetType": "webView",
+                      "isAuthenticated": false
+                      }
+                      },
+                      {
+                      "image": "https://i.ytimg.com/vi/xSomYiDe64k/maxresdefault.jpg",
+                      "target": {
+                      "targetUrl": "http://www.jsoneditoronline.org/",
+                      "targetType": "webView",
+                      "isAuthenticated": false
+                      }
+                      }
+                      ]
+             },
+             {
+             "layoutId": 4,
+             "sectionTitle": "Sale Section",
+             "isViewMoreAvailable": false,
+             "viewMoreTarget": {},
+             "remainingTime": "101021",
+             "data": [
+                      {
+                      "name": "IPhone 5S",
+                      "originalPrice": "1000.00",
+                      "discountedPrice": "800.00",
+                      "discountPercentage": "20",
+                      "currency": "PHP",
+                      "image": "https://i.ytimg.com/vi/lTapz6IK_VQ/maxresdefault.jpg",
+                      "target": {
+                      "targetUrl": "http://www.jsoneditoronline.org/",
+                      "targetType": "webView",
+                      "isAuthenticated": false
+                      }
+                      },
+                      {
+                      "name": "LG G4",
+                      "originalPrice": "1000.00",
+                      "discountedPrice": "800.00",
+                      "discountPercentage": "20",
+                      "currency": "PHP",
+                      "image": "https://i.ytimg.com/vi/rpHThgw0spE/maxresdefault.jpg",
+                      "target": {
+                      "targetUrl": "http://www.jsoneditoronline.org/",
+                      "targetType": "webView",
+                      "isAuthenticated": false
+                      }
+                      },
+                      {
+                      "name": "Moto 360",
+                      "originalPrice": "1000.00",
+                      "discountedPrice": "800.00",
+                      "discountPercentage": "20",
+                      "currency": "PHP",
+                      "image": "http://cdn1.tnwcdn.com/wp-content/blogs.dir/1/files/2014/09/moto_360-1.jpg",
+                      "target": {
+                      "targetUrl": "http://www.jsoneditoronline.org/",
+                      "targetType": "webView",
+                      "isAuthenticated": false
+                      }
+                      }
+                      ]
+             },
+             {
+             "layoutId": 5,
+             "sectionTitle": "Hot Items",
+             "isViewMoreAvailable": true,
+             "viewMoreTarget": {
+             "targetUrl": "http://www.jsoneditoronline.org/",
+             "targetType": "webView",
+             "isAuthenticated": false
+             },
+             "data": [
+                      {
+                      "name": "IPhone 5S",
+                      "originalPrice": "1000.00",
+                      "discountedPrice": "800.00",
+                      "discountPercentage": "20",
+                      "currency": "PHP",
+                      "image": "www.yilinker.com/assets/images/apple.jpg",
+                      "target": {
+                      "targetUrl": "http://www.jsoneditoronline.org/",
+                      "targetType": "webView",
+                      "isAuthenticated": false
+                      }
+                      },
+                      {
+                      "name": "IPhone 5S",
+                      "originalPrice": "1000.00",
+                      "discountedPrice": "800.00",
+                      "discountPercentage": "20",
+                      "currency": "PHP",
+                      "image": "www.yilinker.com/assets/images/apple.jpg",
+                      "target": {
+                      "targetUrl": "http://www.jsoneditoronline.org/",
+                      "targetType": "webView",
+                      "isAuthenticated": false
+                      }
+                      },
+                      {
+                      "name": "IPhone 5S",
+                      "originalPrice": "1000.00",
+                      "discountedPrice": "800.00",
+                      "discountPercentage": "20",
+                      "currency": "PHP",
+                      "image": "www.yilinker.com/assets/images/apple.jpg",
+                      "target": {
+                      "targetUrl": "http://www.jsoneditoronline.org/",
+                      "targetType": "webView",
+                      "isAuthenticated": false
+                      }
+                      }
+                      ]
+             },
+             {
+             "layoutId": 6,
+             "sectionTitle": "Banner Ads",
+             "isViewMoreAvailable": false,
+             "viewMoreTarget": {},
+             "data": [
+                      {
+                      "image": "www.yilinker.com/assets/images/apple.jpg",
+                      "target": {
+                      "targetUrl": "http://www.jsoneditoronline.org/",
+                      "targetType": "webView",
+                      "isAuthenticated": false
+                      }
+                      },
+                      {
+                      "image": "www.yilinker.com/assets/images/apple.jpg",
+                      "target": {
+                      "targetUrl": "http://www.jsoneditoronline.org/",
+                      "targetType": "webView",
+                      "isAuthenticated": false
+                      }
+                      },
+                      {
+                      "image": "www.yilinker.com/assets/images/apple.jpg",
+                      "target": {
+                      "targetUrl": "http://www.jsoneditoronline.org/",
+                      "targetType": "webView",
+                      "isAuthenticated": false
+                      }
+                      }
+                      ]
+             },
+             {
+             "layoutId": 7,
+             "sectionTitle": "New Items",
+             "isViewMoreAvailable": true,
+             "viewMoreTarget": {
+             "targetUrl": "http://www.jsoneditoronline.org/",
+             "targetType": "webView",
+             "isAuthenticated": false
+             },
+             "data": [
+                      {
+                      "name": "IPhone 5S",
+                      "originalPrice": "1000.00",
+                      "discountedPrice": "800.00",
+                      "discountPercentage": "20",
+                      "currency": "PHP",
+                      "image": "www.yilinker.com/assets/images/apple.jpg",
+                      "target": {
+                      "targetUrl": "http://www.jsoneditoronline.org/",
+                      "targetType": "webView",
+                      "isAuthenticated": false
+                      }
+                      },
+                      {
+                      "name": "IPhone 5S",
+                      "originalPrice": "1000.00",
+                      "discountedPrice": "800.00",
+                      "discountPercentage": "20",
+                      "currency": "PHP",
+                      "image": "www.yilinker.com/assets/images/apple.jpg",
+                      "target": {
+                      "targetUrl": "http://www.jsoneditoronline.org/",
+                      "targetType": "webView",
+                      "isAuthenticated": false
+                      }
+                      },
+                      {
+                      "name": "IPhone 5S",
+                      "originalPrice": "1000.00",
+                      "discountedPrice": "800.00",
+                      "discountPercentage": "20",
+                      "currency": "PHP",
+                      "image": "www.yilinker.com/assets/images/apple.jpg",
+                      "target": {
+                      "targetUrl": "http://www.jsoneditoronline.org/",
+                      "targetType": "webView",
+                      "isAuthenticated": false
+                      }
+                      }
+                      ]
+             },
+             {
+             "layoutId": 8,
+             "sectionTitle": "New Stores",
+             "isViewMoreAvailable": true,
+             "viewMoreTarget": {
+             "targetUrl": "http://www.jsoneditoronline.org/",
+             "targetType": "webView",
+             "isAuthenticated": false
+             },
+             "data": [
+                      {
+                      "name": "YiStore",
+                      "specialty": "Electronics and Gadgets",
+                      "image": "www.yilinker.com/assets/images/apple.jpg",
+                      "data": [
+                               {
+                               "name": "Samsung G4",
+                               "originalPrice": "1000.00",
+                               "discountedPrice": "800.00",
+                               "discountPercentage": "20",
+                               "currency": "PHP",
+                               "image": "www.yilinker.com/assets/images/apple.jpg",
+                               "target": {
+                               "targetUrl": "http://www.jsoneditoronline.org/",
+                               "targetType": "webView",
+                               "isAuthenticated": false
+                               }
+                               },
+                               {
+                               "name": "Samsung G4",
+                               "originalPrice": "1000.00",
+                               "discountedPrice": "800.00",
+                               "discountPercentage": "20",
+                               "currency": "PHP",
+                               "image": "www.yilinker.com/assets/images/apple.jpg",
+                               "target": {
+                               "targetUrl": "http://www.jsoneditoronline.org/",
+                               "targetType": "webView",
+                               "isAuthenticated": false
+                               }
+                               },
+                               {
+                               "name": "Samsung G4",
+                               "originalPrice": "1000.00",
+                               "discountedPrice": "800.00",
+                               "discountPercentage": "20",
+                               "currency": "PHP",
+                               "image": "www.yilinker.com/assets/images/apple.jpg",
+                               "target": {
+                               "targetUrl": "http://www.jsoneditoronline.org/",
+                               "targetType": "webView",
+                               "isAuthenticated": false
+                               }
+                               }
+                               ],
+                      "target": {
+                      "targetUrl": "http://www.jsoneditoronline.org/",
+                      "targetType": "webView",
+                      "isAuthenticated": false
+                      }
+                      },
+                      {
+                      "name": "YiStore",
+                      "specialty": "Electronics and Gadgets",
+                      "image": "www.yilinker.com/assets/images/apple.jpg",
+                      "data": [
+                               {
+                               "name": "Samsung G4",
+                               "originalPrice": "1000.00",
+                               "discountedPrice": "800.00",
+                               "discountPercentage": "20",
+                               "currency": "PHP",
+                               "image": "www.yilinker.com/assets/images/apple.jpg",
+                               "target": {
+                               "targetUrl": "http://www.jsoneditoronline.org/",
+                               "targetType": "webView",
+                               "isAuthenticated": false
+                               }
+                               },
+                               {
+                               "name": "Samsung G4",
+                               "originalPrice": "1000.00",
+                               "discountedPrice": "800.00",
+                               "discountPercentage": "20",
+                               "currency": "PHP",
+                               "image": "www.yilinker.com/assets/images/apple.jpg",
+                               "target": {
+                               "targetUrl": "http://www.jsoneditoronline.org/",
+                               "targetType": "webView",
+                               "isAuthenticated": false
+                               }
+                               },
+                               {
+                               "name": "Samsung G4",
+                               "originalPrice": "1000.00",
+                               "discountedPrice": "800.00",
+                               "discountPercentage": "20",
+                               "currency": "PHP",
+                               "image": "www.yilinker.com/assets/images/apple.jpg",
+                               "target": {
+                               "targetUrl": "http://www.jsoneditoronline.org/",
+                               "targetType": "webView",
+                               "isAuthenticated": false
+                               }
+                               }
+                               ],
+                      "target": {
+                      "targetUrl": "http://www.jsoneditoronline.org/",
+                      "targetType": "webView",
+                      "isAuthenticated": false
+                      }
+                      },
+                      {
+                      "name": "YiStore",
+                      "specialty": "Electronics and Gadgets",
+                      "image": "www.yilinker.com/assets/images/apple.jpg",
+                      "data": [
+                               {
+                               "name": "Samsung G4",
+                               "originalPrice": "1000.00",
+                               "discountedPrice": "800.00",
+                               "discountPercentage": "20",
+                               "currency": "PHP",
+                               "image": "www.yilinker.com/assets/images/apple.jpg",
+                               "target": {
+                               "targetUrl": "http://www.jsoneditoronline.org/",
+                               "targetType": "webView",
+                               "isAuthenticated": false
+                               }
+                               },
+                               {
+                               "name": "Samsung G4",
+                               "originalPrice": "1000.00",
+                               "discountedPrice": "800.00",
+                               "discountPercentage": "20",
+                               "currency": "PHP",
+                               "image": "www.yilinker.com/assets/images/apple.jpg",
+                               "target": {
+                               "targetUrl": "http://www.jsoneditoronline.org/",
+                               "targetType": "webView",
+                               "isAuthenticated": false
+                               }
+                               },
+                               {
+                               "name": "Samsung G4",
+                               "originalPrice": "1000.00",
+                               "discountedPrice": "800.00",
+                               "discountPercentage": "20",
+                               "currency": "PHP",
+                               "image": "www.yilinker.com/assets/images/apple.jpg",
+                               "target": {
+                               "targetUrl": "http://www.jsoneditoronline.org/",
+                               "targetType": "webView",
+                               "isAuthenticated": false
+                               }
+                               }
+                               ],
+                      "target": {
+                      "targetUrl": "http://www.jsoneditoronline.org/",
+                      "targetType": "webView",
+                      "isAuthenticated": false
+                      }
+                      },
+                      {
+                      "name": "YiStore",
+                      "specialty": "Electronics and Gadgets",
+                      "image": "www.yilinker.com/assets/images/apple.jpg",
+                      "data": [
+                               {
+                               "name": "Samsung G4",
+                               "originalPrice": "1000.00",
+                               "discountedPrice": "800.00",
+                               "discountPercentage": "20",
+                               "currency": "PHP",
+                               "image": "www.yilinker.com/assets/images/apple.jpg",
+                               "target": {
+                               "targetUrl": "http://www.jsoneditoronline.org/",
+                               "targetType": "webView",
+                               "isAuthenticated": false
+                               }
+                               },
+                               {
+                               "name": "Samsung G4",
+                               "originalPrice": "1000.00",
+                               "discountedPrice": "800.00",
+                               "discountPercentage": "20",
+                               "currency": "PHP",
+                               "image": "www.yilinker.com/assets/images/apple.jpg",
+                               "target": {
+                               "targetUrl": "http://www.jsoneditoronline.org/",
+                               "targetType": "webView",
+                               "isAuthenticated": false
+                               }
+                               },
+                               {
+                               "name": "Samsung G4",
+                               "originalPrice": "1000.00",
+                               "discountedPrice": "800.00",
+                               "discountPercentage": "20",
+                               "currency": "PHP",
+                               "image": "www.yilinker.com/assets/images/apple.jpg",
+                               "target": {
+                               "targetUrl": "http://www.jsoneditoronline.org/",
+                               "targetType": "webView",
+                               "isAuthenticated": false
+                               }
+                               }
+                               ],
+                      "target": {
+                      "targetUrl": "http://www.jsoneditoronline.org/",
+                      "targetType": "webView",
+                      "isAuthenticated": false
+                      }
+                      }
+                      ]
+             },
+             {
+             "layoutId": 9,
+             "sectionTitle": "Categories",
+             "isViewMoreAvailable": true,
+             "viewMoreTarget": {
+             "targetUrl": "http://www.jsoneditoronline.org/",
+             "targetType": "webView",
+             "isAuthenticated": false
+             },
+             "data": [
+                      {
+                      "name": "Electronics and Gadgets",
+                      "image": "",
+                      "target": {
+                      "targetUrl": "http://www.jsoneditoronline.org/",
+                      "targetType": "webView",
+                      "isAuthenticated": false
+                      }
+                      },
+                      {
+                      "name": "Electronics and Gadgets",
+                      "image": "",
+                      "target": {
+                      "targetUrl": "http://www.jsoneditoronline.org/",
+                      "targetType": "webView",
+                      "isAuthenticated": false
+                      }
+                      },
+                      {
+                      "name": "Electronics and Gadgets",
+                      "image": "",
+                      "target": {
+                      "targetUrl": "http://www.jsoneditoronline.org/",
+                      "targetType": "webView",
+                      "isAuthenticated": false
+                      }
+                      },
+                      {
+                      "name": "Electronics and Gadgets",
+                      "image": "",
+                      "target": {
+                      "targetUrl": "http://www.jsoneditoronline.org/",
+                      "targetType": "webView",
+                      "isAuthenticated": false
+                      }
+                      },
+                      {
+                      "name": "Electronics and Gadgets",
+                      "image": "",
+                      "target": {
+                      "targetUrl": "http://www.jsoneditoronline.org/",
+                      "targetType": "webView",
+                      "isAuthenticated": false
+                      }
+                      },
+                      {
+                      "name": "Electronics and Gadgets",
+                      "image": "",
+                      "target": {
+                      "targetUrl": "http://www.jsoneditoronline.org/",
+                      "targetType": "webView",
+                      "isAuthenticated": false
+                      }
+                      }
+                      ]
+             },
+             {
+             "layoutId": 10,
+             "sectionTitle": "Items you may like",
+             "isViewMoreAvailable": true,
+             "viewMoreTarget": {
+             "targetUrl": "http://www.jsoneditoronline.org/",
+             "targetType": "webView",
+             "isAuthenticated": false
+             },
+             "data": [
+                      {
+                      "name": "Samsung G4",
+                      "originalPrice": "1000.00",
+                      "discountedPrice": "800.00",
+                      "discountPercentage": "20",
+                      "currency": "PHP",
+                      "image": "www.yilinker.com/assets/images/apple.jpg",
+                      "target": {
+                      "targetUrl": "http://www.jsoneditoronline.org/",
+                      "targetType": "webView",
+                      "isAuthenticated": false
+                      }
+                      },
+                      {
+                      "name": "Samsung G4",
+                      "originalPrice": "1000.00",
+                      "discountedPrice": "800.00",
+                      "discountPercentage": "20",
+                      "currency": "PHP",
+                      "image": "www.yilinker.com/assets/images/apple.jpg",
+                      "target": {
+                      "targetUrl": "http://www.jsoneditoronline.org/",
+                      "targetType": "webView",
+                      "isAuthenticated": false
+                      }
+                      },
+                      {
+                      "name": "Samsung G4",
+                      "originalPrice": "1000.00",
+                      "discountedPrice": "800.00",
+                      "discountPercentage": "20",
+                      "currency": "PHP",
+                      "image": "www.yilinker.com/assets/images/apple.jpg",
+                      "target": {
+                      "targetUrl": "http://www.jsoneditoronline.org/",
+                      "targetType": "webView",
+                      "isAuthenticated": false
+                      }
+                      },
+                      {
+                      "name": "Samsung G4",
+                      "originalPrice": "1000.00",
+                      "discountedPrice": "800.00",
+                      "discountPercentage": "20",
+                      "currency": "PHP",
+                      "image": "www.yilinker.com/assets/images/apple.jpg",
+                      "target": {
+                      "targetUrl": "http://www.jsoneditoronline.org/",
+                      "targetType": "webView",
+                      "isAuthenticated": false
+                      }
+                      },
+                      {
+                      "name": "Samsung G4",
+                      "originalPrice": "1000.00",
+                      "discountedPrice": "800.00",
+                      "discountPercentage": "20",
+                      "currency": "PHP",
+                      "image": "www.yilinker.com/assets/images/apple.jpg",
+                      "target": {
+                      "targetUrl": "http://www.jsoneditoronline.org/",
+                      "targetType": "webView",
+                      "isAuthenticated": false
+                      }
+                      },
+                      {
+                      "name": "Samsung G4",
+                      "originalPrice": "1000.00",
+                      "discountedPrice": "800.00",
+                      "discountPercentage": "20",
+                      "currency": "PHP",
+                      "image": "www.yilinker.com/assets/images/apple.jpg",
+                      "target": {
+                      "targetUrl": "http://www.jsoneditoronline.org/",
+                      "targetType": "webView",
+                      "isAuthenticated": false
+                      }
+                      },
+                      {
+                      "name": "Samsung G4",
+                      "originalPrice": "1000.00",
+                      "discountedPrice": "800.00",
+                      "discountPercentage": "20",
+                      "currency": "PHP",
+                      "image": "www.yilinker.com/assets/images/apple.jpg",
+                      "target": {
+                      "targetUrl": "http://www.jsoneditoronline.org/",
+                      "targetType": "webView",
+                      "isAuthenticated": false
+                      }
+                      },
+                      {
+                      "name": "Samsung G4",
+                      "originalPrice": "1000.00",
+                      "discountedPrice": "800.00",
+                      "discountPercentage": "20",
+                      "currency": "PHP",
+                      "image": "www.yilinker.com/assets/images/apple.jpg",
+                      "target": {
+                      "targetUrl": "http://www.jsoneditoronline.org/",
+                      "targetType": "webView",
+                      "isAuthenticated": false
+                      }
+                      },
+                      {
+                      "name": "Samsung G4",
+                      "originalPrice": "1000.00",
+                      "discountedPrice": "800.00",
+                      "discountPercentage": "20",
+                      "currency": "PHP",
+                      "image": "www.yilinker.com/assets/images/apple.jpg",
+                      "target": {
+                      "targetUrl": "http://www.jsoneditoronline.org/",
+                      "targetType": "webView",
+                      "isAuthenticated": false
+                      }
+                      },
+                      {
+                      "name": "Samsung G4",
+                      "originalPrice": "1000.00",
+                      "discountedPrice": "800.00",
+                      "discountPercentage": "20",
+                      "currency": "PHP",
+                      "image": "www.yilinker.com/assets/images/apple.jpg",
+                      "target": {
+                      "targetUrl": "http://www.jsoneditoronline.org/",
+                      "targetType": "webView",
+                      "isAuthenticated": false
+                      }
+                      }
+                      ]
+             }
+             ]
 }

@@ -34,21 +34,21 @@
                         <rect key="frame" x="5" y="1" width="420" height="180"/>
                         <color key="backgroundColor" red="0.7843137255" green="0.0" blue="0.36862745099999999" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="1000" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" image="dummy-placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="HPg-kW-7jB">
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="1000" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" image="dummy-placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="HPg-kW-7jB" customClass="ProductImageView" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
                         <rect key="frame" x="12" y="58" width="130" height="82"/>
                         <constraints>
                             <constraint firstAttribute="width" priority="750" constant="130" id="dmC-Yl-ya1"/>
                             <constraint firstAttribute="height" constant="82" id="kvD-cs-kXW"/>
                         </constraints>
                     </imageView>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" tag="1" contentMode="scaleAspectFill" horizontalHuggingPriority="1000" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" image="dummy-placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="q7f-51-8Cv">
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" tag="1" contentMode="scaleAspectFill" horizontalHuggingPriority="1000" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" image="dummy-placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="q7f-51-8Cv" customClass="ProductImageView" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
                         <rect key="frame" x="150" y="58" width="130" height="82"/>
                         <constraints>
                             <constraint firstAttribute="width" priority="750" constant="130" id="LwR-AD-XbJ"/>
                             <constraint firstAttribute="height" constant="82" id="gg6-av-Byr"/>
                         </constraints>
                     </imageView>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" tag="2" contentMode="scaleAspectFill" horizontalHuggingPriority="1000" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" image="dummy-placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="wzS-od-qmT">
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" tag="2" contentMode="scaleAspectFill" horizontalHuggingPriority="1000" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" image="dummy-placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="wzS-od-qmT" customClass="ProductImageView" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
                         <rect key="frame" x="288" y="58" width="130" height="82"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="82" id="Hm8-FQ-6m7"/>
@@ -241,12 +241,12 @@
                 <outlet property="hourSecondDigit" destination="D1E-FT-KvA" id="ReI-32-1Pm"/>
                 <outlet property="minuteFirstDigit" destination="UIp-JL-Dm3" id="bBj-zb-vO9"/>
                 <outlet property="minuteSecondDigit" destination="ndv-v5-mZb" id="CTd-j9-i0a"/>
-                <outlet property="productOneDiscount" destination="GVs-FO-mIG" id="VRj-gh-ruC"/>
-                <outlet property="productOneImageView" destination="HPg-kW-7jB" id="74N-3d-ZbO"/>
-                <outlet property="productThreeDiscount" destination="FjS-R7-Mia" id="SLq-rf-U2z"/>
-                <outlet property="productThreeImageView" destination="wzS-od-qmT" id="ufn-GK-DXq"/>
-                <outlet property="productTwoDiscount" destination="R9V-zd-eln" id="KHC-Io-gta"/>
-                <outlet property="productTwoImageView" destination="q7f-51-8Cv" id="mVX-jA-cUr"/>
+                <outlet property="productOneDiscountLabel" destination="GVs-FO-mIG" id="WUx-W7-IFa"/>
+                <outlet property="productOneImageView" destination="HPg-kW-7jB" id="qCD-b2-fsb"/>
+                <outlet property="productThreeDiscountLabel" destination="FjS-R7-Mia" id="7IZ-ps-0dV"/>
+                <outlet property="productThreeImageView" destination="wzS-od-qmT" id="zZy-Ag-bZ8"/>
+                <outlet property="productTwoDiscountLabel" destination="R9V-zd-eln" id="QdW-jy-nd2"/>
+                <outlet property="productTwoImageView" destination="q7f-51-8Cv" id="wxT-qz-PE9"/>
                 <outlet property="roundedView" destination="s5S-bZ-bgT" id="CJk-Ja-Lf8"/>
                 <outlet property="secondFirstDigit" destination="XP7-Ug-ZMP" id="dg7-bz-bIy"/>
                 <outlet property="secondSecondDigit" destination="zs7-SD-WBL" id="BCG-t1-U4e"/>

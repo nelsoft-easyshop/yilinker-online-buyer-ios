@@ -41,6 +41,8 @@ class HomePageModel: NSObject {
                 data.append(LayoutTwoModel.parseDataFromDictionary(sectionDictionary))
             } else if layoutId == 3 {
                 data.append(LayoutThreeModel.parseDataFromDictionary(sectionDictionary))
+            } else if layoutId == 4 {
+                data.append(LayoutFourModel.parseDataFromDictionary(sectionDictionary))
             }
         }
         
