@@ -14,7 +14,7 @@ protocol ProductImagesViewDelegate {
     func rate(controller: ProductImagesView)
     func message(controller: ProductImagesView)
     func share(controller: ProductImagesView)
-    
+    func fullScreen(controller: ProductImagesView)
 }
 
 class ProductImagesView: UIView, UICollectionViewDataSource, UICollectionViewDelegate {
@@ -59,6 +59,7 @@ class ProductImagesView: UIView, UICollectionViewDataSource, UICollectionViewDel
         addTapTo(self.rateContainerView, action: "rateAction:")
         addTapTo(self.messageContainerView, action: "messageAction:")
         addTapTo(self.shareContainerView, action: "shareAction:")
+        addTapTo(self.collectionView, action: "fullScreenAction:")
     }
     
     func addTapTo(view: UIView, action: Selector) {
@@ -72,9 +73,9 @@ class ProductImagesView: UIView, UICollectionViewDataSource, UICollectionViewDel
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if self.images.count != 0 {
-            return self.images.count
+            return self.images.count + 2
         } else if self.imagesModel != nil {
-            return self.imagesModel.count
+            return self.imagesModel.count + 2
         }
         return 0
     }
@@ -90,6 +91,10 @@ class ProductImagesView: UIView, UICollectionViewDataSource, UICollectionViewDel
         return cell
     }
 
+    func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+        
+    }
+    
     // MARK: - Collection View Delegate
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
@@ -130,6 +135,12 @@ class ProductImagesView: UIView, UICollectionViewDataSource, UICollectionViewDel
     func shareAction(gesture: UIGestureRecognizer) {
         if let delegate = self.delegate {
             delegate.share(self)
+        }
+    }
+    
+    func fullScreenAction(gesture: UIGestureRecognizer) {
+        if let delegate = self.delegate {
+            delegate.fullScreen(self)
         }
     }
     
