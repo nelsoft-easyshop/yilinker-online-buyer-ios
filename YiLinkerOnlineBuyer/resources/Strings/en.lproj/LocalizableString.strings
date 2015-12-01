@@ -271,6 +271,7 @@ ALERT_ADDED_TO_CART_LOCALIZE_KEY = "This item has been added to your cart.";
 ALERT_PLEASE_LOGIN_LOCALIZE_KEY = "Please login to add item in your wishlist.";
 ALERT_PLEASE_COMPLETE_LOCALIZE_KEY = "Please complete the attributes.";
 ALERT_AVOID_ISSUES_LOCALIZE_KEY = "To avoid issues, please login.";
+ALERT_SELLER_NOT_AVAILABLE_LOCALIZE_KEY = "Seller is not available.";
 
 // MARK: - Resolution Center
 RESOLUTION_TITLE_LOCALIZE_KEY = "Resolution Center";

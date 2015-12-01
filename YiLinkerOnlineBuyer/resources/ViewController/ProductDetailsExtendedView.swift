@@ -26,7 +26,7 @@ class ProductDetailsExtendedView: UIView, UIScrollViewDelegate, UIWebViewDelegat
         webView.backgroundColor = .clearColor()
         webView.scrollView.showsVerticalScrollIndicator = false
         
-        webView.loadRequest(NSURLRequest(URL: NSURL(string: "https://www.yilinker.com/")!))
+        webView.loadRequest(NSURLRequest(URL: NSURL(string: "https://www.yilinker.com/item/")!))
         
         self.webView.scrollView.showsHorizontalScrollIndicator = false
     }
@@ -88,7 +88,7 @@ class ProductDetailsExtendedView: UIView, UIScrollViewDelegate, UIWebViewDelegat
 
             }, completion: { (value: Bool) in
                 self.delegate?.closedExtendedDetails()
-                self.frame.origin.y = self.frame.size.height
+                self.frame.origin.y = self.frame.size.height + 100
         })
     }
     

@@ -44,7 +44,7 @@ struct ProductStrings {
     static let cannotMessage = StringHelper.localizedStringWithKey("VENDOR_PAGE_CANNOT_MESSAGE_LOCALIZE_KEY")
     static let avoidIssues = StringHelper.localizedStringWithKey("ALERT_AVOID_ISSUES_LOCALIZE_KEY")
     static let alertOutOfStock = StringHelper.localizedStringWithKey("ALERT_OUT_OF_STOCK_LOCALIZE_KEY")
-    
+    static let alertSellerNotAvailable = StringHelper.localizedStringWithKey("ALERT_SELLER_NOT_AVAILABLE_LOCALIZE_KEY")
 }
 
 protocol ProductViewControllerDelegate {
@@ -437,7 +437,6 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
                 
                 self.attributes = self.productDetailsModel.attributes
                 self.requestSellerDetails()
-                self.requestContactsFromEndpoint()
             } else {
                 let alert = UIAlertController(title: ProductStrings.alertError,
                                             message: responseObject["message"] as? String,
@@ -498,6 +497,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
                 self.productSellerModel = ProductSellerModel.parseDataWithDictionary(responseObject)
                 self.sellerRequest = true
                 self.sellerSuccess = true
+                self.requestContactsFromEndpoint()
                 self.checkRequests()
             } else {
                 self.showAlert(title: ProductStrings.alertError, message: responseObject["message"] as! String)
@@ -688,6 +688,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
             
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
+                println(error)
                 self.hud?.hide(true)
                 if SessionManager.isLoggedIn() {
                     self.showAlert(title: ProductStrings.alertWentWrong, message: nil)
@@ -709,7 +710,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
                     "limit"         : "30",
                     "keyword"       : "",
                     "access_token"  : SessionManager.accessToken()
-                    ]   as Dictionary<String, String>
+                    ] as Dictionary<String, String>
                 
                 let url = APIAtlas.baseUrl + APIAtlas.ACTION_GET_CONTACTS
                 
@@ -719,7 +720,6 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
                     }, failure: {
                         (task: NSURLSessionDataTask!, error: NSError!) in
                         let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                        
                         if task.statusCode == 401 {
                             if (SessionManager.isLoggedIn()){
                                 self.requestRefreshToken("message")
@@ -963,8 +963,8 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     
     func checkRequests() {
         
-        if productRequest && reviewRequest {
-            if productSuccess && reviewSuccess && sellerSuccess {
+        if productRequest && reviewRequest && sellerRequest {
+            if productSuccess {
                 self.emptyView?.hidden = true
                 self.loadViewsWithDetails()
             } else {
@@ -1059,6 +1059,8 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         self.productDetailsExtendedView.frame = self.productImagesView.bounds
         self.productDetailsExtendedView.frame.origin.y = self.view.frame.size.height
         self.productDetailsExtendedView.backgroundColor = .clearColor()
+        println(self.productDetailsModel.slug)
+        self.productDetailsExtendedView.url = self.productDetailsModel.slug
         self.view.addSubview(self.productDetailsExtendedView)
     }
     
@@ -1323,7 +1325,11 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         if canMessage {
             self.navigationController?.pushViewController(messagingViewController, animated: true)
         } else {
-            self.showAlert(title: StringHelper.localizedStringWithKey("MESSAGING_TITLE"), message: ProductStrings.cannotMessage)
+            if !SessionManager.isLoggedIn() {
+                self.showAlert(title: StringHelper.localizedStringWithKey("MESSAGING_TITLE"), message: ProductStrings.cannotMessage)
+            } else {
+                self.showAlert(title: StringHelper.localizedStringWithKey("MESSAGING_TITLE"), message: ProductStrings.alertSellerNotAvailable)
+            }
             //UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "You're allowed to message this seller. Please login first.", title: "Error")
         }
     }
