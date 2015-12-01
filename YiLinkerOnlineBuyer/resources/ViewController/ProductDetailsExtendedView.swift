@@ -26,7 +26,7 @@ class ProductDetailsExtendedView: UIView, UIScrollViewDelegate, UIWebViewDelegat
         webView.backgroundColor = .clearColor()
         webView.scrollView.showsVerticalScrollIndicator = false
         
-        webView.loadRequest(NSURLRequest(URL: NSURL(string: "https://www.yilinker.com/item/")!))
+        webView.loadRequest(NSURLRequest(URL: NSURL(string: "https://www.yilinker.com")!))
         
         self.webView.scrollView.showsHorizontalScrollIndicator = false
     }
