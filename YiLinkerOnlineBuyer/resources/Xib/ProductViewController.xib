@@ -9,6 +9,8 @@
                 <outlet property="addToCartButton" destination="h9O-cg-S2c" id="6hb-Fe-KRc"/>
                 <outlet property="buttonSubContainer" destination="1eX-c7-A5b" id="gO8-yj-3re"/>
                 <outlet property="buttonsContainer" destination="C60-aW-ouZ" id="GzR-X4-rmh"/>
+                <outlet property="buttonsContainerHeight" destination="9lB-Pz-8PY" id="VvI-cZ-KwR"/>
+                <outlet property="buttonsContainerVerticalConstraint" destination="sBK-uj-Xic" id="uPw-9s-Lu8"/>
                 <outlet property="buyItNowLabel" destination="fhZ-EI-5fo" id="pCb-Qh-OLt"/>
                 <outlet property="buyItNowView" destination="IQR-t4-99U" id="VGI-gN-oqo"/>
                 <outlet property="closeButton" destination="J2h-LG-jYM" id="rLc-tT-Nsd"/>
