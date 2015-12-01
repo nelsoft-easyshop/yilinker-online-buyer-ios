@@ -73,9 +73,9 @@ class ProductImagesView: UIView, UICollectionViewDataSource, UICollectionViewDel
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if self.images.count != 0 {
-            return self.images.count + 2
+            return self.images.count
         } else if self.imagesModel != nil {
-            return self.imagesModel.count + 2
+            return self.imagesModel.count
         }
         return 0
     }
