@@ -91,6 +91,8 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     
     var canShowExtendedDetails: Bool = false
     
+    @IBOutlet weak var buttonsContainerVerticalConstraint: NSLayoutConstraint!
+    @IBOutlet weak var buttonsContainerHeight: NSLayoutConstraint!
     // MARK: Request Checker
     var productRequest = false
     var reviewRequest = false
@@ -244,10 +246,10 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         // reached top or bottom
         if scrollView.contentOffset.y <= 0.0 {
             visibility = 0.0
-//            canShowExtendedDetails = false
+            canShowExtendedDetails = false
         } else if scrollView.contentOffset.y + scrollView.frame.size.height == scrollView.contentSize.height {
             visibility = 1.0
-//            canShowExtendedDetails = true
+            canShowExtendedDetails = true
         }
 
         self.navigationController?.navigationBar.alpha = CGFloat(visibility)
@@ -797,13 +799,6 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         }
         self.tableView.hidden = false
         self.buttonsContainer.hidden = false
-        
-        if isFromCart {
-            let dimButtonsView: UIView = UIView(frame: self.buttonsContainer.bounds)
-            dimButtonsView.backgroundColor = .blackColor()
-            dimButtonsView.alpha = 0.5
-            self.buttonsContainer.addSubview(dimButtonsView)
-        }
 
         self.getHeaderView().addSubview(self.getProductImagesView())
         self.getHeaderView().addSubview(self.getProductDetailsView())
@@ -853,6 +848,13 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         
         addExtendedView()
         self.buttonsContainer.layer.zPosition = 2
+        
+        if isFromCart {
+            buttonsContainerHeight.constant = 0.0
+            self.view.layoutIfNeeded()
+            self.buttonsContainer.hidden = true
+            self.productDetailsExtendedView.frame.size.height += 65
+        }
     }
     
     func setDetails(list: NSArray) {
