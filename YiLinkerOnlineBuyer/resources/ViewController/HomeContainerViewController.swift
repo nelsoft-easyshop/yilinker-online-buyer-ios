@@ -158,6 +158,8 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                 self.layouts.append("8")
             } else if model.isKindOfClass(LayoutNineModel) {
                 self.layouts.append("9")
+            } else if model.isKindOfClass(LayoutTenModel) {
+                self.layouts.append("10")
             }
         }
         
@@ -490,7 +492,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         case 9:
             return 1
         case 10:
-            return 10
+            return self.homePageModel.data[section].data.count
         default:
             return 1
         }
@@ -548,6 +550,9 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             if layoutFiveModel.isViewMoreAvailable {
                 headerView.target = layoutFiveModel.viewMoreTarget.targetUrl
                 headerView.targetType = layoutFiveModel.viewMoreTarget.targetType
+                headerView.viewMoreButton.hidden = false
+            } else {
+                headerView.viewMoreButton.hidden = true
             }
             
             headerView.titleLabel.text = layoutFiveModel.sectionTitle
@@ -558,6 +563,9 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             if layoutSevenModel.isViewMoreAvailable {
                 headerView.target = layoutSevenModel.viewMoreTarget.targetUrl
                 headerView.targetType = layoutSevenModel.viewMoreTarget.targetType
+                headerView.viewMoreButton.hidden = false
+            } else {
+                headerView.viewMoreButton.hidden = true
             }
             
             headerView.titleLabel.text = layoutSevenModel.sectionTitle
@@ -568,6 +576,9 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             if layoutEightModel.isViewMoreAvailable {
                 headerView.target = layoutEightModel.viewMoreTarget.targetUrl
                 headerView.targetType = layoutEightModel.viewMoreTarget.targetType
+                headerView.viewMoreButton.hidden = false
+            } else {
+                headerView.viewMoreButton.hidden = true
             }
             
             headerView.titleLabel.text = layoutEightModel.sectionTitle
@@ -578,14 +589,41 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             if layoutNineModel.isViewMoreAvailable {
                 headerView.target = layoutNineModel.viewMoreTarget.targetUrl
                 headerView.targetType = layoutNineModel.viewMoreTarget.targetType
+                headerView.viewMoreButton.hidden = false
+            } else {
+                headerView.viewMoreButton.hidden = true
             }
             
             headerView.titleLabel.text = layoutNineModel.sectionTitle
             headerView.updateTitleLine()
             headerView.backgroundColor = UIColor.clearColor()
+        } else if self.homePageModel.data[indexPath.section].isKindOfClass(LayoutTenModel) {
+            let layoutTenModel: LayoutTenModel = self.homePageModel.data[indexPath.section] as! LayoutTenModel
+            if layoutTenModel.isViewMoreAvailable {
+                headerView.target = layoutTenModel.viewMoreTarget.targetUrl
+                headerView.targetType = layoutTenModel.viewMoreTarget.targetType
+                headerView.viewMoreButton.hidden = false
+            } else {
+                headerView.viewMoreButton.hidden = true
+            }
+            
+            headerView.titleLabel.text = layoutTenModel.sectionTitle
+            headerView.updateTitleLine()
+            headerView.backgroundColor = UIColor.clearColor()
         }
         
         return headerView
+    }
+    
+    //MARK: - CollectionViewDelegate
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        let cell: AnyObject = collectionView.cellForItemAtIndexPath(indexPath)!
+        
+        if cell.isKindOfClass(TwoColumnGridCollectionViewCell) {
+            let towColumnCell: TwoColumnGridCollectionViewCell = collectionView.cellForItemAtIndexPath(indexPath) as! TwoColumnGridCollectionViewCell
+            println(towColumnCell.target)
+            println(towColumnCell.targetType)
+        }
     }
     
     //MARK: - Carousel Data Source
@@ -785,6 +823,17 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     //MARK: - Grid Layout
     func twoColumnGridCollectionViewCellWithIndexPath(indexPath: NSIndexPath) -> TwoColumnGridCollectionViewCell {
         let twoColumnGridCollectionViewCell: TwoColumnGridCollectionViewCell = self.collectionView?.dequeueReusableCellWithReuseIdentifier("TwoColumnGridCollectionViewCell", forIndexPath: indexPath) as! TwoColumnGridCollectionViewCell
+        
+        let layoutTenModel: LayoutTenModel = self.homePageModel.data[indexPath.section] as! LayoutTenModel
+        
+        twoColumnGridCollectionViewCell.target = layoutTenModel.data[indexPath.row].target.targetUrl
+        twoColumnGridCollectionViewCell.targetType = layoutTenModel.data[indexPath.row].target.targetType
+        
+        twoColumnGridCollectionViewCell.productItemImageView.sd_setImageWithURL(NSURL(string: layoutTenModel.data[indexPath.row].image), placeholderImage: UIImage(named: self.placeHolder))
+        twoColumnGridCollectionViewCell.productNameLabel.text = layoutTenModel.data[indexPath.row].name
+        twoColumnGridCollectionViewCell.discountedPriceLabel.text = layoutTenModel.data[indexPath.row].discountedPrice
+        twoColumnGridCollectionViewCell.discountPercentageLabel.text = layoutTenModel.data[indexPath.row].discountPercentage
+        
         return twoColumnGridCollectionViewCell
     }
     

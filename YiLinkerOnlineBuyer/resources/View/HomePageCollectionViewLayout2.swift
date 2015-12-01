@@ -285,7 +285,6 @@ class HomePageCollectionViewLayout2: UICollectionViewLayout {
         let numberOfItems = self.collectionView?.numberOfItemsInSection(section)
         let initialMargin: CGFloat = 8
         
-        let fullSectionItemHeight: CGFloat = 230
         var itemSize: CGSize = CGSizeZero
         
         let screenWidth: CGFloat =  ((screenRect!.width - (horizontalInset * 3)) /  2)
@@ -344,10 +343,11 @@ class HomePageCollectionViewLayout2: UICollectionViewLayout {
                 
                 if (numberOfItems - floor(numberOfItems) > 0.000001) { // 0.000001 can be changed depending on the level of precision you need
                     let items: Int = Int(numberOfItems)
-                    occupiedSpace = occupiedSpace + (SectionHeight.sectionTen * CGFloat(items + 1)) + (sectionVerticalInset * CGFloat(items)) + SectionHeight.layoutHeader
+                    //occupiedSpace = occupiedSpace + (SectionHeight.sectionTen * CGFloat(items + 1)) + (sectionVerticalInset * CGFloat(items)) + SectionHeight.layoutHeader
+                    occupiedSpace = occupiedSpace + (SectionHeight.sectionTen * CGFloat(items + 1)) + (sectionVerticalInset * CGFloat(items / 2)) + SectionHeight.layoutHeader + sectionVerticalInset
                 } else {
                     let items: Int = Int(numberOfItems)
-                    occupiedSpace = occupiedSpace + (SectionHeight.sectionTen * CGFloat(items + 0)) + (sectionVerticalInset * CGFloat(items)) + SectionHeight.layoutHeader
+                    occupiedSpace = occupiedSpace + (SectionHeight.sectionTen * CGFloat(items)) + SectionHeight.layoutHeader + (sectionVerticalInset * CGFloat(items / 2)) + sectionVerticalInset
                 }
             }  else {
                 occupiedSpace = 0.0
