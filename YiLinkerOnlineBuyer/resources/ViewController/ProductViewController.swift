@@ -489,7 +489,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     func requestSellerDetails() {
         
         let params = ["userId": self.productDetailsModel.sellerId]
-        println(params)
+
         manager.POST(APIAtlas.getSellerInfo, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
 
