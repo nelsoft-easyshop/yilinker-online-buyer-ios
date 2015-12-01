@@ -62,6 +62,7 @@ class CartTableViewCell: UITableViewCell, UIScrollViewDelegate {
     @IBAction func buttonClicked(sender : AnyObject) {
         cellScrollView.setContentOffset(CGPointZero, animated: true)
         if(sender as! NSObject == deleteButton){
+            updateSwipeViewStatus()
             delegate?.deleteButtonActionForIndex(self)
         } else if(sender as! NSObject == editButton) {
             updateSwipeViewStatus()
