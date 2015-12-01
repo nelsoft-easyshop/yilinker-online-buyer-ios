@@ -90,7 +90,6 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     var lastContentOffset: CGFloat = 0.0
     
     var canShowExtendedDetails: Bool = false
-    var hideBottomButtons: Bool = true
     
     // MARK: Request Checker
     var productRequest = false
@@ -243,13 +242,13 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         }
 
         // reached top or bottom
-//        if scrollView.contentOffset.y <= 0.0 {
-//            visibility = 0.0
+        if scrollView.contentOffset.y <= 0.0 {
+            visibility = 0.0
 //            canShowExtendedDetails = false
-//        } else if scrollView.contentOffset.y + scrollView.frame.size.height == scrollView.contentSize.height {
-//            visibility = 1.0
+        } else if scrollView.contentOffset.y + scrollView.frame.size.height == scrollView.contentSize.height {
+            visibility = 1.0
 //            canShowExtendedDetails = true
-//        }
+        }
 
         self.navigationController?.navigationBar.alpha = CGFloat(visibility)
         self.lastContentOffset = scrollView.contentOffset.y
@@ -797,12 +796,15 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
             self.closeButton.removeFromSuperview()
         }
         self.tableView.hidden = false
-        self.buttonsContainer.hidden = hideBottomButtons
+        self.buttonsContainer.hidden = false
         
-        if hideBottomButtons {
-            
+        if isFromCart {
+            let dimButtonsView: UIView = UIView(frame: self.buttonsContainer.bounds)
+            dimButtonsView.backgroundColor = .blackColor()
+            dimButtonsView.alpha = 0.5
+            self.buttonsContainer.addSubview(dimButtonsView)
         }
-        
+
         self.getHeaderView().addSubview(self.getProductImagesView())
         self.getHeaderView().addSubview(self.getProductDetailsView())
         self.getHeaderView().addSubview(self.getProductAttributeView())
