@@ -102,7 +102,6 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         super.viewDidLoad()
         //header
         self.registerHeaderCollectionView(self.sectionHeaderNibName)
-        
         self.registerCellWithNibName(self.carouselCellNibName)
         self.registerCellWithNibName(self.dailyLoginNibName)
         self.registerCellWithNibName(self.halfPagerCellNibName)
@@ -128,9 +127,6 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "onNewMessage:",
             name: appDelegate.messageKey, object: nil)
         
-        //decoration view
-        self.registerDecorationView(self.sectionBackgroundNibName)
-        
         let dictionary: NSDictionary = ParseLocalJSON.fileName("dummyHomePage") as NSDictionary
         self.homePageModel = HomePageModel.parseDataFromDictionary(dictionary)
         
@@ -144,8 +140,20 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             } else if model.isKindOfClass(LayoutFourModel) {
                 self.layouts.append("4")
                 let layoutFourModel: LayoutFourModel = self.homePageModel.data[index] as! LayoutFourModel
-                self.remainingTime = layoutFourModel.remainingTime.toInt()!
-                var timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "updateTime", userInfo: nil, repeats: true)
+              
+                if layoutFourModel.remainingTime.toInt() != 0 || layoutFourModel.remainingTime.toInt() != nil {
+                    self.remainingTime = layoutFourModel.remainingTime.toInt()!
+                    var timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "updateTime", userInfo: nil, repeats: true)
+                } else {
+                    self.homePageModel.data.removeAtIndex(index)
+                }
+              
+            } else if model.isKindOfClass(LayoutFiveModel) {
+                self.layouts.append("5")
+            } else if model.isKindOfClass(LayoutSixModel) {
+                self.layouts.append("6")
+            } else if model.isKindOfClass(LayoutSevenModel) {
+                self.layouts.append("7")
             }
         }
         
@@ -165,6 +173,8 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         homePageCollectionViewLayout.layouts = self.layouts
         self.collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         self.collectionView.collectionViewLayout = homePageCollectionViewLayout
+        //decoration view
+        self.registerDecorationView(self.sectionBackgroundNibName)
     }
     
     //MARK: - Register Header Collection View
@@ -502,6 +512,8 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             } else {
                 return self.halfVerticalImageCollectionViewCellWithIndexPath(indexPath)
             }
+        } else if self.layouts[indexPath.section] == "6" {
+            return self.fullImageCollectionViewCellWithIndexPath(indexPath, fullImageCollectionView: self.collectionView)
         } else if self.layouts[indexPath.section] == "7" {
             if indexPath.row == 0 || indexPath.row == 1 {
                 return self.halfVerticalImageCollectionViewCellWithIndexPath(indexPath)
@@ -526,6 +538,27 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
         let headerView: LayoutHeaderCollectionViewCell = self.collectionView?.dequeueReusableSupplementaryViewOfKind(UICollectionElementKindSectionHeader, withReuseIdentifier: self.sectionHeaderNibName, forIndexPath: indexPath) as! LayoutHeaderCollectionViewCell
         headerView.delegate = self
+        
+        if self.homePageModel.data[indexPath.section].isKindOfClass(LayoutFiveModel) {
+            let layoutFiveModel: LayoutFiveModel = self.homePageModel.data[indexPath.section] as! LayoutFiveModel
+            if layoutFiveModel.isViewMoreAvailable {
+                headerView.target = layoutFiveModel.viewMoreTarget.targetUrl
+                headerView.targetType = layoutFiveModel.viewMoreTarget.targetType
+            }
+            
+            headerView.titleLabel.text = layoutFiveModel.sectionTitle
+            headerView.updateTitleLine()
+        } else if self.homePageModel.data[indexPath.section].isKindOfClass(LayoutSevenModel) {
+            let layoutSevenModel: LayoutSevenModel = self.homePageModel.data[indexPath.section] as! LayoutSevenModel
+            if layoutSevenModel.isViewMoreAvailable {
+                headerView.target = layoutSevenModel.viewMoreTarget.targetUrl
+                headerView.targetType = layoutSevenModel.viewMoreTarget.targetType
+            }
+            
+            headerView.titleLabel.text = layoutSevenModel.sectionTitle
+            headerView.updateTitleLine()
+        }
+        
         return headerView
     }
     
@@ -780,6 +813,28 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     func verticalImageCollectionViewCellWithIndexPath(indexPath: NSIndexPath) -> VerticalImageCollectionViewCell {
         let verticalImageCollectionViewCell: VerticalImageCollectionViewCell = self.collectionView?.dequeueReusableCellWithReuseIdentifier(self.verticalImageNibName
             , forIndexPath: indexPath) as! VerticalImageCollectionViewCell
+
+        if self.homePageModel.data[indexPath.section].isKindOfClass(LayoutFiveModel) {
+            let layoutFiveModel: LayoutFiveModel = self.homePageModel.data[indexPath.section] as! LayoutFiveModel
+            verticalImageCollectionViewCell.productItemImageView.sd_setImageWithURL(NSURL(string: layoutFiveModel.data[indexPath.row].image), placeholderImage: UIImage(named: self.placeHolder))
+            
+            verticalImageCollectionViewCell.productNameLabel.text = layoutFiveModel.data[indexPath.row].name
+            verticalImageCollectionViewCell.discountedPriceLabel.text = layoutFiveModel.data[indexPath.row].discountedPrice.formatToPeso()
+            verticalImageCollectionViewCell.discountPercentageLabel.text = layoutFiveModel.data[indexPath.row].discountPercentage.formatToPercentage()
+            
+            verticalImageCollectionViewCell.target = layoutFiveModel.data[indexPath.row].target.targetUrl
+            verticalImageCollectionViewCell.targetType = layoutFiveModel.data[indexPath.row].target.targetType
+        } else if self.homePageModel.data[indexPath.section].isKindOfClass(LayoutSevenModel) {
+            let layoutSevenModel: LayoutSevenModel = self.homePageModel.data[indexPath.section] as! LayoutSevenModel
+            verticalImageCollectionViewCell.productItemImageView.sd_setImageWithURL(NSURL(string: layoutSevenModel.data[indexPath.row].image), placeholderImage: UIImage(named: self.placeHolder))
+            
+            verticalImageCollectionViewCell.productNameLabel.text = layoutSevenModel.data[indexPath.row].name
+            verticalImageCollectionViewCell.discountedPriceLabel.text = layoutSevenModel.data[indexPath.row].discountedPrice.formatToPeso()
+            verticalImageCollectionViewCell.discountPercentageLabel.text = layoutSevenModel.data[indexPath.row].discountPercentage.formatToPercentage()
+            
+            verticalImageCollectionViewCell.target = layoutSevenModel.data[indexPath.row].target.targetUrl
+            verticalImageCollectionViewCell.targetType = layoutSevenModel.data[indexPath.row].target.targetType
+        }
         
         return verticalImageCollectionViewCell
     }
@@ -788,24 +843,54 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     func halfVerticalImageCollectionViewCellWithIndexPath(indexPath: NSIndexPath) -> HalfVerticalImageCollectionViewCell {
         let halfVerticalImageCollectionViewCell: HalfVerticalImageCollectionViewCell = self.collectionView?.dequeueReusableCellWithReuseIdentifier(self.halfVerticalNibName, forIndexPath: indexPath) as! HalfVerticalImageCollectionViewCell
         
+        if self.homePageModel.data[indexPath.section].isKindOfClass(LayoutFiveModel) {
+            let layoutFiveModel: LayoutFiveModel = self.homePageModel.data[indexPath.section] as! LayoutFiveModel
+            halfVerticalImageCollectionViewCell.productItemImageView.sd_setImageWithURL(NSURL(string: layoutFiveModel.data[indexPath.row].image), placeholderImage: UIImage(named: self.placeHolder))
+            
+            halfVerticalImageCollectionViewCell.productNameLabel.text = layoutFiveModel.data[indexPath.row].name
+            halfVerticalImageCollectionViewCell.discountedPriceLabel.text = layoutFiveModel.data[indexPath.row].discountedPrice.formatToPeso()
+            halfVerticalImageCollectionViewCell.discountPercentageLabel.text = layoutFiveModel.data[indexPath.row].discountPercentage.formatToPercentage()
+            
+            halfVerticalImageCollectionViewCell.target = layoutFiveModel.data[indexPath.row].target.targetUrl
+            halfVerticalImageCollectionViewCell.targetType = layoutFiveModel.data[indexPath.row].target.targetType
+        } else if self.homePageModel.data[indexPath.section].isKindOfClass(LayoutSevenModel) {
+            let layoutSevenModel: LayoutSevenModel = self.homePageModel.data[indexPath.section] as! LayoutSevenModel
+            halfVerticalImageCollectionViewCell.productItemImageView.sd_setImageWithURL(NSURL(string: layoutSevenModel.data[indexPath.row].image), placeholderImage: UIImage(named: self.placeHolder))
+            
+            halfVerticalImageCollectionViewCell.productNameLabel.text = layoutSevenModel.data[indexPath.row].name
+            halfVerticalImageCollectionViewCell.discountedPriceLabel.text = layoutSevenModel.data[indexPath.row].discountedPrice.formatToPeso()
+            halfVerticalImageCollectionViewCell.discountPercentageLabel.text = layoutSevenModel.data[indexPath.row].discountPercentage.formatToPercentage()
+            
+            halfVerticalImageCollectionViewCell.target = layoutSevenModel.data[indexPath.row].target.targetUrl
+            halfVerticalImageCollectionViewCell.targetType = layoutSevenModel.data[indexPath.row].target.targetType
+        }
+
         return halfVerticalImageCollectionViewCell
     }
     
     //MARK: - Header View Delegate
     func layoutHeaderCollectionViewCellDidSelectViewMore(layoutHeaderCollectionViewCell: LayoutHeaderCollectionViewCell) {
-        println("view more selected!!!")
+        println(layoutHeaderCollectionViewCell.target)
     }
     
     //MARK: - Full Image Collection View Cell
     func fullImageCollectionViewCellWithIndexPath(indexPath: NSIndexPath, fullImageCollectionView: UICollectionView) -> FullImageCollectionViewCell {
         let fullImageCollectionViewCell: FullImageCollectionViewCell = fullImageCollectionView.dequeueReusableCellWithReuseIdentifier(self.fullImageCellNib, forIndexPath: indexPath) as! FullImageCollectionViewCell
         
-        let layoutOneModel: LayoutOneModel = self.homePageModel.data[indexPath.section] as! LayoutOneModel
-        
-        fullImageCollectionViewCell.target = layoutOneModel.data[indexPath.row].target.targetUrl
-        fullImageCollectionViewCell.targetType = layoutOneModel.data[indexPath.row].target.targetType
-        fullImageCollectionViewCell.itemProductImageView.sd_setImageWithURL(NSURL(string: layoutOneModel.data[indexPath.row].image), placeholderImage: UIImage(named: placeHolder))
-        
+        if self.homePageModel.data[indexPath.section].isKindOfClass(LayoutOneModel) {
+            let layoutOneModel: LayoutOneModel = self.homePageModel.data[indexPath.section] as! LayoutOneModel
+            
+            fullImageCollectionViewCell.target = layoutOneModel.data[indexPath.row].target.targetUrl
+            fullImageCollectionViewCell.targetType = layoutOneModel.data[indexPath.row].target.targetType
+            fullImageCollectionViewCell.itemProductImageView.sd_setImageWithURL(NSURL(string: layoutOneModel.data[indexPath.row].image), placeholderImage: UIImage(named: placeHolder))
+        } else if self.homePageModel.data[indexPath.section].isKindOfClass(LayoutSixModel) {
+            let layoutSixModel: LayoutSixModel = self.homePageModel.data[indexPath.section] as! LayoutSixModel
+            
+            fullImageCollectionViewCell.target = layoutSixModel.data[indexPath.row].target.targetUrl
+            fullImageCollectionViewCell.targetType = layoutSixModel.data[indexPath.row].target.targetType
+            fullImageCollectionViewCell.itemProductImageView.sd_setImageWithURL(NSURL(string: layoutSixModel.data[indexPath.row].image), placeholderImage: UIImage(named: placeHolder))
+        }
+     
         return fullImageCollectionViewCell
     }
     

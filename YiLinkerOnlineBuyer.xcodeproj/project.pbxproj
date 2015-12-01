@@ -134,6 +134,9 @@
 		0C65BBB01C019A0800C66C39 /* NetTotalTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C65BBAE1C019A0800C66C39 /* NetTotalTableViewCell.xib */; };
 		0C677BD11BA03EFA007D8E03 /* GuestCheckoutTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C677BCF1BA03EFA007D8E03 /* GuestCheckoutTableViewCell.swift */; };
 		0C677BD21BA03EFA007D8E03 /* GuestCheckoutTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C677BD01BA03EFA007D8E03 /* GuestCheckoutTableViewCell.xib */; };
+		0C6ABA331C0D3B70003DFFA3 /* LayoutFiveModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C6ABA321C0D3B70003DFFA3 /* LayoutFiveModel.swift */; };
+		0C6ABA351C0D4FDF003DFFA3 /* LayoutSixModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C6ABA341C0D4FDF003DFFA3 /* LayoutSixModel.swift */; };
+		0C6ABA371C0D5B89003DFFA3 /* LayoutSevenModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C6ABA361C0D5B89003DFFA3 /* LayoutSevenModel.swift */; };
 		0C6D45DD1BF4692900D330DB /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C6D45DB1BF4692900D330DB /* WebViewController.swift */; };
 		0C6D45DE1BF4692900D330DB /* WebViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C6D45DC1BF4692900D330DB /* WebViewController.xib */; };
 		0C6EFF2C1C0C795800064F69 /* LayoutFourModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C6EFF2B1C0C795800064F69 /* LayoutFourModel.swift */; };
@@ -625,6 +628,9 @@
 		0C65BBAE1C019A0800C66C39 /* NetTotalTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NetTotalTableViewCell.xib; sourceTree = "<group>"; };
 		0C677BCF1BA03EFA007D8E03 /* GuestCheckoutTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuestCheckoutTableViewCell.swift; sourceTree = "<group>"; };
 		0C677BD01BA03EFA007D8E03 /* GuestCheckoutTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = GuestCheckoutTableViewCell.xib; path = ../View/GuestCheckoutTableViewCell.xib; sourceTree = "<group>"; };
+		0C6ABA321C0D3B70003DFFA3 /* LayoutFiveModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayoutFiveModel.swift; sourceTree = "<group>"; };
+		0C6ABA341C0D4FDF003DFFA3 /* LayoutSixModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayoutSixModel.swift; sourceTree = "<group>"; };
+		0C6ABA361C0D5B89003DFFA3 /* LayoutSevenModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayoutSevenModel.swift; sourceTree = "<group>"; };
 		0C6D45DB1BF4692900D330DB /* WebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		0C6D45DC1BF4692900D330DB /* WebViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = WebViewController.xib; path = ../ViewController/WebViewController.xib; sourceTree = "<group>"; };
 		0C6EFF2B1C0C795800064F69 /* LayoutFourModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayoutFourModel.swift; sourceTree = "<group>"; };
@@ -1031,6 +1037,9 @@
 				0C144DE01C083694000728B4 /* LayoutThreeModel.swift */,
 				0C6EFF2B1C0C795800064F69 /* LayoutFourModel.swift */,
 				0C6EFF2D1C0C95E000064F69 /* HomeProductModel.swift */,
+				0C6ABA321C0D3B70003DFFA3 /* LayoutFiveModel.swift */,
+				0C6ABA341C0D4FDF003DFFA3 /* LayoutSixModel.swift */,
+				0C6ABA361C0D5B89003DFFA3 /* LayoutSevenModel.swift */,
 			);
 			name = HomeModel;
 			sourceTree = "<group>";
@@ -2119,6 +2128,7 @@
 				F7C569BD1BB1762C004740E1 /* TransactionPurchaseDetailsView.swift in Sources */,
 				0C4E5CD31BA1873E0098224A /* RegisterModalViewController.swift in Sources */,
 				F7C637CF1BD9F81A00C29C47 /* TransactionDeliveryLogTableViewController.swift in Sources */,
+				0C6ABA371C0D5B89003DFFA3 /* LayoutSevenModel.swift in Sources */,
 				0C144DE11C083694000728B4 /* LayoutThreeModel.swift in Sources */,
 				26D688C61C021DA7003ED151 /* MapTableViewCell.swift in Sources */,
 				0C1003F41B87629400CAA17A /* NewAddressTableViewCell.swift in Sources */,
@@ -2169,6 +2179,7 @@
 				0C99375F1B750583000D6074 /* SearchViewController.swift in Sources */,
 				0CCA7DF51C0736A100071DD4 /* LayoutNineCollectionViewCell.swift in Sources */,
 				F7C56A051BB1790A004740E1 /* TransactionViewController.swift in Sources */,
+				0C6ABA331C0D3B70003DFFA3 /* LayoutFiveModel.swift in Sources */,
 				0C6D45DD1BF4692900D330DB /* WebViewController.swift in Sources */,
 				0C6EFF2C1C0C795800064F69 /* LayoutFourModel.swift in Sources */,
 				0C538AE71B99F37D00EB64AB /* OrderedProductsModel.swift in Sources */,
@@ -2362,6 +2373,7 @@
 				0C99375B1B750583000D6074 /* CartViewController.swift in Sources */,
 				79F2F55B1B85FD9D00F57E4B /* FilterViewController.swift in Sources */,
 				0C9937571B750583000D6074 /* SemiRoundedButton.swift in Sources */,
+				0C6ABA351C0D4FDF003DFFA3 /* LayoutSixModel.swift in Sources */,
 				F70EFB271BC6BFB40077B8ED /* TransactionLeaveSellerFeedbackTableViewController.swift in Sources */,
 				2689FBFC1B81856B007BEA68 /* ProductUnitsModel.swift in Sources */,
 				F7C569F71BB1790A004740E1 /* TransactionCancelOrderStatusViewController.swift in Sources */,

@@ -43,6 +43,12 @@ class HomePageModel: NSObject {
                 data.append(LayoutThreeModel.parseDataFromDictionary(sectionDictionary))
             } else if layoutId == 4 {
                 data.append(LayoutFourModel.parseDataFromDictionary(sectionDictionary))
+            } else if layoutId == 5 {
+                data.append(LayoutFiveModel.parseDataFromDictionary(sectionDictionary))
+            } else if layoutId == 6 {
+                data.append(LayoutSixModel.parseDataFromDictionary(sectionDictionary))
+            } else if layoutId == 7 {
+                data.append(LayoutSevenModel.parseDataFromDictionary(sectionDictionary))
             }
         }
         
