@@ -90,6 +90,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     var lastContentOffset: CGFloat = 0.0
     
     var canShowExtendedDetails: Bool = false
+    var hideBottomButtons: Bool = true
     
     // MARK: Request Checker
     var productRequest = false
@@ -108,7 +109,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     
     var unitIdIndex: Int = 0
     var isExiting: Bool = true
-    
+    var isFromCart: Bool = false
     @IBOutlet weak var closeButton: UIView!
     
     // Messaging
@@ -155,6 +156,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         tap.addTarget(self, action: "closeAction:")
         self.closeButton.addGestureRecognizer(tap)
 //        self.closeButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "closeAction:"))
+
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -241,13 +243,13 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         }
 
         // reached top or bottom
-        if scrollView.contentOffset.y <= 0.0 {
-            visibility = 0.0
-            canShowExtendedDetails = false
-        } else if scrollView.contentOffset.y + scrollView.frame.size.height == scrollView.contentSize.height {
-            visibility = 1.0
-            canShowExtendedDetails = true
-        }
+//        if scrollView.contentOffset.y <= 0.0 {
+//            visibility = 0.0
+//            canShowExtendedDetails = false
+//        } else if scrollView.contentOffset.y + scrollView.frame.size.height == scrollView.contentSize.height {
+//            visibility = 1.0
+//            canShowExtendedDetails = true
+//        }
 
         self.navigationController?.navigationBar.alpha = CGFloat(visibility)
         self.lastContentOffset = scrollView.contentOffset.y
@@ -795,7 +797,11 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
             self.closeButton.removeFromSuperview()
         }
         self.tableView.hidden = false
-        self.buttonsContainer.hidden = false
+        self.buttonsContainer.hidden = hideBottomButtons
+        
+        if hideBottomButtons {
+            
+        }
         
         self.getHeaderView().addSubview(self.getProductImagesView())
         self.getHeaderView().addSubview(self.getProductDetailsView())
