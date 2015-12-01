@@ -108,7 +108,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     
     var unitIdIndex: Int = 0
     var isExiting: Bool = true
-    
+    var isFromCart: Bool = false
     @IBOutlet weak var closeButton: UIView!
     
     // Messaging
@@ -155,6 +155,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         tap.addTarget(self, action: "closeAction:")
         self.closeButton.addGestureRecognizer(tap)
 //        self.closeButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "closeAction:"))
+
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -243,10 +244,10 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         // reached top or bottom
         if scrollView.contentOffset.y <= 0.0 {
             visibility = 0.0
-            canShowExtendedDetails = false
+//            canShowExtendedDetails = false
         } else if scrollView.contentOffset.y + scrollView.frame.size.height == scrollView.contentSize.height {
             visibility = 1.0
-            canShowExtendedDetails = true
+//            canShowExtendedDetails = true
         }
 
         self.navigationController?.navigationBar.alpha = CGFloat(visibility)
@@ -489,7 +490,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     func requestSellerDetails() {
         
         let params = ["userId": self.productDetailsModel.sellerId]
-        println(params)
+
         manager.POST(APIAtlas.getSellerInfo, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
 
@@ -797,6 +798,13 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         self.tableView.hidden = false
         self.buttonsContainer.hidden = false
         
+        if isFromCart {
+            let dimButtonsView: UIView = UIView(frame: self.buttonsContainer.bounds)
+            dimButtonsView.backgroundColor = .blackColor()
+            dimButtonsView.alpha = 0.5
+            self.buttonsContainer.addSubview(dimButtonsView)
+        }
+
         self.getHeaderView().addSubview(self.getProductImagesView())
         self.getHeaderView().addSubview(self.getProductDetailsView())
         self.getHeaderView().addSubview(self.getProductAttributeView())
