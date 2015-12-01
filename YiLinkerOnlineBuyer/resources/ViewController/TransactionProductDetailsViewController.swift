@@ -272,7 +272,7 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
     //MARK: Transaction Description Delegate Method
     func getProductDescription(desc: String) {
         let description = ProductDescriptionViewController(nibName: "ProductDescriptionViewController", bundle: nil)
-        description.url = desc
+        description.url = self.transactionProductDetailsModel.longDescription
         description.title = self.descriptionProductTitle
         let root: UINavigationController = UINavigationController(rootViewController: description)
         self.tabBarController?.presentViewController(root, animated: true, completion: nil)
