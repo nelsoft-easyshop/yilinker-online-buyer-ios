@@ -253,13 +253,13 @@
 		26D688BF1C01B848003ED151 /* UserMapView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26D688BE1C01B848003ED151 /* UserMapView.xib */; };
 		26D688C21C021614003ED151 /* ProductDetailsExtendedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26D688C01C021614003ED151 /* ProductDetailsExtendedViewController.swift */; };
 		26D688C31C021614003ED151 /* ProductDetailsExtendedViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26D688C11C021614003ED151 /* ProductDetailsExtendedViewController.xib */; };
+		26D688C61C021DA7003ED151 /* MapTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26D688C41C021DA7003ED151 /* MapTableViewCell.swift */; };
+		26D688C71C021DA7003ED151 /* MapTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26D688C51C021DA7003ED151 /* MapTableViewCell.xib */; };
 		26D688C91C022E54003ED151 /* ProductDetailsBottomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26D688C81C022E54003ED151 /* ProductDetailsBottomView.swift */; };
 		26D688CC1C02E92D003ED151 /* FullScreenImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26D688CA1C02E92D003ED151 /* FullScreenImageCollectionViewCell.swift */; };
 		26D688CD1C02E92D003ED151 /* FullScreenImageCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26D688CB1C02E92D003ED151 /* FullScreenImageCollectionViewCell.xib */; };
 		26D688CF1C047389003ED151 /* ProductDetailsExtendedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26D688CE1C047389003ED151 /* ProductDetailsExtendedView.swift */; };
 		26D688D11C0475C4003ED151 /* ProductDetailsExtendedView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26D688D01C0475C4003ED151 /* ProductDetailsExtendedView.xib */; };
-		26D688C61C021DA7003ED151 /* MapTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26D688C41C021DA7003ED151 /* MapTableViewCell.swift */; };
-		26D688C71C021DA7003ED151 /* MapTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26D688C51C021DA7003ED151 /* MapTableViewCell.xib */; };
 		26DB062E1B981CF300D38EA8 /* ProductImagesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26DB062D1B981CF300D38EA8 /* ProductImagesModel.swift */; };
 		790B4BFE1BD8832C00E46AE7 /* VerifyMobileNumberInputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 790B4BFC1BD8832C00E46AE7 /* VerifyMobileNumberInputViewController.swift */; };
 		790B4BFF1BD8832C00E46AE7 /* VerifyMobileNumberInputViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 790B4BFD1BD8832C00E46AE7 /* VerifyMobileNumberInputViewController.xib */; };
@@ -738,13 +738,13 @@
 		26D688BE1C01B848003ED151 /* UserMapView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = UserMapView.xib; path = YiLinkerOnlineBuyer/resources/ViewController/UserMapView.xib; sourceTree = SOURCE_ROOT; };
 		26D688C01C021614003ED151 /* ProductDetailsExtendedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProductDetailsExtendedViewController.swift; path = YiLinkerOnlineBuyer/resources/ViewController/ProductDetailsExtendedViewController.swift; sourceTree = SOURCE_ROOT; };
 		26D688C11C021614003ED151 /* ProductDetailsExtendedViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProductDetailsExtendedViewController.xib; path = YiLinkerOnlineBuyer/resources/ViewController/ProductDetailsExtendedViewController.xib; sourceTree = SOURCE_ROOT; };
+		26D688C41C021DA7003ED151 /* MapTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MapTableViewCell.swift; path = YiLinkerOnlineBuyer/resources/View/MapTableViewCell.swift; sourceTree = SOURCE_ROOT; };
+		26D688C51C021DA7003ED151 /* MapTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MapTableViewCell.xib; path = YiLinkerOnlineBuyer/resources/View/MapTableViewCell.xib; sourceTree = SOURCE_ROOT; };
 		26D688C81C022E54003ED151 /* ProductDetailsBottomView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProductDetailsBottomView.swift; path = YiLinkerOnlineBuyer/resources/ViewController/ProductDetailsBottomView.swift; sourceTree = SOURCE_ROOT; };
 		26D688CA1C02E92D003ED151 /* FullScreenImageCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FullScreenImageCollectionViewCell.swift; path = YiLinkerOnlineBuyer/resources/ViewController/FullScreenImageCollectionViewCell.swift; sourceTree = SOURCE_ROOT; };
 		26D688CB1C02E92D003ED151 /* FullScreenImageCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = FullScreenImageCollectionViewCell.xib; path = YiLinkerOnlineBuyer/resources/ViewController/FullScreenImageCollectionViewCell.xib; sourceTree = SOURCE_ROOT; };
 		26D688CE1C047389003ED151 /* ProductDetailsExtendedView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProductDetailsExtendedView.swift; path = YiLinkerOnlineBuyer/resources/ViewController/ProductDetailsExtendedView.swift; sourceTree = SOURCE_ROOT; };
 		26D688D01C0475C4003ED151 /* ProductDetailsExtendedView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProductDetailsExtendedView.xib; path = YiLinkerOnlineBuyer/resources/ViewController/ProductDetailsExtendedView.xib; sourceTree = SOURCE_ROOT; };
-		26D688C41C021DA7003ED151 /* MapTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MapTableViewCell.swift; path = YiLinkerOnlineBuyer/resources/View/MapTableViewCell.swift; sourceTree = SOURCE_ROOT; };
-		26D688C51C021DA7003ED151 /* MapTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MapTableViewCell.xib; path = YiLinkerOnlineBuyer/resources/View/MapTableViewCell.xib; sourceTree = SOURCE_ROOT; };
 		26DB062D1B981CF300D38EA8 /* ProductImagesModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProductImagesModel.swift; path = YiLinkerOnlineBuyer/resources/Model/ProductImagesModel.swift; sourceTree = SOURCE_ROOT; };
 		5D038C18A7712E626564D2D3 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		790B4BFC1BD8832C00E46AE7 /* VerifyMobileNumberInputViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VerifyMobileNumberInputViewController.swift; path = YiLinkerOnlineBuyer/resources/ViewController/VerifyMobileNumberInputViewController.swift; sourceTree = SOURCE_ROOT; };
@@ -2459,8 +2459,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: NELSON LIAO (XY4U9PK7G5)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: NELSON LIAO (XY4U9PK7G5)";
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2469,7 +2469,7 @@
 				INFOPLIST_FILE = YiLinkerOnlineBuyer/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "496e1c12-7e93-4944-8aab-308d1147ec5d";
+				PROVISIONING_PROFILE = "2dd3d9c4-793a-4d99-9d55-59a22f313cdc";
 				SWIFT_OBJC_BRIDGING_HEADER = "YiLinkerOnlineBuyer/Resources/Helper/YiLinkerOnlineBuyer-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -2481,8 +2481,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: NELSON LIAO (XY4U9PK7G5)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: NELSON LIAO (XY4U9PK7G5)";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2496,7 +2496,7 @@
 					"\"${PODS_ROOT}/Google/Libraries” $(inherited) \"${PODS_ROOT}/GoogleAppUtilities/Libraries\" $(inherited) \"${PODS_ROOT}/GoogleAuthUtilities/Libraries\" $(inherited) \"${PODS_ROOT}/GoogleInterchangeUtilities/Libraries\" $(inherited) \"${PODS_ROOT}/GoogleNetworkingUtilities/Libraries\" $(inherited) \"${PODS_ROOT}/GoogleSignIn/Libraries\" $(inherited) \"${PODS_ROOT}/GoogleSymbolUtilities/Libraries\" $(inherited) \"${PODS_ROOT}/GoogleUtilities/Libraries\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "496e1c12-7e93-4944-8aab-308d1147ec5d";
+				PROVISIONING_PROFILE = "2dd3d9c4-793a-4d99-9d55-59a22f313cdc";
 				SWIFT_OBJC_BRIDGING_HEADER = "YiLinkerOnlineBuyer/Resources/Helper/YiLinkerOnlineBuyer-Bridging-Header.h";
 			};
 			name = Release;
