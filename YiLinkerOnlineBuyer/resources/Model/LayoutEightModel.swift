@@ -1,25 +1,25 @@
 //
-//  LayoutOneModel.swift
+//  LayoutEightModel.swift
 //  YiLinkerOnlineBuyer
 //
-//  Created by Alvin John Tandoc on 11/27/15.
+//  Created by Alvin John Tandoc on 12/1/15.
 //  Copyright (c) 2015 yiLinker-online-buyer. All rights reserved.
 //
 
 import UIKit
 
-class LayoutSevenModel: NSObject {
+class LayoutEightModel: NSObject {
     var layoutId: Int = 0
     var sectionTitle: String = ""
     var isViewMoreAvailable: Bool = false
     var viewMoreTarget: TargetModel = TargetModel()
-    var data: [HomeProductModel] = []
+    var data: [HomeSellerModel] = []
     
     override init() {
         
     }
     
-    init(layoutId: Int, sectionTitle: String, isViewMoreAvailable: Bool, viewMoreTarget: TargetModel, data: [HomeProductModel]) {
+    init(layoutId: Int, sectionTitle: String, isViewMoreAvailable: Bool, viewMoreTarget: TargetModel, data: [HomeSellerModel]) {
         self.layoutId = layoutId
         self.sectionTitle = sectionTitle
         self.isViewMoreAvailable = isViewMoreAvailable
@@ -27,13 +27,13 @@ class LayoutSevenModel: NSObject {
         self.data = data
     }
     
-    class func parseDataFromDictionary(dictionary: NSDictionary) -> LayoutSevenModel {
+    class func parseDataFromDictionary(dictionary: NSDictionary) -> LayoutEightModel {
+        
         var layoutId: Int = 0
         var sectionTitle: String = ""
         var isViewMoreAvailable: Bool = false
         var viewMoreTarget: TargetModel = TargetModel()
-        var remainingTime: String = ""
-        var data: [HomeProductModel] = []
+        var data: [HomeSellerModel] = []
         
         if let temp = dictionary["layoutId"] as? Int {
             layoutId = temp
@@ -51,12 +51,12 @@ class LayoutSevenModel: NSObject {
             viewMoreTarget = TargetModel.parseDataFromDictionary(temp)
         }
         
-        if let temps = dictionary["data"] as? [NSDictionary] {
-            for temp in temps {
-                data.append(HomeProductModel.parseDataFromDictionary(temp))
+        if let dictionaries = dictionary["data"] as? [NSDictionary] {
+            for tempDictionary in dictionaries {
+                data.append(HomeSellerModel.parseDataFromDictionary(tempDictionary))
             }
         }
         
-        return LayoutSevenModel(layoutId: layoutId, sectionTitle: sectionTitle, isViewMoreAvailable: isViewMoreAvailable, viewMoreTarget: viewMoreTarget, data: data)
+        return LayoutEightModel(layoutId: layoutId, sectionTitle: sectionTitle, isViewMoreAvailable: isViewMoreAvailable, viewMoreTarget: viewMoreTarget, data: data)
     }
 }

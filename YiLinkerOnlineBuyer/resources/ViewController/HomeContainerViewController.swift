@@ -154,6 +154,8 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                 self.layouts.append("6")
             } else if model.isKindOfClass(LayoutSevenModel) {
                 self.layouts.append("7")
+            } else if model.isKindOfClass(LayoutEightModel) {
+                self.layouts.append("8")
             }
         }
         
@@ -548,6 +550,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             
             headerView.titleLabel.text = layoutFiveModel.sectionTitle
             headerView.updateTitleLine()
+            headerView.backgroundColor = UIColor.whiteColor()
         } else if self.homePageModel.data[indexPath.section].isKindOfClass(LayoutSevenModel) {
             let layoutSevenModel: LayoutSevenModel = self.homePageModel.data[indexPath.section] as! LayoutSevenModel
             if layoutSevenModel.isViewMoreAvailable {
@@ -557,6 +560,17 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             
             headerView.titleLabel.text = layoutSevenModel.sectionTitle
             headerView.updateTitleLine()
+            headerView.backgroundColor = UIColor.whiteColor()
+        }  else if self.homePageModel.data[indexPath.section].isKindOfClass(LayoutEightModel) {
+            let layoutEightModel: LayoutEightModel = self.homePageModel.data[indexPath.section] as! LayoutEightModel
+            if layoutEightModel.isViewMoreAvailable {
+                headerView.target = layoutEightModel.viewMoreTarget.targetUrl
+                headerView.targetType = layoutEightModel.viewMoreTarget.targetType
+            }
+            
+            headerView.titleLabel.text = layoutEightModel.sectionTitle
+            headerView.updateTitleLine()
+            headerView.backgroundColor = UIColor.clearColor()
         }
         
         return headerView
@@ -934,18 +948,38 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     
     //MARK: - Seller Carousel Data Source
     func sellerCarouselCollectionViewCell(sellerCarouselCollectionViewCell: SellerCarouselCollectionViewCell, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        let parentIndexPath: NSIndexPath = self.collectionView.indexPathForCell(sellerCarouselCollectionViewCell)!
+        let layoutEightModel: LayoutEightModel = self.homePageModel.data[parentIndexPath.section] as! LayoutEightModel
+        return layoutEightModel.data.count
     }
     
     func sellerCarouselCollectionViewCell(sellerCarouselCollectionViewCell: SellerCarouselCollectionViewCell, cellForRowAtIndexPath indexPath: NSIndexPath) -> SellerCollectionViewCell {
+        let parentIndexPath: NSIndexPath = self.collectionView.indexPathForCell(sellerCarouselCollectionViewCell)!
+        let layoutEightModel: LayoutEightModel = self.homePageModel.data[parentIndexPath.section] as! LayoutEightModel
         
         let sellerCollectionView: SellerCollectionViewCell = sellerCarouselCollectionViewCell.collectionView?.dequeueReusableCellWithReuseIdentifier(self.sellerNibName, forIndexPath: indexPath) as! SellerCollectionViewCell
         
-        sellerCollectionView.productOneImageView.target = "target: 1"
-        sellerCollectionView.productTwoImageView.target = "target: 2"
-        sellerCollectionView.productThreeImageView.target = "target 3"
+        sellerCollectionView.productOneImageView.target = layoutEightModel.data[indexPath.row].data[0].target.targetUrl
+        sellerCollectionView.productTwoImageView.target = layoutEightModel.data[indexPath.row].data[1].target.targetUrl
+        sellerCollectionView.productThreeImageView.target = layoutEightModel.data[indexPath.row].data[2].target.targetUrl
+        
+        sellerCollectionView.productOneImageView.targetType = layoutEightModel.data[indexPath.row].data[0].target.targetType
+        sellerCollectionView.productTwoImageView.targetType = layoutEightModel.data[indexPath.row].data[1].target.targetType
+        sellerCollectionView.productThreeImageView.targetType = layoutEightModel.data[indexPath.row].data[2].target.targetType
+        
+        sellerCollectionView.sellerProfileImageView.sd_setImageWithURL(NSURL(string: layoutEightModel.data[indexPath.row].image), placeholderImage: UIImage(named: self.placeHolder))
+        
+        sellerCollectionView.productOneImageView.sd_setImageWithURL(NSURL(string: layoutEightModel.data[indexPath.row].data[0].image), placeholderImage: UIImage(named: self.placeHolder))
+        sellerCollectionView.productTwoImageView.sd_setImageWithURL(NSURL(string: layoutEightModel.data[indexPath.row].data[1].image), placeholderImage: UIImage(named: self.placeHolder))
+        sellerCollectionView.productThreeImageView.sd_setImageWithURL(NSURL(string: layoutEightModel.data[indexPath.row].data[2].image), placeholderImage: UIImage(named: self.placeHolder))
+        
+        sellerCollectionView.target = layoutEightModel.data[indexPath.row].target.targetUrl
+        sellerCollectionView.targetType = layoutEightModel.data[indexPath.row].target.targetType
         
         sellerCollectionView.sellerProfileImageView.userInteractionEnabled = false
+        
+        sellerCollectionView.sellerTitleLabel.text = layoutEightModel.data[indexPath.row].name
+        sellerCollectionView.sellerSubTitleLabel.text = layoutEightModel.data[indexPath.row].specialty
         
         self.addGestureToSellerProduct(sellerCollectionView.productOneImageView)
         self.addGestureToSellerProduct(sellerCollectionView.productTwoImageView)
@@ -961,9 +995,12 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     }
     
     func sellerCarouselCollectionViewCellnumberOfDotsInPageControl(sellerCarouselCollectionViewCell: SellerCarouselCollectionViewCell) -> Int {
-        var numberOfPages: CGFloat = CGFloat(5 / 2)
+        let parentIndexPath: NSIndexPath = self.collectionView.indexPathForCell(sellerCarouselCollectionViewCell)!
+        let layoutEightModel: LayoutEightModel = self.homePageModel.data[parentIndexPath.section] as! LayoutEightModel
         
-        if fmod(numberOfPages, 1.0) == 0.0 {
+        var numberOfPages: CGFloat = CGFloat(layoutEightModel.data.count) / 2.0
+        
+        if fmod(numberOfPages, 1.0) != 0.0 {
             numberOfPages = numberOfPages + 1
         }
         
@@ -972,7 +1009,8 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     
     //MARK: - Seller Carousel Delegate
     func sellerCarouselCollectionViewCell(sellerCarouselCollectionViewCell: SellerCarouselCollectionViewCell, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        println("select index: \(indexPath.row)")
+        let sellerCollectionViewCell: SellerCollectionViewCell = sellerCarouselCollectionViewCell.collectionView.cellForItemAtIndexPath(indexPath) as! SellerCollectionViewCell
+        println(sellerCollectionViewCell.target)
     }
     
     func sellerCarouselCollectionViewCellDidEndDecelerating(sellerCarouselCollectionViewCell: SellerCarouselCollectionViewCell) {

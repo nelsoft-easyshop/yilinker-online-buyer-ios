@@ -4,6 +4,9 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
     <customFonts key="customFonts">
+        <mutableArray key="Panton Bold.otf">
+            <string>Panton-Bold</string>
+        </mutableArray>
         <mutableArray key="Panton SemiBold.otf">
             <string>Panton-SemiBold</string>
         </mutableArray>
@@ -23,7 +26,7 @@
                             <constraint firstAttribute="height" constant="21" id="OWn-fQ-b5x"/>
                             <constraint firstAttribute="width" constant="184" id="cIt-xZ-o6w"/>
                         </constraints>
-                        <fontDescription key="fontDescription" type="system" weight="thin" pointSize="17"/>
+                        <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="17"/>
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>

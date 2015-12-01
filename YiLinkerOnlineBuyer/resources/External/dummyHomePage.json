@@ -333,15 +333,15 @@
                       {
                       "name": "YiStore",
                       "specialty": "Electronics and Gadgets",
-                      "image": "www.yilinker.com/assets/images/apple.jpg",
+                      "image": "http://media.dunkedcdn.com/assets/prod/58321/400x300-2_p19o2jv2ee1abg9jpa8nu6v9ssr.jpg",
                       "data": [
                                {
-                               "name": "Samsung G4",
+                               "name": "Apple Watch",
                                "originalPrice": "1000.00",
                                "discountedPrice": "800.00",
                                "discountPercentage": "20",
                                "currency": "PHP",
-                               "image": "www.yilinker.com/assets/images/apple.jpg",
+                               "image": "http://www.extremetech.com/wp-content/uploads/2014/09/apple-watch-round-concept.jpg",
                                "target": {
                                "targetUrl": "http://www.jsoneditoronline.org/",
                                "targetType": "webView",
@@ -349,25 +349,25 @@
                                }
                                },
                                {
-                               "name": "Samsung G4",
+                               "name": "Samsung Edge",
                                "originalPrice": "1000.00",
                                "discountedPrice": "800.00",
                                "discountPercentage": "20",
                                "currency": "PHP",
                                "image": "www.yilinker.com/assets/images/apple.jpg",
                                "target": {
-                               "targetUrl": "http://www.jsoneditoronline.org/",
+                               "targetUrl": "http://www.samsung.com/uk/discover/multimedia/article_images/accessories_zero-hero-image-v1.jpg",
                                "targetType": "webView",
                                "isAuthenticated": false
                                }
                                },
                                {
-                               "name": "Samsung G4",
+                               "name": "Moto 360",
                                "originalPrice": "1000.00",
                                "discountedPrice": "800.00",
                                "discountPercentage": "20",
                                "currency": "PHP",
-                               "image": "www.yilinker.com/assets/images/apple.jpg",
+                               "image": "http://www.droid-life.com/wp-content/uploads/2014/05/moto-360-concepts-119.jpg",
                                "target": {
                                "targetUrl": "http://www.jsoneditoronline.org/",
                                "targetType": "webView",
@@ -382,17 +382,17 @@
                       }
                       },
                       {
-                      "name": "YiStore",
-                      "specialty": "Electronics and Gadgets",
+                      "name": "Easyshop.ph",
+                      "specialty": "Dress",
                       "image": "www.yilinker.com/assets/images/apple.jpg",
                       "data": [
                                {
-                               "name": "Samsung G4",
+                               "name": "Dress 1",
                                "originalPrice": "1000.00",
                                "discountedPrice": "800.00",
                                "discountPercentage": "20",
                                "currency": "PHP",
-                               "image": "www.yilinker.com/assets/images/apple.jpg",
+                               "image": "http://machopicture.com/images/summer-dresses/5230-chiffon-summer-dress.jpg",
                                "target": {
                                "targetUrl": "http://www.jsoneditoronline.org/",
                                "targetType": "webView",
@@ -400,12 +400,12 @@
                                }
                                },
                                {
-                               "name": "Samsung G4",
+                               "name": "Dress 2",
                                "originalPrice": "1000.00",
                                "discountedPrice": "800.00",
                                "discountPercentage": "20",
                                "currency": "PHP",
-                               "image": "www.yilinker.com/assets/images/apple.jpg",
+                               "image": "https://ferrizedaell.files.wordpress.com/2014/01/3dx8y6-l-610x610-dress-summer-summer-dress-prom-dress-prom-dresses-mini-dress-white-dress-rose-dress-gray-top-skirt-long-skirt-brown-belt-belt.jpg",
                                "target": {
                                "targetUrl": "http://www.jsoneditoronline.org/",
                                "targetType": "webView",
@@ -413,12 +413,12 @@
                                }
                                },
                                {
-                               "name": "Samsung G4",
+                               "name": "Dress 3",
                                "originalPrice": "1000.00",
                                "discountedPrice": "800.00",
                                "discountPercentage": "20",
                                "currency": "PHP",
-                               "image": "www.yilinker.com/assets/images/apple.jpg",
+                               "image": "http://4.bp.blogspot.com/-raVrVogq5_8/VTTktWpIAJI/AAAAAAAAHek/ST8K5zviSXU/s1600/Summer%2BDress%2BFashion%2B2015%2B(5).jpg",
                                "target": {
                                "targetUrl": "http://www.jsoneditoronline.org/",
                                "targetType": "webView",
@@ -433,43 +433,43 @@
                       }
                       },
                       {
-                      "name": "YiStore",
+                      "name": "Nike",
                       "specialty": "Electronics and Gadgets",
                       "image": "www.yilinker.com/assets/images/apple.jpg",
                       "data": [
                                {
-                               "name": "Samsung G4",
+                               "name": "Nike 1",
                                "originalPrice": "1000.00",
                                "discountedPrice": "800.00",
                                "discountPercentage": "20",
                                "currency": "PHP",
-                               "image": "www.yilinker.com/assets/images/apple.jpg",
+                               "image": "http://40.media.tumblr.com/c006fe6ecbc7968898ae71f3d0dc6c66/tumblr_inline_no13g6AYCr1sacl5f_500.jpg",
                                "target": {
-                               "targetUrl": "http://www.jsoneditoronline.org/",
+                               "targetUrl": "nike 1",
                                "targetType": "webView",
                                "isAuthenticated": false
                                }
                                },
                                {
-                               "name": "Samsung G4",
+                               "name": "Nike 2",
                                "originalPrice": "1000.00",
                                "discountedPrice": "800.00",
                                "discountPercentage": "20",
                                "currency": "PHP",
-                               "image": "www.yilinker.com/assets/images/apple.jpg",
+                               "image": "http://www.theblogismine.com/wp-content/uploads/2010/06/Unique-Designs-Painted-on-Nike-Shoes-by-Daniel-Reese-6.jpg",
                                "target": {
-                               "targetUrl": "http://www.jsoneditoronline.org/",
+                               "targetUrl": "nike 2",
                                "targetType": "webView",
                                "isAuthenticated": false
                                }
                                },
                                {
-                               "name": "Samsung G4",
+                               "name": "Nike 3",
                                "originalPrice": "1000.00",
                                "discountedPrice": "800.00",
                                "discountPercentage": "20",
                                "currency": "PHP",
-                               "image": "www.yilinker.com/assets/images/apple.jpg",
+                               "image": "http://www.wufashion.com/sport/wp-content/uploads/2015/01/nike-dunk-shoes-8.jpg",
                                "target": {
                                "targetUrl": "http://www.jsoneditoronline.org/",
                                "targetType": "webView",
@@ -484,17 +484,30 @@
                       }
                       },
                       {
-                      "name": "YiStore",
+                      "name": "LG",
                       "specialty": "Electronics and Gadgets",
                       "image": "www.yilinker.com/assets/images/apple.jpg",
                       "data": [
                                {
-                               "name": "Samsung G4",
+                               "name": "TV 1",
                                "originalPrice": "1000.00",
                                "discountedPrice": "800.00",
                                "discountPercentage": "20",
                                "currency": "PHP",
-                               "image": "www.yilinker.com/assets/images/apple.jpg",
+                               "image": "http://demo.idg.com.au/pcw/inlineimages/lg_2012_tv_1.jpg",
+                               "target": {
+                               "targetUrl": "http://www.jsoneditoronline.org/",
+                               "targetType": "webView",
+                               "isAuthenticated": false
+                               }
+                               },
+                               {
+                               "name": "TV 2",
+                               "originalPrice": "1000.00",
+                               "discountedPrice": "800.00",
+                               "discountPercentage": "20",
+                               "currency": "PHP",
+                               "image": "http://cdn.ndtv.com/tech/images/gadgets/samsung-uhd-tv-launch-635.jpg",
                                "target": {
                                "targetUrl": "http://www.jsoneditoronline.org/",
                                "targetType": "webView",
@@ -507,20 +520,7 @@
                                "discountedPrice": "800.00",
                                "discountPercentage": "20",
                                "currency": "PHP",
-                               "image": "www.yilinker.com/assets/images/apple.jpg",
-                               "target": {
-                               "targetUrl": "http://www.jsoneditoronline.org/",
-                               "targetType": "webView",
-                               "isAuthenticated": false
-                               }
-                               },
-                               {
-                               "name": "Samsung G4",
-                               "originalPrice": "1000.00",
-                               "discountedPrice": "800.00",
-                               "discountPercentage": "20",
-                               "currency": "PHP",
-                               "image": "www.yilinker.com/assets/images/apple.jpg",
+                               "image": "http://uncrate.com/p/2012/10/lg-84-4k-tv-xl.jpg",
                                "target": {
                                "targetUrl": "http://www.jsoneditoronline.org/",
                                "targetType": "webView",

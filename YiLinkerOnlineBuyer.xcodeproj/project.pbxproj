@@ -14,6 +14,8 @@
 		0C1179391BA8291900AA1554 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C11793B1BA8291900AA1554 /* LaunchScreen.xib */; };
 		0C1179461BA82BE700AA1554 /* LocalizableString.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0C1179481BA82BE700AA1554 /* LocalizableString.strings */; };
 		0C11794B1BA98EFE00AA1554 /* StringHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C11794A1BA98EFE00AA1554 /* StringHelper.swift */; };
+		0C11D21C1C0D80F30063D06E /* LayoutEightModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C11D21B1C0D80F30063D06E /* LayoutEightModel.swift */; };
+		0C11D21E1C0D81640063D06E /* HomeSellerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C11D21D1C0D81640063D06E /* HomeSellerModel.swift */; };
 		0C144DD41C080166000728B4 /* HomePageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C144DD31C080166000728B4 /* HomePageModel.swift */; };
 		0C144DD61C080350000728B4 /* LayoutOneModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C144DD51C080350000728B4 /* LayoutOneModel.swift */; };
 		0C144DD81C0803C7000728B4 /* TargetModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C144DD71C0803C7000728B4 /* TargetModel.swift */; };
@@ -506,6 +508,8 @@
 		0C1179471BA82BE700AA1554 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/LocalizableString.strings; sourceTree = "<group>"; };
 		0C1179491BA82BE800AA1554 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LocalizableString.strings"; sourceTree = "<group>"; };
 		0C11794A1BA98EFE00AA1554 /* StringHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringHelper.swift; sourceTree = "<group>"; };
+		0C11D21B1C0D80F30063D06E /* LayoutEightModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayoutEightModel.swift; sourceTree = "<group>"; };
+		0C11D21D1C0D81640063D06E /* HomeSellerModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeSellerModel.swift; sourceTree = "<group>"; };
 		0C144DD31C080166000728B4 /* HomePageModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomePageModel.swift; sourceTree = "<group>"; };
 		0C144DD51C080350000728B4 /* LayoutOneModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayoutOneModel.swift; sourceTree = "<group>"; };
 		0C144DD71C0803C7000728B4 /* TargetModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TargetModel.swift; sourceTree = "<group>"; };
@@ -1040,6 +1044,8 @@
 				0C6ABA321C0D3B70003DFFA3 /* LayoutFiveModel.swift */,
 				0C6ABA341C0D4FDF003DFFA3 /* LayoutSixModel.swift */,
 				0C6ABA361C0D5B89003DFFA3 /* LayoutSevenModel.swift */,
+				0C11D21B1C0D80F30063D06E /* LayoutEightModel.swift */,
+				0C11D21D1C0D81640063D06E /* HomeSellerModel.swift */,
 			);
 			name = HomeModel;
 			sourceTree = "<group>";
@@ -2169,6 +2175,7 @@
 				26AFB3AE1B79DE2900E50926 /* ProductAttributeTableViewCell.swift in Sources */,
 				2689FBFF1B844A69007BEA68 /* CheckoutContainerViewController.swift in Sources */,
 				790B4BFE1BD8832C00E46AE7 /* VerifyMobileNumberInputViewController.swift in Sources */,
+				0C11D21C1C0D80F30063D06E /* LayoutEightModel.swift in Sources */,
 				F7C569B61BB1762C004740E1 /* TransactionDeliveryStatusView.swift in Sources */,
 				0C9937601B750583000D6074 /* WishlistViewController.swift in Sources */,
 				0C2F44A91B848B5400021F45 /* PaymentViewController.swift in Sources */,
@@ -2307,6 +2314,7 @@
 				26AFB3AB1B79DE2900E50926 /* ProductReviewFooterView.swift in Sources */,
 				F7A66B261C03195200D8E688 /* TransactionDetailsTableViewCell.swift in Sources */,
 				F7C56A041BB1790A004740E1 /* TransactionProductDetailsViewController.swift in Sources */,
+				0C11D21E1C0D81640063D06E /* HomeSellerModel.swift in Sources */,
 				B77B8DC21B9B54B40002C513 /* W_Contact.swift in Sources */,
 				0C99373B1B750583000D6074 /* Constants.swift in Sources */,
 				0C374EF41B8851C00050AE1D /* DeliverToTableViewCell.swift in Sources */,
