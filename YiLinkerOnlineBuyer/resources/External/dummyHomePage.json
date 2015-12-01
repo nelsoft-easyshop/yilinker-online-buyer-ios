@@ -548,7 +548,7 @@
              "data": [
                       {
                       "name": "Electronics and Gadgets",
-                      "image": "",
+                      "image": "http://i.huffpost.com/gen/1903607/images/o-SMARTPHONES-facebook.jpg",
                       "target": {
                       "targetUrl": "http://www.jsoneditoronline.org/",
                       "targetType": "webView",
@@ -556,8 +556,8 @@
                       }
                       },
                       {
-                      "name": "Electronics and Gadgets",
-                      "image": "",
+                      "name": "Puppies",
+                      "image": "http://pethealthsupplements.com.au/wp-content/uploads/2015/06/tumblr_static_mom-dog-with-puppies.jpg",
                       "target": {
                       "targetUrl": "http://www.jsoneditoronline.org/",
                       "targetType": "webView",
@@ -565,8 +565,8 @@
                       }
                       },
                       {
-                      "name": "Electronics and Gadgets",
-                      "image": "",
+                      "name": "Cameras",
+                      "image": "http://www.americanphotographers1.com/wp-content/uploads/2015/09/example-photography11.jpg",
                       "target": {
                       "targetUrl": "http://www.jsoneditoronline.org/",
                       "targetType": "webView",
@@ -574,8 +574,8 @@
                       }
                       },
                       {
-                      "name": "Electronics and Gadgets",
-                      "image": "",
+                      "name": "Bags",
+                      "image": "http://g-ecx.images-amazon.com/images/G/31/img14/handbags/201403/editorial/SLING-BAGS._CB341981483_.jpg",
                       "target": {
                       "targetUrl": "http://www.jsoneditoronline.org/",
                       "targetType": "webView",
@@ -583,8 +583,8 @@
                       }
                       },
                       {
-                      "name": "Electronics and Gadgets",
-                      "image": "",
+                      "name": "Laptop",
+                      "image": "https://lh3.googleusercontent.com/-t6Ob5VopQ2w/UvQ3pprxXRI/AAAAAAAAAL8/CgvPhIOruzY/s0-d/help_desk3.png",
                       "target": {
                       "targetUrl": "http://www.jsoneditoronline.org/",
                       "targetType": "webView",
@@ -592,8 +592,8 @@
                       }
                       },
                       {
-                      "name": "Electronics and Gadgets",
-                      "image": "",
+                      "name": "Shoes",
+                      "image": "http://blog.trashness.com/wp-content/uploads/2012/12/boat-shoe-socks-men-fair-isle.jpg",
                       "target": {
                       "targetUrl": "http://www.jsoneditoronline.org/",
                       "targetType": "webView",
@@ -613,12 +613,12 @@
              },
              "data": [
                       {
-                      "name": "Samsung G4",
+                      "name": "IPhone 5S",
                       "originalPrice": "1000.00",
                       "discountedPrice": "800.00",
                       "discountPercentage": "20",
                       "currency": "PHP",
-                      "image": "www.yilinker.com/assets/images/apple.jpg",
+                      "image": "https://i.ytimg.com/vi/lTapz6IK_VQ/maxresdefault.jpg",
                       "target": {
                       "targetUrl": "http://www.jsoneditoronline.org/",
                       "targetType": "webView",
@@ -626,12 +626,12 @@
                       }
                       },
                       {
-                      "name": "Samsung G4",
+                      "name": "LG G4",
                       "originalPrice": "1000.00",
                       "discountedPrice": "800.00",
                       "discountPercentage": "20",
                       "currency": "PHP",
-                      "image": "www.yilinker.com/assets/images/apple.jpg",
+                      "image": "https://i.ytimg.com/vi/rpHThgw0spE/maxresdefault.jpg",
                       "target": {
                       "targetUrl": "http://www.jsoneditoronline.org/",
                       "targetType": "webView",
@@ -639,12 +639,24 @@
                       }
                       },
                       {
-                      "name": "Samsung G4",
+                      "name": "Moto 360",
                       "originalPrice": "1000.00",
                       "discountedPrice": "800.00",
                       "discountPercentage": "20",
                       "currency": "PHP",
-                      "image": "www.yilinker.com/assets/images/apple.jpg",
+                      "image": "http://cdn1.tnwcdn.com/wp-content/blogs.dir/1/files/2014/09/moto_360-1.jpg",
+                      "target": {
+                      "targetUrl": "http://www.jsoneditoronline.org/",
+                      "targetType": "webView",
+                      "isAuthenticated": false
+                      }
+                      },{
+                      "name": "IPhone 5S",
+                      "originalPrice": "1000.00",
+                      "discountedPrice": "800.00",
+                      "discountPercentage": "20",
+                      "currency": "PHP",
+                      "image": "https://i.ytimg.com/vi/lTapz6IK_VQ/maxresdefault.jpg",
                       "target": {
                       "targetUrl": "http://www.jsoneditoronline.org/",
                       "targetType": "webView",
@@ -652,12 +664,12 @@
                       }
                       },
                       {
-                      "name": "Samsung G4",
+                      "name": "LG G4",
                       "originalPrice": "1000.00",
                       "discountedPrice": "800.00",
                       "discountPercentage": "20",
                       "currency": "PHP",
-                      "image": "www.yilinker.com/assets/images/apple.jpg",
+                      "image": "https://i.ytimg.com/vi/rpHThgw0spE/maxresdefault.jpg",
                       "target": {
                       "targetUrl": "http://www.jsoneditoronline.org/",
                       "targetType": "webView",
@@ -665,12 +677,24 @@
                       }
                       },
                       {
-                      "name": "Samsung G4",
+                      "name": "Moto 360",
                       "originalPrice": "1000.00",
                       "discountedPrice": "800.00",
                       "discountPercentage": "20",
                       "currency": "PHP",
-                      "image": "www.yilinker.com/assets/images/apple.jpg",
+                      "image": "http://cdn1.tnwcdn.com/wp-content/blogs.dir/1/files/2014/09/moto_360-1.jpg",
+                      "target": {
+                      "targetUrl": "http://www.jsoneditoronline.org/",
+                      "targetType": "webView",
+                      "isAuthenticated": false
+                      }
+                      },{
+                      "name": "IPhone 5S",
+                      "originalPrice": "1000.00",
+                      "discountedPrice": "800.00",
+                      "discountPercentage": "20",
+                      "currency": "PHP",
+                      "image": "https://i.ytimg.com/vi/lTapz6IK_VQ/maxresdefault.jpg",
                       "target": {
                       "targetUrl": "http://www.jsoneditoronline.org/",
                       "targetType": "webView",
@@ -678,12 +702,12 @@
                       }
                       },
                       {
-                      "name": "Samsung G4",
+                      "name": "LG G4",
                       "originalPrice": "1000.00",
                       "discountedPrice": "800.00",
                       "discountPercentage": "20",
                       "currency": "PHP",
-                      "image": "www.yilinker.com/assets/images/apple.jpg",
+                      "image": "https://i.ytimg.com/vi/rpHThgw0spE/maxresdefault.jpg",
                       "target": {
                       "targetUrl": "http://www.jsoneditoronline.org/",
                       "targetType": "webView",
@@ -691,12 +715,24 @@
                       }
                       },
                       {
-                      "name": "Samsung G4",
+                      "name": "Moto 360",
                       "originalPrice": "1000.00",
                       "discountedPrice": "800.00",
                       "discountPercentage": "20",
                       "currency": "PHP",
-                      "image": "www.yilinker.com/assets/images/apple.jpg",
+                      "image": "http://cdn1.tnwcdn.com/wp-content/blogs.dir/1/files/2014/09/moto_360-1.jpg",
+                      "target": {
+                      "targetUrl": "http://www.jsoneditoronline.org/",
+                      "targetType": "webView",
+                      "isAuthenticated": false
+                      }
+                      },{
+                      "name": "IPhone 5S",
+                      "originalPrice": "1000.00",
+                      "discountedPrice": "800.00",
+                      "discountPercentage": "20",
+                      "currency": "PHP",
+                      "image": "https://i.ytimg.com/vi/lTapz6IK_VQ/maxresdefault.jpg",
                       "target": {
                       "targetUrl": "http://www.jsoneditoronline.org/",
                       "targetType": "webView",
@@ -704,12 +740,12 @@
                       }
                       },
                       {
-                      "name": "Samsung G4",
+                      "name": "LG G4",
                       "originalPrice": "1000.00",
                       "discountedPrice": "800.00",
                       "discountPercentage": "20",
                       "currency": "PHP",
-                      "image": "www.yilinker.com/assets/images/apple.jpg",
+                      "image": "https://i.ytimg.com/vi/rpHThgw0spE/maxresdefault.jpg",
                       "target": {
                       "targetUrl": "http://www.jsoneditoronline.org/",
                       "targetType": "webView",
@@ -717,12 +753,24 @@
                       }
                       },
                       {
-                      "name": "Samsung G4",
+                      "name": "Moto 360",
                       "originalPrice": "1000.00",
                       "discountedPrice": "800.00",
                       "discountPercentage": "20",
                       "currency": "PHP",
-                      "image": "www.yilinker.com/assets/images/apple.jpg",
+                      "image": "http://cdn1.tnwcdn.com/wp-content/blogs.dir/1/files/2014/09/moto_360-1.jpg",
+                      "target": {
+                      "targetUrl": "http://www.jsoneditoronline.org/",
+                      "targetType": "webView",
+                      "isAuthenticated": false
+                      }
+                      },{
+                      "name": "IPhone 5S",
+                      "originalPrice": "1000.00",
+                      "discountedPrice": "800.00",
+                      "discountPercentage": "20",
+                      "currency": "PHP",
+                      "image": "https://i.ytimg.com/vi/lTapz6IK_VQ/maxresdefault.jpg",
                       "target": {
                       "targetUrl": "http://www.jsoneditoronline.org/",
                       "targetType": "webView",
@@ -730,12 +778,63 @@
                       }
                       },
                       {
-                      "name": "Samsung G4",
+                      "name": "LG G4",
                       "originalPrice": "1000.00",
                       "discountedPrice": "800.00",
                       "discountPercentage": "20",
                       "currency": "PHP",
-                      "image": "www.yilinker.com/assets/images/apple.jpg",
+                      "image": "https://i.ytimg.com/vi/rpHThgw0spE/maxresdefault.jpg",
+                      "target": {
+                      "targetUrl": "http://www.jsoneditoronline.org/",
+                      "targetType": "webView",
+                      "isAuthenticated": false
+                      }
+                      },
+                      {
+                      "name": "Moto 360",
+                      "originalPrice": "1000.00",
+                      "discountedPrice": "800.00",
+                      "discountPercentage": "20",
+                      "currency": "PHP",
+                      "image": "http://cdn1.tnwcdn.com/wp-content/blogs.dir/1/files/2014/09/moto_360-1.jpg",
+                      "target": {
+                      "targetUrl": "http://www.jsoneditoronline.org/",
+                      "targetType": "webView",
+                      "isAuthenticated": false
+                      }
+                      },{
+                      "name": "IPhone 5S",
+                      "originalPrice": "1000.00",
+                      "discountedPrice": "800.00",
+                      "discountPercentage": "20",
+                      "currency": "PHP",
+                      "image": "https://i.ytimg.com/vi/lTapz6IK_VQ/maxresdefault.jpg",
+                      "target": {
+                      "targetUrl": "http://www.jsoneditoronline.org/",
+                      "targetType": "webView",
+                      "isAuthenticated": false
+                      }
+                      },
+                      {
+                      "name": "LG G4",
+                      "originalPrice": "1000.00",
+                      "discountedPrice": "800.00",
+                      "discountPercentage": "20",
+                      "currency": "PHP",
+                      "image": "https://i.ytimg.com/vi/rpHThgw0spE/maxresdefault.jpg",
+                      "target": {
+                      "targetUrl": "http://www.jsoneditoronline.org/",
+                      "targetType": "webView",
+                      "isAuthenticated": false
+                      }
+                      },
+                      {
+                      "name": "Moto 360",
+                      "originalPrice": "1000.00",
+                      "discountedPrice": "800.00",
+                      "discountPercentage": "20",
+                      "currency": "PHP",
+                      "image": "http://cdn1.tnwcdn.com/wp-content/blogs.dir/1/files/2014/09/moto_360-1.jpg",
                       "target": {
                       "targetUrl": "http://www.jsoneditoronline.org/",
                       "targetType": "webView",

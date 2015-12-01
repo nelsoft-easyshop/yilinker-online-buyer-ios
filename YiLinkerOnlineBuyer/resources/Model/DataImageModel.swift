@@ -11,6 +11,7 @@ import UIKit
 class DataImageModel: NSObject {
     var image: String = ""
     var target: TargetModel = TargetModel()
+    var name: String = ""
     
     override init() {
         
@@ -21,9 +22,16 @@ class DataImageModel: NSObject {
         self.target = target
     }
     
+    init(image: String, target: TargetModel, name: String) {
+        self.image = image
+        self.target = target
+        self.name = name
+    }
+    
     class func parseDataFromDictionary(dictionary: NSDictionary) -> DataImageModel {
         var image: String = ""
         var target: TargetModel = TargetModel()
+        var name: String = ""
         
         if let temp = dictionary["image"] as? String {
             image = temp
@@ -33,7 +41,14 @@ class DataImageModel: NSObject {
             target = TargetModel.parseDataFromDictionary(temp)
         }
         
+        if let temp = dictionary["name"] as? String {
+            name = temp
+        }
         
-        return DataImageModel(image: image, target: target)
+        if name != "" {
+            return DataImageModel(image: image, target: target, name: name)
+        } else {
+           return DataImageModel(image: image, target: target)
+        }
     }
 }

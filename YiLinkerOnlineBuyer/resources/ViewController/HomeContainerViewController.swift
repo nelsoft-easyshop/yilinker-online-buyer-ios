@@ -156,6 +156,8 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                 self.layouts.append("7")
             } else if model.isKindOfClass(LayoutEightModel) {
                 self.layouts.append("8")
+            } else if model.isKindOfClass(LayoutNineModel) {
+                self.layouts.append("9")
             }
         }
         
@@ -571,6 +573,16 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             headerView.titleLabel.text = layoutEightModel.sectionTitle
             headerView.updateTitleLine()
             headerView.backgroundColor = UIColor.clearColor()
+        } else if self.homePageModel.data[indexPath.section].isKindOfClass(LayoutNineModel) {
+            let layoutNineModel: LayoutNineModel = self.homePageModel.data[indexPath.section] as! LayoutNineModel
+            if layoutNineModel.isViewMoreAvailable {
+                headerView.target = layoutNineModel.viewMoreTarget.targetUrl
+                headerView.targetType = layoutNineModel.viewMoreTarget.targetType
+            }
+            
+            headerView.titleLabel.text = layoutNineModel.sectionTitle
+            headerView.updateTitleLine()
+            headerView.backgroundColor = UIColor.clearColor()
         }
         
         return headerView
@@ -778,20 +790,57 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     
     //MARK: - Layout Nine Collection View Cell With IndexPath
     func layoutNineCollectionViewCellWithIndexPath(indexPath: NSIndexPath) -> LayoutNineCollectionViewCell {
+        let layoutNineModel: LayoutNineModel = self.homePageModel.data[indexPath.section] as! LayoutNineModel
+        
         let layoutNineCollectionViewCell: LayoutNineCollectionViewCell = self.collectionView.dequeueReusableCellWithReuseIdentifier(self.layoutNineNibName, forIndexPath: indexPath) as! LayoutNineCollectionViewCell
         layoutNineCollectionViewCell.delegate = self
         layoutNineCollectionViewCell.dataSource = self
+        
+        layoutNineCollectionViewCell.productOneNameLabel.text = layoutNineModel.data[0].name
+        layoutNineCollectionViewCell.productImageViewOne.sd_setImageWithURL(NSURL(string: layoutNineModel.data[0].image), placeholderImage: UIImage(named: self.placeHolder))
+        layoutNineCollectionViewCell.productImageViewOne.target = layoutNineModel.data[0].target.targetUrl
+        layoutNineCollectionViewCell.productImageViewOne.targetType = layoutNineModel.data[0].target.targetType
+        
+        layoutNineCollectionViewCell.productTwoNameLabel.text = layoutNineModel.data[1].name
+        layoutNineCollectionViewCell.productImageViewTwo.sd_setImageWithURL(NSURL(string: layoutNineModel.data[1].image), placeholderImage: UIImage(named: self.placeHolder))
+        layoutNineCollectionViewCell.productImageViewTwo.target = layoutNineModel.data[1].target.targetUrl
+        layoutNineCollectionViewCell.productImageViewTwo.targetType = layoutNineModel.data[1].target.targetType
+        
+        layoutNineCollectionViewCell.productThreeNameLabel.text = layoutNineModel.data[2].name
+        layoutNineCollectionViewCell.productImageViewThree.sd_setImageWithURL(NSURL(string: layoutNineModel.data[2].image), placeholderImage: UIImage(named: self.placeHolder))
+        layoutNineCollectionViewCell.productImageViewThree.target = layoutNineModel.data[2].target.targetUrl
+        layoutNineCollectionViewCell.productImageViewThree.targetType = layoutNineModel.data[2].target.targetType
+        
+        layoutNineCollectionViewCell.productFourNameLabel.text = layoutNineModel.data[3].name
+        layoutNineCollectionViewCell.productImageViewFour.sd_setImageWithURL(NSURL(string: layoutNineModel.data[3].image), placeholderImage: UIImage(named: self.placeHolder))
+        layoutNineCollectionViewCell.productImageViewFour.target = layoutNineModel.data[3].target.targetUrl
+        layoutNineCollectionViewCell.productImageViewFour.targetType = layoutNineModel.data[3].target.targetType
+        
+        layoutNineCollectionViewCell.productFiveNameLabel.text = layoutNineModel.data[4].name
+        layoutNineCollectionViewCell.productImageViewFive.sd_setImageWithURL(NSURL(string: layoutNineModel.data[4].image), placeholderImage: UIImage(named: self.placeHolder))
+        layoutNineCollectionViewCell.productImageViewFive.target = layoutNineModel.data[4].target.targetUrl
+        layoutNineCollectionViewCell.productImageViewFive.targetType = layoutNineModel.data[4].target.targetType
+        
         return layoutNineCollectionViewCell
     }
     
     //MARK: - Layout Nine Collection View Cell Datasource
     func layoutNineCollectionViewCell(layoutNineCollectionViewCell: LayoutNineCollectionViewCell, numberOfItemsInSection section: Int) -> Int {
-        return self.images.count
+        let parentIndexPath: NSIndexPath = self.collectionView.indexPathForCell(layoutNineCollectionViewCell)!
+        let layoutNineModel: LayoutNineModel = self.homePageModel.data[parentIndexPath.section] as! LayoutNineModel
+        
+        return layoutNineModel.data.count - 5
     }
     
     func layoutNineCollectionViewCell(layoutNineCollectionViewCell: LayoutNineCollectionViewCell, cellForRowAtIndexPath indexPath: NSIndexPath) -> FullImageCollectionViewCell {
+        let parentIndexPath: NSIndexPath = self.collectionView.indexPathForCell(layoutNineCollectionViewCell)!
+        let layoutNineModel: LayoutNineModel = self.homePageModel.data[parentIndexPath.section] as! LayoutNineModel
+        
         let fullImageCell: FullImageCollectionViewCell = layoutNineCollectionViewCell.collectionView.dequeueReusableCellWithReuseIdentifier(layoutNineCollectionViewCell.fullImageCellNib, forIndexPath: indexPath) as! FullImageCollectionViewCell
-        fullImageCell.itemProductImageView.sd_setImageWithURL(NSURL(string: self.images[indexPath.row]), placeholderImage: UIImage(named: "dummy-placeholder"))
+        fullImageCell.itemProductImageView.sd_setImageWithURL(NSURL(string: layoutNineModel.data[indexPath.row + 5].image), placeholderImage: UIImage(named: "dummy-placeholder"))
+        fullImageCell.target = layoutNineModel.data[indexPath.row + 5].target.targetUrl
+        fullImageCell.targetType = layoutNineModel.data[indexPath.row + 5].target.targetType
+        
         fullImageCell.layer.cornerRadius = 5
         fullImageCell.clipsToBounds = true
         return fullImageCell
@@ -804,11 +853,13 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     
     //MARK: - Layout Nine Collection View Cell Delegate
     func layoutNineCollectionViewCellDidClickProductImage(productImage: ProductImageView) {
-        
+        println(productImage.target)
+        println(productImage.targetType)
     }
     
     func layoutNineCollectionViewCell(layoutNineCollectionViewCell: LayoutNineCollectionViewCell, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        
+        let fullImageCell: FullImageCollectionViewCell = layoutNineCollectionViewCell.collectionView.cellForItemAtIndexPath(indexPath) as! FullImageCollectionViewCell
+        println(fullImageCell.target)
     }
     
     func layoutNineCollectionViewCellDidEndDecelerating(layoutNineCollectionViewCell: LayoutNineCollectionViewCell) {
