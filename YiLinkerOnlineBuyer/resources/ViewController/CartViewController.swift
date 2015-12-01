@@ -452,6 +452,7 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
         let productViewController: ProductViewController = ProductViewController(nibName: "ProductViewController", bundle: nil)
         productViewController.tabController = self.tabBarController as! CustomTabBarController
         productViewController.productId = tableData[rowOfTheCell].id
+        productViewController.isFromCart = true
         self.navigationController?.pushViewController(productViewController, animated: true)
     }
     
