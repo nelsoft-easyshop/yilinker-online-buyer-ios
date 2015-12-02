@@ -18,6 +18,8 @@
 		0C11D21E1C0D81640063D06E /* HomeSellerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C11D21D1C0D81640063D06E /* HomeSellerModel.swift */; };
 		0C11D2201C0D96C70063D06E /* LayoutNineModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C11D21F1C0D96C70063D06E /* LayoutNineModel.swift */; };
 		0C11D2221C0DA15B0063D06E /* LayoutTenModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C11D2211C0DA15B0063D06E /* LayoutTenModel.swift */; };
+		0C11D2241C0EE2260063D06E /* ScrollToTopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C11D2231C0EE2260063D06E /* ScrollToTopView.swift */; };
+		0C11D2261C0EE24F0063D06E /* ScrollToTopView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C11D2251C0EE24F0063D06E /* ScrollToTopView.xib */; };
 		0C144DD41C080166000728B4 /* HomePageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C144DD31C080166000728B4 /* HomePageModel.swift */; };
 		0C144DD61C080350000728B4 /* LayoutOneModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C144DD51C080350000728B4 /* LayoutOneModel.swift */; };
 		0C144DD81C0803C7000728B4 /* TargetModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C144DD71C0803C7000728B4 /* TargetModel.swift */; };
@@ -524,6 +526,8 @@
 		0C11D21D1C0D81640063D06E /* HomeSellerModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeSellerModel.swift; sourceTree = "<group>"; };
 		0C11D21F1C0D96C70063D06E /* LayoutNineModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayoutNineModel.swift; sourceTree = "<group>"; };
 		0C11D2211C0DA15B0063D06E /* LayoutTenModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayoutTenModel.swift; sourceTree = "<group>"; };
+		0C11D2231C0EE2260063D06E /* ScrollToTopView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScrollToTopView.swift; sourceTree = "<group>"; };
+		0C11D2251C0EE24F0063D06E /* ScrollToTopView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ScrollToTopView.xib; sourceTree = "<group>"; };
 		0C144DD31C080166000728B4 /* HomePageModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomePageModel.swift; sourceTree = "<group>"; };
 		0C144DD51C080350000728B4 /* LayoutOneModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayoutOneModel.swift; sourceTree = "<group>"; };
 		0C144DD71C0803C7000728B4 /* TargetModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TargetModel.swift; sourceTree = "<group>"; };
@@ -1091,6 +1095,8 @@
 				0CAE2F7A1C070DB10019165A /* SellerCarouselCollectionViewCell.xib */,
 				0CCA7DF31C0736A100071DD4 /* LayoutNineCollectionViewCell.swift */,
 				0CCA7DF41C0736A100071DD4 /* LayoutNineCollectionViewCell.xib */,
+				0C11D2231C0EE2260063D06E /* ScrollToTopView.swift */,
+				0C11D2251C0EE24F0063D06E /* ScrollToTopView.xib */,
 			);
 			name = Home;
 			sourceTree = "<group>";
@@ -2036,6 +2042,7 @@
 				26D688BF1C01B848003ED151 /* UserMapView.xib in Resources */,
 				0C374F2E1B88E3790050AE1D /* PlainTableViewCell.xib in Resources */,
 				F7D9BABA1BBD70830097B76C /* TransactionProductDetailsDescriptionViewController.xib in Resources */,
+				0C11D2261C0EE24F0063D06E /* ScrollToTopView.xib in Resources */,
 				79E68BAB1B8B4EB9008626E4 /* EditProfilePersonalInformationTableViewCell.xib in Resources */,
 				79EBE8861B95F50700434B42 /* ChangePasswordViewController.xib in Resources */,
 				F7D9BABC1BBD70AA0097B76C /* TransactionViews.xib in Resources */,
@@ -2269,6 +2276,7 @@
 				0CDA117E1B764B79007B5DED /* DynamicRoundedTextField.swift in Sources */,
 				79E85FCB1B8A1E0800428AA1 /* ActivityLogTableViewController.swift in Sources */,
 				0CC53C841C00D345002361D4 /* DicountVoucherTableViewCell.swift in Sources */,
+				0C11D2241C0EE2260063D06E /* ScrollToTopView.swift in Sources */,
 				79E8F1511B8FC1B8009CE450 /* ProfileUserDetailsModel.swift in Sources */,
 				26AFB3AF1B79DE2900E50926 /* ProductSellerViewCollectionViewCell.swift in Sources */,
 				F7C637C21BD9EC3D00C29C47 /* DeliveryLogsItemModel.swift in Sources */,
