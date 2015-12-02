@@ -67,7 +67,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     let layoutNineNibName = "LayoutNineCollectionViewCell"
     let twoColumnGridCell = "TwoColumnGridCollectionViewCell"
     
-    var remainingTime: Int = 20000
+    var remainingTime: Int = 0
     
     var firstHourString: String = ""
     var secondHourString: String = ""
@@ -354,8 +354,8 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             } else if model.isKindOfClass(LayoutFourModel) {
                 let layoutFourModel: LayoutFourModel = self.homePageModel.data[index] as! LayoutFourModel
                 
-                if layoutFourModel.remainingTime.toInt() != 0 && layoutFourModel.remainingTime != "" && layoutFourModel.remainingTime.toInt() != nil {
-                    self.remainingTime = layoutFourModel.remainingTime.toInt()!
+                if layoutFourModel.remainingTime != 0 {
+                    self.remainingTime = layoutFourModel.remainingTime
                     var timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "updateTime", userInfo: nil, repeats: true)
                     self.layouts.append("4")
                 } else {
