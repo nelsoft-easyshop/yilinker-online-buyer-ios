@@ -105,14 +105,31 @@
                                     <outlet property="delegate" destination="vXZ-lx-hvc" id="ii6-gD-PgM"/>
                                 </connections>
                             </collectionView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Eam-n3-3yH">
+                                <rect key="frame" x="127" y="37" width="120" height="30"/>
+                                <color key="backgroundColor" red="0.36078431370000003" green="0.36078431370000003" blue="0.36078431370000003" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="120" id="6ZT-Sb-R0J"/>
+                                    <constraint firstAttribute="height" constant="30" id="Anz-0K-km3"/>
+                                </constraints>
+                                <state key="normal" title="back to top">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="backToTop:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="dP7-JP-uUg"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="Lxq-mx-A8I" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="2ho-rM-ruR"/>
                             <constraint firstItem="Lxq-mx-A8I" firstAttribute="top" secondItem="goi-6y-62p" secondAttribute="bottom" id="Cjq-ac-Dzt"/>
+                            <constraint firstItem="Eam-n3-3yH" firstAttribute="top" secondItem="goi-6y-62p" secondAttribute="bottom" constant="17" id="E2a-Yi-gve"/>
                             <constraint firstAttribute="trailingMargin" secondItem="goi-6y-62p" secondAttribute="trailing" constant="-16" id="Ffd-AN-Au2"/>
                             <constraint firstItem="goi-6y-62p" firstAttribute="top" secondItem="kh9-bI-dsS" secondAttribute="topMargin" id="HII-Ny-Xyz"/>
                             <constraint firstItem="goi-6y-62p" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="-16" id="eCr-BI-QhF"/>
+                            <constraint firstAttribute="centerX" secondItem="Eam-n3-3yH" secondAttribute="centerX" id="sKM-yr-Jg4"/>
                             <constraint firstItem="1tV-ne-YDq" firstAttribute="top" secondItem="Lxq-mx-A8I" secondAttribute="bottom" constant="-49" id="vQh-6W-1S2"/>
                             <constraint firstAttribute="trailing" secondItem="Lxq-mx-A8I" secondAttribute="trailing" id="vm6-cu-Jjq"/>
                         </constraints>
@@ -120,6 +137,7 @@
                     <navigationItem key="navigationItem" id="DKy-sG-2VX"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
+                        <outlet property="backToTopButton" destination="Eam-n3-3yH" id="Ysz-hV-Ydx"/>
                         <outlet property="collectionView" destination="Lxq-mx-A8I" id="aqm-iG-nDV"/>
                     </connections>
                 </viewController>
