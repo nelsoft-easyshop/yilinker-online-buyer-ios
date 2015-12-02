@@ -14,13 +14,13 @@ class LayoutFourModel: NSObject {
     var isViewMoreAvailable: Bool = false
     var viewMoreTarget: TargetModel = TargetModel()
     var data: [HomeProductModel] = []
-    var remainingTime: String = ""
+    var remainingTime: Int = 0
     
     override init() {
         
     }
     
-    init(layoutId: Int, sectionTitle: String, isViewMoreAvailable: Bool, viewMoreTarget: TargetModel, remainingTime: String, data: [HomeProductModel]) {
+    init(layoutId: Int, sectionTitle: String, isViewMoreAvailable: Bool, viewMoreTarget: TargetModel, remainingTime: Int, data: [HomeProductModel]) {
         self.layoutId = layoutId
         self.sectionTitle = sectionTitle
         self.isViewMoreAvailable = isViewMoreAvailable
@@ -34,7 +34,7 @@ class LayoutFourModel: NSObject {
         var sectionTitle: String = ""
         var isViewMoreAvailable: Bool = false
         var viewMoreTarget: TargetModel = TargetModel()
-        var remainingTime: String = ""
+        var remainingTime: Int = 0
         var data: [HomeProductModel] = []
         
         if let temp = dictionary["layoutId"] as? Int {
@@ -59,7 +59,7 @@ class LayoutFourModel: NSObject {
             }
         }
         
-        if let temp = dictionary["remainingTime"] as? String {
+        if let temp = dictionary["remainingTime"] as? Int {
             remainingTime = temp
         }
         
