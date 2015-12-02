@@ -11,10 +11,13 @@ import UIKit
 protocol TransactionSectionFooterViewDelegate {
     func leaveSellerFeedback(title: String, tag: Int)
     func messageSeller(sellerId: Int)
+    func sellerPage(sellerId: Int)
 }
 
 class TransactionSectionFooterView: UIView {
 
+    @IBOutlet weak var sellerStorePageButton: UIButton!
+    
     @IBOutlet weak var leaveFeedbackButton: DynamicRoundedButton!
     
     @IBOutlet weak var messageButton: DynamicRoundedButton!
@@ -35,7 +38,7 @@ class TransactionSectionFooterView: UIView {
     }
     */
     override func awakeFromNib() {
-        
+       
     }
     
     @IBAction func leaveFeedback(sender: AnyObject) {
@@ -49,6 +52,10 @@ class TransactionSectionFooterView: UIView {
         println("message \(sender.tag)")
         var tag = sender.tag
         self.delegate?.messageSeller(tag)
+    }
+    
+    @IBAction func goToSellerPage(sender: AnyObject) {
+        self.delegate?.sellerPage(self.sellerNameLabel.tag)
     }
 
 }
