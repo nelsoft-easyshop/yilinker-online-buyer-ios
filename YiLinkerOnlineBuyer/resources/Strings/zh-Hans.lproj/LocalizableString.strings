@@ -336,6 +336,12 @@ ACTIVITY_LOG_TITLE_LOCALIZE_KEY = "活动日志";
 
 //Chan' Module
 
+// MARK: - HELP
+HELP_FOR_CUSTOMER_SERVICE= "为客户服务援助";
+HELP_EMAIL = "电子邮件：";
+HELP_CALL = "电话:";
+
+
 //Cart
 CART_TITLE_LOCALIZE_KEY = "购物车";
 YOU_HAVE_LOCALIZE_KEY = "您有";

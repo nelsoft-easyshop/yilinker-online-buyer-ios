@@ -342,6 +342,11 @@ ACTIVITY_LOG_TITLE_LOCALIZE_KEY = "Activity Log";
 
 //Chan' Module
 
+// MARK: - HELP
+HELP_FOR_CUSTOMER_SERVICE= "For Customer Service Assistance";
+HELP_EMAIL = "Email  :";
+HELP_CALL = "Call     :";
+
 //Cart
 CART_TITLE_LOCALIZE_KEY = "Cart";
 YOU_HAVE_LOCALIZE_KEY = "You have";
