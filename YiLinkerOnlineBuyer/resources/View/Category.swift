@@ -125,6 +125,23 @@ extension UITextView {
     }
 }
 
+extension UIImage {
+    func normalizedImage() -> UIImage {
+        
+        if (self.imageOrientation == UIImageOrientation.Up) {
+            return self
+        }
+        
+        UIGraphicsBeginImageContextWithOptions(self.size, false, self.scale);
+        let rect = CGRect(x: 0, y: 0, width: self.size.width, height: self.size.height)
+        self.drawInRect(rect)
+        
+        var normalizedImage : UIImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return normalizedImage
+    }
+}
+
 
 extension UIAlertController {
     

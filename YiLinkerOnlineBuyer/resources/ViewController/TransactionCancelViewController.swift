@@ -207,7 +207,7 @@ class TransactionCancelViewController: UIViewController, UITextViewDelegate, UIP
             } else {
                 UIAlertController.displayErrorMessageWithTarget(self, errorMessage: response["message"] as! String, title: "Error")
                 self.dismissViewControllerAnimated(true, completion: nil)
-                self.delegate?.dismissView()
+                //self.delegate?.dismissView()
             }
             
             self.hud?.hide(true)

@@ -175,7 +175,7 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
             var textLabel = UILabel(frame: CGRectMake(8, 0, self.transactionProductDetailsView.frame.size.width - 8, self.transactionProductDetailsView.frame.size.height))
             textLabel.text = self.productDetails
             textLabel.textColor = .darkGrayColor()
-            textLabel.font = UIFont.systemFontOfSize(15.0)
+            textLabel.font = UIFont (name: "Panton-Regular", size: 15.0)
             
             self.transactionProductDetailsView.addSubview(textLabel)
         }
@@ -272,7 +272,7 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
     //MARK: Transaction Description Delegate Method
     func getProductDescription(desc: String) {
         let description = ProductDescriptionViewController(nibName: "ProductDescriptionViewController", bundle: nil)
-        description.url = desc
+        description.url = self.transactionProductDetailsModel.longDescription
         description.title = self.descriptionProductTitle
         let root: UINavigationController = UINavigationController(rootViewController: description)
         self.tabBarController?.presentViewController(root, animated: true, completion: nil)
@@ -562,6 +562,8 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
     
     // MARK: - TransactionCancelOrderSuccessViewControllerDelegate
     func closeCancelOrderSuccessViewController() {
+        self.navigationController?.popToRootViewControllerAnimated(true)
+        self.myTimer?.invalidate()
         self.dismissView()
     }
     

@@ -242,7 +242,7 @@ SELECT_CATEGORY_LOCALIZE_KEY = "Select Category";
 // MARK: - Product Details
 FREE_SHIPPING_LOCALIZE_KEY = "Free Shipping";
 SEVEN_DAY_RETURN_LOCALIZE_KEY = "7 Day Return";
-DETAILS_LOCALIZE_KEY = "Details";
+DETAILS_LOCALIZE_KEY = "Select Features";
 QUANTITY_LOCALIZE_KEY = "Quantity";
 DESCRIPTION_LOCALIZE_KEY = "Description";
 SEE_MORE_LOCALIZE_KEY = "SEE MORE";
@@ -252,6 +252,10 @@ SPECIALTY_LOCALIZE_KEY = "Specialty";
 ADD_TO_CART_LOCALIZE_KEY = "ADD TO CART";
 BUY_IT_NOW_LOCALIZE_KEY = "BUY IT NOW";
 NO_REVIEWS_LOCALIZE_KEY = "No Available Reviews";
+REACHED_BOTTOM_LOCALIZE_KEY = "You already reached the bottom.";
+
+OUT_OF_STOCK_LOCALIZE_KEY = "Out of stock";
+ALERT_OUT_OF_STOCK_LOCALIZE_KEY = "Product is out of stock";
 
 CANCEL_LOCALIZE_KEY = "CANCEL";
 DONE_LOCALIZE_KEY = "DONE";
@@ -267,6 +271,7 @@ ALERT_ADDED_TO_CART_LOCALIZE_KEY = "This item has been added to your cart.";
 ALERT_PLEASE_LOGIN_LOCALIZE_KEY = "Please login to add item in your wishlist.";
 ALERT_PLEASE_COMPLETE_LOCALIZE_KEY = "Please complete the attributes.";
 ALERT_AVOID_ISSUES_LOCALIZE_KEY = "To avoid issues, please login.";
+ALERT_SELLER_NOT_AVAILABLE_LOCALIZE_KEY = "Seller is not available.";
 
 // MARK: - Resolution Center
 RESOLUTION_TITLE_LOCALIZE_KEY = "Resolution Center";
@@ -323,7 +328,7 @@ VIEW_FEEDBACK_LOCALIZE_KEY = "VIEW FEEDBACK";
 ABOUT_SELLER_LOCALIZE_KEY = "About Seller";
 PRODUCTS_SELLER_LOCALIZE_KEY = "Products";
 MORE_SELLERS_PRODUCT_LOCALIZE_KEY = "MORE SELLER'S PRODUCT";
-PRODUCT_RATINGS_AND_FEEDBACK_LOCALIZE_KEY = "Product Rating & Feedback";
+PRODUCT_RATINGS_AND_FEEDBACK_LOCALIZE_KEY = "Seller's Rating and Feedback";
 VENDOR_PAGE_CANNOT_FOLLOW_LOCALIZE_KEY = "Please login to follow this seller.";
 VENDOR_PAGE_CANNOT_MESSAGE_LOCALIZE_KEY = "You're not allowed to message this seller. Please login first.";
 VENDOR_PAGE_CANNOT_CALL_LOCALIZE_KEY = "Cannot make a call to";
@@ -336,6 +341,11 @@ SELLERS_RATING_LOCALIZE_KEY = "people rate this seller";
 ACTIVITY_LOG_TITLE_LOCALIZE_KEY = "Activity Log";
 
 //Chan' Module
+
+// MARK: - HELP
+HELP_FOR_CUSTOMER_SERVICE= "For Customer Service Assistance";
+HELP_EMAIL = "Email  :";
+HELP_CALL = "Call     :";
 
 //Cart
 CART_TITLE_LOCALIZE_KEY = "Cart";
@@ -471,6 +481,7 @@ TRANSACTION_PRODUCT_LOCALIZE_KEY = "product";
 TRANSACTION_PRODUCTS_LOCALIZE_KEY = "products";
 TRANSACTION_NO_TRANSACTION_LOCALIZE_KEY = "No transactions available";
 TRANSACTION_DETAILS_TITLE_LOCALIZE_KEY = "Transaction Details";
+TRANSACTION_NO_DELIVERY_STATUS_LOCALIZE_KEY = "No delivery data found.";
 
 TRANSACTION_DETAILS_LOCALIZE_KEY = "DETAILS";
 TRANSACTION_DETAILS_STATUS_LOCALIZE_KEY = "Status";
@@ -495,6 +506,8 @@ TRANSACTION_DETAILS_DELIVERY_LOCALIZE_KEY = "delivery rider";
 TRANSACTION_DETAILS_NOT_ALLOWED_FEEDBACK_LOCALIZE_KEY = "You're not allowed to leave feedback to this seller unless your transaction status is completed.";
 TRANSACTION_DETAILS_NOT_ALLOWED_MESSAGE_LOCALIZE_KEY = "You're not allowed to message this seller.";
 TRANSACTION_NO_REVIEWS_LOCALIZE_KEY = "No reviews available.";
+TRANSACTION_ORDER_PRODUCT_NAME_LOCALIZE_KEY = "Order Product Name";
+TRANSACTION_ORDER_PRODUCT_STATUS_LOCALIZE_KEY = "Order Product Status";
 
 //Transaction Product Details
 TRANSACTION_PRODUCT_DETAILS_TITLE_LOCALIZE_KEY = "Product Details";
@@ -538,7 +551,7 @@ ACTIVITY_LOGS_TITLE_LOCALIZE_KEY = "Activity Logs";
 NO_MORE_DATA_LOCALIZE_KEY = "No more data!";
 
 //Success/Fail Cancellation
-TRANSACTION_CANCEL_ORDER_SUCCESS_LOCALIZE_KEY = "This order has been successfully been cancelled";
+TRANSACTION_CANCEL_ORDER_SUCCESS_LOCALIZE_KEY = "This order has been successfully cancelled.";
 TRANSACTION_CANCEL_ORDER_SUCCESS_SUB_LOCALIZE_KEY = "A Customer Service Representative will contact you shortly to ask how we can help you from losing more orders";
 TRANSACTION_CANCEL_ORDER_RETURN_LOCALIZE_KEY = "Return to Dashboard";
 

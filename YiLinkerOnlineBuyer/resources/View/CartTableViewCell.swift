@@ -13,6 +13,7 @@ protocol CartTableViewCellDelegate{
     func editButtonActionForIndex(sender: AnyObject)
     func checkBoxButtonActionForIndex(sender: AnyObject, state: Bool)
     func swipeViewDidScroll(sender: AnyObject)
+    func tapDetails(sender: AnyObject)
 }
 
 class CartTableViewCell: UITableViewCell, UIScrollViewDelegate {
@@ -29,6 +30,8 @@ class CartTableViewCell: UITableViewCell, UIScrollViewDelegate {
     @IBOutlet weak var cellContentView: UIView!
     @IBOutlet weak var cellButtonView: UIView!
     @IBOutlet weak var swipeIndicatorView: UIView!
+    @IBOutlet weak var productDetailsView: UIView!
+    @IBOutlet weak var checkBoxView: UIView!
     
     @IBOutlet weak var editLabel: UILabel!
     @IBOutlet weak var deleteLabel: UILabel!
@@ -59,6 +62,7 @@ class CartTableViewCell: UITableViewCell, UIScrollViewDelegate {
     @IBAction func buttonClicked(sender : AnyObject) {
         cellScrollView.setContentOffset(CGPointZero, animated: true)
         if(sender as! NSObject == deleteButton){
+            updateSwipeViewStatus()
             delegate?.deleteButtonActionForIndex(self)
         } else if(sender as! NSObject == editButton) {
             updateSwipeViewStatus()
@@ -94,6 +98,8 @@ class CartTableViewCell: UITableViewCell, UIScrollViewDelegate {
         
         cellContentView.frame = CGRectMake(0, 0, width, CGRectGetHeight(self.bounds))
         swipeIndicatorView.frame = CGRectMake((width - 25), 0, 25, CGRectGetHeight(self.bounds))
+        checkBoxView.frame = CGRectMake(0, 0, 35, CGRectGetHeight(self.bounds))
+        productDetailsView.frame = CGRectMake(35, 0, (width - 60), CGRectGetHeight(self.bounds))
         
         productNameLabel.frame = CGRectMake(productNameLabel.frame.origin.x, productNameLabel.frame.origin.y, (width - 187), productNameLabel.frame.height)
         productDetailsLabel.frame = CGRectMake(productDetailsLabel.frame.origin.x, productDetailsLabel.frame.origin.y, (width - 187), productDetailsLabel.frame.height)
@@ -102,7 +108,10 @@ class CartTableViewCell: UITableViewCell, UIScrollViewDelegate {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "enclosingTableViewDidScroll", name: swipeForOptionsCellEnclosingTableViewDidBeginScrollingNotification, object: nil)
 
         var contentTap = UITapGestureRecognizer(target:self, action:"contentTapAction")
-        contentView.addGestureRecognizer(contentTap)
+        checkBoxView.addGestureRecognizer(contentTap)
+        
+        var detailsTap = UITapGestureRecognizer(target:self, action:"goToProductPage")
+        productDetailsView.addGestureRecognizer(detailsTap)
         
         editLabel.text = StringHelper.localizedStringWithKey("CART_EDIT_LOCALIZE_KEY")
         deleteLabel.text = StringHelper.localizedStringWithKey("CART_DELETE_LOCALIZE_KEY")
@@ -123,6 +132,9 @@ class CartTableViewCell: UITableViewCell, UIScrollViewDelegate {
         delegate?.checkBoxButtonActionForIndex(self, state: checkBox.selected)
     }
     
+    func goToProductPage(){
+        delegate?.tapDetails(self)
+    }
     
     func updateSwipeViewStatus(){
         if isSwipeViewOpen {

@@ -71,11 +71,13 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
     }
     
     override func viewDidAppear(animated: Bool) {
-        let locationManager = CLLocationManager()
-        locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.requestWhenInUseAuthorization()
-        locationManager.startUpdatingLocation()
+//        let locationManager = CLLocationManager()
+//        locationManager.delegate = self
+//        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+//        locationManager.requestWhenInUseAuthorization()
+//        locationManager.startUpdatingLocation()
+        
+        self.tableView.reloadData()
     }
     
     override func didReceiveMemoryWarning() {
@@ -328,7 +330,13 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
             profileImageData = UIImageJPEGRepresentation(image, 0.25)
         } else {
             validIDImage = image
-            validIDImageData = UIImageJPEGRepresentation(image, 0.25)
+            if image.imageOrientation == UIImageOrientation.Right {
+                validIDImageData = UIImageJPEGRepresentation(image.normalizedImage(), 0.25)
+            } else {
+                validIDImageData = UIImageJPEGRepresentation(image, 0.25)
+            }
+            
+            profileUserDetailsModel.userDocuments = " "
             personalInfoCell = self.tableView.cellForRowAtIndexPath(personalIndexPath!) as? EditProfilePersonalInformationTableViewCell
             personalInfoCell?.addIDButton.setTitle(personalInfoCell?.changeLocalizeString, forState: UIControlState.Normal)
             personalInfoCell?.viewImageConstraint.constant = 75
@@ -487,7 +495,7 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
     }
     
     func requestNewCodeAction() {
-        changeMobileNumberAction()
+        submitChangeNumberViewController()
     }
     
     // MARK: - VerifyMobileNumberStatusViewControllerDelegate
@@ -500,7 +508,15 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
     }
     
     func requestNewVerificationCodeAction() {
-        changeMobileNumberAction()
+        submitChangeNumberViewController()
+    }
+    
+    func getNewMobileNumber() -> String {
+        var result: String = ""
+        if let val: AnyObject = NSUserDefaults.standardUserDefaults().objectForKey("newMobileNumber") as? String {
+            result = val as! String
+        }
+        return result
     }
     
     

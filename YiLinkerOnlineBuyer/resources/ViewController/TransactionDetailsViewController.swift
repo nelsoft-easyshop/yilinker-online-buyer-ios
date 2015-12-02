@@ -165,7 +165,7 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
         transactionDetailsTableViewCell.selectionStyle = UITableViewCellSelectionStyle.None
         if(self.transactionDetailsModel != nil){
             transactionDetailsTableViewCell.productNameLabel.text = self.table[indexPath.section].transactions[indexPath.row].productName
-            transactionDetailsTableViewCell.productStatusLabel.text = self.orderStatus
+            transactionDetailsTableViewCell.productStatusLabel.text = self.table[indexPath.section].orderStatus
         }
         
         return transactionDetailsTableViewCell
@@ -180,7 +180,7 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
         productDetails.unitPrice = self.table[indexPath.section].transactions[indexPath.row].unitPrice
         productDetails.totalPrice = self.table[indexPath.section].transactions[indexPath.row].totalPrice
         productDetails.productName = self.table[indexPath.section].transactions[indexPath.row].productName
-        productDetails.transactionId = "TID-\(self.transactionId)"
+        productDetails.transactionId = self.transactionId
         productDetails.isCancellable = self.table[indexPath.section].transactions[indexPath.row].isCancellable
         self.navigationController?.pushViewController(productDetails, animated: true)
     }
@@ -217,6 +217,12 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
         
         return self.transactionSectionView
         
+    }
+    
+    func sellerPage(sellerId: Int) {
+        let sellerViewController: SellerViewController = SellerViewController(nibName: "SellerViewController", bundle: nil)
+        sellerViewController.sellerId = sellerId
+        self.navigationController!.pushViewController(sellerViewController, animated: true)
     }
     
     /*
@@ -275,7 +281,7 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
             transactionDetailsView.shippingFeeTitleLabel.text = self.shippingFeeTitle
             transactionDetailsView.totalCostTitleLabel.text = self.totalCostTitle
             
-            transactionDetailsView.statusLabel.text = self.transactionType
+            transactionDetailsView.statusLabel.text = self.orderStatus
             transactionDetailsView.paymentTypeLabel.text = self.paymentType
             transactionDetailsView.dateCreatedLabel.text = self.dateCreated
             transactionDetailsView.quantityLabel.text = self.totalQuantity
@@ -568,7 +574,8 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
                         arr.append(self.tableSectionContents)
                     }
                 }
-                self.table.append(TransactionDetailsModel(sellerName: self.transactionDetailsModel!.sellerStore[a], sellerContact: self.transactionDetailsModel!.sellerContactNumber[a], id: self.transactionDetailsModel.sellerId[a], sellerIdForFeedback: self.transactionDetailsModel.sellerId[a], feedback: self.transactionDetailsModel.hasFeedback[a], transactions: arr))
+                
+                self.table.append(TransactionDetailsModel(sellerName: self.transactionDetailsModel!.sellerStore[a], sellerContact: self.transactionDetailsModel!.sellerContactNumber[a], id: self.transactionDetailsModel.sellerId[a], sellerIdForFeedback: self.transactionDetailsModel.sellerId[a], feedback: self.transactionDetailsModel.hasFeedback[a], transactions: arr, orderStatus: self.transactionDetailsModel.name[a]))
             }
             
             self.tableView.reloadData()

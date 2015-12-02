@@ -67,16 +67,18 @@ class TransactionDetailsModel: NSObject {
     var id: Int = 0
     var sellerIdForFeedback: Int = 0
     var feedback: Bool = false
+    var orderStatus: String = ""
     var transactions: [TransactionDetailsProductsModel] = []
     var isCancellable: [Bool] = []
     
-    init(sellerName: String, sellerContact: String, id: Int, sellerIdForFeedback: Int, feedback: Bool, transactions: [TransactionDetailsProductsModel]) {
+    init(sellerName: String, sellerContact: String, id: Int, sellerIdForFeedback: Int, feedback: Bool, transactions: [TransactionDetailsProductsModel], orderStatus: String) {
         self.sellerName = sellerName
         self.sellerContact = sellerContact
         self.id = id
         self.sellerIdForFeedback = sellerIdForFeedback
         self.feedback = feedback
         self.transactions = transactions
+        self.orderStatus = orderStatus
     }
     
     init(isSuccessful: Bool, sellerId: NSArray, sellerId2: NSArray, sellerStore: NSArray, sellerContactNumber: NSArray, hasFeedback: NSArray, orderProductId: NSArray, productId: NSArray, quantity: NSArray, unitPrice: NSArray, totalPrice: NSArray, productName: NSArray, handlingFee: NSArray, orderProductStatusId: NSArray, name: NSArray, productDescription: NSArray, productImage: NSArray, isCancellable: NSArray){
@@ -141,10 +143,10 @@ class TransactionDetailsModel: NSObject {
                    
                     sellerContactNumber.append(transaction["sellerContactNumber"] as! String)
                     
-                    if !(transaction["hasFeedback"] is NSNull) {
-                        hasFeedback.append(transaction["hasFeedback"] as! Bool)
-                    } else {
+                    if transaction["sellerHasFeedback"] is NSNull {
                         hasFeedback.append(false)
+                    } else {
+                        hasFeedback.append(transaction["sellerHasFeedback"] as! Bool)
                     }
                     
                     let products: NSArray = transaction["products"] as! NSArray
@@ -163,6 +165,10 @@ class TransactionDetailsModel: NSObject {
                                     orderProductStatusId.append(orderProductStatus["orderProductStatusId"] as! Int)
                                     name.append(orderProductStatus["name"] as! String)
                                     productDescription.append(orderProductStatus["description"] as! String)
+                                } else {
+                                    orderProductStatusId.append(0)
+                                    name.append("")
+                                    productDescription.append("")
                                 }
                                 
                                 if (product["productImage"] as! String) != "" {
@@ -211,6 +217,11 @@ class TransactionDetailsModel: NSObject {
             }
             
             if let value: AnyObject = dictionary["data"] {
+                
+                /*if let cancellable = value["isCancellable"] as? Bool{
+                    isCancellable.append(cancellable)
+                }*/
+                
                 let transactions: NSArray = value["transactionItems"] as! NSArray
                 for transaction in transactions as! [NSDictionary] {
                     
@@ -253,7 +264,9 @@ class TransactionDetailsModel: NSObject {
                                 productImage.append("")
                             }
                             
-                            isCancellable.append(product["isCancellable"] as! Bool)
+                            if let cancellable = product["isCancellable"] as? Bool{
+                                isCancellable.append(cancellable)
+                            }
                             //}
                         }
                     }

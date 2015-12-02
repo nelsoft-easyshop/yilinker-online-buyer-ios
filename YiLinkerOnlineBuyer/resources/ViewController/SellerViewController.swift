@@ -105,7 +105,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
     func titleView() {
         let label: UILabel = UILabel(frame: CGRectMake(0, 0, 100, 50))
         label.text = vendorTitle
-        label.font = UIFont (name: "Panton", size: 20)
+        label.font = UIFont (name: "Panton-Regular", size: 20)
         label.textAlignment = NSTextAlignment.Center
         label.textColor = UIColor.whiteColor()
         self.navigationItem.titleView = label
@@ -162,6 +162,9 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         let reviewNib: UINib = UINib(nibName: Constants.Seller.reviewNibName, bundle: nil)
         self.tableView.registerNib(reviewNib, forCellReuseIdentifier: Constants.Seller.reviewIdentifier)
+        
+        let noReviewNib: UINib = UINib(nibName: "NoReviewTableViewCell", bundle: nil)
+        self.tableView.registerNib(noReviewNib, forCellReuseIdentifier: "NoReviewTableViewCell")
         
         let seeMoreNib: UINib = UINib(nibName: Constants.Seller.seeMoreTableViewCellNibNameAndIdentifier, bundle: nil)
         self.tableView.registerNib(seeMoreNib, forCellReuseIdentifier: Constants.Seller.seeMoreTableViewCellNibNameAndIdentifier)
@@ -417,7 +420,11 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         if self.sellerModel2 != nil {
-            return self.sellerModel2!.reviews.count + 3
+            if self.sellerModel2!.reviews.count == 0 {
+                return 4
+            } else {
+                return self.sellerModel2!.reviews.count + 3
+            }
         } else {
             return 1
         }
@@ -454,16 +461,22 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
             
             return generalRatingTableViewCell
         } else {
-            let index: Int = indexPath.section - 3
-            let reviewCell: ReviewTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(Constants.Seller.reviewIdentifier) as! ReviewTableViewCell
-            let reviewModel: ProductReviewsModel = self.sellerModel2!.reviews[index]
-            
-            reviewCell.displayPictureImageView.sd_setImageWithURL(NSURL(string: reviewModel.imageUrl)!, placeholderImage: UIImage(named: "dummy-placeholder"))
-            reviewCell.messageLabel.text = reviewModel.review
-            reviewCell.nameLabel.text = reviewModel.fullName
-            reviewCell.setRating(reviewModel.ratingSellerReview)
-            
-            return reviewCell
+            if self.sellerModel2!.reviews.count != 0 {
+                let index: Int = indexPath.section - 3
+                let reviewCell: ReviewTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(Constants.Seller.reviewIdentifier) as! ReviewTableViewCell
+                let reviewModel: ProductReviewsModel = self.sellerModel2!.reviews[index]
+                
+                reviewCell.displayPictureImageView.sd_setImageWithURL(NSURL(string: reviewModel.imageUrl)!, placeholderImage: UIImage(named: "dummy-placeholder"))
+                reviewCell.messageLabel.text = reviewModel.review
+                reviewCell.nameLabel.text = reviewModel.fullName
+                reviewCell.setRating(reviewModel.ratingSellerReview)
+                
+                return reviewCell
+            } else {
+                let noReviewCell: NoReviewTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("NoReviewTableViewCell") as! NoReviewTableViewCell
+                noReviewCell.noReviewsLabel.text = StringHelper.localizedStringWithKey("TRANSACTION_NO_REVIEWS_LOCALIZE_KEY")
+                return noReviewCell
+            }
         }
     }
     

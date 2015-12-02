@@ -130,7 +130,7 @@ class ViewFeedBackViewController: UIViewController, UITableViewDelegate, UITable
                 self.numberOfPeopleLabel.text = "\(self.sellerModel!.reviews.count)"
                 self.ratingAndReviewsTableView.reloadData()
                 if self.sellerModel!.reviews.count == 0 {
-                    self.showAlert(title: ProductStrings.alertNoReviews, message: nil)
+                    //self.showAlert(title: ProductStrings.alertNoReviews, message: nil)
                     self.ratingAndReviewsTableView.hidden = true
                     self.loadingLabel.hidden = false
                     self.loadingLabel.text = StringHelper.localizedStringWithKey("TRANSACTION_NO_REVIEWS_LOCALIZE_KEY")
@@ -139,7 +139,7 @@ class ViewFeedBackViewController: UIViewController, UITableViewDelegate, UITable
                     self.loadingLabel.hidden = true
                 }
             } else {
-                self.showAlert(title: Constants.Localized.error, message: responseObject["message"] as! String)
+                //self.showAlert(title: Constants.Localized.error, message: responseObject["message"] as! String)
                 self.ratingAndReviewsTableView.hidden = true
                 self.loadingLabel.hidden = false
                 self.loadingLabel.text = StringHelper.localizedStringWithKey("TRANSACTION_NO_REVIEWS_LOCALIZE_KEY")

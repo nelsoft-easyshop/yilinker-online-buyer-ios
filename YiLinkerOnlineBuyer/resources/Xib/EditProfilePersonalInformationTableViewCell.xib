@@ -61,7 +61,7 @@
                         </constraints>
                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                        <textInputTraits key="textInputTraits"/>
+                        <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
                         <connections>
                             <action selector="editingAction:" destination="3XT-ns-6vO" eventType="editingChanged" id="ZjL-iA-Sl0"/>
                         </connections>
@@ -101,7 +101,7 @@
                         </constraints>
                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                        <textInputTraits key="textInputTraits"/>
+                        <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
                         <connections>
                             <action selector="editingAction:" destination="3XT-ns-6vO" eventType="editingChanged" id="ZO5-j8-UCP"/>
                         </connections>
