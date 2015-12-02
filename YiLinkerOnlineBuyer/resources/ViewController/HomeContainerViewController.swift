@@ -119,11 +119,11 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         self.registerCellWithNibName(self.layoutNineNibName)
         self.registerCellWithNibName(self.twoColumnGridCell)
         
-        /*if Reachability.isConnectedToNetwork() {
+        if Reachability.isConnectedToNetwork() {
         self.fireGetHomePageData()
         } else {
         self.addEmptyView()
-        }*/
+        }
         
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         
@@ -131,44 +131,6 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             name: appDelegate.registrationKey, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "onNewMessage:",
             name: appDelegate.messageKey, object: nil)
-        
-        let dictionary: NSDictionary = ParseLocalJSON.fileName("dummyHomePage") as NSDictionary
-        self.homePageModel = HomePageModel.parseDataFromDictionary(dictionary)
-        
-        for (index, model) in enumerate(self.homePageModel.data) {
-            if model.isKindOfClass(LayoutOneModel) {
-                self.layouts.append("1")
-            } else if model.isKindOfClass(LayoutTwoModel) {
-                self.layouts.append("2")
-            } else if model.isKindOfClass(LayoutThreeModel) {
-                self.layouts.append("3")
-            } else if model.isKindOfClass(LayoutFourModel) {
-                self.layouts.append("4")
-                let layoutFourModel: LayoutFourModel = self.homePageModel.data[index] as! LayoutFourModel
-              
-                if layoutFourModel.remainingTime.toInt() != 0 || layoutFourModel.remainingTime.toInt() != nil {
-                    self.remainingTime = layoutFourModel.remainingTime.toInt()!
-                    var timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "updateTime", userInfo: nil, repeats: true)
-                } else {
-                    self.homePageModel.data.removeAtIndex(index)
-                }
-              
-            } else if model.isKindOfClass(LayoutFiveModel) {
-                self.layouts.append("5")
-            } else if model.isKindOfClass(LayoutSixModel) {
-                self.layouts.append("6")
-            } else if model.isKindOfClass(LayoutSevenModel) {
-                self.layouts.append("7")
-            } else if model.isKindOfClass(LayoutEightModel) {
-                self.layouts.append("8")
-            } else if model.isKindOfClass(LayoutNineModel) {
-                self.layouts.append("9")
-            } else if model.isKindOfClass(LayoutTenModel) {
-                self.layouts.append("10")
-            }
-        }
-        
-        self.collectionViewLayout()
         
         self.view.layoutIfNeeded()
         //set customTabbar
@@ -182,6 +144,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     func collectionViewLayout() {
         let homePageCollectionViewLayout: HomePageCollectionViewLayout2 = HomePageCollectionViewLayout2()
         homePageCollectionViewLayout.layouts = self.layouts
+        homePageCollectionViewLayout.homePageModel = self.homePageModel
         self.collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         self.collectionView.collectionViewLayout = homePageCollectionViewLayout
         //decoration view
@@ -362,7 +325,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         let manager = APIManager.sharedInstance
         manager.GET(APIAtlas.homeUrl, parameters: nil, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            
+            self.populateHomePageWithDictionary(responseObject as! NSDictionary)
             self.hud?.hide(true)
             //get user info
             if SessionManager.isLoggedIn() {
@@ -377,7 +340,46 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         })
     }
     
-    
+    //MARK: - Populate Home PageWith  Dictionary
+    func populateHomePageWithDictionary(dictionary: NSDictionary) {
+        self.homePageModel = HomePageModel.parseDataFromDictionary(dictionary)
+        self.layouts.removeAll(keepCapacity: true)
+        for (index, model) in enumerate(self.homePageModel.data) {
+            if model.isKindOfClass(LayoutOneModel) {
+                self.layouts.append("1")
+            } else if model.isKindOfClass(LayoutTwoModel) {
+                self.layouts.append("2")
+            } else if model.isKindOfClass(LayoutThreeModel) {
+                self.layouts.append("3")
+            } else if model.isKindOfClass(LayoutFourModel) {
+                let layoutFourModel: LayoutFourModel = self.homePageModel.data[index] as! LayoutFourModel
+                
+                if layoutFourModel.remainingTime.toInt() != 0 && layoutFourModel.remainingTime != "" && layoutFourModel.remainingTime.toInt() != nil {
+                    self.remainingTime = layoutFourModel.remainingTime.toInt()!
+                    var timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "updateTime", userInfo: nil, repeats: true)
+                    self.layouts.append("4")
+                } else {
+                    self.homePageModel.data.removeAtIndex(index)
+                }
+                
+            } else if model.isKindOfClass(LayoutFiveModel) {
+                self.layouts.append("5")
+            } else if model.isKindOfClass(LayoutSixModel) {
+                self.layouts.append("6")
+            } else if model.isKindOfClass(LayoutSevenModel) {
+                self.layouts.append("7")
+            } else if model.isKindOfClass(LayoutEightModel) {
+                self.layouts.append("8")
+            } else if model.isKindOfClass(LayoutNineModel) {
+                self.layouts.append("9")
+            } else if model.isKindOfClass(LayoutTenModel) {
+                self.layouts.append("10")
+            }
+        }
+        
+        self.collectionView.reloadData()
+        self.collectionViewLayout()
+    }
     
     //MARK: - Getting User Info
     func fireGetUserInfo() {
@@ -814,22 +816,24 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         flashSaleCell.secondFirstDigit.text = self.firstSecondsString
         flashSaleCell.secondSecondDigit.text = self.secondSecondsString
         
-        flashSaleCell.productOneImageView.sd_setImageWithURL(NSURL(string: layoutFourModel.data[0].image), placeholderImage: UIImage(named: "dummy-placeholder"))
-        flashSaleCell.productTwoImageView.sd_setImageWithURL(NSURL(string: layoutFourModel.data[1].image), placeholderImage: UIImage(named: "dummy-placeholder"))
-        flashSaleCell.productThreeImageView.sd_setImageWithURL(NSURL(string: layoutFourModel.data[2].image), placeholderImage: UIImage(named: "dummy-placeholder"))
-        
-        flashSaleCell.productOneImageView.target = layoutFourModel.data[0].target.targetUrl
-        flashSaleCell.productOneImageView.targetType = layoutFourModel.data[0].target.targetType
-        
-        flashSaleCell.productTwoImageView.target = layoutFourModel.data[1].target.targetUrl
-        flashSaleCell.productTwoImageView.targetType = layoutFourModel.data[1].target.targetType
-        
-        flashSaleCell.productThreeImageView.target = layoutFourModel.data[2].target.targetUrl
-        flashSaleCell.productThreeImageView.targetType = layoutFourModel.data[2].target.targetType
-        
-        flashSaleCell.productOneDiscountLabel.text = "\(layoutFourModel.data[0].discountPercentage)%"
-        flashSaleCell.productTwoDiscountLabel.text = "\(layoutFourModel.data[1].discountPercentage)%"
-        flashSaleCell.productThreeDiscountLabel.text = "\(layoutFourModel.data[2].discountPercentage)%"
+        if layoutFourModel.data.count >= 3 {
+            flashSaleCell.productOneImageView.sd_setImageWithURL(NSURL(string: layoutFourModel.data[0].image), placeholderImage: UIImage(named: "dummy-placeholder"))
+            flashSaleCell.productTwoImageView.sd_setImageWithURL(NSURL(string: layoutFourModel.data[1].image), placeholderImage: UIImage(named: "dummy-placeholder"))
+            flashSaleCell.productThreeImageView.sd_setImageWithURL(NSURL(string: layoutFourModel.data[2].image), placeholderImage: UIImage(named: "dummy-placeholder"))
+            
+            flashSaleCell.productOneImageView.target = layoutFourModel.data[0].target.targetUrl
+            flashSaleCell.productOneImageView.targetType = layoutFourModel.data[0].target.targetType
+            
+            flashSaleCell.productTwoImageView.target = layoutFourModel.data[1].target.targetUrl
+            flashSaleCell.productTwoImageView.targetType = layoutFourModel.data[1].target.targetType
+            
+            flashSaleCell.productThreeImageView.target = layoutFourModel.data[2].target.targetUrl
+            flashSaleCell.productThreeImageView.targetType = layoutFourModel.data[2].target.targetType
+            
+            flashSaleCell.productOneDiscountLabel.text = "\(layoutFourModel.data[0].discountPercentage)%"
+            flashSaleCell.productTwoDiscountLabel.text = "\(layoutFourModel.data[1].discountPercentage)%"
+            flashSaleCell.productThreeDiscountLabel.text = "\(layoutFourModel.data[2].discountPercentage)%"
+        }
         
         return flashSaleCell
     }
@@ -859,30 +863,32 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         layoutNineCollectionViewCell.delegate = self
         layoutNineCollectionViewCell.dataSource = self
         
-        layoutNineCollectionViewCell.productOneNameLabel.text = layoutNineModel.data[0].name
-        layoutNineCollectionViewCell.productImageViewOne.sd_setImageWithURL(NSURL(string: layoutNineModel.data[0].image), placeholderImage: UIImage(named: self.placeHolder))
-        layoutNineCollectionViewCell.productImageViewOne.target = layoutNineModel.data[0].target.targetUrl
-        layoutNineCollectionViewCell.productImageViewOne.targetType = layoutNineModel.data[0].target.targetType
-        
-        layoutNineCollectionViewCell.productTwoNameLabel.text = layoutNineModel.data[1].name
-        layoutNineCollectionViewCell.productImageViewTwo.sd_setImageWithURL(NSURL(string: layoutNineModel.data[1].image), placeholderImage: UIImage(named: self.placeHolder))
-        layoutNineCollectionViewCell.productImageViewTwo.target = layoutNineModel.data[1].target.targetUrl
-        layoutNineCollectionViewCell.productImageViewTwo.targetType = layoutNineModel.data[1].target.targetType
-        
-        layoutNineCollectionViewCell.productThreeNameLabel.text = layoutNineModel.data[2].name
-        layoutNineCollectionViewCell.productImageViewThree.sd_setImageWithURL(NSURL(string: layoutNineModel.data[2].image), placeholderImage: UIImage(named: self.placeHolder))
-        layoutNineCollectionViewCell.productImageViewThree.target = layoutNineModel.data[2].target.targetUrl
-        layoutNineCollectionViewCell.productImageViewThree.targetType = layoutNineModel.data[2].target.targetType
-        
-        layoutNineCollectionViewCell.productFourNameLabel.text = layoutNineModel.data[3].name
-        layoutNineCollectionViewCell.productImageViewFour.sd_setImageWithURL(NSURL(string: layoutNineModel.data[3].image), placeholderImage: UIImage(named: self.placeHolder))
-        layoutNineCollectionViewCell.productImageViewFour.target = layoutNineModel.data[3].target.targetUrl
-        layoutNineCollectionViewCell.productImageViewFour.targetType = layoutNineModel.data[3].target.targetType
-        
-        layoutNineCollectionViewCell.productFiveNameLabel.text = layoutNineModel.data[4].name
-        layoutNineCollectionViewCell.productImageViewFive.sd_setImageWithURL(NSURL(string: layoutNineModel.data[4].image), placeholderImage: UIImage(named: self.placeHolder))
-        layoutNineCollectionViewCell.productImageViewFive.target = layoutNineModel.data[4].target.targetUrl
-        layoutNineCollectionViewCell.productImageViewFive.targetType = layoutNineModel.data[4].target.targetType
+        if layoutNineModel.data.count >= 5 {
+            layoutNineCollectionViewCell.productOneNameLabel.text = layoutNineModel.data[0].name
+            layoutNineCollectionViewCell.productImageViewOne.sd_setImageWithURL(NSURL(string: layoutNineModel.data[0].image), placeholderImage: UIImage(named: self.placeHolder))
+            layoutNineCollectionViewCell.productImageViewOne.target = layoutNineModel.data[0].target.targetUrl
+            layoutNineCollectionViewCell.productImageViewOne.targetType = layoutNineModel.data[0].target.targetType
+            
+            layoutNineCollectionViewCell.productTwoNameLabel.text = layoutNineModel.data[1].name
+            layoutNineCollectionViewCell.productImageViewTwo.sd_setImageWithURL(NSURL(string: layoutNineModel.data[1].image), placeholderImage: UIImage(named: self.placeHolder))
+            layoutNineCollectionViewCell.productImageViewTwo.target = layoutNineModel.data[1].target.targetUrl
+            layoutNineCollectionViewCell.productImageViewTwo.targetType = layoutNineModel.data[1].target.targetType
+            
+            layoutNineCollectionViewCell.productThreeNameLabel.text = layoutNineModel.data[2].name
+            layoutNineCollectionViewCell.productImageViewThree.sd_setImageWithURL(NSURL(string: layoutNineModel.data[2].image), placeholderImage: UIImage(named: self.placeHolder))
+            layoutNineCollectionViewCell.productImageViewThree.target = layoutNineModel.data[2].target.targetUrl
+            layoutNineCollectionViewCell.productImageViewThree.targetType = layoutNineModel.data[2].target.targetType
+            
+            layoutNineCollectionViewCell.productFourNameLabel.text = layoutNineModel.data[3].name
+            layoutNineCollectionViewCell.productImageViewFour.sd_setImageWithURL(NSURL(string: layoutNineModel.data[3].image), placeholderImage: UIImage(named: self.placeHolder))
+            layoutNineCollectionViewCell.productImageViewFour.target = layoutNineModel.data[3].target.targetUrl
+            layoutNineCollectionViewCell.productImageViewFour.targetType = layoutNineModel.data[3].target.targetType
+            
+            layoutNineCollectionViewCell.productFiveNameLabel.text = layoutNineModel.data[4].name
+            layoutNineCollectionViewCell.productImageViewFive.sd_setImageWithURL(NSURL(string: layoutNineModel.data[4].image), placeholderImage: UIImage(named: self.placeHolder))
+            layoutNineCollectionViewCell.productImageViewFive.target = layoutNineModel.data[4].target.targetUrl
+            layoutNineCollectionViewCell.productImageViewFive.targetType = layoutNineModel.data[4].target.targetType
+        }
         
         return layoutNineCollectionViewCell
     }
@@ -1072,27 +1078,29 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         
         let sellerCollectionView: SellerCollectionViewCell = sellerCarouselCollectionViewCell.collectionView?.dequeueReusableCellWithReuseIdentifier(self.sellerNibName, forIndexPath: indexPath) as! SellerCollectionViewCell
         
-        sellerCollectionView.productOneImageView.target = layoutEightModel.data[indexPath.row].data[0].target.targetUrl
-        sellerCollectionView.productTwoImageView.target = layoutEightModel.data[indexPath.row].data[1].target.targetUrl
-        sellerCollectionView.productThreeImageView.target = layoutEightModel.data[indexPath.row].data[2].target.targetUrl
-        
-        sellerCollectionView.productOneImageView.targetType = layoutEightModel.data[indexPath.row].data[0].target.targetType
-        sellerCollectionView.productTwoImageView.targetType = layoutEightModel.data[indexPath.row].data[1].target.targetType
-        sellerCollectionView.productThreeImageView.targetType = layoutEightModel.data[indexPath.row].data[2].target.targetType
-        
-        sellerCollectionView.sellerProfileImageView.sd_setImageWithURL(NSURL(string: layoutEightModel.data[indexPath.row].image), placeholderImage: UIImage(named: self.placeHolder))
-        
-        sellerCollectionView.productOneImageView.sd_setImageWithURL(NSURL(string: layoutEightModel.data[indexPath.row].data[0].image), placeholderImage: UIImage(named: self.placeHolder))
-        sellerCollectionView.productTwoImageView.sd_setImageWithURL(NSURL(string: layoutEightModel.data[indexPath.row].data[1].image), placeholderImage: UIImage(named: self.placeHolder))
-        sellerCollectionView.productThreeImageView.sd_setImageWithURL(NSURL(string: layoutEightModel.data[indexPath.row].data[2].image), placeholderImage: UIImage(named: self.placeHolder))
-        
-        sellerCollectionView.target = layoutEightModel.data[indexPath.row].target.targetUrl
-        sellerCollectionView.targetType = layoutEightModel.data[indexPath.row].target.targetType
-        
-        sellerCollectionView.sellerProfileImageView.userInteractionEnabled = false
-        
-        sellerCollectionView.sellerTitleLabel.text = layoutEightModel.data[indexPath.row].name
-        sellerCollectionView.sellerSubTitleLabel.text = layoutEightModel.data[indexPath.row].specialty
+        if layoutEightModel.data[indexPath.row].data.count >= 3 {
+            sellerCollectionView.productOneImageView.target = layoutEightModel.data[indexPath.row].data[0].target.targetUrl
+            sellerCollectionView.productTwoImageView.target = layoutEightModel.data[indexPath.row].data[1].target.targetUrl
+            sellerCollectionView.productThreeImageView.target = layoutEightModel.data[indexPath.row].data[2].target.targetUrl
+            
+            sellerCollectionView.productOneImageView.targetType = layoutEightModel.data[indexPath.row].data[0].target.targetType
+            sellerCollectionView.productTwoImageView.targetType = layoutEightModel.data[indexPath.row].data[1].target.targetType
+            sellerCollectionView.productThreeImageView.targetType = layoutEightModel.data[indexPath.row].data[2].target.targetType
+            
+            sellerCollectionView.sellerProfileImageView.sd_setImageWithURL(NSURL(string: layoutEightModel.data[indexPath.row].image), placeholderImage: UIImage(named: self.placeHolder))
+            
+            sellerCollectionView.productOneImageView.sd_setImageWithURL(NSURL(string: layoutEightModel.data[indexPath.row].data[0].image), placeholderImage: UIImage(named: self.placeHolder))
+            sellerCollectionView.productTwoImageView.sd_setImageWithURL(NSURL(string: layoutEightModel.data[indexPath.row].data[1].image), placeholderImage: UIImage(named: self.placeHolder))
+            sellerCollectionView.productThreeImageView.sd_setImageWithURL(NSURL(string: layoutEightModel.data[indexPath.row].data[2].image), placeholderImage: UIImage(named: self.placeHolder))
+            
+            sellerCollectionView.target = layoutEightModel.data[indexPath.row].target.targetUrl
+            sellerCollectionView.targetType = layoutEightModel.data[indexPath.row].target.targetType
+            
+            sellerCollectionView.sellerProfileImageView.userInteractionEnabled = false
+            
+            sellerCollectionView.sellerTitleLabel.text = layoutEightModel.data[indexPath.row].name
+            sellerCollectionView.sellerSubTitleLabel.text = layoutEightModel.data[indexPath.row].specialty
+        }
         
         self.addGestureToSellerProduct(sellerCollectionView.productOneImageView)
         self.addGestureToSellerProduct(sellerCollectionView.productTwoImageView)
