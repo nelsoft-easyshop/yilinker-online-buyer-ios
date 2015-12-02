@@ -105,7 +105,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
     func titleView() {
         let label: UILabel = UILabel(frame: CGRectMake(0, 0, 100, 50))
         label.text = vendorTitle
-        label.font = UIFont (name: "Panton-SemiBold", size: 20)
+        label.font = UIFont (name: "Panton-Regular", size: 20)
         label.textAlignment = NSTextAlignment.Center
         label.textColor = UIColor.whiteColor()
         self.navigationItem.titleView = label
