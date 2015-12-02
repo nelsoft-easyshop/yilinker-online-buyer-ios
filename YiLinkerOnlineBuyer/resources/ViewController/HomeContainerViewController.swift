@@ -339,6 +339,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         let manager = APIManager.sharedInstance
         manager.GET(APIAtlas.homeUrl, parameters: nil, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            let dictionary: NSDictionary  = ParseLocalJSON.fileName("dummyHomePage")
             self.populateHomePageWithDictionary(responseObject as! NSDictionary)
             self.hud?.hide(true)
             //get user info
@@ -711,14 +712,8 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     func halfPagerCollectionViewCellnumberOfDotsInPageControl(halfPagerCollectionViewCell: HalfPagerCollectionViewCell) -> Int {
         let parentIndexPath: NSIndexPath = self.collectionView.indexPathForCell(halfPagerCollectionViewCell)!
         let layoutThreeModel: LayoutThreeModel = self.homePageModel.data[parentIndexPath.section] as! LayoutThreeModel
-        
-        var numberOfPages: Float = Float(layoutThreeModel.data.count) /  2.0
-        
-        if fmod(numberOfPages, 1.0) != 0.0 {
-            numberOfPages = numberOfPages + 1
-        }
-        
-        return Int(numberOfPages)
+    
+        return layoutThreeModel.data.count
     }
     
     func halfPagerCollectionViewCell(halfPagerCollectionViewCell: HalfPagerCollectionViewCell, cellForRowAtIndexPath indexPath: NSIndexPath) -> FullImageCollectionViewCell {
@@ -739,11 +734,12 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         let rightInset: Int = 15
         self.view.layoutIfNeeded()
         
-        if IphoneType.isIphone6() || IphoneType.isIphone6Plus() {
-            return (self.view.frame.size.width / 2) - CGFloat(rightInset)
-        } else {
-            return (self.view.frame.size.width / 2) - CGFloat(rightInset)
-        }
+            if IphoneType.isIphone6() || IphoneType.isIphone6Plus() {
+                println((self.view.frame.size.width / 2) - 8)
+                return (self.view.frame.size.width / 2) - 8
+            } else {
+                return (self.view.frame.size.width / 2) - 8
+            }
     }
     
     //MARK: - Half Pager Delegate
@@ -754,7 +750,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     
     func halfPagerCollectionViewCellDidEndDecelerating(halfPagerCollectionViewCell: HalfPagerCollectionViewCell) {
         halfPagerCollectionViewCell.layoutIfNeeded()
-        let pageWidth: CGFloat = halfPagerCollectionViewCell.collectionView.frame.size.width
+        let pageWidth: CGFloat = (halfPagerCollectionViewCell.collectionView.frame.size.width - 8) / 2
         let currentPage: CGFloat = halfPagerCollectionViewCell.collectionView.contentOffset.x / pageWidth
         
         if 0.0 != fmodf(Float(currentPage), 1.0) {
@@ -1133,13 +1129,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         let parentIndexPath: NSIndexPath = self.collectionView.indexPathForCell(sellerCarouselCollectionViewCell)!
         let layoutEightModel: LayoutEightModel = self.homePageModel.data[parentIndexPath.section] as! LayoutEightModel
         
-        var numberOfPages: CGFloat = CGFloat(layoutEightModel.data.count) / 2.0
-        
-        if fmod(numberOfPages, 1.0) != 0.0 {
-            numberOfPages = numberOfPages + 1
-        }
-        
-        return Int(numberOfPages)
+        return layoutEightModel.data.count
     }
     
     //MARK: - Seller Carousel Delegate
@@ -1150,7 +1140,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     
     func sellerCarouselCollectionViewCellDidEndDecelerating(sellerCarouselCollectionViewCell: SellerCarouselCollectionViewCell) {
         sellerCarouselCollectionViewCell.layoutIfNeeded()
-        let pageWidth: CGFloat = sellerCarouselCollectionViewCell.collectionView.frame.size.width
+        let pageWidth: CGFloat = sellerCarouselCollectionViewCell.collectionView.frame.size.width / 2
         let currentPage: CGFloat = sellerCarouselCollectionViewCell.collectionView.contentOffset.x / pageWidth
         
         if 0.0 != fmodf(Float(currentPage), 1.0) {
