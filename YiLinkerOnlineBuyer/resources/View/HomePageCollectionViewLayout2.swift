@@ -349,13 +349,10 @@ class HomePageCollectionViewLayout2: UICollectionViewLayout {
                     numberOfItems = CGFloat(layoutTenModel.data.count) / 2.0
                 }
                 
-                println(numberOfItems)
-                
                 if (numberOfItems - floor(numberOfItems) > 0.000001) { // 0.000001 can be changed depending on the level of precision you need
                     var items: Int = Int(numberOfItems)
 
                     let height: CGFloat = SectionHeight.sectionTen * CGFloat(items + 1)
-                    //occupiedSpace = occupiedSpace + (SectionHeight.sectionTen * CGFloat(items + 1)) + (sectionVerticalInset * CGFloat(items)) + SectionHeight.layoutHeader
                     occupiedSpace = occupiedSpace + height + SectionHeight.layoutHeader + (sectionVerticalInset * CGFloat(items / 2)) + sectionVerticalInset + sectionVerticalInset
                 } else {
                     let items: Int = Int(numberOfItems)

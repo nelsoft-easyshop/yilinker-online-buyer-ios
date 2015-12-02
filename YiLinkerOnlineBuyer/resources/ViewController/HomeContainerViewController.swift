@@ -849,8 +849,8 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         
         twoColumnGridCollectionViewCell.productItemImageView.sd_setImageWithURL(NSURL(string: layoutTenModel.data[indexPath.row].image), placeholderImage: UIImage(named: self.placeHolder))
         twoColumnGridCollectionViewCell.productNameLabel.text = layoutTenModel.data[indexPath.row].name
-        twoColumnGridCollectionViewCell.discountedPriceLabel.text = layoutTenModel.data[indexPath.row].discountedPrice
-        twoColumnGridCollectionViewCell.discountPercentageLabel.text = layoutTenModel.data[indexPath.row].discountPercentage
+        twoColumnGridCollectionViewCell.discountedPriceLabel.text = layoutTenModel.data[indexPath.row].discountedPrice.formatToPeso()
+        twoColumnGridCollectionViewCell.discountPercentageLabel.text = layoutTenModel.data[indexPath.row].discountPercentage.formatToPercentage()
         
         return twoColumnGridCollectionViewCell
     }
