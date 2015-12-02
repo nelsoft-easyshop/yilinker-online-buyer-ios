@@ -299,6 +299,15 @@ extension String {
     func formatToPeso() -> String {
         return "₱\(self)"
     }
+    
+    func stringCharacterAtIndex(index: Int) -> String {
+       return "\(Array(self)[index])"
+    }
+    
+    func formatToPercentage() -> String {
+        return "\(self)%"
+    }
+    
 }
 
 extension NSURL {
