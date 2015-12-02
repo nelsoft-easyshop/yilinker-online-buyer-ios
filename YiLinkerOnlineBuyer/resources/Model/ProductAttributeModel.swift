@@ -14,6 +14,7 @@ class ProductAttributeModel {
     var attributeName: String = ""
     var valueId: [String] = []
     var valueName: [String] = []
+    var choices: [String] = []
     
     class func parseAttribute(attributes: NSDictionary) -> ProductAttributeModel {
         
@@ -28,6 +29,11 @@ class ProductAttributeModel {
                 model.valueId.append(value["id"] as! String)
                 model.valueName.append(value["name"] as! String)
             }
+            
+            for value in attributes["choices"] as! NSArray {
+                model.choices.append(value as! String)
+            }
+            
         }
         
         return model
