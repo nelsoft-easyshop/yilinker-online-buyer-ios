@@ -43,7 +43,7 @@ class ProductAttributeTableViewCell: UITableViewCell, UIScrollViewDelegate {
     
     // MARK: - Methods
 
-    func setAttribute( model: ProductAttributeModel, availableCombination: NSArray, selectedValue: NSArray, selectedId: NSArray, width: CGFloat) {
+    func setAttribute(model: ProductAttributeModel, availableCombination: NSArray, selectedValue: NSArray, selectedId: NSArray, width: CGFloat) {
         attributeLabel.text = ProductStrings.select + " \(model.attributeName)"
         
         self.attributesId = []
@@ -56,7 +56,7 @@ class ProductAttributeTableViewCell: UITableViewCell, UIScrollViewDelegate {
             availableCombinationString += availableCombination[i] as! String
         }
         
-        addScrollViewWithAttributes(model.valueName, availableCombination: availableCombination, selectedValue: selectedValue, selectedId: selectedId, width: width)
+        addScrollViewWithAttributes(model.choices, availableCombination: availableCombination, selectedValue: selectedValue, selectedId: selectedId, width: width)
     }
     
     func passProductDetailModel(model: ProductDetailsModel) {
