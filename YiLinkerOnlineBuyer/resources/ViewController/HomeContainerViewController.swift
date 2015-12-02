@@ -205,19 +205,19 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             animatedViewController!.definesPresentationContext = true
             animatedViewController!.view.backgroundColor = UIColor.clearColor()
             
-            if SessionManager.accessToken() != "" {
-                var buttonImages: [String] = ["fab_following", "fab_messaging", "fab_promo", "fab_category", self.profileModel.profileImageUrl]
-                var buttonTitles: [String] = [FABStrings.followedSeller, FABStrings.messaging, FABStrings.todaysPromo, FABStrings.categories, FABStrings.logout]
+            if SessionManager.isLoggedIn() {
+                var buttonImages: [String] = ["fab_following", "fab_messaging", "fab_promo", "fab_category", "fab_help", self.profileModel.profileImageUrl]
+                var buttonTitles: [String] = [FABStrings.followedSeller, FABStrings.messaging, FABStrings.todaysPromo, FABStrings.categories, FABStrings.help, FABStrings.profile]
                 
-                var buttonRightText: [String] = ["", SessionManager.unreadMessageCount(), "", "", "\(self.profileModel.firstName) \(self.profileModel.lastName) \n\(self.profileModel.address.streetAddress) \(self.profileModel.address.subdivision)"]
+                var buttonRightText: [String] = ["", SessionManager.unreadMessageCount(), "", "", "", "\(self.profileModel.firstName) \(self.profileModel.lastName) \n\(self.profileModel.address.streetAddress) \(self.profileModel.address.subdivision)"]
                 
                 animatedViewController?.buttonImages = buttonImages
                 animatedViewController?.buttonTitles = buttonTitles
                 animatedViewController?.buttonRightText = buttonRightText
             } else {
-                var buttonImages: [String] = ["fab_register", "fab_signin", "fab_promo", "fab_category"]
-                var buttonTitles: [String] = ["REGISTER", FABStrings.signIn, FABStrings.todaysPromo, FABStrings.categories]
-                var buttonRightText: [String] = ["", "", "", ""]
+                var buttonImages: [String] = ["fab_register", "fab_signin", "fab_promo", "fab_category", "fab_help"]
+                var buttonTitles: [String] = ["REGISTER", FABStrings.signIn, FABStrings.todaysPromo, FABStrings.categories, FABStrings.help]
+                var buttonRightText: [String] = ["", "", "", "", ""]
                 
                 animatedViewController?.buttonImages = buttonImages
                 animatedViewController?.buttonTitles = buttonTitles
