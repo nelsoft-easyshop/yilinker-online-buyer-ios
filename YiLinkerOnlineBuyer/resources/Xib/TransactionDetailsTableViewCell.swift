@@ -12,10 +12,14 @@ class TransactionDetailsTableViewCell: UITableViewCell {
 
     @IBOutlet weak var productNameLabel: UILabel!
     @IBOutlet weak var productStatusLabel: UILabel!
-
+    @IBOutlet weak var orderProductNameLabel: UILabel!
+    @IBOutlet weak var orderProductStatusLabel: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        self.orderProductNameLabel.text = StringHelper.localizedStringWithKey("TRANSACTION_ORDER_PRODUCT_NAME_LOCALIZE_KEY")
+        self.orderProductStatusLabel.text = StringHelper.localizedStringWithKey("TRANSACTION_ORDER_PRODUCT_STATUS_LOCALIZE_KEY")
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
