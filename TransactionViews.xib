@@ -1025,7 +1025,6 @@ Phiippines</string>
                     <color key="backgroundColor" red="0.35294117647058826" green="0.12156862745098039" blue="0.45882352941176469" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="width" priority="750" constant="121" id="HSb-tH-Rec"/>
-                        <constraint firstAttribute="height" constant="28" id="S7c-YI-MdN"/>
                     </constraints>
                     <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="11"/>
                     <state key="normal" title="MESSAGE">
@@ -1153,6 +1152,7 @@ Phiippines</string>
                 <constraint firstAttribute="trailing" secondItem="dSz-Qa-k82" secondAttribute="trailing" constant="8" id="bBd-D3-xMU"/>
                 <constraint firstAttribute="bottom" secondItem="h81-DO-sDz" secondAttribute="bottom" constant="20" id="bUv-AO-Vmx"/>
                 <constraint firstItem="h81-DO-sDz" firstAttribute="leading" secondItem="HYi-6R-oZb" secondAttribute="leading" constant="8" id="bs8-Tk-GLr"/>
+                <constraint firstItem="h81-DO-sDz" firstAttribute="height" secondItem="dSz-Qa-k82" secondAttribute="height" id="cCk-P6-AA5"/>
                 <constraint firstItem="qx5-w2-Yg0" firstAttribute="leading" secondItem="HYi-6R-oZb" secondAttribute="leading" id="gea-ZP-S9i"/>
                 <constraint firstItem="qx5-w2-Yg0" firstAttribute="top" secondItem="JT7-pG-VuJ" secondAttribute="bottom" constant="8" id="hJj-cR-8h6"/>
                 <constraint firstItem="OVT-ZX-6nh" firstAttribute="leading" secondItem="HYi-6R-oZb" secondAttribute="leading" id="pNI-Gx-y28"/>
