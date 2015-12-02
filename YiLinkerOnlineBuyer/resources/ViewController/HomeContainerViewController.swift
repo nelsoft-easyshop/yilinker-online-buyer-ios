@@ -623,6 +623,18 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             let towColumnCell: TwoColumnGridCollectionViewCell = collectionView.cellForItemAtIndexPath(indexPath) as! TwoColumnGridCollectionViewCell
             println(towColumnCell.target)
             println(towColumnCell.targetType)
+        } else if cell.isKindOfClass(FullImageCollectionViewCell) {
+            let fullImageCell: FullImageCollectionViewCell = collectionView.cellForItemAtIndexPath(indexPath) as! FullImageCollectionViewCell
+            println(fullImageCell.target)
+            println(fullImageCell.targetType)
+        } else if cell.isKindOfClass(HalfVerticalImageCollectionViewCell) {
+            let halfVerticalCell: HalfVerticalImageCollectionViewCell = collectionView.cellForItemAtIndexPath(indexPath) as! HalfVerticalImageCollectionViewCell
+            println(halfVerticalCell.target)
+            println(halfVerticalCell.targetType)
+        } else if cell.isKindOfClass(VerticalImageCollectionViewCell) {
+            let verticalCell: VerticalImageCollectionViewCell = collectionView.cellForItemAtIndexPath(indexPath) as! VerticalImageCollectionViewCell
+            println(verticalCell.target)
+            println(verticalCell.targetType)
         }
     }
     
