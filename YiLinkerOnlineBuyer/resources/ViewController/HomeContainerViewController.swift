@@ -92,6 +92,11 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     
     override func viewWillAppear(animated: Bool) {
         UIApplication.sharedApplication().statusBarStyle = .LightContent
+        self.navigationController?.setNavigationBarHidden(true, animated: true)
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
     }
     
     deinit {
@@ -621,20 +626,16 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         
         if cell.isKindOfClass(TwoColumnGridCollectionViewCell) {
             let towColumnCell: TwoColumnGridCollectionViewCell = collectionView.cellForItemAtIndexPath(indexPath) as! TwoColumnGridCollectionViewCell
-            println(towColumnCell.target)
-            println(towColumnCell.targetType)
+            self.didClickItemWithTarget(towColumnCell.target, targetType: towColumnCell.targetType)
         } else if cell.isKindOfClass(FullImageCollectionViewCell) {
             let fullImageCell: FullImageCollectionViewCell = collectionView.cellForItemAtIndexPath(indexPath) as! FullImageCollectionViewCell
-            println(fullImageCell.target)
-            println(fullImageCell.targetType)
+            self.didClickItemWithTarget(fullImageCell.target, targetType: fullImageCell.targetType)
         } else if cell.isKindOfClass(HalfVerticalImageCollectionViewCell) {
             let halfVerticalCell: HalfVerticalImageCollectionViewCell = collectionView.cellForItemAtIndexPath(indexPath) as! HalfVerticalImageCollectionViewCell
-            println(halfVerticalCell.target)
-            println(halfVerticalCell.targetType)
+            self.didClickItemWithTarget(halfVerticalCell.target, targetType: halfVerticalCell.targetType)
         } else if cell.isKindOfClass(VerticalImageCollectionViewCell) {
             let verticalCell: VerticalImageCollectionViewCell = collectionView.cellForItemAtIndexPath(indexPath) as! VerticalImageCollectionViewCell
-            println(verticalCell.target)
-            println(verticalCell.targetType)
+            self.didClickItemWithTarget(verticalCell.target, targetType: verticalCell.targetType)
         }
     }
     
@@ -662,8 +663,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     func carouselCollectionViewCell(carouselCollectionViewCell: CarouselCollectionViewCell, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         let fullImageCell: FullImageCollectionViewCell = carouselCollectionViewCell.collectionView.cellForItemAtIndexPath(indexPath) as! FullImageCollectionViewCell
         
-        println("Target: \(fullImageCell.target)")
-        println("Target: \(fullImageCell.targetType)")
+        self.didClickItemWithTarget(fullImageCell.target, targetType: fullImageCell.targetType)
     }
     
     func carouselCollectionViewCellDidEndDecelerating(carouselCollectionViewCell: CarouselCollectionViewCell) {
@@ -681,8 +681,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     
     //MARK: - Daily Login Delegate
     func dailyLoginCollectionViewCellDidTapCell(dailyLoginCollectionViewCell: DailyLoginCollectionViewCell) {
-        println("target: \(dailyLoginCollectionViewCell.target)")
-        println("targetType: \(dailyLoginCollectionViewCell.targetType)")
+        self.didClickItemWithTarget(dailyLoginCollectionViewCell.target, targetType: dailyLoginCollectionViewCell.targetType)
     }
     
     //MARK: - Half Pager Data Source
@@ -733,7 +732,8 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     
     //MARK: - Half Pager Delegate
     func halfPagerCollectionViewCell(halfPagerCollectionViewCell: HalfPagerCollectionViewCell, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        println("Did select item \(indexPath.row)")
+        let fullImageCell: FullImageCollectionViewCell = halfPagerCollectionViewCell.collectionView.cellForItemAtIndexPath(indexPath) as! FullImageCollectionViewCell
+        self.didClickItemWithTarget(fullImageCell.target, targetType: fullImageCell.targetType)
     }
     
     func halfPagerCollectionViewCellDidEndDecelerating(halfPagerCollectionViewCell: HalfPagerCollectionViewCell) {
@@ -751,8 +751,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     
     //MARK: - Flash Collection View Delegate
     func flashSaleCollectionViewCell(didTapProductImageView productImageView: ProductImageView) {
-        println(productImageView.target)
-        println(productImageView.targetType)
+        self.didClickItemWithTarget(productImageView.target, targetType: productImageView.targetType)
     }
     
     //MARK: - Seconds To Hours Minutes Seconds
@@ -763,37 +762,40 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     //MARK: - Update Time
     func updateTime() {
         self.remainingTime--
-        let (hour, min, seconds): (Int, Int, Int) = self.secondsToHoursMinutesSeconds(self.remainingTime)
-        
-        var sampleDate: String = "\(hour) Hours, \(min) Minutes, \(seconds) Seconds"
-        
-        if hour < 10 {
-            firstHourString = "\(hour)"
-            secondHourString = "0"
-        } else {
-            firstHourString = "\(hour)".stringCharacterAtIndex(1)
-            secondHourString = "\(hour)".stringCharacterAtIndex(0)
+        if remainingTime != 0 {
+            let (hour, min, seconds): (Int, Int, Int) = self.secondsToHoursMinutesSeconds(self.remainingTime)
+            
+            var sampleDate: String = "\(hour) Hours, \(min) Minutes, \(seconds) Seconds"
+            
+            if hour < 10 {
+                firstHourString = "\(hour)"
+                secondHourString = "0"
+            } else {
+                firstHourString = "\(hour)".stringCharacterAtIndex(1)
+                secondHourString = "\(hour)".stringCharacterAtIndex(0)
+            }
+            
+            if min < 10 {
+                firstMinString = "\(min)"
+                secondMinString = "0"
+            } else {
+                firstMinString = "\(min)".stringCharacterAtIndex(1)
+                secondMinString = "\(min)".stringCharacterAtIndex(0)
+            }
+            
+            if seconds < 10 {
+                firstSecondsString = "\(seconds)"
+                secondSecondsString = "0"
+            } else {
+                firstSecondsString = "\(seconds)".stringCharacterAtIndex(1)
+                secondSecondsString = "\(seconds)".stringCharacterAtIndex(0)
+            }
+            
+            if let indexPath: NSIndexPath = NSIndexPath(forItem: 0, inSection: 3) {
+                self.collectionView.reloadItemsAtIndexPaths([indexPath])
+            }
         }
         
-        if min < 10 {
-            firstMinString = "\(min)"
-            secondMinString = "0"
-        } else {
-            firstMinString = "\(min)".stringCharacterAtIndex(1)
-            secondMinString = "\(min)".stringCharacterAtIndex(0)
-        }
-        
-        if seconds < 10 {
-            firstSecondsString = "\(seconds)"
-            secondSecondsString = "0"
-        } else {
-            firstSecondsString = "\(seconds)".stringCharacterAtIndex(1)
-            secondSecondsString = "\(seconds)".stringCharacterAtIndex(0)
-        }
-        
-        if let indexPath: NSIndexPath = NSIndexPath(forItem: 0, inSection: 3) {
-            self.collectionView.reloadItemsAtIndexPaths([indexPath])
-        }
     }
     
     //MARK: - Flash Sale Collection View Cell With IndexPath
@@ -914,13 +916,12 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     
     //MARK: - Layout Nine Collection View Cell Delegate
     func layoutNineCollectionViewCellDidClickProductImage(productImage: ProductImageView) {
-        println(productImage.target)
-        println(productImage.targetType)
+       self.didClickItemWithTarget(productImage.target, targetType: productImage.targetType)
     }
     
     func layoutNineCollectionViewCell(layoutNineCollectionViewCell: LayoutNineCollectionViewCell, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         let fullImageCell: FullImageCollectionViewCell = layoutNineCollectionViewCell.collectionView.cellForItemAtIndexPath(indexPath) as! FullImageCollectionViewCell
-        println(fullImageCell.target)
+        self.didClickItemWithTarget(fullImageCell.target, targetType: fullImageCell.targetType)
     }
     
     func layoutNineCollectionViewCellDidEndDecelerating(layoutNineCollectionViewCell: LayoutNineCollectionViewCell) {
@@ -996,7 +997,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     
     //MARK: - Header View Delegate
     func layoutHeaderCollectionViewCellDidSelectViewMore(layoutHeaderCollectionViewCell: LayoutHeaderCollectionViewCell) {
-        println(layoutHeaderCollectionViewCell.target)
+        self.didClickItemWithTarget(layoutHeaderCollectionViewCell.target, targetType: layoutHeaderCollectionViewCell.targetType)
     }
     
     //MARK: - Full Image Collection View Cell
@@ -1122,7 +1123,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     //MARK: - Seller Carousel Delegate
     func sellerCarouselCollectionViewCell(sellerCarouselCollectionViewCell: SellerCarouselCollectionViewCell, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         let sellerCollectionViewCell: SellerCollectionViewCell = sellerCarouselCollectionViewCell.collectionView.cellForItemAtIndexPath(indexPath) as! SellerCollectionViewCell
-        println(sellerCollectionViewCell.target)
+         self.didClickItemWithTarget(sellerCollectionViewCell.target, targetType: sellerCollectionViewCell.targetType)
     }
     
     func sellerCarouselCollectionViewCellDidEndDecelerating(sellerCarouselCollectionViewCell: SellerCarouselCollectionViewCell) {
@@ -1148,6 +1149,29 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     //MARK: - Did Tap Item
     func didTapItem(tap: UITapGestureRecognizer) {
         let itemImageView: ProductImageView = tap.view as! ProductImageView
-        println(itemImageView.target)
+        self.didClickItemWithTarget(itemImageView.target, targetType: itemImageView.targetType)
+    }
+    
+    //MARK: - Did Click Item With Target
+    func didClickItemWithTarget(target: String, targetType: String) {
+        if targetType == "seller" {
+            let sellerViewController: SellerViewController = SellerViewController(nibName: "SellerViewController", bundle: nil)
+            self.navigationController!.pushViewController(sellerViewController, animated: true)
+        } else if targetType == "list" {
+            let resultViewController: ResultViewController = ResultViewController(nibName: "ResultViewController", bundle: nil)
+            resultViewController.passModel(SearchSuggestionModel(suggestion: "", imageURL: "", searchUrl: target))
+            self.navigationController!.pushViewController(resultViewController, animated: true)
+        } else if targetType == "product" {
+            let productViewController: ProductViewController = ProductViewController(nibName: "ProductViewController", bundle: nil)
+            productViewController.tabController = self.tabBarController as! CustomTabBarController
+            productViewController.productId = target
+            self.navigationController?.pushViewController(productViewController, animated: true)
+        } else if targetType == "webView" {
+            let webViewController: WebViewController = WebViewController(nibName: "WebViewController", bundle: nil)
+            webViewController.urlString = target
+            self.navigationController!.pushViewController(webViewController, animated: true)
+        } else {
+            self.tabBarController!.view.makeToast(Constants.Localized.someThingWentWrong, duration: 3.0, position: CSToastPositionBottom, style: CSToastManager.sharedStyle())
+        }
     }
 }
