@@ -219,6 +219,12 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
         
     }
     
+    func sellerPage(sellerId: Int) {
+        let sellerViewController: SellerViewController = SellerViewController(nibName: "SellerViewController", bundle: nil)
+        sellerViewController.sellerId = sellerId
+        self.navigationController!.pushViewController(sellerViewController, animated: true)
+    }
+    
     /*
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         //self.transactionIdView =
