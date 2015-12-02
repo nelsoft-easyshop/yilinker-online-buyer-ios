@@ -175,7 +175,7 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
             var textLabel = UILabel(frame: CGRectMake(8, 0, self.transactionProductDetailsView.frame.size.width - 8, self.transactionProductDetailsView.frame.size.height))
             textLabel.text = self.productDetails
             textLabel.textColor = .darkGrayColor()
-            textLabel.font = UIFont.systemFontOfSize(15.0)
+            textLabel.font = UIFont (name: "Panton-Regular", size: 15.0)
             
             self.transactionProductDetailsView.addSubview(textLabel)
         }
