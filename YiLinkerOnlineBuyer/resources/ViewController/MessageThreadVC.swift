@@ -621,6 +621,7 @@ extension MessageThreadVC : UITextViewDelegate{
             
             textView.selectedTextRange = textView.textRangeFromPosition(textView.beginningOfDocument, toPosition: textView.beginningOfDocument)
             
+            println("textview false")
             return false
         }
             
@@ -631,8 +632,11 @@ extension MessageThreadVC : UITextViewDelegate{
         else if textView.textColor == UIColor.lightGrayColor() && !text.isEmpty {
             textView.text = nil
             textView.textColor = UIColor.blackColor()
+            
+            println("textview else if")
         }
         
+        println("textview true")
         return true
     }
     
