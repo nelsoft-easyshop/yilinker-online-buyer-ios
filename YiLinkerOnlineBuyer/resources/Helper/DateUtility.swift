@@ -14,6 +14,7 @@ class DateUtility: NSObject {
     static let twoDays = (60 * 60 * 24) * 2
     static let sevenDays = (60 * 60 * 24) * 7
     
+    static let fullFormat = "dd/MM/YYYY HH:mm a"
     static let dateFormat = "MM/dd/YYYY"
     static let hourFormat = "HH:mm"
     static let dayFormat = "EEEE"
@@ -46,7 +47,7 @@ class DateUtility: NSObject {
         let dateStringFormatter = NSDateFormatter()
         dateStringFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
         
-        dateStringFormatter.dateFormat = hourFormat
+        dateStringFormatter.dateFormat = fullFormat
         return dateStringFormatter.stringFromDate(tempDT)
     }
     
