@@ -358,7 +358,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     //MARK: - Populate Home PageWith  Dictionary
     func populateHomePageWithDictionary(dictionary: NSDictionary) {
         self.homePageModel = HomePageModel.parseDataFromDictionary(dictionary)
-        self.layouts.removeAll(keepCapacity: true)
+        self.layouts.removeAll(keepCapacity: false)
         for (index, model) in enumerate(self.homePageModel.data) {
             if model.isKindOfClass(LayoutOneModel) {
                 self.layouts.append("1")
@@ -774,7 +774,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     //MARK: - Update Time
     func updateTime() {
         self.remainingTime--
-        if remainingTime != 0 {
+        if remainingTime >= 0 {
             let (hour, min, seconds): (Int, Int, Int) = self.secondsToHoursMinutesSeconds(self.remainingTime)
             
             var sampleDate: String = "\(hour) Hours, \(min) Minutes, \(seconds) Seconds"
@@ -805,6 +805,12 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             
             if let indexPath: NSIndexPath = NSIndexPath(forItem: 0, inSection: 3) {
                 self.collectionView.reloadItemsAtIndexPaths([indexPath])
+            }
+        } else {
+            if let indexPath: NSIndexPath = NSIndexPath(forItem: 0, inSection: 3) {
+                if self.remainingTime == -1 {
+                    self.fireGetHomePageData()
+                }
             }
         }
         
@@ -1198,10 +1204,14 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             }
         }
         
-        if isShowBackToTop {
-            self.showBackToTop()
-        } else {
+        if scrollView.panGestureRecognizer.translationInView(scrollView.superview!).y > 0 {
             self.hideBackToTop()
+        } else {
+            if isShowBackToTop {
+                self.showBackToTop()
+            } else {
+                self.hideBackToTop()
+            }
         }
     }
     
