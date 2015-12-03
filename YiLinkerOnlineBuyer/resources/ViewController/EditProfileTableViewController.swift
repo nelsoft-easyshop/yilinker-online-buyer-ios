@@ -326,20 +326,27 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
             addPhotoCell!.addPhotoLabel.text = editPhotoLocalizeString
             
             profileImage = image
-            
-            profileImageData = UIImageJPEGRepresentation(image, 0.25)
+            profileImageData = self.resizeIfNeeded(image, imageData: UIImageJPEGRepresentation(image, 0.25))
         } else {
             validIDImage = image
             if image.imageOrientation == UIImageOrientation.Right {
-                validIDImageData = UIImageJPEGRepresentation(image.normalizedImage(), 0.25)
+                validIDImageData = self.resizeIfNeeded(image.normalizedImage(), imageData: UIImageJPEGRepresentation(image.normalizedImage(), 0.25))
             } else {
-                validIDImageData = UIImageJPEGRepresentation(image, 0.25)
+                validIDImageData = self.resizeIfNeeded(image, imageData: UIImageJPEGRepresentation(image, 0.25))
             }
             
             profileUserDetailsModel.userDocuments = " "
             personalInfoCell = self.tableView.cellForRowAtIndexPath(personalIndexPath!) as? EditProfilePersonalInformationTableViewCell
             personalInfoCell?.addIDButton.setTitle(personalInfoCell?.changeLocalizeString, forState: UIControlState.Normal)
             personalInfoCell?.viewImageConstraint.constant = 75
+        }
+    }
+    
+    func resizeIfNeeded(image: UIImage, imageData:NSData) -> NSData {
+        if (Double)(imageData.length / 1024) > 100 {
+            return UIImageJPEGRepresentation(image.normalizedImage().resize(0.25), 0.25)
+        } else {
+            return imageData
         }
     }
     
@@ -626,7 +633,7 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
                 if self.validIDImageData != nil {
                     data.appendPartWithFileData(self.validIDImageData!, name: "userDocument", fileName: "photo", mimeType: "image/jpeg")
                 }
-                
+                //println(self.validIDImageData.length / 1024.0 / 1024.0)
                 }, success: {
                     (task: NSURLSessionDataTask!, responseObject: AnyObject!) in print(responseObject as! NSDictionary)
                     
