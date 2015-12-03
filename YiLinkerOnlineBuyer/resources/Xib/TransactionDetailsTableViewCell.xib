@@ -102,7 +102,7 @@
                 <outlet property="productNameLabel" destination="cCi-fa-VYc" id="8KD-rJ-LEW"/>
                 <outlet property="productStatusLabel" destination="pfB-qR-fzu" id="5Ps-Ej-Guc"/>
             </connections>
-            <point key="canvasLocation" x="254.5" y="271"/>
+            <point key="canvasLocation" x="252.5" y="296"/>
         </tableViewCell>
     </objects>
     <resources>
