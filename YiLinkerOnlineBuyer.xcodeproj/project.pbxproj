@@ -21,6 +21,10 @@
 		0C11D2241C0EE2260063D06E /* ScrollToTopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C11D2231C0EE2260063D06E /* ScrollToTopView.swift */; };
 		0C11D2261C0EE24F0063D06E /* ScrollToTopView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C11D2251C0EE24F0063D06E /* ScrollToTopView.xib */; };
 		0C11D2281C0EF4C00063D06E /* OneByOneCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C11D2271C0EF4C00063D06E /* OneByOneCollectionViewFlowLayout.swift */; };
+		0C11D22E1C103B620063D06E /* pulltorefresharrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 0C11D22A1C103B620063D06E /* pulltorefresharrow.png */; };
+		0C11D22F1C103B620063D06E /* PullToRefreshOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C11D22B1C103B620063D06E /* PullToRefreshOption.swift */; };
+		0C11D2301C103B620063D06E /* PullToRefreshView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C11D22C1C103B620063D06E /* PullToRefreshView.swift */; };
+		0C11D2311C103B620063D06E /* UIScrollViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C11D22D1C103B620063D06E /* UIScrollViewExtension.swift */; };
 		0C144DD41C080166000728B4 /* HomePageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C144DD31C080166000728B4 /* HomePageModel.swift */; };
 		0C144DD61C080350000728B4 /* LayoutOneModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C144DD51C080350000728B4 /* LayoutOneModel.swift */; };
 		0C144DD81C0803C7000728B4 /* TargetModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C144DD71C0803C7000728B4 /* TargetModel.swift */; };
@@ -530,6 +534,10 @@
 		0C11D2231C0EE2260063D06E /* ScrollToTopView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScrollToTopView.swift; sourceTree = "<group>"; };
 		0C11D2251C0EE24F0063D06E /* ScrollToTopView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ScrollToTopView.xib; sourceTree = "<group>"; };
 		0C11D2271C0EF4C00063D06E /* OneByOneCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OneByOneCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
+		0C11D22A1C103B620063D06E /* pulltorefresharrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pulltorefresharrow.png; sourceTree = "<group>"; };
+		0C11D22B1C103B620063D06E /* PullToRefreshOption.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PullToRefreshOption.swift; sourceTree = "<group>"; };
+		0C11D22C1C103B620063D06E /* PullToRefreshView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PullToRefreshView.swift; sourceTree = "<group>"; };
+		0C11D22D1C103B620063D06E /* UIScrollViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIScrollViewExtension.swift; sourceTree = "<group>"; };
 		0C144DD31C080166000728B4 /* HomePageModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomePageModel.swift; sourceTree = "<group>"; };
 		0C144DD51C080350000728B4 /* LayoutOneModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayoutOneModel.swift; sourceTree = "<group>"; };
 		0C144DD71C0803C7000728B4 /* TargetModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TargetModel.swift; sourceTree = "<group>"; };
@@ -1060,6 +1068,17 @@
 			path = Strings;
 			sourceTree = "<group>";
 		};
+		0C11D2291C103B620063D06E /* PullToRefresh */ = {
+			isa = PBXGroup;
+			children = (
+				0C11D22A1C103B620063D06E /* pulltorefresharrow.png */,
+				0C11D22B1C103B620063D06E /* PullToRefreshOption.swift */,
+				0C11D22C1C103B620063D06E /* PullToRefreshView.swift */,
+				0C11D22D1C103B620063D06E /* UIScrollViewExtension.swift */,
+			);
+			path = PullToRefresh;
+			sourceTree = "<group>";
+		};
 		0C144DD91C0806B0000728B4 /* HomeModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -1291,6 +1310,7 @@
 		0C9936FB1B750583000D6074 /* External */ = {
 			isa = PBXGroup;
 			children = (
+				0C11D2291C103B620063D06E /* PullToRefresh */,
 				0C144DDC1C080F10000728B4 /* dummyHomePage.json */,
 				B7EE726B1BF1DD5D003724CB /* GoogleService-Info.plist */,
 				0C574A331BC6A81C00913F29 /* GooglePlus.bundle */,
@@ -1996,6 +2016,7 @@
 				79E68B831B8AEC85008626E4 /* PointsEarnedTableViewCell.xib in Resources */,
 				79A66A6E1C01A176003D62AD /* ViewImageViewController.xib in Resources */,
 				B7EE726C1BF1DD5D003724CB /* GoogleService-Info.plist in Resources */,
+				0C11D22E1C103B620063D06E /* pulltorefresharrow.png in Resources */,
 				79E68B8F1B8B0717008626E4 /* PointsTableViewCell.xib in Resources */,
 				F740F0921B90D1E200D23A34 /* close2.png in Resources */,
 				F7C569FA1BB1790A004740E1 /* TransactionCancelOrderSuccessViewController.xib in Resources */,
@@ -2224,6 +2245,7 @@
 				F7E294851BFA278900A465A9 /* ActivityLogItemModel.swift in Sources */,
 				26AFB3931B79DD9100E50926 /* XibHelper.swift in Sources */,
 				0C374F4F1B89A4B70050AE1D /* CustomizeShoppingCollectionViewLayout.swift in Sources */,
+				0C11D2301C103B620063D06E /* PullToRefreshView.swift in Sources */,
 				0C2F44A51B848B3A00021F45 /* SummaryViewController.swift in Sources */,
 				26AFB3AE1B79DE2900E50926 /* ProductAttributeTableViewCell.swift in Sources */,
 				2666F5281C0022CD00BABA82 /* ProductFullScreenViewController.swift in Sources */,
@@ -2258,6 +2280,7 @@
 				0CDA117C1B764015007B5DED /* LoginAndRegisterContentViewController.swift in Sources */,
 				0C99374A1B750583000D6074 /* HalfVerticalImageCollectionViewCell.swift in Sources */,
 				B77B8DC31B9B54B40002C513 /* W_Conversation.swift in Sources */,
+				0C11D2311C103B620063D06E /* UIScrollViewExtension.swift in Sources */,
 				F7D9BAB91BBD70830097B76C /* TransactionProductDetailsDescriptionViewController.swift in Sources */,
 				B77B8DD91B9B554A0002C513 /* MessageThreadVC.swift in Sources */,
 				0C99375C1B750583000D6074 /* CircularMenuViewController.swift in Sources */,
@@ -2448,6 +2471,7 @@
 				F7C569F71BB1790A004740E1 /* TransactionCancelOrderStatusViewController.swift in Sources */,
 				0C9937491B750583000D6074 /* GenericCollectionViewCell.swift in Sources */,
 				F7C5699F1BB175F1004740E1 /* TransactionModel.swift in Sources */,
+				0C11D22F1C103B620063D06E /* PullToRefreshOption.swift in Sources */,
 				0C9937461B750583000D6074 /* DynamicRoundedButton.swift in Sources */,
 				79A66A6D1C01A176003D62AD /* ViewImageViewController.swift in Sources */,
 				B77B8DD51B9B554A0002C513 /* DummyNavigationController.swift in Sources */,
