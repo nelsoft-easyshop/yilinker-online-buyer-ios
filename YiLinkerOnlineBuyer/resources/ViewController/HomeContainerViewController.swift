@@ -81,6 +81,8 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     
     var homePageModel: HomePageModel = HomePageModel()
     
+    var timer: NSTimer = NSTimer()
+    
     //MARK: - Life Cycle
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -121,7 +123,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         self.registerCellWithNibName(self.twoColumnGridCell)
         
         if Reachability.isConnectedToNetwork() {
-        self.fireGetHomePageData()
+        self.fireGetHomePageData(true)
         } else {
         self.addEmptyView()
         }
@@ -142,6 +144,21 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         
         self.backToTopButton.layer.cornerRadius = 15
         self.setupBackToTopButton()
+        
+        self.addPullToRefresh()
+    }
+    
+    //MARK: - Add Pull To Refresh
+    func addPullToRefresh() {
+        let options = PullToRefreshOption()
+        options.backgroundColor = UIColor.clearColor()
+        options.indicatorColor = UIColor.darkGrayColor()
+        
+        self.collectionView.addPullToRefresh(options: options, refreshCompletion: { [weak self] in
+            // some code
+            self!.timer.invalidate()
+            self!.fireGetHomePageData(false)
+            })
     }
     
     //MARK: - Back To Top Button
@@ -334,8 +351,11 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     
     //MARK: - Fire Get Home Page Data
     //Request for getting json data for populating homepage
-    func fireGetHomePageData() {
-        self.showHUD()
+    func fireGetHomePageData(showHuD: Bool) {
+        if showHuD {
+            self.showHUD()
+        }
+        
         let manager = APIManager.sharedInstance
         manager.GET(APIAtlas.homeUrl, parameters: nil, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
@@ -371,7 +391,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                 
                 if layoutFourModel.remainingTime != 0 {
                     self.remainingTime = layoutFourModel.remainingTime
-                    var timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "updateTime", userInfo: nil, repeats: true)
+                    self.timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "updateTime", userInfo: nil, repeats: true)
                     self.layouts.append("4")
                 } else {
                     self.homePageModel.data.removeAtIndex(index)
@@ -483,7 +503,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     
     // MARK: - Did Tap Reload
     func didTapReload() {
-        self.fireGetHomePageData()
+        self.fireGetHomePageData(true)
         self.emptyView?.hidden = true
     }
     
@@ -809,7 +829,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         } else {
             if let indexPath: NSIndexPath = NSIndexPath(forItem: 0, inSection: 3) {
                 if self.remainingTime == -1 {
-                    self.fireGetHomePageData()
+                    self.fireGetHomePageData(true)
                 }
             }
         }
