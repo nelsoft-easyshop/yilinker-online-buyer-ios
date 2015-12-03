@@ -37,7 +37,7 @@ class SellerCarouselCollectionViewCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         self.registerCellWithNibName(self.sellerNibName)
-        self.pageControl.currentPageIndicatorTintColor = UIColor.purpleColor()
+        self.pageControl.currentPageIndicatorTintColor = UIColor.darkGrayColor()
         self.collectionView.clipsToBounds = true
     }
     

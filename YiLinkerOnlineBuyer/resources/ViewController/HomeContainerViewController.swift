@@ -733,7 +733,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         let parentIndexPath: NSIndexPath = self.collectionView.indexPathForCell(halfPagerCollectionViewCell)!
         let layoutThreeModel: LayoutThreeModel = self.homePageModel.data[parentIndexPath.section] as! LayoutThreeModel
     
-        return layoutThreeModel.data.count
+        return layoutThreeModel.data.count - 1
     }
     
     func halfPagerCollectionViewCell(halfPagerCollectionViewCell: HalfPagerCollectionViewCell, cellForRowAtIndexPath indexPath: NSIndexPath) -> FullImageCollectionViewCell {
@@ -888,6 +888,14 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         twoColumnGridCollectionViewCell.discountedPriceLabel.text = layoutTenModel.data[indexPath.row].discountedPrice.formatToPeso()
         twoColumnGridCollectionViewCell.discountPercentageLabel.text = layoutTenModel.data[indexPath.row].discountPercentage.formatToPercentage()
         
+        if layoutTenModel.data[indexPath.row].discountPercentage.toInt() == 0 || layoutTenModel.data[indexPath.row].discountPercentage.toInt() == nil {
+            twoColumnGridCollectionViewCell.discountPercentageLabel.hidden = true
+            twoColumnGridCollectionViewCell.originalPriceLabel.hidden = true
+        } else {
+            twoColumnGridCollectionViewCell.discountPercentageLabel.hidden = false
+            twoColumnGridCollectionViewCell.originalPriceLabel.hidden = false
+        }
+        
         return twoColumnGridCollectionViewCell
     }
     
@@ -993,6 +1001,15 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             
             verticalImageCollectionViewCell.target = layoutFiveModel.data[indexPath.row].target.targetUrl
             verticalImageCollectionViewCell.targetType = layoutFiveModel.data[indexPath.row].target.targetType
+            
+            if layoutFiveModel.data[indexPath.row].discountPercentage.toInt() == 0 || layoutFiveModel.data[indexPath.row].discountPercentage.toInt() == nil {
+                verticalImageCollectionViewCell.discountPercentageLabel.hidden = true
+                verticalImageCollectionViewCell.originalPriceLabel.hidden = true
+            } else {
+                verticalImageCollectionViewCell.discountPercentageLabel.hidden = false
+                verticalImageCollectionViewCell.originalPriceLabel.hidden = false
+            }
+            
         } else if self.homePageModel.data[indexPath.section].isKindOfClass(LayoutSevenModel) {
             let layoutSevenModel: LayoutSevenModel = self.homePageModel.data[indexPath.section] as! LayoutSevenModel
             verticalImageCollectionViewCell.productItemImageView.sd_setImageWithURL(NSURL(string: layoutSevenModel.data[indexPath.row].image), placeholderImage: UIImage(named: self.placeHolder))
@@ -1003,6 +1020,14 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             
             verticalImageCollectionViewCell.target = layoutSevenModel.data[indexPath.row].target.targetUrl
             verticalImageCollectionViewCell.targetType = layoutSevenModel.data[indexPath.row].target.targetType
+            
+            if layoutSevenModel.data[indexPath.row].discountPercentage.toInt() == 0 || layoutSevenModel.data[indexPath.row].discountPercentage.toInt() == nil {
+                verticalImageCollectionViewCell.discountPercentageLabel.hidden = true
+                verticalImageCollectionViewCell.originalPriceLabel.hidden = true
+            } else {
+                verticalImageCollectionViewCell.discountPercentageLabel.hidden = false
+                verticalImageCollectionViewCell.originalPriceLabel.hidden = false
+            }
         }
         
         return verticalImageCollectionViewCell
@@ -1022,6 +1047,14 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             
             halfVerticalImageCollectionViewCell.target = layoutFiveModel.data[indexPath.row].target.targetUrl
             halfVerticalImageCollectionViewCell.targetType = layoutFiveModel.data[indexPath.row].target.targetType
+            
+            if layoutFiveModel.data[indexPath.row].discountPercentage.toInt() == 0 || layoutFiveModel.data[indexPath.row].discountPercentage.toInt() == nil {
+                halfVerticalImageCollectionViewCell.discountPercentageLabel.hidden = true
+                halfVerticalImageCollectionViewCell.originalPriceLabel.hidden = true
+            } else {
+                halfVerticalImageCollectionViewCell.discountPercentageLabel.hidden = false
+                halfVerticalImageCollectionViewCell.originalPriceLabel.hidden = false
+            }
         } else if self.homePageModel.data[indexPath.section].isKindOfClass(LayoutSevenModel) {
             let layoutSevenModel: LayoutSevenModel = self.homePageModel.data[indexPath.section] as! LayoutSevenModel
             halfVerticalImageCollectionViewCell.productItemImageView.sd_setImageWithURL(NSURL(string: layoutSevenModel.data[indexPath.row].image), placeholderImage: UIImage(named: self.placeHolder))
@@ -1032,6 +1065,14 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             
             halfVerticalImageCollectionViewCell.target = layoutSevenModel.data[indexPath.row].target.targetUrl
             halfVerticalImageCollectionViewCell.targetType = layoutSevenModel.data[indexPath.row].target.targetType
+            
+            if layoutSevenModel.data[indexPath.row].discountPercentage.toInt() == 0 || layoutSevenModel.data[indexPath.row].discountPercentage.toInt() == nil {
+                halfVerticalImageCollectionViewCell.discountPercentageLabel.hidden = true
+                halfVerticalImageCollectionViewCell.originalPriceLabel.hidden = true
+            } else {
+                halfVerticalImageCollectionViewCell.discountPercentageLabel.hidden = false
+                halfVerticalImageCollectionViewCell.originalPriceLabel.hidden = false
+            }
         }
 
         return halfVerticalImageCollectionViewCell
