@@ -33,7 +33,7 @@ struct FABStrings {
     static let profile: String = StringHelper.localizedStringWithKey("PROFILE_LOCALIZE_KEY")
 }
 
-class HomeContainerViewController: UIViewController, UITabBarControllerDelegate, EmptyViewDelegate, CarouselCollectionViewCellDataSource, CarouselCollectionViewCellDelegate, DailyLoginCollectionViewCellDelegate, HalfPagerCollectionViewCellDelegate, HalfPagerCollectionViewCellDataSource, FlashSaleCollectionViewCellDelegate, LayoutHeaderCollectionViewCellDelegate, SellerCarouselCollectionViewCellDataSource, SellerCarouselCollectionViewCellDelegate, LayoutNineCollectionViewCellDelegate, LayoutNineCollectionViewCellDataSource {
+class HomeContainerViewController: UIViewController, UITabBarControllerDelegate, EmptyViewDelegate, CarouselCollectionViewCellDataSource, CarouselCollectionViewCellDelegate, DailyLoginCollectionViewCellDelegate, HalfPagerCollectionViewCellDelegate, HalfPagerCollectionViewCellDataSource, FlashSaleCollectionViewCellDelegate, LayoutHeaderCollectionViewCellDelegate, SellerCarouselCollectionViewCellDataSource, SellerCarouselCollectionViewCellDelegate, LayoutNineCollectionViewCellDelegate, LayoutNineCollectionViewCellDataSource, UIScrollViewDelegate {
     
     var searchViewContoller: SearchViewController?
     var circularMenuViewController: CircularMenuViewController?
@@ -48,6 +48,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     var layouts: [String] = []
     
     @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var backToTopButton: UIButton!
     
     var images: [String] = ["http://www.nognoginthecity.com/wp-content/uploads/2014/11/20141023_BRA_NA_Penshoppe-CB-women_NA_penshoppe-1.jpg", "http://www.manilaonsale.com/wp-content/uploads/2013/03/Penshoppe-Sale-March-2013.jpg", "http://www.manilaonsale.com/wp-content/uploads/2013/07/Penshoppe-Mid-Year-Clearance-Sale-July-2013.jpg", "http://cdn.soccerbible.com/media/8733/adidas-hunt-pack-supplied-img4.jpg", "http://demandware.edgesuite.net/sits_pod14-adidas/dw/image/v2/aagl_prd/on/demandware.static/-/Sites-adidas-AME-Library/default/dw2ec04560/brand/images/2015/06/adidas-originals-fw15-xeno-zx-flux-fc-double_70190.jpg?sw=470&sh=264&sm=fit&cx=10&cy=0&cw=450&ch=254&sfrm=jpg"]
     
@@ -138,6 +139,19 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         self.customTabBarController?.isValidToSwitchToMenuTabBarItems = false
         self.circularDraweView()
         self.tabBarController!.delegate = self
+        
+        self.backToTopButton.layer.cornerRadius = 15
+        self.setupBackToTopButton()
+    }
+    
+    //MARK: - Back To Top Button
+    func setupBackToTopButton() {
+        self.backToTopButton.layer.cornerRadius = 15
+        self.backToTopButton.alpha = 0
+        self.backToTopButton.layer.shadowColor = UIColor.darkGrayColor().CGColor
+        self.backToTopButton.layer.shadowOffset = CGSizeMake(0, 5)
+        self.backToTopButton.layer.shadowRadius = 5
+        self.backToTopButton.layer.shadowOpacity = 1.0
     }
     
     //MARK: - collectionViewLayout()
@@ -325,6 +339,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         let manager = APIManager.sharedInstance
         manager.GET(APIAtlas.homeUrl, parameters: nil, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            let dictionary: NSDictionary  = ParseLocalJSON.fileName("dummyHomePage")
             self.populateHomePageWithDictionary(responseObject as! NSDictionary)
             self.hud?.hide(true)
             //get user info
@@ -697,14 +712,8 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     func halfPagerCollectionViewCellnumberOfDotsInPageControl(halfPagerCollectionViewCell: HalfPagerCollectionViewCell) -> Int {
         let parentIndexPath: NSIndexPath = self.collectionView.indexPathForCell(halfPagerCollectionViewCell)!
         let layoutThreeModel: LayoutThreeModel = self.homePageModel.data[parentIndexPath.section] as! LayoutThreeModel
-        
-        var numberOfPages: Float = Float(layoutThreeModel.data.count) /  2.0
-        
-        if fmod(numberOfPages, 1.0) != 0.0 {
-            numberOfPages = numberOfPages + 1
-        }
-        
-        return Int(numberOfPages)
+    
+        return layoutThreeModel.data.count
     }
     
     func halfPagerCollectionViewCell(halfPagerCollectionViewCell: HalfPagerCollectionViewCell, cellForRowAtIndexPath indexPath: NSIndexPath) -> FullImageCollectionViewCell {
@@ -725,11 +734,12 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         let rightInset: Int = 15
         self.view.layoutIfNeeded()
         
-        if IphoneType.isIphone6() || IphoneType.isIphone6Plus() {
-            return (self.view.frame.size.width / 2) - CGFloat(rightInset)
-        } else {
-            return (self.view.frame.size.width / 2) - CGFloat(rightInset)
-        }
+            if IphoneType.isIphone6() || IphoneType.isIphone6Plus() {
+                println((self.view.frame.size.width / 2) - 8)
+                return (self.view.frame.size.width / 2) - 8
+            } else {
+                return (self.view.frame.size.width / 2) - 8
+            }
     }
     
     //MARK: - Half Pager Delegate
@@ -740,7 +750,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     
     func halfPagerCollectionViewCellDidEndDecelerating(halfPagerCollectionViewCell: HalfPagerCollectionViewCell) {
         halfPagerCollectionViewCell.layoutIfNeeded()
-        let pageWidth: CGFloat = halfPagerCollectionViewCell.collectionView.frame.size.width
+        let pageWidth: CGFloat = (halfPagerCollectionViewCell.collectionView.frame.size.width - 8) / 2
         let currentPage: CGFloat = halfPagerCollectionViewCell.collectionView.contentOffset.x / pageWidth
         
         if 0.0 != fmodf(Float(currentPage), 1.0) {
@@ -1119,13 +1129,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         let parentIndexPath: NSIndexPath = self.collectionView.indexPathForCell(sellerCarouselCollectionViewCell)!
         let layoutEightModel: LayoutEightModel = self.homePageModel.data[parentIndexPath.section] as! LayoutEightModel
         
-        var numberOfPages: CGFloat = CGFloat(layoutEightModel.data.count) / 2.0
-        
-        if fmod(numberOfPages, 1.0) != 0.0 {
-            numberOfPages = numberOfPages + 1
-        }
-        
-        return Int(numberOfPages)
+        return layoutEightModel.data.count
     }
     
     //MARK: - Seller Carousel Delegate
@@ -1136,7 +1140,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     
     func sellerCarouselCollectionViewCellDidEndDecelerating(sellerCarouselCollectionViewCell: SellerCarouselCollectionViewCell) {
         sellerCarouselCollectionViewCell.layoutIfNeeded()
-        let pageWidth: CGFloat = sellerCarouselCollectionViewCell.collectionView.frame.size.width
+        let pageWidth: CGFloat = sellerCarouselCollectionViewCell.collectionView.frame.size.width / 2
         let currentPage: CGFloat = sellerCarouselCollectionViewCell.collectionView.contentOffset.x / pageWidth
         
         if 0.0 != fmodf(Float(currentPage), 1.0) {
@@ -1181,5 +1185,47 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         } else {
             self.tabBarController!.view.makeToast(Constants.Localized.someThingWentWrong, duration: 3.0, position: CSToastPositionBottom, style: CSToastManager.sharedStyle())
         }
+    }
+    
+    //MARK: - Scroll View Delegate
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        let indexes: [NSIndexPath] = self.collectionView.indexPathsForVisibleItems() as! [NSIndexPath]
+        var isShowBackToTop: Bool = true
+        for index in indexes {
+            if index.section == 2 {
+                isShowBackToTop = false
+                break
+            }
+        }
+        
+        if isShowBackToTop {
+            self.showBackToTop()
+        } else {
+            self.hideBackToTop()
+        }
+    }
+    
+    //MARK: - Show Back To Top
+    func showBackToTop() {
+        UIView.animateWithDuration(0.8, animations: {
+                self.backToTopButton.alpha = 1
+            }, completion: {
+                (value: Bool) in
+            })
+    }
+    
+    //MARK: - Show Back To Top
+    func hideBackToTop() {
+        UIView.animateWithDuration(0.8, animations: {
+            self.backToTopButton.alpha = 0
+            }, completion: {
+                (value: Bool) in
+        })
+    }
+
+    
+    //MARK: - Back To Top
+    @IBAction func backToTop(sender: AnyObject) {
+        self.collectionView.setContentOffset(CGPointZero, animated: true)
     }
 }

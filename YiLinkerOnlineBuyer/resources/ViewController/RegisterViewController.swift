@@ -91,8 +91,8 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
             self.firstNameTextField.enabled = false
             self.lastNameTextField.enabled = false
             self.emailAddressTextField.enabled = false
-            self.passwordTextField.enabled = false
-            self.reTypePasswordTextField.enabled = false
+//            self.passwordTextField.enabled = false
+//            self.reTypePasswordTextField.enabled = false
             
             self.mobileNumberTextField.enabled = false
             self.referralCodeTextField.enabled = false
