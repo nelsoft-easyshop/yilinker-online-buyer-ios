@@ -74,11 +74,7 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
         imagesInArray = [allImageView, pendingImageView, onDeliveryImageView, forFeedbackImageView]
         labelsInArray = [allLabel, pendingLabel, onDeliveryLabel, forFeedbackLabel]
         deselectedImages = ["all", "pending", "onDelivery", "forFeedback"]
-        /*viewsInArray = [allView, pendingView, onDeliveryView, forFeedbackView, supportView]
-        imagesInArray = [allImageView, pendingImageView, onDeliveryImageView, forFeedbackImageView, supportImageView]
-        labelsInArray = [allLabel, pendingLabel, onDeliveryLabel, forFeedbackLabel, supportLabel]
-        deselectedImages = ["all", "pending", "onDelivery", "forFeedback", "support"]*/
-        self.transactionType = "ALL"
+     
         allLabel.text = all
         pendingLabel.text = pending
         onDeliveryLabel.text = onDelivery
@@ -86,11 +82,13 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
         noTransactionLabel.text = noTransaction
         noTransactionLabel.hidden = true
         //supportLabel.text = support
+        
         self.tableView.hidden = true
+        self.tableView.separatorInset = UIEdgeInsetsZero
+        self.tableView.layoutMargins = UIEdgeInsetsZero
+       
         addViewsActions()
     
-        //self.fireTransaction("all")
-        //self.query = "all"
         self.backButton()
     }
     
@@ -113,7 +111,11 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        
         let cell: TransactionTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("TransactionIdentifier") as! TransactionTableViewCell
+        
+        cell.separatorInset = UIEdgeInsetsZero
+        cell.layoutMargins = UIEdgeInsetsZero
         
         if self.tableData.count != 0 {
             var price: Float = (tableData[indexPath.row].total_price2 as NSString).floatValue
@@ -125,7 +127,6 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
             } else {
                 cell.numberLabel.text =  "\(tableData[indexPath.row].product_count2) \(products)"
             }
-            
             cell.transactionIdLabel.text = "TID-\(tableData[indexPath.row].invoice_number2)"
         }
         
@@ -176,7 +177,6 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
             self.isPageEnd = false
             self.fireTransaction("all")
             self.query = "all"
-            self.transactionType = "ALL"
             deselectOtherViews(allView)
         }
     }
@@ -190,7 +190,6 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
             self.isPageEnd = false
             self.fireTransaction("pending")
             self.query = "pending"
-            self.transactionType = "PENDING"
             deselectOtherViews(pendingView)
         }
     }
@@ -204,7 +203,6 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
             self.isPageEnd = false
             self.fireTransaction("on-delivery")
             self.query = "on-delivery"
-            self.transactionType = "ON DELIVERY"
             deselectOtherViews(onDeliveryView)
         }
     }
@@ -218,7 +216,6 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
             self.isPageEnd = false
             self.fireTransaction("for-feedback")
             self.query = "for-feedback"
-            self.transactionType = "FOR FEEDBACK"
             deselectOtherViews(forFeedbackView)
         }
     }
