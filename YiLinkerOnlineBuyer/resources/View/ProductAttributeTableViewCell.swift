@@ -37,6 +37,8 @@ class ProductAttributeTableViewCell: UITableViewCell, UIScrollViewDelegate {
     var buttonWidths: [CGFloat] = []
     var isEditingAttribute: Bool = true
     
+    var selectedValues2: [String] = []
+    
     override func awakeFromNib() {
         super.awakeFromNib()
     }
@@ -108,13 +110,6 @@ class ProductAttributeTableViewCell: UITableViewCell, UIScrollViewDelegate {
                     button.layer.borderColor = Constants.Colors.appTheme.CGColor
                     button.backgroundColor = Constants.Colors.appTheme
                     button.setTitleColor(UIColor.whiteColor(), forState: .Normal)
-                    
-//                    if !self.isEditingAttribute {
-//                        for j in 0..<i {
-//                            self.scrollPosition += self.buttonWidths[j]
-//                        }
-//                    }
-
                 }
             }
             
@@ -123,9 +118,6 @@ class ProductAttributeTableViewCell: UITableViewCell, UIScrollViewDelegate {
         }
 
         self.addSubview(scroll)
-//        if self.scrollPosition > self.scroll.contentSize.width - self.frame.size.width {
-//            self.scrollPosition = self.scroll.contentSize.width - self.frame.size.width
-//        }
         self.scroll.contentOffset.x = self.scrollPosition
     }
     
@@ -145,21 +137,23 @@ class ProductAttributeTableViewCell: UITableViewCell, UIScrollViewDelegate {
     // MARK: - Actions
     
     func clickedAttriubte(sender: UIButton!) {
-//        println("button id: \(sender.tag)")
+        println("boom")
         
-        if sender.selected { // Unselect
-            DeselectButton(sender)
-            if let delegate = self.delegate {
-                delegate.selectedAttribute(self, attributeIndex: self.tag, attributeValue: "", attributeId: -1)
-            }
-        } else {
-            for view in scroll.subviews as! [UIView]{
-                if let button = view as? UIButton {
-                    DeselectButton(button)
-                }
-            }
-            SelectButton(sender)
-        }
+//        selectedValues2.append(sender.titleLabel.text)
+        
+//        if sender.selected { // Unselect
+//            DeselectButton(sender)
+//            if let delegate = self.delegate {
+//                delegate.selectedAttribute(self, attributeIndex: self.tag, attributeValue: "", attributeId: -1)
+//            }
+//        } else {
+//            for view in scroll.subviews as! [UIView]{
+//                if let button = view as? UIButton {
+//                    DeselectButton(button)
+//                }
+//            }
+//            SelectButton(sender)
+//        }
     }
     
     func DeselectButton(button: UIButton) {
