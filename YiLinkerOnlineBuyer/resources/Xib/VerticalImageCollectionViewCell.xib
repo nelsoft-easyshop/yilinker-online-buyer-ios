@@ -28,10 +28,10 @@
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="F-Stop Watch" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="6" translatesAutoresizingMaskIntoConstraints="NO" id="zbT-pN-AHE">
-                        <rect key="frame" x="8" y="190" width="186" height="21"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="F-Stop Watch" lineBreakMode="tailTruncation" numberOfLines="10" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="zbT-pN-AHE">
+                        <rect key="frame" x="8" y="179" width="186" height="32"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="21" id="Zfe-nP-Zmq"/>
+                            <constraint firstAttribute="height" constant="32" id="Zfe-nP-Zmq"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
@@ -48,7 +48,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dummy-placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="5ia-Jp-qLe">
-                        <rect key="frame" x="6" y="3" width="190" height="186"/>
+                        <rect key="frame" x="6" y="3" width="190" height="174"/>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10 % OFF" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="6" translatesAutoresizingMaskIntoConstraints="NO" id="Lbh-CJ-22K" customClass="DynamicRoundedLabel" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
                         <rect key="frame" x="16" y="23" width="68" height="18"/>
@@ -78,7 +78,7 @@
                 <constraint firstItem="5ia-Jp-qLe" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="6" id="Pwd-zX-pgQ"/>
                 <constraint firstAttribute="trailing" secondItem="5ia-Jp-qLe" secondAttribute="trailing" constant="6" id="SbF-JR-yxC"/>
                 <constraint firstAttribute="bottom" secondItem="0p9-52-dFh" secondAttribute="bottom" constant="10" id="Wqm-DQ-dwn"/>
-                <constraint firstItem="5ia-Jp-qLe" firstAttribute="bottom" secondItem="zbT-pN-AHE" secondAttribute="bottom" constant="-22" id="XTK-48-Upp"/>
+                <constraint firstItem="5ia-Jp-qLe" firstAttribute="bottom" secondItem="zbT-pN-AHE" secondAttribute="bottom" constant="-34" id="XTK-48-Upp"/>
                 <constraint firstItem="5ia-Jp-qLe" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="3" id="YSt-bb-T7A"/>
                 <constraint firstItem="wQZ-G9-bat" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="8" id="dbE-Ns-4yW"/>
                 <constraint firstItem="0p9-52-dFh" firstAttribute="leading" secondItem="wQZ-G9-bat" secondAttribute="trailing" constant="17" id="slZ-td-nnJ"/>

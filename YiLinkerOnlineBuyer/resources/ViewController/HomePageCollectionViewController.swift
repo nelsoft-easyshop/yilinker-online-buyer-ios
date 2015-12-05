@@ -382,7 +382,6 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
                 homeProductModel = homeProductModels[indexPath.row]
             }
             
-            
             twoColumnGridCollectionViewCell.productNameLabel.text = homeProductModel?.name
             twoColumnGridCollectionViewCell.targetType = homeProductModel!.targetType
             twoColumnGridCollectionViewCell.target = homeProductModel!.target

@@ -33,34 +33,55 @@ struct FABStrings {
     static let profile: String = StringHelper.localizedStringWithKey("PROFILE_LOCALIZE_KEY")
 }
 
-class HomeContainerViewController: UIViewController, UITabBarControllerDelegate, EmptyViewDelegate {
+class HomeContainerViewController: UIViewController, UITabBarControllerDelegate, EmptyViewDelegate, CarouselCollectionViewCellDataSource, CarouselCollectionViewCellDelegate, DailyLoginCollectionViewCellDelegate, HalfPagerCollectionViewCellDelegate, HalfPagerCollectionViewCellDataSource, FlashSaleCollectionViewCellDelegate, LayoutHeaderCollectionViewCellDelegate, SellerCarouselCollectionViewCellDataSource, SellerCarouselCollectionViewCellDelegate, LayoutNineCollectionViewCellDelegate, LayoutNineCollectionViewCellDataSource, UIScrollViewDelegate {
     
-    @IBOutlet weak var contentView: UIView!
-    var dimView: UIView?
-    
-    let viewControllerIndex = 0
     var searchViewContoller: SearchViewController?
     var circularMenuViewController: CircularMenuViewController?
     var wishlisViewController: WishlistViewController?
     var cartViewController: CartViewController?
-    
-    var viewControllers = [UIViewController]()
-    
-    var selectedChildViewController: UIViewController?
-    var contentViewFrame: CGRect?
-    
-    var hotItemsCollectionViewController: HomePageCollectionViewController?
-    var featuredCollectionViewController: HomePageCollectionViewController?
-    var newItemsCollectionViewController: HomePageCollectionViewController?
-    var sellersCollectionViewController: HomePageCollectionViewController?
-    
-    var curentCollectionViewController: Int = 0
     
     var emptyView: EmptyView?
     var hud: MBProgressHUD?
     var profileModel: ProfileUserDetailsModel = ProfileUserDetailsModel()
     var customTabBarController: CustomTabBarController?
     
+    var layouts: [String] = []
+    
+    @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var backToTopButton: UIButton!
+    
+    var images: [String] = ["http://www.nognoginthecity.com/wp-content/uploads/2014/11/20141023_BRA_NA_Penshoppe-CB-women_NA_penshoppe-1.jpg", "http://www.manilaonsale.com/wp-content/uploads/2013/03/Penshoppe-Sale-March-2013.jpg", "http://www.manilaonsale.com/wp-content/uploads/2013/07/Penshoppe-Mid-Year-Clearance-Sale-July-2013.jpg", "http://cdn.soccerbible.com/media/8733/adidas-hunt-pack-supplied-img4.jpg", "http://demandware.edgesuite.net/sits_pod14-adidas/dw/image/v2/aagl_prd/on/demandware.static/-/Sites-adidas-AME-Library/default/dw2ec04560/brand/images/2015/06/adidas-originals-fw15-xeno-zx-flux-fc-double_70190.jpg?sw=470&sh=264&sm=fit&cx=10&cy=0&cw=450&ch=254&sfrm=jpg"]
+    
+    let placeHolder: String = "dummy-placeholder"
+    
+    let carouselCellNibName = "CarouselCollectionViewCell"
+    let dailyLoginNibName = "DailyLoginCollectionViewCell"
+    let halfPagerCellNibName = "HalfPagerCollectionViewCell"
+    let flashSaleNibName = "FlashSaleCollectionViewCell"
+    let verticalImageNibName = "VerticalImageCollectionViewCell"
+    let halfVerticalNibName = "HalfVerticalImageCollectionViewCell"
+    let sectionBackgroundNibName = "SectionBackground"
+    let sectionHeaderNibName = "LayoutHeaderCollectionViewCell"
+    let fullImageCellNib = "FullImageCollectionViewCell"
+    let sellerNibName = "SellerCollectionViewCell"
+    let sellerCarouselNibName = "SellerCarouselCollectionViewCell"
+    let layoutNineNibName = "LayoutNineCollectionViewCell"
+    let twoColumnGridCell = "TwoColumnGridCollectionViewCell"
+    
+    var remainingTime: Int = 0
+    
+    var firstHourString: String = ""
+    var secondHourString: String = ""
+    
+    var firstMinString: String = ""
+    var secondMinString: String = ""
+    
+    var firstSecondsString: String = ""
+    var secondSecondsString: String = ""
+    
+    var homePageModel: HomePageModel = HomePageModel()
+    
+    var timer: NSTimer = NSTimer()
     
     //MARK: - Life Cycle
     override func didReceiveMemoryWarning() {
@@ -69,24 +90,42 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     }
     
     override func viewDidLayoutSubviews() {
-        contentViewFrame = contentView.bounds
         
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        UIApplication.sharedApplication().statusBarStyle = .LightContent
+        self.navigationController?.setNavigationBarHidden(true, animated: true)
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
+    }
+    
+    deinit {
+        // perform the deinitialization
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //set customTabbar
-        self.view.layoutIfNeeded()
-        self.contentViewFrame = self.view.frame
-        self.customTabBarController = self.tabBarController as? CustomTabBarController
-        self.customTabBarController?.isValidToSwitchToMenuTabBarItems = false
-        self.circularDraweView()
-        self.tabBarController!.delegate = self
-        self.addSuHeaderScrollView()
+        //header
+        self.registerHeaderCollectionView(self.sectionHeaderNibName)
+        self.registerCellWithNibName(self.carouselCellNibName)
+        self.registerCellWithNibName(self.dailyLoginNibName)
+        self.registerCellWithNibName(self.halfPagerCellNibName)
+        self.registerCellWithNibName(self.flashSaleNibName)
+        self.registerCellWithNibName(self.verticalImageNibName)
+        self.registerCellWithNibName(self.halfVerticalNibName)
+        self.registerCellWithNibName(self.fullImageCellNib)
+        self.registerCellWithNibName(self.sellerNibName)
+        self.registerCellWithNibName(self.sellerCarouselNibName)
+        self.registerCellWithNibName(self.layoutNineNibName)
+        self.registerCellWithNibName(self.twoColumnGridCell)
+        
         if Reachability.isConnectedToNetwork() {
-            self.fireGetHomePageData()
+        self.fireGetHomePageData(true)
         } else {
-            self.addEmptyView()
+        self.addEmptyView()
         }
         
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
@@ -95,10 +134,75 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             name: appDelegate.registrationKey, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "onNewMessage:",
             name: appDelegate.messageKey, object: nil)
-        self.initDimView()
+        
+        self.view.layoutIfNeeded()
+        //set customTabbar
+        self.customTabBarController = self.tabBarController as? CustomTabBarController
+        self.customTabBarController?.isValidToSwitchToMenuTabBarItems = false
+        self.circularDraweView()
+        self.tabBarController!.delegate = self
+        
+        self.backToTopButton.layer.cornerRadius = 15
+        self.setupBackToTopButton()
+        
+        self.addPullToRefresh()
     }
     
-    func onRegistration(notification: NSNotification){
+    //MARK: - Add Pull To Refresh
+    func addPullToRefresh() {
+        let options = PullToRefreshOption()
+        options.backgroundColor = UIColor.clearColor()
+        options.indicatorColor = UIColor.darkGrayColor()
+        
+        self.collectionView.addPullToRefresh(options: options, refreshCompletion: { [weak self] in
+            // some code
+            self!.timer.invalidate()
+            self!.fireGetHomePageData(false)
+            })
+    }
+    
+    //MARK: - Back To Top Button
+    func setupBackToTopButton() {
+        self.backToTopButton.layer.cornerRadius = 15
+        self.backToTopButton.alpha = 0
+        self.backToTopButton.layer.shadowColor = UIColor.darkGrayColor().CGColor
+        self.backToTopButton.layer.shadowOffset = CGSizeMake(0, 5)
+        self.backToTopButton.layer.shadowRadius = 5
+        self.backToTopButton.layer.shadowOpacity = 1.0
+    }
+    
+    //MARK: - collectionViewLayout()
+    func collectionViewLayout() {
+        let homePageCollectionViewLayout: HomePageCollectionViewLayout2 = HomePageCollectionViewLayout2()
+        homePageCollectionViewLayout.layouts = self.layouts
+        homePageCollectionViewLayout.homePageModel = self.homePageModel
+        self.collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        self.collectionView.collectionViewLayout = homePageCollectionViewLayout
+        //decoration view
+        self.registerDecorationView(self.sectionBackgroundNibName)
+    }
+    
+    //MARK: - Register Header Collection View
+    func registerHeaderCollectionView(nibName: String) {
+        var layoutHeaderCollectionViewNib: UINib = UINib(nibName: nibName, bundle: nil)
+        collectionView!.registerNib(layoutHeaderCollectionViewNib, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: nibName)
+    }
+    
+    //MARK: - Register Decoration View
+    func registerDecorationView(nibName: String) {
+        var decorationViewNib: UINib = UINib(nibName: nibName, bundle: nil)
+        self.collectionView?.collectionViewLayout.registerNib(decorationViewNib, forDecorationViewOfKind: nibName)
+    }
+    
+    //MARK: - Register Cell
+    func registerCellWithNibName(nibName: String) {
+        let nib: UINib = UINib(nibName: nibName, bundle: nil)
+        self.collectionView.registerNib(nib, forCellWithReuseIdentifier: nibName)
+    }
+    
+    //MARK: - On Registration
+    //On Registration
+    func onRegistration(notification: NSNotification) {
         if let info = notification.userInfo as? Dictionary<String,String> {
             if let error = info["error"] {
                 showAlert("Error registering with GCM", message: error)
@@ -110,6 +214,8 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         }
     }
     
+    //MARK: Show Alert
+    //For GCM Alert
     func showAlert(title:String, message:String) {
         let alert = UIAlertController(title: title,
             message: message, preferredStyle: .Alert)
@@ -118,10 +224,12 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         self.presentViewController(alert, animated: true, completion: nil)
     }
     
-    func onNewMessage(notification : NSNotification){
+    //MARK: On Message
+    //For GCM Message
+    func onNewMessage(notification : NSNotification) {
         if let info = notification.userInfo as? Dictionary<String, AnyObject> {
             if let data = info["data"] as? String{
-                if let data2 = data.dataUsingEncoding(NSUTF8StringEncoding){
+                if let data2 = data.dataUsingEncoding(NSUTF8StringEncoding) {
                     if let json = NSJSONSerialization.JSONObjectWithData(data2, options: .MutableContainers, error: nil) as? [String:AnyObject] {
                         var count = SessionManager.getUnReadMessagesCount() + 1
                         SessionManager.setUnReadMessagesCount(count)
@@ -131,13 +239,11 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         }
     }
     
+    //MARK: Fire Create Registration
+    //For GCM Registration
     func fireCreateRegistration(registrationID : String) {
-        
         self.showHUD()
-        
         let manager: APIManager = APIManager.sharedInstance
-        //seller@easyshop.ph
-        //password
         let parameters: NSDictionary = [
             "registrationId": "\(registrationID)",
             "access_token"  : SessionManager.accessToken(),
@@ -149,9 +255,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         manager.POST(url, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
-            //SVProgressHUD.dismiss()
             self.hud?.hide(true)
-            //self.showSuccessMessage()
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 
@@ -160,29 +264,31 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                 println(error.description)
                 if (Reachability.isConnectedToNetwork()) {
                     let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                
+                    
                     if task.statusCode == 401 {
                         self.fireRefreshToken()
                     } else {
                         UIAlertController.displayErrorMessageWithTarget(self, errorMessage: HomeStrings.somethingWentWrong, title: HomeStrings.error)
                     }
                 }
-                //SVProgressHUD.dismiss()
                 self.hud?.hide(true)
         })
     }
     
+    //MARK: - Add Empty View
+    //Show this view if theres no internet connection
     func addEmptyView() {
         if self.emptyView == nil {
             self.emptyView = UIView.loadFromNibNamed("EmptyView", bundle: nil) as? EmptyView
-            self.emptyView?.frame = self.contentViewFrame!
+            self.view.layoutIfNeeded()
+            self.emptyView?.frame = self.view.frame
             self.emptyView!.delegate = self
             self.view.addSubview(self.emptyView!)
         } else {
             self.emptyView!.hidden = false
         }
     }
-
+    
     //MARK: - Tab Bar Delegate
     func tabBarController(tabBarController: UITabBarController, shouldSelectViewController viewController: UIViewController) -> Bool {
         if viewController == tabBarController.viewControllers![4] as! UIViewController {
@@ -205,19 +311,19 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             animatedViewController!.definesPresentationContext = true
             animatedViewController!.view.backgroundColor = UIColor.clearColor()
             
-            if SessionManager.accessToken() != "" {
-                var buttonImages: [String] = ["fab_following", "fab_messaging", "fab_promo", "fab_category", self.profileModel.profileImageUrl]
-                var buttonTitles: [String] = [FABStrings.followedSeller, FABStrings.messaging, FABStrings.todaysPromo, FABStrings.categories, FABStrings.logout]
+            if SessionManager.isLoggedIn() {
+                var buttonImages: [String] = ["fab_following", "fab_messaging", "fab_promo", "fab_category", "fab_help", self.profileModel.profileImageUrl]
+                var buttonTitles: [String] = [FABStrings.followedSeller, FABStrings.messaging, FABStrings.todaysPromo, FABStrings.categories, FABStrings.help, FABStrings.profile]
                 
-                var buttonRightText: [String] = ["", SessionManager.unreadMessageCount(), "", "", "\(self.profileModel.firstName) \(self.profileModel.lastName) \n\(self.profileModel.address.streetAddress) \(self.profileModel.address.subdivision)"]
+                var buttonRightText: [String] = ["", SessionManager.unreadMessageCount(), "", "", "", "\(self.profileModel.firstName) \(self.profileModel.lastName) \n\(self.profileModel.address.streetAddress) \(self.profileModel.address.subdivision)"]
                 
                 animatedViewController?.buttonImages = buttonImages
                 animatedViewController?.buttonTitles = buttonTitles
                 animatedViewController?.buttonRightText = buttonRightText
             } else {
-                var buttonImages: [String] = ["fab_register", "fab_signin", "fab_promo", "fab_category"]
-                var buttonTitles: [String] = ["REGISTER", FABStrings.signIn, FABStrings.todaysPromo, FABStrings.categories]
-                var buttonRightText: [String] = ["", "", "", ""]
+                var buttonImages: [String] = ["fab_register", "fab_signin", "fab_promo", "fab_category", "fab_help"]
+                var buttonTitles: [String] = ["REGISTER", FABStrings.signIn, FABStrings.todaysPromo, FABStrings.categories, FABStrings.help]
+                var buttonRightText: [String] = ["", "", "", "", ""]
                 
                 animatedViewController?.buttonImages = buttonImages
                 animatedViewController?.buttonTitles = buttonTitles
@@ -233,106 +339,6 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         
     }
     
-    //MARK: - Select View Controller with Index
-    //This function is for executing child view logic code
-    func setSelectedViewControllerWithIndex(index: Int) {
-        if self.viewControllers.count != 0 {
-            let viewController: UIViewController = viewControllers[index]
-            setSelectedViewController(viewController)
-        }
-    }
-    
-    //MARK: - Selected View Controller
-    //Func for view conteinment
-    func setSelectedViewController(viewController: UIViewController) {
-        if !(selectedChildViewController == viewController) {
-            if self.isViewLoaded() {
-                selectedChildViewController?.willMoveToParentViewController(self)
-                selectedChildViewController?.view.removeFromSuperview()
-                selectedChildViewController?.removeFromParentViewController()
-            }
-        }
-        self.view.layoutIfNeeded()
-        self.addChildViewController(viewController)
-        viewController.view.frame = contentViewFrame!
-        contentView.addSubview(viewController.view)
-        viewController.didMoveToParentViewController(self)
-        selectedChildViewController = viewController
-    }
-    
-    //MARK: - Init View Controllers
-    func initViewControllers() {
-        let storyBoard: UIStoryboard = UIStoryboard(name: "HomeStoryBoard", bundle: nil)
-        hotItemsCollectionViewController = storyBoard.instantiateViewControllerWithIdentifier("HomePageCollectionViewController") as? HomePageCollectionViewController
-        featuredCollectionViewController = storyBoard.instantiateViewControllerWithIdentifier("HomePageCollectionViewController") as? HomePageCollectionViewController
-        newItemsCollectionViewController = storyBoard.instantiateViewControllerWithIdentifier("HomePageCollectionViewController") as? HomePageCollectionViewController
-        sellersCollectionViewController = storyBoard.instantiateViewControllerWithIdentifier("HomePageCollectionViewController") as? HomePageCollectionViewController
-    
-        viewControllers.append(hotItemsCollectionViewController!)
-        viewControllers.append(featuredCollectionViewController!)
-        viewControllers.append(newItemsCollectionViewController!)
-        viewControllers.append(sellersCollectionViewController!)
-    }
-    
-    //MARK: - Add Sub Header ScrollView
-    //Function for adding rounded buttons in the navigation bar
-    func addSuHeaderScrollView() {
-        let scrollView: UIScrollView = UIScrollView(frame: CGRectMake(0, 0, self.view.frame.size.width, 40))
-        let titles: [String] = [HomeStrings.featured, HomeStrings.hotItems, HomeStrings.newItem, HomeStrings.seller]
-        var xPosition: CGFloat = 10
-        var counter = 0
-        for title in titles {
-            let button: UIButton = UIButton(frame: CGRectMake(xPosition, 5, 90, 30))
-            button.setTitle(title, forState: UIControlState.Normal)
-            button.titleLabel!.font =  UIFont(name: "HelveticaNeue", size: 10)
-            button.layer.cornerRadius = 15
-            button.layer.borderWidth = 1
-            button.layer.borderColor = UIColor.whiteColor().CGColor
-            button.tag = counter
-            button.addTarget(self, action: "clickSubCategories:", forControlEvents: .TouchUpInside)
-            scrollView.addSubview(button)
-            xPosition = xPosition + button.frame.size.width + 30
-            scrollView.contentSize = CGSizeMake(xPosition, 0)
-            
-            if title == "FEATURED" {
-                button.backgroundColor = UIColor.whiteColor()
-                button.setTitleColor(HexaColor.colorWithHexa(0x5A1F75), forState: UIControlState.Normal)
-            }
-            counter++
-        }
-        scrollView.showsHorizontalScrollIndicator = false
-        let navigationSpacer: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
-        navigationSpacer.width = -20
-        
-        self.navigationItem.leftBarButtonItems = [navigationSpacer, UIBarButtonItem(customView: scrollView)]
-    }
-    
-    //MARK: - Click Sub Categories
-    @IBAction func clickSubCategories(sender: UIButton) {
-        let scrollView: UIScrollView = sender.superview as! UIScrollView
-        let subViewsCount: Int = scrollView.subviews.count
-        
-        for button in scrollView.subviews  {
-            if (button.isKindOfClass(UIButton)) {
-                let tempButton: UIButton = button as! UIButton
-                if tempButton.tag == sender.tag {
-                    tempButton.backgroundColor = UIColor.whiteColor()
-                    tempButton.setTitleColor(HexaColor.colorWithHexa(0x5A1F75), forState: UIControlState.Normal)
-                    if tempButton.tag != 0 {
-                        curentCollectionViewController = tempButton.tag
-                    } else {
-                        curentCollectionViewController = tempButton.tag
-                    }
-                    setSelectedViewControllerWithIndex(curentCollectionViewController)
-                } else {
-                    tempButton.backgroundColor = UIColor.clearColor()
-                    tempButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
-                }
-            }
-            
-        }
-    }
-    
     //MARK: - Circular Drawer View
     //Function for changin tabBar item to circle
     func circularDraweView() {
@@ -345,83 +351,69 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     
     //MARK: - Fire Get Home Page Data
     //Request for getting json data for populating homepage
-    func fireGetHomePageData() {
-        self.showHUD()
+    func fireGetHomePageData(showHuD: Bool) {
+        if showHuD {
+            self.showHUD()
+        }
+        
         let manager = APIManager.sharedInstance
         manager.GET(APIAtlas.homeUrl, parameters: nil, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-                self.populateHomePageWithDictionary(responseObject as! NSDictionary)
-                self.hud?.hide(true)
-                //get user info
-                if SessionManager.isLoggedIn() {
-                    self.fireGetUserInfo()
-                } else {
-                    SessionManager.saveCookies()
-                }
+            let dictionary: NSDictionary  = ParseLocalJSON.fileName("dummyHomePage")
+            self.populateHomePageWithDictionary(responseObject as! NSDictionary)
+            self.hud?.hide(true)
+            //get user info
+            if SessionManager.isLoggedIn() {
+                self.fireGetUserInfo()
+            } else {
+                SessionManager.saveCookies()
+            }
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 self.hud?.hide(true)
                 self.addEmptyView()
         })
-
     }
     
-    //MARK: - Populate Home Page With Dictionary
-    //Function for populating dictionary to the collectionview
+    //MARK: - Populate Home PageWith  Dictionary
     func populateHomePageWithDictionary(dictionary: NSDictionary) {
-        let storyBoard: UIStoryboard = UIStoryboard(name: "HomeStoryBoard", bundle: nil)
-        featuredCollectionViewController = storyBoard.instantiateViewControllerWithIdentifier("HomePageCollectionViewController") as? HomePageCollectionViewController
-        
-        let dataDictionary: NSDictionary = dictionary["data"] as! NSDictionary
-        
-        var featuredDictionary: NSDictionary = dataDictionary["featured"] as! NSDictionary
-        var featuredLayouts: [String] = [Constants.HomePage.layoutOneKey, Constants.HomePage.layoutTwoKey, Constants.HomePage.layoutThreeKey, Constants.HomePage.layoutFourKey, Constants.HomePage.layoutFiveKey, Constants.HomePage.layoutSixKey]
-        
-        featuredCollectionViewController?.dictionary = featuredDictionary
-        featuredCollectionViewController?.layouts = featuredLayouts
-        
-        hotItemsCollectionViewController = storyBoard.instantiateViewControllerWithIdentifier("HomePageCollectionViewController") as? HomePageCollectionViewController
-        let hotItemsDictionary: NSDictionary = dataDictionary["hotItems"] as! NSDictionary
-        var hotItemLayouts: [String] = [Constants.HomePage.layoutTwoKey, Constants.HomePage.layoutSevenKey]
-        
-        let categories: NSArray = hotItemsDictionary["categories"] as! NSArray
-        
-        for (index, category) in enumerate(categories) {
-            let categoryDictionary: NSDictionary = category as! NSDictionary
-            let layoutId: Int = categoryDictionary["categoryId"] as! Int
-            var layout: String = ""
-            if index == 0 {
-                layout = Constants.HomePage.layoutFiveKeyWithFooter
-            } else {
-                layout = Constants.HomePage.layoutFiveKey2
+        self.homePageModel = HomePageModel.parseDataFromDictionary(dictionary)
+        self.layouts.removeAll(keepCapacity: false)
+        for (index, model) in enumerate(self.homePageModel.data) {
+            if model.isKindOfClass(LayoutOneModel) {
+                self.layouts.append("1")
+            } else if model.isKindOfClass(LayoutTwoModel) {
+                self.layouts.append("2")
+            } else if model.isKindOfClass(LayoutThreeModel) {
+                self.layouts.append("3")
+            } else if model.isKindOfClass(LayoutFourModel) {
+                let layoutFourModel: LayoutFourModel = self.homePageModel.data[index] as! LayoutFourModel
+                
+                if layoutFourModel.remainingTime != 0 {
+                    self.remainingTime = layoutFourModel.remainingTime
+                    self.timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "updateTime", userInfo: nil, repeats: true)
+                    self.layouts.append("4")
+                } else {
+                    self.homePageModel.data.removeAtIndex(index)
+                }
+                
+            } else if model.isKindOfClass(LayoutFiveModel) {
+                self.layouts.append("5")
+            } else if model.isKindOfClass(LayoutSixModel) {
+                self.layouts.append("6")
+            } else if model.isKindOfClass(LayoutSevenModel) {
+                self.layouts.append("7")
+            } else if model.isKindOfClass(LayoutEightModel) {
+                self.layouts.append("8")
+            } else if model.isKindOfClass(LayoutNineModel) {
+                self.layouts.append("9")
+            } else if model.isKindOfClass(LayoutTenModel) {
+                self.layouts.append("10")
             }
-            
-            hotItemLayouts.append(layout)
         }
         
-        hotItemLayouts.append(Constants.HomePage.layoutTwoKey)
-        hotItemsCollectionViewController?.dictionary = hotItemsDictionary
-        hotItemsCollectionViewController?.layouts = hotItemLayouts
-        
-        
-        newItemsCollectionViewController = storyBoard.instantiateViewControllerWithIdentifier("HomePageCollectionViewController") as? HomePageCollectionViewController
-        let newItemsDictionary: NSDictionary = dataDictionary["newItems"] as! NSDictionary
-        var newItemslayout: [String] = [Constants.HomePage.layoutEightKey, Constants.HomePage.layoutSixKey]
-        newItemsCollectionViewController?.dictionary = newItemsDictionary
-        newItemsCollectionViewController?.layouts = newItemslayout
-        
-        sellersCollectionViewController = storyBoard.instantiateViewControllerWithIdentifier("HomePageCollectionViewController") as? HomePageCollectionViewController
-        let sellerDictionary: NSDictionary = dataDictionary["sellers"] as! NSDictionary
-        let sellerLayouts: [String] = [Constants.HomePage.layoutNineKey, Constants.HomePage.layoutTenKey]
-        sellersCollectionViewController?.dictionary = sellerDictionary
-        sellersCollectionViewController?.layouts = sellerLayouts
-        
-        viewControllers.append(featuredCollectionViewController!)
-        viewControllers.append(hotItemsCollectionViewController!)
-        viewControllers.append(newItemsCollectionViewController!)
-        viewControllers.append(sellersCollectionViewController!)
-        
-        setSelectedViewControllerWithIndex(self.curentCollectionViewController)
+        self.collectionView.reloadData()
+        self.collectionViewLayout()
     }
     
     //MARK: - Getting User Info
@@ -433,6 +425,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             let dictionary: NSDictionary = responseObject as! NSDictionary
             self.profileModel = ProfileUserDetailsModel.parseDataWithDictionary(dictionary["data"]!)
+            
             //Insert Data to Session Manager
             SessionManager.setFullAddress(self.profileModel.address.fullLocation)
             SessionManager.setUserFullName(self.profileModel.fullName)
@@ -441,9 +434,6 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             SessionManager.setWishlistCount(self.profileModel.wishlistCount)
             self.updateTabBarBadge()
             
-            /*if !SessionManager.isMobileVerified() && !SessionManager.isEmailVerified() {
-                self.fireGetCode()
-            }*/
             
             self.hud?.hide(true)
             }, failure: {
@@ -489,12 +479,12 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-            
+                
                 UIAlertController.displayErrorMessageWithTarget(self, errorMessage: HomeStrings.somethingWentWrong, title: HomeStrings.error)
                 
                 self.hud?.hide(true)
         })
-
+        
     }
     
     //MARK: - Show HUD
@@ -511,88 +501,802 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         self.hud?.show(true)
     }
     
-    
-    
-    //MARK: - Dim View
-    func initDimView() {
-        dimView = UIView(frame: self.view.bounds)
-        dimView?.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
-        self.parentViewController!.view.addSubview(dimView!)
-        //self.view.addSubview(dimView!)
-        dimView?.hidden = true
-        dimView?.alpha = 0
-    }
-    
     // MARK: - Did Tap Reload
     func didTapReload() {
-        self.fireGetHomePageData()
+        self.fireGetHomePageData(true)
         self.emptyView?.hidden = true
     }
     
-    //MARK: - Verification
-   /* func displayCodeDialog() {
-        var verifyNumberModal = VerifyMobileNumberViewController(nibName: "VerifyMobileNumberViewController", bundle: nil)
-        verifyNumberModal.delegate = self
-        verifyNumberModal.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
-        verifyNumberModal.providesPresentationContextTransitionStyle = true
-        verifyNumberModal.definesPresentationContext = true
-        verifyNumberModal.view.backgroundColor = UIColor.clearColor()
-        verifyNumberModal.view.frame.origin.y = 0
-        self.parentViewController!.presentViewController(verifyNumberModal, animated: true, completion: nil)
-        self.tabBarController?.tabBar.userInteractionEnabled = false
-        self.dimView!.hidden = false
-        UIView.animateWithDuration(0.3, animations: {
-            self.dimView!.alpha = 1
-            }, completion: { finished in
-        })
-    }*/
-    
-    
-    // MARK: - GET CODE
-    /*func fireGetCode() {
-        let manager: APIManager = APIManager.sharedInstance
-        //seller@easyshop.ph
-        //password
-        let parameters: NSDictionary = ["access_token": SessionManager.accessToken()]
-        self.showHUD()
-        manager.POST(APIAtlas.verificationGetCodeUrl, parameters: parameters, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            println(responseObject)
-            self.displayCodeDialog()
-            self.hud?.hide(true)
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
-                self.hud?.hide(true)
-        })
+    //MARK: - UICollectionView Data Source
+    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+        //#warning Incomplete method implementation -- Return the number of sections
+        return self.layouts.count
     }
     
-    //MARK: - Verification Delegate
-    func closeVerifyMobileNumberViewController() {
-        self.hideDimView()
-        SessionManager.logout()
-        let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-        appDelegate.changeRootToHomeView()
-    }
-    
-    func verifyMobileNumberAction(isSuccessful: Bool) {
-        self.hideDimView()
-        if !isSuccessful {
-            self.fireGetCode()
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        switch (self.layouts[section].toInt()!) {
+        case 1:
+            return 1
+        case 2:
+            return 1
+        case 3:
+            return 1
+        case 4:
+            return 1
+        case 5:
+            return 3
+        case 6:
+            return 3
+        case 7:
+            return 3
+        case 8:
+            return 1
+        case 9:
+            return 1
+        case 10:
+            return self.homePageModel.data[section].data.count
+        default:
+            return 1
         }
     }
     
-    func requestNewCodeAction() {
-        self.hideDimView()
-        self.fireGetCode()
+    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        if self.layouts[indexPath.section] == "1" {
+            let carouselCell: CarouselCollectionViewCell = self.collectionView.dequeueReusableCellWithReuseIdentifier(self.carouselCellNibName, forIndexPath: indexPath) as! CarouselCollectionViewCell
+            
+            carouselCell.dataSource = self
+            carouselCell.delegate = self
+            
+            return carouselCell
+        } else if self.layouts[indexPath.section] == "2" {
+            return self.dailyLoginWithWIndexpath(indexPath)
+        } else if self.layouts[indexPath.section] == "3" {
+            return self.halfPagerWithIndexPath(indexPath)
+        } else if self.layouts[indexPath.section] == "4" {
+            return self.flashSaleCollectionViewCellWithIndexPath(indexPath)
+        } else if self.layouts[indexPath.section] == "5" {
+            if indexPath.row == 0 {
+                return self.verticalImageCollectionViewCellWithIndexPath(indexPath)
+            } else {
+                return self.halfVerticalImageCollectionViewCellWithIndexPath(indexPath)
+            }
+        } else if self.layouts[indexPath.section] == "6" {
+            return self.fullImageCollectionViewCellWithIndexPath(indexPath, fullImageCollectionView: self.collectionView)
+        } else if self.layouts[indexPath.section] == "7" {
+            if indexPath.row == 0 || indexPath.row == 1 {
+                return self.halfVerticalImageCollectionViewCellWithIndexPath(indexPath)
+            } else {
+                return self.verticalImageCollectionViewCellWithIndexPath(indexPath)
+            }
+        } else if self.layouts[indexPath.section] == "8" {
+            return self.sellerCarouselWithIndexPath(indexPath)
+        } else if self.layouts[indexPath.section] == "9" {
+            return self.layoutNineCollectionViewCellWithIndexPath(indexPath)
+        } else if self.layouts[indexPath.section] == "10" {
+            return self.twoColumnGridCollectionViewCellWithIndexPath(indexPath)
+        } else {
+           return self.twoColumnGridCollectionViewCellWithIndexPath(indexPath)
+        }
     }
     
-    func hideDimView() {
-        UIView.animateWithDuration(0.3, animations: {
-            self.dimView!.alpha = 0
-            self.tabBarController?.tabBar.userInteractionEnabled = true
-            }, completion: { finished in
-                
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
+        return UIEdgeInsetsMake(0, 0, 0, 0)
+    }
+    
+    func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
+        let headerView: LayoutHeaderCollectionViewCell = self.collectionView?.dequeueReusableSupplementaryViewOfKind(UICollectionElementKindSectionHeader, withReuseIdentifier: self.sectionHeaderNibName, forIndexPath: indexPath) as! LayoutHeaderCollectionViewCell
+        headerView.delegate = self
+        
+        if self.homePageModel.data[indexPath.section].isKindOfClass(LayoutFiveModel) {
+            let layoutFiveModel: LayoutFiveModel = self.homePageModel.data[indexPath.section] as! LayoutFiveModel
+            if layoutFiveModel.isViewMoreAvailable {
+                headerView.target = layoutFiveModel.viewMoreTarget.targetUrl
+                headerView.targetType = layoutFiveModel.viewMoreTarget.targetType
+                headerView.viewMoreButton.hidden = false
+            } else {
+                headerView.viewMoreButton.hidden = true
+            }
+            
+            headerView.titleLabel.text = layoutFiveModel.sectionTitle
+            headerView.updateTitleLine()
+            headerView.backgroundColor = UIColor.whiteColor()
+        } else if self.homePageModel.data[indexPath.section].isKindOfClass(LayoutSevenModel) {
+            let layoutSevenModel: LayoutSevenModel = self.homePageModel.data[indexPath.section] as! LayoutSevenModel
+            if layoutSevenModel.isViewMoreAvailable {
+                headerView.target = layoutSevenModel.viewMoreTarget.targetUrl
+                headerView.targetType = layoutSevenModel.viewMoreTarget.targetType
+                headerView.viewMoreButton.hidden = false
+            } else {
+                headerView.viewMoreButton.hidden = true
+            }
+            
+            headerView.titleLabel.text = layoutSevenModel.sectionTitle
+            headerView.updateTitleLine()
+            headerView.backgroundColor = UIColor.whiteColor()
+        }  else if self.homePageModel.data[indexPath.section].isKindOfClass(LayoutEightModel) {
+            let layoutEightModel: LayoutEightModel = self.homePageModel.data[indexPath.section] as! LayoutEightModel
+            if layoutEightModel.isViewMoreAvailable {
+                headerView.target = layoutEightModel.viewMoreTarget.targetUrl
+                headerView.targetType = layoutEightModel.viewMoreTarget.targetType
+                headerView.viewMoreButton.hidden = false
+            } else {
+                headerView.viewMoreButton.hidden = true
+            }
+            
+            headerView.titleLabel.text = layoutEightModel.sectionTitle
+            headerView.updateTitleLine()
+            headerView.backgroundColor = UIColor.clearColor()
+        } else if self.homePageModel.data[indexPath.section].isKindOfClass(LayoutNineModel) {
+            let layoutNineModel: LayoutNineModel = self.homePageModel.data[indexPath.section] as! LayoutNineModel
+            if layoutNineModel.isViewMoreAvailable {
+                headerView.target = layoutNineModel.viewMoreTarget.targetUrl
+                headerView.targetType = layoutNineModel.viewMoreTarget.targetType
+                headerView.viewMoreButton.hidden = false
+            } else {
+                headerView.viewMoreButton.hidden = true
+            }
+            
+            headerView.titleLabel.text = layoutNineModel.sectionTitle
+            headerView.updateTitleLine()
+            headerView.backgroundColor = UIColor.clearColor()
+        } else if self.homePageModel.data[indexPath.section].isKindOfClass(LayoutTenModel) {
+            let layoutTenModel: LayoutTenModel = self.homePageModel.data[indexPath.section] as! LayoutTenModel
+            if layoutTenModel.isViewMoreAvailable {
+                headerView.target = layoutTenModel.viewMoreTarget.targetUrl
+                headerView.targetType = layoutTenModel.viewMoreTarget.targetType
+                headerView.viewMoreButton.hidden = false
+            } else {
+                headerView.viewMoreButton.hidden = true
+            }
+            
+            headerView.titleLabel.text = layoutTenModel.sectionTitle
+            headerView.updateTitleLine()
+            headerView.backgroundColor = UIColor.clearColor()
+        }
+        
+        return headerView
+    }
+    
+    //MARK: - CollectionViewDelegate
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        let cell: AnyObject = collectionView.cellForItemAtIndexPath(indexPath)!
+        
+        if cell.isKindOfClass(TwoColumnGridCollectionViewCell) {
+            let towColumnCell: TwoColumnGridCollectionViewCell = collectionView.cellForItemAtIndexPath(indexPath) as! TwoColumnGridCollectionViewCell
+            self.didClickItemWithTarget(towColumnCell.target, targetType: towColumnCell.targetType)
+        } else if cell.isKindOfClass(FullImageCollectionViewCell) {
+            let fullImageCell: FullImageCollectionViewCell = collectionView.cellForItemAtIndexPath(indexPath) as! FullImageCollectionViewCell
+            self.didClickItemWithTarget(fullImageCell.target, targetType: fullImageCell.targetType)
+        } else if cell.isKindOfClass(HalfVerticalImageCollectionViewCell) {
+            let halfVerticalCell: HalfVerticalImageCollectionViewCell = collectionView.cellForItemAtIndexPath(indexPath) as! HalfVerticalImageCollectionViewCell
+            self.didClickItemWithTarget(halfVerticalCell.target, targetType: halfVerticalCell.targetType)
+        } else if cell.isKindOfClass(VerticalImageCollectionViewCell) {
+            let verticalCell: VerticalImageCollectionViewCell = collectionView.cellForItemAtIndexPath(indexPath) as! VerticalImageCollectionViewCell
+            self.didClickItemWithTarget(verticalCell.target, targetType: verticalCell.targetType)
+        }
+    }
+    
+    //MARK: - Carousel Data Source
+    func carouselCollectionViewCell(carouselCollectionViewCell: CarouselCollectionViewCell, numberOfItemsInSection section: Int) -> Int {
+        let parentIndexPath: NSIndexPath = self.collectionView.indexPathForCell(carouselCollectionViewCell)!
+        let layoutOneModel: LayoutOneModel = self.homePageModel.data[parentIndexPath.section] as! LayoutOneModel
+        
+        return layoutOneModel.data.count
+    }
+    
+    func carouselCollectionViewCell(carouselCollectionViewCell: CarouselCollectionViewCell, cellForRowAtIndexPath indexPath: NSIndexPath) -> FullImageCollectionViewCell {
+        let parentIndexPath: NSIndexPath = self.collectionView.indexPathForCell(carouselCollectionViewCell)!
+        let layoutOneModel: LayoutOneModel = self.homePageModel.data[parentIndexPath.section] as! LayoutOneModel
+        
+        return self.fullImageCollectionViewCellWithIndexPath(indexPath, fullImageCollectionView: carouselCollectionViewCell.collectionView)
+    }
+    
+    func itemWidthInCarouselCollectionViewCell(carouselCollectionViewCell: CarouselCollectionViewCell) -> CGFloat {
+        carouselCollectionViewCell.layoutIfNeeded()
+        return carouselCollectionViewCell.collectionView.frame.size.width
+    }
+    
+    //MARK: - Carousel Delegate
+    func carouselCollectionViewCell(carouselCollectionViewCell: CarouselCollectionViewCell, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        let fullImageCell: FullImageCollectionViewCell = carouselCollectionViewCell.collectionView.cellForItemAtIndexPath(indexPath) as! FullImageCollectionViewCell
+        
+        self.didClickItemWithTarget(fullImageCell.target, targetType: fullImageCell.targetType)
+    }
+    
+    func carouselCollectionViewCellDidEndDecelerating(carouselCollectionViewCell: CarouselCollectionViewCell) {
+        carouselCollectionViewCell.layoutIfNeeded()
+        let pageWidth: CGFloat = carouselCollectionViewCell.collectionView.frame.size.width
+        let currentPage: CGFloat = carouselCollectionViewCell.collectionView.contentOffset.x / pageWidth
+        
+        if 0.0 != fmodf(Float(currentPage), 1.0) {
+            carouselCollectionViewCell.pageControl.currentPage = Int(currentPage) + 1
+        }
+        else {
+            carouselCollectionViewCell.pageControl.currentPage = Int(currentPage)
+        }
+    }
+    
+    //MARK: - Daily Login Delegate
+    func dailyLoginCollectionViewCellDidTapCell(dailyLoginCollectionViewCell: DailyLoginCollectionViewCell) {
+        self.didClickItemWithTarget(dailyLoginCollectionViewCell.target, targetType: dailyLoginCollectionViewCell.targetType)
+    }
+    
+    //MARK: - Half Pager Data Source
+    func halfPagerCollectionViewCell(halfPagerCollectionViewCell: HalfPagerCollectionViewCell, numberOfItemsInSection section: Int) -> Int {
+        let parentIndexPath: NSIndexPath = self.collectionView.indexPathForCell(halfPagerCollectionViewCell)!
+        let layoutThreeModel: LayoutThreeModel = self.homePageModel.data[parentIndexPath.section] as! LayoutThreeModel
+        
+        return layoutThreeModel.data.count
+    }
+    
+    func halfPagerCollectionViewCellnumberOfDotsInPageControl(halfPagerCollectionViewCell: HalfPagerCollectionViewCell) -> Int {
+        let parentIndexPath: NSIndexPath = self.collectionView.indexPathForCell(halfPagerCollectionViewCell)!
+        let layoutThreeModel: LayoutThreeModel = self.homePageModel.data[parentIndexPath.section] as! LayoutThreeModel
+    
+        return layoutThreeModel.data.count - 1
+    }
+    
+    func halfPagerCollectionViewCell(halfPagerCollectionViewCell: HalfPagerCollectionViewCell, cellForRowAtIndexPath indexPath: NSIndexPath) -> FullImageCollectionViewCell {
+        let parentIndexPath: NSIndexPath = self.collectionView.indexPathForCell(halfPagerCollectionViewCell)!
+        let layoutThreeModel: LayoutThreeModel = self.homePageModel.data[parentIndexPath.section] as! LayoutThreeModel
+        
+        let fullImageCell: FullImageCollectionViewCell = halfPagerCollectionViewCell.collectionView.dequeueReusableCellWithReuseIdentifier(halfPagerCollectionViewCell.fullImageCellNib, forIndexPath: indexPath) as! FullImageCollectionViewCell
+        fullImageCell.itemProductImageView.sd_setImageWithURL(NSURL(string: layoutThreeModel.data[indexPath.row].image), placeholderImage: UIImage(named: "dummy-placeholder"))
+        fullImageCell.target = layoutThreeModel.data[indexPath.row].target.targetUrl
+        fullImageCell.targetType = layoutThreeModel.data[indexPath.row].target.targetType
+        fullImageCell.layer.cornerRadius = 5
+        fullImageCell.clipsToBounds = true
+        
+        return fullImageCell
+    }
+    
+    func itemWidthHalfPagerCollectionViewCell(halfPagerCollectionViewCell: HalfPagerCollectionViewCell) -> CGFloat {
+        let rightInset: Int = 15
+        self.view.layoutIfNeeded()
+        
+            if IphoneType.isIphone6() || IphoneType.isIphone6Plus() {
+                println((self.view.frame.size.width / 2) - 8)
+                return (self.view.frame.size.width / 2) - 8
+            } else {
+                return (self.view.frame.size.width / 2) - 8
+            }
+    }
+    
+    //MARK: - Half Pager Delegate
+    func halfPagerCollectionViewCell(halfPagerCollectionViewCell: HalfPagerCollectionViewCell, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        let fullImageCell: FullImageCollectionViewCell = halfPagerCollectionViewCell.collectionView.cellForItemAtIndexPath(indexPath) as! FullImageCollectionViewCell
+        self.didClickItemWithTarget(fullImageCell.target, targetType: fullImageCell.targetType)
+    }
+    
+    func halfPagerCollectionViewCellDidEndDecelerating(halfPagerCollectionViewCell: HalfPagerCollectionViewCell) {
+        halfPagerCollectionViewCell.layoutIfNeeded()
+        let pageWidth: CGFloat = (halfPagerCollectionViewCell.collectionView.frame.size.width - 8) / 2
+        let currentPage: CGFloat = halfPagerCollectionViewCell.collectionView.contentOffset.x / pageWidth
+        
+        if 0.0 != fmodf(Float(currentPage), 1.0) {
+            halfPagerCollectionViewCell.pageControl.currentPage = Int(currentPage) + 1
+        }
+        else {
+            halfPagerCollectionViewCell.pageControl.currentPage = Int(currentPage)
+        }
+    }
+    
+    //MARK: - Flash Collection View Delegate
+    func flashSaleCollectionViewCell(didTapProductImageView productImageView: ProductImageView) {
+        self.didClickItemWithTarget(productImageView.target, targetType: productImageView.targetType)
+    }
+    
+    //MARK: - Seconds To Hours Minutes Seconds
+    func secondsToHoursMinutesSeconds (seconds : Int) -> (Int, Int, Int) {
+        return (seconds / 3600, (seconds % 3600) / 60, (seconds % 3600) % 60)
+    }
+    
+    //MARK: - Update Time
+    func updateTime() {
+        self.remainingTime--
+        if remainingTime >= 0 {
+            let (hour, min, seconds): (Int, Int, Int) = self.secondsToHoursMinutesSeconds(self.remainingTime)
+            
+            var sampleDate: String = "\(hour) Hours, \(min) Minutes, \(seconds) Seconds"
+            
+            if hour < 10 {
+                firstHourString = "\(hour)"
+                secondHourString = "0"
+            } else {
+                firstHourString = "\(hour)".stringCharacterAtIndex(1)
+                secondHourString = "\(hour)".stringCharacterAtIndex(0)
+            }
+            
+            if min < 10 {
+                firstMinString = "\(min)"
+                secondMinString = "0"
+            } else {
+                firstMinString = "\(min)".stringCharacterAtIndex(1)
+                secondMinString = "\(min)".stringCharacterAtIndex(0)
+            }
+            
+            if seconds < 10 {
+                firstSecondsString = "\(seconds)"
+                secondSecondsString = "0"
+            } else {
+                firstSecondsString = "\(seconds)".stringCharacterAtIndex(1)
+                secondSecondsString = "\(seconds)".stringCharacterAtIndex(0)
+            }
+            
+            if let indexPath: NSIndexPath = NSIndexPath(forItem: 0, inSection: 3) {
+                self.collectionView.reloadItemsAtIndexPaths([indexPath])
+            }
+        } else {
+            if let indexPath: NSIndexPath = NSIndexPath(forItem: 0, inSection: 3) {
+                if self.remainingTime == -1 {
+                    self.fireGetHomePageData(true)
+                }
+            }
+        }
+        
+    }
+    
+    //MARK: - Flash Sale Collection View Cell With IndexPath
+    func flashSaleCollectionViewCellWithIndexPath(indexPath: NSIndexPath) -> FlashSaleCollectionViewCell {
+        let layoutFourModel: LayoutFourModel = self.homePageModel.data[indexPath.section] as! LayoutFourModel
+        
+        let flashSaleCell: FlashSaleCollectionViewCell = self.collectionView.dequeueReusableCellWithReuseIdentifier(self.flashSaleNibName, forIndexPath: indexPath) as! FlashSaleCollectionViewCell
+        flashSaleCell.delegate = self
+        
+        flashSaleCell.hourFirstDigit.text = self.firstHourString
+        flashSaleCell.hourSecondDigit.text = self.secondHourString
+        
+        flashSaleCell.minuteFirstDigit.text = self.firstMinString
+        flashSaleCell.minuteSecondDigit.text = self.secondMinString
+        
+        flashSaleCell.secondFirstDigit.text = self.firstSecondsString
+        flashSaleCell.secondSecondDigit.text = self.secondSecondsString
+        
+        if layoutFourModel.data.count >= 3 {
+            flashSaleCell.productOneImageView.sd_setImageWithURL(NSURL(string: layoutFourModel.data[0].image), placeholderImage: UIImage(named: "dummy-placeholder"))
+            flashSaleCell.productTwoImageView.sd_setImageWithURL(NSURL(string: layoutFourModel.data[1].image), placeholderImage: UIImage(named: "dummy-placeholder"))
+            flashSaleCell.productThreeImageView.sd_setImageWithURL(NSURL(string: layoutFourModel.data[2].image), placeholderImage: UIImage(named: "dummy-placeholder"))
+            
+            flashSaleCell.productOneImageView.target = layoutFourModel.data[0].target.targetUrl
+            flashSaleCell.productOneImageView.targetType = layoutFourModel.data[0].target.targetType
+            
+            flashSaleCell.productTwoImageView.target = layoutFourModel.data[1].target.targetUrl
+            flashSaleCell.productTwoImageView.targetType = layoutFourModel.data[1].target.targetType
+            
+            flashSaleCell.productThreeImageView.target = layoutFourModel.data[2].target.targetUrl
+            flashSaleCell.productThreeImageView.targetType = layoutFourModel.data[2].target.targetType
+            
+            flashSaleCell.productOneDiscountLabel.text = "\(layoutFourModel.data[0].discountPercentage)%"
+            flashSaleCell.productTwoDiscountLabel.text = "\(layoutFourModel.data[1].discountPercentage)%"
+            flashSaleCell.productThreeDiscountLabel.text = "\(layoutFourModel.data[2].discountPercentage)%"
+        }
+        
+        return flashSaleCell
+    }
+    
+    //MARK: - Grid Layout
+    func twoColumnGridCollectionViewCellWithIndexPath(indexPath: NSIndexPath) -> TwoColumnGridCollectionViewCell {
+        let twoColumnGridCollectionViewCell: TwoColumnGridCollectionViewCell = self.collectionView?.dequeueReusableCellWithReuseIdentifier("TwoColumnGridCollectionViewCell", forIndexPath: indexPath) as! TwoColumnGridCollectionViewCell
+        
+        let layoutTenModel: LayoutTenModel = self.homePageModel.data[indexPath.section] as! LayoutTenModel
+        
+        twoColumnGridCollectionViewCell.target = layoutTenModel.data[indexPath.row].target.targetUrl
+        twoColumnGridCollectionViewCell.targetType = layoutTenModel.data[indexPath.row].target.targetType
+        
+        twoColumnGridCollectionViewCell.productItemImageView.sd_setImageWithURL(NSURL(string: layoutTenModel.data[indexPath.row].image), placeholderImage: UIImage(named: self.placeHolder))
+        twoColumnGridCollectionViewCell.productNameLabel.text = layoutTenModel.data[indexPath.row].name
+        twoColumnGridCollectionViewCell.discountedPriceLabel.text = layoutTenModel.data[indexPath.row].discountedPrice.formatToPeso()
+        twoColumnGridCollectionViewCell.discountPercentageLabel.text = layoutTenModel.data[indexPath.row].discountPercentage.formatToPercentage()
+        
+        if layoutTenModel.data[indexPath.row].discountPercentage.toInt() == 0 || layoutTenModel.data[indexPath.row].discountPercentage.toInt() == nil {
+            twoColumnGridCollectionViewCell.discountPercentageLabel.hidden = true
+            twoColumnGridCollectionViewCell.originalPriceLabel.hidden = true
+        } else {
+            twoColumnGridCollectionViewCell.discountPercentageLabel.hidden = false
+            twoColumnGridCollectionViewCell.originalPriceLabel.hidden = false
+        }
+        
+        return twoColumnGridCollectionViewCell
+    }
+    
+    //MARK: - Layout Nine Collection View Cell With IndexPath
+    func layoutNineCollectionViewCellWithIndexPath(indexPath: NSIndexPath) -> LayoutNineCollectionViewCell {
+        let layoutNineModel: LayoutNineModel = self.homePageModel.data[indexPath.section] as! LayoutNineModel
+        
+        let layoutNineCollectionViewCell: LayoutNineCollectionViewCell = self.collectionView.dequeueReusableCellWithReuseIdentifier(self.layoutNineNibName, forIndexPath: indexPath) as! LayoutNineCollectionViewCell
+        layoutNineCollectionViewCell.delegate = self
+        layoutNineCollectionViewCell.dataSource = self
+        
+        if layoutNineModel.data.count >= 5 {
+            layoutNineCollectionViewCell.productOneNameLabel.text = layoutNineModel.data[0].name
+            layoutNineCollectionViewCell.productImageViewOne.sd_setImageWithURL(NSURL(string: layoutNineModel.data[0].image), placeholderImage: UIImage(named: self.placeHolder))
+            layoutNineCollectionViewCell.productImageViewOne.target = layoutNineModel.data[0].target.targetUrl
+            layoutNineCollectionViewCell.productImageViewOne.targetType = layoutNineModel.data[0].target.targetType
+            
+            layoutNineCollectionViewCell.productTwoNameLabel.text = layoutNineModel.data[1].name
+            layoutNineCollectionViewCell.productImageViewTwo.sd_setImageWithURL(NSURL(string: layoutNineModel.data[1].image), placeholderImage: UIImage(named: self.placeHolder))
+            layoutNineCollectionViewCell.productImageViewTwo.target = layoutNineModel.data[1].target.targetUrl
+            layoutNineCollectionViewCell.productImageViewTwo.targetType = layoutNineModel.data[1].target.targetType
+            
+            layoutNineCollectionViewCell.productThreeNameLabel.text = layoutNineModel.data[2].name
+            layoutNineCollectionViewCell.productImageViewThree.sd_setImageWithURL(NSURL(string: layoutNineModel.data[2].image), placeholderImage: UIImage(named: self.placeHolder))
+            layoutNineCollectionViewCell.productImageViewThree.target = layoutNineModel.data[2].target.targetUrl
+            layoutNineCollectionViewCell.productImageViewThree.targetType = layoutNineModel.data[2].target.targetType
+            
+            layoutNineCollectionViewCell.productFourNameLabel.text = layoutNineModel.data[3].name
+            layoutNineCollectionViewCell.productImageViewFour.sd_setImageWithURL(NSURL(string: layoutNineModel.data[3].image), placeholderImage: UIImage(named: self.placeHolder))
+            layoutNineCollectionViewCell.productImageViewFour.target = layoutNineModel.data[3].target.targetUrl
+            layoutNineCollectionViewCell.productImageViewFour.targetType = layoutNineModel.data[3].target.targetType
+            
+            layoutNineCollectionViewCell.productFiveNameLabel.text = layoutNineModel.data[4].name
+            layoutNineCollectionViewCell.productImageViewFive.sd_setImageWithURL(NSURL(string: layoutNineModel.data[4].image), placeholderImage: UIImage(named: self.placeHolder))
+            layoutNineCollectionViewCell.productImageViewFive.target = layoutNineModel.data[4].target.targetUrl
+            layoutNineCollectionViewCell.productImageViewFive.targetType = layoutNineModel.data[4].target.targetType
+        }
+        
+        return layoutNineCollectionViewCell
+    }
+    
+    //MARK: - Layout Nine Collection View Cell Datasource
+    func layoutNineCollectionViewCell(layoutNineCollectionViewCell: LayoutNineCollectionViewCell, numberOfItemsInSection section: Int) -> Int {
+        let parentIndexPath: NSIndexPath = self.collectionView.indexPathForCell(layoutNineCollectionViewCell)!
+        let layoutNineModel: LayoutNineModel = self.homePageModel.data[parentIndexPath.section] as! LayoutNineModel
+        
+        return layoutNineModel.data.count - 5
+    }
+    
+    func layoutNineCollectionViewCell(layoutNineCollectionViewCell: LayoutNineCollectionViewCell, cellForRowAtIndexPath indexPath: NSIndexPath) -> FullImageCollectionViewCell {
+        let parentIndexPath: NSIndexPath = self.collectionView.indexPathForCell(layoutNineCollectionViewCell)!
+        let layoutNineModel: LayoutNineModel = self.homePageModel.data[parentIndexPath.section] as! LayoutNineModel
+        
+        let fullImageCell: FullImageCollectionViewCell = layoutNineCollectionViewCell.collectionView.dequeueReusableCellWithReuseIdentifier(layoutNineCollectionViewCell.fullImageCellNib, forIndexPath: indexPath) as! FullImageCollectionViewCell
+        fullImageCell.itemProductImageView.sd_setImageWithURL(NSURL(string: layoutNineModel.data[indexPath.row + 5].image), placeholderImage: UIImage(named: "dummy-placeholder"))
+        fullImageCell.target = layoutNineModel.data[indexPath.row + 5].target.targetUrl
+        fullImageCell.targetType = layoutNineModel.data[indexPath.row + 5].target.targetType
+        
+        fullImageCell.layer.cornerRadius = 5
+        fullImageCell.clipsToBounds = true
+        return fullImageCell
+    }
+    
+    func layoutNineCollectionViewCell(layoutNineCollectionViewCell: LayoutNineCollectionViewCell) -> CGFloat {
+        layoutNineCollectionViewCell.layoutIfNeeded()
+        return layoutNineCollectionViewCell.collectionView.frame.size.width
+    }
+    
+    //MARK: - Layout Nine Collection View Cell Delegate
+    func layoutNineCollectionViewCellDidClickProductImage(productImage: ProductImageView) {
+       self.didClickItemWithTarget(productImage.target, targetType: productImage.targetType)
+    }
+    
+    func layoutNineCollectionViewCell(layoutNineCollectionViewCell: LayoutNineCollectionViewCell, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        let fullImageCell: FullImageCollectionViewCell = layoutNineCollectionViewCell.collectionView.cellForItemAtIndexPath(indexPath) as! FullImageCollectionViewCell
+        self.didClickItemWithTarget(fullImageCell.target, targetType: fullImageCell.targetType)
+    }
+    
+    func layoutNineCollectionViewCellDidEndDecelerating(layoutNineCollectionViewCell: LayoutNineCollectionViewCell) {
+        layoutNineCollectionViewCell.layoutIfNeeded()
+        let pageWidth: CGFloat = layoutNineCollectionViewCell.collectionView.frame.size.width
+        let currentPage: CGFloat = layoutNineCollectionViewCell.collectionView.contentOffset.x / pageWidth
+        
+        if 0.0 != fmodf(Float(currentPage), 1.0) {
+            layoutNineCollectionViewCell.pageControl.currentPage = Int(currentPage) + 1
+        } else {
+            layoutNineCollectionViewCell.pageControl.currentPage = Int(currentPage)
+        }
+    }
+    
+    //MARK: - Vertical Image Collection View Cell With IndexPath
+    func verticalImageCollectionViewCellWithIndexPath(indexPath: NSIndexPath) -> VerticalImageCollectionViewCell {
+        let verticalImageCollectionViewCell: VerticalImageCollectionViewCell = self.collectionView?.dequeueReusableCellWithReuseIdentifier(self.verticalImageNibName
+            , forIndexPath: indexPath) as! VerticalImageCollectionViewCell
+
+        if self.homePageModel.data[indexPath.section].isKindOfClass(LayoutFiveModel) {
+            let layoutFiveModel: LayoutFiveModel = self.homePageModel.data[indexPath.section] as! LayoutFiveModel
+            verticalImageCollectionViewCell.productItemImageView.sd_setImageWithURL(NSURL(string: layoutFiveModel.data[indexPath.row].image), placeholderImage: UIImage(named: self.placeHolder))
+            
+            verticalImageCollectionViewCell.productNameLabel.text = layoutFiveModel.data[indexPath.row].name
+            verticalImageCollectionViewCell.discountedPriceLabel.text = layoutFiveModel.data[indexPath.row].discountedPrice.formatToPeso()
+            verticalImageCollectionViewCell.discountPercentageLabel.text = layoutFiveModel.data[indexPath.row].discountPercentage.formatToPercentage()
+            
+            verticalImageCollectionViewCell.target = layoutFiveModel.data[indexPath.row].target.targetUrl
+            verticalImageCollectionViewCell.targetType = layoutFiveModel.data[indexPath.row].target.targetType
+            
+            if layoutFiveModel.data[indexPath.row].discountPercentage.toInt() == 0 || layoutFiveModel.data[indexPath.row].discountPercentage.toInt() == nil {
+                verticalImageCollectionViewCell.discountPercentageLabel.hidden = true
+                verticalImageCollectionViewCell.originalPriceLabel.hidden = true
+            } else {
+                verticalImageCollectionViewCell.discountPercentageLabel.hidden = false
+                verticalImageCollectionViewCell.originalPriceLabel.hidden = false
+            }
+            
+        } else if self.homePageModel.data[indexPath.section].isKindOfClass(LayoutSevenModel) {
+            let layoutSevenModel: LayoutSevenModel = self.homePageModel.data[indexPath.section] as! LayoutSevenModel
+            verticalImageCollectionViewCell.productItemImageView.sd_setImageWithURL(NSURL(string: layoutSevenModel.data[indexPath.row].image), placeholderImage: UIImage(named: self.placeHolder))
+            
+            verticalImageCollectionViewCell.productNameLabel.text = layoutSevenModel.data[indexPath.row].name
+            verticalImageCollectionViewCell.discountedPriceLabel.text = layoutSevenModel.data[indexPath.row].discountedPrice.formatToPeso()
+            verticalImageCollectionViewCell.discountPercentageLabel.text = layoutSevenModel.data[indexPath.row].discountPercentage.formatToPercentage()
+            
+            verticalImageCollectionViewCell.target = layoutSevenModel.data[indexPath.row].target.targetUrl
+            verticalImageCollectionViewCell.targetType = layoutSevenModel.data[indexPath.row].target.targetType
+            
+            if layoutSevenModel.data[indexPath.row].discountPercentage.toInt() == 0 || layoutSevenModel.data[indexPath.row].discountPercentage.toInt() == nil {
+                verticalImageCollectionViewCell.discountPercentageLabel.hidden = true
+                verticalImageCollectionViewCell.originalPriceLabel.hidden = true
+            } else {
+                verticalImageCollectionViewCell.discountPercentageLabel.hidden = false
+                verticalImageCollectionViewCell.originalPriceLabel.hidden = false
+            }
+        }
+        
+        return verticalImageCollectionViewCell
+    }
+    
+    //MARK: - Half Vertical Image Collection View Cell With IndexPath
+    func halfVerticalImageCollectionViewCellWithIndexPath(indexPath: NSIndexPath) -> HalfVerticalImageCollectionViewCell {
+        let halfVerticalImageCollectionViewCell: HalfVerticalImageCollectionViewCell = self.collectionView?.dequeueReusableCellWithReuseIdentifier(self.halfVerticalNibName, forIndexPath: indexPath) as! HalfVerticalImageCollectionViewCell
+        
+        if self.homePageModel.data[indexPath.section].isKindOfClass(LayoutFiveModel) {
+            let layoutFiveModel: LayoutFiveModel = self.homePageModel.data[indexPath.section] as! LayoutFiveModel
+            halfVerticalImageCollectionViewCell.productItemImageView.sd_setImageWithURL(NSURL(string: layoutFiveModel.data[indexPath.row].image), placeholderImage: UIImage(named: self.placeHolder))
+            
+            halfVerticalImageCollectionViewCell.productNameLabel.text = layoutFiveModel.data[indexPath.row].name
+            halfVerticalImageCollectionViewCell.discountedPriceLabel.text = layoutFiveModel.data[indexPath.row].discountedPrice.formatToPeso()
+            halfVerticalImageCollectionViewCell.discountPercentageLabel.text = layoutFiveModel.data[indexPath.row].discountPercentage.formatToPercentage()
+            
+            halfVerticalImageCollectionViewCell.target = layoutFiveModel.data[indexPath.row].target.targetUrl
+            halfVerticalImageCollectionViewCell.targetType = layoutFiveModel.data[indexPath.row].target.targetType
+            
+            if layoutFiveModel.data[indexPath.row].discountPercentage.toInt() == 0 || layoutFiveModel.data[indexPath.row].discountPercentage.toInt() == nil {
+                halfVerticalImageCollectionViewCell.discountPercentageLabel.hidden = true
+                halfVerticalImageCollectionViewCell.originalPriceLabel.hidden = true
+            } else {
+                halfVerticalImageCollectionViewCell.discountPercentageLabel.hidden = false
+                halfVerticalImageCollectionViewCell.originalPriceLabel.hidden = false
+            }
+        } else if self.homePageModel.data[indexPath.section].isKindOfClass(LayoutSevenModel) {
+            let layoutSevenModel: LayoutSevenModel = self.homePageModel.data[indexPath.section] as! LayoutSevenModel
+            halfVerticalImageCollectionViewCell.productItemImageView.sd_setImageWithURL(NSURL(string: layoutSevenModel.data[indexPath.row].image), placeholderImage: UIImage(named: self.placeHolder))
+            
+            halfVerticalImageCollectionViewCell.productNameLabel.text = layoutSevenModel.data[indexPath.row].name
+            halfVerticalImageCollectionViewCell.discountedPriceLabel.text = layoutSevenModel.data[indexPath.row].discountedPrice.formatToPeso()
+            halfVerticalImageCollectionViewCell.discountPercentageLabel.text = layoutSevenModel.data[indexPath.row].discountPercentage.formatToPercentage()
+            
+            halfVerticalImageCollectionViewCell.target = layoutSevenModel.data[indexPath.row].target.targetUrl
+            halfVerticalImageCollectionViewCell.targetType = layoutSevenModel.data[indexPath.row].target.targetType
+            
+            if layoutSevenModel.data[indexPath.row].discountPercentage.toInt() == 0 || layoutSevenModel.data[indexPath.row].discountPercentage.toInt() == nil {
+                halfVerticalImageCollectionViewCell.discountPercentageLabel.hidden = true
+                halfVerticalImageCollectionViewCell.originalPriceLabel.hidden = true
+            } else {
+                halfVerticalImageCollectionViewCell.discountPercentageLabel.hidden = false
+                halfVerticalImageCollectionViewCell.originalPriceLabel.hidden = false
+            }
+        }
+
+        return halfVerticalImageCollectionViewCell
+    }
+    
+    //MARK: - Header View Delegate
+    func layoutHeaderCollectionViewCellDidSelectViewMore(layoutHeaderCollectionViewCell: LayoutHeaderCollectionViewCell) {
+        self.didClickItemWithTarget(layoutHeaderCollectionViewCell.target, targetType: layoutHeaderCollectionViewCell.targetType)
+    }
+    
+    //MARK: - Full Image Collection View Cell
+    func fullImageCollectionViewCellWithIndexPath(indexPath: NSIndexPath, fullImageCollectionView: UICollectionView) -> FullImageCollectionViewCell {
+        let fullImageCollectionViewCell: FullImageCollectionViewCell = fullImageCollectionView.dequeueReusableCellWithReuseIdentifier(self.fullImageCellNib, forIndexPath: indexPath) as! FullImageCollectionViewCell
+        
+        if self.homePageModel.data[indexPath.section].isKindOfClass(LayoutOneModel) {
+            let layoutOneModel: LayoutOneModel = self.homePageModel.data[indexPath.section] as! LayoutOneModel
+            
+            fullImageCollectionViewCell.target = layoutOneModel.data[indexPath.row].target.targetUrl
+            fullImageCollectionViewCell.targetType = layoutOneModel.data[indexPath.row].target.targetType
+            fullImageCollectionViewCell.itemProductImageView.sd_setImageWithURL(NSURL(string: layoutOneModel.data[indexPath.row].image), placeholderImage: UIImage(named: placeHolder))
+        } else if self.homePageModel.data[indexPath.section].isKindOfClass(LayoutSixModel) {
+            let layoutSixModel: LayoutSixModel = self.homePageModel.data[indexPath.section] as! LayoutSixModel
+            
+            fullImageCollectionViewCell.target = layoutSixModel.data[indexPath.row].target.targetUrl
+            fullImageCollectionViewCell.targetType = layoutSixModel.data[indexPath.row].target.targetType
+            fullImageCollectionViewCell.itemProductImageView.sd_setImageWithURL(NSURL(string: layoutSixModel.data[indexPath.row].image), placeholderImage: UIImage(named: placeHolder))
+        }
+     
+        return fullImageCollectionViewCell
+    }
+    
+    //MARK: - Daily Login With Index Path
+    func dailyLoginWithWIndexpath(indexPath: NSIndexPath) -> DailyLoginCollectionViewCell {
+        let layoutTwoModel: LayoutTwoModel = self.homePageModel.data[indexPath.section] as! LayoutTwoModel
+        
+        let dailyLoginCell: DailyLoginCollectionViewCell = self.collectionView.dequeueReusableCellWithReuseIdentifier(self.dailyLoginNibName, forIndexPath: indexPath) as! DailyLoginCollectionViewCell
+        
+        dailyLoginCell.productImageView.sd_setImageWithURL(NSURL(string: layoutTwoModel.data[0].image), placeholderImage: UIImage(named: self.placeHolder))
+        dailyLoginCell.target = layoutTwoModel.data[0].target.targetUrl
+        dailyLoginCell.targetType = layoutTwoModel.data[0].target.targetType
+        dailyLoginCell.delegate = self
+        
+        return dailyLoginCell
+    }
+    
+    //MAMRK: - Half Pager With IndexPath
+    func halfPagerWithIndexPath(indexPath: NSIndexPath) -> HalfPagerCollectionViewCell {
+        let halfPager: HalfPagerCollectionViewCell = self.collectionView.dequeueReusableCellWithReuseIdentifier(self.halfPagerCellNibName, forIndexPath: indexPath) as! HalfPagerCollectionViewCell
+        halfPager.delegate = self
+        halfPager.dataSource = self
+        return halfPager
+    }
+    
+    //MARK: - Seller Collection View Cell With Index Path
+    func sellerCollectionViewCellWithIndexPath(indexPath: NSIndexPath) -> SellerCollectionViewCell {
+        let sellerCollectionView: SellerCollectionViewCell = self.collectionView?.dequeueReusableCellWithReuseIdentifier(self.sellerNibName, forIndexPath: indexPath) as! SellerCollectionViewCell
+        
+        return sellerCollectionView
+    }
+    
+    //MARK: - Seller Carousel
+    func sellerCarouselWithIndexPath(indexPath: NSIndexPath) -> SellerCarouselCollectionViewCell {
+        let sellerCarosuel: SellerCarouselCollectionViewCell = self.collectionView.dequeueReusableCellWithReuseIdentifier(self.sellerCarouselNibName, forIndexPath: indexPath) as! SellerCarouselCollectionViewCell
+        
+        sellerCarosuel.delegate = self
+        sellerCarosuel.dataSource = self
+        return sellerCarosuel
+    }
+    
+    //MARK: - Seller Carousel Data Source
+    func sellerCarouselCollectionViewCell(sellerCarouselCollectionViewCell: SellerCarouselCollectionViewCell, numberOfItemsInSection section: Int) -> Int {
+        let parentIndexPath: NSIndexPath = self.collectionView.indexPathForCell(sellerCarouselCollectionViewCell)!
+        let layoutEightModel: LayoutEightModel = self.homePageModel.data[parentIndexPath.section] as! LayoutEightModel
+        return layoutEightModel.data.count
+    }
+    
+    func sellerCarouselCollectionViewCell(sellerCarouselCollectionViewCell: SellerCarouselCollectionViewCell, cellForRowAtIndexPath indexPath: NSIndexPath) -> SellerCollectionViewCell {
+        let parentIndexPath: NSIndexPath = self.collectionView.indexPathForCell(sellerCarouselCollectionViewCell)!
+        let layoutEightModel: LayoutEightModel = self.homePageModel.data[parentIndexPath.section] as! LayoutEightModel
+        
+        let sellerCollectionView: SellerCollectionViewCell = sellerCarouselCollectionViewCell.collectionView?.dequeueReusableCellWithReuseIdentifier(self.sellerNibName, forIndexPath: indexPath) as! SellerCollectionViewCell
+        
+        if layoutEightModel.data[indexPath.row].data.count >= 3 {
+            sellerCollectionView.productOneImageView.target = layoutEightModel.data[indexPath.row].data[0].target.targetUrl
+            sellerCollectionView.productTwoImageView.target = layoutEightModel.data[indexPath.row].data[1].target.targetUrl
+            sellerCollectionView.productThreeImageView.target = layoutEightModel.data[indexPath.row].data[2].target.targetUrl
+            
+            sellerCollectionView.productOneImageView.targetType = layoutEightModel.data[indexPath.row].data[0].target.targetType
+            sellerCollectionView.productTwoImageView.targetType = layoutEightModel.data[indexPath.row].data[1].target.targetType
+            sellerCollectionView.productThreeImageView.targetType = layoutEightModel.data[indexPath.row].data[2].target.targetType
+            
+            sellerCollectionView.sellerProfileImageView.sd_setImageWithURL(NSURL(string: layoutEightModel.data[indexPath.row].image), placeholderImage: UIImage(named: self.placeHolder))
+            
+            sellerCollectionView.productOneImageView.sd_setImageWithURL(NSURL(string: layoutEightModel.data[indexPath.row].data[0].image), placeholderImage: UIImage(named: self.placeHolder))
+            sellerCollectionView.productTwoImageView.sd_setImageWithURL(NSURL(string: layoutEightModel.data[indexPath.row].data[1].image), placeholderImage: UIImage(named: self.placeHolder))
+            sellerCollectionView.productThreeImageView.sd_setImageWithURL(NSURL(string: layoutEightModel.data[indexPath.row].data[2].image), placeholderImage: UIImage(named: self.placeHolder))
+            
+            sellerCollectionView.target = layoutEightModel.data[indexPath.row].target.targetUrl
+            sellerCollectionView.targetType = layoutEightModel.data[indexPath.row].target.targetType
+            
+            sellerCollectionView.sellerProfileImageView.userInteractionEnabled = false
+            
+            sellerCollectionView.sellerTitleLabel.text = layoutEightModel.data[indexPath.row].name
+            sellerCollectionView.sellerSubTitleLabel.text = layoutEightModel.data[indexPath.row].specialty
+        }
+        
+        self.addGestureToSellerProduct(sellerCollectionView.productOneImageView)
+        self.addGestureToSellerProduct(sellerCollectionView.productTwoImageView)
+        self.addGestureToSellerProduct(sellerCollectionView.productThreeImageView)
+        
+        return sellerCollectionView
+    }
+    
+    func itemWidthInSellerCarouselCollectionViewCell(sellerCarouselCollectionViewCell: SellerCarouselCollectionViewCell) -> CGFloat {
+        sellerCarouselCollectionViewCell.layoutIfNeeded()
+        
+        return sellerCarouselCollectionViewCell.collectionView.frame.size.width / 2
+    }
+    
+    func sellerCarouselCollectionViewCellnumberOfDotsInPageControl(sellerCarouselCollectionViewCell: SellerCarouselCollectionViewCell) -> Int {
+        let parentIndexPath: NSIndexPath = self.collectionView.indexPathForCell(sellerCarouselCollectionViewCell)!
+        let layoutEightModel: LayoutEightModel = self.homePageModel.data[parentIndexPath.section] as! LayoutEightModel
+        
+        return layoutEightModel.data.count
+    }
+    
+    //MARK: - Seller Carousel Delegate
+    func sellerCarouselCollectionViewCell(sellerCarouselCollectionViewCell: SellerCarouselCollectionViewCell, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        let sellerCollectionViewCell: SellerCollectionViewCell = sellerCarouselCollectionViewCell.collectionView.cellForItemAtIndexPath(indexPath) as! SellerCollectionViewCell
+         self.didClickItemWithTarget(sellerCollectionViewCell.target, targetType: sellerCollectionViewCell.targetType)
+    }
+    
+    func sellerCarouselCollectionViewCellDidEndDecelerating(sellerCarouselCollectionViewCell: SellerCarouselCollectionViewCell) {
+        sellerCarouselCollectionViewCell.layoutIfNeeded()
+        let pageWidth: CGFloat = sellerCarouselCollectionViewCell.collectionView.frame.size.width / 2
+        let currentPage: CGFloat = sellerCarouselCollectionViewCell.collectionView.contentOffset.x / pageWidth
+        
+        if 0.0 != fmodf(Float(currentPage), 1.0) {
+            sellerCarouselCollectionViewCell.pageControl.currentPage = Int(currentPage) + 1
+        }
+        else {
+            sellerCarouselCollectionViewCell.pageControl.currentPage = Int(currentPage)
+        }
+    }
+    
+    //MARK: - Add Gesture To Seller Product
+    func addGestureToSellerProduct(productImageView: ProductImageView) {
+        let tapGestureRecognizer: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "didTapItem:")
+        productImageView.userInteractionEnabled = true
+        productImageView.addGestureRecognizer(tapGestureRecognizer)
+    }
+    
+    //MARK: - Did Tap Item
+    func didTapItem(tap: UITapGestureRecognizer) {
+        let itemImageView: ProductImageView = tap.view as! ProductImageView
+        self.didClickItemWithTarget(itemImageView.target, targetType: itemImageView.targetType)
+    }
+    
+    //MARK: - Did Click Item With Target
+    func didClickItemWithTarget(target: String, targetType: String) {
+        if targetType == "seller" {
+            let sellerViewController: SellerViewController = SellerViewController(nibName: "SellerViewController", bundle: nil)
+            self.navigationController!.pushViewController(sellerViewController, animated: true)
+        } else if targetType == "list" {
+            let resultViewController: ResultViewController = ResultViewController(nibName: "ResultViewController", bundle: nil)
+            resultViewController.passModel(SearchSuggestionModel(suggestion: "", imageURL: "", searchUrl: target))
+            self.navigationController!.pushViewController(resultViewController, animated: true)
+        } else if targetType == "product" {
+            let productViewController: ProductViewController = ProductViewController(nibName: "ProductViewController", bundle: nil)
+            productViewController.tabController = self.tabBarController as! CustomTabBarController
+            productViewController.productId = target
+            self.navigationController?.pushViewController(productViewController, animated: true)
+        } else if targetType == "webView" {
+            let webViewController: WebViewController = WebViewController(nibName: "WebViewController", bundle: nil)
+            webViewController.urlString = target
+            self.navigationController!.pushViewController(webViewController, animated: true)
+        } else {
+            self.tabBarController!.view.makeToast(Constants.Localized.someThingWentWrong, duration: 3.0, position: CSToastPositionBottom, style: CSToastManager.sharedStyle())
+        }
+    }
+    
+    //MARK: - Scroll View Delegate
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        let indexes: [NSIndexPath] = self.collectionView.indexPathsForVisibleItems() as! [NSIndexPath]
+        var isShowBackToTop: Bool = true
+        for index in indexes {
+            if index.section == 2 {
+                isShowBackToTop = false
+                break
+            }
+        }
+        
+        if scrollView.panGestureRecognizer.translationInView(scrollView.superview!).y > 0 {
+            self.hideBackToTop()
+        } else {
+            if isShowBackToTop {
+                self.showBackToTop()
+            } else {
+                self.hideBackToTop()
+            }
+        }
+    }
+    
+    //MARK: - Show Back To Top
+    func showBackToTop() {
+        UIView.animateWithDuration(0.8, animations: {
+                self.backToTopButton.alpha = 1
+            }, completion: {
+                (value: Bool) in
+            })
+    }
+    
+    //MARK: - Show Back To Top
+    func hideBackToTop() {
+        UIView.animateWithDuration(0.8, animations: {
+            self.backToTopButton.alpha = 0
+            }, completion: {
+                (value: Bool) in
         })
-    }*/
+    }
+
+    
+    //MARK: - Back To Top
+    @IBAction func backToTop(sender: AnyObject) {
+        self.collectionView.setContentOffset(CGPointZero, animated: true)
+    }
 }
