@@ -383,7 +383,7 @@ class HomePageCollectionViewLayout2: UICollectionViewLayout {
     
     override func collectionViewContentSize() -> CGSize {
         let navigationBarHeight: CGFloat = 50.0
-        return CGSizeMake(self.screenRect!.width, self.sectionYOffsetWithSectionNumber(self.homePageModel.data.count) + navigationBarHeight)
+        return CGSizeMake(self.screenRect!.width, self.sectionYOffsetWithSectionNumber(self.layouts.count) + navigationBarHeight)
     }
     
     

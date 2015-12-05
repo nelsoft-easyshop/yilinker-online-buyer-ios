@@ -123,9 +123,9 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         self.registerCellWithNibName(self.twoColumnGridCell)
         
         if Reachability.isConnectedToNetwork() {
-        self.fireGetHomePageData(true)
+            self.fireGetHomePageData(true)
         } else {
-        self.addEmptyView()
+            self.addEmptyView()
         }
         
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
@@ -284,6 +284,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             self.emptyView?.frame = self.view.frame
             self.emptyView!.delegate = self
             self.view.addSubview(self.emptyView!)
+            self.collectionView.hidden = true
         } else {
             self.emptyView!.hidden = false
         }
@@ -377,6 +378,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     
     //MARK: - Populate Home PageWith  Dictionary
     func populateHomePageWithDictionary(dictionary: NSDictionary) {
+        self.collectionView.hidden = false
         self.homePageModel = HomePageModel.parseDataFromDictionary(dictionary)
         self.layouts.removeAll(keepCapacity: false)
         for (index, model) in enumerate(self.homePageModel.data) {
