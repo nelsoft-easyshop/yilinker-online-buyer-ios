@@ -15,18 +15,20 @@ class LayoutFourModel: NSObject {
     var viewMoreTarget: TargetModel = TargetModel()
     var data: [HomeProductModel] = []
     var remainingTime: Int = 0
+    var target: TargetModel = TargetModel()
     
     override init() {
         
     }
     
-    init(layoutId: Int, sectionTitle: String, isViewMoreAvailable: Bool, viewMoreTarget: TargetModel, remainingTime: Int, data: [HomeProductModel]) {
+    init(layoutId: Int, sectionTitle: String, isViewMoreAvailable: Bool, viewMoreTarget: TargetModel, target: TargetModel, remainingTime: Int, data: [HomeProductModel]) {
         self.layoutId = layoutId
         self.sectionTitle = sectionTitle
         self.isViewMoreAvailable = isViewMoreAvailable
         self.viewMoreTarget = viewMoreTarget
         self.data = data
         self.remainingTime = remainingTime
+        self.target = target
     }
     
     class func parseDataFromDictionary(dictionary: NSDictionary) -> LayoutFourModel {
@@ -36,6 +38,7 @@ class LayoutFourModel: NSObject {
         var viewMoreTarget: TargetModel = TargetModel()
         var remainingTime: Int = 0
         var data: [HomeProductModel] = []
+        var target: TargetModel = TargetModel()
         
         if let temp = dictionary["layoutId"] as? Int {
             layoutId = temp
@@ -63,6 +66,10 @@ class LayoutFourModel: NSObject {
             remainingTime = temp
         }
         
-        return LayoutFourModel(layoutId: layoutId, sectionTitle: sectionTitle, isViewMoreAvailable: isViewMoreAvailable, viewMoreTarget: viewMoreTarget, remainingTime: remainingTime, data: data)
+        if let temp = dictionary["target"] as? NSDictionary {
+            target = TargetModel.parseDataFromDictionary(temp)
+        }
+        
+        return LayoutFourModel(layoutId: layoutId, sectionTitle: sectionTitle, isViewMoreAvailable: isViewMoreAvailable, viewMoreTarget: viewMoreTarget, target: target, remainingTime: remainingTime, data: data)
     }
 }
