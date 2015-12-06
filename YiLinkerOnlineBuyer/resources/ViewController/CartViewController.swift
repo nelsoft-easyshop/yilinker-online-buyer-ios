@@ -449,10 +449,21 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
         var pathOfTheCell: NSIndexPath = cartTableView.indexPathForCell(sender as! UITableViewCell)!
         var rowOfTheCell: Int = pathOfTheCell.row
         
+        var tempModel: CartProductDetailsModel = tableData[rowOfTheCell]
+        var productUnitId: String = ""
+        
+        for tempProductUnit in tempModel.productUnits {
+            if tempModel.unitId == tempProductUnit.productUnitId {
+                productUnitId = tempProductUnit.productUnitId
+            }
+        }
+
         let productViewController: ProductViewController = ProductViewController(nibName: "ProductViewController", bundle: nil)
         productViewController.tabController = self.tabBarController as! CustomTabBarController
         productViewController.productId = tableData[rowOfTheCell].id
         productViewController.isFromCart = true
+        productViewController.unitId = productUnitId
+        productViewController.quantity = tempModel.quantity
         self.navigationController?.pushViewController(productViewController, animated: true)
     }
     

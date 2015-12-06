@@ -120,8 +120,8 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     var kChrisTableViewAnimationThreshold: Float = 30.0
     
     // MARK: Parameters
-    var unitId: String = "0"
-    var productId: String = "0"
+    var unitId: String = "-1"
+    var productId: String = "-1"
     var quantity: Int = 1
     
     // MARK: - View Life Cycle
@@ -427,7 +427,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         
         productId = productId.stringByReplacingOccurrencesOfString("/api/v1/product/getProductDetail?productId=", withString: "", options: nil, range: nil)
         
-        let id: String = "?productId="// + productId
+        let id: String = "?productId=" + productId
 
         manager.GET(APIAtlas.productDetails + id, parameters: nil, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
@@ -435,7 +435,9 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
             if responseObject["isSuccessful"] as! Bool {
                 self.productDetailsModel = ProductDetailsModel.parseDataWithDictionary(responseObject)
                 self.productId = self.productDetailsModel.id
-                self.unitId = self.productDetailsModel.productUnits[0].productUnitId
+                if !self.isFromCart {
+                    self.unitId = self.productDetailsModel.productUnits[0].productUnitId
+                }
                 
                 self.getUnitIdIndexFrom()
                 
@@ -811,16 +813,39 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         self.getFooterView().addSubview(self.getProductDescriptionView())
         self.getFooterView().addSubview(self.getProductDetailsBottomView())
         
-        self.productImagesView.setDetails(self.productDetailsModel, unitId: unitIdIndex, width: self.view.frame.size.width)
-        //        self.setDetails(productDetailsModel.details)
-        self.setDetails([ProductStrings.freeShipping, ProductStrings.sevenDayReturn])
-        
-        var productQuantity: Int = self.productDetailsModel.productUnits[0].quantity
-        if productQuantity != 0 {
-            productQuantity = 1
+        if !isFromCart {
+            self.quantity = self.productDetailsModel.productUnits[0].quantity
+            if self.quantity != 0 {
+                self.quantity = 1
+            }
+            self.productImagesView.setDetails(self.productDetailsModel, unitId: unitIdIndex, width: self.view.frame.size.width)
+        } else {
+            self.getUnitIdIndexFrom()
+//            var images: [String] = []
+//            for productUnit in self.productDetailsModel.productUnits {
+//                if self.unitId == productUnit.productUnitId {
+//                    if productUnit.imageIds.count != 0 {
+//                        for j in 0..<productUnit.imageIds.count {
+//                            for l in 0..<self.productDetailsModel.images.count {
+//                                println("\(productUnit.imageIds[j]) == \(self.productDetailsModel.images[l].id)")
+//                                if productUnit.imageIds[j] == self.productDetailsModel.images[l].id {
+//                                    println(self.productDetailsModel.images[l].imageLocation)
+//                                    images.append(self.productDetailsModel.images[l].imageLocation)
+//                                }
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//
+//            self.productImagesView.updateDetails(self.productDetailsModel, unitId: unitIdIndex, images: images)
+            self.productImagesView.setDetails(self.productDetailsModel, unitId: unitIdIndex, width: self.view.frame.size.width)
         }
         
-        self.setAttributes(self.productDetailsModel.attributes, productUnits: self.productDetailsModel.productUnits, unitId: self.unitId, quantity: productQuantity)
+//        self.setDetails(productDetailsModel.details)
+        self.setDetails([ProductStrings.freeShipping, ProductStrings.sevenDayReturn])
+        
+        self.setAttributes(self.productDetailsModel.attributes, productUnits: self.productDetailsModel.productUnits, unitId: self.unitId, quantity: self.quantity)
         self.productDescriptionView.setDescription(productDetailsModel.shortDescription, full: productDetailsModel.fullDescription)
         
         
