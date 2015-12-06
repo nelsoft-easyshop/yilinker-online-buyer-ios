@@ -161,59 +161,23 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
     }
     
     @IBAction func doneAction(sender: AnyObject) {
-//        if self.quantity == 0 {
-//            let alertController = UIAlertController(title: ProductStrings.alertFailed, message: ProductStrings.alertOutOfStock, preferredStyle: .Alert)
-//            let defaultAction = UIAlertAction(title: ProductStrings.alertOk, style: .Default, handler: nil)
-//            alertController.addAction(defaultAction)
-//            self.presentViewController(alertController, animated: true, completion: nil)
-//        } else {
-//            var selectionComplete: Bool = true
-//            
-//            for i in 0..<self.selectedId.count {
-//                if selectedId[i] == "-1" {
-//                    selectionComplete = false
-//                }
-//            }
-//            
-//            if selectionComplete {
-//                hideSelf("done")
-//                if let delegate = self.delegate {
-//                    let quantity: Int = stocksLabel.text!.toInt()!
-//                    //                println(unitId)
-//                    delegate.doneActionPassDetailsToProductView(self, unitId: unitId, quantity: quantity, selectedId: selectedId, images: self.imageUrls)
-//                }
-//            } else {
-//                hideSelf("cancel")
-//            }
-//        }
         
         if self.selectedAttributes.contains("") {
-            let alertController = UIAlertController(title: ProductStrings.alertFailed, message: "Please complete attributes.", preferredStyle: .Alert)
+            let alertController = UIAlertController(title: ProductStrings.alertCannotProcceed, message: ProductStrings.alertComplete, preferredStyle: .Alert)
             let defaultAction = UIAlertAction(title: ProductStrings.alertOk, style: .Default, handler: nil)
             alertController.addAction(defaultAction)
             self.presentViewController(alertController, animated: true, completion: nil)
         } else {
-//            self.showHUD()
-            var isCombinationAvailable: Bool = true
-            var ctr: Int = 0
-            for i in 0..<self.attributes.count {
-                if !self.attributes[i].choices.contains(self.selectedAttributes[i + 1]) {
-                    isCombinationAvailable = false
-                } else {
-                    ctr++
-                    if self.attributes.count == ctr {
-                        var selectedAttributeWOQ: [String] = self.selectedAttributes
-                        selectedAttributeWOQ.removeAtIndex(0)
-                        for productUnit in self.productDetailsModel.productUnits {
-                            if productUnit.combinationNames == selectedAttributeWOQ {
-                                println(productUnit.productUnitId)
-                            }
-                        }
-                    }
-                }
+            if self.quantity == 0 {
+                let alertController = UIAlertController(title: ProductStrings.alertFailed, message: ProductStrings.alertOutOfStock, preferredStyle: .Alert)
+                let defaultAction = UIAlertAction(title: ProductStrings.alertOk, style: .Default, handler: nil)
+                alertController.addAction(defaultAction)
+                self.presentViewController(alertController, animated: true, completion: nil)
+            } else {
+                hideSelf("done")
+                let quantity: Int = stocksLabel.text!.toInt()!
+                delegate!.doneActionPassDetailsToProductView(self, unitId: unitId, quantity: quantity, selectedId: selectedId, images: self.imageUrls)
             }
-            
-//            hideSelf("cancel")
         }
     }
     
@@ -225,18 +189,19 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
     }
     
     @IBAction func addToCartAction(sender: AnyObject) {
-        if self.quantity == 0 {
-            
+        
+        if self.selectedAttributes.contains("") {
+            let alertController = UIAlertController(title: ProductStrings.alertCannotProcceed, message: ProductStrings.alertComplete, preferredStyle: .Alert)
+            let defaultAction = UIAlertAction(title: ProductStrings.alertOk, style: .Default, handler: nil)
+            alertController.addAction(defaultAction)
+            self.presentViewController(alertController, animated: true, completion: nil)
         } else {
-            var selectionComplete: Bool = true
-            
-            for i in 0..<self.selectedId.count {
-                if selectedId[i] == "-1" {
-                    selectionComplete = false
-                }
-            }
-            
-            if selectionComplete {
+            if self.quantity == 0 {
+                let alertController = UIAlertController(title: ProductStrings.alertFailed, message: ProductStrings.alertOutOfStock, preferredStyle: .Alert)
+                let defaultAction = UIAlertAction(title: ProductStrings.alertOk, style: .Default, handler: nil)
+                alertController.addAction(defaultAction)
+                self.presentViewController(alertController, animated: true, completion: nil)
+            } else {
                 let url: String = APIAtlas.updateCart()
                 let quantity: Int = stocksLabel.text!.toInt()!
                 
@@ -248,19 +213,12 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
                 println(params)
                 
                 requestAddCartItem(url, params: params)
-                
-            } else {
-                let alertController = UIAlertController(title: ProductStrings.alertError, message: ProductStrings.alertComplete, preferredStyle: .Alert)
-                let defaultAction = UIAlertAction(title: ProductStrings.alertOk, style: .Default, handler: nil)
-                alertController.addAction(defaultAction)
-                self.presentViewController(alertController, animated: true, completion: nil)
             }
         }
-        
     }
     
     func dimViewAction(gesture: UIGestureRecognizer) {
-        cancelAction(nil)
+//        cancelAction(nil)
     }
     
     func buyItNowAction(gesture: UIGestureRecognizer) {
@@ -373,7 +331,7 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
     }
     
     func checkStock(stocks: Int) {
-        
+
         if stocks < 10 {
             stocksLabel.text = "0\(String(stringInterpolationSegment: stocks))"
         } else {
@@ -626,6 +584,16 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
         }
     }
     
+    func passModel2(#productDetailsModel: ProductDetailsModel, selectedValue: [String], unitId: String, quantity: Int, price: String, imageIndex: Int) {
+        self.productDetailsModel = productDetailsModel
+        self.attributes = productDetailsModel.attributes as [ProductAttributeModel]
+        self.selectedAttributes = selectedValue
+        self.quantity = quantity
+        self.unitId = unitId
+        
+        applyProductUnit(unitId)
+    }
+    
     func pressedDimViewFromProductPage(controller: ProductViewController) {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
@@ -749,6 +717,9 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
         
         if self.maximumStock != 0 {
             stocks = 1
+            if self.quantity > 1 {
+                stocks = self.quantity
+            }
             checkStock(stocks)
         } else if self.maximumStock == 0 {
             checkStock(0)

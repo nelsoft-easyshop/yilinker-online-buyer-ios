@@ -262,6 +262,7 @@ DONE_LOCALIZE_KEY = "DONE";
 ENTER_QUANTITY_LOCALIZE_KEY = "Enter Quantity";
 AVAILABLE_STOCKS_LOCALIZE_KEY = "Available Stocks";
 SELECT_LOCALIZE_KEY = "Select";
+CANNOT_PROCEED_LOCALIZE_KEY = "Unable to proceed";
 
 REVIEW_RATING_FEEDBACK_LOCALIZE_KEY = "Product's rating & feedback";
 PEOPLE_RATE_LOCALIZE_KEY = "people rate this product";

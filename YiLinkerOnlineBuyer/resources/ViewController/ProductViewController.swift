@@ -45,6 +45,7 @@ struct ProductStrings {
     static let avoidIssues = StringHelper.localizedStringWithKey("ALERT_AVOID_ISSUES_LOCALIZE_KEY")
     static let alertOutOfStock = StringHelper.localizedStringWithKey("ALERT_OUT_OF_STOCK_LOCALIZE_KEY")
     static let alertSellerNotAvailable = StringHelper.localizedStringWithKey("ALERT_SELLER_NOT_AVAILABLE_LOCALIZE_KEY")
+    static let alertCannotProcceed = StringHelper.localizedStringWithKey("CANNOT_PROCEED_LOCALIZE_KEY")
 }
 
 protocol ProductViewControllerDelegate {
@@ -1049,7 +1050,8 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         attributeModal.definesPresentationContext = true
         attributeModal.view.backgroundColor = UIColor.clearColor()
         attributeModal.view.frame.origin.y = attributeModal.view.frame.size.height
-        attributeModal.passModel(productDetailsModel: productDetailsModel, selectedValue: selectedValue, selectedId: selectedId, unitIdIndex: unitIdIndex, quantity: self.quantity, price: self.productImagesView.priceLabel.text!, imageIndex: self.productImagesView.pageControl.currentPage)
+//        attributeModal.passModel(productDetailsModel: productDetailsModel, selectedValue: selectedValue, selectedId: selectedId, unitIdIndex: unitIdIndex, quantity: self.quantity, price: self.productImagesView.priceLabel.text!, imageIndex: self.productImagesView.pageControl.currentPage)
+        attributeModal.passModel2(productDetailsModel: productDetailsModel, selectedValue: selectedValue, unitId: self.unitId, quantity: self.quantity, price: self.productImagesView.priceLabel.text!, imageIndex: self.productImagesView.pageControl.currentPage)
         attributeModal.setTitle = title
         attributeModal.tabController = self.tabController
         attributeModal.screenWidth = self.view.frame.width
