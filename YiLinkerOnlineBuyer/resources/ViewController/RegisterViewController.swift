@@ -206,8 +206,15 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         self.currentTextFieldTag = textField.tag
         let textFieldHeightWithInset: CGFloat = -30
         if IphoneType.isIphone6Plus() {
-            if textField == self.referralCodeTextField {
-                self.adjustTextFieldYInsetWithInset(textFieldHeightWithInset - 55)
+            if textField == self.referralCodeTextField || textField == self.mobileNumberTextField  {
+                let parentViewController: LoginAndRegisterContentViewController = self.parentViewController as! LoginAndRegisterContentViewController
+                if parentViewController.isFromTab {
+                    self.adjustTextFieldYInsetWithInset(-20)
+                } else {
+                    self.adjustTextFieldYInsetWithInset(-10)
+                }
+                
+                textField.autocorrectionType = .No
             }
         } else if IphoneType.isIphone6() {
             if textField == self.mobileNumberTextField || textField == self.referralCodeTextField || textField == self.reTypePasswordTextField {
