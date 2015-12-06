@@ -427,7 +427,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         
         productId = productId.stringByReplacingOccurrencesOfString("/api/v1/product/getProductDetail?productId=", withString: "", options: nil, range: nil)
         
-        let id: String = "?productId=1605"// + productId
+        let id: String = "?productId="// + productId
 
         manager.GET(APIAtlas.productDetails + id, parameters: nil, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
