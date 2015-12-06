@@ -31,13 +31,15 @@ class LoginAndRegisterContentViewController: UIViewController {
     
     var defaultViewControllerIndex: Int = 0
     
+    var isFromTab: Bool = false
+    
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         if self.registerViewController != nil {
             self.setSelectedViewControllerWithIndex(self.defaultViewControllerIndex)
             if self.defaultViewControllerIndex == 0 {
                 self.signIn(self.signInButton)
-            } else {
+            } else if self.defaultViewControllerIndex == 1 {
                 self.register(self.registerButton)
             }
         }
@@ -63,6 +65,12 @@ class LoginAndRegisterContentViewController: UIViewController {
         super.viewDidLoad()
         self.contentViewFrame = CGRectMake(0, 0, self.contentView.frame.size.width, self.contentView.frame.size.height)
         self.initViewControllers()
+        
+        if !self.isFromTab && IphoneType.isIphone5() {
+            self.verticalSpaceConstraint.constant = 25
+        } else if IphoneType.isIphone5() {
+            self.verticalSpaceConstraint.constant = 10
+        }
         
         self.setSelectedViewControllerWithIndex(self.defaultViewControllerIndex)
         

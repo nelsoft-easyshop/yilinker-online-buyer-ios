@@ -163,6 +163,8 @@ class HiddenViewController: UIViewController {
 
             }
             
+            self.registerViewController?.isFromTab = true
+            self.loginViewController?.isFromTab = true
             
             let storyBoard1: UIStoryboard = UIStoryboard(name: "HomeStoryBoard", bundle: nil)
             self.messagingViewController = storyBoard1.instantiateViewControllerWithIdentifier("ConversationVC") as? ConversationVC
