@@ -146,6 +146,9 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         self.setupBackToTopButton()
         
         self.addPullToRefresh()
+        
+        let productViewController: ProductViewController = ProductViewController(nibName: "ProductViewController", bundle: nil)
+        self.navigationController?.pushViewController(productViewController, animated: true)
     }
     
     //MARK: - Add Pull To Refresh

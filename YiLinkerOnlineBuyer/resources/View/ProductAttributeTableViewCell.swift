@@ -10,6 +10,7 @@ import UIKit
 
 protocol ProductAttributeTableViewCellDelegate {
     func selectedAttribute(controller: ProductAttributeTableViewCell, attributeIndex: Int, attributeValue: String!, attributeId: Int)
+    func selectedAttribute2(controller: ProductAttributeTableViewCell, currentSelected: [String])
 }
 
 class ProductAttributeTableViewCell: UITableViewCell, UIScrollViewDelegate {
@@ -45,27 +46,29 @@ class ProductAttributeTableViewCell: UITableViewCell, UIScrollViewDelegate {
     
     // MARK: - Methods
 
-    func setAttribute(model: ProductAttributeModel, availableCombination: NSArray, selectedValue: NSArray, selectedId: NSArray, width: CGFloat) {
+    func setAttribute(model: ProductAttributeModel, availableCombination: NSArray, selectedValue: NSArray, selectedId: NSArray, width: CGFloat, currentAttributes: [String]) {
         attributeLabel.text = ProductStrings.select + " \(model.attributeName)"
         
         self.attributesId = []
         self.attributesId = model.valueId
         self.attributesName = []
         self.attributesName = model.valueName
-        
+        self.selectedAttributes = []
+        self.selectedAttributes = currentAttributes
+
         availableCombinationString = ""
         for i in 0..<availableCombination.count {
             availableCombinationString += availableCombination[i] as! String
         }
         
-        addScrollViewWithAttributes(model.choices, availableCombination: availableCombination, selectedValue: selectedValue, selectedId: selectedId, width: width)
+        addScrollViewWithAttributes(model.choices, availableCombination: availableCombination, selectedValue: selectedValue, selectedId: selectedId, width: width, currentAttributes: self.selectedAttributes)
     }
     
     func passProductDetailModel(model: ProductDetailsModel) {
         self.productDetailModel = model
     }
     
-    func addScrollViewWithAttributes(attributes: NSArray, availableCombination: NSArray, selectedValue: NSArray, selectedId: NSArray, width: CGFloat) {
+    func addScrollViewWithAttributes(attributes: NSArray, availableCombination: NSArray, selectedValue: NSArray, selectedId: NSArray, width: CGFloat, currentAttributes: [String]) {
         
         for view in self.subviews {
             if view.isKindOfClass(UIScrollView) {
@@ -100,18 +103,24 @@ class ProductAttributeTableViewCell: UITableViewCell, UIScrollViewDelegate {
             
             leftMargin += buttonWidth + 10
 
-            if availableCombinationString.rangeOfString(attributesId[i]) == nil {
-                self.disableButton(button)
-            }
+//            if availableCombinationString.rangeOfString(attributesId[i]) == nil {
+//                self.disableButton(button)
+//            }
             
-            for a in 0..<selectedId.count {
-                if attributesId[i] == selectedId[a] as! String {
-                    button.selected = true
-                    button.layer.borderColor = Constants.Colors.appTheme.CGColor
-                    button.backgroundColor = Constants.Colors.appTheme
-                    button.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+            for selected in currentAttributes {
+                if buttonTitle == selected {
+                    SelectButton(button)
                 }
             }
+            
+//            for a in 0..<selectedId.count {
+//                if attributesId[i] == selectedId[a] as! String {
+//                    button.selected = true
+//                    button.layer.borderColor = Constants.Colors.appTheme.CGColor
+//                    button.backgroundColor = Constants.Colors.appTheme
+//                    button.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+//                }
+//            }
             
             scroll.addSubview(button)
             scroll.contentSize = CGSize(width: CGFloat(leftMargin), height: scroll.frame.size.height)
@@ -137,10 +146,20 @@ class ProductAttributeTableViewCell: UITableViewCell, UIScrollViewDelegate {
     // MARK: - Actions
     
     func clickedAttriubte(sender: UIButton!) {
-        println("boom")
         
 //        selectedValues2.append(sender.titleLabel.text)
         
+        
+        if sender.selected {
+            self.selectedAttributes[self.tag + 1] = ""
+            DeselectButton(sender)
+        } else {
+            self.selectedAttributes[self.tag + 1] = sender.titleLabel!.text!
+            SelectButton(sender)
+        }
+        println(selectedAttributes)
+        
+        delegate?.selectedAttribute2(self, currentSelected: self.selectedAttributes)
 //        if sender.selected { // Unselect
 //            DeselectButton(sender)
 //            if let delegate = self.delegate {
@@ -169,9 +188,9 @@ class ProductAttributeTableViewCell: UITableViewCell, UIScrollViewDelegate {
         button.backgroundColor = Constants.Colors.appTheme
         button.setTitleColor(UIColor.whiteColor(), forState: .Normal)
         
-        if let delegate = self.delegate {
-            delegate.selectedAttribute(self, attributeIndex: self.tag, attributeValue: button.titleLabel?.text!, attributeId: button.tag)
-        }
+//        if let delegate = self.delegate {
+//            delegate.selectedAttribute(self, attributeIndex: self.tag, attributeValue: button.titleLabel?.text!, attributeId: button.tag)
+//        }
         
     }
     
