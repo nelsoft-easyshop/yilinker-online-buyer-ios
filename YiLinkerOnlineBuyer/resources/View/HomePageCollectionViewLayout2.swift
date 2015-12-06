@@ -16,7 +16,7 @@ struct SectionHeight {
     static let sectionFive: CGFloat = 230.0
     static let sectionSix: CGFloat = 240.0
     static let sectionEight: CGFloat = 338
-    static let sectionNine: CGFloat = 355
+    static let sectionNine: CGFloat = 250
     static let sectionTen: CGFloat = 287
     static let layoutHeader: CGFloat = 40.0
 }
@@ -383,7 +383,7 @@ class HomePageCollectionViewLayout2: UICollectionViewLayout {
     
     override func collectionViewContentSize() -> CGSize {
         let navigationBarHeight: CGFloat = 50.0
-        return CGSizeMake(self.screenRect!.width, self.sectionYOffsetWithSectionNumber(self.homePageModel.data.count) + navigationBarHeight)
+        return CGSizeMake(self.screenRect!.width, self.sectionYOffsetWithSectionNumber(self.layouts.count) + navigationBarHeight)
     }
     
     

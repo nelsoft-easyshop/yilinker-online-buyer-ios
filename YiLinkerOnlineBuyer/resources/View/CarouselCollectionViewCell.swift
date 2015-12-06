@@ -35,7 +35,7 @@ class CarouselCollectionViewCell: UICollectionViewCell, UIScrollViewDelegate {
     override func awakeFromNib() {
         super.awakeFromNib()
         self.registerCellWithNibName(self.fullImageCellNib)
-        self.pageControl.currentPageIndicatorTintColor = UIColor.purpleColor()
+        self.pageControl.currentPageIndicatorTintColor = UIColor.darkGrayColor()
         self.collectionView.layer.cornerRadius = 5
         self.collectionView.clipsToBounds = true
     }

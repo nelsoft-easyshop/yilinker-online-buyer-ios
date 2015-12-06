@@ -32,14 +32,14 @@ class SellerCollectionViewCell: UICollectionViewCell {
         super.awakeFromNib()
         self.layer.cornerRadius = 5
         
-        for view in self.contentView.subviews {
+       /*for view in self.contentView.subviews {
             if view.tag != 0 {
                 let tapRecognizer: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "didTapImage:")
                 let productImageView: ProductImageView = view as! ProductImageView
                 productImageView.userInteractionEnabled = true
                 productImageView.addGestureRecognizer(tapRecognizer)
             }
-        }
+        } */
 
     }
     
