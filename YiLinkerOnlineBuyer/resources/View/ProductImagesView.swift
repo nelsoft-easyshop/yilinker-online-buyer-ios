@@ -150,9 +150,6 @@ class ProductImagesView: UIView, UICollectionViewDataSource, UICollectionViewDel
 
         self.nameLabel.text = model.title
 
-        println(model.productUnits[unitId].price)
-        println(model.productUnits[unitId].discountedPrice)
-        
         if model.productUnits[unitId].price != model.productUnits[unitId].discountedPrice {
             self.priceCustomLabel.text = "₱" + model.productUnits[unitId].price
             self.priceCustomLabel.drawDiscountLine(true)
@@ -182,7 +179,7 @@ class ProductImagesView: UIView, UICollectionViewDataSource, UICollectionViewDel
         }
         
         self.images = images
-        
+        println(self.images)
         self.pageControl.numberOfPages = self.images.count
         self.collectionView.reloadData()
     }
