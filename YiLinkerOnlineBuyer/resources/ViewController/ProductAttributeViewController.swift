@@ -61,6 +61,8 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
     var unitId: String = ""
     var price: String = ""
     
+    var selectedAttributes: [String] = []
+    
     var hud: MBProgressHUD?
     var isEditingAttributes: Bool = false
     
@@ -134,8 +136,7 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
 //        println(selectedValue)
         listAvailableCombinations()
         cell.isEditingAttribute = isEditingAttributes
-        cell.setAttribute(self.productDetailsModel.attributes[indexPath.row], availableCombination: self.availableCombination, selectedValue: self.selectedValue, selectedId: self.selectedId, width: self.view.frame.size.width)
-        
+        cell.setAttribute(self.productDetailsModel.attributes[indexPath.row], availableCombination: self.availableCombination, selectedValue: self.selectedValue, selectedId: self.selectedId, width: self.view.frame.size.width, currentAttributes: self.selectedAttributes)
         return cell
     }
     
@@ -160,32 +161,24 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
     }
     
     @IBAction func doneAction(sender: AnyObject) {
-        if self.quantity == 0 {
-            let alertController = UIAlertController(title: ProductStrings.alertFailed, message: ProductStrings.alertOutOfStock, preferredStyle: .Alert)
+        
+        if self.selectedAttributes.contains("") {
+            let alertController = UIAlertController(title: ProductStrings.alertCannotProcceed, message: ProductStrings.alertComplete, preferredStyle: .Alert)
             let defaultAction = UIAlertAction(title: ProductStrings.alertOk, style: .Default, handler: nil)
             alertController.addAction(defaultAction)
             self.presentViewController(alertController, animated: true, completion: nil)
         } else {
-            var selectionComplete: Bool = true
-            
-            for i in 0..<self.selectedId.count {
-                if selectedId[i] == "-1" {
-                    selectionComplete = false
-                }
-            }
-            
-            if selectionComplete {
-                hideSelf("done")
-                if let delegate = self.delegate {
-                    let quantity: Int = stocksLabel.text!.toInt()!
-                    //                println(unitId)
-                    delegate.doneActionPassDetailsToProductView(self, unitId: unitId, quantity: quantity, selectedId: selectedId, images: self.imageUrls)
-                }
+            if self.quantity == 0 {
+                let alertController = UIAlertController(title: ProductStrings.alertFailed, message: ProductStrings.alertOutOfStock, preferredStyle: .Alert)
+                let defaultAction = UIAlertAction(title: ProductStrings.alertOk, style: .Default, handler: nil)
+                alertController.addAction(defaultAction)
+                self.presentViewController(alertController, animated: true, completion: nil)
             } else {
-                hideSelf("cancel")
+                hideSelf("done")
+                let quantity: Int = stocksLabel.text!.toInt()!
+                delegate!.doneActionPassDetailsToProductView(self, unitId: unitId, quantity: quantity, selectedId: selectedId, images: self.imageUrls)
             }
         }
-        
     }
     
     @IBAction func checkoutAction(sender: AnyObject) {
@@ -196,18 +189,19 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
     }
     
     @IBAction func addToCartAction(sender: AnyObject) {
-        if self.quantity == 0 {
-            
+        
+        if self.selectedAttributes.contains("") {
+            let alertController = UIAlertController(title: ProductStrings.alertCannotProcceed, message: ProductStrings.alertComplete, preferredStyle: .Alert)
+            let defaultAction = UIAlertAction(title: ProductStrings.alertOk, style: .Default, handler: nil)
+            alertController.addAction(defaultAction)
+            self.presentViewController(alertController, animated: true, completion: nil)
         } else {
-            var selectionComplete: Bool = true
-            
-            for i in 0..<self.selectedId.count {
-                if selectedId[i] == "-1" {
-                    selectionComplete = false
-                }
-            }
-            
-            if selectionComplete {
+            if self.quantity == 0 {
+                let alertController = UIAlertController(title: ProductStrings.alertFailed, message: ProductStrings.alertOutOfStock, preferredStyle: .Alert)
+                let defaultAction = UIAlertAction(title: ProductStrings.alertOk, style: .Default, handler: nil)
+                alertController.addAction(defaultAction)
+                self.presentViewController(alertController, animated: true, completion: nil)
+            } else {
                 let url: String = APIAtlas.updateCart()
                 let quantity: Int = stocksLabel.text!.toInt()!
                 
@@ -219,19 +213,12 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
                 println(params)
                 
                 requestAddCartItem(url, params: params)
-                
-            } else {
-                let alertController = UIAlertController(title: ProductStrings.alertError, message: ProductStrings.alertComplete, preferredStyle: .Alert)
-                let defaultAction = UIAlertAction(title: ProductStrings.alertOk, style: .Default, handler: nil)
-                alertController.addAction(defaultAction)
-                self.presentViewController(alertController, animated: true, completion: nil)
             }
         }
-        
     }
     
     func dimViewAction(gesture: UIGestureRecognizer) {
-        cancelAction(nil)
+//        cancelAction(nil)
     }
     
     func buyItNowAction(gesture: UIGestureRecognizer) {
@@ -318,7 +305,6 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
         if regex == "()" {
             regex = "(" + not + ")"
         }
-        println(regex)
         
         let re = NSRegularExpression(pattern: regex, options: nil, error: nil)!
         let matches = re.matchesInString(combinationString, options: nil, range: NSRange(location: 0, length: count(combinationString.utf16)))
@@ -334,18 +320,18 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
         
     }
     
-    func availableStock(combination: NSArray) -> Int {
+    func availableStock(unitId: String) -> Int {
         
-        for i in 0..<self.productDetailsModel.productUnits.count {
-            if selectedCombination == self.productDetailsModel.productUnits[i].combination {
-                return self.productDetailsModel.productUnits[i].quantity
+        for productUnit in self.productDetailsModel.productUnits {
+            if productUnit.productUnitId == unitId {
+                return productUnit.quantity
             }
         }
         return 0
     }
     
     func checkStock(stocks: Int) {
-        
+
         if stocks < 10 {
             stocksLabel.text = "0\(String(stringInterpolationSegment: stocks))"
         } else {
@@ -547,6 +533,8 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
         self.unitId = productDetailsModel.productUnits[unitIdIndex].productUnitId
         self.selectedCombination = productDetailsModel.productUnits[unitIdIndex].combination
         
+        self.selectedAttributes = selectedValue as! [String]
+        
 //        setDetail(image: productDetailsModel.images[unitIdIndex].imageLocation, title: productDetailsModel.title, price: price)
         self.productDetailsModel = productDetailsModel
         self.nameLabel.text = productDetailsModel.title
@@ -572,7 +560,6 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
         }
         
         if self.imageUrls.count != 0 {
-            println(self.imageUrls[0])
             self.productImageView.sd_setImageWithURL(NSURL(string: self.imageUrls[0]), placeholderImage: UIImage(named: "dummy-placeholder"))
         }
         
@@ -595,6 +582,16 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
         } else {
             println("----ProductAttributeViewController")
         }
+    }
+    
+    func passModel2(#productDetailsModel: ProductDetailsModel, selectedValue: [String], unitId: String, quantity: Int, price: String, imageIndex: Int) {
+        self.productDetailsModel = productDetailsModel
+        self.attributes = productDetailsModel.attributes as [ProductAttributeModel]
+        self.selectedAttributes = selectedValue
+        self.quantity = quantity
+        self.unitId = unitId
+        
+        applyProductUnit(unitId)
     }
     
     func pressedDimViewFromProductPage(controller: ProductViewController) {
@@ -637,15 +634,14 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
         }
         
         if self.imageUrls.count != 0 {
-            println(self.imageUrls[0])
             self.productImageView.sd_setImageWithURL(NSURL(string: self.imageUrls[0]), placeholderImage: UIImage(named: "dummy-placeholder"))
         }
         
-        maximumStock = availableStock(selectedCombination)
+//        maximumStock = availableStock(selectedCombination)
         self.availabilityStocksLabel.text = "Available stocks : " + String(maximumStock)
         
         listAvailableCombinations()
-//        println(self.availableCombination)
+
         self.tableView.reloadData()
         
         if self.maximumStock != 0 {
@@ -658,4 +654,86 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
         }
     }
     
+    func selectedAttribute2(controller: ProductAttributeTableViewCell, currentSelected: [String]) {
+        self.selectedAttributes = currentSelected
+        
+        var ctr: Int = 0
+        for i in 0..<self.attributes.count {
+            if !self.attributes[i].choices.contains(self.selectedAttributes[i + 1]) {
+                applyProductUnit("0")
+                break
+            } else { // if selected attributes is complete
+                ctr++
+                if self.attributes.count == ctr {
+                    var selectedAttributeWOQ: [String] = self.selectedAttributes
+                    selectedAttributeWOQ.removeAtIndex(0)
+                    for productUnit in self.productDetailsModel.productUnits {
+                        if productUnit.combinationNames == selectedAttributeWOQ {
+                            unitId = productUnit.productUnitId
+                            applyProductUnit(productUnit.productUnitId)
+                        }
+                    }
+                }
+            }
+        }
+        
+        
+        self.tableView.reloadData()
+    }
+    
+    func applyProductUnit(unitId: String) {
+        for productUnit in self.productDetailsModel.productUnits {
+            if productUnit.productUnitId == unitId {
+                if productUnit.discountedPrice.floatValue == 0 {
+                    self.price = productUnit.price
+                } else {
+                    self.price = productUnit.discountedPrice
+                }
+            }
+        }
+        
+        var index: Int = 0
+        self.imageUrls = []
+        for productUnit in self.productDetailsModel.productUnits {
+            if productUnit.productUnitId == unitId {
+                if productUnit.imageIds.count != 0 {
+                    for j in 0..<productUnit.imageIds.count {
+                        for l in 0..<self.productDetailsModel.images.count {
+                            if productUnit.imageIds[j] == self.productDetailsModel.images[l].id {
+                                self.imageUrls.append(self.productDetailsModel.images[l].imageLocation)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
+        if self.imageUrls.count != 0 {
+            self.productImageView.sd_setImageWithURL(NSURL(string: self.imageUrls[0]), placeholderImage: UIImage(named: "dummy-placeholder"))
+        }
+        
+        maximumStock = availableStock(unitId)
+        self.availabilityStocksLabel.text = "Available stocks : " + String(maximumStock)
+        
+        if self.maximumStock != 0 {
+            stocks = 1
+            if self.quantity > 1 {
+                stocks = self.quantity
+            }
+            checkStock(stocks)
+        } else if self.maximumStock == 0 {
+            checkStock(0)
+        } else {
+            println("----ProductAttributeViewController")
+        }
+        
+        self.tableView.reloadData()
+    }
+    
+}
+
+extension Array {
+    func contains<T where T : Equatable>(obj: T) -> Bool {
+        return self.filter({$0 as? T == obj}).count > 0
+    }
 }

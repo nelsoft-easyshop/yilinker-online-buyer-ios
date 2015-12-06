@@ -150,7 +150,10 @@ class ProductImagesView: UIView, UICollectionViewDataSource, UICollectionViewDel
 
         self.nameLabel.text = model.title
 
-        if model.productUnits[unitId].discountedPrice.floatValue != 0 {
+        println(model.productUnits[unitId].price)
+        println(model.productUnits[unitId].discountedPrice)
+        
+        if model.productUnits[unitId].price != model.productUnits[unitId].discountedPrice {
             self.priceCustomLabel.text = "₱" + model.productUnits[unitId].price
             self.priceCustomLabel.drawDiscountLine(true)
             self.priceLabel.text = "₱" + model.productUnits[unitId].discountedPrice
@@ -169,7 +172,7 @@ class ProductImagesView: UIView, UICollectionViewDataSource, UICollectionViewDel
 
     func updateDetails(model: ProductDetailsModel, unitId: Int, images: [String]) {
         
-        if model.productUnits[unitId].discountedPrice.floatValue != 0 {
+        if model.productUnits[unitId].price != model.productUnits[unitId].discountedPrice {
             self.priceCustomLabel.text = "₱" + model.productUnits[unitId].price
             self.priceCustomLabel.drawDiscountLine(true)
             self.priceLabel.text = "₱" + model.productUnits[unitId].discountedPrice

@@ -27,6 +27,7 @@ class ProductUnitsModel {
     var status: Int = 0
     var imageIds: [String] = []
     var combination: [String] = []
+    var combinationNames: [String] = []
     var primaryImage: String = ""
     
     class func parseProductUnits(dictionary: NSDictionary) -> ProductUnitsModel {
@@ -94,16 +95,18 @@ class ProductUnitsModel {
             
             if let tempVar = dictionary["imageIds"] as? NSArray {
                 model.imageIds = tempVar as! [String]
-                println(model.imageIds)
             }
             
             if let tempVar = dictionary["primaryImage"] as? String {
                 model.primaryImage = tempVar
-                println(model.primaryImage)
             }
             
             if let tempVar = dictionary["combination"] as? NSArray {
                 model.combination = tempVar as! [String]
+            }
+            
+            if let tempVar = dictionary["combinationNames"] as? NSArray {
+                model.combinationNames = tempVar as! [String]
             }
             
         } // if dictionary
