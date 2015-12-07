@@ -111,7 +111,7 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
     // MARK: - Collection View Data Source and Delegates
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return cellCount
+        return self.cellCount
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {

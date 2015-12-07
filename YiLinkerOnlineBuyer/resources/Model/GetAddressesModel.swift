@@ -38,7 +38,9 @@ class GetAddressesModel: NSObject {
                 
                 for subValue in value as! NSArray {
                     let model: AddressModelV2 = AddressModelV2.parseAddressFromDictionary(subValue as! NSDictionary)
-                    listOfAddress.append(model)
+                    if model.fullLocation != "" {
+                        listOfAddress.append(model)
+                    }
                 }
             }
         }
