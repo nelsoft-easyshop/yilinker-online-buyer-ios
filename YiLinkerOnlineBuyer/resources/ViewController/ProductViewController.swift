@@ -731,9 +731,10 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
                         } else if task.statusCode == 404 {
                             println(error)
                         } else {
-                            if (SessionManager.isLoggedIn()){
-                                self.showAlert(title: Constants.Localized.error, message: Constants.Localized.someThingWentWrong)
-                            }
+                            println(error)
+//                            if (SessionManager.isLoggedIn()){
+//                                self.showAlert(title: Constants.Localized.error, message: Constants.Localized.someThingWentWrong)
+//                            }
                         }
                         
                         self.contacts = Array<W_Contact>()
