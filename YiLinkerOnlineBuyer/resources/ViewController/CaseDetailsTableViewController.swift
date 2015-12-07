@@ -224,6 +224,7 @@ class CaseDetailsTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell: UITableViewCell = tableView.dequeueReusableCellWithIdentifier("ProductCell") as! UITableViewCell
         cell.textLabel!.text = self.tableData[indexPath.row]
+        
         return cell
     }
     
