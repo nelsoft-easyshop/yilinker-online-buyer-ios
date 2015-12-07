@@ -46,7 +46,7 @@
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" misplaced="YES" text="LG. Sta Lucia East Grand Mall, Marcos HighWay Corner Felix Avenue . Ortigas Pasig City" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sx5-GY-uj9">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text="LG. Sta Lucia East Grand Mall, Marcos HighWay Corner Felix Avenue . Ortigas Pasig City" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sx5-GY-uj9">
                         <rect key="frame" x="46" y="30" width="296" height="29"/>
                         <constraints>
                             <constraint firstAttribute="height" priority="500" constant="44" id="RAw-Fb-yqd"/>
@@ -68,6 +68,19 @@
                             <action selector="deleteIndexPath:" destination="gTV-IL-0wX" eventType="touchUpInside" id="V8r-aF-bDJ"/>
                         </connections>
                     </button>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Fs-p2-iYY">
+                        <rect key="frame" x="0.0" y="0.0" width="46" height="79"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="46" id="KXS-gh-tTU"/>
+                            <constraint firstAttribute="height" constant="79" id="pNs-H9-2Ge"/>
+                        </constraints>
+                        <state key="normal">
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <connections>
+                            <action selector="defaultAddress:" destination="gTV-IL-0wX" eventType="touchUpInside" id="pbu-a7-8Mg"/>
+                        </connections>
+                    </button>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </view>
@@ -77,6 +90,9 @@
                 <constraint firstItem="BKG-VE-yR0" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="13" id="C5c-8y-CCT"/>
                 <constraint firstAttribute="centerY" secondItem="q7d-g0-zfw" secondAttribute="centerY" id="CPe-fz-8Lz"/>
                 <constraint firstAttribute="trailing" secondItem="q7d-g0-zfw" secondAttribute="trailing" constant="8" id="Cr1-4q-2lD"/>
+                <constraint firstItem="6Fs-p2-iYY" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="IRh-Md-FZ4"/>
+                <constraint firstAttribute="bottom" secondItem="6Fs-p2-iYY" secondAttribute="bottom" id="PgG-cL-fy3"/>
+                <constraint firstItem="6Fs-p2-iYY" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="am6-wO-mUf"/>
                 <constraint firstItem="Sx5-GY-uj9" firstAttribute="leading" secondItem="q5N-SS-ZY2" secondAttribute="trailing" constant="8" id="bAf-At-6rN"/>
                 <constraint firstItem="q7d-g0-zfw" firstAttribute="leading" secondItem="Sx5-GY-uj9" secondAttribute="trailing" constant="8" id="l8t-ZN-j4P"/>
                 <constraint firstItem="BKG-VE-yR0" firstAttribute="leading" secondItem="q5N-SS-ZY2" secondAttribute="trailing" constant="7" id="lX7-5E-IbL"/>
