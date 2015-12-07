@@ -82,6 +82,8 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     var homePageModel: HomePageModel = HomePageModel()
     
     var timer: NSTimer = NSTimer()
+    var oneHourIntervalTimer: NSTimer = NSTimer()
+    var updateUsingOneHourInterval: Bool = false
     
     //MARK: - Life Cycle
     override func didReceiveMemoryWarning() {
@@ -828,11 +830,26 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                 secondSecondsString = "\(seconds)".stringCharacterAtIndex(0)
             }
             
-            if let indexPath: NSIndexPath = NSIndexPath(forItem: 0, inSection: 3) {
-                self.collectionView.reloadItemsAtIndexPaths([indexPath])
+            for (index, model) in enumerate(self.homePageModel.data) {
+                if model.isKindOfClass(LayoutFourModel) {
+                    if let indexPath: NSIndexPath = NSIndexPath(forItem: 0, inSection: index) {
+                        self.collectionView.reloadItemsAtIndexPaths([indexPath])
+                    }
+                    break
+                }
             }
+
         } else {
-            if let indexPath: NSIndexPath = NSIndexPath(forItem: 0, inSection: 3) {
+            if self.updateUsingOneHourInterval {
+                self.updateUsingOneHourInterval = false
+                if self.remainingTime == -1 {
+                    self.oneHourIntervalTimer = NSTimer.scheduledTimerWithTimeInterval(3600.0, target: self, selector: "updateData", userInfo: nil, repeats: true)
+                }
+                
+            } else {
+                self.oneHourIntervalTimer.invalidate()
+                self.updateUsingOneHourInterval = true
+                
                 if self.remainingTime == -1 {
                     self.fireGetHomePageData(true)
                 }
@@ -1198,6 +1215,9 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     func didClickItemWithTarget(target: String, targetType: String) {
         if targetType == "seller" {
             let sellerViewController: SellerViewController = SellerViewController(nibName: "SellerViewController", bundle: nil)
+            if target.toInt() != nil {
+                sellerViewController.sellerId = target.toInt()!
+            }
             self.navigationController!.pushViewController(sellerViewController, animated: true)
         } else if targetType == "list" {
             let resultViewController: ResultViewController = ResultViewController(nibName: "ResultViewController", bundle: nil)
@@ -1261,5 +1281,10 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     //MARK: - Back To Top
     @IBAction func backToTop(sender: AnyObject) {
         self.collectionView.setContentOffset(CGPointZero, animated: true)
+    }
+    
+    //MARK: - Update Data
+    func updateData() {
+        self.fireGetHomePageData(true)
     }
 }
