@@ -63,7 +63,7 @@ struct APIAtlas {
     
     static func updateCart() -> String {
         if SessionManager.isLoggedIn() {
-            return "auth/cart/updateCartItem"
+            return "v1/auth/cart/updateCartItem"
         } else {
             SessionManager.loadCookies()
             return "v1/cart/updateCartItem"
