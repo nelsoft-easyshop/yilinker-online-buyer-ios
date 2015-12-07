@@ -828,9 +828,15 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                 secondSecondsString = "\(seconds)".stringCharacterAtIndex(0)
             }
             
-            if let indexPath: NSIndexPath = NSIndexPath(forItem: 0, inSection: 3) {
-                self.collectionView.reloadItemsAtIndexPaths([indexPath])
+            for (index, model) in enumerate(self.homePageModel.data) {
+                if model.isKindOfClass(LayoutFourModel) {
+                    if let indexPath: NSIndexPath = NSIndexPath(forItem: 0, inSection: index) {
+                        self.collectionView.reloadItemsAtIndexPaths([indexPath])
+                    }
+                    break
+                }
             }
+
         } else {
             if let indexPath: NSIndexPath = NSIndexPath(forItem: 0, inSection: 3) {
                 if self.remainingTime == -1 {
@@ -1198,6 +1204,9 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     func didClickItemWithTarget(target: String, targetType: String) {
         if targetType == "seller" {
             let sellerViewController: SellerViewController = SellerViewController(nibName: "SellerViewController", bundle: nil)
+            if target.toInt() != nil {
+                sellerViewController.sellerId = target.toInt()!
+            }
             self.navigationController!.pushViewController(sellerViewController, animated: true)
         } else if targetType == "list" {
             let resultViewController: ResultViewController = ResultViewController(nibName: "ResultViewController", bundle: nil)
