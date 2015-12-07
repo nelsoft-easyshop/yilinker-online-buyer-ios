@@ -128,8 +128,7 @@ class CartProductAttributeViewController: UIViewController, UITableViewDelegate,
     
     func passModel(#cartModel: CartProductDetailsModel, selectedProductUnits: ProductUnitsModel) {
         productDetailModel = cartModel
-        let url = APIAtlas.baseUrl.stringByReplacingOccurrencesOfString("api/v1", withString: "")
-        setDetail("\(url)\(APIAtlas.cartImage)\(selectedProductUnits.primaryImage)", title: productDetailModel!.title, price: selectedProductUnits.discountedPrice)
+        
         self.maximumStock = selectedProductUnits.quantity
         if maximumStock < 0 {
             maximumStock = 0
@@ -141,6 +140,16 @@ class CartProductAttributeViewController: UIViewController, UITableViewDelegate,
         self.availabilityStocksLabel.text = availableLocalizeString + ": " + String(maximumStock)
         
         selectedCombinations = selectedProductUnit.combination
+        
+        if productDetailModel!.images.count != 0 && selectedProductUnit!.imageIds.count != 0 {
+            for tempImage in productDetailModel!.images {
+                if tempImage.id == selectedProductUnit!.imageIds[0] {
+                    setDetail(tempImage.fullImageLocation, title: productDetailModel!.title, price: selectedProductUnit.discountedPrice)
+                }
+            }
+        } else {
+            setDetail("dummy-placeholder", title: productDetailModel!.title, price: selectedProductUnit.discountedPrice)
+        }
         
         getAvailableCombinations()
     }
@@ -192,7 +201,16 @@ class CartProductAttributeViewController: UIViewController, UITableViewDelegate,
             }
             
             let url = APIAtlas.baseUrl.stringByReplacingOccurrencesOfString("api/v1", withString: "")
-            setDetail("\(url)\(APIAtlas.cartImage)\(selectedProductUnit.primaryImage)", title: productDetailModel!.title, price: selectedProductUnit.discountedPrice)
+            
+            if productDetailModel!.images.count != 0 && selectedProductUnit!.imageIds.count != 0 {
+                for tempImage in productDetailModel!.images {
+                    if tempImage.id == selectedProductUnit!.imageIds[0] {
+                        setDetail(tempImage.fullImageLocation, title: productDetailModel!.title, price: selectedProductUnit.discountedPrice)
+                    }
+                }
+            } else {
+                setDetail("dummy-placeholder", title: productDetailModel!.title, price: selectedProductUnit.discountedPrice)
+            }
             
             priceLabel.text = selectedProductUnit.price.formatToPeso()
             self.maximumStock = selectedProductUnit.quantity
