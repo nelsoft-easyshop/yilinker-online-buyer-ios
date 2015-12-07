@@ -717,10 +717,8 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
                     "keyword"       : "",
                     "access_token"  : SessionManager.accessToken()
                     ] as Dictionary<String, String>
-                
-                let url = APIAtlas.baseUrl + APIAtlas.ACTION_GET_CONTACTS
-                
-                manager.POST(url, parameters: parameters, success: {
+
+                manager.POST(APIAtlas.ACTION_GET_CONTACTS + "/", parameters: parameters, success: {
                     (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
                     self.contacts = W_Contact.parseContacts(responseObject as! NSDictionary)
                     }, failure: {
@@ -730,6 +728,8 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
                             if (SessionManager.isLoggedIn()){
                                 self.requestRefreshToken("message")
                             }
+                        } else if task.statusCode == 404 {
+                            println(error)
                         } else {
                             if (SessionManager.isLoggedIn()){
                                 self.showAlert(title: Constants.Localized.error, message: Constants.Localized.someThingWentWrong)
