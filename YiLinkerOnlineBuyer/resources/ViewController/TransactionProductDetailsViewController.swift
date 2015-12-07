@@ -91,6 +91,8 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
         
         let nib = UINib(nibName: "TransactionProductDetailsTableViewCell", bundle: nil)
         self.tableView.registerNib(nib, forCellReuseIdentifier: "TransactionProductDetailsIdentifier")
+        self.tableView.separatorInset = UIEdgeInsetsZero
+        self.tableView.layoutMargins = UIEdgeInsetsZero
         
         println("order product id \(self.orderProductId) \(self.isCancellable)")
         self.fireTransactionProductDetailsDeliveryStatus()
@@ -115,7 +117,8 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell: TransactionProductDetailsTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("TransactionProductDetailsIdentifier") as! TransactionProductDetailsTableViewCell
-        
+        cell.separatorInset = UIEdgeInsetsZero
+        cell.layoutMargins = UIEdgeInsetsZero
         cell.selectionStyle = .None
         if self.transactionProductDetailsModel != nil {
             cell.attributeNameLabel.text = self.transactionProductDetailsModel.attributeName[indexPath.row]
