@@ -821,25 +821,25 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
             self.productImagesView.setDetails(self.productDetailsModel, unitId: unitIdIndex, width: self.view.frame.size.width)
         } else {
             self.getUnitIdIndexFrom()
-//            var images: [String] = []
-//            for productUnit in self.productDetailsModel.productUnits {
-//                if self.unitId == productUnit.productUnitId {
-//                    if productUnit.imageIds.count != 0 {
-//                        for j in 0..<productUnit.imageIds.count {
-//                            for l in 0..<self.productDetailsModel.images.count {
-//                                println("\(productUnit.imageIds[j]) == \(self.productDetailsModel.images[l].id)")
-//                                if productUnit.imageIds[j] == self.productDetailsModel.images[l].id {
-//                                    println(self.productDetailsModel.images[l].imageLocation)
-//                                    images.append(self.productDetailsModel.images[l].imageLocation)
-//                                }
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-//
-//            self.productImagesView.updateDetails(self.productDetailsModel, unitId: unitIdIndex, images: images)
+            var images: [String] = []
+            for productUnit in self.productDetailsModel.productUnits {
+                if self.unitId == productUnit.productUnitId {
+                    if productUnit.imageIds.count != 0 {
+                        for j in 0..<productUnit.imageIds.count {
+                            for l in 0..<self.productDetailsModel.images.count {
+                                println("\(productUnit.imageIds[j]) == \(self.productDetailsModel.images[l].id)")
+                                if productUnit.imageIds[j] == self.productDetailsModel.images[l].id {
+                                    println(self.productDetailsModel.images[l].imageLocation)
+                                    images.append(self.productDetailsModel.images[l].imageLocation)
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
             self.productImagesView.setDetails(self.productDetailsModel, unitId: unitIdIndex, width: self.view.frame.size.width)
+            self.productImagesView.updateDetails(self.productDetailsModel, unitId: unitIdIndex, images: images)
         }
         
 //        self.setDetails(productDetailsModel.details)
