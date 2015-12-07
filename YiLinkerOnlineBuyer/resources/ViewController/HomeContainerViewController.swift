@@ -82,6 +82,8 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     var homePageModel: HomePageModel = HomePageModel()
     
     var timer: NSTimer = NSTimer()
+    var oneHourIntervalTimer: NSTimer = NSTimer()
+    var updateUsingOneHourInterval: Bool = false
     
     //MARK: - Life Cycle
     override func didReceiveMemoryWarning() {
@@ -838,7 +840,16 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             }
 
         } else {
-            if let indexPath: NSIndexPath = NSIndexPath(forItem: 0, inSection: 3) {
+            if self.updateUsingOneHourInterval {
+                self.updateUsingOneHourInterval = false
+                if self.remainingTime == -1 {
+                    self.oneHourIntervalTimer = NSTimer.scheduledTimerWithTimeInterval(3600.0, target: self, selector: "updateData", userInfo: nil, repeats: true)
+                }
+                
+            } else {
+                self.oneHourIntervalTimer.invalidate()
+                self.updateUsingOneHourInterval = true
+                
                 if self.remainingTime == -1 {
                     self.fireGetHomePageData(true)
                 }
@@ -1270,5 +1281,10 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     //MARK: - Back To Top
     @IBAction func backToTop(sender: AnyObject) {
         self.collectionView.setContentOffset(CGPointZero, animated: true)
+    }
+    
+    //MARK: - Update Data
+    func updateData() {
+        self.fireGetHomePageData(true)
     }
 }
