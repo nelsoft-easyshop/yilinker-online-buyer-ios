@@ -376,7 +376,7 @@ class ResolutionCenterViewController: UIViewController, UITableViewDataSource, U
         manager.GET(urlString, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             self.resolutionCenterModel = ResolutionCenterModel.parseDataWithDictionary(responseObject)
-            
+            println(responseObject)
             if self.resolutionCenterModel.isSuccessful {
                 if self.resolutionCenterModel.resolutionArray.count == 0 {
                     self.emptyLabel.hidden = false
@@ -438,7 +438,7 @@ class ResolutionCenterViewController: UIViewController, UITableViewDataSource, U
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             self.transactionModel = TransactionModel.parseDataFromDictionary(responseObject as! NSDictionary)
             self.transactionIds = self.transactionModel.invoice_number
-            
+            println(responseObject)
             if self.transactionIds.count != 0 {
                 let newDispute = self.storyboard?.instantiateViewControllerWithIdentifier("NewDisputeTableViewController")
                     as! NewDisputeTableViewController
