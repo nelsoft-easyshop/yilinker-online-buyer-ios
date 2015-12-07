@@ -75,6 +75,7 @@ PODS:
   - GoogleUtilities (1.0.1):
     - GoogleSymbolUtilities (~> 1.0)
   - MBProgressHUD (0.9.1)
+  - pop (1.0.8)
   - SDWebImage (3.7.3):
     - SDWebImage/Core (= 3.7.3)
   - SDWebImage/Core (3.7.3)
@@ -89,6 +90,7 @@ DEPENDENCIES:
   - Google/CloudMessaging
   - Google/SignIn
   - MBProgressHUD
+  - pop
   - SDWebImage
   - SVProgressHUD
   - Toast
@@ -110,9 +112,10 @@ SPEC CHECKSUMS:
   GoogleSymbolUtilities: a7b0feed1fe667c8d5e647177938d0ecd62d6948
   GoogleUtilities: e3475cd4d45134221d2f3f3626095a1c49b62041
   MBProgressHUD: c47f2c166c126cf2ce36498d80f33e754d4e93ad
+  pop: bb773ae2c791ca2629de13b347e7a8b450fa6a57
   SDWebImage: 1d2b1a1efda1ade1b00b6f8498865f8ddedc8a84
   SVProgressHUD: 748080e4f36e603f6c02aec292664239df5279c1
   Toast: 32c59229abfcf41850162b83bb9259dc84372473
   TTRangeSlider: a12d0ac242a785cf96d4c7dacfe07e42a161251e
 
-COCOAPODS: 0.38.2
+COCOAPODS: 0.39.0

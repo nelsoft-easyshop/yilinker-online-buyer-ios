@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, SellerTableHeaderViewDelegate, ProductsTableViewCellDelegate, ViewFeedBackViewControllerDelegate, EmptyViewDelegate {
+class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, SellerTableHeaderViewDelegate, ProductsTableViewCellDelegate, ViewFeedBackViewControllerDelegate, EmptyViewDelegate, UIScrollViewDelegate {
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -53,6 +53,16 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
     var contacts = [W_Contact()]
     var contentViewFrame: CGRect?
     var canMessage: Bool = false
+    
+    let kTableHeaderHeight: CGFloat = 280.0
+    
+    var sellerHeaderView: SellerTableHeaderView = SellerTableHeaderView()
+    
+    //MARK: - Life Cycle
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(true)
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -113,16 +123,14 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
 
     //MARK: Adding header view to tableview
     func headerView() {
-        
         sellerTableHeaderView.delegate = self
-        
         sellerTableHeaderView.coverPhotoImageView.sd_setImageWithURL(self.sellerModel!.coverPhoto, placeholderImage: UIImage(named: "dummy-placeholder"))
         
         if self.is_successful {
-            self.sellerTableHeaderView.followButton.borderColor = UIColor.clearColor()
+            //self.sellerTableHeaderView.followButton.borderColor = UIColor.clearColor()
             self.sellerTableHeaderView.followButton.setTitle(following, forState: UIControlState.Normal)
         } else if !(self.is_successful){
-            self.sellerTableHeaderView.followButton.borderColor = UIColor.clearColor()
+            //self.sellerTableHeaderView.followButton.borderColor = UIColor.clearColor()
             self.sellerTableHeaderView.followButton.setTitle(follow, forState: UIControlState.Normal)
         }
         
@@ -147,6 +155,26 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         self.tableView.tableHeaderView = sellerTableHeaderView
         self.tableView.reloadData()
+        
+        sellerHeaderView = self.tableView.tableHeaderView as! SellerTableHeaderView
+        tableView.tableHeaderView = nil
+        
+        self.tableView.addSubview(sellerHeaderView)
+        self.tableView.contentInset = UIEdgeInsets(top: kTableHeaderHeight, left: 0, bottom: 0, right: 0)
+        self.tableView.contentOffset = CGPoint(x: 0, y: -kTableHeaderHeight)
+        self.sellerHeaderView.gradient()
+    }
+    
+    //MARK: - Update Header View
+    func updateHeaderView() {
+        var headerRect: CGRect = CGRect(x: 0, y: -kTableHeaderHeight, width: self.tableView.bounds.width, height: kTableHeaderHeight)
+        if tableView.contentOffset.y < -kTableHeaderHeight {
+            headerRect.origin.y = tableView.contentOffset.y
+            headerRect.size.height = -tableView.contentOffset.y
+        }
+        
+        self.sellerHeaderView.frame = headerRect
+        self.sellerHeaderView.gradient()
     }
     
     //MARK: Register nibs for tableview cells
@@ -488,7 +516,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         if section == 0 || section >= 3 {
             return 0
         } else {
-            return 10
+            return 0
         }
     }
     
@@ -544,13 +572,13 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
             
             if self.sellerTableHeaderView.followButton.tag == 1 {
                 self.sellerTableHeaderView.followButton.tag = 2
-                self.sellerTableHeaderView.followButton.borderColor = UIColor.clearColor()
+                //self.sellerTableHeaderView.followButton.borderColor = UIColor.clearColor()
                 self.sellerTableHeaderView.followButton.setTitle(follow, forState: UIControlState.Normal)
                 
                 fireUnfollowSeller()
             } else {
                 self.sellerTableHeaderView.followButton.tag = 1
-                self.sellerTableHeaderView.followButton.borderColor = UIColor.clearColor()
+                //self.sellerTableHeaderView.followButton.borderColor = UIColor.clearColor()
                 self.sellerTableHeaderView.followButton.setTitle(following, forState: UIControlState.Normal)
                 
                 fireFollowSeller()
@@ -737,5 +765,10 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         let defaultAction = UIAlertAction(title: self.ok, style: .Default, handler: nil)
         alertController.addAction(defaultAction)
         presentViewController(alertController, animated: true, completion: nil)
+    }
+    
+    //MARK: - Scroll View Delegate
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        self.updateHeaderView()
     }
 }
