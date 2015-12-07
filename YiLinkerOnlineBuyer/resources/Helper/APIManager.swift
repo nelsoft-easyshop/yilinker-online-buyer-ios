@@ -184,6 +184,8 @@ struct APIAtlas {
     
     //Voucher Url
     static let voucherUrl = APIAtlas.voucher()
+    
+    static let mergeFacebook = "v1/facebook/auth"
 }
 
 class APIManager: AFHTTPSessionManager {

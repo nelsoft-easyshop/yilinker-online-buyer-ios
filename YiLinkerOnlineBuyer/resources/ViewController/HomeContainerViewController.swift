@@ -373,6 +373,9 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             }
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
+                
+                let task = task.response as? NSHTTPURLResponse
+                
                 self.hud?.hide(true)
                 self.addEmptyView()
         })
@@ -436,6 +439,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             SessionManager.setAddressId(self.profileModel.address.userAddressId)
             SessionManager.setCartCount(self.profileModel.cartCount)
             SessionManager.setWishlistCount(self.profileModel.wishlistCount)
+            SessionManager.setProfileImage(self.profileModel.profileImageUrl)
             self.updateTabBarBadge()
             
             

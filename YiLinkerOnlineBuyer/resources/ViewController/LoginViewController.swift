@@ -359,7 +359,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
                     
                     self.hud?.hide(true)
                 } else {
-                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage + "asdasd", duration: 3.0, view: self.view)
+                    
                 }
                 self.hud?.hide(true)
         })
@@ -458,8 +458,12 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
                 self.showSuccessMessage()
                 self.fireCreateRegistration(SessionManager.gcmToken())
             } else {
-                FBSDKLoginManager().logOut()
-                Toast.displayToastWithMessage(loginModel.message, view: self.view)
+                if let isExisting = loginModel.dataDictionary["isExisting"] as? Bool {
+                    self.mergeAccount(token)
+                } else {
+                    FBSDKLoginManager().logOut()
+                    Toast.displayToastWithMessage(loginModel.message, view: self.view)
+                }
             }
             
             }, failure: {
@@ -506,4 +510,34 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
         println("User Logged Out")
     }
    
+    //MARK: - Merge Account
+    func mergeAccount(facebookAccessToken: String) {
+        self.showHUD()
+        let manager: APIManager = APIManager.sharedInstance
+        
+        let parameters: NSDictionary = [LoginConstants.clientIdKey: Constants.Credentials.clientID, LoginConstants.clientSecretKey: Constants.Credentials.clientSecret, LoginConstants.clientSecretKey: Constants.Credentials.grantBuyer, "token": facebookAccessToken, "accountType": "facebook"]
+        
+        manager.POST(APIAtlas.mergeFacebook, parameters: parameters, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            
+            self.hud?.hide(true)
+            
+            let loginModel: LoginModel = LoginModel.parseDataFromDictionary(responseObject as! NSDictionary)
+            if loginModel.isSuccessful {
+                SessionManager.parseTokensFromResponseObject(loginModel.dataDictionary)
+                self.showSuccessMessage()
+                self.fireCreateRegistration(SessionManager.gcmToken())
+            } else {
+                Toast.displayToastWithMessage(loginModel.message, view: self.view)
+            }
+            
+            
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                Toast.displayToastWithMessage(Constants.Localized.someThingWentWrong, view: self.view)
+                self.hud?.hide(true)
+        })
+
+    }
 }
