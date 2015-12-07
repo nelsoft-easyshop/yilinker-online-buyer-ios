@@ -373,6 +373,9 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             }
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
+                
+                let task = task.response as? NSHTTPURLResponse
+                
                 self.hud?.hide(true)
                 self.addEmptyView()
         })
