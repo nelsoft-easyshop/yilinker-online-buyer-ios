@@ -69,6 +69,8 @@ class HiddenViewController: UIViewController {
             } else if index == 3 {
                 self.setNavigationBarTitle(HiddenStrings.categories)
             } else if index == 4 {
+                self.setNavigationBarTitle(HiddenStrings.help)
+            } else {
                 self.setNavigationBarTitle(HiddenStrings.profile)
             }
         } else {
@@ -84,6 +86,8 @@ class HiddenViewController: UIViewController {
                 self.setNavigationBarTitle(HiddenStrings.todaysPromo)
             } else if index == 3 {
                 self.setNavigationBarTitle(HiddenStrings.categories)
+            }  else if index == 3 {
+                self.setNavigationBarTitle(HiddenStrings.help)
             }
         }
     }
@@ -137,6 +141,7 @@ class HiddenViewController: UIViewController {
             self.viewControllers.append(self.messagingViewController!)
             self.viewControllers.append(self.resultViewController!)
             self.viewControllers.append(self.categoriesViewController!)
+            self.viewControllers.append(self.helpViewController!)
             self.viewControllers.append(self.profileViewController!)
         } else {
             self.helpViewController = HelpViewController(nibName: "HelpViewController", bundle: nil)
@@ -158,6 +163,8 @@ class HiddenViewController: UIViewController {
 
             }
             
+            self.registerViewController?.isFromTab = true
+            self.loginViewController?.isFromTab = true
             
             let storyBoard1: UIStoryboard = UIStoryboard(name: "HomeStoryBoard", bundle: nil)
             self.messagingViewController = storyBoard1.instantiateViewControllerWithIdentifier("ConversationVC") as? ConversationVC
@@ -169,6 +176,7 @@ class HiddenViewController: UIViewController {
             self.viewControllers.append(self.loginViewController!)
             self.viewControllers.append(self.resultViewController!)
             self.viewControllers.append(self.categoriesViewController!)
+            self.viewControllers.append(self.helpViewController!)
         }
     }
 

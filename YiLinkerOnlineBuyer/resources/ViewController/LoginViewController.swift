@@ -53,6 +53,8 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
     @IBOutlet weak var signInButton: UIButton!
     @IBOutlet weak var orLabel: UILabel!
     
+    var yAdjustment: CGFloat = 0
+    
     var currentTextFieldTag: Int = 1
     var parentView: UIView?
     var hud: MBProgressHUD?
@@ -73,6 +75,21 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
         
         if self.parentViewController!.isKindOfClass(LoginAndRegisterContentViewController) {
             self.done()
+        }
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        let parentViewController: LoginAndRegisterContentViewController = self.parentViewController as! LoginAndRegisterContentViewController
+        
+        if !parentViewController.isFromTab && IphoneType.isIphone5() {
+            yAdjustment = 25
+        } else if IphoneType.isIphone5() {
+            yAdjustment = -15
+        }
+        
+        if !parentViewController.isFromTab && IphoneType.isIphone5() {
+            parentViewController.verticalSpaceConstraint.constant = yAdjustment
         }
     }
     
@@ -141,8 +158,8 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
     
     //MARK: - Setup TextFields
     func setUpTextFields() {
-        self.passwordTextField.addToolBarWithTarget(self, next: "next", previous: "previous", done: "done")
-        self.emailAddressTextField.addToolBarWithTarget(self, next: "next", previous: "previous", done: "done")
+        //self.passwordTextField.addToolBarWithTarget(self, next: "next", previous: "previous", done: "done")
+        //self.emailAddressTextField.addToolBarWithTarget(self, next: "next", previous: "previous", done: "done")
         self.emailAddressTextField.delegate = self
         self.passwordTextField.delegate = self
     }
@@ -214,7 +231,16 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
         let manager = APIManager.sharedInstance
         manager.operationQueue.cancelAllOperations()
         self.view.endEditing(true)
-        self.adjustTextFieldYInsetWithInset(0)
+        
+        let parentViewController: LoginAndRegisterContentViewController = self.parentViewController as! LoginAndRegisterContentViewController
+        if !parentViewController.isFromTab && IphoneType.isIphone5() {
+            self.adjustTextFieldYInsetWithInset(yAdjustment)
+        } else if IphoneType.isIphone6() || IphoneType.isIphone6Plus() {
+
+        } else {
+            self.adjustTextFieldYInsetWithInset(0)
+        }
+        
         self.showCloseButton()
     }
     
@@ -244,8 +270,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
     func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
         self.currentTextFieldTag = textField.tag
         if IphoneType.isIphone6() {
-            let textFieldHeightWithInset: CGFloat = -25
-            self.adjustTextFieldYInsetWithInset(textFieldHeightWithInset)
+            
         } else if IphoneType.isIphone4() {
             let textFieldHeightWithInset: CGFloat = -50
             self.hideCloseButton()
@@ -285,7 +310,17 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
             errorMessage = LoginStrings.passwordIsRequired
         }
         self.view.endEditing(true)
-        self.adjustTextFieldYInsetWithInset(0)
+        
+        let parentViewController: LoginAndRegisterContentViewController = self.parentViewController as! LoginAndRegisterContentViewController
+        
+        if IphoneType.isIphone5() && !parentViewController.isFromTab {
+            self.adjustTextFieldYInsetWithInset(yAdjustment)
+        } else if IphoneType.isIphone6() {
+            
+        } else {
+            self.adjustTextFieldYInsetWithInset(0)
+        }
+        
         if errorMessage != "" {
            
         } else {

@@ -8,6 +8,7 @@
             <connections>
                 <outlet property="tableView" destination="Y89-Pe-zpq" id="loF-cf-JGo"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+                <outlet property="webView" destination="fB6-Rp-KOK" id="AxS-xT-LU8"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -15,7 +16,7 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="55" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Y89-Pe-zpq">
+                <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="55" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Y89-Pe-zpq">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <connections>
@@ -23,13 +24,21 @@
                         <outlet property="delegate" destination="-1" id="Z2W-zK-qsd"/>
                     </connections>
                 </tableView>
+                <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fB6-Rp-KOK">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                </webView>
             </subviews>
             <color key="backgroundColor" red="0.93146306820000002" green="0.51890868700000004" blue="0.18877391690000001" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
+                <constraint firstItem="fB6-Rp-KOK" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="8Tr-1W-KZj"/>
                 <constraint firstAttribute="trailing" secondItem="Y89-Pe-zpq" secondAttribute="trailing" id="Ebn-NE-pRA"/>
                 <constraint firstItem="Y89-Pe-zpq" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="FVd-Ei-N2Q"/>
                 <constraint firstAttribute="bottom" secondItem="Y89-Pe-zpq" secondAttribute="bottom" id="H4T-Zy-etP"/>
+                <constraint firstAttribute="trailing" secondItem="fB6-Rp-KOK" secondAttribute="trailing" id="TTo-l2-B1e"/>
                 <constraint firstItem="Y89-Pe-zpq" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="aJC-KG-dCb"/>
+                <constraint firstAttribute="bottom" secondItem="fB6-Rp-KOK" secondAttribute="bottom" id="iaK-B9-0EL"/>
+                <constraint firstItem="fB6-Rp-KOK" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="lQP-sA-9OT"/>
             </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
             <point key="canvasLocation" x="314.5" y="240.5"/>

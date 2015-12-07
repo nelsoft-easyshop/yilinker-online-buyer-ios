@@ -91,6 +91,8 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
         
         let nib = UINib(nibName: "TransactionProductDetailsTableViewCell", bundle: nil)
         self.tableView.registerNib(nib, forCellReuseIdentifier: "TransactionProductDetailsIdentifier")
+        self.tableView.separatorInset = UIEdgeInsetsZero
+        self.tableView.layoutMargins = UIEdgeInsetsZero
         
         println("order product id \(self.orderProductId) \(self.isCancellable)")
         self.fireTransactionProductDetailsDeliveryStatus()
@@ -115,7 +117,8 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell: TransactionProductDetailsTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("TransactionProductDetailsIdentifier") as! TransactionProductDetailsTableViewCell
-        
+        cell.separatorInset = UIEdgeInsetsZero
+        cell.layoutMargins = UIEdgeInsetsZero
         cell.selectionStyle = .None
         if self.transactionProductDetailsModel != nil {
             cell.attributeNameLabel.text = self.transactionProductDetailsModel.attributeName[indexPath.row]
@@ -175,7 +178,7 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
             var textLabel = UILabel(frame: CGRectMake(8, 0, self.transactionProductDetailsView.frame.size.width - 8, self.transactionProductDetailsView.frame.size.height))
             textLabel.text = self.productDetails
             textLabel.textColor = .darkGrayColor()
-            textLabel.font = UIFont.systemFontOfSize(15.0)
+            textLabel.font = UIFont (name: "Panton-Regular", size: 15.0)
             
             self.transactionProductDetailsView.addSubview(textLabel)
         }
@@ -272,7 +275,7 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
     //MARK: Transaction Description Delegate Method
     func getProductDescription(desc: String) {
         let description = ProductDescriptionViewController(nibName: "ProductDescriptionViewController", bundle: nil)
-        description.url = desc
+        description.url = self.transactionProductDetailsModel.longDescription
         description.title = self.descriptionProductTitle
         let root: UINavigationController = UINavigationController(rootViewController: description)
         self.tabBarController?.presentViewController(root, animated: true, completion: nil)

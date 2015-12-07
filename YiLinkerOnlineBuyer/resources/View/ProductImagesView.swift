@@ -14,7 +14,7 @@ protocol ProductImagesViewDelegate {
     func rate(controller: ProductImagesView)
     func message(controller: ProductImagesView)
     func share(controller: ProductImagesView)
-    
+    func fullScreen(controller: ProductImagesView)
 }
 
 class ProductImagesView: UIView, UICollectionViewDataSource, UICollectionViewDelegate {
@@ -59,6 +59,7 @@ class ProductImagesView: UIView, UICollectionViewDataSource, UICollectionViewDel
         addTapTo(self.rateContainerView, action: "rateAction:")
         addTapTo(self.messageContainerView, action: "messageAction:")
         addTapTo(self.shareContainerView, action: "shareAction:")
+        addTapTo(self.collectionView, action: "fullScreenAction:")
     }
     
     func addTapTo(view: UIView, action: Selector) {
@@ -90,6 +91,10 @@ class ProductImagesView: UIView, UICollectionViewDataSource, UICollectionViewDel
         return cell
     }
 
+    func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+        
+    }
+    
     // MARK: - Collection View Delegate
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
@@ -133,13 +138,19 @@ class ProductImagesView: UIView, UICollectionViewDataSource, UICollectionViewDel
         }
     }
     
+    func fullScreenAction(gesture: UIGestureRecognizer) {
+        if let delegate = self.delegate {
+            delegate.fullScreen(self)
+        }
+    }
+    
     // Functions
     
     func setDetails(model: ProductDetailsModel, unitId: Int, width: CGFloat) {
 
         self.nameLabel.text = model.title
 
-        if model.productUnits[unitId].discountedPrice.floatValue != 0 {
+        if model.productUnits[unitId].price != model.productUnits[unitId].discountedPrice {
             self.priceCustomLabel.text = "₱" + model.productUnits[unitId].price
             self.priceCustomLabel.drawDiscountLine(true)
             self.priceLabel.text = "₱" + model.productUnits[unitId].discountedPrice
@@ -158,7 +169,7 @@ class ProductImagesView: UIView, UICollectionViewDataSource, UICollectionViewDel
 
     func updateDetails(model: ProductDetailsModel, unitId: Int, images: [String]) {
         
-        if model.productUnits[unitId].discountedPrice.floatValue != 0 {
+        if model.productUnits[unitId].price != model.productUnits[unitId].discountedPrice {
             self.priceCustomLabel.text = "₱" + model.productUnits[unitId].price
             self.priceCustomLabel.drawDiscountLine(true)
             self.priceLabel.text = "₱" + model.productUnits[unitId].discountedPrice
@@ -168,7 +179,7 @@ class ProductImagesView: UIView, UICollectionViewDataSource, UICollectionViewDel
         }
         
         self.images = images
-        
+        println(self.images)
         self.pageControl.numberOfPages = self.images.count
         self.collectionView.reloadData()
     }

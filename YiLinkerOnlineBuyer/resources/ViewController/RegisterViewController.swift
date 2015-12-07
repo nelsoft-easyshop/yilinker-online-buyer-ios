@@ -53,16 +53,23 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
     var currentTextFieldTag: Int = 1
     var hud: MBProgressHUD?
     
-    @IBOutlet weak var orLabel: UILabel!
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-    }
+    var yAdjustment: CGFloat = 0
     
-    override func viewWillDisappear(animated: Bool) {
-        super.viewWillDisappear(animated)
-        if self.parentViewController!.isKindOfClass(LoginAndRegisterContentViewController) {
-            self.done()
+    @IBOutlet weak var orLabel: UILabel!
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        let parentViewController: LoginAndRegisterContentViewController = self.parentViewController as! LoginAndRegisterContentViewController
+        
+        if !parentViewController.isFromTab && IphoneType.isIphone5() {
+            yAdjustment = 25
+        } else if IphoneType.isIphone5() {
+            yAdjustment = -15
+        } else {
+            yAdjustment = 15
         }
+        
+        parentViewController.verticalSpaceConstraint.constant = yAdjustment
+
     }
     
     override func viewDidLoad() {
@@ -91,11 +98,16 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
             self.firstNameTextField.enabled = false
             self.lastNameTextField.enabled = false
             self.emailAddressTextField.enabled = false
-            self.passwordTextField.enabled = false
-            self.reTypePasswordTextField.enabled = false
+//            self.passwordTextField.enabled = false
+//            self.reTypePasswordTextField.enabled = false
             
             self.mobileNumberTextField.enabled = false
             self.referralCodeTextField.enabled = false
+        }
+        
+        let parentViewController: LoginAndRegisterContentViewController = self.parentViewController as! LoginAndRegisterContentViewController
+        if !parentViewController.isFromTab && IphoneType.isIphone5() {
+            parentViewController.verticalSpaceConstraint.constant = yAdjustment
         }
     }
     
@@ -129,24 +141,21 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         self.hud?.show(true)
     }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-    }
 
     func setUpTextFields() {
         self.firstNameTextField.delegate = self
-        self.firstNameTextField.addToolBarWithTarget(self, next: "next", previous: "previous", done: "done")
+        //self.firstNameTextField.addToolBarWithTarget(self, next: "next", previous: "previous", done: "done")
         self.lastNameTextField.delegate = self
-        self.lastNameTextField.addToolBarWithTarget(self, next: "next", previous: "previous", done: "done")
+        //self.lastNameTextField.addToolBarWithTarget(self, next: "next", previous: "previous", done: "done")
         self.emailAddressTextField.delegate = self
-        self.emailAddressTextField.addToolBarWithTarget(self, next: "next", previous: "previous", done: "done")
+        //self.emailAddressTextField.addToolBarWithTarget(self, next: "next", previous: "previous", done: "done")
         self.passwordTextField.delegate = self
-        self.passwordTextField.addToolBarWithTarget(self, next: "next", previous: "previous", done: "done")
+        //self.passwordTextField.addToolBarWithTarget(self, next: "next", previous: "previous", done: "done")
         self.reTypePasswordTextField.delegate = self
-        self.reTypePasswordTextField.addToolBarWithTarget(self, next: "next", previous: "previous", done: "done")
+        //self.reTypePasswordTextField.addToolBarWithTarget(self, next: "next", previous: "previous", done: "done")
         self.mobileNumberTextField.addToolBarWithTarget(self, next: "next", previous: "previous", done: "done")
         self.mobileNumberTextField.delegate = self
-        self.referralCodeTextField.addToolBarWithTarget(self, next: "next", previous: "previous", done: "done")
+        //self.referralCodeTextField.addToolBarWithTarget(self, next: "next", previous: "previous", done: "done")
         self.referralCodeTextField.delegate = self
     }
     
@@ -155,7 +164,19 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
     func done() {
         self.view.endEditing(true)
         self.showCloseButton()
-        self.adjustTextFieldYInsetWithInset(0)
+       
+        let parentViewController: LoginAndRegisterContentViewController = self.parentViewController as! LoginAndRegisterContentViewController
+        
+        if IphoneType.isIphone5() && !parentViewController.isFromTab {
+            self.adjustTextFieldYInsetWithInset(yAdjustment)
+        } else if IphoneType.isIphone6() {
+            self.adjustTextFieldYInsetWithInset(yAdjustment)
+        } else if IphoneType.isIphone6Plus() {
+            self.adjustTextFieldYInsetWithInset(yAdjustment)
+        } else {
+            self.adjustTextFieldYInsetWithInset(yAdjustment)
+        }
+        
     }
     
     // Mark: - Previous
@@ -185,12 +206,27 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         self.currentTextFieldTag = textField.tag
         let textFieldHeightWithInset: CGFloat = -30
         if IphoneType.isIphone6Plus() {
-            if textField == self.referralCodeTextField {
-                self.adjustTextFieldYInsetWithInset(textFieldHeightWithInset - 55)
+            if textField == self.referralCodeTextField || textField == self.mobileNumberTextField  {
+                let parentViewController: LoginAndRegisterContentViewController = self.parentViewController as! LoginAndRegisterContentViewController
+                if parentViewController.isFromTab {
+                    self.adjustTextFieldYInsetWithInset(-20)
+                } else {
+                    self.adjustTextFieldYInsetWithInset(-10)
+                }
+                
+                textField.autocorrectionType = .No
             }
         } else if IphoneType.isIphone6() {
             if textField == self.mobileNumberTextField || textField == self.referralCodeTextField || textField == self.reTypePasswordTextField {
-                self.adjustTextFieldYInsetWithInset(textFieldHeightWithInset + CGFloat((textField.tag - 5) * -55))
+                var x: Int = 0
+                if textField == self.referralCodeTextField {
+                    x = (textField.tag - 1)
+                    textField.autocorrectionType = .No
+                } else {
+                    x = textField.tag
+                }
+                
+                self.adjustTextFieldYInsetWithInset(textFieldHeightWithInset + CGFloat(x - 5) * -55)
             }
         } else if IphoneType.isIphone5() {
             if textField == self.mobileNumberTextField || textField == self.referralCodeTextField || textField == self.reTypePasswordTextField {

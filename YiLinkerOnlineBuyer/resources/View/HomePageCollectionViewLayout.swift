@@ -753,7 +753,6 @@ class HomePageCollectionViewLayout: UICollectionViewLayout {
 
     
     //Dynamic Key Generator
-    
     func layoutKeyForIndexPath(indexPath : NSIndexPath) -> String {
         return "\(indexPath.section)_\(indexPath.row)"
     }

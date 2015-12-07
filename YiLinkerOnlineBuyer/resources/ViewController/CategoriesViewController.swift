@@ -8,9 +8,10 @@
 
 import UIKit
 
-class CategoriesViewController: UIViewController, EmptyViewDelegate {
+class CategoriesViewController: UIViewController, EmptyViewDelegate, UIWebViewDelegate {
 
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var webView: UIWebView!
 
     var categoryModel: CategoryModel!
     var parentText: String = ""
@@ -34,9 +35,11 @@ class CategoriesViewController: UIViewController, EmptyViewDelegate {
         let nib = UINib(nibName: "CategoriesTableViewCell", bundle: nil)
         self.tableView.registerNib(nib, forCellReuseIdentifier: "CategoryIdentifier")
 
-        if firstLoad {
-            requestMainCategories()
-        }
+//        if firstLoad {
+//            requestMainCategories()
+//        }
+        loadWebView()
+        webView.delegate = self
     }
 
     override func viewWillAppear(animated: Bool) {
@@ -44,6 +47,8 @@ class CategoriesViewController: UIViewController, EmptyViewDelegate {
         
         self.navigationController?.navigationBarHidden = false
     }
+    
+    // MARK: - Methods
     
     func configureNavigationBar() {
         self.title = StringHelper.localizedStringWithKey("CATEGORIES_CS_LOCALIZE_KEY")
@@ -63,6 +68,18 @@ class CategoriesViewController: UIViewController, EmptyViewDelegate {
     func back() {
         self.navigationController?.popViewControllerAnimated(true)
     }
+    
+    func loadWebView() {
+        if Reachability.isConnectedToNetwork() {
+            showHUD()
+            var url: String = APIEnvironment.baseUrl() + "/mobile-category"
+            url = url.stringByReplacingOccurrencesOfString("api/v1/", withString: "", options: nil, range: nil)
+            webView.loadRequest(NSURLRequest(URL: NSURL(string: url)!))
+        } else {
+            addEmptyView()
+        }
+    }
+    
     
     // MARK: - Table View Data Source
     
@@ -185,9 +202,10 @@ class CategoriesViewController: UIViewController, EmptyViewDelegate {
     
     func didTapReload() {
         self.emptyView?.hidden = true
-        if firstLoad {
-            requestMainCategories()
-        }
+        loadWebView()
+//        if firstLoad {
+//            requestMainCategories()
+//        }
     }
     
     func showHUD() {
@@ -226,4 +244,9 @@ class CategoriesViewController: UIViewController, EmptyViewDelegate {
         })
     }
 
+    // MARK: - Web View Delegate
+    
+    func webViewDidFinishLoad(webView: UIWebView) {
+        self.hud?.hide(true)
+    }
 }

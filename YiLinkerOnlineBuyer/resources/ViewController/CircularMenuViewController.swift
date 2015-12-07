@@ -25,7 +25,7 @@ class CircularMenuViewController: UIViewController {
     
     @IBOutlet weak var dimView: UIView!
     
-    var profileImageIndex: Int = 4
+    var profileImageIndex: Int = 5
     
     var buttonImages: [String] = []
     var buttonTitles: [String] = []
@@ -210,14 +210,14 @@ class CircularMenuViewController: UIViewController {
                     if SessionManager.isLoggedIn() {
                         var logoutPosition: CGFloat = xPosition - 125
                         let logoutButton: UIButton = UIButton(frame: CGRectMake(logoutPosition, yPosition + 15, 100, 20))
-                        logoutButton.backgroundColor = UIColor.redColor()
+                        logoutButton.backgroundColor = UIColor.whiteColor()
                         logoutButton.setTitle(self.buttonTitles[index], forState: UIControlState.Normal)
                         logoutButton.layer.cornerRadius = 10
-                        logoutButton.titleLabel!.font =  UIFont(name: "HelveticaNeue", size: 12)
+                        logoutButton.titleLabel!.font =  UIFont(name: "HelveticaNeue", size: 10)
+                        logoutButton.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
                         logoutButton.clipsToBounds = true
                         logoutButton.tag = 100 + index
                         logoutButton.alpha = 0
-                        logoutButton.addTarget(self, action: "logout", forControlEvents: UIControlEvents.TouchUpInside)
                         self.view.addSubview(logoutButton)
                     } else {
                         
@@ -243,7 +243,6 @@ class CircularMenuViewController: UIViewController {
 
                         
                         let label: UILabel = UILabel(frame: CGRectMake(labelPosition, yPosition + verticalMarginLabel, width, 20))
-                        label.backgroundColor = UIColor.whiteColor()
                         label.text = self.buttonTitles[index]
                         label.adjustsFontSizeToFitWidth = true
                         label.textAlignment = NSTextAlignment.Center
@@ -361,7 +360,7 @@ class CircularMenuViewController: UIViewController {
             for tempView in self.view.subviews {
                 if tempView.tag != 0 && tempView.tag < 99 {
                     let buttonView: UIButton = tempView as! UIButton
-                    if tempView.tag == 5 {
+                    if tempView.tag == self.profileImageIndex + 1 {
                         buttonView.transform = CGAffineTransformMakeScale(1.6, 1.6)
                     }
                 }
