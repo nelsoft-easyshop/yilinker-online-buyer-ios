@@ -439,6 +439,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             SessionManager.setAddressId(self.profileModel.address.userAddressId)
             SessionManager.setCartCount(self.profileModel.cartCount)
             SessionManager.setWishlistCount(self.profileModel.wishlistCount)
+            SessionManager.setProfileImage(self.profileModel.profileImageUrl)
             self.updateTabBarBadge()
             
             
