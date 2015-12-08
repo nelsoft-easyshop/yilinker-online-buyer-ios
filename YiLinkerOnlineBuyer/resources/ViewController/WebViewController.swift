@@ -121,7 +121,9 @@ class WebViewController: UIViewController, UIWebViewDelegate, EmptyViewDelegate 
             if urlString == WebViewURL.category {
                 return true
             } else {
-                //Put redirection to native view controller here. . . . .
+                var resultController = ResultViewController(nibName: "ResultViewController", bundle: nil)
+                resultController.passModel(SearchSuggestionModel(suggestion: "", imageURL: "", searchUrl: urlString))
+                self.navigationController?.pushViewController(resultController, animated:true);
                 return false
             }
         case .StoreView:
