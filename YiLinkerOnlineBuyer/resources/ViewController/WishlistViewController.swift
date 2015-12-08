@@ -264,17 +264,11 @@ class WishlistViewController: UIViewController, UITableViewDelegate, UITableView
                 //                    cell.productItemImageView.sd_setImageWithURL(NSURL(string: tempProductUnit.imageIds[0]), placeholderImage: UIImage(named: "dummy-placeholder"))
                 //                }
                 
-                
-                if tempProductUnit.primaryImage.isNotEmpty() {
-                    let url = APIAtlas.baseUrl.stringByReplacingOccurrencesOfString("api/v1", withString: "")
-                    cell.productItemImageView.sd_setImageWithURL(NSURL(string: "\(url)\(APIAtlas.cartImage)\(tempProductUnit.primaryImage)"), placeholderImage: UIImage(named: "dummy-placeholder"))
+              
+                if tempModel.images.count != 0 {
+                    cell.productItemImageView.sd_setImageWithURL(NSURL(string: tempModel.images[0].fullImageLocation), placeholderImage: UIImage(named: "dummy-placeholder"))
                 } else {
-                    if tempModel.images.count != 0 {
-                        cell.productItemImageView.sd_setImageWithURL(NSURL(string: tempModel.images[0]), placeholderImage: UIImage(named: "dummy-placeholder"))
-                    } else {
-                        cell.productItemImageView.image = UIImage(named: "dummy-placeholder")
-                    }
-                    
+                    cell.productItemImageView.image = UIImage(named: "dummy-placeholder")
                 }
                 
                 var tempAttributesText: String = ""
