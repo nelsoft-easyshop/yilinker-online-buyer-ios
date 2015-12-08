@@ -38,14 +38,17 @@ class CategoriesViewController: UIViewController, EmptyViewDelegate, UIWebViewDe
 //        if firstLoad {
 //            requestMainCategories()
 //        }
-        loadWebView()
-        webView.delegate = self
+//        loadWebView()
+//        webView.delegate = self
     }
 
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
         self.navigationController?.navigationBarHidden = false
+        let webViewController: WebViewController = WebViewController(nibName: "WebViewController", bundle: nil)
+        webViewController.webviewSource = WebviewSource.Category
+        self.navigationController!.pushViewController(webViewController, animated: false)
     }
     
     // MARK: - Methods
