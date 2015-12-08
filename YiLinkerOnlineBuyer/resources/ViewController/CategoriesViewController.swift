@@ -80,7 +80,6 @@ class CategoriesViewController: UIViewController, EmptyViewDelegate, UIWebViewDe
         }
     }
     
-    
     // MARK: - Table View Data Source
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
