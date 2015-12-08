@@ -111,6 +111,8 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
             
             if indexPath.row != 5 {
                cell.rowTitleLabel.required()
+            } else {
+                cell.rowTextField.keyboardType = UIKeyboardType.NumberPad
             }
             
             addressCellReference.append(cell)
