@@ -17,7 +17,7 @@ class CartProductDetailsModel {
     var slug: String = ""
     var image: String = ""
     var selectedUnitImage: String = ""
-    var images: [String] = []
+    var images: [ProductImagesModel] = []
     var shortDescription: String = ""
     var fullDescription: String = ""
     var sellerId: Int = 0
@@ -38,7 +38,7 @@ class CartProductDetailsModel {
         self.title = title
         self.slug = slug
         self.image = image
-        self.images = images as! [String]
+        self.images = images as! [ProductImagesModel]
         self.selectedUnitImage = selectedUnitImage
         self.shortDescription = shortDescription
         self.fullDescription = fullDescription
@@ -59,7 +59,7 @@ class CartProductDetailsModel {
         var title: String = ""
         var slug: String = ""
         var image: String = ""
-        var images: [String] = []
+        var images: [ProductImagesModel] = []
         var selectedUnitImage: String = ""
         var shortDescription: String = ""
         var fullDescription: String = ""
@@ -97,10 +97,9 @@ class CartProductDetailsModel {
                 image = tempVar
             }
             
-            for tempVar in dictionary["images"] as! NSArray {
-                if let temp = tempVar["fullImageLocation"] as? String {
-                    images.append(temp)
-                }
+            for subValue in dictionary["images"] as! NSArray {
+                let model: ProductImagesModel = ProductImagesModel.parseProductImagesModel(subValue as! NSDictionary)
+                images.append(model)
             }
             
             if let tempVar = dictionary["shortDescription"] as? String {

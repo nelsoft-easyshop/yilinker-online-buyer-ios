@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Panton.otf">
+            <string>Panton-Regular</string>
+            <string>Panton-Regular</string>
+            <string>Panton-Regular</string>
+        </mutableArray>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="LayoutNineCollectionViewCell" id="gTV-IL-0wX" customClass="LayoutNineCollectionViewCell" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="399" height="276"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="399" height="276"/>
+                <subviews>
+                    <view clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="ffe-ao-zQ9">
+                        <rect key="frame" x="8" y="13" width="188" height="153"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dummy-placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="H7S-oc-Bii" customClass="ProductImageView" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="188" height="113"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Animals &amp; Pet Supplies" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mf4-Zc-QoO">
+                                <rect key="frame" x="0.0" y="113" width="188" height="40"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="PGE-Wp-03b"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" red="0.7843137255" green="0.0" blue="0.36862745099999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="H7S-oc-Bii" firstAttribute="top" secondItem="ffe-ao-zQ9" secondAttribute="top" id="7fP-TK-wHM"/>
+                            <constraint firstItem="Mf4-Zc-QoO" firstAttribute="leading" secondItem="ffe-ao-zQ9" secondAttribute="leading" id="DFf-Dc-Vh1"/>
+                            <constraint firstAttribute="trailing" secondItem="Mf4-Zc-QoO" secondAttribute="trailing" id="FTM-b7-cL9"/>
+                            <constraint firstAttribute="trailing" secondItem="H7S-oc-Bii" secondAttribute="trailing" id="IND-eA-nPe"/>
+                            <constraint firstItem="Mf4-Zc-QoO" firstAttribute="top" secondItem="H7S-oc-Bii" secondAttribute="bottom" id="KIn-QH-X98"/>
+                            <constraint firstAttribute="width" priority="50" constant="188" id="UI7-TN-y25"/>
+                            <constraint firstAttribute="bottom" secondItem="Mf4-Zc-QoO" secondAttribute="bottom" id="e60-ai-T2p"/>
+                            <constraint firstItem="H7S-oc-Bii" firstAttribute="leading" secondItem="ffe-ao-zQ9" secondAttribute="leading" id="pZ5-cC-uNY"/>
+                        </constraints>
+                    </view>
+                    <view clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="1Vr-t2-7zE">
+                        <rect key="frame" x="204" y="13" width="188" height="153"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dummy-placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="f2C-mI-XnO" customClass="ProductImageView" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="188" height="113"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Animals &amp; Pet Supplies" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vkU-Kg-25e">
+                                <rect key="frame" x="0.0" y="113" width="188" height="40"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="MLB-pb-VE1"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" red="0.7843137255" green="0.0" blue="0.36862745099999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="f2C-mI-XnO" secondAttribute="trailing" id="Kk5-8z-PhR"/>
+                            <constraint firstItem="f2C-mI-XnO" firstAttribute="top" secondItem="1Vr-t2-7zE" secondAttribute="top" id="RTq-C5-abA"/>
+                            <constraint firstAttribute="bottom" secondItem="vkU-Kg-25e" secondAttribute="bottom" id="XIr-bu-DFY"/>
+                            <constraint firstItem="vkU-Kg-25e" firstAttribute="top" secondItem="f2C-mI-XnO" secondAttribute="bottom" id="gaY-Q3-hIY"/>
+                            <constraint firstItem="vkU-Kg-25e" firstAttribute="leading" secondItem="1Vr-t2-7zE" secondAttribute="leading" id="gqj-Ov-W0f"/>
+                            <constraint firstItem="f2C-mI-XnO" firstAttribute="leading" secondItem="1Vr-t2-7zE" secondAttribute="leading" id="isK-eL-TLP"/>
+                            <constraint firstAttribute="width" priority="50" constant="188" id="sxn-Ff-RET"/>
+                            <constraint firstAttribute="trailing" secondItem="vkU-Kg-25e" secondAttribute="trailing" id="z9Q-Qh-znq"/>
+                        </constraints>
+                    </view>
+                    <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="82Y-hh-gJs">
+                        <rect key="frame" x="8" y="177" width="125" height="91"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dummy-placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="ymM-ZI-0fX" customClass="ProductImageView" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="125" height="66"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="66" id="9xN-jo-SHA"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Camera &amp; Optics" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Czj-OQ-uEb">
+                                <rect key="frame" x="0.0" y="70" width="125" height="21"/>
+                                <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="12"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="91" id="3Wr-7u-nVc"/>
+                            <constraint firstItem="Czj-OQ-uEb" firstAttribute="leading" secondItem="82Y-hh-gJs" secondAttribute="leading" id="Amk-KQ-eCP"/>
+                            <constraint firstItem="ymM-ZI-0fX" firstAttribute="top" secondItem="82Y-hh-gJs" secondAttribute="top" id="Xil-Po-f5d"/>
+                            <constraint firstAttribute="bottom" secondItem="Czj-OQ-uEb" secondAttribute="bottom" id="bmo-Su-t3L"/>
+                            <constraint firstAttribute="width" priority="750" constant="125" id="cfG-lk-wHL"/>
+                            <constraint firstItem="Czj-OQ-uEb" firstAttribute="top" secondItem="ymM-ZI-0fX" secondAttribute="bottom" constant="4" id="dh7-aa-NFd"/>
+                            <constraint firstItem="ymM-ZI-0fX" firstAttribute="leading" secondItem="82Y-hh-gJs" secondAttribute="leading" id="gqF-kC-YcY"/>
+                            <constraint firstAttribute="trailing" secondItem="ymM-ZI-0fX" secondAttribute="trailing" id="pUc-82-K0N"/>
+                            <constraint firstAttribute="trailing" secondItem="Czj-OQ-uEb" secondAttribute="trailing" id="y4y-qo-twW"/>
+                        </constraints>
+                    </view>
+                    <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vzL-gC-yEE">
+                        <rect key="frame" x="137" y="177" width="125" height="91"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dummy-placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="Vc0-Eu-Yth" customClass="ProductImageView" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="125" height="66"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="66" id="jnR-FW-p3R"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Camera &amp; Optics" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SOd-jy-nXF">
+                                <rect key="frame" x="0.0" y="70" width="125" height="21"/>
+                                <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="12"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="91" id="1Mx-tx-Kq1"/>
+                            <constraint firstItem="SOd-jy-nXF" firstAttribute="top" secondItem="Vc0-Eu-Yth" secondAttribute="bottom" constant="4" id="LWO-Ye-JkV"/>
+                            <constraint firstAttribute="width" priority="750" constant="125" id="M2f-nq-Jqw"/>
+                            <constraint firstAttribute="trailing" secondItem="SOd-jy-nXF" secondAttribute="trailing" id="M6W-rn-AyK"/>
+                            <constraint firstItem="Vc0-Eu-Yth" firstAttribute="top" secondItem="vzL-gC-yEE" secondAttribute="top" id="ONd-RS-lQR"/>
+                            <constraint firstAttribute="bottom" secondItem="SOd-jy-nXF" secondAttribute="bottom" id="WIJ-kF-GaM"/>
+                            <constraint firstItem="SOd-jy-nXF" firstAttribute="leading" secondItem="vzL-gC-yEE" secondAttribute="leading" id="l9o-qL-0nB"/>
+                            <constraint firstAttribute="trailing" secondItem="Vc0-Eu-Yth" secondAttribute="trailing" id="nf7-66-0YD"/>
+                            <constraint firstItem="Vc0-Eu-Yth" firstAttribute="leading" secondItem="vzL-gC-yEE" secondAttribute="leading" id="wJN-mK-iDx"/>
+                        </constraints>
+                    </view>
+                    <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PNb-c8-wBc">
+                        <rect key="frame" x="267" y="177" width="125" height="91"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dummy-placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="IyK-tp-iEZ" customClass="ProductImageView" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="125" height="66"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="66" id="O6c-Vh-7vj"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Camera &amp; Optics" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C26-Sv-cQa">
+                                <rect key="frame" x="0.0" y="70" width="125" height="21"/>
+                                <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="12"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="IyK-tp-iEZ" firstAttribute="leading" secondItem="PNb-c8-wBc" secondAttribute="leading" id="0oU-ta-ElP"/>
+                            <constraint firstAttribute="trailing" secondItem="C26-Sv-cQa" secondAttribute="trailing" id="26p-8Y-Qwb"/>
+                            <constraint firstItem="C26-Sv-cQa" firstAttribute="top" secondItem="IyK-tp-iEZ" secondAttribute="bottom" constant="4" id="6uE-5r-JCX"/>
+                            <constraint firstAttribute="trailing" secondItem="IyK-tp-iEZ" secondAttribute="trailing" id="9IO-SH-lMr"/>
+                            <constraint firstItem="IyK-tp-iEZ" firstAttribute="top" secondItem="PNb-c8-wBc" secondAttribute="top" id="Kwk-gv-qgD"/>
+                            <constraint firstItem="C26-Sv-cQa" firstAttribute="leading" secondItem="PNb-c8-wBc" secondAttribute="leading" id="WwB-WE-6xg"/>
+                            <constraint firstAttribute="width" priority="750" constant="125" id="cAQ-wV-lES"/>
+                            <constraint firstAttribute="bottom" secondItem="C26-Sv-cQa" secondAttribute="bottom" id="jnq-Hc-Nt1"/>
+                            <constraint firstAttribute="height" constant="91" id="puX-y4-yNg"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            </view>
+            <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstItem="ffe-ao-zQ9" firstAttribute="height" secondItem="1Vr-t2-7zE" secondAttribute="height" id="3jY-0o-5pr"/>
+                <constraint firstAttribute="trailing" secondItem="PNb-c8-wBc" secondAttribute="trailing" constant="7" id="A83-DC-B1P"/>
+                <constraint firstItem="PNb-c8-wBc" firstAttribute="height" secondItem="vzL-gC-yEE" secondAttribute="height" id="Hcj-d0-WJ0"/>
+                <constraint firstItem="PNb-c8-wBc" firstAttribute="top" secondItem="1Vr-t2-7zE" secondAttribute="bottom" constant="11" id="Kkf-Eg-j6h"/>
+                <constraint firstItem="ffe-ao-zQ9" firstAttribute="width" secondItem="1Vr-t2-7zE" secondAttribute="width" id="LNW-kd-1hW"/>
+                <constraint firstItem="ffe-ao-zQ9" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="13" id="Nyh-ok-jQS"/>
+                <constraint firstItem="1Vr-t2-7zE" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="13" id="PIe-0Q-aEI"/>
+                <constraint firstItem="ffe-ao-zQ9" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="8" id="T6M-XR-eQX"/>
+                <constraint firstItem="vzL-gC-yEE" firstAttribute="leading" secondItem="82Y-hh-gJs" secondAttribute="trailing" constant="4" id="VPA-ng-p2A"/>
+                <constraint firstItem="PNb-c8-wBc" firstAttribute="height" secondItem="82Y-hh-gJs" secondAttribute="height" id="W8o-lw-6Pl"/>
+                <constraint firstItem="PNb-c8-wBc" firstAttribute="width" secondItem="82Y-hh-gJs" secondAttribute="width" id="Yf2-Xr-Tke"/>
+                <constraint firstItem="82Y-hh-gJs" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="8" id="Zef-lm-Ym0"/>
+                <constraint firstItem="vzL-gC-yEE" firstAttribute="top" secondItem="1Vr-t2-7zE" secondAttribute="bottom" constant="11" id="h48-yc-tS9"/>
+                <constraint firstItem="82Y-hh-gJs" firstAttribute="top" secondItem="ffe-ao-zQ9" secondAttribute="bottom" constant="11" id="hcl-TS-ZT2"/>
+                <constraint firstItem="PNb-c8-wBc" firstAttribute="leading" secondItem="vzL-gC-yEE" secondAttribute="trailing" constant="5" id="moV-rm-Ybm"/>
+                <constraint firstAttribute="bottom" secondItem="1Vr-t2-7zE" secondAttribute="bottom" constant="110" id="stK-Bm-KWf"/>
+                <constraint firstAttribute="trailing" secondItem="1Vr-t2-7zE" secondAttribute="trailing" constant="7" id="th8-jn-pfo"/>
+                <constraint firstItem="1Vr-t2-7zE" firstAttribute="leading" secondItem="ffe-ao-zQ9" secondAttribute="trailing" constant="8" id="wry-S3-Lon"/>
+                <constraint firstItem="PNb-c8-wBc" firstAttribute="width" secondItem="vzL-gC-yEE" secondAttribute="width" id="yqV-Mv-pzL"/>
+            </constraints>
+            <size key="customSize" width="399" height="196"/>
+            <connections>
+                <outlet property="productFiveNameLabel" destination="C26-Sv-cQa" id="scS-Ow-e8o"/>
+                <outlet property="productFourNameLabel" destination="SOd-jy-nXF" id="Ta5-oj-dsH"/>
+                <outlet property="productImageViewFive" destination="IyK-tp-iEZ" id="KgU-xq-S2Q"/>
+                <outlet property="productImageViewFour" destination="Vc0-Eu-Yth" id="82D-Sj-qbo"/>
+                <outlet property="productImageViewOne" destination="H7S-oc-Bii" id="dFh-iP-TGh"/>
+                <outlet property="productImageViewThree" destination="ymM-ZI-0fX" id="Co7-lK-CfP"/>
+                <outlet property="productImageViewTwo" destination="f2C-mI-XnO" id="w99-sP-ILe"/>
+                <outlet property="productOneNameLabel" destination="Mf4-Zc-QoO" id="Vev-M9-a4A"/>
+                <outlet property="productThreeNameLabel" destination="Czj-OQ-uEb" id="SZJ-lE-VkZ"/>
+                <outlet property="productTwoNameLabel" destination="vkU-Kg-25e" id="X8v-Xk-0gS"/>
+                <outlet property="viewFive" destination="PNb-c8-wBc" id="xCj-cx-BEM"/>
+                <outlet property="viewFour" destination="vzL-gC-yEE" id="Xkh-Lq-aGV"/>
+                <outlet property="viewOne" destination="ffe-ao-zQ9" id="rSF-tJ-hp3"/>
+                <outlet property="viewThree" destination="82Y-hh-gJs" id="D3O-EA-gwR"/>
+                <outlet property="viewTwo" destination="1Vr-t2-7zE" id="q0Y-em-lgR"/>
+            </connections>
+            <point key="canvasLocation" x="343.5" y="303"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="dummy-placeholder" width="1280" height="800"/>
+    </resources>
+</document>

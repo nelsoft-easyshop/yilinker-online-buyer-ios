@@ -140,6 +140,17 @@ extension UIImage {
         UIGraphicsEndImageContext()
         return normalizedImage
     }
+    
+    func resize(scale:CGFloat)-> UIImage {
+        let imageView = UIImageView(frame: CGRect(origin: CGPoint(x: 0, y: 0), size: CGSize(width: size.width*scale, height: size.height*scale)))
+        imageView.contentMode = UIViewContentMode.ScaleAspectFit
+        imageView.image = self
+        UIGraphicsBeginImageContext(imageView.bounds.size)
+        imageView.layer.renderInContext(UIGraphicsGetCurrentContext()!)
+        let result = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return result
+    }
 }
 
 
@@ -171,6 +182,17 @@ extension UIAlertController {
         let OKAction = UIAlertAction(title: Constants.Localized.ok, style: .Default) { (action) in }
         alert.addAction(OKAction)
         target.presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    class func displayAlertRedirectionToLogin(target: AnyObject, actionHandler: (sucess: Bool) -> Void) {
+        let alertController: UIAlertController = UIAlertController(title: Constants.Localized.error, message: "Cannot verify your account please login.", preferredStyle: UIAlertControllerStyle.Alert)
+        
+        let login: UIAlertAction = UIAlertAction(title: "Login", style: UIAlertActionStyle.Default, handler: { (UIAlertAction) -> Void in
+            actionHandler(sucess: true)
+        })
+        
+        alertController.addAction(login)
+        target.presentViewController(alertController, animated: true, completion: nil)
     }
 }
 
@@ -299,6 +321,15 @@ extension String {
     func formatToPeso() -> String {
         return "₱\(self)"
     }
+    
+    func stringCharacterAtIndex(index: Int) -> String {
+       return "\(Array(self)[index])"
+    }
+    
+    func formatToPercentage() -> String {
+        return "\(self)%"
+    }
+    
 }
 
 extension NSURL {

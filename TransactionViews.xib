@@ -7,12 +7,52 @@
     <customFonts key="customFonts">
         <mutableArray key="Panton Bold.otf">
             <string>Panton-Bold</string>
+            <string>Panton-Bold</string>
+            <string>Panton-Bold</string>
         </mutableArray>
         <mutableArray key="Panton Light.otf">
             <string>Panton-Light</string>
             <string>Panton-Light</string>
         </mutableArray>
+        <mutableArray key="Panton SemiBold.otf">
+            <string>Panton-SemiBold</string>
+            <string>Panton-SemiBold</string>
+            <string>Panton-SemiBold</string>
+            <string>Panton-SemiBold</string>
+        </mutableArray>
         <mutableArray key="Panton.otf">
+            <string>Panton-Regular</string>
+            <string>Panton-Regular</string>
+            <string>Panton-Regular</string>
+            <string>Panton-Regular</string>
+            <string>Panton-Regular</string>
+            <string>Panton-Regular</string>
+            <string>Panton-Regular</string>
+            <string>Panton-Regular</string>
+            <string>Panton-Regular</string>
+            <string>Panton-Regular</string>
+            <string>Panton-Regular</string>
+            <string>Panton-Regular</string>
+            <string>Panton-Regular</string>
+            <string>Panton-Regular</string>
+            <string>Panton-Regular</string>
+            <string>Panton-Regular</string>
+            <string>Panton-Regular</string>
+            <string>Panton-Regular</string>
+            <string>Panton-Regular</string>
+            <string>Panton-Regular</string>
+            <string>Panton-Regular</string>
+            <string>Panton-Regular</string>
+            <string>Panton-Regular</string>
+            <string>Panton-Regular</string>
+            <string>Panton-Regular</string>
+            <string>Panton-Regular</string>
+            <string>Panton-Regular</string>
+            <string>Panton-Regular</string>
+            <string>Panton-Regular</string>
+            <string>Panton-Regular</string>
+            <string>Panton-Regular</string>
+            <string>Panton-Regular</string>
             <string>Panton-Regular</string>
             <string>Panton-Regular</string>
             <string>Panton-Regular</string>
@@ -30,7 +70,7 @@
                     <constraints>
                         <constraint firstAttribute="height" constant="21" id="6UR-xb-8rv"/>
                     </constraints>
-                    <fontDescription key="fontDescription" type="system" weight="thin" pointSize="20"/>
+                    <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="20"/>
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
@@ -39,7 +79,7 @@
                     <constraints>
                         <constraint firstAttribute="height" constant="21" id="XKD-09-eE2"/>
                     </constraints>
-                    <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                    <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="20"/>
                     <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
@@ -69,7 +109,7 @@
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Status" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sNJ-Cr-Fca">
                             <rect key="frame" x="8" y="0.0" width="54" height="37"/>
-                            <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
+                            <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="15"/>
                             <color key="textColor" red="0.29803922770000002" green="0.29803922770000002" blue="0.29803922770000002" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
@@ -85,7 +125,7 @@
                             <constraints>
                                 <constraint firstAttribute="width" constant="101" id="OtL-gf-uL0"/>
                             </constraints>
-                            <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
+                            <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="15"/>
                             <color key="textColor" red="0.29803922770000002" green="0.29803922770000002" blue="0.29803922770000002" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
@@ -99,7 +139,7 @@
                         </view>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Date Created" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V4v-yD-xAF">
                             <rect key="frame" x="10" y="72" width="102" height="37"/>
-                            <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
+                            <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="15"/>
                             <color key="textColor" red="0.29803922770000002" green="0.29803922770000002" blue="0.29803922770000002" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
@@ -109,7 +149,7 @@
                                 <constraint firstAttribute="width" constant="245" id="SKb-Tg-try"/>
                                 <constraint firstAttribute="height" constant="37" id="j29-YG-zAB"/>
                             </constraints>
-                            <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
+                            <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="15"/>
                             <color key="textColor" red="0.29803922770000002" green="0.29803922770000002" blue="0.29803922770000002" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
@@ -122,7 +162,7 @@
                         </view>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Total Quantity" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Cg-pb-bpa">
                             <rect key="frame" x="8" y="108" width="106" height="37"/>
-                            <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
+                            <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="15"/>
                             <color key="textColor" red="0.29803922770000002" green="0.29803922770000002" blue="0.29803922770000002" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
@@ -132,7 +172,7 @@
                                 <constraint firstAttribute="height" constant="37" id="5sk-K7-9On"/>
                                 <constraint firstAttribute="width" constant="131" id="BX8-tb-B0P"/>
                             </constraints>
-                            <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
+                            <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="15"/>
                             <color key="textColor" red="0.29803922770000002" green="0.29803922770000002" blue="0.29803922770000002" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
@@ -145,7 +185,7 @@
                         </view>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Total Unit Cost" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="McM-dh-3sc">
                             <rect key="frame" x="8" y="144" width="114" height="37"/>
-                            <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
+                            <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="15"/>
                             <color key="textColor" red="0.29803922770000002" green="0.29803922770000002" blue="0.29803922770000002" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
@@ -155,7 +195,7 @@
                                 <constraint firstAttribute="width" constant="131" id="4WA-Nx-QIt"/>
                                 <constraint firstAttribute="height" constant="37" id="ymZ-K9-EIs"/>
                             </constraints>
-                            <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
+                            <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="15"/>
                             <color key="textColor" red="0.29803922770000002" green="0.29803922770000002" blue="0.29803922770000002" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
@@ -168,7 +208,7 @@
                         </view>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Shipping Fee" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BHx-rn-7Ju">
                             <rect key="frame" x="8" y="180" width="101" height="37"/>
-                            <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
+                            <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="15"/>
                             <color key="textColor" red="0.29803922770000002" green="0.29803922770000002" blue="0.29803922770000002" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
@@ -178,7 +218,7 @@
                                 <constraint firstAttribute="height" constant="37" id="LFD-Kt-ezL"/>
                                 <constraint firstAttribute="width" constant="131" id="jaq-uL-NEZ"/>
                             </constraints>
-                            <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
+                            <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="15"/>
                             <color key="textColor" red="0.29803922770000002" green="0.29803922770000002" blue="0.29803922770000002" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
@@ -189,19 +229,13 @@
                                 <constraint firstAttribute="height" constant="1" id="YRT-Ht-XYv"/>
                             </constraints>
                         </view>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Total Cost" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y1c-2V-BTY">
-                            <rect key="frame" x="8" y="216" width="78" height="36"/>
-                            <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
-                            <color key="textColor" red="0.29803922770000002" green="0.29803922770000002" blue="0.29803922770000002" alpha="1" colorSpace="calibratedRGB"/>
-                            <nil key="highlightedColor"/>
-                        </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="51,998" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K5P-w6-iC7">
                             <rect key="frame" x="177" y="216" width="190" height="36"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="36" id="A3H-jE-sMs"/>
                                 <constraint firstAttribute="width" constant="190" id="asy-lq-Vog"/>
                             </constraints>
-                            <fontDescription key="fontDescription" type="system" weight="thin" pointSize="25"/>
+                            <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="25"/>
                             <color key="textColor" red="0.50122048590000001" green="0.0" blue="0.7202493687" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
@@ -236,6 +270,12 @@
                                 <constraint firstAttribute="height" constant="37" id="7Zf-yl-Ilu"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
+                            <color key="textColor" red="0.29803922770000002" green="0.29803922770000002" blue="0.29803922770000002" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Total Cost" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y1c-2V-BTY">
+                            <rect key="frame" x="8" y="216" width="78" height="36"/>
+                            <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="15"/>
                             <color key="textColor" red="0.29803922770000002" green="0.29803922770000002" blue="0.29803922770000002" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
@@ -291,7 +331,7 @@
                         <constraint firstAttribute="width" constant="67" id="300-JJ-2Y2"/>
                         <constraint firstAttribute="height" constant="37" id="Jvu-Ky-5np"/>
                     </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                    <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="12"/>
                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
@@ -506,7 +546,7 @@ Phiippines</string>
                             <constraints>
                                 <constraint firstAttribute="height" constant="21" id="4fQ-3H-2SS"/>
                             </constraints>
-                            <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
+                            <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="15"/>
                             <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
@@ -522,7 +562,7 @@ Phiippines</string>
                             <constraints>
                                 <constraint firstAttribute="height" constant="21" id="GAv-97-beM"/>
                             </constraints>
-                            <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
+                            <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="15"/>
                             <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
@@ -538,7 +578,7 @@ Phiippines</string>
                             <constraints>
                                 <constraint firstAttribute="height" constant="21" id="kmJ-hU-bFX"/>
                             </constraints>
-                            <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
+                            <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="15"/>
                             <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                             <nil key="highlightedColor"/>
                         </label>
@@ -547,7 +587,7 @@ Phiippines</string>
                             <constraints>
                                 <constraint firstAttribute="height" constant="21" id="3EC-re-Etg"/>
                             </constraints>
-                            <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
+                            <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="15"/>
                             <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                             <nil key="highlightedColor"/>
                         </label>
@@ -556,7 +596,7 @@ Phiippines</string>
                             <constraints>
                                 <constraint firstAttribute="height" constant="21" id="50R-P4-ubZ"/>
                             </constraints>
-                            <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
+                            <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="15"/>
                             <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
@@ -565,7 +605,7 @@ Phiippines</string>
                             <constraints>
                                 <constraint firstAttribute="height" constant="21" id="Uqw-4Q-jvM"/>
                             </constraints>
-                            <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
+                            <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="15"/>
                             <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                             <nil key="highlightedColor"/>
                         </label>
@@ -665,7 +705,7 @@ Phiippines</string>
                         <constraint firstAttribute="height" constant="37" id="1pq-Fb-RMb"/>
                         <constraint firstAttribute="width" constant="147" id="MoM-ji-YNs"/>
                     </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                    <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="12"/>
                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
@@ -705,7 +745,7 @@ Phiippines</string>
                     <constraints>
                         <constraint firstAttribute="height" constant="22" id="tAh-Bx-HsA"/>
                     </constraints>
-                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
+                    <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="18"/>
                     <color key="textColor" red="0.29803922770000002" green="0.29803922770000002" blue="0.29803922770000002" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
@@ -724,7 +764,7 @@ Phiippines</string>
                 </collectionView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The Beats Acoustic Engine makes your listening experience intimate, personal, and real." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9R9-EM-KOM">
                     <rect key="frame" x="8" y="57" width="367" height="32"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                    <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="13"/>
                     <color key="textColor" red="0.29803922770000002" green="0.29803922770000002" blue="0.29803922770000002" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
@@ -753,15 +793,6 @@ Phiippines</string>
             <rect key="frame" x="0.0" y="0.0" width="375" height="174"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Purchase Details" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kpH-dG-Fyi">
-                    <rect key="frame" x="8" y="0.0" width="367" height="42"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="42" id="lJJ-bO-BzG"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                    <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
-                    <nil key="highlightedColor"/>
-                </label>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8c9-sE-GfM" userLabel="Separator">
                     <rect key="frame" x="0.0" y="41" width="375" height="1"/>
                     <color key="backgroundColor" red="0.7019608021" green="0.7019608021" blue="0.7019608021" alpha="1" colorSpace="calibratedRGB"/>
@@ -775,7 +806,7 @@ Phiippines</string>
                         <constraint firstAttribute="width" constant="89" id="2iF-gf-4Vy"/>
                         <constraint firstAttribute="height" constant="43" id="JcK-HA-oSM"/>
                     </constraints>
-                    <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
+                    <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="15"/>
                     <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
@@ -784,7 +815,7 @@ Phiippines</string>
                     <constraints>
                         <constraint firstAttribute="height" constant="42" id="wud-bn-xtC"/>
                     </constraints>
-                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
+                    <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="15"/>
                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
@@ -801,7 +832,7 @@ Phiippines</string>
                         <constraint firstAttribute="height" constant="43" id="6Le-QJ-N3Z"/>
                         <constraint firstAttribute="width" constant="89" id="933-Fd-fS7"/>
                     </constraints>
-                    <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
+                    <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="15"/>
                     <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
@@ -810,7 +841,7 @@ Phiippines</string>
                     <constraints>
                         <constraint firstAttribute="height" constant="42" id="Xxt-z4-du7"/>
                     </constraints>
-                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
+                    <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="15"/>
                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
@@ -826,7 +857,7 @@ Phiippines</string>
                     <constraints>
                         <constraint firstAttribute="height" constant="42" id="w3R-AR-waL"/>
                     </constraints>
-                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="25"/>
+                    <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="25"/>
                     <color key="textColor" red="0.50122048590000001" green="0.0" blue="0.7202493687" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
@@ -836,7 +867,16 @@ Phiippines</string>
                         <constraint firstAttribute="width" constant="89" id="Xga-M9-vsn"/>
                         <constraint firstAttribute="height" constant="43" id="dbK-un-7O7"/>
                     </constraints>
-                    <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
+                    <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="15"/>
+                    <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Purchase Details" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kpH-dG-Fyi">
+                    <rect key="frame" x="8" y="0.0" width="367" height="42"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="42" id="lJJ-bO-BzG"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="15"/>
                     <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
@@ -892,7 +932,7 @@ Phiippines</string>
                     <constraints>
                         <constraint firstAttribute="height" constant="42" id="opw-RW-LQb"/>
                     </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="15"/>
                     <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
@@ -908,7 +948,7 @@ Phiippines</string>
                     <constraints>
                         <constraint firstAttribute="height" constant="42" id="ats-e0-s4m"/>
                     </constraints>
-                    <fontDescription key="fontDescription" type="system" weight="light" pointSize="13"/>
+                    <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="13"/>
                     <color key="textColor" red="0.29803922770000002" green="0.29803922770000002" blue="0.29803922770000002" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
@@ -920,7 +960,7 @@ Phiippines</string>
                         </imageView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="SEE MORE" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jsQ-aI-8bJ">
                             <rect key="frame" x="54" y="0.0" width="90" height="35"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                            <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="15"/>
                             <color key="textColor" red="0.50122048590000001" green="0.0" blue="0.7202493687" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
@@ -933,6 +973,7 @@ Phiippines</string>
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QIq-iT-Mk8">
                     <rect key="frame" x="8" y="8" width="359" height="120"/>
+                    <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="15"/>
                     <state key="normal">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
@@ -972,40 +1013,18 @@ Phiippines</string>
             <rect key="frame" x="0.0" y="0.0" width="375" height="140"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text="Bogs Borja" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="ldQ-CF-qdm">
-                    <rect key="frame" x="8" y="25" width="179" height="25"/>
-                    <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
-                    <color key="textColor" red="0.29803922770000002" green="0.29803922770000002" blue="0.29803922770000002" alpha="1" colorSpace="calibratedRGB"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="seller" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gbF-nW-wb7">
-                    <rect key="frame" x="8" y="8" width="179" height="26"/>
-                    <fontDescription key="fontDescription" name="Panton-Light" family="Panton" pointSize="13"/>
-                    <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qx5-w2-Yg0" userLabel="Separator">
+                <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qx5-w2-Yg0" userLabel="Separator">
                     <rect key="frame" x="0.0" y="72" width="375" height="1"/>
                     <color key="backgroundColor" red="0.7019608021" green="0.7019608021" blue="0.7019608021" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="1" id="iIN-NQ-mKC"/>
+                        <constraint firstAttribute="height" constant="1" id="mFo-3U-cEn"/>
                     </constraints>
                 </view>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text="+63 (0912) 431 985" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="F5P-s8-a3W">
-                    <rect key="frame" x="195" y="29" width="151" height="18"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="151" id="4SX-Og-2ir"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
-                    <color key="textColor" red="0.29803922770000002" green="0.29803922770000002" blue="0.29803922770000002" alpha="1" colorSpace="calibratedRGB"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dSz-Qa-k82" customClass="DynamicRoundedButton" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
+                <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dSz-Qa-k82" customClass="DynamicRoundedButton" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
                     <rect key="frame" x="246" y="92" width="121" height="28"/>
                     <color key="backgroundColor" red="0.35294117647058826" green="0.12156862745098039" blue="0.45882352941176469" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="width" priority="750" constant="121" id="HSb-tH-Rec"/>
-                        <constraint firstAttribute="height" constant="28" id="S7c-YI-MdN"/>
                     </constraints>
                     <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="11"/>
                     <state key="normal" title="MESSAGE">
@@ -1021,10 +1040,10 @@ Phiippines</string>
                         <action selector="message:" destination="HYi-6R-oZb" eventType="touchUpInside" id="Ul2-RP-r4f"/>
                     </connections>
                 </button>
-                <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h81-DO-sDz" customClass="DynamicRoundedButton" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
+                <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h81-DO-sDz" customClass="DynamicRoundedButton" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
                     <rect key="frame" x="8" y="92" width="177" height="28"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="28" id="dcp-7H-7hs"/>
+                        <constraint firstAttribute="height" constant="28" id="Iic-d0-zIP"/>
                         <constraint firstAttribute="width" priority="750" constant="177" id="w9E-wT-8tS"/>
                     </constraints>
                     <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="11"/>
@@ -1048,37 +1067,98 @@ Phiippines</string>
                         <action selector="leaveFeedback:" destination="HYi-6R-oZb" eventType="touchUpInside" id="4Sj-gn-4Rm"/>
                     </connections>
                 </button>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="contact number" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bys-yh-aL4">
-                    <rect key="frame" x="195" y="4" width="172" height="33"/>
-                    <fontDescription key="fontDescription" name="Panton-Light" family="Panton" pointSize="13"/>
-                    <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
-                    <nil key="highlightedColor"/>
-                </label>
+                <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OVT-ZX-6nh">
+                    <rect key="frame" x="0.0" y="8" width="375" height="20"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="seller" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gbF-nW-wb7">
+                            <rect key="frame" x="8" y="0.0" width="179" height="20"/>
+                            <fontDescription key="fontDescription" name="Panton-Light" family="Panton" pointSize="13"/>
+                            <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="contact number" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bys-yh-aL4">
+                            <rect key="frame" x="203" y="0.0" width="164" height="20"/>
+                            <fontDescription key="fontDescription" name="Panton-Light" family="Panton" pointSize="13"/>
+                            <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <constraints>
+                        <constraint firstAttribute="bottom" secondItem="gbF-nW-wb7" secondAttribute="bottom" id="1Mx-EC-wRR"/>
+                        <constraint firstItem="Bys-yh-aL4" firstAttribute="centerY" secondItem="gbF-nW-wb7" secondAttribute="centerY" id="9w8-lr-XSs"/>
+                        <constraint firstItem="gbF-nW-wb7" firstAttribute="leading" secondItem="OVT-ZX-6nh" secondAttribute="leading" constant="8" id="FqP-2N-KBR"/>
+                        <constraint firstAttribute="trailing" secondItem="Bys-yh-aL4" secondAttribute="trailing" constant="8" id="IfG-mb-phI"/>
+                        <constraint firstItem="gbF-nW-wb7" firstAttribute="top" secondItem="OVT-ZX-6nh" secondAttribute="top" id="Va0-cc-lD8"/>
+                        <constraint firstAttribute="bottom" secondItem="Bys-yh-aL4" secondAttribute="bottom" id="Xi3-Iy-lDr"/>
+                        <constraint firstAttribute="height" constant="20" id="YLd-Vj-bCv"/>
+                        <constraint firstItem="Bys-yh-aL4" firstAttribute="top" secondItem="gbF-nW-wb7" secondAttribute="top" id="auY-og-A2r"/>
+                        <constraint firstItem="Bys-yh-aL4" firstAttribute="leading" secondItem="gbF-nW-wb7" secondAttribute="trailing" constant="16" id="kwo-IY-Pfr"/>
+                        <constraint firstItem="Bys-yh-aL4" firstAttribute="top" secondItem="OVT-ZX-6nh" secondAttribute="top" id="zqB-XK-sy9"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JT7-pG-VuJ">
+                    <rect key="frame" x="0.0" y="28" width="375" height="36"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" misplaced="YES" text="Bogs Borja" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="ldQ-CF-qdm">
+                            <rect key="frame" x="8" y="6" width="179" height="25"/>
+                            <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="15"/>
+                            <color key="textColor" red="0.29803922770000002" green="0.29803922770000002" blue="0.29803922770000002" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" misplaced="YES" text="+63 (0912) 431 985" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="F5P-s8-a3W">
+                            <rect key="frame" x="200" y="6" width="167" height="25"/>
+                            <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="15"/>
+                            <color key="textColor" red="0.29803922770000002" green="0.29803922770000002" blue="0.29803922770000002" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nlf-3w-Ntu">
+                            <rect key="frame" x="8" y="6" width="179" height="25"/>
+                            <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="15"/>
+                            <state key="normal">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="goToSellerPage:" destination="HYi-6R-oZb" eventType="touchUpInside" id="kDR-Wf-0OZ"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <constraints>
+                        <constraint firstAttribute="centerY" secondItem="nlf-3w-Ntu" secondAttribute="centerY" id="3eh-ay-1sK"/>
+                        <constraint firstItem="F5P-s8-a3W" firstAttribute="leading" secondItem="ldQ-CF-qdm" secondAttribute="trailing" constant="13" id="8Xe-nR-JQZ"/>
+                        <constraint firstAttribute="centerY" secondItem="F5P-s8-a3W" secondAttribute="centerY" id="BzL-2Z-yHQ"/>
+                        <constraint firstAttribute="trailing" secondItem="F5P-s8-a3W" secondAttribute="trailing" constant="8" id="N0O-cR-T5B"/>
+                        <constraint firstItem="nlf-3w-Ntu" firstAttribute="width" secondItem="F5P-s8-a3W" secondAttribute="width" id="URR-kT-fR0"/>
+                        <constraint firstAttribute="height" constant="36" id="YRe-MV-alF"/>
+                        <constraint firstAttribute="bottom" secondItem="ldQ-CF-qdm" secondAttribute="bottom" constant="5" id="aoL-ng-EL5"/>
+                        <constraint firstAttribute="centerY" secondItem="ldQ-CF-qdm" secondAttribute="centerY" id="cb6-Ho-feR"/>
+                        <constraint firstItem="nlf-3w-Ntu" firstAttribute="leading" secondItem="JT7-pG-VuJ" secondAttribute="leading" constant="8" id="dXA-eF-gys"/>
+                        <constraint firstAttribute="bottom" secondItem="F5P-s8-a3W" secondAttribute="bottom" constant="5" id="e7S-Lg-YwA"/>
+                        <constraint firstAttribute="bottom" secondItem="nlf-3w-Ntu" secondAttribute="bottom" constant="5" id="hok-Z1-KHE"/>
+                        <constraint firstItem="ldQ-CF-qdm" firstAttribute="leading" secondItem="JT7-pG-VuJ" secondAttribute="leading" constant="8" id="vxd-pm-NZD"/>
+                        <constraint firstItem="F5P-s8-a3W" firstAttribute="leading" secondItem="nlf-3w-Ntu" secondAttribute="trailing" constant="13" id="yQa-Yx-k5J"/>
+                    </constraints>
+                </view>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="gbF-nW-wb7" firstAttribute="top" secondItem="HYi-6R-oZb" secondAttribute="top" constant="8" id="1Fq-sH-l67"/>
-                <constraint firstItem="gbF-nW-wb7" firstAttribute="leading" secondItem="HYi-6R-oZb" secondAttribute="leading" constant="8" id="2a4-Fc-Uqf"/>
-                <constraint firstAttribute="trailing" secondItem="F5P-s8-a3W" secondAttribute="trailing" constant="29" id="9HX-JC-NAE"/>
-                <constraint firstItem="Bys-yh-aL4" firstAttribute="top" secondItem="HYi-6R-oZb" secondAttribute="top" constant="4" id="CDn-8D-WgV"/>
-                <constraint firstItem="qx5-w2-Yg0" firstAttribute="top" secondItem="gbF-nW-wb7" secondAttribute="bottom" constant="38" id="Hco-gV-yLO"/>
-                <constraint firstAttribute="bottom" secondItem="dSz-Qa-k82" secondAttribute="bottom" constant="20" id="KJa-vQ-NFd"/>
-                <constraint firstItem="Bys-yh-aL4" firstAttribute="leading" secondItem="gbF-nW-wb7" secondAttribute="trailing" constant="8" id="KgS-uT-BhM"/>
-                <constraint firstAttribute="trailing" secondItem="qx5-w2-Yg0" secondAttribute="trailing" id="LR5-IA-KGQ"/>
-                <constraint firstAttribute="trailing" secondItem="Bys-yh-aL4" secondAttribute="trailing" constant="8" id="RPK-xf-4CU"/>
+                <constraint firstAttribute="trailing" secondItem="JT7-pG-VuJ" secondAttribute="trailing" id="1nS-k9-syj"/>
+                <constraint firstAttribute="trailing" secondItem="qx5-w2-Yg0" secondAttribute="trailing" id="20o-zt-RTN"/>
+                <constraint firstAttribute="trailing" secondItem="OVT-ZX-6nh" secondAttribute="trailing" id="8h7-tc-wXP"/>
+                <constraint firstItem="h81-DO-sDz" firstAttribute="top" secondItem="qx5-w2-Yg0" secondAttribute="bottom" constant="19" id="BZ6-cB-9dD"/>
+                <constraint firstItem="F5P-s8-a3W" firstAttribute="leading" secondItem="Bys-yh-aL4" secondAttribute="leading" constant="-3" id="R4f-mh-zJP"/>
                 <constraint firstItem="dSz-Qa-k82" firstAttribute="leading" secondItem="h81-DO-sDz" secondAttribute="trailing" constant="61" id="RbV-T2-mjv"/>
-                <constraint firstItem="F5P-s8-a3W" firstAttribute="leading" secondItem="ldQ-CF-qdm" secondAttribute="trailing" constant="8" id="Rbb-0k-EXb"/>
-                <constraint firstItem="ldQ-CF-qdm" firstAttribute="top" secondItem="gbF-nW-wb7" secondAttribute="bottom" constant="-9" id="TiK-CE-Yj3"/>
-                <constraint firstItem="h81-DO-sDz" firstAttribute="top" secondItem="qx5-w2-Yg0" secondAttribute="bottom" constant="19" id="USx-3o-Yao"/>
-                <constraint firstItem="Bys-yh-aL4" firstAttribute="leading" secondItem="F5P-s8-a3W" secondAttribute="leading" id="YHl-Vp-pb3"/>
+                <constraint firstItem="JT7-pG-VuJ" firstAttribute="top" secondItem="OVT-ZX-6nh" secondAttribute="bottom" id="WV7-PZ-6wK"/>
+                <constraint firstItem="JT7-pG-VuJ" firstAttribute="leading" secondItem="HYi-6R-oZb" secondAttribute="leading" id="YMa-Sm-dd9"/>
                 <constraint firstAttribute="trailing" secondItem="dSz-Qa-k82" secondAttribute="trailing" constant="8" id="bBd-D3-xMU"/>
-                <constraint firstAttribute="bottom" secondItem="h81-DO-sDz" secondAttribute="bottom" constant="20" id="bUv-AO-Vmx"/>
                 <constraint firstItem="h81-DO-sDz" firstAttribute="leading" secondItem="HYi-6R-oZb" secondAttribute="leading" constant="8" id="bs8-Tk-GLr"/>
-                <constraint firstItem="qx5-w2-Yg0" firstAttribute="leading" secondItem="HYi-6R-oZb" secondAttribute="leading" id="gea-ZP-S9i"/>
-                <constraint firstItem="qx5-w2-Yg0" firstAttribute="top" secondItem="ldQ-CF-qdm" secondAttribute="bottom" constant="22" id="jnV-Lt-CtX"/>
-                <constraint firstItem="ldQ-CF-qdm" firstAttribute="leading" secondItem="HYi-6R-oZb" secondAttribute="leading" constant="8" id="kVF-Wh-eG9"/>
-                <constraint firstItem="F5P-s8-a3W" firstAttribute="top" secondItem="Bys-yh-aL4" secondAttribute="bottom" constant="-8" id="lqg-fg-RLu"/>
-                <constraint firstItem="qx5-w2-Yg0" firstAttribute="top" secondItem="F5P-s8-a3W" secondAttribute="bottom" constant="25" id="uEj-Vo-joi"/>
+                <constraint firstItem="h81-DO-sDz" firstAttribute="height" secondItem="dSz-Qa-k82" secondAttribute="height" id="cCk-P6-AA5"/>
+                <constraint firstItem="h81-DO-sDz" firstAttribute="centerY" secondItem="dSz-Qa-k82" secondAttribute="centerY" id="cNj-jb-DDW"/>
+                <constraint firstItem="OVT-ZX-6nh" firstAttribute="leading" secondItem="HYi-6R-oZb" secondAttribute="leading" id="pNI-Gx-y28"/>
+                <constraint firstItem="qx5-w2-Yg0" firstAttribute="leading" secondItem="HYi-6R-oZb" secondAttribute="leading" id="qQR-BX-L7r"/>
+                <constraint firstItem="JT7-pG-VuJ" firstAttribute="top" secondItem="OVT-ZX-6nh" secondAttribute="bottom" id="w0e-Yn-BMP"/>
+                <constraint firstItem="OVT-ZX-6nh" firstAttribute="top" secondItem="HYi-6R-oZb" secondAttribute="top" id="wPk-EQ-g1c"/>
+                <constraint firstItem="qx5-w2-Yg0" firstAttribute="top" secondItem="JT7-pG-VuJ" secondAttribute="bottom" constant="8" id="yFL-os-dKG"/>
+                <constraint firstItem="dSz-Qa-k82" firstAttribute="top" secondItem="qx5-w2-Yg0" secondAttribute="bottom" constant="19" id="yLy-oa-3xm"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
@@ -1088,8 +1168,9 @@ Phiippines</string>
                 <outlet property="sellerContactNumberTitle" destination="Bys-yh-aL4" id="Kbb-ea-JpE"/>
                 <outlet property="sellerNameLabel" destination="ldQ-CF-qdm" id="vmF-NI-ePu"/>
                 <outlet property="sellerNameLabelTitle" destination="gbF-nW-wb7" id="Fof-dN-ulU"/>
+                <outlet property="sellerStorePageButton" destination="nlf-3w-Ntu" id="9vv-2W-VMG"/>
             </connections>
-            <point key="canvasLocation" x="800.5" y="624"/>
+            <point key="canvasLocation" x="793.5" y="615"/>
         </view>
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="PcZ-VS-qjU" userLabel="Product Description" customClass="TransactionSectionHeaderView" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="375" height="25"/>

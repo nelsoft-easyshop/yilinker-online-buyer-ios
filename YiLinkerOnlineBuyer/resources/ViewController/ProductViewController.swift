@@ -45,6 +45,7 @@ struct ProductStrings {
     static let avoidIssues = StringHelper.localizedStringWithKey("ALERT_AVOID_ISSUES_LOCALIZE_KEY")
     static let alertOutOfStock = StringHelper.localizedStringWithKey("ALERT_OUT_OF_STOCK_LOCALIZE_KEY")
     static let alertSellerNotAvailable = StringHelper.localizedStringWithKey("ALERT_SELLER_NOT_AVAILABLE_LOCALIZE_KEY")
+    static let alertCannotProcceed = StringHelper.localizedStringWithKey("CANNOT_PROCEED_LOCALIZE_KEY")
 }
 
 protocol ProductViewControllerDelegate {
@@ -91,6 +92,8 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     
     var canShowExtendedDetails: Bool = false
     
+    @IBOutlet weak var buttonsContainerVerticalConstraint: NSLayoutConstraint!
+    @IBOutlet weak var buttonsContainerHeight: NSLayoutConstraint!
     // MARK: Request Checker
     var productRequest = false
     var reviewRequest = false
@@ -117,8 +120,8 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     var kChrisTableViewAnimationThreshold: Float = 30.0
     
     // MARK: Parameters
-    var unitId: String = "0"
-    var productId: String = "0"
+    var unitId: String = "-1"
+    var productId: String = "-1"
     var quantity: Int = 1
     
     // MARK: - View Life Cycle
@@ -244,10 +247,10 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         // reached top or bottom
         if scrollView.contentOffset.y <= 0.0 {
             visibility = 0.0
-//            canShowExtendedDetails = false
+            canShowExtendedDetails = false
         } else if scrollView.contentOffset.y + scrollView.frame.size.height == scrollView.contentSize.height {
             visibility = 1.0
-//            canShowExtendedDetails = true
+            canShowExtendedDetails = true
         }
 
         self.navigationController?.navigationBar.alpha = CGFloat(visibility)
@@ -432,7 +435,9 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
             if responseObject["isSuccessful"] as! Bool {
                 self.productDetailsModel = ProductDetailsModel.parseDataWithDictionary(responseObject)
                 self.productId = self.productDetailsModel.id
-                self.unitId = self.productDetailsModel.productUnits[0].productUnitId
+                if !self.isFromCart {
+                    self.unitId = self.productDetailsModel.productUnits[0].productUnitId
+                }
                 
                 self.getUnitIdIndexFrom()
                 
@@ -554,7 +559,10 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
                 
                 if task.statusCode == 401 {
                     self.requestRefreshToken("wishlist")
+                } else if task.statusCode == 404 {
+                    
                 } else {
+                    self.showAlert(title: ProductStrings.alertWentWrong, message: nil)
                     println(error)
                     self.hud?.hide(true)
                 }
@@ -624,6 +632,8 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
                 
                 if task.statusCode == 401 {
                     self.requestRefreshToken("cart")
+                } else if task.statusCode == 404 {
+
                 } else {
                     self.showAlert(title: ProductStrings.alertWentWrong, message: nil)
                     self.hud?.hide(true)
@@ -659,8 +669,16 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
             
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong. . .", title: "Error")
-                self.hud?.hide(true)
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                
+                if task.statusCode == 401 {
+                    self.requestRefreshToken("cart")
+                } else if task.statusCode == 404 {
+                    
+                } else {
+                    self.showAlert(title: ProductStrings.alertWentWrong, message: nil)
+                    self.hud?.hide(true)
+                }
         })
     }
     
@@ -689,6 +707,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
             
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
+                println("ERROR IN REFRESHING TOKEN")
                 println(error)
                 self.hud?.hide(true)
                 if SessionManager.isLoggedIn() {
@@ -712,10 +731,8 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
                     "keyword"       : "",
                     "access_token"  : SessionManager.accessToken()
                     ] as Dictionary<String, String>
-                
-                let url = APIAtlas.baseUrl + APIAtlas.ACTION_GET_CONTACTS
-                
-                manager.POST(url, parameters: parameters, success: {
+
+                manager.POST(APIAtlas.ACTION_GET_CONTACTS + "/", parameters: parameters, success: {
                     (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
                     self.contacts = W_Contact.parseContacts(responseObject as! NSDictionary)
                     }, failure: {
@@ -725,10 +742,13 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
                             if (SessionManager.isLoggedIn()){
                                 self.requestRefreshToken("message")
                             }
+                        } else if task.statusCode == 404 {
+                            println(error)
                         } else {
-                            if (SessionManager.isLoggedIn()){
-                                self.showAlert(title: Constants.Localized.error, message: Constants.Localized.someThingWentWrong)
-                            }
+                            println(error)
+//                            if (SessionManager.isLoggedIn()){
+//                                self.showAlert(title: Constants.Localized.error, message: Constants.Localized.someThingWentWrong)
+//                            }
                         }
                         
                         self.contacts = Array<W_Contact>()
@@ -797,13 +817,6 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         }
         self.tableView.hidden = false
         self.buttonsContainer.hidden = false
-        
-        if isFromCart {
-            let dimButtonsView: UIView = UIView(frame: self.buttonsContainer.bounds)
-            dimButtonsView.backgroundColor = .blackColor()
-            dimButtonsView.alpha = 0.5
-            self.buttonsContainer.addSubview(dimButtonsView)
-        }
 
         self.getHeaderView().addSubview(self.getProductImagesView())
         self.getHeaderView().addSubview(self.getProductDetailsView())
@@ -815,16 +828,39 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         self.getFooterView().addSubview(self.getProductDescriptionView())
         self.getFooterView().addSubview(self.getProductDetailsBottomView())
         
-        self.productImagesView.setDetails(self.productDetailsModel, unitId: unitIdIndex, width: self.view.frame.size.width)
-        //        self.setDetails(productDetailsModel.details)
-        self.setDetails([ProductStrings.freeShipping, ProductStrings.sevenDayReturn])
-        
-        var productQuantity: Int = self.productDetailsModel.productUnits[0].quantity
-        if productQuantity != 0 {
-            productQuantity = 1
+        if !isFromCart {
+            self.quantity = self.productDetailsModel.productUnits[0].quantity
+            if self.quantity != 0 {
+                self.quantity = 1
+            }
+            self.productImagesView.setDetails(self.productDetailsModel, unitId: unitIdIndex, width: self.view.frame.size.width)
+        } else {
+            self.getUnitIdIndexFrom()
+            var images: [String] = []
+            for productUnit in self.productDetailsModel.productUnits {
+                if self.unitId == productUnit.productUnitId {
+                    if productUnit.imageIds.count != 0 {
+                        for j in 0..<productUnit.imageIds.count {
+                            for l in 0..<self.productDetailsModel.images.count {
+                                println("\(productUnit.imageIds[j]) == \(self.productDetailsModel.images[l].id)")
+                                if productUnit.imageIds[j] == self.productDetailsModel.images[l].id {
+                                    println(self.productDetailsModel.images[l].imageLocation)
+                                    images.append(self.productDetailsModel.images[l].imageLocation)
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            self.productImagesView.setDetails(self.productDetailsModel, unitId: unitIdIndex, width: self.view.frame.size.width)
+            self.productImagesView.updateDetails(self.productDetailsModel, unitId: unitIdIndex, images: images)
         }
         
-        self.setAttributes(self.productDetailsModel.attributes, productUnits: self.productDetailsModel.productUnits, unitId: self.unitId, quantity: productQuantity)
+//        self.setDetails(productDetailsModel.details)
+        self.setDetails([ProductStrings.freeShipping, ProductStrings.sevenDayReturn])
+        
+        self.setAttributes(self.productDetailsModel.attributes, productUnits: self.productDetailsModel.productUnits, unitId: self.unitId, quantity: self.quantity)
         self.productDescriptionView.setDescription(productDetailsModel.shortDescription, full: productDetailsModel.fullDescription)
         
         
@@ -853,6 +889,13 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         
         addExtendedView()
         self.buttonsContainer.layer.zPosition = 2
+        
+        if isFromCart {
+            buttonsContainerHeight.constant = 0.0
+            self.view.layoutIfNeeded()
+            self.buttonsContainer.hidden = true
+            self.productDetailsExtendedView.frame.size.height += 65
+        }
     }
     
     func setDetails(list: NSArray) {
@@ -1047,7 +1090,8 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         attributeModal.definesPresentationContext = true
         attributeModal.view.backgroundColor = UIColor.clearColor()
         attributeModal.view.frame.origin.y = attributeModal.view.frame.size.height
-        attributeModal.passModel(productDetailsModel: productDetailsModel, selectedValue: selectedValue, selectedId: selectedId, unitIdIndex: unitIdIndex, quantity: self.quantity, price: self.productImagesView.priceLabel.text!, imageIndex: self.productImagesView.pageControl.currentPage)
+//        attributeModal.passModel(productDetailsModel: productDetailsModel, selectedValue: selectedValue, selectedId: selectedId, unitIdIndex: unitIdIndex, quantity: self.quantity, price: self.productImagesView.priceLabel.text!, imageIndex: self.productImagesView.pageControl.currentPage)
+        attributeModal.passModel2(productDetailsModel: productDetailsModel, selectedValue: selectedValue, unitId: self.unitId, quantity: self.quantity, price: self.productImagesView.priceLabel.text!, imageIndex: self.productImagesView.pageControl.currentPage)
         attributeModal.setTitle = title
         attributeModal.tabController = self.tabController
         attributeModal.screenWidth = self.view.frame.width

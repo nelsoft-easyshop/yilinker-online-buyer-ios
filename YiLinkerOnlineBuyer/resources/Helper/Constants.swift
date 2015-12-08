@@ -70,7 +70,6 @@ struct Constants {
         //production
 //        static let clientID = "1_9t2337riou0wsws84ckw8gkck8os8skw8cokoooc04gc0kssc"
 //        static let clientSecret = "1vmep15il4cgw8gc0g8gokokk0wwkko0cg0go0s4c484kwswo4"
-        
         static let grantRefreshToken = "refresh_token"
         static let grantBuyer = "http://yilinker-online.com/grant/buyer"
         static let gmailCredential = "231249450400-diffl4ab61n8qaum66bd4v8uuc0bqtq6.apps.googleusercontent.com"

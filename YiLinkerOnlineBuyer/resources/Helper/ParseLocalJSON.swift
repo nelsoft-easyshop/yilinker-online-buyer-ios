@@ -19,12 +19,12 @@ struct ParseLocalJSON {
         return dictionary
     }
     
-    static func fileNameWithArray(fileName : String) -> NSArray {
+    static func fileNameWithArray(fileName : String) -> [NSDictionary] {
         
         let path = NSBundle.mainBundle().pathForResource(fileName, ofType: "json")
         var text = String(contentsOfFile: path!, encoding: NSUTF8StringEncoding, error: nil)!
         
-        let dictionary = text.parseJSONString as! NSArray
+        let dictionary = text.parseJSONString as! [NSDictionary]
         return dictionary
     }
 }

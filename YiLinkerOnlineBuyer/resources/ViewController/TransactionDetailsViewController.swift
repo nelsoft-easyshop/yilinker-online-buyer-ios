@@ -109,6 +109,9 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
         self.navigationController?.view.addSubview(dimView)
         dimView.hidden = true
         
+        self.tableView.layoutMargins = UIEdgeInsetsZero
+        self.tableView.separatorInset = UIEdgeInsetsZero
+        
         total_unit_price = (self.totalUnitCost as NSString).floatValue
         total_handling_fee = (self.shippingFee as NSString).floatValue
         
@@ -163,6 +166,8 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
         */
         let transactionDetailsTableViewCell: TransactionDetailsTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("TransactionDetailsTableViewCell") as! TransactionDetailsTableViewCell
         transactionDetailsTableViewCell.selectionStyle = UITableViewCellSelectionStyle.None
+        transactionDetailsTableViewCell.layoutMargins = UIEdgeInsetsZero
+        transactionDetailsTableViewCell.separatorInset = UIEdgeInsetsZero
         if(self.transactionDetailsModel != nil){
             transactionDetailsTableViewCell.productNameLabel.text = self.table[indexPath.section].transactions[indexPath.row].productName
             transactionDetailsTableViewCell.productStatusLabel.text = self.table[indexPath.section].orderStatus
@@ -217,6 +222,12 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
         
         return self.transactionSectionView
         
+    }
+    
+    func sellerPage(sellerId: Int) {
+        let sellerViewController: SellerViewController = SellerViewController(nibName: "SellerViewController", bundle: nil)
+        sellerViewController.sellerId = sellerId
+        self.navigationController!.pushViewController(sellerViewController, animated: true)
     }
     
     /*

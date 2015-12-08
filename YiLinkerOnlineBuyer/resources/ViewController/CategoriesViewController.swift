@@ -35,10 +35,10 @@ class CategoriesViewController: UIViewController, EmptyViewDelegate, UIWebViewDe
         let nib = UINib(nibName: "CategoriesTableViewCell", bundle: nil)
         self.tableView.registerNib(nib, forCellReuseIdentifier: "CategoryIdentifier")
 
-        if firstLoad {
-            requestMainCategories()
-        }
-//        loadWebView()
+//        if firstLoad {
+//            requestMainCategories()
+//        }
+        loadWebView()
         webView.delegate = self
     }
 
@@ -72,12 +72,13 @@ class CategoriesViewController: UIViewController, EmptyViewDelegate, UIWebViewDe
     func loadWebView() {
         if Reachability.isConnectedToNetwork() {
             showHUD()
-            webView.loadRequest(NSURLRequest(URL: NSURL(string: "https://www.yilinker.com/categories")!))
+            var url: String = APIEnvironment.baseUrl() + "mobile-category"
+            url = url.stringByReplacingOccurrencesOfString("api", withString: "", options: nil, range: nil)
+            webView.loadRequest(NSURLRequest(URL: NSURL(string: url)!))
         } else {
             addEmptyView()
         }
     }
-    
     
     // MARK: - Table View Data Source
     

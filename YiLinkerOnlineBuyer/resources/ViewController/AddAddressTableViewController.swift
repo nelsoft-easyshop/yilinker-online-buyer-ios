@@ -44,6 +44,8 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
     var pickerView: UIPickerView = UIPickerView()
     var addressCellReference = [NewAddressTableViewCell?]()
     
+    var rowForPicker: Int = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.registerNib()
@@ -109,6 +111,8 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
             
             if indexPath.row != 5 {
                cell.rowTitleLabel.required()
+            } else {
+                cell.rowTextField.keyboardType = UIKeyboardType.NumberPad
             }
             
             addressCellReference.append(cell)
@@ -167,32 +171,14 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
     
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if activeTextField == 2 {
-            //get province title and id
-            self.addressModel.provinceId = self.provinceModel.provinceId[row]
-            self.addressModel.province = self.provinceModel.location[row]
-            self.addressModel.city = ""
-            //request for new city data model and reload tableview
-            self.requestGetCities(self.addressModel.provinceId)
-            
-            //save current row and reset dependent values
             self.provinceRow = row
             self.cityRow = 0
             self.barangayRow = 0
-            self.setTextAtIndex(2, text: self.provinceModel.location[row])
         } else if activeTextField == 3 {
-            self.addressModel.cityId = self.cityModel.cityId[row]
-            self.requestGetBarangay(self.addressModel.cityId)
-            self.addressModel.city = self.cityModel.location[row]
-            //save current row and reset dependent values
             self.cityRow = row
             self.barangayRow = 0
-            self.setTextAtIndex(3, text: self.cityModel.location[row])
         } else if activeTextField == 4 {
-            self.setTextAtIndex(activeTextField, text: self.barangayModel.location[row])
-            self.addressModel.barangay = self.barangayModel.location[row]
-            self.addressModel.barangayId = self.barangayModel.barangayId[row]
             self.barangayRow = row
-            self.setTextAtIndex(4, text: self.barangayModel.location[row])
         }
     }
     
@@ -307,6 +293,28 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
         let row = NSIndexPath(forItem: activeTextField, inSection: 0)
         let cell: NewAddressTableViewCell = tableView.cellForRowAtIndexPath(row) as! NewAddressTableViewCell
         cell.rowTextField.endEditing(true)
+        
+        
+        if activeTextField == 2 {
+            //get province title and id
+            self.addressModel.provinceId = self.provinceModel.provinceId[self.provinceRow]
+            self.addressModel.province = self.provinceModel.location[self.provinceRow]
+            self.addressModel.city = ""
+            //request for new city data model and reload tableview
+            self.requestGetCities(self.addressModel.provinceId)
+            self.setTextAtIndex(2, text: self.provinceModel.location[self.provinceRow])
+        } else if activeTextField == 3 {
+            self.addressModel.cityId = self.cityModel.cityId[self.cityRow]
+            self.requestGetBarangay(self.addressModel.cityId)
+            self.addressModel.city = self.cityModel.location[self.cityRow]
+            self.setTextAtIndex(3, text: self.cityModel.location[self.cityRow])
+        } else if activeTextField == 4 {
+            self.setTextAtIndex(activeTextField, text: self.barangayModel.location[self.barangayRow])
+            self.addressModel.barangay = self.barangayModel.location[self.barangayRow]
+            self.addressModel.barangayId = self.barangayModel.barangayId[self.barangayRow]
+            self.setTextAtIndex(4, text: self.barangayModel.location[self.barangayRow])
+        }
+
     }
     
     func getTextAtIndex(index: Int) -> String {
@@ -467,9 +475,10 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
             self.cityModel = CityModel.parseDataWithDictionary(responseObject)
             self.hud?.hide(true)
                 //get all cities and assign get the id and title of the first city
-                if self.cityModel.cityId.count != 0 && self.addressModel.title == "" {
+                if self.cityModel.cityId.count != 0 && !self.isEdit {
                     self.addressModel.city = self.cityModel.location[0]
                     self.addressModel.cityId = self.cityModel.cityId[0]
+                    self.addressModel.barangayId = 0
                     self.requestGetBarangay(self.addressModel.cityId)
                     self.addressModel.barangay = ""
                     self.cityRow = 0
@@ -488,6 +497,21 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 self.hud?.hide(true)
                 self.showAlert(title: Constants.Localized.someThingWentWrong, message: nil)
+                
+                if let task = task.response as? NSHTTPURLResponse {
+                    if error.userInfo != nil {
+                        if let jsonResult = error.userInfo as? Dictionary<String, AnyObject> {
+                            let errorDescription: String = jsonResult["error_description"] as! String
+                            Toast.displayToastWithMessage(errorDescription, duration: 3.0, view: self.view)
+                        }
+                    } else {
+                        if task.statusCode == 401 {
+                            Toast.displayToastWithMessage(LoginStrings.mismatch, duration: 3.0, view: self.view)
+                        } else {
+                            Toast.displayToastWithMessage(Constants.Localized.someThingWentWrong, duration: 3.0, view: self.view)
+                        }
+                    }
+                }
         })
     }
     
@@ -500,10 +524,12 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
                 self.hud?.hide(true)
                 self.barangayModel = BarangayModel.parseDataWithDictionary(responseObject)
             
-                if self.barangayModel.barangayId.count != 0 && self.addressModel.barangayId == 0 {
+                if self.barangayModel.barangayId.count != 0 && !self.isEdit {
                     self.addressModel.barangayId = self.barangayModel.barangayId[0]
                     self.addressModel.barangay = self.barangayModel.location[0]
                     self.setTextAtIndex(4, text: self.barangayModel.location[0])
+                } else {
+                    self.isEdit = false
                 }
             
             if self.isIndexReady == false && self.isEdit2 {

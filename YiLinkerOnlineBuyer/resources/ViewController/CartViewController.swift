@@ -133,7 +133,7 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
                                     model.selectedUnitImage = tempProductUnit.primaryImage
                                 } else {
                                     if model.images.count != 0 {
-                                        model.selectedUnitImage = model.images[0]
+                                        //model.selectedUnitImage = model.images[0]
                                     }
                                 }
                                 
@@ -355,17 +355,18 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
 //                }
                 
                 
-                if tempProductUnit.primaryImage.isNotEmpty() {
-                    let url = APIAtlas.baseUrl.stringByReplacingOccurrencesOfString("api/v1", withString: "")
-                    cell.productItemImageView.sd_setImageWithURL(NSURL(string: "\(url)\(APIAtlas.cartImage)\(tempProductUnit.primaryImage)"), placeholderImage: UIImage(named: "dummy-placeholder"))
-                } else {
-                    if tempModel.images.count != 0 {
-                        cell.productItemImageView.sd_setImageWithURL(NSURL(string: tempModel.images[0]), placeholderImage: UIImage(named: "dummy-placeholder"))
-                    } else {
-                        cell.productItemImageView.image = UIImage(named: "dummy-placeholder")
+                
+                if tempModel.images.count != 0 && tempProductUnit.imageIds.count != 0 {
+                    for tempImage in tempModel.images {
+                        if tempImage.id == tempProductUnit.imageIds[0] {
+                            cell.productItemImageView.sd_setImageWithURL(NSURL(string: tempImage.fullImageLocation), placeholderImage: UIImage(named: "dummy-placeholder"))
+                        }
                     }
-
-                }                
+                } else {
+                    cell.productItemImageView.image = UIImage(named: "dummy-placeholder")
+                }
+                
+                
                 
                 var tempAttributesText: String = ""
                 for tempId in tempProductUnit.combination {
@@ -449,10 +450,21 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
         var pathOfTheCell: NSIndexPath = cartTableView.indexPathForCell(sender as! UITableViewCell)!
         var rowOfTheCell: Int = pathOfTheCell.row
         
+        var tempModel: CartProductDetailsModel = tableData[rowOfTheCell]
+        var productUnitId: String = ""
+        
+        for tempProductUnit in tempModel.productUnits {
+            if tempModel.unitId == tempProductUnit.productUnitId {
+                productUnitId = tempProductUnit.productUnitId
+            }
+        }
+
         let productViewController: ProductViewController = ProductViewController(nibName: "ProductViewController", bundle: nil)
         productViewController.tabController = self.tabBarController as! CustomTabBarController
         productViewController.productId = tableData[rowOfTheCell].id
         productViewController.isFromCart = true
+        productViewController.unitId = productUnitId
+        productViewController.quantity = tempModel.quantity
         self.navigationController?.pushViewController(productViewController, animated: true)
     }
     

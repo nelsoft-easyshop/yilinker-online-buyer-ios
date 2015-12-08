@@ -33,9 +33,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GGLInstanceIDDelegate {
 
         //self.toastStyle()
         if SessionManager.accessToken() == "" {
-            let startingPageStoryBoard: UIStoryboard = UIStoryboard(name: "StartPageStoryBoard", bundle: nil)
-            let startingPageViewController: StartPageViewController = startingPageStoryBoard.instantiateViewControllerWithIdentifier("StartPageViewController") as! StartPageViewController
-            self.window?.rootViewController = startingPageViewController
+            self.startPage()
         } else {
             self.changeRootToHomeView()
         }
@@ -198,6 +196,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GGLInstanceIDDelegate {
         let storyBoard: UIStoryboard = UIStoryboard(name: "HomeStoryBoard", bundle: nil)
         let tabBarController: UITabBarController = storyBoard.instantiateViewControllerWithIdentifier("TabBarController") as! UITabBarController
         self.window?.rootViewController = tabBarController
+    }
+    
+    func startPage() {
+        for view in self.window!.subviews {
+            view.removeFromSuperview()
+        }
+        let startingPageStoryBoard: UIStoryboard = UIStoryboard(name: "StartPageStoryBoard", bundle: nil)
+        let startingPageViewController: StartPageViewController = startingPageStoryBoard.instantiateViewControllerWithIdentifier("StartPageViewController") as! StartPageViewController
+        self.window?.rootViewController = startingPageViewController
     }
     
     func application(application: UIApplication,

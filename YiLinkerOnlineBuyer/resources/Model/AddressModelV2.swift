@@ -39,6 +39,41 @@ class AddressModelV2 {
     var cityId: Int = 0
     var provinceId: Int = 0
     
+    init() {
+        
+    }
+    
+    init(userAddressId: Int, locationId: Int, title: String, unitNumber: String, buildingName: String, streetNumber: String, streetName: String, subdivision: String, zipCode: String, streetAddress: String, country: String, island: String, region: String, province: String, city: String, municipality: String, barangay: String, longitude: String, landline: String, latitude: String, isDefault: Bool, additionalInfo: String, fullLocation: String, barangayId: Int, cityId: Int, provinceId: Int) {
+        
+        self.userAddressId = userAddressId
+        self.locationId = locationId
+        self.title = title
+        self.unitNumber = unitNumber
+        self.buildingName = buildingName
+        self.streetNumber = streetNumber
+        self.streetName = streetName
+        self.subdivision = subdivision
+        self.zipCode = zipCode
+        self.streetAddress = streetAddress
+        self.country = country
+        self.island = island
+        self.region = region
+        self.province = province
+        self.city = city
+        self.municipality = municipality
+        self.barangay = barangay
+        self.longitude = longitude
+        self.landline = landline
+        self.latitude = latitude
+        self.isDefault = isDefault
+        self.additionalInfo = additionalInfo
+        self.fullLocation = fullLocation
+        
+        self.barangayId = barangayId
+        self.cityId = cityId
+        self.provinceId = provinceId
+    }
+    
     class func parseAddressFromDictionary(reviews: NSDictionary) -> AddressModelV2 {
         
         var model = AddressModelV2()
@@ -212,5 +247,12 @@ class AddressModelV2 {
         
         return model
     }
+    
+    func copy() -> AddressModelV2 {
+        let copy: AddressModelV2 = AddressModelV2(userAddressId: userAddressId, locationId: locationId, title: title, unitNumber: unitNumber, buildingName: buildingName, streetNumber: streetNumber, streetName: streetName, subdivision: subdivision, zipCode: zipCode, streetAddress: streetAddress, country: country, island: island, region: region, province: province, city: city, municipality: municipality, barangay: barangay, longitude: longitude, landline: landline, latitude: latitude, isDefault: isDefault, additionalInfo: additionalInfo, fullLocation: fullLocation, barangayId: barangayId, cityId: cityId, provinceId: provinceId)
+        
+        return copy
+    }
+
     
 }

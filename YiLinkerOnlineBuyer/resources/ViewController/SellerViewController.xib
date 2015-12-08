@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
@@ -15,19 +15,17 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="y66-gR-lQH">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="600"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" style="grouped" separatorStyle="default" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" translatesAutoresizingMaskIntoConstraints="NO" id="y66-gR-lQH">
+                    <rect key="frame" x="0.0" y="-20" width="375" height="600"/>
+                    <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                 </tableView>
             </subviews>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
-                <constraint firstItem="y66-gR-lQH" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="5t1-sf-1wg"/>
-                <constraint firstAttribute="bottom" secondItem="y66-gR-lQH" secondAttribute="bottom" id="Bj1-1S-CuX"/>
-                <constraint firstItem="y66-gR-lQH" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Exl-Km-aTA"/>
-                <constraint firstAttribute="trailing" secondItem="y66-gR-lQH" secondAttribute="trailing" id="J2I-bW-s8u"/>
-                <constraint firstAttribute="centerX" secondItem="y66-gR-lQH" secondAttribute="centerX" id="QKP-SZ-cJe"/>
-                <constraint firstAttribute="centerY" secondItem="y66-gR-lQH" secondAttribute="centerY" id="xOR-PJ-rHC"/>
+                <constraint firstAttribute="trailing" secondItem="y66-gR-lQH" secondAttribute="trailing" id="2u4-qc-gDj"/>
+                <constraint firstItem="y66-gR-lQH" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="ALn-2c-GP4"/>
+                <constraint firstAttribute="bottom" secondItem="y66-gR-lQH" secondAttribute="bottom" constant="20" id="VRA-KP-ZNq"/>
+                <constraint firstItem="y66-gR-lQH" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="-20" id="cxq-L6-8C6"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
         </view>

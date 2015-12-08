@@ -111,7 +111,7 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
     // MARK: - Collection View Data Source and Delegates
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return cellCount
+        return self.cellCount
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
@@ -148,7 +148,7 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         let addAddressTableViewController: AddAddressTableViewController = AddAddressTableViewController(nibName: "AddAddressTableViewController", bundle: nil)
         addAddressTableViewController.delegate = self
-        addAddressTableViewController.addressModel = self.getAddressModel.listOfAddress[indexPath.row]
+        addAddressTableViewController.addressModel = self.getAddressModel.listOfAddress[indexPath.row].copy()
         addAddressTableViewController.isEdit = true
         addAddressTableViewController.isEdit2 = true
         self.navigationController!.pushViewController(addAddressTableViewController, animated: true)

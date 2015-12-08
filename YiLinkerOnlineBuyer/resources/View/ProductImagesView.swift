@@ -73,9 +73,9 @@ class ProductImagesView: UIView, UICollectionViewDataSource, UICollectionViewDel
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if self.images.count != 0 {
-            return self.images.count + 2
+            return self.images.count
         } else if self.imagesModel != nil {
-            return self.imagesModel.count + 2
+            return self.imagesModel.count
         }
         return 0
     }
@@ -150,7 +150,7 @@ class ProductImagesView: UIView, UICollectionViewDataSource, UICollectionViewDel
 
         self.nameLabel.text = model.title
 
-        if model.productUnits[unitId].discountedPrice.floatValue != 0 {
+        if model.productUnits[unitId].price != model.productUnits[unitId].discountedPrice {
             self.priceCustomLabel.text = "₱" + model.productUnits[unitId].price
             self.priceCustomLabel.drawDiscountLine(true)
             self.priceLabel.text = "₱" + model.productUnits[unitId].discountedPrice
@@ -169,7 +169,7 @@ class ProductImagesView: UIView, UICollectionViewDataSource, UICollectionViewDel
 
     func updateDetails(model: ProductDetailsModel, unitId: Int, images: [String]) {
         
-        if model.productUnits[unitId].discountedPrice.floatValue != 0 {
+        if model.productUnits[unitId].price != model.productUnits[unitId].discountedPrice {
             self.priceCustomLabel.text = "₱" + model.productUnits[unitId].price
             self.priceCustomLabel.drawDiscountLine(true)
             self.priceLabel.text = "₱" + model.productUnits[unitId].discountedPrice
@@ -179,7 +179,7 @@ class ProductImagesView: UIView, UICollectionViewDataSource, UICollectionViewDel
         }
         
         self.images = images
-        
+        println(self.images)
         self.pageControl.numberOfPages = self.images.count
         self.collectionView.reloadData()
     }
