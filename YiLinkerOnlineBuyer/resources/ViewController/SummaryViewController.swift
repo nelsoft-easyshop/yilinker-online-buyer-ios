@@ -249,6 +249,22 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
             self.tableView.contentInset = contentInset
             self.tableView.scrollIndicatorInsets = contentInset
         })
+        
+        if self.currentTextFieldTag == 5 {
+            self.requestGetCities(self.addressModel.provinceId)
+            self.addressModel.province = self.provinceModel.location[self.provinceRow]
+            self.guestCheckoutTableViewCell.provinceTextField.text = self.provinceModel.location[self.provinceRow]
+            self.cityRow = 0
+            self.barangayRow = 0
+        } else if self.currentTextFieldTag == 6 {
+            self.requestGetBarangay(self.addressModel.cityId)
+            self.guestCheckoutTableViewCell.cityTextField.text = self.cityModel.location[self.cityRow]
+            self.addressModel.city = self.cityModel.location[self.cityRow]
+            self.barangayRow = 0
+        } else if self.currentTextFieldTag == 7 {
+            self.addressModel.barangay = self.barangayModel.location[self.barangayRow]
+            self.guestCheckoutTableViewCell.barangayTextField.text = self.barangayModel.location[self.barangayRow]
+        }
     }
     
     //MARK: - Number Of Rows
@@ -544,6 +560,8 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
         return pickerView
     }
     
+    //MARK: -
+    //MARK: - Picker Data Source
     func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         if self.addressPickerType == AddressPickerType.Barangay {
             return self.barangayModel.location.count
@@ -569,7 +587,7 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        if self.addressPickerType == AddressPickerType.Barangay {
+        /*if self.addressPickerType == AddressPickerType.Barangay {
             self.barangayRow = row
             self.addressModel.barangayId = self.barangayModel.barangayId[row]
             self.addressModel.barangay = self.barangayModel.location[row]
@@ -586,6 +604,16 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
             self.requestGetBarangay(self.addressModel.cityId)
             self.guestCheckoutTableViewCell.cityTextField.text = self.cityModel.location[row]
             self.addressModel.city = self.cityModel.location[row]
+        }*/
+        
+        if self.addressPickerType == AddressPickerType.Barangay {
+            self.barangayRow = row
+        } else if self.addressPickerType == AddressPickerType.Province  {
+            self.addressModel.provinceId = self.provinceModel.provinceId[row]
+            self.provinceRow = row
+        } else {
+            self.addressModel.cityId = self.cityModel.cityId[row]
+            self.cityRow = row
         }
     }
     
