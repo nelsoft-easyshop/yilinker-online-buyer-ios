@@ -22,40 +22,17 @@ class CartProductAttributeTableViewCell: UITableViewCell {
     
     var filter: FilterAttributeModel!
     var productAttribute: ProductAttributeModel!
-    
-    var attributeIDs: [String] = []
     var selectedAttributes: [String] = []
-    var unitIDs: [String] = []
-    var selectedAttributeID: String = ""
-    var selectedAttributeIDIndex: Int = 0
-    
-    var availableCombinations = [String: [String]]()
     
     override func awakeFromNib() {
         super.awakeFromNib()
     }
     
     
-    func passModel(model: ProductAttributeModel, availableCombination: [String: [String]], unitID: [String], selectedAttributes: [String]){
+    func passModel(model: ProductAttributeModel, selectedAttributes: [String]){
         productAttribute = model
-        filter = FilterAttributeModel(title: model.attributeName, selectedIndex: 0, attributes: model.valueName)
-        
-        attributeIDs = productAttribute.valueId
-        
-        availableCombinations = availableCombination
-        
-        unitIDs = unitID
+        filter = FilterAttributeModel(title: model.attributeName, selectedIndex: 0, attributes: uniq(model.valueName))
         self.selectedAttributes = selectedAttributes
-        
-        for var i = 0; i < selectedAttributes.count; i++ {
-            
-            for var j = 0; j < attributeIDs.count; j++ {
-                if selectedAttributes[i] == attributeIDs[j] {
-                    selectedAttributeIDIndex = j
-                }
-            }
-        }
-        
         initializeScrollView()
     }
     
@@ -82,42 +59,15 @@ class CartProductAttributeTableViewCell: UITableViewCell {
             button.layer.borderColor = UIColor.darkGrayColor().CGColor
             button.layer.cornerRadius = button.frame.height/2
             button.backgroundColor = UIColor.whiteColor()
-            button.tag = attributeIDs[i].toInt()!
+            button.tag = i
             button.addTarget(self, action: "clickedAttribute:", forControlEvents: .TouchUpInside)
             
             x += width + 10
             
-            if contains(selectedAttributes, attributeIDs[i]){
+            if contains(selectedAttributes, filter.attributes[i]){
                 SelectButton(button)
-                enableButton(button)
             } else {
-                var tempSelectedAttributes = selectedAttributes
-                println("Original selected \(tempSelectedAttributes)")
-                if selectedAttributes.count == 0 {
-                    enableButton(button)
-                } else {
-                    if selectedAttributes.count < 2 {
-                        tempSelectedAttributes.append(attributeIDs[i])
-                    } else {
-                        //tempSelectedAttributes[selectedAttributeIDIndex] = attributeIDs[i]
-                        tempSelectedAttributes.append(attributeIDs[i])
-                    }
-                    println("Combination count \(availableCombinations.count)")
-                    println("unitIDs \(unitIDs)")
-                    for var j = 0; j < availableCombinations.count; j++ {
-                        println("unitIDs \(unitIDs[j])")
-                        println("Available \(availableCombinations[unitIDs[j]])")
-                        println("Selected \(tempSelectedAttributes)")
-                        if sorted(tempSelectedAttributes, <) == sorted(availableCombinations[unitIDs[j]]!, <) {
-                            println("Found \(tempSelectedAttributes)")
-                            enableButton(button)
-                            break
-                        } else {
-                            disableButton(button)
-                            println("Disabled \(attributeIDs[i])")
-                        }
-                    }
-                }
+                DeselectButton(button)
             }
             scrollView.addSubview(button)
         }
@@ -125,20 +75,33 @@ class CartProductAttributeTableViewCell: UITableViewCell {
         scrollView.contentSize = CGSize(width: CGFloat(x), height: scrollView.frame.size.height)
     }
     
+    func uniq<S : SequenceType, T : Hashable where S.Generator.Element == T>(source: S) -> [T] {
+        var buffer = [T]()
+        var added = Set<T>()
+        for elem in source {
+            if !added.contains(elem) {
+                buffer.append(elem)
+                added.insert(elem)
+            }
+        }
+        return buffer
+    }
     
     func clickedAttribute(sender: UIButton!) {
         
         if sender.selected {
             DeselectButton(sender)
+            delegate?.deselectedAttribute(filter.attributes[sender.tag])
         } else {
             for view in scrollView.subviews as! [UIView]{
                 if let button = view as? UIButton {
                     DeselectButton(button)
+                    delegate?.deselectedAttribute(filter.attributes[button.tag])
                 }
             }
             SelectButton(sender)
             
-            delegate?.selectedAttribute("\(sender.tag)")
+            delegate?.selectedAttribute(filter.attributes[sender.tag])
         }
     }
     
@@ -147,8 +110,6 @@ class CartProductAttributeTableViewCell: UITableViewCell {
         button.layer.borderColor = UIColor.darkGrayColor().CGColor
         button.backgroundColor = UIColor.whiteColor()
         button.setTitleColor(UIColor.darkGrayColor(), forState: .Normal)
-        
-        delegate?.deselectedAttribute("\(button.tag)")
     }
     
     func SelectButton(button: UIButton) {

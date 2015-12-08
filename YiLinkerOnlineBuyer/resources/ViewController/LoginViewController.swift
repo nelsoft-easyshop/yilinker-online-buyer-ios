@@ -332,7 +332,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
     func fireLogin() {
         self.showHUD()
         let manager: APIManager = APIManager.sharedInstance
-        let parameters: NSDictionary = [LoginConstants.emailKey: self.emailAddressTextField.text, LoginConstants.passwordKey: self.passwordTextField.text, LoginConstants.clientIdKey: Constants.Credentials.clientID, LoginConstants.clientSecretKey: Constants.Credentials.clientSecret, LoginConstants.grantTypeKey: Constants.Credentials.grantBuyer]
+        let parameters: NSDictionary = [LoginConstants.emailKey: self.emailAddressTextField.text, LoginConstants.passwordKey: self.passwordTextField.text, LoginConstants.clientIdKey: Constants.Credentials.clientID(), LoginConstants.clientSecretKey: Constants.Credentials.clientSecret(), LoginConstants.grantTypeKey: Constants.Credentials.grantBuyer]
         println(parameters)
         manager.POST(APIAtlas.loginUrl, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
@@ -444,7 +444,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
         self.showHUD()
         let manager: APIManager = APIManager.sharedInstance
         
-        let parameters: NSDictionary = [LoginConstants.tokenKey: token, LoginConstants.clientIdKey: Constants.Credentials.clientID, LoginConstants.clientSecretKey: Constants.Credentials.clientSecret, LoginConstants.grantTypeKey: Constants.Credentials.grantBuyer]
+        let parameters: NSDictionary = [LoginConstants.tokenKey: token, LoginConstants.clientIdKey: Constants.Credentials.clientID(), LoginConstants.clientSecretKey: Constants.Credentials.clientSecret(), LoginConstants.grantTypeKey: Constants.Credentials.grantBuyer]
         
         manager.POST(APIAtlas.facebookUrl, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
@@ -479,7 +479,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
         self.showHUD()
         let manager: APIManager = APIManager.sharedInstance
         
-        let parameters: NSDictionary = [LoginConstants.tokenKey: token, LoginConstants.clientIdKey: Constants.Credentials.clientID, LoginConstants.clientSecretKey: Constants.Credentials.clientSecret, LoginConstants.clientSecretKey: Constants.Credentials.grantBuyer]
+        let parameters: NSDictionary = [LoginConstants.tokenKey: token, LoginConstants.clientIdKey: Constants.Credentials.clientID(), LoginConstants.clientSecretKey: Constants.Credentials.clientSecret(), LoginConstants.clientSecretKey: Constants.Credentials.grantBuyer]
         
         manager.POST(APIAtlas.googleUrl, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
@@ -515,7 +515,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
         self.showHUD()
         let manager: APIManager = APIManager.sharedInstance
         
-        let parameters: NSDictionary = [LoginConstants.clientIdKey: Constants.Credentials.clientID, LoginConstants.clientSecretKey: Constants.Credentials.clientSecret, LoginConstants.clientSecretKey: Constants.Credentials.grantBuyer, "token": facebookAccessToken, "accountType": "facebook"]
+        let parameters: NSDictionary = [LoginConstants.clientIdKey: Constants.Credentials.clientID(), LoginConstants.clientSecretKey: Constants.Credentials.clientSecret(), LoginConstants.clientSecretKey: Constants.Credentials.grantBuyer, "token": facebookAccessToken, "accountType": "facebook"]
         
         manager.POST(APIAtlas.mergeFacebook, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
