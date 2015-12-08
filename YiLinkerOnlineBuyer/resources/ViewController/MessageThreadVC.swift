@@ -47,6 +47,7 @@ class MessageThreadVC: UIViewController {
     
     @IBOutlet weak var bottomLayoutConstraint: NSLayoutConstraint!
     
+    var isBlank : Bool = false
     var imagePlaced : Bool = false
     var prevIsSame : Bool = false
     var keyboardIsShown : Bool = false
@@ -425,6 +426,12 @@ class MessageThreadVC: UIViewController {
     
     @IBAction func onSend(senderButton: UIButton) {
         var lastMessage = composeTextView.text
+        if (isBlank){
+            lastMessage = ""
+        }
+        if (lastMessage == nil){
+            lastMessage = " "
+        }
         self.createMessage(lastMessage, isImage: "0")
     }
     
@@ -621,6 +628,7 @@ extension MessageThreadVC : UITextViewDelegate{
             
             textView.selectedTextRange = textView.textRangeFromPosition(textView.beginningOfDocument, toPosition: textView.beginningOfDocument)
             
+            isBlank = true
             return false
         }
             
@@ -631,6 +639,7 @@ extension MessageThreadVC : UITextViewDelegate{
         else if textView.textColor == UIColor.lightGrayColor() && !text.isEmpty {
             textView.text = nil
             textView.textColor = UIColor.blackColor()
+            isBlank = false
         }
         
         return true
@@ -730,7 +739,7 @@ extension MessageThreadVC : UITableViewDataSource, UITableViewDelegate{
                 }
                 cell.resendButton.addTarget(self, action: Selector("resendButtonTapped:event:"), forControlEvents: UIControlEvents.TouchUpInside)
                 
-                if (messages[index].isSeen == "1") {
+                if (messages[index].isSeen == "1" && index == messages.count-1) {
                     cell.setSeen()
                 }
                 
@@ -792,7 +801,7 @@ extension MessageThreadVC : UITableViewDataSource, UITableViewDelegate{
                 }
                 cell.resendButton.addTarget(self, action: Selector("resendButtonTapped:event:"), forControlEvents: UIControlEvents.TouchUpInside)
                 
-                if (messages[index].isSeen == "0") {
+                if (messages[index].isSeen == "0" && index != messages.count-1) {
                     cell.setSeenOff()
                 }
                 return cell
