@@ -408,8 +408,8 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
     }
     
     func requestRefreshToken(type: AddressRefreshType) {
-        let params: NSDictionary = ["client_id": Constants.Credentials.clientID,
-            "client_secret": Constants.Credentials.clientSecret,
+        let params: NSDictionary = ["client_id": Constants.Credentials.clientID(),
+            "client_secret": Constants.Credentials.clientSecret(),
             "grant_type": Constants.Credentials.grantRefreshToken,
             "refresh_token": SessionManager.refreshToken()]
         self.showHUD()
