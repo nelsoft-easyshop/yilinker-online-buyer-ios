@@ -1243,7 +1243,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             webViewController.urlString = target
             self.navigationController!.pushViewController(webViewController, animated: true)
         } else {
-            self.tabBarController!.view.makeToast(Constants.Localized.someThingWentWrong, duration: 3.0, position: CSToastPositionBottom, style: CSToastManager.sharedStyle())
+            self.tabBarController!.view.makeToast(Constants.Localized.targetNotAvailable, duration: 1.5, position: CSToastPositionBottom, style: CSToastManager.sharedStyle())
         }
     }
     
