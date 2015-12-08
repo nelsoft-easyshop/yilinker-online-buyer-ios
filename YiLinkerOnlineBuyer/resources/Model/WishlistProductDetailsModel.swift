@@ -14,7 +14,7 @@ class WishlistProductDetailsModel {
     var title: String = ""
     var slug: String = ""
     var image: String = ""
-    var images: [String] = []
+    var images: [ProductImagesModel] = []
     var shortDescription: String = ""
     var fullDescription: String = ""
     var sellerId: Int = 0
@@ -35,7 +35,7 @@ class WishlistProductDetailsModel {
         self.title = title
         self.slug = slug
         self.image = image
-        self.images = images as! [String]
+        self.images = images as! [ProductImagesModel]
         self.shortDescription = shortDescription
         self.fullDescription = fullDescription
         self.sellerId = sellerId
@@ -54,7 +54,7 @@ class WishlistProductDetailsModel {
         var title: String = ""
         var slug: String = ""
         var image: String = ""
-        var images: [String] = []
+        var images: [ProductImagesModel] = []
         var shortDescription: String = ""
         var fullDescription: String = ""
         var sellerId: Int = 0
@@ -92,9 +92,8 @@ class WishlistProductDetailsModel {
             }
             
             for tempVar in dictionary["images"] as! NSArray {
-                if let temp = tempVar["fullImageLocation"] as? String {
-                    images.append(temp)
-                }
+                let model: ProductImagesModel = ProductImagesModel.parseProductImagesModel(tempVar as! NSDictionary)
+                images.append(model)
             }
             
             if let tempVar = dictionary["shortDescription"] as? String {
