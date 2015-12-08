@@ -489,7 +489,11 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                 
                 UIAlertController.displayAlertRedirectionToLogin(self, actionHandler: { (sucess) -> Void in
-                    
+                    SessionManager.logout()
+                    FBSDKLoginManager().logOut()
+                    GPPSignIn.sharedInstance().signOut()
+                    let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+                    appDelegate.startPage()
                 })
                 
                 self.hud?.hide(true)
