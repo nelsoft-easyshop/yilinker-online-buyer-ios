@@ -20,6 +20,7 @@ struct Constants {
         static let information: String = StringHelper.localizedStringWithKey("INFORMATION_LOCALIZE_KEY")
         static let noInternet: String = StringHelper.localizedStringWithKey("NO_INTERNET_LOCALIZE_KEY")
         static let noInternetErrorMessage: String = StringHelper.localizedStringWithKey("NO_INTERNET_ERROR_MESSAGE_LOCALIZE_KEY")
+        static let targetNotAvailable: String = StringHelper.localizedStringWithKey("TARGET_NOT_AVAILABLE")
     }
     
     struct HomePage {

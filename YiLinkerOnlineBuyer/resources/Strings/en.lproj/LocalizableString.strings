@@ -571,4 +571,5 @@ SERVER_ERROR_LOCALIZE_KEY = "Server Error";
 NO_INTERNET_LOCALIZE_KEY = "No Internet Connection";
 NO_INTERNET_ERROR_MESSAGE_LOCALIZE_KEY = "Please check your internet connection.";
 INFORMATION_LOCALIZE_KEY = "Information";
+TARGET_NOT_AVAILABLE = "Not available.";
 
