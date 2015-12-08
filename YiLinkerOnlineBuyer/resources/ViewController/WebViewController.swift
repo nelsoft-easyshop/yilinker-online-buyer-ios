@@ -8,6 +8,22 @@
 
 import UIKit
 
+enum WebviewSource {
+    case FlashSale
+    case DailyLogin
+    case Category
+    case StoreView
+    case Default
+}
+
+class WebViewURL {
+    static let baseUrl = APIEnvironment.baseUrl().stringByReplacingOccurrencesOfString("/api", withString: "/")
+    static let flashSale: String = baseUrl + APIAtlas.flashSale
+    static let dailyLogin: String = baseUrl + APIAtlas.dailyLogin
+    static let category: String = baseUrl + APIAtlas.category
+    static let storeView: String = baseUrl + APIAtlas.storeView
+}
+
 class WebViewController: UIViewController, UIWebViewDelegate, EmptyViewDelegate {
 
     @IBOutlet weak var webView: UIWebView!
@@ -15,10 +31,16 @@ class WebViewController: UIViewController, UIWebViewDelegate, EmptyViewDelegate 
     
     var emptyView: EmptyView?
     
+    var webviewSource = WebviewSource.Default
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.webView.delegate = self
-        self.loadUrlWithUrlString(self.urlString)
+        if self.urlString.isEmpty {
+            loadWebview()
+        } else {
+            self.loadUrlWithUrlString(self.urlString)
+        }
         self.backButton()
     }
     
@@ -27,6 +49,26 @@ class WebViewController: UIViewController, UIWebViewDelegate, EmptyViewDelegate 
         let url = NSURL(string: string)!
         let requestObj = NSURLRequest(URL: url)
         self.webView.loadRequest(requestObj)
+    }
+    
+    func  loadWebview() {
+        var tempUrl: String = ""
+        switch webviewSource {
+        case .FlashSale:
+           tempUrl = WebViewURL.flashSale
+        case .DailyLogin:
+            tempUrl = WebViewURL.dailyLogin
+        case .Category:
+            tempUrl = WebViewURL.category
+        case .StoreView:
+            tempUrl = WebViewURL.storeView
+        case .Default:
+            self.addEmptyView()
+        default:
+            print("Default")
+        }
+        
+        self.loadUrlWithUrlString(tempUrl)
     }
 
     override func didReceiveMemoryWarning() {
@@ -42,10 +84,61 @@ class WebViewController: UIViewController, UIWebViewDelegate, EmptyViewDelegate 
     
     func webViewDidFinishLoad(webView: UIWebView) {
         self.showNetworkStatusIndicator(false)
+        webView.stringByEvaluatingJavaScriptFromString("document.body.style.webkitTouchCallout='none';")
     }
     
     func webViewDidStartLoad(webView: UIWebView) {
         self.showNetworkStatusIndicator(true)
+    }
+    
+    func webView(webView: UIWebView, shouldStartLoadWithRequest request: NSURLRequest, navigationType: UIWebViewNavigationType) -> Bool {
+        
+        var url: NSURL = request.URL!
+        var urlString: String = url.absoluteString!
+        
+        switch webviewSource {
+        case .FlashSale:
+            if urlString == WebViewURL.flashSale {
+                return true
+            } else {
+                //Put redirection to native view controller here. . . . .
+                
+                let productViewController: ProductViewController = ProductViewController(nibName: "ProductViewController", bundle: nil)
+                productViewController.tabController = self.tabBarController as! CustomTabBarController
+                productViewController.productId = flashSaleLinkTap(urlString)
+                self.navigationController?.pushViewController(productViewController, animated: true)
+                return false
+            }
+            
+        case .DailyLogin:
+            if urlString == WebViewURL.dailyLogin {
+                return true
+            } else {
+                //Put redirection to native view controller here. . . . .
+                return false
+            }
+        case .Category:
+            if urlString == WebViewURL.category {
+                return true
+            } else {
+                var resultController = ResultViewController(nibName: "ResultViewController", bundle: nil)
+                resultController.passModel(SearchSuggestionModel(suggestion: "", imageURL: "", searchUrl: urlString))
+                self.navigationController?.pushViewController(resultController, animated:true);
+                return false
+            }
+        case .StoreView:
+            if urlString == WebViewURL.storeView {
+                return true
+            } else {
+                //Put redirection to native view controller here. . . . .
+                return false
+            }
+        case .Default:
+            self.addEmptyView()
+            return false
+        default:
+            return false
+        }
     }
     
     //MARK: - Show Network Status Indicator
@@ -110,5 +203,23 @@ class WebViewController: UIViewController, UIWebViewDelegate, EmptyViewDelegate 
     func didTapReload() {
         self.emptyView!.hidden = true
         self.webView.reload()
+    }
+
+    //MARK: - Flash Sales
+    func flashSaleLinkTap(url: String) -> String {
+        
+        var productUrl: String = ""
+        
+        let html = webView.stringByEvaluatingJavaScriptFromString("document.documentElement.outerHTML")
+        let doc = TFHpple(HTMLData: html?.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false))
+        var elements = doc.searchWithXPathQuery("//a[@class='btn promo-instance-product-status btn-inactive']")
+        
+        for element in elements as! [TFHppleElement] {
+            if url.contains(element.objectForKey("href")) {
+                productUrl = element.objectForKey("data-product-id")
+                break
+            }
+        }
+        return productUrl
     }
 }

@@ -183,6 +183,17 @@ extension UIAlertController {
         alert.addAction(OKAction)
         target.presentViewController(alert, animated: true, completion: nil)
     }
+    
+    class func displayAlertRedirectionToLogin(target: AnyObject, actionHandler: (sucess: Bool) -> Void) {
+        let alertController: UIAlertController = UIAlertController(title: Constants.Localized.error, message: "Cannot verify your account please login.", preferredStyle: UIAlertControllerStyle.Alert)
+        
+        let login: UIAlertAction = UIAlertAction(title: "Login", style: UIAlertActionStyle.Default, handler: { (UIAlertAction) -> Void in
+            actionHandler(sucess: true)
+        })
+        
+        alertController.addAction(login)
+        target.presentViewController(alertController, animated: true, completion: nil)
+    }
 }
 
 
@@ -317,6 +328,13 @@ extension String {
     
     func formatToPercentage() -> String {
         return "\(self)%"
+    }
+    
+    func indexOfCharacter(char: Character) -> Int {
+        if let idx = find(self, char) {
+            return distance(self.startIndex, idx)
+        }
+        return -1
     }
     
 }

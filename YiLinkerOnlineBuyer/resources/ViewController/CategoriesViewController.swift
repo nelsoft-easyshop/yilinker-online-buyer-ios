@@ -38,14 +38,17 @@ class CategoriesViewController: UIViewController, EmptyViewDelegate, UIWebViewDe
 //        if firstLoad {
 //            requestMainCategories()
 //        }
-        loadWebView()
-        webView.delegate = self
+//        loadWebView()
+//        webView.delegate = self
     }
 
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
         self.navigationController?.navigationBarHidden = false
+        let webViewController: WebViewController = WebViewController(nibName: "WebViewController", bundle: nil)
+        webViewController.webviewSource = WebviewSource.Category
+        self.navigationController!.pushViewController(webViewController, animated: false)
     }
     
     // MARK: - Methods
@@ -73,13 +76,13 @@ class CategoriesViewController: UIViewController, EmptyViewDelegate, UIWebViewDe
         if Reachability.isConnectedToNetwork() {
             showHUD()
             var url: String = APIEnvironment.baseUrl() + "/mobile-category"
-            url = url.stringByReplacingOccurrencesOfString("api/v1/", withString: "", options: nil, range: nil)
+            url = url.stringByReplacingOccurrencesOfString("api/", withString: "", options: nil, range: nil)
+            println(url)
             webView.loadRequest(NSURLRequest(URL: NSURL(string: url)!))
         } else {
             addEmptyView()
         }
     }
-    
     
     // MARK: - Table View Data Source
     

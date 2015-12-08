@@ -133,7 +133,7 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
                                     model.selectedUnitImage = tempProductUnit.primaryImage
                                 } else {
                                     if model.images.count != 0 {
-                                        model.selectedUnitImage = model.images[0]
+                                        //model.selectedUnitImage = model.images[0]
                                     }
                                 }
                                 
@@ -290,8 +290,8 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     func requestRefreshToken(type: String, url: String, params: NSDictionary!) {
         let url: String = APIAtlas.refreshTokenUrl
-        let params: NSDictionary = ["client_id": Constants.Credentials.clientID,
-            "client_secret": Constants.Credentials.clientSecret,
+        let params: NSDictionary = ["client_id": Constants.Credentials.clientID(),
+            "client_secret": Constants.Credentials.clientSecret(),
             "grant_type": Constants.Credentials.grantRefreshToken,
             "refresh_token": SessionManager.refreshToken()]
         
@@ -355,17 +355,18 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
 //                }
                 
                 
-                if tempProductUnit.primaryImage.isNotEmpty() {
-                    let url = APIAtlas.baseUrl.stringByReplacingOccurrencesOfString("api/v1", withString: "")
-                    cell.productItemImageView.sd_setImageWithURL(NSURL(string: "\(url)\(APIAtlas.cartImage)\(tempProductUnit.primaryImage)"), placeholderImage: UIImage(named: "dummy-placeholder"))
-                } else {
-                    if tempModel.images.count != 0 {
-                        cell.productItemImageView.sd_setImageWithURL(NSURL(string: tempModel.images[0]), placeholderImage: UIImage(named: "dummy-placeholder"))
-                    } else {
-                        cell.productItemImageView.image = UIImage(named: "dummy-placeholder")
+                
+                if tempModel.images.count != 0 && tempProductUnit.imageIds.count != 0 {
+                    for tempImage in tempModel.images {
+                        if tempImage.id == tempProductUnit.imageIds[0] {
+                            cell.productItemImageView.sd_setImageWithURL(NSURL(string: tempImage.fullImageLocation), placeholderImage: UIImage(named: "dummy-placeholder"))
+                        }
                     }
-
-                }                
+                } else {
+                    cell.productItemImageView.image = UIImage(named: "dummy-placeholder")
+                }
+                
+                
                 
                 var tempAttributesText: String = ""
                 for tempId in tempProductUnit.combination {

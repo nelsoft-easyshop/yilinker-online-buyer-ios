@@ -559,7 +559,10 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
                 
                 if task.statusCode == 401 {
                     self.requestRefreshToken("wishlist")
+                } else if task.statusCode == 404 {
+                    
                 } else {
+                    self.showAlert(title: ProductStrings.alertWentWrong, message: nil)
                     println(error)
                     self.hud?.hide(true)
                 }
@@ -629,6 +632,8 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
                 
                 if task.statusCode == 401 {
                     self.requestRefreshToken("cart")
+                } else if task.statusCode == 404 {
+
                 } else {
                     self.showAlert(title: ProductStrings.alertWentWrong, message: nil)
                     self.hud?.hide(true)
@@ -664,15 +669,23 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
             
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong. . .", title: "Error")
-                self.hud?.hide(true)
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                
+                if task.statusCode == 401 {
+                    self.requestRefreshToken("cart")
+                } else if task.statusCode == 404 {
+                    
+                } else {
+                    self.showAlert(title: ProductStrings.alertWentWrong, message: nil)
+                    self.hud?.hide(true)
+                }
         })
     }
     
     func requestRefreshToken(type: String) {
         
-        let params: NSDictionary = ["client_id": Constants.Credentials.clientID,
-            "client_secret": Constants.Credentials.clientSecret,
+        let params: NSDictionary = ["client_id": Constants.Credentials.clientID(),
+            "client_secret": Constants.Credentials.clientSecret(),
             "grant_type": Constants.Credentials.grantRefreshToken,
             "refresh_token": SessionManager.refreshToken()]
         
@@ -694,6 +707,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
             
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
+                println("ERROR IN REFRESHING TOKEN")
                 println(error)
                 self.hud?.hide(true)
                 if SessionManager.isLoggedIn() {

@@ -90,7 +90,7 @@ class CartProductAttributeViewController: UIViewController, UITableViewDelegate,
         
         var productAttribute: ProductAttributeModel = productDetailModel!.attributes[indexPath.row]
         cell.delegate = self
-        cell.passModel(productAttribute, availableCombination: availableCombinations, unitID: unitIDs, selectedAttributes: selectedCombinations)
+        cell.passModel(productAttribute, selectedAttributes: selectedCombinations)
         return cell
     }
     
@@ -118,18 +118,31 @@ class CartProductAttributeViewController: UIViewController, UITableViewDelegate,
     }
     
     @IBAction func doneAction(sender: AnyObject!) {
-        self.dismissViewControllerAnimated(true, completion: nil)
-        var productID = productDetailModel?.id.toInt()!
-        var itemID = productDetailModel?.itemId
-        delegate?.pressedDoneAttribute(self, productID: productID!, unitID: selectedProductUnit.productUnitId.toInt()!, itemID: itemID!, quantity: stocks)
+        if self.selectedCombinations.count !=  selectedProductUnit.combinationNames.count {
+            let alertController = UIAlertController(title: ProductStrings.alertCannotProcceed, message: ProductStrings.alertComplete, preferredStyle: .Alert)
+            let defaultAction = UIAlertAction(title: ProductStrings.alertOk, style: .Default, handler: nil)
+            alertController.addAction(defaultAction)
+            self.presentViewController(alertController, animated: true, completion: nil)
+        } else {
+            if self.stocks == 0 {
+                let alertController = UIAlertController(title: ProductStrings.alertFailed, message: ProductStrings.alertOutOfStock, preferredStyle: .Alert)
+                let defaultAction = UIAlertAction(title: ProductStrings.alertOk, style: .Default, handler: nil)
+                alertController.addAction(defaultAction)
+                self.presentViewController(alertController, animated: true, completion: nil)
+            } else {
+                self.dismissViewControllerAnimated(true, completion: nil)
+                var productID = productDetailModel?.id.toInt()!
+                var itemID = productDetailModel?.itemId
+                delegate?.pressedDoneAttribute(self, productID: productID!, unitID: selectedProductUnit.productUnitId.toInt()!, itemID: itemID!, quantity: stocks)
+            }
+        }
     }
     
     // MARK: - Methods
     
     func passModel(#cartModel: CartProductDetailsModel, selectedProductUnits: ProductUnitsModel) {
         productDetailModel = cartModel
-        let url = APIAtlas.baseUrl.stringByReplacingOccurrencesOfString("api/v1", withString: "")
-        setDetail("\(url)\(APIAtlas.cartImage)\(selectedProductUnits.primaryImage)", title: productDetailModel!.title, price: selectedProductUnits.discountedPrice)
+        
         self.maximumStock = selectedProductUnits.quantity
         if maximumStock < 0 {
             maximumStock = 0
@@ -140,7 +153,17 @@ class CartProductAttributeViewController: UIViewController, UITableViewDelegate,
         selectedProductUnit = selectedProductUnits
         self.availabilityStocksLabel.text = availableLocalizeString + ": " + String(maximumStock)
         
-        selectedCombinations = selectedProductUnit.combination
+        selectedCombinations = selectedProductUnit.combinationNames
+        
+        if productDetailModel!.images.count != 0 && selectedProductUnit!.imageIds.count != 0 {
+            for tempImage in productDetailModel!.images {
+                if tempImage.id == selectedProductUnit!.imageIds[0] {
+                    setDetail(tempImage.fullImageLocation, title: productDetailModel!.title, price: selectedProductUnit.discountedPrice)
+                }
+            }
+        } else {
+            setDetail("dummy-placeholder", title: productDetailModel!.title, price: selectedProductUnit.discountedPrice)
+        }
         
         getAvailableCombinations()
     }
@@ -148,7 +171,6 @@ class CartProductAttributeViewController: UIViewController, UITableViewDelegate,
     func selectedAttribute(attributeId: String){
         if !contains(selectedCombinations, attributeId) {
             selectedCombinations.append(attributeId)
-            println(checkSelectedIfAvailable(selectedCombinations))
             updateDetails(checkSelectedIfAvailable(selectedCombinations))
         }
         tableView.reloadData()
@@ -168,7 +190,7 @@ class CartProductAttributeViewController: UIViewController, UITableViewDelegate,
     func getAvailableCombinations() {
         for var i = 0; i < productDetailModel!.productUnits.count; i++ {
             unitIDs.append(productDetailModel!.productUnits[i].productUnitId)
-            availableCombinations[productDetailModel!.productUnits[i].productUnitId] = productDetailModel!.productUnits[i].combination
+            availableCombinations[productDetailModel!.productUnits[i].productUnitId] = productDetailModel!.productUnits[i].combinationNames
         }
     }
     
@@ -191,10 +213,17 @@ class CartProductAttributeViewController: UIViewController, UITableViewDelegate,
                 }
             }
             
-            let url = APIAtlas.baseUrl.stringByReplacingOccurrencesOfString("api/v1", withString: "")
-            setDetail("\(url)\(APIAtlas.cartImage)\(selectedProductUnit.primaryImage)", title: productDetailModel!.title, price: selectedProductUnit.discountedPrice)
+            if productDetailModel!.images.count != 0 && selectedProductUnit!.imageIds.count != 0 {
+                for tempImage in productDetailModel!.images {
+                    if tempImage.id == selectedProductUnit!.imageIds[0] {
+                        setDetail(tempImage.fullImageLocation, title: productDetailModel!.title, price: selectedProductUnit.discountedPrice)
+                    }
+                }
+            } else {
+                setDetail("dummy-placeholder", title: productDetailModel!.title, price: selectedProductUnit.discountedPrice)
+            }
             
-            priceLabel.text = selectedProductUnit.price.formatToPeso()
+            priceLabel.text = selectedProductUnit.discountedPrice.formatToPeso()
             self.maximumStock = selectedProductUnit.quantity
             if maximumStock < 0 {
                 maximumStock = 0

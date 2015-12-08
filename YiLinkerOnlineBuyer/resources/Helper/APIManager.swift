@@ -7,7 +7,7 @@
 //
 
 struct APIEnvironment {
-    
+
     static var development = true
     static var staging = false
     static var production = false
@@ -97,7 +97,7 @@ struct APIAtlas {
     static let cartUrl = "v1/auth/cart/getCart"
     static let wishlistUrl = "v1/auth/cart/getCart"
     static let updateWishlistUrl = "v1/auth/cart/updateCartItem"
-    static let addWishlistToCartUrl = "auth/wishlistToCart"
+    static let addWishlistToCartUrl = "v1/auth/wishlistToCart"
     static let updateCartUrl = "v1/auth/cart/updateCartItem"
     static let getSellerUrl = "v1/get-seller"
     static let buyerSellerFeedbacks = "v1/feedback/getUserFeedbacks"
@@ -144,15 +144,15 @@ struct APIAtlas {
     static let baseUrl = APIEnvironment.baseUrl()
     
     /* MESSAGING CONSTANTS */
-    static let ACTION_SEND_MESSAGE          = "v1/message/sendMessage"
-    static let ACTION_GET_CONVERSATION_HEAD = "v1/message/getConversationHead"
-    static let ACTION_GET_CONTACTS          = "v1/message/getContacts"
-    static let ACTION_GET_CONVERSATION_MESSAGES = "v1/message/getConversationMessages"
-    static let ACTION_SET_AS_READ           = "v1/message/setConversationAsRead"
-    static let ACTION_IMAGE_ATTACH          = "v1/message/imageAttach"
-    static let ACTION_GCM_CREATE            = "v1/auth/device/addRegistrationId"
-    static let ACTION_GCM_DELETE            = "v1/auth/device/deleteRegistrationId"
-    static let ACTION_GCM_UPDATE            = "v1/device/auth/updateRegistrationId"
+    static let ACTION_SEND_MESSAGE          = "/v1/message/sendMessage"
+    static let ACTION_GET_CONVERSATION_HEAD = "/v1/message/getConversationHead"
+    static let ACTION_GET_CONTACTS          = "/v1/message/getContacts"
+    static let ACTION_GET_CONVERSATION_MESSAGES = "/v1/message/getConversationMessages"
+    static let ACTION_SET_AS_READ           = "/v1/message/setConversationAsRead"
+    static let ACTION_IMAGE_ATTACH          = "/v1/message/imageAttach"
+    static let ACTION_GCM_CREATE            = "/v1/auth/device/addRegistrationId"
+    static let ACTION_GCM_DELETE            = "/v1/auth/device/deleteRegistrationId"
+    static let ACTION_GCM_UPDATE            = "/v1/device/auth/updateRegistrationId"
     static let uploadFileType = "jpeg"
     
     //Transactions
@@ -186,6 +186,12 @@ struct APIAtlas {
     static let voucherUrl = APIAtlas.voucher()
     
     static let mergeFacebook = "v1/facebook/auth"
+    
+    //Webview
+    static let flashSale = "flash-sale"
+    static let dailyLogin = "daily-login"
+    static let category = "mobile-category"
+    static let storeView = "store-view"
 }
 
 class APIManager: AFHTTPSessionManager {
