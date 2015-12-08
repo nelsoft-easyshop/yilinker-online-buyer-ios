@@ -8,9 +8,9 @@
 
 struct APIEnvironment {
     
-    static var development = false
+    static var development = true
     static var staging = false
-    static var production = true
+    static var production = false
     
     static func baseUrl() -> String {
         if development {
@@ -97,7 +97,7 @@ struct APIAtlas {
     static let cartUrl = "v1/auth/cart/getCart"
     static let wishlistUrl = "v1/auth/cart/getCart"
     static let updateWishlistUrl = "v1/auth/cart/updateCartItem"
-    static let addWishlistToCartUrl = "auth/wishlistToCart"
+    static let addWishlistToCartUrl = "v1/auth/wishlistToCart"
     static let updateCartUrl = "v1/auth/cart/updateCartItem"
     static let getSellerUrl = "v1/get-seller"
     static let buyerSellerFeedbacks = "v1/feedback/getUserFeedbacks"
