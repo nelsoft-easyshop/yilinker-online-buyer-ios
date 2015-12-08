@@ -72,8 +72,8 @@ class CategoriesViewController: UIViewController, EmptyViewDelegate, UIWebViewDe
     func loadWebView() {
         if Reachability.isConnectedToNetwork() {
             showHUD()
-            var url: String = APIEnvironment.baseUrl() + "/mobile-category"
-            url = url.stringByReplacingOccurrencesOfString("api/v1/", withString: "", options: nil, range: nil)
+            var url: String = APIEnvironment.baseUrl() + "mobile-category"
+            url = url.stringByReplacingOccurrencesOfString("api", withString: "", options: nil, range: nil)
             webView.loadRequest(NSURLRequest(URL: NSURL(string: url)!))
         } else {
             addEmptyView()
