@@ -238,8 +238,8 @@ class ProfileSettingsViewController: UIViewController, UITableViewDataSource, UI
         self.showHUD()
         let manager = APIManager.sharedInstance
         let parameters: NSDictionary = [
-            "client_id": Constants.Credentials.clientID,
-            "client_secret": Constants.Credentials.clientSecret,
+            "client_id": Constants.Credentials.clientID(),
+            "client_secret": Constants.Credentials.clientSecret(),
             "grant_type": Constants.Credentials.grantRefreshToken,
             "refresh_token": SessionManager.refreshToken()]
         
