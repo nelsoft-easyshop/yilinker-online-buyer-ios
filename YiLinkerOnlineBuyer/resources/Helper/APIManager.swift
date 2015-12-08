@@ -186,6 +186,12 @@ struct APIAtlas {
     static let voucherUrl = APIAtlas.voucher()
     
     static let mergeFacebook = "v1/facebook/auth"
+    
+    //Webview
+    static let flashSale = "flash-sale"
+    static let dailyLogin = "daily-login"
+    static let category = "mobile-category"
+    static let storeView = "store-view"
 }
 
 class APIManager: AFHTTPSessionManager {

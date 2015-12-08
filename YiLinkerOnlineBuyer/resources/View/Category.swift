@@ -330,6 +330,13 @@ extension String {
         return "\(self)%"
     }
     
+    func indexOfCharacter(char: Character) -> Int {
+        if let idx = find(self, char) {
+            return distance(self.startIndex, idx)
+        }
+        return -1
+    }
+    
 }
 
 extension NSURL {

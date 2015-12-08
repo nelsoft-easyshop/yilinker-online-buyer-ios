@@ -168,6 +168,10 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         settingsViewController.tableDataStatus.append(profileDetails.isEmailSubscribed)
         settingsViewController.tableDataStatus.append(false)
         self.navigationController?.pushViewController(settingsViewController, animated:true)
+        
+//        let webViewController: WebViewController = WebViewController(nibName: "WebViewController", bundle: nil)
+//        webViewController.webviewSource = WebviewSource.FlashSale
+//        self.navigationController!.pushViewController(webViewController, animated: true)
     }
     
     //Loader function
