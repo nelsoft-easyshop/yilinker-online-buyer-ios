@@ -174,6 +174,7 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
             noTransactionLabel.hidden = true
             self.tableData.removeAll(keepCapacity: false)
             page = 0
+            self.refreshPage = true
             self.isPageEnd = false
             self.fireTransaction("all")
             self.query = "all"
@@ -187,6 +188,7 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
             noTransactionLabel.hidden = true
             self.tableData.removeAll(keepCapacity: false)
             page = 0
+            self.refreshPage = true
             self.isPageEnd = false
             self.fireTransaction("pending")
             self.query = "pending"
@@ -200,6 +202,7 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
             noTransactionLabel.hidden = true
             self.tableData.removeAll(keepCapacity: false)
             page = 0
+            self.refreshPage = true
             self.isPageEnd = false
             self.fireTransaction("on-delivery")
             self.query = "on-delivery"
@@ -213,6 +216,7 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
             selectView(forFeedbackView, label: forFeedbackLabel, imageView: forFeedbackImageView, imageName: "forFeedback2")
             self.tableData.removeAll(keepCapacity: false)
             page = 0
+            self.refreshPage = true
             self.isPageEnd = false
             self.fireTransaction("for-feedback")
             self.query = "for-feedback"
@@ -360,7 +364,11 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
     //MARK: Refresh token
     func requestRefreshToken(type: TransactionRefreshType) {
         
-        self.showHUD()
+        if self.refreshPage {
+            UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+        } else {
+            self.showHUD()
+        }
         
         let manager = APIManager.sharedInstance
         let params: NSDictionary = ["client_id": Constants.Credentials.clientID(),
@@ -383,6 +391,12 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
                 self.fireTransaction("for-feedback")
             } else {
                 self.fireTransaction("support")
+            }
+            
+            if self.refreshPage {
+                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+            } else {
+                self.hud?.hide(true)
             }
             
             }, failure: {

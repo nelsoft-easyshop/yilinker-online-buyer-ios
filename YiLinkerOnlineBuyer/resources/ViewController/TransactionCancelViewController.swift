@@ -168,7 +168,7 @@ class TransactionCancelViewController: UIViewController, UITextViewDelegate, UIP
                     let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                     
                     if task.statusCode == 401 {
-                        self.fireRefreshToken()
+                        self.fireRefreshToken(CancellationType.GetReason)
                     } else {
 //                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
                         let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
@@ -220,7 +220,7 @@ class TransactionCancelViewController: UIViewController, UITextViewDelegate, UIP
                     let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                     
                     if task.statusCode == 401 {
-                        self.fireRefreshToken()
+                        self.fireRefreshToken(CancellationType.PostReason)
                     } else {
                        // UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
                         let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
@@ -240,7 +240,7 @@ class TransactionCancelViewController: UIViewController, UITextViewDelegate, UIP
     }
     
     //MARK: Refresh tokens
-    func fireRefreshToken() {
+    func fireRefreshToken(type: CancellationType) {
         
         self.showHUD()
         
@@ -256,7 +256,12 @@ class TransactionCancelViewController: UIViewController, UITextViewDelegate, UIP
             
             SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
             
-            self.fireGetReasonForCancellation()
+            if type == CancellationType.GetReason {
+                self.fireGetReasonForCancellation()
+            } else {
+                self.firePostCancellation()
+            }
+            
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 

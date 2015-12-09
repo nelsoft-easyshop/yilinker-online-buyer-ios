@@ -19,6 +19,11 @@ enum PaymentType {
     case CreditCard
 }
 
+enum CancellationType {
+    case GetReason
+    case PostReason
+}
+
 enum CustomizeShoppingType {
     case Categories
     case Seller
