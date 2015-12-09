@@ -41,6 +41,15 @@ class CircularMenuViewController: UIViewController {
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "onNewMessage:",
             name: appDelegate.messageKey, object: nil)
+        
+        self.closeButton()
+    }
+    
+    //MARK: - Close Button
+    func closeButton() {
+        var insetSpace: CGFloat = 15
+        roundedButton.imageView?.contentMode = UIViewContentMode.ScaleAspectFit
+        roundedButton.imageEdgeInsets = UIEdgeInsetsMake(insetSpace, insetSpace, insetSpace, insetSpace)
     }
     
     func onNewMessage(notification : NSNotification){
@@ -395,7 +404,6 @@ class CircularMenuViewController: UIViewController {
             
         })
     }
-    
     
     private func initDimView() {
         let screenSize: CGRect = UIScreen.mainScreen().bounds
