@@ -170,8 +170,18 @@ class NewDisputeTableViewController: UITableViewController, UIPickerViewDataSour
             
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+//                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
                 self.hud?.hide(true)
+                
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                
+                if task.statusCode == 401 {
+                    self.fireRefreshToken("submit")
+                } else {
+                    if task.statusCode != 404 {
+                        println(error.userInfo)
+                    }
+                }
         })
     }
     
@@ -347,16 +357,29 @@ class NewDisputeTableViewController: UITableViewController, UIPickerViewDataSour
 //                    self.transactionIds.append(self.transactionModel.invoice_number[i])
 //                }
 //            }
-//            self.tableView.reloadData()
-            
-//            self.hud?.hide(true)
-            self.isCaseDetailsDone = true
-            self.requestChecker()
+            self.hud?.hide(true)
+            self.tableView.reloadData()
+//            self.isCaseDetailsDone = true
+//            self.requestChecker()
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
 //                self.hud?.hide(true)
                 println(error.userInfo)
                 self.isCaseDetailsDone = true
                 self.requestChecker()
+                
+                
+                self.hud?.hide(true)
+                
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                
+                if task.statusCode == 401 {
+                    self.fireRefreshToken("details")
+                } else {
+                    if task.statusCode != 404 {
+                        println(error.userInfo)
+//                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+                    }
+                }
         })
     }
     
@@ -374,8 +397,18 @@ class NewDisputeTableViewController: UITableViewController, UIPickerViewDataSour
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
 //                self.hud?.hide(true)
                 println(error.userInfo)
-//                self.isReasonsDone = true
-//                self.requestChecker()
+                self.hud?.hide(true)
+                
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                
+                if task.statusCode == 401 {
+                    self.fireRefreshToken("reasons")
+                } else {
+                    if task.statusCode != 404 {
+                        println(error.userInfo)
+//                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+                    }
+                }
         })
     }
     
@@ -384,6 +417,34 @@ class NewDisputeTableViewController: UITableViewController, UIPickerViewDataSour
             self.tableView.reloadData()
             self.hud?.hide(true)
         }
+    }
+    
+    func fireRefreshToken(type: String) {
+        self.showHUD()
+        let manager = APIManager.sharedInstance
+        let parameters: NSDictionary = [
+            "client_id": Constants.Credentials.clientID(),
+            "client_secret": Constants.Credentials.clientSecret(),
+            "grant_type": Constants.Credentials.grantRefreshToken,
+            "refresh_token": SessionManager.refreshToken()]
+        
+        manager.POST(APIAtlas.refreshTokenUrl, parameters: parameters, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            
+            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+            
+            if type == "reasons" {
+                self.requestGetCaseDetails()
+            } else {
+                
+            }
+            
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                self.hud?.hide(true)
+        })
+        
     }
     
     // MARK: - Text Field delegate

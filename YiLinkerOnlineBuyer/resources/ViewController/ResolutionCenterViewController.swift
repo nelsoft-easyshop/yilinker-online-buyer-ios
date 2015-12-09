@@ -398,16 +398,18 @@ class ResolutionCenterViewController: UIViewController, UITableViewDataSource, U
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                 
                 if task.statusCode == 401 {
-                    self.fireRefreshToken()
+                    self.fireRefreshToken("cases")
                 } else {
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: ProductStrings.alertError, title: ProductStrings.alertWentWrong)
+                    if task.statusCode != 404 {
+                        println(error.userInfo)
+                    }
                 }
                 
                 println(error)
         })
     }
     
-    func fireRefreshToken() {
+    func fireRefreshToken(type: String) {
         self.showHUD()
         let manager = APIManager.sharedInstance
         let parameters: NSDictionary = [
@@ -420,7 +422,12 @@ class ResolutionCenterViewController: UIViewController, UITableViewDataSource, U
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
             SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
-            self.fireGetCases()
+            if type == "cases" {
+                self.fireGetCases()
+            } else {
+                self.requestGetTransactionsIds()
+            }
+            
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
@@ -451,6 +458,17 @@ class ResolutionCenterViewController: UIViewController, UITableViewDataSource, U
 
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
                 self.hud?.hide(true)
+                
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                
+                if task.statusCode == 401 {
+                    self.fireRefreshToken("id")
+                } else {
+                    if task.statusCode != 404 {
+                        println(error.userInfo)
+                    }
+                }
+                
                 println(error.userInfo)
         })
     }

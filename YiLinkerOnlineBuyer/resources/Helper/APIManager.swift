@@ -7,7 +7,7 @@
 //
 
 struct APIEnvironment {
-
+    
     static var development = false
     static var staging = true
     static var production = false
