@@ -599,10 +599,9 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
     func fireTransactionProductDetails() {
         self.showHUD()
         let manager = APIManager.sharedInstance
-        println("orderProductId \(self.orderProductId)")
+        
         manager.GET(APIAtlas.transactionProductDetails+"\(SessionManager.accessToken())&orderProductId=\(self.orderProductId)", parameters: nil, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            println(responseObject)
             
             if responseObject["isSuccessful"] as! Bool {
                 self.transactionProductDetailsModel = TransactionProductDetailsModel.parseFromDataDictionary(responseObject as! NSDictionary)
@@ -635,10 +634,10 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
     func fireTransactionProductDetailsDeliveryStatus() {
         self.showHUD()
         let manager = APIManager.sharedInstance
-        println(self.transactionId)
+        
         manager.GET(APIAtlas.transactionDeliveryStatus+"\(SessionManager.accessToken())&transactionId=\(self.transactionId)", parameters: nil, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            println(responseObject)
+            
             if responseObject["isSuccessful"] as! Bool {
                 self.transactionDeliveryStatus = TransactionProductDetailsDeliveryStatusModel.parseDataFromDictionary(responseObject as! NSDictionary)
             }
