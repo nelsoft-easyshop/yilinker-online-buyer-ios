@@ -204,20 +204,25 @@ class ChangePasswordViewController: UIViewController {
             println(responseObject)
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                 
-                if Reachability.isConnectedToNetwork() {
-                    var info = error.userInfo!
-                    
-                    self.dismissLoader()
-                    
-                    if let data = info["message"] as? NSString {
-                        self.showAlert(title: self.errorLocalizeString, message: data as String)
-                    } else {
-                        self.showAlert(title: self.errorLocalizeString, message: self.somethingWrongLocalizeString)
-                    }
-                    
+                if task.statusCode == 401 {
+                    self.requestRefreshToken(url, params: params)
                 } else {
-                    self.showAlert(title: self.connectionLocalizeString, message: self.connectionMessageLocalizeString)
+                    if Reachability.isConnectedToNetwork() {
+                        var info = error.userInfo!
+                        
+                        self.dismissLoader()
+                        
+                        if let data = info["message"] as? NSString {
+                            self.showAlert(title: self.errorLocalizeString, message: data as String)
+                        } else {
+                            self.showAlert(title: self.errorLocalizeString, message: self.somethingWrongLocalizeString)
+                        }
+                        
+                    } else {
+                        self.showAlert(title: self.connectionLocalizeString, message: self.connectionMessageLocalizeString)
+                    }
                 }
                 
         })
@@ -225,23 +230,23 @@ class ChangePasswordViewController: UIViewController {
     }
     
     func requestRefreshToken(url: String, params: NSDictionary!) {
-        let url: String = "http://online.api.easydeal.ph/api/v1/login"
+        let urlTemp: String = "http://online.api.easydeal.ph/api/v1/login"
         let params: NSDictionary = ["client_id": Constants.Credentials.clientID(),
             "client_secret": Constants.Credentials.clientSecret(),
             "grant_type": Constants.Credentials.grantRefreshToken,
             "refresh_token": SessionManager.refreshToken()]
         
         let manager = APIManager.sharedInstance
-        manager.POST(url, parameters: params, success: {
+        manager.POST(urlTemp, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             self.dismissLoader()
             
-            if (responseObject["isSuccessful"] as! Bool) {
-                SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
-                self.fireUpdateProfile(url, params: params)
-            } else {
-                self.showAlert(title: self.errorLocalizeString, message: responseObject["message"] as! String)
-            }
+            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+            
+            var paramsTemp: Dictionary<String, String> = params as! Dictionary<String, String>
+            paramsTemp["access_token"] = SessionManager.accessToken()
+
+            self.fireUpdateProfile(url, params: paramsTemp)
             
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in

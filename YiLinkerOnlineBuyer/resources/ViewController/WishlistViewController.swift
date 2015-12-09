@@ -160,29 +160,28 @@ class WishlistViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func requestRefreshToken(type: String, url: String, params: NSDictionary!) {
-        let url: String = APIAtlas.refreshTokenUrl
+        let urlTemp: String
         let params: NSDictionary = ["client_id": Constants.Credentials.clientID(),
             "client_secret": Constants.Credentials.clientSecret(),
             "grant_type": Constants.Credentials.grantRefreshToken,
             "refresh_token": SessionManager.refreshToken()]
         
         let manager = APIManager.sharedInstance
-        manager.POST(url, parameters: params, success: {
+        manager.POST(APIAtlas.refreshTokenUrl, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             self.dismissLoader()
             
-            if (responseObject["isSuccessful"] as! Bool) {
-                SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
-                
-                if type == "getWishlist" {
-                    self.requestProductDetails(url, params: params)
-                } else if type == "addToCart" {
-                    self.fireAddToCartItem(url, params: params)
-                } else if type == "deleteWishlist" {
-                    self.fireDeleteCartItem(url, params: params)
-                }
-            } else {
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: responseObject["message"] as! String, title: Constants.Localized.error)
+            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+            
+            var paramsTemp: Dictionary<String, String> = params as! Dictionary<String, String>
+            paramsTemp["access_token"] = SessionManager.accessToken()
+            
+            if type == "getWishlist" {
+                self.requestProductDetails(url, params: paramsTemp)
+            } else if type == "addToCart" {
+                self.fireAddToCartItem(url, params: paramsTemp)
+            } else if type == "deleteWishlist" {
+                self.fireDeleteCartItem(url, params: paramsTemp)
             }
             
             }, failure: {

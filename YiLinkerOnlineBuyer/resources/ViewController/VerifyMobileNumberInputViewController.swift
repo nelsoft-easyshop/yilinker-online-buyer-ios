@@ -159,12 +159,7 @@ class VerifyMobileNumberInputViewController: UIViewController {
         manager.POST(url, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             self.dismissLoader()
-            
-            if (responseObject["isSuccessful"] as! Bool) {
-                SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
-            } else {
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: responseObject["message"] as! String)
-            }
+            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
             
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in

@@ -315,25 +315,20 @@ class ChangeMobileNumberViewController: UIViewController {
     
     
     func requestRefreshToken(type: String, url: String, params: NSDictionary!) {
-        let url: String = APIAtlas.loginUrl
+        let urlTemp: String = APIAtlas.loginUrl
         let params: NSDictionary = ["client_id": Constants.Credentials.clientID(),
             "client_secret": Constants.Credentials.clientSecret(),
             "grant_type": Constants.Credentials.grantRefreshToken,
             "refresh_token": SessionManager.refreshToken()]
         
         let manager = APIManager.sharedInstance
-        manager.POST(url, parameters: params, success: {
+        manager.POST(urlTemp, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             self.dismissLoader()
             
-            if (responseObject["isSuccessful"] as! Bool) {
-                SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
-                if type == "change" {
-                    self.fireUpdateProfile(url, params: params)
-                } 
-                
-            } else {
-                self.showAlert(title: self.errorLocalizeString, message: responseObject["message"] as! String)
+            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+            if type == "change" {
+                self.fireUpdateProfile(url, params: params)
             }
             
             }, failure: {
