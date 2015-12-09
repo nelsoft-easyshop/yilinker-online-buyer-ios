@@ -148,7 +148,7 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         let addAddressTableViewController: AddAddressTableViewController = AddAddressTableViewController(nibName: "AddAddressTableViewController", bundle: nil)
         addAddressTableViewController.delegate = self
-        addAddressTableViewController.addressModel = self.getAddressModel.listOfAddress[indexPath.row]
+        addAddressTableViewController.addressModel = self.getAddressModel.listOfAddress[indexPath.row].copy()
         addAddressTableViewController.isEdit = true
         addAddressTableViewController.isEdit2 = true
         self.navigationController!.pushViewController(addAddressTableViewController, animated: true)
@@ -303,8 +303,8 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
     
     func requestRefreshToken(type: AddressRefreshType, uid: Int, indexPath: NSIndexPath!) {
         let url: String = "http://online.api.easydeal.ph/api/v1/login"
-        let params: NSDictionary = ["client_id": Constants.Credentials.clientID,
-            "client_secret": Constants.Credentials.clientSecret,
+        let params: NSDictionary = ["client_id": Constants.Credentials.clientID(),
+            "client_secret": Constants.Credentials.clientSecret(),
             "grant_type": Constants.Credentials.grantRefreshToken,
             "refresh_token": SessionManager.refreshToken()]
         let manager = APIManager.sharedInstance

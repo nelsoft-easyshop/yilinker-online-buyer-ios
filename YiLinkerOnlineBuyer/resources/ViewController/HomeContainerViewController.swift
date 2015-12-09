@@ -373,6 +373,9 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             }
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
+                
+                let task = task.response as? NSHTTPURLResponse
+                
                 self.hud?.hide(true)
                 self.addEmptyView()
         })
@@ -436,6 +439,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             SessionManager.setAddressId(self.profileModel.address.userAddressId)
             SessionManager.setCartCount(self.profileModel.cartCount)
             SessionManager.setWishlistCount(self.profileModel.wishlistCount)
+            SessionManager.setProfileImage(self.profileModel.profileImageUrl)
             self.updateTabBarBadge()
             
             
@@ -474,17 +478,24 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     //MARK: - Fire Refresh Token
     func fireRefreshToken() {
         let manager: APIManager = APIManager.sharedInstance
-        let parameters: NSDictionary = ["client_id": Constants.Credentials.clientID, "client_secret": Constants.Credentials.clientSecret, "grant_type": Constants.Credentials.grantRefreshToken, "refresh_token":  SessionManager.refreshToken()]
+        let parameters: NSDictionary = ["client_id": Constants.Credentials.clientID(), "client_secret": Constants.Credentials.clientSecret(), "grant_type": Constants.Credentials.grantRefreshToken, "refresh_token":  SessionManager.refreshToken()]
         self.showHUD()
         manager.POST(APIAtlas.refreshTokenUrl, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
             self.hud?.hide(true)
+            self.fireGetUserInfo()
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                 
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: HomeStrings.somethingWentWrong, title: HomeStrings.error)
+                UIAlertController.displayAlertRedirectionToLogin(self, actionHandler: { (sucess) -> Void in
+                    SessionManager.logout()
+                    FBSDKLoginManager().logOut()
+                    GPPSignIn.sharedInstance().signOut()
+                    let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+                    appDelegate.startPage()
+                })
                 
                 self.hud?.hide(true)
         })
@@ -1233,7 +1244,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             webViewController.urlString = target
             self.navigationController!.pushViewController(webViewController, animated: true)
         } else {
-            self.tabBarController!.view.makeToast(Constants.Localized.someThingWentWrong, duration: 3.0, position: CSToastPositionBottom, style: CSToastManager.sharedStyle())
+            self.tabBarController!.view.makeToast(Constants.Localized.targetNotAvailable, duration: 1.5, position: CSToastPositionBottom, style: CSToastManager.sharedStyle())
         }
     }
     

@@ -93,7 +93,7 @@ class LoginAndRegisterContentViewController: UIViewController {
         self.contentViewFrame = CGRectMake(0, 0, self.contentView.frame.size.width, self.contentView.frame.size.height)
     }
     
-    func initViewControllers() {
+    func initViewControllers() {    
         self.loginViewController  = self.storyboard!.instantiateViewControllerWithIdentifier("LoginViewController") as? LoginViewController
         self.registerViewController = self.storyboard?.instantiateViewControllerWithIdentifier("RegisterViewController") as? RegisterViewController
         

@@ -242,9 +242,14 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
             self.transactionCancelView = XibHelper.puffViewWithNibName("TransactionViews", index: 9) as! TransactionCancelOrderView
             self.transactionCancelView.cancelOrderLabel.text = self.cancelOrder
             self.transactionCancelView.delegate = self
-            if !self.isCancellable {
+            if self.transactionProductDetailsModel != nil {
+                if !self.transactionProductDetailsModel.isCancellable {
+                    self.transactionCancelView.cancelView.hidden = true
+                }
+            } else {
                 self.transactionCancelView.cancelView.hidden = true
             }
+            
             self.transactionCancelView.frame.size.width = self.view.frame.size.width
             self.transactionCancelView.frame.origin.y += CGFloat(20)
         }
@@ -585,22 +590,11 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             println(responseObject)
             self.transactionProductDetailsModel = TransactionProductDetailsModel.parseFromDataDictionary(responseObject as! NSDictionary)
-            //for var i: Int = 0; i < self.name.count; i++ {
-            //SKU", "Brand", "Weight (kg)", "Height (mm)", "Width (cm)", "Length (cm)"
-            //self.productDictionary[self.name[0]] = self.transactionProductDetailsModel.sku
-            //self.productDictionary[self.name[1]] = self.transactionProductDetailsModel.brandName
-            //self.productDictionary[self.name[2]] = self.transactionProductDetailsModel.color
-            //self.productDictionary[self.name[3]] = self.transactionProductDetailsModel.size
-            // self.productDictionary[self.name[4]] = self.transactionProductDetailsModel.weight
-            // self.productDictionary[self.name[5]] = self.transactionProductDetailsModel.height
-            //self.productDictionary[self.name[6]] = self.transactionProductDetailsModel.width
-            // self.productDictionary[self.name[7]] = self.transactionProductDetailsModel.length
-            //}
-            
-            //self.array.
+       
             if self.headerView == nil {
                 self.loadViewsWithDetails()
             }
+            
             self.tableView.reloadData()
             self.hud?.hide(true)
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
@@ -722,7 +716,7 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
         let manager: APIManager = APIManager.sharedInstance
         //seller@easyshop.ph
         //password
-        let parameters: NSDictionary = ["client_id": Constants.Credentials.clientID, "client_secret": Constants.Credentials.clientSecret, "grant_type": Constants.Credentials.grantRefreshToken, "refresh_token":  SessionManager.refreshToken()]
+        let parameters: NSDictionary = ["client_id": Constants.Credentials.clientID(), "client_secret": Constants.Credentials.clientSecret(), "grant_type": Constants.Credentials.grantRefreshToken, "refresh_token":  SessionManager.refreshToken()]
         manager.POST(APIAtlas.refreshTokenUrl, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             if self.refreshtag == 1001 {

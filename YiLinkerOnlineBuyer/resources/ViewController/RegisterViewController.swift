@@ -229,9 +229,18 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
                 self.adjustTextFieldYInsetWithInset(textFieldHeightWithInset + CGFloat(x - 5) * -55)
             }
         } else if IphoneType.isIphone5() {
-            if textField == self.mobileNumberTextField || textField == self.referralCodeTextField || textField == self.reTypePasswordTextField {
-                self.adjustTextFieldYInsetWithInset(textFieldHeightWithInset + CGFloat((textField.tag - 5) * -45))
+            let parent: LoginAndRegisterContentViewController = self.parentViewController as! LoginAndRegisterContentViewController
+            if parent.isFromTab {
+                if textField == self.mobileNumberTextField || textField == self.referralCodeTextField || textField == self.reTypePasswordTextField || textField == self.passwordTextField {
+                    self.adjustTextFieldYInsetWithInset(textFieldHeightWithInset + CGFloat((textField.tag - 3) * -40))
+                }
+            } else {
+                if textField == self.mobileNumberTextField || textField == self.referralCodeTextField || textField == self.reTypePasswordTextField {
+                    self.adjustTextFieldYInsetWithInset(textFieldHeightWithInset + CGFloat((textField.tag - 5) * -45))
+                }
             }
+            
+            
         } else if IphoneType.isIphone4() {
             self.hideCloseButton()
             if textField == self.firstNameTextField || textField == self.lastNameTextField {
@@ -382,7 +391,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         let manager: APIManager = APIManager.sharedInstance
         //seller@easyshop.ph
         //password
-        let parameters: NSDictionary = ["email": self.emailAddressTextField.text,"password": self.passwordTextField.text, "client_id": Constants.Credentials.clientID, "client_secret": Constants.Credentials.clientSecret, "grant_type": Constants.Credentials.grantBuyer]
+        let parameters: NSDictionary = ["email": self.emailAddressTextField.text,"password": self.passwordTextField.text, "client_id": Constants.Credentials.clientID(), "client_secret": Constants.Credentials.clientSecret(), "grant_type": Constants.Credentials.grantBuyer]
         self.showHUD()
         manager.POST(APIAtlas.loginUrl, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in

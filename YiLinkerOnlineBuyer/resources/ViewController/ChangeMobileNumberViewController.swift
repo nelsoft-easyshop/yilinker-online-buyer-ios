@@ -316,8 +316,8 @@ class ChangeMobileNumberViewController: UIViewController {
     
     func requestRefreshToken(type: String, url: String, params: NSDictionary!) {
         let url: String = APIAtlas.loginUrl
-        let params: NSDictionary = ["client_id": Constants.Credentials.clientID,
-            "client_secret": Constants.Credentials.clientSecret,
+        let params: NSDictionary = ["client_id": Constants.Credentials.clientID(),
+            "client_secret": Constants.Credentials.clientSecret(),
             "grant_type": Constants.Credentials.grantRefreshToken,
             "refresh_token": SessionManager.refreshToken()]
         

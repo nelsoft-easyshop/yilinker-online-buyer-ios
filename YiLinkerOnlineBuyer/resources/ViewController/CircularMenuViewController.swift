@@ -41,6 +41,15 @@ class CircularMenuViewController: UIViewController {
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "onNewMessage:",
             name: appDelegate.messageKey, object: nil)
+        
+        self.closeButton()
+    }
+    
+    //MARK: - Close Button
+    func closeButton() {
+        var insetSpace: CGFloat = 15
+        roundedButton.imageView?.contentMode = UIViewContentMode.ScaleAspectFit
+        roundedButton.imageEdgeInsets = UIEdgeInsetsMake(insetSpace, insetSpace, insetSpace, insetSpace)
     }
     
     func onNewMessage(notification : NSNotification){
@@ -342,7 +351,7 @@ class CircularMenuViewController: UIViewController {
                     tempView.alpha = 1
                 }
             }
-            self.dimView.alpha = 0.6
+            self.dimView.alpha = 1.0
             //self.showTitles()
         }), completion: { (value: Bool) in
             if SessionManager.isLoggedIn() {
@@ -396,12 +405,16 @@ class CircularMenuViewController: UIViewController {
         })
     }
     
-    
     private func initDimView() {
+        let screenSize: CGRect = UIScreen.mainScreen().bounds
         self.dimView.alpha = 0.0
         dimView.userInteractionEnabled = true
         let tapGesture: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dissmissViewControllerAnimated")
         dimView.addGestureRecognizer(tapGesture)
+        dimView.backgroundColor = UIColor.clearColor()
+        
+        
+        dimView.blurView()
     }
 
     @IBAction func logout(sender: AnyObject) {

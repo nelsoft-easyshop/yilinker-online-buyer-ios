@@ -96,7 +96,8 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
         var tapTableView = UITapGestureRecognizer(target:self, action:"hideKeyboard")
         self.tableView.addGestureRecognizer(tapTableView)
         
-        dimView = UIView(frame: self.view.bounds)
+        
+        dimView = UIView(frame: UIScreen.mainScreen().bounds)
         dimView?.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
         self.navigationController?.view.addSubview(dimView!)
         //self.view.addSubview(dimView!)
@@ -690,8 +691,8 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
     
     func requestRefreshToken(type: String, url: String, params: NSDictionary!, withImage: Bool) {
         let url: String = APIAtlas.refreshTokenUrl
-        let params: NSDictionary = ["client_id": Constants.Credentials.clientID,
-            "client_secret": Constants.Credentials.clientSecret,
+        let params: NSDictionary = ["client_id": Constants.Credentials.clientID(),
+            "client_secret": Constants.Credentials.clientSecret(),
             "grant_type": Constants.Credentials.grantRefreshToken,
             "refresh_token": SessionManager.refreshToken()]
         

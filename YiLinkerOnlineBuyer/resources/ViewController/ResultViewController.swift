@@ -98,7 +98,7 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
-        fullDimView = UIView(frame: self.view.bounds)
+        fullDimView = UIView(frame: UIScreen.mainScreen().bounds)
         fullDimView?.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
         self.navigationController?.view.addSubview(fullDimView!)
         //self.view.addSubview(dimView!)
@@ -344,8 +344,8 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
     
     func requestRefreshToken(url: String, params: NSDictionary!) {
         let url: String = APIAtlas.refreshTokenUrl
-        let params: NSDictionary = ["client_id": Constants.Credentials.clientID,
-            "client_secret": Constants.Credentials.clientSecret,
+        let params: NSDictionary = ["client_id": Constants.Credentials.clientID(),
+            "client_secret": Constants.Credentials.clientSecret(),
             "grant_type": Constants.Credentials.grantRefreshToken,
             "refresh_token": SessionManager.refreshToken()]
         

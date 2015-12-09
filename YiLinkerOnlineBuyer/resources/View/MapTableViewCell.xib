@@ -19,17 +19,17 @@
                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MapPin" translatesAutoresizingMaskIntoConstraints="NO" id="mKf-qJ-Tbc">
                         <rect key="frame" x="146" y="70" width="28" height="35"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="35" id="35N-vG-fBi"/>
+                            <constraint firstAttribute="width" constant="28" id="0Vu-6p-abq"/>
+                            <constraint firstAttribute="height" constant="35" id="DWr-oe-PfP"/>
                         </constraints>
                     </imageView>
                 </subviews>
                 <constraints>
+                    <constraint firstAttribute="centerY" secondItem="mKf-qJ-Tbc" secondAttribute="centerY" constant="8.5" id="41t-Gv-auS"/>
                     <constraint firstItem="TaT-mw-7Ps" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="15" id="7dT-yC-oEz"/>
                     <constraint firstAttribute="bottom" secondItem="TaT-mw-7Ps" secondAttribute="bottom" constant="-2" id="Nr0-7H-Ezo"/>
-                    <constraint firstItem="mKf-qJ-Tbc" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="146" id="PHd-O6-nIe"/>
-                    <constraint firstItem="mKf-qJ-Tbc" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="70" id="Vyy-za-wND"/>
-                    <constraint firstAttribute="trailing" secondItem="mKf-qJ-Tbc" secondAttribute="trailing" constant="146" id="hn7-ZL-sJt"/>
                     <constraint firstAttribute="trailing" secondItem="TaT-mw-7Ps" secondAttribute="trailing" id="tCU-LG-Dyd"/>
+                    <constraint firstAttribute="centerX" secondItem="mKf-qJ-Tbc" secondAttribute="centerX" id="wAR-hl-3hy"/>
                     <constraint firstItem="TaT-mw-7Ps" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="wLT-Nr-P97"/>
                 </constraints>
             </tableViewCellContentView>

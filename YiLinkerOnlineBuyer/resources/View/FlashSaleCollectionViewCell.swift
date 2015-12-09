@@ -55,9 +55,9 @@ class FlashSaleCollectionViewCell: UICollectionViewCell {
         self.addTriangleToImageView(self.productTwoImageView)
         self.addTriangleToImageView(self.productThreeImageView)
         
-        /*self.addTapRecognizer(self.productOneImageView)
+        self.addTapRecognizer(self.productOneImageView)
         self.addTapRecognizer(self.productTwoImageView)
-        self.addTapRecognizer(self.productThreeImageView)*/
+        self.addTapRecognizer(self.productThreeImageView)
     }
     
     //MARK: - Round This Label

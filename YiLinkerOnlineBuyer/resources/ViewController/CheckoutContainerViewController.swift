@@ -466,8 +466,8 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
     
     func fireRefreshToken(refreshType: CheckoutRefreshType) {
         self.showHUD()
-        let params: NSDictionary = ["client_id": Constants.Credentials.clientID,
-            "client_secret": Constants.Credentials.clientSecret,
+        let params: NSDictionary = ["client_id": Constants.Credentials.clientID(),
+            "client_secret": Constants.Credentials.clientSecret(),
             "grant_type": Constants.Credentials.grantRefreshToken,
             "refresh_token": SessionManager.refreshToken()]
         let manager = APIManager.sharedInstance
@@ -493,7 +493,7 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
     func showRegisterAlert() {
         self.view.layoutIfNeeded()
         
-        let dimView: UIView = UIView(frame: self.view.frame)
+        let dimView: UIView = UIView(frame: UIScreen.mainScreen().bounds)
         dimView.backgroundColor = UIColor.blackColor()
         dimView.alpha = 0.0
         dimView.tag = 100
@@ -535,7 +535,7 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
         let manager: APIManager = APIManager.sharedInstance
         //seller@easyshop.ph
         //password
-        let parameters: NSDictionary = ["email": email,"password": password, "client_id": Constants.Credentials.clientID, "client_secret": Constants.Credentials.clientSecret, "grant_type": Constants.Credentials.grantBuyer]
+        let parameters: NSDictionary = ["email": email,"password": password, "client_id": Constants.Credentials.clientID(), "client_secret": Constants.Credentials.clientSecret(), "grant_type": Constants.Credentials.grantBuyer]
         self.showHUD()
         manager.POST(APIAtlas.loginUrl, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
@@ -590,7 +590,8 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
     
     //MARK: - Dim View
     func initDimView() {
-        dimView = UIView(frame: self.view.bounds)
+        let screenSize: CGRect = UIScreen.mainScreen().bounds
+        dimView = UIView(frame: screenSize)
         dimView?.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
         self.navigationController!.view.addSubview(dimView!)
         //self.view.addSubview(dimView!)
