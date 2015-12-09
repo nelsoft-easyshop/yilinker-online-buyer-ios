@@ -125,6 +125,8 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
             cell.checkBoxButton.setImage(UIImage(named: "checkBox"), forState: UIControlState.Normal)
             cell.checkBoxButton.backgroundColor = Constants.Colors.selectedGreenColor
             SessionManager.setFullAddress(self.getAddressModel.listOfAddress[indexPath.row].fullLocation)
+            SessionManager.setLang("\(self.getAddressModel.listOfAddress[indexPath.row].latitude)")
+            SessionManager.setLong("\(self.getAddressModel.listOfAddress[indexPath.row].longitude)")
         } else {
             cell.checkBoxButton.setImage(nil, forState: UIControlState.Normal)
             cell.checkBoxButton.layer.borderWidth = 1
@@ -343,6 +345,9 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
                 
                 SessionManager.setAddressId(addressModel.userAddressId)
                 SessionManager.setFullAddress(addressModel.fullLocation)
+                
+                SessionManager.setLang(addressModel.latitude)
+                SessionManager.setLong(addressModel.longitude)
                 
                 self.selectedIndex = indexPath.row
                 self.collectionView.reloadData()

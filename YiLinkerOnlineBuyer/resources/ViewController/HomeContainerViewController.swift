@@ -318,7 +318,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                 var buttonImages: [String] = ["fab_following", "fab_messaging", "fab_promo", "fab_category", "fab_help", SessionManager.profileImageStringUrl()]
                 var buttonTitles: [String] = [FABStrings.followedSeller, FABStrings.messaging, FABStrings.todaysPromo, FABStrings.categories, FABStrings.help, FABStrings.profile]
                 
-                var buttonRightText: [String] = ["", SessionManager.unreadMessageCount(), "", "", "", "\(self.profileModel.firstName) \(self.profileModel.lastName) \n\(self.profileModel.address.streetAddress) \(self.profileModel.address.subdivision)"]
+                var buttonRightText: [String] = ["", SessionManager.unreadMessageCount(), "", "", "", "\(SessionManager.userFullName()) \n \(SessionManager.userFullName())"]
                 
                 animatedViewController?.buttonImages = buttonImages
                 animatedViewController?.buttonTitles = buttonTitles
@@ -440,6 +440,13 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             SessionManager.setCartCount(self.profileModel.cartCount)
             SessionManager.setWishlistCount(self.profileModel.wishlistCount)
             SessionManager.setProfileImage(self.profileModel.profileImageUrl)
+            
+            println(self.profileModel.address.latitude)
+            println(self.profileModel.address.longitude)
+            
+            SessionManager.setLang(self.profileModel.address.latitude)
+            SessionManager.setLong(self.profileModel.address.longitude)
+            
             self.updateTabBarBadge()
             
             

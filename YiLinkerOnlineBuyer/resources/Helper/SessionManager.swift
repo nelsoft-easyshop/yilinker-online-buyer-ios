@@ -334,4 +334,39 @@ class SessionManager {
     class func unreadMessageCount() -> String {
         return "You have \(self.getUnReadMessagesCount()) unread messages"
     }
+    
+    class func longitude() -> String {
+        var returnValue : String?
+        
+        returnValue = NSUserDefaults.standardUserDefaults().objectForKey("long") as? String
+        
+        if returnValue == nil || returnValue == "" {
+            returnValue = "0"
+        }
+        
+        return returnValue!
+    }
+    
+    class func latitude() -> String {
+        var returnValue : String?
+        
+        returnValue = NSUserDefaults.standardUserDefaults().objectForKey("lat") as? String
+        
+        if returnValue == nil || returnValue == "" {
+            returnValue = "0"
+        }
+        
+        return returnValue!
+    }
+    
+    class func setLong(long: String) {
+        NSUserDefaults.standardUserDefaults().setObject("\(long)", forKey: "long")
+        NSUserDefaults.standardUserDefaults().synchronize()
+    }
+    
+    class func setLang(lang: String) {
+        NSUserDefaults.standardUserDefaults().setObject("\(lang)", forKey: "lat")
+        NSUserDefaults.standardUserDefaults().synchronize()
+    }
+    
 }
