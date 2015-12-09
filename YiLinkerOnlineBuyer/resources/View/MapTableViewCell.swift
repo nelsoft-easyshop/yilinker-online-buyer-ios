@@ -19,6 +19,7 @@ class MapTableViewCell: UITableViewCell, MKMapViewDelegate {
         super.awakeFromNib()
         // Initialization code
         self.mapView.delegate = self
+//        setLocation(latitude: 14.4880779641213, longitude: 121.029669824614)
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
@@ -40,4 +41,13 @@ class MapTableViewCell: UITableViewCell, MKMapViewDelegate {
         return self.long
     }
     
+    func setLocation(#latitude: Double, longitude: Double) {
+        var newRegion = MKCoordinateRegion()
+        newRegion.center.latitude = latitude
+        newRegion.center.longitude = longitude
+        newRegion.span.latitudeDelta = 0.000388
+        newRegion.span.longitudeDelta = 0.006243
+        
+        self.mapView.setRegion(newRegion, animated: true)
+    }
 }
