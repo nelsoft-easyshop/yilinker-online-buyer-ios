@@ -250,11 +250,24 @@ class TransactionDetailsModel: NSObject {
                             println(product["orderProductStatus"]?.count)
                             if product["orderProductStatus"]?.count != 0 {
                                 if let orderProductStatus: AnyObject = product["orderProductStatus"] {
-                                    println(orderProductStatus)
-                                    orderProductStatusId.append(orderProductStatus["orderProductStatusId"] as! Int)
-                                    name.append(orderProductStatus["name"] as! String)
-                                    productDescription.append(orderProductStatus["description"] as! String)
                                     
+                                    if !(orderProductStatus["orderProductStatusId"] is NSNull) {
+                                        orderProductStatusId.append(orderProductStatus["orderProductStatusId"] as! Int)
+                                    } else {
+                                        orderProductStatusId.append(0)
+                                    }
+                                    
+                                    if !(orderProductStatus["name"] is NSNull) {
+                                        name.append(orderProductStatus["name"] as! String)
+                                    } else {
+                                        name.append("")
+                                    }
+                                    
+                                    if !(orderProductStatus["description"] is NSNull) {
+                                        productDescription.append(orderProductStatus["description"] as! String)
+                                    } else {
+                                        productDescription.append("")
+                                    }
                                 }
                             }
                             
@@ -266,6 +279,8 @@ class TransactionDetailsModel: NSObject {
                             
                             if let cancellable = product["isCancellable"] as? Bool{
                                 isCancellable.append(cancellable)
+                            } else {
+                                isCancellable.append(false)
                             }
                             //}
                         }

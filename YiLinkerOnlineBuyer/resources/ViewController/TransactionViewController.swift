@@ -323,7 +323,8 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
 
                     let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                     
-                    if self.query == "all" {if error.userInfo != nil {
+                    if self.query == "all" {
+                    if error.userInfo != nil {
                         let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
                         let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
                         UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: Constants.Localized.someThingWentWrong)
