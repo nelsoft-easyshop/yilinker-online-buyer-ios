@@ -229,9 +229,18 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
                 self.adjustTextFieldYInsetWithInset(textFieldHeightWithInset + CGFloat(x - 5) * -55)
             }
         } else if IphoneType.isIphone5() {
-            if textField == self.mobileNumberTextField || textField == self.referralCodeTextField || textField == self.reTypePasswordTextField {
-                self.adjustTextFieldYInsetWithInset(textFieldHeightWithInset + CGFloat((textField.tag - 5) * -45))
+            let parent: LoginAndRegisterContentViewController = self.parentViewController as! LoginAndRegisterContentViewController
+            if parent.isFromTab {
+                if textField == self.mobileNumberTextField || textField == self.referralCodeTextField || textField == self.reTypePasswordTextField || textField == self.passwordTextField {
+                    self.adjustTextFieldYInsetWithInset(textFieldHeightWithInset + CGFloat((textField.tag - 3) * -40))
+                }
+            } else {
+                if textField == self.mobileNumberTextField || textField == self.referralCodeTextField || textField == self.reTypePasswordTextField {
+                    self.adjustTextFieldYInsetWithInset(textFieldHeightWithInset + CGFloat((textField.tag - 5) * -45))
+                }
             }
+            
+            
         } else if IphoneType.isIphone4() {
             self.hideCloseButton()
             if textField == self.firstNameTextField || textField == self.lastNameTextField {
