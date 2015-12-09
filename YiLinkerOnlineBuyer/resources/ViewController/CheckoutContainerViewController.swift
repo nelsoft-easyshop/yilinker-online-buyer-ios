@@ -493,7 +493,7 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
     func showRegisterAlert() {
         self.view.layoutIfNeeded()
         
-        let dimView: UIView = UIView(frame: self.view.frame)
+        let dimView: UIView = UIView(frame: UIScreen.mainScreen().bounds)
         dimView.backgroundColor = UIColor.blackColor()
         dimView.alpha = 0.0
         dimView.tag = 100

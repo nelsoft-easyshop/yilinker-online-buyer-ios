@@ -98,7 +98,7 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
-        fullDimView = UIView(frame: self.view.bounds)
+        fullDimView = UIView(frame: UIScreen.mainScreen().bounds)
         fullDimView?.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
         self.navigationController?.view.addSubview(fullDimView!)
         //self.view.addSubview(dimView!)

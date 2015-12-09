@@ -96,7 +96,8 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
         var tapTableView = UITapGestureRecognizer(target:self, action:"hideKeyboard")
         self.tableView.addGestureRecognizer(tapTableView)
         
-        dimView = UIView(frame: self.view.bounds)
+        
+        dimView = UIView(frame: UIScreen.mainScreen().bounds)
         dimView?.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
         self.navigationController?.view.addSubview(dimView!)
         //self.view.addSubview(dimView!)
