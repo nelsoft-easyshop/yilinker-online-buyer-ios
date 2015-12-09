@@ -94,7 +94,6 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
         self.tableView.separatorInset = UIEdgeInsetsZero
         self.tableView.layoutMargins = UIEdgeInsetsZero
         
-        println("order product id \(self.orderProductId) \(self.isCancellable)")
         self.fireTransactionProductDetailsDeliveryStatus()
         self.fireTransactionProductDetails()
         
@@ -589,8 +588,11 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
         manager.GET(APIAtlas.transactionProductDetails+"\(SessionManager.accessToken())&orderProductId=\(self.orderProductId)", parameters: nil, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             println(responseObject)
-            self.transactionProductDetailsModel = TransactionProductDetailsModel.parseFromDataDictionary(responseObject as! NSDictionary)
-       
+            
+            if responseObject["isSuccessful"] as! Bool {
+                self.transactionProductDetailsModel = TransactionProductDetailsModel.parseFromDataDictionary(responseObject as! NSDictionary)
+            }
+            
             if self.headerView == nil {
                 self.loadViewsWithDetails()
             }
@@ -620,10 +622,13 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
         let manager = APIManager.sharedInstance
         manager.GET(APIAtlas.transactionDeliveryStatus+"\(SessionManager.accessToken())&transactionId=\(self.transactionId)", parameters: nil, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            println("timer \(self.time) \(self.transactionId) \(responseObject)")
-            self.transactionDeliveryStatus = TransactionProductDetailsDeliveryStatusModel.parseDataFromDictionary(responseObject as! NSDictionary)
+            
+            if responseObject["isSuccessful"] as! Bool {
+                self.transactionDeliveryStatus = TransactionProductDetailsDeliveryStatusModel.parseDataFromDictionary(responseObject as! NSDictionary)
+            }
+            
             self.timerRefresh()
-            //self.tableView.reloadData()
+            
             self.hud?.hide(true)
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
                 //self.hud?.hide(true)
@@ -650,10 +655,11 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
         let manager = APIManager.sharedInstance
         manager.GET(APIAtlas.transactionDeliveryStatus+"\(SessionManager.accessToken())&transactionId=\(self.transactionId)", parameters: nil, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            println("timer \(self.time) \(self.transactionId) \(responseObject)")
-            self.transactionDeliveryStatus = TransactionProductDetailsDeliveryStatusModel.parseDataFromDictionary(responseObject as! NSDictionary)
-            //self.tableView.reloadData()
-            //self.hud?.hide(true)
+            
+            if responseObject["isSuccessful"] as! Bool {
+                self.transactionDeliveryStatus = TransactionProductDetailsDeliveryStatusModel.parseDataFromDictionary(responseObject as! NSDictionary)
+            }
+            
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
                 //self.hud?.hide(true)
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
@@ -684,6 +690,7 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
             SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
             
             if self.refreshtag == 1001 {
+                self.fireTransactionProductDetailsDeliveryStatus()
                 self.fireTransactionProductDetails()
             } else {
                 self.fireTransactionProductDetailsDeliveryStatus()
@@ -697,7 +704,7 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
                 self.hud?.hide(true)
                 let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
                 let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: Constants.Localized.someThingWentWrong)
+                //UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: Constants.Localized.someThingWentWrong)
                
         })
         
