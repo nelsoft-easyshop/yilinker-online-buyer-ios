@@ -484,6 +484,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
             self.hud?.hide(true)
+            self.fireGetUserInfo()
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
