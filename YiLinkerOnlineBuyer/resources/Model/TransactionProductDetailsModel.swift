@@ -42,8 +42,9 @@ class TransactionProductDetailsModel: NSObject {
     var shortDescription: String = ""
     var attributeName: [String] = []
     var attributeValue: [String] = []
+    var isCancellable: Bool = false
     
-    init(productImage: String, sku: String, color: String, size: String, width: String, height: String, length: String, weight: String, brandName: String, longDescription: String, shortDescription: String, attributeName: NSArray, attributeValue: NSArray) {
+    init(productImage: String, sku: String, color: String, size: String, width: String, height: String, length: String, weight: String, brandName: String, longDescription: String, shortDescription: String, attributeName: NSArray, attributeValue: NSArray, isCancellable: Bool) {
         self.productImage = productImage
         self.sku = sku
         self.color = color
@@ -57,6 +58,7 @@ class TransactionProductDetailsModel: NSObject {
         self.shortDescription = shortDescription
         self.attributeName = attributeName as! [String]
         self.attributeValue = attributeValue as! [String]
+        self.isCancellable = isCancellable
     }
     
     class func parseFromDataDictionary(dictionary: AnyObject) -> TransactionProductDetailsModel {
@@ -72,6 +74,7 @@ class TransactionProductDetailsModel: NSObject {
         var brandName: String = ""
         var longDescription: String = ""
         var shortDescription: String = ""
+        var isCancellable: Bool = false
         
         var attributeName: [String] = []
         var attributeValue: [String] = []
@@ -90,10 +93,22 @@ class TransactionProductDetailsModel: NSObject {
                 
                 if let val = value["productImage"] as? String {
                     productImage = val
+                } else {
+                    productImage = ""
+                }
+                
+                if let val = value["isCancellable"] as? Bool {
+                    isCancellable = val
+                } else {
+                    isCancellable = false
                 }
                 
                 if let val = value["sku"] as? String {
                     sku = val
+                    attributeName.append(skuTitle)
+                    attributeValue.append(sku)
+                } else {
+                    sku = ""
                     attributeName.append(skuTitle)
                     attributeValue.append(sku)
                 }
@@ -101,6 +116,10 @@ class TransactionProductDetailsModel: NSObject {
                 if let brand: AnyObject = value["brand"] {
                     if let val = brand["name"] as? String {
                         brandName = val
+                        attributeName.append(brandTitle)
+                        attributeValue.append(brandName)
+                    } else {
+                        brandName = ""
                         attributeName.append(brandTitle)
                         attributeValue.append(brandName)
                     }
@@ -115,15 +134,23 @@ class TransactionProductDetailsModel: NSObject {
                 if let attributes: AnyObject = value["attributes"] {
                     if let val = attributes["Color"] as? String {
                         color = val
+                    } else {
+                        color = ""
                     }
                     
                     if let val = attributes["Size"] as? String {
                         size = val
+                    } else {
+                        size = ""
                     }
                 }
                 
                 if let val = value["width"] as? String {
                     width = val
+                    attributeName.append(widthTitle)
+                    attributeValue.append(width)
+                } else {
+                    width = ""
                     attributeName.append(widthTitle)
                     attributeValue.append(width)
                 }
@@ -132,10 +159,18 @@ class TransactionProductDetailsModel: NSObject {
                     height = val
                     attributeName.append(heightTitle)
                     attributeValue.append(height)
+                } else {
+                    height = ""
+                    attributeName.append(heightTitle)
+                    attributeValue.append(height)
                 }
                 
                 if let val = value["length"] as? String {
                     length = val
+                    attributeName.append(lengthTitle)
+                    attributeValue.append(length)
+                } else {
+                    length = ""
                     attributeName.append(lengthTitle)
                     attributeValue.append(length)
                 }
@@ -144,20 +179,28 @@ class TransactionProductDetailsModel: NSObject {
                     weight = val
                     attributeName.append(weightTitle)
                     attributeValue.append(weight)
+                } else {
+                    weight = ""
+                    attributeName.append(weightTitle)
+                    attributeValue.append(weight)
                 }
                 
                 if let val = value["description"] as? String {
                     longDescription = val
+                } else {
+                   longDescription = ""
                 }
                 
                 if let val = value["shortDescription"] as? String {
                     shortDescription = val
+                } else {
+                    shortDescription = ""
                 }
                 
             }
         }
         
-        let transactionProductDetailsModel = TransactionProductDetailsModel(productImage: productImage, sku: sku, color: color, size: size, width: width, height: height, length: length, weight: weight, brandName: brandName, longDescription: longDescription, shortDescription: shortDescription, attributeName: attributeName, attributeValue: attributeValue)
+        let transactionProductDetailsModel = TransactionProductDetailsModel(productImage: productImage, sku: sku, color: color, size: size, width: width, height: height, length: length, weight: weight, brandName: brandName, longDescription: longDescription, shortDescription: shortDescription, attributeName: attributeName, attributeValue: attributeValue, isCancellable: isCancellable)
         
         return transactionProductDetailsModel
         
