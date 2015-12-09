@@ -431,7 +431,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
 
         manager.GET(APIAtlas.productDetails + id, parameters: nil, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            println(responseObject)
+
             if responseObject["isSuccessful"] as! Bool {
                 self.productDetailsModel = ProductDetailsModel.parseDataWithDictionary(responseObject)
                 self.productId = self.productDetailsModel.id
@@ -631,7 +631,11 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                 
                 if task.statusCode == 401 {
-                    self.requestRefreshToken("cart")
+                    if type == "buyitnow" {
+                        self.requestRefreshToken("buy")
+                    } else {
+                        self.requestRefreshToken("cart")
+                    }
                 } else if task.statusCode == 404 {
 
                 } else {
@@ -683,7 +687,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     }
     
     func requestRefreshToken(type: String) {
-        
+        println("REFRESHING TOKEN")
         let params: NSDictionary = ["client_id": Constants.Credentials.clientID(),
             "client_secret": Constants.Credentials.clientSecret(),
             "grant_type": Constants.Credentials.grantRefreshToken,
@@ -695,7 +699,9 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
             
             self.hud?.hide(true)
             SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
-            if type == "cart" {
+            if type == "buy" {
+                self.requestAddCartItem("buyitnow")
+            } else if type == "cart" {
                 self.requestAddCartItem("")
             } else if type == "wishlist" {
                 self.requestUpdateWishlistItem()
@@ -732,11 +738,13 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
                     "access_token"  : SessionManager.accessToken()
                     ] as Dictionary<String, String>
 
-                manager.POST(APIAtlas.ACTION_GET_CONTACTS + "/", parameters: parameters, success: {
+                let url = APIAtlas.baseUrl + APIAtlas.ACTION_GET_CONTACTS
+                manager.POST(url, parameters: parameters, success: {
                     (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
                     self.contacts = W_Contact.parseContacts(responseObject as! NSDictionary)
                     }, failure: {
                         (task: NSURLSessionDataTask!, error: NSError!) in
+                        println("ERROR IN GETING CONTACTS")
                         let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                         if task.statusCode == 401 {
                             if (SessionManager.isLoggedIn()){
