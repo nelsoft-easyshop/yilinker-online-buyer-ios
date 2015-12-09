@@ -287,6 +287,8 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
    
                 if queryType == "for-feedback" {
                     trans = TransactionModel.parseDataFromDictionary(responseObject as! NSDictionary)
+                } else if queryType == "pending" {
+                    trans = TransactionModel.parseDataFromDictionary4(responseObject as! NSDictionary)
                 } else {
                     trans = TransactionModel.parseDataFromDictionary3(responseObject as! NSDictionary)
                 }

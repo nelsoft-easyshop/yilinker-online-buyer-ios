@@ -61,6 +61,9 @@ class TransactionDetailsModel: NSObject {
     var name: [String] = []
     var productDescription: [String] = []
     var productImage: [String] = []
+    var transactionUnitPrice: String = ""
+    var transactionTotalPrice: String = ""
+    var transactionShippingFee: String = ""
     
     var sellerName: String = ""
     var sellerContact: String = ""
@@ -81,7 +84,7 @@ class TransactionDetailsModel: NSObject {
         self.orderStatus = orderStatus
     }
     
-    init(isSuccessful: Bool, sellerId: NSArray, sellerId2: NSArray, sellerStore: NSArray, sellerContactNumber: NSArray, hasFeedback: NSArray, orderProductId: NSArray, productId: NSArray, quantity: NSArray, unitPrice: NSArray, totalPrice: NSArray, productName: NSArray, handlingFee: NSArray, orderProductStatusId: NSArray, name: NSArray, productDescription: NSArray, productImage: NSArray, isCancellable: NSArray){
+    init(isSuccessful: Bool, sellerId: NSArray, sellerId2: NSArray, sellerStore: NSArray, sellerContactNumber: NSArray, hasFeedback: NSArray, orderProductId: NSArray, productId: NSArray, quantity: NSArray, unitPrice: NSArray, totalPrice: NSArray, productName: NSArray, handlingFee: NSArray, orderProductStatusId: NSArray, name: NSArray, productDescription: NSArray, productImage: NSArray, isCancellable: NSArray, transactionUnitPrice: String, transactionTotalPrice: String, transactionShippingFee: String){
         
         self.sellerId = sellerId as! [Int]
         self.sellerId2 = sellerId2 as! [Int]
@@ -101,6 +104,9 @@ class TransactionDetailsModel: NSObject {
         self.productDescription = productDescription as! [String]
         self.productImage = productImage as! [String]
         self.isCancellable = isCancellable as! [Bool]
+        self.transactionTotalPrice = transactionTotalPrice
+        self.transactionUnitPrice = transactionUnitPrice
+        self.transactionShippingFee = transactionShippingFee
         
     }
     
@@ -123,6 +129,9 @@ class TransactionDetailsModel: NSObject {
         var productDescription: [String] = []
         var productImage: [String] = []
         var isCancellable: [Bool] = []
+        var transactionUnitPrice: String = ""
+        var transactionTotalPrice: String = ""
+        var transactionShippingFee: String = ""
 
         if dictionary.isKindOfClass(NSDictionary) {
             println(dictionary)
@@ -131,6 +140,25 @@ class TransactionDetailsModel: NSObject {
             }
             
             if let value: AnyObject = dictionary["data"] {
+                
+                if let val = value["transactionUnitPrice"] as? String {
+                    transactionUnitPrice = val
+                } else {
+                    transactionUnitPrice = ""
+                }
+                
+                if let val = value["transactionPrice"] as? String {
+                    transactionTotalPrice = val
+                } else {
+                    transactionTotalPrice = ""
+                }
+                
+                if let val = value["transactionShippingFee"] as? String {
+                    transactionShippingFee = val
+                } else {
+                    transactionShippingFee = ""
+                }
+                
                 let transactions: NSArray = value["transactionItems"] as! NSArray
                 for transaction in transactions as! [NSDictionary] {
                     
@@ -185,7 +213,7 @@ class TransactionDetailsModel: NSObject {
             }
         }
         
-        let transactionDetailsModel = TransactionDetailsModel(isSuccessful: isSuccessful, sellerId: sellerId, sellerId2: sellerId2, sellerStore: sellerStore, sellerContactNumber: sellerContactNumber, hasFeedback: hasFeedback, orderProductId: orderProductId, productId: productId, quantity: quantity, unitPrice: unitPrice, totalPrice: totalPrice, productName: productName, handlingFee: handlingFee, orderProductStatusId: orderProductStatusId, name: name, productDescription: productDescription, productImage: productImage, isCancellable: isCancellable)
+        let transactionDetailsModel = TransactionDetailsModel(isSuccessful: isSuccessful, sellerId: sellerId, sellerId2: sellerId2, sellerStore: sellerStore, sellerContactNumber: sellerContactNumber, hasFeedback: hasFeedback, orderProductId: orderProductId, productId: productId, quantity: quantity, unitPrice: unitPrice, totalPrice: totalPrice, productName: productName, handlingFee: handlingFee, orderProductStatusId: orderProductStatusId, name: name, productDescription: productDescription, productImage: productImage, isCancellable: isCancellable, transactionUnitPrice: transactionUnitPrice, transactionTotalPrice: transactionTotalPrice, transactionShippingFee: transactionShippingFee)
         
         return transactionDetailsModel
     }
@@ -209,6 +237,9 @@ class TransactionDetailsModel: NSObject {
         var productDescription: [String] = []
         var productImage: [String] = []
         var isCancellable: [Bool] = []
+        var transactionUnitPrice: String = ""
+        var transactionTotalPrice: String = ""
+        var transactionShippingFee: String = ""
         
         if dictionary.isKindOfClass(NSDictionary) {
             println(dictionary)
@@ -221,6 +252,24 @@ class TransactionDetailsModel: NSObject {
                 /*if let cancellable = value["isCancellable"] as? Bool{
                     isCancellable.append(cancellable)
                 }*/
+                
+                if let val = value["transactionUnitPrice"] as? String {
+                    transactionUnitPrice = val
+                } else {
+                    transactionUnitPrice = ""
+                }
+                
+                if let val = value["transactionPrice"] as? String {
+                    transactionTotalPrice = val
+                } else {
+                    transactionTotalPrice = ""
+                }
+                
+                if let val = value["transactionShippingFee"] as? String {
+                    transactionShippingFee = val
+                } else {
+                    transactionShippingFee = ""
+                }
                 
                 let transactions: NSArray = value["transactionItems"] as! NSArray
                 for transaction in transactions as! [NSDictionary] {
@@ -289,7 +338,7 @@ class TransactionDetailsModel: NSObject {
             }
         }
         
-        let transactionDetailsModel = TransactionDetailsModel(isSuccessful: isSuccessful, sellerId: sellerId, sellerId2: sellerId2, sellerStore: sellerStore, sellerContactNumber: sellerContactNumber, hasFeedback: hasFeedback, orderProductId: orderProductId, productId: productId, quantity: quantity, unitPrice: unitPrice, totalPrice: totalPrice, productName: productName, handlingFee: handlingFee, orderProductStatusId: orderProductStatusId, name: name, productDescription: productDescription, productImage: productImage, isCancellable: isCancellable)
+        let transactionDetailsModel = TransactionDetailsModel(isSuccessful: isSuccessful, sellerId: sellerId, sellerId2: sellerId2, sellerStore: sellerStore, sellerContactNumber: sellerContactNumber, hasFeedback: hasFeedback, orderProductId: orderProductId, productId: productId, quantity: quantity, unitPrice: unitPrice, totalPrice: totalPrice, productName: productName, handlingFee: handlingFee, orderProductStatusId: orderProductStatusId, name: name, productDescription: productDescription, productImage: productImage, isCancellable: isCancellable, transactionUnitPrice: transactionUnitPrice, transactionTotalPrice: transactionTotalPrice, transactionShippingFee: transactionShippingFee)
         
         return transactionDetailsModel
     }
