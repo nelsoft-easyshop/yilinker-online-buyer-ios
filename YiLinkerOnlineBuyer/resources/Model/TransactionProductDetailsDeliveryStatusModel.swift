@@ -40,26 +40,38 @@ class TransactionProductDetailsDeliveryStatusModel: NSObject {
             for delivery in deliveryStatus as! [NSDictionary] {
                 if let val = delivery["lastCheckedInBy"] as? String {
                     lastCheckedInBy = val
+                } else {
+                    lastCheckedInBy = "-"
                 }
                 
                 if let val = delivery["lastCheckedInLocation"] as? String {
                     lastCheckedInLocation = val
+                } else {
+                    lastCheckedInLocation = "-"
                 }
                 
                 if let val = delivery["pickupRider"] as? String {
                     pickupRider = val
+                } else {
+                    pickupRider = ""
                 }
                 
                 if let val = delivery["pickupRiderContactNumber"] as? String {
                     pickupRiderContactNumber = val
+                } else {
+                    pickupRiderContactNumber = ""
                 }
                 
                 if let val = delivery["deliveryRider"] as? String {
                     deliveryRider = val
+                } else {
+                    deliveryRider = "-"
                 }
                 
                 if let val = delivery["deliveryRiderContactNumber"] as? String {
                     deliveryRiderContactNumber = val
+                } else {
+                    deliveryRiderContactNumber = ""
                 }
             }
         } else {

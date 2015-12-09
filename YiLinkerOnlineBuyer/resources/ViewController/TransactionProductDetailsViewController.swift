@@ -395,71 +395,86 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
     //MARK: Delivery Status
     //MARK: SMS and Phone call
     func pickupSmsAction() {
-        if self.transactionDeliveryStatus.pickupRiderContactNumber != "" {
-            if UIApplication.sharedApplication().canOpenURL(NSURL(string: "tel:\(self.transactionDeliveryStatus.pickupRiderContactNumber)")!) {
-                println("can message")
-                //UIApplication.sharedApplication().openURL(NSURL(string:"tel:\(self.transactionDeliveryStatus.pickupRiderContactNumber)")!)
-                /*var toRecipents = ["\(self.transactionDeliveryStatus.pickupRiderContactNumber)"]
-                var mc: MFMessageComposeViewController = MFMessageComposeViewController()
-                mc.recipients = toRecipents
-                mc.delegate = self
-                mc.body = ""
-                */
-                self.sendMessage(self.transactionDeliveryStatus.pickupRiderContactNumber)
-                //UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Call number action.", title: "Call Pick-up")
+        if self.transactionDeliveryStatus != nil {
+            if self.transactionDeliveryStatus.pickupRiderContactNumber != "" {
+                if UIApplication.sharedApplication().canOpenURL(NSURL(string: "tel:\(self.transactionDeliveryStatus.pickupRiderContactNumber)")!) {
+                    println("can message")
+                    //UIApplication.sharedApplication().openURL(NSURL(string:"tel:\(self.transactionDeliveryStatus.pickupRiderContactNumber)")!)
+                    /*var toRecipents = ["\(self.transactionDeliveryStatus.pickupRiderContactNumber)"]
+                    var mc: MFMessageComposeViewController = MFMessageComposeViewController()
+                    mc.recipients = toRecipents
+                    mc.delegate = self
+                    mc.body = ""
+                    */
+                    self.sendMessage(self.transactionDeliveryStatus.pickupRiderContactNumber)
+                    //UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Call number action.", title: "Call Pick-up")
+                } else {
+                    println("cant message")
+                    //UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Cannot make a call", title: "Call Pick-up")
+                }
             } else {
-                println("cant message")
-                //UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Cannot make a call", title: "Call Pick-up")
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "No available contact number.", title: "Message Pick-up")
+            }
+        } else {
+             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "No available contact number.", title: "Message Pick-up")
+        }
+    }
+    
+    func pickupCallAction() {
+        if self.transactionDeliveryStatus != nil {
+            if self.transactionDeliveryStatus.pickupRiderContactNumber != "" {
+                if UIApplication.sharedApplication().canOpenURL(NSURL(string: "tel:\(self.transactionDeliveryStatus.pickupRiderContactNumber)")!) {
+                    println("can call")
+                    UIApplication.sharedApplication().openURL(NSURL(string:"tel:\(self.transactionDeliveryStatus.pickupRiderContactNumber)")!)
+                    //UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Call number action.", title: "Call Pick-up")
+                } else {
+                    println("cant make a call")
+                    //UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Cannot make a call", title: "Call Pick-up")
+                }
+            } else {
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "No available contact number.", title: "Call Pick-up")
             }
         } else {
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "No available contact number.", title: "Message Pick-up")
         }
-        
-    }
-    
-    func pickupCallAction() {
-        if self.transactionDeliveryStatus.pickupRiderContactNumber != "" {
-            if UIApplication.sharedApplication().canOpenURL(NSURL(string: "tel:\(self.transactionDeliveryStatus.pickupRiderContactNumber)")!) {
-                println("can call")
-                UIApplication.sharedApplication().openURL(NSURL(string:"tel:\(self.transactionDeliveryStatus.pickupRiderContactNumber)")!)
-                //UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Call number action.", title: "Call Pick-up")
-            } else {
-                println("cant make a call")
-                //UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Cannot make a call", title: "Call Pick-up")
-            }
-        } else {
-            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "No available contact number.", title: "Call Pick-up")
-        }
     }
     
     func deliverySmsAction() {
-        //UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Send SMS action.", title: "SMS Pick-up")
-        if self.transactionDeliveryStatus.deliveryRiderContactNumber != "" {
-            if UIApplication.sharedApplication().canOpenURL(NSURL(string: "tel:\(self.transactionDeliveryStatus.deliveryRiderContactNumber)")!) {
-                println("can message")
-                self.sendMessage(self.transactionDeliveryStatus.deliveryRiderContactNumber)
-                //UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Call number action.", title: "Call Pick-up")
+        if self.transactionDeliveryStatus != nil {
+            //UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Send SMS action.", title: "SMS Pick-up")
+            if self.transactionDeliveryStatus.deliveryRiderContactNumber != "" {
+                if UIApplication.sharedApplication().canOpenURL(NSURL(string: "tel:\(self.transactionDeliveryStatus.deliveryRiderContactNumber)")!) {
+                    println("can message")
+                    self.sendMessage(self.transactionDeliveryStatus.deliveryRiderContactNumber)
+                    //UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Call number action.", title: "Call Pick-up")
+                } else {
+                    println("cant message")
+                    //UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Cannot make a call", title: "Call Pick-up")
+                }
             } else {
-                println("cant message")
-                //UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Cannot make a call", title: "Call Pick-up")
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "No available contact number.", title: "Call Delivery Rider")
             }
         } else {
-            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "No available contact number.", title: "Call Delivery Rider")
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "No available contact number.", title: "Message Pick-up")
         }
     }
     
     func deliveryCallAction() {
-        if self.transactionDeliveryStatus.deliveryRiderContactNumber != "" {
-            if UIApplication.sharedApplication().canOpenURL(NSURL(string: "tel:\(self.transactionDeliveryStatus.deliveryRiderContactNumber)")!) {
-                println("can call")
-                UIApplication.sharedApplication().openURL(NSURL(string:"tel:\(self.transactionDeliveryStatus.deliveryRiderContactNumber)")!)
-                //UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Call number action.", title: "Call Pick-up")
+        if self.transactionDeliveryStatus != nil {
+            if self.transactionDeliveryStatus.deliveryRiderContactNumber != "" {
+                if UIApplication.sharedApplication().canOpenURL(NSURL(string: "tel:\(self.transactionDeliveryStatus.deliveryRiderContactNumber)")!) {
+                    println("can call")
+                    UIApplication.sharedApplication().openURL(NSURL(string:"tel:\(self.transactionDeliveryStatus.deliveryRiderContactNumber)")!)
+                    //UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Call number action.", title: "Call Pick-up")
+                } else {
+                    println("cant make a call")
+                    //UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Cannot make a call", title: "Call Pick-up")
+                }
             } else {
-                println("cant make a call")
-                //UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Cannot make a call", title: "Call Pick-up")
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "No available contact number.", title: "Call Delivery Rider")
             }
         } else {
-            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "No available contact number.", title: "Call Delivery Rider")
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "No available contact number.", title: "Message Pick-up")
         }
     }
     
@@ -620,9 +635,10 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
     func fireTransactionProductDetailsDeliveryStatus() {
         self.showHUD()
         let manager = APIManager.sharedInstance
+        println(self.transactionId)
         manager.GET(APIAtlas.transactionDeliveryStatus+"\(SessionManager.accessToken())&transactionId=\(self.transactionId)", parameters: nil, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            
+            println(responseObject)
             if responseObject["isSuccessful"] as! Bool {
                 self.transactionDeliveryStatus = TransactionProductDetailsDeliveryStatusModel.parseDataFromDictionary(responseObject as! NSDictionary)
             }
