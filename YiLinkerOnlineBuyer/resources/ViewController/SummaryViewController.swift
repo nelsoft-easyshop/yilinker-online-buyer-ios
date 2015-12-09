@@ -301,7 +301,7 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
         } else {
             if indexPath.row == 0 {
                 if SessionManager.isLoggedIn() {
-                    return 140
+                    return 160
                 } else {
                     return 480
                 }
