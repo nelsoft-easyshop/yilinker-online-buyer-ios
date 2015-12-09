@@ -178,6 +178,8 @@ class HiddenViewController: UIViewController {
             self.viewControllers.append(self.categoriesViewController!)
             self.viewControllers.append(self.helpViewController!)
         }
+        
+        self.categoriesViewController?.isFromFAB = true
     }
 
     override func didReceiveMemoryWarning() {

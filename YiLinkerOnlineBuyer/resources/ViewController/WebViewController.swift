@@ -8,6 +8,13 @@
 
 import UIKit
 
+struct WebviewStrings {
+    static let flashSales = StringHelper.localizedStringWithKey("WEBVIEW_FLASH_SALES")
+    static let dailyLogin = StringHelper.localizedStringWithKey("WEBVIEW_DAILY_LOGIN")
+    static let categories = StringHelper.localizedStringWithKey("WEBVIEW_CATEGORIES")
+    static let storeView = StringHelper.localizedStringWithKey("WEBVIEW_STORE_VIEW")
+}
+
 enum WebviewSource {
     case FlashSale
     case DailyLogin
@@ -32,16 +39,32 @@ class WebViewController: UIViewController, UIWebViewDelegate, EmptyViewDelegate 
     var emptyView: EmptyView?
     
     var webviewSource = WebviewSource.Default
+    var isFromFab: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.webView.delegate = self
+        
         if self.urlString.isEmpty {
+            loadWebview()
+        } else if self.urlString == WebViewURL.flashSale {
+            webviewSource = WebviewSource.FlashSale
+            loadWebview()
+        } else if self.urlString == WebViewURL.dailyLogin {
+            webviewSource = WebviewSource.DailyLogin
+            loadWebview()
+        } else if self.urlString == WebViewURL.category {
+            webviewSource = WebviewSource.Category
+            loadWebview()
+        } else if self.urlString == WebViewURL.storeView {
+            webviewSource = WebviewSource.StoreView
             loadWebview()
         } else {
             self.loadUrlWithUrlString(self.urlString)
         }
+        
         self.backButton()
+        
     }
     
     //MARK: - Load URL with URL String
@@ -55,13 +78,17 @@ class WebViewController: UIViewController, UIWebViewDelegate, EmptyViewDelegate 
         var tempUrl: String = ""
         switch webviewSource {
         case .FlashSale:
-           tempUrl = WebViewURL.flashSale
+            tempUrl = WebViewURL.flashSale
+            self.title = WebviewStrings.flashSales
         case .DailyLogin:
             tempUrl = WebViewURL.dailyLogin
+            self.title = WebviewStrings.dailyLogin
         case .Category:
             tempUrl = WebViewURL.category
+            self.title = WebviewStrings.categories
         case .StoreView:
             tempUrl = WebViewURL.storeView
+            self.title = WebviewStrings.storeView
         case .Default:
             self.addEmptyView()
         default:
@@ -134,10 +161,9 @@ class WebViewController: UIViewController, UIWebViewDelegate, EmptyViewDelegate 
                 return false
             }
         case .Default:
-            self.addEmptyView()
-            return false
+            return true
         default:
-            return false
+            return true
         }
     }
     
@@ -152,6 +178,11 @@ class WebViewController: UIViewController, UIWebViewDelegate, EmptyViewDelegate 
         backButton.frame = CGRectMake(0, 0, 40, 40)
         backButton.addTarget(self, action: "back", forControlEvents: UIControlEvents.TouchUpInside)
         backButton.setImage(UIImage(named: "back-white"), forState: UIControlState.Normal)
+        
+        if isFromFab {
+            backButton.hidden = true
+        }
+        
         var customBackButton:UIBarButtonItem = UIBarButtonItem(customView: backButton)
         
         let navigationSpacer: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
@@ -164,24 +195,7 @@ class WebViewController: UIViewController, UIWebViewDelegate, EmptyViewDelegate 
         if self.webView.canGoBack {
             self.webView.goBack()
         } else {
-            let alertController = UIAlertController(title: "YiLinker", message: "Are you sure you want to leave this page?", preferredStyle: .Alert)
-            
-            let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
-                // cancel action
-            }
-            
-            alertController.addAction(cancelAction)
-            
-            let OKAction = UIAlertAction(title: "OK", style: .Default) { (action) in
-                self.navigationController!.popViewControllerAnimated(true)
-            }
-            
-            alertController.addAction(OKAction)
-            
-            self.presentViewController(alertController, animated: true) {
-        
-            }
-            
+            self.navigationController!.popViewControllerAnimated(true)
         }
     }
     

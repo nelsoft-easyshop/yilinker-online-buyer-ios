@@ -338,6 +338,12 @@ ACTIVITY_LOG_TITLE_LOCALIZE_KEY = "活动日志";
 
 //Chan' Module
 
+// MARK: - Webview
+WEBVIEW_FLASH_SALES = "闪存销售";//No Chinese String
+WEBVIEW_DAILY_LOGIN = "每日登录";//No Chinese String
+WEBVIEW_CATEGORIES = "类别";//No Chinese String
+WEBVIEW_STORE_VIEW = "存储视图";//No Chinese String
+
 // MARK: - HELP
 HELP_FOR_CUSTOMER_SERVICE= "为客户服务援助";
 HELP_EMAIL = "电子邮件：";

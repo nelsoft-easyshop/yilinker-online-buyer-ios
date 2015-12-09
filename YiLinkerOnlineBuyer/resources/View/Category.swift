@@ -204,6 +204,14 @@ extension UIView {
             bundle: bundle
             ).instantiateWithOwner(nil, options: nil)[0] as? UIView
     }
+    
+    func blurView() {
+        let screenSize: CGRect = UIScreen.mainScreen().bounds
+        var blurEffect = UIBlurEffect(style: UIBlurEffectStyle.Dark)
+        var blurEffectView = UIVisualEffectView(effect: blurEffect)
+        blurEffectView.frame = CGRectMake(0, 0, screenSize.width + 50, screenSize.height + 50)
+        self.addSubview(blurEffectView)
+    }
 }
 
 

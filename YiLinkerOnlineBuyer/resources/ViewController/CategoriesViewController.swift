@@ -20,6 +20,7 @@ class CategoriesViewController: UIViewController, EmptyViewDelegate, UIWebViewDe
     
     var emptyView: EmptyView?
     var hud: MBProgressHUD?
+    var isFromFAB: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,6 +49,7 @@ class CategoriesViewController: UIViewController, EmptyViewDelegate, UIWebViewDe
         self.navigationController?.navigationBarHidden = false
         let webViewController: WebViewController = WebViewController(nibName: "WebViewController", bundle: nil)
         webViewController.webviewSource = WebviewSource.Category
+        webViewController.isFromFab = self.isFromFAB
         self.navigationController!.pushViewController(webViewController, animated: false)
     }
     
