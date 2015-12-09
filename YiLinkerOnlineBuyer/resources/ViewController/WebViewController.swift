@@ -134,10 +134,9 @@ class WebViewController: UIViewController, UIWebViewDelegate, EmptyViewDelegate 
                 return false
             }
         case .Default:
-            self.addEmptyView()
-            return false
+            return true
         default:
-            return false
+            return true
         }
     }
     
