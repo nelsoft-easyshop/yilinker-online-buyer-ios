@@ -8,9 +8,11 @@
 
 import UIKit
 import MapKit
+import CoreLocation
 
-class MapTableViewCell: UITableViewCell, MKMapViewDelegate {
+class MapTableViewCell: UITableViewCell, MKMapViewDelegate, CLLocationManagerDelegate {
 
+    let locationManager = CLLocationManager()
     @IBOutlet weak var mapView: MKMapView!
     var lat: Double = 0.0
     var long: Double = 0.0
@@ -19,7 +21,13 @@ class MapTableViewCell: UITableViewCell, MKMapViewDelegate {
         super.awakeFromNib()
         // Initialization code
         self.mapView.delegate = self
-//        setLocation(latitude: 14.4880779641213, longitude: 121.029669824614)
+//        self.locationManager.requestWhenInUseAuthorization()
+        
+        locationManager.delegate = self
+        locationManager.requestAlwaysAuthorization()
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.requestAlwaysAuthorization()
+        locationManager.startUpdatingLocation()
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
@@ -28,10 +36,28 @@ class MapTableViewCell: UITableViewCell, MKMapViewDelegate {
         // Configure the view for the selected state
     }
     
+    // MARK: - Map View Delegate
+    
     func mapView(mapView: MKMapView!, regionDidChangeAnimated animated: Bool) {
         self.lat = mapView.centerCoordinate.latitude
         self.long = mapView.centerCoordinate.longitude
     }
+    
+    // MARK: - Location Delegate
+    
+    func locationManager(manager: CLLocationManager!, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+        if CLLocationManager .authorizationStatus() == CLAuthorizationStatus.AuthorizedAlways {
+            locationManager.startUpdatingLocation()
+        }
+    }
+    
+    func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
+        var locValue:CLLocationCoordinate2D = manager.location.coordinate
+        print("locations = \(locValue.latitude) \(locValue.longitude)")
+        setLocation(latitude: locValue.latitude, longitude: locValue.longitude)
+    }
+    
+    // MARK: - Methods
     
     func latitude() -> Double {
         return self.lat
