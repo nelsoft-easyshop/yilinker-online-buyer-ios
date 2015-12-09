@@ -120,6 +120,7 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
             return cell
         } else {
             let mapCell: MapTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(self.mapCellNibName) as! MapTableViewCell
+            mapCell.setLocation(latitude: SessionManager.latitude().toDouble()!, longitude: SessionManager.longitude().toDouble()!)
             return mapCell
         }
     }
@@ -130,7 +131,7 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
             return 41
         } else {
             //map height
-            return 199
+            return 300
         }
     }
     
@@ -376,7 +377,8 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
     
     func fireEditAddress() {
         self.showHUD()
-        
+        let indexPath: NSIndexPath = NSIndexPath(forRow: 6, inSection: 0)
+        let cell: MapTableViewCell = self.tableView.cellForRowAtIndexPath(indexPath) as! MapTableViewCell
         let params = ["access_token": SessionManager.accessToken(),
             "title": getTextAtIndex(0),
             "streetName": getTextAtIndex(1),
@@ -385,7 +387,9 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
             "barangay": getTextAtIndex(4),
             "zipCode": getTextAtIndex(5),
             "locationId": self.addressModel.barangayId,
-            "userAddressId": self.addressModel.userAddressId
+            "userAddressId": self.addressModel.userAddressId,
+            "longitude":cell.longitude(),
+            "latitude":cell.latitude()
         ]
         
         manager.POST(APIAtlas.editAddress, parameters: params, success: {
