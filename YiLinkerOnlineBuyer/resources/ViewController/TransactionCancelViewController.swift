@@ -170,7 +170,10 @@ class TransactionCancelViewController: UIViewController, UITextViewDelegate, UIP
                     if task.statusCode == 401 {
                         self.fireRefreshToken()
                     } else {
-                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
+//                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
+                        let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
+                        let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
+                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: Constants.Localized.someThingWentWrong)
                         self.dismissViewControllerAnimated(true, completion: nil)
                         self.delegate?.dismissView()
                         
@@ -219,10 +222,12 @@ class TransactionCancelViewController: UIViewController, UITextViewDelegate, UIP
                     if task.statusCode == 401 {
                         self.fireRefreshToken()
                     } else {
-                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
+                       // UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
+                        let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
+                        let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
+                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: Constants.Localized.someThingWentWrong)
                         self.dismissViewControllerAnimated(true, completion: nil)
                         self.delegate?.dismissView()
-                        
                     }
                 } else {
                     UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.noInternet, title: Constants.Localized.error)
@@ -256,6 +261,9 @@ class TransactionCancelViewController: UIViewController, UITextViewDelegate, UIP
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
+                let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: Constants.Localized.someThingWentWrong)
                 self.hud?.hide(true)
         }) 
     }

@@ -251,9 +251,12 @@ class TransactionDeliveryLogTableViewController: UITableViewController {
                     if Reachability.isConnectedToNetwork() {
                         UIAlertController.displaySomethingWentWrongError(self)
                     } else {
-                        UIAlertController.displayNoInternetConnectionError(self)
+                        let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
+                        let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
+                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: Constants.Localized.someThingWentWrong)
+                        self.hud?.hide(true)
+                        //UIAlertController.displayNoInternetConnectionError(self)
                     }
-                    println(error)
                 }
         })
         
@@ -272,12 +275,16 @@ class TransactionDeliveryLogTableViewController: UITableViewController {
         manager.POST(APIAtlas.refreshTokenUrl, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
+            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+            
             self.fireGetDeliveryLogs()
             
-            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
+                let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: Constants.Localized.someThingWentWrong)
                 self.hud?.hide(true)
         })
         

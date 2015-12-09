@@ -325,12 +325,8 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
 
                     let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                     
-                    if self.query == "all" {
-                    if error.userInfo != nil {
-                        let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
-                        let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
-                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: Constants.Localized.someThingWentWrong)
-                    } else if task.statusCode == 401 {
+                    if task.statusCode == 401 {
+                        if self.query == "all" {
                             self.requestRefreshToken(TransactionRefreshType.All)
                         } else if self.query == "on-delivery" {
                             self.requestRefreshToken(TransactionRefreshType.OnGoing)
@@ -344,7 +340,10 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
                     } else {
                         self.tableData.removeAll(keepCapacity: false)
                         self.tableView.reloadData()
-                        self.showAlert(title: Constants.Localized.someThingWentWrong, message: nil)
+                        let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
+                        let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
+                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: Constants.Localized.someThingWentWrong)
+                        //self.showAlert(title: Constants.Localized.someThingWentWrong, message: nil)
                         self.addEmptyView()
                     }
                     
@@ -371,6 +370,8 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
         
         manager.POST(APIAtlas.loginUrl, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            
+            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
             
             if type == TransactionRefreshType.All {
                 self.fireTransaction("all")
@@ -457,12 +458,11 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
     func addEmptyView() {
         if self.emptyView == nil {
             self.emptyView = UIView.loadFromNibNamed("EmptyView", bundle: nil) as? EmptyView
-            self.emptyView?.frame = self.contentViewFrame!
             self.emptyView!.delegate = self
+            self.emptyView!.frame = self.view.bounds
             self.view.addSubview(self.emptyView!)
         } else {
-            self.emptyView!.hidden = false
-            println("unhide empty view")
+            self.emptyView?.hidden = false
         }
     }
     

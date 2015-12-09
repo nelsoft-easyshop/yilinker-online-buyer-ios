@@ -598,32 +598,18 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
             self.tableView.reloadData()
             self.hud?.hide(true)
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
-                self.hud?.hide(true)
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                if error.userInfo != nil {
-                    let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
-                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: Constants.Localized.someThingWentWrong)
-                    self.tableView.reloadData()
-                    /*let alert = UIAlertController(title: Constants.Localized.someThingWentWrong,
-                    message: errorModel.message,
-                    preferredStyle: UIAlertControllerStyle.Alert)
-                    let okButton = UIAlertAction(title: ProductStrings.alertOk,
-                    style: UIAlertActionStyle.Cancel) { (alert) -> Void in
-                    self.navigationController?.popViewControllerAnimated(true)
-                    }
-                    alert.addAction(okButton)
-                    self.presentViewController(alert, animated: true, completion: nil)
-                    */
-                } else if task.statusCode == 401 {
+                if task.statusCode == 401 {
                     self.fireRefreshToken()
                     self.tableView.reloadData()
                 } else {
-                    self.showAlert(title: Constants.Localized.error, message: Constants.Localized.someThingWentWrong)
+                    let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: Constants.Localized.someThingWentWrong)
+                    self.hud?.hide(true)
                     self.tableView.reloadData()
                 }
                 self.refreshtag = 1001
-                //println(error.userInfo)
                 
         })
     }
@@ -640,32 +626,20 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
             //self.tableView.reloadData()
             self.hud?.hide(true)
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
-                self.hud?.hide(true)
+                //self.hud?.hide(true)
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                if error.userInfo != nil {
-                    let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
-                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: Constants.Localized.someThingWentWrong)
-                    self.tableView.reloadData()
-                    /*let alert = UIAlertController(title: Constants.Localized.someThingWentWrong,
-                    message: errorModel.message,
-                    preferredStyle: UIAlertControllerStyle.Alert)
-                    let okButton = UIAlertAction(title: ProductStrings.alertOk,
-                    style: UIAlertActionStyle.Cancel) { (alert) -> Void in
-                    self.navigationController?.popViewControllerAnimated(true)
-                    }
-                    alert.addAction(okButton)
-                    self.presentViewController(alert, animated: true, completion: nil)
-                    */
-                } else if task.statusCode == 401 {
+                
+                if task.statusCode == 401 {
                     self.fireRefreshToken()
                     self.tableView.reloadData()
                 } else {
-                    self.showAlert(title: Constants.Localized.error, message: Constants.Localized.someThingWentWrong)
+                    let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: Constants.Localized.someThingWentWrong)
+                    self.hud?.hide(true)
                     self.tableView.reloadData()
                 }
                 self.refreshtag = 1002
-                println(error.userInfo)
                 
         })
     }
@@ -683,30 +657,17 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
                 //self.hud?.hide(true)
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                if error.userInfo != nil {
+                if task.statusCode == 401 {
+                    self.fireRefreshToken()
+                    self.tableView.reloadData()
+                } else {
                     let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
                     let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
                     UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: Constants.Localized.someThingWentWrong)
                     self.tableView.reloadData()
-                    /*let alert = UIAlertController(title: Constants.Localized.someThingWentWrong,
-                    message: errorModel.message,
-                    preferredStyle: UIAlertControllerStyle.Alert)
-                    let okButton = UIAlertAction(title: ProductStrings.alertOk,
-                    style: UIAlertActionStyle.Cancel) { (alert) -> Void in
-                    self.navigationController?.popViewControllerAnimated(true)
-                    }
-                    alert.addAction(okButton)
-                    self.presentViewController(alert, animated: true, completion: nil)
-                    */
-                } else if task.statusCode == 401 {
-                    self.fireRefreshToken()
-                    self.tableView.reloadData()
-                } else {
-                    self.showAlert(title: Constants.Localized.error, message: Constants.Localized.someThingWentWrong)
-                    self.tableView.reloadData()
+                    self.hud?.hide(true)
                 }
                 self.refreshtag = 1002
-                println(error.userInfo)
                 
         })
     }
@@ -719,19 +680,24 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
         let parameters: NSDictionary = ["client_id": Constants.Credentials.clientID(), "client_secret": Constants.Credentials.clientSecret(), "grant_type": Constants.Credentials.grantRefreshToken, "refresh_token":  SessionManager.refreshToken()]
         manager.POST(APIAtlas.refreshTokenUrl, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            
+            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+            
             if self.refreshtag == 1001 {
                 self.fireTransactionProductDetails()
             } else {
                 self.fireTransactionProductDetailsDeliveryStatus()
             }
             self.hud?.hide(true)
-            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+           
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
            
                 self.hud?.hide(true)
-                self.showAlert(title: Constants.Localized.error, message: Constants.Localized.someThingWentWrong)
+                let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
+                let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: Constants.Localized.someThingWentWrong)
                
         })
         
