@@ -431,7 +431,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
 
         manager.GET(APIAtlas.productDetails + id, parameters: nil, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            println(responseObject)
+
             if responseObject["isSuccessful"] as! Bool {
                 self.productDetailsModel = ProductDetailsModel.parseDataWithDictionary(responseObject)
                 self.productId = self.productDetailsModel.id
@@ -683,7 +683,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     }
     
     func requestRefreshToken(type: String) {
-        
+        println("REFRESHING TOKEN")
         let params: NSDictionary = ["client_id": Constants.Credentials.clientID(),
             "client_secret": Constants.Credentials.clientSecret(),
             "grant_type": Constants.Credentials.grantRefreshToken,
@@ -732,11 +732,13 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
                     "access_token"  : SessionManager.accessToken()
                     ] as Dictionary<String, String>
 
-                manager.POST(APIAtlas.ACTION_GET_CONTACTS + "/", parameters: parameters, success: {
+                let url = APIAtlas.baseUrl + APIAtlas.ACTION_GET_CONTACTS
+                manager.POST(url, parameters: parameters, success: {
                     (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
                     self.contacts = W_Contact.parseContacts(responseObject as! NSDictionary)
                     }, failure: {
                         (task: NSURLSessionDataTask!, error: NSError!) in
+                        println("ERROR IN GETING CONTACTS")
                         let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                         if task.statusCode == 401 {
                             if (SessionManager.isLoggedIn()){
