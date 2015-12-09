@@ -128,9 +128,6 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        if headerView == nil {
-            loadViewsWithDetails()
-        }
     }
     
     // MARK: - Table View Data Source
@@ -277,6 +274,13 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
     func getTransactionDetailsView() -> TransactionDetailsView {
         if self.transactionDetailsView == nil {
             self.transactionDetailsView = XibHelper.puffViewWithNibName("TransactionViews", index: 1) as! TransactionDetailsView
+            
+            if(self.transactionDetailsModel != nil){
+                transactionDetailsView.unitCostLabel.text = (self.transactionDetailsModel.transactionUnitPrice).formatToPeso()
+                transactionDetailsView.shippingFeeLabel.text = (self.transactionDetailsModel.transactionShippingFee).formatToPeso()
+                transactionDetailsView.totalCostLabel.text = (self.transactionDetailsModel.transactionTotalPrice).formatToPeso()
+            }
+            
             transactionDetailsView.transactionDetails.text  = self.transactionDetails
             transactionDetailsView.statusTitleLabel.text = self.statusTitle
             transactionDetailsView.paymentTypeTitleLabel.text = self.paymentTypeTitle
@@ -285,14 +289,13 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
             transactionDetailsView.unitCostTitleLabel.text = self.totalUnitCostTitle
             transactionDetailsView.shippingFeeTitleLabel.text = self.shippingFeeTitle
             transactionDetailsView.totalCostTitleLabel.text = self.totalCostTitle
-            
             transactionDetailsView.statusLabel.text = self.orderStatus
             transactionDetailsView.paymentTypeLabel.text = self.paymentType
             transactionDetailsView.dateCreatedLabel.text = self.dateCreated
             transactionDetailsView.quantityLabel.text = self.totalQuantity
-            transactionDetailsView.unitCostLabel.text = "\((self.totalUnitCost).formatToPeso())"
-            transactionDetailsView.shippingFeeLabel.text = "\((self.shippingFee).formatToPeso())"
-            transactionDetailsView.totalCostLabel.text = "\((self.totalCost).formatToPeso())"
+//            transactionDetailsView.unitCostLabel.text = "\((self.totalUnitCost).formatToPeso())"
+//            transactionDetailsView.shippingFeeLabel.text = "\((self.shippingFee).formatToPeso())"
+//            transactionDetailsView.totalCostLabel.text = "\((self.totalCost).formatToPeso())"
             
             self.transactionDetailsView.frame.size.width = self.view.frame.size.width
         }
@@ -581,6 +584,10 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
                 }
                 
                 self.table.append(TransactionDetailsModel(sellerName: self.transactionDetailsModel!.sellerStore[a], sellerContact: self.transactionDetailsModel!.sellerContactNumber[a], id: self.transactionDetailsModel.sellerId[a], sellerIdForFeedback: self.transactionDetailsModel.sellerId[a], feedback: self.transactionDetailsModel.hasFeedback[a], transactions: arr, orderStatus: self.transactionDetailsModel.name[a]))
+            }
+            
+            if self.headerView == nil {
+                self.loadViewsWithDetails()
             }
             
             self.tableView.reloadData()
