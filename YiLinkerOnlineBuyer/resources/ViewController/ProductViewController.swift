@@ -631,7 +631,11 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                 
                 if task.statusCode == 401 {
-                    self.requestRefreshToken("cart")
+                    if type == "buyitnow" {
+                        self.requestRefreshToken("buy")
+                    } else {
+                        self.requestRefreshToken("cart")
+                    }
                 } else if task.statusCode == 404 {
 
                 } else {
@@ -695,7 +699,9 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
             
             self.hud?.hide(true)
             SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
-            if type == "cart" {
+            if type == "buy" {
+                self.requestAddCartItem("buyitnow")
+            } else if type == "cart" {
                 self.requestAddCartItem("")
             } else if type == "wishlist" {
                 self.requestUpdateWishlistItem()
