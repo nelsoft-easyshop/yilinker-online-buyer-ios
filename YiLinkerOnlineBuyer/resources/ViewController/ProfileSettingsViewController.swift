@@ -49,7 +49,7 @@ class ProfileSettingsViewController: UIViewController, UITableViewDataSource, UI
         
         tableView.tableFooterView = UIView(frame: CGRectZero)
         
-        dimView = UIView(frame: self.view.bounds)
+        dimView = UIView(frame: UIScreen.mainScreen().bounds)
         dimView?.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
         self.navigationController?.view.addSubview(dimView!)
         //self.view.addSubview(dimView!)

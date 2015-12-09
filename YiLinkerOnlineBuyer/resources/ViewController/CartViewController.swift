@@ -69,7 +69,7 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         self.title = StringHelper.localizedStringWithKey("CART_TITLE_LOCALIZE_KEY")
         
-        dimView = UIView(frame: self.view.bounds)
+        dimView = UIView(frame: UIScreen.mainScreen().bounds)
         dimView?.backgroundColor = UIColor.blackColor()
         dimView?.alpha = 0
         self.navigationController?.view.addSubview(dimView!)
