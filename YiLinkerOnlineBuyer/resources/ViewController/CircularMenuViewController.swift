@@ -342,7 +342,7 @@ class CircularMenuViewController: UIViewController {
                     tempView.alpha = 1
                 }
             }
-            self.dimView.alpha = 0.6
+            self.dimView.alpha = 1.0
             //self.showTitles()
         }), completion: { (value: Bool) in
             if SessionManager.isLoggedIn() {
@@ -398,10 +398,15 @@ class CircularMenuViewController: UIViewController {
     
     
     private func initDimView() {
+        let screenSize: CGRect = UIScreen.mainScreen().bounds
         self.dimView.alpha = 0.0
         dimView.userInteractionEnabled = true
         let tapGesture: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dissmissViewControllerAnimated")
         dimView.addGestureRecognizer(tapGesture)
+        dimView.backgroundColor = UIColor.clearColor()
+        
+        
+        dimView.blurView()
     }
 
     @IBAction func logout(sender: AnyObject) {
