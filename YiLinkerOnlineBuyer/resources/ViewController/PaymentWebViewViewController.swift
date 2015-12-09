@@ -127,10 +127,12 @@ class PaymentWebViewViewController: UIViewController, UIWebViewDelegate {
                 
                 if task.statusCode == 401 {
                     self.fireRefreshToken(transactionId)
+                } else {
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+                    self.hud?.hide(true)
                 }
                 
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
-                self.hud?.hide(true)
+                
         })
     }
     

@@ -751,6 +751,10 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
             SessionManager.setCartCount(profileModel.cartCount)
             SessionManager.setWishlistCount(profileModel.wishlistCount)
             SessionManager.setProfileImage(profileModel.profileImageUrl)
+            
+            SessionManager.setCity(profileModel.address.city)
+            SessionManager.setProvince(profileModel.address.province)
+            
             self.dismissLoader()
             
             var changeLocalizeString = StringHelper.localizedStringWithKey("SUCCESS_LOCALIZE_KEY")

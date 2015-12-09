@@ -369,4 +369,39 @@ class SessionManager {
         NSUserDefaults.standardUserDefaults().synchronize()
     }
     
+    class func city() -> String {
+        var returnValue : String?
+        
+        returnValue = NSUserDefaults.standardUserDefaults().objectForKey("city") as? String
+        
+        if returnValue == nil || returnValue == "" {
+            returnValue = ""
+        }
+        
+        return returnValue!
+    }
+    
+    class func setCity(city: String) {
+        NSUserDefaults.standardUserDefaults().setObject("\(city)", forKey: "city")
+        NSUserDefaults.standardUserDefaults().synchronize()
+    }
+    
+    class func province() -> String {
+        var returnValue : String?
+        
+        returnValue = NSUserDefaults.standardUserDefaults().objectForKey("province") as? String
+        
+        if returnValue == nil || returnValue == "" {
+            returnValue = ""
+        }
+        
+        return returnValue!
+    }
+    
+    class func setProvince(province: String) {
+        NSUserDefaults.standardUserDefaults().setObject("\(province)", forKey: "province")
+        NSUserDefaults.standardUserDefaults().synchronize()
+    }
+
+    
 }

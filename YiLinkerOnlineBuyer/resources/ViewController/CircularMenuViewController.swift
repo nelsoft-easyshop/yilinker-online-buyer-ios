@@ -205,7 +205,7 @@ class CircularMenuViewController: UIViewController {
                     yPosition = yPosition - button.frame.size.height - verticalMargin
                 } else {
                     
-                    var labelWidth: CGFloat = 150
+                    var labelWidth: CGFloat = 100
                     var fontSize: CGFloat = 14.0
                     if IphoneType.isIphone4() {
                         labelWidth = 120
@@ -260,6 +260,7 @@ class CircularMenuViewController: UIViewController {
                         label.font = UIFont(name: label.font.fontName, size: 10)
                         label.tag = 100 + index
                         label.alpha = 0
+                        label.adjustsFontSizeToFitWidth = true
                         self.view.addSubview(label)
                     }
                    
@@ -274,7 +275,7 @@ class CircularMenuViewController: UIViewController {
                             yPosition = yPosition - 30
                         }
                         
-                        let label: UILabel = UILabel(frame: CGRectMake(xPosition + 75, yPosition, labelWidth, 60))
+                        let label: UILabel = UILabel(frame: CGRectMake(xPosition + 75, yPosition, labelWidth, 100))
                         label.backgroundColor = UIColor.clearColor()
                         label.text = self.buttonRightText[index]
                         label.adjustsFontSizeToFitWidth = true

@@ -367,7 +367,7 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
     func displayAlertAndRedirectToChangeAddressWithMessage(message: String) {
         let alertController = UIAlertController(title: Constants.Localized.error, message: message, preferredStyle: .Alert)
         let OKAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default) { (action) in
-            Delay.delayWithDuration(1.0, completionHandler: { (success) -> Void in
+            Delay.delayWithDuration(0.5, completionHandler: { (success) -> Void in
                 let changeAddressViewController: ChangeAddressViewController = ChangeAddressViewController(nibName: "ChangeAddressViewController", bundle: nil)
                 changeAddressViewController.delegate = self
                 self.navigationController!.pushViewController(changeAddressViewController, animated: true)
@@ -739,8 +739,9 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                
-                if error.userInfo != nil {
+                if task.statusCode == 401 {
+                    self.fireRefreshToken(CheckoutRefreshType.Voucher, cell: cell)
+                } else if error.userInfo != nil {
                     if let jsonResult = error.userInfo as? Dictionary<String, AnyObject> {
                         let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(jsonResult)
                         UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message)
@@ -796,6 +797,38 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
         userMapView.frame = CGRectMake(0, 40, self.view.frame.size.width, 184)
         containerView.addSubview(userMapView)
         return containerView
+    }
+    
+    //MARK: - Refresh Token
+    func fireRefreshToken(refreshType: CheckoutRefreshType, cell: VoucherTableViewCell) {
+        let manager: APIManager = APIManager.sharedInstance
+        let parameters: NSDictionary = ["client_id": Constants.Credentials.clientID(), "client_secret": Constants.Credentials.clientSecret(), "grant_type": Constants.Credentials.grantRefreshToken, "refresh_token":  SessionManager.refreshToken()]
+        self.showHUD()
+        manager.POST(APIAtlas.refreshTokenUrl, parameters: parameters, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+            self.hud?.hide(true)
+            
+            if refreshType == .Voucher {
+                self.fireVoucher(cell)
+            }
+            
+            
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                
+                UIAlertController.displayAlertRedirectionToLogin(self, actionHandler: { (sucess) -> Void in
+                    SessionManager.logout()
+                    FBSDKLoginManager().logOut()
+                    GPPSignIn.sharedInstance().signOut()
+                    let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+                    appDelegate.startPage()
+                })
+                
+                self.hud?.hide(true)
+        })
+        
     }
     
 }
