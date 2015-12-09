@@ -59,6 +59,8 @@ enum CheckoutRefreshType {
     case COD
     case Credit
     case OverView
+    case Voucher
+    case SetAddress
 }
 
 enum TargetType {

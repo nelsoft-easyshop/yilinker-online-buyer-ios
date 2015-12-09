@@ -257,7 +257,7 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                 if task.statusCode == 401 {
                     self.requestRefreshToken(AddressRefreshType.Get, uid: 0, indexPath: nil)
-                }  else if error.userInfo != nil {
+                } else if error.userInfo != nil {
                     let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
                     let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
                     UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: errorModel.title)
@@ -313,7 +313,7 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
         self.showHUD()
         manager.POST(url, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            
+            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
             if type == AddressRefreshType.Get {
                 self.requestGetAddressess()
             } else if type == AddressRefreshType.Delete {

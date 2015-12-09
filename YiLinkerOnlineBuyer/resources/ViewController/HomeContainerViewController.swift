@@ -318,7 +318,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                 var buttonImages: [String] = ["fab_following", "fab_messaging", "fab_promo", "fab_category", "fab_help", SessionManager.profileImageStringUrl()]
                 var buttonTitles: [String] = [FABStrings.followedSeller, FABStrings.messaging, FABStrings.todaysPromo, FABStrings.categories, FABStrings.help, FABStrings.profile]
                 
-                var buttonRightText: [String] = ["", SessionManager.unreadMessageCount(), "", "", "", "\(SessionManager.userFullName()) \n \(SessionManager.userFullAddress())"]
+                var buttonRightText: [String] = ["", SessionManager.unreadMessageCount(), "", "", "", "\(SessionManager.userFullName()) \n \(SessionManager.city()) \(SessionManager.province())"]
                 
                 animatedViewController?.buttonImages = buttonImages
                 animatedViewController?.buttonTitles = buttonTitles
@@ -440,6 +440,9 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             SessionManager.setCartCount(self.profileModel.cartCount)
             SessionManager.setWishlistCount(self.profileModel.wishlistCount)
             SessionManager.setProfileImage(self.profileModel.profileImageUrl)
+            
+            SessionManager.setCity(self.profileModel.address.city)
+            SessionManager.setProvince(self.profileModel.address.province)
             
             println(self.profileModel.address.latitude)
             println(self.profileModel.address.longitude)
