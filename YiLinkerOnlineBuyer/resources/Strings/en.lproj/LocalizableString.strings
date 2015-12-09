@@ -406,6 +406,7 @@ RESOLUTIONCENTER_LOCALIZE_KEY = "Resolution\nCenter";
 SETTINGS_LOCALIZE_KEY = "Settings";
 
 //Edit Profile
+EDITPROFILE_TRY_AGAIN = "Please try again.";
 EDITPROFILE_LOCALIZE_KEY = "Edit Profile";
 EDITPHOTO_LOCALIZE_KEY = "Edit Photo";
 ADDPHOTO_LOCALIZE_KEY = "Add Photo";

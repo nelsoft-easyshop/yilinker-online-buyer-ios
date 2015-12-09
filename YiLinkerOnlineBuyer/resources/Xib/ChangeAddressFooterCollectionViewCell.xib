@@ -21,8 +21,8 @@
                         <rect key="frame" x="15" y="8" width="126" height="30"/>
                         <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="126" id="Mw6-k9-ZK7"/>
-                            <constraint firstAttribute="height" constant="30" id="ieN-Dr-X3Z"/>
+                            <constraint firstAttribute="width" constant="126" id="aS8-3u-ybT"/>
+                            <constraint firstAttribute="height" constant="30" id="rC5-03-kgy"/>
                         </constraints>
                         <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="13"/>
                         <state key="normal" title="+ NEW ADDRESS">
@@ -48,8 +48,8 @@
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </view>
             <constraints>
-                <constraint firstItem="tC2-Qh-ywY" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="15" id="Hx1-W4-OuM"/>
-                <constraint firstItem="tC2-Qh-ywY" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="8" id="att-1w-f8n"/>
+                <constraint firstItem="tC2-Qh-ywY" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="8" id="PCs-bc-xBn"/>
+                <constraint firstItem="tC2-Qh-ywY" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="15" id="mji-pB-5im"/>
             </constraints>
             <size key="customSize" width="321" height="53"/>
             <connections>

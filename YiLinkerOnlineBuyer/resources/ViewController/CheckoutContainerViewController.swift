@@ -392,10 +392,11 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                 if task.statusCode == 401 {
                     self.fireRefreshToken(CheckoutRefreshType.COD)
+                } else {
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
+                    self.hud?.hide(true)
                 }
                 self.selectedIndex--
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
-                self.hud?.hide(true)
         })
     }
     
@@ -419,10 +420,12 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
                 
                 if task.statusCode == 401 {
                     self.fireRefreshToken(CheckoutRefreshType.Credit)
+                } else {
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
+                    self.hud?.hide(true)
                 }
                 self.selectedIndex--
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
-                self.hud?.hide(true)
+                
         })
     }
     

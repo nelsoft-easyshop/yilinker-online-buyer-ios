@@ -27,8 +27,6 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
 
         initializeViews()
         registerNibs()
-        
-        requestProfileDetails(APIAtlas.profileUrl, params: NSDictionary(dictionary: ["access_token": SessionManager.accessToken()]), showLoader: true)
     }
 
     override func didReceiveMemoryWarning() {
@@ -81,8 +79,16 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
             }
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                UIAlertController.displaySomethingWentWrongError(self)
-                self.dismissLoader()
+                if task.response as? NSHTTPURLResponse != nil {
+                    let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                    
+                    if task.statusCode == 401 {
+                        self.requestRefreshToken("requestProfileDetails", url: url, params: params, showLoader: showLoader)
+                    } else {
+                        UIAlertController.displaySomethingWentWrongError(self)
+                        self.dismissLoader()
+                    }
+                }
         })
     }
     
@@ -194,22 +200,21 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     }
 
     func requestRefreshToken(type: String, url: String, params: NSDictionary!, showLoader: Bool) {
-        let url: String = APIAtlas.refreshTokenUrl
+        let urlTemp: String = APIAtlas.refreshTokenUrl
         let params: NSDictionary = ["client_id": Constants.Credentials.clientID(),
             "client_secret": Constants.Credentials.clientSecret(),
             "grant_type": Constants.Credentials.grantRefreshToken,
             "refresh_token": SessionManager.refreshToken()]
         
         let manager = APIManager.sharedInstance
-        manager.POST(url, parameters: params, success: {
+        manager.POST(urlTemp, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
-            if (responseObject["isSuccessful"] as! Bool) {
-                SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
-                self.requestProfileDetails(url, params: params, showLoader: showLoader)
-            } else {
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: responseObject["message"] as! String, title: Constants.Localized.error)
-            }
+            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+            var paramsTemp: Dictionary<String, String> = params as! Dictionary<String, String>
+            paramsTemp["access_token"] = SessionManager.accessToken()
+            
+            self.requestProfileDetails(url, params: paramsTemp, showLoader: showLoader)
             
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in

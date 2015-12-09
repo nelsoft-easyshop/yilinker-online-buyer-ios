@@ -400,12 +400,12 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                if error.userInfo != nil {
+                 if task.statusCode == 401 {
+                    self.requestRefreshToken(AddressRefreshType.Edit)
+                } else if error.userInfo != nil {
                     let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
                     let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
                     UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: Constants.Localized.someThingWentWrong)
-                } else if task.statusCode == 401 {
-                    self.requestRefreshToken(AddressRefreshType.Edit)
                 } else {
                     self.showAlert(title: Constants.Localized.someThingWentWrong, message: nil)
                     self.hud?.hide(true)
@@ -422,7 +422,7 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
         let manager = APIManager.sharedInstance
         manager.POST(APIAtlas.loginUrl, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            
+            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
             if type == AddressRefreshType.Create {
                 self.requestAddAddress()
             } else if type == AddressRefreshType.Edit {

@@ -289,7 +289,6 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func requestRefreshToken(type: String, url: String, params: NSDictionary!) {
-        let url: String = APIAtlas.refreshTokenUrl
         let params: NSDictionary = ["client_id": Constants.Credentials.clientID(),
             "client_secret": Constants.Credentials.clientSecret(),
             "grant_type": Constants.Credentials.grantRefreshToken,
@@ -297,27 +296,26 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         let manager = APIManager.sharedInstance
         
-        manager.POST(url, parameters: params, success: {
+        manager.POST(APIAtlas.refreshTokenUrl, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
             
-            if (responseObject["isSuccessful"] as! Bool) {
-                SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
-                
-                if type == "getCart" {
-                    self.fireGetCartItems(url, params: params)
-                } else if type == "editToCart" {
-                    self.fireAddToCartItem(url, params: params)
-                } else if type == "deleteCart" {
-                    self.fireDeleteCartItem(url, params: params)
-                } else if type == "passCart" {
-                    self.firePassCartItem(url, params: params)
-                }
-            } else {
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: responseObject["message"] as! String)
+            var paramsTemp: Dictionary<String, String> = params as! Dictionary<String, String>
+            paramsTemp["access_token"] = SessionManager.accessToken()
+            
+            if type == "getCart" {
+                self.fireGetCartItems(url, params: paramsTemp)
+            } else if type == "editToCart" {
+                self.fireAddToCartItem(url, params: paramsTemp)
+            } else if type == "deleteCart" {
+                self.fireDeleteCartItem(url, params: paramsTemp)
+            } else if type == "passCart" {
+                self.firePassCartItem(url, params: paramsTemp)
             }
             
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
+                println(error)
         })
     }
     
@@ -356,12 +354,14 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
                 
                 
                 
-                if tempModel.images.count != 0 && tempProductUnit.imageIds.count != 0 {
+                if tempProductUnit.imageIds.count != 0 {
                     for tempImage in tempModel.images {
                         if tempImage.id == tempProductUnit.imageIds[0] {
                             cell.productItemImageView.sd_setImageWithURL(NSURL(string: tempImage.fullImageLocation), placeholderImage: UIImage(named: "dummy-placeholder"))
                         }
                     }
+                } else if tempModel.images.count != 0 {
+                    cell.productItemImageView.sd_setImageWithURL(NSURL(string: tempModel.images[0].fullImageLocation), placeholderImage: UIImage(named: "dummy-placeholder"))
                 } else {
                     cell.productItemImageView.image = UIImage(named: "dummy-placeholder")
                 }

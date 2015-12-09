@@ -99,6 +99,7 @@ class SellerCategoryViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
         let sellerSubCategoryViewController: SellerSubCategoryViewController = SellerSubCategoryViewController(nibName: "SellerSubCategoryViewController", bundle: nil)
         sellerSubCategoryViewController.subCategoryName = self.tableData[indexPath.row].categorySubs2
         self.navigationController!.pushViewController(sellerSubCategoryViewController, animated: true)
