@@ -228,6 +228,9 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
                 return guestCheckoutTableViewCell
             } else {
                 let mapCell: MapTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(self.mapCellNibName) as! MapTableViewCell
+                let latitude: Double = SessionManager.latitude().toDouble()!
+                let longitude: Double = SessionManager.longitude().toDouble()!
+                mapCell.setLocation(latitude: latitude, longitude: longitude)
                 return mapCell
             }
         }
@@ -298,7 +301,7 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
         } else {
             if indexPath.row == 0 {
                 if SessionManager.isLoggedIn() {
-                    return 140
+                    return 160
                 } else {
                     return 480
                 }

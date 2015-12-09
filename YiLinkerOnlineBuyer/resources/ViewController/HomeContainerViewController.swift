@@ -318,7 +318,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                 var buttonImages: [String] = ["fab_following", "fab_messaging", "fab_promo", "fab_category", "fab_help", SessionManager.profileImageStringUrl()]
                 var buttonTitles: [String] = [FABStrings.followedSeller, FABStrings.messaging, FABStrings.todaysPromo, FABStrings.categories, FABStrings.help, FABStrings.profile]
                 
-                var buttonRightText: [String] = ["", SessionManager.unreadMessageCount(), "", "", "", "\(self.profileModel.firstName) \(self.profileModel.lastName) \n\(self.profileModel.address.streetAddress) \(self.profileModel.address.subdivision)"]
+                var buttonRightText: [String] = ["", SessionManager.unreadMessageCount(), "", "", "", "\(SessionManager.userFullName()) \n \(SessionManager.userFullAddress())"]
                 
                 animatedViewController?.buttonImages = buttonImages
                 animatedViewController?.buttonTitles = buttonTitles
@@ -440,6 +440,13 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             SessionManager.setCartCount(self.profileModel.cartCount)
             SessionManager.setWishlistCount(self.profileModel.wishlistCount)
             SessionManager.setProfileImage(self.profileModel.profileImageUrl)
+            
+            println(self.profileModel.address.latitude)
+            println(self.profileModel.address.longitude)
+            
+            SessionManager.setLang(self.profileModel.address.latitude)
+            SessionManager.setLong(self.profileModel.address.longitude)
+            
             self.updateTabBarBadge()
             
             
@@ -1146,28 +1153,32 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         
         let sellerCollectionView: SellerCollectionViewCell = sellerCarouselCollectionViewCell.collectionView?.dequeueReusableCellWithReuseIdentifier(self.sellerNibName, forIndexPath: indexPath) as! SellerCollectionViewCell
         
-        if layoutEightModel.data[indexPath.row].data.count >= 3 {
+        sellerCollectionView.target = layoutEightModel.data[indexPath.row].target.targetUrl
+        sellerCollectionView.targetType = layoutEightModel.data[indexPath.row].target.targetType
+        
+        sellerCollectionView.sellerProfileImageView.userInteractionEnabled = false
+        
+        sellerCollectionView.sellerTitleLabel.text = layoutEightModel.data[indexPath.row].name
+        sellerCollectionView.sellerSubTitleLabel.text = layoutEightModel.data[indexPath.row].specialty
+        sellerCollectionView.sellerProfileImageView.sd_setImageWithURL(NSURL(string: layoutEightModel.data[indexPath.row].image), placeholderImage: UIImage(named: self.placeHolder))
+        
+        if layoutEightModel.data[indexPath.row].data.count >= 1 {
             sellerCollectionView.productOneImageView.target = layoutEightModel.data[indexPath.row].data[0].target.targetUrl
-            sellerCollectionView.productTwoImageView.target = layoutEightModel.data[indexPath.row].data[1].target.targetUrl
-            sellerCollectionView.productThreeImageView.target = layoutEightModel.data[indexPath.row].data[2].target.targetUrl
-            
             sellerCollectionView.productOneImageView.targetType = layoutEightModel.data[indexPath.row].data[0].target.targetType
-            sellerCollectionView.productTwoImageView.targetType = layoutEightModel.data[indexPath.row].data[1].target.targetType
-            sellerCollectionView.productThreeImageView.targetType = layoutEightModel.data[indexPath.row].data[2].target.targetType
-            
-            sellerCollectionView.sellerProfileImageView.sd_setImageWithURL(NSURL(string: layoutEightModel.data[indexPath.row].image), placeholderImage: UIImage(named: self.placeHolder))
-            
             sellerCollectionView.productOneImageView.sd_setImageWithURL(NSURL(string: layoutEightModel.data[indexPath.row].data[0].image), placeholderImage: UIImage(named: self.placeHolder))
+            
+        }
+        
+        if layoutEightModel.data[indexPath.row].data.count >= 2 {
+            sellerCollectionView.productTwoImageView.target = layoutEightModel.data[indexPath.row].data[1].target.targetUrl
+            sellerCollectionView.productTwoImageView.targetType = layoutEightModel.data[indexPath.row].data[1].target.targetType
             sellerCollectionView.productTwoImageView.sd_setImageWithURL(NSURL(string: layoutEightModel.data[indexPath.row].data[1].image), placeholderImage: UIImage(named: self.placeHolder))
+        }
+        
+        if layoutEightModel.data[indexPath.row].data.count >= 3 {
+            sellerCollectionView.productThreeImageView.target = layoutEightModel.data[indexPath.row].data[2].target.targetUrl
+            sellerCollectionView.productThreeImageView.targetType = layoutEightModel.data[indexPath.row].data[2].target.targetType
             sellerCollectionView.productThreeImageView.sd_setImageWithURL(NSURL(string: layoutEightModel.data[indexPath.row].data[2].image), placeholderImage: UIImage(named: self.placeHolder))
-            
-            sellerCollectionView.target = layoutEightModel.data[indexPath.row].target.targetUrl
-            sellerCollectionView.targetType = layoutEightModel.data[indexPath.row].target.targetType
-            
-            sellerCollectionView.sellerProfileImageView.userInteractionEnabled = false
-            
-            sellerCollectionView.sellerTitleLabel.text = layoutEightModel.data[indexPath.row].name
-            sellerCollectionView.sellerSubTitleLabel.text = layoutEightModel.data[indexPath.row].specialty
         }
         
         self.addGestureToSellerProduct(sellerCollectionView.productOneImageView)
