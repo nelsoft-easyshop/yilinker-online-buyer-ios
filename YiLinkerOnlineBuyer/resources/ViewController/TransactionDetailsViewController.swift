@@ -517,15 +517,13 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
                 
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                 
-                if error.userInfo != nil {
+                if task.statusCode == 401 {
+                    self.fireRefreshToken(TransactionDetailsType.Seller)
+                } else {
                     let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
                     let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
                     UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: Constants.Localized.someThingWentWrong)
-                    self.hud?.hide(true)
-                } else if task.statusCode == 401 {
-                    self.fireRefreshToken(TransactionDetailsType.Seller)
-                } else {
-                    self.showAlert(title: Constants.Localized.someThingWentWrong, message: nil)
+                    //self.showAlert(title: Constants.Localized.someThingWentWrong, message: nil)
                     self.hud?.hide(true)
                 }
         })
@@ -601,7 +599,11 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
                     }
                     self.fireRefreshToken(TransactionDetailsType.Details)
                 } else {
-                    self.showAlert(title: self.error, message: self.somethingWentWrong)
+                    let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: Constants.Localized.someThingWentWrong)
+                    self.hud?.hide(true)
+                    //self.showAlert(title: self.error, message: self.somethingWentWrong)
                 }
         })
     }
@@ -645,7 +647,11 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
                             }
                             self.fireRefreshToken(TransactionDetailsType.Contacts)
                         } else {
-                            self.showAlert(title: self.error, message: self.somethingWentWrong)
+                            let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
+                            let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
+                            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: Constants.Localized.someThingWentWrong)
+                            self.hud?.hide(true)
+                            //self.showAlert(title: self.error, message: self.somethingWentWrong)
                         }
                         
                         self.contacts = Array<W_Contact>()
@@ -674,10 +680,11 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
             self.hud?.hide(true)
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                self.showAlert(title: self.error, message: self.somethingWentWrong)
-                
+                let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
+                let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: Constants.Localized.someThingWentWrong)
                 self.hud?.hide(true)
+                //self.showAlert(title: self.error, message: self.somethingWentWrong)
         })
         
     }

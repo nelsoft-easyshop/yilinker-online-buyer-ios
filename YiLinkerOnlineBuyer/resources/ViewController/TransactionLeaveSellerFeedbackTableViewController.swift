@@ -159,16 +159,13 @@ class TransactionLeaveSellerFeedbackTableViewController: UITableViewController, 
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
                 println(error.description)
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                if error.userInfo != nil {
-                    let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
-                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: Constants.Localized.someThingWentWrong)
-                    self.tableView.reloadData()
-                } else if task.statusCode == 401 {
+               if task.statusCode == 401 {
                     self.requestRefreshToken()
                     self.tableView.reloadData()
                 } else {
-                    self.showAlert(title: Constants.Localized.error, message: Constants.Localized.someThingWentWrong)
+                    let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: Constants.Localized.someThingWentWrong)
                     self.tableView.reloadData()
                 }
                 
@@ -190,22 +187,17 @@ class TransactionLeaveSellerFeedbackTableViewController: UITableViewController, 
         manager.POST(APIAtlas.loginUrl, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
+            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+            
             self.fireSellerFeedback(self.feedback, rateItemQuality: self.rate, rateCommunication: self.rateComm)
             
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                
-                if error.userInfo != nil {
-                    let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
-                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: Constants.Localized.someThingWentWrong)
-                } else if task.statusCode == 401 {
-                    self.requestRefreshToken()
-                } else {
-                    self.showAlert(title: Constants.Localized.someThingWentWrong, message: Constants.Localized.error)
-                }
+                let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
+                let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: Constants.Localized.someThingWentWrong)
                 
                 self.hud?.hide(true)
         })
