@@ -428,7 +428,6 @@ class ResolutionCenterViewController: UIViewController, UITableViewDataSource, U
                 self.requestGetTransactionsIds()
             }
             
-            self.fireGetCases()
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
