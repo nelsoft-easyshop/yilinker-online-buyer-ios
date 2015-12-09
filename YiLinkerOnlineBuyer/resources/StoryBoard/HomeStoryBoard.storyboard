@@ -276,7 +276,7 @@
                                     <constraint firstAttribute="height" constant="50" id="JbF-we-eeg"/>
                                     <constraint firstAttribute="width" constant="50" id="ge0-nK-fsZ"/>
                                 </constraints>
-                                <state key="normal" image="close">
+                                <state key="normal" image="close-white">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -2936,7 +2936,7 @@
     <resources>
         <image name="add" width="195" height="195"/>
         <image name="cart" width="25" height="25"/>
-        <image name="close" width="22" height="22"/>
+        <image name="close-white" width="147" height="147"/>
         <image name="filter-checked" width="20" height="20"/>
         <image name="filter-close" width="22" height="22"/>
         <image name="filter-save" width="22" height="19"/>
