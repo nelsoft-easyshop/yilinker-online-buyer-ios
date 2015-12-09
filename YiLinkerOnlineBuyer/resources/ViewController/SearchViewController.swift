@@ -192,8 +192,10 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         var tempModel: SearchSuggestionModel = tableData[indexPath.row]
         
         if tempModel.suggestion.contains(browseLocalizeString) {
-            let categoryViewController = CategoriesViewController(nibName: "CategoriesViewController", bundle: nil)
-            self.navigationController?.pushViewController(categoryViewController, animated: true)
+            self.navigationController?.navigationBarHidden = false
+            let webViewController: WebViewController = WebViewController(nibName: "WebViewController", bundle: nil)
+            webViewController.webviewSource = WebviewSource.Category
+            self.navigationController!.pushViewController(webViewController, animated: true)
         } else {
             var resultController = ResultViewController(nibName: "ResultViewController", bundle: nil)
             resultController.passModel(tableData[indexPath.row])
@@ -201,6 +203,7 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         }
         
         searchBar.resignFirstResponder()
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
         
     }
     
