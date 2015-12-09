@@ -691,7 +691,7 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
                 }
             }
         }
-        
+        self.nameLabel.text = productDetailsModel.title
         var index: Int = 0
         self.imageUrls = []
         for productUnit in self.productDetailsModel.productUnits {
