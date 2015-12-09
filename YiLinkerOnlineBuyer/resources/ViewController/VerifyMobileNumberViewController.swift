@@ -209,9 +209,16 @@ class VerifyMobileNumberViewController: UIViewController {
             
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
-                self.delegate?.closeVerifyMobileNumberViewController()
-                self.hud?.hide(true)
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                
+                if task.statusCode == 401 {
+                    self.requestRefreshToken("changeNumber", url: "", params:parameters)
+                } else {
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
+                    self.delegate?.closeVerifyMobileNumberViewController()
+                    self.hud?.hide(true)
+                }
+                
         })
     }
     
@@ -231,32 +238,35 @@ class VerifyMobileNumberViewController: UIViewController {
             println(responseObject)
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                 
-                println(error)
-                if Reachability.isConnectedToNetwork() {
-                    var info = error.userInfo!
-                    
-                    if let data = info["data"] as? NSDictionary {
-                        if let errors = data["errors"] as? NSArray {
-                            if errors.count == 0 {
-                                if let message = info["message"] as? NSString {
-                                    self.showAlertError(message as String)
+                if task.statusCode == 401 {
+                    self.requestRefreshToken("getCode", url: "", params:params)
+                } else {
+                    if Reachability.isConnectedToNetwork() {
+                        var info = error.userInfo!
+                        
+                        if let data = info["data"] as? NSDictionary {
+                            if let errors = data["errors"] as? NSArray {
+                                if errors.count == 0 {
+                                    if let message = info["message"] as? NSString {
+                                        self.showAlertError(message as String)
+                                    }
+                                    
+                                } else {
+                                    self.showAlertError(errors[0] as! String)
                                 }
-                                
-                            } else {
-                                self.showAlertError(errors[0] as! String)
                             }
+                        } else {
+                            UIAlertController.displaySomethingWentWrongError(self)
                         }
+                        
                     } else {
-                        UIAlertController.displaySomethingWentWrongError(self)
+                        UIAlertController.displayNoInternetConnectionError(self)
                     }
                     
-                } else {
-                    UIAlertController.displayNoInternetConnectionError(self)
+                    self.dismissLoader()
                 }
-                
-                self.dismissLoader()
-                
         })
         
     }
@@ -267,7 +277,7 @@ class VerifyMobileNumberViewController: UIViewController {
         manager.POST(url, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in print(responseObject as! NSDictionary)
             if responseObject.objectForKey("error") != nil {
-                self.requestRefreshToken(url, params: params)
+                self.requestRefreshToken("verifyCode", url: url, params: params)
             } else {
                 if responseObject["isSuccessful"] as! Bool {
                     self.dismissViewControllerAnimated(true, completion: nil)
@@ -284,42 +294,55 @@ class VerifyMobileNumberViewController: UIViewController {
             println(responseObject)
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                if Reachability.isConnectedToNetwork() {
-                    if error.userInfo != nil {
-                        if let jsonResult = error.userInfo as? Dictionary<String, AnyObject> {
-                            let errorDescription: String = jsonResult["message"] as! String
-                            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorDescription)
-                        }
-                    } else {
-                        UIAlertController.displaySomethingWentWrongError(self)
-                    }
-                    self.dismissLoader()
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                
+                if task.statusCode == 401 {
+                    self.requestRefreshToken("verifyCode", url: "", params:params)
                 } else {
-                    UIAlertController.displayNoInternetConnectionError(self)
+                    if Reachability.isConnectedToNetwork() {
+                        if error.userInfo != nil {
+                            if let jsonResult = error.userInfo as? Dictionary<String, AnyObject> {
+                                let errorDescription: String = jsonResult["message"] as! String
+                                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorDescription)
+                            }
+                        } else {
+                            UIAlertController.displaySomethingWentWrongError(self)
+                        }
+                        self.dismissLoader()
+                    } else {
+                        UIAlertController.displayNoInternetConnectionError(self)
+                    }
+                    
+                    println(error)
                 }
                 
-                println(error)
         })
         
     }
     
-    func requestRefreshToken(url: String, params: NSDictionary!) {
-        let url: String = "http://online.api.easydeal.ph/api/v1/login"
+    func requestRefreshToken(type: String, url: String, params: NSDictionary!) {
+        let urlTemp: String = "http://online.api.easydeal.ph/api/v1/login"
         let params: NSDictionary = ["client_id": Constants.Credentials.clientID(),
             "client_secret": Constants.Credentials.clientSecret(),
             "grant_type": Constants.Credentials.grantRefreshToken,
             "refresh_token": SessionManager.refreshToken()]
         
         let manager = APIManager.sharedInstance
-        manager.POST(url, parameters: params, success: {
+        manager.POST(urlTemp, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             self.dismissLoader()
             
-            if (responseObject["isSuccessful"] as! Bool) {
-                SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
-                self.fireVerify(url, params: params)
-            } else {
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: responseObject["message"] as! String)
+            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+            
+            var paramsTemp: Dictionary<String, String> = params as! Dictionary<String, String>
+            paramsTemp["access_token"] = SessionManager.accessToken()
+            
+            if type == "getCode" {
+                self.fireGetCode()
+            } else if type == "verifyCode" {
+                self.fireVerify(url, params: paramsTemp)
+            }  else if type == "changeNumber" {
+                self.fireUpdateProfile(url, params: paramsTemp)
             }
             
             }, failure: {

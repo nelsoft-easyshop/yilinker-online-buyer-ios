@@ -59,6 +59,7 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
     var selectPhotoLocalizeString: String  = ""
     var takePhotoLocalizeString: String  = ""
     var cancelLocalizeString: String  = ""
+    var tryAgainLocalizeString: String = "|"
     //var locationManager: CLLocationManager?
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -112,6 +113,7 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
         somethingWrongLocalizeString = StringHelper.localizedStringWithKey("SOMETHINGWENTWRONG_LOCALIZE_KEY")
         connectionLocalizeString = StringHelper.localizedStringWithKey("CONNECTIONUNREACHABLE_LOCALIZE_KEY")
         connectionMessageLocalizeString = StringHelper.localizedStringWithKey("CONNECTIONERRORMESSAGE_LOCALIZE_KEY")
+        tryAgainLocalizeString = StringHelper.localizedStringWithKey("EDITPROFILE_TRY_AGAIN")
         
         editPhotoLocalizeString = StringHelper.localizedStringWithKey("EDITPHOTO_LOCALIZE_KEY")
         addPhotoLocalizeString = StringHelper.localizedStringWithKey("ADDPHOTO_LOCALIZE_KEY")
@@ -645,9 +647,20 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
                     
                 }, failure: {
                     (task: NSURLSessionDataTask!, error: NSError!) in
-                    self.dismissLoader()
-                    self.showAlert(self.errorLocalizeString, message: self.somethingWrongLocalizeString)
-                    println(error)
+                    
+                    let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                    
+                    if task.statusCode == 401 {
+                        self.requestRefreshToken("updateProfile", url: url, params: params, withImage: withImage)
+                    } else  if task.statusCode == 500 {
+//                        self.dismissLoader()
+//                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: self.tryAgainLocalizeString)
+                        self.saveAction(self)
+                    } else {
+                        self.dismissLoader()
+                        self.showAlert(self.errorLocalizeString, message: self.somethingWrongLocalizeString)
+                        println(error)
+                    }
             })
         } else {
             manager.POST(url, parameters: params, success: {
@@ -663,9 +676,19 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
                     println(responseObject)
                 }, failure: {
                     (task: NSURLSessionDataTask!, error: NSError!) in
-                    self.showAlert(self.errorLocalizeString, message: self.somethingWrongLocalizeString)
-                    self.dismissLoader()
-                    println(error)
+                    
+                    let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                    
+                    if task.statusCode == 401 {
+                        self.requestRefreshToken("updateProfile", url: url, params: params, withImage: withImage)
+                    } else  if task.statusCode == 500 {
+//                        self.dismissLoader()
+//                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: self.tryAgainLocalizeString)
+                        self.saveAction(self)
+                    } else {
+                        self.dismissLoader()
+                        self.showAlert(self.errorLocalizeString, message: self.somethingWrongLocalizeString)
+                    }
             })
         }
         
@@ -690,27 +713,26 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
     }
     
     func requestRefreshToken(type: String, url: String, params: NSDictionary!, withImage: Bool) {
-        let url: String = APIAtlas.refreshTokenUrl
-        let params: NSDictionary = ["client_id": Constants.Credentials.clientID(),
+        let urlTemp: String = APIAtlas.refreshTokenUrl
+        let paramsTemp: NSDictionary = ["client_id": Constants.Credentials.clientID(),
             "client_secret": Constants.Credentials.clientSecret(),
             "grant_type": Constants.Credentials.grantRefreshToken,
             "refresh_token": SessionManager.refreshToken()]
         
         let manager = APIManager.sharedInstance
-            manager.POST(url, parameters: params, success: {
+            manager.POST(urlTemp, parameters: paramsTemp, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
             SVProgressHUD.dismiss()
             
-            if (responseObject["isSuccessful"] as! Bool) {
-                SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
-                if type == "updateProfile" {
-                    self.fireUpdateProfile(url, params: params, withImage: withImage)
-                } else {
-                    self.fireGetUserInfo()
-                }
+            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+            var paramsTemp: Dictionary<String, String> = params as! Dictionary<String, String>
+            paramsTemp["access_token"] = SessionManager.accessToken()
+            
+            if type == "updateProfile" {
+                self.fireUpdateProfile(APIAtlas.editProfileUrl + "?access_token=" + SessionManager.accessToken(), params: paramsTemp, withImage: withImage)
             } else {
-                self.showAlert(self.errorLocalizeString, message: responseObject["message"] as! String)
+                self.fireGetUserInfo()
             }
             
             }, failure: {

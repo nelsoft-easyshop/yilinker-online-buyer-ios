@@ -246,9 +246,8 @@ class ProfileSettingsViewController: UIViewController, UITableViewDataSource, UI
         manager.POST(APIAtlas.refreshTokenUrl, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
-            self.firePostSettings(type, isOn: isON)
-            
             SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+            self.firePostSettings(type, isOn: isON)
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse

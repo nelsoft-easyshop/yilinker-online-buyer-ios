@@ -22,11 +22,10 @@ enum WebviewSource {
     case StoreView
     case Default
 }
-
 class WebViewURL {
     static let baseUrl = APIEnvironment.baseUrl().stringByReplacingOccurrencesOfString("/api", withString: "/")
     static let flashSale: String = baseUrl + APIAtlas.flashSale
-    static let dailyLogin: String = baseUrl + APIAtlas.dailyLogin
+    static let dailyLogin: String = APIEnvironment.baseUrl() + "/v1/auth/" + APIAtlas.dailyLogin
     static let category: String = baseUrl + APIAtlas.category
     static let storeView: String = baseUrl + APIAtlas.storeView
 }
@@ -44,6 +43,7 @@ class WebViewController: UIViewController, UIWebViewDelegate, EmptyViewDelegate 
     override func viewDidLoad() {
         super.viewDidLoad()
         self.webView.delegate = self
+        self.webView.scrollView.bounces = false
         
         if self.urlString.isEmpty {
             loadWebview()
@@ -81,7 +81,7 @@ class WebViewController: UIViewController, UIWebViewDelegate, EmptyViewDelegate 
             tempUrl = WebViewURL.flashSale
             self.title = WebviewStrings.flashSales
         case .DailyLogin:
-            tempUrl = WebViewURL.dailyLogin
+            tempUrl = WebViewURL.dailyLogin + "?access_token=\(SessionManager.accessToken())"
             self.title = WebviewStrings.dailyLogin
         case .Category:
             tempUrl = WebViewURL.category
@@ -110,8 +110,18 @@ class WebViewController: UIViewController, UIWebViewDelegate, EmptyViewDelegate 
     }
     
     func webViewDidFinishLoad(webView: UIWebView) {
+        webView.hidden = false
         self.showNetworkStatusIndicator(false)
         webView.stringByEvaluatingJavaScriptFromString("document.body.style.webkitTouchCallout='none';")
+        
+        if webviewSource == WebviewSource.DailyLogin {
+            let html: String = webView.stringByEvaluatingJavaScriptFromString("document.documentElement.outerHTML")!
+            
+            if html.contains("error") {
+                webView.hidden = true
+                self.requestRefreshToken()
+            }
+        }
     }
     
     func webViewDidStartLoad(webView: UIWebView) {
@@ -138,10 +148,9 @@ class WebViewController: UIViewController, UIWebViewDelegate, EmptyViewDelegate 
             }
             
         case .DailyLogin:
-            if urlString == WebViewURL.dailyLogin {
+            if urlString == WebViewURL.dailyLogin + "?access_token=\(SessionManager.accessToken())" {
                 return true
             } else {
-                //Put redirection to native view controller here. . . . .
                 return false
             }
         case .Category:
@@ -192,11 +201,11 @@ class WebViewController: UIViewController, UIWebViewDelegate, EmptyViewDelegate 
     
     //MARK: - Back
     func back() {
-        if self.webView.canGoBack {
-            self.webView.goBack()
-        } else {
+//        if self.webView.canGoBack {
+//            self.webView.goBack()
+//        } else {
             self.navigationController!.popViewControllerAnimated(true)
-        }
+//        }
     }
     
     //MARK: - Add Empty View
@@ -235,5 +244,24 @@ class WebViewController: UIViewController, UIWebViewDelegate, EmptyViewDelegate 
             }
         }
         return productUrl
+    }
+    
+    func requestRefreshToken() {
+        let params: NSDictionary = ["client_id": Constants.Credentials.clientID(),
+            "client_secret": Constants.Credentials.clientSecret(),
+            "grant_type": Constants.Credentials.grantRefreshToken,
+            "refresh_token": SessionManager.refreshToken()]
+        
+        let manager = APIManager.sharedInstance
+        
+        manager.POST(APIAtlas.refreshTokenUrl, parameters: params, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+                SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+            
+                self.loadWebview()
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                println(error)
+        })
     }
 }

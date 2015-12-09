@@ -343,22 +343,20 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
     }
     
     func requestRefreshToken(url: String, params: NSDictionary!) {
-        let url: String = APIAtlas.refreshTokenUrl
+        let urlTemp: String = APIAtlas.refreshTokenUrl
         let params: NSDictionary = ["client_id": Constants.Credentials.clientID(),
             "client_secret": Constants.Credentials.clientSecret(),
             "grant_type": Constants.Credentials.grantRefreshToken,
             "refresh_token": SessionManager.refreshToken()]
         
         let manager = APIManager.sharedInstance
-        manager.POST(url, parameters: params, success: {
+        manager.POST(urlTemp, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             self.dismissLoader()
-            if (responseObject["isSuccessful"] as! Bool) {
-                SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
-                self.requestSearchDetails(url, params: params)
-            } else {
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: responseObject["message"] as! String, title: Constants.Localized.error)
-            }
+            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+            var paramsTemp: Dictionary<String, String> = params as! Dictionary<String, String>
+            paramsTemp["access_token"] = SessionManager.accessToken()
+            self.requestSearchDetails(url, params: params)
             
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
