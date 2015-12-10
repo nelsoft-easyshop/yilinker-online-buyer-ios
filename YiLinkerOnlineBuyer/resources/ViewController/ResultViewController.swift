@@ -81,6 +81,8 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
     var filterTapGesture: UITapGestureRecognizer!
     var viewTypeTapGesture: UITapGestureRecognizer!
     
+    var pageTitle: String = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -161,9 +163,12 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
             [NSForegroundColorAttributeName: UIColor.whiteColor(),
                 NSFontAttributeName: UIFont(name: "Panton-Regular", size: 21)!]
         
-        let resultsLocalizeString: String = StringHelper.localizedStringWithKey("RESULTS_LOCALIZE_KEY")
-        self.title = resultsLocalizeString
-        
+        if pageTitle.isEmpty {
+            let resultsLocalizeString: String = StringHelper.localizedStringWithKey("RESULTS_LOCALIZE_KEY")
+            self.title = resultsLocalizeString
+        } else {
+            self.title = pageTitle
+        }
         
         //hide dimview
         dimView.alpha = 0
