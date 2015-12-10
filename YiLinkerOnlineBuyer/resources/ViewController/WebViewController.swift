@@ -13,6 +13,9 @@ struct WebviewStrings {
     static let dailyLogin = StringHelper.localizedStringWithKey("WEBVIEW_DAILY_LOGIN")
     static let categories = StringHelper.localizedStringWithKey("WEBVIEW_CATEGORIES")
     static let storeView = StringHelper.localizedStringWithKey("WEBVIEW_STORE_VIEW")
+    static let newItems = StringHelper.localizedStringWithKey("WEBVIEW_NEW_ITEMS")
+    static let hotItems = StringHelper.localizedStringWithKey("WEBVIEW_HOT_ITEMS")
+    static let yilinker = StringHelper.localizedStringWithKey("WEBVIEW_YILINKER")
 }
 
 enum WebviewSource {
@@ -20,6 +23,7 @@ enum WebviewSource {
     case DailyLogin
     case Category
     case StoreView
+    case ProductList
     case Default
 }
 class WebViewURL {
@@ -28,6 +32,7 @@ class WebViewURL {
     static let dailyLogin: String = APIEnvironment.baseUrl() + "/v1/auth/" + APIAtlas.dailyLogin
     static let category: String = baseUrl + APIAtlas.category
     static let storeView: String = baseUrl + APIAtlas.storeView
+    static let productList: String = baseUrl + APIAtlas.mobileProductList
 }
 
 class WebViewController: UIViewController, UIWebViewDelegate, EmptyViewDelegate {
@@ -61,7 +66,11 @@ class WebViewController: UIViewController, UIWebViewDelegate, EmptyViewDelegate 
         } else if self.urlString == WebViewURL.storeView {
             webviewSource = WebviewSource.StoreView
             loadWebview()
+        } else if self.urlString.contains(WebViewURL.productList) {
+            webviewSource = WebviewSource.ProductList
+            loadWebview()
         } else {
+             self.title = WebviewStrings.yilinker
             self.loadUrlWithUrlString(self.urlString)
         }
         
@@ -91,9 +100,18 @@ class WebViewController: UIViewController, UIWebViewDelegate, EmptyViewDelegate 
         case .StoreView:
             tempUrl = WebViewURL.storeView
             self.title = WebviewStrings.storeView
+        case .ProductList:
+            tempUrl = self.urlString
+            if tempUrl.contains("hotItems") {
+                self.title = WebviewStrings.hotItems
+            } else if tempUrl.contains("newItems") {
+                self.title = WebviewStrings.newItems
+            }
         case .Default:
+            self.title = WebviewStrings.yilinker
             self.addEmptyView()
         default:
+            self.title = WebviewStrings.yilinker
             print("Default")
         }
         
@@ -142,11 +160,13 @@ class WebViewController: UIViewController, UIWebViewDelegate, EmptyViewDelegate 
             if urlString == WebViewURL.flashSale {
                 return true
             } else {
-                
-                let productViewController: ProductViewController = ProductViewController(nibName: "ProductViewController", bundle: nil)
-                productViewController.tabController = self.tabBarController as! CustomTabBarController
-                productViewController.productId = flashSaleLinkTap(urlString)
-                self.navigationController?.pushViewController(productViewController, animated: true)
+                let productId: String = productLinkTap(urlString)
+                if productId.isNotEmpty() {
+                    let productViewController: ProductViewController = ProductViewController(nibName: "ProductViewController", bundle: nil)
+                    productViewController.tabController = self.tabBarController as! CustomTabBarController
+                    productViewController.productId = productId
+                    self.navigationController?.pushViewController(productViewController, animated: true)
+                }
                 return false
             }
             
@@ -176,6 +196,19 @@ class WebViewController: UIViewController, UIWebViewDelegate, EmptyViewDelegate 
                     self.navigationController!.pushViewController(sellerViewController, animated: true)
                 }
                 
+                return false
+            }
+        case .ProductList:
+            if urlString.contains(WebViewURL.productList) {
+                return true
+            } else {
+                let productId: String = productLinkTap(urlString)
+                if productId.isNotEmpty() {
+                    let productViewController: ProductViewController = ProductViewController(nibName: "ProductViewController", bundle: nil)
+                    productViewController.tabController = self.tabBarController as! CustomTabBarController
+                    productViewController.productId = productId
+                    self.navigationController?.pushViewController(productViewController, animated: true)
+                }
                 return false
             }
         case .Default:
@@ -251,20 +284,23 @@ class WebViewController: UIViewController, UIWebViewDelegate, EmptyViewDelegate 
     }
 
     //MARK: - Flash Sales
-    func flashSaleLinkTap(url: String) -> String {
+    func productLinkTap(url: String) -> String {
         
         var productUrl: String = ""
         
-        let html = webView.stringByEvaluatingJavaScriptFromString("document.documentElement.outerHTML")
-        let doc = TFHpple(HTMLData: html?.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false))
-        var elements = doc.searchWithXPathQuery("//a[@class='btn promo-instance-product-status btn-inactive']")
+        let start = url.indexOfCharacter("=") + 1
+        productUrl = url.substringFromIndex(advance(minElement(indices(url)), start))
         
-        for element in elements as! [TFHppleElement] {
-            if url.contains(element.objectForKey("href")) {
-                productUrl = element.objectForKey("data-product-id")
-                break
-            }
-        }
+//        let html = webView.stringByEvaluatingJavaScriptFromString("document.documentElement.outerHTML")
+//        let doc = TFHpple(HTMLData: html?.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false))
+//        var elements = doc.searchWithXPathQuery("//a[@class='btn promo-instance-product-status btn-inactive']")
+//        
+//        for element in elements as! [TFHppleElement] {
+//            if url.contains(element.objectForKey("href")) {
+//                productUrl = element.objectForKey("data-product-id")
+//                break
+//            }
+//        }
         return productUrl
     }
     
@@ -273,16 +309,21 @@ class WebViewController: UIViewController, UIWebViewDelegate, EmptyViewDelegate 
         
         var storeUrl: String = ""
         
-        let html = webView.stringByEvaluatingJavaScriptFromString("document.documentElement.outerHTML")
-        let doc = TFHpple(HTMLData: html?.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false))
-        var elements = doc.searchWithXPathQuery("//a[@class='seller-name']")
-        
-        for element in elements as! [TFHppleElement] {
-            if url.contains(element.objectForKey("href")) {
-                storeUrl = element.objectForKey("data-sellerid")
-                break
-            }
+        let start = url.indexOfCharacter("=") + 1
+        if start != 0 {
+            storeUrl = url.substringFromIndex(advance(minElement(indices(url)), start))
         }
+        
+//        let html = webView.stringByEvaluatingJavaScriptFromString("document.documentElement.outerHTML")
+//        let doc = TFHpple(HTMLData: html?.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false))
+//        var elements = doc.searchWithXPathQuery("//a[@class='seller-name']")
+//        
+//        for element in elements as! [TFHppleElement] {
+//            if url.contains(element.objectForKey("href")) {
+//                storeUrl = element.objectForKey("data-sellerid")
+//                break
+//            }
+//        }
         return storeUrl
     }
     

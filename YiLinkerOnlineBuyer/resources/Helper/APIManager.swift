@@ -8,9 +8,9 @@
 
 struct APIEnvironment {
     
-    static var development = true
+    static var development = false
     static var staging = false
-    static var production = false
+    static var production = true
     
     static func baseUrl() -> String {
         if development {
@@ -192,6 +192,7 @@ struct APIAtlas {
     static let dailyLogin = "daily-login"
     static let category = "mobile-category"
     static let storeView = "mobile-stores"
+    static let mobileProductList = "mobile-product-list"
 }
 
 class APIManager: AFHTTPSessionManager {

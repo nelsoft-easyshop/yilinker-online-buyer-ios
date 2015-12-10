@@ -286,10 +286,11 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             self.emptyView?.frame = self.view.frame
             self.emptyView!.delegate = self
             self.view.addSubview(self.emptyView!)
-            self.collectionView.hidden = true
         } else {
             self.emptyView!.hidden = false
         }
+        
+        self.collectionView.hidden = true
     }
     
     //MARK: - Tab Bar Delegate
@@ -365,6 +366,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             let dictionary: NSDictionary  = ParseLocalJSON.fileName("dummyHomePage")
             self.populateHomePageWithDictionary(responseObject as! NSDictionary)
             self.hud?.hide(true)
+            self.collectionView.hidden = false
             //get user info
             if SessionManager.isLoggedIn() {
                 self.fireGetUserInfo()
@@ -421,6 +423,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         
         self.collectionView.reloadData()
         self.collectionViewLayout()
+        self.collectionView!.reloadData()
     }
     
     //MARK: - Getting User Info
@@ -1242,10 +1245,22 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             let sellerViewController: SellerViewController = SellerViewController(nibName: "SellerViewController", bundle: nil)
             if target.toInt() != nil {
                 sellerViewController.sellerId = target.toInt()!
+            } else {
+                let urlArray: [String] = target.componentsSeparatedByString("=")
+                if urlArray[1].toInt() != nil {
+                    sellerViewController.sellerId  = urlArray[1].toInt()!
+                } else {
+                    self.tabBarController!.view.makeToast(Constants.Localized.targetNotAvailable, duration: 1.5, position: CSToastPositionBottom, style: CSToastManager.sharedStyle())
+                }
             }
             self.navigationController!.pushViewController(sellerViewController, animated: true)
-        } else if targetType == "list" {
+        } else if targetType == "productList" {
             let resultViewController: ResultViewController = ResultViewController(nibName: "ResultViewController", bundle: nil)
+            resultViewController.passModel(SearchSuggestionModel(suggestion: "", imageURL: "", searchUrl: target))
+            self.navigationController!.pushViewController(resultViewController, animated: true)
+        } else if targetType == "sellerList" {
+            let resultViewController: ResultViewController = ResultViewController(nibName: "ResultViewController", bundle: nil)
+            resultViewController.isSellerSearch = true
             resultViewController.passModel(SearchSuggestionModel(suggestion: "", imageURL: "", searchUrl: target))
             self.navigationController!.pushViewController(resultViewController, animated: true)
         } else if targetType == "product" {

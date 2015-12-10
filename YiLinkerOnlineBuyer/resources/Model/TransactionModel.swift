@@ -272,7 +272,7 @@ class TransactionModel: NSObject {
                 let orders: NSArray = value["orders"] as! NSArray
                 for order in orders as! [NSDictionary] {
                     for product_status in order["unique_order_product_statuses"] as! NSArray {
-                        if order["order_status_id"] as! String == "7" {
+                        if order["order_status_id"] as! String != "8" {
                             let dateComponents = NSDateComponents()
                             
                             var dates = order["date_added"] as! String

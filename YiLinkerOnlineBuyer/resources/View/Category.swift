@@ -331,7 +331,12 @@ extension String {
     }
     
     func formatToPeso() -> String {
-        return "₱\(self)"
+        
+        if self.rangeOfString("₱") != nil{
+            return self
+        } else {
+            return "₱\(self)"
+        }
     }
     
     func stringCharacterAtIndex(index: Int) -> String {

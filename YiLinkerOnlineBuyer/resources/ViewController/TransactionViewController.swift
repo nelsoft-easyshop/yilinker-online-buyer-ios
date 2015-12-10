@@ -190,8 +190,8 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
             page = 0
             self.refreshPage = true
             self.isPageEnd = false
-            self.fireTransaction("pending")
-            self.query = "pending"
+            self.fireTransaction("ongoing")
+            self.query = "ongoing"
             deselectOtherViews(pendingView)
         }
     }
@@ -288,7 +288,7 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
                 
                 let data2 = NSJSONSerialization.dataWithJSONObject(responseObject, options: nil, error: nil)
                 let string2 = NSString(data: data2!, encoding: NSUTF8StringEncoding)
-   
+                /*
                 if queryType == "for-feedback" {
                     trans = TransactionModel.parseDataFromDictionary(responseObject as! NSDictionary)
                 } else if queryType == "pending" {
@@ -296,6 +296,8 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
                 } else {
                     trans = TransactionModel.parseDataFromDictionary3(responseObject as! NSDictionary)
                 }
+                */
+                 trans = TransactionModel.parseDataFromDictionary3(responseObject as! NSDictionary)
                 
                 if trans!.product_name.count != 0 {
                     if trans!.order_id.count < 15 {

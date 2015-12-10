@@ -173,7 +173,8 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
                 return orderSummaryCell
             } else if indexPath.row == ((self.cartItems.count - 1) + 1) {// 1 = to cell below the cart items
                 let totalCell: TotalSummaryPriceTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(self.totalCellNibName) as! TotalSummaryPriceTableViewCell
-                totalCell.totalPriceValueLabel.text = self.totalPrice
+                
+                    totalCell.totalPriceValueLabel.text = self.totalPrice.formatToPeso()
                 
                  totalCell.separatorInset = UIEdgeInsetsMake(0, 1000, 0, 1000)
                 return totalCell
@@ -367,10 +368,8 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
     func displayAlertAndRedirectToChangeAddressWithMessage(message: String) {
         let alertController = UIAlertController(title: Constants.Localized.error, message: message, preferredStyle: .Alert)
         let OKAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default) { (action) in
-            Delay.delayWithDuration(0.5, completionHandler: { (success) -> Void in
-                let changeAddressViewController: ChangeAddressViewController = ChangeAddressViewController(nibName: "ChangeAddressViewController", bundle: nil)
-                changeAddressViewController.delegate = self
-                self.navigationController!.pushViewController(changeAddressViewController, animated: true)
+            Delay.delayWithDuration(0.0, completionHandler: { (success) -> Void in
+                self.redirectToAddress()
             })
         }
         
@@ -379,6 +378,13 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
         self.presentViewController(alertController, animated: true) {
             
         }
+    }
+    
+    //MARK: - Mark Redirect To Address
+    func redirectToAddress() {
+        let changeAddressViewController: ChangeAddressViewController = ChangeAddressViewController(nibName: "ChangeAddressViewController", bundle: nil)
+        changeAddressViewController.delegate = self
+        self.navigationController!.pushViewController(changeAddressViewController, animated: true)
     }
     
     //Guest Checkout Delegate
