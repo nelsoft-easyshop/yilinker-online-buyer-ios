@@ -25,17 +25,21 @@ class ProductDetailsExtendedView: UIView, UIScrollViewDelegate, UIWebViewDelegat
         webView.scrollView.backgroundColor = .clearColor()
         webView.backgroundColor = .clearColor()
         webView.scrollView.showsVerticalScrollIndicator = false
-        
-        webView.loadRequest(NSURLRequest(URL: NSURL(string: "https://www.yilinker.com")!))
-        
+        self.activityIndicator.stopAnimating()
         self.webView.scrollView.showsHorizontalScrollIndicator = false
+        
+//        webView.loadRequest(NSURLRequest(URL: NSURL(string: "https://www.yilinker.com")!))
     }
 
+    func loadUrl(url: String) {
+        webView.loadHTMLString(url, baseURL: nil)
+    }
+    
     func setDelegate() {
         webView.delegate = self
         self.webView.scrollView.delegate = self
     }
-    
+
     func webViewDidFinishLoad(webView: UIWebView) {
         self.activityIndicator.stopAnimating()
     }
@@ -52,11 +56,6 @@ class ProductDetailsExtendedView: UIView, UIScrollViewDelegate, UIWebViewDelegat
         } else if (scrollOffset + scrollViewHeight <= scrollContentSizeHeight) {
             self.frame.origin.y = scrollOffset * -1
         }
-//        if scrollView == self.webView.scrollView {
-//            if self.scrolledPastBottomThresholdInTableView(self.webView.scrollView) {
-//                dismissMe()
-//            }
-//        }
     }
     
     func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
@@ -70,7 +69,6 @@ class ProductDetailsExtendedView: UIView, UIScrollViewDelegate, UIWebViewDelegat
             dismissMe("top")
         }
     }
-    
     
     func scrolledPastBottomThresholdInTableView(scrollView: UIScrollView) -> Bool {
         return scrollView.contentOffset.y <= -100

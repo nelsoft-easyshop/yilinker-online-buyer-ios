@@ -40,6 +40,8 @@ class WebViewController: UIViewController, UIWebViewDelegate, EmptyViewDelegate 
     var webviewSource = WebviewSource.Default
     var isFromFab: Bool = false
     
+    var hud: MBProgressHUD?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.webView.delegate = self
@@ -105,6 +107,7 @@ class WebViewController: UIViewController, UIWebViewDelegate, EmptyViewDelegate 
     
     //MARK: - Web View Delegate
     func webView(webView: UIWebView, didFailLoadWithError error: NSError) {
+        self.webView.hidden = true
         self.showNetworkStatusIndicator(false)
         self.addEmptyView()
     }
@@ -126,6 +129,7 @@ class WebViewController: UIViewController, UIWebViewDelegate, EmptyViewDelegate 
     
     func webViewDidStartLoad(webView: UIWebView) {
         self.showNetworkStatusIndicator(true)
+        self.webView.hidden = true
     }
     
     func webView(webView: UIWebView, shouldStartLoadWithRequest request: NSURLRequest, navigationType: UIWebViewNavigationType) -> Bool {
@@ -138,7 +142,6 @@ class WebViewController: UIViewController, UIWebViewDelegate, EmptyViewDelegate 
             if urlString == WebViewURL.flashSale {
                 return true
             } else {
-                //Put redirection to native view controller here. . . . .
                 
                 let productViewController: ProductViewController = ProductViewController(nibName: "ProductViewController", bundle: nil)
                 productViewController.tabController = self.tabBarController as! CustomTabBarController
@@ -166,19 +169,38 @@ class WebViewController: UIViewController, UIWebViewDelegate, EmptyViewDelegate 
             if urlString == WebViewURL.storeView {
                 return true
             } else {
-                //Put redirection to native view controller here. . . . .
+                let sellerId: String = storeViewLinkTap(urlString)
+                if sellerId.isNotEmpty() {
+                    let sellerViewController: SellerViewController = SellerViewController(nibName: "SellerViewController", bundle: nil)
+                    sellerViewController.sellerId = (sellerId as NSString).integerValue
+                    self.navigationController!.pushViewController(sellerViewController, animated: true)
+                }
+                
                 return false
             }
         case .Default:
             return true
         default:
-            return true
+            return false
         }
     }
     
     //MARK: - Show Network Status Indicator
     func showNetworkStatusIndicator(isShow: Bool) {
-        UIApplication.sharedApplication().networkActivityIndicatorVisible = isShow
+        if isShow {
+            if self.hud != nil {
+                self.hud!.hide(true)
+                self.hud = nil
+            }
+            
+            self.hud = MBProgressHUD(view: self.view)
+            self.hud?.removeFromSuperViewOnHide = true
+            self.hud?.dimBackground = false
+            self.view.addSubview(self.hud!)
+            self.hud?.show(true)
+        } else {
+            self.hud?.hide(true)
+        }
     }
 
     //MARK: - Back Button
@@ -244,6 +266,24 @@ class WebViewController: UIViewController, UIWebViewDelegate, EmptyViewDelegate 
             }
         }
         return productUrl
+    }
+    
+    //MARK: - Store View
+    func storeViewLinkTap(url: String) -> String {
+        
+        var storeUrl: String = ""
+        
+        let html = webView.stringByEvaluatingJavaScriptFromString("document.documentElement.outerHTML")
+        let doc = TFHpple(HTMLData: html?.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false))
+        var elements = doc.searchWithXPathQuery("//a[@class='seller-name']")
+        
+        for element in elements as! [TFHppleElement] {
+            if url.contains(element.objectForKey("href")) {
+                storeUrl = element.objectForKey("data-sellerid")
+                break
+            }
+        }
+        return storeUrl
     }
     
     func requestRefreshToken() {

@@ -710,6 +710,8 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
         
         if self.imageUrls.count != 0 {
             self.productImageView.sd_setImageWithURL(NSURL(string: self.imageUrls[0]), placeholderImage: UIImage(named: "dummy-placeholder"))
+        } else if self.imageUrls.count == 0 {
+            self.productImageView.sd_setImageWithURL(NSURL(string: self.productDetailsModel.images[0].imageLocation), placeholderImage: UIImage(named: "dummy-placeholder"))
         }
         
         maximumStock = availableStock(unitId)

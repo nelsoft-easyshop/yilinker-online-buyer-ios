@@ -98,6 +98,7 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
     //Strings
     var sellerId: String = ""
     var transactionType: String = ""
+    var refreshPage: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -115,10 +116,6 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
         total_unit_price = (self.totalUnitCost as NSString).floatValue
         total_handling_fee = (self.shippingFee as NSString).floatValue
         
-        //Get transaction details
-        self.fireTransactionDetails(self.transactionId)
-        //Get buyer's contacts
-        self.getContactsFromEndpoint("1", limit: "30", keyword: "")
         //Set title of navigation bar
         self.title = transactionDetailsTitle
         //Customize navigation bar
@@ -128,6 +125,13 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        self.table.removeAll(keepCapacity: false)
+        self.conversations.removeAll(keepCapacity: false)
+        self.contacts.removeAll(keepCapacity: false)
+        self.contactsNotFollowed.removeAll(keepCapacity: false)
+        
+        //Get transaction details
+        self.fireTransactionDetails(self.transactionId)
     }
     
     // MARK: - Table View Data Source
@@ -559,7 +563,8 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
     
     //MARK: Get transactions details by id
     func fireTransactionDetails(transactionId: String) {
-        self.showHUD()
+        
+        self.showProgressBar()
        
         let manager = APIManager.sharedInstance
         let url = APIAtlas.transactionDetails+"\(SessionManager.accessToken())&transactionId=\(transactionId)" as NSString
@@ -567,29 +572,39 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
         
         manager.GET(urlEncoded!, parameters: nil, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            self.transactionDetailsModel = TransactionDetailsModel.parseDataFromDictionary2(responseObject as! NSDictionary)
             
-            self.cellCount = self.transactionDetailsModel!.sellerId.count
-            self.cellSection = self.transactionDetailsModel!.sellerId.count
-            
-            for var a = 0; a < self.transactionDetailsModel.sellerId.count; a++ {
-                var arr = [TransactionDetailsProductsModel]()
-                for var b = 0; b < self.transactionDetailsModel.productName.count; b++ {
-                    if self.transactionDetailsModel.sellerId[a] == self.transactionDetailsModel.sellerId2[b] {
-                        self.tableSectionContents = TransactionDetailsProductsModel(orderProductId: self.transactionDetailsModel.orderProductId[b], productId: self.transactionDetailsModel.productId[b], quantity: self.transactionDetailsModel.quantity[b], unitPrice: self.transactionDetailsModel.unitPrice[b], totalPrice: self.transactionDetailsModel.totalPrice[b], productName: self.transactionDetailsModel.productName[b], handlingFee: self.transactionDetailsModel.handlingFee[b], isCancellable: self.transactionDetailsModel.isCancellable[b])
-                        arr.append(self.tableSectionContents)
+            if responseObject["isSuccessful"] as! Bool {
+                self.transactionDetailsModel = TransactionDetailsModel.parseDataFromDictionary2(responseObject as! NSDictionary)
+                
+                self.cellCount = self.transactionDetailsModel!.sellerId.count
+                self.cellSection = self.transactionDetailsModel!.sellerId.count
+                
+                for var a = 0; a < self.transactionDetailsModel.sellerId.count; a++ {
+                    var arr = [TransactionDetailsProductsModel]()
+                    for var b = 0; b < self.transactionDetailsModel.productName.count; b++ {
+                        if self.transactionDetailsModel.sellerId[a] == self.transactionDetailsModel.sellerId2[b] {
+                            self.tableSectionContents = TransactionDetailsProductsModel(orderProductId: self.transactionDetailsModel.orderProductId[b], productId: self.transactionDetailsModel.productId[b], quantity: self.transactionDetailsModel.quantity[b], unitPrice: self.transactionDetailsModel.unitPrice[b], totalPrice: self.transactionDetailsModel.totalPrice[b], productName: self.transactionDetailsModel.productName[b], handlingFee: self.transactionDetailsModel.handlingFee[b], isCancellable: self.transactionDetailsModel.isCancellable[b])
+                            arr.append(self.tableSectionContents)
+                        }
                     }
+                    
+                    self.table.append(TransactionDetailsModel(sellerName: self.transactionDetailsModel!.sellerStore[a], sellerContact: self.transactionDetailsModel!.sellerContactNumber[a], id: self.transactionDetailsModel.sellerId[a], sellerIdForFeedback: self.transactionDetailsModel.sellerId[a], feedback: self.transactionDetailsModel.hasFeedback[a], transactions: arr, orderStatus: self.transactionDetailsModel.name[a]))
                 }
                 
-                self.table.append(TransactionDetailsModel(sellerName: self.transactionDetailsModel!.sellerStore[a], sellerContact: self.transactionDetailsModel!.sellerContactNumber[a], id: self.transactionDetailsModel.sellerId[a], sellerIdForFeedback: self.transactionDetailsModel.sellerId[a], feedback: self.transactionDetailsModel.hasFeedback[a], transactions: arr, orderStatus: self.transactionDetailsModel.name[a]))
+                if self.headerView == nil {
+                    self.loadViewsWithDetails()
+                }
+                
+                self.tableView.reloadData()
+                
+                self.hideProgressBar()
+                
+                //Get buyer's contacts
+                self.getContactsFromEndpoint("1", limit: "30", keyword: "")
+            } else {
+                self.showAlert(title: self.error, message: self.somethingWentWrong)
             }
             
-            if self.headerView == nil {
-                self.loadViewsWithDetails()
-            }
-            
-            self.tableView.reloadData()
-            self.hud?.hide(true)
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                 
@@ -602,7 +617,9 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
                     let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
                     let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
                     UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: Constants.Localized.someThingWentWrong)
-                    self.hud?.hide(true)
+                    
+                    self.hideProgressBar()
+                    
                     //self.showAlert(title: self.error, message: self.somethingWentWrong)
                 }
         })
@@ -613,7 +630,8 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
         limit : String,
         keyword: String){
             if (Reachability.isConnectedToNetwork()) {
-                self.showHUD()
+                
+                self.showProgressBar()
                 
                 let manager: APIManager = APIManager.sharedInstance
                 manager.requestSerializer = AFHTTPRequestSerializer()
@@ -636,7 +654,10 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
                         self.arrayContacts.append(self.contacts[i].userId)
                     }
                     
-                    self.hud?.hide(true)
+                    self.hideProgressBar()
+                    
+                    self.refreshPage = true
+                    
                     }, failure: {
                         (task: NSURLSessionDataTask!, error: NSError!) in
                         let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
@@ -655,12 +676,14 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
                         }
                         
                         self.contacts = Array<W_Contact>()
-                        self.hud?.hide(true)
+                        self.hideProgressBar()
                 })
             }
     }
     
     func fireRefreshToken(type: TransactionDetailsType) {
+        
+        self.showProgressBar()
         
         let manager: APIManager = APIManager.sharedInstance
         let parameters: NSDictionary = ["client_id": Constants.Credentials.clientID(), "client_secret": Constants.Credentials.clientSecret(), "grant_type": Constants.Credentials.grantRefreshToken, "refresh_token":  SessionManager.refreshToken()]
@@ -677,16 +700,34 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
                 self.getContactsFromEndpoint("1", limit: "30", keyword: "")
             }
             
-            self.hud?.hide(true)
+            self.hideProgressBar()
+            
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
                 let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
                 UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: Constants.Localized.someThingWentWrong)
-                self.hud?.hide(true)
+                
+                self.hideProgressBar()
                 //self.showAlert(title: self.error, message: self.somethingWentWrong)
         })
         
+    }
+    
+    func showProgressBar() {
+        if self.refreshPage {
+            UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+        } else {
+            self.showHUD()
+        }
+    }
+    
+    func hideProgressBar() {
+        if self.refreshPage {
+            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+        } else {
+            self.hud?.hide(true)
+        }
     }
     
     //MARK: Show alert dialog box

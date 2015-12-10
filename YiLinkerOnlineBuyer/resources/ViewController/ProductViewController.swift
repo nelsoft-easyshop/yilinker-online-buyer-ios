@@ -158,6 +158,8 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         tap.addTarget(self, action: "closeAction:")
         self.closeButton.addGestureRecognizer(tap)
 //        self.closeButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "closeAction:"))
+        let extendedViewController: ProductDetailsExtendedViewController = ProductDetailsExtendedViewController(nibName: "ProductDetailsExtendedViewController", bundle: nil)
+        self.addChildViewController(extendedViewController)
 
     }
     
@@ -268,7 +270,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         
         if scrollView == self.tableView {
             if self.scrolledPastBottomThresholdInTableView(self.tableView) && canShowExtendedDetails{
-                openExtendedProductDetails()
+//                openExtendedProductDetails()
             }
         }
     }
@@ -415,7 +417,6 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         if self.productDetailsBottomView == nil {
             self.productDetailsBottomView = XibHelper.puffViewWithNibName("ProductViewsViewController", index: 5) as! ProductDetailsBottomView
             self.productDetailsBottomView.frame.size.width = self.view.frame.size.width
-//            self.productDetailsBottomView.sellerLabel.text = ProductStrings.seller
         }
         return self.productDetailsBottomView
     }
@@ -791,14 +792,14 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         self.setPosition(self.productReviewHeaderView, from: self.productAttributeView)
         self.setPosition(self.productSellerView, from: self.productReviewFooterView)
         self.setPosition(self.productDescriptionView, from: self.productSellerView)
-        self.setPosition(self.productDetailsBottomView, from: self.productDescriptionView)
+//        self.setPosition(self.productDetailsBottomView, from: self.productDescriptionView)
         
         newFrame = self.headerView.frame
         newFrame.size.height = CGRectGetMaxY(self.productReviewHeaderView.frame)
         self.headerView.frame = newFrame
         
         newFrame = self.footerView.frame
-        newFrame.size.height = CGRectGetMaxY(self.productDetailsBottomView.frame)
+        newFrame.size.height = CGRectGetMaxY(self.productDescriptionView.frame)
         self.footerView.frame = newFrame
         
         self.tableView.tableFooterView = nil
@@ -834,7 +835,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         self.getFooterView().addSubview(self.getProductReviewFooterView())
         self.getFooterView().addSubview(self.getProductSellerView())
         self.getFooterView().addSubview(self.getProductDescriptionView())
-        self.getFooterView().addSubview(self.getProductDetailsBottomView())
+//        self.getFooterView().addSubview(self.getProductDetailsBottomView())
         
         if !isFromCart {
             self.quantity = self.productDetailsModel.productUnits[0].quantity
@@ -1119,8 +1120,8 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         self.productDetailsExtendedView.frame = self.productImagesView.bounds
         self.productDetailsExtendedView.frame.origin.y = self.view.frame.size.height
         self.productDetailsExtendedView.backgroundColor = .clearColor()
-        println(self.productDetailsModel.slug)
-        self.productDetailsExtendedView.url = self.productDetailsModel.slug
+        self.productDetailsExtendedView.url = self.productDetailsModel.fullDescription
+        self.productDetailsExtendedView.loadUrl(self.productDetailsModel.fullDescription)
         self.view.addSubview(self.productDetailsExtendedView)
     }
     
@@ -1313,13 +1314,21 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
 //        extendedProductDetails.view.backgroundColor = UIColor.clearColor()
 //        extendedProductDetails.url = self.productDetailsModel.fullDescription
 //        self.tabBarController?.presentViewController(extendedProductDetails, animated: true, completion: nil)
-        self.navigationController?.navigationBarHidden = true
-        UIApplication.sharedApplication().statusBarHidden = true
-        self.productDetailsExtendedView.setDelegate()
-
-        UIView.animateWithDuration(0.5, animations: {
-            self.productDetailsExtendedView.frame.origin.y = 0.0
-        })
+        
+//        self.navigationController?.navigationBarHidden = true
+//        UIApplication.sharedApplication().statusBarHidden = true
+//        self.productDetailsExtendedView.setDelegate()
+//
+//        UIView.animateWithDuration(0.5, animations: {
+//            self.productDetailsExtendedView.frame.origin.y = 0.0
+//        })
+        
+        isExiting = false
+        let description = ProductDescriptionViewController(nibName: "ProductDescriptionViewController", bundle: nil)
+        description.url = self.productDetailsModel.fullDescription
+        description.title = self.productDetailsModel.title
+        let root: UINavigationController = UINavigationController(rootViewController: description)
+        self.tabBarController?.presentViewController(root, animated: true, completion: nil)
     }
     
     // MARK: - Navigation Bar Actions
