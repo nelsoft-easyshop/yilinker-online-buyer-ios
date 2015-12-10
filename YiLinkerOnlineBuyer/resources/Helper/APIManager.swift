@@ -192,6 +192,7 @@ struct APIAtlas {
     static let dailyLogin = "daily-login"
     static let category = "mobile-category"
     static let storeView = "mobile-stores"
+    static let mobileProductList = "mobile-product-list"
 }
 
 class APIManager: AFHTTPSessionManager {
