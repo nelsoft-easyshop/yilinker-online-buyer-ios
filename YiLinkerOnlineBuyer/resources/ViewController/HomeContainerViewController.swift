@@ -1261,12 +1261,13 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             self.navigationController!.pushViewController(sellerViewController, animated: true)
         } else if targetType == "productList" {
             let resultViewController: ResultViewController = ResultViewController(nibName: "ResultViewController", bundle: nil)
-            resultViewController.passModel(SearchSuggestionModel(suggestion: "", imageURL: "", searchUrl: target))
             resultViewController.pageTitle = sectionTitle
+            resultViewController.passModel(SearchSuggestionModel(suggestion: "", imageURL: "", searchUrl: target))
             self.navigationController!.pushViewController(resultViewController, animated: true)
         } else if targetType == "sellerList" {
             let resultViewController: ResultViewController = ResultViewController(nibName: "ResultViewController", bundle: nil)
             resultViewController.isSellerSearch = true
+            resultViewController.pageTitle = sectionTitle
             resultViewController.passModel(SearchSuggestionModel(suggestion: "", imageURL: "", searchUrl: target))
             resultViewController.pageTitle = sectionTitle
             self.navigationController!.pushViewController(resultViewController, animated: true)
