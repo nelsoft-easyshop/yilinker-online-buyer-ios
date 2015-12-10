@@ -36,6 +36,7 @@
                     </view>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="1000" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" image="dummy-placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="HPg-kW-7jB" customClass="ProductImageView" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
                         <rect key="frame" x="12" y="58" width="130" height="82"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="width" priority="750" constant="130" id="dmC-Yl-ya1"/>
                             <constraint firstAttribute="height" constant="82" id="kvD-cs-kXW"/>
@@ -43,6 +44,7 @@
                     </imageView>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" tag="1" contentMode="scaleAspectFill" horizontalHuggingPriority="1000" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" image="dummy-placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="q7f-51-8Cv" customClass="ProductImageView" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
                         <rect key="frame" x="150" y="58" width="130" height="82"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="width" priority="750" constant="130" id="LwR-AD-XbJ"/>
                             <constraint firstAttribute="height" constant="82" id="gg6-av-Byr"/>
@@ -50,6 +52,7 @@
                     </imageView>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" tag="2" contentMode="scaleAspectFill" horizontalHuggingPriority="1000" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" image="dummy-placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="wzS-od-qmT" customClass="ProductImageView" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
                         <rect key="frame" x="288" y="58" width="130" height="82"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="82" id="Hm8-FQ-6m7"/>
                             <constraint firstAttribute="width" priority="750" constant="130" id="h9g-6e-p39"/>
