@@ -625,6 +625,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                 headerView.viewMoreButton.hidden = true
             }
             
+            headerView.sectionTitle = layoutFiveModel.sectionTitle
             headerView.titleLabel.text = layoutFiveModel.sectionTitle
             headerView.updateTitleLine()
             headerView.backgroundColor = UIColor.whiteColor()
@@ -638,6 +639,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                 headerView.viewMoreButton.hidden = true
             }
             
+            headerView.sectionTitle = layoutSevenModel.sectionTitle
             headerView.titleLabel.text = layoutSevenModel.sectionTitle
             headerView.updateTitleLine()
             headerView.backgroundColor = UIColor.whiteColor()
@@ -651,6 +653,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                 headerView.viewMoreButton.hidden = true
             }
             
+            headerView.sectionTitle = layoutEightModel.sectionTitle
             headerView.titleLabel.text = layoutEightModel.sectionTitle
             headerView.updateTitleLine()
             headerView.backgroundColor = UIColor.clearColor()
@@ -664,6 +667,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                 headerView.viewMoreButton.hidden = true
             }
             
+            headerView.sectionTitle = layoutNineModel.sectionTitle
             headerView.titleLabel.text = layoutNineModel.sectionTitle
             headerView.updateTitleLine()
             headerView.backgroundColor = UIColor.clearColor()
@@ -677,6 +681,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                 headerView.viewMoreButton.hidden = true
             }
             
+            headerView.sectionTitle = layoutTenModel.sectionTitle
             headerView.titleLabel.text = layoutTenModel.sectionTitle
             headerView.updateTitleLine()
             headerView.backgroundColor = UIColor.clearColor()
@@ -1084,7 +1089,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     
     //MARK: - Header View Delegate
     func layoutHeaderCollectionViewCellDidSelectViewMore(layoutHeaderCollectionViewCell: LayoutHeaderCollectionViewCell) {
-        self.didClickItemWithTarget(layoutHeaderCollectionViewCell.target, targetType: layoutHeaderCollectionViewCell.targetType)
+        self.didClickItemWithTarget(layoutHeaderCollectionViewCell.target, targetType: layoutHeaderCollectionViewCell.targetType, sectionTitle: layoutHeaderCollectionViewCell.sectionTitle)
     }
     
     //MARK: - Full Image Collection View Cell
@@ -1240,7 +1245,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     }
     
     //MARK: - Did Click Item With Target
-    func didClickItemWithTarget(target: String, targetType: String) {
+    func didClickItemWithTarget(target: String, targetType: String, sectionTitle: String = "") {
         if targetType == "seller" {
             let sellerViewController: SellerViewController = SellerViewController(nibName: "SellerViewController", bundle: nil)
             if target.toInt() != nil {
@@ -1257,11 +1262,13 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         } else if targetType == "productList" {
             let resultViewController: ResultViewController = ResultViewController(nibName: "ResultViewController", bundle: nil)
             resultViewController.passModel(SearchSuggestionModel(suggestion: "", imageURL: "", searchUrl: target))
+            resultViewController.pageTitle = sectionTitle
             self.navigationController!.pushViewController(resultViewController, animated: true)
         } else if targetType == "sellerList" {
             let resultViewController: ResultViewController = ResultViewController(nibName: "ResultViewController", bundle: nil)
             resultViewController.isSellerSearch = true
             resultViewController.passModel(SearchSuggestionModel(suggestion: "", imageURL: "", searchUrl: target))
+            resultViewController.pageTitle = sectionTitle
             self.navigationController!.pushViewController(resultViewController, animated: true)
         } else if targetType == "product" {
             let productViewController: ProductViewController = ProductViewController(nibName: "ProductViewController", bundle: nil)
