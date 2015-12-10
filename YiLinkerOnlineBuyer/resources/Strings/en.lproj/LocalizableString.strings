@@ -344,10 +344,13 @@ ACTIVITY_LOG_TITLE_LOCALIZE_KEY = "Activity Log";
 //Chan' Module
 
 // MARK: - Webview
+WEBVIEW_YILINKER = "YiLinker";
 WEBVIEW_FLASH_SALES = "Flash Sales";
 WEBVIEW_DAILY_LOGIN = "Daily Login";
 WEBVIEW_CATEGORIES = "Categories";
 WEBVIEW_STORE_VIEW = "Store View";
+WEBVIEW_HOT_ITEMS = "Hot Items";
+WEBVIEW_NEW_ITEMS = "New Items";
 
 // MARK: - HELP
 HELP_FOR_CUSTOMER_SERVICE= "For Customer Service Assistance";

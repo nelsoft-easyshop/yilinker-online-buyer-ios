@@ -78,7 +78,7 @@ class WishlistViewController: UIViewController, UITableViewDelegate, UITableView
                 if responseObject.objectForKey("error") != nil {
                     self.requestRefreshToken("deleteWishlist", url: url, params: params)
                 } else {
-                    self.populateTableView(responseObject)
+                    self.getWishlistData()
                 }
             
             }, failure: {
@@ -139,7 +139,7 @@ class WishlistViewController: UIViewController, UITableViewDelegate, UITableView
         manager.GET(url, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in print(responseObject as! NSDictionary)
                 if responseObject.objectForKey("error") != nil {
-                self.requestRefreshToken("getWishlist", url: url, params: params)
+                    self.requestRefreshToken("getWishlist", url: url, params: params)
                 } else {
                     self.populateTableView(responseObject)
                 }
@@ -177,7 +177,7 @@ class WishlistViewController: UIViewController, UITableViewDelegate, UITableView
             paramsTemp["access_token"] = SessionManager.accessToken()
             
             if type == "getWishlist" {
-                self.requestProductDetails(url, params: paramsTemp)
+                self.getWishlistData()
             } else if type == "addToCart" {
                 self.fireAddToCartItem(url, params: paramsTemp)
             } else if type == "deleteWishlist" {
