@@ -45,20 +45,17 @@
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" misplaced="YES" text="LG. Sta Lucia East Grand Mall, Marcos HighWay Corner Felix Avenue . Ortigas Pasig City" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sx5-GY-uj9">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text="LG. Sta Lucia East Grand Mall, Marcos HighWay Corner Felix Avenue . Ortigas Pasig City" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sx5-GY-uj9">
                         <rect key="frame" x="46" y="30" width="296" height="29"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="29" id="2U2-E5-FCu"/>
-                        </constraints>
                         <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="12"/>
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q7d-g0-zfw">
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q7d-g0-zfw">
                         <rect key="frame" x="350" y="28" width="23" height="23"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="23" id="q5H-Le-zoa"/>
-                            <constraint firstAttribute="height" constant="23" id="r6B-09-gpu"/>
+                            <constraint firstAttribute="width" constant="23" id="02q-Ns-gNo"/>
+                            <constraint firstAttribute="height" constant="23" id="5UU-GP-5Ki"/>
                         </constraints>
                         <state key="normal" backgroundImage="trash">
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -84,18 +81,20 @@
             </view>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
+                <constraint firstAttribute="trailing" secondItem="q7d-g0-zfw" secondAttribute="trailing" constant="8" id="0wW-ky-boC"/>
                 <constraint firstItem="BKG-VE-yR0" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="13" id="4Cy-1w-Z41"/>
+                <constraint firstItem="Sx5-GY-uj9" firstAttribute="top" secondItem="BKG-VE-yR0" secondAttribute="bottom" id="6Mc-4A-1A9"/>
+                <constraint firstAttribute="bottom" secondItem="Sx5-GY-uj9" secondAttribute="bottom" constant="20" id="6nV-XF-uG5"/>
                 <constraint firstItem="6Fs-p2-iYY" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="9cm-FK-Qkn"/>
                 <constraint firstItem="q5N-SS-ZY2" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="15" id="Bwq-HY-JEb"/>
                 <constraint firstItem="6Fs-p2-iYY" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="IGa-7A-dG4"/>
-                <constraint firstItem="q7d-g0-zfw" firstAttribute="leading" secondItem="Sx5-GY-uj9" secondAttribute="trailing" constant="8" id="R0B-u9-GIf"/>
                 <constraint firstItem="BKG-VE-yR0" firstAttribute="leading" secondItem="q5N-SS-ZY2" secondAttribute="trailing" constant="7" id="Slr-Ly-VbX"/>
+                <constraint firstItem="Sx5-GY-uj9" firstAttribute="leading" secondItem="6Fs-p2-iYY" secondAttribute="trailing" id="TyM-7f-aly"/>
+                <constraint firstItem="q7d-g0-zfw" firstAttribute="leading" secondItem="Sx5-GY-uj9" secondAttribute="trailing" constant="8" id="blX-0A-D38"/>
+                <constraint firstItem="q7d-g0-zfw" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="28" id="eBV-Op-H0h"/>
                 <constraint firstItem="q5N-SS-ZY2" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="18" id="hch-i7-Rd8"/>
                 <constraint firstAttribute="bottom" secondItem="6Fs-p2-iYY" secondAttribute="bottom" id="mAI-xX-dfR"/>
                 <constraint firstAttribute="trailing" secondItem="BKG-VE-yR0" secondAttribute="trailing" constant="39" id="qi5-N4-Ies"/>
-                <constraint firstItem="Sx5-GY-uj9" firstAttribute="top" secondItem="BKG-VE-yR0" secondAttribute="bottom" id="x3P-uh-P4X"/>
-                <constraint firstItem="q7d-g0-zfw" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="28" id="xyq-l1-dK7"/>
-                <constraint firstItem="Sx5-GY-uj9" firstAttribute="leading" secondItem="6Fs-p2-iYY" secondAttribute="trailing" id="y3K-wd-dJI"/>
             </constraints>
             <size key="customSize" width="381" height="79"/>
             <connections>
