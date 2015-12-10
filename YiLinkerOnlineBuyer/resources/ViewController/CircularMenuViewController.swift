@@ -275,7 +275,7 @@ class CircularMenuViewController: UIViewController {
                             yPosition = yPosition - 30
                         }
                         
-                        let label: UILabel = UILabel(frame: CGRectMake(xPosition + 75, yPosition, labelWidth, 100))
+                        let label: UILabel = UILabel(frame: CGRectMake(xPosition + 75, yPosition, labelWidth, 130))
                         label.backgroundColor = UIColor.clearColor()
                         label.text = self.buttonRightText[index]
                         label.adjustsFontSizeToFitWidth = true

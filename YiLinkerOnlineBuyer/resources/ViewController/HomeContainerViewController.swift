@@ -1242,6 +1242,14 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             let sellerViewController: SellerViewController = SellerViewController(nibName: "SellerViewController", bundle: nil)
             if target.toInt() != nil {
                 sellerViewController.sellerId = target.toInt()!
+            } else {
+                let urlArray: [String] = target.componentsSeparatedByString("=")
+                if urlArray[1].toInt() != nil {
+                    sellerViewController.sellerId  = urlArray[1].toInt()!
+                } else {
+                    self.tabBarController!.view.makeToast(Constants.Localized.targetNotAvailable, duration: 1.5, position: CSToastPositionBottom, style: CSToastManager.sharedStyle())
+                }
+                
             }
             self.navigationController!.pushViewController(sellerViewController, animated: true)
         } else if targetType == "list" {

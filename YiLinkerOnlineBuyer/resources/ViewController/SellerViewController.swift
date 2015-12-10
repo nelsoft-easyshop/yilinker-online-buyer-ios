@@ -88,6 +88,8 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         //Get seller ratings and feebback
         self.fireSellerFeedback()
         
+        self.getContactsFromEndpoint("1", limit: "30", keyword: "")
+        
         //Set footer view frame and row height
         self.tableView.estimatedRowHeight = 112.0
         self.tableView.rowHeight = UITableViewAutomaticDimension
@@ -230,7 +232,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                
+                self.hud?.hide(true)
                 if error.userInfo != nil {
                     if task.statusCode == 401 {
                         self.requestRefreshToken(SellerRefreshType.Get)
