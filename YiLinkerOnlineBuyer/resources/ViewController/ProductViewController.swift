@@ -415,7 +415,6 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         if self.productDetailsBottomView == nil {
             self.productDetailsBottomView = XibHelper.puffViewWithNibName("ProductViewsViewController", index: 5) as! ProductDetailsBottomView
             self.productDetailsBottomView.frame.size.width = self.view.frame.size.width
-//            self.productDetailsBottomView.sellerLabel.text = ProductStrings.seller
         }
         return self.productDetailsBottomView
     }
@@ -1119,8 +1118,8 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         self.productDetailsExtendedView.frame = self.productImagesView.bounds
         self.productDetailsExtendedView.frame.origin.y = self.view.frame.size.height
         self.productDetailsExtendedView.backgroundColor = .clearColor()
-        println(self.productDetailsModel.slug)
-        self.productDetailsExtendedView.url = self.productDetailsModel.slug
+        self.productDetailsExtendedView.url = self.productDetailsModel.fullDescription
+        self.productDetailsExtendedView.loadUrl(self.productDetailsModel.fullDescription)
         self.view.addSubview(self.productDetailsExtendedView)
     }
     
