@@ -19,6 +19,7 @@ class LayoutHeaderCollectionViewCell: UICollectionViewCell {
     
     var target: String = ""
     var targetType: String = ""
+    var sectionTitle: String = ""
     
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var widthConstraint: NSLayoutConstraint!
