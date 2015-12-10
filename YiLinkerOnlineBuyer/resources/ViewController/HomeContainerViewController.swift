@@ -421,6 +421,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         
         self.collectionView.reloadData()
         self.collectionViewLayout()
+        self.collectionView!.reloadData()
     }
     
     //MARK: - Getting User Info
@@ -1249,12 +1250,16 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                 } else {
                     self.tabBarController!.view.makeToast(Constants.Localized.targetNotAvailable, duration: 1.5, position: CSToastPositionBottom, style: CSToastManager.sharedStyle())
                 }
-                
             }
             self.navigationController!.pushViewController(sellerViewController, animated: true)
-        } else if targetType == "list" {
+        } else if targetType == "productList" {
             let resultViewController: ResultViewController = ResultViewController(nibName: "ResultViewController", bundle: nil)
             resultViewController.passModel(SearchSuggestionModel(suggestion: "", imageURL: "", searchUrl: target))
+            self.navigationController!.pushViewController(resultViewController, animated: true)
+        } else if targetType == "sellerList" {
+            let resultViewController: ResultViewController = ResultViewController(nibName: "ResultViewController", bundle: nil)
+            resultViewController.passModel(SearchSuggestionModel(suggestion: "", imageURL: "", searchUrl: target))
+            resultViewController.isSellerSearch = true
             self.navigationController!.pushViewController(resultViewController, animated: true)
         } else if targetType == "product" {
             let productViewController: ProductViewController = ProductViewController(nibName: "ProductViewController", bundle: nil)
