@@ -191,7 +191,7 @@ struct APIAtlas {
     static let flashSale = "flash-sale"
     static let dailyLogin = "daily-login"
     static let category = "mobile-category"
-    static let storeView = "store-view"
+    static let storeView = "mobile-stores"
 }
 
 class APIManager: AFHTTPSessionManager {
