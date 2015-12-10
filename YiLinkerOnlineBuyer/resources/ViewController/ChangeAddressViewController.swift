@@ -349,6 +349,9 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
                 SessionManager.setLang(addressModel.latitude)
                 SessionManager.setLong(addressModel.longitude)
                 
+                SessionManager.setCity(addressModel.city)
+                SessionManager.setProvince(addressModel.province)
+                
                 self.selectedIndex = indexPath.row
                 self.collectionView.reloadData()
             } else {
