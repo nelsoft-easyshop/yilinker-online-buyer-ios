@@ -286,10 +286,11 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             self.emptyView?.frame = self.view.frame
             self.emptyView!.delegate = self
             self.view.addSubview(self.emptyView!)
-            self.collectionView.hidden = true
         } else {
             self.emptyView!.hidden = false
         }
+        
+        self.collectionView.hidden = true
     }
     
     //MARK: - Tab Bar Delegate
@@ -365,6 +366,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             let dictionary: NSDictionary  = ParseLocalJSON.fileName("dummyHomePage")
             self.populateHomePageWithDictionary(responseObject as! NSDictionary)
             self.hud?.hide(true)
+            self.collectionView.hidden = false
             //get user info
             if SessionManager.isLoggedIn() {
                 self.fireGetUserInfo()
