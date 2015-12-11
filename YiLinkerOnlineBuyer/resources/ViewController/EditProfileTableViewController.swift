@@ -412,7 +412,7 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
         var changeNumberModal = ChangeMobileNumberViewController(nibName: "ChangeMobileNumberViewController", bundle: nil)
         changeNumberModal.mobileNumber = profileUserDetailsModel.contactNumber
         changeNumberModal.delegate = self
-        if SessionManager.mobileNumber().isEmpty {
+        if SessionManager.mobileNumber().isEmpty  || !SessionManager.isMobileVerified(){
             changeNumberModal.isFromCheckout = true
         }
         
