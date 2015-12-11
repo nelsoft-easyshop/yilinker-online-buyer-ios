@@ -941,8 +941,10 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         twoColumnGridCollectionViewCell.productNameLabel.text = layoutTenModel.data[indexPath.row].name
         twoColumnGridCollectionViewCell.discountedPriceLabel.text = layoutTenModel.data[indexPath.row].discountedPrice.formatToPeso()
         twoColumnGridCollectionViewCell.discountPercentageLabel.text = layoutTenModel.data[indexPath.row].discountPercentage.formatToPercentage()
+        twoColumnGridCollectionViewCell.originalPriceLabel.text = layoutTenModel.data[indexPath.row].originalPrice.formatToPeso()
+        twoColumnGridCollectionViewCell.originalPriceLabel.drawDiscountLine(false)
         
-        if layoutTenModel.data[indexPath.row].discountPercentage.toInt() == 0 || layoutTenModel.data[indexPath.row].discountPercentage.toInt() == nil {
+        if layoutTenModel.data[indexPath.row].discountPercentage.toDouble() == 0 || layoutTenModel.data[indexPath.row].discountPercentage.toDouble() == nil {
             twoColumnGridCollectionViewCell.discountPercentageLabel.hidden = true
             twoColumnGridCollectionViewCell.originalPriceLabel.hidden = true
         } else {
@@ -1011,7 +1013,10 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             verticalImageCollectionViewCell.target = layoutFiveModel.data[indexPath.row].target.targetUrl
             verticalImageCollectionViewCell.targetType = layoutFiveModel.data[indexPath.row].target.targetType
             
-            if layoutFiveModel.data[indexPath.row].discountPercentage.toInt() == 0 || layoutFiveModel.data[indexPath.row].discountPercentage.toInt() == nil {
+            verticalImageCollectionViewCell.originalPriceLabel.text = layoutFiveModel.data[indexPath.row].originalPrice.formatToPeso()
+            verticalImageCollectionViewCell.originalPriceLabel.drawDiscountLine(false)
+            
+            if layoutFiveModel.data[indexPath.row].discountPercentage.toDouble() == 0 || layoutFiveModel.data[indexPath.row].discountPercentage.toDouble() == nil {
                 verticalImageCollectionViewCell.discountPercentageLabel.hidden = true
                 verticalImageCollectionViewCell.originalPriceLabel.hidden = true
             } else {
@@ -1029,8 +1034,10 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             
             verticalImageCollectionViewCell.target = layoutSevenModel.data[indexPath.row].target.targetUrl
             verticalImageCollectionViewCell.targetType = layoutSevenModel.data[indexPath.row].target.targetType
+            verticalImageCollectionViewCell.originalPriceLabel.text = layoutSevenModel.data[indexPath.row].originalPrice.formatToPeso()
+            verticalImageCollectionViewCell.originalPriceLabel.drawDiscountLine(false)
             
-            if layoutSevenModel.data[indexPath.row].discountPercentage.toInt() == 0 || layoutSevenModel.data[indexPath.row].discountPercentage.toInt() == nil {
+            if layoutSevenModel.data[indexPath.row].discountPercentage.toDouble() == 0 || layoutSevenModel.data[indexPath.row].discountPercentage.toDouble() == nil {
                 verticalImageCollectionViewCell.discountPercentageLabel.hidden = true
                 verticalImageCollectionViewCell.originalPriceLabel.hidden = true
             } else {
@@ -1057,7 +1064,10 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             halfVerticalImageCollectionViewCell.target = layoutFiveModel.data[indexPath.row].target.targetUrl
             halfVerticalImageCollectionViewCell.targetType = layoutFiveModel.data[indexPath.row].target.targetType
             
-            if layoutFiveModel.data[indexPath.row].discountPercentage.toInt() == 0 || layoutFiveModel.data[indexPath.row].discountPercentage.toInt() == nil {
+            halfVerticalImageCollectionViewCell.originalPriceLabel.text = layoutFiveModel.data[indexPath.row].originalPrice.formatToPeso()
+            halfVerticalImageCollectionViewCell.originalPriceLabel.drawDiscountLine(false)
+            
+            if layoutFiveModel.data[indexPath.row].discountPercentage.toDouble() == 0 || layoutFiveModel.data[indexPath.row].discountPercentage.toDouble() == nil {
                 halfVerticalImageCollectionViewCell.discountPercentageLabel.hidden = true
                 halfVerticalImageCollectionViewCell.originalPriceLabel.hidden = true
             } else {
@@ -1074,6 +1084,9 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             
             halfVerticalImageCollectionViewCell.target = layoutSevenModel.data[indexPath.row].target.targetUrl
             halfVerticalImageCollectionViewCell.targetType = layoutSevenModel.data[indexPath.row].target.targetType
+            
+            halfVerticalImageCollectionViewCell.originalPriceLabel.text = layoutSevenModel.data[indexPath.row].originalPrice.formatToPeso()
+            halfVerticalImageCollectionViewCell.originalPriceLabel.drawDiscountLine(true)
             
             if layoutSevenModel.data[indexPath.row].discountPercentage.toInt() == 0 || layoutSevenModel.data[indexPath.row].discountPercentage.toInt() == nil {
                 halfVerticalImageCollectionViewCell.discountPercentageLabel.hidden = true

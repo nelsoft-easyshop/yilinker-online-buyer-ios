@@ -53,6 +53,10 @@ class HomeProductModel: NSObject {
         }
         
         if let tempDiscountPercentage = dictionary["discountPercentage"] as? String {
+            if name == "JJL Cuhk children's clothes DGXT43009" {
+                println(tempDiscountPercentage)
+            }
+            
             discountPercentage = tempDiscountPercentage
         }
         
