@@ -25,6 +25,8 @@ class SellerSubCategoryViewController: UIViewController, UITableViewDataSource, 
         if let val: AnyObject = dictCategory["subcategories"] {
             let cat: NSArray = dictCategory["subcategories"] as! NSArray
             println(cat.count)
+            self.arr.append("ALL PRODUCTS")
+            self.arrCategoryId.append(self.sellerSubCategoryModel!.categoryId[0])
             for categoryDictionary in cat as! [NSDictionary] {
                 self.sellerSubCategoryModel = SellerSubCategoryModel.parseDataFromDictionary(categoryDictionary)
                 self.arr.append(self.sellerSubCategoryModel!.name[0])
