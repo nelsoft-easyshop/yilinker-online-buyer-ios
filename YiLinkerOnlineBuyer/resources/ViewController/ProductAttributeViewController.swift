@@ -345,7 +345,10 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
         
         priceLabel.text = "₱" + (priceDouble * stockDouble).string(2)
         
-        if stocks == 0 {
+        if maximumStock == 1 {
+            disableButton(increaseButton)
+            disableButton(decreaseButton)
+        } else if stocks == 0 {
             disableButton(increaseButton)
             disableButton(decreaseButton)
             stocksLabel.alpha = 0.3
