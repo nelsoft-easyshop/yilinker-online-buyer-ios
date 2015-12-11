@@ -364,7 +364,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         manager.GET(APIAtlas.homeUrl, parameters: nil, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             let dictionary: NSDictionary  = ParseLocalJSON.fileName("dummyHomePage")
-            self.populateHomePageWithDictionary(responseObject as! NSDictionary)
+            self.populateHomePageWithDictionary(dictionary)
             self.hud?.hide(true)
             self.collectionView.hidden = false
             //get user info
@@ -870,9 +870,12 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                 self.updateUsingOneHourInterval = false
                 if self.remainingTime == -1 {
                     self.oneHourIntervalTimer = NSTimer.scheduledTimerWithTimeInterval(3600.0, target: self, selector: "updateData", userInfo: nil, repeats: true)
+                    self.timer.invalidate()
+                    self.oneHourIntervalTimer.invalidate()
                 }
                 
             } else {
+                self.timer.invalidate()
                 self.oneHourIntervalTimer.invalidate()
                 self.updateUsingOneHourInterval = true
                 
