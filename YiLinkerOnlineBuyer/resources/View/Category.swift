@@ -344,7 +344,13 @@ extension String {
     }
     
     func formatToPercentage() -> String {
-        return "\(self)%"
+        if self.toDouble() != nil {
+            let stringNum: String = "\(round(self.toDouble()!))% OFF"
+            return stringNum.stringByReplacingOccurrencesOfString(".0", withString: "")
+        } else {
+            return ""
+        }
+        
     }
     
     func indexOfCharacter(char: Character) -> Int {

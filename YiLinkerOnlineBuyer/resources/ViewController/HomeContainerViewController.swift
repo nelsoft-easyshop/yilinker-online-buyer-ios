@@ -915,9 +915,9 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             flashSaleCell.productThreeImageView.target = layoutFourModel.data[2].target.targetUrl
             flashSaleCell.productThreeImageView.targetType = layoutFourModel.data[2].target.targetType
             
-            flashSaleCell.productOneDiscountLabel.text = "\(layoutFourModel.data[0].discountPercentage)%"
-            flashSaleCell.productTwoDiscountLabel.text = "\(layoutFourModel.data[1].discountPercentage)%"
-            flashSaleCell.productThreeDiscountLabel.text = "\(layoutFourModel.data[2].discountPercentage)%"
+            flashSaleCell.productOneDiscountLabel.text = "\(layoutFourModel.data[0].discountPercentage)% OFF"
+            flashSaleCell.productTwoDiscountLabel.text = "\(layoutFourModel.data[1].discountPercentage)% OFF"
+            flashSaleCell.productThreeDiscountLabel.text = "\(layoutFourModel.data[2].discountPercentage) OFF%"
         }
         
         return flashSaleCell
