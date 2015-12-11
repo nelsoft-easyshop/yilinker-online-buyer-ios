@@ -263,7 +263,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
             
             if responseObject["isSuccessful"] as! Bool {
                 self.sellerModel2 = SellerModel.parseSellerReviewsDataFromDictionary(responseObject as! NSDictionary)
-                //self.hud?.hide(true)
+                 self.tableView.reloadData()
             } else {
                 self.showAlert(title: Constants.Localized.error, message: responseObject["message"] as! String)
                 //self.hud?.hide(true)
@@ -284,7 +284,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 }
                 
         })
-        self.tableView.reloadData()
+       
     }
     
     //MARK: Follow seller
@@ -644,6 +644,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
                     (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
                     self.contacts = W_Contact.parseContacts(responseObject as! NSDictionary)
                     self.hud?.hide(true)
+                    self.tableView.reloadData()
                     }, failure: {
                         (task: NSURLSessionDataTask!, error: NSError!) in
                         let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse

@@ -55,10 +55,10 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text="&quot;Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tC8-Yd-occ">
-                                <rect key="frame" x="17" y="53" width="289" height="32"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text="&quot;Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" minimumFontSize="7" translatesAutoresizingMaskIntoConstraints="NO" id="tC8-Yd-occ">
+                                <rect key="frame" x="17" y="52" width="289" height="49"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" priority="500" constant="31" id="0GF-7b-f8f"/>
+                                    <constraint firstAttribute="height" constant="49" id="pVF-Wt-T8g"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="13"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
@@ -67,15 +67,15 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="SrV-Sm-muB" firstAttribute="leading" secondItem="tC8-Yd-occ" secondAttribute="trailing" constant="31" id="0m8-zB-mBG"/>
                             <constraint firstItem="jzk-DI-tsJ" firstAttribute="leading" secondItem="yz9-Nf-Uuz" secondAttribute="leading" constant="17" id="1Wh-VE-UJY"/>
+                            <constraint firstItem="G2W-GT-co0" firstAttribute="top" secondItem="yz9-Nf-Uuz" secondAttribute="top" constant="53" id="AfH-P3-jXw"/>
                             <constraint firstItem="G2W-GT-co0" firstAttribute="trailing" secondItem="yz9-Nf-Uuz" secondAttribute="trailingMargin" id="K5E-w5-OIH"/>
+                            <constraint firstAttribute="bottom" secondItem="tC8-Yd-occ" secondAttribute="bottom" constant="9" id="MPw-Qc-SGC"/>
                             <constraint firstItem="jzk-DI-tsJ" firstAttribute="top" secondItem="yz9-Nf-Uuz" secondAttribute="top" constant="29" id="PXe-oU-h2d"/>
-                            <constraint firstItem="jzk-DI-tsJ" firstAttribute="leading" secondItem="tC8-Yd-occ" secondAttribute="leading" id="bD4-0M-cdR"/>
-                            <constraint firstItem="SrV-Sm-muB" firstAttribute="leading" secondItem="tC8-Yd-occ" secondAttribute="trailing" constant="31" id="bS0-9A-W3o"/>
+                            <constraint firstItem="tC8-Yd-occ" firstAttribute="leading" secondItem="yz9-Nf-Uuz" secondAttribute="leading" constant="17" id="bKr-Dc-oY9"/>
                             <constraint firstItem="G2W-GT-co0" firstAttribute="leading" secondItem="SrV-Sm-muB" secondAttribute="trailing" constant="13" id="dAn-G3-T1l"/>
                             <constraint firstItem="SrV-Sm-muB" firstAttribute="top" secondItem="yz9-Nf-Uuz" secondAttribute="top" constant="45" id="e9D-7f-nm6"/>
-                            <constraint firstItem="G2W-GT-co0" firstAttribute="top" secondItem="tC8-Yd-occ" secondAttribute="top" id="ewg-co-49Q"/>
-                            <constraint firstItem="tC8-Yd-occ" firstAttribute="top" secondItem="jzk-DI-tsJ" secondAttribute="bottom" constant="3" id="r5h-2t-yXa"/>
                         </constraints>
                     </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ship to" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CCF-OB-CRt">
