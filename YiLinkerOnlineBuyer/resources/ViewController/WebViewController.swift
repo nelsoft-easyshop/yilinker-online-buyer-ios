@@ -16,6 +16,7 @@ struct WebviewStrings {
     static let newItems = StringHelper.localizedStringWithKey("WEBVIEW_NEW_ITEMS")
     static let hotItems = StringHelper.localizedStringWithKey("WEBVIEW_HOT_ITEMS")
     static let yilinker = StringHelper.localizedStringWithKey("WEBVIEW_YILINKER")
+    static let please = StringHelper.localizedStringWithKey("WEBVIEW_PLEASE")
 }
 
 enum WebviewSource {
@@ -42,6 +43,7 @@ class WebViewController: UIViewController, UIWebViewDelegate, EmptyViewDelegate 
     
     @IBOutlet weak var errorView: UIView!
     var emptyView: EmptyView?
+    @IBOutlet weak var pleaseLabel: UILabel!
     
     var webviewSource = WebviewSource.Default
     var isFromFab: Bool = false
@@ -77,7 +79,8 @@ class WebViewController: UIViewController, UIWebViewDelegate, EmptyViewDelegate 
         }
         
         self.backButton()
-        
+        self.edgesForExtendedLayout = UIRectEdge.None
+        self.pleaseLabel.text = WebviewStrings.please
     }
     
     //MARK: - Load URL with URL String
