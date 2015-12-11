@@ -706,10 +706,12 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         } else if cell.isKindOfClass(VerticalImageCollectionViewCell) {
             let verticalCell: VerticalImageCollectionViewCell = collectionView.cellForItemAtIndexPath(indexPath) as! VerticalImageCollectionViewCell
             self.didClickItemWithTarget(verticalCell.target, targetType: verticalCell.targetType)
-        } else if cell.isKindOfClass(FlashSaleCollectionViewCell) {
+        }
+        
+        /*else if cell.isKindOfClass(FlashSaleCollectionViewCell) {
             let flashSaleCollectionViewCell: FlashSaleCollectionViewCell = collectionView.cellForItemAtIndexPath(indexPath) as! FlashSaleCollectionViewCell
             self.didClickItemWithTarget(flashSaleCollectionViewCell.target, targetType: flashSaleCollectionViewCell.targetType)
-        }
+        }*/
     }
     
     //MARK: - Carousel Data Source
