@@ -12,7 +12,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="VoucherTableViewCell" rowHeight="59" id="KGk-i7-Jjw" customClass="VoucherTableViewCell" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="VoucherTableViewCell" rowHeight="59" id="KGk-i7-Jjw" customClass="VoucherTableViewCell" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="320" height="59"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
@@ -20,7 +20,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sL4-Cg-Dja">
-                        <rect key="frame" x="-8" y="14" width="336" height="46"/>
+                        <rect key="frame" x="-40" y="14" width="400" height="46"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Voucher Code" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jZn-RH-RNH">
@@ -58,17 +58,17 @@
                     </textField>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="sL4-Cg-Dja" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="6" id="Asu-mq-LQ9"/>
+                    <constraint firstItem="sL4-Cg-Dja" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="-48" id="20O-Ua-yKM"/>
                     <constraint firstAttribute="trailing" secondItem="rU1-Dg-Brz" secondAttribute="trailing" constant="7" id="Ciu-bo-BWb"/>
                     <constraint firstItem="rU1-Dg-Brz" firstAttribute="leading" secondItem="ai5-sY-HFA" secondAttribute="trailing" constant="8" id="Ndd-ce-r8f"/>
-                    <constraint firstItem="sL4-Cg-Dja" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="-16" id="RYW-Yb-MCY"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="sL4-Cg-Dja" secondAttribute="bottom" constant="-10" id="THF-ru-Otl"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="sL4-Cg-Dja" secondAttribute="trailing" constant="-48" id="UQ0-lf-ljV"/>
                     <constraint firstItem="ai5-sY-HFA" firstAttribute="leading" secondItem="jZn-RH-RNH" secondAttribute="trailing" constant="7" id="aO3-LL-5mJ"/>
                     <constraint firstItem="jZn-RH-RNH" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="17" id="b33-Kx-zto"/>
                     <constraint firstItem="ai5-sY-HFA" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="13" id="eEA-KA-KSe"/>
                     <constraint firstItem="rU1-Dg-Brz" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="21" id="hCs-so-nJk"/>
                     <constraint firstItem="jZn-RH-RNH" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="1" id="nYd-Tf-jZH"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="sL4-Cg-Dja" secondAttribute="trailing" constant="-16" id="tGl-hs-gK9"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="sL4-Cg-Dja" secondAttribute="bottom" constant="-10" id="yCm-on-XUe"/>
+                    <constraint firstItem="sL4-Cg-Dja" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="6" id="yh1-sJ-GIq"/>
                 </constraints>
             </tableViewCellContentView>
             <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>

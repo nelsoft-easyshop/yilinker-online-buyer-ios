@@ -12,21 +12,43 @@
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                 <rect key="frame" x="0.0" y="0.0" width="380" height="70"/>
                 <subviews>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="lQD-rw-rVc">
-                        <rect key="frame" x="5" y="0.0" width="370" height="70"/>
-                    </imageView>
+                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="AuP-Q6-hg5">
+                        <rect key="frame" x="5" y="4" width="370" height="62"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="6gF-77-ZXK">
+                            <size key="itemSize" width="50" height="50"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <connections>
+                            <outlet property="dataSource" destination="gTV-IL-0wX" id="J0A-bv-ye5"/>
+                            <outlet property="delegate" destination="gTV-IL-0wX" id="ufo-jr-pxf"/>
+                        </connections>
+                    </collectionView>
+                    <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" hidesForSinglePage="YES" numberOfPages="1" translatesAutoresizingMaskIntoConstraints="NO" id="M27-FB-Rxi">
+                        <rect key="frame" x="0.0" y="40" width="380" height="37"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="37" id="5Xk-Ty-pEm"/>
+                        </constraints>
+                        <color key="pageIndicatorTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="currentPageIndicatorTintColor" red="0.36078431370000003" green="0.36078431370000003" blue="0.36078431370000003" alpha="1" colorSpace="calibratedRGB"/>
+                    </pageControl>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </view>
             <constraints>
-                <constraint firstItem="lQD-rw-rVc" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="Fgt-aY-Qgy"/>
-                <constraint firstAttribute="trailing" secondItem="lQD-rw-rVc" secondAttribute="trailing" constant="5" id="JlO-t3-lgn"/>
-                <constraint firstItem="lQD-rw-rVc" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="5" id="Xfk-Ez-I10"/>
-                <constraint firstAttribute="bottom" secondItem="lQD-rw-rVc" secondAttribute="bottom" id="amJ-fs-Enf"/>
+                <constraint firstAttribute="trailing" secondItem="AuP-Q6-hg5" secondAttribute="trailing" constant="5" id="8Xp-9p-iXX"/>
+                <constraint firstAttribute="bottom" secondItem="AuP-Q6-hg5" secondAttribute="bottom" constant="4" id="8rs-az-GuV"/>
+                <constraint firstItem="M27-FB-Rxi" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="MJb-Hu-djE"/>
+                <constraint firstAttribute="trailing" secondItem="M27-FB-Rxi" secondAttribute="trailing" id="buQ-lS-7h5"/>
+                <constraint firstItem="AuP-Q6-hg5" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="5" id="buX-JN-LXz"/>
+                <constraint firstItem="AuP-Q6-hg5" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="4" id="xVT-Lh-RNT"/>
+                <constraint firstAttribute="bottom" secondItem="M27-FB-Rxi" secondAttribute="bottom" constant="-7" id="xjn-MU-M5N"/>
             </constraints>
             <size key="customSize" width="388" height="70"/>
             <connections>
-                <outlet property="productImageView" destination="lQD-rw-rVc" id="tV8-NR-ynM"/>
+                <outlet property="collectionView" destination="AuP-Q6-hg5" id="rjc-YO-mGS"/>
+                <outlet property="pageControl" destination="M27-FB-Rxi" id="pTE-h9-4Qn"/>
             </connections>
             <point key="canvasLocation" x="271" y="364"/>
         </collectionViewCell>
