@@ -996,48 +996,52 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     func verticalImageCollectionViewCellWithIndexPath(indexPath: NSIndexPath) -> VerticalImageCollectionViewCell {
         let verticalImageCollectionViewCell: VerticalImageCollectionViewCell = self.collectionView?.dequeueReusableCellWithReuseIdentifier(self.verticalImageNibName
             , forIndexPath: indexPath) as! VerticalImageCollectionViewCell
-
         if self.homePageModel.data[indexPath.section].isKindOfClass(LayoutFiveModel) {
             let layoutFiveModel: LayoutFiveModel = self.homePageModel.data[indexPath.section] as! LayoutFiveModel
-            verticalImageCollectionViewCell.productItemImageView.sd_setImageWithURL(NSURL(string: layoutFiveModel.data[indexPath.row].image), placeholderImage: UIImage(named: self.placeHolder))
-            
-            verticalImageCollectionViewCell.productNameLabel.text = layoutFiveModel.data[indexPath.row].name
-            verticalImageCollectionViewCell.discountedPriceLabel.text = layoutFiveModel.data[indexPath.row].discountedPrice.formatToPeso()
-            verticalImageCollectionViewCell.discountPercentageLabel.text = layoutFiveModel.data[indexPath.row].discountPercentage.formatToPercentage()
-            
-            verticalImageCollectionViewCell.target = layoutFiveModel.data[indexPath.row].target.targetUrl
-            verticalImageCollectionViewCell.targetType = layoutFiveModel.data[indexPath.row].target.targetType
-            
-            verticalImageCollectionViewCell.originalPriceLabel.text = layoutFiveModel.data[indexPath.row].originalPrice.formatToPeso()
-            verticalImageCollectionViewCell.originalPriceLabel.drawDiscountLine(false)
-            
-            if layoutFiveModel.data[indexPath.row].discountPercentage.toDouble() == 0 || layoutFiveModel.data[indexPath.row].discountPercentage.toDouble() == nil {
-                verticalImageCollectionViewCell.discountPercentageLabel.hidden = true
-                verticalImageCollectionViewCell.originalPriceLabel.hidden = true
-            } else {
-                verticalImageCollectionViewCell.discountPercentageLabel.hidden = false
-                verticalImageCollectionViewCell.originalPriceLabel.hidden = false
+            if indexPath.row < layoutFiveModel.data.count {
+                verticalImageCollectionViewCell.productItemImageView.sd_setImageWithURL(NSURL(string: layoutFiveModel.data[indexPath.row].image), placeholderImage: UIImage(named: self.placeHolder))
+                
+                verticalImageCollectionViewCell.productNameLabel.text = layoutFiveModel.data[indexPath.row].name
+                verticalImageCollectionViewCell.discountedPriceLabel.text = layoutFiveModel.data[indexPath.row].discountedPrice.formatToPeso()
+                verticalImageCollectionViewCell.discountPercentageLabel.text = layoutFiveModel.data[indexPath.row].discountPercentage.formatToPercentage()
+                
+                verticalImageCollectionViewCell.target = layoutFiveModel.data[indexPath.row].target.targetUrl
+                verticalImageCollectionViewCell.targetType = layoutFiveModel.data[indexPath.row].target.targetType
+                
+                verticalImageCollectionViewCell.originalPriceLabel.text = layoutFiveModel.data[indexPath.row].originalPrice.formatToPeso()
+                verticalImageCollectionViewCell.originalPriceLabel.drawDiscountLine(false)
+                
+                if layoutFiveModel.data[indexPath.row].discountPercentage.toDouble() == 0 || layoutFiveModel.data[indexPath.row].discountPercentage.toDouble() == nil {
+                    verticalImageCollectionViewCell.discountPercentageLabel.hidden = true
+                    verticalImageCollectionViewCell.originalPriceLabel.hidden = true
+                } else {
+                    verticalImageCollectionViewCell.discountPercentageLabel.hidden = false
+                    verticalImageCollectionViewCell.originalPriceLabel.hidden = false
+                }
             }
             
         } else if self.homePageModel.data[indexPath.section].isKindOfClass(LayoutSevenModel) {
             let layoutSevenModel: LayoutSevenModel = self.homePageModel.data[indexPath.section] as! LayoutSevenModel
-            verticalImageCollectionViewCell.productItemImageView.sd_setImageWithURL(NSURL(string: layoutSevenModel.data[indexPath.row].image), placeholderImage: UIImage(named: self.placeHolder))
             
-            verticalImageCollectionViewCell.productNameLabel.text = layoutSevenModel.data[indexPath.row].name
-            verticalImageCollectionViewCell.discountedPriceLabel.text = layoutSevenModel.data[indexPath.row].discountedPrice.formatToPeso()
-            verticalImageCollectionViewCell.discountPercentageLabel.text = layoutSevenModel.data[indexPath.row].discountPercentage.formatToPercentage()
-            
-            verticalImageCollectionViewCell.target = layoutSevenModel.data[indexPath.row].target.targetUrl
-            verticalImageCollectionViewCell.targetType = layoutSevenModel.data[indexPath.row].target.targetType
-            verticalImageCollectionViewCell.originalPriceLabel.text = layoutSevenModel.data[indexPath.row].originalPrice.formatToPeso()
-            verticalImageCollectionViewCell.originalPriceLabel.drawDiscountLine(false)
-            
-            if layoutSevenModel.data[indexPath.row].discountPercentage.toDouble() == 0 || layoutSevenModel.data[indexPath.row].discountPercentage.toDouble() == nil {
-                verticalImageCollectionViewCell.discountPercentageLabel.hidden = true
-                verticalImageCollectionViewCell.originalPriceLabel.hidden = true
-            } else {
-                verticalImageCollectionViewCell.discountPercentageLabel.hidden = false
-                verticalImageCollectionViewCell.originalPriceLabel.hidden = false
+            if indexPath.row < layoutSevenModel.data.count {
+                verticalImageCollectionViewCell.productItemImageView.sd_setImageWithURL(NSURL(string: layoutSevenModel.data[indexPath.row].image), placeholderImage: UIImage(named: self.placeHolder))
+                verticalImageCollectionViewCell.productNameLabel.text = layoutSevenModel.data[indexPath.row].name
+                verticalImageCollectionViewCell.discountedPriceLabel.text = layoutSevenModel.data[indexPath.row].discountedPrice.formatToPeso()
+                verticalImageCollectionViewCell.discountPercentageLabel.text = layoutSevenModel.data[indexPath.row].discountPercentage.formatToPercentage()
+                
+                verticalImageCollectionViewCell.target = layoutSevenModel.data[indexPath.row].target.targetUrl
+                verticalImageCollectionViewCell.targetType = layoutSevenModel.data[indexPath.row].target.targetType
+                
+                verticalImageCollectionViewCell.originalPriceLabel.text = layoutSevenModel.data[indexPath.row].originalPrice.formatToPeso()
+                verticalImageCollectionViewCell.originalPriceLabel.drawDiscountLine(false)
+                
+                if layoutSevenModel.data[indexPath.row].discountPercentage.toDouble() == 0 || layoutSevenModel.data[indexPath.row].discountPercentage.toDouble() == nil {
+                    verticalImageCollectionViewCell.discountPercentageLabel.hidden = true
+                    verticalImageCollectionViewCell.originalPriceLabel.hidden = true
+                } else {
+                    verticalImageCollectionViewCell.discountPercentageLabel.hidden = false
+                    verticalImageCollectionViewCell.originalPriceLabel.hidden = false
+                }
             }
         }
         
@@ -1050,48 +1054,54 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         
         if self.homePageModel.data[indexPath.section].isKindOfClass(LayoutFiveModel) {
             let layoutFiveModel: LayoutFiveModel = self.homePageModel.data[indexPath.section] as! LayoutFiveModel
-            halfVerticalImageCollectionViewCell.productItemImageView.sd_setImageWithURL(NSURL(string: layoutFiveModel.data[indexPath.row].image), placeholderImage: UIImage(named: self.placeHolder))
-            
-            halfVerticalImageCollectionViewCell.productNameLabel.text = layoutFiveModel.data[indexPath.row].name
-            halfVerticalImageCollectionViewCell.discountedPriceLabel.text = layoutFiveModel.data[indexPath.row].discountedPrice.formatToPeso()
-            halfVerticalImageCollectionViewCell.discountPercentageLabel.text = layoutFiveModel.data[indexPath.row].discountPercentage.formatToPercentage()
-            
-            halfVerticalImageCollectionViewCell.target = layoutFiveModel.data[indexPath.row].target.targetUrl
-            halfVerticalImageCollectionViewCell.targetType = layoutFiveModel.data[indexPath.row].target.targetType
-            
-            halfVerticalImageCollectionViewCell.originalPriceLabel.text = layoutFiveModel.data[indexPath.row].originalPrice.formatToPeso()
-            halfVerticalImageCollectionViewCell.originalPriceLabel.drawDiscountLine(false)
-            
-            if layoutFiveModel.data[indexPath.row].discountPercentage.toDouble() == 0 || layoutFiveModel.data[indexPath.row].discountPercentage.toDouble() == nil {
-                halfVerticalImageCollectionViewCell.discountPercentageLabel.hidden = true
-                halfVerticalImageCollectionViewCell.originalPriceLabel.hidden = true
-            } else {
-                halfVerticalImageCollectionViewCell.discountPercentageLabel.hidden = false
-                halfVerticalImageCollectionViewCell.originalPriceLabel.hidden = false
+           
+            if indexPath.row < layoutFiveModel.data.count {
+                halfVerticalImageCollectionViewCell.productItemImageView.sd_setImageWithURL(NSURL(string: layoutFiveModel.data[indexPath.row].image), placeholderImage: UIImage(named: self.placeHolder))
+                
+                halfVerticalImageCollectionViewCell.productNameLabel.text = layoutFiveModel.data[indexPath.row].name
+                halfVerticalImageCollectionViewCell.discountedPriceLabel.text = layoutFiveModel.data[indexPath.row].discountedPrice.formatToPeso()
+                halfVerticalImageCollectionViewCell.discountPercentageLabel.text = layoutFiveModel.data[indexPath.row].discountPercentage.formatToPercentage()
+                
+                halfVerticalImageCollectionViewCell.target = layoutFiveModel.data[indexPath.row].target.targetUrl
+                halfVerticalImageCollectionViewCell.targetType = layoutFiveModel.data[indexPath.row].target.targetType
+                
+                halfVerticalImageCollectionViewCell.originalPriceLabel.text = layoutFiveModel.data[indexPath.row].originalPrice.formatToPeso()
+                halfVerticalImageCollectionViewCell.originalPriceLabel.drawDiscountLine(false)
+                
+                if layoutFiveModel.data[indexPath.row].discountPercentage.toDouble() == 0 || layoutFiveModel.data[indexPath.row].discountPercentage.toDouble() == nil {
+                    halfVerticalImageCollectionViewCell.discountPercentageLabel.hidden = true
+                    halfVerticalImageCollectionViewCell.originalPriceLabel.hidden = true
+                } else {
+                    halfVerticalImageCollectionViewCell.discountPercentageLabel.hidden = false
+                    halfVerticalImageCollectionViewCell.originalPriceLabel.hidden = false
+                }
             }
+            
         } else if self.homePageModel.data[indexPath.section].isKindOfClass(LayoutSevenModel) {
             let layoutSevenModel: LayoutSevenModel = self.homePageModel.data[indexPath.section] as! LayoutSevenModel
-            halfVerticalImageCollectionViewCell.productItemImageView.sd_setImageWithURL(NSURL(string: layoutSevenModel.data[indexPath.row].image), placeholderImage: UIImage(named: self.placeHolder))
-            
-            halfVerticalImageCollectionViewCell.productNameLabel.text = layoutSevenModel.data[indexPath.row].name
-            halfVerticalImageCollectionViewCell.discountedPriceLabel.text = layoutSevenModel.data[indexPath.row].discountedPrice.formatToPeso()
-            halfVerticalImageCollectionViewCell.discountPercentageLabel.text = layoutSevenModel.data[indexPath.row].discountPercentage.formatToPercentage()
-            
-            halfVerticalImageCollectionViewCell.target = layoutSevenModel.data[indexPath.row].target.targetUrl
-            halfVerticalImageCollectionViewCell.targetType = layoutSevenModel.data[indexPath.row].target.targetType
-            
-            halfVerticalImageCollectionViewCell.originalPriceLabel.text = layoutSevenModel.data[indexPath.row].originalPrice.formatToPeso()
-            halfVerticalImageCollectionViewCell.originalPriceLabel.drawDiscountLine(true)
-            
-            if layoutSevenModel.data[indexPath.row].discountPercentage.toInt() == 0 || layoutSevenModel.data[indexPath.row].discountPercentage.toInt() == nil {
-                halfVerticalImageCollectionViewCell.discountPercentageLabel.hidden = true
-                halfVerticalImageCollectionViewCell.originalPriceLabel.hidden = true
-            } else {
-                halfVerticalImageCollectionViewCell.discountPercentageLabel.hidden = false
-                halfVerticalImageCollectionViewCell.originalPriceLabel.hidden = false
+
+            if indexPath.row < layoutSevenModel.data.count {
+                halfVerticalImageCollectionViewCell.productItemImageView.sd_setImageWithURL(NSURL(string: layoutSevenModel.data[indexPath.row].image), placeholderImage: UIImage(named: self.placeHolder))
+                
+                halfVerticalImageCollectionViewCell.productNameLabel.text = layoutSevenModel.data[indexPath.row].name
+                halfVerticalImageCollectionViewCell.discountedPriceLabel.text = layoutSevenModel.data[indexPath.row].discountedPrice.formatToPeso()
+                halfVerticalImageCollectionViewCell.discountPercentageLabel.text = layoutSevenModel.data[indexPath.row].discountPercentage.formatToPercentage()
+                
+                halfVerticalImageCollectionViewCell.target = layoutSevenModel.data[indexPath.row].target.targetUrl
+                halfVerticalImageCollectionViewCell.targetType = layoutSevenModel.data[indexPath.row].target.targetType
+                
+                halfVerticalImageCollectionViewCell.originalPriceLabel.text = layoutSevenModel.data[indexPath.row].originalPrice.formatToPeso()
+                halfVerticalImageCollectionViewCell.originalPriceLabel.drawDiscountLine(true)
+                
+                if layoutSevenModel.data[indexPath.row].discountPercentage.toDouble() == 0 || layoutSevenModel.data[indexPath.row].discountPercentage.toDouble() == nil {
+                    halfVerticalImageCollectionViewCell.discountPercentageLabel.hidden = true
+                    halfVerticalImageCollectionViewCell.originalPriceLabel.hidden = true
+                } else {
+                    halfVerticalImageCollectionViewCell.discountPercentageLabel.hidden = false
+                    halfVerticalImageCollectionViewCell.originalPriceLabel.hidden = false
+                }
             }
         }
-
         return halfVerticalImageCollectionViewCell
     }
     
