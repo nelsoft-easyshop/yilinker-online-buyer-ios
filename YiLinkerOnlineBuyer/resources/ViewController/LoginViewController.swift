@@ -391,8 +391,8 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
     //MARK: - Success Message
     func showSuccessMessage() {
         Toast.displayToastWithMessage( LoginStrings.successMessage, duration: 3.0, view: self.view)
-        
-        Delay.delayWithDuration(3.0, completionHandler: { (success) -> Void in
+        self.view.userInteractionEnabled = false
+        Delay.delayWithDuration(1.0, completionHandler: { (success) -> Void in
             let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
             appDelegate.changeRootToHomeView()
         })
