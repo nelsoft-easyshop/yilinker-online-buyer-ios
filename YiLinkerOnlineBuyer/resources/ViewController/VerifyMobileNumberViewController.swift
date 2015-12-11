@@ -131,6 +131,8 @@ class VerifyMobileNumberViewController: UIViewController {
     
     @IBAction func buttonAction(sender: AnyObject) {
         if sender as! UIButton == closeButton {
+            SessionManager.setMobileNumber("")
+            setNewMobileNumber("")
             self.dismissViewControllerAnimated(true, completion: nil)
             delegate?.closeVerifyMobileNumberViewController()
         } else if sender as! UIButton == verifyButton {
@@ -162,7 +164,7 @@ class VerifyMobileNumberViewController: UIViewController {
     
     func getCode() {
         if !SessionManager.isMobileVerified(){
-            if SessionManager.mobileNumber().isEmpty {
+            if SessionManager.mobileNumber() ==  getNewMobileNumber(){
                 fireUpdateProfile(APIAtlas.updateMobileNumber, params: NSDictionary(dictionary: ["access_token" : SessionManager.accessToken(),
                     "newContactNumber": getNewMobileNumber()]))
             } else {
@@ -179,6 +181,11 @@ class VerifyMobileNumberViewController: UIViewController {
                 "oldContactNumber": SessionManager.mobileNumber(),
                 "newContactNumber": getNewMobileNumber()]))
         }
+    }
+    
+    func setNewMobileNumber(newMobileNumber: String) {
+        NSUserDefaults.standardUserDefaults().setObject(newMobileNumber, forKey: "newMobileNumber")
+        NSUserDefaults.standardUserDefaults().synchronize()
     }
     
     func getNewMobileNumber() -> String {

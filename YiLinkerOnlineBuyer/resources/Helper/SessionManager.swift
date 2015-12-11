@@ -173,6 +173,10 @@ class SessionManager {
     }
     
     class func logout() {
+        let appDomain = NSBundle.mainBundle().bundleIdentifier!
+        
+        NSUserDefaults.standardUserDefaults().removePersistentDomainForName(appDomain)
+        
         NSUserDefaults.standardUserDefaults().setObject("", forKey: "accessToken")
         NSUserDefaults.standardUserDefaults().setObject("", forKey: "refreshToken")
         NSUserDefaults.standardUserDefaults().setObject("0", forKey: "messageCount")
