@@ -18,9 +18,12 @@ class SellerSubCategoryViewController: UIViewController, UITableViewDataSource, 
     
     var arr: [String] = []
     var arrCategoryId: [Int] = []
+    var categoryId: Int = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.arr.append("ALL PRODUCTS")
+        self.arrCategoryId.append(self.categoryId)
         var dictCategory:NSDictionary = ["subcategories" : self.subCategoryName]
         if let val: AnyObject = dictCategory["subcategories"] {
             let cat: NSArray = dictCategory["subcategories"] as! NSArray
@@ -103,10 +106,17 @@ class SellerSubCategoryViewController: UIViewController, UITableViewDataSource, 
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let resultViewController: ResultViewController = ResultViewController(nibName: "ResultViewController", bundle: nil)
-        resultViewController.categoryName = self.arr[indexPath.row]
-        resultViewController.passCategoryID(self.arrCategoryId[indexPath.row])
-        self.navigationController!.pushViewController(resultViewController, animated: true)
+        
+        if indexPath.row == 0 {
+            let resultList = ResultViewController(nibName: "ResultViewController", bundle: nil)
+            resultList.passCategoryID(self.arrCategoryId[indexPath.row])
+            self.navigationController?.pushViewController(resultList, animated: true)
+        } else {
+            let resultViewController: ResultViewController = ResultViewController(nibName: "ResultViewController", bundle: nil)
+            resultViewController.categoryName = self.arr[indexPath.row]
+            resultViewController.passCustomCategoryID(self.arrCategoryId[indexPath.row])
+            self.navigationController!.pushViewController(resultViewController, animated: true)
+        }
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {

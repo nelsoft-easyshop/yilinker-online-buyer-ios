@@ -412,6 +412,8 @@
 		F70EFB281BC6BFB40077B8ED /* TransactionLeaveSellerFeedbackTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F70EFB261BC6BFB40077B8ED /* TransactionLeaveSellerFeedbackTableViewController.xib */; };
 		F740F0901B90D1D800D23A34 /* address.png in Resources */ = {isa = PBXBuildFile; fileRef = F740F08F1B90D1D800D23A34 /* address.png */; };
 		F740F0921B90D1E200D23A34 /* close2.png in Resources */ = {isa = PBXBuildFile; fileRef = F740F0911B90D1E200D23A34 /* close2.png */; };
+		F7432D251C1B3B390039057C /* ResultAllViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7432D231C1B3B390039057C /* ResultAllViewController.swift */; };
+		F7432D261C1B3B390039057C /* ResultAllViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7432D241C1B3B390039057C /* ResultAllViewController.xib */; };
 		F7A66B261C03195200D8E688 /* TransactionDetailsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7A66B241C03195200D8E688 /* TransactionDetailsTableViewCell.swift */; };
 		F7A66B271C03195200D8E688 /* TransactionDetailsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7A66B251C03195200D8E688 /* TransactionDetailsTableViewCell.xib */; };
 		F7C5699C1BB175F1004740E1 /* TransactionCancellationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C569971BB175F1004740E1 /* TransactionCancellationModel.swift */; };
@@ -933,6 +935,8 @@
 		F70EFB261BC6BFB40077B8ED /* TransactionLeaveSellerFeedbackTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TransactionLeaveSellerFeedbackTableViewController.xib; path = YiLinkerOnlineBuyer/resources/ViewController/TransactionLeaveSellerFeedbackTableViewController.xib; sourceTree = SOURCE_ROOT; };
 		F740F08F1B90D1D800D23A34 /* address.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = address.png; sourceTree = "<group>"; };
 		F740F0911B90D1E200D23A34 /* close2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = close2.png; sourceTree = "<group>"; };
+		F7432D231C1B3B390039057C /* ResultAllViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ResultAllViewController.swift; path = YiLinkerOnlineBuyer/resources/ViewController/ResultAllViewController.swift; sourceTree = SOURCE_ROOT; };
+		F7432D241C1B3B390039057C /* ResultAllViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ResultAllViewController.xib; path = YiLinkerOnlineBuyer/resources/ViewController/ResultAllViewController.xib; sourceTree = SOURCE_ROOT; };
 		F7A66B241C03195200D8E688 /* TransactionDetailsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TransactionDetailsTableViewCell.swift; path = YiLinkerOnlineBuyer/resources/Xib/TransactionDetailsTableViewCell.swift; sourceTree = SOURCE_ROOT; };
 		F7A66B251C03195200D8E688 /* TransactionDetailsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TransactionDetailsTableViewCell.xib; path = YiLinkerOnlineBuyer/resources/Xib/TransactionDetailsTableViewCell.xib; sourceTree = SOURCE_ROOT; };
 		F7C569971BB175F1004740E1 /* TransactionCancellationModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionCancellationModel.swift; sourceTree = "<group>"; };
@@ -1597,6 +1601,8 @@
 				79E68B9E1B8B428B008626E4 /* ProfileSettingsViewController.swift */,
 				0CC8A63D1B7B9BF600C91425 /* ProfileViewController.swift */,
 				0C5925FF1B8327BA0021EA76 /* ResultViewController.swift */,
+				F7432D231C1B3B390039057C /* ResultAllViewController.swift */,
+				F7432D241C1B3B390039057C /* ResultAllViewController.xib */,
 				0C9937271B750583000D6074 /* SearchViewController.swift */,
 				F7DC7ED81BA13FAC004F7FD4 /* SellerCategoryTableViewCell.swift */,
 				F7DC7ED41BA13E3D004F7FD4 /* SellerCategoryViewController.swift */,
@@ -1849,7 +1855,6 @@
 				0C8A7C6B1B6772670039F013 /* Frameworks */,
 				0C8A7C6C1B6772670039F013 /* Resources */,
 				15458B67C73D196045380AA0 /* Copy Pods Resources */,
-				593886DBE13D68427CA59700 /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -2088,6 +2093,7 @@
 				0C4E5CD41BA1873E0098224A /* RegisterModalViewController.xib in Resources */,
 				0CC53C811C00C73B002361D4 /* TotalSummaryPriceTableViewCell.xib in Resources */,
 				0C374F321B88E3790050AE1D /* ProfileViewController.xib in Resources */,
+				F7432D261C1B3B390039057C /* ResultAllViewController.xib in Resources */,
 				79E68BA71B8B4572008626E4 /* EditProfileAddPhotoTableViewCell.xib in Resources */,
 				793A899F1BA004550030FDC7 /* VerifyMobileNumberStatusViewController.xib in Resources */,
 				F7C569F81BB1790A004740E1 /* TransactionCancelOrderStatusViewController.xib in Resources */,
@@ -2149,21 +2155,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		593886DBE13D68427CA59700 /* Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -2268,6 +2259,7 @@
 				0C538AE71B99F37D00EB64AB /* OrderedProductsModel.swift in Sources */,
 				0C329E7C1B7B7353005BE2B6 /* HelpViewController.swift in Sources */,
 				26AFB3AC1B79DE2900E50926 /* ProductSellerView.swift in Sources */,
+				F7432D251C1B3B390039057C /* ResultAllViewController.swift in Sources */,
 				0C11794B1BA98EFE00AA1554 /* StringHelper.swift in Sources */,
 				F7C56A081BB179FF004740E1 /* TransactionTableViewCell.swift in Sources */,
 				0C5926011B8327BA0021EA76 /* ResultViewController.swift in Sources */,

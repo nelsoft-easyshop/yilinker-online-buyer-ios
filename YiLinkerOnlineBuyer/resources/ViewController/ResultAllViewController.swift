@@ -1,14 +1,14 @@
 //
-//  ResultViewController.swift
+//  ResultAllViewController.swift
 //  YiLinkerOnlineBuyer
 //
-//  Created by Alvin John Tandoc on 8/18/15.
+//  Created by Joriel Oller Fronda on 12/12/15.
 //  Copyright (c) 2015 yiLinker-online-buyer. All rights reserved.
 //
 
 import UIKit
 
-class ResultViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UITableViewDelegate, UITableViewDataSource, FilterViewControllerDelegate {
+class ResultAllViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UITableViewDelegate, UITableViewDataSource, FilterViewControllerDelegate {
     
     let manager = APIManager.sharedInstance
     
@@ -44,16 +44,16 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
     var sellerCollectionViewData: [SearchSellerModel] = []
     var sortData: [String] = []
     var sortParameter: [String] =
-        [ "sortType=BYDATE&sortDirection=ASC"
-         ,"sortType=BYDATE&sortDirection=DESC"
-         ,"sortType=ALPHABETICAL&sortDirection=ASC"
-         ,"sortType=ALPHABETICAL&sortDirection=DESC"]
+    [ "sortType=BYDATE&sortDirection=ASC"
+        ,"sortType=BYDATE&sortDirection=DESC"
+        ,"sortType=ALPHABETICAL&sortDirection=ASC"
+        ,"sortType=ALPHABETICAL&sortDirection=DESC"]
     
     var filterAtributes: [FilterAttributeModel] = []
-
+    
     typealias InitialSearchParameters = (targetUrl: String, parameters: NSDictionary!)
     var initialParameters: InitialSearchParameters? = nil
-
+    
     var searchSuggestion: SearchSuggestionModel!
     
     var fullDimView: UIView?
@@ -82,11 +82,11 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
     var viewTypeTapGesture: UITapGestureRecognizer!
     
     var pageTitle: String = ""
-    var filtersString: [String] = []
+    var sellerId: Int = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         self.initializeViews()
         self.backButton()
         self.initializeLocalizedString()
@@ -102,7 +102,7 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
         //self.view.addSubview(dimView!)
         fullDimView?.hidden = true
         fullDimView?.alpha = 0
-
+        
         
         self.navigationController?.navigationBar.alpha = 1
         self.navigationController?.navigationBar.barTintColor = Constants.Colors.appTheme
@@ -115,19 +115,22 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
             page = 1
         }
         
-        if targetType == TargetType.TodaysPromo {
-            requestSuggestionSearchUrl = APIAtlas.todaysPromo
-            requestSearchDetails(requestSuggestionSearchUrl, params: nil)
-        }
+//        if targetType == TargetType.TodaysPromo {
+//            requestSuggestionSearchUrl = APIAtlas.todaysPromo
+//            requestSearchDetails(requestSuggestionSearchUrl, params: nil)
+//        }
+        
+        println(self.sellerId)
+        requestSearchDetails("\(APIAtlas.productList)?sellerIds[0]=\(sellerId)", params: nil)
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
-
+    
     func passSearchKey(key: String) {
     }
-
+    
     // MARK : Initializations
     func initializeLocalizedString() {
         listLocalizeString = StringHelper.localizedStringWithKey("LIST_LOCALIZE_KEY")
@@ -150,7 +153,7 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
         sortLabel.text = sortLocalizeString
         viewTypeLabel.text = listLocalizeString
     }
-
+    
     func initializeViews() {
         var nib = UINib(nibName: "SortTableViewCell", bundle: nil)
         sortPickerTableView.registerNib(nib, forCellReuseIdentifier: "SortTableViewCell")
@@ -180,7 +183,7 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
         self.navigationController?.view.addSubview(fullDimView!)
         fullDimView?.hidden = true
         fullDimView?.alpha = 0
-
+        
         noResultLabel.hidden = true
     }
     
@@ -199,7 +202,7 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
     func back() {
         self.navigationController!.popViewControllerAnimated(true)
     }
-
+    
     
     
     func initializeTapGestures() {
@@ -233,26 +236,8 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
     
     func passCategoryID(id: Int) {
         if Reachability.isConnectedToNetwork() {
-            requestSuggestionSearchUrl = "\(APIAtlas.productList)?categoryIds=\(id)"
-            requestSearchDetails("\(APIAtlas.productList)?categoryIds=\(id)", params: nil)
-        } else {
-            UIAlertController.displayNoInternetConnectionError(self)
-        }
-    }
-    
-    func passCustomCategoryID(id: Int) {
-        if Reachability.isConnectedToNetwork() {
-            requestSuggestionSearchUrl = "\(APIAtlas.productList)?customCategoryId=\(id)"
-            requestSearchDetails("\(APIAtlas.productList)?customCategoryId=\(id)", params: nil)
-        } else {
-            UIAlertController.displayNoInternetConnectionError(self)
-        }
-    }
-    
-    func passSellerID(id: String) {
-        if Reachability.isConnectedToNetwork() {
-            requestSuggestionSearchUrl = "\(APIAtlas.productList)?sellerIds=\(id)"
-            requestSearchDetails("\(APIAtlas.productList)?sellerIds=\(id)", params: nil)
+            requestSuggestionSearchUrl = "\(APIAtlas.productList)?sellerId=\(sellerId)"
+            requestSearchDetails("\(APIAtlas.productList)?sellerId=\(sellerId)", params: nil)
         } else {
             UIAlertController.displayNoInternetConnectionError(self)
         }
@@ -268,125 +253,63 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
         }
         
         if Reachability.isConnectedToNetwork() {
-            requestSuggestionSearchUrl = searchSuggestion.searchUrl
+            //requestSuggestionSearchUrl = searchSuggestion.searchUrl
             requestSearchDetails(requestSuggestionSearchUrl, params: nil)
         } else {
             UIAlertController.displayNoInternetConnectionError(self)
         }
     }
-
+    
     // MARK: API Request
     func requestSearchDetails(url: String, params: NSDictionary!) {
         println("URL \(url)\nPARAMS:\(params)")
-        if isSellerSearch {
-            if (sellerCollectionViewData.count % 15) == 0 || page == 0 {
-                println("\(collectionViewData.count) \(totalResultCount)")
-                
-                if page == 0 {
-                    page = 1
-                }
-                
-                
-                if( initialParameters == nil ) {
-                    initialParameters = (targetUrl: url, parameters: params)
-                }
-                
-                showLoader()
-                
-                manager.GET(url, parameters: params, success: {
-                    (task: NSURLSessionDataTask!, responseObject: AnyObject!) in print(responseObject as! NSDictionary)
-                    
-                    println(responseObject)
-                    if responseObject.objectForKey("error") != nil {
-                        self.requestRefreshToken(url, params: params)
-                    } else {
-                        self.populateSellerTableView(responseObject)
-                        self.page++
-                    }
-                    }, failure: {
-                        (task: NSURLSessionDataTask!, error: NSError!) in
-                        if task.response as? NSHTTPURLResponse != nil {
-                            let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                            
-                            if task.statusCode == 401 {
-                                self.requestRefreshToken( url, params: params)
-                            } else {
-                                UIAlertController.displaySomethingWentWrongError(self)
-                                self.dismissLoader()
-                            }
-                        }
-                })
-            } else {
-                let noMoreLocalizeString: String = StringHelper.localizedStringWithKey("NOMORERESULTS_LOCALIZE_KEY")
-                let resultsLocalizeString: String = StringHelper.localizedStringWithKey("RESULTS_LOCALIZE_KEY")
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: noMoreLocalizeString, title: resultsLocalizeString)
+        if (collectionViewData.count % 15) == 0 || page == 0 {
+            println("\(collectionViewData.count) \(totalResultCount)")
+            
+            if page == 0 {
+                page = 1
             }
+            
+            if( initialParameters == nil ) {
+                initialParameters = (targetUrl: url, parameters: params)
+            }
+            
+            showLoader()
+            
+            var tempURL: String = url
+            
+            if !tempURL.contains("?") &&  tempURL.contains("&") {
+                let rOriginal = tempURL.rangeOfString("&")
+                tempURL = tempURL.stringByReplacingCharactersInRange(rOriginal!, withString: "?")
+            }
+            
+            manager.GET(tempURL, parameters: params, success: {
+                (task: NSURLSessionDataTask!, responseObject: AnyObject!) in print(responseObject as! NSDictionary)
+                
+                println(responseObject)
+                if responseObject.objectForKey("error") != nil {
+                    self.requestRefreshToken(url, params: params)
+                } else {
+                    self.populateTableView(responseObject)
+                    self.page++
+                }
+                }, failure: {
+                    (task: NSURLSessionDataTask!, error: NSError!) in
+                    if task.response as? NSHTTPURLResponse != nil {
+                        let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                        
+                        if task.statusCode == 401 {
+                            self.requestRefreshToken( url, params: params)
+                        } else {
+                            UIAlertController.displaySomethingWentWrongError(self)
+                            self.dismissLoader()
+                        }
+                    }
+            })
         } else {
-            if (collectionViewData.count % 15) == 0 || page == 0 {
-                println("\(collectionViewData.count) \(totalResultCount)")
-                
-                if page == 0 {
-                    page = 1
-                }
-                
-                if( initialParameters == nil ) {
-                    initialParameters = (targetUrl: url, parameters: params)
-                }
-                
-                showLoader()
-                
-                var tempURL: String = url
-                
-                if !tempURL.contains("?") &&  tempURL.contains("&") {
-                    let rOriginal = tempURL.rangeOfString("&")
-                    tempURL = tempURL.stringByReplacingCharactersInRange(rOriginal!, withString: "?")
-                }
-                
-                if filtersString.count > 0 {
-                    tempURL += "&"
-                    for var i = 0; i < filtersString.count; i++ {
-                        tempURL += filtersString[i]
-                        if (i + 1) != filtersString.count {
-                            tempURL += "&"
-                        }
-                    }
-                }
-                
-                if params != nil {
-                    for (key, value) in params {
-                        tempURL += "&\(key)=\(value)"
-                    }
-                }
-                
-                
-                manager.GET(tempURL.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!, parameters: NSDictionary(), success: {
-                    (task: NSURLSessionDataTask!, responseObject: AnyObject!) in print(responseObject as! NSDictionary)
-                    
-                    println(responseObject)
-                    if responseObject.objectForKey("error") != nil {
-                        self.requestRefreshToken(url, params: params)
-                    } else {
-                        self.populateTableView(responseObject)
-                        self.page++
-                    }
-                    }, failure: {
-                        (task: NSURLSessionDataTask!, error: NSError!) in
-                        if task.response as? NSHTTPURLResponse != nil {
-                            let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                            
-                            if task.statusCode == 401 {
-                                self.requestRefreshToken( url, params: params)
-                            } else {
-                                UIAlertController.displaySomethingWentWrongError(self)
-                                self.dismissLoader()
-                            }
-                        }
-                })
-            } else {
-                let noMoreLocalizeString: String = StringHelper.localizedStringWithKey("NOMORERESULTS_LOCALIZE_KEY")
-                let resultsLocalizeString: String = StringHelper.localizedStringWithKey("RESULTS_LOCALIZE_KEY")
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: noMoreLocalizeString, title: resultsLocalizeString)
-            }
+            let noMoreLocalizeString: String = StringHelper.localizedStringWithKey("NOMORERESULTS_LOCALIZE_KEY")
+            let resultsLocalizeString: String = StringHelper.localizedStringWithKey("RESULTS_LOCALIZE_KEY")
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: noMoreLocalizeString, title: resultsLocalizeString)
         }
     }
     
@@ -418,7 +341,6 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
     // MARK: Delegates
     // MARK: Functions Updating Values
     func populateTableView(responseObject: AnyObject) {
-        noResultLabel.hidden = true
         if let value: NSDictionary = responseObject["data"] as? NSDictionary{
             if let value: AnyObject = value["totalResultCount"] {
                 if value as! NSObject != NSNull() {
@@ -482,7 +404,7 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
     }
     
     func populateSellerTableView(responseObject: AnyObject) {
-        noResultLabel.hidden = true
+        
         for subValue in responseObject["data"]  as! NSArray {
             println(subValue)
             let model: SearchSellerModel = SearchSellerModel.parseDataWithDictionary(subValue as! NSDictionary)
@@ -582,7 +504,7 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
             self.navigationController?.pushViewController(productViewController, animated: true)
         }
     }
-
+    
     
     // MARK: - Table view data source
     
@@ -593,12 +515,12 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return sortData.count
     }
-
+    
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("SortTableViewCell", forIndexPath: indexPath) as! SortTableViewCell
-    
+        
         cell.detailsLabel?.text = sortData[indexPath.row]
-    
+        
         return cell
     }
     
@@ -608,7 +530,7 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
             }, completion: { finished in
                 self.dimView.hidden = true
         })
-
+        
         page = 0
         collectionViewData.removeAll(keepCapacity: false)
         resultCollectionView.reloadData()
@@ -619,9 +541,9 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
                 NSLog(requestSuggestionSearchUrl)
                 requestSearchDetails(requestSuggestionSearchUrl, params: initialParameters!.parameters)
             }/* else {
-                let requestSoloSearchUrl = "\(APIAtlas.productList)?\(sortParameterSelection)"
-                NSLog(requestSoloSearchUrl)
-                requestSearchDetails(requestSoloSearchUrl, params: nil)
+            let requestSoloSearchUrl = "\(APIAtlas.productList)?\(sortParameterSelection)"
+            NSLog(requestSoloSearchUrl)
+            requestSearchDetails(requestSoloSearchUrl, params: nil)
             } */
             resultCollectionView.setContentOffset(CGPointZero, animated: true)
         } else {
@@ -660,21 +582,15 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
         page = 0
         collectionViewData.removeAll(keepCapacity: false)
         resultCollectionView.reloadData()
-        filtersString = []
-        for (key, value) in filters {
-            if value as! String != "All" {
-                filtersString.append("attributes[]=\(key)|\(value)")
-            }
-        }
-        
         requestSearchDetails(requestSuggestionSearchUrl, params: NSDictionary(dictionary: [
             "priceFrom": minPrice,
-            "priceTo": maxPrice]))
+            "priceTo": maxPrice,
+            "filters": [filters]]))
         selectedMaxPrice = maxPrice
         selectedMinPrice = minPrice
     }
     
-    // MARK : - Functions 
+    // MARK : - Functions
     //Loader function
     func showLoader() {
         if self.hud != nil {
@@ -760,10 +676,6 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
                 self.fullDimView!.alpha = 1
                 }, completion: { finished in
             })
-            
-            if !dimView.hidden {
-                tapSortViewAction()
-            }
         } else {
             filterView.alpha = 0.5
         }
@@ -771,8 +683,5 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
     
     func tapViewTypeViewAction() {
         self.changeViewType()
-        if !dimView.hidden {
-            tapSortViewAction()
-        }
     }
 }
