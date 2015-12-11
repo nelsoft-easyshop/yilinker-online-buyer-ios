@@ -82,6 +82,7 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
     var viewTypeTapGesture: UITapGestureRecognizer!
     
     var pageTitle: String = ""
+    var filtersString: [String] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -239,6 +240,15 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
         }
     }
     
+    func passSellerID(id: String) {
+        if Reachability.isConnectedToNetwork() {
+            requestSuggestionSearchUrl = "\(APIAtlas.productList)?sellerIds=\(id)"
+            requestSearchDetails("\(APIAtlas.productList)?sellerIds=\(id)", params: nil)
+        } else {
+            UIAlertController.displayNoInternetConnectionError(self)
+        }
+    }
+    
     func passModel(searchSuggestion: SearchSuggestionModel) {
         self.searchSuggestion = searchSuggestion
         
@@ -323,7 +333,24 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
                     tempURL = tempURL.stringByReplacingCharactersInRange(rOriginal!, withString: "?")
                 }
                 
-                manager.GET(tempURL, parameters: params, success: {
+                if filtersString.count > 0 {
+                    tempURL += "&"
+                    for var i = 0; i < filtersString.count; i++ {
+                        tempURL += filtersString[i]
+                        if (i + 1) != filtersString.count {
+                            tempURL += "&"
+                        }
+                    }
+                }
+                
+                if params != nil {
+                    for (key, value) in params {
+                        tempURL += "&\(key)=\(value)"
+                    }
+                }
+                
+                
+                manager.GET(tempURL.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!, parameters: NSDictionary(), success: {
                     (task: NSURLSessionDataTask!, responseObject: AnyObject!) in print(responseObject as! NSDictionary)
                     
                     println(responseObject)
@@ -382,6 +409,7 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
     // MARK: Delegates
     // MARK: Functions Updating Values
     func populateTableView(responseObject: AnyObject) {
+        noResultLabel.hidden = true
         if let value: NSDictionary = responseObject["data"] as? NSDictionary{
             if let value: AnyObject = value["totalResultCount"] {
                 if value as! NSObject != NSNull() {
@@ -445,7 +473,7 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
     }
     
     func populateSellerTableView(responseObject: AnyObject) {
-            
+        noResultLabel.hidden = true
         for subValue in responseObject["data"]  as! NSArray {
             println(subValue)
             let model: SearchSellerModel = SearchSellerModel.parseDataWithDictionary(subValue as! NSDictionary)
@@ -623,10 +651,16 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
         page = 0
         collectionViewData.removeAll(keepCapacity: false)
         resultCollectionView.reloadData()
+        filtersString = []
+        for (key, value) in filters {
+            if value as! String != "All" {
+                filtersString.append("attributes[]=\(key)|\(value)")
+            }
+        }
+        
         requestSearchDetails(requestSuggestionSearchUrl, params: NSDictionary(dictionary: [
             "priceFrom": minPrice,
-            "priceTo": maxPrice,
-            "filters": [filters]]))
+            "priceTo": maxPrice]))
         selectedMaxPrice = maxPrice
         selectedMinPrice = minPrice
     }
@@ -717,6 +751,10 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
                 self.fullDimView!.alpha = 1
                 }, completion: { finished in
             })
+            
+            if !dimView.hidden {
+                tapSortViewAction()
+            }
         } else {
             filterView.alpha = 0.5
         }
@@ -724,5 +762,8 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
     
     func tapViewTypeViewAction() {
         self.changeViewType()
+        if !dimView.hidden {
+            tapSortViewAction()
+        }
     }
 }
