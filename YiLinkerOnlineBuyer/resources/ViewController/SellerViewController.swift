@@ -84,6 +84,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         //Set title of navigation bar
         self.titleView()
         //Get seller/store info
+        println(self.sellerId)
         self.fireSeller()
         //Get seller ratings and feebback
         self.fireSellerFeedback()
@@ -215,6 +216,8 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
             url = APIAtlas.getSellerInfo
             parameters = ["userId" : sellerId] as NSDictionary
         }
+        
+        println(parameters)
         
         manager.POST(url, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
