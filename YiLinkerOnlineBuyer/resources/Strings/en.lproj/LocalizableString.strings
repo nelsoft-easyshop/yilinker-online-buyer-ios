@@ -320,6 +320,12 @@ DISPUTE_CHOOSE_TRANSACTION_NUMBER_TRANSACTION_LOCALIZE_KEY = "Please choose a tr
 CUSTOMIZE_SHOPPING_ALERT_TITLE_LOCALIZE_KEY = "Feature Not Available";
 CUSTOMIZE_SHOPPING_ALERT_MESSAGE_LOCALIZE_KEY = "Customize shopping will be available on the next release.";
 
+//Map
+MAP_TITLE_LOCALIZE_KEY = "ENABLE LOCATION";
+MAP_MESSAGE_LOCALIZE_KEY = "You need to enable Location Services. Go to Settings > Privacy > Location Services.";
+MAP_CANCEL_LOCALIZE_KEY = "Cancel";
+MAP_SETTINGS_LOCALIZE_KEY = "Settings";
+
 //Vendor Page
 VENDOR_PAGE_TITLE_LOCALIZE_KEY = "Vendor Page";
 FOLLOW_LOCALIZE_KEY = "FOLLOW";

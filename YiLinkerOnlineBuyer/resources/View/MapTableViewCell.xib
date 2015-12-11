@@ -23,6 +23,19 @@
                             <constraint firstAttribute="height" constant="35" id="DWr-oe-PfP"/>
                         </constraints>
                     </imageView>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HuI-n7-Y3d">
+                        <rect key="frame" x="8" y="23" width="40" height="40"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="40" id="FZk-S7-4lg"/>
+                            <constraint firstAttribute="height" constant="40" id="Fa9-z5-ELX"/>
+                        </constraints>
+                        <state key="normal" image="location">
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <connections>
+                            <action selector="gotoCurrentLocation:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="LXS-MX-kAN"/>
+                        </connections>
+                    </button>
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="centerY" secondItem="mKf-qJ-Tbc" secondAttribute="centerY" constant="8.5" id="41t-Gv-auS"/>
@@ -31,6 +44,8 @@
                     <constraint firstAttribute="trailing" secondItem="TaT-mw-7Ps" secondAttribute="trailing" id="tCU-LG-Dyd"/>
                     <constraint firstAttribute="centerX" secondItem="mKf-qJ-Tbc" secondAttribute="centerX" id="wAR-hl-3hy"/>
                     <constraint firstItem="TaT-mw-7Ps" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="wLT-Nr-P97"/>
+                    <constraint firstItem="HuI-n7-Y3d" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="23" id="yaQ-Xr-h7Q"/>
+                    <constraint firstItem="HuI-n7-Y3d" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="zAb-rT-m4C"/>
                 </constraints>
             </tableViewCellContentView>
             <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
@@ -43,5 +58,6 @@
     </objects>
     <resources>
         <image name="MapPin" width="25" height="31"/>
+        <image name="location" width="97" height="97"/>
     </resources>
 </document>
