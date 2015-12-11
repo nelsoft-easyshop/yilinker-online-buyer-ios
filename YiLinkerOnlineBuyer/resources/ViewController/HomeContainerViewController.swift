@@ -104,6 +104,18 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         self.navigationController?.setNavigationBarHidden(false, animated: true)
     }
     
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(true)
+        if self.view.window != nil && self.remainingTime == -1 {
+            Delay.delayWithDuration(1.0, completionHandler: { (success) -> Void in
+                self.timer.invalidate()
+                self.oneHourIntervalTimer.invalidate()
+                let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+                appDelegate.changeRootToHomeView()
+            })
+        }
+    }
+    
     deinit {
         // perform the deinitialization
     }
@@ -148,6 +160,8 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         self.setupBackToTopButton()
         
         self.addPullToRefresh()
+        
+        self.oneHourIntervalTimer = NSTimer.scheduledTimerWithTimeInterval(3600.0, target: self, selector: "updateData", userInfo: nil, repeats: true)
     }
     
     //MARK: - Add Pull To Refresh
@@ -176,8 +190,8 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     //MARK: - collectionViewLayout()
     func collectionViewLayout() {
         let homePageCollectionViewLayout: HomePageCollectionViewLayout2 = HomePageCollectionViewLayout2()
-        homePageCollectionViewLayout.layouts = self.layouts
         homePageCollectionViewLayout.homePageModel = self.homePageModel
+        homePageCollectionViewLayout.layouts = self.layouts
         self.collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         self.collectionView.collectionViewLayout = homePageCollectionViewLayout
         //decoration view
@@ -400,12 +414,10 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                 
                 if layoutFourModel.remainingTime != 0 {
                     self.remainingTime = layoutFourModel.remainingTime
-                    self.timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "updateTime", userInfo: nil, repeats: true)
-                    self.layouts.append("4")
-                } else {
-                    self.homePageModel.data.removeAtIndex(index)
                 }
-                
+
+                self.timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "updateTime", userInfo: nil, repeats: true)
+                self.layouts.append("4")
             } else if model.isKindOfClass(LayoutFiveModel) {
                 self.layouts.append("5")
             } else if model.isKindOfClass(LayoutSixModel) {
@@ -421,9 +433,10 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             }
         }
         
-        self.collectionView.reloadData()
-        self.collectionViewLayout()
-        self.collectionView!.reloadData()
+        dispatch_async(dispatch_get_main_queue(), {
+            self.collectionView.reloadData()
+            self.collectionViewLayout()
+        })
     }
     
     //MARK: - Getting User Info
@@ -564,7 +577,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         case 10:
             return self.homePageModel.data[section].data.count
         default:
-            return 1
+            return 0
         }
     }
     
@@ -603,7 +616,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         } else if self.layouts[indexPath.section] == "10" {
             return self.twoColumnGridCollectionViewCellWithIndexPath(indexPath)
         } else {
-           return self.twoColumnGridCollectionViewCellWithIndexPath(indexPath)
+           return UICollectionViewCell()
         }
     }
     
@@ -826,7 +839,10 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     
     //MARK: - Update Time
     func updateTime() {
-        self.remainingTime--
+        if self.remainingTime > -1 {
+            remainingTime--
+        }
+        
         if remainingTime >= 0 {
             let (hour, min, seconds): (Int, Int, Int) = self.secondsToHoursMinutesSeconds(self.remainingTime)
             
@@ -866,10 +882,9 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             }
 
         } else {
-            if self.updateUsingOneHourInterval {
+            /*if self.updateUsingOneHourInterval {
                 self.updateUsingOneHourInterval = false
                 if self.remainingTime == -1 {
-                    self.oneHourIntervalTimer = NSTimer.scheduledTimerWithTimeInterval(3600.0, target: self, selector: "updateData", userInfo: nil, repeats: true)
                     self.timer.invalidate()
                     self.oneHourIntervalTimer.invalidate()
                 }
@@ -880,11 +895,27 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                 self.updateUsingOneHourInterval = true
                 
                 if self.remainingTime == -1 {
-                    self.fireGetHomePageData(true)
+                    //self.fireGetHomePageData(true)
+                    
+                    if self.view.window != nil {
+                        Delay.delayWithDuration(1.0, completionHandler: { (success) -> Void in
+                            let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+                            appDelegate.changeRootToHomeView()
+                        })
+                    }
                 }
+            }*/
+            
+            if self.view.window != nil && self.remainingTime == -1 {
+                Delay.delayWithDuration(1.0, completionHandler: { (success) -> Void in
+                    self.timer.invalidate()
+                    self.oneHourIntervalTimer.invalidate()
+                    let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+                    appDelegate.changeRootToHomeView()
+                })
             }
         }
-        
+
     }
     
     //MARK: - Flash Sale Collection View Cell With IndexPath
