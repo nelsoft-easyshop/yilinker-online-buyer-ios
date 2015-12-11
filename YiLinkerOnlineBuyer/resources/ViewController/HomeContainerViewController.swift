@@ -33,7 +33,7 @@ struct FABStrings {
     static let profile: String = StringHelper.localizedStringWithKey("PROFILE_LOCALIZE_KEY")
 }
 
-class HomeContainerViewController: UIViewController, UITabBarControllerDelegate, EmptyViewDelegate, CarouselCollectionViewCellDataSource, CarouselCollectionViewCellDelegate, DailyLoginCollectionViewCellDelegate, HalfPagerCollectionViewCellDelegate, HalfPagerCollectionViewCellDataSource, FlashSaleCollectionViewCellDelegate, LayoutHeaderCollectionViewCellDelegate, SellerCarouselCollectionViewCellDataSource, SellerCarouselCollectionViewCellDelegate, LayoutNineCollectionViewCellDelegate, UIScrollViewDelegate {
+class HomeContainerViewController: UIViewController, UITabBarControllerDelegate, EmptyViewDelegate, CarouselCollectionViewCellDataSource, CarouselCollectionViewCellDelegate, DailyLoginCollectionViewCellDelegate, HalfPagerCollectionViewCellDelegate, HalfPagerCollectionViewCellDataSource, FlashSaleCollectionViewCellDelegate, LayoutHeaderCollectionViewCellDelegate, SellerCarouselCollectionViewCellDataSource, SellerCarouselCollectionViewCellDelegate, LayoutNineCollectionViewCellDelegate, DailyLoginCollectionViewCellDataSource {
     
     var searchViewContoller: SearchViewController?
     var circularMenuViewController: CircularMenuViewController?
@@ -752,11 +752,6 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         }
     }
     
-    //MARK: - Daily Login Delegate
-    func dailyLoginCollectionViewCellDidTapCell(dailyLoginCollectionViewCell: DailyLoginCollectionViewCell) {
-        self.didClickItemWithTarget(dailyLoginCollectionViewCell.target, targetType: dailyLoginCollectionViewCell.targetType)
-    }
-    
     //MARK: - Half Pager Data Source
     func halfPagerCollectionViewCell(halfPagerCollectionViewCell: HalfPagerCollectionViewCell, numberOfItemsInSection section: Int) -> Int {
         let parentIndexPath: NSIndexPath = self.collectionView.indexPathForCell(halfPagerCollectionViewCell)!
@@ -1131,11 +1126,12 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         let layoutTwoModel: LayoutTwoModel = self.homePageModel.data[indexPath.section] as! LayoutTwoModel
         
         let dailyLoginCell: DailyLoginCollectionViewCell = self.collectionView.dequeueReusableCellWithReuseIdentifier(self.dailyLoginNibName, forIndexPath: indexPath) as! DailyLoginCollectionViewCell
-        
-        dailyLoginCell.productImageView.sd_setImageWithURL(NSURL(string: layoutTwoModel.data[0].image), placeholderImage: UIImage(named: self.placeHolder))
+        dailyLoginCell.delegate = self
+        dailyLoginCell.dataSource = self
+        /*dailyLoginCell.productImageView.sd_setImageWithURL(NSURL(string: layoutTwoModel.data[0].image), placeholderImage: UIImage(named: self.placeHolder))
         dailyLoginCell.target = layoutTwoModel.data[0].target.targetUrl
         dailyLoginCell.targetType = layoutTwoModel.data[0].target.targetType
-        dailyLoginCell.delegate = self
+        dailyLoginCell.delegate = self*/
         
         return dailyLoginCell
     }
@@ -1347,5 +1343,51 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     //MARK: - Update Data
     func updateData() {
         self.fireGetHomePageData(true)
+    }
+    
+    //MARK: - 
+    //MARK: - Daily Login Delegate
+    func dailyLoginCollectionViewCellDidTapCell(dailyLoginCollectionViewCell: DailyLoginCollectionViewCell) {
+        
+    }
+    
+    func dailyLoginCollectionViewCell(dailyLoginCollectionViewCell: DailyLoginCollectionViewCell, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        let fullImageCell: FullImageCollectionViewCell = dailyLoginCollectionViewCell.collectionView.cellForItemAtIndexPath(indexPath) as! FullImageCollectionViewCell
+        
+        self.didClickItemWithTarget(fullImageCell.target, targetType: fullImageCell.targetType)
+    }
+    
+    func dailyLoginCollectionViewCellDidEndDecelerating(dailyLoginCollectionViewCell: DailyLoginCollectionViewCell) {
+        dailyLoginCollectionViewCell.layoutIfNeeded()
+        let pageWidth: CGFloat = dailyLoginCollectionViewCell.collectionView.frame.size.width
+        let currentPage: CGFloat = dailyLoginCollectionViewCell.collectionView.contentOffset.x / pageWidth
+        
+        if 0.0 != fmodf(Float(currentPage), 1.0) {
+            dailyLoginCollectionViewCell.pageControl.currentPage = Int(currentPage) + 1
+        }
+        else {
+            dailyLoginCollectionViewCell.pageControl.currentPage = Int(currentPage)
+        }
+    }
+    
+    //MARK: -
+    //MARK: - Daily Login Data Source
+    func dailyLoginCollectionViewCell(dailyLoginCollectionViewCell: DailyLoginCollectionViewCell, numberOfItemsInSection section: Int) -> Int {
+        let parentIndexPath: NSIndexPath = self.collectionView.indexPathForCell(dailyLoginCollectionViewCell)!
+        let layoutTwoModel: LayoutTwoModel = self.homePageModel.data[parentIndexPath.section] as! LayoutTwoModel
+        
+        return layoutTwoModel.data.count
+    }
+    
+    func dailyLoginCollectionViewCell(dailyLoginCollectionViewCell: DailyLoginCollectionViewCell, cellForRowAtIndexPath indexPath: NSIndexPath) -> FullImageCollectionViewCell {
+        let parentIndexPath: NSIndexPath = self.collectionView.indexPathForCell(dailyLoginCollectionViewCell)!
+        let layoutTwoModel: LayoutTwoModel = self.homePageModel.data[parentIndexPath.section] as! LayoutTwoModel
+        
+        return self.fullImageCollectionViewCellWithIndexPath(indexPath, fullImageCollectionView: dailyLoginCollectionViewCell.collectionView)
+    }
+    
+    func itemWidthInDailyLoginCollectionViewCell(dailyLoginCollectionViewCell: DailyLoginCollectionViewCell) -> CGFloat {
+        dailyLoginCollectionViewCell.layoutIfNeeded()
+        return dailyLoginCollectionViewCell.collectionView.frame.size.width
     }
 }

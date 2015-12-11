@@ -10,27 +10,69 @@ import UIKit
 
 protocol DailyLoginCollectionViewCellDelegate {
     func dailyLoginCollectionViewCellDidTapCell(dailyLoginCollectionViewCell: DailyLoginCollectionViewCell)
+    
+    func dailyLoginCollectionViewCell(dailyLoginCollectionViewCell: DailyLoginCollectionViewCell, didSelectItemAtIndexPath indexPath: NSIndexPath)
+    func dailyLoginCollectionViewCellDidEndDecelerating(dailyLoginCollectionViewCell: DailyLoginCollectionViewCell)
 }
 
-class DailyLoginCollectionViewCell: UICollectionViewCell {
-
-    @IBOutlet weak var productImageView: UIImageView!
+protocol DailyLoginCollectionViewCellDataSource {
+    func dailyLoginCollectionViewCell(dailyLoginCollectionViewCell: DailyLoginCollectionViewCell, numberOfItemsInSection section: Int) -> Int
     
+    func dailyLoginCollectionViewCell(dailyLoginCollectionViewCell: DailyLoginCollectionViewCell, cellForRowAtIndexPath indexPath: NSIndexPath) -> FullImageCollectionViewCell
+    
+    func itemWidthInDailyLoginCollectionViewCell(dailyLoginCollectionViewCell: DailyLoginCollectionViewCell) -> CGFloat
+}
+
+class DailyLoginCollectionViewCell: UICollectionViewCell, UIScrollViewDelegate {
+    
+    @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var pageControl: UIPageControl!
+    
+    var dataSource: DailyLoginCollectionViewCellDataSource?
     var delegate: DailyLoginCollectionViewCellDelegate?
     
-    var target: String = ""
-    var targetType: String = ""
+    let fullImageCellNib = "FullImageCollectionViewCell"
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.productImageView.layer.cornerRadius = 5
-        self.productImageView.userInteractionEnabled = true
-        let gestureRecognizer: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "tap")
-        self.productImageView.addGestureRecognizer(gestureRecognizer)
+        self.registerCellWithNibName(self.fullImageCellNib)
+        self.pageControl.currentPageIndicatorTintColor = UIColor.darkGrayColor()
+        self.collectionView.layer.cornerRadius = 5
+        self.collectionView.clipsToBounds = true
     }
     
-    //MARK: - Tap
-    func tap() {
-        self.delegate?.dailyLoginCollectionViewCellDidTapCell(self)
+    //MARK: - Register Cell
+    func registerCellWithNibName(nibName: String) {
+        let nib: UINib = UINib(nibName: nibName, bundle: nil)
+        self.collectionView.registerNib(nib, forCellWithReuseIdentifier: nibName)
+    }
+    
+    //MARK: - Collection View Data Source
+    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        self.pageControl.numberOfPages = self.dataSource!.dailyLoginCollectionViewCell(self, numberOfItemsInSection: 0)
+        return self.dataSource!.dailyLoginCollectionViewCell(self, numberOfItemsInSection: 0)
+    }
+    
+    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        return self.dataSource!.dailyLoginCollectionViewCell(self, cellForRowAtIndexPath: indexPath)
+    }
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+        var cellSize:CGSize = CGSizeMake(self.dataSource!.itemWidthInDailyLoginCollectionViewCell(self), SectionHeight.sectionTwo)
+        return cellSize
+    }
+    
+    //MARK: - Collection View Delegate
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        self.delegate?.dailyLoginCollectionViewCell(self, didSelectItemAtIndexPath: indexPath)
+    }
+    
+    //MARK: - ScrollView Delegate
+    func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+        self.delegate?.dailyLoginCollectionViewCellDidEndDecelerating(self)
     }
 }
