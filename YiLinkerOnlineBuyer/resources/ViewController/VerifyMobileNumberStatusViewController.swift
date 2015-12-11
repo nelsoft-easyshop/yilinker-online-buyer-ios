@@ -54,6 +54,10 @@ class VerifyMobileNumberStatusViewController: UIViewController {
             titleLabel.text = StringHelper.localizedStringWithKey("CONGRATULATIONS_LOCALIZED_KEY")
             messageLabel.text = StringHelper.localizedStringWithKey("SUCCESS_VERIFIED_LOCALIZED_KEY")
         } else {
+            
+            SessionManager.setMobileNumber("")
+            setNewMobileNumber("")
+            
             iconView.backgroundColor = Constants.Colors.errorVerification
             iconImageView.image = UIImage(named: "oops")
             continueButton.hidden = true
@@ -76,4 +80,8 @@ class VerifyMobileNumberStatusViewController: UIViewController {
         }
     }
 
+    func setNewMobileNumber(newMobileNumber: String) {
+        NSUserDefaults.standardUserDefaults().setObject(newMobileNumber, forKey: "newMobileNumber")
+        NSUserDefaults.standardUserDefaults().synchronize()
+    }
 }
