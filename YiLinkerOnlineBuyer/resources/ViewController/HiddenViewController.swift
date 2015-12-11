@@ -133,6 +133,7 @@ class HiddenViewController: UIViewController {
             self.messagingViewController = storyBoard.instantiateViewControllerWithIdentifier("ConversationVC") as? ConversationVC
             self.customizeShoppingViewController = CustomizeShoppingViewController(nibName: "CustomizeShoppingViewController", bundle: nil)
             self.resultViewController = ResultViewController(nibName: "ResultViewController", bundle: nil)
+            self.resultViewController!.targetType = TargetType.TodaysPromo
             self.categoriesViewController = CategoriesViewController(nibName: "CategoriesViewController", bundle: nil)
             self.profileViewController = ProfileViewController(nibName: "ProfileViewController", bundle: nil)
             //ConversationVC

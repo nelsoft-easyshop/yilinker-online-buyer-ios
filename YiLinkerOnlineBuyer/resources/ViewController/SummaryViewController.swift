@@ -194,6 +194,7 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
                     discountTotalCell.discountVoucherLabel.textAlignment = NSTextAlignment.Right
                     discountTotalCell.discountVoucherLabel.textColor = UIColor.redColor()
                 }
+               
                 discountTotalCell.separatorInset = UIEdgeInsetsMake(0, 1000, 0, 1000)
                 
                 return discountTotalCell
