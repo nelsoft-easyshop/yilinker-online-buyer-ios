@@ -90,11 +90,6 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
         self.backButton()
         self.initializeLocalizedString()
         self.registerNibs()
-        
-        if targetType == TargetType.TodaysPromo {
-            requestSuggestionSearchUrl = APIAtlas.todaysPromo
-            requestSearchDetails(requestSuggestionSearchUrl, params: nil)
-        }
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -117,6 +112,11 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
         } else {
             actionViewHeight.constant = 0
             page = 1
+        }
+        
+        if targetType == TargetType.TodaysPromo {
+            requestSuggestionSearchUrl = APIAtlas.todaysPromo
+            requestSearchDetails(requestSuggestionSearchUrl, params: nil)
         }
     }
     
@@ -316,7 +316,14 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
                 
                 showLoader()
                 
-                manager.GET(url, parameters: params, success: {
+                var tempURL: String = url
+                
+                if !tempURL.contains("?") &&  tempURL.contains("&") {
+                    let rOriginal = tempURL.rangeOfString("&")
+                    tempURL = tempURL.stringByReplacingCharactersInRange(rOriginal!, withString: "?")
+                }
+                
+                manager.GET(tempURL, parameters: params, success: {
                     (task: NSURLSessionDataTask!, responseObject: AnyObject!) in print(responseObject as! NSDictionary)
                     
                     println(responseObject)
@@ -420,6 +427,12 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
                         }
                     }
                 }
+            }
+            
+            if filterAtributes.count != 0 && maxPrice > 0{
+                filterView.alpha = 1
+            } else {
+                filterView.alpha = 0.5
             }
             
             self.resultCollectionView.reloadSections(NSIndexSet(index: 0))
@@ -685,25 +698,28 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
     }
     
     func tapFilterViewAction() {
-        println("Filter Tapped!")
-        var attributeModal = FilterViewController(nibName: "FilterViewController", bundle: nil)
-        attributeModal.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
-        attributeModal.providesPresentationContextTransitionStyle = true
-        attributeModal.definesPresentationContext = true
-        attributeModal.delegate = self
-        attributeModal.passFilter(filterAtributes, maxPrice: maxPrice, minPrice: minPrice)
-        attributeModal.maxPrice = maxPrice
-        attributeModal.minPrice = minPrice
-        attributeModal.selectedMaxPrice = selectedMaxPrice
-        attributeModal.selectedMinPrice = selectedMinPrice
-        self.tabBarController?.presentViewController(attributeModal, animated: true, completion: nil)
-        
-        self.fullDimView!.hidden = false
-        UIView.animateWithDuration(0.3, animations: {
-            self.fullDimView!.alpha = 1
-            }, completion: { finished in
-        })
-        
+        if filterAtributes.count != 0 {
+            filterView.alpha = 1
+            var attributeModal = FilterViewController(nibName: "FilterViewController", bundle: nil)
+            attributeModal.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
+            attributeModal.providesPresentationContextTransitionStyle = true
+            attributeModal.definesPresentationContext = true
+            attributeModal.delegate = self
+            attributeModal.passFilter(filterAtributes, maxPrice: maxPrice, minPrice: minPrice)
+            attributeModal.maxPrice = maxPrice
+            attributeModal.minPrice = minPrice
+            attributeModal.selectedMaxPrice = selectedMaxPrice
+            attributeModal.selectedMinPrice = selectedMinPrice
+            self.tabBarController?.presentViewController(attributeModal, animated: true, completion: nil)
+            
+            self.fullDimView!.hidden = false
+            UIView.animateWithDuration(0.3, animations: {
+                self.fullDimView!.alpha = 1
+                }, completion: { finished in
+            })
+        } else {
+            filterView.alpha = 0.5
+        }
     }
     
     func tapViewTypeViewAction() {
