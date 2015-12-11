@@ -1029,6 +1029,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             
             verticalImageCollectionViewCell.target = layoutSevenModel.data[indexPath.row].target.targetUrl
             verticalImageCollectionViewCell.targetType = layoutSevenModel.data[indexPath.row].target.targetType
+           
             verticalImageCollectionViewCell.originalPriceLabel.text = layoutSevenModel.data[indexPath.row].originalPrice.formatToPeso()
             verticalImageCollectionViewCell.originalPriceLabel.drawDiscountLine(false)
             
@@ -1083,7 +1084,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             halfVerticalImageCollectionViewCell.originalPriceLabel.text = layoutSevenModel.data[indexPath.row].originalPrice.formatToPeso()
             halfVerticalImageCollectionViewCell.originalPriceLabel.drawDiscountLine(true)
             
-            if layoutSevenModel.data[indexPath.row].discountPercentage.toInt() == 0 || layoutSevenModel.data[indexPath.row].discountPercentage.toInt() == nil {
+            if layoutSevenModel.data[indexPath.row].discountPercentage.toDouble() == 0 || layoutSevenModel.data[indexPath.row].discountPercentage.toDouble() == nil {
                 halfVerticalImageCollectionViewCell.discountPercentageLabel.hidden = true
                 halfVerticalImageCollectionViewCell.originalPriceLabel.hidden = true
             } else {
