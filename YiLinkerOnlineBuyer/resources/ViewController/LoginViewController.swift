@@ -25,7 +25,7 @@ struct LoginStrings {
 
 private struct LoginConstants {
     static let homeServerClientID = "231249450400-dso2pqhieqta2h78m9shhu8qs7gi3jji.apps.googleusercontent.com"
-    static let forgotPasswordUrlString = "http://online.api.easydeal.ph/forgot-password-request"
+    static let forgotPasswordUrlString = APIEnvironment.baseUrl().stringByReplacingOccurrencesOfString("/api", withString: "/") + "forgot-password-request"
     
     static let emailKey = "email"
     static let passwordKey = "password"
