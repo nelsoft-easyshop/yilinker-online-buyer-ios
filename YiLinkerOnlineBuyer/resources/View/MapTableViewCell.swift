@@ -53,7 +53,10 @@ class MapTableViewCell: UITableViewCell, MKMapViewDelegate, CLLocationManagerDel
     
     func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
         var locValue:CLLocationCoordinate2D = manager.location.coordinate
-        setLocation(latitude: locValue.latitude, longitude: locValue.longitude)
+        if self.lat != 0.0 {
+            setLocation(latitude: locValue.latitude, longitude: locValue.longitude)
+        }
+        
     }
     
     // MARK: - Methods
