@@ -36,10 +36,11 @@ class WebViewURL {
 }
 
 class WebViewController: UIViewController, UIWebViewDelegate, EmptyViewDelegate {
-
+    
     @IBOutlet weak var webView: UIWebView!
     var urlString: String = ""
     
+    @IBOutlet weak var errorView: UIView!
     var emptyView: EmptyView?
     
     var webviewSource = WebviewSource.Default
@@ -51,6 +52,7 @@ class WebViewController: UIViewController, UIWebViewDelegate, EmptyViewDelegate 
         super.viewDidLoad()
         self.webView.delegate = self
         self.webView.scrollView.bounces = false
+        errorView.hidden = true
         
         if self.urlString.isEmpty {
             loadWebview()
@@ -70,7 +72,7 @@ class WebViewController: UIViewController, UIWebViewDelegate, EmptyViewDelegate 
             webviewSource = WebviewSource.ProductList
             loadWebview()
         } else {
-             self.title = WebviewStrings.yilinker
+            self.title = WebviewStrings.yilinker
             self.loadUrlWithUrlString(self.urlString)
         }
         
@@ -117,7 +119,7 @@ class WebViewController: UIViewController, UIWebViewDelegate, EmptyViewDelegate 
         
         self.loadUrlWithUrlString(tempUrl)
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -166,6 +168,8 @@ class WebViewController: UIViewController, UIWebViewDelegate, EmptyViewDelegate 
                     productViewController.tabController = self.tabBarController as! CustomTabBarController
                     productViewController.productId = productId
                     self.navigationController?.pushViewController(productViewController, animated: true)
+                } else {
+                    errorView.hidden = false
                 }
                 return false
             }
@@ -174,6 +178,7 @@ class WebViewController: UIViewController, UIWebViewDelegate, EmptyViewDelegate 
             if urlString == WebViewURL.dailyLogin + "?access_token=\(SessionManager.accessToken())" {
                 return true
             } else {
+                errorView.hidden = false
                 return false
             }
         case .Category:
@@ -181,6 +186,7 @@ class WebViewController: UIViewController, UIWebViewDelegate, EmptyViewDelegate 
                 return true
             } else {
                 var resultController = ResultViewController(nibName: "ResultViewController", bundle: nil)
+                resultController.pageTitle = self.getCategoryTitle(urlString)
                 resultController.passModel(SearchSuggestionModel(suggestion: "", imageURL: "", searchUrl: urlString))
                 self.navigationController?.pushViewController(resultController, animated:true);
                 return false
@@ -194,6 +200,8 @@ class WebViewController: UIViewController, UIWebViewDelegate, EmptyViewDelegate 
                     let sellerViewController: SellerViewController = SellerViewController(nibName: "SellerViewController", bundle: nil)
                     sellerViewController.sellerId = (sellerId as NSString).integerValue
                     self.navigationController!.pushViewController(sellerViewController, animated: true)
+                } else {
+                    errorView.hidden = false
                 }
                 
                 return false
@@ -208,12 +216,15 @@ class WebViewController: UIViewController, UIWebViewDelegate, EmptyViewDelegate 
                     productViewController.tabController = self.tabBarController as! CustomTabBarController
                     productViewController.productId = productId
                     self.navigationController?.pushViewController(productViewController, animated: true)
+                } else {
+                    errorView.hidden = false
                 }
                 return false
             }
         case .Default:
             return true
         default:
+            errorView.hidden = false
             return false
         }
     }
@@ -235,7 +246,7 @@ class WebViewController: UIViewController, UIWebViewDelegate, EmptyViewDelegate 
             self.hud?.hide(true)
         }
     }
-
+    
     //MARK: - Back Button
     func backButton() {
         var backButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
@@ -256,25 +267,26 @@ class WebViewController: UIViewController, UIWebViewDelegate, EmptyViewDelegate 
     
     //MARK: - Back
     func back() {
-//        if self.webView.canGoBack {
-//            self.webView.goBack()
-//        } else {
-            self.navigationController!.popViewControllerAnimated(true)
-//        }
+        //        if self.webView.canGoBack {
+        //            self.webView.goBack()
+        //        } else {
+        self.navigationController!.popViewControllerAnimated(true)
+        //        }
     }
     
     //MARK: - Add Empty View
     func addEmptyView() {
-        if self.emptyView == nil {
-            self.emptyView = UIView.loadFromNibNamed("EmptyView", bundle: nil) as? EmptyView
-            self.webView.layoutIfNeeded()
-            self.emptyView!.frame = self.webView.frame
-            self.emptyView!.backgroundColor = UIColor.whiteColor()
-            self.emptyView!.delegate = self
-            self.webView.addSubview(emptyView!)
-        } else {
-            self.emptyView!.hidden = false
-        }
+//        if self.emptyView == nil {
+//            self.emptyView = UIView.loadFromNibNamed("EmptyView", bundle: nil) as? EmptyView
+//            self.webView.layoutIfNeeded()
+//            self.emptyView!.frame = self.webView.frame
+//            self.emptyView!.backgroundColor = UIColor.whiteColor()
+//            self.emptyView!.delegate = self
+//            self.webView.addSubview(emptyView!)
+//        } else {
+//            self.emptyView!.hidden = false
+//        }
+        errorView.hidden = false
     }
     
     //MARK: - Empty View Delegate
@@ -282,7 +294,7 @@ class WebViewController: UIViewController, UIWebViewDelegate, EmptyViewDelegate 
         self.emptyView!.hidden = true
         self.webView.reload()
     }
-
+    
     //MARK: - Flash Sales
     func productLinkTap(url: String) -> String {
         
@@ -291,16 +303,16 @@ class WebViewController: UIViewController, UIWebViewDelegate, EmptyViewDelegate 
         let start = url.indexOfCharacter("=") + 1
         productUrl = url.substringFromIndex(advance(minElement(indices(url)), start))
         
-//        let html = webView.stringByEvaluatingJavaScriptFromString("document.documentElement.outerHTML")
-//        let doc = TFHpple(HTMLData: html?.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false))
-//        var elements = doc.searchWithXPathQuery("//a[@class='btn promo-instance-product-status btn-inactive']")
-//        
-//        for element in elements as! [TFHppleElement] {
-//            if url.contains(element.objectForKey("href")) {
-//                productUrl = element.objectForKey("data-product-id")
-//                break
-//            }
-//        }
+        //        let html = webView.stringByEvaluatingJavaScriptFromString("document.documentElement.outerHTML")
+        //        let doc = TFHpple(HTMLData: html?.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false))
+        //        var elements = doc.searchWithXPathQuery("//a[@class='btn promo-instance-product-status btn-inactive']")
+        //
+        //        for element in elements as! [TFHppleElement] {
+        //            if url.contains(element.objectForKey("href")) {
+        //                productUrl = element.objectForKey("data-product-id")
+        //                break
+        //            }
+        //        }
         return productUrl
     }
     
@@ -314,17 +326,47 @@ class WebViewController: UIViewController, UIWebViewDelegate, EmptyViewDelegate 
             storeUrl = url.substringFromIndex(advance(minElement(indices(url)), start))
         }
         
-//        let html = webView.stringByEvaluatingJavaScriptFromString("document.documentElement.outerHTML")
-//        let doc = TFHpple(HTMLData: html?.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false))
-//        var elements = doc.searchWithXPathQuery("//a[@class='seller-name']")
-//        
-//        for element in elements as! [TFHppleElement] {
-//            if url.contains(element.objectForKey("href")) {
-//                storeUrl = element.objectForKey("data-sellerid")
-//                break
-//            }
-//        }
+        //        let html = webView.stringByEvaluatingJavaScriptFromString("document.documentElement.outerHTML")
+        //        let doc = TFHpple(HTMLData: html?.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false))
+        //        var elements = doc.searchWithXPathQuery("//a[@class='seller-name']")
+        //
+        //        for element in elements as! [TFHppleElement] {
+        //            if url.contains(element.objectForKey("href")) {
+        //                storeUrl = element.objectForKey("data-sellerid")
+        //                break
+        //            }
+        //        }
         return storeUrl
+    }
+    
+    //MARK: - Category
+    func getCategoryTitle(url: String) -> String {
+    
+        var titleString: String = ""
+        let html = webView.stringByEvaluatingJavaScriptFromString("document.documentElement.outerHTML")
+        let doc = TFHpple(HTMLData: html?.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false))
+        var elements = doc.searchWithXPathQuery("//a")
+        
+        for element in elements as! [TFHppleElement] {
+            print(url)
+            print(APIEnvironment.baseUrl() + element.objectForKey("href"))
+            if url == (APIEnvironment.baseUrl().stringByReplacingOccurrencesOfString("/api", withString: "") + element.objectForKey("href")) {
+                if element.children.count != 0 {
+                    if element.children.count > 3 {
+                        if let tempElement = element.children[3] as? TFHppleElement {
+                            if tempElement.children.count != 0 {
+                                if let spanElement = tempElement.children[0] as? TFHppleElement {
+                                    titleString = spanElement.text()
+                                }
+                            }
+                        }
+                    }
+                }
+                break
+            }
+        }
+        
+        return titleString
     }
     
     func requestRefreshToken() {
@@ -337,9 +379,9 @@ class WebViewController: UIViewController, UIWebViewDelegate, EmptyViewDelegate 
         
         manager.POST(APIAtlas.refreshTokenUrl, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-                SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
             
-                self.loadWebview()
+            self.loadWebview()
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 println(error)

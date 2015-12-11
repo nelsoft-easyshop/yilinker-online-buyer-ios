@@ -3,32 +3,100 @@
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Panton Bold.otf">
+            <string>Panton-Bold</string>
+        </mutableArray>
+    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="WebViewController" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
             <connections>
+                <outlet property="errorView" destination="95g-mR-h2o" id="yd0-DM-aWv"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
                 <outlet property="webView" destination="m8z-Og-EDG" id="ctm-ak-mkZ"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
-            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="m8z-Og-EDG">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </webView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="95g-mR-h2o">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="webview_background" translatesAutoresizingMaskIntoConstraints="NO" id="o8n-tf-Jsa">
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        </imageView>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="webview_yibo" translatesAutoresizingMaskIntoConstraints="NO" id="ZG8-C7-fol">
+                            <rect key="frame" x="30" y="228" width="259" height="272"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="272" id="eZf-JB-zCw"/>
+                            </constraints>
+                        </imageView>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="webview_wave" translatesAutoresizingMaskIntoConstraints="NO" id="vbs-hp-ntk">
+                            <rect key="frame" x="0.0" y="438" width="320" height="42"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="42" id="Wh2-cD-L2r"/>
+                            </constraints>
+                        </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PLEASE TRY TO VISIT ME AGAIN LATER" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aFQ-FR-M61">
+                            <rect key="frame" x="32" y="80" width="256" height="123"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="123" id="EA7-1G-srY"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="34"/>
+                            <color key="textColor" red="0.37647058820000001" green="0.12549019610000001" blue="0.46666666670000001" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="o8n-tf-Jsa" firstAttribute="top" secondItem="95g-mR-h2o" secondAttribute="top" id="06X-KM-I2a"/>
+                        <constraint firstItem="o8n-tf-Jsa" firstAttribute="leading" secondItem="95g-mR-h2o" secondAttribute="leading" id="307-oJ-L8N"/>
+                        <constraint firstAttribute="trailing" secondItem="o8n-tf-Jsa" secondAttribute="trailing" id="3jN-Jo-Qec"/>
+                        <constraint firstItem="aFQ-FR-M61" firstAttribute="leading" secondItem="95g-mR-h2o" secondAttribute="leading" constant="32" id="44Z-8f-oeM"/>
+                        <constraint firstAttribute="bottom" secondItem="vbs-hp-ntk" secondAttribute="bottom" id="6ho-Zh-3wx"/>
+                        <constraint firstAttribute="bottom" secondItem="o8n-tf-Jsa" secondAttribute="bottom" id="7wR-yL-hRC"/>
+                        <constraint firstAttribute="bottom" secondItem="o8n-tf-Jsa" secondAttribute="bottom" id="AbC-Zs-0n0"/>
+                        <constraint firstAttribute="trailing" secondItem="aFQ-FR-M61" secondAttribute="trailing" constant="32" id="Iuu-32-7hO"/>
+                        <constraint firstItem="o8n-tf-Jsa" firstAttribute="top" secondItem="95g-mR-h2o" secondAttribute="top" id="QFl-D7-qGo"/>
+                        <constraint firstItem="o8n-tf-Jsa" firstAttribute="leading" secondItem="95g-mR-h2o" secondAttribute="leading" id="RZp-8G-cRL"/>
+                        <constraint firstAttribute="trailing" secondItem="ZG8-C7-fol" secondAttribute="trailing" constant="31" id="bdo-EK-nAV"/>
+                        <constraint firstAttribute="trailing" secondItem="o8n-tf-Jsa" secondAttribute="trailing" id="ef9-J8-Bzh"/>
+                        <constraint firstItem="aFQ-FR-M61" firstAttribute="top" secondItem="95g-mR-h2o" secondAttribute="top" constant="80" id="fFr-1q-gOu"/>
+                        <constraint firstAttribute="bottom" secondItem="ZG8-C7-fol" secondAttribute="bottom" constant="-20" id="hYt-GK-MSd"/>
+                        <constraint firstItem="vbs-hp-ntk" firstAttribute="leading" secondItem="95g-mR-h2o" secondAttribute="leading" id="lIL-Df-MsK"/>
+                        <constraint firstAttribute="bottom" secondItem="o8n-tf-Jsa" secondAttribute="bottom" id="mMn-N8-bn4"/>
+                        <constraint firstItem="ZG8-C7-fol" firstAttribute="leading" secondItem="95g-mR-h2o" secondAttribute="leading" constant="30" id="na8-7Y-z0I"/>
+                        <constraint firstAttribute="trailing" secondItem="o8n-tf-Jsa" secondAttribute="trailing" id="pHE-GZ-rxz"/>
+                        <constraint firstItem="o8n-tf-Jsa" firstAttribute="top" secondItem="95g-mR-h2o" secondAttribute="top" id="vGv-x3-1gg"/>
+                        <constraint firstAttribute="trailing" secondItem="vbs-hp-ntk" secondAttribute="trailing" id="wsN-1o-ABJ"/>
+                        <constraint firstItem="o8n-tf-Jsa" firstAttribute="leading" secondItem="95g-mR-h2o" secondAttribute="leading" id="zYM-9U-spz"/>
+                    </constraints>
+                </view>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="m8z-Og-EDG" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="6de-aD-Smy"/>
-                <constraint firstAttribute="trailing" secondItem="m8z-Og-EDG" secondAttribute="trailing" id="YSu-Wt-sbu"/>
-                <constraint firstAttribute="bottom" secondItem="m8z-Og-EDG" secondAttribute="bottom" id="lzz-mp-tQi"/>
-                <constraint firstItem="m8z-Og-EDG" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="v64-w7-nuu"/>
+                <constraint firstAttribute="trailing" secondItem="95g-mR-h2o" secondAttribute="trailing" id="Enq-T9-gbq"/>
+                <constraint firstAttribute="bottom" secondItem="m8z-Og-EDG" secondAttribute="bottom" id="KbF-kI-gWB"/>
+                <constraint firstAttribute="trailing" secondItem="m8z-Og-EDG" secondAttribute="trailing" id="Kt5-od-ob5"/>
+                <constraint firstItem="95g-mR-h2o" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="QMa-5e-8HM"/>
+                <constraint firstItem="95g-mR-h2o" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="UYU-fC-iie"/>
+                <constraint firstItem="m8z-Og-EDG" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="VGO-AV-Z30"/>
+                <constraint firstAttribute="bottom" secondItem="95g-mR-h2o" secondAttribute="bottom" id="e5y-xz-tZ2"/>
+                <constraint firstItem="m8z-Og-EDG" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="gsk-xG-ouf"/>
             </constraints>
-            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
-            <point key="canvasLocation" x="487" y="367"/>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="485" y="365"/>
         </view>
     </objects>
+    <resources>
+        <image name="webview_background" width="360" height="640"/>
+        <image name="webview_wave" width="360" height="46"/>
+        <image name="webview_yibo" width="292" height="218"/>
+    </resources>
 </document>
