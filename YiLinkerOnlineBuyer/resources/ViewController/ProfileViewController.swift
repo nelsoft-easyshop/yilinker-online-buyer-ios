@@ -201,13 +201,13 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
 
     func requestRefreshToken(type: String, url: String, params: NSDictionary!, showLoader: Bool) {
         let urlTemp: String = APIAtlas.refreshTokenUrl
-        let params: NSDictionary = ["client_id": Constants.Credentials.clientID(),
+        let paramsRefresh: NSDictionary = ["client_id": Constants.Credentials.clientID(),
             "client_secret": Constants.Credentials.clientSecret(),
             "grant_type": Constants.Credentials.grantRefreshToken,
             "refresh_token": SessionManager.refreshToken()]
         
         let manager = APIManager.sharedInstance
-        manager.POST(urlTemp, parameters: params, success: {
+        manager.POST(urlTemp, parameters: paramsRefresh, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
             SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
