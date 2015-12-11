@@ -348,6 +348,7 @@ WEBVIEW_CATEGORIES = "类别";//No Chinese String
 WEBVIEW_STORE_VIEW = "存储视图";//No Chinese String
 WEBVIEW_HOT_ITEMS = "热项目";//No Chinese String
 WEBVIEW_NEW_ITEMS = "新项目";//No Chinese String
+WEBVIEW_PLEASE = "请尝试稍后再来看我";//No Chinese String
 
 // MARK: - HELP
 HELP_FOR_CUSTOMER_SERVICE= "为客户服务援助";
