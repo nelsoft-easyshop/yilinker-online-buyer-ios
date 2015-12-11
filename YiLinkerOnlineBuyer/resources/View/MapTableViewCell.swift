@@ -14,6 +14,7 @@ class MapTableViewCell: UITableViewCell, MKMapViewDelegate, CLLocationManagerDel
 
     let locationManager = CLLocationManager()
     @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var pinImageView: UIImageView!
     var lat: Double = 0.0
     var long: Double = 0.0
     
@@ -28,6 +29,7 @@ class MapTableViewCell: UITableViewCell, MKMapViewDelegate, CLLocationManagerDel
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.requestAlwaysAuthorization()
         locationManager.startUpdatingLocation()
+
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
@@ -48,6 +50,9 @@ class MapTableViewCell: UITableViewCell, MKMapViewDelegate, CLLocationManagerDel
     func locationManager(manager: CLLocationManager!, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
         if CLLocationManager .authorizationStatus() == CLAuthorizationStatus.AuthorizedAlways {
             locationManager.startUpdatingLocation()
+            self.pinImageView.hidden = false
+        } else if CLLocationManager .authorizationStatus() == CLAuthorizationStatus.Denied {
+            self.pinImageView.hidden = true
         }
     }
     

@@ -36,6 +36,7 @@
             <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
             <connections>
                 <outlet property="mapView" destination="TaT-mw-7Ps" id="rmg-vJ-JVG"/>
+                <outlet property="pinImageView" destination="mKf-qJ-Tbc" id="8xf-Pa-vuM"/>
             </connections>
             <point key="canvasLocation" x="327" y="364.5"/>
         </tableViewCell>
