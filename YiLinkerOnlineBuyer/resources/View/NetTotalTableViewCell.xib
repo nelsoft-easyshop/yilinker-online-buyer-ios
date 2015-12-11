@@ -21,23 +21,23 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="A1U-Xq-eg3">
-                        <rect key="frame" x="-13" y="8" width="437" height="45"/>
+                        <rect key="frame" x="-50" y="8" width="500" height="45"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Net Total:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hLa-wx-iS1">
-                                <rect key="frame" x="26" y="12" width="63" height="21"/>
+                                <rect key="frame" x="62" y="16" width="63" height="21"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="63" id="ccR-6H-4WH"/>
-                                    <constraint firstAttribute="height" constant="21" id="qyd-IQ-FBJ"/>
+                                    <constraint firstAttribute="height" constant="21" id="3ox-Yy-a4n"/>
+                                    <constraint firstAttribute="width" constant="63" id="GuV-tf-QVW"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="14"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0000" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nh2-pg-5W7">
-                                <rect key="frame" x="260" y="16" width="152" height="21"/>
+                                <rect key="frame" x="297" y="16" width="152" height="21"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="152" id="EtR-qW-pON"/>
-                                    <constraint firstAttribute="height" constant="21" id="RS4-Ap-Icj"/>
+                                    <constraint firstAttribute="width" constant="152" id="DdK-cV-cP8"/>
+                                    <constraint firstAttribute="height" constant="21" id="SEx-Wb-pVu"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="14"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
@@ -46,18 +46,18 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="hLa-wx-iS1" firstAttribute="leading" secondItem="A1U-Xq-eg3" secondAttribute="leading" constant="26" id="1uQ-Vf-Q7S"/>
-                            <constraint firstAttribute="bottom" secondItem="nh2-pg-5W7" secondAttribute="bottom" constant="8" id="PEu-Cg-FV6"/>
-                            <constraint firstAttribute="height" constant="45" id="Xy2-jL-vzf"/>
-                            <constraint firstAttribute="bottom" secondItem="hLa-wx-iS1" secondAttribute="bottom" constant="12" id="cZP-2h-Jng"/>
-                            <constraint firstAttribute="trailing" secondItem="nh2-pg-5W7" secondAttribute="trailing" constant="25" id="chv-5a-cb9"/>
+                            <constraint firstItem="hLa-wx-iS1" firstAttribute="leading" secondItem="A1U-Xq-eg3" secondAttribute="leading" constant="62" id="KVi-3Q-A63"/>
+                            <constraint firstAttribute="bottom" secondItem="hLa-wx-iS1" secondAttribute="bottom" constant="8" id="qmN-CR-02W"/>
+                            <constraint firstAttribute="trailing" secondItem="nh2-pg-5W7" secondAttribute="trailing" constant="51" id="rJC-VS-cK5"/>
+                            <constraint firstAttribute="bottom" secondItem="nh2-pg-5W7" secondAttribute="bottom" constant="8" id="tmd-5w-GBq"/>
                         </constraints>
                     </view>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="bottomMargin" secondItem="A1U-Xq-eg3" secondAttribute="bottom" constant="-8" id="XU0-b7-y9N"/>
-                    <constraint firstItem="A1U-Xq-eg3" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="-21" id="cjv-61-fWJ"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="A1U-Xq-eg3" secondAttribute="trailing" constant="-22" id="y7M-ma-Npf"/>
+                    <constraint firstItem="A1U-Xq-eg3" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="6bv-jG-pYp"/>
+                    <constraint firstItem="A1U-Xq-eg3" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="-58" id="jPy-Dk-wRq"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="A1U-Xq-eg3" secondAttribute="trailing" constant="-48" id="rwu-m2-lcm"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="A1U-Xq-eg3" secondAttribute="bottom" constant="-8" id="wIQ-Sp-Ueo"/>
                 </constraints>
             </tableViewCellContentView>
             <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
