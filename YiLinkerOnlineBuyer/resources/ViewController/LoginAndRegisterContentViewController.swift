@@ -43,7 +43,7 @@ class LoginAndRegisterContentViewController: UIViewController {
                 self.register(self.registerButton)
             }
         }
-        
+        self.contentView.layer.zPosition = 10
         self.signInButton.layer.borderColor = Constants.Colors.appTheme.CGColor
         
         self.signInButton.layer.borderWidth = 1

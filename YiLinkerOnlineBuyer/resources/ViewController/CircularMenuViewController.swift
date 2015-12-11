@@ -135,10 +135,10 @@ class CircularMenuViewController: UIViewController {
                             labelPosition = labelPosition + 15
                         }
                     } else if IphoneType.isIphone4() {
-                        if index != 0 {
-                            width = width - 40
-                            labelPosition = labelPosition + 40
-                        }
+                        //if index != 0 {
+                            width = width - 15
+                            labelPosition = labelPosition + 20
+                        //}
                      
                         fontSize = 8
                     }
@@ -268,7 +268,7 @@ class CircularMenuViewController: UIViewController {
                     //name label and address
                     if  self.buttonRightText[index] != "" {
                         if IphoneType.isIphone4() {
-                            
+                            yPosition = yPosition - 40
                         } else if IphoneType.isIphone5() {
                             yPosition = yPosition - 20
                         } else {
@@ -434,15 +434,24 @@ class CircularMenuViewController: UIViewController {
                 
             }
         }
-        
+        self.redirectToHiddenWithIndex(index)
+        self.dissmissViewControllerAnimated()
+    }
+    
+    func redirectToHiddenWithIndex(index: Int) {
         self.customTabBarController?.selectedIndex = 2
         let navigationController: UINavigationController = self.customTabBarController!.viewControllers![2] as! UINavigationController
         navigationController.popToRootViewControllerAnimated(false)
         let hiddenViewController: HiddenViewController = navigationController.viewControllers[0] as! HiddenViewController
         hiddenViewController.selectViewControllerAtIndex(index)
-        
         self.customTabBarController?.isValidToSwitchToMenuTabBarItems = false
-        self.dissmissViewControllerAnimated()
+    }
+    
+    func redirectToLoginRegister() {
+        let storyBoard: UIStoryboard = UIStoryboard(name: "StartPageStoryBoard", bundle: nil)
+        let loginRegisterViewController: LoginAndRegisterContentViewController = storyBoard.instantiateViewControllerWithIdentifier("LoginAndRegisterContentViewController5") as! LoginAndRegisterContentViewController
+        
+        self.customTabBarController!.presentViewController(loginRegisterViewController, animated: true, completion: nil)
     }
     
     //logout
