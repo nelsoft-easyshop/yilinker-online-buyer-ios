@@ -17,6 +17,7 @@ class MapTableViewCell: UITableViewCell, MKMapViewDelegate, CLLocationManagerDel
     @IBOutlet weak var pinImageView: UIImageView!
     var lat: Double = 0.0
     var long: Double = 0.0
+    var isAlreadySetLocation: Bool = false
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -58,7 +59,10 @@ class MapTableViewCell: UITableViewCell, MKMapViewDelegate, CLLocationManagerDel
     
     func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
         var locValue:CLLocationCoordinate2D = manager.location.coordinate
-        setLocation(latitude: locValue.latitude, longitude: locValue.longitude)
+        if !isAlreadySetLocation {
+            isAlreadySetLocation = true
+            setLocation(latitude: locValue.latitude, longitude: locValue.longitude)
+        }
     }
     
     // MARK: - Methods
