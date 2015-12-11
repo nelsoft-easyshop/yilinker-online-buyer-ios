@@ -16,7 +16,7 @@
                     <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="TaT-mw-7Ps">
                         <rect key="frame" x="0.0" y="15" width="320" height="179"/>
                     </mapView>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MapPin" translatesAutoresizingMaskIntoConstraints="NO" id="mKf-qJ-Tbc">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MapPin" translatesAutoresizingMaskIntoConstraints="NO" id="mKf-qJ-Tbc">
                         <rect key="frame" x="146" y="70" width="28" height="35"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="28" id="0Vu-6p-abq"/>
@@ -57,7 +57,7 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="MapPin" width="25" height="31"/>
+        <image name="MapPin" width="192" height="192"/>
         <image name="location" width="97" height="97"/>
     </resources>
 </document>
