@@ -12,7 +12,7 @@ protocol AddAddressTableViewControllerDelegate {
     func addAddressTableViewController(didAddAddressSucceed addAddressTableViewController: AddAddressTableViewController)
 }
 
-class AddAddressTableViewController: UITableViewController, UITableViewDelegate, UITableViewDataSource, NewAddressTableViewCellDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
+class AddAddressTableViewController: UITableViewController, UITableViewDelegate, UITableViewDataSource, NewAddressTableViewCellDelegate, UIPickerViewDelegate, UIPickerViewDataSource, MapTableViewCellDelegate {
     
     let mapCellNibName = "MapTableViewCell"
     
@@ -121,6 +121,7 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
         } else {
             let mapCell: MapTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(self.mapCellNibName) as! MapTableViewCell
             mapCell.setLocation(latitude: SessionManager.latitude().toDouble()!, longitude: SessionManager.longitude().toDouble()!)
+            mapCell.delegate = self
             return mapCell
         }
     }
@@ -589,5 +590,16 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
                 self.barangayRow = i
             }
         }
+    }
+    
+    // MARK: - Map Table View Cell Delegate 
+    func showAlertForLocation() {
+        let alertController = UIAlertController(title: StringHelper.localizedStringWithKey("MAP_TITLE_LOCALIZE_KEY"), message: StringHelper.localizedStringWithKey("MAP_MESSAGE_LOCALIZE_KEY"), preferredStyle: .Alert)
+        alertController.addAction(UIAlertAction(title: StringHelper.localizedStringWithKey("MAP_CANCEL_LOCALIZE_KEY"), style: .Default, handler: nil))
+        alertController.addAction(UIAlertAction(title: StringHelper.localizedStringWithKey("MAP_SETTINGS_LOCALIZE_KEY"),
+            style: UIAlertActionStyle.Default) { (alert) -> Void in
+                UIApplication.sharedApplication().openURL(NSURL(string: UIApplicationOpenSettingsURLString)!)
+            })
+        self.presentViewController(alertController, animated: true, completion: nil)
     }
 }
