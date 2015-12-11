@@ -161,13 +161,13 @@ class WishlistViewController: UIViewController, UITableViewDelegate, UITableView
     
     func requestRefreshToken(type: String, url: String, params: NSDictionary!) {
         let urlTemp: String
-        let params: NSDictionary = ["client_id": Constants.Credentials.clientID(),
+        let paramsRefresh: NSDictionary = ["client_id": Constants.Credentials.clientID(),
             "client_secret": Constants.Credentials.clientSecret(),
             "grant_type": Constants.Credentials.grantRefreshToken,
             "refresh_token": SessionManager.refreshToken()]
         
         let manager = APIManager.sharedInstance
-        manager.POST(APIAtlas.refreshTokenUrl, parameters: params, success: {
+        manager.POST(APIAtlas.refreshTokenUrl, parameters: paramsRefresh, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             self.dismissLoader()
             

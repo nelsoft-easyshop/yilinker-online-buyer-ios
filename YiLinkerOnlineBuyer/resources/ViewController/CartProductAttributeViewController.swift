@@ -225,10 +225,13 @@ class CartProductAttributeViewController: UIViewController, UITableViewDelegate,
             
             priceLabel.text = selectedProductUnit.discountedPrice.formatToPeso()
             self.maximumStock = selectedProductUnit.quantity
-            if maximumStock < 0 {
+            if maximumStock <= 0 {
                 maximumStock = 0
+                stocks = 0
+            } else {
+                stocks = 1
             }
-            stocks = productDetailModel!.quantity
+            
             checkStock(stocks)
             self.availabilityStocksLabel.text = availableLocalizeString + ": " + String(maximumStock)
             
@@ -250,28 +253,21 @@ class CartProductAttributeViewController: UIViewController, UITableViewDelegate,
             stocksLabel.text = String(stringInterpolationSegment: stocks)
         }
         
-        if stocks == 0 && maximumStock == 0 {
+        if stocks == 0 {
             disableButton(increaseButton)
             disableButton(decreaseButton)
             stocksLabel.alpha = 0.3
-        } else if stocks == 1  && maximumStock != 0 {
-            enableButton(increaseButton)
-            disableButton(decreaseButton)
-            stocksLabel.alpha = 1.0
-        } else if stocks == 1  && maximumStock == 0{
-            stocksLabel.alpha = 0.3
-            disableButton(increaseButton)
         } else if stocks == maximumStock {
             stocksLabel.alpha = 1.0
             disableButton(increaseButton)
         } else if stocks == minimumStock {
             stocksLabel.alpha = 1.0
             disableButton(decreaseButton)
-        } else if stocks > 0 || stocks < maximumStock {
+            enableButton(increaseButton)
+        } else if stocks > 0 && stocks < maximumStock {
+            stocksLabel.alpha = 1.0
             enableButton(increaseButton)
             enableButton(decreaseButton)
-            stocksLabel.alpha = 1.0
-        } else {
         }
     }
     

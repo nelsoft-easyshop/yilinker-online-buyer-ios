@@ -256,24 +256,29 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
         tableData.removeAll(keepCapacity: false)
         cartTableView.reloadData()
         if let value: AnyObject = responseObject["data"] {
-            for subValue in value["items"] as! NSArray {
-                let model: CartProductDetailsModel = CartProductDetailsModel.parseDataWithDictionary(subValue as! NSDictionary)
-                model.selected = true
-                let tempItemId = model.itemId
-                if model.selected {
-                    selectedItemIDs.append(tempItemId)
-                } else {
-                    selectedItemIDs = selectedItemIDs.filter({$0 != tempItemId})
+            if responseObject["isSuccessful"] as! Bool {
+                for subValue in value["items"] as! NSArray {
+                    let model: CartProductDetailsModel = CartProductDetailsModel.parseDataWithDictionary(subValue as! NSDictionary)
+                    model.selected = true
+                    let tempItemId = model.itemId
+                    if model.selected {
+                        selectedItemIDs.append(tempItemId)
+                    } else {
+                        selectedItemIDs = selectedItemIDs.filter({$0 != tempItemId})
+                    }
+                    self.tableData.append(model)
                 }
-                self.tableData.append(model)
+                
+                self.cartTableView.reloadData()
+                
+                if let value: Int = value["total"] as? Int {
+                    self.badgeCount = value
+                    SessionManager.setCartCount(value)
+                }
+            } else {
+                self.getCartData()
             }
             
-            self.cartTableView.reloadData()
-            
-            if let value: Int = value["total"] as? Int {
-                self.badgeCount = value
-                SessionManager.setCartCount(value)
-            }
         }
         
         if badgeCount != 0 {
@@ -289,14 +294,14 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func requestRefreshToken(type: String, url: String, params: NSDictionary!) {
-        let params: NSDictionary = ["client_id": Constants.Credentials.clientID(),
+        let paramsRefresh: NSDictionary = ["client_id": Constants.Credentials.clientID(),
             "client_secret": Constants.Credentials.clientSecret(),
             "grant_type": Constants.Credentials.grantRefreshToken,
             "refresh_token": SessionManager.refreshToken()]
         
         let manager = APIManager.sharedInstance
         
-        manager.POST(APIAtlas.refreshTokenUrl, parameters: params, success: {
+        manager.POST(APIAtlas.refreshTokenUrl, parameters: paramsRefresh, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
             
