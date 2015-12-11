@@ -12,6 +12,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="WebViewController" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
             <connections>
                 <outlet property="errorView" destination="95g-mR-h2o" id="yd0-DM-aWv"/>
+                <outlet property="pleaseLabel" destination="aFQ-FR-M61" id="BSB-gS-Kyk"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
                 <outlet property="webView" destination="m8z-Og-EDG" id="ctm-ak-mkZ"/>
             </connections>
