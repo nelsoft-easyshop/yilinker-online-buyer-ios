@@ -240,6 +240,15 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
         }
     }
     
+    func passCustomCategoryID(id: Int) {
+        if Reachability.isConnectedToNetwork() {
+            requestSuggestionSearchUrl = "\(APIAtlas.productList)?customCategoryId=\(id)"
+            requestSearchDetails("\(APIAtlas.productList)?customCategoryId=\(id)", params: nil)
+        } else {
+            UIAlertController.displayNoInternetConnectionError(self)
+        }
+    }
+    
     func passSellerID(id: String) {
         if Reachability.isConnectedToNetwork() {
             requestSuggestionSearchUrl = "\(APIAtlas.productList)?sellerIds=\(id)"

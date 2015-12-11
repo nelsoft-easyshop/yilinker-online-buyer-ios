@@ -101,13 +101,17 @@ class SellerCategoryViewController: UIViewController, UITableViewDataSource, UIT
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         if indexPath.row == 0 {
-            let resultViewController: ResultAllViewController = ResultAllViewController(nibName: "ResultAllViewController", bundle: nil)
+            /*let resultViewController: ResultAllViewController = ResultAllViewController(nibName: "ResultAllViewController", bundle: nil)
             resultViewController.sellerId = self.sellerId
             println(self.sellerId)
-            self.navigationController!.pushViewController(resultViewController, animated: true)
+            self.navigationController!.pushViewController(resultViewController, animated: true)*/
+            let resultList = ResultViewController(nibName: "ResultViewController", bundle: nil)
+            resultList.passSellerID("\(self.sellerId)")
+            self.navigationController?.pushViewController(resultList, animated: true)
         } else {
             let sellerSubCategoryViewController: SellerSubCategoryViewController = SellerSubCategoryViewController(nibName: "SellerSubCategoryViewController", bundle: nil)
             sellerSubCategoryViewController.subCategoryName = self.tableData[indexPath.row].categorySubs2
+            sellerSubCategoryViewController.categoryId = self.tableData[indexPath.row].categoryId2
             self.navigationController!.pushViewController(sellerSubCategoryViewController, animated: true)
         }
         
@@ -129,9 +133,9 @@ class SellerCategoryViewController: UIViewController, UITableViewDataSource, UIT
             
             self.sellerCategory = SellerCategoryModel.parseDataFromDictionary(responseObject as! NSDictionary)
             var arr: [String] = []
-             self.tableData.append(SellerCategoryModel(name: "All", subCategories: "List of all product", subCategories2: arr))
+            self.tableData.append(SellerCategoryModel(name: "All", categoryId: 0, subCategories: "This will display all seller's products.", subCategories2: arr))
             for var i: Int = 0; i < self.sellerCategory!.name.count; i++ {
-                self.tableData.append(SellerCategoryModel(name: self.sellerCategory!.name[i], subCategories: self.sellerCategory!.subCategories2[i], subCategories2: self.sellerCategory!.subCategories3[i]))
+                self.tableData.append(SellerCategoryModel(name: self.sellerCategory!.name[i],  categoryId: self.sellerCategory!.categoryId[i], subCategories: self.sellerCategory!.subCategories2[i], subCategories2: self.sellerCategory!.subCategories3[i]))
             }
             self.categoryTableView.reloadData()
             self.hud?.hide(true)
