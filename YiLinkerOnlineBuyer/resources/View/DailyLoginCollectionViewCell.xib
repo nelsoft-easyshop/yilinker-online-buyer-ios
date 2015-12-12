@@ -7,51 +7,48 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="DailyLoginCollectionViewCell" id="gTV-IL-0wX" customClass="DailyLoginCollectionViewCell" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="380" height="70"/>
+            <rect key="frame" x="0.0" y="0.0" width="379" height="152"/>
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                <rect key="frame" x="0.0" y="0.0" width="380" height="70"/>
+                <rect key="frame" x="0.0" y="0.0" width="379" height="152"/>
                 <subviews>
-                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="AuP-Q6-hg5">
-                        <rect key="frame" x="5" y="4" width="370" height="62"/>
-                        <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
-                        <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="6gF-77-ZXK">
-                            <size key="itemSize" width="50" height="50"/>
+                    <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="k0m-c9-CtB">
+                        <rect key="frame" x="8" y="107" width="364" height="37"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="37" id="4qs-VD-Uwv"/>
+                        </constraints>
+                    </pageControl>
+                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="HsO-G9-FKS">
+                        <rect key="frame" x="8" y="6" width="364" height="140"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="rib-Oe-IoF">
+                            <size key="itemSize" width="50" height="140"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
                         <connections>
-                            <outlet property="dataSource" destination="gTV-IL-0wX" id="J0A-bv-ye5"/>
-                            <outlet property="delegate" destination="gTV-IL-0wX" id="ufo-jr-pxf"/>
+                            <outlet property="dataSource" destination="gTV-IL-0wX" id="dDV-vo-DgD"/>
+                            <outlet property="delegate" destination="gTV-IL-0wX" id="4qy-vZ-1Vp"/>
                         </connections>
                     </collectionView>
-                    <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" hidesForSinglePage="YES" numberOfPages="1" translatesAutoresizingMaskIntoConstraints="NO" id="M27-FB-Rxi">
-                        <rect key="frame" x="0.0" y="40" width="380" height="37"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="37" id="5Xk-Ty-pEm"/>
-                        </constraints>
-                        <color key="pageIndicatorTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <color key="currentPageIndicatorTintColor" red="0.36078431370000003" green="0.36078431370000003" blue="0.36078431370000003" alpha="1" colorSpace="calibratedRGB"/>
-                    </pageControl>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </view>
             <constraints>
-                <constraint firstAttribute="trailing" secondItem="AuP-Q6-hg5" secondAttribute="trailing" constant="5" id="8Xp-9p-iXX"/>
-                <constraint firstAttribute="bottom" secondItem="AuP-Q6-hg5" secondAttribute="bottom" constant="4" id="8rs-az-GuV"/>
-                <constraint firstItem="M27-FB-Rxi" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="MJb-Hu-djE"/>
-                <constraint firstAttribute="trailing" secondItem="M27-FB-Rxi" secondAttribute="trailing" id="buQ-lS-7h5"/>
-                <constraint firstItem="AuP-Q6-hg5" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="5" id="buX-JN-LXz"/>
-                <constraint firstItem="AuP-Q6-hg5" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="4" id="xVT-Lh-RNT"/>
-                <constraint firstAttribute="bottom" secondItem="M27-FB-Rxi" secondAttribute="bottom" constant="-7" id="xjn-MU-M5N"/>
+                <constraint firstItem="HsO-G9-FKS" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="8" id="0Nf-OG-WjH"/>
+                <constraint firstAttribute="bottom" secondItem="k0m-c9-CtB" secondAttribute="bottom" constant="8" id="5RL-nl-pRV"/>
+                <constraint firstAttribute="trailing" secondItem="HsO-G9-FKS" secondAttribute="trailing" constant="7" id="F5N-22-hTL"/>
+                <constraint firstItem="k0m-c9-CtB" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="8" id="Ogg-4f-3Re"/>
+                <constraint firstAttribute="bottom" secondItem="HsO-G9-FKS" secondAttribute="bottom" constant="6" id="hFH-bw-Vhj"/>
+                <constraint firstItem="HsO-G9-FKS" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="6" id="p0U-Zu-gHD"/>
+                <constraint firstAttribute="trailing" secondItem="k0m-c9-CtB" secondAttribute="trailing" constant="7" id="zHg-26-237"/>
             </constraints>
-            <size key="customSize" width="388" height="70"/>
+            <size key="customSize" width="387" height="152"/>
             <connections>
-                <outlet property="collectionView" destination="AuP-Q6-hg5" id="rjc-YO-mGS"/>
-                <outlet property="pageControl" destination="M27-FB-Rxi" id="pTE-h9-4Qn"/>
+                <outlet property="collectionView" destination="HsO-G9-FKS" id="ndY-bC-gOK"/>
+                <outlet property="pageControl" destination="k0m-c9-CtB" id="dOr-TM-h0O"/>
             </connections>
-            <point key="canvasLocation" x="271" y="364"/>
+            <point key="canvasLocation" x="270.5" y="478"/>
         </collectionViewCell>
     </objects>
 </document>

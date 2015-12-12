@@ -33,7 +33,7 @@ struct FABStrings {
     static let profile: String = StringHelper.localizedStringWithKey("PROFILE_LOCALIZE_KEY")
 }
 
-class HomeContainerViewController: UIViewController, UITabBarControllerDelegate, EmptyViewDelegate, CarouselCollectionViewCellDataSource, CarouselCollectionViewCellDelegate, DailyLoginCollectionViewCellDelegate, HalfPagerCollectionViewCellDelegate, HalfPagerCollectionViewCellDataSource, FlashSaleCollectionViewCellDelegate, LayoutHeaderCollectionViewCellDelegate, SellerCarouselCollectionViewCellDataSource, SellerCarouselCollectionViewCellDelegate, LayoutNineCollectionViewCellDelegate, DailyLoginCollectionViewCellDataSource {
+class HomeContainerViewController: UIViewController, UITabBarControllerDelegate, EmptyViewDelegate, CarouselCollectionViewCellDataSource, CarouselCollectionViewCellDelegate, HalfPagerCollectionViewCellDelegate, HalfPagerCollectionViewCellDataSource, FlashSaleCollectionViewCellDelegate, LayoutHeaderCollectionViewCellDelegate, SellerCarouselCollectionViewCellDataSource, SellerCarouselCollectionViewCellDelegate, LayoutNineCollectionViewCellDelegate, DailyLoginCollectionViewCellDataSource, DailyLoginCollectionViewCellDelegate {
     
     var searchViewContoller: SearchViewController?
     var circularMenuViewController: CircularMenuViewController?
@@ -172,8 +172,12 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         
         self.collectionView.addPullToRefresh(options: options, refreshCompletion: { [weak self] in
             // some code
-            self!.timer.invalidate()
-            self!.fireGetHomePageData(false)
+            Delay.delayWithDuration(1.0, completionHandler: { (success) -> Void in
+                self!.timer.invalidate()
+                self!.oneHourIntervalTimer.invalidate()
+                let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+                appDelegate.changeRootToHomeView()
+            })
             })
     }
     
@@ -401,7 +405,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     func populateHomePageWithDictionary(dictionary: NSDictionary) {
         self.collectionView.hidden = false
         self.homePageModel = HomePageModel.parseDataFromDictionary(dictionary)
-        self.layouts.removeAll(keepCapacity: false)
+        self.layouts.removeAll(keepCapacity: true)
         for (index, model) in enumerate(self.homePageModel.data) {
             if model.isKindOfClass(LayoutOneModel) {
                 self.layouts.append("1")
@@ -1164,6 +1168,12 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             fullImageCollectionViewCell.target = layoutSixModel.data[indexPath.row].target.targetUrl
             fullImageCollectionViewCell.targetType = layoutSixModel.data[indexPath.row].target.targetType
             fullImageCollectionViewCell.itemProductImageView.sd_setImageWithURL(NSURL(string: layoutSixModel.data[indexPath.row].image), placeholderImage: UIImage(named: placeHolder))
+        }  else if self.homePageModel.data[indexPath.section].isKindOfClass(LayoutTwoModel) {
+            let layoutTwoModel: LayoutTwoModel = self.homePageModel.data[indexPath.section] as! LayoutTwoModel
+            
+            fullImageCollectionViewCell.target = layoutTwoModel.data[indexPath.row].target.targetUrl
+            fullImageCollectionViewCell.targetType = layoutTwoModel.data[indexPath.row].target.targetType
+            fullImageCollectionViewCell.itemProductImageView.sd_setImageWithURL(NSURL(string: layoutTwoModel.data[indexPath.row].image), placeholderImage: UIImage(named: placeHolder))
         }
      
         return fullImageCollectionViewCell
@@ -1174,12 +1184,14 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         let layoutTwoModel: LayoutTwoModel = self.homePageModel.data[indexPath.section] as! LayoutTwoModel
         
         let dailyLoginCell: DailyLoginCollectionViewCell = self.collectionView.dequeueReusableCellWithReuseIdentifier(self.dailyLoginNibName, forIndexPath: indexPath) as! DailyLoginCollectionViewCell
-        dailyLoginCell.delegate = self
-        dailyLoginCell.dataSource = self
+        
         /*dailyLoginCell.productImageView.sd_setImageWithURL(NSURL(string: layoutTwoModel.data[0].image), placeholderImage: UIImage(named: self.placeHolder))
         dailyLoginCell.target = layoutTwoModel.data[0].target.targetUrl
-        dailyLoginCell.targetType = layoutTwoModel.data[0].target.targetType
-        dailyLoginCell.delegate = self*/
+        dailyLoginCell.targetType = layoutTwoModel.data[0].target.targetType*/
+        
+        dailyLoginCell.delegate = self
+        dailyLoginCell.dataSource = self
+        dailyLoginCell.collectionView.reloadData()
         
         return dailyLoginCell
     }
@@ -1401,21 +1413,20 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     
     func dailyLoginCollectionViewCell(dailyLoginCollectionViewCell: DailyLoginCollectionViewCell, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         let fullImageCell: FullImageCollectionViewCell = dailyLoginCollectionViewCell.collectionView.cellForItemAtIndexPath(indexPath) as! FullImageCollectionViewCell
-        
         self.didClickItemWithTarget(fullImageCell.target, targetType: fullImageCell.targetType)
     }
     
     func dailyLoginCollectionViewCellDidEndDecelerating(dailyLoginCollectionViewCell: DailyLoginCollectionViewCell) {
-        dailyLoginCollectionViewCell.layoutIfNeeded()
-        let pageWidth: CGFloat = dailyLoginCollectionViewCell.collectionView.frame.size.width
-        let currentPage: CGFloat = dailyLoginCollectionViewCell.collectionView.contentOffset.x / pageWidth
-        
-        if 0.0 != fmodf(Float(currentPage), 1.0) {
-            dailyLoginCollectionViewCell.pageControl.currentPage = Int(currentPage) + 1
-        }
-        else {
-            dailyLoginCollectionViewCell.pageControl.currentPage = Int(currentPage)
-        }
+//        dailyLoginCollectionViewCell.layoutIfNeeded()
+//        let pageWidth: CGFloat = dailyLoginCollectionViewCell.collectionView.frame.size.width
+//        let currentPage: CGFloat = dailyLoginCollectionViewCell.collectionView.contentOffset.x / pageWidth
+//        
+//        if 0.0 != fmodf(Float(currentPage), 1.0) {
+//            dailyLoginCollectionViewCell.pageControl.currentPage = Int(currentPage) + 1
+//        }
+//        else {
+//            dailyLoginCollectionViewCell.pageControl.currentPage = Int(currentPage)
+//        }
     }
     
     //MARK: -
@@ -1428,10 +1439,17 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     }
     
     func dailyLoginCollectionViewCell(dailyLoginCollectionViewCell: DailyLoginCollectionViewCell, cellForRowAtIndexPath indexPath: NSIndexPath) -> FullImageCollectionViewCell {
+        
+        let fullImageCollectionViewCell: FullImageCollectionViewCell = dailyLoginCollectionViewCell.collectionView.dequeueReusableCellWithReuseIdentifier(self.fullImageCellNib, forIndexPath: indexPath) as! FullImageCollectionViewCell
+        
         let parentIndexPath: NSIndexPath = self.collectionView.indexPathForCell(dailyLoginCollectionViewCell)!
         let layoutTwoModel: LayoutTwoModel = self.homePageModel.data[parentIndexPath.section] as! LayoutTwoModel
         
-        return self.fullImageCollectionViewCellWithIndexPath(indexPath, fullImageCollectionView: dailyLoginCollectionViewCell.collectionView)
+        fullImageCollectionViewCell.target = layoutTwoModel.data[indexPath.row].target.targetUrl
+        fullImageCollectionViewCell.targetType = layoutTwoModel.data[indexPath.row].target.targetType
+        fullImageCollectionViewCell.itemProductImageView.sd_setImageWithURL(NSURL(string: layoutTwoModel.data[indexPath.row].image), placeholderImage: UIImage(named: placeHolder))
+        
+        return fullImageCollectionViewCell
     }
     
     func itemWidthInDailyLoginCollectionViewCell(dailyLoginCollectionViewCell: DailyLoginCollectionViewCell) -> CGFloat {
