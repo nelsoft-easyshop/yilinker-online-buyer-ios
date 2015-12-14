@@ -177,9 +177,13 @@ class VerifyMobileNumberViewController: UIViewController {
                 }
             }
         } else {
-            fireUpdateProfile(APIAtlas.updateMobileNumber, params: NSDictionary(dictionary: ["access_token" : SessionManager.accessToken(),
-                "oldContactNumber": SessionManager.mobileNumber(),
-                "newContactNumber": getNewMobileNumber()]))
+            if SessionManager.mobileNumber() == getNewMobileNumber() {
+                fireGetCode()
+            } else {
+                fireUpdateProfile(APIAtlas.updateMobileNumber, params: NSDictionary(dictionary: ["access_token" : SessionManager.accessToken(),
+                    "newContactNumber": getNewMobileNumber(),
+                    "oldContactNumber": SessionManager.mobileNumber()]))
+            }
         }
     }
     
