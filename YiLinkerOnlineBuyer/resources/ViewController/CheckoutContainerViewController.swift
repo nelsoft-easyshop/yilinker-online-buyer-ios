@@ -55,7 +55,7 @@ struct AddressStrings {
     
     static let incompleteInformation: String = StringHelper.localizedStringWithKey("INCOMPLETE_INFORMATION_LOCALIZE_KEY")
     static let mobileNumberIsRequired: String = StringHelper.localizedStringWithKey("MOBILE_NUMBER_REQUIRED_LOCALIZE_KEY")
-    
+    static let addressIsRequired: String = StringHelper.localizedStringWithKey("ADDRESS_REQUIRED_LOCALIZE_KEY")
     static let streetTitleRequired: String = StringHelper.localizedStringWithKey("STREET_TITLE_REQUIRED_LOCALIZE_KEY")
     static let unitNoRequired: String = StringHelper.localizedStringWithKey("UNIT_NO_REQUIRED_LOCALIZE_KEY")
     
@@ -184,6 +184,8 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
                     UIAlertController.displayErrorMessageWithTarget(self, errorMessage: RegisterStrings.emailRequired, title: AddressStrings.incompleteInformation)
                 } else if !self.summaryViewController!.guestCheckoutTableViewCell.emailTextField.text!.isValidEmail() {
                     UIAlertController.displayErrorMessageWithTarget(self, errorMessage: RegisterStrings.invalidEmail, title: AddressStrings.incompleteInformation)
+                } else if self.summaryViewController!.guestCheckoutTableViewCell.streetNameTextField.text!.isEmpty {
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: AddressStrings.addressIsRequired, title: AddressStrings.incompleteInformation)
                 } else {
                     self.guestEmail = self.summaryViewController!.guestCheckoutTableViewCell.emailTextField.text
                     self.guestFirstName = self.summaryViewController!.guestCheckoutTableViewCell.firstNameTextField.text
