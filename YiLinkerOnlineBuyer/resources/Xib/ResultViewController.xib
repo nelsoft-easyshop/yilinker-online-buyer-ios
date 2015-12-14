@@ -7,6 +7,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ResultViewController" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
             <connections>
                 <outlet property="actionView" destination="Uyb-VK-Thh" id="inG-Wy-qBE"/>
+                <outlet property="actionViewHeight" destination="Sr6-84-KYc" id="e2Q-zF-GmP"/>
                 <outlet property="dimView" destination="rI2-hy-mMb" id="Js4-ik-wzp"/>
                 <outlet property="filterLabel" destination="i69-th-rrW" id="txk-9O-k9O"/>
                 <outlet property="filterView" destination="hXh-Ex-xcS" id="xu4-Nc-i66"/>
