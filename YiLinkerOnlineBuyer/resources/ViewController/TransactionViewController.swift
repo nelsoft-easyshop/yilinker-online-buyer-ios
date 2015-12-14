@@ -83,6 +83,7 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
         noTransactionLabel.hidden = true
         //supportLabel.text = support
         
+        self.transactionType = "ALL"
         self.tableView.hidden = true
         self.tableView.separatorInset = UIEdgeInsetsZero
         self.tableView.layoutMargins = UIEdgeInsetsZero
