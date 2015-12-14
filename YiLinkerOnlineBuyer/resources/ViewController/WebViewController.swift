@@ -178,12 +178,18 @@ class WebViewController: UIViewController, UIWebViewDelegate, EmptyViewDelegate 
             }
             
         case .DailyLogin:
-            if urlString == WebViewURL.dailyLogin + "?access_token=\(SessionManager.accessToken())" {
-                return true
+            if SessionManager.isLoggedIn() {
+                if urlString == WebViewURL.dailyLogin + "?access_token=\(SessionManager.accessToken())" {
+                    return true
+                } else {
+                    errorView.hidden = false
+                    return false
+                }
             } else {
                 errorView.hidden = false
                 return false
             }
+            
         case .Category:
             if urlString == WebViewURL.category {
                 return true
