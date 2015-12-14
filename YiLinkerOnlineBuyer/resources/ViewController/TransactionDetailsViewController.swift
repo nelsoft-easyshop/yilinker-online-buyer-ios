@@ -184,7 +184,8 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
         productDetails.orderProductId = self.table[indexPath.section].transactions[indexPath.row].orderProductId
         productDetails.quantity = self.table[indexPath.section].transactions[indexPath.row].quantity
         productDetails.unitPrice = self.table[indexPath.section].transactions[indexPath.row].unitPrice
-        productDetails.totalPrice = self.table[indexPath.section].transactions[indexPath.row].totalPrice
+        productDetails.totalPrice = self.calculateTotalUnitCost(self.table[indexPath.section].transactions[indexPath.row].quantity, price: self.table[indexPath.section].transactions[indexPath.row].unitPrice).formatToTwoDecimal().formatToPeso()
+        //self.table[indexPath.section].transactions[indexPath.row].totalPrice
         productDetails.productName = self.table[indexPath.section].transactions[indexPath.row].productName
         productDetails.transactionId = self.transactionId
         productDetails.isCancellable = self.table[indexPath.section].transactions[indexPath.row].isCancellable
@@ -231,6 +232,16 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
         self.navigationController!.pushViewController(sellerViewController, animated: true)
     }
     
+    func calculateTotalUnitCost(quantity: Int, price: String) -> String {
+        var tempUnitCost: Double = 0
+        
+        for i in 1...quantity {
+            tempUnitCost += (price.stringByReplacingOccurrencesOfString(",", withString: "") as NSString).doubleValue
+        }
+        
+        return "\(tempUnitCost)"
+    }
+
     /*
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         //self.transactionIdView =
@@ -280,9 +291,15 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
             self.transactionDetailsView = XibHelper.puffViewWithNibName("TransactionViews", index: 1) as! TransactionDetailsView
             
             if(self.transactionDetailsModel != nil){
-                transactionDetailsView.unitCostLabel.text = (self.transactionDetailsModel.transactionUnitPrice).formatToPeso()
+               
+                var totalProductCost = self.calculateTotalUnitCost(self.totalQuantity.toInt()!, price: self.transactionDetailsModel.transactionTotalPrice)
+                transactionDetailsView.unitCostLabel.text = (self.transactionDetailsModel.transactionUnitPrice).formatToTwoDecimal().formatToPeso()
+                    
+                    //(self.transactionDetailsModel.transactionUnitPrice).formatToPeso()
                 transactionDetailsView.shippingFeeLabel.text = (self.transactionDetailsModel.transactionShippingFee).formatToPeso()
-                transactionDetailsView.totalCostLabel.text = (self.transactionDetailsModel.transactionTotalPrice).formatToPeso()
+                transactionDetailsView.totalCostLabel.text = (self.transactionDetailsModel.transactionTotalPrice).formatToTwoDecimal().formatToPeso()
+                //("\((self.transactionDetailsModel.transactionUnitPrice + self.transactionDetailsModel.transactionShippingFee))").formatToTwoDecimal().formatToPeso()
+                
             }
             
             transactionDetailsView.transactionDetails.text  = self.transactionDetails
@@ -573,7 +590,7 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
         
         manager.GET(urlEncoded!, parameters: nil, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            
+            println(responseObject)
             if responseObject["isSuccessful"] as! Bool {
                 self.transactionDetailsModel = TransactionDetailsModel.parseDataFromDictionary2(responseObject as! NSDictionary)
                 
