@@ -538,6 +538,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         var attributeModal = ViewFeedBackViewController(nibName: "ViewFeedBackViewController", bundle: nil)
         attributeModal.delegate = self
         attributeModal.sellerId = self.sellerId
+        attributeModal.feedback = true
         attributeModal.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
         attributeModal.providesPresentationContextTransitionStyle = true
         attributeModal.definesPresentationContext = true

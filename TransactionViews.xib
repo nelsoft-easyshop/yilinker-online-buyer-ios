@@ -56,6 +56,7 @@
             <string>Panton-Regular</string>
             <string>Panton-Regular</string>
             <string>Panton-Regular</string>
+            <string>Panton-Regular</string>
         </mutableArray>
     </customFonts>
     <objects>
@@ -183,16 +184,18 @@
                                 <constraint firstAttribute="height" constant="1" id="1gn-tM-VNV"/>
                             </constraints>
                         </view>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Total Unit Cost" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="McM-dh-3sc">
-                            <rect key="frame" x="8" y="144" width="114" height="37"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Total Unit Cost" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="McM-dh-3sc">
+                            <rect key="frame" x="8" y="149" width="152" height="28"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="152" id="CrA-Xz-dQM"/>
+                            </constraints>
                             <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="15"/>
                             <color key="textColor" red="0.29803922770000002" green="0.29803922770000002" blue="0.29803922770000002" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="35,999" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fdg-L4-usM">
-                            <rect key="frame" x="236" y="144" width="131" height="37"/>
+                            <rect key="frame" x="200" y="144" width="167" height="37"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="131" id="4WA-Nx-QIt"/>
                                 <constraint firstAttribute="height" constant="37" id="ymZ-K9-EIs"/>
                             </constraints>
                             <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="15"/>
@@ -207,7 +210,7 @@
                             </constraints>
                         </view>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Shipping Fee" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BHx-rn-7Ju">
-                            <rect key="frame" x="8" y="180" width="101" height="37"/>
+                            <rect key="frame" x="8" y="187" width="101" height="23"/>
                             <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="15"/>
                             <color key="textColor" red="0.29803922770000002" green="0.29803922770000002" blue="0.29803922770000002" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
@@ -284,11 +287,13 @@
                     <constraints>
                         <constraint firstItem="fKS-m9-Umv" firstAttribute="top" secondItem="DBP-d3-FFt" secondAttribute="bottom" constant="35" id="120-uR-a7F"/>
                         <constraint firstAttribute="trailing" secondItem="fKS-m9-Umv" secondAttribute="trailing" constant="8" id="1UW-hM-abg"/>
+                        <constraint firstItem="fdg-L4-usM" firstAttribute="leading" secondItem="McM-dh-3sc" secondAttribute="trailing" constant="40" id="1eQ-Nc-enK"/>
                         <constraint firstItem="H9s-gu-IdM" firstAttribute="leading" secondItem="hLe-9L-Eym" secondAttribute="leading" id="3Zp-Qf-qox"/>
                         <constraint firstAttribute="trailing" secondItem="doo-Qd-627" secondAttribute="trailing" constant="8" id="6ac-Bx-Vip"/>
                         <constraint firstItem="yvF-Mf-Lji" firstAttribute="leading" secondItem="hLe-9L-Eym" secondAttribute="leading" id="7EB-jq-mdV"/>
                         <constraint firstItem="DKl-6I-Lxr" firstAttribute="leading" secondItem="hLe-9L-Eym" secondAttribute="leading" constant="8" id="APU-eG-t3q"/>
                         <constraint firstItem="fdg-L4-usM" firstAttribute="top" secondItem="H9s-gu-IdM" secondAttribute="bottom" constant="35" id="DiI-Sc-AzK"/>
+                        <constraint firstItem="NzJ-To-ZZ3" firstAttribute="top" secondItem="McM-dh-3sc" secondAttribute="bottom" constant="3" id="GbC-cS-TzJ"/>
                         <constraint firstItem="ti5-qQ-tXu" firstAttribute="top" secondItem="zdI-YP-Yve" secondAttribute="bottom" constant="35" id="I6n-Iw-Ry3"/>
                         <constraint firstItem="doo-Qd-627" firstAttribute="top" secondItem="hLe-9L-Eym" secondAttribute="top" constant="6" id="MAr-0l-5xT"/>
                         <constraint firstAttribute="trailing" secondItem="NzJ-To-ZZ3" secondAttribute="trailing" id="MZQ-cZ-Xya"/>
@@ -297,6 +302,7 @@
                         <constraint firstItem="zdI-YP-Yve" firstAttribute="top" secondItem="DBP-d3-FFt" secondAttribute="bottom" constant="35" id="RcR-p4-6in"/>
                         <constraint firstItem="Pac-fx-ROp" firstAttribute="leading" secondItem="hLe-9L-Eym" secondAttribute="leading" id="Vo1-yp-M2w"/>
                         <constraint firstAttribute="trailing" secondItem="Dpg-kW-cES" secondAttribute="trailing" constant="8" id="Ydi-YL-PvN"/>
+                        <constraint firstItem="McM-dh-3sc" firstAttribute="leading" secondItem="hLe-9L-Eym" secondAttribute="leading" constant="8" id="ZYD-yD-Ia7"/>
                         <constraint firstItem="DBP-d3-FFt" firstAttribute="leading" secondItem="hLe-9L-Eym" secondAttribute="leading" id="aSE-WB-6Md"/>
                         <constraint firstItem="NzJ-To-ZZ3" firstAttribute="top" secondItem="Pac-fx-ROp" secondAttribute="bottom" constant="35" id="aWU-Ei-aQs"/>
                         <constraint firstItem="doo-Qd-627" firstAttribute="top" secondItem="hLe-9L-Eym" secondAttribute="top" constant="6" id="bG9-UZ-9ru"/>
@@ -322,6 +328,7 @@
                         <constraint firstItem="K5P-w6-iC7" firstAttribute="top" secondItem="NzJ-To-ZZ3" secondAttribute="bottom" constant="35" id="tkl-8N-Vuj"/>
                         <constraint firstItem="yvF-Mf-Lji" firstAttribute="top" secondItem="NzJ-To-ZZ3" secondAttribute="bottom" constant="35" id="wY5-xy-5II"/>
                         <constraint firstItem="doo-Qd-627" firstAttribute="top" secondItem="hLe-9L-Eym" secondAttribute="top" constant="6" id="wkE-M0-tmn"/>
+                        <constraint firstItem="McM-dh-3sc" firstAttribute="top" secondItem="Pac-fx-ROp" secondAttribute="bottom" constant="4" id="xjv-wS-dSl"/>
                         <constraint firstItem="n0j-Cp-vbq" firstAttribute="top" secondItem="doo-Qd-627" secondAttribute="bottom" constant="4" id="yND-tT-MBb"/>
                     </constraints>
                 </view>
@@ -1013,14 +1020,14 @@ Phiippines</string>
             <rect key="frame" x="0.0" y="0.0" width="375" height="140"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qx5-w2-Yg0" userLabel="Separator">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qx5-w2-Yg0" userLabel="Separator">
                     <rect key="frame" x="0.0" y="72" width="375" height="1"/>
                     <color key="backgroundColor" red="0.7019608021" green="0.7019608021" blue="0.7019608021" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="1" id="mFo-3U-cEn"/>
                     </constraints>
                 </view>
-                <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dSz-Qa-k82" customClass="DynamicRoundedButton" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
+                <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dSz-Qa-k82" customClass="DynamicRoundedButton" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
                     <rect key="frame" x="246" y="92" width="121" height="28"/>
                     <color key="backgroundColor" red="0.35294117647058826" green="0.12156862745098039" blue="0.45882352941176469" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
@@ -1040,7 +1047,7 @@ Phiippines</string>
                         <action selector="message:" destination="HYi-6R-oZb" eventType="touchUpInside" id="Ul2-RP-r4f"/>
                     </connections>
                 </button>
-                <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h81-DO-sDz" customClass="DynamicRoundedButton" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
+                <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h81-DO-sDz" customClass="DynamicRoundedButton" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
                     <rect key="frame" x="8" y="92" width="177" height="28"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="28" id="Iic-d0-zIP"/>
@@ -1067,16 +1074,16 @@ Phiippines</string>
                         <action selector="leaveFeedback:" destination="HYi-6R-oZb" eventType="touchUpInside" id="4Sj-gn-4Rm"/>
                     </connections>
                 </button>
-                <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OVT-ZX-6nh">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OVT-ZX-6nh">
                     <rect key="frame" x="0.0" y="8" width="375" height="20"/>
                     <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="seller" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gbF-nW-wb7">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="seller" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gbF-nW-wb7">
                             <rect key="frame" x="8" y="0.0" width="179" height="20"/>
                             <fontDescription key="fontDescription" name="Panton-Light" family="Panton" pointSize="13"/>
                             <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="contact number" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bys-yh-aL4">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="contact number" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bys-yh-aL4">
                             <rect key="frame" x="203" y="0.0" width="164" height="20"/>
                             <fontDescription key="fontDescription" name="Panton-Light" family="Panton" pointSize="13"/>
                             <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
@@ -1096,22 +1103,22 @@ Phiippines</string>
                         <constraint firstItem="Bys-yh-aL4" firstAttribute="top" secondItem="OVT-ZX-6nh" secondAttribute="top" id="zqB-XK-sy9"/>
                     </constraints>
                 </view>
-                <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JT7-pG-VuJ">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JT7-pG-VuJ">
                     <rect key="frame" x="0.0" y="28" width="375" height="36"/>
                     <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" misplaced="YES" text="Bogs Borja" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="ldQ-CF-qdm">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text="Bogs Borja" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="ldQ-CF-qdm">
                             <rect key="frame" x="8" y="6" width="179" height="25"/>
                             <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="15"/>
                             <color key="textColor" red="0.29803922770000002" green="0.29803922770000002" blue="0.29803922770000002" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" misplaced="YES" text="+63 (0912) 431 985" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="F5P-s8-a3W">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text="+63 (0912) 431 985" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="F5P-s8-a3W">
                             <rect key="frame" x="200" y="6" width="167" height="25"/>
                             <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="15"/>
                             <color key="textColor" red="0.29803922770000002" green="0.29803922770000002" blue="0.29803922770000002" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nlf-3w-Ntu">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nlf-3w-Ntu">
                             <rect key="frame" x="8" y="6" width="179" height="25"/>
                             <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="15"/>
                             <state key="normal">
@@ -1239,10 +1246,32 @@ Phiippines</string>
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
                 </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F8Z-sn-mXp" customClass="DynamicRoundedButton" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
+                    <rect key="frame" x="8" y="14" width="359" height="32"/>
+                    <color key="backgroundColor" red="0.30588235289999999" green="0.1215686275" blue="0.4549019608" alpha="1" colorSpace="calibratedRGB"/>
+                    <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="15"/>
+                    <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <state key="normal" title="LEAVE PRODUCT FEEDBACK">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                            <real key="value" value="13"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                    <connections>
+                        <action selector="leaveFeedback" destination="CdL-Ze-R7c" eventType="touchUpInside" id="Nox-yo-D3d"/>
+                    </connections>
+                </button>
             </subviews>
             <constraints>
+                <constraint firstAttribute="centerX" secondItem="F8Z-sn-mXp" secondAttribute="centerX" id="5O9-3E-a0X"/>
                 <constraint firstItem="gOp-uy-NuM" firstAttribute="trailing" secondItem="CdL-Ze-R7c" secondAttribute="trailingMargin" id="E7I-AJ-3p7"/>
+                <constraint firstAttribute="trailing" secondItem="F8Z-sn-mXp" secondAttribute="trailing" constant="8" id="GMq-DH-00v"/>
                 <constraint firstItem="gOp-uy-NuM" firstAttribute="bottom" secondItem="CdL-Ze-R7c" secondAttribute="bottomMargin" constant="-7" id="Hlv-Ha-klJ"/>
+                <constraint firstAttribute="bottom" secondItem="F8Z-sn-mXp" secondAttribute="bottom" constant="13" id="Nl3-CU-2tb"/>
+                <constraint firstItem="F8Z-sn-mXp" firstAttribute="top" secondItem="CdL-Ze-R7c" secondAttribute="top" constant="14" id="ekM-v7-VSr"/>
                 <constraint firstItem="gOp-uy-NuM" firstAttribute="leading" secondItem="CdL-Ze-R7c" secondAttribute="leadingMargin" id="zO8-8z-pkd"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
@@ -1250,6 +1279,7 @@ Phiippines</string>
                 <outlet property="cancelButton" destination="1JB-FW-kJb" id="4HN-yN-pzt"/>
                 <outlet property="cancelOrderLabel" destination="pCM-TD-2h3" id="SZx-xN-Lhj"/>
                 <outlet property="cancelView" destination="gOp-uy-NuM" id="Lb7-BO-f8m"/>
+                <outlet property="leaveFeedbackButton" destination="F8Z-sn-mXp" id="PQ4-wZ-57H"/>
             </connections>
             <point key="canvasLocation" x="824.5" y="868.5"/>
         </view>

@@ -83,6 +83,7 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
         noTransactionLabel.hidden = true
         //supportLabel.text = support
         
+        self.transactionType = "ALL"
         self.tableView.hidden = true
         self.tableView.separatorInset = UIEdgeInsetsZero
         self.tableView.layoutMargins = UIEdgeInsetsZero
@@ -178,6 +179,7 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
             self.isPageEnd = false
             self.fireTransaction("all")
             self.query = "all"
+            self.transactionType = "ALL"
             deselectOtherViews(allView)
         }
     }
@@ -192,6 +194,7 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
             self.isPageEnd = false
             self.fireTransaction("ongoing")
             self.query = "ongoing"
+            self.transactionType = "ONGOING"
             deselectOtherViews(pendingView)
         }
     }
@@ -206,6 +209,7 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
             self.isPageEnd = false
             self.fireTransaction("on-delivery")
             self.query = "on-delivery"
+            self.transactionType = "ON-DELIVERY"
             deselectOtherViews(onDeliveryView)
         }
     }
@@ -220,6 +224,7 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
             self.isPageEnd = false
             self.fireTransaction("for-feedback")
             self.query = "for-feedback"
+            self.transactionType = "FOR FEEDBACK"
             deselectOtherViews(forFeedbackView)
         }
     }

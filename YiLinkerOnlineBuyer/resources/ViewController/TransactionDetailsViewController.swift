@@ -182,9 +182,12 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let productDetails = TransactionProductDetailsViewController(nibName: "TransactionProductDetailsViewController", bundle: nil)
         productDetails.orderProductId = self.table[indexPath.section].transactions[indexPath.row].orderProductId
+        productDetails.productId = self.table[indexPath.section].transactions[indexPath.row].productId
         productDetails.quantity = self.table[indexPath.section].transactions[indexPath.row].quantity
         productDetails.unitPrice = self.table[indexPath.section].transactions[indexPath.row].unitPrice
-        productDetails.totalPrice = self.table[indexPath.section].transactions[indexPath.row].totalPrice
+        productDetails.totalPrice = self.calculateTotalUnitCost(self.table[indexPath.section].transactions[indexPath.row].quantity, price: self.table[indexPath.section].transactions[indexPath.row].unitPrice).formatToTwoDecimal().formatToPeso()
+        productDetails.hasProductFeedback = self.table[indexPath.section].transactions[indexPath.row].hasProductFeedback
+        //self.table[indexPath.section].transactions[indexPath.row].totalPrice
         productDetails.productName = self.table[indexPath.section].transactions[indexPath.row].productName
         productDetails.transactionId = self.transactionId
         productDetails.isCancellable = self.table[indexPath.section].transactions[indexPath.row].isCancellable
@@ -231,6 +234,16 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
         self.navigationController!.pushViewController(sellerViewController, animated: true)
     }
     
+    func calculateTotalUnitCost(quantity: Int, price: String) -> String {
+        var tempUnitCost: Double = 0
+        
+        for i in 1...quantity {
+            tempUnitCost += (price.stringByReplacingOccurrencesOfString(",", withString: "") as NSString).doubleValue
+        }
+        
+        return "\(tempUnitCost)"
+    }
+
     /*
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         //self.transactionIdView =
@@ -280,9 +293,15 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
             self.transactionDetailsView = XibHelper.puffViewWithNibName("TransactionViews", index: 1) as! TransactionDetailsView
             
             if(self.transactionDetailsModel != nil){
-                transactionDetailsView.unitCostLabel.text = (self.transactionDetailsModel.transactionUnitPrice).formatToPeso()
+               
+                var totalProductCost = self.calculateTotalUnitCost(self.totalQuantity.toInt()!, price: self.transactionDetailsModel.transactionTotalPrice)
+                transactionDetailsView.unitCostLabel.text = (self.transactionDetailsModel.transactionUnitPrice).formatToTwoDecimal().formatToPeso()
+                    
+                    //(self.transactionDetailsModel.transactionUnitPrice).formatToPeso()
                 transactionDetailsView.shippingFeeLabel.text = (self.transactionDetailsModel.transactionShippingFee).formatToPeso()
-                transactionDetailsView.totalCostLabel.text = (self.transactionDetailsModel.transactionTotalPrice).formatToPeso()
+                transactionDetailsView.totalCostLabel.text = (self.transactionDetailsModel.transactionTotalPrice).formatToTwoDecimal().formatToPeso()
+                //("\((self.transactionDetailsModel.transactionUnitPrice + self.transactionDetailsModel.transactionShippingFee))").formatToTwoDecimal().formatToPeso()
+                
             }
             
             transactionDetailsView.transactionDetails.text  = self.transactionDetails
@@ -293,7 +312,8 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
             transactionDetailsView.unitCostTitleLabel.text = self.totalUnitCostTitle
             transactionDetailsView.shippingFeeTitleLabel.text = self.shippingFeeTitle
             transactionDetailsView.totalCostTitleLabel.text = self.totalCostTitle
-            transactionDetailsView.statusLabel.text = self.orderStatus
+            //transactionDetailsView.statusLabel.text = self.orderStatus
+            transactionDetailsView.statusLabel.text = self.transactionType
             transactionDetailsView.paymentTypeLabel.text = self.paymentType
             transactionDetailsView.dateCreatedLabel.text = self.dateCreated
             transactionDetailsView.quantityLabel.text = self.totalQuantity
@@ -553,6 +573,7 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
             var attributeModal = ViewFeedBackViewController(nibName: "ViewFeedBackViewController", bundle: nil)
             attributeModal.delegate = self
             attributeModal.sellerId = tag
+            attributeModal.feedback = true
             attributeModal.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
             attributeModal.providesPresentationContextTransitionStyle = true
             attributeModal.definesPresentationContext = true
@@ -572,7 +593,7 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
         
         manager.GET(urlEncoded!, parameters: nil, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            
+            println(responseObject)
             if responseObject["isSuccessful"] as! Bool {
                 self.transactionDetailsModel = TransactionDetailsModel.parseDataFromDictionary2(responseObject as! NSDictionary)
                 
@@ -583,7 +604,7 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
                     var arr = [TransactionDetailsProductsModel]()
                     for var b = 0; b < self.transactionDetailsModel.productName.count; b++ {
                         if self.transactionDetailsModel.sellerId[a] == self.transactionDetailsModel.sellerId2[b] {
-                            self.tableSectionContents = TransactionDetailsProductsModel(orderProductId: self.transactionDetailsModel.orderProductId[b], productId: self.transactionDetailsModel.productId[b], quantity: self.transactionDetailsModel.quantity[b], unitPrice: self.transactionDetailsModel.unitPrice[b], totalPrice: self.transactionDetailsModel.totalPrice[b], productName: self.transactionDetailsModel.productName[b], handlingFee: self.transactionDetailsModel.handlingFee[b], isCancellable: self.transactionDetailsModel.isCancellable[b])
+                            self.tableSectionContents = TransactionDetailsProductsModel(orderProductId: self.transactionDetailsModel.orderProductId[b], productId: self.transactionDetailsModel.productId[b], quantity: self.transactionDetailsModel.quantity[b], unitPrice: self.transactionDetailsModel.unitPrice[b], totalPrice: self.transactionDetailsModel.totalPrice[b], productName: self.transactionDetailsModel.productName[b], handlingFee: self.transactionDetailsModel.handlingFee[b], isCancellable: self.transactionDetailsModel.isCancellable[b], hasProductFeedback: self.transactionDetailsModel.hasProductFeedback[b])
                             arr.append(self.tableSectionContents)
                         }
                     }

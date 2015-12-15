@@ -441,4 +441,30 @@ class SellerModel: NSObject {
         return sellerModel
         
     }
+    
+    class func parseSellerReviewsDataFromDictionary2(dictionary: NSDictionary) -> SellerModel {
+        
+        var rating: Int = 0
+        var productReviews: [ProductReviewsModel] = [ProductReviewsModel]()
+        
+        if let value: AnyObject = dictionary["data"] {
+            if let tempRating = value["ratingAverage"] as? Int {
+                rating = tempRating
+            }
+            
+            if let val: AnyObject = value["reviews"] {
+                var reviewArray: NSArray = value["reviews"] as! NSArray
+                
+                for (index, review) in enumerate(reviewArray) {
+                    let reviewDictionary: NSDictionary = review as! NSDictionary
+                    let productReviewModel: ProductReviewsModel = ProductReviewsModel.parseSellerProductReviewsModel2(reviewDictionary)
+                    productReviews.append(productReviewModel)
+                }
+            }
+        }
+        
+        let sellerModel: SellerModel = SellerModel(rating: rating, product_reviews: productReviews)
+        return sellerModel
+        
+    }
 }

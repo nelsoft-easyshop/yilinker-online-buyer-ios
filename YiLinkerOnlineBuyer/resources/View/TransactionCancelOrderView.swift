@@ -10,6 +10,7 @@ import UIKit
 
 protocol TransactionCancelOrderViewDelegate {
     func showCancelOrder()
+    func leaveProductFeedback(tag: Int)
 }
 
 class TransactionCancelOrderView: UIView {
@@ -17,6 +18,7 @@ class TransactionCancelOrderView: UIView {
     @IBOutlet weak var cancelOrderLabel: UILabel!
     @IBOutlet weak var cancelView: DynamicRoundedView!
     @IBOutlet weak var cancelButton: UIButton!
+    @IBOutlet weak var leaveFeedbackButton: DynamicRoundedButton!
     
     var delegate: TransactionCancelOrderViewDelegate?
     override func awakeFromNib() {
@@ -34,6 +36,10 @@ class TransactionCancelOrderView: UIView {
 
     @IBAction func cancelButtonAction(sender: AnyObject){
         self.delegate?.showCancelOrder()
+    }
+    
+    @IBAction func leaveFeedback() {
+        self.delegate?.leaveProductFeedback(self.leaveFeedbackButton.tag)
     }
     /*
     // Only override drawRect: if you perform custom drawing.

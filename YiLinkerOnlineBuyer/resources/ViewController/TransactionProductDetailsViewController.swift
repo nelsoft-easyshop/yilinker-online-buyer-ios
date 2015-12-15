@@ -9,7 +9,7 @@
 import UIKit
 import MessageUI
 
-class TransactionProductDetailsViewController: UIViewController, TransactionCancelOrderViewDelegate, TransactionCancelViewControllerDelegate, TransactionCancelOrderSuccessViewControllerDelegate, TransactionDescriptionViewDelegate, TransactionProductDetailsDescriptionViewControllerDelegate, TransactionDeliveryStatusViewDelegate, MFMessageComposeViewControllerDelegate{
+class TransactionProductDetailsViewController: UIViewController, TransactionCancelOrderViewDelegate, TransactionCancelViewControllerDelegate, TransactionCancelOrderSuccessViewControllerDelegate, TransactionDescriptionViewDelegate, TransactionProductDetailsDescriptionViewControllerDelegate, TransactionDeliveryStatusViewDelegate, ViewFeedBackViewControllerDelegate, MFMessageComposeViewControllerDelegate{
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -32,6 +32,7 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
     var array: NSArray?
     var mArray: NSMutableArray?
     
+    var productId: String = ""
     var orderProductId: String = ""
     var quantity: Int = 0
     var unitPrice: String = ""
@@ -40,6 +41,7 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
     var transactionId: String = ""
     var imageUrl: String = ""
     var isCancellable: Bool = false
+    var hasProductFeedback: Bool = false
     var refreshtag: Int = 1001
     var time: Int = 0
     var refreshPage: Bool = false
@@ -243,6 +245,21 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
             if self.transactionProductDetailsModel != nil {
                 if !self.transactionProductDetailsModel.isCancellable {
                     self.transactionCancelView.cancelView.hidden = true
+                    if self.hasProductFeedback {
+                        self.transactionCancelView.leaveFeedbackButton.setTitle("VIEW PRODUCT FEEDBACK", forState: UIControlState.Normal)
+                        self.transactionCancelView.leaveFeedbackButton.hidden = false
+                        self.transactionCancelView.leaveFeedbackButton.tag = 1001
+                    } else {
+                        if self.transactionProductDetailsModel.orderProductStatusId == 4 {
+                            self.transactionCancelView.leaveFeedbackButton.hidden = false
+                            self.transactionCancelView.leaveFeedbackButton.tag = 1002
+                        } else {
+                            self.transactionCancelView.leaveFeedbackButton.hidden = true
+                        }
+                    }
+                } else {
+                    self.transactionCancelView.cancelView.hidden = false
+                    self.transactionCancelView.leaveFeedbackButton.hidden = true
                 }
             } else {
                 self.transactionCancelView.cancelView.hidden = true
@@ -534,6 +551,30 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
         self.myTimer!.invalidate()
     }
     
+    func leaveProductFeedback(tag: Int) {
+        if tag == 1002 {
+            let feedbackView = TransactionLeaveProductFeedbackTableViewController(nibName: "TransactionLeaveProductFeedbackTableViewController", bundle: nil)
+            feedbackView.edgesForExtendedLayout = UIRectEdge.None
+            feedbackView.orderProductId = self.orderProductId.toInt()!
+            feedbackView.productId = self.productId.toInt()!
+            self.navigationController?.pushViewController(feedbackView, animated: true)
+            self.myTimer!.invalidate()
+        } else {
+            self.showView()
+            var attributeModal = ViewFeedBackViewController(nibName: "ViewFeedBackViewController", bundle: nil)
+            attributeModal.delegate = self
+            attributeModal.orderProductId = self.orderProductId.toInt()!
+            attributeModal.productId = self.productId.toInt()!
+            attributeModal.feedback = false
+            attributeModal.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
+            attributeModal.providesPresentationContextTransitionStyle = true
+            attributeModal.definesPresentationContext = true
+            attributeModal.screenWidth = self.view.frame.width
+            self.tabBarController?.presentViewController(attributeModal, animated: true, completion: nil)
+            self.myTimer!.invalidate()
+        }
+    }
+
     func showView(){
         UIView.animateWithDuration(0.3, animations: {
             self.dimView.hidden = false
@@ -545,6 +586,15 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
     
     //MARK: TransactionCancelViewControllerDelegate
     func dismissView() {
+        UIView.animateWithDuration(0.3, animations: {
+            self.dimView.hidden = true
+            //self.view.transform = CGAffineTransformMakeTranslation(1, 1)
+            self.dimView.alpha = 0
+            //self.dimView.layer.zPosition = -1
+        })
+    }
+    
+    func dismissDimView() {
         UIView.animateWithDuration(0.3, animations: {
             self.dimView.hidden = true
             //self.view.transform = CGAffineTransformMakeTranslation(1, 1)
@@ -585,7 +635,7 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
         
         manager.GET(APIAtlas.transactionProductDetails+"\(SessionManager.accessToken())&orderProductId=\(self.orderProductId)", parameters: nil, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            
+            println(responseObject)
             if responseObject["isSuccessful"] as! Bool {
                 self.transactionProductDetailsModel = TransactionProductDetailsModel.parseFromDataDictionary(responseObject as! NSDictionary)
             }

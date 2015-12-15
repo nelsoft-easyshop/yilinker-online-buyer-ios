@@ -74,7 +74,10 @@ class ProductReviewsModel {
         
         var model = ProductReviewsModel()
         if reviews.isKindOfClass(NSDictionary) {
-            model.ratingSellerReview = reviews["averageRating"] as! String
+            if let rating = reviews["averageRating"] as? String {
+                model.ratingSellerReview = rating
+            }
+            
             model.fullName = reviews["fullName"] as! String
             model.review = reviews["feedback"] as! String
             model.imageUrl = reviews["profileImageUrl"] as! String
@@ -94,6 +97,23 @@ class ProductReviewsModel {
             model.fullName = dictionary["fullName"] as! String
             model.review = dictionary["feedback"] as! String
             model.imageUrl = dictionary["profileImageUrl"] as! String
+        }
+        
+        return model
+    }
+    
+    class func parseSellerProductReviewsModel2(reviews: NSDictionary) -> ProductReviewsModel! {
+        
+        var model = ProductReviewsModel()
+        if reviews.isKindOfClass(NSDictionary) {
+            if let rating = reviews["rating"] as? String {
+                model.ratingSellerReview = rating
+            }
+            
+            model.fullName = reviews["fullName"] as! String
+            model.review = reviews["review"] as! String
+            model.imageUrl = reviews["profileImageUrl"] as! String
+            
         }
         
         return model
