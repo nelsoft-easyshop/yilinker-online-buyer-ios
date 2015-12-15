@@ -55,6 +55,8 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
     
     var yAdjustment: CGFloat = 0
     
+    var mainViewGesture: UITapGestureRecognizer?
+    
     @IBOutlet weak var orLabel: UILabel!
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
@@ -69,7 +71,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         }
         
         parentViewController.verticalSpaceConstraint.constant = yAdjustment
-
+        self.parentViewController?.view.addGestureRecognizer(mainViewGesture!)
     }
     
     override func viewDidLoad() {
@@ -108,6 +110,29 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         let parentViewController: LoginAndRegisterContentViewController = self.parentViewController as! LoginAndRegisterContentViewController
         if !parentViewController.isFromTab && IphoneType.isIphone5() {
             parentViewController.verticalSpaceConstraint.constant = yAdjustment
+        }
+        
+        mainViewGesture = UITapGestureRecognizer(target:self, action:"tapMainViewAction")
+    }
+    
+    override func viewDidDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        self.parentViewController?.view.removeGestureRecognizer(mainViewGesture!)
+    }
+    
+    //MARK: Tap Main View
+    func tapMainViewAction() {
+        self.view.endEditing(true)
+        
+        if IphoneType.isIphone5() {
+            self.adjustTextFieldYInsetWithInset(yAdjustment)
+        } else if IphoneType.isIphone6() {
+            self.adjustTextFieldYInsetWithInset(yAdjustment)
+        } else if IphoneType.isIphone6Plus() {
+            self.adjustTextFieldYInsetWithInset(yAdjustment)
+        } else {
+            self.adjustTextFieldYInsetWithInset(yAdjustment)
         }
     }
     
