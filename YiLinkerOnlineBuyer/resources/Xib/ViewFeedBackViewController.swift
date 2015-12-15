@@ -110,6 +110,7 @@ class ViewFeedBackViewController: UIViewController, UITableViewDelegate, UITable
                 cell.nameLabel.text = reviewModel.fullName
                 var strImageUrl = reviewModel.profileImageUrl
                 var strRate = reviewModel.ratingSellerReview
+                println("\(strRate)")
                 cell.setRating(strRate)
                 cell.setDisplayPicture(strImageUrl)
             }
@@ -177,7 +178,11 @@ class ViewFeedBackViewController: UIViewController, UITableViewDelegate, UITable
                         self.loadingLabel.hidden = true
                     }
                 } else {
-                    self.productReviewModel = ProductReviewModel.parseDataWithDictionary(responseObject)
+                    self.productReviewModel = ProductReviewModel.parseDataWithDictionary2(responseObject)
+                    self.setRating(self.productReviewModel!.ratingAverage)
+                    self.generalRatingLabel.text = "\(self.productReviewModel!.ratingAverage)"
+                    self.numberOfPeopleLabel.text = "\(self.productReviewModel!.reviews.count)"
+                    self.ratingAndReviewsTableView.reloadData()
                     if self.productReviewModel!.reviews.count == 0 {
                         //self.showAlert(title: ProductStrings.alertNoReviews, message: nil)
                         self.ratingAndReviewsTableView.hidden = true

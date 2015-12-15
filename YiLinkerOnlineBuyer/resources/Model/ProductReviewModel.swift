@@ -54,4 +54,37 @@ class ProductReviewModel {
         
         return ProductReviewModel(message: message, isSuccessful: isSuccessful, ratingAverage: ratingAverage, reviews: reviews)
     } // parse
+    
+    class func parseDataWithDictionary2(dictionary: AnyObject) -> ProductReviewModel! {
+        
+        var message: String = ""
+        var isSuccessful: Bool = false
+        
+        var ratingAverage: Int = 0
+        var reviews: [ProductReviewsModel] = []
+        
+        if dictionary.isKindOfClass(NSDictionary) {
+            
+            if let tempVar = dictionary["message"] as? String {
+                message = tempVar
+            }
+            
+            if let tempVar = dictionary["isSuccessful"] as? Bool {
+                isSuccessful = tempVar
+            }
+            
+            if let value: AnyObject = dictionary["data"] {
+                if let tempVar = value["ratingAverage"] as? Int {
+                    ratingAverage = tempVar
+                }
+                
+                for subValue in value["reviews"] as! NSArray {
+                    let model: ProductReviewsModel = ProductReviewsModel.parseSellerProductReviewsModel2(subValue as! NSDictionary)
+                    reviews.append(model)
+                }
+            }
+        } // dictionary
+        
+        return ProductReviewModel(message: message, isSuccessful: isSuccessful, ratingAverage: ratingAverage, reviews: reviews)
+    } // parse
 }
