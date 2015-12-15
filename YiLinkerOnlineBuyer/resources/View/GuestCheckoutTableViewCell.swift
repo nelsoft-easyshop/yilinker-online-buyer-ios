@@ -55,7 +55,7 @@ class GuestCheckoutTableViewCell: UITableViewCell, UITextFieldDelegate {
         }
         
         self.localizedLabels()
-        
+        self.requiredLabels()
         self.clipsToBounds = true
     }
     
@@ -68,6 +68,17 @@ class GuestCheckoutTableViewCell: UITableViewCell, UITextFieldDelegate {
         self.cityLabel.text = AddressStrings.city
         self.barangayLabel.text = AddressStrings.barangay
         self.zipCodelabel.text = AddressStrings.zipCode
+    }
+    
+    func requiredLabels() {
+        self.firstNameLabel.required()
+        self.lastNameLabel.required()
+        self.mobileNumberLabel.required()
+        self.emailAddressLabel.required()
+        streetNameLabel.required()
+        self.provinceLabel.required()
+        self.cityLabel.required()
+        self.barangayLabel.required()
     }
     
     override func setSelected(selected: Bool, animated: Bool) {
