@@ -152,7 +152,10 @@ class TransactionLeaveProductFeedbackTableViewController: UITableViewController,
                         }
                         
                     }
+                    //Toast.displayToastWithMessage(errors, duration: 3.0, view: self.view)
                     UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errors, title: Constants.Localized.error)
+                    //self.showAlert(Constants.Localized.error, message: errors)
+                    //self.navigationController?.popViewControllerAnimated(true)
                     self.tableView.reloadData()
                 }
                 
@@ -232,6 +235,21 @@ class TransactionLeaveProductFeedbackTableViewController: UITableViewController,
         let defaultAction = UIAlertAction(title: Constants.Localized.ok, style: .Default, handler: nil)
         alertController.addAction(defaultAction)
         presentViewController(alertController, animated: true, completion: nil)
+    }
+    
+    //MARK: Alert view
+    func showAlert(title: String, message: String) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+        
+        let OKAction = UIAlertAction(title: Constants.Localized.ok, style: .Default) { (action) in
+            self.navigationController?.popToRootViewControllerAnimated(true)
+            //alertController.dismissViewControllerAnimated(true, completion: nil)
+        }
+        
+        alertController.addAction(OKAction)
+        
+        self.presentViewController(alertController, animated: true) {
+        }
     }
     
     /*
