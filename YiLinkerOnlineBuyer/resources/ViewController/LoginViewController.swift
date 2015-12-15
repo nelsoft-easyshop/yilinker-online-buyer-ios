@@ -59,6 +59,8 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
     var parentView: UIView?
     var hud: MBProgressHUD?
     
+    var mainViewGesture: UITapGestureRecognizer?
+    
     //MARK: - ViewDidAppear
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
@@ -67,11 +69,14 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
         self.passwordTextField.placeholder = LoginStrings.enterPassword
         self.orLabel.text = LoginStrings.or
         self.forgotPasswordButton.setTitle(LoginStrings.forgotPasswordd, forState: UIControlState.Normal)
+        
+        self.parentViewController?.view.addGestureRecognizer(mainViewGesture!)
     }
     
     //MARK: - ViewDidDisappear
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
+        self.parentViewController?.view.removeGestureRecognizer(mainViewGesture!)
         
         if self.parentViewController!.isKindOfClass(LoginAndRegisterContentViewController) {
             self.done()
@@ -109,6 +114,21 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
         self.setupSignInButton()
         self.setUpTextFields()
         self.setUpGmailLogin()
+        
+        mainViewGesture = UITapGestureRecognizer(target:self, action:"tapMainViewAction")
+    }
+    
+    //MARK: Tap Main View
+    func tapMainViewAction() {
+        self.view.endEditing(true)
+        
+        if IphoneType.isIphone5() {
+            self.adjustTextFieldYInsetWithInset(yAdjustment)
+        } else if IphoneType.isIphone6() || IphoneType.isIphone6Plus() {
+            
+        } else {
+            self.adjustTextFieldYInsetWithInset(0)
+        }
     }
     
     //MARK: Setup Signin Button
