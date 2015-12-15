@@ -263,8 +263,13 @@ class WishlistViewController: UIViewController, UITableViewDelegate, UITableView
                 //                    cell.productItemImageView.sd_setImageWithURL(NSURL(string: tempProductUnit.imageIds[0]), placeholderImage: UIImage(named: "dummy-placeholder"))
                 //                }
                 
-              
-                if tempModel.images.count != 0 {
+                if tempProductUnit.imageIds.count != 0 {
+                    for tempImage in tempModel.images {
+                        if tempImage.id == tempProductUnit.imageIds[0] {
+                            cell.productItemImageView.sd_setImageWithURL(NSURL(string: tempImage.fullImageLocation), placeholderImage: UIImage(named: "dummy-placeholder"))
+                        }
+                    }
+                } else if tempModel.images.count != 0 {
                     cell.productItemImageView.sd_setImageWithURL(NSURL(string: tempModel.images[0].fullImageLocation), placeholderImage: UIImage(named: "dummy-placeholder"))
                 } else {
                     cell.productItemImageView.image = UIImage(named: "dummy-placeholder")

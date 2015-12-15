@@ -187,6 +187,40 @@
                       "targetType": "webView",
                       "isAuthenticated": false
                       }
+                      },
+                      {
+                      "name": "Official Yilinker Product With Super Ultra Electro Magnetic Giga Long Product Title With Super Ultra Electro Magnetic Giga Long Product Title",
+                      "originalPrice": "10000.00",
+                      "discountedPrice": "10000.00",
+                      "discountPercentage": "0.00",
+                      "currency": "PHP",
+                      "image": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/1009_592_1446017111.jpg?",
+                      "thumbnail": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/thumbnail/1009_592_1446017111.jpg?",
+                      "small": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/small/1009_592_1446017111.jpg?",
+                      "medium": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/medium/1009_592_1446017111.jpg?",
+                      "large": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/large/1009_592_1446017111.jpg?",
+                      "target": {
+                      "targetUrl": "https://yilinker.com",
+                      "targetType": "webView",
+                      "isAuthenticated": false
+                      }
+                      },
+                      {
+                      "name": "Official Yilinker Product With Super Ultra Electro Magnetic Giga Long Product Title With Super Ultra Electro Magnetic Giga Long Product Title",
+                      "originalPrice": "10000.00",
+                      "discountedPrice": "10000.00",
+                      "discountPercentage": "0.00",
+                      "currency": "PHP",
+                      "image": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/1009_592_1446017111.jpg?",
+                      "thumbnail": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/thumbnail/1009_592_1446017111.jpg?",
+                      "small": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/small/1009_592_1446017111.jpg?",
+                      "medium": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/medium/1009_592_1446017111.jpg?",
+                      "large": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/large/1009_592_1446017111.jpg?",
+                      "target": {
+                      "targetUrl": "https://yilinker.com",
+                      "targetType": "webView",
+                      "isAuthenticated": false
+                      }
                       }
                       ]
              },

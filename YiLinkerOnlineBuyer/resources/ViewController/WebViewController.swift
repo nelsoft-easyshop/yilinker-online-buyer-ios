@@ -58,19 +58,19 @@ class WebViewController: UIViewController, UIWebViewDelegate, EmptyViewDelegate 
         
         if self.urlString.isEmpty {
             loadWebview()
-        } else if self.urlString == WebViewURL.flashSale {
+        } else if self.urlString.contains(APIAtlas.flashSale) {
             webviewSource = WebviewSource.FlashSale
             loadWebview()
-        } else if self.urlString == WebViewURL.dailyLogin {
+        } else if self.urlString.contains(APIAtlas.dailyLogin) {
             webviewSource = WebviewSource.DailyLogin
             loadWebview()
-        } else if self.urlString == WebViewURL.category {
+        } else if self.urlString.contains(APIAtlas.category) {
             webviewSource = WebviewSource.Category
             loadWebview()
-        } else if self.urlString == WebViewURL.storeView {
+        } else if self.urlString.contains(APIAtlas.storeView) {
             webviewSource = WebviewSource.StoreView
             loadWebview()
-        } else if self.urlString.contains(WebViewURL.productList) {
+        } else if self.urlString.contains(APIAtlas.productList) {
             webviewSource = WebviewSource.ProductList
             loadWebview()
         } else {
@@ -178,12 +178,18 @@ class WebViewController: UIViewController, UIWebViewDelegate, EmptyViewDelegate 
             }
             
         case .DailyLogin:
-            if urlString == WebViewURL.dailyLogin + "?access_token=\(SessionManager.accessToken())" {
-                return true
+            if SessionManager.isLoggedIn() {
+                if urlString == WebViewURL.dailyLogin + "?access_token=\(SessionManager.accessToken())" {
+                    return true
+                } else {
+                    errorView.hidden = false
+                    return false
+                }
             } else {
                 errorView.hidden = false
                 return false
             }
+            
         case .Category:
             if urlString == WebViewURL.category {
                 return true
@@ -324,9 +330,11 @@ class WebViewController: UIViewController, UIWebViewDelegate, EmptyViewDelegate 
         
         var storeUrl: String = ""
         
-        let start = url.indexOfCharacter("=") + 1
-        if start != 0 {
-            storeUrl = url.substringFromIndex(advance(minElement(indices(url)), start))
+        if url.contains("getStoreInfo") {
+            let start = url.indexOfCharacter("=") + 1
+            if start != 0 {
+                storeUrl = url.substringFromIndex(advance(minElement(indices(url)), start))
+            }
         }
         
         //        let html = webView.stringByEvaluatingJavaScriptFromString("document.documentElement.outerHTML")
