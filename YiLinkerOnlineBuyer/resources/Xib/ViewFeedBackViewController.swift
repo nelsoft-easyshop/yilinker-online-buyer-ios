@@ -34,6 +34,9 @@ class ViewFeedBackViewController: UIViewController, UITableViewDelegate, UITable
     var productReviewModel: ProductReviewModel?
     var sellerModel: SellerModel?
     var sellerId: Int = 0
+    var orderProductId: Int = 0
+    var productId: Int = 0
+    var feedback: Bool = false
     
     var screenWidth: CGFloat = 0.0
     
@@ -44,8 +47,9 @@ class ViewFeedBackViewController: UIViewController, UITableViewDelegate, UITable
     
     var cancelTitle = StringHelper.localizedStringWithKey("CANCEL_LOCALIZE_KEY")
     var sellerRating = StringHelper.localizedStringWithKey("SELLERS_RATING_AND_FEEDBACK_LOCALIZE_KEY")
+    var productRating = StringHelper.localizedStringWithKey("RATING_FEEDBACK_LOCALIZE_KEY")
     var ratingTitle = StringHelper.localizedStringWithKey("SELLERS_RATING_LOCALIZE_KEY")
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -57,7 +61,12 @@ class ViewFeedBackViewController: UIViewController, UITableViewDelegate, UITable
         self.registerNibs()
         
         self.cancelButton.setTitle(cancelTitle, forState: UIControlState.Normal)
-        self.sellerRatingLabel.text = sellerRating
+        
+        if self.feedback {
+            self.sellerRatingLabel.text = sellerRating
+        } else {
+            self.sellerRatingLabel.text = productRating
+        }
         self.ratingLabel.text = ratingTitle
         self.ratingAndReviewsTableView.hidden = true
         self.loadingLabel.hidden = false
@@ -84,14 +93,26 @@ class ViewFeedBackViewController: UIViewController, UITableViewDelegate, UITable
         
         let cell: ReviewTableViewCell = self.ratingAndReviewsTableView.dequeueReusableCellWithIdentifier(reviewTableViewCellIdentifier, forIndexPath: indexPath) as! ReviewTableViewCell
         cell.delegate = self
-        if(self.sellerModel != nil) {
-            let reviewModel: ProductReviewsModel = self.sellerModel!.reviews[indexPath.section]
-            cell.messageLabel.text = reviewModel.review
-            cell.nameLabel.text = reviewModel.fullName
-            var strImageUrl = reviewModel.profileImageUrl
-            var strRate = reviewModel.ratingSellerReview
-            cell.setRating(strRate)
-            cell.setDisplayPicture(strImageUrl)
+        if self.feedback {
+            if(self.sellerModel != nil) {
+                let reviewModel: ProductReviewsModel = self.sellerModel!.reviews[indexPath.section]
+                cell.messageLabel.text = reviewModel.review
+                cell.nameLabel.text = reviewModel.fullName
+                var strImageUrl = reviewModel.profileImageUrl
+                var strRate = reviewModel.ratingSellerReview
+                cell.setRating(strRate)
+                cell.setDisplayPicture(strImageUrl)
+            }
+        } else {
+            if(self.productReviewModel != nil) {
+                let reviewModel: ProductReviewsModel = self.productReviewModel!.reviews[indexPath.section]
+                cell.messageLabel.text = reviewModel.review
+                cell.nameLabel.text = reviewModel.fullName
+                var strImageUrl = reviewModel.profileImageUrl
+                var strRate = reviewModel.ratingSellerReview
+                cell.setRating(strRate)
+                cell.setDisplayPicture(strImageUrl)
+            }
         }
         
         return cell
@@ -108,35 +129,64 @@ class ViewFeedBackViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        if self.sellerModel != nil {
-            return self.sellerModel!.reviews.count
+        if self.feedback {
+            if self.sellerModel != nil {
+                return self.sellerModel!.reviews.count
+            } else {
+                return 0
+            }
         } else {
-            return 0
+            if self.productReviewModel != nil {
+                return self.productReviewModel!.reviews.count
+            } else {
+                return 0
+            }
         }
-        
     }
     
     func fireSellerFeedback() {
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         let manager = APIManager.sharedInstance
-        let parameters: NSDictionary = ["sellerId" : self.sellerId];
-        manager.POST("\(APIAtlas.buyerSellerFeedbacks)?access_token=\(SessionManager.accessToken())", parameters: parameters, success: {
+        var parameters: NSDictionary?
+        var url: String = ""
+        if self.feedback {
+            parameters = ["sellerId" : self.sellerId]
+            url = "\(APIAtlas.buyerSellerFeedbacks)?access_token=\(SessionManager.accessToken())"
+        } else {
+            parameters = ["productId" : self.productId]
+            url = APIAtlas.productReviews
+        }
+        
+        manager.POST(url, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             println(responseObject["isSuccessful"])
             if responseObject["isSuccessful"] as! Bool {
-                self.sellerModel = SellerModel.parseSellerReviewsDataFromDictionary(responseObject as! NSDictionary)
-                self.setRating(self.sellerModel!.rating)
-                self.generalRatingLabel.text = "\(self.sellerModel!.rating)"
-                self.numberOfPeopleLabel.text = "\(self.sellerModel!.reviews.count)"
-                self.ratingAndReviewsTableView.reloadData()
-                if self.sellerModel!.reviews.count == 0 {
-                    //self.showAlert(title: ProductStrings.alertNoReviews, message: nil)
-                    self.ratingAndReviewsTableView.hidden = true
-                    self.loadingLabel.hidden = false
-                    self.loadingLabel.text = StringHelper.localizedStringWithKey("TRANSACTION_NO_REVIEWS_LOCALIZE_KEY")
+                if self.feedback {
+                    self.sellerModel = SellerModel.parseSellerReviewsDataFromDictionary(responseObject as! NSDictionary)
+                    self.setRating(self.sellerModel!.rating)
+                    self.generalRatingLabel.text = "\(self.sellerModel!.rating)"
+                    self.numberOfPeopleLabel.text = "\(self.sellerModel!.reviews.count)"
+                    self.ratingAndReviewsTableView.reloadData()
+                    if self.sellerModel!.reviews.count == 0 {
+                        //self.showAlert(title: ProductStrings.alertNoReviews, message: nil)
+                        self.ratingAndReviewsTableView.hidden = true
+                        self.loadingLabel.hidden = false
+                        self.loadingLabel.text = StringHelper.localizedStringWithKey("TRANSACTION_NO_REVIEWS_LOCALIZE_KEY")
+                    } else {
+                        self.ratingAndReviewsTableView.hidden = false
+                        self.loadingLabel.hidden = true
+                    }
                 } else {
-                    self.ratingAndReviewsTableView.hidden = false
-                    self.loadingLabel.hidden = true
+                    self.productReviewModel = ProductReviewModel.parseDataWithDictionary(responseObject)
+                    if self.productReviewModel!.reviews.count == 0 {
+                        //self.showAlert(title: ProductStrings.alertNoReviews, message: nil)
+                        self.ratingAndReviewsTableView.hidden = true
+                        self.loadingLabel.hidden = false
+                        self.loadingLabel.text = StringHelper.localizedStringWithKey("TRANSACTION_NO_REVIEWS_LOCALIZE_KEY")
+                    } else {
+                        self.ratingAndReviewsTableView.hidden = false
+                        self.loadingLabel.hidden = true
+                    }
                 }
             } else {
                 //self.showAlert(title: Constants.Localized.error, message: responseObject["message"] as! String)
@@ -148,18 +198,26 @@ class ViewFeedBackViewController: UIViewController, UITableViewDelegate, UITable
             self.ratingAndReviewsTableView.reloadData()
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                if error.userInfo != nil {
-                    println(error.userInfo)
-                    if let jsonResult = error.userInfo as? Dictionary<String, AnyObject> {
-                        if jsonResult["message"] != nil {
-                            self.showAlert(title: jsonResult["message"] as! String, message: nil)
-                        } else {
-                            self.showAlert(title: Constants.Localized.someThingWentWrong, message: nil)
+                
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                if task.statusCode == 401 {
+                    self.fireRefreshToken()
+                    self.ratingAndReviewsTableView.reloadData()
+                } else {
+                    if error.userInfo != nil {
+                        println(error.userInfo)
+                        if let jsonResult = error.userInfo as? Dictionary<String, AnyObject> {
+                            if jsonResult["message"] != nil {
+                                self.showAlert(title: jsonResult["message"] as! String, message: nil)
+                            } else {
+                                self.showAlert(title: Constants.Localized.someThingWentWrong, message: nil)
+                            }
                         }
+                    } else  {
+                        self.showAlert(title: Constants.Localized.error, message: Constants.Localized.someThingWentWrong)
                     }
-                } else  {
-                    self.showAlert(title: Constants.Localized.error, message: Constants.Localized.someThingWentWrong)
                 }
+                
                 UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                 self.ratingAndReviewsTableView.hidden = true
                 self.loadingLabel.hidden = true
@@ -214,6 +272,31 @@ class ViewFeedBackViewController: UIViewController, UITableViewDelegate, UITable
     
     func rateImage(ctr: UIButton) {
         ctr.setImage(UIImage(named: "rating2"), forState: UIControlState.Normal)
+    }
+    
+    func fireRefreshToken() {
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+        let manager: APIManager = APIManager.sharedInstance
+        let parameters: NSDictionary = ["client_id": Constants.Credentials.clientID(), "client_secret": Constants.Credentials.clientSecret(), "grant_type": Constants.Credentials.grantRefreshToken, "refresh_token":  SessionManager.refreshToken()]
+        manager.POST(APIAtlas.refreshTokenUrl, parameters: parameters, success: {
+            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+            
+            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+            self.fireSellerFeedback()
+            
+            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+            
+            }, failure: {
+                (task: NSURLSessionDataTask!, error: NSError!) in
+                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                
+                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
+                let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: Constants.Localized.someThingWentWrong)
+                
+        })
+        
     }
 
     /*

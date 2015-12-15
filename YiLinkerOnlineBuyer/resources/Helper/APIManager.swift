@@ -165,6 +165,7 @@ struct APIAtlas {
     static let getReasons = "v1/auth/dispute/get-buyer-reasons?access_token="
     static let transactionDeliveryStatus = "v1/auth/getTransactionDeliveryOverview?access_token="
     static let getDeliveryLogs = "v1/auth/getTransactionDeliveryLogs"
+    static let transactionLeaveProductFeedback = "v1/auth/product/addProductReview"
     
     //Resolution Center
     static let getResolutionCenterCases = "/api/v1/auth/dispute/get-case"

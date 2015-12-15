@@ -43,8 +43,11 @@ class TransactionProductDetailsModel: NSObject {
     var attributeName: [String] = []
     var attributeValue: [String] = []
     var isCancellable: Bool = false
+    var hasFeedback: Bool = false
+    var orderProductId: Int = 0
+    var orderProductStatusId: Int = 0
     
-    init(productImage: String, sku: String, color: String, size: String, width: String, height: String, length: String, weight: String, brandName: String, longDescription: String, shortDescription: String, attributeName: NSArray, attributeValue: NSArray, isCancellable: Bool) {
+    init(productImage: String, sku: String, color: String, size: String, width: String, height: String, length: String, weight: String, brandName: String, longDescription: String, shortDescription: String, attributeName: NSArray, attributeValue: NSArray, isCancellable: Bool, hasFeedback: Bool, orderProductId: Int, orderProductStatusId: Int) {
         self.productImage = productImage
         self.sku = sku
         self.color = color
@@ -59,6 +62,9 @@ class TransactionProductDetailsModel: NSObject {
         self.attributeName = attributeName as! [String]
         self.attributeValue = attributeValue as! [String]
         self.isCancellable = isCancellable
+        self.hasFeedback = hasFeedback
+        self.orderProductId = orderProductId
+        self.orderProductStatusId = orderProductStatusId
     }
     
     class func parseFromDataDictionary(dictionary: AnyObject) -> TransactionProductDetailsModel {
@@ -75,6 +81,9 @@ class TransactionProductDetailsModel: NSObject {
         var longDescription: String = ""
         var shortDescription: String = ""
         var isCancellable: Bool = false
+        var hasFeedback: Bool = false
+        var orderProductId: Int = 0
+        var orderProductStatusId: Int = 0
         
         var attributeName: [String] = []
         var attributeValue: [String] = []
@@ -103,6 +112,18 @@ class TransactionProductDetailsModel: NSObject {
                     isCancellable = false
                 }
                 
+                if let val = value["hasProductReview"] as? Bool {
+                    hasFeedback = val
+                } else {
+                    hasFeedback = false
+                }
+                
+                if let val = value["orderProductId"] as? Int {
+                    orderProductId = val
+                } else {
+                    orderProductId = 0
+                }
+                
                 if let val = value["sku"] as? String {
                     sku = val
                     attributeName.append(skuTitle)
@@ -122,6 +143,14 @@ class TransactionProductDetailsModel: NSObject {
                         brandName = ""
                         attributeName.append(brandTitle)
                         attributeValue.append(brandName)
+                    }
+                }
+                
+                if let order: AnyObject = value["orderProductStatus"] {
+                    if let val = order["orderProductStatusId"] as? Int {
+                        orderProductStatusId = val
+                    } else {
+                        orderProductStatusId = 0
                     }
                 }
                 
@@ -200,7 +229,8 @@ class TransactionProductDetailsModel: NSObject {
             }
         }
         
-        let transactionProductDetailsModel = TransactionProductDetailsModel(productImage: productImage, sku: sku, color: color, size: size, width: width, height: height, length: length, weight: weight, brandName: brandName, longDescription: longDescription, shortDescription: shortDescription, attributeName: attributeName, attributeValue: attributeValue, isCancellable: isCancellable)
+        let transactionProductDetailsModel = TransactionProductDetailsModel(productImage: productImage, sku: sku, color: color, size: size, width: width, height: height, length: length, weight: weight, brandName: brandName, longDescription: longDescription, shortDescription: shortDescription, attributeName: attributeName, attributeValue: attributeValue, isCancellable: isCancellable, hasFeedback: hasFeedback, orderProductId
+            : orderProductId, orderProductStatusId: orderProductStatusId)
         
         return transactionProductDetailsModel
         

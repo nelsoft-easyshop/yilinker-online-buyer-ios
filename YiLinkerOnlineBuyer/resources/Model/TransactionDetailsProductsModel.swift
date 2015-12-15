@@ -30,8 +30,9 @@ class TransactionDetailsProductsModel: NSObject {
     var productName: String = ""
     var handlingFee: String = ""
     var isCancellable: Bool = false
+    var hasProductFeedback: Bool = false
     
-    init(orderProductId: String, productId: String, quantity: Int, unitPrice: String, totalPrice: String, productName: String, handlingFee: String, isCancellable: Bool) {
+    init(orderProductId: String, productId: String, quantity: Int, unitPrice: String, totalPrice: String, productName: String, handlingFee: String, isCancellable: Bool, hasProductFeedback: Bool) {
         self.orderProductId = orderProductId
         self.productId = productId
         self.quantity = quantity
@@ -40,6 +41,7 @@ class TransactionDetailsProductsModel: NSObject {
         self.productName = productName
         self.handlingFee = handlingFee
         self.isCancellable = isCancellable
+        self.hasProductFeedback = hasProductFeedback
     }
     
     /*

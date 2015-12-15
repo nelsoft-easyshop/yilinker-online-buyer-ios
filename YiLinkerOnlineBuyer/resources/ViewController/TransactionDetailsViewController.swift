@@ -182,9 +182,11 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let productDetails = TransactionProductDetailsViewController(nibName: "TransactionProductDetailsViewController", bundle: nil)
         productDetails.orderProductId = self.table[indexPath.section].transactions[indexPath.row].orderProductId
+        productDetails.productId = self.table[indexPath.section].transactions[indexPath.row].productId
         productDetails.quantity = self.table[indexPath.section].transactions[indexPath.row].quantity
         productDetails.unitPrice = self.table[indexPath.section].transactions[indexPath.row].unitPrice
         productDetails.totalPrice = self.calculateTotalUnitCost(self.table[indexPath.section].transactions[indexPath.row].quantity, price: self.table[indexPath.section].transactions[indexPath.row].unitPrice).formatToTwoDecimal().formatToPeso()
+        productDetails.hasProductFeedback = self.table[indexPath.section].transactions[indexPath.row].hasProductFeedback
         //self.table[indexPath.section].transactions[indexPath.row].totalPrice
         productDetails.productName = self.table[indexPath.section].transactions[indexPath.row].productName
         productDetails.transactionId = self.transactionId
@@ -571,6 +573,7 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
             var attributeModal = ViewFeedBackViewController(nibName: "ViewFeedBackViewController", bundle: nil)
             attributeModal.delegate = self
             attributeModal.sellerId = tag
+            attributeModal.feedback = true
             attributeModal.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
             attributeModal.providesPresentationContextTransitionStyle = true
             attributeModal.definesPresentationContext = true
@@ -601,7 +604,7 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
                     var arr = [TransactionDetailsProductsModel]()
                     for var b = 0; b < self.transactionDetailsModel.productName.count; b++ {
                         if self.transactionDetailsModel.sellerId[a] == self.transactionDetailsModel.sellerId2[b] {
-                            self.tableSectionContents = TransactionDetailsProductsModel(orderProductId: self.transactionDetailsModel.orderProductId[b], productId: self.transactionDetailsModel.productId[b], quantity: self.transactionDetailsModel.quantity[b], unitPrice: self.transactionDetailsModel.unitPrice[b], totalPrice: self.transactionDetailsModel.totalPrice[b], productName: self.transactionDetailsModel.productName[b], handlingFee: self.transactionDetailsModel.handlingFee[b], isCancellable: self.transactionDetailsModel.isCancellable[b])
+                            self.tableSectionContents = TransactionDetailsProductsModel(orderProductId: self.transactionDetailsModel.orderProductId[b], productId: self.transactionDetailsModel.productId[b], quantity: self.transactionDetailsModel.quantity[b], unitPrice: self.transactionDetailsModel.unitPrice[b], totalPrice: self.transactionDetailsModel.totalPrice[b], productName: self.transactionDetailsModel.productName[b], handlingFee: self.transactionDetailsModel.handlingFee[b], isCancellable: self.transactionDetailsModel.isCancellable[b], hasProductFeedback: self.transactionDetailsModel.hasProductFeedback[b])
                             arr.append(self.tableSectionContents)
                         }
                     }
