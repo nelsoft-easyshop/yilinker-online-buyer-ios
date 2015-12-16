@@ -166,6 +166,18 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
                 for tempProductUnit in product.productUnits {
                     if product.unitId == tempProductUnit.productUnitId {
                         orderSummaryCell.priceLabel.text = tempProductUnit.discountedPrice.formatToTwoDecimal()
+                        
+                        if tempProductUnit.imageIds.count != 0 {
+                            for tempImage in product.images {
+                                if tempImage.id == tempProductUnit.imageIds[0] {
+                                    orderSummaryCell.productImageView.sd_setImageWithURL(NSURL(string: tempImage.fullImageLocation), placeholderImage: UIImage(named: "dummy-placeholder"))
+                                }
+                            }
+                        } else if product.images.count != 0 {
+                            orderSummaryCell.productImageView.sd_setImageWithURL(NSURL(string: product.images[0].fullImageLocation), placeholderImage: UIImage(named: "dummy-placeholder"))
+                        } else {
+                            orderSummaryCell.productImageView.image = UIImage(named: "dummy-placeholder")
+                        }
                         break
                     }
                 }
