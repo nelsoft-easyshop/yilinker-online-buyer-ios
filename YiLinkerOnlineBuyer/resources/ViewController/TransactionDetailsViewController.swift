@@ -295,11 +295,11 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
             if(self.transactionDetailsModel != nil){
                
                 var totalProductCost = self.calculateTotalUnitCost(self.totalQuantity.toInt()!, price: self.transactionDetailsModel.transactionTotalPrice)
-                transactionDetailsView.unitCostLabel.text = (self.transactionDetailsModel.transactionUnitPrice).formatToTwoDecimal().formatToPeso()
-                    
+                //transactionDetailsView.unitCostLabel.text = (self.transactionDetailsModel.transactionUnitPrice).formatToTwoDecimal().formatToPeso()
+                transactionDetailsView.unitCostLabel.text = (self.totalCost).formatToPeso()
                     //(self.transactionDetailsModel.transactionUnitPrice).formatToPeso()
                 transactionDetailsView.shippingFeeLabel.text = (self.transactionDetailsModel.transactionShippingFee).formatToPeso()
-                transactionDetailsView.totalCostLabel.text = (self.transactionDetailsModel.transactionTotalPrice).formatToTwoDecimal().formatToPeso()
+                transactionDetailsView.totalCostLabel.text = (self.transactionDetailsModel.transactionTotalPrice).formatToPeso()
                 //("\((self.transactionDetailsModel.transactionUnitPrice + self.transactionDetailsModel.transactionShippingFee))").formatToTwoDecimal().formatToPeso()
                 
             }

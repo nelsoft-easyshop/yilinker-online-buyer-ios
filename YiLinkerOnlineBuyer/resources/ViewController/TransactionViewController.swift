@@ -87,7 +87,7 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
         self.tableView.hidden = true
         self.tableView.separatorInset = UIEdgeInsetsZero
         self.tableView.layoutMargins = UIEdgeInsetsZero
-       
+        self.tableView.tableFooterView = UIView(frame: CGRectZero)
         addViewsActions()
     
         self.backButton()
