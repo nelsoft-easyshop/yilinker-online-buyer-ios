@@ -418,10 +418,12 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                 
                 if layoutFourModel.remainingTime != 0 {
                     self.remainingTime = layoutFourModel.remainingTime
+                    self.timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "updateTime", userInfo: nil, repeats: true)
+                    self.layouts.append("4")
+                } else {
+                    self.homePageModel.data.removeAtIndex(index)
                 }
 
-                self.timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "updateTime", userInfo: nil, repeats: true)
-                self.layouts.append("4")
             } else if model.isKindOfClass(LayoutFiveModel) {
                 self.layouts.append("5")
             } else if model.isKindOfClass(LayoutSixModel) {
