@@ -323,19 +323,40 @@ extension String {
     }
     
     func formatToTwoDecimal() -> String {
-        let formatter = NSNumberFormatter()
-        formatter.minimumFractionDigits = 2
-        formatter.maximumFractionDigits = 2
-        formatter.numberStyle = NSNumberFormatterStyle.DecimalStyle
-        return "₱\(formatter.stringFromNumber((self as NSString).doubleValue)!)"
+        var numberFormatter = NSNumberFormatter()
+        numberFormatter.numberStyle = NSNumberFormatterStyle.DecimalStyle
+        var stringNumber: String = ""
+        
+        if self.toDouble() != nil {
+            stringNumber = numberFormatter.stringFromNumber(self.toDouble()!)!
+        } else {
+            stringNumber = numberFormatter.stringFromNumber(0)!
+        }
+        
+        
+        if self.rangeOfString("₱") != nil{
+            return stringNumber
+        } else {
+            return "₱ \(stringNumber)"
+        }
     }
     
     func formatToPeso() -> String {
+        var numberFormatter = NSNumberFormatter()
+        numberFormatter.numberStyle = NSNumberFormatterStyle.DecimalStyle
+        var stringNumber: String = ""
+        
+        if self.toDouble() != nil {
+          stringNumber = numberFormatter.stringFromNumber(self.toDouble()!)!
+        } else {
+          stringNumber = numberFormatter.stringFromNumber(0)!
+        }
+        
         
         if self.rangeOfString("₱") != nil{
-            return self
+            return stringNumber
         } else {
-            return "₱\(self)"
+            return "₱ \(stringNumber)"
         }
     }
     
