@@ -345,6 +345,7 @@ extension String {
         var numberFormatter = NSNumberFormatter()
         numberFormatter.numberStyle = NSNumberFormatterStyle.DecimalStyle
         var stringNumber: String = ""
+
         stringNumber = self
         
         if self.rangeOfString(",") != nil {

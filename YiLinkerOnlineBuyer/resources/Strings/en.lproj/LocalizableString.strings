@@ -183,7 +183,7 @@ ADDRESS_TITLE_REQUIRED_LOCALIZE_KEY = "Address title is required";
 ADDRESS_REQUIRED_LOCALIZE_KEY = "Address is required.";
 
 STREET_NUMBER_REQUIRED_LOCALIZE_KEY = "Street number is required.";
-STREET_NAME_REQUIRED_LOCALIZE_KEY = "Street name is required.";
+STREET_NAME_REQUIRED_LOCALIZE_KEY = "Address is required.";
 ZIP_CODE_REQUIRED_LOCALIZE_KEY = "Zip code is required.";
 
 // MARK: - Checkout - Payment
