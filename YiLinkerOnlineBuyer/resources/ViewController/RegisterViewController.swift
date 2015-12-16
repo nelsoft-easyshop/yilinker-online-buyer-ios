@@ -46,7 +46,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var reTypePasswordTextField: UITextField!
     @IBOutlet weak var mobileNumberTextField: UITextField!
-    @IBOutlet weak var referralCodeTextField: UITextField!
+    //@IBOutlet weak var referralCodeTextField: UITextField!
     
     @IBOutlet weak var registerButton: DynamicRoundedButton!
     
@@ -104,7 +104,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
 //            self.reTypePasswordTextField.enabled = false
             
             self.mobileNumberTextField.enabled = false
-            self.referralCodeTextField.enabled = false
+            //self.referralCodeTextField.enabled = false
         }
         
         let parentViewController: LoginAndRegisterContentViewController = self.parentViewController as! LoginAndRegisterContentViewController
@@ -181,7 +181,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         self.mobileNumberTextField.addToolBarWithTarget(self, next: "next", previous: "previous", done: "done")
         self.mobileNumberTextField.delegate = self
         //self.referralCodeTextField.addToolBarWithTarget(self, next: "next", previous: "previous", done: "done")
-        self.referralCodeTextField.delegate = self
+        //self.referralCodeTextField.delegate = self
     }
     
     
@@ -231,7 +231,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         self.currentTextFieldTag = textField.tag
         let textFieldHeightWithInset: CGFloat = -30
         if IphoneType.isIphone6Plus() {
-            if textField == self.referralCodeTextField || textField == self.mobileNumberTextField  {
+            if textField == self.mobileNumberTextField  {
                 let parentViewController: LoginAndRegisterContentViewController = self.parentViewController as! LoginAndRegisterContentViewController
                 if parentViewController.isFromTab {
                     self.adjustTextFieldYInsetWithInset(-20)
@@ -242,25 +242,27 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
                 textField.autocorrectionType = .No
             }
         } else if IphoneType.isIphone6() {
-            if textField == self.mobileNumberTextField || textField == self.referralCodeTextField || textField == self.reTypePasswordTextField {
+            if textField == self.mobileNumberTextField || textField == self.reTypePasswordTextField {
                 var x: Int = 0
-                if textField == self.referralCodeTextField {
+                /*if textField == self.referralCodeTextField {
                     x = (textField.tag - 1)
                     textField.autocorrectionType = .No
                 } else {
                     x = textField.tag
-                }
+                }*/
+                
+                x = textField.tag
                 
                 self.adjustTextFieldYInsetWithInset(textFieldHeightWithInset + CGFloat(x - 5) * -55)
             }
         } else if IphoneType.isIphone5() {
             let parent: LoginAndRegisterContentViewController = self.parentViewController as! LoginAndRegisterContentViewController
             if parent.isFromTab {
-                if textField == self.mobileNumberTextField || textField == self.referralCodeTextField || textField == self.reTypePasswordTextField || textField == self.passwordTextField {
+                if textField == self.mobileNumberTextField || textField == self.reTypePasswordTextField || textField == self.passwordTextField {
                     self.adjustTextFieldYInsetWithInset(textFieldHeightWithInset + CGFloat((textField.tag - 3) * -40))
                 }
             } else {
-                if textField == self.mobileNumberTextField || textField == self.referralCodeTextField || textField == self.reTypePasswordTextField {
+                if textField == self.mobileNumberTextField || textField == self.reTypePasswordTextField {
                     self.adjustTextFieldYInsetWithInset(textFieldHeightWithInset + CGFloat((textField.tag - 5) * -45))
                 }
             }
@@ -386,7 +388,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
             parameters = ["email": self.emailAddressTextField.text,"password": self.passwordTextField.text, "firstName": self.firstNameTextField.text, "lastName": self.lastNameTextField.text, "contactNumber": self.mobileNumberTextField.text]
         } else {
             url = APIAtlas.guestUserRegisterUrl
-            parameters = ["user_guest[plainPassword][first]": self.passwordTextField.text, "user_guest[plainPassword][second]": self.passwordTextField.text, "user_guest[referralCode]" : self.referralCodeTextField.text]
+            parameters = ["user_guest[plainPassword][first]": self.passwordTextField.text, "user_guest[plainPassword][second]": self.passwordTextField.text, "user_guest[referralCode]" : ""]
         }
         
         manager.POST(url, parameters: parameters, success: {
