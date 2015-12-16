@@ -155,12 +155,14 @@ class CartProductAttributeViewController: UIViewController, UITableViewDelegate,
         
         selectedCombinations = selectedProductUnit.combinationNames
         
-        if productDetailModel!.images.count != 0 && selectedProductUnit!.imageIds.count != 0 {
+        if selectedProductUnits.imageIds.count != 0 {
             for tempImage in productDetailModel!.images {
-                if tempImage.id == selectedProductUnit!.imageIds[0] {
+                if tempImage.id == selectedProductUnits.imageIds[0] {
                     setDetail(tempImage.fullImageLocation, title: productDetailModel!.title, price: selectedProductUnit.discountedPrice)
                 }
             }
+        } else if productDetailModel!.images.count != 0 {
+            setDetail(productDetailModel!.images[0].fullImageLocation, title: productDetailModel!.title, price: selectedProductUnit.discountedPrice)
         } else {
             setDetail("dummy-placeholder", title: productDetailModel!.title, price: selectedProductUnit.discountedPrice)
         }

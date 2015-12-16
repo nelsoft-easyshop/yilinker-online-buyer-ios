@@ -15,6 +15,7 @@ struct WebviewStrings {
     static let storeView = StringHelper.localizedStringWithKey("WEBVIEW_STORE_VIEW")
     static let newItems = StringHelper.localizedStringWithKey("WEBVIEW_NEW_ITEMS")
     static let hotItems = StringHelper.localizedStringWithKey("WEBVIEW_HOT_ITEMS")
+    static let todaysPromo = StringHelper.localizedStringWithKey("TODAYS_PROMO_HIDDEN_LOCALIZE_KEY")
     static let yilinker = StringHelper.localizedStringWithKey("WEBVIEW_YILINKER")
     static let please = StringHelper.localizedStringWithKey("WEBVIEW_PLEASE")
 }
@@ -70,7 +71,7 @@ class WebViewController: UIViewController, UIWebViewDelegate, EmptyViewDelegate 
         } else if self.urlString.contains(APIAtlas.storeView) {
             webviewSource = WebviewSource.StoreView
             loadWebview()
-        } else if self.urlString.contains(APIAtlas.productList) {
+        } else if self.urlString.contains(APIAtlas.mobileProductList) {
             webviewSource = WebviewSource.ProductList
             loadWebview()
         } else {
@@ -111,6 +112,10 @@ class WebViewController: UIViewController, UIWebViewDelegate, EmptyViewDelegate 
                 self.title = WebviewStrings.hotItems
             } else if tempUrl.contains("newItems") {
                 self.title = WebviewStrings.newItems
+            } else if tempUrl.contains("todaysPromo") {
+                self.title = WebviewStrings.todaysPromo
+            } else {
+                self.title = WebviewStrings.yilinker
             }
         case .Default:
             self.title = WebviewStrings.yilinker
