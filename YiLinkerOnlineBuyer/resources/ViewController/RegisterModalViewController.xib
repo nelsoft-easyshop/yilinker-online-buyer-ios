@@ -17,7 +17,6 @@
             <connections>
                 <outlet property="createButton" destination="uJo-Bo-zpH" id="FDJ-3O-ozi"/>
                 <outlet property="doYouWantLabel" destination="yuJ-VS-4B9" id="xKk-Z0-JG3"/>
-                <outlet property="messageLabel" destination="bjQ-7J-XEH" id="794-jP-tA9"/>
                 <outlet property="noButton" destination="VW2-Rs-wy6" id="xyf-JI-JGF"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -44,23 +43,14 @@
                             </connections>
                         </button>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="createAccount" translatesAutoresizingMaskIntoConstraints="NO" id="1YG-aR-6Ww">
-                            <rect key="frame" x="151" y="30" width="58" height="52"/>
+                            <rect key="frame" x="133" y="26" width="91" height="81"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="58" id="0j1-d7-tt2"/>
-                                <constraint firstAttribute="height" constant="52" id="vS9-Gw-v8c"/>
+                                <constraint firstAttribute="width" constant="91" id="0j1-d7-tt2"/>
+                                <constraint firstAttribute="height" constant="81" id="vS9-Gw-v8c"/>
                             </constraints>
                         </imageView>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bjQ-7J-XEH">
-                            <rect key="frame" x="38" y="112" width="283" height="32"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="32" id="tKf-YI-xWT"/>
-                            </constraints>
-                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                            <nil key="highlightedColor"/>
-                        </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Do you want to create an account?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yuJ-VS-4B9">
-                            <rect key="frame" x="62" y="90" width="235" height="21"/>
+                            <rect key="frame" x="62" y="113" width="235" height="21"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="21" id="zQC-IH-QWD"/>
                             </constraints>
@@ -118,19 +108,16 @@
                     <constraints>
                         <constraint firstItem="OJh-8g-7c0" firstAttribute="leading" secondItem="Ueg-nk-xR5" secondAttribute="leading" constant="8" id="3Ex-wq-xRk"/>
                         <constraint firstAttribute="trailing" secondItem="yuJ-VS-4B9" secondAttribute="trailing" constant="62" id="E6s-IL-6ef"/>
-                        <constraint firstItem="1YG-aR-6Ww" firstAttribute="top" secondItem="Ueg-nk-xR5" secondAttribute="top" constant="30" id="Fos-fS-Oik"/>
+                        <constraint firstItem="1YG-aR-6Ww" firstAttribute="top" secondItem="Ueg-nk-xR5" secondAttribute="top" constant="26" id="Fos-fS-Oik"/>
                         <constraint firstAttribute="height" constant="234" id="Ggf-T3-RXV"/>
-                        <constraint firstAttribute="centerX" secondItem="1YG-aR-6Ww" secondAttribute="centerX" id="H51-T1-Fsc"/>
+                        <constraint firstAttribute="centerX" secondItem="1YG-aR-6Ww" secondAttribute="centerX" constant="1" id="H51-T1-Fsc"/>
                         <constraint firstAttribute="trailing" secondItem="Hv3-ao-qbj" secondAttribute="trailing" id="R8l-Zo-9sy"/>
                         <constraint firstItem="Hv3-ao-qbj" firstAttribute="leading" secondItem="Ueg-nk-xR5" secondAttribute="leading" id="Rvv-r3-0JR"/>
                         <constraint firstItem="yuJ-VS-4B9" firstAttribute="leading" secondItem="Ueg-nk-xR5" secondAttribute="leading" constant="62" id="SG9-WU-DUD"/>
                         <constraint firstItem="OJh-8g-7c0" firstAttribute="top" secondItem="Ueg-nk-xR5" secondAttribute="top" constant="8" id="UgL-WT-uHY"/>
                         <constraint firstAttribute="width" constant="359" id="ZaB-bx-ebj"/>
-                        <constraint firstAttribute="trailing" secondItem="bjQ-7J-XEH" secondAttribute="trailing" constant="38" id="anT-Mk-vyZ"/>
                         <constraint firstAttribute="bottom" secondItem="Hv3-ao-qbj" secondAttribute="bottom" id="bnY-78-AuD"/>
-                        <constraint firstItem="yuJ-VS-4B9" firstAttribute="top" secondItem="1YG-aR-6Ww" secondAttribute="bottom" constant="8" id="hdF-vh-s7q"/>
-                        <constraint firstItem="bjQ-7J-XEH" firstAttribute="leading" secondItem="Ueg-nk-xR5" secondAttribute="leading" constant="38" id="vh1-sA-CwR"/>
-                        <constraint firstItem="bjQ-7J-XEH" firstAttribute="top" secondItem="yuJ-VS-4B9" secondAttribute="bottom" constant="1" id="xfS-1u-7VU"/>
+                        <constraint firstItem="yuJ-VS-4B9" firstAttribute="top" secondItem="1YG-aR-6Ww" secondAttribute="bottom" constant="6" id="hdF-vh-s7q"/>
                     </constraints>
                 </view>
             </subviews>
