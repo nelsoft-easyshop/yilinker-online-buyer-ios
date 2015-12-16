@@ -19,6 +19,11 @@ class OverViewViewController: UIViewController, UITableViewDelegate, UITableView
     @IBOutlet weak var tableView: UITableView!
     var paymentSuccessModel: PaymentSuccessModel = PaymentSuccessModel()
     
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        tableView.reloadData()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     
@@ -27,6 +32,9 @@ class OverViewViewController: UIViewController, UITableViewDelegate, UITableView
         
         let totalTableViewCell: TotalTableViewCell = XibHelper.puffViewWithNibName(Constants.Checkout.OverView.totalTableViewCellNibNameAndIdentifier, index: 0) as! TotalTableViewCell
         totalTableViewCell.priceLabel.text = self.paymentSuccessModel.data.totalPrice.formatToPeso()
+        
+        tableView.estimatedRowHeight = 41.0
+        tableView.rowHeight = UITableViewAutomaticDimension
         
         self.tableView.tableFooterView = totalTableViewCell
         self.registerNib()
