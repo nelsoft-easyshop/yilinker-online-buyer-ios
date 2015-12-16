@@ -160,8 +160,6 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         self.setupBackToTopButton()
         
         self.addPullToRefresh()
-        
-        self.oneHourIntervalTimer = NSTimer.scheduledTimerWithTimeInterval(3600.0, target: self, selector: "updateData", userInfo: nil, repeats: true)
     }
     
     //MARK: - Add Pull To Refresh
@@ -883,6 +881,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                     if let indexPath: NSIndexPath = NSIndexPath(forItem: 0, inSection: index) {
                         self.collectionView.reloadItemsAtIndexPaths([indexPath])
                     }
+                    
                     break
                 }
             }
@@ -912,14 +911,15 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                 }
             }*/
             
-            if self.view.window != nil && self.remainingTime == -1 {
-                Delay.delayWithDuration(1.0, completionHandler: { (success) -> Void in
-                    self.timer.invalidate()
-                    self.oneHourIntervalTimer.invalidate()
+            Delay.delayWithDuration(1.0, completionHandler: { (success) -> Void in
+                self.timer.invalidate()
+                if self.view.window != nil && self.remainingTime == -1 {
                     let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
                     appDelegate.changeRootToHomeView()
-                })
-            }
+                }
+            })
+            
+            
         }
 
     }

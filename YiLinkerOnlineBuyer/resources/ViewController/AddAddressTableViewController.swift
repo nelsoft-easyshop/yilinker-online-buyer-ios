@@ -398,6 +398,8 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
             self.hud?.hide(true)
             self.navigationController!.popViewControllerAnimated(true)
             self.delegate!.addAddressTableViewController(didAddAddressSucceed: self)
+            SessionManager.setLang("\(cell.latitude())")
+            SessionManager.setLong("\(cell.longitude())")
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
