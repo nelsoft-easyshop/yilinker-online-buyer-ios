@@ -345,13 +345,14 @@ extension String {
         var numberFormatter = NSNumberFormatter()
         numberFormatter.numberStyle = NSNumberFormatterStyle.DecimalStyle
         var stringNumber: String = ""
+
+        stringNumber = self
         
-        if self.toDouble() != nil {
-          stringNumber = numberFormatter.stringFromNumber(self.toDouble()!)!
-        } else {
-          stringNumber = numberFormatter.stringFromNumber(0)!
+        if self.rangeOfString(",") != nil {
+            if numberFormatter.stringFromNumber(0) != "0" {
+                stringNumber = numberFormatter.stringFromNumber(0)!
+            }
         }
-        
         
         if self.rangeOfString("₱") != nil{
             return stringNumber
