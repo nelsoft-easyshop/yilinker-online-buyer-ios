@@ -23,7 +23,6 @@ class RegisterModalViewController: UIViewController {
 
     @IBOutlet weak var createButton: UIButton!
     @IBOutlet weak var doYouWantLabel: UILabel!
-    @IBOutlet weak var messageLabel: UILabel!
     @IBOutlet weak var noButton: UIButton!
     
     var delegate: RegisterModalViewControllerDelegate?
@@ -38,7 +37,6 @@ class RegisterModalViewController: UIViewController {
         self.createButton.setTitle(RegisterModalStrings.yes, forState: UIControlState.Normal)
         self.noButton.setTitle(RegisterModalStrings.no, forState: UIControlState.Normal)
         
-        self.messageLabel.text = RegisterModalStrings.createMessage
         self.doYouWantLabel.text = RegisterModalStrings.doYouWant
     }
 
