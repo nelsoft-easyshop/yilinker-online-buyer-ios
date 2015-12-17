@@ -91,6 +91,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     var lastContentOffset: CGFloat = 0.0
     
     var canShowExtendedDetails: Bool = false
+    var dimV: UIView!
     
     @IBOutlet weak var buttonsContainerVerticalConstraint: NSLayoutConstraint!
     @IBOutlet weak var buttonsContainerHeight: NSLayoutConstraint!
@@ -784,6 +785,11 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         
         self.navigationItem.setLeftBarButtonItem(close, animated: false)
         self.navigationItem.setRightBarButtonItems([share, negativeSpacer, message, /*negativeSpacer, rate,*/ negativeSpacer, wishlist], animated: true)
+        
+        dimV = UIView(frame: self.view.frame)
+        dimV.backgroundColor = UIColor.blackColor()
+        dimV.alpha = 0.0
+        self.navigationController?.view.addSubview(dimV)
     }
     
     func setUpViews() {
@@ -1115,8 +1121,9 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         self.tabBarController?.presentViewController(attributeModal, animated: true, completion: nil)
         
         UIView.animateWithDuration(0.3, animations: {
-            self.dimView.alpha = 0.5
-            self.dimView.layer.zPosition = 2
+//            self.dimView.alpha = 0.5
+//            self.dimView.layer.zPosition = 2
+            self.dimV.alpha = 0.50
             self.view.transform = CGAffineTransformMakeScale(0.92, 0.95)
             self.navigationController?.navigationBar.alpha = 0.0
         })
@@ -1188,15 +1195,16 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         
         UIView.animateWithDuration(0.3, animations: {
             self.view.transform = CGAffineTransformMakeTranslation(1, 1)
-            self.dimView.alpha = 0
-            self.dimView.layer.zPosition = -1
+//            self.dimView.alpha = 0
+//            self.dimView.layer.zPosition = -1
+            self.dimV?.alpha = 0.0
             self.navigationController?.navigationBar.alpha = CGFloat(self.visibility)
             }, completion: { finished in
                 if type == "cart" {
                     self.showAlert(title: nil, message: ProductStrings.alertCart)
                     self.loadViewsWithDetails()
                 } else if type == "done" {
-                    //                    self.showAlert(type)
+//                    self.showAlert(type)
                 }
         })
         
@@ -1221,8 +1229,9 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     func pressedCancelReview(controller: ProductReviewViewController) {
         UIView.animateWithDuration(0.3, animations: {
             self.view.transform = CGAffineTransformMakeTranslation(1, 1)
-            self.dimView.alpha = 0
-            self.dimView.layer.zPosition = -1
+//            self.dimView.alpha = 0
+//            self.dimView.layer.zPosition = -1
+            self.dimV.alpha = 0.0
             self.navigationController?.navigationBar.alpha = CGFloat(self.visibility)
         })
     }
@@ -1365,10 +1374,12 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
             reviewModal.view.frame.origin.y = reviewModal.view.frame.size.height
             reviewModal.passModel(self.productReviewModel)
             self.tabBarController?.presentViewController(reviewModal, animated: true, completion: nil)
-            
+
+//            self.navigationController?.navigationBar.addSubview(self.dimView)
             UIView.animateWithDuration(0.3, animations: {
-                self.dimView.alpha = 0.5
-                self.dimView.layer.zPosition = 2
+//                self.dimView.alpha = 0.5
+//                self.dimView.layer.zPosition = 2
+                self.dimV.alpha = 0.50
                 self.view.transform = CGAffineTransformMakeScale(0.92, 0.93)
                 self.navigationController?.navigationBar.alpha = 0.0
             })
