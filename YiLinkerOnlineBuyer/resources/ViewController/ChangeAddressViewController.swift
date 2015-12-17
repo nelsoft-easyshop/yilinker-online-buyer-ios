@@ -198,11 +198,17 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
     }
     
     func deleteCellInIndexPath(indexPath: NSIndexPath) {
-        if cellCount != 0 {
-            self.cellCount = self.cellCount - 1
+        if indexPath.row != self.selectedIndex {
+            if cellCount != 0 {
+                self.cellCount = self.cellCount - 1
+            }
+            
+            self.collectionView.deleteItemsAtIndexPaths([NSIndexPath(forItem: indexPath.row, inSection: indexPath.section)])
+            self.requestGetAddressess()
+        } else {
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Can't delete primary address.")
         }
-        
-        self.collectionView.deleteItemsAtIndexPaths([NSIndexPath(forItem: indexPath.row, inSection: indexPath.section)])
+       
     }
     
     // MARK: - Methods
