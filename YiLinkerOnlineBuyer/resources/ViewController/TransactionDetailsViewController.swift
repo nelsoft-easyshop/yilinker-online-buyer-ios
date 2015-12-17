@@ -185,7 +185,8 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
         productDetails.productId = self.table[indexPath.section].transactions[indexPath.row].productId
         productDetails.quantity = self.table[indexPath.section].transactions[indexPath.row].quantity
         productDetails.unitPrice = self.table[indexPath.section].transactions[indexPath.row].unitPrice
-        productDetails.totalPrice = self.calculateTotalUnitCost(self.table[indexPath.section].transactions[indexPath.row].quantity, price: self.table[indexPath.section].transactions[indexPath.row].unitPrice).formatToTwoDecimal().formatToPeso()
+        //productDetails.totalPrice = self.calculateTotalUnitCost(self.table[indexPath.section].transactions[indexPath.row].quantity, price: self.table[indexPath.section].transactions[indexPath.row].unitPrice)
+        productDetails.totalPrice = self.table[indexPath.section].transactions[indexPath.row].totalPrice.formatToPeso()
         productDetails.hasProductFeedback = self.table[indexPath.section].transactions[indexPath.row].hasProductFeedback
         //self.table[indexPath.section].transactions[indexPath.row].totalPrice
         productDetails.productName = self.table[indexPath.section].transactions[indexPath.row].productName
