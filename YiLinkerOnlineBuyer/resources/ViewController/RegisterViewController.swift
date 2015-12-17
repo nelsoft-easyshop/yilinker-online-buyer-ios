@@ -318,12 +318,8 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         
         if !self.firstNameTextField.isNotEmpty() {
             errorMessage = RegisterStrings.firstNameRequired
-        } else if !self.firstNameTextField.isValidName() {
-            errorMessage = RegisterStrings.illegalFirstName
         } else if !self.lastNameTextField.isNotEmpty() {
             errorMessage = RegisterStrings.lastNameRequired
-        } else if !self.lastNameTextField.isValidName() {
-            errorMessage = RegisterStrings.invalidLastName
         } else if !self.emailAddressTextField.isNotEmpty() {
             errorMessage = RegisterStrings.emailRequired
         } else if !self.emailAddressTextField.isValidEmail() {
