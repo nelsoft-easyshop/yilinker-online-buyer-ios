@@ -186,7 +186,7 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
             } else if indexPath.row == ((self.cartItems.count - 1) + 1) {// 1 = to cell below the cart items
                 let totalCell: TotalSummaryPriceTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(self.totalCellNibName) as! TotalSummaryPriceTableViewCell
                 
-                    totalCell.totalPriceValueLabel.text = self.totalPrice.formatToPeso()
+                    totalCell.totalPriceValueLabel.text = self.totalPrice.formatToTwoDecimal()
                 
                  totalCell.separatorInset = UIEdgeInsetsMake(0, 1000, 0, 1000)
                 return totalCell
@@ -212,7 +212,7 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
                 return discountTotalCell
             } else {
                 let netTotalTableViewCell: NetTotalTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(self.netTotalCellNibName) as! NetTotalTableViewCell
-                netTotalTableViewCell.netTotalValueLabel.text = self.voucherModel.voucherPrice.formatToPeso()
+                netTotalTableViewCell.netTotalValueLabel.text = self.voucherModel.voucherPrice.formatToTwoDecimal()
                 return netTotalTableViewCell
             }
         } else {
