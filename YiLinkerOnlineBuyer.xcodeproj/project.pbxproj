@@ -323,6 +323,9 @@
 		79A66A6E1C01A176003D62AD /* ViewImageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79A66A6C1C01A176003D62AD /* ViewImageViewController.xib */; };
 		79AA08331B8F4DCF00AF3AA4 /* CartProductAttributeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79AA08321B8F4DCF00AF3AA4 /* CartProductAttributeTableViewCell.swift */; };
 		79AA08351B8F4E6300AF3AA4 /* CartProductAttributeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79AA08341B8F4E6300AF3AA4 /* CartProductAttributeTableViewCell.xib */; };
+		79ACCB851C22FADF0026911A /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 79ACCB7E1C22FADF0026911A /* LICENSE */; };
+		79ACCB861C22FADF0026911A /* TTRangeSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 79ACCB821C22FADF0026911A /* TTRangeSlider.m */; };
+		79ACCB871C22FADF0026911A /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 79ACCB841C22FADF0026911A /* README.md */; };
 		79D5B14E1C0EB7EE009CBEEF /* HelpViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79D5B14D1C0EB7EE009CBEEF /* HelpViewController.xib */; };
 		79E68B731B8AB900008626E4 /* ActivityLogTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79E68B721B8AB900008626E4 /* ActivityLogTableViewCell.xib */; };
 		79E68B751B8AC390008626E4 /* ActivityLogTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79E68B741B8AC390008626E4 /* ActivityLogTableViewCell.swift */; };
@@ -849,6 +852,11 @@
 		79A66A6C1C01A176003D62AD /* ViewImageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ViewImageViewController.xib; path = YiLinkerOnlineBuyer/resources/ViewController/ViewImageViewController.xib; sourceTree = SOURCE_ROOT; };
 		79AA08321B8F4DCF00AF3AA4 /* CartProductAttributeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CartProductAttributeTableViewCell.swift; path = YiLinkerOnlineBuyer/resources/View/CartProductAttributeTableViewCell.swift; sourceTree = SOURCE_ROOT; };
 		79AA08341B8F4E6300AF3AA4 /* CartProductAttributeTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CartProductAttributeTableViewCell.xib; path = YiLinkerOnlineBuyer/resources/Xib/CartProductAttributeTableViewCell.xib; sourceTree = SOURCE_ROOT; };
+		79ACCB7E1C22FADF0026911A /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		79ACCB811C22FADF0026911A /* TTRangeSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTRangeSlider.h; sourceTree = "<group>"; };
+		79ACCB821C22FADF0026911A /* TTRangeSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTRangeSlider.m; sourceTree = "<group>"; };
+		79ACCB831C22FADF0026911A /* TTRangeSliderDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTRangeSliderDelegate.h; sourceTree = "<group>"; };
+		79ACCB841C22FADF0026911A /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		79D5B14D1C0EB7EE009CBEEF /* HelpViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HelpViewController.xib; sourceTree = "<group>"; };
 		79E68B721B8AB900008626E4 /* ActivityLogTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ActivityLogTableViewCell.xib; path = YiLinkerOnlineBuyer/resources/Xib/ActivityLogTableViewCell.xib; sourceTree = SOURCE_ROOT; };
 		79E68B741B8AC390008626E4 /* ActivityLogTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ActivityLogTableViewCell.swift; path = YiLinkerOnlineBuyer/resources/View/ActivityLogTableViewCell.swift; sourceTree = SOURCE_ROOT; };
@@ -1322,6 +1330,7 @@
 		0C9936FB1B750583000D6074 /* External */ = {
 			isa = PBXGroup;
 			children = (
+				79ACCB7D1C22FADF0026911A /* TTRangeSlider */,
 				0C11D2291C103B620063D06E /* PullToRefresh */,
 				0C144DDC1C080F10000728B4 /* dummyHomePage.json */,
 				B7EE726B1BF1DD5D003724CB /* GoogleService-Info.plist */,
@@ -1820,6 +1829,34 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		79ACCB7D1C22FADF0026911A /* TTRangeSlider */ = {
+			isa = PBXGroup;
+			children = (
+				79ACCB7E1C22FADF0026911A /* LICENSE */,
+				79ACCB7F1C22FADF0026911A /* Pod */,
+				79ACCB841C22FADF0026911A /* README.md */,
+			);
+			path = TTRangeSlider;
+			sourceTree = "<group>";
+		};
+		79ACCB7F1C22FADF0026911A /* Pod */ = {
+			isa = PBXGroup;
+			children = (
+				79ACCB801C22FADF0026911A /* Classes */,
+			);
+			path = Pod;
+			sourceTree = "<group>";
+		};
+		79ACCB801C22FADF0026911A /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				79ACCB811C22FADF0026911A /* TTRangeSlider.h */,
+				79ACCB821C22FADF0026911A /* TTRangeSlider.m */,
+				79ACCB831C22FADF0026911A /* TTRangeSliderDelegate.h */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
 		B77B8DBC1B9B537C0002C513 /* Messaging */ = {
 			isa = PBXGroup;
 			children = (
@@ -1971,6 +2008,7 @@
 				79E68B871B8AFD22008626E4 /* PointsDetailsTableViewCell.xib in Resources */,
 				0C9937651B750583000D6074 /* NewSellerCollectionViewCell.xib in Resources */,
 				F7CC68F41BA295A2009168D7 /* message2.png in Resources */,
+				79ACCB851C22FADF0026911A /* LICENSE in Resources */,
 				0C2F44CD1B8576FE00021F45 /* Panton Light Italic.otf in Resources */,
 				0C8A7C7B1B6772670039F013 /* Images.xcassets in Resources */,
 				F70EFB281BC6BFB40077B8ED /* TransactionLeaveSellerFeedbackTableViewController.xib in Resources */,
@@ -2438,6 +2476,7 @@
 				79F2F5521B85795C00F57E4B /* WishlistModel.swift in Sources */,
 				26AFB3B91B79DE3800E50926 /* ProductDescriptionViewController.swift in Sources */,
 				26AFB39F1B79DDEA00E50926 /* ProductSellerModel.swift in Sources */,
+				79ACCB861C22FADF0026911A /* TTRangeSlider.m in Sources */,
 				26AFB3A81B79DE2900E50926 /* ProductImagesView.swift in Sources */,
 				F7DB29BD1C1EF6CA006E0140 /* TransactionLeaveProductFeedbackTableViewController.swift in Sources */,
 				0C2F44E11B85A0AA00021F45 /* ShipToTableViewCell.swift in Sources */,
@@ -2455,6 +2494,7 @@
 				0C2F45291B85E95D00021F45 /* ChangeAddressCollectionViewCell.swift in Sources */,
 				79E68B931B8B0B8D008626E4 /* PointsTableViewCell.swift in Sources */,
 				F7C56A061BB1790A004740E1 /* TransactionViews.swift in Sources */,
+				79ACCB871C22FADF0026911A /* README.md in Sources */,
 				79E68B8D1B8B0431008626E4 /* PointsBreakdownTableViewCell.swift in Sources */,
 				0C5111D51B81CD69002F0001 /* SellerViewController.swift in Sources */,
 				F7C569FD1BB1790A004740E1 /* TransactionDeliveryLogViewController.swift in Sources */,

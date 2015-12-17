@@ -8,7 +8,7 @@
 #import <Google/SignIn.h>
 #import <GoogleSignIn/GoogleSignIn.h>
 #import <SVProgressHUD/SVProgressHUD.h>
-#import <TTRangeSlider/TTRangeSlider.h>
+#import <TTRangeSlider.h>
 #import <MBProgressHUD.h>
 #import <Google/CloudMessaging.h>
 #import <GooglePlus/GooglePlus.h>
@@ -17,3 +17,4 @@
 #import "UIView+Toast.h"
 #import <pop/POP.h>
 #import "TFHpple.h"
+#import "TTRangeSliderDelegate.h"
