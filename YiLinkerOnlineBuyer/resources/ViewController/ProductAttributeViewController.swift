@@ -161,6 +161,7 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
     }
     
     @IBAction func doneAction(sender: AnyObject) {
+        self.quantity = stocksLabel.text!.toInt()!
         
         if self.selectedAttributes.contains("") {
             let alertController = UIAlertController(title: ProductStrings.alertCannotProcceed, message: ProductStrings.alertComplete, preferredStyle: .Alert)
@@ -189,6 +190,7 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
     }
     
     @IBAction func addToCartAction(sender: AnyObject) {
+        self.quantity = stocksLabel.text!.toInt()!
         
         if self.selectedAttributes.contains("") {
             let alertController = UIAlertController(title: ProductStrings.alertCannotProcceed, message: ProductStrings.alertComplete, preferredStyle: .Alert)
@@ -222,6 +224,8 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
     }
     
     func buyItNowAction(gesture: UIGestureRecognizer) {
+        self.quantity = stocksLabel.text!.toInt()!
+        
         if self.quantity == 0 {
             let alertController = UIAlertController(title: ProductStrings.alertFailed, message: ProductStrings.alertOutOfStock, preferredStyle: .Alert)
             let defaultAction = UIAlertAction(title: ProductStrings.alertOk, style: .Default, handler: nil)
@@ -324,7 +328,6 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
         
         for productUnit in self.productDetailsModel.productUnits {
             if productUnit.productUnitId == unitId {
-                self.quantity = productUnit.quantity
                 return productUnit.quantity
             }
         }
@@ -596,6 +599,7 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
         self.unitId = unitId
         
         applyProductUnit(unitId)
+        checkStock(self.quantity)
     }
     
     func pressedDimViewFromProductPage(controller: ProductViewController) {
@@ -723,9 +727,9 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
         
         if self.maximumStock != 0 {
             stocks = 1
-            if self.quantity > 1 {
-                stocks = self.quantity
-            }
+//            if self.quantity > 1 {
+//                stocks = self.quantity
+//            }
             checkStock(stocks)
         } else if self.maximumStock == 0 {
             checkStock(0)
