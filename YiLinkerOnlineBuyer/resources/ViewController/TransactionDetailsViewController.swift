@@ -300,11 +300,7 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
                 transactionDetailsView.unitCostLabel.text = (self.totalCost).formatToPeso()
                     //(self.transactionDetailsModel.transactionUnitPrice).formatToPeso()
                 transactionDetailsView.shippingFeeLabel.text = (self.transactionDetailsModel.transactionShippingFee).formatToPeso()
-                if self.transactionDetailsModel.transactionTotalPrice.toDouble() < 1 {
-                    transactionDetailsView.totalCostLabel.text = ("₱ 1.00")
-                } else {
-                    transactionDetailsView.totalCostLabel.text = (self.transactionDetailsModel.transactionTotalPrice).formatToPeso()
-                }
+                transactionDetailsView.totalCostLabel.text = (self.transactionDetailsModel.transactionTotalPrice).formatToPeso()
                 //("\((self.transactionDetailsModel.transactionUnitPrice + self.transactionDetailsModel.transactionShippingFee))").formatToTwoDecimal().formatToPeso()
                 
             }
