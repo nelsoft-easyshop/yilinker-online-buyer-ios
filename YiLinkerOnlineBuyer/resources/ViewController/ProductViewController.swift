@@ -161,6 +161,8 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
 //        self.closeButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "closeAction:"))
         let extendedViewController: ProductDetailsExtendedViewController = ProductDetailsExtendedViewController(nibName: "ProductDetailsExtendedViewController", bundle: nil)
         self.addChildViewController(extendedViewController)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "checkViewSize", name: UIApplicationWillEnterForegroundNotification, object: nil)
 
     }
     
@@ -1138,6 +1140,10 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         self.productDetailsExtendedView.url = self.productDetailsModel.fullDescription
         self.productDetailsExtendedView.loadUrl(self.productDetailsModel.fullDescription)
         self.view.addSubview(self.productDetailsExtendedView)
+    }
+    
+    func checkViewSize() {
+        self.view.transform = CGAffineTransformMakeScale(1, 1)
     }
     
     // MARK: - Product Images Delegate
