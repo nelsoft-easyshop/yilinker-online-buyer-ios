@@ -323,17 +323,14 @@ extension String {
     }
     
     func formatToTwoDecimal() -> String {
-        var numberFormatter = NSNumberFormatter()
-        numberFormatter.numberStyle = NSNumberFormatterStyle.DecimalStyle
         var stringNumber: String = ""
         
-        if self.toDouble() != nil {
-            stringNumber = numberFormatter.stringFromNumber(self.toDouble()!)!
-        } else {
-            stringNumber = numberFormatter.stringFromNumber(0)!
-        }
-        
-        
+        let formatter = NSNumberFormatter()
+        formatter.minimumFractionDigits = 2
+        formatter.maximumFractionDigits = 2
+        formatter.numberStyle = NSNumberFormatterStyle.DecimalStyle
+        stringNumber = "\(formatter.stringFromNumber((self as NSString).doubleValue)!)"
+
         if self.rangeOfString("₱") != nil{
             return stringNumber
         } else {
@@ -354,7 +351,7 @@ extension String {
             }
         }
         
-        if self.rangeOfString("₱") != nil{
+        if self.rangeOfString("₱") != nil {
             return stringNumber
         } else {
             return "₱ \(stringNumber)"
