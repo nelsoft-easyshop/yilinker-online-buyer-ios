@@ -838,10 +838,20 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
 //        self.getFooterView().addSubview(self.getProductDetailsBottomView())
         
         if !isFromCart {
-            self.quantity = self.productDetailsModel.productUnits[0].quantity
+            for unit in self.productDetailsModel.productUnits {
+                println(unit.quantity)
+                if unit.quantity != 0 {
+                    self.quantity = unit.quantity
+                    self.unitId = unit.productUnitId
+                    getUnitIdIndexFrom()
+                    break
+                }
+            }
             if self.quantity != 0 {
                 self.quantity = 1
             }
+            
+            
             self.productImagesView.setDetails(self.productDetailsModel, unitId: unitIdIndex, width: self.view.frame.size.width)
         } else {
             self.getUnitIdIndexFrom()
@@ -851,9 +861,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
                     if productUnit.imageIds.count != 0 {
                         for j in 0..<productUnit.imageIds.count {
                             for l in 0..<self.productDetailsModel.images.count {
-                                println("\(productUnit.imageIds[j]) == \(self.productDetailsModel.images[l].id)")
                                 if productUnit.imageIds[j] == self.productDetailsModel.images[l].id {
-                                    println(self.productDetailsModel.images[l].imageLocation)
                                     images.append(self.productDetailsModel.images[l].imageLocation)
                                 }
                             }
