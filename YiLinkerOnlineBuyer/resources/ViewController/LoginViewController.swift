@@ -342,7 +342,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
         }
         
         if errorMessage != "" {
-           
+            Toast.displayToastWithMessage(errorMessage, duration: 1.5, view: self.view)
         } else {
             fireLogin()
         }
@@ -371,9 +371,9 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
                         }
                     } else {
                         if task.statusCode == 401 {
-                            Toast.displayToastWithMessage(LoginStrings.mismatch, duration: 3.0, view: self.view)
+                            Toast.displayToastWithMessage(LoginStrings.mismatch, duration: 1.5, view: self.view)
                         } else {
-                            Toast.displayToastWithMessage(Constants.Localized.someThingWentWrong, duration: 3.0, view: self.view)
+                            Toast.displayToastWithMessage(Constants.Localized.someThingWentWrong, duration: 1.5, view: self.view)
                         }
                     }
                     
