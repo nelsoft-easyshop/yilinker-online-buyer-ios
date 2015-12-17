@@ -169,7 +169,7 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
             self.presentViewController(alertController, animated: true, completion: nil)
         } else {
             if self.quantity == 0 {
-                let alertController = UIAlertController(title: ProductStrings.alertFailed, message: ProductStrings.alertOutOfStock, preferredStyle: .Alert)
+                let alertController = UIAlertController(title: ProductStrings.alertCannotProcceed, message: ProductStrings.alertOutOfStock, preferredStyle: .Alert)
                 let defaultAction = UIAlertAction(title: ProductStrings.alertOk, style: .Default, handler: nil)
                 alertController.addAction(defaultAction)
                 self.presentViewController(alertController, animated: true, completion: nil)
@@ -324,6 +324,7 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
         
         for productUnit in self.productDetailsModel.productUnits {
             if productUnit.productUnitId == unitId {
+                self.quantity = productUnit.quantity
                 return productUnit.quantity
             }
         }
