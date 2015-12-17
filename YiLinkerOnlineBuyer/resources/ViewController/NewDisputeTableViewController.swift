@@ -206,6 +206,7 @@ class NewDisputeTableViewController: UITableViewController, UIPickerViewDataSour
         let pickerView: UIPickerView = UIPickerView(frame:CGRectMake(0, 0, screenSize.width, 225))
         pickerView.delegate = self
         pickerView.dataSource = self
+        
         if pickerType == "Number" {
             if self.transactionIds.count != 0 {
                 self.transactionNumber.inputView = pickerView
@@ -389,7 +390,7 @@ class NewDisputeTableViewController: UITableViewController, UIPickerViewDataSour
         manager.GET(APIAtlas.getReasons + "\(SessionManager.accessToken())", parameters: nil, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             self.disputeReasonModel = DisputeReasonsModel.parseDataWithDictionary(responseObject)
-            
+            println(responseObject)
             self.tableView.reloadData()
             self.hud?.hide(true)
 //            self.isReasonsDone = true
@@ -517,6 +518,29 @@ class NewDisputeTableViewController: UITableViewController, UIPickerViewDataSour
             self.reasonTextField.text = self.disputeReasonModel.replacementReason[row]
             self.reasonId = self.disputeReasonModel.replacementId[row]
         }
+    }
+    
+    func pickerView(pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusingView view: UIView!) -> UIView {
+        var pickerLabel = UILabel()
+        pickerLabel.textColor = UIColor.blackColor()
+        
+        if pickerType == "Type" {
+            pickerLabel.text = self.transactionTypes[row]
+        } else if pickerType == "Number" {
+            pickerLabel.text = self.transactionIds[row]
+        } else if pickerType == "Reason" {
+            if self.transactionType.text == DisputeStrings.refund {
+                pickerLabel.text = self.disputeReasonModel.refundReason[row]
+            } else if self.transactionType.text == DisputeStrings.replacement {
+                pickerLabel.text = self.disputeReasonModel.replacementReason[row]
+            }
+        }
+        
+        pickerLabel.numberOfLines = 0
+        pickerLabel.font = UIFont(name: "Panton-Regular", size: 12)
+        pickerLabel.textAlignment = NSTextAlignment.Center
+        return pickerLabel
+
     }
     
     // MARK: - Dispute Add Item View Controller Delegate
