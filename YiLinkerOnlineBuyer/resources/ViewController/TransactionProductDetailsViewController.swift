@@ -163,7 +163,7 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
             self.transactionPurchaseDetailsView.priceTitleLabel.text = self.priceTitle
             self.transactionPurchaseDetailsView.purchaseDetailsLabel.text = self.purchaseDetails
             self.transactionPurchaseDetailsView.quantityLabel.text = "\(self.quantity)"
-            self.transactionPurchaseDetailsView.totalCostLabel.text = "\((self.totalPrice).formatToPeso())"
+            self.transactionPurchaseDetailsView.totalCostLabel.text = "\(self.totalPrice)"
             self.transactionPurchaseDetailsView.priceLabel.text = "\((self.unitPrice).formatToPeso())"
             self.transactionPurchaseDetailsView.frame.size.width = self.view.frame.size.width
         }
