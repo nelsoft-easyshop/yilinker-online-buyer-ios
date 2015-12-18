@@ -846,17 +846,23 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
 //        self.getFooterView().addSubview(self.getProductDetailsBottomView())
         
         if !isFromCart {
-            for unit in self.productDetailsModel.productUnits {
-                println(unit.quantity)
-                if unit.quantity != 0 {
-                    self.quantity = unit.quantity
-                    self.unitId = unit.productUnitId
+            for i in 0..<self.productDetailsModel.productUnits.count {
+                if self.productDetailsModel.productUnits[i].quantity != 0 {
+                    self.quantity = self.productDetailsModel.productUnits[i].quantity
+                    self.unitId = self.productDetailsModel.productUnits[i].productUnitId
                     getUnitIdIndexFrom()
                     break
+                } else if self.productDetailsModel.productUnits[i].quantity == 0 && i == self.productDetailsModel.productUnits.count - 1 {
+                    self.quantity = 0
+                    self.unitIdIndex = 0
                 }
             }
+            
             if self.quantity != 0 {
                 self.quantity = 1
+            } else if self.quantity == 0 {
+                self.quantity = 0
+                self.unitIdIndex = 0
             }
             
             
