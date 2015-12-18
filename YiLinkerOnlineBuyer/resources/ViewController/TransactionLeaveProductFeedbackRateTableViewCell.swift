@@ -20,9 +20,11 @@ class TransactionLeaveProductFeedbackRateTableViewCell: UITableViewCell {
     @IBOutlet weak var star4Button: UIButton!
     @IBOutlet weak var star5Button: UIButton!
     
+    @IBOutlet weak var rateThisProductLabel: UILabel!
     @IBOutlet weak var messageLabel: UILabel!
     
     var titleLabelTitle = StringHelper.localizedStringWithKey("TRANSACTION_LEAVE_FEEDBACK_INFO_LOCALIZE_KEY")
+    var rateThisProduct =  StringHelper.localizedStringWithKey("TRANSACTION_LEAVE_RATE_LOCALIZE_KEY")
     
     var rateButtons: [UIButton] = []
     var rate: Int = 0
@@ -35,6 +37,7 @@ class TransactionLeaveProductFeedbackRateTableViewCell: UITableViewCell {
         rateButtons = [star1Button, star2Button, star3Button, star4Button, star5Button]
         
         self.messageLabel.text = titleLabelTitle
+        self.rateThisProductLabel.text = rateThisProduct
         
         // Initialization code
     }
