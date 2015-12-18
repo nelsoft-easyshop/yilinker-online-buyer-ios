@@ -209,15 +209,21 @@ class WebViewController: UIViewController, UIWebViewDelegate, EmptyViewDelegate 
             if urlString == WebViewURL.storeView {
                 return true
             } else {
-                let sellerId: String = storeViewLinkTap(urlString)
-                if sellerId.isNotEmpty() {
+                if urlString.contains("userId") {
+                    let id: String = storeViewLinkTap(urlString)
                     let sellerViewController: SellerViewController = SellerViewController(nibName: "SellerViewController", bundle: nil)
-                    sellerViewController.sellerId = (sellerId as NSString).integerValue
+                    sellerViewController.sellerId = (id as NSString).integerValue
                     self.navigationController!.pushViewController(sellerViewController, animated: true)
+                    
+                } else if urlString.contains("productId") {
+                    let id: String = productLinkTap(urlString)
+                    let productViewController: ProductViewController = ProductViewController(nibName: "ProductViewController", bundle: nil)
+                    productViewController.tabController = self.tabBarController as! CustomTabBarController
+                    productViewController.productId = id
+                    self.navigationController?.pushViewController(productViewController, animated: true)
                 } else {
                     errorView.hidden = false
                 }
-                
                 return false
             }
         case .ProductList:

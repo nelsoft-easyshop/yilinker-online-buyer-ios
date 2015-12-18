@@ -28,8 +28,12 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     var badgeCount: Int = 0
     
+    var isAttributesOpen: Bool = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "checkViewSize", name: UIApplicationWillEnterForegroundNotification, object: nil)
         
         initializeViews()
         initializeLocalizedString()
@@ -80,6 +84,10 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         let checkoutLocalizeString: String = StringHelper.localizedStringWithKey("CHECKOUT_LOCALIZE_KEY")
         checkoutButton.setTitle(checkoutLocalizeString, forState: UIControlState.Normal)
+    }
+    
+    func checkViewSize() {
+        self.view.transform = CGAffineTransformMakeScale(1, 1)
     }
     
     @IBAction func buttonClicked(sender: AnyObject) {
@@ -475,6 +483,7 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     // MARK: - Cart Product Attribute View Controller Delegate
     func pressedCancelAttribute(controller: CartProductAttributeViewController) {
+        self.isAttributesOpen = false
         UIView.animateWithDuration(0.3, animations: {
             self.view.transform = CGAffineTransformMakeTranslation(1, 1)
             self.dimView!.alpha = 0
@@ -483,6 +492,8 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func pressedDoneAttribute(controller: CartProductAttributeViewController, productID: Int, unitID: Int, itemID: Int, quantity: Int) {
+        
+        self.isAttributesOpen = false
         if Reachability.isConnectedToNetwork() {
             var params: NSDictionary = ["access_token": SessionManager.accessToken(),
                 "productId": "\(productID)",
@@ -581,7 +592,7 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
         attributeModal.view.frame.origin.y = attributeModal.view.frame.size.height
         attributeModal.passModel(cartModel: tempModel, selectedProductUnits: selectedProductUnits!)
         self.tabBarController?.presentViewController(attributeModal, animated: true, completion: nil)
-        
+        self.isAttributesOpen = true
         UIView.animateWithDuration(0.3, animations: {
             self.dimView!.alpha = 0.5
             self.view.transform = CGAffineTransformMakeScale(0.92, 0.95)

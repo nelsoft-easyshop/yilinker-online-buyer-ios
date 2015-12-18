@@ -7,15 +7,15 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" restorationIdentifier="TransactionLeaveProductFeedbackRateTableViewCell" selectionStyle="default" indentationWidth="10" reuseIdentifier="TransactionLeaveProductFeedbackRateTableViewCell" rowHeight="182" id="4zE-13-nOF" customClass="TransactionLeaveProductFeedbackRateTableViewCell" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="375" height="182"/>
+        <tableViewCell contentMode="scaleToFill" restorationIdentifier="TransactionLeaveProductFeedbackRateTableViewCell" selectionStyle="default" indentationWidth="10" reuseIdentifier="TransactionLeaveProductFeedbackRateTableViewCell" rowHeight="232" id="4zE-13-nOF" customClass="TransactionLeaveProductFeedbackRateTableViewCell" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="232"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="4zE-13-nOF" id="BCp-Lm-CaX">
                 <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yXg-MT-3sX" userLabel="Star Container">
-                        <rect key="frame" x="51" y="130" width="272" height="30"/>
+                        <rect key="frame" x="51" y="176" width="272" height="30"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3t1-7U-mbq" userLabel="star1">
                                 <rect key="frame" x="20" y="0.0" width="40" height="30"/>
@@ -69,6 +69,12 @@
                             <constraint firstAttribute="height" constant="30" id="SPP-6C-xRK"/>
                         </constraints>
                     </view>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Rate this product" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="Xj8-yn-ujP">
+                        <rect key="frame" x="68" y="130" width="238" height="33"/>
+                        <fontDescription key="fontDescription" type="system" weight="thin" pointSize="17"/>
+                        <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="pa3-Ue-jSR">
                         <rect key="frame" x="55" y="8" width="265" height="114"/>
                         <constraints>
@@ -84,23 +90,28 @@ product.</string>
                     </label>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="yXg-MT-3sX" firstAttribute="top" secondItem="pa3-Ue-jSR" secondAttribute="bottom" constant="8" id="D7t-7H-2vh"/>
+                    <constraint firstItem="Xj8-yn-ujP" firstAttribute="top" secondItem="pa3-Ue-jSR" secondAttribute="bottom" constant="8" id="Dbh-im-5nS"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="yXg-MT-3sX" secondAttribute="bottom" constant="17" id="FB3-5E-q0D"/>
                     <constraint firstAttribute="trailingMargin" secondItem="pa3-Ue-jSR" secondAttribute="trailing" constant="47" id="GIx-2L-yw5"/>
                     <constraint firstItem="pa3-Ue-jSR" firstAttribute="leading" secondItem="BCp-Lm-CaX" secondAttribute="leadingMargin" constant="47" id="KZQ-8E-EjY"/>
                     <constraint firstAttribute="centerX" secondItem="pa3-Ue-jSR" secondAttribute="centerX" id="QME-xT-yTy"/>
-                    <constraint firstItem="yXg-MT-3sX" firstAttribute="top" secondItem="BCp-Lm-CaX" secondAttribute="top" constant="130" id="SMQ-SM-lpu"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="Xj8-yn-ujP" secondAttribute="trailing" constant="61" id="UBI-F7-xPd"/>
+                    <constraint firstItem="Xj8-yn-ujP" firstAttribute="leading" secondItem="BCp-Lm-CaX" secondAttribute="leadingMargin" constant="60" id="VJb-9i-KDg"/>
+                    <constraint firstItem="yXg-MT-3sX" firstAttribute="top" secondItem="Xj8-yn-ujP" secondAttribute="bottom" constant="13" id="fDg-Pr-5tu"/>
+                    <constraint firstItem="pa3-Ue-jSR" firstAttribute="top" secondItem="BCp-Lm-CaX" secondAttribute="topMargin" id="gbb-Gl-K6V"/>
                     <constraint firstItem="yXg-MT-3sX" firstAttribute="centerX" secondItem="BCp-Lm-CaX" secondAttribute="centerX" id="qk9-0Q-QxR"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
                 <outlet property="messageLabel" destination="pa3-Ue-jSR" id="jva-J8-rQx"/>
+                <outlet property="rateThisProductLabel" destination="Xj8-yn-ujP" id="SzW-mW-1uI"/>
                 <outlet property="star1Button" destination="3t1-7U-mbq" id="qda-Hc-usM"/>
                 <outlet property="star2Button" destination="zst-YJ-hYM" id="CVQ-CQ-NZz"/>
                 <outlet property="star3Button" destination="WCx-9s-QaQ" id="2Pv-c7-VZE"/>
                 <outlet property="star4Button" destination="8YT-UY-JEC" id="El3-eN-q6y"/>
                 <outlet property="star5Button" destination="lQJ-fV-KbV" id="VkE-E1-wuz"/>
             </connections>
-            <point key="canvasLocation" x="249.5" y="121"/>
+            <point key="canvasLocation" x="249.5" y="146"/>
         </tableViewCell>
     </objects>
     <resources>

@@ -80,7 +80,7 @@ class TransactionLeaveProductFeedbackTableViewController: UITableViewController,
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if indexPath.section == 0 {
-            return 182
+            return 232
         } else {
             return 50
         }

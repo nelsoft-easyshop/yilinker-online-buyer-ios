@@ -51,6 +51,10 @@ class FilterViewController: UIViewController, FilterTableViewCellDelegate {
         initializeLocalizedString()
     }
     
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+    }
+    
     func initializeLocalizedString() {
         let cancelLocalizeString: String = StringHelper.localizedStringWithKey("CANCEL_LOCALIZE_KEY")
         cancelButton.setTitle(cancelLocalizeString, forState: UIControlState.Normal)
