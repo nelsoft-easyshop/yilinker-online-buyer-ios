@@ -199,7 +199,7 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
             self.presentViewController(alertController, animated: true, completion: nil)
         } else {
             if self.quantity == 0 {
-                let alertController = UIAlertController(title: ProductStrings.alertFailed, message: ProductStrings.alertOutOfStock, preferredStyle: .Alert)
+                let alertController = UIAlertController(title: ProductStrings.alertCannotProcceed, message: ProductStrings.alertOutOfStock, preferredStyle: .Alert)
                 let defaultAction = UIAlertAction(title: ProductStrings.alertOk, style: .Default, handler: nil)
                 alertController.addAction(defaultAction)
                 self.presentViewController(alertController, animated: true, completion: nil)
@@ -227,7 +227,7 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
         self.quantity = stocksLabel.text!.toInt()!
         
         if self.quantity == 0 {
-            let alertController = UIAlertController(title: ProductStrings.alertFailed, message: ProductStrings.alertOutOfStock, preferredStyle: .Alert)
+            let alertController = UIAlertController(title: ProductStrings.alertCannotProcceed, message: ProductStrings.alertOutOfStock, preferredStyle: .Alert)
             let defaultAction = UIAlertAction(title: ProductStrings.alertOk, style: .Default, handler: nil)
             alertController.addAction(defaultAction)
             self.presentViewController(alertController, animated: true, completion: nil)
@@ -425,7 +425,7 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
     
     func requestAddCartItem(url: String, params: NSDictionary!) {
         if self.quantity == 0 {
-            let alertController = UIAlertController(title: ProductStrings.alertFailed, message: ProductStrings.alertOutOfStock, preferredStyle: .Alert)
+            let alertController = UIAlertController(title: ProductStrings.alertCannotProcceed, message: ProductStrings.alertOutOfStock, preferredStyle: .Alert)
             let defaultAction = UIAlertAction(title: ProductStrings.alertOk, style: .Default, handler: nil)
             alertController.addAction(defaultAction)
             self.presentViewController(alertController, animated: true, completion: nil)

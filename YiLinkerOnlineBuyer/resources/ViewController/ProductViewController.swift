@@ -1277,7 +1277,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     
     @IBAction func addToCartAction(sender: AnyObject) {
         if self.quantity == 0 {
-            self.showAlert(title: ProductStrings.alertFailed, message: ProductStrings.alertOutOfStock)
+            self.showAlert(title: ProductStrings.alertCannotProcceed, message: ProductStrings.alertOutOfStock)
         } else {
             requestAddCartItem("cart")
         }
@@ -1285,7 +1285,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     
     func buyItNowAction(gesture: UIGestureRecognizer) {
         if self.quantity == 0 {
-            self.showAlert(title: ProductStrings.alertFailed, message: ProductStrings.alertOutOfStock)
+            self.showAlert(title: ProductStrings.alertCannotProcceed, message: ProductStrings.alertOutOfStock)
         } else {
             requestAddCartItem("buyitnow")
         }
