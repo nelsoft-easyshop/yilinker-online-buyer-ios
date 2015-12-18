@@ -91,6 +91,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     var lastContentOffset: CGFloat = 0.0
     
     var canShowExtendedDetails: Bool = false
+    var dimV: UIView!
     
     @IBOutlet weak var buttonsContainerVerticalConstraint: NSLayoutConstraint!
     @IBOutlet weak var buttonsContainerHeight: NSLayoutConstraint!
@@ -160,6 +161,8 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
 //        self.closeButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "closeAction:"))
         let extendedViewController: ProductDetailsExtendedViewController = ProductDetailsExtendedViewController(nibName: "ProductDetailsExtendedViewController", bundle: nil)
         self.addChildViewController(extendedViewController)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "checkViewSize", name: UIApplicationWillEnterForegroundNotification, object: nil)
 
     }
     
@@ -784,6 +787,11 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         
         self.navigationItem.setLeftBarButtonItem(close, animated: false)
         self.navigationItem.setRightBarButtonItems([share, negativeSpacer, message, /*negativeSpacer, rate,*/ negativeSpacer, wishlist], animated: true)
+        
+        dimV = UIView(frame: self.view.frame)
+        dimV.backgroundColor = UIColor.blackColor()
+        dimV.alpha = 0.0
+        self.navigationController?.view.addSubview(dimV)
     }
     
     func setUpViews() {
@@ -838,10 +846,20 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
 //        self.getFooterView().addSubview(self.getProductDetailsBottomView())
         
         if !isFromCart {
-            self.quantity = self.productDetailsModel.productUnits[0].quantity
+            for unit in self.productDetailsModel.productUnits {
+                println(unit.quantity)
+                if unit.quantity != 0 {
+                    self.quantity = unit.quantity
+                    self.unitId = unit.productUnitId
+                    getUnitIdIndexFrom()
+                    break
+                }
+            }
             if self.quantity != 0 {
                 self.quantity = 1
             }
+            
+            
             self.productImagesView.setDetails(self.productDetailsModel, unitId: unitIdIndex, width: self.view.frame.size.width)
         } else {
             self.getUnitIdIndexFrom()
@@ -851,9 +869,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
                     if productUnit.imageIds.count != 0 {
                         for j in 0..<productUnit.imageIds.count {
                             for l in 0..<self.productDetailsModel.images.count {
-                                println("\(productUnit.imageIds[j]) == \(self.productDetailsModel.images[l].id)")
                                 if productUnit.imageIds[j] == self.productDetailsModel.images[l].id {
-                                    println(self.productDetailsModel.images[l].imageLocation)
                                     images.append(self.productDetailsModel.images[l].imageLocation)
                                 }
                             }
@@ -1107,8 +1123,9 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         self.tabBarController?.presentViewController(attributeModal, animated: true, completion: nil)
         
         UIView.animateWithDuration(0.3, animations: {
-            self.dimView.alpha = 0.5
-            self.dimView.layer.zPosition = 2
+//            self.dimView.alpha = 0.5
+//            self.dimView.layer.zPosition = 2
+            self.dimV.alpha = 0.50
             self.view.transform = CGAffineTransformMakeScale(0.92, 0.95)
             self.navigationController?.navigationBar.alpha = 0.0
         })
@@ -1123,6 +1140,10 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         self.productDetailsExtendedView.url = self.productDetailsModel.fullDescription
         self.productDetailsExtendedView.loadUrl(self.productDetailsModel.fullDescription)
         self.view.addSubview(self.productDetailsExtendedView)
+    }
+    
+    func checkViewSize() {
+        self.view.transform = CGAffineTransformMakeScale(1, 1)
     }
     
     // MARK: - Product Images Delegate
@@ -1180,15 +1201,16 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         
         UIView.animateWithDuration(0.3, animations: {
             self.view.transform = CGAffineTransformMakeTranslation(1, 1)
-            self.dimView.alpha = 0
-            self.dimView.layer.zPosition = -1
+//            self.dimView.alpha = 0
+//            self.dimView.layer.zPosition = -1
+            self.dimV?.alpha = 0.0
             self.navigationController?.navigationBar.alpha = CGFloat(self.visibility)
             }, completion: { finished in
                 if type == "cart" {
                     self.showAlert(title: nil, message: ProductStrings.alertCart)
                     self.loadViewsWithDetails()
                 } else if type == "done" {
-                    //                    self.showAlert(type)
+//                    self.showAlert(type)
                 }
         })
         
@@ -1213,8 +1235,9 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     func pressedCancelReview(controller: ProductReviewViewController) {
         UIView.animateWithDuration(0.3, animations: {
             self.view.transform = CGAffineTransformMakeTranslation(1, 1)
-            self.dimView.alpha = 0
-            self.dimView.layer.zPosition = -1
+//            self.dimView.alpha = 0
+//            self.dimView.layer.zPosition = -1
+            self.dimV.alpha = 0.0
             self.navigationController?.navigationBar.alpha = CGFloat(self.visibility)
         })
     }
@@ -1357,10 +1380,12 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
             reviewModal.view.frame.origin.y = reviewModal.view.frame.size.height
             reviewModal.passModel(self.productReviewModel)
             self.tabBarController?.presentViewController(reviewModal, animated: true, completion: nil)
-            
+
+//            self.navigationController?.navigationBar.addSubview(self.dimView)
             UIView.animateWithDuration(0.3, animations: {
-                self.dimView.alpha = 0.5
-                self.dimView.layer.zPosition = 2
+//                self.dimView.alpha = 0.5
+//                self.dimView.layer.zPosition = 2
+                self.dimV.alpha = 0.50
                 self.view.transform = CGAffineTransformMakeScale(0.92, 0.93)
                 self.navigationController?.navigationBar.alpha = 0.0
             })

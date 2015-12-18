@@ -41,6 +41,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GGLInstanceIDDelegate {
         UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: true)
         self.window?.makeKeyAndVisible()
         self.window!.backgroundColor = UIColor.whiteColor()
+
         //Google Sign In
         // Initialize sign-in
         var configureError: NSError?
