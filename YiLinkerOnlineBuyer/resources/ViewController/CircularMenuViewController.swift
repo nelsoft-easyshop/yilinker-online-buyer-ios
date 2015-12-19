@@ -25,7 +25,7 @@ class CircularMenuViewController: UIViewController {
     
     @IBOutlet weak var dimView: UIView!
     
-    var profileImageIndex: Int = 5
+    var profileImageIndex: Int = 4
     
     var buttonImages: [String] = []
     var buttonTitles: [String] = []
