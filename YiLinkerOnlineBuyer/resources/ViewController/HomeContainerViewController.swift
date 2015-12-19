@@ -183,6 +183,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     func setupBackToTopButton() {
         self.backToTopButton.layer.cornerRadius = 15
         self.backToTopButton.alpha = 0
+        self.backToTopButton.backgroundColor = Constants.Colors.appTheme
         self.backToTopButton.layer.shadowColor = UIColor.darkGrayColor().CGColor
         self.backToTopButton.layer.shadowOffset = CGSizeMake(0, 5)
         self.backToTopButton.layer.shadowRadius = 5
@@ -332,17 +333,17 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             animatedViewController!.view.backgroundColor = UIColor.clearColor()
             
             if SessionManager.isLoggedIn() {
-                var buttonImages: [String] = ["fab_following", "fab_messaging", "fab_promo", "fab_category", "fab_help", SessionManager.profileImageStringUrl()]
-                var buttonTitles: [String] = [FABStrings.followedSeller, FABStrings.messaging, FABStrings.todaysPromo, FABStrings.categories, FABStrings.help, FABStrings.profile]
+                var buttonImages: [String] = ["fab_following", "fab_messaging", "fab_category", "fab_help", SessionManager.profileImageStringUrl()]
+                var buttonTitles: [String] = [FABStrings.followedSeller, FABStrings.messaging, FABStrings.categories, FABStrings.help, FABStrings.profile]
                 
-                var buttonRightText: [String] = ["", SessionManager.unreadMessageCount(), "", "", "", "\(SessionManager.userFullName()) \n \(SessionManager.city()) \(SessionManager.province())"]
+                var buttonRightText: [String] = ["", SessionManager.unreadMessageCount(), "", "", "\(SessionManager.userFullName()) \n \(SessionManager.city()) \(SessionManager.province())"]
                 
                 animatedViewController?.buttonImages = buttonImages
                 animatedViewController?.buttonTitles = buttonTitles
                 animatedViewController?.buttonRightText = buttonRightText
             } else {
-                var buttonImages: [String] = ["fab_register", "fab_signin", "fab_promo", "fab_category", "fab_help"]
-                var buttonTitles: [String] = ["REGISTER", FABStrings.signIn, FABStrings.todaysPromo, FABStrings.categories, FABStrings.help]
+                var buttonImages: [String] = ["fab_register", "fab_signin", "fab_category", "fab_help"]
+                var buttonTitles: [String] = ["REGISTER", FABStrings.signIn, FABStrings.categories, FABStrings.help]
                 var buttonRightText: [String] = ["", "", "", "", ""]
                 
                 animatedViewController?.buttonImages = buttonImages

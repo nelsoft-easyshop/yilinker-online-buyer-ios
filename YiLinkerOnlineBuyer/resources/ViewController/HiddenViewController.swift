@@ -65,10 +65,8 @@ class HiddenViewController: UIViewController {
             } else if index == 1 {
                 self.setNavigationBarTitle(HiddenStrings.messaging)
             } else if index == 2 {
-                self.setNavigationBarTitle(HiddenStrings.todaysPromo)
-            } else if index == 3 {
                 self.setNavigationBarTitle(HiddenStrings.categories)
-            } else if index == 4 {
+            } else if index == 3 {
                 self.setNavigationBarTitle(HiddenStrings.help)
             } else {
                 self.setNavigationBarTitle(HiddenStrings.profile)
@@ -83,8 +81,6 @@ class HiddenViewController: UIViewController {
                 self.loginViewController?.defaultViewControllerIndex = 0
                 self.loginViewController?.closeButton.hidden = true
             } else if index == 2 {
-                self.setNavigationBarTitle(HiddenStrings.todaysPromo)
-            } else if index == 3 {
                 self.setNavigationBarTitle(HiddenStrings.categories)
             }  else if index == 3 {
                 self.setNavigationBarTitle(HiddenStrings.help)
@@ -140,7 +136,6 @@ class HiddenViewController: UIViewController {
             
             self.viewControllers.append(self.followedSellerViewController!)
             self.viewControllers.append(self.messagingViewController!)
-            self.viewControllers.append(self.resultViewController!)
             self.viewControllers.append(self.categoriesViewController!)
             self.viewControllers.append(self.helpViewController!)
             self.viewControllers.append(self.profileViewController!)
@@ -175,7 +170,6 @@ class HiddenViewController: UIViewController {
             
             self.viewControllers.append(self.registerViewController!)
             self.viewControllers.append(self.loginViewController!)
-            self.viewControllers.append(self.resultViewController!)
             self.viewControllers.append(self.categoriesViewController!)
             self.viewControllers.append(self.helpViewController!)
         }
