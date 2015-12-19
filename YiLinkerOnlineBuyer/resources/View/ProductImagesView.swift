@@ -88,6 +88,8 @@ class ProductImagesView: UIView, UICollectionViewDataSource, UICollectionViewDel
             cell.setImage(self.imagesModel[indexPath.row].imageLocation)
         }
         
+        cell.imageView.contentMode = UIViewContentMode.ScaleAspectFit
+        
         return cell
     }
 
