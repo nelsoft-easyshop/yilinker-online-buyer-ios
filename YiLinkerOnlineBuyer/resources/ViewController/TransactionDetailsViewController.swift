@@ -313,8 +313,11 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
             transactionDetailsView.unitCostTitleLabel.text = self.totalUnitCostTitle
             transactionDetailsView.shippingFeeTitleLabel.text = self.shippingFeeTitle
             transactionDetailsView.totalCostTitleLabel.text = self.totalCostTitle
-            //transactionDetailsView.statusLabel.text = self.orderStatus
-            transactionDetailsView.statusLabel.text = self.transactionType
+            if self.transactionType == StringHelper.localizedStringWithKey("TRANSACTION_ALL_LOCALIZE_KEY") {
+                transactionDetailsView.statusLabel.text = self.orderStatus
+            } else {
+                transactionDetailsView.statusLabel.text = self.transactionType
+            }
             transactionDetailsView.paymentTypeLabel.text = self.paymentType
             transactionDetailsView.dateCreatedLabel.text = self.dateCreated
             transactionDetailsView.quantityLabel.text = self.totalQuantity
