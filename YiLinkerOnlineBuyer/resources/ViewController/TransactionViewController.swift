@@ -277,12 +277,12 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
         if !isPageEnd {
             page++
             
-            if self.refreshPage {
+            /*if self.refreshPage {
                 UIApplication.sharedApplication().networkActivityIndicatorVisible = true
             } else {
                 self.showHUD()
-            }
-            
+            }*/
+            self.showHUD()
             let manager = APIManager.sharedInstance
             var url: String = APIAtlas.transactionLogs+"\(SessionManager.accessToken())&type=\(queryType)&perPage=15&page=\(page)"
             
@@ -324,12 +324,12 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
                
                 self.tableView.reloadData()
                 
-                if self.refreshPage {
+                /*if self.refreshPage {
                     UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                 } else {
-                  self.hud?.hide(true)
-                }
-                
+                  
+                }*/
+                self.hud?.hide(true)
                 self.refreshPage = true
                 
                 }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
@@ -359,11 +359,12 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
                     }
                     
                     self.tableView.hidden = true
-                    if self.refreshPage {
+                    /*if self.refreshPage {
                         UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                     } else {
                         self.hud?.hide(true)
-                    }
+                    }*/
+                    self.hud?.hide(true)
             })
         }
     }
@@ -371,12 +372,12 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
     //MARK: Refresh token
     func requestRefreshToken(type: TransactionRefreshType) {
         
-        if self.refreshPage {
+        /*if self.refreshPage {
             UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         } else {
             self.showHUD()
-        }
-        
+        }*/
+        self.showHUD()
         let manager = APIManager.sharedInstance
         let params: NSDictionary = ["client_id": Constants.Credentials.clientID(),
             "client_secret": Constants.Credentials.clientSecret(),
@@ -400,12 +401,12 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
                 self.fireTransaction("support")
             }
             
-            if self.refreshPage {
+            /*if self.refreshPage {
                 UIApplication.sharedApplication().networkActivityIndicatorVisible = false
             } else {
                 self.hud?.hide(true)
-            }
-            
+            }*/
+            self.hud?.hide(true)
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 self.hud?.hide(true)
