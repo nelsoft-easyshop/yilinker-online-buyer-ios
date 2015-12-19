@@ -183,6 +183,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     func setupBackToTopButton() {
         self.backToTopButton.layer.cornerRadius = 15
         self.backToTopButton.alpha = 0
+        self.backToTopButton.backgroundColor = Constants.Colors.appTheme
         self.backToTopButton.layer.shadowColor = UIColor.darkGrayColor().CGColor
         self.backToTopButton.layer.shadowOffset = CGSizeMake(0, 5)
         self.backToTopButton.layer.shadowRadius = 5
