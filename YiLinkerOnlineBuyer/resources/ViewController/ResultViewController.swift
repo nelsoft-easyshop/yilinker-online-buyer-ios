@@ -602,6 +602,10 @@ class ResultViewController: UIViewController, UICollectionViewDataSource, UIColl
         return cell
     }
     
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 30
+    }
+    
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         UIView.animateWithDuration(0.3, animations: {
             self.dimView.alpha = 0
