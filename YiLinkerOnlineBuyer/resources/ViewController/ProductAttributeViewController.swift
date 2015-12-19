@@ -599,7 +599,7 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
         self.unitId = unitId
         
         applyProductUnit(unitId)
-        checkStock(self.quantity)
+        checkStock(quantity)
     }
     
     func pressedDimViewFromProductPage(controller: ProductViewController) {
@@ -727,9 +727,9 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
         
         if self.maximumStock != 0 {
             stocks = 1
-//            if self.quantity > 1 {
-//                stocks = self.quantity
-//            }
+            if self.quantity > 1 {
+                stocks = self.quantity
+            }
             checkStock(stocks)
         } else if self.maximumStock == 0 {
             checkStock(0)
