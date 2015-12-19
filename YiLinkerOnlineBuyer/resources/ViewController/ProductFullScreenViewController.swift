@@ -75,7 +75,7 @@ class ProductFullScreenViewController: UIViewController, UIScrollViewDelegate {
             self.imageView = UIImageView(frame: CGRectMake(0, 0, screenSize.size.width, imageViewHeight))
             self.imageView.sd_setImageWithURL(NSURL(string: images[i])!, placeholderImage: UIImage(named: "dummy-placeholder"))
 //            self.imageView.backgroundColor = UIColor.greenColor()
-            self.imageView.contentMode = UIViewContentMode.ScaleAspectFill
+            self.imageView.contentMode = UIViewContentMode.ScaleAspectFit
             self.imageView.userInteractionEnabled = true
             self.imageView.addGestureRecognizer(imageTap)
             self.imageView.center = self.scrollView.center
