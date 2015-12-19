@@ -187,7 +187,7 @@ class WebViewController: UIViewController, UIWebViewDelegate, EmptyViewDelegate 
                 if urlString == WebViewURL.dailyLogin + "?access_token=\(SessionManager.accessToken())" {
                     return true
                 } else {
-                    errorView.hidden = false
+                    //errorView.hidden = false
                     return false
                 }
             } else {
