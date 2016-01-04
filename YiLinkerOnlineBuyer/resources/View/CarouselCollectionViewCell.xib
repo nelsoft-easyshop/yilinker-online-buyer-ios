@@ -27,7 +27,7 @@
                             <outlet property="delegate" destination="gTV-IL-0wX" id="tPI-kM-ySU"/>
                         </connections>
                     </collectionView>
-                    <pageControl opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="DlP-SB-GWN">
+                    <pageControl opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" hidesForSinglePage="YES" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="DlP-SB-GWN">
                         <rect key="frame" x="8" y="165" width="376" height="37"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="37" id="vN5-Aa-avc"/>
