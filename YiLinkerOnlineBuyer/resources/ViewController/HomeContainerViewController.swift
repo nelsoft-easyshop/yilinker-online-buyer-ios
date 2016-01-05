@@ -377,26 +377,33 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             self.showHUD()
         }
         
-        let manager = APIManager.sharedInstance
-        manager.GET(APIAtlas.homeUrl, parameters: nil, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            let dictionary: NSDictionary  = ParseLocalJSON.fileName("dummyHomePage")
-            self.populateHomePageWithDictionary(responseObject as! NSDictionary)
-            self.hud?.hide(true)
-            self.collectionView.hidden = false
-            //get user info
-            if SessionManager.isLoggedIn() {
-                self.fireGetUserInfo()
-            } else {
-                SessionManager.saveCookies()
-            }
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                
-                let task = task.response as? NSHTTPURLResponse
-                
+        WebServiceManager.fireGetHomePageDataWithUrl(APIAtlas.homeUrl, actionHandler: {
+            (successful, responseObject, requestErrorType) -> Void in
+            if successful {
+                self.populateHomePageWithDictionary(responseObject as! NSDictionary)
                 self.hud?.hide(true)
-                self.addEmptyView()
+                self.collectionView.hidden = false
+                //get user info
+                if SessionManager.isLoggedIn() {
+                    self.fireGetUserInfo()
+                } else {
+                    SessionManager.saveCookies()
+                }
+            } else {
+                self.hud?.hide(true)
+                if requestErrorType == .ResponseError {
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                } else if requestErrorType == .PageNotFound {
+                    Toast.displayToastWithMessage("Page not found.", duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    Toast.displayToastWithMessage(Constants.Localized.error, duration: 1.5, view: self.view)
+                }
+            }
         })
     }
     

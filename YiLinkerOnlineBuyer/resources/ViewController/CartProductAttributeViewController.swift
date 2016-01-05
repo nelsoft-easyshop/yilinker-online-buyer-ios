@@ -57,10 +57,10 @@ class CartProductAttributeViewController: UIViewController, UITableViewDelegate,
         let nib = UINib(nibName: "CartProductAttributeTableViewCell", bundle: nil)
         self.tableView.registerNib(nib, forCellReuseIdentifier: "CartProductAttributeTableViewCell")
         
-//        let tap = UITapGestureRecognizer()
-//        tap.numberOfTapsRequired = 1
-//        tap.addTarget(self, action: "dimViewAction:")
-//        self.dimView.addGestureRecognizer(tap)
+        //        let tap = UITapGestureRecognizer()
+        //        tap.numberOfTapsRequired = 1
+        //        tap.addTarget(self, action: "dimViewAction:")
+        //        self.dimView.addGestureRecognizer(tap)
         self.dimView.backgroundColor = .clearColor()
         
         initializeLocalizedString()
@@ -259,6 +259,9 @@ class CartProductAttributeViewController: UIViewController, UITableViewDelegate,
             disableButton(increaseButton)
             disableButton(decreaseButton)
             stocksLabel.alpha = 0.3
+        } else if maximumStock == 1 {
+            disableButton(increaseButton)
+            disableButton(decreaseButton)
         } else if stocks == maximumStock {
             stocksLabel.alpha = 1.0
             disableButton(increaseButton)
