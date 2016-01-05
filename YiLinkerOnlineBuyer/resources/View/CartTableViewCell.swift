@@ -21,8 +21,9 @@ class CartTableViewCell: UITableViewCell, UIScrollViewDelegate {
     var delegate: CartTableViewCellDelegate?
     
     var isSwipeViewOpen: Bool = false
+    var swipeCtr: Int = 0
     
-    let buttonViewWidth: CGFloat = 163         
+    let buttonViewWidth: CGFloat = 163
     let swipeForOptionsCellEnclosingTableViewDidBeginScrollingNotification: String = "SwipeForOptionsCellEnclosingTableViewDidBeginScrollingNotification"
     
     @IBOutlet weak var cellScrollView: UIScrollView!
@@ -68,6 +69,10 @@ class CartTableViewCell: UITableViewCell, UIScrollViewDelegate {
             updateSwipeViewStatus()
             delegate?.editButtonActionForIndex(self)
         } else if(sender as! NSObject == swipeIndicatorButton) {
+            self.swipeCtr = 1
+            if !isSwipeViewOpen {
+                cellScrollView.contentOffset.x = 1
+            }
             updateSwipeViewStatus()
         } else if(sender as! NSObject == checkBox) {
             contentTapAction()
@@ -106,7 +111,7 @@ class CartTableViewCell: UITableViewCell, UIScrollViewDelegate {
         productPriceLabel.frame = CGRectMake(productPriceLabel.frame.origin.x, productPriceLabel.frame.origin.y, (width - 187), productPriceLabel.frame.height)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "enclosingTableViewDidScroll", name: swipeForOptionsCellEnclosingTableViewDidBeginScrollingNotification, object: nil)
-
+        
         var contentTap = UITapGestureRecognizer(target:self, action:"contentTapAction")
         checkBoxView.addGestureRecognizer(contentTap)
         
@@ -137,25 +142,27 @@ class CartTableViewCell: UITableViewCell, UIScrollViewDelegate {
     }
     
     func updateSwipeViewStatus(){
-        if isSwipeViewOpen {
-            isSwipeViewOpen = false
-            swipeIndicatorButton.setImage(UIImage(named: "left"), forState: UIControlState.Normal)
-            swipeIndicatorButton.alpha = 1.0
-            dispatch_async(dispatch_get_main_queue(), {
-                self.cellScrollView.setContentOffset(CGPointZero, animated: true)
-            })
-        } else {
-            if cellScrollView.contentOffset.x > 0 {
-                isSwipeViewOpen = true
-                swipeIndicatorButton.setImage(UIImage(named: "right"), forState: UIControlState.Normal)
-                swipeIndicatorButton.alpha = 0.5
+        if self.swipeCtr == 1 {
+            if isSwipeViewOpen {
+                isSwipeViewOpen = false
+                swipeIndicatorButton.setImage(UIImage(named: "left"), forState: UIControlState.Normal)
+                swipeIndicatorButton.alpha = 1.0
                 dispatch_async(dispatch_get_main_queue(), {
-                    self.cellScrollView.setContentOffset(CGPoint(x: self.buttonViewWidth, y: 0), animated: true)
+                    self.cellScrollView.setContentOffset(CGPointZero, animated: true)
                 })
+            } else {
+                if cellScrollView.contentOffset.x > 0 {
+                    isSwipeViewOpen = true
+                    swipeIndicatorButton.setImage(UIImage(named: "right"), forState: UIControlState.Normal)
+                    swipeIndicatorButton.alpha = 0.5
+                    dispatch_async(dispatch_get_main_queue(), {
+                        self.cellScrollView.setContentOffset(CGPoint(x: self.buttonViewWidth, y: 0), animated: true)
+                    })
+                }
             }
         }
     }
-
+    
     
     func enclosingTableViewDidScroll() {
         if isSwipeViewOpen {
@@ -172,8 +179,13 @@ class CartTableViewCell: UITableViewCell, UIScrollViewDelegate {
         }
     }
     
+    func scrollViewWillBeginDragging(scrollView: UIScrollView) {
+        self.swipeCtr = 0
+    }
+    
     func scrollViewWillEndDragging(scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         delegate?.swipeViewDidScroll(self)
+        self.swipeCtr++
         if scrollView.contentOffset.x > buttonViewWidth {
             Float(targetContentOffset.memory.x) == Float(buttonViewWidth)
             if !isSwipeViewOpen {
