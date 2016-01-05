@@ -10,7 +10,7 @@ struct Constants {
     
     struct WebServiceStatusCode {
         static let pageNotFound: Int = 404
-        static let expireAccessToken: Int = 401
+        static let expiredAccessToken: Int = 401
         static let requestTimeOut: Int = 408
     }
     
