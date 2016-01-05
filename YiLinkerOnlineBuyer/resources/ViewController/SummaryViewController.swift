@@ -199,8 +199,7 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
                 let discountTotalCell: DicountVoucherTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(self.discountVouncherNibName) as! DicountVoucherTableViewCell
                 
                 if self.voucherModel.isSuccessful {
-                    println("Discount Value: ₱ \(self.voucherModel.less)")
-                    discountTotalCell.discountVoucherLabel.text = "Discount Value: ₱ \(self.voucherModel.less)"
+                    discountTotalCell.discountVoucherLabel.text = "Discount Value: \(self.voucherModel.less.formatToTwoDecimal())"
                 } else {
                     discountTotalCell.discountVoucherLabel.text = "\(self.voucherModel.message)"
                     discountTotalCell.discountVoucherLabel.textAlignment = NSTextAlignment.Right
