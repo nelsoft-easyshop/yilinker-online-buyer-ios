@@ -26,6 +26,9 @@ class ProductDescriptionViewController: UIViewController {
 //        self.navigationController?.navigationBar.barTintColor = Constants.Colors.appTheme
 //        self.navigationController?.navigationBar.tintColor = .whiteColor()
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Stop, target: self, action: "closeAction")
+
+        self.webView.frame = self.view.bounds
+        self.webView.scalesPageToFit = true
     }
 
     func closeAction() {
