@@ -195,9 +195,9 @@
                     <rect key="frame" x="0.0" y="36" width="375" height="631"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bfA-mE-D5q">
-                            <rect key="frame" x="0.0" y="0.0" width="375" height="125"/>
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="150"/>
                             <subviews>
-                                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="25" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Mkh-ce-Sbp">
+                                <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" style="plain" separatorStyle="default" rowHeight="25" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Mkh-ce-Sbp">
                                     <rect key="frame" x="0.0" y="25" width="375" height="120"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="120" id="xjk-oF-BYa"/>
@@ -223,7 +223,7 @@
                                 <constraint firstAttribute="trailing" secondItem="Mkh-ce-Sbp" secondAttribute="trailing" id="1YZ-G8-cUA"/>
                                 <constraint firstItem="Mkh-ce-Sbp" firstAttribute="top" secondItem="ZIu-as-AsN" secondAttribute="bottom" id="Gtg-19-mPT"/>
                                 <constraint firstItem="Mkh-ce-Sbp" firstAttribute="top" secondItem="ZIu-as-AsN" secondAttribute="bottom" id="IcS-mK-hwD"/>
-                                <constraint firstAttribute="height" constant="125" id="K7K-yQ-lwG"/>
+                                <constraint firstAttribute="height" constant="150" id="K7K-yQ-lwG"/>
                                 <constraint firstAttribute="trailing" secondItem="ZIu-as-AsN" secondAttribute="trailing" constant="8" id="Wrq-Yy-opx"/>
                                 <constraint firstItem="ZIu-as-AsN" firstAttribute="leading" secondItem="bfA-mE-D5q" secondAttribute="leading" constant="8" id="Xt0-LU-TDE"/>
                                 <constraint firstItem="Mkh-ce-Sbp" firstAttribute="leading" secondItem="bfA-mE-D5q" secondAttribute="leading" id="Yyx-r4-3js"/>
