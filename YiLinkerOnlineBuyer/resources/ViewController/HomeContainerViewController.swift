@@ -1351,6 +1351,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         } else if targetType == "webView" {
             let webViewController: WebViewController = WebViewController(nibName: "WebViewController", bundle: nil)
             webViewController.urlString = target
+            webViewController.pageTitle = sectionTitle
             self.navigationController!.pushViewController(webViewController, animated: true)
         } else {
             self.tabBarController!.view.makeToast(Constants.Localized.targetNotAvailable, duration: 1.5, position: CSToastPositionBottom, style: CSToastManager.sharedStyle())
