@@ -7,6 +7,13 @@
 //
 
 struct Constants {
+    
+    struct WebServiceStatusCode {
+        static let pageNotFound: Int = 404
+        static let expireAccessToken: Int = 401
+        static let requestTimeOut: Int = 408
+    }
+    
     struct Localized {
         static let ok: String = StringHelper.localizedStringWithKey("OK_BUTTON_LOCALIZE_KEY")
         static let someThingWentWrong: String = StringHelper.localizedStringWithKey("SOMETHING_WENT_WRONG_LOCALIZE_KEY")

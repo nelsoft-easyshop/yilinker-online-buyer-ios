@@ -82,3 +82,13 @@ enum AddressPickerType {
     case City
     case Barangay
 }
+
+enum RequestErrorType {
+    case NoInternetConnection
+    case RequestTimeOut
+    case PageNotFound
+    case AccessTokenExpire
+    case ResponseError
+    case UnRecognizeError
+    case NoError
+}
