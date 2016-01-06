@@ -482,7 +482,15 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                 if requestErrorType == .ResponseError {
                     //Error in api requirements
                     let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
-                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                    
+                    if errorModel.message == "The access token provided is invalid." {
+                        UIAlertController.displayAlertRedirectionToLogin(self, actionHandler: { (sucess) -> Void in
+                            self.logout()
+                        })
+                    } else {
+                        Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                    }
+                    
                 } else if requestErrorType == .AccessTokenExpired {
                     self.fireRefreshToken()
                 } else if requestErrorType == .PageNotFound {
@@ -533,14 +541,19 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             } else {
                 //Forcing user to logout.
                 UIAlertController.displayAlertRedirectionToLogin(self, actionHandler: { (sucess) -> Void in
-                    SessionManager.logout()
-                    FBSDKLoginManager().logOut()
-                    GPPSignIn.sharedInstance().signOut()
-                    let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-                    appDelegate.startPage()
+                   self.logout()
                 })
             }
         })
+    }
+    
+    //MARK: logout
+    func logout() {
+        SessionManager.logout()
+        FBSDKLoginManager().logOut()
+        GPPSignIn.sharedInstance().signOut()
+        let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        appDelegate.startPage()
     }
     
     //MARK: - Show HUD
