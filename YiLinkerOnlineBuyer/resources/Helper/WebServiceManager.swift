@@ -33,6 +33,10 @@ class WebServiceManager: NSObject {
     static let plainPasswordSecondKey = "user_guest[plainPassword][second]"
     static let referralCodeKey = "user_guest[referralCode]"
     
+    //Checkout
+    static let addressIdKey = "address_id"
+    static let voucherCodeKey = "voucherCode"
+    
     //MARK: - Fire Login Request With URL
     class func fireLoginRequestWithUrl(url: String, emailAddress: String, password: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
         let manager: APIManager = APIManager.sharedInstance
@@ -83,6 +87,30 @@ class WebServiceManager: NSObject {
         let parameters: NSDictionary = [self.accessTokenKey: accessToken]
         
         self.firePostRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+    }
+    
+    //MARK: - Fire Set Checkout Address With Url
+    class func fireSetCheckoutAddressWithUrl(url: String, accessToken: String, addressId: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+        let parameters: NSDictionary = [self.accessTokenKey: accessToken, self.addressIdKey: addressId]
+        
+        self.firePostRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+    }
+    
+    //MARK: - Fire Voucher With Url
+    class func fireVoucherWithUrl(url: String, accessToken: String, voucherCode: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+        
+        var parameters: NSDictionary = NSDictionary()
+        
+        if accessToken != "" {
+            parameters = [self.accessTokenKey: accessToken, self.voucherCodeKey: voucherCode]
+        } else {
+            parameters = [self.voucherCodeKey: voucherCode]
+        }
+        self.fireGetRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
             actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
         }
     }
