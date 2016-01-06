@@ -65,7 +65,7 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
     var totalUnitCostTitle = StringHelper.localizedStringWithKey("TRANSACTION_DETAILS_UNIT_COST_LOCALIZE_KEY")
     var shippingFeeTitle = StringHelper.localizedStringWithKey("TRANSACTION_DETAILS_SHIPPING_LOCALIZE_KEY")
     var totalCostTitle = StringHelper.localizedStringWithKey("TRANSACTION_DETAILS_TOTAL_COST_LOCALIZE_KEY")
-    
+    var voucherDiscountTitle = StringHelper.localizedStringWithKey("TRANSACTION_DETAILS_VOUCHER_DISCOUNT_LOCALIZE_KEY")
     //Delivery Status
     var deliveryStatus = StringHelper.localizedStringWithKey("TRANSACTION_DETAILS_DELIVERY_STATUS_LOCALIZE_KEY")
     var checkIn = StringHelper.localizedStringWithKey("TRANSACTION_DETAILS_CHECKIN_LOCALIZE_KEY")
@@ -311,6 +311,7 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
                     //(self.transactionDetailsModel.transactionUnitPrice).formatToPeso()
                 transactionDetailsView.shippingFeeLabel.text = (self.transactionDetailsModel.transactionShippingFee).formatToPeso()
                 transactionDetailsView.totalCostLabel.text = (self.transactionDetailsModel.transactionTotalPrice).formatToPeso()
+                transactionDetailsView.voucherDiscountLabel.text = (self.transactionDetailsModel.voucherDiscount).formatToTwoDecimal().formatToPeso()
                 //("\((self.transactionDetailsModel.transactionUnitPrice + self.transactionDetailsModel.transactionShippingFee))").formatToTwoDecimal().formatToPeso()
                 
             }
@@ -323,6 +324,7 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
             transactionDetailsView.unitCostTitleLabel.text = self.totalUnitCostTitle
             transactionDetailsView.shippingFeeTitleLabel.text = self.shippingFeeTitle
             transactionDetailsView.totalCostTitleLabel.text = self.totalCostTitle
+            transactionDetailsView.voucherDiscountTitleLabel.text = self.voucherDiscountTitle
             if self.transactionType == StringHelper.localizedStringWithKey("TRANSACTION_ALL_LOCALIZE_KEY") {
                 transactionDetailsView.statusLabel.text = self.orderStatus
             } else {
