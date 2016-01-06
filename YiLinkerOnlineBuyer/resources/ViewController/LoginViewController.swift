@@ -354,9 +354,8 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
                 } else {
                     self.hud?.hide(true)
                     if requestErrorType == .ResponseError {
-                        let jsonError: NSDictionary = responseObject as! NSDictionary
-                        let errorDescription: String = jsonError["error_description"] as! String
-                        Toast.displayToastWithMessage(errorDescription, duration: 1.5, view: self.view)
+                        let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                        Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
                     } else if requestErrorType == .PageNotFound {
                         Toast.displayToastWithMessage("Page not found.", duration: 1.5, view: self.view)
                     } else if requestErrorType == .NoInternetConnection {
