@@ -591,4 +591,4 @@ NO_INTERNET_LOCALIZE_KEY = "No Internet Connection";
 NO_INTERNET_ERROR_MESSAGE_LOCALIZE_KEY = "Please check your internet connection.";
 INFORMATION_LOCALIZE_KEY = "Information";
 TARGET_NOT_AVAILABLE = "No items to load.";
-
+PAGE_NOT_FOUND_LOCALIZE_KEY = "Page not found.";
