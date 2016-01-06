@@ -344,45 +344,30 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
         if errorMessage != "" {
             Toast.displayToastWithMessage(errorMessage, duration: 1.5, view: self.view)
         } else {
-            fireLogin()
-        }
-    }
-    
-    //MARK: - Fire Login
-    func fireLogin() {
-        self.showHUD()
-        let manager: APIManager = APIManager.sharedInstance
-        let parameters: NSDictionary = [LoginConstants.emailKey: self.emailAddressTextField.text, LoginConstants.passwordKey: self.passwordTextField.text, LoginConstants.clientIdKey: Constants.Credentials.clientID(), LoginConstants.clientSecretKey: Constants.Credentials.clientSecret(), LoginConstants.grantTypeKey: Constants.Credentials.grantBuyer]
-        println(parameters)
-        manager.POST(APIAtlas.loginUrl, parameters: parameters, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-                SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
-                self.hud?.hide(true)
-                self.showSuccessMessage()
-                self.fireCreateRegistration(SessionManager.gcmToken())
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                
-                if let task = task.response as? NSHTTPURLResponse {
-                    if error.userInfo != nil {
-                        if let jsonResult = error.userInfo as? Dictionary<String, AnyObject> {
-                            let errorDescription: String = jsonResult["error_description"] as! String
-                            Toast.displayToastWithMessage(errorDescription, duration: 3.0, view: self.view)
-                        }
-                    } else {
-                        if task.statusCode == 401 {
-                            Toast.displayToastWithMessage(LoginStrings.mismatch, duration: 1.5, view: self.view)
-                        } else {
-                            Toast.displayToastWithMessage(Constants.Localized.someThingWentWrong, duration: 1.5, view: self.view)
-                        }
-                    }
-                    
+            self.showHUD()
+            WebServiceManager.fireLoginRequestWithUrl(APIAtlas.loginUrl, emailAddress: self.emailAddressTextField.text!, password: self.passwordTextField.text!, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+                if successful {
+                    SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
                     self.hud?.hide(true)
+                    self.showSuccessMessage()
+                    self.fireCreateRegistration(SessionManager.gcmToken())
                 } else {
-                    
+                    self.hud?.hide(true)
+                    if requestErrorType == .ResponseError {
+                        let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                        Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                    } else if requestErrorType == .PageNotFound {
+                        Toast.displayToastWithMessage("Page not found.", duration: 1.5, view: self.view)
+                    } else if requestErrorType == .NoInternetConnection {
+                        Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                    } else if requestErrorType == .RequestTimeOut {
+                        Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                    } else if requestErrorType == .UnRecognizeError {
+                        Toast.displayToastWithMessage(Constants.Localized.error, duration: 1.5, view: self.view)
+                    }
                 }
-                self.hud?.hide(true)
-        })
+            })
+        }
     }
     
     //MARK: - Fire Registration GCM

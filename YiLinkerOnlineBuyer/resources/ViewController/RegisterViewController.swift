@@ -117,7 +117,6 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
     
     override func viewDidDisappear(animated: Bool) {
         super.viewDidDisappear(animated)
-        
         self.parentViewController?.view.removeGestureRecognizer(mainViewGesture!)
     }
     
@@ -142,7 +141,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         self.registerButton.clipsToBounds = true
     }
     
-    // MARK: Populate Default Data
+    //MARK: Populate Default Data
     func populateDefautData() {
         let parentViewController: LoginAndRegisterContentViewController = self.parentViewController as! LoginAndRegisterContentViewController
         
@@ -166,7 +165,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         self.hud?.show(true)
     }
     
-
+    //MARK: - Setup TextFields
     func setUpTextFields() {
         self.firstNameTextField.delegate = self
         //self.firstNameTextField.addToolBarWithTarget(self, next: "next", previous: "previous", done: "done")
@@ -185,7 +184,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
     }
     
     
-    // Mark: - Done
+    //MARK: - Done
     func done() {
         self.view.endEditing(true)
         self.showCloseButton()
@@ -204,7 +203,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         
     }
     
-    // Mark: - Previous
+    //MARK: - Previous
     func previous() {
         let previousTag: Int = self.currentTextFieldTag - 1
        
@@ -216,7 +215,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
 
     }
     
-    // Mark: - Next
+    //MARK: - Next
     func next() {
         let nextTag: Int = self.currentTextFieldTag + 1
         
@@ -227,6 +226,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
+    //MARK: - TextField Delegate
     func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
         self.currentTextFieldTag = textField.tag
         let textFieldHeightWithInset: CGFloat = -30
@@ -300,8 +300,9 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         return true
     }
     
-    
+    //MARK: - Adjust Text Field Y Inset With Inset
     func adjustTextFieldYInsetWithInset(inset: CGFloat) {
+        //Code for adjusting view above the keyboard
         if self.parentViewController!.isKindOfClass(LoginAndRegisterContentViewController) {
             UIView.animateWithDuration(0.5, delay: 0.0, options: nil, animations: {
                 let parentViewController: LoginAndRegisterContentViewController = self.parentViewController as! LoginAndRegisterContentViewController
@@ -313,9 +314,10 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
+    //MARK: - Register
     func register() {
         var errorMessage: String = ""
-        
+        //validate fields
         if !self.firstNameTextField.isNotEmpty() {
             errorMessage = RegisterStrings.firstNameRequired
         } else if !self.lastNameTextField.isNotEmpty() {
@@ -341,12 +343,75 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         } 
         
         if errorMessage != "" {
-            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorMessage)
+            Toast.displayToastWithMessage(errorMessage, duration: 1.5, view: self.view)
         } else {
-            self.fireRegister()
+            self.showHUD()
+            
+            let loginRegisterParentViewController: LoginAndRegisterContentViewController = self.parentViewController as! LoginAndRegisterContentViewController
+            //check if the user is guest or not
+            if loginRegisterParentViewController.registerModel.firstName == "" {
+                //user is not guests
+                WebServiceManager.fireRegisterRequestWithUrl(APIAtlas.registerUrl, emailAddress: self.emailAddressTextField.text,
+                    mobileNumber: self.mobileNumberTextField.text, password: self.passwordTextField.text,
+                    firstName: self.firstNameTextField.text, lastName: self.lastNameTextField.text,
+                    actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+                        if successful {
+                            self.hud?.hide(true)
+                            let registerModel: RegisterModel = RegisterModel.parseDataFromDictionary(responseObject as! NSDictionary)
+                            if registerModel.isSuccessful {
+                                self.fireLogin(self.emailAddressTextField.text, password: self.passwordTextField.text)
+                            } else {
+                                Toast.displayToastWithMessage(registerModel.message, duration: 2.0, view: self.view)
+                            }
+                        } else {
+                            self.hud?.hide(true)
+                            if requestErrorType == .ResponseError {
+                                let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                                Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                            } else if requestErrorType == .PageNotFound {
+                                Toast.displayToastWithMessage("Page not found.", duration: 1.5, view: self.view)
+                            } else if requestErrorType == .NoInternetConnection {
+                                Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                            } else if requestErrorType == .RequestTimeOut {
+                                Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                            } else if requestErrorType == .UnRecognizeError {
+                                Toast.displayToastWithMessage(Constants.Localized.error, duration: 1.5, view: self.view)
+                            }
+                        }
+                })
+            } else {
+                //user is guest
+                WebServiceManager.fireGuestRegisterRequestWithUrl(APIAtlas.guestUserRegisterUrl, password: self.passwordTextField.text, referralCode: "", actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+                    if successful {
+                        self.hud?.hide(true)
+                        let registerModel: RegisterModel = RegisterModel.parseDataFromDictionary(responseObject as! NSDictionary)
+                        if registerModel.isSuccessful {
+                            //Login User after successfully registered
+                            self.fireLogin(self.emailAddressTextField.text, password: self.passwordTextField.text)
+                        } else {
+                            Toast.displayToastWithMessage(registerModel.message, duration: 2.0, view: self.view)
+                        }
+                    } else {
+                        self.hud?.hide(true)
+                        if requestErrorType == .ResponseError {
+                            let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                            Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                        } else if requestErrorType == .PageNotFound {
+                            Toast.displayToastWithMessage("Page not found.", duration: 1.5, view: self.view)
+                        } else if requestErrorType == .NoInternetConnection {
+                            Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                        } else if requestErrorType == .RequestTimeOut {
+                            Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                        } else if requestErrorType == .UnRecognizeError {
+                            Toast.displayToastWithMessage(Constants.Localized.error, duration: 1.5, view: self.view)
+                        }
+                    }
+                })
+            }
         }
     }
     
+    //MARK: - Hide Close Button
     func hideCloseButton() {
         if self.parentViewController!.isKindOfClass(LoginAndRegisterContentViewController) {
             UIView.animateWithDuration(0.3, delay: 0.0, options: nil, animations: {
@@ -358,6 +423,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
+    //MARK: - Show Close Button
     func showCloseButton() {
         if self.parentViewController!.isKindOfClass(LoginAndRegisterContentViewController) {
             UIView.animateWithDuration(0.3, delay: 0.0, options: nil, animations: {
@@ -369,78 +435,66 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
-    func fireRegister() {
-        self.showHUD()
-        let manager: APIManager = APIManager.sharedInstance
-
-        var parameters: NSDictionary?
-        
-        let loginRegisterParentViewController: LoginAndRegisterContentViewController = self.parentViewController as! LoginAndRegisterContentViewController
-        
-        var url: String = ""
-        
-        if loginRegisterParentViewController.registerModel.firstName == "" {
-            url = APIAtlas.registerUrl
-            parameters = ["email": self.emailAddressTextField.text,"password": self.passwordTextField.text, "firstName": self.firstNameTextField.text, "lastName": self.lastNameTextField.text, "contactNumber": self.mobileNumberTextField.text]
-        } else {
-            url = APIAtlas.guestUserRegisterUrl
-            parameters = ["user_guest[plainPassword][first]": self.passwordTextField.text, "user_guest[plainPassword][second]": self.passwordTextField.text, "user_guest[referralCode]" : ""]
-        }
-        
-        manager.POST(url, parameters: parameters, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-                let registerModel: RegisterModel = RegisterModel.parseDataFromDictionary(responseObject as! NSDictionary)
-                if registerModel.isSuccessful {
-                    self.fireLogin(self.emailAddressTextField.text, password: self.passwordTextField.text, firstName: self.firstNameTextField.text, lastName: self.lastNameTextField.text)
-                } else {
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: registerModel.message, title: "Error")
-                     self.hud?.hide(true)
-                }
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-    
-                if !Reachability.isConnectedToNetwork() {
-                    UIAlertController.displayNoInternetConnectionError(self)
-                } else {
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
-                }
-                
+    //MARK: - Fire Login
+    func fireLogin(email: String, password: String) {
+        WebServiceManager.fireLoginRequestWithUrl(APIAtlas.loginUrl, emailAddress: email, password: password, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+            if successful {
+                //Save access token and refresh token to session manager
+                SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
                 self.hud?.hide(true)
+                //Show success message and redirect to homepage
+                self.showSuccessMessage()
+                self.fireCreateRegistration(SessionManager.gcmToken())
+            } else {
+                self.hud?.hide(true)
+                if requestErrorType == .ResponseError {
+                    let jsonError: NSDictionary = responseObject as! NSDictionary
+                    let errorDescription: String = jsonError["error_description"] as! String
+                    Toast.displayToastWithMessage(errorDescription, duration: 1.5, view: self.view)
+                } else if requestErrorType == .PageNotFound {
+                    Toast.displayToastWithMessage("Page not found.", duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    Toast.displayToastWithMessage(Constants.Localized.error, duration: 1.5, view: self.view)
+                }
+            }
         })
     }
     
-    func fireLogin(email: String, password: String, firstName: String, lastName: String) {
-        let manager: APIManager = APIManager.sharedInstance
-        //seller@easyshop.ph
-        //password
-        let parameters: NSDictionary = ["email": self.emailAddressTextField.text,"password": self.passwordTextField.text, "client_id": Constants.Credentials.clientID(), "client_secret": Constants.Credentials.clientSecret(), "grant_type": Constants.Credentials.grantBuyer]
-        self.showHUD()
-        manager.POST(APIAtlas.loginUrl, parameters: parameters, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
-            self.hud?.hide(true)
-            self.showSuccessMessage()
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
-                self.hud?.hide(true)
-        })
-    }
-    
+    //MARK: - Show Success Message
     func showSuccessMessage() {
-        let alertController = UIAlertController(title: RegisterStrings.thankyou, message: RegisterStrings.successRegister, preferredStyle: .Alert)
+        Toast.displayToastWithMessage(RegisterStrings.successRegister, duration: 1.5, view: self.view)
+        self.view.userInteractionEnabled = false
         
-        let OKAction = UIAlertAction(title: Constants.Localized.ok, style: .Default) { (action) in
-            alertController.dismissViewControllerAnimated(true, completion: nil)
+        Delay.delayWithDuration(1.5, completionHandler: { (success) -> Void in
             let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
             appDelegate.changeRootToHomeView()
-        }
-        
-        alertController.addAction(OKAction)
-        
-        self.presentViewController(alertController, animated: true) {
+        })
+    }
+    
+    //MARK: - Fire Registration GCM
+    func fireCreateRegistration(registrationID : String) {
+        if(SessionManager.isLoggedIn()){
+            let manager: APIManager = APIManager.sharedInstance
+            let parameters: NSDictionary = [
+                
+                "registrationId": "\(registrationID)",
+                "access_token"  : SessionManager.accessToken(),
+                "deviceType"    : "1"
+                ]   as Dictionary<String, String>
             
+            let url = APIAtlas.baseUrl + APIAtlas.ACTION_GCM_CREATE
+            
+            manager.POST(url, parameters: parameters, success: {
+                (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+                println("Registration successful!")
+                }, failure: {
+                    (task: NSURLSessionDataTask!, error: NSError!) in
+                    println("Registration unsuccessful!")
+            })
         }
     }
 }

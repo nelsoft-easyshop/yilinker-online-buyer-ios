@@ -63,10 +63,10 @@
                                             <constraint firstAttribute="height" constant="20" id="J1m-Td-zbg"/>
                                         </constraints>
                                     </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Product name" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="7" translatesAutoresizingMaskIntoConstraints="NO" id="NyL-VY-AYZ">
-                                        <rect key="frame" x="8" y="10" width="150" height="42"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Product name" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="NyL-VY-AYZ">
+                                        <rect key="frame" x="8" y="5" width="150" height="50"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="42" id="tGf-fd-zGl"/>
+                                            <constraint firstAttribute="height" constant="50" id="tGf-fd-zGl"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
@@ -80,14 +80,14 @@
                                     <constraint firstAttribute="trailing" secondItem="N2l-fS-ZkD" secondAttribute="trailing" constant="94" id="EJZ-RX-tJn"/>
                                     <constraint firstItem="NyL-VY-AYZ" firstAttribute="leading" secondItem="KAE-Og-ScH" secondAttribute="leading" constant="8" id="ObW-oh-ZbZ"/>
                                     <constraint firstItem="N2l-fS-ZkD" firstAttribute="leading" secondItem="KAE-Og-ScH" secondAttribute="leading" constant="8" id="PBl-dT-KeG"/>
-                                    <constraint firstItem="NyL-VY-AYZ" firstAttribute="top" secondItem="KAE-Og-ScH" secondAttribute="top" constant="10" id="UMX-eL-cLO"/>
+                                    <constraint firstItem="NyL-VY-AYZ" firstAttribute="top" secondItem="KAE-Og-ScH" secondAttribute="top" constant="5" id="UMX-eL-cLO"/>
                                     <constraint firstAttribute="trailing" secondItem="Vz5-po-Z1k" secondAttribute="trailing" constant="8" id="WQZ-bG-oaa"/>
                                     <constraint firstItem="Vz5-po-Z1k" firstAttribute="leading" secondItem="NyL-VY-AYZ" secondAttribute="trailing" constant="1" id="dMT-lJ-nHb"/>
                                     <constraint firstAttribute="bottom" secondItem="N2l-fS-ZkD" secondAttribute="bottom" constant="21" id="isU-7G-eav"/>
-                                    <constraint firstItem="SPI-WQ-MB1" firstAttribute="top" secondItem="NyL-VY-AYZ" secondAttribute="bottom" constant="1" id="jJ0-VW-OLD"/>
+                                    <constraint firstItem="SPI-WQ-MB1" firstAttribute="top" secondItem="NyL-VY-AYZ" secondAttribute="bottom" constant="-2" id="jJ0-VW-OLD"/>
                                     <constraint firstAttribute="trailing" secondItem="SPI-WQ-MB1" secondAttribute="trailing" constant="8" id="kp9-Pe-ncg"/>
                                     <constraint firstItem="SPI-WQ-MB1" firstAttribute="leading" secondItem="KAE-Og-ScH" secondAttribute="leading" constant="8" id="sof-dD-msq"/>
-                                    <constraint firstItem="SPI-WQ-MB1" firstAttribute="top" secondItem="NyL-VY-AYZ" secondAttribute="bottom" constant="1" id="uUY-7M-Cyt"/>
+                                    <constraint firstItem="SPI-WQ-MB1" firstAttribute="top" secondItem="NyL-VY-AYZ" secondAttribute="bottom" constant="-2" id="uUY-7M-Cyt"/>
                                     <constraint firstAttribute="height" constant="120" id="v1m-jJ-MwW"/>
                                     <constraint firstItem="N2l-fS-ZkD" firstAttribute="top" secondItem="SPI-WQ-MB1" secondAttribute="bottom" constant="4" id="v71-Yy-ubs"/>
                                     <constraint firstAttribute="trailing" secondItem="NyL-VY-AYZ" secondAttribute="trailing" constant="29" id="yFW-Zq-UDq"/>
