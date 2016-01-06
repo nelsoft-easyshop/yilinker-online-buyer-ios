@@ -138,9 +138,11 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         if self.sellerModel!.isAffiliated {
             sellerTableHeaderView.addressLabel.hidden = true
             sellerTableHeaderView.callButton.hidden = true
+            sellerTableHeaderView.messageButton.hidden = true
         } else  {
             sellerTableHeaderView.addressLabel.hidden = false
             sellerTableHeaderView.callButton.hidden = false
+            sellerTableHeaderView.messageButton.hidden = false
         }
         
         let imageView: UIImageView = UIImageView(frame: CGRectMake(0, 0, sellerTableHeaderView.profileImageView.frame.width, sellerTableHeaderView.profileImageView.frame.height))
