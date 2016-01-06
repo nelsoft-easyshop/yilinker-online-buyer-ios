@@ -297,15 +297,11 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     //MARK: - Add Empty View
     //Show this view if theres no internet connection
     func addEmptyView() {
-        if self.emptyView == nil {
-            self.emptyView = UIView.loadFromNibNamed("EmptyView", bundle: nil) as? EmptyView
-            self.view.layoutIfNeeded()
-            self.emptyView?.frame = self.view.frame
-            self.emptyView!.delegate = self
-            self.view.addSubview(self.emptyView!)
-        } else {
-            self.emptyView!.hidden = false
-        }
+        self.emptyView = UIView.loadFromNibNamed("EmptyView", bundle: nil) as? EmptyView
+        self.view.layoutIfNeeded()
+        self.emptyView?.frame = self.view.frame
+        self.emptyView!.delegate = self
+        self.view.addSubview(self.emptyView!)
         
         self.collectionView.hidden = true
     }
@@ -391,6 +387,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                 }
             } else {
                 self.hud?.hide(true)
+                self.addEmptyView()
                 if requestErrorType == .ResponseError {
                     //Error in api requirements
                     let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
@@ -562,8 +559,8 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     
     // MARK: - Did Tap Reload
     func didTapReload() {
+        self.emptyView?.removeFromSuperview()
         self.fireGetHomePageData(true)
-        self.emptyView?.hidden = true
     }
     
     //MARK: - UICollectionView Data Source
