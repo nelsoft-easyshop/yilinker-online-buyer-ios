@@ -119,9 +119,7 @@ class TransactionLeaveProductFeedbackTableViewController: UITableViewController,
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
             if responseObject["isSuccessful"] as! Bool {
-                let productDetails = TransactionProductDetailsViewController(nibName: "TransactionProductDetailsViewController", bundle: nil)
-                productDetails.setProductFeedback = true
-                
+                Feedback.setProductFeedback = true
                 self.navigationController?.popViewControllerAnimated(true)
             } else {
                 self.showAlert(title: "Feedback", message: responseObject["message"] as! String)
@@ -164,10 +162,8 @@ class TransactionLeaveProductFeedbackTableViewController: UITableViewController,
                         }
                         */
                     }
-                    //Toast.displayToastWithMessage(errors, duration: 3.0, view: self.view)
+                    
                     UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errors, title: Constants.Localized.error)
-                    //self.showAlert(Constants.Localized.error, message: errors)
-                    //self.navigationController?.popViewControllerAnimated(true)
                     self.tableView.reloadData()
                 }
                 
