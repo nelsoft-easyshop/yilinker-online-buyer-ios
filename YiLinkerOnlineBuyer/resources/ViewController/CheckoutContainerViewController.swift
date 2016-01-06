@@ -364,7 +364,6 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
                     self.redirectToHomeView()
                 }
             }
-            
         } else {
             self.redirectToHomeView()
         }
@@ -471,27 +470,27 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
     
     func fireRefreshToken(refreshType: CheckoutRefreshType) {
         self.showHUD()
-        let params: NSDictionary = ["client_id": Constants.Credentials.clientID(),
-            "client_secret": Constants.Credentials.clientSecret(),
-            "grant_type": Constants.Credentials.grantRefreshToken,
-            "refresh_token": SessionManager.refreshToken()]
-        let manager = APIManager.sharedInstance
-        manager.POST(APIAtlas.loginUrl, parameters: params, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+        WebServiceManager.fireRefreshTokenWithUrl(APIAtlas.refreshTokenUrl, actionHandler: {
+            (successful, responseObject, requestErrorType) -> Void in
+            self.hud?.hide(true)
+            
+            if successful {
+                SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
                 if refreshType == CheckoutRefreshType.COD {
                     self.fireCOD()
                 } else if refreshType == CheckoutRefreshType.Credit {
                     self.firePesoPay()
                 }
-            
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                let alertController = UIAlertController(title: Constants.Localized.someThingWentWrong, message: "", preferredStyle: .Alert)
-                let defaultAction = UIAlertAction(title: Constants.Localized.ok, style: .Default, handler: nil)
-                alertController.addAction(defaultAction)
-                self.presentViewController(alertController, animated: true, completion: nil)
-                self.hud?.hide(true)
+            } else {
+                //Forcing user to logout.
+                UIAlertController.displayAlertRedirectionToLogin(self, actionHandler: { (sucess) -> Void in
+                    SessionManager.logout()
+                    FBSDKLoginManager().logOut()
+                    GPPSignIn.sharedInstance().signOut()
+                    let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+                    appDelegate.startPage()
+                })
+            }
         })
     }
     
