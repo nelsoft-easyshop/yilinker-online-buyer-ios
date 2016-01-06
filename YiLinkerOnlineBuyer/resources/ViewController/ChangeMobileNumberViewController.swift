@@ -192,7 +192,6 @@ class ChangeMobileNumberViewController: UIViewController {
                     showAlert(title: errorLocalizeString, message: completeLocalizeString)
                 } else {
                     if SessionManager.mobileNumber().isEmpty {
-                        SessionManager.setMobileNumber(newNumberTextField.text)
                         setNewMobileNumber(newNumberTextField.text)
 //                        fireUpdateProfile(APIAtlas.updateMobileNumber, params: NSDictionary(dictionary: ["access_token" : SessionManager.accessToken(),
 //                            "newContactNumber": newNumberTextField.text ]))

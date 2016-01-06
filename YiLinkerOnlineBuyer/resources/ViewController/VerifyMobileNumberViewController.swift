@@ -164,7 +164,7 @@ class VerifyMobileNumberViewController: UIViewController {
     
     func getCode() {
         if !SessionManager.isMobileVerified(){
-            if SessionManager.mobileNumber() ==  getNewMobileNumber(){
+            if SessionManager.mobileNumber().isEmpty {
                 fireUpdateProfile(APIAtlas.updateMobileNumber, params: NSDictionary(dictionary: ["access_token" : SessionManager.accessToken(),
                     "newContactNumber": getNewMobileNumber()]))
             } else {
