@@ -245,8 +245,8 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     
     //MARK: On Message
     //For GCM Message
-    func onNewMessage(notification : NSNotification) {
-        if let info = notification.userInfo as? Dictionary<String, AnyObject> {
+   func onNewMessage(notification : NSNotification) {
+        /*if let info = notification.userInfo as? Dictionary<String, AnyObject> {
             if let data = info["data"] as? String{
                 if let data2 = data.dataUsingEncoding(NSUTF8StringEncoding) {
                     if let json = NSJSONSerialization.JSONObjectWithData(data2, options: .MutableContainers, error: nil) as? [String:AnyObject] {
@@ -255,7 +255,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                     }
                 }
             }
-        }
+        }*/
     }
     
     //MARK: Fire Create Registration
