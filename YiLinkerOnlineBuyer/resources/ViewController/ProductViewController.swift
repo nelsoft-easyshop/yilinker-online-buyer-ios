@@ -800,14 +800,14 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         self.setPosition(self.productReviewHeaderView, from: self.productAttributeView)
         self.setPosition(self.productSellerView, from: self.productReviewFooterView)
         self.setPosition(self.productDescriptionView, from: self.productSellerView)
-//        self.setPosition(self.productDetailsBottomView, from: self.productDescriptionView)
+        self.setPosition(self.productDetailsBottomView, from: self.productDescriptionView)
         
         newFrame = self.headerView.frame
         newFrame.size.height = CGRectGetMaxY(self.productReviewHeaderView.frame)
         self.headerView.frame = newFrame
         
         newFrame = self.footerView.frame
-        newFrame.size.height = CGRectGetMaxY(self.productDescriptionView.frame)
+        newFrame.size.height = CGRectGetMaxY(self.productDetailsBottomView.frame)
         self.footerView.frame = newFrame
         
         self.tableView.tableFooterView = nil
@@ -843,7 +843,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         self.getFooterView().addSubview(self.getProductReviewFooterView())
         self.getFooterView().addSubview(self.getProductSellerView())
         self.getFooterView().addSubview(self.getProductDescriptionView())
-//        self.getFooterView().addSubview(self.getProductDetailsBottomView())
+        self.getFooterView().addSubview(self.getProductDetailsBottomView())
         
         if !isFromCart {
             for i in 0..<self.productDetailsModel.productUnits.count {
