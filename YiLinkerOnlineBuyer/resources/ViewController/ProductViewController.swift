@@ -73,6 +73,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     var productReviewFooterView: ProductReviewFooterView!
     var productSellerView: ProductSellerView!
     var productDetailsBottomView: ProductDetailsBottomView!
+    var productExtendedView: ProductExtendedView!
     var productDetailsExtendedView = ProductDetailsExtendedView()
     
     let manager = APIManager.sharedInstance
@@ -113,6 +114,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     var unitIdIndex: Int = 0
     var isExiting: Bool = true
     var isFromCart: Bool = false
+    var isAlreadyMoveOffset: Bool = false
     @IBOutlet weak var closeButton: UIView!
     
     // Messaging
@@ -261,15 +263,16 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         self.navigationController?.navigationBar.alpha = CGFloat(visibility)
         self.lastContentOffset = scrollView.contentOffset.y
         
-//        var scrollViewHeight: CGFloat = scrollView.frame.size.height
-//        var scrollContentSizeHeight: CGFloat = scrollView.contentSize.height
-//        var scrollOffset: CGFloat = scrollView.contentOffset.y
-//        
-//        if (scrollOffset + scrollViewHeight <= scrollContentSizeHeight && canShowExtendedDetails) {
-//            if scrollOffset >= 160 {
-//                openExtendedProductDetails()
-//            }
-//        }
+        var scrollViewHeight: CGFloat = scrollView.frame.size.height
+        var scrollContentSizeHeight: CGFloat = scrollView.contentSize.height + 80
+        var scrollOffset: CGFloat = scrollView.contentOffset.y
+        
+        if (scrollOffset + scrollViewHeight >= scrollContentSizeHeight) {
+            if !isAlreadyMoveOffset {
+                isAlreadyMoveOffset = true
+                showExtendedView()
+            }
+        }
         
         if scrollView == self.tableView {
             if self.scrolledPastBottomThresholdInTableView(self.tableView) && canShowExtendedDetails{
@@ -361,10 +364,9 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
             
             var seeMoreImageView = UIImageView(frame: CGRectMake(seeMoreLabel.frame.size.width, (seeMoreLabel.frame.size.height / 2) - 6, 8, 12))
             seeMoreImageView.image = UIImage(named: "seeMore")
-            seeMoreLabel.addSubview(seeMoreImageView)
-            
-            seeMoreLabel.center.x = self.view.center.x - 5
-            self.productDescriptionView.seeMoreView.addSubview(seeMoreLabel)
+//            seeMoreLabel.addSubview(seeMoreImageView)
+//            seeMoreLabel.center.x = self.view.center.x - 5
+//            self.productDescriptionView.seeMoreView.addSubview(seeMoreLabel)
         }
         return self.productDescriptionView
     }
@@ -422,6 +424,15 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
             self.productDetailsBottomView.frame.size.width = self.view.frame.size.width
         }
         return self.productDetailsBottomView
+    }
+    
+    func getProductExtendedView() -> ProductExtendedView {
+        if self.productExtendedView == nil {
+            self.productExtendedView = XibHelper.puffViewWithNibName("ProductViewsViewController", index: 6) as! ProductExtendedView
+            self.productExtendedView.frame.size.width = self.view.frame.size.width
+            self.productExtendedView.frame.size.height = self.view.frame.size.height - 114
+        }
+        return self.productExtendedView
     }
     
     // MARK: - Requests
@@ -801,6 +812,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         self.setPosition(self.productSellerView, from: self.productReviewFooterView)
         self.setPosition(self.productDescriptionView, from: self.productSellerView)
         self.setPosition(self.productDetailsBottomView, from: self.productDescriptionView)
+        self.setPosition(self.productExtendedView, from: self.productDetailsBottomView)
         
         newFrame = self.headerView.frame
         newFrame.size.height = CGRectGetMaxY(self.productReviewHeaderView.frame)
@@ -844,6 +856,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         self.getFooterView().addSubview(self.getProductSellerView())
         self.getFooterView().addSubview(self.getProductDescriptionView())
         self.getFooterView().addSubview(self.getProductDetailsBottomView())
+        self.getFooterView().addSubview(self.getProductExtendedView())
         
         if !isFromCart {
             for i in 0..<self.productDetailsModel.productUnits.count {
@@ -1150,6 +1163,12 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     
     func checkViewSize() {
         self.view.transform = CGAffineTransformMakeScale(1, 1)
+    }
+    
+    func showExtendedView() {
+//        self.tableView.scrollRectToVisible(CGRectMake(0, 1000, self.tableView.frame.size.width, self.tableView.frame.size.height), animated: true)
+        self.tableView.setContentOffset(CGPoint(x: 0, y: 1000), animated: true)
+//        isAlreadyMoveOffset = false
     }
     
     // MARK: - Product Images Delegate
