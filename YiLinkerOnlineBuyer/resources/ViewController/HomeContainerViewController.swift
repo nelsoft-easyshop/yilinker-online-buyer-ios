@@ -85,6 +85,8 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     var oneHourIntervalTimer: NSTimer = NSTimer()
     var updateUsingOneHourInterval: Bool = false
     
+    var oldPushNotifData: String = ""
+    
     //MARK: - Life Cycle
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -245,17 +247,21 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     
     //MARK: On Message
     //For GCM Message
-    func onNewMessage(notification : NSNotification) {
+    func onNewMessage(notification : NSNotification){
         if let info = notification.userInfo as? Dictionary<String, AnyObject> {
             if let data = info["data"] as? String{
-                if let data2 = data.dataUsingEncoding(NSUTF8StringEncoding) {
+                if let data2 = data.dataUsingEncoding(NSUTF8StringEncoding){
                     if let json = NSJSONSerialization.JSONObjectWithData(data2, options: .MutableContainers, error: nil) as? [String:AnyObject] {
-                        var count = SessionManager.getUnReadMessagesCount() + 1
-                        SessionManager.setUnReadMessagesCount(count)
+                        if self.oldPushNotifData != data {
+                            var count = SessionManager.getUnReadMessagesCount() + 1
+                            SessionManager.setUnReadMessagesCount(count)
+                        }
                     }
                 }
+                self.oldPushNotifData = data
             }
         }
+        
     }
     
     //MARK: Fire Create Registration
