@@ -275,26 +275,6 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
             }
             self.lastContentOffset = scrollView.contentOffset.y
         }
-        
-        var scrollViewHeight: CGFloat = scrollView.frame.size.height
-        var scrollContentSizeHeight: CGFloat = scrollView.contentSize.height + 80
-        var scrollOffset: CGFloat = scrollView.contentOffset.y
-        
-        println("\(scrollOffset + scrollViewHeight) >= \(scrollContentSizeHeight)")
-        if (scrollOffset + scrollViewHeight >= 665.0 && scrollView == self.containerScrollView) {
-//            println("benga")
-//            if !isAlreadyMoveOffset {
-//                println("scroll to second view")
-//                isAlreadyMoveOffset = true
-//                showExtendedView()
-//            }
-        }
-        
-        if scrollView == self.tableView {
-            if self.scrolledPastBottomThresholdInTableView(self.tableView) && canShowExtendedDetails{
-//                openExtendedProductDetails()
-            }
-        }
     }
     
     func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
@@ -304,12 +284,13 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         
         if scrollView == self.containerScrollView {
             if isScrollingUp {
-                self.containerScrollView.pagingEnabled = false
                 if (scrollOffset + scrollViewHeight >= 665.0) {
+                    self.containerScrollView.pagingEnabled = false
                     self.containerScrollView.scrollRectToVisible(CGRectMake(0, 1000, self.containerScrollView.frame.size.width, self.containerScrollView.frame.size.height), animated: true)
                 }
             } else {
-                if (scrollOffset + scrollViewHeight <= 1010.0) {
+                if (scrollOffset + scrollViewHeight <= 1015.0) {
+                    self.containerScrollView.pagingEnabled = false
                     self.containerScrollView.setContentOffset(CGPointMake(0.0, 0.0), animated: true)
                 }
             }
