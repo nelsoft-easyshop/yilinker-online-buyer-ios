@@ -10,10 +10,10 @@
                 <outlet property="buttonSubContainer" destination="1eX-c7-A5b" id="gO8-yj-3re"/>
                 <outlet property="buttonsContainer" destination="C60-aW-ouZ" id="GzR-X4-rmh"/>
                 <outlet property="buttonsContainerHeight" destination="9lB-Pz-8PY" id="VvI-cZ-KwR"/>
-                <outlet property="buttonsContainerVerticalConstraint" destination="sBK-uj-Xic" id="uPw-9s-Lu8"/>
                 <outlet property="buyItNowLabel" destination="fhZ-EI-5fo" id="pCb-Qh-OLt"/>
                 <outlet property="buyItNowView" destination="IQR-t4-99U" id="VGI-gN-oqo"/>
                 <outlet property="closeButton" destination="J2h-LG-jYM" id="rLc-tT-Nsd"/>
+                <outlet property="containerScrollView" destination="QQa-Er-ug9" id="Mfl-NW-ki3"/>
                 <outlet property="dimView" destination="E51-2e-Dng" id="BEl-KQ-PAN"/>
                 <outlet property="tableView" destination="r01-f0-aka" id="6la-mP-bFW"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -28,14 +28,6 @@
                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                     <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
-                <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" style="plain" separatorStyle="default" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="140" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="r01-f0-aka">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="553"/>
-                    <color key="backgroundColor" red="0.90196079015731812" green="0.90196079015731812" blue="0.90196079015731812" alpha="1" colorSpace="calibratedRGB"/>
-                    <connections>
-                        <outlet property="dataSource" destination="-1" id="w84-Zh-o78"/>
-                        <outlet property="delegate" destination="-1" id="FVY-ai-ilb"/>
-                    </connections>
-                </tableView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="J2h-LG-jYM" userLabel="close">
                     <rect key="frame" x="8" y="34" width="40" height="40"/>
                     <subviews>
@@ -110,21 +102,37 @@
                         <constraint firstAttribute="trailing" secondItem="IQR-t4-99U" secondAttribute="trailing" constant="13" id="mDm-A0-kuc"/>
                     </constraints>
                 </view>
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QQa-Er-ug9">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="553"/>
+                    <subviews>
+                        <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" style="plain" separatorStyle="default" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="140" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="r01-f0-aka">
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="553"/>
+                            <color key="backgroundColor" red="0.90196079015731812" green="0.90196079015731812" blue="0.90196079015731812" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <outlet property="dataSource" destination="-1" id="w84-Zh-o78"/>
+                                <outlet property="delegate" destination="-1" id="FVY-ai-ilb"/>
+                            </connections>
+                        </tableView>
+                    </subviews>
+                    <connections>
+                        <outlet property="delegate" destination="-1" id="lHL-rV-dXu"/>
+                    </connections>
+                </scrollView>
             </subviews>
             <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
-                <constraint firstItem="r01-f0-aka" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="0iG-8i-uX9"/>
+                <constraint firstAttribute="bottom" secondItem="QQa-Er-ug9" secondAttribute="bottom" constant="114" id="6KC-CL-xh8"/>
                 <constraint firstItem="J2h-LG-jYM" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="8PP-O9-zGA"/>
                 <constraint firstAttribute="bottom" secondItem="E51-2e-Dng" secondAttribute="bottom" id="8ys-zX-9tR"/>
                 <constraint firstAttribute="bottom" secondItem="C60-aW-ouZ" secondAttribute="bottom" constant="49" id="9AK-Ha-GgR"/>
                 <constraint firstAttribute="trailing" secondItem="C60-aW-ouZ" secondAttribute="trailing" id="A8d-5d-r4C"/>
                 <constraint firstAttribute="trailing" secondItem="E51-2e-Dng" secondAttribute="trailing" id="RsQ-tb-x4o"/>
-                <constraint firstItem="r01-f0-aka" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="gty-oG-iLv"/>
+                <constraint firstItem="QQa-Er-ug9" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Xgq-Rn-UW2"/>
+                <constraint firstAttribute="trailing" secondItem="QQa-Er-ug9" secondAttribute="trailing" id="aft-JX-MNn"/>
                 <constraint firstItem="E51-2e-Dng" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="iuJ-Lz-nke"/>
                 <constraint firstItem="E51-2e-Dng" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="jqR-Se-Vd4"/>
+                <constraint firstItem="QQa-Er-ug9" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="liJ-rT-tpx"/>
                 <constraint firstItem="C60-aW-ouZ" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="mFv-c3-H4k"/>
-                <constraint firstItem="C60-aW-ouZ" firstAttribute="top" secondItem="r01-f0-aka" secondAttribute="bottom" id="sBK-uj-Xic"/>
-                <constraint firstAttribute="trailing" secondItem="r01-f0-aka" secondAttribute="trailing" id="urd-hL-Pgj"/>
                 <constraint firstItem="J2h-LG-jYM" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="34" id="xSZ-Cx-l58"/>
             </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
