@@ -61,6 +61,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     @IBOutlet weak var buttonsContainer: UIView!
     @IBOutlet weak var buttonSubContainer: UIView!
     @IBOutlet weak var buyItNowLabel: UILabel!
+    @IBOutlet weak var blockerView: UIView!
     
     var headerView: UIView!
     var footerView: UIView!
@@ -285,20 +286,28 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         if scrollView == self.containerScrollView {
             if isScrollingUp {
                 if (scrollOffset + scrollViewHeight >= 665.0) {
+//                    self.blockerView.hidden = false
                     self.containerScrollView.pagingEnabled = false
+                    self.containerScrollView.userInteractionEnabled = false
+                    self.productDetailsBottomView.textLabel.text = "Release to view other details."
                     self.containerScrollView.scrollRectToVisible(CGRectMake(0, 1000, self.containerScrollView.frame.size.width, self.containerScrollView.frame.size.height), animated: true)
                 }
             } else {
                 if (scrollOffset + scrollViewHeight <= 1015.0) {
+//                    self.blockerView.hidden = false
                     self.containerScrollView.pagingEnabled = false
+                    self.containerScrollView.userInteractionEnabled = false
                     self.containerScrollView.setContentOffset(CGPointMake(0.0, 0.0), animated: true)
+                    self.productDetailsBottomView.textLabel.text = "Scroll up to show more."
                 }
             }
         }
     }
     
     func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+//        self.blockerView.hidden = true
         self.containerScrollView.pagingEnabled = true
+        self.containerScrollView.userInteractionEnabled = true
     }
     
     func scrolledPastBottomThresholdInTableView(tableView: UITableView) -> Bool {
