@@ -53,6 +53,7 @@ class ProductsTableViewCell: UITableViewCell, UICollectionViewDelegate, UICollec
         let cell: FullImageCollectionViewCell = self.collectionView?.dequeueReusableCellWithReuseIdentifier("FullImageCollectionViewCell", forIndexPath: indexPath) as! FullImageCollectionViewCell
         let homeProductModel: ProductModel = self.productModels[indexPath.row]
         cell.itemProductImageView.sd_setImageWithURL(homeProductModel.imageURL, placeholderImage: UIImage(named: "dummy-placeholder"))
+        cell.itemProductImageView.backgroundColor = UIColor.clearColor()
         return cell
     }
     
