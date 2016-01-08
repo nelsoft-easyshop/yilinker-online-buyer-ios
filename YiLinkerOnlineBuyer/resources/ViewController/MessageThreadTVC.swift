@@ -40,17 +40,30 @@ class MessageThreadTVC: UITableViewCell {
     
     func setSeenOff(){
         if (seen_image != nil){
-            seen_image.removeFromSuperview()
+            seen_image.hidden = true
             self.removeConstraint(trailingSpaceToSeen)
         }
         
         if (seen_label != nil){
-            seen_label.removeFromSuperview()
+            seen_label.hidden = true
             timestampLabelTrailingContraint.constant = 10.0
         }
-
+        
     }
     
+    func setSeenOn(){
+        if (seen_image != nil){
+            seen_image.hidden = false
+            self.addConstraint(trailingSpaceToSeen)
+        }
+        
+        if (seen_label != nil){
+            seen_label.hidden = false
+            timestampLabelTrailingContraint.constant = 58.0
+        }
+        
+    }
+
     
     
 }
