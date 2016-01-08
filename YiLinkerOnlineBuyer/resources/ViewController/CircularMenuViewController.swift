@@ -266,16 +266,22 @@ class CircularMenuViewController: UIViewController {
                    
                     
                     //name label and address
+                    var nameAndAdderssWidth: CGFloat = 130
+                    
                     if  self.buttonRightText[index] != "" {
                         if IphoneType.isIphone4() {
                             yPosition = yPosition - 40
+                            nameAndAdderssWidth = 110
                         } else if IphoneType.isIphone5() {
-                            yPosition = yPosition - 20
+                            yPosition = yPosition - 40
+                            nameAndAdderssWidth = 110
+                            fontSize = 10
                         } else {
-                            yPosition = yPosition - 30
+                            yPosition = yPosition - 50
+                            fontSize = 10
                         }
                         
-                        let label: UILabel = UILabel(frame: CGRectMake(xPosition + 75, yPosition, labelWidth, 130))
+                        let label: UILabel = UILabel(frame: CGRectMake(xPosition + 75, yPosition, labelWidth, nameAndAdderssWidth))
                         label.backgroundColor = UIColor.clearColor()
                         label.text = "\(SessionManager.userFullName()) \n \(SessionManager.city()) \(SessionManager.province())"
                         label.adjustsFontSizeToFitWidth = true
