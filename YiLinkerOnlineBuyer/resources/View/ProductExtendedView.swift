@@ -19,21 +19,10 @@ class ProductExtendedView: UIView {
     var delegate: ProductExtendedViewDelegate?
     
     override func awakeFromNib() {
-        var refreshController:UIRefreshControl = UIRefreshControl()
-        
-        refreshController.bounds = CGRectMake(0, 50, refreshController.bounds.size.width, refreshController.bounds.size.height) // Change position of refresh view
-        refreshController.addTarget(self, action: Selector("refreshWebView:"), forControlEvents: UIControlEvents.ValueChanged)
-        refreshController.attributedTitle = NSAttributedString(string: "Pull down to refresh...")
-        webView.scrollView.addSubview(refreshController)
     }
     
     func setDescription(htmlString: String) {
         webView.loadHTMLString(htmlString, baseURL: nil)
-    }
-    
-    func refreshWebView(refresh: UIRefreshControl){
-        delegate?.pullAction(self)
-        refresh.endRefreshing()
     }
 
 }
