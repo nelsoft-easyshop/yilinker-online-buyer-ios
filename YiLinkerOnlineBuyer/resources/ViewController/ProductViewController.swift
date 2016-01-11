@@ -283,19 +283,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     // Scroll to position when reached position
     func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         if scrollView == self.containerScrollView {
-            if isScrollingUp {
-                if (self.containerScrollView.contentOffset.y >= 85.0) {
-                    self.setScrollViewsOffset(CGPointMake(0.0, 553.0))
-                } else if self.containerScrollView.contentOffset.y < 85 {
-                    self.setScrollViewsOffset(CGPointMake(0.0, 0.0))
-                }
-            } else {
-                if self.containerScrollView.contentOffset.y <= 465.0 {
-                    self.setScrollViewsOffset(CGPointMake(0.0, 0.0))
-                } else if self.containerScrollView.contentOffset.y > 465 {
-                    self.setScrollViewsOffset(CGPointMake(0.0, 553.0))
-                }
-            }
+            checkScrollDirectionAndSetPosition()
         }
     }
     
@@ -303,19 +291,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     func scrollViewWillBeginDecelerating(scrollView: UIScrollView) {
         if scrollView == self.containerScrollView && !self.containerScrollView.userInteractionEnabled {
             self.setScrollViewsOffset(self.containerScrollView.contentOffset)
-            if isScrollingUp {
-                if self.containerScrollView.contentOffset.y >= 85.0 {
-                    self.setScrollViewsOffset(CGPointMake(0.0, 553.0))
-                } else if self.containerScrollView.contentOffset.y < 85 {
-                    self.setScrollViewsOffset(CGPointMake(0.0, 0.0))
-                }
-            } else {
-                if self.containerScrollView.contentOffset.y <= 465.0 {
-                    self.setScrollViewsOffset(CGPointMake(0.0, 0.0))
-                } else if self.containerScrollView.contentOffset.y > 465 {
-                    self.setScrollViewsOffset(CGPointMake(0.0, 553.0))
-                }
-            }
+            checkScrollDirectionAndSetPosition()
         }
     }
     
@@ -1002,7 +978,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         
         self.containerScrollView.addSubview(self.tableView)
         self.containerScrollView.addSubview(self.getProductExtendedView())
-        self.productExtendedView.frame.origin.y = self.containerScrollView.frame.size.height// + 20
+        self.productExtendedView.frame.origin.y = self.containerScrollView.frame.size.height
         self.containerScrollView.contentSize = CGSizeMake(self.containerScrollView.frame.size.width, self.containerScrollView.frame.size.height + self.productExtendedView.frame.size.height)
     }
     
@@ -1243,8 +1219,24 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     func setMessageForDetails() {
         if self.containerScrollView.contentOffset.y == 0.0 {
             self.productDetailsBottomView.textLabel.text = ProductStrings.messageScrollUp
-        } else if self.containerScrollView.contentOffset.y == 553.0 {
+        } else if self.containerScrollView.contentOffset.y == self.containerScrollView.frame.size.height {
             self.productDetailsBottomView.textLabel.text = ProductStrings.messageRelease
+        }
+    }
+    
+    func checkScrollDirectionAndSetPosition() {
+        if isScrollingUp {
+            if self.containerScrollView.contentOffset.y >= 85.0 {
+                self.setScrollViewsOffset(CGPointMake(0.0, self.containerScrollView.frame.size.height))
+            } else if self.containerScrollView.contentOffset.y < 85 {
+                self.setScrollViewsOffset(CGPointMake(0.0, 0.0))
+            }
+        } else {
+            if self.containerScrollView.contentOffset.y <= self.containerScrollView.frame.size.height - 88.0 {
+                self.setScrollViewsOffset(CGPointMake(0.0, 0.0))
+            } else if self.containerScrollView.contentOffset.y > self.containerScrollView.frame.size.height - 88.0 {
+                self.setScrollViewsOffset(CGPointMake(0.0, self.containerScrollView.frame.size.height))
+            }
         }
     }
     
