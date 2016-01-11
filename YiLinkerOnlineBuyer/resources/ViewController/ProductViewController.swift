@@ -259,7 +259,6 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         }
 
         // reached top or bottom
-        
         if scrollView.contentOffset.y <= 0.0 && scrollView == self.tableView {
             visibility = 0.0
             canShowExtendedDetails = false
@@ -279,53 +278,57 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
             self.lastContentOffset = scrollView.contentOffset.y
         }
         
-        println(self.containerScrollView.contentOffset.y)
     }
 
+    // Scroll to position when reached position
     func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        
         if scrollView == self.containerScrollView {
-            var scrollViewHeight: CGFloat = scrollView.frame.size.height
-            var scrollContentSizeHeight: CGFloat = scrollView.contentSize.height + 80
-            var scrollOffset: CGFloat = scrollView.contentOffset.y
-            println("bitaw")
             if isScrollingUp {
-                println("UP > \(self.containerScrollView.contentOffset.y)")
                 if (self.containerScrollView.contentOffset.y >= 85.0) {
-                    self.containerScrollView.pagingEnabled = false
-                    self.containerScrollView.userInteractionEnabled = false
-                    self.containerScrollView.setContentOffset(CGPointMake(0.0, 553.0), animated: true)
+                    self.setScrollViewsOffset(CGPointMake(0.0, 553.0))
+                } else if self.containerScrollView.contentOffset.y < 85 {
+                    self.setScrollViewsOffset(CGPointMake(0.0, 0.0))
                 }
             } else {
-                println("DOWN > \(self.containerScrollView.contentOffset.y)")
                 if self.containerScrollView.contentOffset.y <= 465.0 {
-                    self.containerScrollView.pagingEnabled = false
-                    self.containerScrollView.userInteractionEnabled = false
-                    self.containerScrollView.setContentOffset(CGPointMake(0.0, 0.0), animated: true)
+                    self.setScrollViewsOffset(CGPointMake(0.0, 0.0))
+                } else if self.containerScrollView.contentOffset.y > 465 {
+                    self.setScrollViewsOffset(CGPointMake(0.0, 553.0))
                 }
             }
         }
     }
     
+    // Stop scrolling then scroll to position
+    func scrollViewWillBeginDecelerating(scrollView: UIScrollView) {
+        if scrollView == self.containerScrollView && !self.containerScrollView.userInteractionEnabled {
+            self.setScrollViewsOffset(self.containerScrollView.contentOffset)
+            if isScrollingUp {
+                if self.containerScrollView.contentOffset.y >= 85.0 {
+                    self.setScrollViewsOffset(CGPointMake(0.0, 553.0))
+                } else if self.containerScrollView.contentOffset.y < 85 {
+                    self.setScrollViewsOffset(CGPointMake(0.0, 0.0))
+                }
+            } else {
+                if self.containerScrollView.contentOffset.y <= 465.0 {
+                    self.setScrollViewsOffset(CGPointMake(0.0, 0.0))
+                } else if self.containerScrollView.contentOffset.y > 465 {
+                    self.setScrollViewsOffset(CGPointMake(0.0, 553.0))
+                }
+            }
+        }
+    }
+    
+    // Set message for details
     func scrollViewDidEndScrollingAnimation(scrollView: UIScrollView) {
         if scrollView == self.containerScrollView {
-            self.containerScrollView.pagingEnabled = true
             self.containerScrollView.userInteractionEnabled = true
-            
-            if self.containerScrollView.contentOffset.y == 0.0 {
-                self.productDetailsBottomView.textLabel.text = ProductStrings.messageScrollUp
-            } else {
-                self.productDetailsBottomView.textLabel.text = ProductStrings.messageRelease
-            }
+            setMessageForDetails()
         }
     }
     
     func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
-        if self.containerScrollView.contentOffset.y == 0.0 {
-            self.productDetailsBottomView.textLabel.text = ProductStrings.messageScrollUp
-        } else {
-            self.productDetailsBottomView.textLabel.text = ProductStrings.messageRelease
-        }
+        setMessageForDetails()
     }
     
     func scrolledPastBottomThresholdInTableView(tableView: UITableView) -> Bool {
@@ -1230,6 +1233,19 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
 //        self.tableView.setContentOffset(CGPoint(x: 0, y: self.tableView.contentSize.height - 114), animated: true)
 //        isAlreadyMoveOffset = false
 //        self.tableView.scrollEnabled = false
+    }
+    
+    func setScrollViewsOffset(offset: CGPoint) {
+        self.containerScrollView.userInteractionEnabled = false
+        self.containerScrollView.setContentOffset(offset, animated: true)
+    }
+    
+    func setMessageForDetails() {
+        if self.containerScrollView.contentOffset.y == 0.0 {
+            self.productDetailsBottomView.textLabel.text = ProductStrings.messageScrollUp
+        } else if self.containerScrollView.contentOffset.y == 553.0 {
+            self.productDetailsBottomView.textLabel.text = ProductStrings.messageRelease
+        }
     }
     
     // MARK: - Product Images Delegate
