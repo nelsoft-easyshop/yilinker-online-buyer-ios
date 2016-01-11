@@ -541,6 +541,27 @@
             </connections>
             <point key="canvasLocation" x="364.5" y="1578.5"/>
         </view>
+        <view contentMode="scaleToFill" id="4z3-Y4-ZvJ" customClass="ProductExtendedView" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="543"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WMg-0N-X4P">
+                    <rect key="frame" x="0.0" y="64" width="375" height="479"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </webView>
+            </subviews>
+            <constraints>
+                <constraint firstItem="WMg-0N-X4P" firstAttribute="leading" secondItem="4z3-Y4-ZvJ" secondAttribute="leading" id="Jrz-8l-Rrz"/>
+                <constraint firstAttribute="bottom" secondItem="WMg-0N-X4P" secondAttribute="bottom" id="LX3-Sg-Uoo"/>
+                <constraint firstItem="WMg-0N-X4P" firstAttribute="top" secondItem="4z3-Y4-ZvJ" secondAttribute="top" constant="64" id="dgU-W3-FPu"/>
+                <constraint firstAttribute="trailing" secondItem="WMg-0N-X4P" secondAttribute="trailing" id="rfG-Dq-Oyt"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="webView" destination="WMg-0N-X4P" id="em9-mL-jBo"/>
+            </connections>
+            <point key="canvasLocation" x="364.5" y="1968.5"/>
+        </view>
     </objects>
     <resources>
         <image name="close" width="22" height="22"/>

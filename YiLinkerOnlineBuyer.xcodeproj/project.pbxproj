@@ -238,6 +238,7 @@
 		262626B71C00D28E0068E876 /* UserMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 262626B61C00D28E0068E876 /* UserMapView.swift */; };
 		2632F5211B7F8690006931E4 /* FollowedSellerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2632F51F1B7F8690006931E4 /* FollowedSellerTableViewCell.swift */; };
 		2632F5241B7F8EFF006931E4 /* FollwedSellerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2632F5231B7F8EFF006931E4 /* FollwedSellerModel.swift */; };
+		2638614D1C3E5DD200D2ECE2 /* ProductExtendedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2638614C1C3E5DD200D2ECE2 /* ProductExtendedView.swift */; };
 		2666F5281C0022CD00BABA82 /* ProductFullScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2666F5261C0022CD00BABA82 /* ProductFullScreenViewController.swift */; };
 		2666F5291C0022CD00BABA82 /* ProductFullScreenViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2666F5271C0022CD00BABA82 /* ProductFullScreenViewController.xib */; };
 		266A5C601BB0029200343DB4 /* DisputeAddItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 266A5C5E1BB0029200343DB4 /* DisputeAddItemViewController.swift */; };
@@ -767,6 +768,7 @@
 		262626B61C00D28E0068E876 /* UserMapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserMapView.swift; path = YiLinkerOnlineBuyer/resources/ViewController/UserMapView.swift; sourceTree = SOURCE_ROOT; };
 		2632F51F1B7F8690006931E4 /* FollowedSellerTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FollowedSellerTableViewCell.swift; path = YiLinkerOnlineBuyer/resources/ViewController/FollowedSellerTableViewCell.swift; sourceTree = SOURCE_ROOT; };
 		2632F5231B7F8EFF006931E4 /* FollwedSellerModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FollwedSellerModel.swift; path = YiLinkerOnlineBuyer/resources/Model/FollwedSellerModel.swift; sourceTree = SOURCE_ROOT; };
+		2638614C1C3E5DD200D2ECE2 /* ProductExtendedView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProductExtendedView.swift; path = YiLinkerOnlineBuyer/resources/View/ProductExtendedView.swift; sourceTree = SOURCE_ROOT; };
 		2666F5261C0022CD00BABA82 /* ProductFullScreenViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProductFullScreenViewController.swift; path = YiLinkerOnlineBuyer/resources/ViewController/ProductFullScreenViewController.swift; sourceTree = SOURCE_ROOT; };
 		2666F5271C0022CD00BABA82 /* ProductFullScreenViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProductFullScreenViewController.xib; path = YiLinkerOnlineBuyer/resources/ViewController/ProductFullScreenViewController.xib; sourceTree = SOURCE_ROOT; };
 		266A5C5E1BB0029200343DB4 /* DisputeAddItemViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisputeAddItemViewController.swift; sourceTree = "<group>"; };
@@ -1566,6 +1568,7 @@
 				F7A66B241C03195200D8E688 /* TransactionDetailsTableViewCell.swift */,
 				0C1778021C045FB800C310D9 /* HomePageCollectionViewLayout2.swift */,
 				0C11D2271C0EF4C00063D06E /* OneByOneCollectionViewFlowLayout.swift */,
+				2638614C1C3E5DD200D2ECE2 /* ProductExtendedView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2348,6 +2351,7 @@
 				F7D9BAB91BBD70830097B76C /* TransactionProductDetailsDescriptionViewController.swift in Sources */,
 				B77B8DD91B9B554A0002C513 /* MessageThreadVC.swift in Sources */,
 				0C99375C1B750583000D6074 /* CircularMenuViewController.swift in Sources */,
+				2638614D1C3E5DD200D2ECE2 /* ProductExtendedView.swift in Sources */,
 				B77B8DD71B9B554A0002C513 /* MessageThreadImageTVC.swift in Sources */,
 				0C538AE31B99F07100EB64AB /* PaymentDataModel.swift in Sources */,
 				26AFB39A1B79DDEA00E50926 /* ProductDetailsModel.swift in Sources */,
