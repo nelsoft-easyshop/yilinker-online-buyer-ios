@@ -118,6 +118,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     var isExiting: Bool = true
     var isFromCart: Bool = false
     var isAlreadyMoveOffset: Bool = false
+    var isDefault: Bool = true
     @IBOutlet weak var closeButton: UIView!
     
     // Messaging
@@ -911,6 +912,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
             
             self.productImagesView.setDetails(self.productDetailsModel, unitId: unitIdIndex, width: self.view.frame.size.width)
         } else {
+            isDefault = false
             self.getUnitIdIndexFrom()
             var images: [String] = []
             for productUnit in self.productDetailsModel.productUnits {
@@ -1031,7 +1033,11 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
                 if productUnits[self.unitIdIndex].combination[i] == attributes[i].valueId[j] {
                     selectedName.append(attributes[i].attributeName)
                     selectedId.append(attributes[i].valueId[j])
-                    selectedValue.append(attributes[i].valueName[j])
+                    if isDefault {
+                        selectedValue.append("-")
+                    } else {
+                        selectedValue.append(attributes[i].valueName[j])
+                    }
                 }
             }
         }
@@ -1276,6 +1282,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     }
     
     func doneActionPassDetailsToProductView(controller: ProductAttributeViewController, unitId: String, quantity: Int, selectedId: NSArray, images: [String]) {
+        self.isDefault = false
         self.unitId = unitId
         self.selectedId = selectedId as! [String]
         self.quantity = quantity
@@ -1284,6 +1291,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     }
     
     func gotoCheckoutFromAttributes(controller: ProductAttributeViewController, unitId: String, quantity: Int) {
+        self.isDefault = false
         self.unitId = unitId
         self.quantity = quantity
         self.buyItNowAction(UIGestureRecognizer())
@@ -1335,7 +1343,9 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     // MARK: Actions
     
     @IBAction func addToCartAction(sender: AnyObject) {
-        if self.quantity == 0 {
+        if isDefault {
+            seeMoreAttribute("")
+        } else if self.quantity == 0 {
             self.showAlert(title: ProductStrings.alertCannotProcceed, message: ProductStrings.alertOutOfStock)
         } else {
             requestAddCartItem("cart")
@@ -1343,7 +1353,9 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     }
     
     func buyItNowAction(gesture: UIGestureRecognizer) {
-        if self.quantity == 0 {
+        if isDefault {
+            seeMoreAttribute("")
+        } else if self.quantity == 0 {
             self.showAlert(title: ProductStrings.alertCannotProcceed, message: ProductStrings.alertOutOfStock)
         } else {
             requestAddCartItem("buyitnow")
