@@ -17,7 +17,8 @@ struct ProductStrings {
     static let seeMore = StringHelper.localizedStringWithKey("SEE_MORE_LOCALIZE_KEY")
     static let ratingFeedback = StringHelper.localizedStringWithKey("RATING_FEEDBACK_LOCALIZE_KEY")
     static let seller = StringHelper.localizedStringWithKey("SELLER_LOCALIZE_KEY")
-    static let reachedBottom = StringHelper.localizedStringWithKey("REACHED_BOTTOM_LOCALIZE_KEY")
+    static let messageScrollUp = StringHelper.localizedStringWithKey("FIRST_VIEW_MESSAGE_LOCALIZE_KEY")
+    static let messageRelease = StringHelper.localizedStringWithKey("SECOND_VIEW_MESSAGE_LOCALIZE_KEY")
     static let outOfStock = StringHelper.localizedStringWithKey("OUT_OF_STOCK_LOCALIZE_KEY")
     
     static let addToCart = StringHelper.localizedStringWithKey("ADD_TO_CART_LOCALIZE_KEY")
@@ -119,6 +120,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     var isExiting: Bool = true
     var isFromCart: Bool = false
     var isAlreadyMoveOffset: Bool = false
+    var isFirstView: Bool = true
     @IBOutlet weak var closeButton: UIView!
     
     // Messaging
@@ -276,38 +278,54 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
             }
             self.lastContentOffset = scrollView.contentOffset.y
         }
+        
+        println(self.containerScrollView.contentOffset.y)
     }
-    
+
     func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        var scrollViewHeight: CGFloat = scrollView.frame.size.height
-        var scrollContentSizeHeight: CGFloat = scrollView.contentSize.height + 80
-        var scrollOffset: CGFloat = scrollView.contentOffset.y
         
         if scrollView == self.containerScrollView {
+            var scrollViewHeight: CGFloat = scrollView.frame.size.height
+            var scrollContentSizeHeight: CGFloat = scrollView.contentSize.height + 80
+            var scrollOffset: CGFloat = scrollView.contentOffset.y
+            println("bitaw")
             if isScrollingUp {
-                if (scrollOffset + scrollViewHeight >= 665.0) {
-//                    self.blockerView.hidden = false
+                println("UP > \(self.containerScrollView.contentOffset.y)")
+                if (self.containerScrollView.contentOffset.y >= 85.0) {
                     self.containerScrollView.pagingEnabled = false
                     self.containerScrollView.userInteractionEnabled = false
-                    self.productDetailsBottomView.textLabel.text = "Release to view other details."
-                    self.containerScrollView.scrollRectToVisible(CGRectMake(0, 1000, self.containerScrollView.frame.size.width, self.containerScrollView.frame.size.height), animated: true)
+                    self.containerScrollView.setContentOffset(CGPointMake(0.0, 553.0), animated: true)
                 }
             } else {
-                if (scrollOffset + scrollViewHeight <= 1015.0) {
-//                    self.blockerView.hidden = false
+                println("DOWN > \(self.containerScrollView.contentOffset.y)")
+                if self.containerScrollView.contentOffset.y <= 465.0 {
                     self.containerScrollView.pagingEnabled = false
                     self.containerScrollView.userInteractionEnabled = false
                     self.containerScrollView.setContentOffset(CGPointMake(0.0, 0.0), animated: true)
-                    self.productDetailsBottomView.textLabel.text = "Scroll up to show more."
                 }
             }
         }
     }
     
+    func scrollViewDidEndScrollingAnimation(scrollView: UIScrollView) {
+        if scrollView == self.containerScrollView {
+            self.containerScrollView.pagingEnabled = true
+            self.containerScrollView.userInteractionEnabled = true
+            
+            if self.containerScrollView.contentOffset.y == 0.0 {
+                self.productDetailsBottomView.textLabel.text = ProductStrings.messageScrollUp
+            } else {
+                self.productDetailsBottomView.textLabel.text = ProductStrings.messageRelease
+            }
+        }
+    }
+    
     func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
-//        self.blockerView.hidden = true
-        self.containerScrollView.pagingEnabled = true
-        self.containerScrollView.userInteractionEnabled = true
+        if self.containerScrollView.contentOffset.y == 0.0 {
+            self.productDetailsBottomView.textLabel.text = ProductStrings.messageScrollUp
+        } else {
+            self.productDetailsBottomView.textLabel.text = ProductStrings.messageRelease
+        }
     }
     
     func scrolledPastBottomThresholdInTableView(tableView: UITableView) -> Bool {

@@ -103,7 +103,7 @@
                         <constraint firstAttribute="trailing" secondItem="IQR-t4-99U" secondAttribute="trailing" constant="13" id="mDm-A0-kuc"/>
                     </constraints>
                 </view>
-                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QQa-Er-ug9">
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QQa-Er-ug9">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="553"/>
                     <subviews>
                         <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" style="plain" separatorStyle="default" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="140" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="r01-f0-aka">
