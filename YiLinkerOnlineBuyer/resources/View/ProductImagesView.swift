@@ -30,6 +30,7 @@ class ProductImagesView: UIView, UICollectionViewDataSource, UICollectionViewDel
     @IBOutlet weak var priceLabel: UILabel!
     @IBOutlet weak var originalPrice: UILabel!
     @IBOutlet weak var priceCustomLabel: DiscountLabel!
+    @IBOutlet weak var discountPercentLabel: UILabel!
     
     var imagesModel: [ProductImagesModel]!
     
@@ -48,6 +49,7 @@ class ProductImagesView: UIView, UICollectionViewDataSource, UICollectionViewDel
         self.rateContainerView.layer.cornerRadius = self.rateContainerView.frame.size.width / 2
         self.messageContainerView.layer.cornerRadius = self.messageContainerView.frame.size.width / 2
         self.shareContainerView.layer.cornerRadius = self.shareContainerView.frame.size.width / 2
+        self.discountPercentLabel.layer.cornerRadius = 5
         
         self.collectionView.dataSource = self
         self.collectionView.delegate = self
@@ -161,6 +163,13 @@ class ProductImagesView: UIView, UICollectionViewDataSource, UICollectionViewDel
             self.priceLabel.text = "₱" + model.productUnits[unitId].price
         }
         
+        if model.productUnits[unitId].discount != 0 {
+            self.discountPercentLabel.hidden = false
+            self.discountPercentLabel.text = "\(model.productUnits[unitId].discount)% OFF "
+        } else {
+            self.discountPercentLabel.hidden = true
+        }
+        
         self.width = width
         
         self.imagesModel = model.images
@@ -178,6 +187,13 @@ class ProductImagesView: UIView, UICollectionViewDataSource, UICollectionViewDel
         } else {
             self.priceCustomLabel.hidden = true
             self.priceLabel.text = "₱" + model.productUnits[unitId].price
+        }
+        
+        if model.productUnits[unitId].discount != 0 {
+            self.discountPercentLabel.hidden = false
+            self.discountPercentLabel.text = "\(model.productUnits[unitId].discount)% OFF "
+        } else {
+            self.discountPercentLabel.hidden = true
         }
         
         self.images = images
