@@ -756,7 +756,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     func carouselCollectionViewCell(carouselCollectionViewCell: CarouselCollectionViewCell, cellForRowAtIndexPath indexPath: NSIndexPath) -> FullImageCollectionViewCell {
         let parentIndexPath: NSIndexPath = self.collectionView.indexPathForCell(carouselCollectionViewCell)!
         let layoutOneModel: LayoutOneModel = self.homePageModel.data[parentIndexPath.section] as! LayoutOneModel
-        
+
         return self.fullImageCollectionViewCellWithIndexPath(indexPath, fullImageCollectionView: carouselCollectionViewCell.collectionView)
     }
     
@@ -1174,7 +1174,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         
         if self.homePageModel.data[indexPath.section].isKindOfClass(LayoutOneModel) {
             let layoutOneModel: LayoutOneModel = self.homePageModel.data[indexPath.section] as! LayoutOneModel
-            
+        
             fullImageCollectionViewCell.target = layoutOneModel.data[indexPath.row].target.targetUrl
             fullImageCollectionViewCell.targetType = layoutOneModel.data[indexPath.row].target.targetType
             fullImageCollectionViewCell.itemProductImageView.sd_setImageWithURL(NSURL(string: layoutOneModel.data[indexPath.row].image), placeholderImage: UIImage(named: placeHolder))
@@ -1464,7 +1464,6 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         fullImageCollectionViewCell.target = layoutTwoModel.data[indexPath.row].target.targetUrl
         fullImageCollectionViewCell.targetType = layoutTwoModel.data[indexPath.row].target.targetType
         fullImageCollectionViewCell.itemProductImageView.sd_setImageWithURL(NSURL(string: layoutTwoModel.data[indexPath.row].image), placeholderImage: UIImage(named: placeHolder))
-        
         return fullImageCollectionViewCell
     }
     
