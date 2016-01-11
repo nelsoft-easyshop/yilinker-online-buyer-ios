@@ -17,7 +17,8 @@ struct ProductStrings {
     static let seeMore = StringHelper.localizedStringWithKey("SEE_MORE_LOCALIZE_KEY")
     static let ratingFeedback = StringHelper.localizedStringWithKey("RATING_FEEDBACK_LOCALIZE_KEY")
     static let seller = StringHelper.localizedStringWithKey("SELLER_LOCALIZE_KEY")
-    static let reachedBottom = StringHelper.localizedStringWithKey("REACHED_BOTTOM_LOCALIZE_KEY")
+    static let messageScrollUp = StringHelper.localizedStringWithKey("FIRST_VIEW_MESSAGE_LOCALIZE_KEY")
+    static let messageRelease = StringHelper.localizedStringWithKey("SECOND_VIEW_MESSAGE_LOCALIZE_KEY")
     static let outOfStock = StringHelper.localizedStringWithKey("OUT_OF_STOCK_LOCALIZE_KEY")
     
     static let addToCart = StringHelper.localizedStringWithKey("ADD_TO_CART_LOCALIZE_KEY")
@@ -61,6 +62,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     @IBOutlet weak var buttonsContainer: UIView!
     @IBOutlet weak var buttonSubContainer: UIView!
     @IBOutlet weak var buyItNowLabel: UILabel!
+    @IBOutlet weak var blockerView: UIView!
     
     var headerView: UIView!
     var footerView: UIView!
@@ -118,6 +120,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     var isExiting: Bool = true
     var isFromCart: Bool = false
     var isAlreadyMoveOffset: Bool = false
+    var isFirstView: Bool = true
     @IBOutlet weak var closeButton: UIView!
     
     // Messaging
@@ -256,7 +259,6 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         }
 
         // reached top or bottom
-        
         if scrollView.contentOffset.y <= 0.0 && scrollView == self.tableView {
             visibility = 0.0
             canShowExtendedDetails = false
@@ -275,30 +277,34 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
             }
             self.lastContentOffset = scrollView.contentOffset.y
         }
+        
+    }
+
+    // Scroll to position when reached position
+    func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        if scrollView == self.containerScrollView {
+            checkScrollDirectionAndSetPosition()
+        }
     }
     
-    func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        var scrollViewHeight: CGFloat = scrollView.frame.size.height
-        var scrollContentSizeHeight: CGFloat = scrollView.contentSize.height + 80
-        var scrollOffset: CGFloat = scrollView.contentOffset.y
-        
+    // Stop scrolling then scroll to position
+    func scrollViewWillBeginDecelerating(scrollView: UIScrollView) {
+        if scrollView == self.containerScrollView && !self.containerScrollView.userInteractionEnabled {
+            self.setScrollViewsOffset(self.containerScrollView.contentOffset)
+            checkScrollDirectionAndSetPosition()
+        }
+    }
+    
+    // Set message for details
+    func scrollViewDidEndScrollingAnimation(scrollView: UIScrollView) {
         if scrollView == self.containerScrollView {
-            if isScrollingUp {
-                if (scrollOffset + scrollViewHeight >= 665.0) {
-                    self.containerScrollView.pagingEnabled = false
-                    self.containerScrollView.scrollRectToVisible(CGRectMake(0, 1000, self.containerScrollView.frame.size.width, self.containerScrollView.frame.size.height), animated: true)
-                }
-            } else {
-                if (scrollOffset + scrollViewHeight <= 1015.0) {
-                    self.containerScrollView.pagingEnabled = false
-                    self.containerScrollView.setContentOffset(CGPointMake(0.0, 0.0), animated: true)
-                }
-            }
+            self.containerScrollView.userInteractionEnabled = true
+            setMessageForDetails()
         }
     }
     
     func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
-        self.containerScrollView.pagingEnabled = true
+        setMessageForDetails()
     }
     
     func scrolledPastBottomThresholdInTableView(tableView: UITableView) -> Bool {
@@ -972,7 +978,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         
         self.containerScrollView.addSubview(self.tableView)
         self.containerScrollView.addSubview(self.getProductExtendedView())
-        self.productExtendedView.frame.origin.y = self.containerScrollView.frame.size.height// + 20
+        self.productExtendedView.frame.origin.y = self.containerScrollView.frame.size.height
         self.containerScrollView.contentSize = CGSizeMake(self.containerScrollView.frame.size.width, self.containerScrollView.frame.size.height + self.productExtendedView.frame.size.height)
     }
     
@@ -1203,6 +1209,35 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
 //        self.tableView.setContentOffset(CGPoint(x: 0, y: self.tableView.contentSize.height - 114), animated: true)
 //        isAlreadyMoveOffset = false
 //        self.tableView.scrollEnabled = false
+    }
+    
+    func setScrollViewsOffset(offset: CGPoint) {
+        self.containerScrollView.userInteractionEnabled = false
+        self.containerScrollView.setContentOffset(offset, animated: true)
+    }
+    
+    func setMessageForDetails() {
+        if self.containerScrollView.contentOffset.y == 0.0 {
+            self.productDetailsBottomView.textLabel.text = ProductStrings.messageScrollUp
+        } else if self.containerScrollView.contentOffset.y == self.containerScrollView.frame.size.height {
+            self.productDetailsBottomView.textLabel.text = ProductStrings.messageRelease
+        }
+    }
+    
+    func checkScrollDirectionAndSetPosition() {
+        if isScrollingUp {
+            if self.containerScrollView.contentOffset.y >= 85.0 {
+                self.setScrollViewsOffset(CGPointMake(0.0, self.containerScrollView.frame.size.height))
+            } else if self.containerScrollView.contentOffset.y < 85 {
+                self.setScrollViewsOffset(CGPointMake(0.0, 0.0))
+            }
+        } else {
+            if self.containerScrollView.contentOffset.y <= self.containerScrollView.frame.size.height - 88.0 {
+                self.setScrollViewsOffset(CGPointMake(0.0, 0.0))
+            } else if self.containerScrollView.contentOffset.y > self.containerScrollView.frame.size.height - 88.0 {
+                self.setScrollViewsOffset(CGPointMake(0.0, self.containerScrollView.frame.size.height))
+            }
+        }
     }
     
     // MARK: - Product Images Delegate

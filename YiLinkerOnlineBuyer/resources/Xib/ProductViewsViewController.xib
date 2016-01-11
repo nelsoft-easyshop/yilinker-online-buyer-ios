@@ -207,7 +207,7 @@
             <point key="canvasLocation" x="364.5" y="399.5"/>
         </view>
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="hYp-dZ-AVK" customClass="ProductDescriptionView" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="375" height="116"/>
+            <rect key="frame" x="0.0" y="0.0" width="375" height="93"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Description" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qM9-sb-7bx">
@@ -235,7 +235,7 @@
                     <color key="textColor" red="0.29803922770000002" green="0.29803922770000002" blue="0.29803922770000002" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5I9-Tf-7qv">
+                <view hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5I9-Tf-7qv">
                     <rect key="frame" x="0.0" y="74" width="375" height="42"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
@@ -251,7 +251,7 @@
                 <constraint firstItem="qM9-sb-7bx" firstAttribute="top" secondItem="hYp-dZ-AVK" secondAttribute="top" id="Ylc-mu-dIY"/>
                 <constraint firstAttribute="trailing" secondItem="mpd-07-oTc" secondAttribute="trailing" constant="8" id="bfS-0d-Vxe"/>
                 <constraint firstItem="A2V-fG-Tne" firstAttribute="top" secondItem="hYp-dZ-AVK" secondAttribute="top" constant="41" id="hjF-jx-piY"/>
-                <constraint firstAttribute="bottom" secondItem="5I9-Tf-7qv" secondAttribute="bottom" id="jhd-ag-RJF"/>
+                <constraint firstAttribute="bottom" secondItem="5I9-Tf-7qv" secondAttribute="bottom" constant="-23" id="jhd-ag-RJF"/>
                 <constraint firstItem="qM9-sb-7bx" firstAttribute="leading" secondItem="hYp-dZ-AVK" secondAttribute="leading" constant="8" id="nc5-Gf-7lE"/>
                 <constraint firstItem="5I9-Tf-7qv" firstAttribute="leading" secondItem="hYp-dZ-AVK" secondAttribute="leading" id="oyi-o2-J1m"/>
                 <constraint firstAttribute="trailing" secondItem="A2V-fG-Tne" secondAttribute="trailing" id="rEU-Gh-wv9"/>
@@ -264,7 +264,7 @@
                 <outlet property="descriptionTitleLabel" destination="qM9-sb-7bx" id="eZC-Dq-I3K"/>
                 <outlet property="seeMoreView" destination="5I9-Tf-7qv" id="1bF-yp-9FZ"/>
             </connections>
-            <point key="canvasLocation" x="364.5" y="892"/>
+            <point key="canvasLocation" x="364.5" y="880.5"/>
         </view>
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="aCA-2i-XxI" customClass="ProductReviewHeaderView" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="375" height="42"/>
