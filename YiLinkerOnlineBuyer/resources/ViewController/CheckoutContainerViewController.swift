@@ -132,6 +132,16 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
         }
     }
     
+    override func viewDidLayoutSubviews() {
+        self.contentViewFrame = contentView.bounds
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
+    //MARK: - Show HUD
     func showHUD() {
         if self.hud != nil {
             self.hud!.hide(true)
@@ -144,16 +154,13 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
         self.view.addSubview(self.hud!)
         self.hud?.show(true)
     }
-
+    
+    //MARK: - Title View
     func titleView() {
         self.navigationController!.navigationBar.topItem!.title = "Checkout"
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
+    //MARK: - Set Selected View Controller With Index
     // This function is for executing child view logic code
     func setSelectedViewControllerWithIndex(index: Int) {
         if index == 0 {
@@ -207,6 +214,7 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
         }
     }
     
+    //MARK: - First Circle
     func firsCircle() {
         for imageView in self.firstCircleLabel.subviews {
             imageView.removeFromSuperview()
@@ -225,6 +233,7 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
         self.overViewLabel.textColor = UIColor.lightGrayColor()
     }
     
+    //MARK: - Second Circle
     func secondCircle() {
         self.firstCircleLabel.backgroundColor = Constants.Colors.appTheme
         
@@ -248,6 +257,7 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
         self.overViewLabel.textColor = UIColor.lightGrayColor()
     }
     
+    //MARK: - Third Circle
     func thirdCircle() {
         self.firstCircleLabel.backgroundColor = Constants.Colors.appTheme
         
@@ -279,11 +289,7 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
         self.overViewLabel.textColor = UIColor.whiteColor()
     }
     
-    override func viewDidLayoutSubviews() {
-        self.contentViewFrame = contentView.bounds
-        
-    }
-    
+    //MARK: - Set Selected View Controller
     func setSelectedViewController(viewController: UIViewController) {
         if !(selectedChildViewController == viewController) {
             if self.isViewLoaded() {
@@ -300,6 +306,7 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
         selectedChildViewController = viewController
     }
     
+    //MARK: - Init View Controller
     func initViewController() {
         summaryViewController = SummaryViewController(nibName: "SummaryViewController", bundle: nil)
         paymentViewController = PaymentViewController(nibName: "PaymentViewController", bundle: nil)
@@ -312,6 +319,7 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
         self.viewControllers.append(overViewViewController!)
     }
     
+    //MARK: - Back Button
     func backButton() {
         var backButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
         backButton.frame = CGRectMake(0, 0, 40, 40)
@@ -325,6 +333,7 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
         self.navigationItem.leftBarButtonItems = [navigationSpacer, customBackButton]
     }
     
+    //MARK: - Back
     func back() {
         if self.selectedIndex != 0 {
             self.selectedIndex--
@@ -334,6 +343,7 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
         }
     }
     
+    //MARK: - Save And Continue
     @IBAction func saveAndContinue(sender: AnyObject) {
         var limit: Int = self.viewControllers.count
         
@@ -364,79 +374,104 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
                     self.redirectToHomeView()
                 }
             }
-            
         } else {
             self.redirectToHomeView()
         }
 
     }
     
+    //MARK: - Redirect To Home View
     func redirectToHomeView() {
         let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         appDelegate.changeRootToHomeView()
     }
     
+    //MARK: - Fire COD
     func fireCOD() {
         self.showHUD()
-        let manager: APIManager = APIManager.sharedInstance
-        let parameters: NSDictionary = ["access_token": SessionManager.accessToken()]
-        manager.POST(APIAtlas.cashOnDeliveryUrl, parameters: parameters, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+        WebServiceManager.fireCODWithUrl(APIAtlas.COD(), accessToken: SessionManager.accessToken()) {
+            (successful, responseObject, requestErrorType) -> Void in
             self.hud?.hide(true)
+            if successful {
                 let paymentSuccessModel: PaymentSuccessModel = PaymentSuccessModel.parseDataWithDictionary(responseObject as! NSDictionary)
                 if paymentSuccessModel.isSuccessful {
                     self.redirectToSuccessPage(paymentSuccessModel)
                 } else {
+                    self.selectedIndex--
                     UIAlertController.displayErrorMessageWithTarget(self, errorMessage: paymentSuccessModel.message, title: Constants.Localized.someThingWentWrong)
                 }
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                if task.statusCode == 401 {
-                    self.fireRefreshToken(CheckoutRefreshType.COD)
-                } else {
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
-                    self.hud?.hide(true)
-                }
+            } else {
                 self.selectedIndex--
-        })
+                if requestErrorType == .ResponseError {
+                    //Error in api requirements
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                } else if requestErrorType == .AccessTokenExpired {
+                     self.fireRefreshToken(CheckoutRefreshType.COD)
+                } else if requestErrorType == .PageNotFound {
+                    //Page not found
+                    Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    //No internet connection
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    //Request timeout
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    //Unhandled error
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
+                }
+            }
+        }
     }
     
+    //MARK: - Fire Peso Pay
+    //This function is for getting the peso pay urls
     func firePesoPay() {
-        self.showHUD()
-        let manager: APIManager = APIManager.sharedInstance
-        let parameters: NSDictionary = ["access_token": SessionManager.accessToken()]
-        manager.POST(APIAtlas.pesoPayUrl, parameters: parameters, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+        WebServiceManager.firePesoPayWithUrl(APIAtlas.pesoPayUrl, accessToken: SessionManager.accessToken()) {
+            (successful, responseObject, requestErrorType) -> Void in
             self.hud?.hide(true)
-            println(responseObject)
+            if successful {
                 let pesoPayModel: PesoPayModel = PesoPayModel.parseDataWithDictionary(responseObject as! NSDictionary)
                 if pesoPayModel.isSuccessful {
                     self.redirectToPaymentWebViewWithUrl(pesoPayModel)
                 } else {
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: pesoPayModel.message, title: "Something went wrong")
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: pesoPayModel.message, title: Constants.Localized.error)
                 }
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                
-                if task.statusCode == 401 {
-                    self.fireRefreshToken(CheckoutRefreshType.Credit)
-                } else {
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
-                    self.hud?.hide(true)
-                }
+
+            } else {
                 self.selectedIndex--
-                
-        })
+                if requestErrorType == .ResponseError {
+                    //Error in api requirements
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                } else if requestErrorType == .AccessTokenExpired {
+                    self.fireRefreshToken(CheckoutRefreshType.Credit)
+                } else if requestErrorType == .PageNotFound {
+                    //Page not found
+                    Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    //No internet connection
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    //Request timeout
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    //Unhandled error
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
+                }
+            }
+        }
     }
     
+    //MARK: - Continue Button
     func continueButton(title: String) {
         if self.continueButton != nil {
             self.continueButton.setTitle(title, forState: UIControlState.Normal)
         }
     }
     
+    //MARK: - Redirect to Payment WebView With Url
     func redirectToPaymentWebViewWithUrl(pesoPayModel: PesoPayModel) {
         let paymentWebViewController = PaymentWebViewViewController(nibName: "PaymentWebViewViewController", bundle: nil)
         paymentWebViewController.pesoPayModel = pesoPayModel
@@ -446,6 +481,7 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
         self.presentViewController(navigationController, animated: true, completion: nil)
     }
     
+    //MARK: - Payment Web View Controller Delegate
     func paymentWebViewController(paymentDidCancel paymentWebViewController: PaymentWebViewViewController) {
         self.selectedIndex--
     }
@@ -454,6 +490,11 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
         self.redirectToSuccessPage(paymentSuccessModel)
     }
     
+    func paymentWebViewController(paymentDidNotSucceed paymentWebViewController: PaymentWebViewViewController) {
+        self.selectedIndex--
+    }
+    
+    //MARK: - Redirect to Success Page
     func redirectToSuccessPage(paymentSuccessModel: PaymentSuccessModel) {
         self.selectedIndex++
         self.overViewViewController?.paymentSuccessModel = paymentSuccessModel
@@ -465,36 +506,34 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
         self.thirdCircle()
     }
     
-    func paymentWebViewController(paymentDidNotSucceed paymentWebViewController: PaymentWebViewViewController) {
-        self.selectedIndex--
-    }
-    
+    //MARK: - Fire Refresh Token
     func fireRefreshToken(refreshType: CheckoutRefreshType) {
         self.showHUD()
-        let params: NSDictionary = ["client_id": Constants.Credentials.clientID(),
-            "client_secret": Constants.Credentials.clientSecret(),
-            "grant_type": Constants.Credentials.grantRefreshToken,
-            "refresh_token": SessionManager.refreshToken()]
-        let manager = APIManager.sharedInstance
-        manager.POST(APIAtlas.loginUrl, parameters: params, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+        WebServiceManager.fireRefreshTokenWithUrl(APIAtlas.refreshTokenUrl, actionHandler: {
+            (successful, responseObject, requestErrorType) -> Void in
+            self.hud?.hide(true)
+            
+            if successful {
+                SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
                 if refreshType == CheckoutRefreshType.COD {
                     self.fireCOD()
                 } else if refreshType == CheckoutRefreshType.Credit {
                     self.firePesoPay()
                 }
-            
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                let alertController = UIAlertController(title: Constants.Localized.someThingWentWrong, message: "", preferredStyle: .Alert)
-                let defaultAction = UIAlertAction(title: Constants.Localized.ok, style: .Default, handler: nil)
-                alertController.addAction(defaultAction)
-                self.presentViewController(alertController, animated: true, completion: nil)
-                self.hud?.hide(true)
+            } else {
+                //Forcing user to logout.
+                UIAlertController.displayAlertRedirectionToLogin(self, actionHandler: { (sucess) -> Void in
+                    SessionManager.logout()
+                    FBSDKLoginManager().logOut()
+                    GPPSignIn.sharedInstance().signOut()
+                    let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+                    appDelegate.startPage()
+                })
+            }
         })
     }
     
+    //MARK: - Show Register Alert
     func showRegisterAlert() {
         self.view.layoutIfNeeded()
         
@@ -517,6 +556,7 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
         self.navigationController!.presentViewController(registerModelViewController, animated: true, completion: nil)
     }
     
+    //MARK: - Register Modal ViewController Delegate
     func registerModalViewController(didExit view: RegisterModalViewController, isShowRegister: Bool) {
         for dimView in self.navigationController!.view.subviews {
             if dimView.tag == 100 {
@@ -535,36 +575,11 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
         }
     }
     
-    
-    func fireLogin(email: String, password: String) {
-        let manager: APIManager = APIManager.sharedInstance
-        //seller@easyshop.ph
-        //password
-        let parameters: NSDictionary = ["email": email,"password": password, "client_id": Constants.Credentials.clientID(), "client_secret": Constants.Credentials.clientSecret(), "grant_type": Constants.Credentials.grantBuyer]
-        self.showHUD()
-        manager.POST(APIAtlas.loginUrl, parameters: parameters, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
-            self.showSuccessMessage()
-            self.hud?.hide(true)
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                
-                if task.statusCode == 401 {
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Mismatch username and password", title: "Login Failed")
-                } else {
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
-                }
-                
-                self.hud?.hide(true)
-        })
-    }
-    
+    //MARK: - Show Success Message
     func showSuccessMessage() {
         let alertController = UIAlertController(title: Constants.Localized.success, message: LoginStrings.successMessage, preferredStyle: .Alert)
         
-        let OKAction = UIAlertAction(title: "OK", style: .Default) { (action) in
+        let OKAction = UIAlertAction(title: Constants.Localized.ok, style: .Default) { (action) in
             alertController.dismissViewControllerAnimated(true, completion: nil)
             let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
             appDelegate.changeRootToHomeView()
@@ -577,7 +592,7 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
         }
     }
 
-    
+    //MARK: - Redirect To Register
     func redirectToRegister() {
         let storyBoard: UIStoryboard = UIStoryboard(name: "StartPageStoryBoard", bundle: nil)
         let registerViewController: LoginAndRegisterContentViewController?
@@ -604,6 +619,7 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
         dimView?.alpha = 0
     }
     
+    //MARK: - Hide Dim View
     func hideDimView() {
         UIView.animateWithDuration(0.3, animations: {
             self.dimView!.alpha = 0
@@ -612,6 +628,7 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
         })
     }
     
+    //MARK: - Change Mobile Number Action
     func changeMobileNumberAction(){
         var changeNumberModal = ChangeMobileNumberViewController(nibName: "ChangeMobileNumberViewController", bundle: nil)
         changeNumberModal.delegate = self
@@ -632,7 +649,7 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
         })
     }
     
-    // MARK: - ChangeMobileNumberViewControllerDelegate
+    // MARK: - Change Mobile Number ViewController Delegate
     func closeChangeNumbderViewController(){
         hideDimView()
         self.dismissViewControllerAnimated(true, completion: nil)
@@ -655,7 +672,7 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
         })
     }
     
-    // MARK: - VerifyMobileNumberViewControllerDelegate
+    // MARK: - Verify Mobile Number ViewController Delegate
     func closeVerifyMobileNumberViewController() {
         hideDimView()
         self.dismissViewControllerAnimated(true, completion: nil)
