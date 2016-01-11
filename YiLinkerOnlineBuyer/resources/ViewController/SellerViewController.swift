@@ -103,6 +103,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.tableView.reloadData()
     }
     
+    //MARK: -
     //MARK: Reload tableview
     func populateData() {
         self.tableView.delegate = self
@@ -112,6 +113,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.tableView.reloadData()
     }
     
+    //MARK: -
     //MARK: Set title of navigation bar
     func titleView() {
         let label: UILabel = UILabel(frame: CGRectMake(0, 0, 100, 50))
@@ -122,6 +124,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.navigationItem.titleView = label
     }
 
+    //MARK: -
     //MARK: Adding header view to tableview
     func headerView() {
         sellerTableHeaderView.delegate = self
@@ -168,6 +171,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.sellerHeaderView.gradient()
     }
     
+    //MARK: -
     //MARK: - Update Header View
     func updateHeaderView() {
         var headerRect: CGRect = CGRect(x: 0, y: -kTableHeaderHeight, width: self.tableView.bounds.width, height: kTableHeaderHeight)
@@ -180,6 +184,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.sellerHeaderView.gradient()
     }
     
+    //MARK: -
     //MARK: Register nibs for tableview cells
     func registerNib() {
         let sellerNib: UINib = UINib(nibName: Constants.Seller.aboutSellerTableViewCellNibNameAndIdentifier, bundle: nil)
@@ -201,206 +206,201 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.tableView.registerNib(seeMoreNib, forCellReuseIdentifier: Constants.Seller.seeMoreTableViewCellNibNameAndIdentifier)
     }
     
+    //MARK: -
     //MARK: Get seller/store info
     func fireSeller() {
-        
-        self.showHUD()
-        
-        let manager = APIManager.sharedInstance
-        let parameters: NSDictionary?
-        
         var url: String = ""
         
         if SessionManager.isLoggedIn() {
             url = APIAtlas.getSellerInfoLoggedIn
-            parameters = ["userId" : sellerId, "access_token" : SessionManager.accessToken()] as NSDictionary
         } else {
             url = APIAtlas.getSellerInfo
-            parameters = ["userId" : sellerId] as NSDictionary
         }
         
-        println(parameters)
-        
-        manager.POST(url, parameters: parameters, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-
-            if responseObject["isSuccessful"] as! Bool {
-                self.sellerModel = SellerModel.parseSellerDataFromDictionary(responseObject as! NSDictionary)
-                self.is_successful = self.sellerModel!.is_allowed
-                self.hud?.hide(true)
-                self.populateData()
-            } else {
-                self.showAlert(title: "Error", message: responseObject["message"] as! String)
-                self.hud?.hide(true)
-            }
-
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                self.hud?.hide(true)
-                if error.userInfo != nil {
-                    if task.statusCode == 401 {
-                        self.requestRefreshToken(SellerRefreshType.Get)
-                    }
+        self.showHUD()
+        WebServiceManager.fireSellerWithUrl(url, accessToken: SessionManager.accessToken(), sellerId: sellerId) {
+            (successful, responseObject, requestErrorType) -> Void in
+            self.hud?.hide(true)
+            if successful {
+                if responseObject["isSuccessful"] as! Bool {
+                    self.sellerModel = SellerModel.parseSellerDataFromDictionary(responseObject as! NSDictionary)
+                    self.is_successful = self.sellerModel!.is_allowed
+                    self.hud!.hide(true)
+                    self.populateData()
                 } else {
-                    self.showAlert(title: Constants.Localized.someThingWentWrong, message: nil)
+                    self.showAlert(title: "Error", message: responseObject["message"] as! String)
                     self.hud?.hide(true)
-                    self.is_successful == self.sellerModel?.is_allowed
                 }
-                
-        })
+            } else {
+                if requestErrorType == .ResponseError {
+                    //Error in api requirements
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                } else if requestErrorType == .AccessTokenExpired {
+                    self.requestRefreshToken(SellerRefreshType.Get)
+                } else if requestErrorType == .PageNotFound {
+                    //Page not found
+                    Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    //No internet connection
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    //Request timeout
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    //Unhandled error
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
+                }
+            }
+        }
+        
         self.tableView.reloadData()
     }
     
+    //MARK: -
     //MARK: Get seller ratings and feedback
     func fireSellerFeedback() {
-        
-        //self.showHUD()
-        
-        let manager = APIManager.sharedInstance
-        let parameters: NSDictionary = ["sellerId" : sellerId];
-        
-        manager.POST("\(APIAtlas.buyerSellerFeedbacks)?access_token=\(SessionManager.accessToken())", parameters: parameters, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            
-            if responseObject["isSuccessful"] as! Bool {
-                self.sellerModel2 = SellerModel.parseSellerReviewsDataFromDictionary(responseObject as! NSDictionary)
-                 self.tableView.reloadData()
-            } else {
-                self.showAlert(title: Constants.Localized.error, message: responseObject["message"] as! String)
-                //self.hud?.hide(true)
-            }
-            
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                
-                if error.userInfo != nil {
-                    if task.statusCode == 401 {
-                        self.requestRefreshToken(SellerRefreshType.Feedback)
-                    }
+        WebServiceManager.fireSellerFeedbackWithUrl(APIAtlas.buyerSellerFeedbacks, sellerId: sellerId) {
+            (successful, responseObject, requestErrorType) -> Void in
+            if successful {
+                if responseObject["isSuccessful"] as! Bool {
+                    self.sellerModel2 = SellerModel.parseSellerReviewsDataFromDictionary(responseObject as! NSDictionary)
+                    self.tableView.reloadData()
                 } else {
-                    self.showAlert(title: Constants.Localized.someThingWentWrong, message: nil)
-                    self.hud?.hide(true)
+                    self.showAlert(title: Constants.Localized.error, message: responseObject["message"] as! String)
                 }
-                
-        })
-       
+            } else {
+                if requestErrorType == .ResponseError {
+                    //Error in api requirements
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                } else if requestErrorType == .AccessTokenExpired {
+                    self.requestRefreshToken(SellerRefreshType.Feedback)
+                } else if requestErrorType == .PageNotFound {
+                    //Page not found
+                    Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    //No internet connection
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    //Request timeout
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    //Unhandled error
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
+                }
+            }
+        }
     }
     
+    //MARK: -
     //MARK: Follow seller
     func fireFollowSeller() {
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
-        //self.showHUD()
-        self.hud?.hide(true)
-        let manager = APIManager.sharedInstance
-        let parameters: NSDictionary = ["sellerId" : sellerId, "access_token" : SessionManager.accessToken()];
-        
-        manager.POST(APIAtlas.followSeller, parameters: parameters, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            
-            self.followSellerModel = FollowedSellerModel.parseFollowSellerDataWithDictionary(responseObject as! NSDictionary)
-            self.is_successful = true
-            self.sellerTableHeaderView.followButton.tag = 1
-            
+        WebServiceManager.fireFollowSellerWithUrl(APIAtlas.followSeller, sellerId: self.sellerId, accessToken: SessionManager.accessToken()) { (successful, responseObject, requestErrorType) -> Void in
             UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-            
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                
-                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-                
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-               
-                if task.statusCode == 401 {
+            if successful {
+                self.followSellerModel = FollowedSellerModel.parseFollowSellerDataWithDictionary(responseObject as! NSDictionary)
+                self.is_successful = true
+                self.sellerTableHeaderView.followButton.tag = 1
+            } else {
+                if requestErrorType == .ResponseError {
+                    //Error in api requirements
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                } else if requestErrorType == .AccessTokenExpired {
                     self.requestRefreshToken(SellerRefreshType.Follow)
-                } else {
-                    self.showAlert(title: Constants.Localized.someThingWentWrong, message: nil)
-                    self.is_successful = false
-                    self.sellerTableHeaderView.followButton.tag = 2
+                } else if requestErrorType == .PageNotFound {
+                    //Page not found
+                    Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    //No internet connection
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    //Request timeout
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    //Unhandled error
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
                 }
-                
-                //self.hud?.hide(true)
-        })
+            }
+            
+            if requestErrorType != .AccessTokenExpired {
+                self.sellerTableHeaderView.followButton.tag = 2
+            }
+        }
     }
     
+    //MARK: -
     //MARK: Unfollow seller
     func fireUnfollowSeller() {
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
-        //self.showHUD()
-        
-        let manager = APIManager.sharedInstance
-        let parameters: NSDictionary = ["sellerId" : sellerId, "access_token" : SessionManager.accessToken()];
-        
-        manager.POST(APIAtlas.unfollowSeller, parameters: parameters, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            
-            self.followSellerModel = FollowedSellerModel.parseFollowSellerDataWithDictionary(responseObject as! NSDictionary)
-            self.is_successful = false
-            self.sellerTableHeaderView.followButton.tag = 2
-            
+        WebServiceManager.fireUnFollowSellerWithUrl(APIAtlas.unfollowSeller, sellerId: self.sellerId, accessToken: SessionManager.accessToken()) { (successful, responseObject, requestErrorType) -> Void in
             UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-            
-            //self.hud?.hide(true)
-            
-            }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
-                
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+            if successful {
+                self.followSellerModel = FollowedSellerModel.parseFollowSellerDataWithDictionary(responseObject as! NSDictionary)
+                self.is_successful = false
+                self.sellerTableHeaderView.followButton.tag = 2
                 
                 UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-                if task.statusCode == 401 {
-                    self.requestRefreshToken(SellerRefreshType.Unfollow)
-                } else if error.userInfo != nil {
-                    let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
-                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: Constants.Localized.someThingWentWrong)
-                    let data = error.userInfo as! Dictionary<String, AnyObject>
-                    self.followSellerModel = FollowedSellerModel.parseFollowSellerDataWithDictionary(error.userInfo as! Dictionary<String, AnyObject>)
-                    self.is_successful = false
-                    self.sellerTableHeaderView.followButton.tag = 2
-                } else {
-                    self.showAlert(title: Constants.Localized.someThingWentWrong, message: nil)
-                    self.is_successful = false
-                    self.sellerTableHeaderView.followButton.tag = 2
-                }
-                
-                //self.hud?.hide(true)
-        })
-    }
-    
-    //MARK: Refresh token
-    func requestRefreshToken(type: SellerRefreshType) {
-        
-        self.showHUD()
-        
-        let manager = APIManager.sharedInstance
-        let params: NSDictionary = ["client_id": Constants.Credentials.clientID(),
-            "client_secret": Constants.Credentials.clientSecret(),
-            "grant_type": Constants.Credentials.grantRefreshToken,
-            "refresh_token": SessionManager.refreshToken()]
-
-        manager.POST(APIAtlas.loginUrl, parameters: params, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            
-            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
-            
-            if type == SellerRefreshType.Follow {
-                self.fireFollowSeller()
-            } else if type == SellerRefreshType.Unfollow {
-                self.fireUnfollowSeller()
-            } else if type == SellerRefreshType.Get {
-                self.fireSeller()
             } else {
-                self.fireSellerFeedback()
+                if requestErrorType == .ResponseError {
+                    //Error in api requirements
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                } else if requestErrorType == .AccessTokenExpired {
+                    self.requestRefreshToken(SellerRefreshType.Unfollow)
+                } else if requestErrorType == .PageNotFound {
+                    //Page not found
+                    Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    //No internet connection
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    //Request timeout
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    //Unhandled error
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
+                }
             }
             
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
+            if requestErrorType != .AccessTokenExpired {
+                self.sellerTableHeaderView.followButton.tag = 2
+            }
+        }
+    }
+    
+    //MARK: -
+    //MARK: Refresh token
+    func requestRefreshToken(type: SellerRefreshType) {
+        self.showHUD()
+        WebServiceManager.fireRefreshTokenWithUrl(APIAtlas.refreshTokenUrl, actionHandler: {
+            (successful, responseObject, requestErrorType) -> Void in
+            self.hud?.hide(true)
+            
+            if successful {
+                SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
                 
-                self.showAlert(title: Constants.Localized.ok, message: Constants.Localized.someThingWentWrong)
-                
-                self.hud?.hide(true)
+                if type == SellerRefreshType.Follow {
+                    self.fireFollowSeller()
+                } else if type == SellerRefreshType.Unfollow {
+                    self.fireUnfollowSeller()
+                } else if type == SellerRefreshType.Get {
+                    self.fireSeller()
+                } else {
+                    self.fireSellerFeedback()
+                }
+            } else {
+                //Forcing user to logout.
+                UIAlertController.displayAlertRedirectionToLogin(self, actionHandler: { (sucess) -> Void in
+                    SessionManager.logout()
+                    FBSDKLoginManager().logOut()
+                    GPPSignIn.sharedInstance().signOut()
+                    let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+                    appDelegate.startPage()
+                })
+            }
         })
     }
     
@@ -408,6 +408,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.emptyView?.hidden = true
     }
     
+    //MARK: -
     //MARK: Customize navigation bar - adding back button
     func backButton() {
         var backButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
@@ -422,6 +423,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.navigationItem.leftBarButtonItems = [navigationSpacer, customBackButton]
     }
     
+    //MARK: -
     //MARK: Back action for navigation's back button
     func back() {
         self.navigationController!.popViewControllerAnimated(true)
@@ -432,6 +434,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         // Dispose of any resources that can be recreated.
     }
     
+    //MARK: -
     //MARK: UiTableView delegate methods
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
@@ -531,6 +534,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         }
     }
     
+    //MARK: -
     //MARK: Seller Header View Delegate
     //Show seller's ratings and feedback
     func sellerTableHeaderViewDidViewFeedBack() {
@@ -549,7 +553,8 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
     }
     
-    //Follow/Unfollow seller
+    //MARK: -
+    //MARK: - Follow/Unfollow seller
     func sellerTableHeaderViewDidFollow() {
         
         sellerTableHeaderView.delegate = self
@@ -580,6 +585,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         }
     }
     
+    //MARK: -
     //MARK: Message seller
     func sellerTableHeaderViewDidMessage() {
         
@@ -611,6 +617,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
     }
     
+    //MARK: -
     //MARK: Call seller
     func sellerTableHeaderViewDidCall() {
         if UIApplication.sharedApplication().canOpenURL(NSURL(string: "tel://\(self.sellerContactNumber)" )!) {
@@ -622,6 +629,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
     }
     
+    //MARK: -
     //MARK: Get buyer's contacts
     func getContactsFromEndpoint(
         page : String,
@@ -669,6 +677,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
             
     }
     
+    //MARK: -
     //MARK: Add empty view on the current view
     func addEmptyView() {
         if self.emptyView == nil {
@@ -681,6 +690,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         }
     }
     
+    //MARK: -
     //MARK: Refresh token
     func fireRefreshToken() {
         let manager: APIManager = APIManager.sharedInstance
@@ -720,6 +730,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.navigationController!.pushViewController(sellerCategoryViewController, animated: true)
     }
     
+    //MARK: -
     //MARK: Show HUD
     func showHUD() {
         if self.hud != nil {
@@ -734,7 +745,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.hud?.show(true)
     }
     
-    
+    //MARK: -
     //MARK: Show and hide dim view
     func showView(){
         UIView.animateWithDuration(0.3, animations: {
@@ -754,6 +765,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         })
     }
     
+    //MARK: -
     //MARK: Show alert dialog box
     func showAlert(#title: String!, message: String!) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
@@ -762,6 +774,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         presentViewController(alertController, animated: true, completion: nil)
     }
     
+    //MARK: -
     //MARK: - Scroll View Delegate
     func scrollViewDidScroll(scrollView: UIScrollView) {
         self.updateHeaderView()
