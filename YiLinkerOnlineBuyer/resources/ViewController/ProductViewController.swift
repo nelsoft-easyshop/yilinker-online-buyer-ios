@@ -17,7 +17,8 @@ struct ProductStrings {
     static let seeMore = StringHelper.localizedStringWithKey("SEE_MORE_LOCALIZE_KEY")
     static let ratingFeedback = StringHelper.localizedStringWithKey("RATING_FEEDBACK_LOCALIZE_KEY")
     static let seller = StringHelper.localizedStringWithKey("SELLER_LOCALIZE_KEY")
-    static let reachedBottom = StringHelper.localizedStringWithKey("REACHED_BOTTOM_LOCALIZE_KEY")
+    static let messageScrollUp = StringHelper.localizedStringWithKey("FIRST_VIEW_MESSAGE_LOCALIZE_KEY")
+    static let messageRelease = StringHelper.localizedStringWithKey("SECOND_VIEW_MESSAGE_LOCALIZE_KEY")
     static let outOfStock = StringHelper.localizedStringWithKey("OUT_OF_STOCK_LOCALIZE_KEY")
     
     static let addToCart = StringHelper.localizedStringWithKey("ADD_TO_CART_LOCALIZE_KEY")
@@ -52,7 +53,7 @@ protocol ProductViewControllerDelegate {
     func pressedDimViewFromProductPage(controller: ProductViewController)
 }
 
-class ProductViewController: UIViewController, ProductImagesViewDelegate, ProductDescriptionViewDelegate, ProductReviewFooterViewDelegate, ProductSellerViewDelegate, ProductReviewViewControllerDelegate, ProductAttributeViewControllerDelegate, EmptyViewDelegate, ProductDetailsExtendedViewDelegate {
+class ProductViewController: UIViewController, ProductImagesViewDelegate, ProductDescriptionViewDelegate, ProductReviewFooterViewDelegate, ProductSellerViewDelegate, ProductReviewViewControllerDelegate, ProductAttributeViewControllerDelegate, EmptyViewDelegate, ProductDetailsExtendedViewDelegate, ProductExtendedViewDelegate, UIScrollViewDelegate {
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var dimView: UIView!
@@ -61,6 +62,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     @IBOutlet weak var buttonsContainer: UIView!
     @IBOutlet weak var buttonSubContainer: UIView!
     @IBOutlet weak var buyItNowLabel: UILabel!
+    @IBOutlet weak var blockerView: UIView!
     
     var headerView: UIView!
     var footerView: UIView!
@@ -73,7 +75,9 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     var productReviewFooterView: ProductReviewFooterView!
     var productSellerView: ProductSellerView!
     var productDetailsBottomView: ProductDetailsBottomView!
+    var productExtendedView: ProductExtendedView!
     var productDetailsExtendedView = ProductDetailsExtendedView()
+    var bottomSpace: UIView!
     
     let manager = APIManager.sharedInstance
     var productDetailsModel: ProductDetailsModel!
@@ -89,8 +93,10 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     var newFrame: CGRect!
     var visibility = 0.0
     var lastContentOffset: CGFloat = 0.0
+    @IBOutlet weak var containerScrollView: UIScrollView!
     
     var canShowExtendedDetails: Bool = false
+    var isScrollingUp: Bool = false
     var dimV: UIView!
     
     @IBOutlet weak var buttonsContainerVerticalConstraint: NSLayoutConstraint!
@@ -113,6 +119,8 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     var unitIdIndex: Int = 0
     var isExiting: Bool = true
     var isFromCart: Bool = false
+    var isAlreadyMoveOffset: Bool = false
+    var isFirstView: Bool = true
     @IBOutlet weak var closeButton: UIView!
     
     // Messaging
@@ -163,7 +171,6 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         self.addChildViewController(extendedViewController)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "checkViewSize", name: UIApplicationWillEnterForegroundNotification, object: nil)
-
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -243,39 +250,61 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
             }
         }
         
-        if visibility > 1.0 {
-            visibility = 1.0
-        } else if visibility < 0.0 {
-            visibility = 0.0
+        if scrollView == self.tableView {
+            if visibility > 1.0 {
+                visibility = 1.0
+            } else if visibility < 0.0 {
+                visibility = 0.0
+            }
         }
 
         // reached top or bottom
-        if scrollView.contentOffset.y <= 0.0 {
+        if scrollView.contentOffset.y <= 0.0 && scrollView == self.tableView {
             visibility = 0.0
             canShowExtendedDetails = false
-        } else if scrollView.contentOffset.y + scrollView.frame.size.height == scrollView.contentSize.height {
+        } else if scrollView.contentOffset.y + scrollView.frame.size.height == scrollView.contentSize.height && scrollView == self.tableView{
             visibility = 1.0
             canShowExtendedDetails = true
         }
 
         self.navigationController?.navigationBar.alpha = CGFloat(visibility)
-        self.lastContentOffset = scrollView.contentOffset.y
         
-//        var scrollViewHeight: CGFloat = scrollView.frame.size.height
-//        var scrollContentSizeHeight: CGFloat = scrollView.contentSize.height
-//        var scrollOffset: CGFloat = scrollView.contentOffset.y
-//        
-//        if (scrollOffset + scrollViewHeight <= scrollContentSizeHeight && canShowExtendedDetails) {
-//            if scrollOffset >= 160 {
-//                openExtendedProductDetails()
-//            }
-//        }
-        
-        if scrollView == self.tableView {
-            if self.scrolledPastBottomThresholdInTableView(self.tableView) && canShowExtendedDetails{
-//                openExtendedProductDetails()
+        if scrollView == self.containerScrollView {
+            if self.lastContentOffset > scrollView.contentOffset.y {
+                self.isScrollingUp = false
+            } else if self.lastContentOffset < scrollView.contentOffset.y {
+                self.isScrollingUp = true
             }
+            self.lastContentOffset = scrollView.contentOffset.y
         }
+        
+    }
+
+    // Scroll to position when reached position
+    func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        if scrollView == self.containerScrollView {
+            checkScrollDirectionAndSetPosition()
+        }
+    }
+    
+    // Stop scrolling then scroll to position
+    func scrollViewWillBeginDecelerating(scrollView: UIScrollView) {
+        if scrollView == self.containerScrollView && !self.containerScrollView.userInteractionEnabled {
+            self.setScrollViewsOffset(self.containerScrollView.contentOffset)
+            checkScrollDirectionAndSetPosition()
+        }
+    }
+    
+    // Set message for details
+    func scrollViewDidEndScrollingAnimation(scrollView: UIScrollView) {
+        if scrollView == self.containerScrollView {
+            self.containerScrollView.userInteractionEnabled = true
+            setMessageForDetails()
+        }
+    }
+    
+    func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+        setMessageForDetails()
     }
     
     func scrolledPastBottomThresholdInTableView(tableView: UITableView) -> Bool {
@@ -361,10 +390,9 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
             
             var seeMoreImageView = UIImageView(frame: CGRectMake(seeMoreLabel.frame.size.width, (seeMoreLabel.frame.size.height / 2) - 6, 8, 12))
             seeMoreImageView.image = UIImage(named: "seeMore")
-            seeMoreLabel.addSubview(seeMoreImageView)
-            
-            seeMoreLabel.center.x = self.view.center.x - 5
-            self.productDescriptionView.seeMoreView.addSubview(seeMoreLabel)
+//            seeMoreLabel.addSubview(seeMoreImageView)
+//            seeMoreLabel.center.x = self.view.center.x - 5
+//            self.productDescriptionView.seeMoreView.addSubview(seeMoreLabel)
         }
         return self.productDescriptionView
     }
@@ -422,6 +450,25 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
             self.productDetailsBottomView.frame.size.width = self.view.frame.size.width
         }
         return self.productDetailsBottomView
+    }
+    
+    func getProductExtendedView() -> ProductExtendedView {
+        if self.productExtendedView == nil {
+            self.productExtendedView = XibHelper.puffViewWithNibName("ProductViewsViewController", index: 6) as! ProductExtendedView
+            self.productExtendedView.frame.size.width = self.view.frame.size.width
+            self.productExtendedView.frame.size.height = self.view.frame.size.height - 114
+            self.productExtendedView.delegate = self
+            self.productExtendedView.setDescription(productDetailsModel.fullDescription)
+        }
+        return self.productExtendedView
+    }
+    
+    func getBottomSpace() -> UIView {
+        if self.bottomSpace == nil {
+            self.bottomSpace = UIView(frame: CGRectMake(0, 0, self.view.frame.size.width, 20))
+            self.bottomSpace.backgroundColor = UIColor.redColor()
+        }
+        return self.bottomSpace
     }
     
     // MARK: - Requests
@@ -800,14 +847,15 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         self.setPosition(self.productReviewHeaderView, from: self.productAttributeView)
         self.setPosition(self.productSellerView, from: self.productReviewFooterView)
         self.setPosition(self.productDescriptionView, from: self.productSellerView)
-//        self.setPosition(self.productDetailsBottomView, from: self.productDescriptionView)
+        self.setPosition(self.productDetailsBottomView, from: self.productDescriptionView)
+//        self.setPosition(self.bottomSpace, from: self.productDetailsBottomView)
         
         newFrame = self.headerView.frame
         newFrame.size.height = CGRectGetMaxY(self.productReviewHeaderView.frame)
         self.headerView.frame = newFrame
         
         newFrame = self.footerView.frame
-        newFrame.size.height = CGRectGetMaxY(self.productDescriptionView.frame)
+        newFrame.size.height = CGRectGetMaxY(self.productDetailsBottomView.frame)
         self.footerView.frame = newFrame
         
         self.tableView.tableFooterView = nil
@@ -843,7 +891,8 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         self.getFooterView().addSubview(self.getProductReviewFooterView())
         self.getFooterView().addSubview(self.getProductSellerView())
         self.getFooterView().addSubview(self.getProductDescriptionView())
-//        self.getFooterView().addSubview(self.getProductDetailsBottomView())
+        self.getFooterView().addSubview(self.getProductDetailsBottomView())
+//        self.getFooterView().addSubview(self.getBottomSpace())
         
         if !isFromCart {
             for i in 0..<self.productDetailsModel.productUnits.count {
@@ -892,8 +941,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         self.setDetails([ProductStrings.freeShipping, ProductStrings.sevenDayReturn])
         
         self.setAttributes(self.productDetailsModel.attributes, productUnits: self.productDetailsModel.productUnits, unitId: self.unitId, quantity: self.quantity)
-        self.productDescriptionView.setDescription(productDetailsModel.shortDescription, full: productDetailsModel.fullDescription)
-        
+//        self.productDescriptionView.setDescription(productDetailsModel.shortDescription, full: productDetailsModel.fullDescription)
         
         if self.productReviewModel != nil {
             self.productReviewHeaderView.setRating(self.productReviewModel.ratingAverage)
@@ -927,6 +975,11 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
             self.buttonsContainer.hidden = true
             self.productDetailsExtendedView.frame.size.height += 65
         }
+        
+        self.containerScrollView.addSubview(self.tableView)
+        self.containerScrollView.addSubview(self.getProductExtendedView())
+        self.productExtendedView.frame.origin.y = self.containerScrollView.frame.size.height
+        self.containerScrollView.contentSize = CGSizeMake(self.containerScrollView.frame.size.width, self.containerScrollView.frame.size.height + self.productExtendedView.frame.size.height)
     }
     
     func setDetails(list: NSArray) {
@@ -1152,6 +1205,41 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         self.view.transform = CGAffineTransformMakeScale(1, 1)
     }
     
+    func showExtendedView() {
+//        self.tableView.setContentOffset(CGPoint(x: 0, y: self.tableView.contentSize.height - 114), animated: true)
+//        isAlreadyMoveOffset = false
+//        self.tableView.scrollEnabled = false
+    }
+    
+    func setScrollViewsOffset(offset: CGPoint) {
+        self.containerScrollView.userInteractionEnabled = false
+        self.containerScrollView.setContentOffset(offset, animated: true)
+    }
+    
+    func setMessageForDetails() {
+        if self.containerScrollView.contentOffset.y == 0.0 {
+            self.productDetailsBottomView.textLabel.text = ProductStrings.messageScrollUp
+        } else if self.containerScrollView.contentOffset.y == self.containerScrollView.frame.size.height {
+            self.productDetailsBottomView.textLabel.text = ProductStrings.messageRelease
+        }
+    }
+    
+    func checkScrollDirectionAndSetPosition() {
+        if isScrollingUp {
+            if self.containerScrollView.contentOffset.y >= 85.0 {
+                self.setScrollViewsOffset(CGPointMake(0.0, self.containerScrollView.frame.size.height))
+            } else if self.containerScrollView.contentOffset.y < 85 {
+                self.setScrollViewsOffset(CGPointMake(0.0, 0.0))
+            }
+        } else {
+            if self.containerScrollView.contentOffset.y <= self.containerScrollView.frame.size.height - 88.0 {
+                self.setScrollViewsOffset(CGPointMake(0.0, 0.0))
+            } else if self.containerScrollView.contentOffset.y > self.containerScrollView.frame.size.height - 88.0 {
+                self.setScrollViewsOffset(CGPointMake(0.0, self.containerScrollView.frame.size.height))
+            }
+        }
+    }
+    
     // MARK: - Product Images Delegate
     
     func close(controller: ProductImagesView) {
@@ -1271,6 +1359,12 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         let productView = ProductViewController(nibName: "ProductViewController", bundle: nil)
         productView.productId = id
         self.navigationController?.pushViewController(productView, animated: true)
+    }
+    
+    // MARK: - Product Extended View Delegate
+    
+    func pullAction(controller: ProductExtendedView) {
+        println("Boom")
     }
     
     // MARK: Actions

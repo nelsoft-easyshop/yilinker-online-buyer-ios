@@ -348,32 +348,40 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     func fireSetCheckoutAddress(addressId: String) {
         self.showHUD()
-        let manager: APIManager = APIManager.sharedInstance
-        let parameters: NSDictionary = ["access_token": SessionManager.accessToken(), "address_id": "\(addressId)"]
-        manager.POST(APIAtlas.setCheckoutAddressUrl, parameters: parameters, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            let jsonResult: Dictionary = responseObject as! Dictionary<String, AnyObject>!
-            if jsonResult["isSuccessful"] as! Bool != true {
-                self.isValidToSelectPayment = false
-                self.displayAlertAndRedirectToChangeAddressWithMessage(jsonResult["message"] as! String)
-            } else {
-                self.isValidToSelectPayment = true
-            }
-            self.hud?.hide(true)
+        WebServiceManager.fireSetCheckoutAddressWithUrl(APIAtlas.setCheckoutAddressUrl, accessToken: SessionManager.accessToken(), addressId: addressId) {
+            (successful, responseObject, requestErrorType) -> Void in
+            self.hud!.hide(true)
             
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                
-                if error.userInfo != nil {
-                    if let jsonResult = error.userInfo as? Dictionary<String, AnyObject> {
-                        let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(jsonResult)
-                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message)
-                    }
+            if successful {
+                let jsonResult: NSDictionary = responseObject as! NSDictionary
+                if jsonResult["isSuccessful"] as! Bool != true {
+                    self.isValidToSelectPayment = false
+                    self.displayAlertAndRedirectToChangeAddressWithMessage(jsonResult["message"] as! String)
+                } else {
+                    self.isValidToSelectPayment = true
                 }
-                
-                self.hud?.hide(true)
-        })
+            } else {
+                if requestErrorType == .ResponseError {
+                    //Error in api requirements
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                } else if requestErrorType == .AccessTokenExpired {
+                    self.fireRefreshToken(CheckoutRefreshType.SetAddress, cell: VoucherTableViewCell())
+                } else if requestErrorType == .PageNotFound {
+                    //Page not found
+                    Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    //No internet connection
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    //Request timeout
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    //Unhandled error
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
+                }
+            }
+        }
     }
     
     //MARK: - Display Alert and Redirect to Address
@@ -736,40 +744,35 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
     //f0150b95
     func fireVoucher(cell: VoucherTableViewCell) {
         self.showHUD()
-        let manager: APIManager = APIManager.sharedInstance
-        
-        var parameters: NSDictionary = NSDictionary()
-        
-        if SessionManager.isLoggedIn() {
-            parameters = ["access_token": SessionManager.accessToken(), "voucherCode": cell.voucherTextField.text]
-        } else {
-            parameters = ["voucherCode": cell.voucherTextField.text]
-        }
-        
-        manager.GET(APIAtlas.voucherUrl, parameters: parameters, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            println(responseObject)
-            self.voucherModel = VoucherModel.parseDataFromDictionary(responseObject as! NSDictionary)
-            self.voucherRequestIsSuccessful(cell, voucherModel: self.voucherModel)
-            self.changeButtonState(cell.addButton)
-            
+        WebServiceManager.fireVoucherWithUrl(APIAtlas.voucherUrl, accessToken: SessionManager.accessToken(), voucherCode: cell.voucherTextField.text) {
+            (successful, responseObject, requestErrorType) -> Void in
             self.hud?.hide(true)
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                if task.statusCode == 401 {
-                    self.fireRefreshToken(CheckoutRefreshType.Voucher, cell: cell)
-                } else if error.userInfo != nil {
-                    if let jsonResult = error.userInfo as? Dictionary<String, AnyObject> {
-                        let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(jsonResult)
-                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message)
-                    }
-                } else {
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Error", title: "Something went wrong.")
+            if successful {
+                self.voucherModel = VoucherModel.parseDataFromDictionary(responseObject as! NSDictionary)
+                self.voucherRequestIsSuccessful(cell, voucherModel: self.voucherModel)
+                self.changeButtonState(cell.addButton)
+            } else {
+                if requestErrorType == .ResponseError {
+                    //Error in api requirements
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                } else if requestErrorType == .AccessTokenExpired {
+                    self.fireRefreshToken(.Voucher, cell: cell)
+                } else if requestErrorType == .PageNotFound {
+                    //Page not found
+                    Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    //No internet connection
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    //Request timeout
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    //Unhandled error
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
                 }
-                
-                self.hud?.hide(true)
-        })
+            }
+        }
     }
     
     //MARK: - Voucher Table View Cell
@@ -819,23 +822,22 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     //MARK: - Refresh Token
     func fireRefreshToken(refreshType: CheckoutRefreshType, cell: VoucherTableViewCell) {
-        let manager: APIManager = APIManager.sharedInstance
-        let parameters: NSDictionary = ["client_id": Constants.Credentials.clientID(), "client_secret": Constants.Credentials.clientSecret(), "grant_type": Constants.Credentials.grantRefreshToken, "refresh_token":  SessionManager.refreshToken()]
         self.showHUD()
-        manager.POST(APIAtlas.refreshTokenUrl, parameters: parameters, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+        WebServiceManager.fireRefreshTokenWithUrl(APIAtlas.refreshTokenUrl, actionHandler: {
+            (successful, responseObject, requestErrorType) -> Void in
             self.hud?.hide(true)
             
-            if refreshType == .Voucher {
-                self.fireVoucher(cell)
-            }
-            
-            
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+            if successful {
+                SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+                self.hud?.hide(true)
                 
+                if refreshType == .Voucher {
+                    self.fireVoucher(cell)
+                } else if refreshType == .SetAddress {
+                   self.fireSetCheckoutAddress("\(SessionManager.addressId())")
+                }
+            } else {
+                //Forcing user to logout.
                 UIAlertController.displayAlertRedirectionToLogin(self, actionHandler: { (sucess) -> Void in
                     SessionManager.logout()
                     FBSDKLoginManager().logOut()
@@ -843,10 +845,7 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
                     let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
                     appDelegate.startPage()
                 })
-                
-                self.hud?.hide(true)
+            }
         })
-        
     }
-    
 }

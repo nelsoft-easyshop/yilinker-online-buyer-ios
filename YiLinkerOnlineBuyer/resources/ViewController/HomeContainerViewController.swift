@@ -245,8 +245,8 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     
     //MARK: On Message
     //For GCM Message
-    func onNewMessage(notification : NSNotification) {
-        if let info = notification.userInfo as? Dictionary<String, AnyObject> {
+   func onNewMessage(notification : NSNotification) {
+        /*if let info = notification.userInfo as? Dictionary<String, AnyObject> {
             if let data = info["data"] as? String{
                 if let data2 = data.dataUsingEncoding(NSUTF8StringEncoding) {
                     if let json = NSJSONSerialization.JSONObjectWithData(data2, options: .MutableContainers, error: nil) as? [String:AnyObject] {
@@ -255,7 +255,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                     }
                 }
             }
-        }
+        }*/
     }
     
     //MARK: Fire Create Registration
@@ -297,15 +297,11 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     //MARK: - Add Empty View
     //Show this view if theres no internet connection
     func addEmptyView() {
-        if self.emptyView == nil {
-            self.emptyView = UIView.loadFromNibNamed("EmptyView", bundle: nil) as? EmptyView
-            self.view.layoutIfNeeded()
-            self.emptyView?.frame = self.view.frame
-            self.emptyView!.delegate = self
-            self.view.addSubview(self.emptyView!)
-        } else {
-            self.emptyView!.hidden = false
-        }
+        self.emptyView = UIView.loadFromNibNamed("EmptyView", bundle: nil) as? EmptyView
+        self.view.layoutIfNeeded()
+        self.emptyView?.frame = self.view.frame
+        self.emptyView!.delegate = self
+        self.view.addSubview(self.emptyView!)
         
         self.collectionView.hidden = true
     }
@@ -391,16 +387,22 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                 }
             } else {
                 self.hud?.hide(true)
+                self.addEmptyView()
                 if requestErrorType == .ResponseError {
+                    //Error in api requirements
                     let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
                     Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
                 } else if requestErrorType == .PageNotFound {
-                    Toast.displayToastWithMessage("Page not found.", duration: 1.5, view: self.view)
+                    //Page not found
+                    Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
                 } else if requestErrorType == .NoInternetConnection {
+                    //No internet connection
                     Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
                 } else if requestErrorType == .RequestTimeOut {
+                    //Request timeout
                     Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
                 } else if requestErrorType == .UnRecognizeError {
+                    //Unhandled error
                     Toast.displayToastWithMessage(Constants.Localized.error, duration: 1.5, view: self.view)
                 }
             }
@@ -451,49 +453,62 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         })
     }
     
-    //MARK: - Getting User Info
+    //MARK: - Fire Get User Info
     func fireGetUserInfo() {
-        let manager: APIManager = APIManager.sharedInstance
-        let parameters: NSDictionary = ["access_token": SessionManager.accessToken()]
         self.showHUD()
-        manager.POST(APIAtlas.getUserInfoUrl, parameters: parameters, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            let dictionary: NSDictionary = responseObject as! NSDictionary
-            self.profileModel = ProfileUserDetailsModel.parseDataWithDictionary(dictionary["data"]!)
-            
-            //Insert Data to Session Manager
-            SessionManager.setFullAddress(self.profileModel.address.fullLocation)
-            SessionManager.setUserFullName(self.profileModel.fullName)
-            SessionManager.setAddressId(self.profileModel.address.userAddressId)
-            SessionManager.setCartCount(self.profileModel.cartCount)
-            SessionManager.setWishlistCount(self.profileModel.wishlistCount)
-            SessionManager.setProfileImage(self.profileModel.profileImageUrl)
-            
-            SessionManager.setCity(self.profileModel.address.city)
-            SessionManager.setProvince(self.profileModel.address.province)
-            
-            println(self.profileModel.address.latitude)
-            println(self.profileModel.address.longitude)
-            
-            SessionManager.setLang(self.profileModel.address.latitude)
-            SessionManager.setLong(self.profileModel.address.longitude)
-            
-            self.updateTabBarBadge()
-            
-            
+        WebServiceManager.fireGetUserInfoWithUrl(APIAtlas.getUserInfoUrl, accessToken: SessionManager.accessToken()) { (successful, responseObject, requestErrorType) -> Void in
             self.hud?.hide(true)
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+            if successful {
+                let dictionary: NSDictionary = responseObject as! NSDictionary
+                self.profileModel = ProfileUserDetailsModel.parseDataWithDictionary(dictionary["data"]!)
+                //Insert Data to Session Manager
+                SessionManager.setFullAddress(self.profileModel.address.fullLocation)
+                SessionManager.setUserFullName(self.profileModel.fullName)
+                SessionManager.setAddressId(self.profileModel.address.userAddressId)
+                SessionManager.setCartCount(self.profileModel.cartCount)
+                SessionManager.setWishlistCount(self.profileModel.wishlistCount)
+                SessionManager.setProfileImage(self.profileModel.profileImageUrl)
                 
-                if task.statusCode == 401 {
-                    self.fireRefreshToken()
-                } else {
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: HomeStrings.somethingWentWrong, title: HomeStrings.error)
-                }
+                SessionManager.setCity(self.profileModel.address.city)
+                SessionManager.setProvince(self.profileModel.address.province)
                 
+                SessionManager.setLang(self.profileModel.address.latitude)
+                SessionManager.setLong(self.profileModel.address.longitude)
+                
+                //Update tab bar icons badges
+                self.updateTabBarBadge()
+            } else {
                 self.hud?.hide(true)
-        })
+                if requestErrorType == .ResponseError {
+                    //Error in api requirements
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    
+                    if errorModel.message == "The access token provided is invalid." {
+                        UIAlertController.displayAlertRedirectionToLogin(self, actionHandler: { (sucess) -> Void in
+                            self.logout()
+                        })
+                    } else {
+                        Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                    }
+                    
+                } else if requestErrorType == .AccessTokenExpired {
+                    self.fireRefreshToken()
+                } else if requestErrorType == .PageNotFound {
+                    //Page not found
+                    Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    //No internet connection
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    //Request timeout
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    //Unhandled error
+                    Toast.displayToastWithMessage(Constants.Localized.error, duration: 1.5, view: self.view)
+                }
+            }
+
+        }
     }
     
     //MARK: - Update Tab Bar Badge
@@ -515,29 +530,30 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     
     //MARK: - Fire Refresh Token
     func fireRefreshToken() {
-        let manager: APIManager = APIManager.sharedInstance
-        let parameters: NSDictionary = ["client_id": Constants.Credentials.clientID(), "client_secret": Constants.Credentials.clientSecret(), "grant_type": Constants.Credentials.grantRefreshToken, "refresh_token":  SessionManager.refreshToken()]
         self.showHUD()
-        manager.POST(APIAtlas.refreshTokenUrl, parameters: parameters, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+        WebServiceManager.fireRefreshTokenWithUrl(APIAtlas.refreshTokenUrl, actionHandler: {
+            (successful, responseObject, requestErrorType) -> Void in
             self.hud?.hide(true)
-            self.fireGetUserInfo()
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                
+            
+            if successful {
+                SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+                self.fireGetUserInfo()
+            } else {
+                //Forcing user to logout.
                 UIAlertController.displayAlertRedirectionToLogin(self, actionHandler: { (sucess) -> Void in
-                    SessionManager.logout()
-                    FBSDKLoginManager().logOut()
-                    GPPSignIn.sharedInstance().signOut()
-                    let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-                    appDelegate.startPage()
+                   self.logout()
                 })
-                
-                self.hud?.hide(true)
+            }
         })
-        
+    }
+    
+    //MARK: logout
+    func logout() {
+        SessionManager.logout()
+        FBSDKLoginManager().logOut()
+        GPPSignIn.sharedInstance().signOut()
+        let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        appDelegate.startPage()
     }
     
     //MARK: - Show HUD
@@ -556,8 +572,8 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     
     // MARK: - Did Tap Reload
     func didTapReload() {
+        self.emptyView?.removeFromSuperview()
         self.fireGetHomePageData(true)
-        self.emptyView?.hidden = true
     }
     
     //MARK: - UICollectionView Data Source

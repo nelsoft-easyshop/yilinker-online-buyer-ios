@@ -32,6 +32,8 @@ class CircularMenuViewController: UIViewController {
     var buttonRightText: [String] = []
     var customTabBarController: CustomTabBarController?
     
+    var messageLabel: UILabel = UILabel()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.initDimView()
@@ -59,6 +61,10 @@ class CircularMenuViewController: UIViewController {
                     if let json = NSJSONSerialization.JSONObjectWithData(data2, options: .MutableContainers, error: nil) as? [String:AnyObject] {
                         var count = SessionManager.getUnReadMessagesCount() + 1
                         SessionManager.setUnReadMessagesCount(count)
+                        if count != 0 {
+                            self.messageLabel.hidden = false
+                            self.messageLabel.text = SessionManager.unreadMessageCount()
+                        }
                     }
                 }
             }
@@ -189,7 +195,7 @@ class CircularMenuViewController: UIViewController {
                         
                         if SessionManager.isLoggedIn() && index == 1 {
                             label.backgroundColor = UIColor.redColor()
-                            
+                            self.messageLabel = label
                             if SessionManager.unreadMessageCount() == "" || SessionManager.unreadMessageCount() == "You have 0 unread messages" {
                                 label.hidden = true
                             }
@@ -266,16 +272,22 @@ class CircularMenuViewController: UIViewController {
                    
                     
                     //name label and address
+                    var nameAndAdderssWidth: CGFloat = 130
+                    
                     if  self.buttonRightText[index] != "" {
                         if IphoneType.isIphone4() {
                             yPosition = yPosition - 40
+                            nameAndAdderssWidth = 110
                         } else if IphoneType.isIphone5() {
-                            yPosition = yPosition - 20
+                            yPosition = yPosition - 40
+                            nameAndAdderssWidth = 110
+                            fontSize = 10
                         } else {
-                            yPosition = yPosition - 30
+                            yPosition = yPosition - 50
+                            fontSize = 10
                         }
                         
-                        let label: UILabel = UILabel(frame: CGRectMake(xPosition + 75, yPosition, labelWidth, 130))
+                        let label: UILabel = UILabel(frame: CGRectMake(xPosition + 75, yPosition, labelWidth, nameAndAdderssWidth))
                         label.backgroundColor = UIColor.clearColor()
                         label.text = "\(SessionManager.userFullName()) \n \(SessionManager.city()) \(SessionManager.province())"
                         label.adjustsFontSizeToFitWidth = true
