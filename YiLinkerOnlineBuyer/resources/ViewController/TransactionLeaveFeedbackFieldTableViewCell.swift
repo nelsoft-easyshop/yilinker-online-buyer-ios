@@ -43,7 +43,7 @@ class TransactionLeaveFeedbackFieldTableViewCell: UITableViewCell {
     }
     
     @IBAction func submit(sender: AnyObject) {
-        self.delegate?.submitAction(self.inputTextField.text)
+        self.delegate!.submitAction(self.inputTextField.text)
     }
     
 }

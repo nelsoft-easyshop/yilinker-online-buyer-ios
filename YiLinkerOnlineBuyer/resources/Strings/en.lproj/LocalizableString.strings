@@ -254,7 +254,8 @@ SPECIALTY_LOCALIZE_KEY = "Specialty";
 ADD_TO_CART_LOCALIZE_KEY = "ADD TO CART";
 BUY_IT_NOW_LOCALIZE_KEY = "BUY IT NOW";
 NO_REVIEWS_LOCALIZE_KEY = "No Available Reviews";
-REACHED_BOTTOM_LOCALIZE_KEY = "You have reached the bottom.";
+FIRST_VIEW_MESSAGE_LOCALIZE_KEY = "Scroll up to show more";
+SECOND_VIEW_MESSAGE_LOCALIZE_KEY = "Release to view other details";
 
 OUT_OF_STOCK_LOCALIZE_KEY = "Out of stock";
 ALERT_OUT_OF_STOCK_LOCALIZE_KEY = "Product is out of stock";
@@ -591,4 +592,4 @@ NO_INTERNET_LOCALIZE_KEY = "No Internet Connection";
 NO_INTERNET_ERROR_MESSAGE_LOCALIZE_KEY = "Please check your internet connection.";
 INFORMATION_LOCALIZE_KEY = "Information";
 TARGET_NOT_AVAILABLE = "No items to load.";
-
+PAGE_NOT_FOUND_LOCALIZE_KEY = "Page not found.";

@@ -65,6 +65,7 @@ class TransactionDetailsModel: NSObject {
     var transactionTotalPrice: String = ""
     var transactionShippingFee: String = ""
     var hasProductFeedback: [Bool] = []
+    var isReseller: [Bool] = []
     
     var sellerName: String = ""
     var sellerContact: String = ""
@@ -74,8 +75,9 @@ class TransactionDetailsModel: NSObject {
     var orderStatus: String = ""
     var transactions: [TransactionDetailsProductsModel] = []
     var isCancellable: [Bool] = []
+    var isAffiliate: Bool = false
     
-    init(sellerName: String, sellerContact: String, id: Int, sellerIdForFeedback: Int, feedback: Bool, transactions: [TransactionDetailsProductsModel], orderStatus: String) {
+    init(sellerName: String, sellerContact: String, id: Int, sellerIdForFeedback: Int, feedback: Bool, transactions: [TransactionDetailsProductsModel], orderStatus: String, isAffiliate: Bool) {
         self.sellerName = sellerName
         self.sellerContact = sellerContact
         self.id = id
@@ -83,9 +85,10 @@ class TransactionDetailsModel: NSObject {
         self.feedback = feedback
         self.transactions = transactions
         self.orderStatus = orderStatus
+        self.isAffiliate = isAffiliate
     }
     
-    init(isSuccessful: Bool, sellerId: NSArray, sellerId2: NSArray, sellerStore: NSArray, sellerContactNumber: NSArray, hasFeedback: NSArray, orderProductId: NSArray, productId: NSArray, quantity: NSArray, unitPrice: NSArray, totalPrice: NSArray, productName: NSArray, handlingFee: NSArray, orderProductStatusId: NSArray, name: NSArray, productDescription: NSArray, productImage: NSArray, isCancellable: NSArray, transactionUnitPrice: String, transactionTotalPrice: String, transactionShippingFee: String, hasProductFeedback: NSArray){
+    init(isSuccessful: Bool, sellerId: NSArray, sellerId2: NSArray, sellerStore: NSArray, sellerContactNumber: NSArray, hasFeedback: NSArray, orderProductId: NSArray, productId: NSArray, quantity: NSArray, unitPrice: NSArray, totalPrice: NSArray, productName: NSArray, handlingFee: NSArray, orderProductStatusId: NSArray, name: NSArray, productDescription: NSArray, productImage: NSArray, isCancellable: NSArray, transactionUnitPrice: String, transactionTotalPrice: String, transactionShippingFee: String, hasProductFeedback: NSArray, isReseller: NSArray){
         
         self.sellerId = sellerId as! [Int]
         self.sellerId2 = sellerId2 as! [Int]
@@ -109,6 +112,7 @@ class TransactionDetailsModel: NSObject {
         self.transactionUnitPrice = transactionUnitPrice
         self.transactionShippingFee = transactionShippingFee
         self.hasProductFeedback = hasProductFeedback as! [Bool]
+        self.isReseller = isReseller as! [Bool]
     }
     
     class func parseDataFromDictionary(dictionary: AnyObject) -> TransactionDetailsModel {
@@ -134,6 +138,7 @@ class TransactionDetailsModel: NSObject {
         var transactionTotalPrice: String = ""
         var transactionShippingFee: String = ""
         var hasProductFeedback: [Bool] = []
+        var isReseller: [Bool] = []
 
         if dictionary.isKindOfClass(NSDictionary) {
             println(dictionary)
@@ -179,6 +184,12 @@ class TransactionDetailsModel: NSObject {
                         hasFeedback.append(transaction["sellerHasFeedback"] as! Bool)
                     }
                     
+                    if value["isAffiliate"] is NSNull {
+                        isReseller.append(false)
+                    } else {
+                        isReseller.append(transaction["isAffiliate"] as! Bool)
+                    }
+                    
                     let products: NSArray = transaction["products"] as! NSArray
                     for product in products as! [NSDictionary] {
                         if let orderProductStatus: AnyObject = product["orderProductStatus"] {
@@ -216,7 +227,7 @@ class TransactionDetailsModel: NSObject {
             }
         }
         
-        let transactionDetailsModel = TransactionDetailsModel(isSuccessful: isSuccessful, sellerId: sellerId, sellerId2: sellerId2, sellerStore: sellerStore, sellerContactNumber: sellerContactNumber, hasFeedback: hasFeedback, orderProductId: orderProductId, productId: productId, quantity: quantity, unitPrice: unitPrice, totalPrice: totalPrice, productName: productName, handlingFee: handlingFee, orderProductStatusId: orderProductStatusId, name: name, productDescription: productDescription, productImage: productImage, isCancellable: isCancellable, transactionUnitPrice: transactionUnitPrice, transactionTotalPrice: transactionTotalPrice, transactionShippingFee: transactionShippingFee, hasProductFeedback: hasProductFeedback)
+        let transactionDetailsModel = TransactionDetailsModel(isSuccessful: isSuccessful, sellerId: sellerId, sellerId2: sellerId2, sellerStore: sellerStore, sellerContactNumber: sellerContactNumber, hasFeedback: hasFeedback, orderProductId: orderProductId, productId: productId, quantity: quantity, unitPrice: unitPrice, totalPrice: totalPrice, productName: productName, handlingFee: handlingFee, orderProductStatusId: orderProductStatusId, name: name, productDescription: productDescription, productImage: productImage, isCancellable: isCancellable, transactionUnitPrice: transactionUnitPrice, transactionTotalPrice: transactionTotalPrice, transactionShippingFee: transactionShippingFee, hasProductFeedback: hasProductFeedback, isReseller: isReseller)
         
         return transactionDetailsModel
     }
@@ -244,6 +255,7 @@ class TransactionDetailsModel: NSObject {
         var transactionTotalPrice: String = ""
         var transactionShippingFee: String = ""
         var hasProductFeedback: [Bool] = []
+        var isReseller: [Bool] = []
         
         if dictionary.isKindOfClass(NSDictionary) {
             println(dictionary)
@@ -287,6 +299,12 @@ class TransactionDetailsModel: NSObject {
                     
                     sellerContactNumber.append(transaction["sellerContactNumber"] as! String)
                     hasFeedback.append(transaction["sellerHasFeedback"] as! Bool)
+                    
+                    if value["isAffiliate"] is NSNull {
+                        isReseller.append(false)
+                    } else {
+                       isReseller.append(transaction["isAffiliate"] as! Bool)
+                    }
                     
                     let products: NSArray = transaction["products"] as! NSArray
                     for product in products as! [NSDictionary] {
@@ -343,7 +361,7 @@ class TransactionDetailsModel: NSObject {
             }
         }
         
-        let transactionDetailsModel = TransactionDetailsModel(isSuccessful: isSuccessful, sellerId: sellerId, sellerId2: sellerId2, sellerStore: sellerStore, sellerContactNumber: sellerContactNumber, hasFeedback: hasFeedback, orderProductId: orderProductId, productId: productId, quantity: quantity, unitPrice: unitPrice, totalPrice: totalPrice, productName: productName, handlingFee: handlingFee, orderProductStatusId: orderProductStatusId, name: name, productDescription: productDescription, productImage: productImage, isCancellable: isCancellable, transactionUnitPrice: transactionUnitPrice, transactionTotalPrice: transactionTotalPrice, transactionShippingFee: transactionShippingFee, hasProductFeedback: hasProductFeedback)
+        let transactionDetailsModel = TransactionDetailsModel(isSuccessful: isSuccessful, sellerId: sellerId, sellerId2: sellerId2, sellerStore: sellerStore, sellerContactNumber: sellerContactNumber, hasFeedback: hasFeedback, orderProductId: orderProductId, productId: productId, quantity: quantity, unitPrice: unitPrice, totalPrice: totalPrice, productName: productName, handlingFee: handlingFee, orderProductStatusId: orderProductStatusId, name: name, productDescription: productDescription, productImage: productImage, isCancellable: isCancellable, transactionUnitPrice: transactionUnitPrice, transactionTotalPrice: transactionTotalPrice, transactionShippingFee: transactionShippingFee, hasProductFeedback: hasProductFeedback, isReseller: isReseller)
         
         return transactionDetailsModel
     }

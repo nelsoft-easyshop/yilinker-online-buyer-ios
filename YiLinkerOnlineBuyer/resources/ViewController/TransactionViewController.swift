@@ -10,6 +10,7 @@ import UIKit
 
 class TransactionViewController: UIViewController, EmptyViewDelegate {
 
+    //UIView declaration and initialization
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var allView: UIView!
     @IBOutlet weak var pendingView: UIView!
@@ -17,12 +18,14 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
     @IBOutlet weak var forFeedbackView: UIView!
     @IBOutlet weak var supportView: UIView!
     
+    //UIImageView declaration and initializxation
     @IBOutlet weak var allImageView: UIImageView!
     @IBOutlet weak var pendingImageView: UIImageView!
     @IBOutlet weak var onDeliveryImageView: UIImageView!
     @IBOutlet weak var forFeedbackImageView: UIImageView!
     @IBOutlet weak var supportImageView: UIImageView!
     
+    //UILabel declaration and initialization
     @IBOutlet weak var allLabel: UILabel!
     @IBOutlet weak var pendingLabel: UILabel!
     @IBOutlet weak var onDeliveryLabel: UILabel!
@@ -30,16 +33,34 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
     @IBOutlet weak var supportLabel: UILabel!
     @IBOutlet var noTransactionLabel: UILabel!
     
-    var viewsInArray: [UIView] = []
+    //Array of UIImageView - used as a container of transaction UIImageView tabs
     var imagesInArray: [UIImageView] = []
+    //Array of UILabel - used as a container of transaction UILabel tabs
     var labelsInArray: [UILabel] = []
+    //Array of UIView - used as a container of transaction UIView tabs
+    var viewsInArray: [UIView] = []
+    //Array of strings - used to reference images for each transaction tabs
     var deselectedImages: [String] = []
-
-    var hud: MBProgressHUD?
-    
-    var transactionModel: TransactionModel?
+    //Array of TransactionModel - used to store parsed data from the api return
     var tableData:[TransactionModel] = []
     
+    //Boolean - used as indicator in refreshing access tokens
+    var refreshPage: Bool = false
+    //Boolean - used ad indicator for pagination
+    var isPageEnd: Bool = false
+    //Integer - used to store number of page 1 to ...
+    var page: Int = 0
+    //String - used to store the type of query in getting transaction list (ongoing, on-delivery, pending)
+    var query: String = "all"
+    //String - used to store the type of transaction chose by the user
+    var transactionType: String = ""
+    
+    //MBProgressHUD declaration and initialization
+    var hud: MBProgressHUD?
+    //EmptyView declatation and initialization - used to add view if encountered an error from the api like Server Error
+    var emptyView : EmptyView?
+    
+    //Stores string values sets in LocalizedStrings.strings
     var transactionTitle = StringHelper.localizedStringWithKey("TRANSACTION_TITLE_TITLE_LOCALIZE_KEY")
     var all = StringHelper.localizedStringWithKey("TRANSACTION_ALL_LOCALIZE_KEY")
     var pending = StringHelper.localizedStringWithKey("TRANSACTION_PENDING_LOCALIZE_KEY")
@@ -50,26 +71,13 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
     var products = StringHelper.localizedStringWithKey("TRANSACTION_PRODUCTS_LOCALIZE_KEY")
     var noTransaction = StringHelper.localizedStringWithKey("TRANSACTION_NO_TRANSACTION_LOCALIZE_KEY")
     
-    var refreshPage: Bool = false
-    var isPageEnd: Bool = false
-    var page: Int = 0
-    var query: String = "all"
-    var transactionType: String = ""
-    var transactionArray: NSArray?
-    
-    var emptyView : EmptyView?
-    var contentViewFrame: CGRect?
-
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.contentViewFrame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)
-        
+        //Set the navigation title of the view controller
         self.title = transactionTitle
         
-        let nib = UINib(nibName: "TransactionTableViewCell", bundle: nil)
-        self.tableView.registerNib(nib, forCellReuseIdentifier: "TransactionIdentifier")
-        
+        //Add array of UIView 
         viewsInArray = [allView, pendingView, onDeliveryView, forFeedbackView]
         imagesInArray = [allImageView, pendingImageView, onDeliveryImageView, forFeedbackImageView]
         labelsInArray = [allLabel, pendingLabel, onDeliveryLabel, forFeedbackLabel]
@@ -90,6 +98,9 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
         self.tableView.tableFooterView = UIView(frame: CGRectZero)
         addViewsActions()
     
+        let nib = UINib(nibName: "TransactionTableViewCell", bundle: nil)
+        self.tableView.registerNib(nib, forCellReuseIdentifier: "TransactionIdentifier")
+        
         self.backButton()
     }
     
@@ -440,24 +451,7 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
         self.navigationController?.view.addSubview(self.hud!)
         self.hud?.show(true)
     }
-    
-    func clearModel() {
-        self.transactionModel?.order_id.removeAll(keepCapacity: false)
-        self.transactionModel?.date_added.removeAll(keepCapacity: false)
-        self.transactionModel?.invoice_number.removeAll(keepCapacity: false)
-        self.transactionModel?.payment_type.removeAll(keepCapacity: false)
-        self.transactionModel?.payment_method_id.removeAll(keepCapacity: false)
-        self.transactionModel?.order_status.removeAll(keepCapacity: false)
-        self.transactionModel?.order_status_id.removeAll(keepCapacity: false)
-        self.transactionModel?.total_price.removeAll(keepCapacity: false)
-        self.transactionModel?.total_unit_price.removeAll(keepCapacity: false)
-        self.transactionModel?.total_item_price.removeAll(keepCapacity: false)
-        self.transactionModel?.total_handling_fee.removeAll(keepCapacity: false)
-        self.transactionModel?.total_quantity.removeAll(keepCapacity: false)
-        self.transactionModel?.product_name.removeAll(keepCapacity: false)
-        self.transactionModel?.product_count.removeAll(keepCapacity: false)
-    }
-    
+
     //MARK: Customize navigation bar
     func backButton() {
         var backButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
