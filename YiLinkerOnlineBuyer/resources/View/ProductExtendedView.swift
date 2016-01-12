@@ -19,6 +19,8 @@ class ProductExtendedView: UIView {
     var delegate: ProductExtendedViewDelegate?
     
     override func awakeFromNib() {
+        self.webView.frame = self.bounds
+        self.webView.scalesPageToFit = true
     }
     
     func setDescription(htmlString: String) {
