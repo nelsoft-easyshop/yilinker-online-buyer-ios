@@ -33,6 +33,13 @@ class WebServiceManager: NSObject {
     static let plainPasswordSecondKey = "user_guest[plainPassword][second]"
     static let referralCodeKey = "user_guest[referralCode]"
     
+    //Messaging Conversation List dictionary keys
+    static let pageKey = "page"
+    static let limitKey = "limit"
+    static let keywordKey = "keyword"
+    
+    static private var postTask: NSURLSessionDataTask?
+    
     //MARK: - Fire Login Request With URL
     class func fireLoginRequestWithUrl(url: String, emailAddress: String, password: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
         let manager: APIManager = APIManager.sharedInstance
@@ -68,12 +75,34 @@ class WebServiceManager: NSObject {
         }
     }
     
+    //MARK: - Fire Get Conversation lis With Url
+    class func fireGetConversationListWithUrl(url: String, page: String, limit: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+        let parameters: NSDictionary = [pageKey: page, limitKey: limit]
+        self.firePostRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+    }
+    
+    //MARK: - Fire Get Contacts lis With Url
+    class func fireGetContactListWithUrl(url: String, keyword: String, page: String, limit: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+        let parameters: NSDictionary = [pageKey: page, limitKey: limit, keywordKey: keyword]
+        let manager = APIManager.sharedInstance
+        if (self.postTask != nil) {
+            self.postTask?.cancel()
+            manager.operationQueue.cancelAllOperations()
+            self.postTask = nil
+        }
+        self.firePostRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+    }
+    
     //MARK: - Post Request With Url
     //This function is for removing repeated codes in handler
     private static func firePostRequestWithUrl(url: String, parameters: AnyObject, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
         let manager = APIManager.sharedInstance
         if Reachability.isConnectedToNetwork() {
-            manager.GET(url, parameters: parameters, success: {
+            self.postTask = manager.POST(url, parameters: parameters, success: {
                 (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
                 actionHandler(successful: true, responseObject: responseObject, requestErrorType: .NoError)
                 }, failure: {

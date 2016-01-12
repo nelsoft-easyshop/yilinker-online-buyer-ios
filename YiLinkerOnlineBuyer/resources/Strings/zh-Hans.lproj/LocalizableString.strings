@@ -224,6 +224,14 @@ MESSAGING_SAVE_FAILED = "保存失败.";
 MESSAGING_SAVE_FAILED_MESSAGE = "无法保存图像";
 MESSAGING_PHOTO_MESSAGE = "您发送/接收照片";
 MESSAGING_NEW_MESSAGE = "你有一个新的消息!";
+MESSAGING_MINUTES_AGO = "分钟前"; //No Chinese String
+MESSAGING_HOURS_AGO = "小时前"; //No Chinese String
+MESSAGING_DAYS_AGO = "天前"; //No Chinese String
+MESSAGING_MINUTE_AGO = "分钟前"; //No Chinese String
+MESSAGING_HOUR_AGO = "小时前"; //No Chinese String
+MESSAGING_DAY_AGO = "一天前"; //No Chinese String
+MESSAGING_NO_MESSAGE = "没有更多的消息。"; //No Chinese String
+MESSAGING_WRITE_TO = "写到..."; //No Chinese String
 
 // MARK: - Rj's Modules
 

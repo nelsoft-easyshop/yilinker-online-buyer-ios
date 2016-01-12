@@ -229,6 +229,14 @@ MESSAGING_SAVE_FAILED = "Save Failed.";
 MESSAGING_SAVE_FAILED_MESSAGE = "Failed to save image";
 MESSAGING_PHOTO_MESSAGE = "You sent/received a photo";
 MESSAGING_NEW_MESSAGE = "You have a new message!";
+MESSAGING_MINUTES_AGO = "minutes ago";
+MESSAGING_HOURS_AGO = "hours ago";
+MESSAGING_DAYS_AGO = "days ago";
+MESSAGING_MINUTE_AGO = "minute ago";
+MESSAGING_HOUR_AGO = "hour ago";
+MESSAGING_DAY_AGO = "day ago";
+MESSAGING_NO_MESSAGE = "No more message.";
+MESSAGING_WRITE_TO = "Write to . . .";
 
 
 // MARK: - Rj's Modules

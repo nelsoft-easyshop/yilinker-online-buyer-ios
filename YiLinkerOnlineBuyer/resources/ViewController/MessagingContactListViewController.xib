@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Panton.otf">
+            <string>Panton-Regular</string>
+        </mutableArray>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MessagingContactListViewController" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
+            <connections>
+                <outlet property="searchTextField" destination="9h8-qq-nIe" id="Bcw-nI-qTl"/>
+                <outlet property="tableView" destination="SyW-vs-dlj" id="TGa-w3-14e"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="SyW-vs-dlj">
+                    <rect key="frame" x="0.0" y="38" width="375" height="629"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="sectionIndexBackgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </tableView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gkO-Vp-XI1" userLabel="Search">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="38"/>
+                    <subviews>
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Write to. . ." minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9h8-qq-nIe">
+                            <rect key="frame" x="12" y="4" width="351" height="30"/>
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="14"/>
+                            <textInputTraits key="textInputTraits" returnKeyType="search"/>
+                            <connections>
+                                <action selector="editingChange:" destination="-1" eventType="editingChanged" id="dVc-LD-zke"/>
+                            </connections>
+                        </textField>
+                    </subviews>
+                    <color key="backgroundColor" red="0.34901960780000002" green="0.19215686269999999" blue="0.47058823529999999" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="bottom" secondItem="9h8-qq-nIe" secondAttribute="bottom" constant="4" id="AHh-yl-4et"/>
+                        <constraint firstAttribute="height" constant="38" id="GNN-4l-Iic"/>
+                        <constraint firstItem="9h8-qq-nIe" firstAttribute="leading" secondItem="gkO-Vp-XI1" secondAttribute="leading" constant="12" id="PCL-UK-qyy"/>
+                        <constraint firstAttribute="trailing" secondItem="9h8-qq-nIe" secondAttribute="trailing" constant="12" id="kVe-JV-LcN"/>
+                        <constraint firstItem="9h8-qq-nIe" firstAttribute="top" secondItem="gkO-Vp-XI1" secondAttribute="top" constant="4" id="yTI-iW-i2b"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstItem="gkO-Vp-XI1" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="LkJ-Db-h2Z"/>
+                <constraint firstItem="gkO-Vp-XI1" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="Odh-GN-MOS"/>
+                <constraint firstAttribute="trailing" secondItem="SyW-vs-dlj" secondAttribute="trailing" id="Pwb-Hg-up4"/>
+                <constraint firstItem="SyW-vs-dlj" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Th0-by-BDw"/>
+                <constraint firstItem="SyW-vs-dlj" firstAttribute="top" secondItem="gkO-Vp-XI1" secondAttribute="bottom" id="XvJ-iq-LTc"/>
+                <constraint firstAttribute="trailing" secondItem="gkO-Vp-XI1" secondAttribute="trailing" id="YOH-Q0-Ucd"/>
+                <constraint firstAttribute="bottom" secondItem="SyW-vs-dlj" secondAttribute="bottom" id="YbV-gO-5gy"/>
+            </constraints>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+        </view>
+    </objects>
+</document>
