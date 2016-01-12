@@ -70,7 +70,6 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
         super.viewDidLoad()
         
         customizeViews()
-        
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -133,7 +132,7 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
         cell.delegate = self
         cell.passProductDetailModel(self.productDetailsModel)
         cell.tag = indexPath.row
-//        println(selectedValue)
+
         listAvailableCombinations()
         cell.isEditingAttribute = isEditingAttributes
         cell.setAttribute(self.productDetailsModel.attributes[indexPath.row], availableCombination: self.availableCombination, selectedValue: self.selectedValue, selectedId: self.selectedId, width: self.view.frame.size.width, currentAttributes: self.selectedAttributes)
@@ -142,6 +141,16 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
 //        println(indexPath.row)
+    }
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+
+        for attribute in self.productDetailsModel.attributes {
+            var variantNameHeight: Int = 20 //25 Subtract by 5 for better
+            var heightMultiplier: Int = (attribute.valueName.count / 2) + 1
+            return CGFloat((45 * heightMultiplier) + variantNameHeight)
+        }
+        return 70.0
     }
     
     // MARK: - Actions
@@ -356,10 +365,13 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
         if maximumStock == 1 {
             disableButton(increaseButton)
             disableButton(decreaseButton)
-        } else if stocks == 0 {
+        } else if stocks == 0 || self.selectedAttributes.contains("-") {
             disableButton(increaseButton)
             disableButton(decreaseButton)
             stocksLabel.alpha = 0.3
+            if self.selectedAttributes.contains("-") {
+                stocksLabel.text = "00"
+            }
         } else if stocks == maximumStock {
             stocksLabel.alpha = 1.0
             disableButton(increaseButton)
@@ -727,6 +739,9 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
         }
         
         maximumStock = availableStock(unitId)
+        if self.selectedAttributes.contains("-") {
+            maximumStock = 0
+        }
         self.availabilityStocksLabel.text = "Available stocks : " + String(maximumStock)
         
         if self.maximumStock != 0 {

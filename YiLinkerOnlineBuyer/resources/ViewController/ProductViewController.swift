@@ -277,8 +277,9 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
             } else if self.lastContentOffset < scrollView.contentOffset.y {
                 self.isScrollingUp = true
             }
-            self.lastContentOffset = scrollView.contentOffset.y
         }
+        
+        self.lastContentOffset = scrollView.contentOffset.y
         
     }
 
@@ -916,7 +917,6 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
                 self.unitIdIndex = 0
             }
             
-            
             self.productImagesView.setDetails(self.productDetailsModel, unitId: unitIdIndex, width: self.view.frame.size.width)
         } else {
             isDefault = false
@@ -1012,7 +1012,6 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     }
     
     func setAttributes(attributes: [ProductAttributeModel], productUnits: [ProductUnitsModel], unitId: String, quantity: Int) {
-        println("unit id >>> \(unitId)")
         
         for view in self.productAttributeView.subviews {
             if view is UILabel {

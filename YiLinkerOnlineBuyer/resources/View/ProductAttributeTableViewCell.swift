@@ -76,18 +76,27 @@ class ProductAttributeTableViewCell: UITableViewCell, UIScrollViewDelegate {
             }
         }
         
-        scroll = UIScrollView(frame: CGRectMake(0, 0/*self.frame.size.height - 70*/, width, 70))
+        scroll = UIScrollView(frame: CGRectMake(0, 0, width, 200))
         scroll.delegate = self
         var spacingX: CGFloat = 0.0
         
-//        println(availableCombinationString)
-        var leftMargin: Int = 10
-        
+        var topMargin: CGFloat = 25.0
+        var leftMargin: CGFloat = 15.0
+        var buttonWidth: CGFloat = (self.frame.size.width / 2) - 30.0
+        var buttonHeight: CGFloat = 30.0
         for i in 0..<attributes.count {
+            // Dynamic width
+//            var buttonWidth: Int = (count(buttonTitle) * 10) + 20
+//            var button = UIButton(frame: CGRectMake(CGFloat(leftMargin), scroll.frame.size.height - 45/*(scroll.frame.size.height / 2) - 15*/, CGFloat(buttonWidth), 30))
             let buttonTitle: String = attributes[i] as! String
-            var buttonWidth: Int = (count(buttonTitle) * 10) + 20
             
-            var button = UIButton(frame: CGRectMake(CGFloat(leftMargin), scroll.frame.size.height - 45/*(scroll.frame.size.height / 2) - 15*/, CGFloat(buttonWidth), 30))
+            if i % 2 != 0 {
+                leftMargin += leftMargin + buttonWidth
+            } else {
+                leftMargin = 20.0
+            }
+
+            var button = UIButton(frame: CGRectMake(leftMargin, topMargin, buttonWidth, buttonHeight))
             button.setTitle(buttonTitle, forState: .Normal)
             button.titleLabel?.font = UIFont(name: "Panton-Bold", size: 15.0)
             button.titleLabel?.font = UIFont.boldSystemFontOfSize(15.0)
@@ -99,9 +108,9 @@ class ProductAttributeTableViewCell: UITableViewCell, UIScrollViewDelegate {
             button.addTarget(self, action: "clickedAttriubte:", forControlEvents: .TouchUpInside)
             button.tag = attributesId[i].toInt()!
             
-            self.buttonWidths.append(button.frame.size.width)
-            
-            leftMargin += buttonWidth + 10
+            if i % 2 != 0 {
+                topMargin += 40.0
+            }
 
 //            if availableCombinationString.rangeOfString(attributesId[i]) == nil {
 //                self.disableButton(button)
@@ -123,11 +132,13 @@ class ProductAttributeTableViewCell: UITableViewCell, UIScrollViewDelegate {
 //            }
             
             scroll.addSubview(button)
-            scroll.contentSize = CGSize(width: CGFloat(leftMargin), height: scroll.frame.size.height)
+//            scroll.contentSize = CGSize(width: scroll.frame.size.width, height: topMargin)
         }
 
         self.addSubview(scroll)
         self.scroll.contentOffset.x = self.scrollPosition
+        
+//        self.frame.size.height = 200.0
     }
     
     func formatCombination(combinations: NSArray) -> String {
