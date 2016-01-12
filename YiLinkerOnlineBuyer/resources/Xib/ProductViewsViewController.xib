@@ -4,6 +4,9 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
     <customFonts key="customFonts">
+        <mutableArray key="Panton SemiBold.otf">
+            <string>Panton-SemiBold</string>
+        </mutableArray>
         <mutableArray key="Panton.otf">
             <string>Panton-Regular</string>
         </mutableArray>
@@ -164,6 +167,17 @@
                         <constraint firstAttribute="height" constant="42" id="oaJ-V0-gjA"/>
                     </constraints>
                 </view>
+                <label hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="100% OFF" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="jmh-lf-cMT">
+                    <rect key="frame" x="15" y="409" width="125" height="43"/>
+                    <color key="backgroundColor" red="1" green="0.12921032860000001" blue="0.39058684500000002" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="43" id="eAU-V5-HHt"/>
+                        <constraint firstAttribute="width" constant="125" id="fsv-Ny-r92"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="20"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
@@ -181,11 +195,13 @@
                 <constraint firstAttribute="trailing" secondItem="Mf8-6k-Nbf" secondAttribute="trailing" constant="6" id="Y0p-Yq-D9w"/>
                 <constraint firstItem="Dh9-WO-r2Y" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="YyS-g1-F8f"/>
                 <constraint firstItem="FKy-Yy-HNs" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="34" id="d42-7m-Xiw"/>
+                <constraint firstItem="aWQ-Wr-v5c" firstAttribute="top" secondItem="jmh-lf-cMT" secondAttribute="bottom" id="dTy-nD-VoU"/>
                 <constraint firstItem="sVc-rl-QSJ" firstAttribute="top" secondItem="Mf8-6k-Nbf" secondAttribute="bottom" constant="8" id="hDh-uH-qge"/>
                 <constraint firstAttribute="trailing" secondItem="sVc-rl-QSJ" secondAttribute="trailing" constant="6" id="hOw-WB-vMF"/>
                 <constraint firstItem="GOO-gy-vhj" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="lId-dH-39F"/>
                 <constraint firstItem="aWQ-Wr-v5c" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="o0S-it-ECK"/>
                 <constraint firstAttribute="trailing" secondItem="Dh9-WO-r2Y" secondAttribute="trailing" id="p68-v0-dd7"/>
+                <constraint firstItem="jmh-lf-cMT" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="15" id="rCc-hV-bp2"/>
                 <constraint firstAttribute="trailing" secondItem="b53-al-htE" secondAttribute="trailing" id="swK-Xg-QKQ"/>
                 <constraint firstAttribute="trailing" secondItem="GOO-gy-vhj" secondAttribute="trailing" id="w49-cV-ZT3"/>
                 <constraint firstItem="b53-al-htE" firstAttribute="top" secondItem="aWQ-Wr-v5c" secondAttribute="bottom" id="ygP-8X-N2l"/>
@@ -195,6 +211,7 @@
             <connections>
                 <outlet property="closeContainerView" destination="FKy-Yy-HNs" id="uN7-SP-2E4"/>
                 <outlet property="collectionView" destination="GOO-gy-vhj" id="jj9-CS-2t3"/>
+                <outlet property="discountPercentLabel" destination="jmh-lf-cMT" id="WXA-Zz-Ism"/>
                 <outlet property="messageContainerView" destination="RJM-7I-w4S" id="N9a-2p-wHb"/>
                 <outlet property="nameLabel" destination="0jG-D7-b0E" id="XQd-rJ-1h2"/>
                 <outlet property="pageControl" destination="aWQ-Wr-v5c" id="CCd-Hp-jPL"/>
@@ -207,7 +224,7 @@
             <point key="canvasLocation" x="364.5" y="399.5"/>
         </view>
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="hYp-dZ-AVK" customClass="ProductDescriptionView" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="375" height="116"/>
+            <rect key="frame" x="0.0" y="0.0" width="375" height="93"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Description" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qM9-sb-7bx">
@@ -235,7 +252,7 @@
                     <color key="textColor" red="0.29803922770000002" green="0.29803922770000002" blue="0.29803922770000002" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5I9-Tf-7qv">
+                <view hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5I9-Tf-7qv">
                     <rect key="frame" x="0.0" y="74" width="375" height="42"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
@@ -251,7 +268,7 @@
                 <constraint firstItem="qM9-sb-7bx" firstAttribute="top" secondItem="hYp-dZ-AVK" secondAttribute="top" id="Ylc-mu-dIY"/>
                 <constraint firstAttribute="trailing" secondItem="mpd-07-oTc" secondAttribute="trailing" constant="8" id="bfS-0d-Vxe"/>
                 <constraint firstItem="A2V-fG-Tne" firstAttribute="top" secondItem="hYp-dZ-AVK" secondAttribute="top" constant="41" id="hjF-jx-piY"/>
-                <constraint firstAttribute="bottom" secondItem="5I9-Tf-7qv" secondAttribute="bottom" id="jhd-ag-RJF"/>
+                <constraint firstAttribute="bottom" secondItem="5I9-Tf-7qv" secondAttribute="bottom" constant="-23" id="jhd-ag-RJF"/>
                 <constraint firstItem="qM9-sb-7bx" firstAttribute="leading" secondItem="hYp-dZ-AVK" secondAttribute="leading" constant="8" id="nc5-Gf-7lE"/>
                 <constraint firstItem="5I9-Tf-7qv" firstAttribute="leading" secondItem="hYp-dZ-AVK" secondAttribute="leading" id="oyi-o2-J1m"/>
                 <constraint firstAttribute="trailing" secondItem="A2V-fG-Tne" secondAttribute="trailing" id="rEU-Gh-wv9"/>
@@ -264,7 +281,7 @@
                 <outlet property="descriptionTitleLabel" destination="qM9-sb-7bx" id="eZC-Dq-I3K"/>
                 <outlet property="seeMoreView" destination="5I9-Tf-7qv" id="1bF-yp-9FZ"/>
             </connections>
-            <point key="canvasLocation" x="364.5" y="892"/>
+            <point key="canvasLocation" x="364.5" y="880.5"/>
         </view>
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="aCA-2i-XxI" customClass="ProductReviewHeaderView" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="375" height="42"/>
