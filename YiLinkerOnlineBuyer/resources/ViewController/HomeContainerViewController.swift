@@ -136,11 +136,13 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         self.registerCellWithNibName(self.layoutNineNibName)
         self.registerCellWithNibName(self.twoColumnGridCell)
         
-        if Reachability.isConnectedToNetwork() {
+        /*if Reachability.isConnectedToNetwork() {
             self.fireGetHomePageData(true)
         } else {
             self.addEmptyView()
-        }
+        }*/
+        
+        self.fireGetHomePageData(true)
         
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         
@@ -378,6 +380,9 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             if successful {
                 self.populateHomePageWithDictionary(responseObject as! NSDictionary)
                 self.hud?.hide(true)
+                
+                self.addOrUpdateHomeDataToCoreDataWithDataString(StringHelper.convertDictionaryToJsonString(responseObject as! NSDictionary) as String)
+                
                 self.collectionView.hidden = false
                 //get user info
                 if SessionManager.isLoggedIn() {
@@ -387,7 +392,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                 }
             } else {
                 self.hud?.hide(true)
-                self.addEmptyView()
+
                 if requestErrorType == .ResponseError {
                     //Error in api requirements
                     let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
@@ -397,7 +402,15 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                     Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
                 } else if requestErrorType == .NoInternetConnection {
                     //No internet connection
-                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                    //Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                    if self.isJsonStringEmpty() {
+                        self.addEmptyView()
+                    } else {
+                        //show cached data
+                        self.showNoDataBanner()
+                        self.populateHomePageWithDictionary(self.coreDataJsonString())
+                    }
+                    
                 } else if requestErrorType == .RequestTimeOut {
                     //Request timeout
                     Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
@@ -407,6 +420,71 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                 }
             }
         })
+    }
+    
+    //MARK: -
+    //MARK: - Show No Data Banner
+    func showNoDataBanner() {
+        let kNoInternetViewHeight: CGFloat = 26
+        let noInternetView: UIView = XibHelper.puffViewWithNibName("NoInternetConnectionView", index: 0)
+        noInternetView.frame = CGRectMake(0, 20, self.view.frame.size.width, kNoInternetViewHeight)
+        noInternetView.layer.zPosition = 100
+        noInternetView.alpha = 0
+        self.view.addSubview(noInternetView)
+        
+        UIView.animateWithDuration(2.0, delay: 1.0, usingSpringWithDamping: 0.8, initialSpringVelocity: 3.0, options: UIViewAnimationOptions.CurveEaseInOut, animations: ({
+           noInternetView.alpha = 1
+        }), completion: {
+            (value: Bool) in
+            Delay.delayWithDuration(0.3, completionHandler: { (success) -> Void in
+                UIView.animateWithDuration(2.0, delay: 1.0, usingSpringWithDamping: 0.8, initialSpringVelocity: 3.0, options: UIViewAnimationOptions.CurveEaseInOut, animations: ({
+                    noInternetView.alpha = 0
+                }), completion: {
+                    (value: Bool) in
+                    noInternetView.removeFromSuperview()
+                })
+            })
+        })
+    }
+    
+    //MARK: -
+    //MARK: - Add or Update Home Data to Core Data With Data String
+    func addOrUpdateHomeDataToCoreDataWithDataString(jsonString: String) {
+        var homeEntities: [HomeEntity] = HomeEntity.findAll() as! [HomeEntity]
+        
+        if homeEntities.count == 0 {
+            let homeEntity: HomeEntity = HomeEntity.createEntity() as! HomeEntity
+            homeEntity.json = jsonString
+            homeEntities.append(homeEntity)
+            NSManagedObjectContext.defaultContext().saveToPersistentStoreAndWait()
+            println("new record added to homeEntity")
+        } else {
+            let homeEntity: HomeEntity = homeEntities.first!
+            homeEntity.json = jsonString
+            homeEntities.append(homeEntity)
+            NSManagedObjectContext.defaultContext().saveToPersistentStoreAndWait()
+            println("updated record in homeEntity")
+        }
+    }
+    
+    //MARK: - 
+    //MARK: - isJsonStringEmpty
+    
+    func isJsonStringEmpty() -> Bool {
+        var homeEntities: [HomeEntity] = HomeEntity.findAll() as! [HomeEntity]
+        
+        if homeEntities.count == 0 {
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    //MARK: -
+    //MARK: -  Core Data Json String
+    func coreDataJsonString() -> NSDictionary {
+        let homeEntities: [HomeEntity] = HomeEntity.findAll() as! [HomeEntity]
+        return StringHelper.convertStringToDictionary(homeEntities.first!.json)
     }
     
     //MARK: - Populate Home PageWith  Dictionary
