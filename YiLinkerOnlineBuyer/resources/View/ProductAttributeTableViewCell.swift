@@ -82,8 +82,9 @@ class ProductAttributeTableViewCell: UITableViewCell, UIScrollViewDelegate {
         
         var topMargin: CGFloat = 25.0
         var leftMargin: CGFloat = 15.0
-        var buttonWidth: CGFloat = (self.frame.size.width / 2) - 30.0
+        var buttonWidth: CGFloat = (width / 2) - 30.0
         var buttonHeight: CGFloat = 30.0
+        
         for i in 0..<attributes.count {
             // Dynamic width
 //            var buttonWidth: Int = (count(buttonTitle) * 10) + 20

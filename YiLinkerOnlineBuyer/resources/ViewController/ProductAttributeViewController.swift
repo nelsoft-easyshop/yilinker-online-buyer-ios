@@ -144,13 +144,17 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-
-        for attribute in self.productDetailsModel.attributes {
-            var variantNameHeight: Int = 20 //25 Subtract by 5 for better
-            var heightMultiplier: Int = (attribute.valueName.count / 2) + 1
-            return CGFloat((45 * heightMultiplier) + variantNameHeight)
+        
+        var cellDefaultHeight: CGFloat = 70.0
+        var ctr: Int = 0
+        
+        for i in 0..<self.productDetailsModel.attributes[indexPath.row].choices.count {
+            if i > 1 && i % 2 == 0 {
+                ctr += 1
+            }
         }
-        return 70.0
+        
+        return CGFloat(40 * ctr) + cellDefaultHeight
     }
     
     // MARK: - Actions
