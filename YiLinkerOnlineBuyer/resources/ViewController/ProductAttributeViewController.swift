@@ -211,7 +211,12 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
             alertController.addAction(defaultAction)
             self.presentViewController(alertController, animated: true, completion: nil)
         } else {
-            if self.quantity == 0 {
+            if priceLabel.text == ProductStrings.attributeNotAvailable {
+                let alertController = UIAlertController(title: ProductStrings.alertCannotProcceed, message: ProductStrings.alertNotAvailable, preferredStyle: .Alert)
+                let defaultAction = UIAlertAction(title: ProductStrings.alertOk, style: .Default, handler: nil)
+                alertController.addAction(defaultAction)
+                self.presentViewController(alertController, animated: true, completion: nil)
+            } else if self.quantity == 0 {
                 let alertController = UIAlertController(title: ProductStrings.alertCannotProcceed, message: ProductStrings.alertOutOfStock, preferredStyle: .Alert)
                 let defaultAction = UIAlertAction(title: ProductStrings.alertOk, style: .Default, handler: nil)
                 alertController.addAction(defaultAction)
@@ -243,30 +248,23 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
             let defaultAction = UIAlertAction(title: ProductStrings.alertOk, style: .Default, handler: nil)
             alertController.addAction(defaultAction)
             self.presentViewController(alertController, animated: true, completion: nil)
-        } else if self.quantity == 0 {
-            let alertController = UIAlertController(title: ProductStrings.alertCannotProcceed, message: ProductStrings.alertOutOfStock, preferredStyle: .Alert)
-            let defaultAction = UIAlertAction(title: ProductStrings.alertOk, style: .Default, handler: nil)
-            alertController.addAction(defaultAction)
-            self.presentViewController(alertController, animated: true, completion: nil)
         } else {
-//            var selectionComplete: Bool = true
-//            
-//            for i in 0..<self.selectedId.count {
-//                if selectedId[i] == "-1" {
-//                    selectionComplete = false
-//                }
-//            }
-//            
-//            if selectionComplete {
-                hideSelf("buy")
+            if priceLabel.text == ProductStrings.attributeNotAvailable {
+                let alertController = UIAlertController(title: ProductStrings.alertCannotProcceed, message: ProductStrings.alertNotAvailable, preferredStyle: .Alert)
+                let defaultAction = UIAlertAction(title: ProductStrings.alertOk, style: .Default, handler: nil)
+                alertController.addAction(defaultAction)
+                self.presentViewController(alertController, animated: true, completion: nil)
+            } else if self.quantity == 0 {
+                let alertController = UIAlertController(title: ProductStrings.alertCannotProcceed, message: ProductStrings.alertOutOfStock, preferredStyle: .Alert)
+                let defaultAction = UIAlertAction(title: ProductStrings.alertOk, style: .Default, handler: nil)
+                alertController.addAction(defaultAction)
+                self.presentViewController(alertController, animated: true, completion: nil)
+            } else {
+//                hideSelf("buy")
+                self.doneAction(self.doneButton)
                 let quantity: Int = stocksLabel.text!.toInt()!
                 delegate!.gotoCheckoutFromAttributes(self, unitId: self.unitId, quantity: quantity)
-//            } else {
-//                let alertController = UIAlertController(title: ProductStrings.alertError, message: ProductStrings.alertComplete, preferredStyle: .Alert)
-//                let defaultAction = UIAlertAction(title: ProductStrings.alertOk, style: .Default, handler: nil)
-//                alertController.addAction(defaultAction)
-//                self.presentViewController(alertController, animated: true, completion: nil)
-//            }
+            }
         }
         
     }
@@ -360,15 +358,19 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
         }
         
         let priceWithoutComma = price.stringByReplacingOccurrencesOfString(",", withString: "")
-        
         var priceDouble: Float = NSString(string: priceWithoutComma).floatValue
         var stockDouble: Float = NSString(string: self.stocksLabel.text!).floatValue
-        
+        if stockDouble == 0.0 {
+            stockDouble = 1.0
+        }
         priceLabel.text = "₱" + (priceDouble * stockDouble).string(2)
+        priceLabel.textColor = Constants.Colors.productPrice
+        
         
         if maximumStock == 1 {
             disableButton(increaseButton)
             disableButton(decreaseButton)
+            stocksLabel.alpha = 1.0
         } else if stocks == 0 || self.selectedAttributes.contains("-") {
             disableButton(increaseButton)
             disableButton(decreaseButton)
@@ -439,6 +441,26 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
         self.hud?.dimBackground = false
         self.view.addSubview(self.hud!)
         self.hud?.show(true)
+    }
+    
+    func selectedNotAvailable() {
+        // display zero on available stocks
+        self.availabilityStocksLabel.text = "Available stocks : 0"
+        
+        stocksLabel.text = "00"
+        disableButton(increaseButton)
+        disableButton(decreaseButton)
+        stocksLabel.alpha = 0.3
+        
+        priceLabel.text = "Not Available"
+        priceLabel.textColor = UIColor.redColor()
+    }
+    
+    func setPrice() {
+        
+        if !self.selectedAttributes.contains("-") { // completed attributes
+            
+        }
     }
     
     // MARK: - Requests
@@ -686,9 +708,10 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
         self.selectedAttributes = currentSelected
         
         var ctr: Int = 0
+        var isCombinationNotAvailable: Bool = true
+        
         for i in 0..<self.attributes.count {
             if !self.attributes[i].choices.contains(self.selectedAttributes[i + 1]) {
-                applyProductUnit("0")
                 break
             } else { // if selected attributes is complete
                 ctr++
@@ -699,12 +722,21 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
                         if productUnit.combinationNames == selectedAttributeWOQ {
                             unitId = productUnit.productUnitId
                             applyProductUnit(productUnit.productUnitId)
+                            isCombinationNotAvailable = false
+                            break
                         }
                     }
                 }
+                
+                if isCombinationNotAvailable && !self.selectedAttributes.contains("-") {
+                    priceLabel.text = "Not Available"
+                    selectedNotAvailable()
+                }
+                
             }
+            
+            
         }
-        
         
         self.tableView.reloadData()
     }

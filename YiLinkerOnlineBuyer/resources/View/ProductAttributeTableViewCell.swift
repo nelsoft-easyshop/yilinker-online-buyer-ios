@@ -163,8 +163,8 @@ class ProductAttributeTableViewCell: UITableViewCell, UIScrollViewDelegate {
         
         
         if sender.selected {
-            self.selectedAttributes[self.tag + 1] = ""
-            DeselectButton(sender)
+//            self.selectedAttributes[self.tag + 1] = ""
+//            DeselectButton(sender)
         } else {
             self.selectedAttributes[self.tag + 1] = sender.titleLabel!.text!
             SelectButton(sender)

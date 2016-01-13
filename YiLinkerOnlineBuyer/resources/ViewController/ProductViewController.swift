@@ -20,6 +20,7 @@ struct ProductStrings {
     static let messageScrollUp = StringHelper.localizedStringWithKey("FIRST_VIEW_MESSAGE_LOCALIZE_KEY")
     static let messageRelease = StringHelper.localizedStringWithKey("SECOND_VIEW_MESSAGE_LOCALIZE_KEY")
     static let outOfStock = StringHelper.localizedStringWithKey("OUT_OF_STOCK_LOCALIZE_KEY")
+    static let attributeNotAvailable = StringHelper.localizedStringWithKey("ATTRIBUTE_PRICE_NOT_AVAILABLE_LOCALIZE_KEY")
     
     static let addToCart = StringHelper.localizedStringWithKey("ADD_TO_CART_LOCALIZE_KEY")
     static let buytItNow = StringHelper.localizedStringWithKey("BUY_IT_NOW_LOCALIZE_KEY")
@@ -47,6 +48,7 @@ struct ProductStrings {
     static let alertOutOfStock = StringHelper.localizedStringWithKey("ALERT_OUT_OF_STOCK_LOCALIZE_KEY")
     static let alertSellerNotAvailable = StringHelper.localizedStringWithKey("ALERT_SELLER_NOT_AVAILABLE_LOCALIZE_KEY")
     static let alertCannotProcceed = StringHelper.localizedStringWithKey("CANNOT_PROCEED_LOCALIZE_KEY")
+    static let alertNotAvailable = StringHelper.localizedStringWithKey("ALERT_ATTRIBUTE_COMBINATION_NOT_AVAILABLE_LOCALIZE_KEY")
 }
 
 protocol ProductViewControllerDelegate {
@@ -898,17 +900,21 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
 //        self.getFooterView().addSubview(self.getBottomSpace())
         
         if !isFromCart {
-            for i in 0..<self.productDetailsModel.productUnits.count {
-                if self.productDetailsModel.productUnits[i].quantity != 0 {
-                    self.quantity = self.productDetailsModel.productUnits[i].quantity
-                    self.unitId = self.productDetailsModel.productUnits[i].productUnitId
-                    getUnitIdIndexFrom()
-                    break
-                } else if self.productDetailsModel.productUnits[i].quantity == 0 && i == self.productDetailsModel.productUnits.count - 1 {
-                    self.quantity = 0
-                    self.unitIdIndex = 0
-                }
-            }
+//            for i in 0..<self.productDetailsModel.productUnits.count {
+//                if self.productDetailsModel.productUnits[i].quantity != 0 {
+//                    self.quantity = self.productDetailsModel.productUnits[i].quantity
+//                    self.unitId = self.productDetailsModel.productUnits[i].productUnitId
+//                    getUnitIdIndexFrom()
+//                    break
+//                } else if self.productDetailsModel.productUnits[i].quantity == 0 && i == self.productDetailsModel.productUnits.count - 1 {
+//                    self.quantity = 0
+//                    self.unitIdIndex = 0
+//                }
+//            }
+            
+            self.quantity = self.productDetailsModel.productUnits[0].quantity
+            self.unitId = self.productDetailsModel.productUnits[0].productUnitId
+            getUnitIdIndexFrom()
             
             if self.quantity != 0 {
                 self.quantity = 1
