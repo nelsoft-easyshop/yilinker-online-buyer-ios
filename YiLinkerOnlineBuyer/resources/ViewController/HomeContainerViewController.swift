@@ -143,7 +143,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         } else {
             self.addEmptyView()
         }
-        
+
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "onRegistration:",
@@ -162,6 +162,14 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         self.setupBackToTopButton()
         
         self.addPullToRefresh()
+        
+        let languageType: LanguageType = LanguageHelper.currentLanguge()
+        
+        if languageType == .Chinese {
+            println("Device language is chinese!")
+        } else {
+            println("Device language is english!")
+        }
     }
     
     //MARK: - Add Pull To Refresh

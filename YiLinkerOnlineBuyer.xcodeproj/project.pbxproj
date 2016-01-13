@@ -230,6 +230,7 @@
 		0CCA7DF51C0736A100071DD4 /* LayoutNineCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CCA7DF31C0736A100071DD4 /* LayoutNineCollectionViewCell.swift */; };
 		0CCA7DF61C0736A100071DD4 /* LayoutNineCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CCA7DF41C0736A100071DD4 /* LayoutNineCollectionViewCell.xib */; };
 		0CD103EC1B8B4769002E15F4 /* DynamicRoundedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CD103EB1B8B4769002E15F4 /* DynamicRoundedView.swift */; };
+		0CD4C80D1C464D260031E4FE /* LanguageHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CD4C80C1C464D260031E4FE /* LanguageHelper.swift */; };
 		0CDA117A1B760E1A007B5DED /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CDA11791B760E1A007B5DED /* LoginViewController.swift */; };
 		0CDA117C1B764015007B5DED /* LoginAndRegisterContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CDA117B1B764015007B5DED /* LoginAndRegisterContentViewController.swift */; };
 		0CDA117E1B764B79007B5DED /* DynamicRoundedTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CDA117D1B764B79007B5DED /* DynamicRoundedTextField.swift */; };
@@ -760,6 +761,7 @@
 		0CCA7DF31C0736A100071DD4 /* LayoutNineCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayoutNineCollectionViewCell.swift; sourceTree = "<group>"; };
 		0CCA7DF41C0736A100071DD4 /* LayoutNineCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LayoutNineCollectionViewCell.xib; sourceTree = "<group>"; };
 		0CD103EB1B8B4769002E15F4 /* DynamicRoundedView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DynamicRoundedView.swift; sourceTree = "<group>"; };
+		0CD4C80C1C464D260031E4FE /* LanguageHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguageHelper.swift; sourceTree = "<group>"; };
 		0CDA11791B760E1A007B5DED /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		0CDA117B1B764015007B5DED /* LoginAndRegisterContentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginAndRegisterContentViewController.swift; sourceTree = "<group>"; };
 		0CDA117D1B764B79007B5DED /* DynamicRoundedTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DynamicRoundedTextField.swift; sourceTree = "<group>"; };
@@ -1371,6 +1373,7 @@
 				0C74406B1BDF42EB0019792A /* Toast.swift */,
 				0C74406D1BDF4A8A0019792A /* Delay.swift */,
 				0C79FD931C3B51FF00B6F2DF /* WebServiceManager.swift */,
+				0CD4C80C1C464D260031E4FE /* LanguageHelper.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -2436,6 +2439,7 @@
 				962595331BAB1BF500A118C0 /* CaseDetailsModel.swift in Sources */,
 				F7CCDAA61B943CF7000F5AD4 /* ProductsTableViewCell.swift in Sources */,
 				26AFB3B71B79DE3800E50926 /* ProductAttributeViewController.swift in Sources */,
+				0CD4C80D1C464D260031E4FE /* LanguageHelper.swift in Sources */,
 				26AFB3AD1B79DE2900E50926 /* ReviewTableViewCell.swift in Sources */,
 				0C144DD81C0803C7000728B4 /* TargetModel.swift in Sources */,
 				0C329E751B7B2D32005BE2B6 /* RegisterModel.swift in Sources */,

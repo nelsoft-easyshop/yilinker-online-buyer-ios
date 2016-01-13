@@ -9,5 +9,18 @@
 import UIKit
 
 class LanguageHelper: NSObject {
-   
+    
+    static let chinese = "zh"
+    static let english = "en"
+    
+    class func currentLanguge() -> LanguageType {
+        let langId = NSLocale.currentLocale().objectForKey(NSLocaleLanguageCode) as! String
+        
+        if langId == LanguageHelper.chinese {
+            return .Chinese
+        } else {
+            return .English
+        }
+    }
+    
 }
