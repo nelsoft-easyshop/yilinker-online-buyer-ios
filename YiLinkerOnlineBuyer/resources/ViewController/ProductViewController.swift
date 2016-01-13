@@ -809,7 +809,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
                         } else if task.statusCode == 404 {
                             println(error)
                         } else {
-                            println(error)
+                            println(error.userInfo)
 //                            if (SessionManager.isLoggedIn()){
 //                                self.showAlert(title: Constants.Localized.error, message: Constants.Localized.someThingWentWrong)
 //                            }
@@ -985,7 +985,22 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
             self.productDetailsExtendedView.frame.size.height += 65
         }
         
-        self.containerScrollView.addSubview(self.tableView)
+        let screen: CGRect = UIScreen.mainScreen().bounds
+        
+        if screen.height == 480 {
+            println("iPhone4 or 4s")
+            self.tableView.contentSize.height += 187
+        } else if screen.height == 568 {
+            self.tableView.contentSize.height += 99
+            println("iPhone5 or 5s or 5c")
+        } else if screen.height == 667 {
+            println("iPhone 6 or 6s")
+            // Default size
+        } else if screen.height == 736 {
+            println("iPhone6 Plus or 6s Plus")
+            self.tableView.contentSize.height -= 69
+        }
+        
         self.containerScrollView.addSubview(self.getProductExtendedView())
         self.productExtendedView.frame.origin.y = self.containerScrollView.frame.size.height
         self.containerScrollView.contentSize = CGSizeMake(self.containerScrollView.frame.size.width, self.containerScrollView.frame.size.height + self.productExtendedView.frame.size.height)
