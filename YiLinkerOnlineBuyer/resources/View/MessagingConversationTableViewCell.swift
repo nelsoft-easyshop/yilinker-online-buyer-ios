@@ -76,11 +76,9 @@ class MessagingConversationTableViewCell: UITableViewCell {
     
     func setHasNewMessage(hasNew: Bool) {
         if hasNew {
-            self.messageLabel.textColor = Constants.Colors.appTheme
-            self.senderNameLabel.textColor = Constants.Colors.appTheme
+            self.messageLabel.font = UIFont.boldSystemFontOfSize(self.messageLabel.font.pointSize)
         } else {
-            self.messageLabel.textColor = Constants.Colors.grayLine
-            self.senderNameLabel.textColor = Constants.Colors.grayLine
+            self.messageLabel.font = UIFont.systemFontOfSize(self.messageLabel.font.pointSize)
         }
         
     }

@@ -9,7 +9,6 @@
         </mutableArray>
         <mutableArray key="Panton.otf">
             <string>Panton-Regular</string>
-            <string>Panton-Regular</string>
         </mutableArray>
     </customFonts>
     <objects>
@@ -52,7 +51,7 @@
                         <constraints>
                             <constraint firstAttribute="height" constant="15" id="Dfk-77-01L"/>
                         </constraints>
-                        <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="12"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>

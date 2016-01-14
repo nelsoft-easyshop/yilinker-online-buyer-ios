@@ -109,9 +109,7 @@ class MessagingContactListViewController: UIViewController {
     //MARK: API Requests
     // Function to get contact list
     func fireGetContactList() {
-        if isEndReached {
-            Toast.displayToastWithMessage(MessagingLocalizedStrings.noMoreMessages, duration: 1.5, view: self.view)
-        } else {
+        if !isEndReached {
             if self.page == 1 && !isFromSearch{
                 self.showHUD()
             } else {

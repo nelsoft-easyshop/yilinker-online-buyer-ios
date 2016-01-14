@@ -342,7 +342,7 @@ extension MessagingConversationListViewController: UITableViewDataSource, UITabl
                 cell.setIsOnline(false)
             }
             
-            if tempContactModel.hasUnreadMessage.isNotEmpty() || tempContactModel.hasUnreadMessage != "0" {
+            if tempContactModel.hasUnreadMessage.isNotEmpty() && tempContactModel.hasUnreadMessage != "0" {
                 cell.setHasNewMessage(true)
             } else {
                 cell.setHasNewMessage(false)
