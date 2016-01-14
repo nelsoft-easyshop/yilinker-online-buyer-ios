@@ -332,6 +332,10 @@ extension MessagingConversationListViewController: UITableViewDataSource, UITabl
             cell.dateLabel.text = ""
         }
         
+        if tempModel.isImage == "1" {
+            cell.messageLabel.text = MessagingLocalizedStrings.photoMessage
+        }
+        
         if let tempContactModel: MessagingContactModel = tempModel.contactDetails {
             cell.senderNameLabel.text = tempContactModel.fullName
             cell.senderImageView.sd_setImageWithURL(NSURL(string: tempContactModel.profileImageUrl), placeholderImage: UIImage(named: "dummy-placeholder"))
@@ -359,6 +363,12 @@ extension MessagingConversationListViewController: UITableViewDataSource, UITabl
     // UITableViewDelegate
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        
+        if SessionManager.getUnReadMessagesCount() != 0 {
+            if let count = conversationsTableData[indexPath.row].contactDetails?.hasUnreadMessage.toInt() {
+                SessionManager.setUnReadMessagesCount(SessionManager.getUnReadMessagesCount() - count)
+            }
+        }
         var viewController = MessagingThreadViewController(nibName: "MessagingThreadViewController", bundle: nil)
         viewController.receiver = self.conversationsTableData[indexPath.row].contactDetails
         self.navigationController?.pushViewController(viewController, animated:true)

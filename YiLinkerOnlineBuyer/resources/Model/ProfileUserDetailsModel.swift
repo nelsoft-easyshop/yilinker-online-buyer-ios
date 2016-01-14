@@ -196,6 +196,7 @@ class ProfileUserDetailsModel: NSObject {
         if let value: AnyObject = dictionary["messageCount"] {
             if value as! NSObject != NSNull() {
                 messageCount = value as! Int
+                SessionManager.setUnReadMessagesCount(messageCount)
             }
         }
         
