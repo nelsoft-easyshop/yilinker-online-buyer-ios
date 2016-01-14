@@ -20,6 +20,7 @@ struct ProductStrings {
     static let messageScrollUp = StringHelper.localizedStringWithKey("FIRST_VIEW_MESSAGE_LOCALIZE_KEY")
     static let messageRelease = StringHelper.localizedStringWithKey("SECOND_VIEW_MESSAGE_LOCALIZE_KEY")
     static let outOfStock = StringHelper.localizedStringWithKey("OUT_OF_STOCK_LOCALIZE_KEY")
+    static let attributeNotAvailable = StringHelper.localizedStringWithKey("ATTRIBUTE_PRICE_NOT_AVAILABLE_LOCALIZE_KEY")
     
     static let addToCart = StringHelper.localizedStringWithKey("ADD_TO_CART_LOCALIZE_KEY")
     static let buytItNow = StringHelper.localizedStringWithKey("BUY_IT_NOW_LOCALIZE_KEY")
@@ -47,6 +48,7 @@ struct ProductStrings {
     static let alertOutOfStock = StringHelper.localizedStringWithKey("ALERT_OUT_OF_STOCK_LOCALIZE_KEY")
     static let alertSellerNotAvailable = StringHelper.localizedStringWithKey("ALERT_SELLER_NOT_AVAILABLE_LOCALIZE_KEY")
     static let alertCannotProcceed = StringHelper.localizedStringWithKey("CANNOT_PROCEED_LOCALIZE_KEY")
+    static let alertNotAvailable = StringHelper.localizedStringWithKey("ALERT_ATTRIBUTE_COMBINATION_NOT_AVAILABLE_LOCALIZE_KEY")
 }
 
 protocol ProductViewControllerDelegate {
@@ -120,7 +122,9 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     var isExiting: Bool = true
     var isFromCart: Bool = false
     var isAlreadyMoveOffset: Bool = false
+    var isDefault: Bool = true
     var isFirstView: Bool = true
+
     @IBOutlet weak var closeButton: UIView!
     
     // Messaging
@@ -275,8 +279,9 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
             } else if self.lastContentOffset < scrollView.contentOffset.y {
                 self.isScrollingUp = true
             }
-            self.lastContentOffset = scrollView.contentOffset.y
         }
+        
+        self.lastContentOffset = scrollView.contentOffset.y
         
     }
 
@@ -895,17 +900,21 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
 //        self.getFooterView().addSubview(self.getBottomSpace())
         
         if !isFromCart {
-            for i in 0..<self.productDetailsModel.productUnits.count {
-                if self.productDetailsModel.productUnits[i].quantity != 0 {
-                    self.quantity = self.productDetailsModel.productUnits[i].quantity
-                    self.unitId = self.productDetailsModel.productUnits[i].productUnitId
-                    getUnitIdIndexFrom()
-                    break
-                } else if self.productDetailsModel.productUnits[i].quantity == 0 && i == self.productDetailsModel.productUnits.count - 1 {
-                    self.quantity = 0
-                    self.unitIdIndex = 0
-                }
-            }
+//            for i in 0..<self.productDetailsModel.productUnits.count {
+//                if self.productDetailsModel.productUnits[i].quantity != 0 {
+//                    self.quantity = self.productDetailsModel.productUnits[i].quantity
+//                    self.unitId = self.productDetailsModel.productUnits[i].productUnitId
+//                    getUnitIdIndexFrom()
+//                    break
+//                } else if self.productDetailsModel.productUnits[i].quantity == 0 && i == self.productDetailsModel.productUnits.count - 1 {
+//                    self.quantity = 0
+//                    self.unitIdIndex = 0
+//                }
+//            }
+            
+            self.quantity = self.productDetailsModel.productUnits[0].quantity
+            self.unitId = self.productDetailsModel.productUnits[0].productUnitId
+            getUnitIdIndexFrom()
             
             if self.quantity != 0 {
                 self.quantity = 1
@@ -914,9 +923,9 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
                 self.unitIdIndex = 0
             }
             
-            
             self.productImagesView.setDetails(self.productDetailsModel, unitId: unitIdIndex, width: self.view.frame.size.width)
         } else {
+            isDefault = false
             self.getUnitIdIndexFrom()
             var images: [String] = []
             for productUnit in self.productDetailsModel.productUnits {
@@ -1009,7 +1018,6 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     }
     
     func setAttributes(attributes: [ProductAttributeModel], productUnits: [ProductUnitsModel], unitId: String, quantity: Int) {
-        println("unit id >>> \(unitId)")
         
         for view in self.productAttributeView.subviews {
             if view is UILabel {
@@ -1037,7 +1045,11 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
                 if productUnits[self.unitIdIndex].combination[i] == attributes[i].valueId[j] {
                     selectedName.append(attributes[i].attributeName)
                     selectedId.append(attributes[i].valueId[j])
-                    selectedValue.append(attributes[i].valueName[j])
+                    if isDefault {
+                        selectedValue.append("-")
+                    } else {
+                        selectedValue.append(attributes[i].valueName[j])
+                    }
                 }
             }
         }
@@ -1311,6 +1323,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     }
     
     func doneActionPassDetailsToProductView(controller: ProductAttributeViewController, unitId: String, quantity: Int, selectedId: NSArray, images: [String]) {
+        self.isDefault = false
         self.unitId = unitId
         self.selectedId = selectedId as! [String]
         self.quantity = quantity
@@ -1319,6 +1332,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     }
     
     func gotoCheckoutFromAttributes(controller: ProductAttributeViewController, unitId: String, quantity: Int) {
+        self.isDefault = false
         self.unitId = unitId
         self.quantity = quantity
         self.buyItNowAction(UIGestureRecognizer())
@@ -1370,7 +1384,9 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     // MARK: Actions
     
     @IBAction func addToCartAction(sender: AnyObject) {
-        if self.quantity == 0 {
+        if isDefault {
+            seeMoreAttribute("")
+        } else if self.quantity == 0 {
             self.showAlert(title: ProductStrings.alertCannotProcceed, message: ProductStrings.alertOutOfStock)
         } else {
             requestAddCartItem("cart")
@@ -1378,7 +1394,9 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     }
     
     func buyItNowAction(gesture: UIGestureRecognizer) {
-        if self.quantity == 0 {
+        if isDefault {
+            seeMoreAttribute("")
+        } else if self.quantity == 0 {
             self.showAlert(title: ProductStrings.alertCannotProcceed, message: ProductStrings.alertOutOfStock)
         } else {
             requestAddCartItem("buyitnow")
