@@ -63,6 +63,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GGLInstanceIDDelegate {
         
         GCMService.sharedInstance().startWithConfig(GCMConfig.defaultConfig())
         UIApplication.sharedApplication().applicationIconBadgeNumber = 0
+        
+        MagicalRecord.setupCoreDataStack()
+        
         return FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
     }
     
