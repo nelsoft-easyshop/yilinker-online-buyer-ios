@@ -151,7 +151,7 @@ struct APIAtlas {
     static let ACTION_SET_AS_READ           = "/v1/message/setConversationAsRead"
     static let ACTION_IMAGE_ATTACH          = "/v1/message/imageAttach"
     static let ACTION_GCM_CREATE            = "/v1/auth/device/addRegistrationId"
-    static let ACTION_GCM_DELETE            = "/v1/auth/device/deleteRegistrationId"
+    static let ACTION_GCM_DELETE            = "v1/auth/device/deleteRegistrationId"
     static let ACTION_GCM_UPDATE            = "/v1/device/auth/updateRegistrationId"
     static let uploadFileType = "jpeg"
     

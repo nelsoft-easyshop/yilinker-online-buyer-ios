@@ -34,6 +34,8 @@ class CircularMenuViewController: UIViewController {
     
     var messageLabel: UILabel = UILabel()
     
+    var oldPushNotifData: String = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.initDimView()
@@ -54,19 +56,23 @@ class CircularMenuViewController: UIViewController {
         roundedButton.imageEdgeInsets = UIEdgeInsetsMake(insetSpace, insetSpace, insetSpace, insetSpace)
     }
     
+    
     func onNewMessage(notification : NSNotification){
         if let info = notification.userInfo as? Dictionary<String, AnyObject> {
             if let data = info["data"] as? String{
                 if let data2 = data.dataUsingEncoding(NSUTF8StringEncoding){
                     if let json = NSJSONSerialization.JSONObjectWithData(data2, options: .MutableContainers, error: nil) as? [String:AnyObject] {
-                        var count = SessionManager.getUnReadMessagesCount() + 1
-                        SessionManager.setUnReadMessagesCount(count)
-                        if count != 0 {
-                            self.messageLabel.hidden = false
-                            self.messageLabel.text = SessionManager.unreadMessageCount()
+                        if self.oldPushNotifData != data {
+                            var count = SessionManager.getUnReadMessagesCount() + 1
+                            SessionManager.setUnReadMessagesCount(count)
+                            if count != 0 {
+                                self.messageLabel.hidden = false
+                                self.messageLabel.text = SessionManager.unreadMessageCount()
+                            }
                         }
                     }
                 }
+                self.oldPushNotifData = data
             }
         }
     }
