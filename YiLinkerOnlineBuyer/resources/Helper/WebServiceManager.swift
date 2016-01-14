@@ -32,19 +32,27 @@ class WebServiceManager: NSObject {
     static let plainPasswordFirstKey = "user_guest[plainPassword][first]"
     static let plainPasswordSecondKey = "user_guest[plainPassword][second]"
     static let referralCodeKey = "user_guest[referralCode]"
-    
+
     //Messaging dictionary keys
     static let pageKey = "page"
     static let limitKey = "limit"
     static let keywordKey = "keyword"
-    static let userIdKey = "userId"
     static let messageKey = "message"
     static let recipientIdKey = "recipientId"
     static let isImageKey = "isImage"
     static let deviceTypeKey = "deviceType"
     
     static private var postTask: NSURLSessionDataTask?
+
+    //Checkout
+    static let addressIdKey = "address_id"
+    static let voucherCodeKey = "voucherCode"
     
+    //Seller
+    static let sellerIdKey = "sellerId"
+    static let userIdKey = "userId"
+    
+    //MARK: -
     //MARK: - Fire Login Request With URL
     class func fireLoginRequestWithUrl(url: String, emailAddress: String, password: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
         let manager: APIManager = APIManager.sharedInstance
@@ -56,6 +64,7 @@ class WebServiceManager: NSObject {
         }
     }
     
+    //MARK: -
     //MARK: - Fire RefreshTokenWithUrl
     class func fireRefreshTokenWithUrl(url: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
         let parameters: NSDictionary = [self.clientIdKey: Constants.Credentials.clientID(), self.clientSecretKey: Constants.Credentials.clientSecret(), self.grantTypeKey: Constants.Credentials.grantRefreshToken, self.refreshTokenKey:  SessionManager.refreshToken()]
@@ -65,6 +74,7 @@ class WebServiceManager: NSObject {
         }
     }
     
+    //MARK: -
     //MARK: - Fire Get Home Page Data With Url
     class func fireGetHomePageDataWithUrl(url: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
         self.fireGetRequestWithUrl(url, parameters: []) { (successful, responseObject, requestErrorType) -> Void in
@@ -72,9 +82,41 @@ class WebServiceManager: NSObject {
         }
     }
     
+    //MARK: -
     //MARK: - Fire Get User Info With Url
     class func fireGetUserInfoWithUrl(url: String, accessToken: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
-        let parameters: NSDictionary = ["access_token": SessionManager.accessToken()]
+        let parameters: NSDictionary = [self.accessTokenKey: accessToken]
+        
+        self.firePostRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+    }
+    
+    //MARK: -
+    //MARK: - Fire COD With Url
+    class func fireCODWithUrl(url: String, accessToken: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+        let parameters: NSDictionary = [self.accessTokenKey: accessToken]
+        
+        self.firePostRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+    }
+    
+    //MARK: -
+    //MARK: - Fire Peso Pay With Url
+    class func firePesoPayWithUrl(url: String, accessToken: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+        let parameters: NSDictionary = [self.accessTokenKey: accessToken]
+        
+        self.firePostRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+    }
+    
+    //MARK: -
+    //MARK: - Fire Set Checkout Address With Url
+    class func fireSetCheckoutAddressWithUrl(url: String, accessToken: String, addressId: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+        let parameters: NSDictionary = [self.accessTokenKey: accessToken, self.addressIdKey: addressId]
+        
         self.firePostRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
             actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
         }
@@ -148,6 +190,23 @@ class WebServiceManager: NSObject {
         }
     }
     
+    //MARK: -
+    //MARK: - Fire Voucher With Url
+    class func fireVoucherWithUrl(url: String, accessToken: String, voucherCode: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+        
+        var parameters: NSDictionary = NSDictionary()
+        
+        if accessToken != "" {
+            parameters = [self.accessTokenKey: accessToken, self.voucherCodeKey: voucherCode]
+        } else {
+            parameters = [self.voucherCodeKey: voucherCode]
+        }
+        self.fireGetRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+    }
+    
+    //MARK: -
     //MARK: - Post Request With Url
     //This function is for removing repeated codes in handler
     private static func firePostRequestWithUrl(url: String, parameters: AnyObject, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
@@ -157,12 +216,9 @@ class WebServiceManager: NSObject {
                 (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
                 actionHandler(successful: true, responseObject: responseObject, requestErrorType: .NoError)
                 }, failure: {
-                    (task: NSURLSessionDataTask!, error: NSError!) in
+                    (task   : NSURLSessionDataTask!, error: NSError!) in
                     if let task = task.response as? NSHTTPURLResponse {
-                        if error.userInfo != nil {
-                            //Request is successful but encounter error in server
-                            actionHandler(successful: false, responseObject: error.userInfo!, requestErrorType: .ResponseError)
-                        } else if task.statusCode == Constants.WebServiceStatusCode.pageNotFound {
+                        if task.statusCode == Constants.WebServiceStatusCode.pageNotFound {
                             //Page not found
                             actionHandler(successful: false, responseObject: [], requestErrorType: .PageNotFound)
                         } else if task.statusCode == Constants.WebServiceStatusCode.requestTimeOut {
@@ -171,6 +227,9 @@ class WebServiceManager: NSObject {
                         } else if task.statusCode == Constants.WebServiceStatusCode.expiredAccessToken {
                             //The accessToken is already expired
                             actionHandler(successful: false, responseObject: [], requestErrorType: .AccessTokenExpired)
+                        } else if error.userInfo != nil {
+                            //Request is successful but encounter error in server
+                            actionHandler(successful: false, responseObject: error.userInfo!, requestErrorType: .ResponseError)
                         } else {
                             //Unrecognized error, this is a rare case.
                             actionHandler(successful: false, responseObject: [], requestErrorType: .UnRecognizeError)
@@ -225,6 +284,7 @@ class WebServiceManager: NSObject {
         }
     }
     
+    //MARK: -
     //MARK: - Get Request With Url
     //This function is for removing repeated codes in handler
     private static func fireGetRequestWithUrl(url: String, parameters: AnyObject, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
@@ -236,10 +296,7 @@ class WebServiceManager: NSObject {
                 }, failure: {
                     (task: NSURLSessionDataTask!, error: NSError!) in
                     if let task = task.response as? NSHTTPURLResponse {
-                        if error.userInfo != nil {
-                            //Request is successful but encounter error in server
-                            actionHandler(successful: false, responseObject: error.userInfo!, requestErrorType: .ResponseError)
-                        } else if task.statusCode == Constants.WebServiceStatusCode.pageNotFound {
+                        if task.statusCode == Constants.WebServiceStatusCode.pageNotFound {
                             //Page not found
                             actionHandler(successful: false, responseObject: [], requestErrorType: .PageNotFound)
                         } else if task.statusCode == Constants.WebServiceStatusCode.requestTimeOut {
@@ -248,6 +305,9 @@ class WebServiceManager: NSObject {
                         } else if task.statusCode == Constants.WebServiceStatusCode.expiredAccessToken {
                             //The accessToken is already expired
                             actionHandler(successful: false, responseObject: [], requestErrorType: .AccessTokenExpired)
+                        } else if error.userInfo != nil {
+                            //Request is successful but encounter error in server
+                            actionHandler(successful: false, responseObject: error.userInfo!, requestErrorType: .ResponseError)
                         } else {
                             //Unrecognized error, this is a rare case.
                             actionHandler(successful: false, responseObject: [], requestErrorType: .UnRecognizeError)
@@ -262,6 +322,7 @@ class WebServiceManager: NSObject {
         }
     }
     
+    //MARK: -
     //MARK: - Fire Register Request With URL
     class func fireRegisterRequestWithUrl(url: String, emailAddress: String, mobileNumber: String, password: String, firstName: String, lastName: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
         let manager: APIManager = APIManager.sharedInstance
@@ -293,6 +354,7 @@ class WebServiceManager: NSObject {
         }
     }
     
+    //MARK: -
     //MARK: - Fire Guest Register Request With URL
     class func fireGuestRegisterRequestWithUrl(url: String, password: String, referralCode: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
         let manager: APIManager = APIManager.sharedInstance
@@ -321,6 +383,49 @@ class WebServiceManager: NSObject {
             })
         } else {
             actionHandler(successful: false, responseObject: [], requestErrorType: .NoInternetConnection)
+        }
+    }
+ 
+    //MARK: -
+    //MARK: - Fire Seller With Url
+    class func fireSellerWithUrl(url: String, accessToken: String, sellerId: Int, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+        var parameters: NSDictionary = NSDictionary()
+        
+        if SessionManager.isLoggedIn() {
+            parameters = [self.userIdKey: sellerId, self.accessTokenKey: accessToken]
+        } else {
+            parameters = [self.userIdKey: sellerId]
+        }
+        
+        self.firePostRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+    }
+    
+    //MARK: -
+    //MARK: - Fire Seller Feedback With Url
+    class func fireSellerFeedbackWithUrl(url: String, sellerId: Int, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+        var parameters: NSDictionary = [self.sellerIdKey: sellerId]
+        self.firePostRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+    }
+    
+    //MARK: - 
+    //MARK: - Fire Follow Seller With Url
+    class func fireFollowSellerWithUrl(url: String, sellerId: Int, accessToken: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+        var parameters: NSDictionary = [self.sellerIdKey: sellerId, self.accessTokenKey: accessToken]
+        self.firePostRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+    }
+    
+    //MARK: -
+    //MARK: - Fire UnFollow Seller With Url
+    class func fireUnFollowSellerWithUrl(url: String, sellerId: Int, accessToken: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+        var parameters: NSDictionary = [self.sellerIdKey: sellerId, self.accessTokenKey: accessToken]
+        self.firePostRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
         }
     }
 }

@@ -14,7 +14,7 @@ class ProductDetailsBottomView: UIView {
     
     override func awakeFromNib() {
         
-        self.textLabel.text = ProductStrings.reachedBottom
+        self.textLabel.text = ProductStrings.messageScrollUp
     }
     
 }

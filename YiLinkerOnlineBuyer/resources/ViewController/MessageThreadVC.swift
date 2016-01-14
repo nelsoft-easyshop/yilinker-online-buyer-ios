@@ -161,12 +161,13 @@ class MessageThreadVC: UIViewController {
             if let data = info["data"] as? String{
                 if let data2 = data.dataUsingEncoding(NSUTF8StringEncoding){
                     if let json = NSJSONSerialization.JSONObjectWithData(data2, options: .MutableContainers, error: nil) as? [String:AnyObject] {
-                        if let userId = json["userId"] as? Int{
-                            if (String(userId) == recipient?.userId){
+//                        if let userId = json["recipientName"] as? String{
+//                            if (String(userId) == recipient?.fullName){
                                 var r_temp = recipient?.userId ?? ""
-                                self.getMessagesFromEndpoint("1", limit: "30", userId: r_temp)
-                            }
-                        }
+                                self.messages[messages.count - 1].isSeen = "1"
+                                self.threadTableView.reloadData()
+//                            }
+//                        }
                     }
                 }
             }
@@ -262,8 +263,10 @@ class MessageThreadVC: UIViewController {
         onlineLabel.font = UIFont(name: onlineLabel.font.fontName, size: 11.0)
         onlineLabel.textColor = UIColor.whiteColor()
         onlineLabel.sizeToFit()
+        onlineLabel.text = LocalizedStrings.online
         
-        var onlineLabelFrame = CGRectMake(navBarWidth-profileImageDimension - rightPadding - onlineLabel.frame.width - rightPadding2, 6, onlineLabel.frame.width, onlineLabel.frame.height)
+        var onlineLabelFrame = CGRectMake(navBarWidth-profileImageDimension - rightPadding - 35 - rightPadding2, 6, 35, 15)
+
         
         onlineLabel.frame = onlineLabelFrame
         
@@ -801,8 +804,10 @@ extension MessageThreadVC : UITableViewDataSource, UITableViewDelegate{
                 }
                 cell.resendButton.addTarget(self, action: Selector("resendButtonTapped:event:"), forControlEvents: UIControlEvents.TouchUpInside)
                 
-                if (messages[index].isSeen == "0" && index != messages.count-1) {
+                if (messages[index].isSeen == "0") {
                     cell.setSeenOff()
+                } else {
+                    cell.setSeenOn()
                 }
                 return cell
             } else {

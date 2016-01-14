@@ -150,7 +150,17 @@ class CaseDetailsTableViewController: UITableViewController {
                 
                 self.caseID.text = caseDetailsModel.caseData.ticket
                 self.statusCase.text = caseDetails.statusType
-                self.dateOpen.text = caseDetails.dateAdded
+                
+                var dates = caseDetails.dateAdded
+                let dateFormatter = NSDateFormatter()
+                dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+                let date: NSDate = dateFormatter.dateFromString(dates)!
+                
+                let dateFormatter1 = NSDateFormatter()
+                dateFormatter1.dateFormat = "MMMM dd, yyyy"
+                dates = dateFormatter1.stringFromDate(date)
+                
+                self.dateOpen.text = dates
                 // In Buyer other is Disputer, In Seller other is Disputee
                 self.otherParty.text = caseDetails.disputerName
                 for remarkElement in caseDetails.remarks {

@@ -85,6 +85,8 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     var oneHourIntervalTimer: NSTimer = NSTimer()
     var updateUsingOneHourInterval: Bool = false
     
+    var oldPushNotifData: String = ""
+    
     //MARK: - Life Cycle
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -136,11 +138,13 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         self.registerCellWithNibName(self.layoutNineNibName)
         self.registerCellWithNibName(self.twoColumnGridCell)
         
-        if Reachability.isConnectedToNetwork() {
+        /*if Reachability.isConnectedToNetwork() {
             self.fireGetHomePageData(true)
         } else {
             self.addEmptyView()
-        }
+        }*/
+        
+        self.fireGetHomePageData(true)
         
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         
@@ -245,17 +249,21 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     
     //MARK: On Message
     //For GCM Message
-    func onNewMessage(notification : NSNotification) {
+    func onNewMessage(notification : NSNotification){
         if let info = notification.userInfo as? Dictionary<String, AnyObject> {
             if let data = info["data"] as? String{
-                if let data2 = data.dataUsingEncoding(NSUTF8StringEncoding) {
+                if let data2 = data.dataUsingEncoding(NSUTF8StringEncoding){
                     if let json = NSJSONSerialization.JSONObjectWithData(data2, options: .MutableContainers, error: nil) as? [String:AnyObject] {
-                        var count = SessionManager.getUnReadMessagesCount() + 1
-                        SessionManager.setUnReadMessagesCount(count)
+                        if self.oldPushNotifData != data {
+//                            var count = SessionManager.getUnReadMessagesCount() + 1
+//                            SessionManager.setUnReadMessagesCount(count)
+                        }
                     }
                 }
+                self.oldPushNotifData = data
             }
         }
+        
     }
     
     //MARK: Fire Create Registration
@@ -297,15 +305,11 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     //MARK: - Add Empty View
     //Show this view if theres no internet connection
     func addEmptyView() {
-        if self.emptyView == nil {
-            self.emptyView = UIView.loadFromNibNamed("EmptyView", bundle: nil) as? EmptyView
-            self.view.layoutIfNeeded()
-            self.emptyView?.frame = self.view.frame
-            self.emptyView!.delegate = self
-            self.view.addSubview(self.emptyView!)
-        } else {
-            self.emptyView!.hidden = false
-        }
+        self.emptyView = UIView.loadFromNibNamed("EmptyView", bundle: nil) as? EmptyView
+        self.view.layoutIfNeeded()
+        self.emptyView?.frame = self.view.frame
+        self.emptyView!.delegate = self
+        self.view.addSubview(self.emptyView!)
         
         self.collectionView.hidden = true
     }
@@ -382,6 +386,9 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             if successful {
                 self.populateHomePageWithDictionary(responseObject as! NSDictionary)
                 self.hud?.hide(true)
+                
+                self.addOrUpdateHomeDataToCoreDataWithDataString(StringHelper.convertDictionaryToJsonString(responseObject as! NSDictionary) as String)
+                
                 self.collectionView.hidden = false
                 //get user info
                 if SessionManager.isLoggedIn() {
@@ -391,6 +398,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                 }
             } else {
                 self.hud?.hide(true)
+
                 if requestErrorType == .ResponseError {
                     //Error in api requirements
                     let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
@@ -400,7 +408,15 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                     Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
                 } else if requestErrorType == .NoInternetConnection {
                     //No internet connection
-                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                    //Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                    if self.isJsonStringEmpty() {
+                        self.addEmptyView()
+                    } else {
+                        //show cached data
+                        self.showNoDataBanner()
+                        self.populateHomePageWithDictionary(self.coreDataJsonString())
+                    }
+                    
                 } else if requestErrorType == .RequestTimeOut {
                     //Request timeout
                     Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
@@ -410,6 +426,71 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                 }
             }
         })
+    }
+    
+    //MARK: -
+    //MARK: - Show No Data Banner
+    func showNoDataBanner() {
+        let kNoInternetViewHeight: CGFloat = 26
+        let noInternetView: UIView = XibHelper.puffViewWithNibName("NoInternetConnectionView", index: 0)
+        noInternetView.frame = CGRectMake(0, 20, self.view.frame.size.width, kNoInternetViewHeight)
+        noInternetView.layer.zPosition = 100
+        noInternetView.alpha = 0
+        self.view.addSubview(noInternetView)
+        
+        UIView.animateWithDuration(2.0, delay: 1.0, usingSpringWithDamping: 0.8, initialSpringVelocity: 3.0, options: UIViewAnimationOptions.CurveEaseInOut, animations: ({
+           noInternetView.alpha = 1
+        }), completion: {
+            (value: Bool) in
+            Delay.delayWithDuration(0.3, completionHandler: { (success) -> Void in
+                UIView.animateWithDuration(2.0, delay: 1.0, usingSpringWithDamping: 0.8, initialSpringVelocity: 3.0, options: UIViewAnimationOptions.CurveEaseInOut, animations: ({
+                    noInternetView.alpha = 0
+                }), completion: {
+                    (value: Bool) in
+                    noInternetView.removeFromSuperview()
+                })
+            })
+        })
+    }
+    
+    //MARK: -
+    //MARK: - Add or Update Home Data to Core Data With Data String
+    func addOrUpdateHomeDataToCoreDataWithDataString(jsonString: String) {
+        var homeEntities: [HomeEntity] = HomeEntity.findAll() as! [HomeEntity]
+        
+        if homeEntities.count == 0 {
+            let homeEntity: HomeEntity = HomeEntity.createEntity() as! HomeEntity
+            homeEntity.json = jsonString
+            homeEntities.append(homeEntity)
+            NSManagedObjectContext.defaultContext().saveToPersistentStoreAndWait()
+            println("new record added to homeEntity")
+        } else {
+            let homeEntity: HomeEntity = homeEntities.first!
+            homeEntity.json = jsonString
+            homeEntities.append(homeEntity)
+            NSManagedObjectContext.defaultContext().saveToPersistentStoreAndWait()
+            println("updated record in homeEntity")
+        }
+    }
+    
+    //MARK: - 
+    //MARK: - isJsonStringEmpty
+    
+    func isJsonStringEmpty() -> Bool {
+        var homeEntities: [HomeEntity] = HomeEntity.findAll() as! [HomeEntity]
+        
+        if homeEntities.count == 0 {
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    //MARK: -
+    //MARK: -  Core Data Json String
+    func coreDataJsonString() -> NSDictionary {
+        let homeEntities: [HomeEntity] = HomeEntity.findAll() as! [HomeEntity]
+        return StringHelper.convertStringToDictionary(homeEntities.first!.json)
     }
     
     //MARK: - Populate Home PageWith  Dictionary
@@ -485,7 +566,15 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                 if requestErrorType == .ResponseError {
                     //Error in api requirements
                     let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
-                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                    
+                    if errorModel.message == "The access token provided is invalid." {
+                        UIAlertController.displayAlertRedirectionToLogin(self, actionHandler: { (sucess) -> Void in
+                            self.logout()
+                        })
+                    } else {
+                        Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                    }
+                    
                 } else if requestErrorType == .AccessTokenExpired {
                     self.fireRefreshToken()
                 } else if requestErrorType == .PageNotFound {
@@ -536,14 +625,19 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             } else {
                 //Forcing user to logout.
                 UIAlertController.displayAlertRedirectionToLogin(self, actionHandler: { (sucess) -> Void in
-                    SessionManager.logout()
-                    FBSDKLoginManager().logOut()
-                    GPPSignIn.sharedInstance().signOut()
-                    let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-                    appDelegate.startPage()
+                   self.logout()
                 })
             }
         })
+    }
+    
+    //MARK: logout
+    func logout() {
+        SessionManager.logout()
+        FBSDKLoginManager().logOut()
+        GPPSignIn.sharedInstance().signOut()
+        let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        appDelegate.startPage()
     }
     
     //MARK: - Show HUD
@@ -562,8 +656,8 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     
     // MARK: - Did Tap Reload
     func didTapReload() {
+        self.emptyView?.removeFromSuperview()
         self.fireGetHomePageData(true)
-        self.emptyView?.hidden = true
     }
     
     //MARK: - UICollectionView Data Source

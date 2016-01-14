@@ -65,7 +65,7 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
     var totalUnitCostTitle = StringHelper.localizedStringWithKey("TRANSACTION_DETAILS_UNIT_COST_LOCALIZE_KEY")
     var shippingFeeTitle = StringHelper.localizedStringWithKey("TRANSACTION_DETAILS_SHIPPING_LOCALIZE_KEY")
     var totalCostTitle = StringHelper.localizedStringWithKey("TRANSACTION_DETAILS_TOTAL_COST_LOCALIZE_KEY")
-    
+    var voucherDiscountTitle = StringHelper.localizedStringWithKey("TRANSACTION_DETAILS_VOUCHER_DISCOUNT_LOCALIZE_KEY")
     //Delivery Status
     var deliveryStatus = StringHelper.localizedStringWithKey("TRANSACTION_DETAILS_DELIVERY_STATUS_LOCALIZE_KEY")
     var checkIn = StringHelper.localizedStringWithKey("TRANSACTION_DETAILS_CHECKIN_LOCALIZE_KEY")
@@ -181,26 +181,17 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let productDetails = TransactionProductDetailsViewController(nibName: "TransactionProductDetailsViewController", bundle: nil)
-        productDetails.orderProductId = self.table[indexPath.section].transactions[indexPath.row].orderProductId
-        productDetails.productId = self.table[indexPath.section].transactions[indexPath.row].productId
-        productDetails.quantity = self.table[indexPath.section].transactions[indexPath.row].quantity
-        productDetails.unitPrice = self.table[indexPath.section].transactions[indexPath.row].unitPrice
-        //productDetails.totalPrice = self.calculateTotalUnitCost(self.table[indexPath.section].transactions[indexPath.row].quantity, price: self.table[indexPath.section].transactions[indexPath.row].unitPrice)
-        productDetails.totalPrice = self.table[indexPath.section].transactions[indexPath.row].totalPrice.formatToPeso()
-        productDetails.hasProductFeedback = self.table[indexPath.section].transactions[indexPath.row].hasProductFeedback
-        //self.table[indexPath.section].transactions[indexPath.row].totalPrice
-        productDetails.productName = self.table[indexPath.section].transactions[indexPath.row].productName
+        productDetails.table = self.table
+        productDetails.indexSection = indexPath.section
+        productDetails.indexRow = indexPath.row
         productDetails.transactionId = self.transactionId
-        productDetails.isCancellable = self.table[indexPath.section].transactions[indexPath.row].isCancellable
         self.navigationController?.pushViewController(productDetails, animated: true)
     }
     
     func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         self.transactionSectionView = XibHelper.puffViewWithNibName("TransactionViews", index: 7) as! TransactionSectionFooterView
         self.transactionSectionView.delegate = self
-        self.transactionSectionView.sellerContactNumberTitle.text = self.contactNumber
         self.transactionSectionView.sellerNameLabelTitle.text = self.seller
-        self.transactionSectionView.messageButton.setTitle(self.message, forState: UIControlState.Normal)
         if self.table.count != 0 {
             if self.table[section].feedback {
                 self.transactionSectionView.leaveFeedbackButton.backgroundColor = Constants.Colors.appTheme
@@ -217,12 +208,31 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
                 self.transactionSectionView.leaveFeedbackButton.setTitleColor(Constants.Colors.appTheme, forState: UIControlState.Normal)
                 self.viewLeaveFeedback = true
             }
+            
+            if self.transactionDetailsModel.isReseller[section] {
+                self.transactionSectionView.sellerContactNumberTitle.hidden = true
+                self.transactionSectionView.sellerContactNumber.hidden = true
+                self.transactionSectionView.messageButton.hidden = true
+                self.transactionSectionView.sellerContactNumberTitle.text = self.contactNumber
+                self.transactionSectionView.sellerContactNumber.text = self.table[section].sellerContact
+                self.transactionSectionView.messageButton.setTitle(self.message, forState: UIControlState.Normal)
+                self.transactionSectionView.messageButton.backgroundColor = Constants.Colors.appTheme
+                self.transactionSectionView.messageButton.tag = self.table[section].sellerIdForFeedback
+            } else {
+                self.transactionSectionView.sellerContactNumberTitle.hidden = false
+                self.transactionSectionView.sellerContactNumber.hidden = false
+                self.transactionSectionView.messageButton.hidden = false
+                self.transactionSectionView.sellerContactNumberTitle.text = self.contactNumber
+                self.transactionSectionView.sellerContactNumber.text = self.table[section].sellerContact
+                self.transactionSectionView.messageButton.setTitle(self.message, forState: UIControlState.Normal)
+                self.transactionSectionView.messageButton.backgroundColor = Constants.Colors.appTheme
+                self.transactionSectionView.messageButton.tag = self.table[section].sellerIdForFeedback
+            }
+            
+                
             self.transactionSectionView.leaveFeedbackButton.tag = self.table[section].sellerIdForFeedback
-            self.transactionSectionView.messageButton.backgroundColor = Constants.Colors.appTheme
-            self.transactionSectionView.messageButton.tag = self.table[section].sellerIdForFeedback
             self.transactionSectionView.sellerNameLabel.text = self.table[section].sellerName
             self.transactionSectionView.sellerNameLabel.tag = self.table[section].sellerIdForFeedback
-            self.transactionSectionView.sellerContactNumber.text = self.table[section].sellerContact
         }
         
         return self.transactionSectionView
@@ -301,6 +311,7 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
                     //(self.transactionDetailsModel.transactionUnitPrice).formatToPeso()
                 transactionDetailsView.shippingFeeLabel.text = (self.transactionDetailsModel.transactionShippingFee).formatToPeso()
                 transactionDetailsView.totalCostLabel.text = (self.transactionDetailsModel.transactionTotalPrice).formatToPeso()
+                transactionDetailsView.voucherDiscountLabel.text = (self.transactionDetailsModel.voucherDiscount).formatToTwoDecimal().formatToPeso()
                 //("\((self.transactionDetailsModel.transactionUnitPrice + self.transactionDetailsModel.transactionShippingFee))").formatToTwoDecimal().formatToPeso()
                 
             }
@@ -313,6 +324,7 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
             transactionDetailsView.unitCostTitleLabel.text = self.totalUnitCostTitle
             transactionDetailsView.shippingFeeTitleLabel.text = self.shippingFeeTitle
             transactionDetailsView.totalCostTitleLabel.text = self.totalCostTitle
+            transactionDetailsView.voucherDiscountTitleLabel.text = self.voucherDiscountTitle
             if self.transactionType == StringHelper.localizedStringWithKey("TRANSACTION_ALL_LOCALIZE_KEY") {
                 transactionDetailsView.statusLabel.text = self.orderStatus
             } else {
@@ -613,7 +625,7 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
                         }
                     }
                     
-                    self.table.append(TransactionDetailsModel(sellerName: self.transactionDetailsModel!.sellerStore[a], sellerContact: self.transactionDetailsModel!.sellerContactNumber[a], id: self.transactionDetailsModel.sellerId[a], sellerIdForFeedback: self.transactionDetailsModel.sellerId[a], feedback: self.transactionDetailsModel.hasFeedback[a], transactions: arr, orderStatus: self.transactionDetailsModel.name[a]))
+                    self.table.append(TransactionDetailsModel(sellerName: self.transactionDetailsModel!.sellerStore[a], sellerContact: self.transactionDetailsModel!.sellerContactNumber[a], id: self.transactionDetailsModel.sellerId[a], sellerIdForFeedback: self.transactionDetailsModel.sellerId[a], feedback: self.transactionDetailsModel.hasFeedback[a], transactions: arr, orderStatus: self.transactionDetailsModel.name[a], isAffiliate: self.transactionDetailsModel.isReseller[a]))
                 }
                 
                 if self.headerView == nil {

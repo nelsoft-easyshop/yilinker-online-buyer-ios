@@ -235,6 +235,7 @@
                     </constraints>
                     <connections>
                         <outlet property="dataSource" destination="-1" id="YZ6-tT-yXk"/>
+                        <outlet property="delegate" destination="-1" id="XPE-lU-DGl"/>
                     </connections>
                 </tableView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Q5o-bR-J25" userLabel="buttons container">

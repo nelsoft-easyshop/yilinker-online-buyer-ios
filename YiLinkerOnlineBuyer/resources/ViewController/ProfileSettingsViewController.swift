@@ -143,9 +143,9 @@ class ProfileSettingsViewController: UIViewController, UITableViewDataSource, UI
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        
         if indexPath.row == tableData.count {
             self.fireDeleteRegistration(SessionManager.gcmToken())
-            
         }
     }
     
@@ -213,8 +213,6 @@ class ProfileSettingsViewController: UIViewController, UITableViewDataSource, UI
         let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         appDelegate.changeRootToHomeView()
     }
-    
-
     
     // MARK: - ProfileSettingsTableViewCellDelegate
     func settingsSwitchAction(sender: AnyObject, value: Bool) {

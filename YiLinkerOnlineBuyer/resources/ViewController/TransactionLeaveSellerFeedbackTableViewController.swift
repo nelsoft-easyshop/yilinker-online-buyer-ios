@@ -159,6 +159,7 @@ class TransactionLeaveSellerFeedbackTableViewController: UITableViewController, 
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
                 println(error.description)
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+    
                if task.statusCode == 401 {
                     self.requestRefreshToken()
                     self.tableView.reloadData()
