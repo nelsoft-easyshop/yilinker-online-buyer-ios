@@ -12,6 +12,7 @@ enum MessagingThreadRequestType {
     case GetConversation
     case AttachImage
     case SendImage
+    case SetAsRead
 }
 
 class MessagingThreadViewController: UIViewController {
@@ -280,6 +281,7 @@ class MessagingThreadViewController: UIViewController {
     /* Function to get conversation/message list
     * and process it to convert it to object */
     func fireGetConversationList() {
+        self.requestType = MessagingThreadRequestType.GetConversation
         if isEndReached {
             Toast.displayToastWithMessage(MessagingLocalizedStrings.noMoreMessages, duration: 1.5, view: self.view)
         } else {
@@ -356,6 +358,7 @@ class MessagingThreadViewController: UIViewController {
     *  When API request is successful, the values of sent message of messageTableData
     *  are updated to values from the server. */
     func fireSendMessage(message: String, isImage: Bool) {
+        self.requestType = MessagingThreadRequestType.SendImage
         var URL: String = ""
         
         self.setSendButtonEnabled(false)
@@ -382,6 +385,7 @@ class MessagingThreadViewController: UIViewController {
                         self.messageTableData[indexLast].timeSent = tempVar
                     }
                     self.messageTableData[indexLast].isSent = true
+                    self.messageTableData[indexLast].hasError = false
                     self.tableView.reloadData()
                 }
             } else {
@@ -416,6 +420,7 @@ class MessagingThreadViewController: UIViewController {
     
     // Function to set current message thread as read/seen
     func fireSetConversationAsRead() {
+        self.requestType = MessagingThreadRequestType.SetAsRead
         var URL: String = "\(APIAtlas.ACTION_SET_AS_READ_V2)?access_token=\(SessionManager.accessToken())"
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         
@@ -453,6 +458,7 @@ class MessagingThreadViewController: UIViewController {
     * It uploads the image to the server and parse the JSON to 
     * get the URL of the image and send it as message */
     func fireAttachImage(image: UIImage) {
+        self.requestType = MessagingThreadRequestType.AttachImage
         var URL: String = ""
         
         self.setSendButtonEnabled(false)
@@ -520,9 +526,9 @@ class MessagingThreadViewController: UIViewController {
                     self.fireAttachImage(self.imageUploadTemp)
                 case .SendImage:
                     self.fireSendMessage(self.messageTemp, isImage: self.isImageTemp)
+                case .SetAsRead:
+                    self.fireSetConversationAsRead()
                 }
-                
-                self.fireGetConversationList()
             } else {
                 //Forcing user to logout.
                 UIAlertController.displayAlertRedirectionToLogin(self, actionHandler: { (sucess) -> Void in
@@ -796,15 +802,29 @@ extension MessagingThreadViewController: UITableViewDataSource, UITableViewDeleg
         
         let tempModel: MessagingMessageModel = messageTableData[indexPath.row]
         
-        if tempModel.isImage == "1" {
-            let productFullScreen: ProductFullScreenViewController = ProductFullScreenViewController(nibName: "ProductFullScreenViewController", bundle: nil)
-            productFullScreen.images.append(self.messageTableData[indexPath.row].message)
-            productFullScreen.index = 0
-            productFullScreen.screenSize = self.view.frame
-            
-            self.navigationController?.presentViewController(productFullScreen, animated: false, completion: nil)
+        if tempModel.hasError {
+            switch self.requestType {
+            case .GetConversation :
+                self.fireGetConversationList()
+            case .AttachImage :
+                self.fireAttachImage(self.imageUploadTemp)
+            case .SendImage:
+                self.fireSendMessage(self.messageTemp, isImage: self.isImageTemp)
+            case .SetAsRead:
+                self.fireSetConversationAsRead()
+            }
         } else {
-            self.closeKeyboard()
+            if tempModel.isImage == "1" {
+                
+                let productFullScreen: ProductFullScreenViewController = ProductFullScreenViewController(nibName: "ProductFullScreenViewController", bundle: nil)
+                productFullScreen.images.append(self.messageTableData[indexPath.row].message)
+                productFullScreen.index = 0
+                productFullScreen.screenSize = self.view.frame
+                
+                self.navigationController?.presentViewController(productFullScreen, animated: false, completion: nil)
+            } else {
+                self.closeKeyboard()
+            }
         }
     }
     
