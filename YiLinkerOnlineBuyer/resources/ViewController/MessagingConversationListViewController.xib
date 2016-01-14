@@ -7,6 +7,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MessagingConversationListViewController" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
             <connections>
                 <outlet property="newMessageButton" destination="2Jb-4F-YBK" id="YaZ-8e-Jak"/>
+                <outlet property="noMessageLabel" destination="xUO-JJ-Fbl" id="xUe-36-eHV"/>
                 <outlet property="tableView" destination="gT0-SX-10M" id="dVh-Bb-Nf1"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -36,6 +37,16 @@
                         <action selector="newMessageAction:" destination="-1" eventType="touchUpInside" id="LgH-Cz-ACo"/>
                     </connections>
                 </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No message." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xUO-JJ-Fbl">
+                    <rect key="frame" x="122" y="323" width="131" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="21" id="JhW-zn-KMC"/>
+                        <constraint firstAttribute="width" constant="131" id="seU-ql-UYs"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
+                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
@@ -43,8 +54,10 @@
                 <constraint firstAttribute="bottom" secondItem="gT0-SX-10M" secondAttribute="bottom" id="KFP-et-YvG"/>
                 <constraint firstItem="gT0-SX-10M" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Kcs-cz-s4f"/>
                 <constraint firstAttribute="trailing" secondItem="gT0-SX-10M" secondAttribute="trailing" id="cgd-Rl-KG8"/>
+                <constraint firstAttribute="centerY" secondItem="xUO-JJ-Fbl" secondAttribute="centerY" id="dzO-eF-JRu"/>
                 <constraint firstAttribute="bottom" secondItem="2Jb-4F-YBK" secondAttribute="bottom" constant="32" id="nJf-Mp-8WX"/>
                 <constraint firstAttribute="trailing" secondItem="2Jb-4F-YBK" secondAttribute="trailing" constant="12" id="txA-YI-VDg"/>
+                <constraint firstAttribute="centerX" secondItem="xUO-JJ-Fbl" secondAttribute="centerX" id="ufc-2X-U8h"/>
             </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
         </view>
