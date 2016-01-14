@@ -189,7 +189,6 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        
         if self.tableView.contentOffset.y <= 140 {
             self.navigationController?.navigationBar.alpha = 0
         }
@@ -1132,7 +1131,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         if self.emptyView == nil {
             self.emptyView = UIView.loadFromNibNamed("EmptyView", bundle: nil) as? EmptyView
             self.emptyView!.delegate = self
-            self.emptyView!.frame = self.view.bounds
+            self.emptyView!.frame = UIScreen.mainScreen().bounds
             self.closeButton.removeFromSuperview()
             self.emptyView?.addSubview(self.closeButton)
             self.closeButton.transform = CGAffineTransformMakeTranslation(8.0, 34.0)
