@@ -237,6 +237,8 @@ MESSAGING_HOUR_AGO = "hour ago";
 MESSAGING_DAY_AGO = "day ago";
 MESSAGING_NO_MESSAGE = "No more message.";
 MESSAGING_WRITE_TO = "Write to . . .";
+MESSAGING_NO_MESSAGE_LOCALIZE_KEY = "No message.";
+MESSAGING_NO_RESULTS_LOCALIZE_KEY = "No results found.";
 
 
 // MARK: - Rj's Modules

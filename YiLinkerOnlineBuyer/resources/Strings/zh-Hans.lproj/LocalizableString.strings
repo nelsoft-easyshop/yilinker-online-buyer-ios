@@ -232,6 +232,8 @@ MESSAGING_HOUR_AGO = "小时前"; //No Chinese String
 MESSAGING_DAY_AGO = "一天前"; //No Chinese String
 MESSAGING_NO_MESSAGE = "没有更多的消息。"; //No Chinese String
 MESSAGING_WRITE_TO = "写到..."; //No Chinese String
+MESSAGING_NO_MESSAGE_LOCALIZE_KEY = "没有消息."; //No Chinese String
+MESSAGING_NO_RESULTS_LOCALIZE_KEY = "未找到结果。"; //No Chinese String
 
 // MARK: - Rj's Modules
 
