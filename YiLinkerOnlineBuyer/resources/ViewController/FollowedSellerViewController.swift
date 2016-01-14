@@ -117,7 +117,7 @@ class FollowedSellerViewController: UIViewController, EmptyViewDelegate {
         
         manager.POST(APIAtlas.getFollowedSellers, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            println(responseObject)
+
             self.followedSellerModel = FollowedSellerModel.parseDataWithDictionary(responseObject)
             
             if self.followedSellerModel.id.count != 0 {
@@ -166,19 +166,24 @@ class FollowedSellerViewController: UIViewController, EmptyViewDelegate {
     // MARK: - Empty View
     
     func addEmptyView() {
-        self.emptyView = UIView.loadFromNibNamed("EmptyView", bundle: nil) as? EmptyView
-        self.emptyView?.frame = self.view.frame
-        self.emptyView!.delegate = self
-        self.view.addSubview(self.emptyView!)
+        self.hud?.hide(true)
+        if self.emptyView == nil {
+            self.emptyView = UIView.loadFromNibNamed("EmptyView", bundle: nil) as? EmptyView
+            self.emptyView?.frame = self.view.frame
+            self.emptyView!.delegate = self
+            self.view.addSubview(self.emptyView!)
+        } else {
+            self.emptyView!.hidden = false
+        }
     }
     
     func didTapReload() {
         if Reachability.isConnectedToNetwork() {
+            self.emptyView?.hidden = true
             requestFollowedSelers()
         } else {
             addEmptyView()
         }
-        self.emptyView?.removeFromSuperview()
     }
     
 }
