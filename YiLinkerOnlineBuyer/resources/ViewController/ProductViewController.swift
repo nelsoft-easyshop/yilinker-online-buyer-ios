@@ -65,6 +65,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     @IBOutlet weak var buttonSubContainer: UIView!
     @IBOutlet weak var buyItNowLabel: UILabel!
     @IBOutlet weak var blockerView: UIView!
+    @IBOutlet weak var containerScrollView: UIScrollView!
     
     var headerView: UIView!
     var footerView: UIView!
@@ -95,7 +96,6 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     var newFrame: CGRect!
     var visibility = 0.0
     var lastContentOffset: CGFloat = 0.0
-    @IBOutlet weak var containerScrollView: UIScrollView!
     
     var canShowExtendedDetails: Bool = false
     var isScrollingUp: Bool = false
@@ -254,7 +254,17 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
             }
         }
         
+        // if scrolling the table view
         if scrollView == self.tableView {
+            // reached top or bottom
+            if scrollView.contentOffset.y <= 0.0 {
+                visibility = 0.0
+                canShowExtendedDetails = false
+            } else if scrollView.contentOffset.y + scrollView.frame.size.height == scrollView.contentSize.height {
+                visibility = 1.0
+                canShowExtendedDetails = true
+            }
+            
             if visibility > 1.0 {
                 visibility = 1.0
             } else if visibility < 0.0 {
@@ -262,27 +272,21 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
             }
         }
 
-        // reached top or bottom
-        if scrollView.contentOffset.y <= 0.0 && scrollView == self.tableView {
-            visibility = 0.0
-            canShowExtendedDetails = false
-        } else if scrollView.contentOffset.y + scrollView.frame.size.height == scrollView.contentSize.height && scrollView == self.tableView{
-            visibility = 1.0
-            canShowExtendedDetails = true
-        }
-
         self.navigationController?.navigationBar.alpha = CGFloat(visibility)
         
+        // if scrolling the scroll view
         if scrollView == self.containerScrollView {
             if self.lastContentOffset > scrollView.contentOffset.y {
                 self.isScrollingUp = false
             } else if self.lastContentOffset < scrollView.contentOffset.y {
                 self.isScrollingUp = true
             }
+            
+            
+            self.tableView.transform = CGAffineTransformMakeTranslation(0.0, self.containerScrollView.contentOffset.y * -1.0)
         }
         
         self.lastContentOffset = scrollView.contentOffset.y
-        
     }
 
     // Scroll to position when reached position
@@ -975,7 +979,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         
         self.hud?.hide(true)
         
-        addExtendedView()
+//        addExtendedView()
         self.buttonsContainer.layer.zPosition = 2
         
         if isFromCart {
@@ -984,23 +988,8 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
             self.buttonsContainer.hidden = true
             self.productDetailsExtendedView.frame.size.height += 65
         }
-        
-        let screen: CGRect = UIScreen.mainScreen().bounds
-        
-        if screen.height == 480 {
-            println("iPhone4 or 4s")
-            self.tableView.contentSize.height += 187
-        } else if screen.height == 568 {
-            self.tableView.contentSize.height += 99
-            println("iPhone5 or 5s or 5c")
-        } else if screen.height == 667 {
-            println("iPhone 6 or 6s")
-            // Default size
-        } else if screen.height == 736 {
-            println("iPhone6 Plus or 6s Plus")
-            self.tableView.contentSize.height -= 69
-        }
-        
+
+        self.containerScrollView.addSubview(self.tableView)
         self.containerScrollView.addSubview(self.getProductExtendedView())
         self.productExtendedView.frame.origin.y = self.containerScrollView.frame.size.height
         self.containerScrollView.contentSize = CGSizeMake(self.containerScrollView.frame.size.width, self.containerScrollView.frame.size.height + self.productExtendedView.frame.size.height)
