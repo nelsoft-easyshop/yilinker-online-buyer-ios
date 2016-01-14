@@ -14,6 +14,8 @@ class MessagingContactListViewController: UIViewController {
     
     @IBOutlet weak var searchTextField: UITextField!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var noResultLabel: UILabel!
+    var emptyView : EmptyView?
     
     var hud: MBProgressHUD?
     
@@ -32,9 +34,15 @@ class MessagingContactListViewController: UIViewController {
         self.initializeViews()
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        self.emptyView?.hidden = true
+    }
+    
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         self.resetData()
+        self.contactsTableData.removeAll(keepCapacity: false)
         self.fireGetContactList()
     }
     
@@ -68,6 +76,10 @@ class MessagingContactListViewController: UIViewController {
         self.searchTextField.attributedPlaceholder = NSAttributedString(string:MessagingLocalizedStrings.writeTo,
             attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()])
         self.searchTextField.tintColor = UIColor.whiteColor()
+        
+        //Initialize no results label
+        self.noResultLabel.hidden = true
+        self.noResultLabel.text = MessagingLocalizedStrings.noResultLocalizeString
     }
     
     // Add back button to navigation bar
@@ -112,6 +124,11 @@ class MessagingContactListViewController: UIViewController {
                 UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                 
                 if successful {
+                    
+                    if self.isFromSearch {
+                        self.contactsTableData.removeAll(keepCapacity: false)
+                    }
+                    
                     //Parsing of data
                     //Loop to data object to parse json
                     let dictionary: NSDictionary = responseObject as! NSDictionary
@@ -122,6 +139,12 @@ class MessagingContactListViewController: UIViewController {
                                 self.contactsTableData.append(MessagingContactModel.parseDataFromDictionary(tempItem))
                                 println(MessagingContactModel.parseDataFromDictionary(tempItem).fullName)
                             }
+                        }
+                        
+                        if self.contactsTableData.count == 0 {
+                            self.noResultLabel.hidden = false
+                        } else {
+                            self.noResultLabel.hidden = true
                         }
                         
                         //Check if the pagination reaches end
@@ -135,6 +158,7 @@ class MessagingContactListViewController: UIViewController {
                     self.tableView.reloadData()
                     
                 } else {
+                    self.addEmptyView()
                     if requestErrorType == .ResponseError {
                         //Error in api requirements
                         let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
@@ -153,6 +177,8 @@ class MessagingContactListViewController: UIViewController {
                     } else if requestErrorType == .UnRecognizeError {
                         //Unhandled error
                         Toast.displayToastWithMessage(Constants.Localized.error, duration: 1.5, view: self.view)
+                    } else {
+                        self.emptyView?.hidden = true
                     }
                 }
                 
@@ -204,7 +230,6 @@ class MessagingContactListViewController: UIViewController {
         self.isEndReached = false
         self.keyword = ""
         self.page = 1
-        self.contactsTableData.removeAll(keepCapacity: false)
     }
 }
 
@@ -238,6 +263,9 @@ extension MessagingContactListViewController: UITableViewDataSource, UITableView
     // UITableViewDelegate
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        var viewController = MessagingThreadViewController(nibName: "MessagingThreadViewController", bundle: nil)
+        viewController.receiver = self.contactsTableData[indexPath.row]
+        self.navigationController?.pushViewController(viewController, animated:true)
     }
     
     // UIScrollViewDelegate
@@ -259,3 +287,23 @@ extension MessagingContactListViewController: UITableViewDataSource, UITableView
         self.searchTextField.resignFirstResponder()
     }
 }
+ 
+ extension MessagingContactListViewController : EmptyViewDelegate{
+    func addEmptyView() {
+        if self.emptyView == nil {
+            self.emptyView = UIView.loadFromNibNamed("EmptyView", bundle: nil) as? EmptyView
+            self.emptyView?.frame = self.view.frame
+            self.emptyView!.delegate = self
+            self.view.addSubview(self.emptyView!)
+        } else {
+            self.emptyView!.hidden = false
+        }
+    }
+    
+    func didTapReload() {
+        self.resetData()
+        self.contactsTableData.removeAll(keepCapacity: false)
+        self.fireGetContactList()
+        self.emptyView?.hidden = true
+    }
+ }

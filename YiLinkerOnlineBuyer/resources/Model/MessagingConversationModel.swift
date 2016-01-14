@@ -38,6 +38,8 @@ class MessagingConversationModel: NSObject {
             if dictionary["userId"] != nil {
                 if let tempVar = dictionary["userId"] as? Int {
                     contactDetails.userId = "\(tempVar)"
+                } else if let tempVar = dictionary["userId"] as? String {
+                    contactDetails.userId = tempVar
                 }
             }
             

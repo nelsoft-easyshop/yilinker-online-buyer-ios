@@ -24,8 +24,11 @@ class MessagingMessageModel: NSObject {
     var isSeen: String = ""
     var timeSeen: String = ""
     var isSenderOnline: String = ""
+    var isSent: Bool = true
+    var hasError: Bool = false
+    var image: UIImage = UIImage(named: "dummy-placeholder")!
     
-    init(messageId: String, senderId: String, recipientId: String, senderProfileImageUrl: String, senderProfileThumbnailImageUrl: String, senderProfileSmallImageUrl: String, senderProfileMediumImageUrl: String, senderProfileLargeImageUrl: String, message: String, isImage: String, timeSent: String, isSeen: String, timeSeen: String, isSenderOnline: String) {
+    init(messageId: String, senderId: String, recipientId: String, senderProfileImageUrl: String, senderProfileThumbnailImageUrl: String, senderProfileSmallImageUrl: String, senderProfileMediumImageUrl: String, senderProfileLargeImageUrl: String, message: String, isImage: String, timeSent: String, isSeen: String, timeSeen: String, isSenderOnline: String, isSent: Bool, hasError: Bool, image: UIImage) {
         self.messageId = messageId
         self.senderId = senderId
         self.recipientId = recipientId
@@ -40,6 +43,9 @@ class MessagingMessageModel: NSObject {
         self.isSeen = isSeen
         self.timeSeen = timeSeen
         self.isSenderOnline = isSenderOnline
+        self.isSent = isSent
+        self.hasError = hasError
+        self.image = image
     }
     
     
@@ -58,6 +64,9 @@ class MessagingMessageModel: NSObject {
         var isSeen: String = ""
         var timeSeen: String = ""
         var isSenderOnline: String = ""
+        var isSent: Bool = true
+        var hasError: Bool = false
+        var image: UIImage = UIImage(named: "dummy-placeholder")!
         
         if dictionary.isKindOfClass(NSDictionary) {
             if dictionary["messageId"] != nil {
@@ -145,6 +154,6 @@ class MessagingMessageModel: NSObject {
             }
         }
         
-        return MessagingMessageModel(messageId: messageId, senderId: senderId, recipientId: recipientId, senderProfileImageUrl: senderProfileImageUrl, senderProfileThumbnailImageUrl: senderProfileThumbnailImageUrl, senderProfileSmallImageUrl: senderProfileSmallImageUrl, senderProfileMediumImageUrl: senderProfileMediumImageUrl, senderProfileLargeImageUrl: senderProfileLargeImageUrl, message: message, isImage: isImage, timeSent: timeSent, isSeen: isSeen, timeSeen: timeSeen, isSenderOnline: isSenderOnline)
+        return MessagingMessageModel(messageId: messageId, senderId: senderId, recipientId: recipientId, senderProfileImageUrl: senderProfileImageUrl, senderProfileThumbnailImageUrl: senderProfileThumbnailImageUrl, senderProfileSmallImageUrl: senderProfileSmallImageUrl, senderProfileMediumImageUrl: senderProfileMediumImageUrl, senderProfileLargeImageUrl: senderProfileLargeImageUrl, message: message, isImage: isImage, timeSent: timeSent, isSeen: isSeen, timeSeen: timeSeen, isSenderOnline: isSenderOnline, isSent: isSent, hasError: hasError, image: image)
     }
 }

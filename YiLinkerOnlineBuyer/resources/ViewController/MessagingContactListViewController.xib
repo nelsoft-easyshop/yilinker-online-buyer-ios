@@ -11,6 +11,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MessagingContactListViewController" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
             <connections>
+                <outlet property="noResultLabel" destination="1Ch-sY-AWi" id="2Te-CZ-CNb"/>
                 <outlet property="searchTextField" destination="9h8-qq-nIe" id="Bcw-nI-qTl"/>
                 <outlet property="tableView" destination="SyW-vs-dlj" id="TGa-w3-14e"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -49,6 +50,16 @@
                         <constraint firstItem="9h8-qq-nIe" firstAttribute="top" secondItem="gkO-Vp-XI1" secondAttribute="top" constant="4" id="yTI-iW-i2b"/>
                     </constraints>
                 </view>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No results found." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Ch-sY-AWi">
+                    <rect key="frame" x="122" y="323" width="131" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="131" id="com-Pg-8D8"/>
+                        <constraint firstAttribute="height" constant="21" id="r6H-Ar-y8n"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
+                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
@@ -59,6 +70,8 @@
                 <constraint firstItem="SyW-vs-dlj" firstAttribute="top" secondItem="gkO-Vp-XI1" secondAttribute="bottom" id="XvJ-iq-LTc"/>
                 <constraint firstAttribute="trailing" secondItem="gkO-Vp-XI1" secondAttribute="trailing" id="YOH-Q0-Ucd"/>
                 <constraint firstAttribute="bottom" secondItem="SyW-vs-dlj" secondAttribute="bottom" id="YbV-gO-5gy"/>
+                <constraint firstAttribute="centerX" secondItem="1Ch-sY-AWi" secondAttribute="centerX" id="Ze0-8b-j2b"/>
+                <constraint firstAttribute="centerY" secondItem="1Ch-sY-AWi" secondAttribute="centerY" id="g1N-a2-vjo"/>
             </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
         </view>

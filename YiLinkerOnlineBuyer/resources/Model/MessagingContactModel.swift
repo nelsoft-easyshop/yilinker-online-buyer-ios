@@ -54,6 +54,8 @@ class MessagingContactModel: NSObject {
             if dictionary["userId"] != nil {
                 if let tempVar = dictionary["userId"] as? Int {
                     userId = "\(tempVar)"
+                } else if let tempVar = dictionary["userId"] as? String {
+                    userId = tempVar
                 }
             }
             

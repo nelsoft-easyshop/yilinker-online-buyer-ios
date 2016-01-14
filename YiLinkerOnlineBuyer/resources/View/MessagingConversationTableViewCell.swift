@@ -58,19 +58,30 @@ class MessagingConversationTableViewCell: UITableViewCell {
             if interval < 2 {
                 dateText = "\(interval.formatToNoDecimal()) \(MessagingLocalizedStrings.hourAgo)"
             } else {
-                dateText = "\(minutesInterval.formatToNoDecimal()) \(MessagingLocalizedStrings.hoursAgo)"
+                dateText = "\(interval.formatToNoDecimal()) \(MessagingLocalizedStrings.hoursAgo)"
             }
         } else if minutesInterval < (7 * 24 * 60) {     // Lesser than a week
             let interval: Double = minutesInterval / 60 / 24
             if interval < 2 {
                 dateText = "\(interval.formatToNoDecimal()) \(MessagingLocalizedStrings.dayAgo)"
             } else {
-                dateText = "\(minutesInterval.formatToNoDecimal()) \(MessagingLocalizedStrings.daysAgo)"
+                dateText = "\(interval.formatToNoDecimal()) \(MessagingLocalizedStrings.daysAgo)"
             }
         } else {
             dateText = tempDate.formatDateToString("yyyy/MM/dd")
         }
         
         self.dateLabel.text = dateText
+    }
+    
+    func setHasNewMessage(hasNew: Bool) {
+        if hasNew {
+            self.messageLabel.textColor = Constants.Colors.appTheme
+            self.senderNameLabel.textColor = Constants.Colors.appTheme
+        } else {
+            self.messageLabel.textColor = Constants.Colors.grayLine
+            self.senderNameLabel.textColor = Constants.Colors.grayLine
+        }
+        
     }
 }

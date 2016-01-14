@@ -99,17 +99,13 @@ extension UILabel {
     
     func boldFont() {
         let currentFont: UIFont = self.font
-        if let newFont: UIFont = UIFont(name: "\(currentFont.fontName)-Bold", size: currentFont.pointSize) {
-            self.font = newFont
-        }
+        self.font = UIFont.boldSystemFontOfSize(currentFont.pointSize)
         
     }
     
     func unboldFont() {
         let currentFont: UIFont = self.font
-        if let newFont: UIFont = UIFont(name: currentFont.fontName.stringByReplacingOccurrencesOfString("-Bold", withString: ""), size: currentFont.pointSize) {
-            self.font = newFont
-        }
+        self.font = UIFont.systemFontOfSize(currentFont.pointSize)
     }
 }
 

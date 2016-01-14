@@ -41,6 +41,14 @@ struct  MessagingLocalizedStrings {
     
     static let noMoreMessages = StringHelper.localizedStringWithKey("MESSAGING_NO_MESSAGE")
     static let writeTo = StringHelper.localizedStringWithKey("MESSAGING_WRITE_TO")
+    
+    static let addPhotoLocalizeString = StringHelper.localizedStringWithKey("ADDPHOTO_LOCALIZE_KEY")
+    static let selectPhotoLocalizeString = StringHelper.localizedStringWithKey("SELECTPHOTO_LOCALIZE_KEY")
+    static let  takePhotoLocalizeString = StringHelper.localizedStringWithKey("TAKEPHOTO_LOCALIZE_KEY")
+    static let  cancelLocalizeString = StringHelper.localizedStringWithKey("CANCEL_LOCALIZE_KEY")
+    
+    static let  noMessageLocalizeString = StringHelper.localizedStringWithKey("MESSAGING_NO_MESSAGE_LOCALIZE_KEY")
+    static let  noResultLocalizeString = StringHelper.localizedStringWithKey("MESSAGING_NO_RESULTS_LOCALIZE_KEY")
 }
 
 class MessagingConversationListViewController: UIViewController {
@@ -49,6 +57,8 @@ class MessagingConversationListViewController: UIViewController {
 
     @IBOutlet var tableView: UITableView!
     @IBOutlet var newMessageButton: UIButton!
+    @IBOutlet weak var noMessageLabel: UILabel!
+    var emptyView : EmptyView?
     
     var hud: MBProgressHUD?
     
@@ -59,18 +69,39 @@ class MessagingConversationListViewController: UIViewController {
     var page: Int = 1
     var isEndReached: Bool = false
     
+    var showHud: Bool = true
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         self.initializeViews()
+        self.resetAndGetDataWithHud(true)
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        self.emptyView?.hidden = true
     }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        self.isEndReached = false
-        self.page = 1
-        self.conversationsTableData.removeAll(keepCapacity: false)
-        self.fireGetConversationList()
+        
+        //Register notification observer for GCM
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "onReceiveNewMessage:",
+            name: appDelegate.messageKey, object: nil)
+        
+        
+        
+        self.resetAndGetDataWithHud(false)
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        //Unregister notification observer for GCM
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: appDelegate.messageKey, object: nil)
     }
 
     override func didReceiveMemoryWarning() {
@@ -106,6 +137,10 @@ class MessagingConversationListViewController: UIViewController {
         self.newMessageButton.layer.shadowRadius = 2.0;
         
         self.addBackButton()
+        
+        //Initialize no message label
+        self.noMessageLabel.hidden = true
+        self.noMessageLabel.text = MessagingLocalizedStrings.noMessageLocalizeString
     }
     
     // Add back button to navigation bar
@@ -134,25 +169,42 @@ class MessagingConversationListViewController: UIViewController {
     
     
     //MARK: API Requests
-    // Function to get conversation list
+    /* Function to get conversation/message list
+    * and process it to convert it to objects */
     func fireGetConversationList() {
         if isEndReached {
             Toast.displayToastWithMessage(MessagingLocalizedStrings.noMoreMessages, duration: 1.5, view: self.view)
         } else {
-            self.showHUD()
+            if self.showHud {
+                self.showHUD()
+            } else {
+                UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+            }
+            
             WebServiceManager.fireGetConversationListWithUrl("\(APIAtlas.ACTION_GET_CONVERSATION_HEAD_V2)?access_token=\(SessionManager.accessToken())", page: "\(self.page)", limit: "\(self.LIMIT)", actionHandler: { (successful, responseObject, requestErrorType) -> Void in
             
                 println(responseObject)
                 self.hud?.hide(true)
+                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                 if successful {
-                    //Parsing of data
-                    //Loop to data object to parse json
+                    if self.page == 1 {
+                        self.conversationsTableData.removeAll(keepCapacity: false)
+                    }
+                    
+                    /*Parsing of data and loop to data object to parse json
+                    * and converts the json to objects */
                     let dictionary: NSDictionary = responseObject as! NSDictionary
                     if let tempArray = dictionary["data"] as? NSArray {
                         for item in tempArray {
                             if let tempItem = item as? NSDictionary {
                                 self.conversationsTableData.append(MessagingConversationModel.parseDataFromDictionary(tempItem))
                             }
+                        }
+                        
+                        if self.conversationsTableData.count == 0 {
+                            self.noMessageLabel.hidden = false
+                        } else {
+                            self.noMessageLabel.hidden = true
                         }
                         
                         //Check if the pagination reaches end
@@ -166,6 +218,7 @@ class MessagingConversationListViewController: UIViewController {
                     self.tableView.reloadData()
                     
                 } else {
+                    self.addEmptyView()
                     if requestErrorType == .ResponseError {
                         //Error in api requirements
                         let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
@@ -192,6 +245,7 @@ class MessagingConversationListViewController: UIViewController {
     }
     
     //MARK: - Fire Refresh Token
+    /*Function called when access_token is already expired. */
     func fireRefreshToken() {
         self.showHUD()
         WebServiceManager.fireRefreshTokenWithUrl(APIAtlas.refreshTokenUrl, actionHandler: {
@@ -215,6 +269,30 @@ class MessagingConversationListViewController: UIViewController {
     }
     
     //MARK: Util Functions
+    
+    //MARK: GCM Notifications
+    func onReceiveNewMessage(notification : NSNotification){
+        if let info = notification.userInfo as? Dictionary<String, AnyObject> {
+            if let data = info["data"] as? String{
+                if let data2 = data.dataUsingEncoding(NSUTF8StringEncoding){
+                    if let json = NSJSONSerialization.JSONObjectWithData(data2, options: .MutableContainers, error: nil) as? [String:AnyObject] {
+                        if let userId = json["senderUid"] as? Int{
+                            self.resetAndGetDataWithHud(false)
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    
+    func resetAndGetDataWithHud(showHud: Bool) {
+        self.isEndReached = false
+        self.page = 1
+        self.showHud = showHud
+        self.fireGetConversationList()
+    }
+    
     //Show HUD
     func showHUD() {
         if self.hud != nil {
@@ -265,9 +343,9 @@ extension MessagingConversationListViewController: UITableViewDataSource, UITabl
             }
             
             if tempContactModel.hasUnreadMessage.isNotEmpty() || tempContactModel.hasUnreadMessage != "0" {
-                cell.messageLabel.boldFont()
+                cell.setHasNewMessage(true)
             } else {
-                cell.messageLabel.unboldFont()
+                cell.setHasNewMessage(false)
             }
         }
         
@@ -281,6 +359,9 @@ extension MessagingConversationListViewController: UITableViewDataSource, UITabl
     // UITableViewDelegate
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        var viewController = MessagingThreadViewController(nibName: "MessagingThreadViewController", bundle: nil)
+        viewController.receiver = self.conversationsTableData[indexPath.row].contactDetails
+        self.navigationController?.pushViewController(viewController, animated:true)
     }
     
     // UIScrollViewDelegate
@@ -296,5 +377,23 @@ extension MessagingConversationListViewController: UITableViewDataSource, UITabl
         if y > temp {
             self.fireGetConversationList()
         }
+    }
+}
+
+extension MessagingConversationListViewController : EmptyViewDelegate{
+    func addEmptyView() {
+        if self.emptyView == nil {
+            self.emptyView = UIView.loadFromNibNamed("EmptyView", bundle: nil) as? EmptyView
+            self.emptyView?.frame = self.view.frame
+            self.emptyView!.delegate = self
+            self.view.addSubview(self.emptyView!)
+        } else {
+            self.emptyView!.hidden = false
+        }
+    }
+    
+    func didTapReload() {
+        self.resetAndGetDataWithHud(true)
+        self.emptyView?.hidden = true
     }
 }
