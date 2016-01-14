@@ -143,18 +143,77 @@ class ProfileSettingsViewController: UIViewController, UITableViewDataSource, UI
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        
         if indexPath.row == tableData.count {
-            SessionManager.logout()
-            FBSDKLoginManager().logOut()
-            GPPSignIn.sharedInstance().signOut()
-            self.dismissViewControllerAnimated(false, completion: nil)
-            let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-            appDelegate.changeRootToHomeView()
+            self.fireDeleteRegistration(SessionManager.gcmToken())
+        
+        
+//            SessionManager.logout()
+//            FBSDKLoginManager().logOut()
+//            GPPSignIn.sharedInstance().signOut()
+//            self.dismissViewControllerAnimated(false, completion: nil)
+//            let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+//            appDelegate.changeRootToHomeView()
             
         }
     }
     
 
+    func fireDeleteRegistration(registrationID : String) {
+        if Reachability.isConnectedToNetwork() {
+            if(SessionManager.isLoggedIn()){
+                let manager: APIManager = APIManager.sharedInstance
+                let parameters: NSDictionary = [
+                    
+                    "registrationId": "\(registrationID)",
+                    "deviceType"    : "1"
+                    ]   as Dictionary<String, String>
+                
+                let url = "\(APIAtlas.ACTION_GCM_DELETE)?access_token=\(SessionManager.accessToken())"
+                self.showHUD()
+                manager.POST(url, parameters: parameters, success: {
+                    (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+                    println(responseObject)
+                    println("Registration successful!")
+                    self.logoutUser()
+                    self.hud?.hide(true)
+                    }, failure: {
+                        (task: NSURLSessionDataTask!, error: NSError!) in
+                        let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                        println("Registration unsuccessful!")
+                        self.hud?.hide(true)
+                        if task.statusCode == 401 {
+                        } else {
+                            if Reachability.isConnectedToNetwork() {
+                                var info = error.userInfo!
+                                
+                                if info["data"] != nil {
+                                    self.logoutUser()
+                                } else {
+                                    UIAlertController.displaySomethingWentWrongError(self)
+                                }
+                                
+                            } else {
+                                UIAlertController.displayNoInternetConnectionError(self)
+                            }
+                        }
+                        
+                })
+            }
+        } else {
+            UIAlertController.displayNoInternetConnectionError(self)
+        }
+        
+    }
+    
+    func logoutUser() {
+        SessionManager.logout()
+        FBSDKLoginManager().logOut()
+        GPPSignIn.sharedInstance().signOut()
+        self.dismissViewControllerAnimated(false, completion: nil)
+        let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        appDelegate.changeRootToHomeView()
+    }
     
     // MARK: - ProfileSettingsTableViewCellDelegate
     func settingsSwitchAction(sender: AnyObject, value: Bool) {

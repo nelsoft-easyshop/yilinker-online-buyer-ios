@@ -253,8 +253,8 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                 if let data2 = data.dataUsingEncoding(NSUTF8StringEncoding){
                     if let json = NSJSONSerialization.JSONObjectWithData(data2, options: .MutableContainers, error: nil) as? [String:AnyObject] {
                         if self.oldPushNotifData != data {
-                            var count = SessionManager.getUnReadMessagesCount() + 1
-                            SessionManager.setUnReadMessagesCount(count)
+//                            var count = SessionManager.getUnReadMessagesCount() + 1
+//                            SessionManager.setUnReadMessagesCount(count)
                         }
                     }
                 }
