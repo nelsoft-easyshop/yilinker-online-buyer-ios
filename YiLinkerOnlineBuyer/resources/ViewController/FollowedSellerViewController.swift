@@ -111,55 +111,59 @@ class FollowedSellerViewController: UIViewController, EmptyViewDelegate {
     // MARK: - Request
     
     func requestFollowedSelers() {
-        let manager = APIManager.sharedInstance
-        let params = ["access_token": SessionManager.accessToken(),
-            "page": "1", "limit": "999"]
-        
-        manager.POST(APIAtlas.getFollowedSellers, parameters: params, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-
-            self.followedSellerModel = FollowedSellerModel.parseDataWithDictionary(responseObject)
-            
-            if self.followedSellerModel.id.count != 0 {
-                self.tableView.reloadData()
-            } else {
-                self.emptyLabel.hidden = false
-            }
-            self.hud?.hide(true)
-            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                if task.statusCode == 401 {
-                    self.requestRefreshToken()
+        WebServiceManager.fireFollwedSellersWithUrl(APIAtlas.getFollowedSellers, page: "1", limit: "999", accessToken: SessionManager.accessToken(), actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+            if successful {
+                self.hud?.hide(true)
+                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                self.followedSellerModel = FollowedSellerModel.parseDataWithDictionary(responseObject)
+                
+                if self.followedSellerModel.id.count != 0 {
+                    self.tableView.reloadData()
                 } else {
-                    self.addEmptyView()
-                    self.hud?.hide(true)
-                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                    self.emptyLabel.hidden = false
                 }
+            } else {
+                if requestErrorType == .ResponseError {
+                    //Error in api requirements
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                } else if requestErrorType == .AccessTokenExpired {
+                    self.requestRefreshToken()
+                } else if requestErrorType == .PageNotFound {
+                    //Page not found
+                    Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    //No internet connection
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    //Request timeout
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    //Unhandled error
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
+                }
+            }
         })
     }
     
     func requestRefreshToken() {
-        let params: NSDictionary = ["client_id": Constants.Credentials.clientID(),
-            "client_secret": Constants.Credentials.clientSecret(),
-            "grant_type": Constants.Credentials.grantRefreshToken,
-            "refresh_token": SessionManager.refreshToken()]
-        
-        let manager = APIManager.sharedInstance
-        manager.POST(APIAtlas.loginUrl, parameters: params, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+        WebServiceManager.fireRefreshTokenWithUrl(APIAtlas.refreshTokenUrl, actionHandler: {
+            (successful, responseObject, requestErrorType) -> Void in
+            self.hud?.hide(true)
             
+            if successful {
                 SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
                 self.requestFollowedSelers()
-
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                self.hud?.hide(true)
-                let alertController = UIAlertController(title: ProductStrings.alertWentWrong, message: "", preferredStyle: .Alert)
-                let defaultAction = UIAlertAction(title: ProductStrings.alertOk, style: .Default, handler: nil)
-                alertController.addAction(defaultAction)
-                self.presentViewController(alertController, animated: true, completion: nil)
+            } else {
+                //Forcing user to logout.
+                UIAlertController.displayAlertRedirectionToLogin(self, actionHandler: { (sucess) -> Void in
+                    SessionManager.logout()
+                    FBSDKLoginManager().logOut()
+                    GPPSignIn.sharedInstance().signOut()
+                    let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+                    appDelegate.startPage()
+                })
+            }
         })
     }
     

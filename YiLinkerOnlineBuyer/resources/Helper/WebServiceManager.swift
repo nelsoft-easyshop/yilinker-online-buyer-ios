@@ -41,6 +41,10 @@ class WebServiceManager: NSObject {
     static let sellerIdKey = "sellerId"
     static let userIdKey = "userId"
     
+    // Followed Sellers' keys
+    static let pageKey = "page"
+    static let limitKey = "limit"
+    
     //MARK: -
     //MARK: - Fire Login Request With URL
     class func fireLoginRequestWithUrl(url: String, emailAddress: String, password: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
@@ -305,6 +309,14 @@ class WebServiceManager: NSObject {
     //MARK: - Fire UnFollow Seller With Url
     class func fireUnFollowSellerWithUrl(url: String, sellerId: Int, accessToken: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
         var parameters: NSDictionary = [self.sellerIdKey: sellerId, self.accessTokenKey: accessToken]
+        self.firePostRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+    }
+    
+    // MARK: - Followed Sellers
+    class func fireFollwedSellersWithUrl(url: String, page: String, limit: String, accessToken: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+        var parameters: NSDictionary = [self.pageKey: page, self.limitKey: limit, self.accessTokenKey: accessToken]
         self.firePostRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
             actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
         }
