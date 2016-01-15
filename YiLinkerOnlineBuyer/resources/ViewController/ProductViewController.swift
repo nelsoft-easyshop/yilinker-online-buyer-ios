@@ -544,47 +544,6 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
                 }
             }
         })
-
-//        manager.GET(APIAtlas.productDetails + id, parameters: nil, success: {
-//            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-//
-//            if responseObject["isSuccessful"] as! Bool {
-//                self.productDetailsModel = ProductDetailsModel.parseDataWithDictionary(responseObject)
-//                self.productId = self.productDetailsModel.id
-//                if !self.isFromCart {
-//                    self.unitId = self.productDetailsModel.productUnits[0].productUnitId
-//                }
-//                
-//                self.getUnitIdIndexFrom()
-//                
-//                self.attributes = self.productDetailsModel.attributes
-//                self.requestSellerDetails()
-//            } else {
-//                let alert = UIAlertController(title: ProductStrings.alertError,
-//                                            message: responseObject["message"] as? String,
-//                                     preferredStyle: UIAlertControllerStyle.Alert)
-//                let okButton = UIAlertAction(title: ProductStrings.alertOk,
-//                                             style: UIAlertActionStyle.Cancel) { (alert) -> Void in
-//                    self.barCloseAction()
-//                }
-//                alert.addAction(okButton)
-//                self.presentViewController(alert, animated: true, completion: nil)
-//                
-//                self.hud?.hide(true)
-//                self.addEmptyView()
-//            }
-//            
-//            self.productRequest = true
-//            self.productSuccess = true
-//            self.checkRequests()
-//            
-//            }, failure: {
-//                (task: NSURLSessionDataTask!, error: NSError!) in
-//                println("product failed")
-//                self.productRequest = true
-//                self.productSuccess = false
-//                self.checkRequests()
-//        })
     }
     
     func requestReviewDetails() {
@@ -625,27 +584,9 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
                 }
             }
         })
-        
-//        manager.POST(APIAtlas.productReviews, parameters: params, success: {
-//            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-//            
-//            self.productReviewModel = ProductReviewModel.parseDataWithDictionary(responseObject)
-//            self.reviewRequest = true
-//            self.reviewSuccess = true
-//            self.checkRequests()
-//            
-//            }, failure: {
-//                (task: NSURLSessionDataTask!, error: NSError!) in
-//                println("review failed")
-//                self.reviewRequest = true
-//                self.reviewSuccess = false
-//                self.checkRequests()
-//        })
     }
     
     func requestSellerDetails() {
-        
-//        let params = ["userId": self.productDetailsModel.sellerId]
 
         WebServiceManager.fireGetSellerDetailsWithUrl(APIAtlas.getSellerInfo, userId: self.productDetailsModel.sellerId, accessToken: SessionManager.accessToken(), actionHandler: { (successful, responseObject, requestErrorType) -> Void in
             if successful {
@@ -686,40 +627,11 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
                 }
             }
         })
-//        manager.POST(APIAtlas.getSellerInfo, parameters: params, success: {
-//            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-//
-//            if responseObject["isSuccessful"] as! Bool {
-//                self.productSellerModel = ProductSellerModel.parseDataWithDictionary(responseObject)
-//                self.sellerRequest = true
-//                self.sellerSuccess = true
-//                self.requestContactsFromEndpoint()
-//                self.checkRequests()
-//            } else {
-//                self.showAlert(title: ProductStrings.alertError, message: responseObject["message"] as! String)
-//                self.hud?.hide(true)
-//                self.addEmptyView()
-//            }
-//            
-//            }, failure: {
-//                (task: NSURLSessionDataTask!, error: NSError!) in
-//                println("seller failed")
-//                println(error)
-//                self.sellerRequest = true
-//                self.sellerSuccess = false
-//                self.checkRequests()
-//        })
     }
     
     func requestUpdateWishlistItem() {
         
         self.showHUD()
-//        let manager = APIManager.sharedInstance
-//        let params = ["access_token": SessionManager.accessToken(),
-//            "productId": self.productId,
-//            "unitId": self.unitId,
-//            "quantity": "1",
-//            "wishlist": "true"]
         
         WebServiceManager.fireUpdateWishlistWithUrl(APIAtlas.updateWishlistUrl, productId: self.productId, unitId: self.unitId, quantity: "1", wishlist: "true", accessToken: SessionManager.accessToken(), actionHandler: { (successful, responseObject, requestErrorType) -> Void in
             if successful {
@@ -757,43 +669,6 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
             }
             self.hud?.hide(true)
         })
-        
-//        manager.POST(APIAtlas.updateWishlistUrl, parameters: params, success: {
-//            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-//            
-//            if responseObject.isKindOfClass(NSDictionary) {
-//                
-//                if let tempVar = responseObject["isSuccessful"] as? Bool {
-//                    if tempVar {
-//                        var data: NSDictionary = responseObject["data"] as! NSDictionary
-//                        var items: NSArray = data["items"] as! NSArray
-//                        SessionManager.setWishlistCount(items.count)
-//                        self.showAlert(title: nil, message: ProductStrings.alertWishlist)
-//                        self.addBadge("wishlist")
-//                    } else {
-//                        if let tempVar = responseObject["message"] as? String {
-//                            self.showAlert(title: ProductStrings.alertError, message: tempVar)
-//                        }
-//                    }
-//                }
-//            }
-//            
-//            self.hud?.hide(true)
-//            
-//            }, failure: {
-//                (task: NSURLSessionDataTask!, error: NSError!) in
-//                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-//                
-//                if task.statusCode == 401 {
-//                    self.requestRefreshToken("wishlist")
-//                } else if task.statusCode == 404 {
-//                    
-//                } else {
-//                    self.showAlert(title: ProductStrings.alertWentWrong, message: nil)
-//                    println(error)
-//                    self.hud?.hide(true)
-//                }
-//        })
     }
     
     func requestAddCartItem(type: String) {
@@ -868,79 +743,6 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
             }
             self.hud?.hide(true)
         })
-        
-//        self.showHUD()
-//        let params: NSDictionary = ["access_token": SessionManager.accessToken(),
-//            "productId": self.productDetailsModel.id,
-//            "unitId": self.unitId,
-//            "quantity": quantity]
-//        println(params)
-//        
-//        manager.POST(APIAtlas.updateCart(), parameters: params, success: {
-//            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-//            
-//            if responseObject.isKindOfClass(NSDictionary) {
-//                
-//                if let tempVar = responseObject["isSuccessful"] as? Bool {
-//                    var data: NSDictionary = responseObject["data"] as! NSDictionary
-//                    
-//                    var items: NSArray = data["items"] as! NSArray
-//                    
-//                    if type == "buyitnow" {
-//                        var itemProductId: String = ""
-//                        var itemUnitId: String = ""
-//                        
-//                        for i in 0..<items.count {
-//                            let item: NSDictionary = items[i] as! NSDictionary
-//                            itemProductId = item["id"] as! String
-//                            
-//                            let productUnits: NSArray = item["productUnits"] as! NSArray
-//                            for i in 0..<productUnits.count {
-//                                let productUnit: NSDictionary = productUnits[i] as! NSDictionary
-//                                itemUnitId = productUnit["productUnitId"] as! String
-//                                
-//                                if self.productId == itemProductId && self.unitId == itemUnitId {
-//                                    var quantity: String = item["quantity"] as! String
-//                                    var price: Double = (productUnit["discountedPrice"] as! NSString).doubleValue
-//                                    var iQuantity: Double = (quantity as NSString).doubleValue
-//                                    self.requestCartToCheckout(item["itemId"] as! Int, totalAmount: (iQuantity * price))
-//                                    break
-//                                }
-//                                
-//                            } // loop for product unit
-//                        } // loop for items
-//                    } else {
-//                        self.showAlert(title: nil, message: ProductStrings.alertCart)
-//                        println(items.count)
-//                        SessionManager.setCartCount(data["total"] as! Int)
-//                        self.addBadge("cart")
-//                        self.hud?.hide(true)
-//                    }
-//                    
-//                } else {
-//                    self.showAlert(title: ProductStrings.alertError, message: responseObject["message"] as! String)
-//                    self.hud?.hide(true)
-//                }
-//            }
-//            
-//            }, failure: {
-//                (task: NSURLSessionDataTask!, error: NSError!) in
-//                
-//                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-//                
-//                if task.statusCode == 401 {
-//                    if type == "buyitnow" {
-//                        self.requestRefreshToken("buy")
-//                    } else {
-//                        self.requestRefreshToken("cart")
-//                    }
-//                } else if task.statusCode == 404 {
-//
-//                } else {
-//                    self.showAlert(title: ProductStrings.alertWentWrong, message: nil)
-//                    self.hud?.hide(true)
-//                }
-//        })
     }
     
     func requestCartToCheckout(id: Int, totalAmount: Double) {
@@ -995,41 +797,6 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
             }
             self.hud?.hide(true)
         })
-        
-//        manager.POST(APIAtlas.updateCheckout(), parameters: params, success: {
-//            (task: NSURLSessionDataTask!, responseObject: AnyObject!)in
-//            
-//            var cartProductModel: [CartProductDetailsModel] = []
-//            
-//            if let value: AnyObject = responseObject["data"] {
-//                for subValue in responseObject["data"] as! NSArray {
-//                    let model: CartProductDetailsModel = CartProductDetailsModel.parseDataWithDictionary(subValue as! NSDictionary)
-//                    cartProductModel.append(model)
-//                }
-//            }
-//            
-//            let checkout = CheckoutContainerViewController(nibName: "CheckoutContainerViewController", bundle: nil)
-//            checkout.carItems = cartProductModel
-//            checkout.totalPrice = String(stringInterpolationSegment: totalAmount)
-//            let navigationController: UINavigationController = UINavigationController(rootViewController: checkout)
-//            navigationController.navigationBar.barTintColor = Constants.Colors.appTheme
-//            self.tabBarController?.presentViewController(navigationController, animated: true, completion: nil)
-//            
-//            self.hud?.hide(true)
-//            
-//            }, failure: {
-//                (task: NSURLSessionDataTask!, error: NSError!) in
-//                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-//                
-//                if task.statusCode == 401 {
-//                    self.requestRefreshToken("cart")
-//                } else if task.statusCode == 404 {
-//                    
-//                } else {
-//                    self.showAlert(title: ProductStrings.alertWentWrong, message: nil)
-//                    self.hud?.hide(true)
-//                }
-//        })
     }
     
     func requestContactsFromEndpoint(){
@@ -1048,8 +815,8 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
                 } else {
                     if requestErrorType == .ResponseError {
                         //Error in api requirements
-                        let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
-                        Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+//                        let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+//                        Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
                     } else if requestErrorType == .AccessTokenExpired {
                         if (SessionManager.isLoggedIn()){
                             self.requestRefreshToken("message")
@@ -1072,42 +839,6 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
                 self.hud?.hide(true)
             })
         }
-        
-//        if (Reachability.isConnectedToNetwork()) {
-//            //self.showHUD()
-//            
-//            let manager: APIManager = APIManager.sharedInstance
-//            manager.requestSerializer = AFHTTPRequestSerializer()
-//            
-//            let parameters: NSDictionary = [
-//                "page"          : "1",
-//                "limit"         : "30",
-//                "keyword"       : "",
-//                "access_token"  : SessionManager.accessToken()
-//                ] as Dictionary<String, String>
-//            
-//            let url = APIAtlas.baseUrl + APIAtlas.ACTION_GET_CONTACTS
-//            manager.POST(url, parameters: parameters, success: {
-//                (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-//                self.contacts = W_Contact.parseContacts(responseObject as! NSDictionary)
-//                }, failure: {
-//                    (task: NSURLSessionDataTask!, error: NSError!) in
-//                    println("ERROR IN GETING CONTACTS")
-//                    let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-//                    if task.statusCode == 401 {
-//                        if (SessionManager.isLoggedIn()){
-//                            self.requestRefreshToken("message")
-//                        }
-//                    } else if task.statusCode == 404 {
-//                        println(error)
-//                    } else {
-//                        println(error.userInfo)
-//                    }
-//                    
-//                    self.contacts = Array<W_Contact>()
-//                    self.hud?.hide(true)
-//            })
-//        }
     }
     
     func requestRefreshToken(type: String) {
@@ -1133,7 +864,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
                         println("else in product view refresh token")
                     }
                 } else {
-                    let alertController = UIAlertController(title: ProductStrings.alertError, message: responseObject["message"] as! String, preferredStyle: .Alert)
+                    let alertController = UIAlertController(title: ProductStrings.alertError, message: responseObject["message"] as? String, preferredStyle: .Alert)
                     let defaultAction = UIAlertAction(title: ProductStrings.alertOk, style: .Default, handler: nil)
                     alertController.addAction(defaultAction)
                     self.presentViewController(alertController, animated: true, completion: nil)
@@ -1149,43 +880,6 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
                 })
             }
         })
-        
-//        let params: NSDictionary = ["client_id": Constants.Credentials.clientID(),
-//            "client_secret": Constants.Credentials.clientSecret(),
-//            "grant_type": Constants.Credentials.grantRefreshToken,
-//            "refresh_token": SessionManager.refreshToken()]
-//        
-//        let manager = APIManager.sharedInstance
-//        manager.POST(APIAtlas.loginUrl, parameters: params, success: {
-//            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-//            
-//            self.hud?.hide(true)
-//            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
-//            if type == "details" {
-//                self.requestProductDetails()
-//            } else if type == "buy" {
-//                self.requestAddCartItem("buyitnow")
-//            } else if type == "cart" {
-//                self.requestAddCartItem("")
-//            } else if type == "wishlist" {
-//                self.requestUpdateWishlistItem()
-//            } else if type == "message" {
-//                self.requestContactsFromEndpoint()
-//            }else {
-//                println("else in product view refresh token")
-//            }
-//            
-//            }, failure: {
-//                (task: NSURLSessionDataTask!, error: NSError!) in
-//                println("ERROR IN REFRESHING TOKEN")
-//                println(error)
-//                self.hud?.hide(true)
-//                if SessionManager.isLoggedIn() {
-//                    self.showAlert(title: ProductStrings.alertWentWrong, message: nil)
-//                } else {
-//                    self.showAlert(title: ProductStrings.alertWentWrong, message: ProductStrings.avoidIssues)
-//                }
-//        })
     }
     
     // MARK: - Methods
