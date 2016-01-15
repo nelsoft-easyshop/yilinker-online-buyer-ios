@@ -488,7 +488,7 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
                     }
                 }
             } else {
-                
+                self.hud?.hide(true)
                 if requestErrorType == .ResponseError {
                     //Error in api requirements
                     let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)

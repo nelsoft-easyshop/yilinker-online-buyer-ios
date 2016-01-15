@@ -525,8 +525,8 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
                 self.checkRequests()
                 if requestErrorType == .ResponseError {
                     //Error in api requirements
-                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
-                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+//                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+//                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
                 } else if requestErrorType == .AccessTokenExpired {
                     self.requestRefreshToken("details")
                 } else if requestErrorType == .PageNotFound {
@@ -565,8 +565,8 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
                 self.checkRequests()
                 if requestErrorType == .ResponseError {
                     //Error in api requirements
-                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
-                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+//                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+//                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
                 } else if requestErrorType == .AccessTokenExpired {
                     self.requestRefreshToken("details")
                 } else if requestErrorType == .PageNotFound {
@@ -608,8 +608,8 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
                 self.checkRequests()
                 if requestErrorType == .ResponseError {
                     //Error in api requirements
-                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
-                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+//                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+//                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
                 } else if requestErrorType == .AccessTokenExpired {
                     self.requestRefreshToken("details")
                 } else if requestErrorType == .PageNotFound {
