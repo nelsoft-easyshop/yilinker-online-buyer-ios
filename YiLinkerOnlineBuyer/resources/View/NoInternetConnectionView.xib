@@ -10,14 +10,14 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="26"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No internet connection, loading cached data." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="98P-N5-0c0">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No internet connection, loading cached data." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="7" translatesAutoresizingMaskIntoConstraints="NO" id="98P-N5-0c0">
                     <rect key="frame" x="-1" y="2" width="320" height="21"/>
-                    <fontDescription key="fontDescription" type="italicSystem" pointSize="11"/>
+                    <fontDescription key="fontDescription" type="italicSystem" pointSize="13"/>
                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
             </subviews>
-            <color key="backgroundColor" red="0.37647058820000001" green="0.1215686275" blue="0.46666666670000001" alpha="1" colorSpace="calibratedRGB"/>
+            <color key="backgroundColor" red="0.89631470960000004" green="0.029226388759999999" blue="0.12704667019999999" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
                 <constraint firstItem="98P-N5-0c0" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="2" id="5cv-ok-awF"/>
                 <constraint firstItem="98P-N5-0c0" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="-1" id="P0S-2d-UQa"/>
