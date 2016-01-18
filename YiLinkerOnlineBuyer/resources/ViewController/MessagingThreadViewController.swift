@@ -70,7 +70,7 @@ class MessagingThreadViewController: UIViewController {
         self.sender = MessagingContactModel(userId: SessionManager.userId(), slug: "", fullName: SessionManager.userFullName(), profileImageUrl: SessionManager.profileImageStringUrl(), profileThumbnailImageUrl: "", profileSmallImageUrl: "", profileMediumImageUrl: "", profileLargeImageUrl: "", isOnline: "1", hasUnreadMessage: "0")
         
         self.initializeViews()
-        
+        self.setButtonEnabled(false, addPhotoEnabled: true)
         self.resetAndGetDataWithHud(true)
     }
     
@@ -249,7 +249,6 @@ class MessagingThreadViewController: UIViewController {
             *  avoid  extra call for getting of conversation/messages*/
             self.messageTemp = self.messageTextField.text
             self.isImageTemp = false
-            self.fireSendMessage(self.messageTextField.text, isImage: false)
             self.closeKeyboard()
             self.messageTableData.append(MessagingMessageModel(
                 messageId: self.TEMP_MESSAGE_ID,
@@ -270,12 +269,23 @@ class MessagingThreadViewController: UIViewController {
                 hasError: false,
                 image: UIImage(named: "dummy-placeholder")!))
             self.tableView.reloadData()
-            self.messageTextField.text = ""
             self.goToBottomTableView()
+            self.fireSendMessage(self.messageTextField.text, isImage: false)
+            self.messageTextField.text = ""
         } else if sender as? UIButton == addPhotoButton {
             self.openImageActionSheet()
         }
     }
+    
+    @IBAction func onMessageTextChanged(sender: AnyObject) {
+        if self.messageTextField.text.isEmpty {
+            self.setButtonEnabled(false, addPhotoEnabled: true)
+        } else {
+            self.setButtonEnabled(true, addPhotoEnabled: true)
+        }
+        
+    }
+    
     
     //MARK: API Requests
     /* Function to get conversation/message list
@@ -361,7 +371,7 @@ class MessagingThreadViewController: UIViewController {
         self.requestType = MessagingThreadRequestType.SendImage
         var URL: String = ""
         
-        self.setSendButtonEnabled(false)
+        self.setButtonEnabled(false, addPhotoEnabled: false)
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         
         
@@ -370,7 +380,7 @@ class MessagingThreadViewController: UIViewController {
         WebServiceManager.fireSendMessageWithUrl(URL, isImage: isImage, recipientId: self.receiver.userId, message: message, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
             
             UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-            self.setSendButtonEnabled(true)
+            self.setButtonEnabled(false, addPhotoEnabled: false)
             if successful {
                 /*Parsing of data to update the values sent message of messageTableData
                 * to values from the server. */
@@ -387,8 +397,13 @@ class MessagingThreadViewController: UIViewController {
                     self.messageTableData[indexLast].isSent = true
                     self.messageTableData[indexLast].hasError = false
                     self.tableView.reloadData()
+                    
+                    self.setButtonEnabled(false, addPhotoEnabled: true)
                 }
             } else {
+                
+                self.setButtonEnabled(true, addPhotoEnabled: true)
+                
                 //Set tableView's last cell to its's error view
                 if self.lastIndexOfSenderMessage() != -1 {
                     self.messageTableData[self.lastIndexOfSenderMessage()].hasError = true
@@ -461,7 +476,7 @@ class MessagingThreadViewController: UIViewController {
         self.requestType = MessagingThreadRequestType.AttachImage
         var URL: String = ""
         
-        self.setSendButtonEnabled(false)
+        self.setButtonEnabled(false, addPhotoEnabled: false)
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         
         URL = "\(APIAtlas.ACTION_IMAGE_ATTACH_V2)?access_token=\(SessionManager.accessToken())"
@@ -470,7 +485,6 @@ class MessagingThreadViewController: UIViewController {
                 //Parsing of data to get the URL and send it as a plain text message
                 let dictionary: NSDictionary = responseObject as! NSDictionary
                 if let tempDict = dictionary["data"] as? NSDictionary {
-                    self.setSendButtonEnabled(false)
                     let indexLast: Int = self.lastIndexOfSenderMessage()
                     if let tempVar = tempDict["url"] as? String {
                         self.isImageTemp = true
@@ -478,6 +492,8 @@ class MessagingThreadViewController: UIViewController {
                     }
                 }
             } else {
+                self.setButtonEnabled(true, addPhotoEnabled: true)
+                
                 //Set tableView's last cell to its's error view
                 if self.lastIndexOfSenderMessage() != -1 {
                     self.messageTableData[self.lastIndexOfSenderMessage()].hasError = true
@@ -622,6 +638,7 @@ class MessagingThreadViewController: UIViewController {
                                         hasError: false,
                                         image: UIImage(named: "dummy-placeholder")!))
                                     self.tableView.reloadData()
+                                    self.goToBottomTableView()
                                 }
                                 
                                 self.resetAndGetDataWithHud(false)
@@ -653,16 +670,19 @@ class MessagingThreadViewController: UIViewController {
     }
     
     //Set enabled send button
-    func setSendButtonEnabled(enabled: Bool) {
-        if enabled {
+    func setButtonEnabled(sendEnabled: Bool, addPhotoEnabled: Bool) {
+        if sendEnabled {
             self.sendButton.alpha = 1.0
             self.sendButton.enabled = true
-            self.addPhotoButton.alpha = 1.0
-            self.addPhotoButton.enabled = true
-
         } else {
             self.sendButton.alpha = 0.5
             self.sendButton.enabled = false
+        }
+        
+        if addPhotoEnabled {
+            self.addPhotoButton.alpha = 1.0
+            self.addPhotoButton.enabled = true
+        } else {
             self.addPhotoButton.alpha = 0.5
             self.addPhotoButton.enabled = false
         }
