@@ -41,6 +41,24 @@ class WebServiceManager: NSObject {
     static let sellerIdKey = "sellerId"
     static let userIdKey = "userId"
     
+    //Address
+    static let provinceIdKey = "provinceId"
+    static let cityIdIdKey = "cityId"
+    
+    //Guest User
+    static let guestFirstNameKey = "user_guest[firstName]"
+    static let guestLastNameKey = "user_guest[lastName]"
+    static let guestEmailKey = "user_guest[email]"
+    static let guestContactNumberKey = "user_guest[contactNumber]"
+    static let guestTitleKey = "user_address[title]"
+    static let guestStreetNameKey = "user_address[streetName]"
+    static let guestZipCodeKey = "user_address[zipCode]"
+    static let guestLocationKey = "user_address[location]"
+    static let guestIsDefaultKey = "user_address[isDefault]"
+    
+    //OverView
+    static let transactionIdKey = "transactionId"
+    
     //MARK: -
     //MARK: - Fire Login Request With URL
     class func fireLoginRequestWithUrl(url: String, emailAddress: String, password: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
@@ -123,6 +141,55 @@ class WebServiceManager: NSObject {
             parameters = [self.voucherCodeKey: voucherCode]
         }
         self.fireGetRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+    }
+    
+    //MARK: -
+    //MARK: - Fire Province
+    class func fireProvince(url: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+        let parameters: NSDictionary = NSDictionary()
+        
+        self.firePostRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+    }
+    
+    //MARK: -
+    //MARK: - Fire City
+    class func fireCityWithProvinceId(url: String, provinceId: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+        let parameters: NSDictionary = [self.provinceIdKey: provinceId]
+        
+        self.firePostRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+    }
+    
+    //MARK: -
+    //MARK: - Fire Barangays
+    class func fireBarangaysWithCityId(url: String, cityId: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+        let parameters: NSDictionary = [self.cityIdIdKey: cityId]
+        
+        self.firePostRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+    }
+    
+    //MARK: -
+    //MARK: - Fire Guest Checkout
+    class func fireGuestCheckoutWithUrl(url: String, firstName: String, lastName: String, email: String, contactNumber: String, title: String, streetName: String, zipCode: String, location: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+        
+        let parameters: NSDictionary = ["user_guest[firstName]": firstName,
+            self.guestLastNameKey: lastName,
+            self.guestEmailKey: email,
+            self.guestContactNumberKey: contactNumber,
+            self.guestTitleKey: "Guest Address",
+            self.guestStreetNameKey: streetName,
+            self.guestZipCodeKey: zipCode,
+            self.guestLocationKey: location,
+            self.guestIsDefaultKey: true]
+        SessionManager.loadCookies()
+        self.firePostRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
             actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
         }
     }
@@ -264,6 +331,16 @@ class WebServiceManager: NSObject {
             })
         } else {
             actionHandler(successful: false, responseObject: [], requestErrorType: .NoInternetConnection)
+        }
+    }
+    
+    //MARK: -
+    //MARK: - Fire Over View With Url
+    class func fireOverViewWith(url: String, accessToken: String, transactionId: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+       let parameters = [self.accessTokenKey: accessToken, self.transactionIdKey: transactionId]
+        
+        self.firePostRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
         }
     }
  
