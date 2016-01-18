@@ -31,6 +31,26 @@ extension UITextField {
 
     }
     
+    func addToolBarWithTarget(target: AnyObject, done: Selector) {
+        let toolBar = UIToolbar()
+        toolBar.sizeToFit()
+        toolBar.barStyle = UIBarStyle.Black
+        toolBar.barTintColor = Constants.Colors.appTheme
+        toolBar.tintColor = UIColor.whiteColor()
+        
+        let doneItem = UIBarButtonItem(title: Constants.Localized.done, style: UIBarButtonItemStyle.Done, target: target, action: done)
+        
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: self, action: nil)
+        
+        
+        var toolbarButtons = [flexibleSpace, doneItem]
+        
+        //Put the buttons into the ToolBar and display the tool bar
+        toolBar.setItems(toolbarButtons, animated: false)
+        
+        self.inputAccessoryView = toolBar
+    }
+    
     func isValidEmail() -> Bool {
         // println("validate calendar: \(testStr)")
         let emailRegEx = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$"
@@ -193,6 +213,25 @@ extension UIAlertController {
         
         alertController.addAction(login)
         target.presentViewController(alertController, animated: true, completion: nil)
+    }
+    
+    class func showAlertYesOrNoWithTitle(title: String, message: String, viewController: UIViewController, actionHandler: (isYes: Bool) -> Void) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+        
+        let cancelAction = UIAlertAction(title: RegisterModalStrings.no, style: .Cancel) { (action) in
+            actionHandler(isYes: false)
+        }
+        
+        alertController.addAction(cancelAction)
+        
+        let OKAction = UIAlertAction(title: RegisterModalStrings.yes, style: .Default) { (action) in
+             actionHandler(isYes: true)
+        }
+        alertController.addAction(OKAction)
+        
+        viewController.presentViewController(alertController, animated: true) {
+            // ...
+        }
     }
 }
 
