@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -23,18 +23,15 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dummy-profile-image" translatesAutoresizingMaskIntoConstraints="NO" id="lPX-NO-SZY">
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dummy-placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="lPX-NO-SZY">
                         <rect key="frame" x="8" y="13" width="77" height="49"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="77" id="cXL-ON-rHt"/>
                             <constraint firstAttribute="height" constant="49" id="h7F-Gn-gmA"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bamboo Battery" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LgQ-GA-VF4">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bamboo Battery" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LgQ-GA-VF4">
                         <rect key="frame" x="93" y="13" width="217" height="17"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="17" id="o5z-R1-Lgf"/>
-                        </constraints>
                         <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="12"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
@@ -42,7 +39,7 @@
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="x1" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lJ8-9G-qKe">
                         <rect key="frame" x="94" y="31" width="136" height="14"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="14" id="T8I-HV-PMc"/>
+                            <constraint firstAttribute="height" constant="14" id="TOy-ls-vQg"/>
                         </constraints>
                         <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="11"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -51,7 +48,7 @@
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="P 4500" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9F7-2V-DNu">
                         <rect key="frame" x="93" y="48" width="137" height="14"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="14" id="mm7-gu-T9i"/>
+                            <constraint firstAttribute="height" constant="14" id="8cM-2k-sfT"/>
                         </constraints>
                         <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="11"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -59,17 +56,18 @@
                     </label>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="9F7-2V-DNu" firstAttribute="leading" secondItem="lPX-NO-SZY" secondAttribute="trailing" constant="8" id="0Gt-Jf-nfW"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="9F7-2V-DNu" secondAttribute="trailing" constant="82" id="38g-1T-aPl"/>
                     <constraint firstItem="lPX-NO-SZY" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="5" id="39K-SX-pUY"/>
-                    <constraint firstItem="lJ8-9G-qKe" firstAttribute="top" secondItem="LgQ-GA-VF4" secondAttribute="bottom" constant="1" id="5Mf-zA-AIo"/>
-                    <constraint firstItem="LgQ-GA-VF4" firstAttribute="leading" secondItem="lPX-NO-SZY" secondAttribute="trailing" constant="8" id="Eyy-71-Zqo"/>
+                    <constraint firstItem="lJ8-9G-qKe" firstAttribute="top" secondItem="LgQ-GA-VF4" secondAttribute="bottom" constant="1" id="3wE-sy-Sd7"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="LgQ-GA-VF4" secondAttribute="trailing" constant="2" id="50a-jG-nN0"/>
+                    <constraint firstItem="LgQ-GA-VF4" firstAttribute="leading" secondItem="lPX-NO-SZY" secondAttribute="trailing" constant="8" id="Ad1-pK-BuA"/>
+                    <constraint firstItem="9F7-2V-DNu" firstAttribute="top" secondItem="lJ8-9G-qKe" secondAttribute="bottom" constant="3" id="CPb-6K-Xsr"/>
+                    <constraint firstItem="9F7-2V-DNu" firstAttribute="bottom" secondItem="H2p-sc-9uM" secondAttribute="bottomMargin" id="NAQ-Hj-vlb"/>
+                    <constraint firstItem="LgQ-GA-VF4" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="5" id="PW9-b3-fFX"/>
                     <constraint firstItem="lPX-NO-SZY" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="QuA-ff-trx"/>
-                    <constraint firstItem="9F7-2V-DNu" firstAttribute="top" secondItem="lJ8-9G-qKe" secondAttribute="bottom" constant="3" id="d2t-dd-fdi"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="lJ8-9G-qKe" secondAttribute="trailing" constant="82" id="oP7-7z-E0f"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="LgQ-GA-VF4" secondAttribute="trailing" constant="2" id="pPW-BT-e0t"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="9F7-2V-DNu" secondAttribute="trailing" constant="82" id="pxj-2E-cFJ"/>
-                    <constraint firstItem="LgQ-GA-VF4" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="5" id="uZD-bT-3xj"/>
-                    <constraint firstItem="lJ8-9G-qKe" firstAttribute="leading" secondItem="lPX-NO-SZY" secondAttribute="trailing" constant="9" id="vXR-DV-aq0"/>
+                    <constraint firstItem="lJ8-9G-qKe" firstAttribute="leading" secondItem="lPX-NO-SZY" secondAttribute="trailing" constant="9" id="e3L-la-fzV"/>
+                    <constraint firstItem="9F7-2V-DNu" firstAttribute="leading" secondItem="lPX-NO-SZY" secondAttribute="trailing" constant="8" id="fVX-Et-CLW"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="lJ8-9G-qKe" secondAttribute="trailing" constant="82" id="rKu-qg-GfR"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
@@ -82,6 +80,6 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="dummy-profile-image" width="100" height="104"/>
+        <image name="dummy-placeholder" width="1280" height="800"/>
     </resources>
 </document>
