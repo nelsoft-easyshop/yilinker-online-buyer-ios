@@ -11,13 +11,12 @@ import UIKit
 class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, ShipToTableViewCellDelegate, ChangeAddressViewControllerDelegate, GuestCheckoutTableViewCellDelegate, UIScrollViewDelegate, UIPickerViewDataSource, UIPickerViewDelegate, VoucherTableViewCellDelegate {
 
     @IBOutlet weak var tableView: UITableView!
+    
+    //Cells
     var shipToTableViewCell: ShipToTableViewCell = ShipToTableViewCell()
-    var cartItems: [CartProductDetailsModel] = []
-    var totalPrice: String = ""
-    var hud: MBProgressHUD?
-    var isValidToSelectPayment: Bool = true
     var guestCheckoutTableViewCell: GuestCheckoutTableViewCell = GuestCheckoutTableViewCell()
     
+    //Identifiers
     let guestCheckoutCellIdentifier = "GuestCheckoutTableViewCell"
     let guestCheckoutCellNibName = "GuestCheckoutTableViewCell"
     let voucherCellNibName = "VoucherTableViewCell"
@@ -26,42 +25,62 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
     let netTotalCellNibName = "NetTotalTableViewCell"
     let mapCellNibName = "MapTableViewCell"
     
+    //active textfield in guest checkout
     var currentTextFieldTag: Int = 0
     
-    var provinceModel: ProvinceModel = ProvinceModel()
-    var cityModel: CityModel = CityModel()
-    var barangayModel: BarangayModel = BarangayModel()
+    var totalPrice: String = ""
+    var hud: MBProgressHUD?
     
-    //for selected values in picker view
-    var barangayRow: Int = 0
-    var cityRow: Int = 0
-    var provinceRow: Int = 0
-    
+    var cartItems: [CartProductDetailsModel] = []
     var addressPickerType: AddressPickerType = AddressPickerType.Barangay
-    
-    var addressModel: AddressModelV2 = AddressModelV2()
-    
-    var additionalCellCount: Int = 2
     
     var voucherModel: VoucherModel = VoucherModel()
     
+    //number of rows above voucher cell
+    var additionalCellCount: Int = 2
+    
+    var checkoutContainerViewController: CheckoutContainerViewController = CheckoutContainerViewController()
+    
+    //MARK: - 
+    //MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         self.registerNib()
-
+        
+        //Get the parent view controller
+        self.checkoutContainerViewController = self.parentViewController as! CheckoutContainerViewController
+        
+        self.tableView.estimatedRowHeight = 68.0
+        self.tableView.rowHeight = UITableViewAutomaticDimension
+        
+        /*
+            First check if the user is loged in. If yes set the checkout address of the user, get the address id of the user in our session manager and 
+            pass it to the setCheckout address func on our parentController.
+        */
+        
         if SessionManager.isLoggedIn() {
             self.tableView.layoutIfNeeded()
             
             if SessionManager.isMobileVerified() {
-                self.fireSetCheckoutAddress("\(SessionManager.addressId())")
+                self.checkoutContainerViewController.fireSetCheckoutAddressWithAddressId("\(SessionManager.addressId())")
             }
             
         } else {
-            self.requestGetProvince()
+            self.checkoutContainerViewController.fireProvinces()
         }
     }
     
-    //Show HUD
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
+    //MARK: -
+    //MARK: - Show HUD
     func showHUD() {
         if self.hud != nil {
             self.hud!.hide(true)
@@ -75,11 +94,7 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
         self.hud?.show(true)
     }
     
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-    }
-    
+    //MARK: -
     //MARK: - Register Nib
     func registerNib() {
         let orderSummaryNib: UINib = UINib(nibName: Constants.Checkout.orderSummaryTableViewCellNibNameAndIdentifier, bundle: nil)
@@ -107,17 +122,54 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
         self.tableView.registerNib(mapNib, forCellReuseIdentifier: self.mapCellNibName)
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    //MARK: -
+    //MARK: - Change Address View Controller
+    func changeAddressViewController(didSelectAddress address: String) {
+        self.checkoutContainerViewController.fireSetCheckoutAddressWithAddressId("\(SessionManager.addressId())")
+        self.tableView.reloadData()
+    }
+
+    //MARK: -
+    //MARK: - Table View Data Source
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        if indexPath.section == 0 {
+            if indexPath.row < self.cartItems.count {
+                //Make a func for creating orderSemmaryTableViewCell for cleaner code.
+                return self.orderSummaryTableViewCellWithIndexPath(indexPath)
+            } else if indexPath.row == ((self.cartItems.count - 1) + 1) {// 1 = to cell below the cart items
+                
+                return self.totalSummaryPriceTableViewCellWithIndexPath(indexPath)
+            } else if indexPath.row == ((self.cartItems.count - 1) + 2)  {
+                
+                return self.voucherTableViewCellWithIndexPath(indexPath)
+            } else if indexPath.row == ((self.cartItems.count - 1) + 3) {
+                
+                return self.discountVoucherTotalViewCellWithIndexPath(indexPath)
+            } else {
+                let netTotalTableViewCell: NetTotalTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(self.netTotalCellNibName) as! NetTotalTableViewCell
+                netTotalTableViewCell.netTotalValueLabel.text = self.voucherModel.voucherPrice.formatToTwoDecimal()
+                return netTotalTableViewCell
+            }
+        } else {
+            if indexPath.row == 0 {
+                if SessionManager.isLoggedIn() {
+                    return self.shipToTableViewCellWithIndexPath(indexPath)
+                } else {
+                    return self.guestCheckoutTableViewCellWithindexPath(indexPath)
+                }
+                
+            } else {
+                return self.mapTableViewCellWithIndexPath(indexPath)
+            }
+        }
     }
     
-    //MARK: - Height For Header
+    //MARK: - Height For Footer in Section
     func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return 0
     }
     
-    //MARK: - Height For Header
+    //MARK: - Height For Header in Section
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         if section == 0 {
             return 41
@@ -126,17 +178,13 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
         }
     }
     
-    func changeAddressViewController(didSelectAddress address: String) {
-        self.fireSetCheckoutAddress("\(SessionManager.addressId())")
-        self.tableView.reloadData()
-    }
-
+    //MARK: - View For Header in Section
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         var headerView: CheckoutViews
         if section == 0 {
-          headerView = XibHelper.puffViewWithNibName("CheckoutViews", index: 0) as! CheckoutViews
+            headerView = XibHelper.puffViewWithNibName("CheckoutViews", index: 0) as! CheckoutViews
         } else {
-          headerView = XibHelper.puffViewWithNibName("CheckoutViews", index: 2) as! CheckoutViews
+            headerView = XibHelper.puffViewWithNibName("CheckoutViews", index: 2) as! CheckoutViews
         }
         
         headerView.backgroundColor = Constants.Colors.selectedCellColor
@@ -144,6 +192,7 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
         return headerView
     }
     
+    //MARK: - View For Footer in Section
     func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         if section == 0 {
             return UIView(frame: CGRectZero)
@@ -151,144 +200,13 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
             return UIView(frame: CGRectZero)
         }
     }
-
-    //MARK: - Cell For Row At IndexPath
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        if indexPath.section == 0 {
-            if indexPath.row < self.cartItems.count {
-                let product: CartProductDetailsModel = self.cartItems[indexPath.row]
-                let url = APIAtlas.baseUrl.stringByReplacingOccurrencesOfString("api/v1", withString: "")
-                let orderSummaryCell: OrderSummaryTableViewCell = tableView.dequeueReusableCellWithIdentifier(Constants.Checkout.orderSummaryTableViewCellNibNameAndIdentifier) as! OrderSummaryTableViewCell
-                orderSummaryCell.productImageView.sd_setImageWithURL(NSURL(string: "\(url)\(APIAtlas.cartImage)\(product.selectedUnitImage)")!, placeholderImage: UIImage(named: "dummy-placeholder"))
-                orderSummaryCell.itemTitleLabel.text = product.title
-                orderSummaryCell.quantityLabel.text = "\(product.quantity)"
-                
-                for tempProductUnit in product.productUnits {
-                    if product.unitId == tempProductUnit.productUnitId {
-                        orderSummaryCell.priceLabel.text = tempProductUnit.discountedPrice.formatToTwoDecimal()
-                        
-                        if tempProductUnit.imageIds.count != 0 {
-                            for tempImage in product.images {
-                                if tempImage.id == tempProductUnit.imageIds[0] {
-                                    orderSummaryCell.productImageView.sd_setImageWithURL(NSURL(string: tempImage.fullImageLocation), placeholderImage: UIImage(named: "dummy-placeholder"))
-                                }
-                            }
-                        } else if product.images.count != 0 {
-                            orderSummaryCell.productImageView.sd_setImageWithURL(NSURL(string: product.images[0].fullImageLocation), placeholderImage: UIImage(named: "dummy-placeholder"))
-                        } else {
-                            orderSummaryCell.productImageView.image = UIImage(named: "dummy-placeholder")
-                        }
-                        break
-                    }
-                }
-                
-                return orderSummaryCell
-            } else if indexPath.row == ((self.cartItems.count - 1) + 1) {// 1 = to cell below the cart items
-                let totalCell: TotalSummaryPriceTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(self.totalCellNibName) as! TotalSummaryPriceTableViewCell
-                
-                    totalCell.totalPriceValueLabel.text = self.totalPrice.formatToTwoDecimal()
-                
-                 totalCell.separatorInset = UIEdgeInsetsMake(0, 1000, 0, 1000)
-                return totalCell
-            } else if indexPath.row == ((self.cartItems.count - 1) + 2)  {
-                let voucherCell: VoucherTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(self.voucherCellNibName) as! VoucherTableViewCell
-                voucherCell.delegate = self
-                voucherCell.selectionStyle = UITableViewCellSelectionStyle.None
-                return voucherCell
-            } else if indexPath.row == ((self.cartItems.count - 1) + 3) {
-                let discountTotalCell: DicountVoucherTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(self.discountVouncherNibName) as! DicountVoucherTableViewCell
-                
-                if self.voucherModel.isSuccessful {
-                    discountTotalCell.discountVoucherLabel.text = "Discount Value: \(self.voucherModel.less.formatToTwoDecimal())"
-                } else {
-                    discountTotalCell.discountVoucherLabel.text = "\(self.voucherModel.message)"
-                    discountTotalCell.discountVoucherLabel.textAlignment = NSTextAlignment.Right
-                    discountTotalCell.discountVoucherLabel.textColor = UIColor.redColor()
-                }
-               
-                discountTotalCell.separatorInset = UIEdgeInsetsMake(0, 1000, 0, 1000)
-                
-                return discountTotalCell
-            } else {
-                let netTotalTableViewCell: NetTotalTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(self.netTotalCellNibName) as! NetTotalTableViewCell
-                netTotalTableViewCell.netTotalValueLabel.text = self.voucherModel.voucherPrice.formatToTwoDecimal()
-                return netTotalTableViewCell
-            }
-        } else {
-            
-            if indexPath.row == 0 {
-                if SessionManager.isLoggedIn() {
-                    self.shipToTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(Constants.Checkout.shipToTableViewCellNibNameAndIdentifier) as! ShipToTableViewCell
-                    shipToTableViewCell.frame = CGRectMake(0, 0, self.tableView.frame.size.width, shipToTableViewCell.frame.size.height)
-                    shipToTableViewCell.delegate = self
-                    shipToTableViewCell.addressLabel.text = SessionManager.userFullAddress()
-                    return shipToTableViewCell
-                } else {
-                    self.guestCheckoutTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(self.guestCheckoutCellIdentifier) as! GuestCheckoutTableViewCell
-                    self.guestCheckoutTableViewCell.delegate = self
-                    self.guestCheckoutTableViewCell.selectionStyle = UITableViewCellSelectionStyle.None
-                    self.guestCheckoutTableViewCell.separatorInset = UIEdgeInsetsMake(0, 1000, 0, 1000)
-                    for view in self.guestCheckoutTableViewCell.contentView.subviews {
-                        if view.isKindOfClass(UITextField) {
-                            let textField: UITextField = view as! UITextField
-                            if !IphoneType.isIphone4() {
-                                textField.addToolBarWithTarget(self, next: "next", previous: "previous:", done: "done")
-                            }
-                        }
-                    }
-                }
-                
-                return guestCheckoutTableViewCell
-            } else {
-                let mapCell: MapTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(self.mapCellNibName) as! MapTableViewCell
-                let latitude: Double = SessionManager.latitude().toDouble()!
-                let longitude: Double = SessionManager.longitude().toDouble()!
-                mapCell.setLocation(latitude: latitude, longitude: longitude)
-                return mapCell
-            }
-        }
-    }
     
-    func next() {
-        self.guestCheckoutTableViewCell.setBecomesFirstResponder(self.currentTextFieldTag + 1)
-    }
-    
-    func previous(sender: UITextField) {
-        self.guestCheckoutTableViewCell.setBecomesFirstResponder(self.currentTextFieldTag - 1)
-    }
-    
-    func done() {
-        self.view.endEditing(true)
-        var contentInset: UIEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0)
-        
-        UIView.animateWithDuration(0.5, animations: {
-            self.tableView.contentInset = contentInset
-            self.tableView.scrollIndicatorInsets = contentInset
-        })
-        
-        if self.currentTextFieldTag == 5 {
-            self.requestGetCities(self.addressModel.provinceId)
-            self.addressModel.province = self.provinceModel.location[self.provinceRow]
-            self.guestCheckoutTableViewCell.provinceTextField.text = self.provinceModel.location[self.provinceRow]
-            self.cityRow = 0
-            self.barangayRow = 0
-        } else if self.currentTextFieldTag == 6 {
-            self.requestGetBarangay(self.addressModel.cityId)
-            self.guestCheckoutTableViewCell.cityTextField.text = self.cityModel.location[self.cityRow]
-            self.addressModel.city = self.cityModel.location[self.cityRow]
-            self.barangayRow = 0
-        } else if self.currentTextFieldTag == 7 {
-            self.addressModel.barangay = self.barangayModel.location[self.barangayRow]
-            self.guestCheckoutTableViewCell.barangayTextField.text = self.barangayModel.location[self.barangayRow]
-        }
-    }
-    
-    //MARK: - Number Of Rows
+    //MARK: - Number Of Rows In Section
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
             return cartItems.count + additionalCellCount
         } else {
-           return 2
+            return 2
         }
     }
     
@@ -301,6 +219,7 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
         }
     }
     
+    //MARK: - Height For Row At IndexPath
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if indexPath.section == 0 {
             if indexPath.row == ((self.cartItems.count - 1) + 2) {
@@ -308,9 +227,9 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
             } else if indexPath.row == ((self.cartItems.count - 1) + 3) {
                 return 34
             } else {
-                return 71
+                return UITableViewAutomaticDimension
             }
-
+            
         } else {
             if indexPath.row == 0 {
                 if SessionManager.isLoggedIn() {
@@ -321,15 +240,58 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
             } else {
                 return 199
             }
-           
         }
     }
     
-    
+    //MARK: - 
+    //MARK: - Table View Delegate
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
     
+    //MARK: - 
+    //MARK: - Next
+    func next() {
+        self.guestCheckoutTableViewCell.setBecomesFirstResponder(self.currentTextFieldTag + 1)
+    }
+    
+    //MARK: -
+    //MARK: - Previous
+    func previous(sender: UITextField) {
+        self.guestCheckoutTableViewCell.setBecomesFirstResponder(self.currentTextFieldTag - 1)
+    }
+    
+    //MARK: -
+    //MARK: - Done
+    func done() {
+        self.view.endEditing(true)
+        var contentInset: UIEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0)
+        
+        UIView.animateWithDuration(0.5, animations: {
+            self.tableView.contentInset = contentInset
+            self.tableView.scrollIndicatorInsets = contentInset
+        })
+        
+        if self.currentTextFieldTag == 5 {
+            self.checkoutContainerViewController.fireCitiesWithProvinceId("\(self.checkoutContainerViewController.addressModel.provinceId)")
+            self.checkoutContainerViewController.addressModel.province = self.checkoutContainerViewController.provinceModel.location[self.checkoutContainerViewController.provinceRow]
+            self.guestCheckoutTableViewCell.provinceTextField.text = self.checkoutContainerViewController.provinceModel.location[self.checkoutContainerViewController.provinceRow]
+            
+            self.checkoutContainerViewController.cityRow = 0
+            self.checkoutContainerViewController.barangayRow = 0
+        } else if self.currentTextFieldTag == 6 {
+            self.checkoutContainerViewController.fireBarangaysWithCityId("\(self.checkoutContainerViewController.addressModel.cityId)")
+            self.guestCheckoutTableViewCell.cityTextField.text = self.checkoutContainerViewController.cityModel.location[self.checkoutContainerViewController.cityRow]
+            self.checkoutContainerViewController.addressModel.city = self.checkoutContainerViewController.cityModel.location[self.checkoutContainerViewController.cityRow]
+            self.checkoutContainerViewController.barangayRow = 0
+        } else if self.currentTextFieldTag == 7 {
+            self.checkoutContainerViewController.addressModel.barangay = self.checkoutContainerViewController.barangayModel.location[self.checkoutContainerViewController.barangayRow]
+            self.guestCheckoutTableViewCell.barangayTextField.text = self.checkoutContainerViewController.barangayModel.location[self.checkoutContainerViewController.barangayRow]
+        }
+    }
+    
+    //MARK: -
+    //MARK: - Ship To TableViewCell
     func shipToTableViewCell(didTap shipToTableViewCell: ShipToTableViewCell) {
         shipToTableViewCell.fakeContainerView.backgroundColor = Constants.Colors.selectedCellColor
         
@@ -346,45 +308,9 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
         self.navigationController!.pushViewController(changeAddressViewController, animated: true)
     }
     
-    func fireSetCheckoutAddress(addressId: String) {
-        self.showHUD()
-        WebServiceManager.fireSetCheckoutAddressWithUrl(APIAtlas.setCheckoutAddressUrl, accessToken: SessionManager.accessToken(), addressId: addressId) {
-            (successful, responseObject, requestErrorType) -> Void in
-            self.hud!.hide(true)
-            
-            if successful {
-                let jsonResult: NSDictionary = responseObject as! NSDictionary
-                if jsonResult["isSuccessful"] as! Bool != true {
-                    self.isValidToSelectPayment = false
-                    self.displayAlertAndRedirectToChangeAddressWithMessage(jsonResult["message"] as! String)
-                } else {
-                    self.isValidToSelectPayment = true
-                }
-            } else {
-                if requestErrorType == .ResponseError {
-                    //Error in api requirements
-                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
-                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
-                } else if requestErrorType == .AccessTokenExpired {
-                    self.fireRefreshToken(CheckoutRefreshType.SetAddress, cell: VoucherTableViewCell())
-                } else if requestErrorType == .PageNotFound {
-                    //Page not found
-                    Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
-                } else if requestErrorType == .NoInternetConnection {
-                    //No internet connection
-                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
-                } else if requestErrorType == .RequestTimeOut {
-                    //Request timeout
-                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
-                } else if requestErrorType == .UnRecognizeError {
-                    //Unhandled error
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
-                }
-            }
-        }
-    }
     
-    //MARK: - Display Alert and Redirect to Address
+    //MARK: -
+    //MARK: - Display Alert And Redirect To Change Address With Message
     func displayAlertAndRedirectToChangeAddressWithMessage(message: String) {
         let alertController = UIAlertController(title: Constants.Localized.error, message: message, preferredStyle: .Alert)
         let OKAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default) { (action) in
@@ -400,6 +326,7 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
         }
     }
     
+    //MARK: -
     //MARK: - Mark Redirect To Address
     func redirectToAddress() {
         let changeAddressViewController: ChangeAddressViewController = ChangeAddressViewController(nibName: "ChangeAddressViewController", bundle: nil)
@@ -407,14 +334,15 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
         self.navigationController!.pushViewController(changeAddressViewController, animated: true)
     }
     
-    //Guest Checkout Delegate
+    //MARK: -
+    //MARK: - Guest Checkout Delegate
     func guestCheckoutTableViewCell(guestCheckoutTableViewCell: GuestCheckoutTableViewCell, didClickNext textfieldTag: Int, textField: UITextField) {
         self.next()
     }
     
     func guestCheckoutTableViewCell(guestCheckoutTableViewCell: GuestCheckoutTableViewCell, didClickDone textfieldTag: Int, textField: UITextField) {
         self.view.endEditing(true)
-        self.fireGuestUser()
+        self.checkoutContainerViewController.fireGuestCheckout()
     }
     func guestCheckoutTableViewCell(guestCheckoutTableViewCell: GuestCheckoutTableViewCell, didStartEditingTextFieldWithTag textfieldTag: Int, textField: UITextField) {
         self.currentTextFieldTag = textfieldTag
@@ -447,14 +375,7 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
                     contentInset.top = contentInset.top - (45 * CGFloat(textfieldTag + 1)) - 120
                 } 
             } else if IphoneType.isIphone4() {
-                 let extraSpace: CGFloat = 150
-//                if textfieldTag == 3 {
-//                    contentInset.top = contentInset.top - (50 * CGFloat(textfieldTag - 1)) - extraSpace
-//                } else if textfieldTag >= 8 {
-//                    contentInset.top = contentInset.top - (55 * CGFloat(textfieldTag)) - extraSpace
-//                } else {
-//                    contentInset.top = contentInset.top - (45 * CGFloat(textfieldTag)) - extraSpace
-//                }
+                let extraSpace: CGFloat = 150
                 
                 if textfieldTag >= 8 {
                     contentInset.top = contentInset.top - (60 * CGFloat(textfieldTag)) - extraSpace
@@ -464,9 +385,7 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
                     } else {
                         contentInset.top = contentInset.top - (45 * CGFloat(textfieldTag + 1)) - extraSpace
                     }
-                    
                 }
-                
             }
                 self.tableView.contentInset = contentInset
                 self.tableView.scrollIndicatorInsets = contentInset
@@ -474,20 +393,23 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         
         if textField == self.guestCheckoutTableViewCell.provinceTextField {
-            self.guestCheckoutTableViewCell.provinceTextField.text = self.addressModel.province
-            self.guestCheckoutTableViewCell.provinceTextField.inputView = self.addPicker(self.provinceRow)
             self.addressPickerType = AddressPickerType.Province
+            self.guestCheckoutTableViewCell.provinceTextField.text = self.checkoutContainerViewController.addressModel.province
+            self.guestCheckoutTableViewCell.provinceTextField.inputView = self.addPicker(self.checkoutContainerViewController.provinceRow)
+            
         } else if textField == self.guestCheckoutTableViewCell.cityTextField {
-            self.guestCheckoutTableViewCell.cityTextField.text = self.addressModel.city
-            self.guestCheckoutTableViewCell.cityTextField.inputView = self.addPicker(self.cityRow)
             self.addressPickerType = AddressPickerType.City
+            self.guestCheckoutTableViewCell.cityTextField.text = self.checkoutContainerViewController.addressModel.city
+            self.guestCheckoutTableViewCell.cityTextField.inputView = self.addPicker(self.checkoutContainerViewController.cityRow)
         } else if textField == self.guestCheckoutTableViewCell.barangayTextField {
-            self.guestCheckoutTableViewCell.barangayTextField.text = self.addressModel.barangay
-            self.guestCheckoutTableViewCell.barangayTextField.inputView = self.addPicker(self.barangayRow)
             self.addressPickerType = AddressPickerType.Barangay
+            self.guestCheckoutTableViewCell.barangayTextField.text = self.checkoutContainerViewController.addressModel.barangay
+            self.guestCheckoutTableViewCell.barangayTextField.inputView = self.addPicker(self.checkoutContainerViewController.barangayRow)
         }
     }
     
+    //MARK: - 
+    //MARK: - Scroll View Will Begin Draging
     func scrollViewWillBeginDragging(scrollView: UIScrollView) {
         self.view.endEditing(true)
         var contentInset: UIEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0)
@@ -495,91 +417,8 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
         self.tableView.scrollIndicatorInsets = contentInset
     }
     
-    //Province
-    func requestGetProvince() {
-        let manager = APIManager.sharedInstance
-        self.showHUD()
-        manager.POST(APIAtlas.provinceUrl, parameters: nil, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            self.hud?.hide(true)
-            self.provinceModel = ProvinceModel.parseDataWithDictionary(responseObject)
-            if self.provinceModel.location.count != 0 {
-                self.addressModel.province = self.provinceModel.location[0]
-                self.addressModel.provinceId = self.provinceModel.provinceId[0]
-                self.requestGetCities(self.provinceModel.provinceId[0])
-                
-                self.guestCheckoutTableViewCell.cityTextField.text = ""
-                self.guestCheckoutTableViewCell.barangayTextField.text = ""
-                self.guestCheckoutTableViewCell.provinceTextField.text = self.provinceModel.location[0]
-                self.provinceRow = 0
-            } else {
-                if self.addressModel.provinceId != 0 {
-                    self.requestGetCities(self.addressModel.provinceId)
-                } else {
-                    self.requestGetCities(self.provinceModel.provinceId[0])
-                }
-            }
-            
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                self.hud?.hide(true)
-        })
-    }
-    
-    func requestGetCities(id: Int) {
-        self.showHUD()
-        let manager = APIManager.sharedInstance
-        let params = ["provinceId": String(id)]
-        
-        self.guestCheckoutTableViewCell.barangayTextField.text = ""
-        
-        manager.POST(APIAtlas.citiesUrl, parameters: params, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            self.cityModel = CityModel.parseDataWithDictionary(responseObject)
-            self.hud?.hide(true)
-            //get all cities and assign get the id and title of the first city
-            if self.cityModel.cityId.count != 0 {
-                self.addressModel.city = self.cityModel.location[0]
-                self.addressModel.cityId = self.cityModel.cityId[0]
-                self.requestGetBarangay(self.addressModel.cityId)
-                self.addressModel.barangay = ""
-                self.guestCheckoutTableViewCell.cityTextField.text = self.cityModel.location[0]
-                self.cityRow = 0
-                self.barangayRow = 0
-            } else {
-                if self.addressModel.cityId != 0 {
-                    self.requestGetBarangay(self.addressModel.cityId)
-                } else {
-                    self.addressModel.city = self.cityModel.location[0]
-                    self.addressModel.cityId = self.cityModel.cityId[0]
-                    self.requestGetBarangay(self.cityModel.cityId[0])
-                }
-            }
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                self.hud?.hide(true)
-        })
-    }
-    
-    func requestGetBarangay(id: Int) {
-        let manager = APIManager.sharedInstance
-        let params = ["cityId": String(id)]
-        self.showHUD()
-        manager.POST(APIAtlas.barangay, parameters: params, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            self.hud?.hide(true)
-            self.barangayModel = BarangayModel.parseDataWithDictionary(responseObject)
-            
-            self.addressModel.barangayId = self.barangayModel.barangayId[0]
-            self.addressModel.barangay = self.barangayModel.location[0]
-            self.guestCheckoutTableViewCell.barangayTextField.text = self.barangayModel.location[0]
-            
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                self.hud?.hide(true)
-        })
-    }
-    
+    //MARK: -
+    //MARK: - Add Picker
     func addPicker(selectedIndex: Int) -> UIPickerView {
         let screenSize: CGRect = UIScreen.mainScreen().bounds
         let pickerView: UIPickerView = UIPickerView(frame:CGRectMake(0, 0, screenSize.width, 225))
@@ -593,21 +432,21 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
     //MARK: - Picker Data Source
     func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         if self.addressPickerType == AddressPickerType.Barangay {
-            return self.barangayModel.location.count
+            return self.checkoutContainerViewController.barangayModel.location.count
         } else if self.addressPickerType == AddressPickerType.Province  {
-            return self.provinceModel.location.count
+            return self.checkoutContainerViewController.provinceModel.location.count
         } else {
-            return self.cityModel.location.count
+            return self.checkoutContainerViewController.cityModel.location.count
         }
     }
     
     func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String! {
         if self.addressPickerType == AddressPickerType.Barangay {
-            return self.barangayModel.location[row]
+            return self.checkoutContainerViewController.barangayModel.location[row]
         } else if self.addressPickerType == AddressPickerType.Province  {
-            return self.provinceModel.location[row]
+            return self.checkoutContainerViewController.provinceModel.location[row]
         } else {
-            return self.cityModel.location[row]
+            return self.checkoutContainerViewController.cityModel.location[row]
         }
     }
     
@@ -616,92 +455,35 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        /*if self.addressPickerType == AddressPickerType.Barangay {
-            self.barangayRow = row
-            self.addressModel.barangayId = self.barangayModel.barangayId[row]
-            self.addressModel.barangay = self.barangayModel.location[row]
-            self.guestCheckoutTableViewCell.barangayTextField.text = self.barangayModel.location[row]
-        } else if self.addressPickerType == AddressPickerType.Province  {
-            self.addressModel.provinceId = self.provinceModel.provinceId[row]
-            self.provinceRow = row
-            self.requestGetCities(self.addressModel.provinceId)
-            self.addressModel.province = self.provinceModel.location[row]
-            self.guestCheckoutTableViewCell.provinceTextField.text = self.provinceModel.location[row]
-        } else {
-            self.addressModel.cityId = self.cityModel.cityId[row]
-            self.cityRow = row
-            self.requestGetBarangay(self.addressModel.cityId)
-            self.guestCheckoutTableViewCell.cityTextField.text = self.cityModel.location[row]
-            self.addressModel.city = self.cityModel.location[row]
-        }*/
-        
         if self.addressPickerType == AddressPickerType.Barangay {
-            self.barangayRow = row
+            self.checkoutContainerViewController.barangayRow = row
+            self.checkoutContainerViewController.addressModel.barangayId = self.checkoutContainerViewController.barangayModel.barangayId[row]
         } else if self.addressPickerType == AddressPickerType.Province  {
-            self.addressModel.provinceId = self.provinceModel.provinceId[row]
-            self.provinceRow = row
+            self.checkoutContainerViewController.addressModel.provinceId = self.checkoutContainerViewController.provinceModel.provinceId[row]
+            self.checkoutContainerViewController.provinceRow = row
         } else {
-            self.addressModel.cityId = self.cityModel.cityId[row]
-            self.cityRow = row
+            self.checkoutContainerViewController.addressModel.cityId = self.checkoutContainerViewController.cityModel.cityId[row]
+            self.checkoutContainerViewController.cityRow = row
         }
     }
     
+    //MARK: - 
+    //MARK: - Text Field Should Return
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         return true
     }
     
-    func fireGuestUser() {
-        let manager = APIManager.sharedInstance
-        
-        let params = ["user_guest[firstName]": self.guestCheckoutTableViewCell.firstNameTextField.text,
-            "user_guest[lastName]": self.guestCheckoutTableViewCell.lastNameTextField.text,
-            "user_guest[email]": self.guestCheckoutTableViewCell.emailTextField.text,
-            "user_guest[contactNumber]": self.guestCheckoutTableViewCell.mobileNumberTextField.text,
-            "user_address[title]": "Guest Address",
-            "user_address[streetName]": self.guestCheckoutTableViewCell.streetNameTextField.text,
-            "user_address[zipCode]": self.guestCheckoutTableViewCell.zipCodeTextField.text,
-            "user_address[location]": "\(self.addressModel.barangayId)",
-            "user_address[isDefault]": true]
-        
-        self.showHUD()
-        SessionManager.loadCookies()
-        manager.POST(APIAtlas.guestUserUrl, parameters: params, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            self.hud?.hide(true)
-            println(responseObject)
-            let dictionary: NSDictionary = responseObject as! NSDictionary
-            
-            let isSuccessful: Bool = dictionary["isSuccessful"] as! Bool
-            
-            if isSuccessful {
-                let address: String = "\(self.guestCheckoutTableViewCell.streetNameTextField.text) \(self.addressModel.barangay) \(self.addressModel.city) \(self.addressModel.province)"
-                let fullName: String = "\(self.guestCheckoutTableViewCell.firstNameTextField.text) \(self.guestCheckoutTableViewCell.lastNameTextField.text)"
-                SessionManager.setUserFullName(fullName)
-                SessionManager.setFullAddress(address)
-                
-                let checkoutContainerViewController: CheckoutContainerViewController = self.parentViewController as! CheckoutContainerViewController
-                checkoutContainerViewController.isValidGuestUser = true
-                checkoutContainerViewController.guestEmail = self.guestCheckoutTableViewCell.emailTextField.text
-                checkoutContainerViewController.saveAndContinue(checkoutContainerViewController.continueButton)
-            } else {
-                let message: String = dictionary["message"] as! String
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: message)
-            }
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                self.hud?.hide(true)
-        })
-    }
-    
+    //MARK: -
     //MARK: - Voucher Table View Cell Delegate
     func voucherTableViewCell(didTapAddButton cell: VoucherTableViewCell) {
         if cell.addButton.titleLabel!.text == "Add" {
-            self.fireVoucher(cell)
+            self.checkoutContainerViewController.fireVoucherWithVoucherId(cell.voucherTextField.text)
         } else {
             self.voucherRequestNotSuccessful(cell)
         }
     }
     
+    //MARK: -
     //MARK: Voucher Request Not Successful
     func voucherRequestNotSuccessful(cell: VoucherTableViewCell) {
         let rowCount: Int = self.additionalCellCount + self.cartItems.count
@@ -719,13 +501,16 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
         self.tableView.deleteRowsAtIndexPaths(indexPaths, withRowAnimation: UITableViewRowAnimation.Left)
     }
     
-    //MARK: Voucher Request Successful
-    func voucherRequestIsSuccessful(cell: VoucherTableViewCell, voucherModel: VoucherModel) {
-        cell.voucherTextField.enabled = false
+    //MARK: -
+    //MARK: - Voucher Request Successful
+    func voucherRequestIsSuccessful(voucherModel: VoucherModel) {
+        //copy the voucher model to our global voucher model
+        self.voucherModel = voucherModel
+        let voucherCell: VoucherTableViewCell = self.tableView.cellForRowAtIndexPath(NSIndexPath(forItem: ((self.cartItems.count - 1) + 2), inSection: 0)) as! VoucherTableViewCell
+        voucherCell.voucherTextField.enabled = false
         self.additionalCellCount++
         //Add Discount Value
         let cell: DicountVoucherTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(self.discountVouncherNibName) as! DicountVoucherTableViewCell
-        
         
         var indexPaths: [NSIndexPath] = []
         let indexPath: NSIndexPath = NSIndexPath(forRow: self.additionalCellCount + (self.cartItems.count - 1), inSection: 0)
@@ -737,44 +522,11 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
             indexPaths.append(indexPath2)
         }
         
+        self.changeButtonState(voucherCell.addButton)
         self.tableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: UITableViewRowAnimation.Left)
     }
     
-    //MARK: Fire Voucher
-    //f0150b95
-    func fireVoucher(cell: VoucherTableViewCell) {
-        self.showHUD()
-        WebServiceManager.fireVoucherWithUrl(APIAtlas.voucherUrl, accessToken: SessionManager.accessToken(), voucherCode: cell.voucherTextField.text) {
-            (successful, responseObject, requestErrorType) -> Void in
-            self.hud?.hide(true)
-            if successful {
-                self.voucherModel = VoucherModel.parseDataFromDictionary(responseObject as! NSDictionary)
-                self.voucherRequestIsSuccessful(cell, voucherModel: self.voucherModel)
-                self.changeButtonState(cell.addButton)
-            } else {
-                if requestErrorType == .ResponseError {
-                    //Error in api requirements
-                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
-                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
-                } else if requestErrorType == .AccessTokenExpired {
-                    self.fireRefreshToken(.Voucher, cell: cell)
-                } else if requestErrorType == .PageNotFound {
-                    //Page not found
-                    Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
-                } else if requestErrorType == .NoInternetConnection {
-                    //No internet connection
-                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
-                } else if requestErrorType == .RequestTimeOut {
-                    //Request timeout
-                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
-                } else if requestErrorType == .UnRecognizeError {
-                    //Unhandled error
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
-                }
-            }
-        }
-    }
-    
+    //MARK: -
     //MARK: - Voucher Table View Cell
     func voucherTableViewCell(textFieldDidChange cell: VoucherTableViewCell) {
         if count(cell.voucherTextField.text) >= 6 {
@@ -785,6 +537,7 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
         
     }
     
+    //MARK: -
     //MARK: - Change Button State
     func changeButtonState(button: UIButton) {
         if button.titleLabel!.text == "Add" {
@@ -796,6 +549,7 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
         }
     }
     
+    //MARK: -
     //MARK: - Activate Button
     func activateAddButton(button: UIButton) {
         button.setTitle("Add", forState: UIControlState.Normal)
@@ -803,6 +557,7 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
         button.enabled = true
     }
     
+    //MARK: -
     //MARK: - DeActivate Button
     func deActivateAddButton(button: UIButton) {
         button.setTitle("Add", forState: UIControlState.Normal)
@@ -810,6 +565,7 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
         button.enabled = false
     }
     
+    //MARK: -
     //MARK: - Add User Map
     func userMapView() -> UIView {
         let containerView: UIView = UIView(frame: CGRectMake(0, 0, self.view.frame.size.width, 300))
@@ -820,32 +576,148 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
         return containerView
     }
     
-    //MARK: - Refresh Token
-    func fireRefreshToken(refreshType: CheckoutRefreshType, cell: VoucherTableViewCell) {
-        self.showHUD()
-        WebServiceManager.fireRefreshTokenWithUrl(APIAtlas.refreshTokenUrl, actionHandler: {
-            (successful, responseObject, requestErrorType) -> Void in
-            self.hud?.hide(true)
-            
-            if successful {
-                SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
-                self.hud?.hide(true)
-                
-                if refreshType == .Voucher {
-                    self.fireVoucher(cell)
-                } else if refreshType == .SetAddress {
-                   self.fireSetCheckoutAddress("\(SessionManager.addressId())")
+    //MARK: - 
+    //MARK: - Total Summary Price Table View Cell With IndexPath
+    func totalSummaryPriceTableViewCellWithIndexPath(indexPath: NSIndexPath) -> TotalSummaryPriceTableViewCell  {
+        let totalCell: TotalSummaryPriceTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(self.totalCellNibName) as! TotalSummaryPriceTableViewCell
+        
+        totalCell.totalPriceValueLabel.text = self.totalPrice.formatToTwoDecimal()
+        
+        totalCell.separatorInset = UIEdgeInsetsMake(0, 1000, 0, 1000)
+        return totalCell
+    }
+    
+    //MARK: - 
+    //MARK: - Discount Voucher Total ViewCell With IndexPath
+    func discountVoucherTotalViewCellWithIndexPath(indexPath: NSIndexPath) -> DicountVoucherTableViewCell {
+        let discountTotalCell: DicountVoucherTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(self.discountVouncherNibName) as! DicountVoucherTableViewCell
+        
+        if self.voucherModel.isSuccessful {
+            discountTotalCell.discountVoucherLabel.text = "Discount Value: \(self.voucherModel.less.formatToTwoDecimal())"
+        } else {
+            discountTotalCell.discountVoucherLabel.text = "\(self.voucherModel.message)"
+            discountTotalCell.discountVoucherLabel.textAlignment = NSTextAlignment.Right
+            discountTotalCell.discountVoucherLabel.textColor = UIColor.redColor()
+        }
+        
+        discountTotalCell.separatorInset = UIEdgeInsetsMake(0, 1000, 0, 1000)
+        
+        return discountTotalCell
+    }
+    
+    //MARK: -
+    //MARK: - Voucher Table View Cell With Index Path
+    func voucherTableViewCellWithIndexPath(indexPath: NSIndexPath) -> VoucherTableViewCell {
+        let voucherCell: VoucherTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(self.voucherCellNibName) as! VoucherTableViewCell
+        voucherCell.delegate = self
+        voucherCell.selectionStyle = UITableViewCellSelectionStyle.None
+        return voucherCell
+    }
+    
+    //MARK: - 
+    //MARK: - Guest Checkout Table View Cell  With Index Path
+    func guestCheckoutTableViewCellWithindexPath(indexPath: NSIndexPath) -> GuestCheckoutTableViewCell {
+        self.guestCheckoutTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(self.guestCheckoutCellIdentifier) as! GuestCheckoutTableViewCell
+        self.guestCheckoutTableViewCell.delegate = self
+        self.guestCheckoutTableViewCell.selectionStyle = UITableViewCellSelectionStyle.None
+        self.guestCheckoutTableViewCell.separatorInset = UIEdgeInsetsMake(0, 1000, 0, 1000)
+        for view in self.guestCheckoutTableViewCell.contentView.subviews {
+            if view.isKindOfClass(UITextField) {
+                let textField: UITextField = view as! UITextField
+                if !IphoneType.isIphone4() {
+                    if textField.tag > 4 && textField.tag < 8 {
+                        textField.addToolBarWithTarget(self, done: "done")
+                    } else {
+                        textField.addToolBarWithTarget(self, next: "next", previous: "previous:", done: "done")
+                    }
                 }
-            } else {
-                //Forcing user to logout.
-                UIAlertController.displayAlertRedirectionToLogin(self, actionHandler: { (sucess) -> Void in
-                    SessionManager.logout()
-                    FBSDKLoginManager().logOut()
-                    GPPSignIn.sharedInstance().signOut()
-                    let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-                    appDelegate.startPage()
-                })
             }
-        })
+        }
+        
+        return guestCheckoutTableViewCell
+    }
+    
+    //MARK: - Ship To Table View Cell With Index Path
+    //MARK: - 
+    func shipToTableViewCellWithIndexPath(indexPath: NSIndexPath) -> ShipToTableViewCell {
+        self.shipToTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(Constants.Checkout.shipToTableViewCellNibNameAndIdentifier) as! ShipToTableViewCell
+        shipToTableViewCell.frame = CGRectMake(0, 0, self.tableView.frame.size.width, shipToTableViewCell.frame.size.height)
+        shipToTableViewCell.delegate = self
+        shipToTableViewCell.addressLabel.text = SessionManager.userFullAddress()
+        return shipToTableViewCell
+    }
+    
+    //MARK: - 
+    //MARK: - Map Table View Cell With Index Path
+    func mapTableViewCellWithIndexPath(indexPath: NSIndexPath) -> MapTableViewCell {
+        let mapCell: MapTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(self.mapCellNibName) as! MapTableViewCell
+        let latitude: Double = SessionManager.latitude().toDouble()!
+        let longitude: Double = SessionManager.longitude().toDouble()!
+        mapCell.setLocation(latitude: latitude, longitude: longitude)
+        mapCell.disableTouch()
+        return mapCell
+    }
+    
+    //MARK: -
+    //MARK: - Order Summary Table View Cell With IndexPath
+    func orderSummaryTableViewCellWithIndexPath(indexPath: NSIndexPath) -> OrderSummaryTableViewCell {
+        let product: CartProductDetailsModel = self.cartItems[indexPath.row]
+        let url = APIAtlas.baseUrl.stringByReplacingOccurrencesOfString("api/v1", withString: "")
+        let orderSummaryCell: OrderSummaryTableViewCell = tableView.dequeueReusableCellWithIdentifier(Constants.Checkout.orderSummaryTableViewCellNibNameAndIdentifier) as! OrderSummaryTableViewCell
+        orderSummaryCell.productImageView.sd_setImageWithURL(NSURL(string: "\(url)\(APIAtlas.cartImage)\(product.selectedUnitImage)")!, placeholderImage: UIImage(named: "dummy-placeholder"))
+        orderSummaryCell.itemTitleLabel.text = product.title
+        orderSummaryCell.quantityLabel.text = "x\(product.quantity)"
+        
+        for tempProductUnit in product.productUnits {
+            if product.unitId == tempProductUnit.productUnitId {
+                orderSummaryCell.priceLabel.text = tempProductUnit.discountedPrice.formatToTwoDecimal()
+                
+                if tempProductUnit.imageIds.count != 0 {
+                    for tempImage in product.images {
+                        if tempImage.id == tempProductUnit.imageIds[0] {
+                            orderSummaryCell.productImageView.sd_setImageWithURL(NSURL(string: tempImage.fullImageLocation), placeholderImage: UIImage(named: "dummy-placeholder"))
+                        }
+                    }
+                } else if product.images.count != 0 {
+                    orderSummaryCell.productImageView.sd_setImageWithURL(NSURL(string: product.images[0].fullImageLocation), placeholderImage: UIImage(named: "dummy-placeholder"))
+                } else {
+                    orderSummaryCell.productImageView.image = UIImage(named: "dummy-placeholder")
+                }
+                break
+            }
+        }
+        
+        return orderSummaryCell
+    }
+    
+    //MARK: - 
+    //MARK: - Clear City and Barangay TextField
+    func clearCityAndBarangayTextField() {
+        self.guestCheckoutTableViewCell.cityTextField.text = ""
+        self.guestCheckoutTableViewCell.barangayTextField.text = ""
+    }
+    
+    //MARK: - 
+    //MARK: - Set Barangay TextField Text With String
+    func setBarangayTextFieldTextWithString(barangay: String) {
+        self.guestCheckoutTableViewCell.barangayTextField.text = barangay
+    }
+    
+    //MARK: -
+    //MARK: - Set City TextField Text With String
+    func setCityTextFieldTextWithString(city: String) {
+        self.guestCheckoutTableViewCell.cityTextField.text = city
+    }
+    
+    //MARK: -
+    //MARK: - Set Barangay TextField Text With String
+    func setProvinceTextFieldTextWithString(province: String) {
+        self.guestCheckoutTableViewCell.provinceTextField.text = province
+    }
+    
+    //MARK: - 
+    //MARK: - Guest Checkout User
+    func guestUser() -> RegisterModel {
+        return RegisterModel(firstName: self.guestCheckoutTableViewCell.firstNameTextField.text, lastName: self.guestCheckoutTableViewCell.lastNameTextField.text, emailAddress: self.guestCheckoutTableViewCell.emailTextField.text, mobileNumber: self.guestCheckoutTableViewCell.mobileNumberTextField.text, title: "Guest Address", streetName: self.guestCheckoutTableViewCell.streetNameTextField.text, zipCode: self.guestCheckoutTableViewCell.zipCodeTextField.text, location: "\(self.checkoutContainerViewController.addressModel.barangayId)")
     }
 }
