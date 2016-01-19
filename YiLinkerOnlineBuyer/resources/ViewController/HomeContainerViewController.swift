@@ -257,8 +257,6 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                 if let data2 = data.dataUsingEncoding(NSUTF8StringEncoding){
                     if let json = NSJSONSerialization.JSONObjectWithData(data2, options: .MutableContainers, error: nil) as? [String:AnyObject] {
                         if self.oldPushNotifData != data {
-//                            var count = SessionManager.getUnReadMessagesCount() + 1
-//                            SessionManager.setUnReadMessagesCount(count)
                             self.circularDraweView()
                         }
                     }
@@ -404,7 +402,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                 }
             } else {
                 self.hud?.hide(true)
-
+                
                 if requestErrorType == .ResponseError {
                     //Error in api requirements
                     let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
@@ -445,7 +443,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         self.view.addSubview(noInternetView)
         
         UIView.animateWithDuration(2.0, delay: 1.0, usingSpringWithDamping: 0.8, initialSpringVelocity: 3.0, options: UIViewAnimationOptions.CurveEaseInOut, animations: ({
-           noInternetView.alpha = 1
+            noInternetView.alpha = 1
         }), completion: {
             (value: Bool) in
             Delay.delayWithDuration(0.3, completionHandler: { (success) -> Void in
@@ -479,7 +477,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         }
     }
     
-    //MARK: - 
+    //MARK: -
     //MARK: - isJsonStringEmpty
     
     func isJsonStringEmpty() -> Bool {
@@ -521,7 +519,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                 } else {
                     self.homePageModel.data.removeAtIndex(index)
                 }
-
+                
             } else if model.isKindOfClass(LayoutFiveModel) {
                 self.layouts.append("5")
             } else if model.isKindOfClass(LayoutSixModel) {
@@ -597,7 +595,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                     Toast.displayToastWithMessage(Constants.Localized.error, duration: 1.5, view: self.view)
                 }
             }
-
+            
         }
     }
     
@@ -631,7 +629,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             } else {
                 //Forcing user to logout.
                 UIAlertController.displayAlertRedirectionToLogin(self, actionHandler: { (sucess) -> Void in
-                   self.logout()
+                    self.logout()
                 })
             }
         })
@@ -734,7 +732,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         } else if self.layouts[indexPath.section] == "10" {
             return self.twoColumnGridCollectionViewCellWithIndexPath(indexPath)
         } else {
-           return UICollectionViewCell()
+            return UICollectionViewCell()
         }
     }
     
@@ -840,8 +838,8 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         }
         
         /*else if cell.isKindOfClass(FlashSaleCollectionViewCell) {
-            let flashSaleCollectionViewCell: FlashSaleCollectionViewCell = collectionView.cellForItemAtIndexPath(indexPath) as! FlashSaleCollectionViewCell
-            self.didClickItemWithTarget(flashSaleCollectionViewCell.target, targetType: flashSaleCollectionViewCell.targetType)
+        let flashSaleCollectionViewCell: FlashSaleCollectionViewCell = collectionView.cellForItemAtIndexPath(indexPath) as! FlashSaleCollectionViewCell
+        self.didClickItemWithTarget(flashSaleCollectionViewCell.target, targetType: flashSaleCollectionViewCell.targetType)
         }*/
     }
     
@@ -896,7 +894,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     func halfPagerCollectionViewCellnumberOfDotsInPageControl(halfPagerCollectionViewCell: HalfPagerCollectionViewCell) -> Int {
         let parentIndexPath: NSIndexPath = self.collectionView.indexPathForCell(halfPagerCollectionViewCell)!
         let layoutThreeModel: LayoutThreeModel = self.homePageModel.data[parentIndexPath.section] as! LayoutThreeModel
-    
+        
         return layoutThreeModel.data.count - 1
     }
     
@@ -918,12 +916,12 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         let rightInset: Int = 15
         self.view.layoutIfNeeded()
         
-            if IphoneType.isIphone6() || IphoneType.isIphone6Plus() {
-                println((self.view.frame.size.width / 2) - 8)
-                return (self.view.frame.size.width / 2) - 8
-            } else {
-                return (self.view.frame.size.width / 2) - 8
-            }
+        if IphoneType.isIphone6() || IphoneType.isIphone6Plus() {
+            println((self.view.frame.size.width / 2) - 8)
+            return (self.view.frame.size.width / 2) - 8
+        } else {
+            return (self.view.frame.size.width / 2) - 8
+        }
     }
     
     //MARK: - Half Pager Delegate
@@ -999,30 +997,30 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                     break
                 }
             }
-
+            
         } else {
             /*if self.updateUsingOneHourInterval {
-                self.updateUsingOneHourInterval = false
-                if self.remainingTime == -1 {
-                    self.timer.invalidate()
-                    self.oneHourIntervalTimer.invalidate()
-                }
-                
+            self.updateUsingOneHourInterval = false
+            if self.remainingTime == -1 {
+            self.timer.invalidate()
+            self.oneHourIntervalTimer.invalidate()
+            }
+            
             } else {
-                self.timer.invalidate()
-                self.oneHourIntervalTimer.invalidate()
-                self.updateUsingOneHourInterval = true
-                
-                if self.remainingTime == -1 {
-                    //self.fireGetHomePageData(true)
-                    
-                    if self.view.window != nil {
-                        Delay.delayWithDuration(1.0, completionHandler: { (success) -> Void in
-                            let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-                            appDelegate.changeRootToHomeView()
-                        })
-                    }
-                }
+            self.timer.invalidate()
+            self.oneHourIntervalTimer.invalidate()
+            self.updateUsingOneHourInterval = true
+            
+            if self.remainingTime == -1 {
+            //self.fireGetHomePageData(true)
+            
+            if self.view.window != nil {
+            Delay.delayWithDuration(1.0, completionHandler: { (success) -> Void in
+            let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+            appDelegate.changeRootToHomeView()
+            })
+            }
+            }
             }*/
             
             Delay.delayWithDuration(1.0, completionHandler: { (success) -> Void in
@@ -1035,7 +1033,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             
             
         }
-
+        
     }
     
     //MARK: - Flash Sale Collection View Cell With IndexPath
@@ -1092,9 +1090,9 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         
         twoColumnGridCollectionViewCell.productItemImageView.sd_setImageWithURL(NSURL(string: layoutTenModel.data[indexPath.row].image), placeholderImage: UIImage(named: self.placeHolder))
         twoColumnGridCollectionViewCell.productNameLabel.text = layoutTenModel.data[indexPath.row].name
-        twoColumnGridCollectionViewCell.discountedPriceLabel.text = layoutTenModel.data[indexPath.row].discountedPrice.formatToTwoDecimal()
+        twoColumnGridCollectionViewCell.discountedPriceLabel.text = layoutTenModel.data[indexPath.row].discountedPrice.addPesoSign()
         twoColumnGridCollectionViewCell.discountPercentageLabel.text = layoutTenModel.data[indexPath.row].discountPercentage.formatToPercentage()
-        twoColumnGridCollectionViewCell.originalPriceLabel.text = layoutTenModel.data[indexPath.row].originalPrice.formatToTwoDecimal()
+        twoColumnGridCollectionViewCell.originalPriceLabel.text = layoutTenModel.data[indexPath.row].originalPrice.addPesoSign()
         twoColumnGridCollectionViewCell.originalPriceLabel.drawDiscountLine(false)
         
         if layoutTenModel.data[indexPath.row].discountPercentage.toDouble() == 0 || layoutTenModel.data[indexPath.row].discountPercentage.toDouble() == nil {
@@ -1147,7 +1145,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     
     //MARK: - Layout Nine Collection View Cell Delegate
     func layoutNineCollectionViewCellDidClickProductImage(productImage: ProductImageView) {
-       self.didClickItemWithTarget(productImage.target, targetType: productImage.targetType)
+        self.didClickItemWithTarget(productImage.target, targetType: productImage.targetType)
     }
     
     //MARK: - Vertical Image Collection View Cell With IndexPath
@@ -1160,13 +1158,13 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                 verticalImageCollectionViewCell.productItemImageView.sd_setImageWithURL(NSURL(string: layoutFiveModel.data[indexPath.row].image), placeholderImage: UIImage(named: self.placeHolder))
                 
                 verticalImageCollectionViewCell.productNameLabel.text = layoutFiveModel.data[indexPath.row].name
-                verticalImageCollectionViewCell.discountedPriceLabel.text = layoutFiveModel.data[indexPath.row].discountedPrice.formatToTwoDecimal()
+                verticalImageCollectionViewCell.discountedPriceLabel.text = layoutFiveModel.data[indexPath.row].discountedPrice.addPesoSign()
                 verticalImageCollectionViewCell.discountPercentageLabel.text = layoutFiveModel.data[indexPath.row].discountPercentage.formatToPercentage()
                 
                 verticalImageCollectionViewCell.target = layoutFiveModel.data[indexPath.row].target.targetUrl
                 verticalImageCollectionViewCell.targetType = layoutFiveModel.data[indexPath.row].target.targetType
                 
-                verticalImageCollectionViewCell.originalPriceLabel.text = layoutFiveModel.data[indexPath.row].originalPrice.formatToTwoDecimal()
+                verticalImageCollectionViewCell.originalPriceLabel.text = layoutFiveModel.data[indexPath.row].originalPrice.addPesoSign()
                 verticalImageCollectionViewCell.originalPriceLabel.drawDiscountLine(false)
                 
                 if layoutFiveModel.data[indexPath.row].discountPercentage.toDouble() == 0 || layoutFiveModel.data[indexPath.row].discountPercentage.toDouble() == nil {
@@ -1184,13 +1182,13 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             if indexPath.row < layoutSevenModel.data.count {
                 verticalImageCollectionViewCell.productItemImageView.sd_setImageWithURL(NSURL(string: layoutSevenModel.data[indexPath.row].image), placeholderImage: UIImage(named: self.placeHolder))
                 verticalImageCollectionViewCell.productNameLabel.text = layoutSevenModel.data[indexPath.row].name
-                verticalImageCollectionViewCell.discountedPriceLabel.text = layoutSevenModel.data[indexPath.row].discountedPrice.formatToTwoDecimal()
+                verticalImageCollectionViewCell.discountedPriceLabel.text = layoutSevenModel.data[indexPath.row].discountedPrice.addPesoSign()
                 verticalImageCollectionViewCell.discountPercentageLabel.text = layoutSevenModel.data[indexPath.row].discountPercentage.formatToPercentage()
                 
                 verticalImageCollectionViewCell.target = layoutSevenModel.data[indexPath.row].target.targetUrl
                 verticalImageCollectionViewCell.targetType = layoutSevenModel.data[indexPath.row].target.targetType
                 
-                verticalImageCollectionViewCell.originalPriceLabel.text = layoutSevenModel.data[indexPath.row].originalPrice.formatToTwoDecimal()
+                verticalImageCollectionViewCell.originalPriceLabel.text = layoutSevenModel.data[indexPath.row].originalPrice.addPesoSign()
                 verticalImageCollectionViewCell.originalPriceLabel.drawDiscountLine(false)
                 
                 if layoutSevenModel.data[indexPath.row].discountPercentage.toDouble() == 0 || layoutSevenModel.data[indexPath.row].discountPercentage.toDouble() == nil {
@@ -1212,18 +1210,18 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         
         if self.homePageModel.data[indexPath.section].isKindOfClass(LayoutFiveModel) {
             let layoutFiveModel: LayoutFiveModel = self.homePageModel.data[indexPath.section] as! LayoutFiveModel
-           
+            
             if indexPath.row < layoutFiveModel.data.count {
                 halfVerticalImageCollectionViewCell.productItemImageView.sd_setImageWithURL(NSURL(string: layoutFiveModel.data[indexPath.row].image), placeholderImage: UIImage(named: self.placeHolder))
                 
                 halfVerticalImageCollectionViewCell.productNameLabel.text = layoutFiveModel.data[indexPath.row].name
-                halfVerticalImageCollectionViewCell.discountedPriceLabel.text = layoutFiveModel.data[indexPath.row].discountedPrice.formatToTwoDecimal()
+                halfVerticalImageCollectionViewCell.discountedPriceLabel.text = layoutFiveModel.data[indexPath.row].discountedPrice.addPesoSign()
                 halfVerticalImageCollectionViewCell.discountPercentageLabel.text = layoutFiveModel.data[indexPath.row].discountPercentage.formatToPercentage()
                 
                 halfVerticalImageCollectionViewCell.target = layoutFiveModel.data[indexPath.row].target.targetUrl
                 halfVerticalImageCollectionViewCell.targetType = layoutFiveModel.data[indexPath.row].target.targetType
                 
-                halfVerticalImageCollectionViewCell.originalPriceLabel.text = layoutFiveModel.data[indexPath.row].originalPrice.formatToTwoDecimal()
+                halfVerticalImageCollectionViewCell.originalPriceLabel.text = layoutFiveModel.data[indexPath.row].originalPrice.addPesoSign()
                 halfVerticalImageCollectionViewCell.originalPriceLabel.drawDiscountLine(false)
                 
                 if layoutFiveModel.data[indexPath.row].discountPercentage.toDouble() == 0 || layoutFiveModel.data[indexPath.row].discountPercentage.toDouble() == nil {
@@ -1237,18 +1235,18 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             
         } else if self.homePageModel.data[indexPath.section].isKindOfClass(LayoutSevenModel) {
             let layoutSevenModel: LayoutSevenModel = self.homePageModel.data[indexPath.section] as! LayoutSevenModel
-
+            
             if indexPath.row < layoutSevenModel.data.count {
                 halfVerticalImageCollectionViewCell.productItemImageView.sd_setImageWithURL(NSURL(string: layoutSevenModel.data[indexPath.row].image), placeholderImage: UIImage(named: self.placeHolder))
                 
                 halfVerticalImageCollectionViewCell.productNameLabel.text = layoutSevenModel.data[indexPath.row].name
-                halfVerticalImageCollectionViewCell.discountedPriceLabel.text = layoutSevenModel.data[indexPath.row].discountedPrice.formatToTwoDecimal()
+                halfVerticalImageCollectionViewCell.discountedPriceLabel.text = layoutSevenModel.data[indexPath.row].discountedPrice.addPesoSign()
                 halfVerticalImageCollectionViewCell.discountPercentageLabel.text = layoutSevenModel.data[indexPath.row].discountPercentage.formatToPercentage()
                 
                 halfVerticalImageCollectionViewCell.target = layoutSevenModel.data[indexPath.row].target.targetUrl
                 halfVerticalImageCollectionViewCell.targetType = layoutSevenModel.data[indexPath.row].target.targetType
                 
-                halfVerticalImageCollectionViewCell.originalPriceLabel.text = layoutSevenModel.data[indexPath.row].originalPrice.formatToTwoDecimal()
+                halfVerticalImageCollectionViewCell.originalPriceLabel.text = layoutSevenModel.data[indexPath.row].originalPrice.addPesoSign()
                 halfVerticalImageCollectionViewCell.originalPriceLabel.drawDiscountLine(true)
                 
                 if layoutSevenModel.data[indexPath.row].discountPercentage.toDouble() == 0 || layoutSevenModel.data[indexPath.row].discountPercentage.toDouble() == nil {
@@ -1291,7 +1289,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             fullImageCollectionViewCell.targetType = layoutTwoModel.data[indexPath.row].target.targetType
             fullImageCollectionViewCell.itemProductImageView.sd_setImageWithURL(NSURL(string: layoutTwoModel.data[indexPath.row].image), placeholderImage: UIImage(named: placeHolder))
         }
-     
+        
         return fullImageCollectionViewCell
     }
     
@@ -1400,7 +1398,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     //MARK: - Seller Carousel Delegate
     func sellerCarouselCollectionViewCell(sellerCarouselCollectionViewCell: SellerCarouselCollectionViewCell, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         let sellerCollectionViewCell: SellerCollectionViewCell = sellerCarouselCollectionViewCell.collectionView.cellForItemAtIndexPath(indexPath) as! SellerCollectionViewCell
-         self.didClickItemWithTarget(sellerCollectionViewCell.target, targetType: sellerCollectionViewCell.targetType)
+        self.didClickItemWithTarget(sellerCollectionViewCell.target, targetType: sellerCollectionViewCell.targetType)
     }
     
     func sellerCarouselCollectionViewCellDidEndDecelerating(sellerCarouselCollectionViewCell: SellerCarouselCollectionViewCell) {
@@ -1495,10 +1493,10 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     //MARK: - Show Back To Top
     func showBackToTop() {
         UIView.animateWithDuration(0.8, animations: {
-                self.backToTopButton.alpha = 1
+            self.backToTopButton.alpha = 1
             }, completion: {
                 (value: Bool) in
-            })
+        })
     }
     
     //MARK: - Show Back To Top
@@ -1509,7 +1507,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                 (value: Bool) in
         })
     }
-
+    
     
     //MARK: - Back To Top
     @IBAction func backToTop(sender: AnyObject) {
@@ -1521,7 +1519,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         self.fireGetHomePageData(true)
     }
     
-    //MARK: - 
+    //MARK: -
     //MARK: - Daily Login Delegate
     func dailyLoginCollectionViewCellDidTapCell(dailyLoginCollectionViewCell: DailyLoginCollectionViewCell) {
         
@@ -1533,16 +1531,16 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     }
     
     func dailyLoginCollectionViewCellDidEndDecelerating(dailyLoginCollectionViewCell: DailyLoginCollectionViewCell) {
-//        dailyLoginCollectionViewCell.layoutIfNeeded()
-//        let pageWidth: CGFloat = dailyLoginCollectionViewCell.collectionView.frame.size.width
-//        let currentPage: CGFloat = dailyLoginCollectionViewCell.collectionView.contentOffset.x / pageWidth
-//        
-//        if 0.0 != fmodf(Float(currentPage), 1.0) {
-//            dailyLoginCollectionViewCell.pageControl.currentPage = Int(currentPage) + 1
-//        }
-//        else {
-//            dailyLoginCollectionViewCell.pageControl.currentPage = Int(currentPage)
-//        }
+        //        dailyLoginCollectionViewCell.layoutIfNeeded()
+        //        let pageWidth: CGFloat = dailyLoginCollectionViewCell.collectionView.frame.size.width
+        //        let currentPage: CGFloat = dailyLoginCollectionViewCell.collectionView.contentOffset.x / pageWidth
+        //
+        //        if 0.0 != fmodf(Float(currentPage), 1.0) {
+        //            dailyLoginCollectionViewCell.pageControl.currentPage = Int(currentPage) + 1
+        //        }
+        //        else {
+        //            dailyLoginCollectionViewCell.pageControl.currentPage = Int(currentPage)
+        //        }
     }
     
     //MARK: -
