@@ -52,6 +52,14 @@ class WebServiceManager: NSObject {
     static let sellerIdKey = "sellerId"
     static let userIdKey = "userId"
     
+    //Wishlist
+    static let wishlistKey = "wishlist"
+    static let productIdKey = "productId"
+    static let unitIdKey = "unitId"
+    static let quantityKey = "quantity"
+    static let itemIdsKey = "itemIds[]"
+    
+    
     //MARK: -
     //MARK: - Fire Login Request With URL
     class func fireLoginRequestWithUrl(url: String, emailAddress: String, password: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
@@ -175,7 +183,7 @@ class WebServiceManager: NSObject {
         }
     }
     
-    //MARK: - Fire Get Contacts lis With Url
+    //MARK: - Fire Get Contacts list With Url
     class func fireAttachImageWithUrl(url: String, image: UIImage, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
         self.firePostRequestWithImage(url, parameters: [], image: image) { (successful, responseObject, requestErrorType) -> Void in
             actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
@@ -202,6 +210,30 @@ class WebServiceManager: NSObject {
             parameters = [self.voucherCodeKey: voucherCode]
         }
         self.fireGetRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+    }
+    
+    //MARK: - Fire Get Wishlist data list With Url
+    class func fireGetWishlistWithUrl(url: String, access_token: String, wishlist: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+        let parameters: NSDictionary = [self.accessTokenKey: access_token, self.wishlistKey: wishlist]
+        self.fireGetRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+    }
+    
+    //MARK: - Fire Delete Wishlist Item
+    class func fireDeleteWishlistItemWithUrl(url: String, access_token: String, productId: String, unitId: String, quantity: Int, wishlist: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+        let parameters: NSDictionary = [self.accessTokenKey: access_token, self.productIdKey: productId, self.unitIdKey: unitId, self.quantityKey: quantity, self.wishlistKey: wishlist]
+        self.firePostRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+    }
+    
+    //MARK: - Fire Add Wishlist Item to Cart
+    class func fireAddWishlistItemToCartWithUrl(url: String, access_token: String, itemIds: Int, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+        let parameters: NSDictionary = [self.accessTokenKey: access_token, self.itemIdsKey: itemIds]
+        self.firePostRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
             actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
         }
     }
