@@ -86,8 +86,10 @@ class ProductImagesView: UIView, UICollectionViewDataSource, UICollectionViewDel
         let cell: ProductSellerViewCollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier("productSellerIdentifier", forIndexPath: indexPath) as! ProductSellerViewCollectionViewCell
         if self.images.count != 0 {
             cell.setImage(self.images[indexPath.row])
+            println(self.images[indexPath.row])
         } else if self.imagesModel != nil {
             cell.setImage(self.imagesModel[indexPath.row].imageLocation)
+            println(self.imagesModel[indexPath.row].imageLocation)
         }
         
         cell.imageView.contentMode = UIViewContentMode.ScaleAspectFit

@@ -137,7 +137,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         self.registerCellWithNibName(self.twoColumnGridCell)
         
         self.fireGetHomePageData(true)
-        
+
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "onRegistration:",
@@ -156,6 +156,14 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         self.setupBackToTopButton()
         
         self.addPullToRefresh()
+        
+        let languageType: LanguageType = LanguageHelper.currentLanguge()
+        
+        if languageType == .Chinese {
+            println("Device language is chinese!")
+        } else {
+            println("Device language is english!")
+        }
     }
     
     //MARK: - Add Pull To Refresh
@@ -254,8 +262,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                 if let data2 = data.dataUsingEncoding(NSUTF8StringEncoding){
                     if let json = NSJSONSerialization.JSONObjectWithData(data2, options: .MutableContainers, error: nil) as? [String:AnyObject] {
                         if self.oldPushNotifData != data {
-                            //                            var count = SessionManager.getUnReadMessagesCount() + 1
-                            //                            SessionManager.setUnReadMessagesCount(count)
+                            self.circularDraweView()
                         }
                     }
                 }
@@ -371,6 +378,9 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         item2.selectedImage = unselectedImage
         item2.image = unselectedImage
         item2.imageInsets = UIEdgeInsets(top: 6, left: 0, bottom: -6, right: 0)
+        if SessionManager.getUnReadMessagesCount() != 0 {
+            item2.badgeValue = "\(SessionManager.getUnReadMessagesCount())"
+        }
     }
     
     //MARK: - Fire Get Home Page Data

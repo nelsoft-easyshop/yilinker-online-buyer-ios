@@ -392,6 +392,9 @@ extension MessagingConversationListViewController: UITableViewDataSource, UITabl
 
 extension MessagingConversationListViewController : EmptyViewDelegate{
     func addEmptyView() {
+        self.conversationsTableData.removeAll(keepCapacity: false)
+        self.tableView.reloadData()
+        
         if self.emptyView == nil {
             self.emptyView = UIView.loadFromNibNamed("EmptyView", bundle: nil) as? EmptyView
             self.emptyView?.frame = self.view.frame
