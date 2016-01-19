@@ -383,7 +383,6 @@ class ResolutionCenterViewController: UIViewController, UITableViewDataSource, U
                     self.tableData = self.resolutionCenterModel.resolutionArray
                     self.resolutionTableView.reloadData()
                 }
-                self.hud?.hide(true)
             } else {
                 self.hud?.hide(true)
                 if requestErrorType == .ResponseError {
