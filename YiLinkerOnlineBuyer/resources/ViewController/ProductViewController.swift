@@ -20,6 +20,7 @@ struct ProductStrings {
     static let messageScrollUp = StringHelper.localizedStringWithKey("FIRST_VIEW_MESSAGE_LOCALIZE_KEY")
     static let messageRelease = StringHelper.localizedStringWithKey("SECOND_VIEW_MESSAGE_LOCALIZE_KEY")
     static let outOfStock = StringHelper.localizedStringWithKey("OUT_OF_STOCK_LOCALIZE_KEY")
+    static let attributeNotAvailable = StringHelper.localizedStringWithKey("ATTRIBUTE_PRICE_NOT_AVAILABLE_LOCALIZE_KEY")
     
     static let addToCart = StringHelper.localizedStringWithKey("ADD_TO_CART_LOCALIZE_KEY")
     static let buytItNow = StringHelper.localizedStringWithKey("BUY_IT_NOW_LOCALIZE_KEY")
@@ -47,6 +48,7 @@ struct ProductStrings {
     static let alertOutOfStock = StringHelper.localizedStringWithKey("ALERT_OUT_OF_STOCK_LOCALIZE_KEY")
     static let alertSellerNotAvailable = StringHelper.localizedStringWithKey("ALERT_SELLER_NOT_AVAILABLE_LOCALIZE_KEY")
     static let alertCannotProcceed = StringHelper.localizedStringWithKey("CANNOT_PROCEED_LOCALIZE_KEY")
+    static let alertNotAvailable = StringHelper.localizedStringWithKey("ALERT_ATTRIBUTE_COMBINATION_NOT_AVAILABLE_LOCALIZE_KEY")
 }
 
 protocol ProductViewControllerDelegate {
@@ -63,6 +65,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     @IBOutlet weak var buttonSubContainer: UIView!
     @IBOutlet weak var buyItNowLabel: UILabel!
     @IBOutlet weak var blockerView: UIView!
+    @IBOutlet weak var containerScrollView: UIScrollView!
     
     var headerView: UIView!
     var footerView: UIView!
@@ -93,7 +96,6 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     var newFrame: CGRect!
     var visibility = 0.0
     var lastContentOffset: CGFloat = 0.0
-    @IBOutlet weak var containerScrollView: UIScrollView!
     
     var canShowExtendedDetails: Bool = false
     var isScrollingUp: Bool = false
@@ -120,7 +122,9 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     var isExiting: Bool = true
     var isFromCart: Bool = false
     var isAlreadyMoveOffset: Bool = false
+    var isDefault: Bool = true
     var isFirstView: Bool = true
+
     @IBOutlet weak var closeButton: UIView!
     
     // Messaging
@@ -185,7 +189,6 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        
         if self.tableView.contentOffset.y <= 140 {
             self.navigationController?.navigationBar.alpha = 0
         }
@@ -250,7 +253,17 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
             }
         }
         
+        // if scrolling the table view
         if scrollView == self.tableView {
+            // reached top or bottom
+            if scrollView.contentOffset.y <= 0.0 {
+                visibility = 0.0
+                canShowExtendedDetails = false
+            } else if scrollView.contentOffset.y + scrollView.frame.size.height == scrollView.contentSize.height {
+                visibility = 1.0
+                canShowExtendedDetails = true
+            }
+            
             if visibility > 1.0 {
                 visibility = 1.0
             } else if visibility < 0.0 {
@@ -258,26 +271,21 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
             }
         }
 
-        // reached top or bottom
-        if scrollView.contentOffset.y <= 0.0 && scrollView == self.tableView {
-            visibility = 0.0
-            canShowExtendedDetails = false
-        } else if scrollView.contentOffset.y + scrollView.frame.size.height == scrollView.contentSize.height && scrollView == self.tableView{
-            visibility = 1.0
-            canShowExtendedDetails = true
-        }
-
         self.navigationController?.navigationBar.alpha = CGFloat(visibility)
         
+        // if scrolling the scroll view
         if scrollView == self.containerScrollView {
             if self.lastContentOffset > scrollView.contentOffset.y {
                 self.isScrollingUp = false
             } else if self.lastContentOffset < scrollView.contentOffset.y {
                 self.isScrollingUp = true
             }
-            self.lastContentOffset = scrollView.contentOffset.y
+            
+            
+            self.tableView.transform = CGAffineTransformMakeTranslation(0.0, self.containerScrollView.contentOffset.y * -1.0)
         }
         
+        self.lastContentOffset = scrollView.contentOffset.y
     }
 
     // Scroll to position when reached position
@@ -804,7 +812,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
                         } else if task.statusCode == 404 {
                             println(error)
                         } else {
-                            println(error)
+                            println(error.userInfo)
 //                            if (SessionManager.isLoggedIn()){
 //                                self.showAlert(title: Constants.Localized.error, message: Constants.Localized.someThingWentWrong)
 //                            }
@@ -895,17 +903,21 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
 //        self.getFooterView().addSubview(self.getBottomSpace())
         
         if !isFromCart {
-            for i in 0..<self.productDetailsModel.productUnits.count {
-                if self.productDetailsModel.productUnits[i].quantity != 0 {
-                    self.quantity = self.productDetailsModel.productUnits[i].quantity
-                    self.unitId = self.productDetailsModel.productUnits[i].productUnitId
-                    getUnitIdIndexFrom()
-                    break
-                } else if self.productDetailsModel.productUnits[i].quantity == 0 && i == self.productDetailsModel.productUnits.count - 1 {
-                    self.quantity = 0
-                    self.unitIdIndex = 0
-                }
-            }
+//            for i in 0..<self.productDetailsModel.productUnits.count {
+//                if self.productDetailsModel.productUnits[i].quantity != 0 {
+//                    self.quantity = self.productDetailsModel.productUnits[i].quantity
+//                    self.unitId = self.productDetailsModel.productUnits[i].productUnitId
+//                    getUnitIdIndexFrom()
+//                    break
+//                } else if self.productDetailsModel.productUnits[i].quantity == 0 && i == self.productDetailsModel.productUnits.count - 1 {
+//                    self.quantity = 0
+//                    self.unitIdIndex = 0
+//                }
+//            }
+            
+            self.quantity = self.productDetailsModel.productUnits[0].quantity
+            self.unitId = self.productDetailsModel.productUnits[0].productUnitId
+            getUnitIdIndexFrom()
             
             if self.quantity != 0 {
                 self.quantity = 1
@@ -914,9 +926,9 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
                 self.unitIdIndex = 0
             }
             
-            
             self.productImagesView.setDetails(self.productDetailsModel, unitId: unitIdIndex, width: self.view.frame.size.width)
         } else {
+            isDefault = false
             self.getUnitIdIndexFrom()
             var images: [String] = []
             for productUnit in self.productDetailsModel.productUnits {
@@ -966,7 +978,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         
         self.hud?.hide(true)
         
-        addExtendedView()
+//        addExtendedView()
         self.buttonsContainer.layer.zPosition = 2
         
         if isFromCart {
@@ -975,7 +987,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
             self.buttonsContainer.hidden = true
             self.productDetailsExtendedView.frame.size.height += 65
         }
-        
+
         self.containerScrollView.addSubview(self.tableView)
         self.containerScrollView.addSubview(self.getProductExtendedView())
         self.productExtendedView.frame.origin.y = self.containerScrollView.frame.size.height
@@ -1009,7 +1021,6 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     }
     
     func setAttributes(attributes: [ProductAttributeModel], productUnits: [ProductUnitsModel], unitId: String, quantity: Int) {
-        println("unit id >>> \(unitId)")
         
         for view in self.productAttributeView.subviews {
             if view is UILabel {
@@ -1037,7 +1048,11 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
                 if productUnits[self.unitIdIndex].combination[i] == attributes[i].valueId[j] {
                     selectedName.append(attributes[i].attributeName)
                     selectedId.append(attributes[i].valueId[j])
-                    selectedValue.append(attributes[i].valueName[j])
+                    if isDefault {
+                        selectedValue.append("-")
+                    } else {
+                        selectedValue.append(attributes[i].valueName[j])
+                    }
                 }
             }
         }
@@ -1116,7 +1131,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         if self.emptyView == nil {
             self.emptyView = UIView.loadFromNibNamed("EmptyView", bundle: nil) as? EmptyView
             self.emptyView!.delegate = self
-            self.emptyView!.frame = self.view.bounds
+            self.emptyView!.frame = UIScreen.mainScreen().bounds
             self.closeButton.removeFromSuperview()
             self.emptyView?.addSubview(self.closeButton)
             self.closeButton.transform = CGAffineTransformMakeTranslation(8.0, 34.0)
@@ -1311,6 +1326,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     }
     
     func doneActionPassDetailsToProductView(controller: ProductAttributeViewController, unitId: String, quantity: Int, selectedId: NSArray, images: [String]) {
+        self.isDefault = false
         self.unitId = unitId
         self.selectedId = selectedId as! [String]
         self.quantity = quantity
@@ -1319,6 +1335,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     }
     
     func gotoCheckoutFromAttributes(controller: ProductAttributeViewController, unitId: String, quantity: Int) {
+        self.isDefault = false
         self.unitId = unitId
         self.quantity = quantity
         self.buyItNowAction(UIGestureRecognizer())
@@ -1370,7 +1387,9 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     // MARK: Actions
     
     @IBAction func addToCartAction(sender: AnyObject) {
-        if self.quantity == 0 {
+        if isDefault {
+            seeMoreAttribute("")
+        } else if self.quantity == 0 {
             self.showAlert(title: ProductStrings.alertCannotProcceed, message: ProductStrings.alertOutOfStock)
         } else {
             requestAddCartItem("cart")
@@ -1378,7 +1397,9 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     }
     
     func buyItNowAction(gesture: UIGestureRecognizer) {
-        if self.quantity == 0 {
+        if isDefault {
+            seeMoreAttribute("")
+        } else if self.quantity == 0 {
             self.showAlert(title: ProductStrings.alertCannotProcceed, message: ProductStrings.alertOutOfStock)
         } else {
             requestAddCartItem("buyitnow")

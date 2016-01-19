@@ -96,6 +96,17 @@ extension UILabel {
         myMutableString.addAttribute(NSForegroundColorAttributeName, value: UIColor.redColor(), range: NSRange(location: stringCount - 1,length:1))
         self.attributedText = myMutableString
     }
+    
+    func boldFont() {
+        let currentFont: UIFont = self.font
+        self.font = UIFont.boldSystemFontOfSize(currentFont.pointSize)
+        
+    }
+    
+    func unboldFont() {
+        let currentFont: UIFont = self.font
+        self.font = UIFont.systemFontOfSize(currentFont.pointSize)
+    }
 }
 
 extension UITextView {
@@ -250,8 +261,6 @@ extension NSDate {
         return isLess
     }
     
-    
-    
     func addDays(daysToAdd : Int) -> NSDate {
         var secondsInDays : NSTimeInterval = Double(daysToAdd) * 60 * 60 * 24
         var dateWithDaysAdded : NSDate = self.dateByAddingTimeInterval(secondsInDays)
@@ -263,6 +272,35 @@ extension NSDate {
         var dateWithHoursAdded : NSDate = self.dateByAddingTimeInterval(secondsInHours)
         return dateWithHoursAdded
     }
+    
+//    func differenceInMinutesWithCurrentDate() -> Double {
+//        return (self.timeIntervalSinceNow / 60)
+//    }
+    
+    func differenceInMinutesWithCurrentDate() -> Double {
+        return ((NSDate().timeIntervalSinceDate(self)) / 60)
+    }
+    
+    func formatDateToString(desiredFormat: String) -> String {
+        var dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = desiredFormat
+        return dateFormatter.stringFromDate(self)
+    }
+}
+
+extension Double {
+    func formatToNoDecimal() -> String {
+        var stringNumber: String = ""
+        
+        let formatter = NSNumberFormatter()
+        formatter.minimumFractionDigits = 0
+        formatter.maximumFractionDigits = 0
+        formatter.numberStyle = NSNumberFormatterStyle.DecimalStyle
+        stringNumber = formatter.stringFromNumber(self)!
+        
+        return stringNumber
+    }
+
 }
 
 extension String {
@@ -377,6 +415,12 @@ extension String {
             return distance(self.startIndex, idx)
         }
         return -1
+    }
+    
+    func formatStringToDate(format: String) -> NSDate {
+        var dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = format
+        return dateFormatter.dateFromString(self)!
     }
     
 }

@@ -224,6 +224,16 @@ MESSAGING_SAVE_FAILED = "保存失败.";
 MESSAGING_SAVE_FAILED_MESSAGE = "无法保存图像";
 MESSAGING_PHOTO_MESSAGE = "您发送/接收照片";
 MESSAGING_NEW_MESSAGE = "你有一个新的消息!";
+MESSAGING_MINUTES_AGO = "分钟前"; //No Chinese String
+MESSAGING_HOURS_AGO = "小时前"; //No Chinese String
+MESSAGING_DAYS_AGO = "天前"; //No Chinese String
+MESSAGING_MINUTE_AGO = "分钟前"; //No Chinese String
+MESSAGING_HOUR_AGO = "小时前"; //No Chinese String
+MESSAGING_DAY_AGO = "一天前"; //No Chinese String
+MESSAGING_NO_MESSAGE = "没有更多的消息。"; //No Chinese String
+MESSAGING_WRITE_TO = "写到..."; //No Chinese String
+MESSAGING_NO_MESSAGE_LOCALIZE_KEY = "没有消息."; //No Chinese String
+MESSAGING_NO_RESULTS_LOCALIZE_KEY = "未找到结果。"; //No Chinese String
 
 // MARK: - Rj's Modules
 
@@ -268,8 +278,11 @@ PEOPLE_RATE_LOCALIZE_KEY = "用户评价这个商品";
 ALERT_ADDED_TO_WISHLIST_LOCALIZE_KEY = "此项目已被添加到您的收藏。";
 ALERT_ADDED_TO_CART_LOCALIZE_KEY = "此项目已被添加到您的购物车。";
 ALERT_PLEASE_LOGIN_LOCALIZE_KEY = "请登录-在您的收藏中添加项。";
-ALERT_PLEASE_COMPLETE_LOCALIZE_KEY = "请填写属性。";
+ALERT_PLEASE_COMPLETE_LOCALIZE_KEY = "请完成组合。";
 ALERT_AVOID_ISSUES_LOCALIZE_KEY = "为了避免问题，请登录。";
+ALERT_SELLER_NOT_AVAILABLE_LOCALIZE_KEY = "卖方不是可用的。";
+ATTRIBUTE_PRICE_NOT_AVAILABLE_LOCALIZE_KEY = "没有可供选择";
+ALERT_ATTRIBUTE_COMBINATION_NOT_AVAILABLE_LOCALIZE_KEY = "产品不可用于所需组合。";
 
 // MARK: - Resolution Center
 RESOLUTION_TITLE_LOCALIZE_KEY = "客服中心";
