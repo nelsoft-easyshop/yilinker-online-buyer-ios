@@ -93,3 +93,8 @@ enum RequestErrorType {
     case NoError
     case Cancel
 }
+
+enum LanguageType {
+    case English
+    case Chinese
+}

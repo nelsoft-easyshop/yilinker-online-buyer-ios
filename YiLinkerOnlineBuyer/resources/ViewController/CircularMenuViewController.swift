@@ -288,6 +288,7 @@ class CircularMenuViewController: UIViewController {
                             yPosition = yPosition - 40
                             nameAndAdderssWidth = 110
                             fontSize = 10
+                            labelWidth = labelWidth - 20
                         } else {
                             yPosition = yPosition - 50
                             fontSize = 10
@@ -295,7 +296,7 @@ class CircularMenuViewController: UIViewController {
                         
                         let label: UILabel = UILabel(frame: CGRectMake(xPosition + 75, yPosition, labelWidth, nameAndAdderssWidth))
                         label.backgroundColor = UIColor.clearColor()
-                        label.text = "\(SessionManager.userFullName()) \n \(SessionManager.city()) \(SessionManager.province())"
+                        label.text = "\(SessionManager.userFullName()) \n\(SessionManager.city()) \(SessionManager.province())"
                         label.adjustsFontSizeToFitWidth = true
                         label.textAlignment = NSTextAlignment.Left
                         label.font = UIFont(name: label.font.fontName, size: fontSize)
