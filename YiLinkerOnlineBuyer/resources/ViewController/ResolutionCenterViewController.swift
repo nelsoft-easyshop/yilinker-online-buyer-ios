@@ -376,22 +376,18 @@ class ResolutionCenterViewController: UIViewController, UITableViewDataSource, U
         WebServiceManager.fireGetCasesWithUrl(urlString, parameter: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
             self.resolutionCenterModel = ResolutionCenterModel.parseDataWithDictionary(responseObject)
             if successful {
-                if responseObject["isSuccessful"] as! Bool {
-                    if self.resolutionCenterModel.resolutionArray.count == 0 {
-                        self.emptyLabel.hidden = false
-                    } else {
-                        self.tableData.removeAll(keepCapacity: false)
-                        self.tableData = self.resolutionCenterModel.resolutionArray
-                        self.resolutionTableView.reloadData()
-                    }
-                } else {
+                if self.resolutionCenterModel.resolutionArray.count == 0 {
                     self.emptyLabel.hidden = false
+                } else {
+                    self.tableData.removeAll(keepCapacity: false)
+                    self.tableData = self.resolutionCenterModel.resolutionArray
+                    self.resolutionTableView.reloadData()
                 }
-                self.hud?.hide(true)
             } else {
                 self.hud?.hide(true)
                 if requestErrorType == .ResponseError {
                     //Error in api requirements
+                    self.emptyLabel.hidden = false
                     let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
                     Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
                 } else if requestErrorType == .AccessTokenExpired {
@@ -447,19 +443,15 @@ class ResolutionCenterViewController: UIViewController, UITableViewDataSource, U
         
         WebServiceManager.fireGetTransactionIdsWithUrl(APIAtlas.transactionLogs + "\(SessionManager.accessToken())" + "&perPage=999" + "&type=for-resolution", actionHandler: { (successful, responseObject, requestErrorType) -> Void in
             if successful {
-                if responseObject["isSuccessful"] as! Bool {
-                    self.transactionModel = TransactionModel.parseDataFromDictionary(responseObject as! NSDictionary)
-                    self.transactionIds = self.transactionModel.invoice_number
-                    if self.transactionIds.count != 0 {
-                        let newDispute = self.storyboard?.instantiateViewControllerWithIdentifier("NewDisputeTableViewController")
-                            as! NewDisputeTableViewController
-                        newDispute.transactionIds = self.transactionIds
-                        self.navigationController?.pushViewController(newDispute, animated:true)
-                    } else {
-                        self.view.makeToast(DisputeStrings.noAvailableTransaction, duration: 3.0, position: CSToastPositionBottom, style: CSToastManager.sharedStyle())
-                    }
+                self.transactionModel = TransactionModel.parseDataFromDictionary(responseObject as! NSDictionary)
+                self.transactionIds = self.transactionModel.invoice_number
+                if self.transactionIds.count != 0 {
+                    let newDispute = self.storyboard?.instantiateViewControllerWithIdentifier("NewDisputeTableViewController")
+                        as! NewDisputeTableViewController
+                    newDispute.transactionIds = self.transactionIds
+                    self.navigationController?.pushViewController(newDispute, animated:true)
                 } else {
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: responseObject["message"] as! String, title: ProductStrings.alertError)
+                    self.view.makeToast(DisputeStrings.noAvailableTransaction, duration: 3.0, position: CSToastPositionBottom, style: CSToastManager.sharedStyle())
                 }
                 self.hud?.hide(true)
             } else {
@@ -467,7 +459,8 @@ class ResolutionCenterViewController: UIViewController, UITableViewDataSource, U
                 if requestErrorType == .ResponseError {
                     //Error in api requirements
                     let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
-                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+//                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: ProductStrings.alertError)
                 } else if requestErrorType == .AccessTokenExpired {
                     self.fireRefreshToken("id")
                 } else if requestErrorType == .PageNotFound {
