@@ -2,7 +2,6 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SummaryViewController" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
@@ -27,10 +26,10 @@
             </subviews>
             <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
-                <constraint firstItem="VvR-1d-JL7" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leadingMargin" constant="-8" id="3Vj-E8-c0t"/>
-                <constraint firstAttribute="trailingMargin" secondItem="VvR-1d-JL7" secondAttribute="trailing" constant="-8" id="If2-Ik-4Gc"/>
-                <constraint firstItem="VvR-1d-JL7" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="topMargin" constant="-8" id="trW-2J-vYw"/>
-                <constraint firstAttribute="bottomMargin" secondItem="VvR-1d-JL7" secondAttribute="bottom" constant="-8" id="zgI-tv-rEK"/>
+                <constraint firstItem="VvR-1d-JL7" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="51X-WG-mei"/>
+                <constraint firstAttribute="trailing" secondItem="VvR-1d-JL7" secondAttribute="trailing" id="7kt-hS-gEb"/>
+                <constraint firstItem="VvR-1d-JL7" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="F9m-5o-9Oa"/>
+                <constraint firstAttribute="bottom" secondItem="VvR-1d-JL7" secondAttribute="bottom" id="ksJ-aE-6gf"/>
             </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
             <point key="canvasLocation" x="147" y="34"/>

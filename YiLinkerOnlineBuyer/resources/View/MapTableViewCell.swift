@@ -100,4 +100,8 @@ class MapTableViewCell: UITableViewCell, MKMapViewDelegate, CLLocationManagerDel
             setLocation(latitude: currentLocation.latitude, longitude: currentLocation.longitude)
         }
     }
+    
+    func disableTouch() {
+        self.userInteractionEnabled = false
+    }
 }

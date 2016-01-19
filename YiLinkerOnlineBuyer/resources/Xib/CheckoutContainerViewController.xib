@@ -3,7 +3,6 @@
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CheckoutContainerViewController" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
@@ -139,10 +138,6 @@
                         <constraint firstAttribute="height" constant="1" id="bSL-tb-4ft"/>
                     </constraints>
                 </view>
-                <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gGV-to-MNJ">
-                    <rect key="frame" x="0.0" y="105" width="375" height="503"/>
-                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sNv-RQ-xgI">
                     <rect key="frame" x="0.0" y="608" width="375" height="59"/>
                     <color key="backgroundColor" red="0.35294117650000001" green="0.1215686275" blue="0.45882352939999999" alpha="1" colorSpace="calibratedRGB"/>
@@ -157,10 +152,13 @@
                         <action selector="saveAndContinue:" destination="-1" eventType="touchUpInside" id="cVZ-5c-Wu3"/>
                     </connections>
                 </button>
+                <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gGV-to-MNJ">
+                    <rect key="frame" x="0.0" y="105" width="375" height="503"/>
+                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                </view>
             </subviews>
             <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
-                <constraint firstItem="gGV-to-MNJ" firstAttribute="top" secondItem="1GJ-ux-GGX" secondAttribute="bottom" constant="16" id="1fI-UH-1FH"/>
                 <constraint firstItem="uJy-WJ-8t1" firstAttribute="top" secondItem="1oI-tI-jhe" secondAttribute="bottom" constant="12" id="5Am-Gh-Beo"/>
                 <constraint firstAttribute="trailing" secondItem="sNv-RQ-xgI" secondAttribute="trailing" id="5ea-jT-O9Q"/>
                 <constraint firstItem="1oI-tI-jhe" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="5i4-yZ-e0D"/>
@@ -168,17 +166,18 @@
                 <constraint firstItem="1GJ-ux-GGX" firstAttribute="top" secondItem="1oI-tI-jhe" secondAttribute="bottom" constant="12" id="ASq-s4-jxv"/>
                 <constraint firstAttribute="trailing" secondItem="1oI-tI-jhe" secondAttribute="trailing" id="Dzi-wr-Fbd"/>
                 <constraint firstItem="sNv-RQ-xgI" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="GPe-Yg-fgs"/>
+                <constraint firstAttribute="trailing" secondItem="gGV-to-MNJ" secondAttribute="trailing" id="JAn-vy-pjS"/>
+                <constraint firstItem="gGV-to-MNJ" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="JOU-Ft-tJF"/>
                 <constraint firstItem="h9F-Um-AEZ" firstAttribute="leading" secondItem="uJy-WJ-8t1" secondAttribute="trailing" id="NU0-jk-0ud"/>
-                <constraint firstAttribute="trailingMargin" secondItem="gGV-to-MNJ" secondAttribute="trailing" constant="-8" id="QNC-nh-jNr"/>
                 <constraint firstItem="h9F-Um-AEZ" firstAttribute="top" secondItem="1oI-tI-jhe" secondAttribute="bottom" constant="26" id="RqU-7g-mtR"/>
                 <constraint firstAttribute="bottom" secondItem="sNv-RQ-xgI" secondAttribute="bottom" id="W1J-0b-xEU"/>
                 <constraint firstItem="uJy-WJ-8t1" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="40" id="Ws0-WL-QEV"/>
                 <constraint firstItem="7lD-Zo-5ZB" firstAttribute="top" secondItem="1oI-tI-jhe" secondAttribute="bottom" constant="26" id="Yrk-AK-VOM"/>
+                <constraint firstItem="sNv-RQ-xgI" firstAttribute="top" secondItem="gGV-to-MNJ" secondAttribute="bottom" id="e79-8x-ii5"/>
                 <constraint firstItem="7lD-Zo-5ZB" firstAttribute="leading" secondItem="1GJ-ux-GGX" secondAttribute="trailing" id="fli-nA-7Rd"/>
                 <constraint firstAttribute="centerX" secondItem="1GJ-ux-GGX" secondAttribute="centerX" id="ggH-mv-Eo1"/>
-                <constraint firstItem="sNv-RQ-xgI" firstAttribute="top" secondItem="gGV-to-MNJ" secondAttribute="bottom" id="iA2-zE-Qtf"/>
                 <constraint firstItem="1GJ-ux-GGX" firstAttribute="leading" secondItem="h9F-Um-AEZ" secondAttribute="trailing" constant="-1" id="kEV-bJ-hMJ"/>
-                <constraint firstItem="gGV-to-MNJ" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leadingMargin" constant="-8" id="ocV-0m-rNi"/>
+                <constraint firstItem="gGV-to-MNJ" firstAttribute="top" secondItem="dXs-e6-m70" secondAttribute="bottom" constant="16" id="mZu-1x-FXb"/>
                 <constraint firstItem="dXs-e6-m70" firstAttribute="top" secondItem="1oI-tI-jhe" secondAttribute="bottom" constant="12" id="pK9-TJ-gNM"/>
                 <constraint firstItem="dXs-e6-m70" firstAttribute="leading" secondItem="7lD-Zo-5ZB" secondAttribute="trailing" constant="-1" id="wC4-Vo-paH"/>
                 <constraint firstItem="1oI-tI-jhe" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="zR6-1v-Jcb"/>
