@@ -92,3 +92,8 @@ enum RequestErrorType {
     case UnRecognizeError
     case NoError
 }
+
+enum LanguageType {
+    case English
+    case Chinese
+}

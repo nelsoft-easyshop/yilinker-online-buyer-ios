@@ -138,14 +138,8 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         self.registerCellWithNibName(self.layoutNineNibName)
         self.registerCellWithNibName(self.twoColumnGridCell)
         
-        /*if Reachability.isConnectedToNetwork() {
-            self.fireGetHomePageData(true)
-        } else {
-            self.addEmptyView()
-        }*/
-        
         self.fireGetHomePageData(true)
-        
+
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "onRegistration:",
@@ -164,6 +158,14 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         self.setupBackToTopButton()
         
         self.addPullToRefresh()
+        
+        let languageType: LanguageType = LanguageHelper.currentLanguge()
+        
+        if languageType == .Chinese {
+            println("Device language is chinese!")
+        } else {
+            println("Device language is english!")
+        }
     }
     
     //MARK: - Add Pull To Refresh
