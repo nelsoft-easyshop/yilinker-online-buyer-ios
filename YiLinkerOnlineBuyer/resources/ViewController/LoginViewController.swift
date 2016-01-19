@@ -61,6 +61,9 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
     
     var mainViewGesture: UITapGestureRecognizer?
     
+    var loginSessionDataTask: NSURLSessionDataTask = NSURLSessionDataTask()
+    
+    //MARK: -
     //MARK: - ViewDidAppear
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
@@ -73,6 +76,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
         self.parentViewController?.view.addGestureRecognizer(mainViewGesture!)
     }
     
+    //MARK: -
     //MARK: - ViewDidDisappear
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
@@ -345,7 +349,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
             Toast.displayToastWithMessage(errorMessage, duration: 1.5, view: self.view)
         } else {
             self.showHUD()
-            WebServiceManager.fireLoginRequestWithUrl(APIAtlas.loginUrl, emailAddress: self.emailAddressTextField.text!, password: self.passwordTextField.text!, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+            self.loginSessionDataTask = WebServiceManager.fireLoginRequestWithUrl(APIAtlas.loginUrl, emailAddress: self.emailAddressTextField.text!, password: self.passwordTextField.text!, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
                 if successful {
                     SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
                     self.hud?.hide(true)
@@ -364,6 +368,8 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
                         Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
                     } else if requestErrorType == .UnRecognizeError {
                         Toast.displayToastWithMessage(Constants.Localized.error, duration: 1.5, view: self.view)
+                    } else if requestErrorType == .Cancel {
+                        //Do nothing
                     }
                 }
             })
