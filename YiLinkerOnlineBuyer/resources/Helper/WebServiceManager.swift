@@ -54,14 +54,16 @@ class WebServiceManager: NSObject {
     
     //MARK: -
     //MARK: - Fire Login Request With URL
-    class func fireLoginRequestWithUrl(url: String, emailAddress: String, password: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+    class func fireLoginRequestWithUrl(url: String, emailAddress: String, password: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) -> NSURLSessionDataTask {
         let manager: APIManager = APIManager.sharedInstance
         
         let parameters: NSDictionary = [self.emailKey: emailAddress, self.passwordKey: password, self.clientIdKey: Constants.Credentials.clientID(), self.clientSecretKey: Constants.Credentials.clientSecret(), self.grantTypeKey: Constants.Credentials.grantBuyer]
         
-        self.firePostRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+        let sessionDataTask: NSURLSessionDataTask = self.firePostRequestSessionDataTaskWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
             actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
         }
+        
+        return sessionDataTask
     }
     
     //MARK: -
@@ -242,6 +244,95 @@ class WebServiceManager: NSObject {
         } else {
             actionHandler(successful: false, responseObject: [], requestErrorType: .NoInternetConnection)
         }
+    }
+    
+    
+    //MARK: -
+    //MARK: - Post Request With Url * Session Data Task
+    //This function is for removing repeated codes in handler
+    private static func firePostRequestSessionDataTaskWithUrl(url: String, parameters: AnyObject, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) -> NSURLSessionDataTask {
+        let manager = APIManager.sharedInstance
+        var sessionDataTask: NSURLSessionDataTask = NSURLSessionDataTask()
+        if Reachability.isConnectedToNetwork() {
+           sessionDataTask = manager.POST(url, parameters: parameters, success: {
+                (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+                actionHandler(successful: true, responseObject: responseObject, requestErrorType: .NoError)
+                }, failure: {
+                    (task : NSURLSessionDataTask!, error: NSError!) in
+                    if let task = task.response as? NSHTTPURLResponse {
+                        if task.statusCode == Constants.WebServiceStatusCode.pageNotFound {
+                            //Page not found
+                            actionHandler(successful: false, responseObject: [], requestErrorType: .PageNotFound)
+                        } else if task.statusCode == Constants.WebServiceStatusCode.requestTimeOut {
+                            //Request Timeout
+                            actionHandler(successful: false, responseObject: [], requestErrorType: .RequestTimeOut)
+                        } else if task.statusCode == Constants.WebServiceStatusCode.expiredAccessToken {
+                            //The accessToken is already expired
+                            actionHandler(successful: false, responseObject: [], requestErrorType: .AccessTokenExpired)
+                        } else if error.userInfo != nil {
+                            //Request is successful but encounter error in server
+                            actionHandler(successful: false, responseObject: error.userInfo!, requestErrorType: .ResponseError)
+                        } else {
+                            //Unrecognized error, this is a rare case.
+                            actionHandler(successful: false, responseObject: [], requestErrorType: .UnRecognizeError)
+                        }
+                    } else {
+                        if Reachability.isConnectedToNetwork() {
+                            actionHandler(successful: false, responseObject: [], requestErrorType: .Cancel)
+                        } else {
+                            actionHandler(successful: false, responseObject: [], requestErrorType: .NoInternetConnection)
+                        }
+                    }
+            })!
+        } else {
+            actionHandler(successful: false, responseObject: [], requestErrorType: .NoInternetConnection)
+        }
+        
+        return sessionDataTask
+    }
+    
+    //MARK: -
+    //MARK: - Get Request With Url * Session Data Task
+    //This function is for removing repeated codes in handler
+    private static func fireGetRequestSessionDataTaskWithUrl(url: String, parameters: AnyObject, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) -> NSURLSessionDataTask {
+        let manager = APIManager.sharedInstance
+        var sessionDataTask: NSURLSessionDataTask = NSURLSessionDataTask()
+        if Reachability.isConnectedToNetwork() {
+            sessionDataTask = manager.GET(url, parameters: parameters, success: {
+                (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+                actionHandler(successful: true, responseObject: responseObject, requestErrorType: .NoError)
+                }, failure: {
+                    (task : NSURLSessionDataTask!, error: NSError!) in
+                    if let task = task.response as? NSHTTPURLResponse {
+                        if task.statusCode == Constants.WebServiceStatusCode.pageNotFound {
+                            //Page not found
+                            actionHandler(successful: false, responseObject: [], requestErrorType: .PageNotFound)
+                        } else if task.statusCode == Constants.WebServiceStatusCode.requestTimeOut {
+                            //Request Timeout
+                            actionHandler(successful: false, responseObject: [], requestErrorType: .RequestTimeOut)
+                        } else if task.statusCode == Constants.WebServiceStatusCode.expiredAccessToken {
+                            //The accessToken is already expired
+                            actionHandler(successful: false, responseObject: [], requestErrorType: .AccessTokenExpired)
+                        } else if error.userInfo != nil {
+                            //Request is successful but encounter error in server
+                            actionHandler(successful: false, responseObject: error.userInfo!, requestErrorType: .ResponseError)
+                        } else {
+                            //Unrecognized error, this is a rare case.
+                            actionHandler(successful: false, responseObject: [], requestErrorType: .UnRecognizeError)
+                        }
+                    } else {
+                        if Reachability.isConnectedToNetwork() {
+                            actionHandler(successful: false, responseObject: [], requestErrorType: .Cancel)
+                        } else {
+                            actionHandler(successful: false, responseObject: [], requestErrorType: .NoInternetConnection)
+                        }
+                    }
+            })!
+        } else {
+            actionHandler(successful: false, responseObject: [], requestErrorType: .NoInternetConnection)
+        }
+        
+        return sessionDataTask
     }
     
     //MARK: - Post Request With Image
