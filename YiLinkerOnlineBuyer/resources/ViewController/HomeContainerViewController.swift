@@ -1678,9 +1678,6 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         
         fullImageCollectionViewCell.target = layoutTwoModel.data[indexPath.row].target.targetUrl
         fullImageCollectionViewCell.targetType = layoutTwoModel.data[indexPath.row].target.targetType
-<<<<<<< HEAD
-        fullImageCollectionViewCell.itemProductImageView.sd_setImageWithURL(NSURL(string: layoutTwoModel.data[indexPath.row].image), placeholderImage: UIImage(named: placeHolder))
-=======
         
         fullImageCollectionViewCell.itemProductImageView.sd_setImageWithURL(NSURL(string: layoutTwoModel.data[indexPath.row].image), placeholderImage: UIImage(named: placeHolder), completed: { (downloadedImage, NSError, SDImageCacheType, NSURL) -> Void in
             if let imageView = fullImageCollectionViewCell.itemProductImageView {
@@ -1690,7 +1687,6 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             }
         })
         
->>>>>>> development
         return fullImageCollectionViewCell
     }
     
