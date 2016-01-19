@@ -53,8 +53,8 @@ class WebServiceManager: NSObject {
     static let userIdKey = "userId"
     
     // Followed Sellers keys
-    static let pageKey = "page"
-    static let limitKey = "limit"
+    // page
+    // limit
     
     // Review Details keys
     static let productIdKey = "productId"
@@ -74,7 +74,7 @@ class WebServiceManager: NSObject {
     // Get Contacts
     // page
     // limit
-    static let keywordKey = "keyword"
+    // keyword
     
     //MARK: -
     //MARK: - Fire Login Request With URL

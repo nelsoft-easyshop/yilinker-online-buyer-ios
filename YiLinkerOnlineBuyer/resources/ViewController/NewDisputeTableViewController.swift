@@ -160,18 +160,15 @@ class NewDisputeTableViewController: UITableViewController, UIPickerViewDataSour
         
         WebServiceManager.fireSubmitDispute(APIAtlas.postResolutionCenterAddCase, parameter: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
             if successful {
-                if responseObject["isSuccessful"] as! Bool {
-                    self.navigationController?.popViewControllerAnimated(true)
-                } else {
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: responseObject["message"] as! String, title: ProductStrings.alertError)
-                }
+                self.navigationController?.popViewControllerAnimated(true)
                 self.hud?.hide(true)
             } else {
                 self.hud?.hide(true)
                 if requestErrorType == .ResponseError {
                     //Error in api requirements
                     let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
-                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+//                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: ProductStrings.alertError)
                 } else if requestErrorType == .AccessTokenExpired {
                     self.fireRefreshToken("submit")
                 } else if requestErrorType == .PageNotFound {

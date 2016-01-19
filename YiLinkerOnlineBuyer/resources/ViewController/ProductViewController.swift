@@ -490,31 +490,16 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         WebServiceManager.fireGetProductDetailsWithUrl(APIAtlas.productDetails + id, actionHandler: {
             (successful, responseObject, requestErrorType) -> Void in
             if successful {
-                if responseObject["isSuccessful"] as! Bool {
-                    self.productDetailsModel = ProductDetailsModel.parseDataWithDictionary(responseObject)
-                    self.productId = self.productDetailsModel.id
-                    if !self.isFromCart {
-                        self.unitId = self.productDetailsModel.productUnits[0].productUnitId
-                    }
-                    
-                    self.getUnitIdIndexFrom()
-                    
-                    self.attributes = self.productDetailsModel.attributes
-                    self.requestSellerDetails()
-                } else {
-                    let alert = UIAlertController(title: ProductStrings.alertError,
-                        message: responseObject["message"] as? String,
-                        preferredStyle: UIAlertControllerStyle.Alert)
-                    let okButton = UIAlertAction(title: ProductStrings.alertOk,
-                        style: UIAlertActionStyle.Cancel) { (alert) -> Void in
-                            self.barCloseAction()
-                    }
-                    alert.addAction(okButton)
-                    self.presentViewController(alert, animated: true, completion: nil)
-                    
-                    self.hud?.hide(true)
-                    self.addEmptyView()
+                self.productDetailsModel = ProductDetailsModel.parseDataWithDictionary(responseObject)
+                self.productId = self.productDetailsModel.id
+                if !self.isFromCart {
+                    self.unitId = self.productDetailsModel.productUnits[0].productUnitId
                 }
+                
+                self.getUnitIdIndexFrom()
+                
+                self.attributes = self.productDetailsModel.attributes
+                self.requestSellerDetails()
                 
                 self.productRequest = true
                 self.productSuccess = true
@@ -525,8 +510,15 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
                 self.checkRequests()
                 if requestErrorType == .ResponseError {
                     //Error in api requirements
-//                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
-//                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    let alert = UIAlertController(title: ProductStrings.alertError, message: errorModel.message, preferredStyle: UIAlertControllerStyle.Alert)
+                    let okButton = UIAlertAction(title: ProductStrings.alertOk, style: UIAlertActionStyle.Cancel) { (alert) -> Void in
+                            self.barCloseAction()
+                    }
+                    alert.addAction(okButton)
+                    self.presentViewController(alert, animated: true, completion: nil)
+                    self.hud?.hide(true)
+                    self.addEmptyView()
                 } else if requestErrorType == .AccessTokenExpired {
                     self.requestRefreshToken("details")
                 } else if requestErrorType == .PageNotFound {
@@ -550,14 +542,10 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         
         WebServiceManager.fireGetReviewDetailsWithUrl(APIAtlas.productReviews, productId: productId, accessToken: SessionManager.accessToken(), actionHandler: { (successful, responseObject, requestErrorType) -> Void in
             if successful {
-                if responseObject["isSuccessful"] as! Bool {
-                    self.productReviewModel = ProductReviewModel.parseDataWithDictionary(responseObject)
-                    self.reviewRequest = true
-                    self.reviewSuccess = true
-                    self.checkRequests()
-                } else {
-                    
-                }
+                self.productReviewModel = ProductReviewModel.parseDataWithDictionary(responseObject)
+                self.reviewRequest = true
+                self.reviewSuccess = true
+                self.checkRequests()
             } else {
                 println("review failed")
                 self.reviewRequest = true
@@ -590,17 +578,11 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
 
         WebServiceManager.fireGetSellerDetailsWithUrl(APIAtlas.getSellerInfo, userId: self.productDetailsModel.sellerId, accessToken: SessionManager.accessToken(), actionHandler: { (successful, responseObject, requestErrorType) -> Void in
             if successful {
-                if responseObject["isSuccessful"] as! Bool {
-                    self.productSellerModel = ProductSellerModel.parseDataWithDictionary(responseObject)
-                    self.sellerRequest = true
-                    self.sellerSuccess = true
-                    self.requestContactsFromEndpoint()
-                    self.checkRequests()
-                } else {
-                    self.showAlert(title: ProductStrings.alertError, message: responseObject["message"] as! String)
-                    self.hud?.hide(true)
-                    self.addEmptyView()
-                }
+                self.productSellerModel = ProductSellerModel.parseDataWithDictionary(responseObject)
+                self.sellerRequest = true
+                self.sellerSuccess = true
+                self.requestContactsFromEndpoint()
+                self.checkRequests()
             } else {
                 println("seller failed")
                 self.sellerRequest = true
@@ -608,8 +590,10 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
                 self.checkRequests()
                 if requestErrorType == .ResponseError {
                     //Error in api requirements
-//                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
-//                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    self.showAlert(title: ProductStrings.alertError, message: errorModel.message)
+                    self.hud?.hide(true)
+                    self.addEmptyView()
                 } else if requestErrorType == .AccessTokenExpired {
                     self.requestRefreshToken("details")
                 } else if requestErrorType == .PageNotFound {
@@ -635,22 +619,16 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         
         WebServiceManager.fireUpdateWishlistWithUrl(APIAtlas.updateWishlistUrl, productId: self.productId, unitId: self.unitId, quantity: "1", wishlist: "true", accessToken: SessionManager.accessToken(), actionHandler: { (successful, responseObject, requestErrorType) -> Void in
             if successful {
-                if responseObject["isSuccessful"] as! Bool {
-                    var data: NSDictionary = responseObject["data"] as! NSDictionary
-                    var items: NSArray = data["items"] as! NSArray
-                    SessionManager.setWishlistCount(items.count)
-                    self.showAlert(title: nil, message: ProductStrings.alertWishlist)
-                    self.addBadge("wishlist")
-                } else {
-                    if let tempVar = responseObject["message"] as? String {
-                        self.showAlert(title: ProductStrings.alertError, message: tempVar)
-                    }
-                }
+                var data: NSDictionary = responseObject["data"] as! NSDictionary
+                var items: NSArray = data["items"] as! NSArray
+                SessionManager.setWishlistCount(items.count)
+                self.showAlert(title: nil, message: ProductStrings.alertWishlist)
+                self.addBadge("wishlist")
             } else {
                 if requestErrorType == .ResponseError {
                     //Error in api requirements
                     let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
-                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                    self.showAlert(title: ProductStrings.alertError, message: errorModel.message)
                 } else if requestErrorType == .AccessTokenExpired {
                     self.requestRefreshToken("wishlist")
                 } else if requestErrorType == .PageNotFound {
@@ -677,50 +655,46 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         
         WebServiceManager.fireAddToCartWithUrl(APIAtlas.updateCart(), productId: self.productDetailsModel.id, unitId: self.unitId, quantity: quantity, accessToken: SessionManager.accessToken(), actionHandler: { (successful, responseObject, requestErrorType) -> Void in
             if successful {
-                if responseObject["isSuccessful"] as! Bool {
-                    var data: NSDictionary = responseObject["data"] as! NSDictionary
+                var data: NSDictionary = responseObject["data"] as! NSDictionary
+                
+                var items: NSArray = data["items"] as! NSArray
+                
+                if type == "buyitnow" {
+                    var itemProductId: String = ""
+                    var itemUnitId: String = ""
                     
-                    var items: NSArray = data["items"] as! NSArray
-                    
-                    if type == "buyitnow" {
-                        var itemProductId: String = ""
-                        var itemUnitId: String = ""
+                    for i in 0..<items.count {
+                        let item: NSDictionary = items[i] as! NSDictionary
+                        itemProductId = item["id"] as! String
                         
-                        for i in 0..<items.count {
-                            let item: NSDictionary = items[i] as! NSDictionary
-                            itemProductId = item["id"] as! String
+                        let productUnits: NSArray = item["productUnits"] as! NSArray
+                        for i in 0..<productUnits.count {
+                            let productUnit: NSDictionary = productUnits[i] as! NSDictionary
+                            itemUnitId = productUnit["productUnitId"] as! String
                             
-                            let productUnits: NSArray = item["productUnits"] as! NSArray
-                            for i in 0..<productUnits.count {
-                                let productUnit: NSDictionary = productUnits[i] as! NSDictionary
-                                itemUnitId = productUnit["productUnitId"] as! String
-                                
-                                if self.productId == itemProductId && self.unitId == itemUnitId {
-                                    var quantity: String = item["quantity"] as! String
-                                    var price: Double = (productUnit["discountedPrice"] as! NSString).doubleValue
-                                    var iQuantity: Double = (quantity as NSString).doubleValue
-                                    self.requestCartToCheckout(item["itemId"] as! Int, totalAmount: (iQuantity * price))
-                                    break
-                                }
-                                
-                            } // loop for product unit
-                        } // loop for items
-                    } else {
-                        self.showAlert(title: nil, message: ProductStrings.alertCart)
-                        println(items.count)
-                        SessionManager.setCartCount(data["total"] as! Int)
-                        self.addBadge("cart")
-                        self.hud?.hide(true)
-                    }
+                            if self.productId == itemProductId && self.unitId == itemUnitId {
+                                var quantity: String = item["quantity"] as! String
+                                var price: Double = (productUnit["discountedPrice"] as! NSString).doubleValue
+                                var iQuantity: Double = (quantity as NSString).doubleValue
+                                self.requestCartToCheckout(item["itemId"] as! Int, totalAmount: (iQuantity * price))
+                                break
+                            }
+                            
+                        } // loop for product unit
+                    } // loop for items
                 } else {
-                    self.showAlert(title: ProductStrings.alertError, message: responseObject["message"] as! String)
+                    self.showAlert(title: nil, message: ProductStrings.alertCart)
+                    println(items.count)
+                    SessionManager.setCartCount(data["total"] as! Int)
+                    self.addBadge("cart")
                     self.hud?.hide(true)
                 }
             } else {
                 if requestErrorType == .ResponseError {
                     //Error in api requirements
                     let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
-                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                    self.showAlert(title: ProductStrings.alertError, message: errorModel.message)
+                    self.hud?.hide(true)
                 } else if requestErrorType == .AccessTokenExpired {
                     if type == "buyitnow" {
                         self.requestRefreshToken("buy")
@@ -753,32 +727,26 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         WebServiceManager.fireCartToCheckoutWithUrl(APIAtlas.updateCheckout(), cart: item, accessToken: SessionManager.accessToken(), actionHandler: {
             (successful, responseObject, requestErrorType) -> Void in
             if successful {
-                if responseObject["isSuccessful"] as! Bool {
-                    var cartProductModel: [CartProductDetailsModel] = []
-                    
-                    if let value: AnyObject = responseObject["data"] {
-                        for subValue in responseObject["data"] as! NSArray {
-                            let model: CartProductDetailsModel = CartProductDetailsModel.parseDataWithDictionary(subValue as! NSDictionary)
-                            cartProductModel.append(model)
-                        }
-                    }
-                    
-                    let checkout = CheckoutContainerViewController(nibName: "CheckoutContainerViewController", bundle: nil)
-                    checkout.carItems = cartProductModel
-                    checkout.totalPrice = String(stringInterpolationSegment: totalAmount)
-                    let navigationController: UINavigationController = UINavigationController(rootViewController: checkout)
-                    navigationController.navigationBar.barTintColor = Constants.Colors.appTheme
-                    self.tabBarController?.presentViewController(navigationController, animated: true, completion: nil)
-                } else {
-                    if let tempVar = responseObject["message"] as? String {
-                        self.showAlert(title: ProductStrings.alertError, message: tempVar)
+                var cartProductModel: [CartProductDetailsModel] = []
+                
+                if let value: AnyObject = responseObject["data"] {
+                    for subValue in responseObject["data"] as! NSArray {
+                        let model: CartProductDetailsModel = CartProductDetailsModel.parseDataWithDictionary(subValue as! NSDictionary)
+                        cartProductModel.append(model)
                     }
                 }
+                
+                let checkout = CheckoutContainerViewController(nibName: "CheckoutContainerViewController", bundle: nil)
+                checkout.carItems = cartProductModel
+                checkout.totalPrice = String(stringInterpolationSegment: totalAmount)
+                let navigationController: UINavigationController = UINavigationController(rootViewController: checkout)
+                navigationController.navigationBar.barTintColor = Constants.Colors.appTheme
+                self.tabBarController?.presentViewController(navigationController, animated: true, completion: nil)
             } else {
                 if requestErrorType == .ResponseError {
                     //Error in api requirements
                     let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
-                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                    self.showAlert(title: ProductStrings.alertError, message: errorModel.message)
                 } else if requestErrorType == .AccessTokenExpired {
                     self.requestRefreshToken("cart")
                 } else if requestErrorType == .PageNotFound {
@@ -805,13 +773,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
             let url = APIAtlas.baseUrl + APIAtlas.ACTION_GET_CONTACTS
             WebServiceManager.fireGetContacttDetailsWithUrl(url, page: "1", limit: "99", keyword: "", accessToken: SessionManager.accessToken(), actionHandler: {  (successful, responseObject, requestErrorType) -> Void in
                 if successful {
-                    if responseObject["isSuccessful"] as! Bool {
-                        self.contacts = W_Contact.parseContacts(responseObject as! NSDictionary)
-                    } else {
-                        if let tempVar = responseObject["message"] as? String {
-                            self.showAlert(title: ProductStrings.alertError, message: tempVar)
-                        }
-                    }
+                    self.contacts = W_Contact.parseContacts(responseObject as! NSDictionary)
                 } else {
                     if requestErrorType == .ResponseError {
                         //Error in api requirements
@@ -845,29 +807,22 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         println("REFRESHING TOKEN")
         WebServiceManager.fireRefreshTokenWithUrl(APIAtlas.refreshTokenUrl, actionHandler: {
             (successful, responseObject, requestErrorType) -> Void in
-            self.hud?.hide(true)
+            self.showHUD()
             
             if successful {
-                if responseObject["isSuccessful"] as! Bool {
-                    SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
-                    if type == "details" {
-                        self.requestProductDetails()
-                    } else if type == "buy" {
-                        self.requestAddCartItem("buyitnow")
-                    } else if type == "cart" {
-                        self.requestAddCartItem("")
-                    } else if type == "wishlist" {
-                        self.requestUpdateWishlistItem()
-                    } else if type == "message" {
-                        self.requestContactsFromEndpoint()
-                    }else {
-                        println("else in product view refresh token")
-                    }
+                SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+                if type == "details" {
+                    self.requestProductDetails()
+                } else if type == "buy" {
+                    self.requestAddCartItem("buyitnow")
+                } else if type == "cart" {
+                    self.requestAddCartItem("")
+                } else if type == "wishlist" {
+                    self.requestUpdateWishlistItem()
+                } else if type == "message" {
+                    self.requestContactsFromEndpoint()
                 } else {
-                    let alertController = UIAlertController(title: ProductStrings.alertError, message: responseObject["message"] as? String, preferredStyle: .Alert)
-                    let defaultAction = UIAlertAction(title: ProductStrings.alertOk, style: .Default, handler: nil)
-                    alertController.addAction(defaultAction)
-                    self.presentViewController(alertController, animated: true, completion: nil)
+                    println("else in product view refresh token")
                 }
             } else {
                 //Forcing user to logout.
