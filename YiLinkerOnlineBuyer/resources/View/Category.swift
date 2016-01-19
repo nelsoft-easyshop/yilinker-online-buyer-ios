@@ -383,6 +383,10 @@ extension String {
         }
     }
     
+    func addPesoSign() -> String {
+        return "₱ \(self)"
+    }
+    
     func formatToPeso() -> String {
         var numberFormatter = NSNumberFormatter()
         numberFormatter.numberStyle = NSNumberFormatterStyle.DecimalStyle
