@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Panton Bold.otf">
+            <string>Panton-Bold</string>
+        </mutableArray>
+        <mutableArray key="Panton.otf">
+            <string>Panton-Regular</string>
+        </mutableArray>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MessagingThreadViewController" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
+            <connections>
+                <outlet property="addPhotoButton" destination="e14-Gh-XOz" id="nah-SD-yQW"/>
+                <outlet property="messageTextField" destination="IuA-eW-8Ug" id="2tc-tm-GuI"/>
+                <outlet property="newMessageBottomContraint" destination="H5D-JX-D8l" id="E0K-od-jNL"/>
+                <outlet property="newMessageView" destination="y1Y-2e-oYa" id="m60-zi-Gf8"/>
+                <outlet property="sendButton" destination="s59-cm-ueI" id="KgE-Wc-yf0"/>
+                <outlet property="tableView" destination="T64-ON-0oK" id="tPe-WI-0e8"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="T64-ON-0oK">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="617"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    <color key="sectionIndexBackgroundColor" red="0.88235294117647056" green="0.88235294117647056" blue="0.88235294117647056" alpha="1" colorSpace="calibratedRGB"/>
+                </tableView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="y1Y-2e-oYa" userLabel="Message View">
+                    <rect key="frame" x="0.0" y="617" width="375" height="50"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="s59-cm-ueI">
+                            <rect key="frame" x="293" y="0.0" width="82" height="50"/>
+                            <color key="backgroundColor" red="0.37647058823529411" green="0.12549019607843137" blue="0.46666666666666667" alpha="1" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="82" id="Ww5-5i-lY7"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="14"/>
+                            <state key="normal" title="Send">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="buttonAction:" destination="-1" eventType="touchUpInside" id="x3l-YY-o7M"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e14-Gh-XOz">
+                            <rect key="frame" x="12" y="0.0" width="25" height="50"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="25" id="yia-JN-7m7"/>
+                            </constraints>
+                            <inset key="contentEdgeInsets" minX="2" minY="17" maxX="2" maxY="17"/>
+                            <state key="normal" image="picture">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="buttonAction:" destination="-1" eventType="touchUpInside" id="wrh-yW-OZb"/>
+                            </connections>
+                        </button>
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Type Your Message" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="IuA-eW-8Ug">
+                            <rect key="frame" x="45" y="10" width="240" height="30"/>
+                            <color key="tintColor" red="0.37647058820000001" green="0.12549019610000001" blue="0.46666666670000001" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                            <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="14"/>
+                            <textInputTraits key="textInputTraits"/>
+                            <connections>
+                                <action selector="onMessageTextChanged:" destination="-1" eventType="editingChanged" id="zmN-cq-Pxf"/>
+                            </connections>
+                        </textField>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="s59-cm-ueI" firstAttribute="top" secondItem="y1Y-2e-oYa" secondAttribute="top" id="09V-04-bJO"/>
+                        <constraint firstItem="e14-Gh-XOz" firstAttribute="top" secondItem="y1Y-2e-oYa" secondAttribute="top" id="0zU-kA-Rq6"/>
+                        <constraint firstAttribute="bottom" secondItem="s59-cm-ueI" secondAttribute="bottom" id="7Ad-L9-hP4"/>
+                        <constraint firstAttribute="bottom" secondItem="e14-Gh-XOz" secondAttribute="bottom" id="LZ5-d9-bHc"/>
+                        <constraint firstItem="IuA-eW-8Ug" firstAttribute="top" secondItem="y1Y-2e-oYa" secondAttribute="top" constant="10" id="R58-Lf-e6i"/>
+                        <constraint firstItem="e14-Gh-XOz" firstAttribute="leading" secondItem="y1Y-2e-oYa" secondAttribute="leading" constant="12" id="SRH-sD-eb0"/>
+                        <constraint firstAttribute="trailing" secondItem="s59-cm-ueI" secondAttribute="trailing" id="YN6-oP-A5E"/>
+                        <constraint firstAttribute="bottom" secondItem="IuA-eW-8Ug" secondAttribute="bottom" constant="10" id="ku9-8d-L2c"/>
+                        <constraint firstAttribute="height" constant="50" id="sjv-J7-67u"/>
+                        <constraint firstItem="IuA-eW-8Ug" firstAttribute="leading" secondItem="e14-Gh-XOz" secondAttribute="trailing" constant="8" id="w3g-XC-PBi"/>
+                        <constraint firstItem="s59-cm-ueI" firstAttribute="leading" secondItem="IuA-eW-8Ug" secondAttribute="trailing" constant="8" id="wnr-4K-waa"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="T64-ON-0oK" secondAttribute="trailing" id="7dw-gw-X8o"/>
+                <constraint firstAttribute="trailing" secondItem="y1Y-2e-oYa" secondAttribute="trailing" id="9dl-Kh-pAB"/>
+                <constraint firstAttribute="bottom" secondItem="y1Y-2e-oYa" secondAttribute="bottom" id="H5D-JX-D8l"/>
+                <constraint firstItem="y1Y-2e-oYa" firstAttribute="top" secondItem="T64-ON-0oK" secondAttribute="bottom" id="Iu2-Dr-kPp"/>
+                <constraint firstItem="T64-ON-0oK" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="jW8-St-sIa"/>
+                <constraint firstItem="y1Y-2e-oYa" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="uL9-SC-0mX"/>
+                <constraint firstItem="T64-ON-0oK" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="zhE-Gw-mwN"/>
+            </constraints>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="picture" width="200" height="159"/>
+    </resources>
+</document>

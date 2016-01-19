@@ -18,3 +18,5 @@
 #import <pop/POP.h>
 #import "TFHpple.h"
 #import "TTRangeSliderDelegate.h"
+#define MR_SHORTHAND
+#import <CoreData+MagicalRecord.h>

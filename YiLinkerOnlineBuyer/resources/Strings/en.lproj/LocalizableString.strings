@@ -229,6 +229,16 @@ MESSAGING_SAVE_FAILED = "Save Failed.";
 MESSAGING_SAVE_FAILED_MESSAGE = "Failed to save image";
 MESSAGING_PHOTO_MESSAGE = "You sent/received a photo";
 MESSAGING_NEW_MESSAGE = "You have a new message!";
+MESSAGING_MINUTES_AGO = "minutes ago";
+MESSAGING_HOURS_AGO = "hours ago";
+MESSAGING_DAYS_AGO = "days ago";
+MESSAGING_MINUTE_AGO = "minute ago";
+MESSAGING_HOUR_AGO = "hour ago";
+MESSAGING_DAY_AGO = "day ago";
+MESSAGING_NO_MESSAGE = "No more message.";
+MESSAGING_WRITE_TO = "Write to . . .";
+MESSAGING_NO_MESSAGE_LOCALIZE_KEY = "No message.";
+MESSAGING_NO_RESULTS_LOCALIZE_KEY = "No results found.";
 
 
 // MARK: - Rj's Modules
@@ -254,7 +264,8 @@ SPECIALTY_LOCALIZE_KEY = "Specialty";
 ADD_TO_CART_LOCALIZE_KEY = "ADD TO CART";
 BUY_IT_NOW_LOCALIZE_KEY = "BUY IT NOW";
 NO_REVIEWS_LOCALIZE_KEY = "No Available Reviews";
-REACHED_BOTTOM_LOCALIZE_KEY = "You have reached the bottom.";
+FIRST_VIEW_MESSAGE_LOCALIZE_KEY = "Scroll up to show more";
+SECOND_VIEW_MESSAGE_LOCALIZE_KEY = "Release to view other details";
 
 OUT_OF_STOCK_LOCALIZE_KEY = "Out of stock";
 ALERT_OUT_OF_STOCK_LOCALIZE_KEY = "Product is out of stock";
@@ -272,9 +283,11 @@ PEOPLE_RATE_LOCALIZE_KEY = "people rate this product";
 ALERT_ADDED_TO_WISHLIST_LOCALIZE_KEY = "This item has been added to your wishlist.";
 ALERT_ADDED_TO_CART_LOCALIZE_KEY = "This item has been added to your cart.";
 ALERT_PLEASE_LOGIN_LOCALIZE_KEY = "Please login to add item in your wishlist.";
-ALERT_PLEASE_COMPLETE_LOCALIZE_KEY = "Please complete the attributes.";
+ALERT_PLEASE_COMPLETE_LOCALIZE_KEY = "Please complete the combination.";
 ALERT_AVOID_ISSUES_LOCALIZE_KEY = "To avoid issues, please login.";
 ALERT_SELLER_NOT_AVAILABLE_LOCALIZE_KEY = "Seller is not available.";
+ATTRIBUTE_PRICE_NOT_AVAILABLE_LOCALIZE_KEY = "Not Available";
+ALERT_ATTRIBUTE_COMBINATION_NOT_AVAILABLE_LOCALIZE_KEY = "Product is not available for the desired combination.";
 
 // MARK: - Resolution Center
 RESOLUTION_TITLE_LOCALIZE_KEY = "Resolution Center";
@@ -510,6 +523,7 @@ TRANSACTION_DETAILS_QUANTITY_LOCALIZE_KEY = "Total Quantity";
 TRANSACTION_DETAILS_UNIT_COST_LOCALIZE_KEY = "Total Product Cost";
 TRANSACTION_DETAILS_SHIPPING_LOCALIZE_KEY = "Shipping Fee";
 TRANSACTION_DETAILS_TOTAL_COST_LOCALIZE_KEY = "Total Cost";
+TRANSACTION_DETAILS_VOUCHER_DISCOUNT_LOCALIZE_KEY = "Voucher Discount";
 
 TRANSACTION_DETAILS_PRODUCT_LIST_LOCALIZE_KEY = "PRODUCT LIST";
 TRANSACTION_DETAILS_SELLER_LOCALIZE_KEY = "seller";
@@ -592,3 +606,5 @@ NO_INTERNET_ERROR_MESSAGE_LOCALIZE_KEY = "Please check your internet connection.
 INFORMATION_LOCALIZE_KEY = "Information";
 TARGET_NOT_AVAILABLE = "No items to load.";
 PAGE_NOT_FOUND_LOCALIZE_KEY = "Page not found.";
+
+HI_LOCALIZE_KEY = "Hi";

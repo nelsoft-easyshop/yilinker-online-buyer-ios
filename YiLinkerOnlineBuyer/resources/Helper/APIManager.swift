@@ -8,9 +8,9 @@
 
 struct APIEnvironment {
     
-    static var development = false
+    static var development = true
     static var staging = false
-    static var production = true
+    static var production = false
     
     static func baseUrl() -> String {
         if development {
@@ -151,9 +151,22 @@ struct APIAtlas {
     static let ACTION_SET_AS_READ           = "/v1/message/setConversationAsRead"
     static let ACTION_IMAGE_ATTACH          = "/v1/message/imageAttach"
     static let ACTION_GCM_CREATE            = "/v1/auth/device/addRegistrationId"
-    static let ACTION_GCM_DELETE            = "/v1/auth/device/deleteRegistrationId"
+    static let ACTION_GCM_DELETE            = "v1/auth/device/deleteRegistrationId"
     static let ACTION_GCM_UPDATE            = "/v1/device/auth/updateRegistrationId"
     static let uploadFileType = "jpeg"
+    
+    /* MESSAGING CONSTANTS V2 */
+    static let ACTION_SEND_MESSAGE_V2          = "v1/message/sendMessage"
+    static let ACTION_GET_CONVERSATION_HEAD_V2 = "v1/message/getConversationHead"
+    static let ACTION_GET_CONTACTS_V2          = "v1/message/getContacts"
+    static let ACTION_GET_CONVERSATION_MESSAGES_V2 = "v1/message/getConversationMessages"
+    static let ACTION_SET_AS_READ_V2           = "v1/message/setConversationAsRead"
+    static let ACTION_IMAGE_ATTACH_V2          = "v1/message/imageAttach"
+    static let ACTION_GCM_CREATE_V2            = "v1/auth/device/addRegistrationId"
+    static let ACTION_GCM_DELETE_V2            = "v1/auth/device/deleteRegistrationId"
+    static let ACTION_GCM_UPDATE_V2           = "v1/device/auth/updateRegistrationId"
+    static let uploadFileType_V2 = "jpeg"
+    
     
     //Transactions
     static let transactionLogs = "v1/auth/getTransactionList?access_token="

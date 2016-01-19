@@ -29,6 +29,7 @@ struct Constants {
         static let noInternetErrorMessage: String = StringHelper.localizedStringWithKey("NO_INTERNET_ERROR_MESSAGE_LOCALIZE_KEY")
         static let targetNotAvailable: String = StringHelper.localizedStringWithKey("TARGET_NOT_AVAILABLE")
         static let pageNotFound: String = StringHelper.localizedStringWithKey("PAGE_NOT_FOUND_LOCALIZE_KEY")
+        static let hi: String = StringHelper.localizedStringWithKey("HI_LOCALIZE_KEY")
     }
     
     struct HomePage {
@@ -58,6 +59,8 @@ struct Constants {
         static let successfulVerification: UIColor = HexaColor.colorWithHexa(0x75348A)
         static let errorVerification: UIColor = HexaColor.colorWithHexa(0x666666)
         static let grayText: UIColor = HexaColor.colorWithHexa(0x666666)
+        static let offlineColor = HexaColor.colorWithHexa(0xda202d)
+        static let onlineColor = HexaColor.colorWithHexa(0x54b6a7)
     }
     
     struct Facebook {

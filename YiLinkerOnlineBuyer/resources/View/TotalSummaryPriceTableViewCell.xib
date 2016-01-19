@@ -22,21 +22,10 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" tag="20" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Delivery" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Koj-Ff-LuD">
-                        <rect key="frame" x="12" y="6" width="103" height="21"/>
+                    <label opaque="NO" userInteractionEnabled="NO" tag="30" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Total" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p3H-9Y-7Qz">
+                        <rect key="frame" x="12" y="24" width="35" height="21"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="21" id="GeU-D4-h20"/>
-                            <constraint firstAttribute="width" constant="103" id="Sik-5p-cvH"/>
-                        </constraints>
-                        <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="13"/>
-                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                        <nil key="highlightedColor"/>
-                    </label>
-                    <label opaque="NO" userInteractionEnabled="NO" tag="30" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Total" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p3H-9Y-7Qz">
-                        <rect key="frame" x="12" y="29" width="35" height="21"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="21" id="j2A-TX-U6H"/>
-                            <constraint firstAttribute="width" constant="35" id="x8o-dl-2cc"/>
+                            <constraint firstAttribute="width" constant="35" id="4wE-In-d8K"/>
                         </constraints>
                         <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="13"/>
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
@@ -45,8 +34,8 @@
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="P 0,000" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6sH-Ba-jIX">
                         <rect key="frame" x="199" y="24" width="110" height="21"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="21" id="Ofo-7d-4TT"/>
-                            <constraint firstAttribute="width" constant="110" id="tro-5U-whu"/>
+                            <constraint firstAttribute="height" constant="21" id="74O-gh-0Ua"/>
+                            <constraint firstAttribute="width" constant="110" id="fbc-aQ-yrS"/>
                         </constraints>
                         <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="13"/>
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
@@ -55,8 +44,18 @@
                     <label opaque="NO" userInteractionEnabled="NO" tag="40" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="FREE" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4MH-q1-Qvi">
                         <rect key="frame" x="199" y="6" width="110" height="21"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="110" id="8qk-mL-6sW"/>
-                            <constraint firstAttribute="height" constant="21" id="dgx-YG-ROA"/>
+                            <constraint firstAttribute="height" constant="21" id="Glf-bf-mag"/>
+                            <constraint firstAttribute="width" constant="110" id="Pg7-d7-XfD"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="13"/>
+                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" tag="20" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Delivery" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Koj-Ff-LuD">
+                        <rect key="frame" x="12" y="6" width="103" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="103" id="Rfx-1T-VMO"/>
+                            <constraint firstAttribute="height" constant="21" id="VHk-Bl-0es"/>
                         </constraints>
                         <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="13"/>
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
@@ -64,14 +63,15 @@
                     </label>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="Koj-Ff-LuD" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="-2" id="40B-pS-emS"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="6sH-Ba-jIX" secondAttribute="trailing" constant="3" id="8VN-T6-gdr"/>
-                    <constraint firstItem="p3H-9Y-7Qz" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="4" id="PLk-IJ-I4X"/>
-                    <constraint firstItem="6sH-Ba-jIX" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="16" id="Y3g-tt-a7h"/>
-                    <constraint firstItem="4MH-q1-Qvi" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="-2" id="bUL-9q-4sf"/>
-                    <constraint firstItem="Koj-Ff-LuD" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="4" id="dhN-Yy-Cox"/>
-                    <constraint firstItem="p3H-9Y-7Qz" firstAttribute="top" secondItem="Koj-Ff-LuD" secondAttribute="bottom" constant="2" id="jX4-5Y-qEp"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="4MH-q1-Qvi" secondAttribute="trailing" constant="3" id="oSx-NO-3ft"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="6sH-Ba-jIX" secondAttribute="trailing" constant="3" id="8pW-OH-H1c"/>
+                    <constraint firstItem="p3H-9Y-7Qz" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="4" id="CcE-W4-gY3"/>
+                    <constraint firstItem="p3H-9Y-7Qz" firstAttribute="top" secondItem="Koj-Ff-LuD" secondAttribute="bottom" constant="-3" id="DZO-MM-G3N"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="p3H-9Y-7Qz" secondAttribute="bottom" constant="3" id="Lxk-TH-zRd"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="4MH-q1-Qvi" secondAttribute="trailing" constant="3" id="MwD-Qz-RBN"/>
+                    <constraint firstItem="4MH-q1-Qvi" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="-2" id="adO-UF-YEQ"/>
+                    <constraint firstItem="p3H-9Y-7Qz" firstAttribute="leading" secondItem="Koj-Ff-LuD" secondAttribute="leading" id="did-Cl-KhY"/>
+                    <constraint firstItem="Koj-Ff-LuD" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="6" id="hUr-Zp-LyW"/>
+                    <constraint firstItem="6sH-Ba-jIX" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="16" id="tbr-Ta-7Ld"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>

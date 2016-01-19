@@ -31,6 +31,26 @@ extension UITextField {
 
     }
     
+    func addToolBarWithTarget(target: AnyObject, done: Selector) {
+        let toolBar = UIToolbar()
+        toolBar.sizeToFit()
+        toolBar.barStyle = UIBarStyle.Black
+        toolBar.barTintColor = Constants.Colors.appTheme
+        toolBar.tintColor = UIColor.whiteColor()
+        
+        let doneItem = UIBarButtonItem(title: Constants.Localized.done, style: UIBarButtonItemStyle.Done, target: target, action: done)
+        
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: self, action: nil)
+        
+        
+        var toolbarButtons = [flexibleSpace, doneItem]
+        
+        //Put the buttons into the ToolBar and display the tool bar
+        toolBar.setItems(toolbarButtons, animated: false)
+        
+        self.inputAccessoryView = toolBar
+    }
+    
     func isValidEmail() -> Bool {
         // println("validate calendar: \(testStr)")
         let emailRegEx = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$"
@@ -96,6 +116,17 @@ extension UILabel {
         myMutableString.addAttribute(NSForegroundColorAttributeName, value: UIColor.redColor(), range: NSRange(location: stringCount - 1,length:1))
         self.attributedText = myMutableString
     }
+    
+    func boldFont() {
+        let currentFont: UIFont = self.font
+        self.font = UIFont.boldSystemFontOfSize(currentFont.pointSize)
+        
+    }
+    
+    func unboldFont() {
+        let currentFont: UIFont = self.font
+        self.font = UIFont.systemFontOfSize(currentFont.pointSize)
+    }
 }
 
 extension UITextView {
@@ -121,7 +152,15 @@ extension UITextView {
         toolBar.setItems(toolbarButtons, animated: false)
         
         self.inputAccessoryView = toolBar
-        
+    }
+}
+
+extension UIImageView {
+    func fadeInImageWithImage(image: UIImage) {
+        self.alpha = 0
+        UIView.transitionWithView(self, duration: 0.5, options: UIViewAnimationOptions.CurveEaseIn, animations: { () -> Void in
+            self.alpha = 1
+            }, completion: nil)
     }
 }
 
@@ -152,7 +191,6 @@ extension UIImage {
         return result
     }
 }
-
 
 extension UIAlertController {
     
@@ -193,6 +231,25 @@ extension UIAlertController {
         
         alertController.addAction(login)
         target.presentViewController(alertController, animated: true, completion: nil)
+    }
+    
+    class func showAlertYesOrNoWithTitle(title: String, message: String, viewController: UIViewController, actionHandler: (isYes: Bool) -> Void) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+        
+        let cancelAction = UIAlertAction(title: RegisterModalStrings.no, style: .Cancel) { (action) in
+            actionHandler(isYes: false)
+        }
+        
+        alertController.addAction(cancelAction)
+        
+        let OKAction = UIAlertAction(title: RegisterModalStrings.yes, style: .Default) { (action) in
+             actionHandler(isYes: true)
+        }
+        alertController.addAction(OKAction)
+        
+        viewController.presentViewController(alertController, animated: true) {
+            // ...
+        }
     }
 }
 
@@ -250,8 +307,6 @@ extension NSDate {
         return isLess
     }
     
-    
-    
     func addDays(daysToAdd : Int) -> NSDate {
         var secondsInDays : NSTimeInterval = Double(daysToAdd) * 60 * 60 * 24
         var dateWithDaysAdded : NSDate = self.dateByAddingTimeInterval(secondsInDays)
@@ -263,6 +318,35 @@ extension NSDate {
         var dateWithHoursAdded : NSDate = self.dateByAddingTimeInterval(secondsInHours)
         return dateWithHoursAdded
     }
+    
+//    func differenceInMinutesWithCurrentDate() -> Double {
+//        return (self.timeIntervalSinceNow / 60)
+//    }
+    
+    func differenceInMinutesWithCurrentDate() -> Double {
+        return ((NSDate().timeIntervalSinceDate(self)) / 60)
+    }
+    
+    func formatDateToString(desiredFormat: String) -> String {
+        var dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = desiredFormat
+        return dateFormatter.stringFromDate(self)
+    }
+}
+
+extension Double {
+    func formatToNoDecimal() -> String {
+        var stringNumber: String = ""
+        
+        let formatter = NSNumberFormatter()
+        formatter.minimumFractionDigits = 0
+        formatter.maximumFractionDigits = 0
+        formatter.numberStyle = NSNumberFormatterStyle.DecimalStyle
+        stringNumber = formatter.stringFromNumber(self)!
+        
+        return stringNumber
+    }
+
 }
 
 extension String {
@@ -338,6 +422,10 @@ extension String {
         }
     }
     
+    func addPesoSign() -> String {
+        return "₱ \(self)"
+    }
+    
     func formatToPeso() -> String {
         var numberFormatter = NSNumberFormatter()
         numberFormatter.numberStyle = NSNumberFormatterStyle.DecimalStyle
@@ -377,6 +465,12 @@ extension String {
             return distance(self.startIndex, idx)
         }
         return -1
+    }
+    
+    func formatStringToDate(format: String) -> NSDate {
+        var dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = format
+        return dateFormatter.dateFromString(self)!
     }
     
 }

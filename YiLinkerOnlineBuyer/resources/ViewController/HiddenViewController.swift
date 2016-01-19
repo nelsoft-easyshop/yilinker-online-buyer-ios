@@ -27,7 +27,8 @@ class HiddenViewController: UIViewController {
     var helpViewController: HelpViewController?
     var registerViewController: LoginAndRegisterContentViewController?
     var loginViewController: LoginAndRegisterContentViewController?
-    var messagingViewController: ConversationVC?
+//    var messagingViewController: ConversationVC?
+    var messagingViewController: MessagingConversationListViewController?
     var customizeShoppingViewController: CustomizeShoppingViewController?
     var resultViewController: ResultViewController?
     var categoriesViewController: CategoriesViewController?
@@ -126,7 +127,8 @@ class HiddenViewController: UIViewController {
             self.followedSellerViewController = FollowedSellerViewController(nibName: "FollowedSellerViewController", bundle: nil)
 
             let storyBoard: UIStoryboard = UIStoryboard(name: "HomeStoryBoard", bundle: nil)
-            self.messagingViewController = storyBoard.instantiateViewControllerWithIdentifier("ConversationVC") as? ConversationVC
+//            self.messagingViewController = storyBoard.instantiateViewControllerWithIdentifier("ConversationVC") as? ConversationVC
+            self.messagingViewController = MessagingConversationListViewController(nibName: "MessagingConversationListViewController", bundle: nil)
             self.customizeShoppingViewController = CustomizeShoppingViewController(nibName: "CustomizeShoppingViewController", bundle: nil)
             self.resultViewController = ResultViewController(nibName: "ResultViewController", bundle: nil)
             self.resultViewController!.targetType = TargetType.TodaysPromo
@@ -163,7 +165,8 @@ class HiddenViewController: UIViewController {
             self.loginViewController?.isFromTab = true
             
             let storyBoard1: UIStoryboard = UIStoryboard(name: "HomeStoryBoard", bundle: nil)
-            self.messagingViewController = storyBoard1.instantiateViewControllerWithIdentifier("ConversationVC") as? ConversationVC
+//            self.messagingViewController = storyBoard1.instantiateViewControllerWithIdentifier("ConversationVC") as? ConversationVC
+            self.messagingViewController = MessagingConversationListViewController(nibName: "MessagingConversationListViewController", bundle: nil)
             self.customizeShoppingViewController = CustomizeShoppingViewController(nibName: "CustomizeShoppingViewController", bundle: nil)
             self.resultViewController = ResultViewController(nibName: "ResultViewController", bundle: nil)
             self.categoriesViewController = CategoriesViewController(nibName: "CategoriesViewController", bundle: nil)

@@ -22,7 +22,7 @@ class WishlistTableViewCell: UITableViewCell, UIScrollViewDelegate {
     
     let buttonViewWidth: CGFloat = 163
     let swipeForOptionsCellEnclosingTableViewDidBeginScrollingNotification: String = "SwipeForOptionsCellEnclosingTableViewDidBeginScrollingNotification"
-
+    
     @IBOutlet weak var cellScrollView: UIScrollView!
     
     @IBOutlet weak var cellContentView: UIView!
@@ -40,13 +40,13 @@ class WishlistTableViewCell: UITableViewCell, UIScrollViewDelegate {
     @IBOutlet weak var deleteLabel: UILabel!
     
     @IBOutlet weak var productItemImageView: UIImageView!
-
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         
         initializeView()
     }
-
+    
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
@@ -86,6 +86,11 @@ class WishlistTableViewCell: UITableViewCell, UIScrollViewDelegate {
         
         addToCartLabel.text = StringHelper.localizedStringWithKey("WISHLIST_ADD_LOCALIZE_KEY")
         deleteLabel.text = StringHelper.localizedStringWithKey("WISHLIST_DELETE_LOCALIZE_KEY")
+        
+        productNameLabel.frame = CGRectMake(productNameLabel.frame.origin.x, productNameLabel.frame.origin.y, (width - 160), productNameLabel.frame.height)
+        productDetailsLabel.frame = CGRectMake(productDetailsLabel.frame.origin.x, productDetailsLabel.frame.origin.y, (width - 160), productDetailsLabel.frame.height)
+        productPriceLabel.frame = CGRectMake(productPriceLabel.frame.origin.x, productPriceLabel.frame.origin.y, (width - 160), productPriceLabel.frame.height)
+        
     }
     
     func updateSwipeViewStatus(){
@@ -134,7 +139,7 @@ class WishlistTableViewCell: UITableViewCell, UIScrollViewDelegate {
         else {
             updateSwipeViewStatus()
         }
-
+        
     }
-
+    
 }

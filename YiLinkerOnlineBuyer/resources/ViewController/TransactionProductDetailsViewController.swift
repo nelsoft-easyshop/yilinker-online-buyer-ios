@@ -9,6 +9,9 @@
 import UIKit
 import MessageUI
 
+struct Feedback {
+    static var setProductFeedback: Bool = false
+}
 class TransactionProductDetailsViewController: UIViewController, TransactionCancelOrderViewDelegate, TransactionCancelViewControllerDelegate, TransactionCancelOrderSuccessViewControllerDelegate, TransactionDescriptionViewDelegate, TransactionProductDetailsDescriptionViewControllerDelegate, TransactionDeliveryStatusViewDelegate, ViewFeedBackViewControllerDelegate, MFMessageComposeViewControllerDelegate{
     
     @IBOutlet weak var tableView: UITableView!
@@ -44,10 +47,13 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
     var hasProductFeedback: Bool = false
     var refreshtag: Int = 1001
     var time: Int = 0
+    var indexSection: Int = 0
+    var indexRow: Int = 0
     var refreshPage: Bool = false
     
     var myTimer: NSTimer?
     var hud: MBProgressHUD?
+    var table: [TransactionDetailsModel] = []
     var transactionProductDetailsModel: TransactionProductDetailsModel!
     var transactionDeliveryStatus: TransactionProductDetailsDeliveryStatusModel!
     var productDictionary = Dictionary<String, String>()
@@ -91,16 +97,31 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
         
         self.title = productDetailsTitle
         self.backButton()
-        
-        let nib = UINib(nibName: "TransactionProductDetailsTableViewCell", bundle: nil)
-        self.tableView.registerNib(nib, forCellReuseIdentifier: "TransactionProductDetailsIdentifier")
-        self.tableView.separatorInset = UIEdgeInsetsZero
-        self.tableView.layoutMargins = UIEdgeInsetsZero
 
+        self.orderProductId = self.table[indexSection].transactions[indexRow].orderProductId
+        self.productId = self.table[indexSection].transactions[indexRow].productId
+        self.quantity = self.table[indexSection].transactions[indexRow].quantity
+        self.unitPrice = self.table[indexSection].transactions[indexRow].unitPrice
+        self.totalPrice = self.table[indexSection].transactions[indexRow].totalPrice.formatToPeso()
+        self.hasProductFeedback = self.table[indexSection].transactions[indexRow].hasProductFeedback
+        self.productName = self.table[indexSection].transactions[indexRow].productName
+        self.isCancellable = self.table[indexSection].transactions[indexRow].isCancellable
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        println(Feedback.setProductFeedback)
+        let nib = UINib(nibName: "TransactionProductDetailsTableViewCell", bundle: nil)
+        self.tableView.registerNib(nib, forCellReuseIdentifier: "TransactionProductDetailsIdentifier")
+        self.tableView.separatorInset = UIEdgeInsetsZero
+        self.tableView.layoutMargins = UIEdgeInsetsZero
+        if Feedback.setProductFeedback {
+            self.table[indexSection].transactions[indexRow].hasProductFeedback = true
+            self.hasProductFeedback = self.table[indexSection].transactions[indexRow].hasProductFeedback
+        } else {
+            self.table[indexSection].transactions[indexRow].hasProductFeedback = false
+            self.hasProductFeedback = self.table[indexSection].transactions[indexRow].hasProductFeedback
+        }
         self.fireTransactionProductDetailsDeliveryStatus()
         self.fireTransactionProductDetails()
     }
@@ -238,6 +259,35 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
     }
     
     func getTransactionCancelOrderView() -> TransactionCancelOrderView {
+        self.transactionCancelView = XibHelper.puffViewWithNibName("TransactionViews", index: 9) as! TransactionCancelOrderView
+        self.transactionCancelView.cancelOrderLabel.text = self.cancelOrder
+        self.transactionCancelView.delegate = self
+        if self.transactionProductDetailsModel != nil {
+            if !self.transactionProductDetailsModel.isCancellable {
+                self.transactionCancelView.cancelView.hidden = true
+                if self.hasProductFeedback {
+                    self.transactionCancelView.leaveFeedbackButton.setTitle("VIEW PRODUCT FEEDBACK", forState: UIControlState.Normal)
+                    self.transactionCancelView.leaveFeedbackButton.hidden = false
+                    self.transactionCancelView.leaveFeedbackButton.tag = 1001
+                } else {
+                    if self.transactionProductDetailsModel.orderProductStatusId == 4 {
+                        self.transactionCancelView.leaveFeedbackButton.hidden = false
+                        self.transactionCancelView.leaveFeedbackButton.tag = 1002
+                    } else {
+                        self.transactionCancelView.leaveFeedbackButton.hidden = true
+                    }
+                }
+            } else {
+                self.transactionCancelView.cancelView.hidden = false
+                self.transactionCancelView.leaveFeedbackButton.hidden = true
+            }
+        } else {
+            self.transactionCancelView.cancelView.hidden = true
+        }
+        
+        self.transactionCancelView.frame.size.width = self.view.frame.size.width
+        self.transactionCancelView.frame.origin.y += CGFloat(20)
+        /*
         if self.transactionCancelView == nil {
             self.transactionCancelView = XibHelper.puffViewWithNibName("TransactionViews", index: 9) as! TransactionCancelOrderView
             self.transactionCancelView.cancelOrderLabel.text = self.cancelOrder
@@ -267,7 +317,36 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
             
             self.transactionCancelView.frame.size.width = self.view.frame.size.width
             self.transactionCancelView.frame.origin.y += CGFloat(20)
-        }
+        } else {
+            self.transactionCancelView = XibHelper.puffViewWithNibName("TransactionViews", index: 9) as! TransactionCancelOrderView
+            self.transactionCancelView.cancelOrderLabel.text = self.cancelOrder
+            self.transactionCancelView.delegate = self
+            if self.transactionProductDetailsModel != nil {
+                if !self.transactionProductDetailsModel.isCancellable {
+                    self.transactionCancelView.cancelView.hidden = true
+                    if self.hasProductFeedback {
+                        self.transactionCancelView.leaveFeedbackButton.setTitle("VIEW PRODUCT FEEDBACK", forState: UIControlState.Normal)
+                        self.transactionCancelView.leaveFeedbackButton.hidden = false
+                        self.transactionCancelView.leaveFeedbackButton.tag = 1001
+                    } else {
+                        if self.transactionProductDetailsModel.orderProductStatusId == 4 {
+                            self.transactionCancelView.leaveFeedbackButton.hidden = false
+                            self.transactionCancelView.leaveFeedbackButton.tag = 1002
+                        } else {
+                            self.transactionCancelView.leaveFeedbackButton.hidden = true
+                        }
+                    }
+                } else {
+                    self.transactionCancelView.cancelView.hidden = false
+                    self.transactionCancelView.leaveFeedbackButton.hidden = true
+                }
+            } else {
+                self.transactionCancelView.cancelView.hidden = true
+            }
+            
+            self.transactionCancelView.frame.size.width = self.view.frame.size.width
+            self.transactionCancelView.frame.origin.y += CGFloat(20)
+        }*/
         return self.transactionCancelView
     }
     
@@ -635,9 +714,20 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
         
         manager.GET(APIAtlas.transactionProductDetails+"\(SessionManager.accessToken())&orderProductId=\(self.orderProductId)", parameters: nil, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            println(responseObject)
+            
+            let data = NSJSONSerialization.dataWithJSONObject(responseObject, options: nil, error: nil)
+             var formattedRating: String = NSString(data: data!, encoding: NSUTF8StringEncoding) as! String
+            
+            println(formattedRating)
+            
             if responseObject["isSuccessful"] as! Bool {
                 self.transactionProductDetailsModel = TransactionProductDetailsModel.parseFromDataDictionary(responseObject as! NSDictionary)
+            }
+            
+            if Feedback.setProductFeedback {
+                self.headerView.removeFromSuperview()
+                self.footerView.removeFromSuperview()
+                self.loadViewsWithDetails()
             }
             
             if self.headerView == nil {

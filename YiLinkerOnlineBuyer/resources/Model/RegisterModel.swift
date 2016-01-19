@@ -19,11 +19,29 @@ class RegisterModel {
     var emailAddress: String = ""
     var mobileNumber: String = ""
     
+    //for guest checkout
+    var title: String = ""
+    var streetName: String = ""
+    var zipCode: String = ""
+    var location: String = ""
+    
     init(firstName: String, lastName: String, emailAddress: String, mobileNumber: String) {
         self.firstName = firstName
         self.lastName = lastName
         self.emailAddress = emailAddress
         self.mobileNumber = mobileNumber
+    }
+    
+    init(firstName: String, lastName: String, emailAddress: String, mobileNumber: String, title: String, streetName: String, zipCode: String, location: String) {
+        self.firstName = firstName
+        self.lastName = lastName
+        self.emailAddress = emailAddress
+        self.mobileNumber = mobileNumber
+        
+        self.title = title
+        self.streetName = streetName
+        self.zipCode = zipCode
+        self.location = location
     }
     
     init() {
