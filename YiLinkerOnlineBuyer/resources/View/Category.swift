@@ -152,7 +152,15 @@ extension UITextView {
         toolBar.setItems(toolbarButtons, animated: false)
         
         self.inputAccessoryView = toolBar
-        
+    }
+}
+
+extension UIImageView {
+    func fadeInImageWithImage(image: UIImage) {
+        self.alpha = 0
+        UIView.transitionWithView(self, duration: 0.5, options: UIViewAnimationOptions.CurveEaseIn, animations: { () -> Void in
+            self.alpha = 1
+            }, completion: nil)
     }
 }
 
@@ -183,7 +191,6 @@ extension UIImage {
         return result
     }
 }
-
 
 extension UIAlertController {
     

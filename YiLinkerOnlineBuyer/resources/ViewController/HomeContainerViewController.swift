@@ -50,8 +50,6 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var backToTopButton: UIButton!
     
-    var images: [String] = ["http://www.nognoginthecity.com/wp-content/uploads/2014/11/20141023_BRA_NA_Penshoppe-CB-women_NA_penshoppe-1.jpg", "http://www.manilaonsale.com/wp-content/uploads/2013/03/Penshoppe-Sale-March-2013.jpg", "http://www.manilaonsale.com/wp-content/uploads/2013/07/Penshoppe-Mid-Year-Clearance-Sale-July-2013.jpg", "http://cdn.soccerbible.com/media/8733/adidas-hunt-pack-supplied-img4.jpg", "http://demandware.edgesuite.net/sits_pod14-adidas/dw/image/v2/aagl_prd/on/demandware.static/-/Sites-adidas-AME-Library/default/dw2ec04560/brand/images/2015/06/adidas-originals-fw15-xeno-zx-flux-fc-double_70190.jpg?sw=470&sh=264&sm=fit&cx=10&cy=0&cw=450&ch=254&sfrm=jpg"]
-    
     let placeHolder: String = "dummy-placeholder"
     
     let carouselCellNibName = "CarouselCollectionViewCell"
@@ -185,6 +183,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             })
     }
     
+    //MARK: -
     //MARK: - Back To Top Button
     func setupBackToTopButton() {
         self.backToTopButton.layer.cornerRadius = 15
@@ -196,6 +195,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         self.backToTopButton.layer.shadowOpacity = 1.0
     }
     
+    //MARK: -
     //MARK: - collectionViewLayout()
     func collectionViewLayout() {
         let homePageCollectionViewLayout: HomePageCollectionViewLayout2 = HomePageCollectionViewLayout2()
@@ -207,24 +207,28 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         self.registerDecorationView(self.sectionBackgroundNibName)
     }
     
+    //MARK: -
     //MARK: - Register Header Collection View
     func registerHeaderCollectionView(nibName: String) {
         var layoutHeaderCollectionViewNib: UINib = UINib(nibName: nibName, bundle: nil)
         collectionView!.registerNib(layoutHeaderCollectionViewNib, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: nibName)
     }
     
+    //MARK: -
     //MARK: - Register Decoration View
     func registerDecorationView(nibName: String) {
         var decorationViewNib: UINib = UINib(nibName: nibName, bundle: nil)
         self.collectionView?.collectionViewLayout.registerNib(decorationViewNib, forDecorationViewOfKind: nibName)
     }
     
+    //MARK: -
     //MARK: - Register Cell
     func registerCellWithNibName(nibName: String) {
         let nib: UINib = UINib(nibName: nibName, bundle: nil)
         self.collectionView.registerNib(nib, forCellWithReuseIdentifier: nibName)
     }
     
+    //MARK: -
     //MARK: - On Registration
     //On Registration
     func onRegistration(notification: NSNotification) {
@@ -239,7 +243,8 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         }
     }
     
-    //MARK: Show Alert
+    //MARK: -
+    //MARK: - Show Alert
     //For GCM Alert
     func showAlert(title:String, message:String) {
         let alert = UIAlertController(title: title,
@@ -479,7 +484,6 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     
     //MARK: -
     //MARK: - isJsonStringEmpty
-    
     func isJsonStringEmpty() -> Bool {
         var homeEntities: [HomeEntity] = HomeEntity.findAll() as! [HomeEntity]
         
@@ -497,6 +501,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         return StringHelper.convertStringToDictionary(homeEntities.first!.json)
     }
     
+    //MARK: -
     //MARK: - Populate Home PageWith  Dictionary
     func populateHomePageWithDictionary(dictionary: NSDictionary) {
         self.collectionView.hidden = false
@@ -541,6 +546,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         })
     }
     
+    //MARK: -
     //MARK: - Fire Get User Info
     func fireGetUserInfo() {
         self.showHUD()
@@ -595,10 +601,10 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                     Toast.displayToastWithMessage(Constants.Localized.error, duration: 1.5, view: self.view)
                 }
             }
-            
         }
     }
     
+    //MARK: -
     //MARK: - Update Tab Bar Badge
     func updateTabBarBadge() {
         if SessionManager.wishlistCount() != 0 {
@@ -616,6 +622,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         }
     }
     
+    //MARK: -
     //MARK: - Fire Refresh Token
     func fireRefreshToken() {
         self.showHUD()
@@ -635,6 +642,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         })
     }
     
+    //MARK: -
     //MARK: logout
     func logout() {
         SessionManager.logout()
@@ -644,6 +652,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         appDelegate.startPage()
     }
     
+    //MARK: -
     //MARK: - Show HUD
     func showHUD() {
         if self.hud != nil {
@@ -658,12 +667,14 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         self.hud?.show(true)
     }
     
-    // MARK: - Did Tap Reload
+    //MARK: -
+    //MARK: - Did Tap Reload
     func didTapReload() {
         self.emptyView?.removeFromSuperview()
         self.fireGetHomePageData(true)
     }
     
+    //MARK: -
     //MARK: - UICollectionView Data Source
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         //#warning Incomplete method implementation -- Return the number of sections
@@ -697,6 +708,8 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         }
     }
     
+    //MARK: - 
+    //MARK: -
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         if self.layouts[indexPath.section] == "1" {
             let carouselCell: CarouselCollectionViewCell = self.collectionView.dequeueReusableCellWithReuseIdentifier(self.carouselCellNibName, forIndexPath: indexPath) as! CarouselCollectionViewCell
@@ -819,6 +832,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         return headerView
     }
     
+    //MARK: -
     //MARK: - CollectionViewDelegate
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         let cell: AnyObject = collectionView.cellForItemAtIndexPath(indexPath)!
@@ -836,13 +850,9 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             let verticalCell: VerticalImageCollectionViewCell = collectionView.cellForItemAtIndexPath(indexPath) as! VerticalImageCollectionViewCell
             self.didClickItemWithTarget(verticalCell.target, targetType: verticalCell.targetType)
         }
-        
-        /*else if cell.isKindOfClass(FlashSaleCollectionViewCell) {
-        let flashSaleCollectionViewCell: FlashSaleCollectionViewCell = collectionView.cellForItemAtIndexPath(indexPath) as! FlashSaleCollectionViewCell
-        self.didClickItemWithTarget(flashSaleCollectionViewCell.target, targetType: flashSaleCollectionViewCell.targetType)
-        }*/
     }
     
+    //MARK: -
     //MARK: - Carousel Data Source
     func carouselCollectionViewCell(carouselCollectionViewCell: CarouselCollectionViewCell, numberOfItemsInSection section: Int) -> Int {
         let parentIndexPath: NSIndexPath = self.collectionView.indexPathForCell(carouselCollectionViewCell)!
@@ -863,6 +873,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         return carouselCollectionViewCell.collectionView.frame.size.width
     }
     
+    //MARK: -
     //MARK: - Carousel Delegate
     func carouselCollectionViewCell(carouselCollectionViewCell: CarouselCollectionViewCell, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         let fullImageCell: FullImageCollectionViewCell = carouselCollectionViewCell.collectionView.cellForItemAtIndexPath(indexPath) as! FullImageCollectionViewCell
@@ -883,6 +894,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         }
     }
     
+    //MARK: -
     //MARK: - Half Pager Data Source
     func halfPagerCollectionViewCell(halfPagerCollectionViewCell: HalfPagerCollectionViewCell, numberOfItemsInSection section: Int) -> Int {
         let parentIndexPath: NSIndexPath = self.collectionView.indexPathForCell(halfPagerCollectionViewCell)!
@@ -903,7 +915,15 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         let layoutThreeModel: LayoutThreeModel = self.homePageModel.data[parentIndexPath.section] as! LayoutThreeModel
         
         let fullImageCell: FullImageCollectionViewCell = halfPagerCollectionViewCell.collectionView.dequeueReusableCellWithReuseIdentifier(halfPagerCollectionViewCell.fullImageCellNib, forIndexPath: indexPath) as! FullImageCollectionViewCell
-        fullImageCell.itemProductImageView.sd_setImageWithURL(NSURL(string: layoutThreeModel.data[indexPath.row].image), placeholderImage: UIImage(named: "dummy-placeholder"))
+        
+        fullImageCell.itemProductImageView.sd_setImageWithURL(NSURL(string: layoutThreeModel.data[indexPath.row].image), placeholderImage: UIImage(named: "dummy-placeholder"), completed: { (downloadedImage, NSError, SDImageCacheType, NSURL) -> Void in
+            if let imageView = fullImageCell.itemProductImageView {
+                if downloadedImage != nil {
+                    imageView.fadeInImageWithImage(downloadedImage)
+                }
+            }
+        })
+        
         fullImageCell.target = layoutThreeModel.data[indexPath.row].target.targetUrl
         fullImageCell.targetType = layoutThreeModel.data[indexPath.row].target.targetType
         fullImageCell.layer.cornerRadius = 5
@@ -924,6 +944,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         }
     }
     
+    //MARK: -
     //MARK: - Half Pager Delegate
     func halfPagerCollectionViewCell(halfPagerCollectionViewCell: HalfPagerCollectionViewCell, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         let fullImageCell: FullImageCollectionViewCell = halfPagerCollectionViewCell.collectionView.cellForItemAtIndexPath(indexPath) as! FullImageCollectionViewCell
@@ -943,16 +964,19 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         }
     }
     
+    //MARK: -
     //MARK: - Flash Collection View Delegate
     func flashSaleCollectionViewCell(didTapProductImageView productImageView: ProductImageView) {
         self.didClickItemWithTarget(productImageView.target, targetType: productImageView.targetType)
     }
     
+    //MARK: -
     //MARK: - Seconds To Hours Minutes Seconds
     func secondsToHoursMinutesSeconds (seconds : Int) -> (Int, Int, Int) {
         return (seconds / 3600, (seconds % 3600) / 60, (seconds % 3600) % 60)
     }
     
+    //MARK: -
     //MARK: - Update Time
     func updateTime() {
         if self.remainingTime > -1 {
@@ -997,32 +1021,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                     break
                 }
             }
-            
         } else {
-            /*if self.updateUsingOneHourInterval {
-            self.updateUsingOneHourInterval = false
-            if self.remainingTime == -1 {
-            self.timer.invalidate()
-            self.oneHourIntervalTimer.invalidate()
-            }
-            
-            } else {
-            self.timer.invalidate()
-            self.oneHourIntervalTimer.invalidate()
-            self.updateUsingOneHourInterval = true
-            
-            if self.remainingTime == -1 {
-            //self.fireGetHomePageData(true)
-            
-            if self.view.window != nil {
-            Delay.delayWithDuration(1.0, completionHandler: { (success) -> Void in
-            let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-            appDelegate.changeRootToHomeView()
-            })
-            }
-            }
-            }*/
-            
             Delay.delayWithDuration(1.0, completionHandler: { (success) -> Void in
                 self.timer.invalidate()
                 if self.view.window != nil && self.remainingTime == -1 {
@@ -1030,12 +1029,10 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                     appDelegate.changeRootToHomeView()
                 }
             })
-            
-            
         }
-        
     }
     
+    //MARK: -
     //MARK: - Flash Sale Collection View Cell With IndexPath
     func flashSaleCollectionViewCellWithIndexPath(indexPath: NSIndexPath) -> FlashSaleCollectionViewCell {
         let layoutFourModel: LayoutFourModel = self.homePageModel.data[indexPath.section] as! LayoutFourModel
@@ -1079,6 +1076,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         return flashSaleCell
     }
     
+    //MARK: -
     //MARK: - Grid Layout
     func twoColumnGridCollectionViewCellWithIndexPath(indexPath: NSIndexPath) -> TwoColumnGridCollectionViewCell {
         let twoColumnGridCollectionViewCell: TwoColumnGridCollectionViewCell = self.collectionView?.dequeueReusableCellWithReuseIdentifier("TwoColumnGridCollectionViewCell", forIndexPath: indexPath) as! TwoColumnGridCollectionViewCell
@@ -1088,7 +1086,14 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         twoColumnGridCollectionViewCell.target = layoutTenModel.data[indexPath.row].target.targetUrl
         twoColumnGridCollectionViewCell.targetType = layoutTenModel.data[indexPath.row].target.targetType
         
-        twoColumnGridCollectionViewCell.productItemImageView.sd_setImageWithURL(NSURL(string: layoutTenModel.data[indexPath.row].image), placeholderImage: UIImage(named: self.placeHolder))
+        twoColumnGridCollectionViewCell.productItemImageView.sd_setImageWithURL(NSURL(string: layoutTenModel.data[indexPath.row].image), placeholderImage: UIImage(named: self.placeHolder), completed: { (downloadedImage, NSError, SDImageCacheType, NSURL) -> Void in
+            if let imageView = twoColumnGridCollectionViewCell.productItemImageView {
+                if downloadedImage != nil {
+                    imageView.fadeInImageWithImage(downloadedImage)
+                }
+            }
+        })
+        
         twoColumnGridCollectionViewCell.productNameLabel.text = layoutTenModel.data[indexPath.row].name
         twoColumnGridCollectionViewCell.discountedPriceLabel.text = layoutTenModel.data[indexPath.row].discountedPrice.addPesoSign()
         twoColumnGridCollectionViewCell.discountPercentageLabel.text = layoutTenModel.data[indexPath.row].discountPercentage.formatToPercentage()
@@ -1106,6 +1111,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         return twoColumnGridCollectionViewCell
     }
     
+    //MARK: -
     //MARK: - Layout Nine Collection View Cell With IndexPath
     func layoutNineCollectionViewCellWithIndexPath(indexPath: NSIndexPath) -> LayoutNineCollectionViewCell {
         let layoutNineModel: LayoutNineModel = self.homePageModel.data[indexPath.section] as! LayoutNineModel
@@ -1115,27 +1121,62 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         
         if layoutNineModel.data.count >= 5 {
             layoutNineCollectionViewCell.productOneNameLabel.text = layoutNineModel.data[0].name
-            layoutNineCollectionViewCell.productImageViewOne.sd_setImageWithURL(NSURL(string: layoutNineModel.data[0].image), placeholderImage: UIImage(named: self.placeHolder))
             layoutNineCollectionViewCell.productImageViewOne.target = layoutNineModel.data[0].target.targetUrl
             layoutNineCollectionViewCell.productImageViewOne.targetType = layoutNineModel.data[0].target.targetType
+            layoutNineCollectionViewCell.productImageViewOne.sd_setImageWithURL(NSURL(string: layoutNineModel.data[0].image), placeholderImage: UIImage(named: self.placeHolder), completed: { (downloadedImage, NSError, SDImageCacheType, NSURL) -> Void in
+                if let imageView = layoutNineCollectionViewCell.productImageViewOne {
+                    if downloadedImage != nil {
+                        imageView.fadeInImageWithImage(downloadedImage)
+                    }
+                }
+            })
+            
             
             layoutNineCollectionViewCell.productTwoNameLabel.text = layoutNineModel.data[1].name
-            layoutNineCollectionViewCell.productImageViewTwo.sd_setImageWithURL(NSURL(string: layoutNineModel.data[1].image), placeholderImage: UIImage(named: self.placeHolder))
+            layoutNineCollectionViewCell.productImageViewTwo.sd_setImageWithURL(NSURL(string: layoutNineModel.data[1].image), placeholderImage: UIImage(named: self.placeHolder), completed: { (downloadedImage, NSError, SDImageCacheType, NSURL) -> Void in
+                if let imageView = layoutNineCollectionViewCell.productImageViewTwo {
+                    if downloadedImage != nil {
+                        imageView.fadeInImageWithImage(downloadedImage)
+                    }
+                }
+            })
             layoutNineCollectionViewCell.productImageViewTwo.target = layoutNineModel.data[1].target.targetUrl
             layoutNineCollectionViewCell.productImageViewTwo.targetType = layoutNineModel.data[1].target.targetType
             
+            
             layoutNineCollectionViewCell.productThreeNameLabel.text = layoutNineModel.data[2].name
-            layoutNineCollectionViewCell.productImageViewThree.sd_setImageWithURL(NSURL(string: layoutNineModel.data[2].image), placeholderImage: UIImage(named: self.placeHolder))
+            layoutNineCollectionViewCell.productImageViewThree.sd_setImageWithURL(NSURL(string: layoutNineModel.data[2].image), placeholderImage: UIImage(named: self.placeHolder), completed: { (downloadedImage, NSError, SDImageCacheType, NSURL) -> Void in
+                if let imageView = layoutNineCollectionViewCell.productImageViewThree {
+                    if downloadedImage != nil {
+                        imageView.fadeInImageWithImage(downloadedImage)
+                    }
+                }
+            })
             layoutNineCollectionViewCell.productImageViewThree.target = layoutNineModel.data[2].target.targetUrl
             layoutNineCollectionViewCell.productImageViewThree.targetType = layoutNineModel.data[2].target.targetType
             
+            
             layoutNineCollectionViewCell.productFourNameLabel.text = layoutNineModel.data[3].name
-            layoutNineCollectionViewCell.productImageViewFour.sd_setImageWithURL(NSURL(string: layoutNineModel.data[3].image), placeholderImage: UIImage(named: self.placeHolder))
+            layoutNineCollectionViewCell.productImageViewFour.sd_setImageWithURL(NSURL(string: layoutNineModel.data[3].image), placeholderImage: UIImage(named: self.placeHolder), completed: { (downloadedImage, NSError, SDImageCacheType, NSURL) -> Void in
+                if let imageView = layoutNineCollectionViewCell.productImageViewFour {
+                    if downloadedImage != nil {
+                        imageView.fadeInImageWithImage(downloadedImage)
+                    }
+                }
+            })
             layoutNineCollectionViewCell.productImageViewFour.target = layoutNineModel.data[3].target.targetUrl
             layoutNineCollectionViewCell.productImageViewFour.targetType = layoutNineModel.data[3].target.targetType
             
+            
+            
             layoutNineCollectionViewCell.productFiveNameLabel.text = layoutNineModel.data[4].name
-            layoutNineCollectionViewCell.productImageViewFive.sd_setImageWithURL(NSURL(string: layoutNineModel.data[4].image), placeholderImage: UIImage(named: self.placeHolder))
+            layoutNineCollectionViewCell.productImageViewFive.sd_setImageWithURL(NSURL(string: layoutNineModel.data[4].image), placeholderImage: UIImage(named: self.placeHolder), completed: { (downloadedImage, NSError, SDImageCacheType, NSURL) -> Void in
+                if let imageView = layoutNineCollectionViewCell.productImageViewFive {
+                    if downloadedImage != nil {
+                        imageView.fadeInImageWithImage(downloadedImage)
+                    }
+                }
+            })
             layoutNineCollectionViewCell.productImageViewFive.target = layoutNineModel.data[4].target.targetUrl
             layoutNineCollectionViewCell.productImageViewFive.targetType = layoutNineModel.data[4].target.targetType
         }
@@ -1143,11 +1184,13 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         return layoutNineCollectionViewCell
     }
     
+    //MARK: -
     //MARK: - Layout Nine Collection View Cell Delegate
     func layoutNineCollectionViewCellDidClickProductImage(productImage: ProductImageView) {
         self.didClickItemWithTarget(productImage.target, targetType: productImage.targetType)
     }
     
+    //MARK: -
     //MARK: - Vertical Image Collection View Cell With IndexPath
     func verticalImageCollectionViewCellWithIndexPath(indexPath: NSIndexPath) -> VerticalImageCollectionViewCell {
         let verticalImageCollectionViewCell: VerticalImageCollectionViewCell = self.collectionView?.dequeueReusableCellWithReuseIdentifier(self.verticalImageNibName
@@ -1155,7 +1198,13 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         if self.homePageModel.data[indexPath.section].isKindOfClass(LayoutFiveModel) {
             let layoutFiveModel: LayoutFiveModel = self.homePageModel.data[indexPath.section] as! LayoutFiveModel
             if indexPath.row < layoutFiveModel.data.count {
-                verticalImageCollectionViewCell.productItemImageView.sd_setImageWithURL(NSURL(string: layoutFiveModel.data[indexPath.row].image), placeholderImage: UIImage(named: self.placeHolder))
+                verticalImageCollectionViewCell.productItemImageView.sd_setImageWithURL(NSURL(string: layoutFiveModel.data[indexPath.row].image), placeholderImage: UIImage(named: self.placeHolder), completed: { (downloadedImage, NSError, SDImageCacheType, NSURL) -> Void in
+                    if let imageView = verticalImageCollectionViewCell.productItemImageView {
+                        if downloadedImage != nil {
+                            imageView.fadeInImageWithImage(downloadedImage)
+                        }
+                    }
+                })
                 
                 verticalImageCollectionViewCell.productNameLabel.text = layoutFiveModel.data[indexPath.row].name
                 verticalImageCollectionViewCell.discountedPriceLabel.text = layoutFiveModel.data[indexPath.row].discountedPrice.addPesoSign()
@@ -1180,7 +1229,14 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             let layoutSevenModel: LayoutSevenModel = self.homePageModel.data[indexPath.section] as! LayoutSevenModel
             
             if indexPath.row < layoutSevenModel.data.count {
-                verticalImageCollectionViewCell.productItemImageView.sd_setImageWithURL(NSURL(string: layoutSevenModel.data[indexPath.row].image), placeholderImage: UIImage(named: self.placeHolder))
+                verticalImageCollectionViewCell.productItemImageView.sd_setImageWithURL(NSURL(string: layoutSevenModel.data[indexPath.row].image), placeholderImage: UIImage(named: self.placeHolder), completed: { (downloadedImage, NSError, SDImageCacheType, NSURL) -> Void in
+                    if let imageView = verticalImageCollectionViewCell.productItemImageView {
+                        if downloadedImage != nil {
+                            imageView.fadeInImageWithImage(downloadedImage)
+                        }
+                    }
+                })
+                
                 verticalImageCollectionViewCell.productNameLabel.text = layoutSevenModel.data[indexPath.row].name
                 verticalImageCollectionViewCell.discountedPriceLabel.text = layoutSevenModel.data[indexPath.row].discountedPrice.addPesoSign()
                 verticalImageCollectionViewCell.discountPercentageLabel.text = layoutSevenModel.data[indexPath.row].discountPercentage.formatToPercentage()
@@ -1204,6 +1260,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         return verticalImageCollectionViewCell
     }
     
+    //MARK: -
     //MARK: - Half Vertical Image Collection View Cell With IndexPath
     func halfVerticalImageCollectionViewCellWithIndexPath(indexPath: NSIndexPath) -> HalfVerticalImageCollectionViewCell {
         let halfVerticalImageCollectionViewCell: HalfVerticalImageCollectionViewCell = self.collectionView?.dequeueReusableCellWithReuseIdentifier(self.halfVerticalNibName, forIndexPath: indexPath) as! HalfVerticalImageCollectionViewCell
@@ -1212,7 +1269,13 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             let layoutFiveModel: LayoutFiveModel = self.homePageModel.data[indexPath.section] as! LayoutFiveModel
             
             if indexPath.row < layoutFiveModel.data.count {
-                halfVerticalImageCollectionViewCell.productItemImageView.sd_setImageWithURL(NSURL(string: layoutFiveModel.data[indexPath.row].image), placeholderImage: UIImage(named: self.placeHolder))
+                halfVerticalImageCollectionViewCell.productItemImageView.sd_setImageWithURL(NSURL(string: layoutFiveModel.data[indexPath.row].image), placeholderImage: UIImage(named: self.placeHolder), completed: { (downloadedImage, NSError, SDImageCacheType, NSURL) -> Void in
+                    if let imageView = halfVerticalImageCollectionViewCell.productItemImageView {
+                        if downloadedImage != nil {
+                            imageView.fadeInImageWithImage(downloadedImage)
+                        }
+                    }
+                })
                 
                 halfVerticalImageCollectionViewCell.productNameLabel.text = layoutFiveModel.data[indexPath.row].name
                 halfVerticalImageCollectionViewCell.discountedPriceLabel.text = layoutFiveModel.data[indexPath.row].discountedPrice.addPesoSign()
@@ -1237,7 +1300,13 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             let layoutSevenModel: LayoutSevenModel = self.homePageModel.data[indexPath.section] as! LayoutSevenModel
             
             if indexPath.row < layoutSevenModel.data.count {
-                halfVerticalImageCollectionViewCell.productItemImageView.sd_setImageWithURL(NSURL(string: layoutSevenModel.data[indexPath.row].image), placeholderImage: UIImage(named: self.placeHolder))
+                halfVerticalImageCollectionViewCell.productItemImageView.sd_setImageWithURL(NSURL(string: layoutSevenModel.data[indexPath.row].image), placeholderImage: UIImage(named: self.placeHolder), completed: { (downloadedImage, NSError, SDImageCacheType, NSURL) -> Void in
+                    if let imageView = halfVerticalImageCollectionViewCell.productItemImageView {
+                        if downloadedImage != nil {
+                            imageView.fadeInImageWithImage(downloadedImage)
+                        }
+                    }
+                })
                 
                 halfVerticalImageCollectionViewCell.productNameLabel.text = layoutSevenModel.data[indexPath.row].name
                 halfVerticalImageCollectionViewCell.discountedPriceLabel.text = layoutSevenModel.data[indexPath.row].discountedPrice.addPesoSign()
@@ -1261,11 +1330,13 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         return halfVerticalImageCollectionViewCell
     }
     
+    //MARK: -
     //MARK: - Header View Delegate
     func layoutHeaderCollectionViewCellDidSelectViewMore(layoutHeaderCollectionViewCell: LayoutHeaderCollectionViewCell) {
         self.didClickItemWithTarget(layoutHeaderCollectionViewCell.target, targetType: layoutHeaderCollectionViewCell.targetType, sectionTitle: layoutHeaderCollectionViewCell.sectionTitle)
     }
     
+    //MARK: -
     //MARK: - Full Image Collection View Cell
     func fullImageCollectionViewCellWithIndexPath(indexPath: NSIndexPath, fullImageCollectionView: UICollectionView) -> FullImageCollectionViewCell {
         let fullImageCollectionViewCell: FullImageCollectionViewCell = fullImageCollectionView.dequeueReusableCellWithReuseIdentifier(self.fullImageCellNib, forIndexPath: indexPath) as! FullImageCollectionViewCell
@@ -1275,33 +1346,52 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             
             fullImageCollectionViewCell.target = layoutOneModel.data[indexPath.row].target.targetUrl
             fullImageCollectionViewCell.targetType = layoutOneModel.data[indexPath.row].target.targetType
-            fullImageCollectionViewCell.itemProductImageView.sd_setImageWithURL(NSURL(string: layoutOneModel.data[indexPath.row].image), placeholderImage: UIImage(named: placeHolder))
+            
+            fullImageCollectionViewCell.itemProductImageView.sd_setImageWithURL(NSURL(string: layoutOneModel.data[indexPath.row].image), placeholderImage:  UIImage(named: placeHolder), completed: { (downloadedImage, NSError, SDImageCacheType, NSURL) -> Void in
+                if let imageView = fullImageCollectionViewCell.itemProductImageView {
+                    if downloadedImage != nil {
+                        imageView.fadeInImageWithImage(downloadedImage)
+                    }
+                }
+            })
         } else if self.homePageModel.data[indexPath.section].isKindOfClass(LayoutSixModel) {
             let layoutSixModel: LayoutSixModel = self.homePageModel.data[indexPath.section] as! LayoutSixModel
             
             fullImageCollectionViewCell.target = layoutSixModel.data[indexPath.row].target.targetUrl
             fullImageCollectionViewCell.targetType = layoutSixModel.data[indexPath.row].target.targetType
-            fullImageCollectionViewCell.itemProductImageView.sd_setImageWithURL(NSURL(string: layoutSixModel.data[indexPath.row].image), placeholderImage: UIImage(named: placeHolder))
+            
+            fullImageCollectionViewCell.itemProductImageView.sd_setImageWithURL(NSURL(string: layoutSixModel.data[indexPath.row].image), placeholderImage: UIImage(named: placeHolder), completed: { (downloadedImage, NSError, SDImageCacheType, NSURL) -> Void in
+                if let imageView = fullImageCollectionViewCell.itemProductImageView {
+                    if downloadedImage != nil {
+                        imageView.fadeInImageWithImage(downloadedImage)
+                    }
+                }
+            })
+            
         }  else if self.homePageModel.data[indexPath.section].isKindOfClass(LayoutTwoModel) {
             let layoutTwoModel: LayoutTwoModel = self.homePageModel.data[indexPath.section] as! LayoutTwoModel
             
             fullImageCollectionViewCell.target = layoutTwoModel.data[indexPath.row].target.targetUrl
             fullImageCollectionViewCell.targetType = layoutTwoModel.data[indexPath.row].target.targetType
-            fullImageCollectionViewCell.itemProductImageView.sd_setImageWithURL(NSURL(string: layoutTwoModel.data[indexPath.row].image), placeholderImage: UIImage(named: placeHolder))
+            
+            fullImageCollectionViewCell.itemProductImageView.sd_setImageWithURL(NSURL(string: layoutTwoModel.data[indexPath.row].image), placeholderImage: UIImage(named: placeHolder), completed: { (downloadedImage, NSError, SDImageCacheType, NSURL) -> Void in
+                if let imageView = fullImageCollectionViewCell.itemProductImageView {
+                    if downloadedImage != nil {
+                        imageView.fadeInImageWithImage(downloadedImage)
+                    }
+                }
+            })
         }
         
         return fullImageCollectionViewCell
     }
     
+    //MARK: -
     //MARK: - Daily Login With Index Path
     func dailyLoginWithWIndexpath(indexPath: NSIndexPath) -> DailyLoginCollectionViewCell {
         let layoutTwoModel: LayoutTwoModel = self.homePageModel.data[indexPath.section] as! LayoutTwoModel
         
         let dailyLoginCell: DailyLoginCollectionViewCell = self.collectionView.dequeueReusableCellWithReuseIdentifier(self.dailyLoginNibName, forIndexPath: indexPath) as! DailyLoginCollectionViewCell
-        
-        /*dailyLoginCell.productImageView.sd_setImageWithURL(NSURL(string: layoutTwoModel.data[0].image), placeholderImage: UIImage(named: self.placeHolder))
-        dailyLoginCell.target = layoutTwoModel.data[0].target.targetUrl
-        dailyLoginCell.targetType = layoutTwoModel.data[0].target.targetType*/
         
         dailyLoginCell.delegate = self
         dailyLoginCell.dataSource = self
@@ -1310,7 +1400,8 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         return dailyLoginCell
     }
     
-    //MAMRK: - Half Pager With IndexPath
+    //MARK: -
+    //MARK: - Half Pager With IndexPath
     func halfPagerWithIndexPath(indexPath: NSIndexPath) -> HalfPagerCollectionViewCell {
         let halfPager: HalfPagerCollectionViewCell = self.collectionView.dequeueReusableCellWithReuseIdentifier(self.halfPagerCellNibName, forIndexPath: indexPath) as! HalfPagerCollectionViewCell
         halfPager.delegate = self
@@ -1318,6 +1409,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         return halfPager
     }
     
+    //MARK: -
     //MARK: - Seller Collection View Cell With Index Path
     func sellerCollectionViewCellWithIndexPath(indexPath: NSIndexPath) -> SellerCollectionViewCell {
         let sellerCollectionView: SellerCollectionViewCell = self.collectionView?.dequeueReusableCellWithReuseIdentifier(self.sellerNibName, forIndexPath: indexPath) as! SellerCollectionViewCell
@@ -1325,6 +1417,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         return sellerCollectionView
     }
     
+    //MARK: -
     //MARK: - Seller Carousel
     func sellerCarouselWithIndexPath(indexPath: NSIndexPath) -> SellerCarouselCollectionViewCell {
         let sellerCarosuel: SellerCarouselCollectionViewCell = self.collectionView.dequeueReusableCellWithReuseIdentifier(self.sellerCarouselNibName, forIndexPath: indexPath) as! SellerCarouselCollectionViewCell
@@ -1334,6 +1427,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         return sellerCarosuel
     }
     
+    //MARK: -
     //MARK: - Seller Carousel Data Source
     func sellerCarouselCollectionViewCell(sellerCarouselCollectionViewCell: SellerCarouselCollectionViewCell, numberOfItemsInSection section: Int) -> Int {
         let parentIndexPath: NSIndexPath = self.collectionView.indexPathForCell(sellerCarouselCollectionViewCell)!
@@ -1354,25 +1448,49 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         
         sellerCollectionView.sellerTitleLabel.text = layoutEightModel.data[indexPath.row].name
         sellerCollectionView.sellerSubTitleLabel.text = layoutEightModel.data[indexPath.row].specialty
-        sellerCollectionView.sellerProfileImageView.sd_setImageWithURL(NSURL(string: layoutEightModel.data[indexPath.row].image), placeholderImage: UIImage(named: self.placeHolder))
+        sellerCollectionView.sellerProfileImageView.sd_setImageWithURL(NSURL(string: layoutEightModel.data[indexPath.row].image), placeholderImage: UIImage(named: self.placeHolder), completed: { (downloadedImage, NSError, SDImageCacheType, NSURL) -> Void in
+            if let imageView = sellerCollectionView.sellerProfileImageView {
+                if downloadedImage != nil {
+                    imageView.fadeInImageWithImage(downloadedImage)
+                }
+            }
+        })
         
         if layoutEightModel.data[indexPath.row].data.count >= 1 {
             sellerCollectionView.productOneImageView.target = layoutEightModel.data[indexPath.row].data[0].target.targetUrl
             sellerCollectionView.productOneImageView.targetType = layoutEightModel.data[indexPath.row].data[0].target.targetType
-            sellerCollectionView.productOneImageView.sd_setImageWithURL(NSURL(string: layoutEightModel.data[indexPath.row].data[0].image), placeholderImage: UIImage(named: self.placeHolder))
+            sellerCollectionView.productOneImageView.sd_setImageWithURL(NSURL(string: layoutEightModel.data[indexPath.row].data[0].image), placeholderImage: UIImage(named: self.placeHolder), completed: { (downloadedImage, NSError, SDImageCacheType, NSURL) -> Void in
+                if let imageView = sellerCollectionView.productOneImageView {
+                    if downloadedImage != nil {
+                        imageView.fadeInImageWithImage(downloadedImage)
+                    }
+                }
+            })
             
         }
         
         if layoutEightModel.data[indexPath.row].data.count >= 2 {
             sellerCollectionView.productTwoImageView.target = layoutEightModel.data[indexPath.row].data[1].target.targetUrl
             sellerCollectionView.productTwoImageView.targetType = layoutEightModel.data[indexPath.row].data[1].target.targetType
-            sellerCollectionView.productTwoImageView.sd_setImageWithURL(NSURL(string: layoutEightModel.data[indexPath.row].data[1].image), placeholderImage: UIImage(named: self.placeHolder))
+            sellerCollectionView.productTwoImageView.sd_setImageWithURL(NSURL(string: layoutEightModel.data[indexPath.row].data[1].image), placeholderImage: UIImage(named: self.placeHolder), completed: { (downloadedImage, NSError, SDImageCacheType, NSURL) -> Void in
+                if let imageView = sellerCollectionView.productTwoImageView {
+                    if downloadedImage != nil {
+                        imageView.fadeInImageWithImage(downloadedImage)
+                    }
+                }
+            })
         }
         
         if layoutEightModel.data[indexPath.row].data.count >= 3 {
             sellerCollectionView.productThreeImageView.target = layoutEightModel.data[indexPath.row].data[2].target.targetUrl
             sellerCollectionView.productThreeImageView.targetType = layoutEightModel.data[indexPath.row].data[2].target.targetType
-            sellerCollectionView.productThreeImageView.sd_setImageWithURL(NSURL(string: layoutEightModel.data[indexPath.row].data[2].image), placeholderImage: UIImage(named: self.placeHolder))
+            sellerCollectionView.productThreeImageView.sd_setImageWithURL(NSURL(string: layoutEightModel.data[indexPath.row].data[2].image), placeholderImage: UIImage(named: self.placeHolder), completed: { (downloadedImage, NSError, SDImageCacheType, NSURL) -> Void in
+                if let imageView = sellerCollectionView.productThreeImageView {
+                    if downloadedImage != nil {
+                        imageView.fadeInImageWithImage(downloadedImage)
+                    }
+                }
+            })
         }
         
         self.addGestureToSellerProduct(sellerCollectionView.productOneImageView)
@@ -1395,6 +1513,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         return layoutEightModel.data.count
     }
     
+    //MARK: -
     //MARK: - Seller Carousel Delegate
     func sellerCarouselCollectionViewCell(sellerCarouselCollectionViewCell: SellerCarouselCollectionViewCell, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         let sellerCollectionViewCell: SellerCollectionViewCell = sellerCarouselCollectionViewCell.collectionView.cellForItemAtIndexPath(indexPath) as! SellerCollectionViewCell
@@ -1414,6 +1533,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         }
     }
     
+    //MARK: -
     //MARK: - Add Gesture To Seller Product
     func addGestureToSellerProduct(productImageView: ProductImageView) {
         let tapGestureRecognizer: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "didTapItem:")
@@ -1421,12 +1541,14 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         productImageView.addGestureRecognizer(tapGestureRecognizer)
     }
     
+    //MARK: -
     //MARK: - Did Tap Item
     func didTapItem(tap: UITapGestureRecognizer) {
         let itemImageView: ProductImageView = tap.view as! ProductImageView
         self.didClickItemWithTarget(itemImageView.target, targetType: itemImageView.targetType)
     }
     
+    //MARK: -
     //MARK: - Did Click Item With Target
     func didClickItemWithTarget(target: String, targetType: String, sectionTitle: String = "") {
         if targetType == "seller" {
@@ -1468,6 +1590,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         }
     }
     
+    //MARK: -
     //MARK: - Scroll View Delegate
     func scrollViewDidScroll(scrollView: UIScrollView) {
         let indexes: [NSIndexPath] = self.collectionView.indexPathsForVisibleItems() as! [NSIndexPath]
@@ -1490,6 +1613,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         }
     }
     
+    //MARK: -
     //MARK: - Show Back To Top
     func showBackToTop() {
         UIView.animateWithDuration(0.8, animations: {
@@ -1499,6 +1623,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         })
     }
     
+    //MARK: -
     //MARK: - Show Back To Top
     func hideBackToTop() {
         UIView.animateWithDuration(0.8, animations: {
@@ -1507,13 +1632,14 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                 (value: Bool) in
         })
     }
-    
-    
+
+    //MARK: -
     //MARK: - Back To Top
     @IBAction func backToTop(sender: AnyObject) {
         self.collectionView.setContentOffset(CGPointZero, animated: true)
     }
     
+    //MARK: -
     //MARK: - Update Data
     func updateData() {
         self.fireGetHomePageData(true)
@@ -1531,16 +1657,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     }
     
     func dailyLoginCollectionViewCellDidEndDecelerating(dailyLoginCollectionViewCell: DailyLoginCollectionViewCell) {
-        //        dailyLoginCollectionViewCell.layoutIfNeeded()
-        //        let pageWidth: CGFloat = dailyLoginCollectionViewCell.collectionView.frame.size.width
-        //        let currentPage: CGFloat = dailyLoginCollectionViewCell.collectionView.contentOffset.x / pageWidth
-        //
-        //        if 0.0 != fmodf(Float(currentPage), 1.0) {
-        //            dailyLoginCollectionViewCell.pageControl.currentPage = Int(currentPage) + 1
-        //        }
-        //        else {
-        //            dailyLoginCollectionViewCell.pageControl.currentPage = Int(currentPage)
-        //        }
+        
     }
     
     //MARK: -
@@ -1561,7 +1678,14 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         
         fullImageCollectionViewCell.target = layoutTwoModel.data[indexPath.row].target.targetUrl
         fullImageCollectionViewCell.targetType = layoutTwoModel.data[indexPath.row].target.targetType
-        fullImageCollectionViewCell.itemProductImageView.sd_setImageWithURL(NSURL(string: layoutTwoModel.data[indexPath.row].image), placeholderImage: UIImage(named: placeHolder))
+        
+        fullImageCollectionViewCell.itemProductImageView.sd_setImageWithURL(NSURL(string: layoutTwoModel.data[indexPath.row].image), placeholderImage: UIImage(named: placeHolder), completed: { (downloadedImage, NSError, SDImageCacheType, NSURL) -> Void in
+            if let imageView = fullImageCollectionViewCell.itemProductImageView {
+                if downloadedImage != nil {
+                    imageView.fadeInImageWithImage(downloadedImage)
+                }
+            }
+        })
         
         return fullImageCollectionViewCell
     }
