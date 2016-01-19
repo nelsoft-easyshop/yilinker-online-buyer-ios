@@ -148,6 +148,7 @@ class FollowedSellerViewController: UIViewController, EmptyViewDelegate {
     }
     
     func requestRefreshToken() {
+        self.showHUD()
         WebServiceManager.fireRefreshTokenWithUrl(APIAtlas.refreshTokenUrl, actionHandler: {
             (successful, responseObject, requestErrorType) -> Void in
             self.hud?.hide(true)
