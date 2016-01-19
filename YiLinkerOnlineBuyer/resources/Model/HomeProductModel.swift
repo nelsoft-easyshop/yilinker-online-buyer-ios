@@ -64,7 +64,9 @@ class HomeProductModel: NSObject {
             currency = temp
         }
         
-        if let temp = dictionary["image"] as? String {
+        if let temp = dictionary["thumbnail"] as? String {
+            image = temp
+        } else if let temp = dictionary["image"] as? String {
             image = temp
         }
         
