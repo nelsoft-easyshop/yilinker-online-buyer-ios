@@ -234,6 +234,7 @@
 		0CCA7DF51C0736A100071DD4 /* LayoutNineCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CCA7DF31C0736A100071DD4 /* LayoutNineCollectionViewCell.swift */; };
 		0CCA7DF61C0736A100071DD4 /* LayoutNineCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CCA7DF41C0736A100071DD4 /* LayoutNineCollectionViewCell.xib */; };
 		0CD103EC1B8B4769002E15F4 /* DynamicRoundedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CD103EB1B8B4769002E15F4 /* DynamicRoundedView.swift */; };
+		0CD4C80D1C464D260031E4FE /* LanguageHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CD4C80C1C464D260031E4FE /* LanguageHelper.swift */; };
 		0CDA117A1B760E1A007B5DED /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CDA11791B760E1A007B5DED /* LoginViewController.swift */; };
 		0CDA117C1B764015007B5DED /* LoginAndRegisterContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CDA117B1B764015007B5DED /* LoginAndRegisterContentViewController.swift */; };
 		0CDA117E1B764B79007B5DED /* DynamicRoundedTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CDA117D1B764B79007B5DED /* DynamicRoundedTextField.swift */; };
@@ -300,6 +301,8 @@
 		26D688CF1C047389003ED151 /* ProductDetailsExtendedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26D688CE1C047389003ED151 /* ProductDetailsExtendedView.swift */; };
 		26D688D11C0475C4003ED151 /* ProductDetailsExtendedView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26D688D01C0475C4003ED151 /* ProductDetailsExtendedView.xib */; };
 		26DB062E1B981CF300D38EA8 /* ProductImagesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26DB062D1B981CF300D38EA8 /* ProductImagesModel.swift */; };
+		79044D9D1C44963E00D3E41C /* MessagingThreadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79044D9B1C44963E00D3E41C /* MessagingThreadViewController.swift */; };
+		79044D9E1C44963E00D3E41C /* MessagingThreadViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79044D9C1C44963E00D3E41C /* MessagingThreadViewController.xib */; };
 		790B4BFE1BD8832C00E46AE7 /* VerifyMobileNumberInputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 790B4BFC1BD8832C00E46AE7 /* VerifyMobileNumberInputViewController.swift */; };
 		790B4BFF1BD8832C00E46AE7 /* VerifyMobileNumberInputViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 790B4BFD1BD8832C00E46AE7 /* VerifyMobileNumberInputViewController.xib */; };
 		793A89961B9FFFD80030FDC7 /* ChangeMobileNumberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 793A89941B9FFFD80030FDC7 /* ChangeMobileNumberViewController.swift */; };
@@ -319,6 +322,14 @@
 		7985D3621BB037DD0060E5F5 /* DeactivateModalViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7985D3601BB037DD0060E5F5 /* DeactivateModalViewController.xib */; };
 		7987F3181B7B744A00B02DF4 /* WishlistTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7987F3171B7B744A00B02DF4 /* WishlistTableViewCell.swift */; };
 		7987F31A1B7B746000B02DF4 /* WishlistTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7987F3191B7B746000B02DF4 /* WishlistTableViewCell.xib */; };
+		799AEA091C44C5DE00F9AB88 /* MessagingSenderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799AEA071C44C5DE00F9AB88 /* MessagingSenderTableViewCell.swift */; };
+		799AEA0A1C44C5DE00F9AB88 /* MessagingSenderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 799AEA081C44C5DE00F9AB88 /* MessagingSenderTableViewCell.xib */; };
+		799AEA0D1C44DA5800F9AB88 /* MessagingReceiverTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799AEA0B1C44DA5800F9AB88 /* MessagingReceiverTableViewCell.swift */; };
+		799AEA0E1C44DA5800F9AB88 /* MessagingReceiverTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 799AEA0C1C44DA5800F9AB88 /* MessagingReceiverTableViewCell.xib */; };
+		799AEA111C4506B300F9AB88 /* MessagingSenderImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799AEA0F1C4506B300F9AB88 /* MessagingSenderImageTableViewCell.swift */; };
+		799AEA121C4506B300F9AB88 /* MessagingSenderImageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 799AEA101C4506B300F9AB88 /* MessagingSenderImageTableViewCell.xib */; };
+		799AEA151C45109800F9AB88 /* MessagingReceiverImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799AEA131C45109800F9AB88 /* MessagingReceiverImageTableViewCell.swift */; };
+		799AEA161C45109800F9AB88 /* MessagingReceiverImageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 799AEA141C45109800F9AB88 /* MessagingReceiverImageTableViewCell.xib */; };
 		79A1C6ED1B8329200043AA36 /* SearchSuggestionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79A1C6EC1B8329200043AA36 /* SearchSuggestionModel.swift */; };
 		79A1C6EF1B8329390043AA36 /* SearchSuggestionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79A1C6EE1B8329390043AA36 /* SearchSuggestionTableViewCell.swift */; };
 		79A1C6F11B8329490043AA36 /* SearchSuggestionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79A1C6F01B8329490043AA36 /* SearchSuggestionTableViewCell.xib */; };
@@ -332,6 +343,10 @@
 		79ACCB851C22FADF0026911A /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 79ACCB7E1C22FADF0026911A /* LICENSE */; };
 		79ACCB861C22FADF0026911A /* TTRangeSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 79ACCB821C22FADF0026911A /* TTRangeSlider.m */; };
 		79ACCB871C22FADF0026911A /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 79ACCB841C22FADF0026911A /* README.md */; };
+		79BBF0EC1C438C80005DB226 /* MessagingContactListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79BBF0EA1C438C80005DB226 /* MessagingContactListViewController.swift */; };
+		79BBF0ED1C438C80005DB226 /* MessagingContactListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79BBF0EB1C438C80005DB226 /* MessagingContactListViewController.xib */; };
+		79BBF0F01C439065005DB226 /* MessagingContactTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79BBF0EE1C439065005DB226 /* MessagingContactTableViewCell.swift */; };
+		79BBF0F11C439065005DB226 /* MessagingContactTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79BBF0EF1C439065005DB226 /* MessagingContactTableViewCell.xib */; };
 		79D5B14E1C0EB7EE009CBEEF /* HelpViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79D5B14D1C0EB7EE009CBEEF /* HelpViewController.xib */; };
 		79E68B731B8AB900008626E4 /* ActivityLogTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79E68B721B8AB900008626E4 /* ActivityLogTableViewCell.xib */; };
 		79E68B751B8AC390008626E4 /* ActivityLogTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79E68B741B8AC390008626E4 /* ActivityLogTableViewCell.swift */; };
@@ -382,6 +397,13 @@
 		79F40FD51BCF99F100E5D70E /* UIAppearance+Swift.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F40FD41BCF99F100E5D70E /* UIAppearance+Swift.m */; };
 		79F417761B7C3ADB0047D02D /* CartProductAttributeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F417741B7C3ADB0047D02D /* CartProductAttributeViewController.swift */; };
 		79F9FC4C1BC022FB00B3E0DA /* SearchSellerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F9FC4B1BC022FB00B3E0DA /* SearchSellerModel.swift */; };
+		79FE2BE01C3FA1DE0055D894 /* MessagingContactModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79FE2BDF1C3FA1DE0055D894 /* MessagingContactModel.swift */; };
+		79FE2BE21C3FA7920055D894 /* MessagingConversationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79FE2BE11C3FA7920055D894 /* MessagingConversationModel.swift */; };
+		79FE2BE41C3FB03D0055D894 /* MessagingMessageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79FE2BE31C3FB03D0055D894 /* MessagingMessageModel.swift */; };
+		79FE2BE81C3FBBFD0055D894 /* MessagingConversationListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79FE2BE61C3FBBFD0055D894 /* MessagingConversationListViewController.swift */; };
+		79FE2BE91C3FBBFD0055D894 /* MessagingConversationListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79FE2BE71C3FBBFD0055D894 /* MessagingConversationListViewController.xib */; };
+		79FE2BED1C3FC4600055D894 /* MessagingConversationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79FE2BEB1C3FC4600055D894 /* MessagingConversationTableViewCell.swift */; };
+		79FE2BEE1C3FC4600055D894 /* MessagingConversationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79FE2BEC1C3FC4600055D894 /* MessagingConversationTableViewCell.xib */; };
 		961BE59C1B9948C100E8631A /* DisputeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 961BE59B1B9948C100E8631A /* DisputeViewController.xib */; };
 		961BE59E1B994B2900E8631A /* ResolutionCenterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961BE59D1B994B2900E8631A /* ResolutionCenterViewController.swift */; };
 		961BE5A01B994B7D00E8631A /* DisputeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961BE59F1B994B7D00E8631A /* DisputeViewController.swift */; };
@@ -768,6 +790,7 @@
 		0CCA7DF31C0736A100071DD4 /* LayoutNineCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayoutNineCollectionViewCell.swift; sourceTree = "<group>"; };
 		0CCA7DF41C0736A100071DD4 /* LayoutNineCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LayoutNineCollectionViewCell.xib; sourceTree = "<group>"; };
 		0CD103EB1B8B4769002E15F4 /* DynamicRoundedView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DynamicRoundedView.swift; sourceTree = "<group>"; };
+		0CD4C80C1C464D260031E4FE /* LanguageHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguageHelper.swift; sourceTree = "<group>"; };
 		0CDA11791B760E1A007B5DED /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		0CDA117B1B764015007B5DED /* LoginAndRegisterContentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginAndRegisterContentViewController.swift; sourceTree = "<group>"; };
 		0CDA117D1B764B79007B5DED /* DynamicRoundedTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DynamicRoundedTextField.swift; sourceTree = "<group>"; };
@@ -835,6 +858,8 @@
 		26D688D01C0475C4003ED151 /* ProductDetailsExtendedView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProductDetailsExtendedView.xib; path = YiLinkerOnlineBuyer/resources/ViewController/ProductDetailsExtendedView.xib; sourceTree = SOURCE_ROOT; };
 		26DB062D1B981CF300D38EA8 /* ProductImagesModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProductImagesModel.swift; path = YiLinkerOnlineBuyer/resources/Model/ProductImagesModel.swift; sourceTree = SOURCE_ROOT; };
 		5D038C18A7712E626564D2D3 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		79044D9B1C44963E00D3E41C /* MessagingThreadViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MessagingThreadViewController.swift; path = YiLinkerOnlineBuyer/resources/ViewController/MessagingThreadViewController.swift; sourceTree = SOURCE_ROOT; };
+		79044D9C1C44963E00D3E41C /* MessagingThreadViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MessagingThreadViewController.xib; path = YiLinkerOnlineBuyer/resources/ViewController/MessagingThreadViewController.xib; sourceTree = SOURCE_ROOT; };
 		790B4BFC1BD8832C00E46AE7 /* VerifyMobileNumberInputViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VerifyMobileNumberInputViewController.swift; path = YiLinkerOnlineBuyer/resources/ViewController/VerifyMobileNumberInputViewController.swift; sourceTree = SOURCE_ROOT; };
 		790B4BFD1BD8832C00E46AE7 /* VerifyMobileNumberInputViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = VerifyMobileNumberInputViewController.xib; path = YiLinkerOnlineBuyer/resources/ViewController/VerifyMobileNumberInputViewController.xib; sourceTree = SOURCE_ROOT; };
 		793A89941B9FFFD80030FDC7 /* ChangeMobileNumberViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChangeMobileNumberViewController.swift; path = YiLinkerOnlineBuyer/resources/ViewController/ChangeMobileNumberViewController.swift; sourceTree = SOURCE_ROOT; };
@@ -854,6 +879,14 @@
 		7985D3601BB037DD0060E5F5 /* DeactivateModalViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DeactivateModalViewController.xib; path = ../ViewController/DeactivateModalViewController.xib; sourceTree = "<group>"; };
 		7987F3171B7B744A00B02DF4 /* WishlistTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WishlistTableViewCell.swift; sourceTree = "<group>"; };
 		7987F3191B7B746000B02DF4 /* WishlistTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WishlistTableViewCell.xib; sourceTree = "<group>"; };
+		799AEA071C44C5DE00F9AB88 /* MessagingSenderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MessagingSenderTableViewCell.swift; path = YiLinkerOnlineBuyer/resources/View/MessagingSenderTableViewCell.swift; sourceTree = SOURCE_ROOT; };
+		799AEA081C44C5DE00F9AB88 /* MessagingSenderTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MessagingSenderTableViewCell.xib; path = YiLinkerOnlineBuyer/resources/View/MessagingSenderTableViewCell.xib; sourceTree = SOURCE_ROOT; };
+		799AEA0B1C44DA5800F9AB88 /* MessagingReceiverTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MessagingReceiverTableViewCell.swift; path = YiLinkerOnlineBuyer/resources/View/MessagingReceiverTableViewCell.swift; sourceTree = SOURCE_ROOT; };
+		799AEA0C1C44DA5800F9AB88 /* MessagingReceiverTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MessagingReceiverTableViewCell.xib; path = YiLinkerOnlineBuyer/resources/View/MessagingReceiverTableViewCell.xib; sourceTree = SOURCE_ROOT; };
+		799AEA0F1C4506B300F9AB88 /* MessagingSenderImageTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MessagingSenderImageTableViewCell.swift; path = YiLinkerOnlineBuyer/resources/View/MessagingSenderImageTableViewCell.swift; sourceTree = SOURCE_ROOT; };
+		799AEA101C4506B300F9AB88 /* MessagingSenderImageTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MessagingSenderImageTableViewCell.xib; path = YiLinkerOnlineBuyer/resources/View/MessagingSenderImageTableViewCell.xib; sourceTree = SOURCE_ROOT; };
+		799AEA131C45109800F9AB88 /* MessagingReceiverImageTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MessagingReceiverImageTableViewCell.swift; path = YiLinkerOnlineBuyer/resources/View/MessagingReceiverImageTableViewCell.swift; sourceTree = SOURCE_ROOT; };
+		799AEA141C45109800F9AB88 /* MessagingReceiverImageTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MessagingReceiverImageTableViewCell.xib; path = YiLinkerOnlineBuyer/resources/View/MessagingReceiverImageTableViewCell.xib; sourceTree = SOURCE_ROOT; };
 		79A1C6EC1B8329200043AA36 /* SearchSuggestionModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchSuggestionModel.swift; sourceTree = "<group>"; };
 		79A1C6EE1B8329390043AA36 /* SearchSuggestionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchSuggestionTableViewCell.swift; sourceTree = "<group>"; };
 		79A1C6F01B8329490043AA36 /* SearchSuggestionTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchSuggestionTableViewCell.xib; sourceTree = "<group>"; };
@@ -869,6 +902,10 @@
 		79ACCB821C22FADF0026911A /* TTRangeSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTRangeSlider.m; sourceTree = "<group>"; };
 		79ACCB831C22FADF0026911A /* TTRangeSliderDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTRangeSliderDelegate.h; sourceTree = "<group>"; };
 		79ACCB841C22FADF0026911A /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		79BBF0EA1C438C80005DB226 /* MessagingContactListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MessagingContactListViewController.swift; path = YiLinkerOnlineBuyer/resources/ViewController/MessagingContactListViewController.swift; sourceTree = SOURCE_ROOT; };
+		79BBF0EB1C438C80005DB226 /* MessagingContactListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MessagingContactListViewController.xib; path = YiLinkerOnlineBuyer/resources/ViewController/MessagingContactListViewController.xib; sourceTree = SOURCE_ROOT; };
+		79BBF0EE1C439065005DB226 /* MessagingContactTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MessagingContactTableViewCell.swift; path = YiLinkerOnlineBuyer/resources/View/MessagingContactTableViewCell.swift; sourceTree = SOURCE_ROOT; };
+		79BBF0EF1C439065005DB226 /* MessagingContactTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MessagingContactTableViewCell.xib; path = YiLinkerOnlineBuyer/resources/View/MessagingContactTableViewCell.xib; sourceTree = SOURCE_ROOT; };
 		79D5B14D1C0EB7EE009CBEEF /* HelpViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HelpViewController.xib; sourceTree = "<group>"; };
 		79E68B721B8AB900008626E4 /* ActivityLogTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ActivityLogTableViewCell.xib; path = YiLinkerOnlineBuyer/resources/Xib/ActivityLogTableViewCell.xib; sourceTree = SOURCE_ROOT; };
 		79E68B741B8AC390008626E4 /* ActivityLogTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ActivityLogTableViewCell.swift; path = YiLinkerOnlineBuyer/resources/View/ActivityLogTableViewCell.swift; sourceTree = SOURCE_ROOT; };
@@ -920,6 +957,13 @@
 		79F40FD41BCF99F100E5D70E /* UIAppearance+Swift.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIAppearance+Swift.m"; path = "YiLinkerOnlineBuyer/resources/Helper/UIAppearance+Swift.m"; sourceTree = SOURCE_ROOT; };
 		79F417741B7C3ADB0047D02D /* CartProductAttributeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CartProductAttributeViewController.swift; path = YiLinkerOnlineBuyer/resources/ViewController/CartProductAttributeViewController.swift; sourceTree = SOURCE_ROOT; };
 		79F9FC4B1BC022FB00B3E0DA /* SearchSellerModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SearchSellerModel.swift; path = YiLinkerOnlineBuyer/resources/Model/SearchSellerModel.swift; sourceTree = SOURCE_ROOT; };
+		79FE2BDF1C3FA1DE0055D894 /* MessagingContactModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MessagingContactModel.swift; path = YiLinkerOnlineBuyer/resources/Model/MessagingContactModel.swift; sourceTree = SOURCE_ROOT; };
+		79FE2BE11C3FA7920055D894 /* MessagingConversationModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MessagingConversationModel.swift; path = YiLinkerOnlineBuyer/resources/Model/MessagingConversationModel.swift; sourceTree = SOURCE_ROOT; };
+		79FE2BE31C3FB03D0055D894 /* MessagingMessageModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MessagingMessageModel.swift; path = YiLinkerOnlineBuyer/resources/Model/MessagingMessageModel.swift; sourceTree = SOURCE_ROOT; };
+		79FE2BE61C3FBBFD0055D894 /* MessagingConversationListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MessagingConversationListViewController.swift; path = YiLinkerOnlineBuyer/resources/ViewController/MessagingConversationListViewController.swift; sourceTree = SOURCE_ROOT; };
+		79FE2BE71C3FBBFD0055D894 /* MessagingConversationListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MessagingConversationListViewController.xib; path = YiLinkerOnlineBuyer/resources/ViewController/MessagingConversationListViewController.xib; sourceTree = SOURCE_ROOT; };
+		79FE2BEB1C3FC4600055D894 /* MessagingConversationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MessagingConversationTableViewCell.swift; path = YiLinkerOnlineBuyer/resources/View/MessagingConversationTableViewCell.swift; sourceTree = SOURCE_ROOT; };
+		79FE2BEC1C3FC4600055D894 /* MessagingConversationTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MessagingConversationTableViewCell.xib; path = YiLinkerOnlineBuyer/resources/View/MessagingConversationTableViewCell.xib; sourceTree = SOURCE_ROOT; };
 		9140515446F9D97EC8790C7B /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		961BE59B1B9948C100E8631A /* DisputeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DisputeViewController.xib; sourceTree = "<group>"; };
 		961BE59D1B994B2900E8631A /* ResolutionCenterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResolutionCenterViewController.swift; sourceTree = "<group>"; };
@@ -1382,6 +1426,7 @@
 				0C74406B1BDF42EB0019792A /* Toast.swift */,
 				0C74406D1BDF4A8A0019792A /* Delay.swift */,
 				0C79FD931C3B51FF00B6F2DF /* WebServiceManager.swift */,
+				0CD4C80C1C464D260031E4FE /* LanguageHelper.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -1389,6 +1434,7 @@
 		0C9937041B750583000D6074 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				79FE2BDE1C3FA18F0055D894 /* Messaging V2 */,
 				0C8FEC571C44F9FF00B33C4D /* HomeEntity.swift */,
 				F7D8C9041BBC056100305EF2 /* SellerCategoryModel.swift */,
 				F7C569971BB175F1004740E1 /* TransactionCancellationModel.swift */,
@@ -1465,6 +1511,7 @@
 		0C99370B1B750583000D6074 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				79FE2BEA1C3FC4360055D894 /* Messaging V2 */,
 				0C1778011C045B7200C310D9 /* Home */,
 				2689FBF51B80412D007BEA68 /* CategoriesTableViewCell.swift */,
 				F7C56A071BB179FF004740E1 /* TransactionTableViewCell.swift */,
@@ -1588,6 +1635,7 @@
 		0C9937221B750583000D6074 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				79FE2BE51C3FBBCA0055D894 /* Messaging V2 */,
 				0C6D45DA1BF4679B00D330DB /* Address */,
 				0C6D45D91BF4678600D330DB /* Help */,
 				0C6D45D81BF4673400D330DB /* Customized Shopping */,
@@ -1875,6 +1923,48 @@
 			path = Classes;
 			sourceTree = "<group>";
 		};
+		79FE2BDE1C3FA18F0055D894 /* Messaging V2 */ = {
+			isa = PBXGroup;
+			children = (
+				79FE2BDF1C3FA1DE0055D894 /* MessagingContactModel.swift */,
+				79FE2BE11C3FA7920055D894 /* MessagingConversationModel.swift */,
+				79FE2BE31C3FB03D0055D894 /* MessagingMessageModel.swift */,
+			);
+			name = "Messaging V2";
+			sourceTree = "<group>";
+		};
+		79FE2BE51C3FBBCA0055D894 /* Messaging V2 */ = {
+			isa = PBXGroup;
+			children = (
+				79FE2BE61C3FBBFD0055D894 /* MessagingConversationListViewController.swift */,
+				79FE2BE71C3FBBFD0055D894 /* MessagingConversationListViewController.xib */,
+				79BBF0EA1C438C80005DB226 /* MessagingContactListViewController.swift */,
+				79BBF0EB1C438C80005DB226 /* MessagingContactListViewController.xib */,
+				79044D9B1C44963E00D3E41C /* MessagingThreadViewController.swift */,
+				79044D9C1C44963E00D3E41C /* MessagingThreadViewController.xib */,
+			);
+			name = "Messaging V2";
+			sourceTree = "<group>";
+		};
+		79FE2BEA1C3FC4360055D894 /* Messaging V2 */ = {
+			isa = PBXGroup;
+			children = (
+				79FE2BEB1C3FC4600055D894 /* MessagingConversationTableViewCell.swift */,
+				79FE2BEC1C3FC4600055D894 /* MessagingConversationTableViewCell.xib */,
+				79BBF0EE1C439065005DB226 /* MessagingContactTableViewCell.swift */,
+				79BBF0EF1C439065005DB226 /* MessagingContactTableViewCell.xib */,
+				799AEA071C44C5DE00F9AB88 /* MessagingSenderTableViewCell.swift */,
+				799AEA081C44C5DE00F9AB88 /* MessagingSenderTableViewCell.xib */,
+				799AEA0B1C44DA5800F9AB88 /* MessagingReceiverTableViewCell.swift */,
+				799AEA0C1C44DA5800F9AB88 /* MessagingReceiverTableViewCell.xib */,
+				799AEA0F1C4506B300F9AB88 /* MessagingSenderImageTableViewCell.swift */,
+				799AEA101C4506B300F9AB88 /* MessagingSenderImageTableViewCell.xib */,
+				799AEA131C45109800F9AB88 /* MessagingReceiverImageTableViewCell.swift */,
+				799AEA141C45109800F9AB88 /* MessagingReceiverImageTableViewCell.xib */,
+			);
+			name = "Messaging V2";
+			sourceTree = "<group>";
+		};
 		B77B8DBC1B9B537C0002C513 /* Messaging */ = {
 			isa = PBXGroup;
 			children = (
@@ -2065,6 +2155,7 @@
 				0C99376A1B750583000D6074 /* SectionBackground.xib in Resources */,
 				F7CCDA8E1B943CBB000F5AD4 /* FollowedSellerViewController.xib in Resources */,
 				0C144DDD1C080F10000728B4 /* dummyHomePage.json in Resources */,
+				79BBF0F11C439065005DB226 /* MessagingContactTableViewCell.xib in Resources */,
 				793A89971B9FFFD80030FDC7 /* ChangeMobileNumberViewController.xib in Resources */,
 				0C374F461B88E3790050AE1D /* CustomizeShoppingViewController.xib in Resources */,
 				26D688CD1C02E92D003ED151 /* FullScreenImageCollectionViewCell.xib in Resources */,
@@ -2082,6 +2173,7 @@
 				0C65BBB01C019A0800C66C39 /* NetTotalTableViewCell.xib in Resources */,
 				79E85FBC1B89DC1500428AA1 /* ProfileHeaderTableViewCell.xib in Resources */,
 				F7DC7EE31BA1421F004F7FD4 /* SellerSubCategoryViewController.xib in Resources */,
+				799AEA161C45109800F9AB88 /* MessagingReceiverImageTableViewCell.xib in Resources */,
 				0C99376E1B750583000D6074 /* ViewMoreFooterCollectionViewCell.xib in Resources */,
 				F7CCDA881B943CBB000F5AD4 /* CartProductAttributeViewController.xib in Resources */,
 				0C2F44D11B8576FE00021F45 /* Panton SemiBold.otf in Resources */,
@@ -2098,11 +2190,13 @@
 				7971F73F1B861ABE00322861 /* FilterTableViewCell.xib in Resources */,
 				0C2F44CF1B8576FE00021F45 /* Panton Regular Italic.otf in Resources */,
 				F7DC7EDB1BA13FAC004F7FD4 /* SellerCategoryTableViewCell.xib in Resources */,
+				79FE2BE91C3FBBFD0055D894 /* MessagingConversationListViewController.xib in Resources */,
 				0C2F44D41B8576FE00021F45 /* Panton.otf in Resources */,
 				79E68BAF1B8B5306008626E4 /* EditProfileAddressTableViewCell.xib in Resources */,
 				26AFB3C21B79DE5600E50926 /* ProductAttributeViewController.xib in Resources */,
 				0C9937691B750583000D6074 /* ScrollableCollectionViewCell.xib in Resources */,
 				26AFB3C01B79DE5600E50926 /* ProductViewsViewController.xib in Resources */,
+				79BBF0ED1C438C80005DB226 /* MessagingContactListViewController.xib in Resources */,
 				0C574A341BC6A81C00913F29 /* GooglePlus.bundle in Resources */,
 				79F2F55C1B85FD9D00F57E4B /* FilterViewController.xib in Resources */,
 				797D49111B7A50BA00617F6B /* CartTableViewCell.xib in Resources */,
@@ -2126,6 +2220,7 @@
 				0C2F44CE1B8576FE00021F45 /* Panton Light.otf in Resources */,
 				26AFB3C31B79DE5600E50926 /* ProductDescriptionViewController.xib in Resources */,
 				F70EFB241BC6BF190077B8ED /* TransactionLeaveFeedbackRateTableViewCell.xib in Resources */,
+				799AEA0A1C44C5DE00F9AB88 /* MessagingSenderTableViewCell.xib in Resources */,
 				0C374F4D1B8998F30050AE1D /* CustomizeShoppingCollectionViewCell.xib in Resources */,
 				F7CCDA891B943CBB000F5AD4 /* CategoriesTableViewCell.xib in Resources */,
 				F7C569E11BB1776F004740E1 /* TransactionProductDetailsViewController.xib in Resources */,
@@ -2140,6 +2235,7 @@
 				0C2F44C61B8576FE00021F45 /* Panton Bold.otf in Resources */,
 				F7CCDA951B943CBB000F5AD4 /* SellerViewController.xib in Resources */,
 				26D688BF1C01B848003ED151 /* UserMapView.xib in Resources */,
+				799AEA121C4506B300F9AB88 /* MessagingSenderImageTableViewCell.xib in Resources */,
 				0C374F2E1B88E3790050AE1D /* PlainTableViewCell.xib in Resources */,
 				F7D9BABA1BBD70830097B76C /* TransactionProductDetailsDescriptionViewController.xib in Resources */,
 				0C11D2261C0EE24F0063D06E /* ScrollToTopView.xib in Resources */,
@@ -2173,6 +2269,7 @@
 				0C2F44DE1B85840F00021F45 /* CheckoutViews.xib in Resources */,
 				79A1C6FB1B83787B0043AA36 /* SellerResultCollectionViewCell.xib in Resources */,
 				0C374F441B88E3790050AE1D /* ResultViewController.xib in Resources */,
+				79044D9E1C44963E00D3E41C /* MessagingThreadViewController.xib in Resources */,
 				0CC53C851C00D345002361D4 /* DicountVoucherTableViewCell.xib in Resources */,
 				0C374F371B88E3790050AE1D /* PaymentViewController.xib in Resources */,
 				0C374F451B88E3790050AE1D /* AboutSellerTableViewCell.xib in Resources */,
@@ -2183,7 +2280,9 @@
 				0C2F44CB1B8576FE00021F45 /* Panton Heavy Italic.otf in Resources */,
 				79E68B9D1B8B4270008626E4 /* ProfileSettingsTableViewCell.xib in Resources */,
 				F70EFB201BC6BEB80077B8ED /* TransactionLeaveFeedbackFieldTableViewCell.xib in Resources */,
+				799AEA0E1C44DA5800F9AB88 /* MessagingReceiverTableViewCell.xib in Resources */,
 				0C9937661B750583000D6074 /* NewSellerScrollableCollectionViewCell.xib in Resources */,
+				79FE2BEE1C3FC4600055D894 /* MessagingConversationTableViewCell.xib in Resources */,
 				B7B1D8321BA15B0C006A5DF5 /* old_GoogleService-Info.plist in Resources */,
 				2666F5291C0022CD00BABA82 /* ProductFullScreenViewController.xib in Resources */,
 			);
@@ -2290,6 +2389,7 @@
 				26D688C61C021DA7003ED151 /* MapTableViewCell.swift in Sources */,
 				0C1003F41B87629400CAA17A /* NewAddressTableViewCell.swift in Sources */,
 				79E68B911B8B0AE9008626E4 /* PointModel.swift in Sources */,
+				799AEA111C4506B300F9AB88 /* MessagingSenderImageTableViewCell.swift in Sources */,
 				0C2670CF1B772E4B00394E29 /* Enums.swift in Sources */,
 				26C285481B8FF546005EBD3A /* CityModel.swift in Sources */,
 				79E68BAD1B8B5081008626E4 /* EditProfilePersonalInformationTableViewCell.swift in Sources */,
@@ -2303,6 +2403,7 @@
 				0C8FEC581C44F9FF00B33C4D /* HomeEntity.swift in Sources */,
 				F7C569B71BB1762C004740E1 /* TransactionDescriptionView.swift in Sources */,
 				7987F3181B7B744A00B02DF4 /* WishlistTableViewCell.swift in Sources */,
+				799AEA0D1C44DA5800F9AB88 /* MessagingReceiverTableViewCell.swift in Sources */,
 				793A89961B9FFFD80030FDC7 /* ChangeMobileNumberViewController.swift in Sources */,
 				0C9937551B750583000D6074 /* ScrollableCollectionViewCell.swift in Sources */,
 				F7D37CA11B92B09100FA7B16 /* ViewFeedBackViewController.swift in Sources */,
@@ -2326,6 +2427,7 @@
 				26AFB3931B79DD9100E50926 /* XibHelper.swift in Sources */,
 				0C374F4F1B89A4B70050AE1D /* CustomizeShoppingCollectionViewLayout.swift in Sources */,
 				0C11D2301C103B620063D06E /* PullToRefreshView.swift in Sources */,
+				79FE2BE01C3FA1DE0055D894 /* MessagingContactModel.swift in Sources */,
 				0C2F44A51B848B3A00021F45 /* SummaryViewController.swift in Sources */,
 				26AFB3AE1B79DE2900E50926 /* ProductAttributeTableViewCell.swift in Sources */,
 				2666F5281C0022CD00BABA82 /* ProductFullScreenViewController.swift in Sources */,
@@ -2333,6 +2435,7 @@
 				790B4BFE1BD8832C00E46AE7 /* VerifyMobileNumberInputViewController.swift in Sources */,
 				0C11D21C1C0D80F30063D06E /* LayoutEightModel.swift in Sources */,
 				F7C569B61BB1762C004740E1 /* TransactionDeliveryStatusView.swift in Sources */,
+				79FE2BE21C3FA7920055D894 /* MessagingConversationModel.swift in Sources */,
 				0C9937601B750583000D6074 /* WishlistViewController.swift in Sources */,
 				0C2F44A91B848B5400021F45 /* PaymentViewController.swift in Sources */,
 				0C6EFF2E1C0C95E000064F69 /* HomeProductModel.swift in Sources */,
@@ -2342,6 +2445,7 @@
 				0C99375F1B750583000D6074 /* SearchViewController.swift in Sources */,
 				F7DB29B91C1EF44C006E0140 /* TransactionLeaveProductFeedbackRateTableViewCell.swift in Sources */,
 				0CCA7DF51C0736A100071DD4 /* LayoutNineCollectionViewCell.swift in Sources */,
+				79BBF0F01C439065005DB226 /* MessagingContactTableViewCell.swift in Sources */,
 				F7C56A051BB1790A004740E1 /* TransactionViewController.swift in Sources */,
 				0C6ABA331C0D3B70003DFFA3 /* LayoutFiveModel.swift in Sources */,
 				0C6D45DD1BF4692900D330DB /* WebViewController.swift in Sources */,
@@ -2408,6 +2512,7 @@
 				0C99374E1B750583000D6074 /* NewSellerScrollableCollectionViewCell.swift in Sources */,
 				79E68BA41B8B4376008626E4 /* EditProfileTableViewController.swift in Sources */,
 				0C2F44AD1B848B7E00021F45 /* OverViewViewController.swift in Sources */,
+				79BBF0EC1C438C80005DB226 /* MessagingContactListViewController.swift in Sources */,
 				0CE35EB81B76711400AAA8F1 /* RegisterViewController.swift in Sources */,
 				F7C5699D1BB175F1004740E1 /* TransactionDetailsModel.swift in Sources */,
 				F7C569FF1BB1790A004740E1 /* TransactionDetailsViewController.swift in Sources */,
@@ -2451,13 +2556,16 @@
 				962595331BAB1BF500A118C0 /* CaseDetailsModel.swift in Sources */,
 				F7CCDAA61B943CF7000F5AD4 /* ProductsTableViewCell.swift in Sources */,
 				26AFB3B71B79DE3800E50926 /* ProductAttributeViewController.swift in Sources */,
+				0CD4C80D1C464D260031E4FE /* LanguageHelper.swift in Sources */,
 				26AFB3AD1B79DE2900E50926 /* ReviewTableViewCell.swift in Sources */,
 				0C144DD81C0803C7000728B4 /* TargetModel.swift in Sources */,
 				0C329E751B7B2D32005BE2B6 /* RegisterModel.swift in Sources */,
+				79FE2BE41C3FB03D0055D894 /* MessagingMessageModel.swift in Sources */,
 				7985D3611BB037DD0060E5F5 /* DeactivateModalViewController.swift in Sources */,
 				0C99374B1B750583000D6074 /* HomePageCollectionViewLayout.swift in Sources */,
 				F7DC7EE21BA1421F004F7FD4 /* SellerSubCategoryViewController.swift in Sources */,
 				F7CCDB441BCCD1070078209A /* TransactionProductDetailsDeliveryStatusModel.swift in Sources */,
+				79FE2BE81C3FBBFD0055D894 /* MessagingConversationListViewController.swift in Sources */,
 				0C144DDB1C080786000728B4 /* DataImageModel.swift in Sources */,
 				79E68B9B1B8B4239008626E4 /* ProfileSettingsTableViewCell.swift in Sources */,
 				0CAE2F7B1C070DB10019165A /* SellerCarouselCollectionViewCell.swift in Sources */,
@@ -2465,6 +2573,7 @@
 				0CD103EC1B8B4769002E15F4 /* DynamicRoundedView.swift in Sources */,
 				0C9937451B750583000D6074 /* DiscountLabel.swift in Sources */,
 				79AA08331B8F4DCF00AF3AA4 /* CartProductAttributeTableViewCell.swift in Sources */,
+				79044D9D1C44963E00D3E41C /* MessagingThreadViewController.swift in Sources */,
 				961BE5AC1B9958BC00E8631A /* CheckBox.swift in Sources */,
 				0C374F5D1B8A2DBF0050AE1D /* CustomizeShoppingFlowLayout.swift in Sources */,
 				262626B71C00D28E0068E876 /* UserMapView.swift in Sources */,
@@ -2508,6 +2617,8 @@
 				0C6490761B7781E400F88F92 /* Category.swift in Sources */,
 				79E68B851B8AF4D0008626E4 /* PointsEarnedTableViewCell.swift in Sources */,
 				26C2854A1B8FF555005EBD3A /* BarangayModel.swift in Sources */,
+				79FE2BED1C3FC4600055D894 /* MessagingConversationTableViewCell.swift in Sources */,
+				799AEA091C44C5DE00F9AB88 /* MessagingSenderTableViewCell.swift in Sources */,
 				0C65BBAF1C019A0800C66C39 /* NetTotalTableViewCell.swift in Sources */,
 				0C99375D1B750583000D6074 /* HomeContainerViewController.swift in Sources */,
 				26D688C91C022E54003ED151 /* ProductDetailsBottomView.swift in Sources */,
@@ -2538,6 +2649,7 @@
 				0C374F5A1B8A03CC0050AE1D /* CustomizeShoppingTableViewCell.swift in Sources */,
 				F7CCDAA11B943CF7000F5AD4 /* ProductResultListCollectionViewCell.swift in Sources */,
 				0C99375E1B750583000D6074 /* HomePageCollectionViewController.swift in Sources */,
+				799AEA151C45109800F9AB88 /* MessagingReceiverImageTableViewCell.swift in Sources */,
 				0C35A5CF1BC425AE006C0A65 /* LoginModel.swift in Sources */,
 				0C374EF81B88552E0050AE1D /* PaymentWebViewViewController.swift in Sources */,
 				26DB062E1B981CF300D38EA8 /* ProductImagesModel.swift in Sources */,

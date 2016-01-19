@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Panton Bold.otf">
+            <string>Panton-Bold</string>
+        </mutableArray>
+        <mutableArray key="Panton.otf">
+            <string>Panton-Regular</string>
+        </mutableArray>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="MessagingContactTableViewCell" id="KGk-i7-Jjw" customClass="MessagingContactTableViewCell" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="53"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dummy-placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="eaH-Nl-IrV">
+                        <rect key="frame" x="12" y="7" width="38" height="38"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="38" id="jNx-vb-jsU"/>
+                            <constraint firstAttribute="height" constant="38" id="rzh-kO-bJc"/>
+                        </constraints>
+                    </imageView>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="I2q-Ss-3Xc" userLabel="Status View">
+                        <rect key="frame" x="320" y="21" width="10" height="10"/>
+                        <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="tintColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="10" id="fL3-0G-Vsp"/>
+                            <constraint firstAttribute="height" constant="10" id="uI3-QZ-3sO"/>
+                        </constraints>
+                    </view>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Offline" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S9g-3A-gpn">
+                        <rect key="frame" x="333" y="18" width="30" height="15"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="15" id="cMR-Fa-Rp9"/>
+                            <constraint firstAttribute="width" constant="30" id="sh4-Ft-8qh"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="10"/>
+                        <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GWk-RZ-oQp">
+                        <rect key="frame" x="0.0" y="51" width="375" height="1"/>
+                        <color key="backgroundColor" red="0.88235294117647056" green="0.88235294117647056" blue="0.88235294117647056" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="1" id="qSQ-Qo-xGm"/>
+                        </constraints>
+                    </view>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name Of Contact" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="0Ix-jp-kI9">
+                        <rect key="frame" x="58" y="15" width="249" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="scr-qd-oV5"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="14"/>
+                        <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="0Ix-jp-kI9" firstAttribute="leading" secondItem="eaH-Nl-IrV" secondAttribute="trailing" constant="8" id="3Xg-nX-JfL"/>
+                    <constraint firstItem="S9g-3A-gpn" firstAttribute="leading" secondItem="I2q-Ss-3Xc" secondAttribute="trailing" constant="3" id="IBj-Xe-bFQ"/>
+                    <constraint firstAttribute="trailing" secondItem="S9g-3A-gpn" secondAttribute="trailing" constant="12" id="OT3-Zd-jvb"/>
+                    <constraint firstItem="eaH-Nl-IrV" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="12" id="Oib-og-hIr"/>
+                    <constraint firstAttribute="centerY" secondItem="I2q-Ss-3Xc" secondAttribute="centerY" id="VU8-2v-Hh7"/>
+                    <constraint firstItem="I2q-Ss-3Xc" firstAttribute="leading" secondItem="0Ix-jp-kI9" secondAttribute="trailing" constant="13" id="Zwo-Rw-f1Y"/>
+                    <constraint firstAttribute="bottom" secondItem="GWk-RZ-oQp" secondAttribute="bottom" id="bpC-7W-2OB"/>
+                    <constraint firstAttribute="trailing" secondItem="GWk-RZ-oQp" secondAttribute="trailing" id="dg7-rA-l7S"/>
+                    <constraint firstItem="GWk-RZ-oQp" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="ghf-oH-LPv"/>
+                    <constraint firstAttribute="centerY" secondItem="eaH-Nl-IrV" secondAttribute="centerY" id="pAt-nx-gub"/>
+                    <constraint firstAttribute="centerY" secondItem="0Ix-jp-kI9" secondAttribute="centerY" id="rH5-VC-ebe"/>
+                    <constraint firstAttribute="centerY" secondItem="S9g-3A-gpn" secondAttribute="centerY" id="sJ7-8o-Kwi"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="contactImageView" destination="eaH-Nl-IrV" id="tGM-EQ-1pu"/>
+                <outlet property="contactName" destination="0Ix-jp-kI9" id="voq-Ku-J0P"/>
+                <outlet property="statusLabel" destination="S9g-3A-gpn" id="2p4-XY-ff2"/>
+                <outlet property="statusView" destination="I2q-Ss-3Xc" id="fbQ-tP-Ojn"/>
+            </connections>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="dummy-placeholder" width="1280" height="800"/>
+    </resources>
+</document>
