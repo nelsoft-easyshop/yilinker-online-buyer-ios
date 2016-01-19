@@ -350,7 +350,7 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
     }
     
     func checkStock(stocks: Int) {
-
+        println(stocks)
         if stocks < 10 {
             stocksLabel.text = "0\(String(stringInterpolationSegment: stocks))"
         } else {
@@ -775,7 +775,9 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
         }
         
         maximumStock = availableStock(unitId)
-        if self.selectedAttributes.contains("-") {
+        if self.selectedAttributes[0] == "-" {
+           self.selectedAttributes[0] = "1x"
+        } else if self.selectedAttributes.contains("-") {
             maximumStock = 0
         }
         self.availabilityStocksLabel.text = "Available stocks : " + String(maximumStock)
