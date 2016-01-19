@@ -27,6 +27,11 @@ class SessionManager {
         NSUserDefaults.standardUserDefaults().synchronize()
     }
     
+    class func setUserId(userId: String) {
+        NSUserDefaults.standardUserDefaults().setObject(userId, forKey: "userId")
+        NSUserDefaults.standardUserDefaults().synchronize()
+    }
+    
     class func setProfileImage(profileImageUrlString: String) {
         NSUserDefaults.standardUserDefaults().setObject(profileImageUrlString, forKey: "profileImageUrlString")
         NSUserDefaults.standardUserDefaults().synchronize()
@@ -65,6 +70,14 @@ class SessionManager {
     class func setMobileNumber(mobileNumber: String) {
         NSUserDefaults.standardUserDefaults().setObject(mobileNumber, forKey: "mobileNumber")
         NSUserDefaults.standardUserDefaults().synchronize()
+    }
+    
+    class func userId() -> String {
+        var result: String = ""
+        if let val: AnyObject = NSUserDefaults.standardUserDefaults().objectForKey("userId") as? String {
+            result = val as! String
+        }
+        return result
     }
     
     class func mobileNumber() -> String {

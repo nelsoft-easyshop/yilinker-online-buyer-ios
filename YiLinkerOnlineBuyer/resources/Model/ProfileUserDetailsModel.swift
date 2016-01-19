@@ -10,6 +10,7 @@ import UIKit
 
 class ProfileUserDetailsModel: NSObject {
    
+    var userId: String = ""
     var fullName: String = ""
     var firstName: String = ""
     var lastName: String = ""
@@ -32,7 +33,8 @@ class ProfileUserDetailsModel: NSObject {
     var isEmailVerified: Bool = false
     var isMobileVerified: Bool = false
     
-    init(fullName: String, firstName: String, lastName: String, email: String, contactNumber: String, profileImageUrl: String, coverPhoto: String, gender: String, birthdate: String, address: AddressModelV2, userDocuments: String, transactionCount: Int, wishlistCount: Int, cartCount: Int, messageCount: Int, followingCount: Int, isEmailSubscribed: Bool, isSmsSubscribed: Bool, isEmailVerified: Bool, isMobileVerified: Bool){
+    init(userId: String, fullName: String, firstName: String, lastName: String, email: String, contactNumber: String, profileImageUrl: String, coverPhoto: String, gender: String, birthdate: String, address: AddressModelV2, userDocuments: String, transactionCount: Int, wishlistCount: Int, cartCount: Int, messageCount: Int, followingCount: Int, isEmailSubscribed: Bool, isSmsSubscribed: Bool, isEmailVerified: Bool, isMobileVerified: Bool){
+        self.userId = userId
         self.fullName = fullName
         self.firstName = firstName
         self.lastName = lastName
@@ -60,6 +62,7 @@ class ProfileUserDetailsModel: NSObject {
     }
     
     class func parseDataWithDictionary(dictionary: AnyObject) -> ProfileUserDetailsModel {
+        var userId: String = ""
         var fullName: String = ""
         var firstName: String = ""
         var lastName: String = ""
@@ -81,10 +84,18 @@ class ProfileUserDetailsModel: NSObject {
         var isSmsSubscribed: Bool = false
         var isEmailVerified: Bool = false
         var isMobileVerified: Bool = false
+        
+        if let value: AnyObject = dictionary["userId"] {
+            if value as! NSObject != NSNull() {
+                userId = "\(value as! Int)"
+                SessionManager.setUserId(userId)
+            }
+        }
     
         if let value: AnyObject = dictionary["fullName"] {
             if value as! NSObject != NSNull() {
                 fullName = value as! String
+                SessionManager.setUserFullName(fullName)
             }
         }
         
@@ -116,6 +127,7 @@ class ProfileUserDetailsModel: NSObject {
         if let value: AnyObject = dictionary["profileImageUrl"] {
             if value as! NSObject != NSNull() {
                 profileImageUrl = value as! String
+                SessionManager.setProfileImage(profileImageUrl)
             }
         }
         
@@ -184,6 +196,7 @@ class ProfileUserDetailsModel: NSObject {
         if let value: AnyObject = dictionary["messageCount"] {
             if value as! NSObject != NSNull() {
                 messageCount = value as! Int
+                SessionManager.setUnReadMessagesCount(messageCount)
             }
         }
         
@@ -219,7 +232,8 @@ class ProfileUserDetailsModel: NSObject {
             }
         }
         
-        return ProfileUserDetailsModel(fullName: fullName,
+        return ProfileUserDetailsModel(userId: userId,
+            fullName: fullName,
             firstName: firstName,
             lastName: lastName,
             email: email,
