@@ -196,6 +196,51 @@ class SessionManager {
         NSUserDefaults.standardUserDefaults().synchronize()
     }
     
+    class func logoutWithTarget(viewController: UIViewController) {
+        var hud: MBProgressHUD = MBProgressHUD(view: viewController.view)
+        hud.removeFromSuperViewOnHide = true
+        hud.dimBackground = false
+        viewController.view.addSubview(hud)
+        hud.show(true)
+        
+        var URL: String = "\(APIAtlas.ACTION_GCM_DELETE_V2)?access_token=\(SessionManager.accessToken())"
+        
+        WebServiceManager.fireLogoutUserWithUrl(URL, registrationId: SessionManager.gcmToken(), deviceType: "1", access_token: SessionManager.accessToken(), actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+            
+            hud.hide(true)
+            if successful || requestErrorType == .ResponseError {
+                self.logoutUserWithHomeRedirection(viewController)
+            } else {
+                if requestErrorType == .AccessTokenExpired {
+                    self.logoutUserWithHomeRedirection(viewController)
+                } else if requestErrorType == .PageNotFound {
+                    //Page not found
+                    Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: viewController.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    //No internet connection
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: viewController.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    //Request timeout
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: viewController.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    //Unhandled error
+                    Toast.displayToastWithMessage(Constants.Localized.error, duration: 1.5, view: viewController.view)
+                }
+            }
+        })
+    }
+    
+    class func logoutUserWithHomeRedirection(viewController: UIViewController) {
+        let registrationToken = SessionManager.gcmToken()
+        SessionManager.logout()
+        SessionManager.setGcmToken(registrationToken)
+        FBSDKLoginManager().logOut()
+        GPPSignIn.sharedInstance().signOut()
+        viewController.dismissViewControllerAnimated(false, completion: nil)
+        let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        appDelegate.changeRootToHomeView()
+    }
+    
     class func isLoggedIn() -> Bool {
         if self.accessToken() != "" {
             return true
