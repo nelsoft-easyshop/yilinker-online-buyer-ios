@@ -55,7 +55,7 @@ protocol ProductViewControllerDelegate {
     func pressedDimViewFromProductPage(controller: ProductViewController)
 }
 
-class ProductViewController: UIViewController, ProductImagesViewDelegate, ProductDescriptionViewDelegate, ProductReviewFooterViewDelegate, ProductSellerViewDelegate, ProductReviewViewControllerDelegate, ProductAttributeViewControllerDelegate, EmptyViewDelegate, ProductDetailsExtendedViewDelegate, ProductExtendedViewDelegate, UIScrollViewDelegate {
+class ProductViewController: UIViewController, ProductImagesViewDelegate, ProductReviewFooterViewDelegate, ProductSellerViewDelegate, ProductReviewViewControllerDelegate, ProductAttributeViewControllerDelegate, EmptyViewDelegate, ProductDetailsExtendedViewDelegate, ProductExtendedViewDelegate, UIScrollViewDelegate {
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var dimView: UIView!
@@ -397,12 +397,6 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
             seeMoreLabel.textColor = .blueColor()
             seeMoreLabel.font = UIFont.systemFontOfSize(15.0)
             seeMoreLabel.textAlignment = .Center
-            
-            var seeMoreImageView = UIImageView(frame: CGRectMake(seeMoreLabel.frame.size.width, (seeMoreLabel.frame.size.height / 2) - 6, 8, 12))
-            seeMoreImageView.image = UIImage(named: "seeMore")
-//            seeMoreLabel.addSubview(seeMoreImageView)
-//            seeMoreLabel.center.x = self.view.center.x - 5
-//            self.productDescriptionView.seeMoreView.addSubview(seeMoreLabel)
         }
         return self.productDescriptionView
     }
@@ -955,7 +949,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         self.setDetails([ProductStrings.freeShipping, ProductStrings.sevenDayReturn])
         
         self.setAttributes(self.productDetailsModel.attributes, productUnits: self.productDetailsModel.productUnits, unitId: self.unitId, quantity: self.quantity)
-//        self.productDescriptionView.setDescription(productDetailsModel.shortDescription, full: productDetailsModel.fullDescription)
+        self.productDescriptionView.setDescription(productDetailsModel.shortDescription, full: productDetailsModel.fullDescription)
         
         if self.productReviewModel != nil {
             self.productReviewHeaderView.setRating(self.productReviewModel.ratingAverage)
@@ -974,7 +968,6 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         setUpViews()
         
         self.productImagesView.delegate = self
-        self.productDescriptionView.delegate = self
         self.productReviewFooterView.delegate = self
         self.productSellerView.delegate = self
         
@@ -1293,17 +1286,6 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         productFullScreen.screenSize = self.view.frame
         
         self.navigationController?.presentViewController(productFullScreen, animated: false, completion: nil)
-    }
-    
-    // MARK: - Product Description Delegate
-    
-    func seeMoreDescription(controller: ProductDescriptionView) {
-        isExiting = false
-        let description = ProductDescriptionViewController(nibName: "ProductDescriptionViewController", bundle: nil)
-        description.url = self.productDetailsModel.fullDescription
-        description.title = self.productDetailsModel.title
-        let root: UINavigationController = UINavigationController(rootViewController: description)
-        self.tabBarController?.presentViewController(root, animated: true, completion: nil)
     }
     
     // MARK: - Product Attribute Delegate
