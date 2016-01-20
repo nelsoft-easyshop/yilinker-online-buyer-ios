@@ -64,35 +64,43 @@ class FollowedSellerModel {
             }
             
             if let categories: AnyObject = dictionary["data"] {
-                
                 for category in categories as! NSArray {
                     if let tempVar = category["sellerId"] as? Int {
                         id.append(tempVar)
+                    } else {
+                        id.append(0)
                     }
                     
                     if let tempVar = category["fullName"] as? String {
                         fullName.append(tempVar)
+                    } else {
+                        fullName.append("Not Available")
                     }
                     
                     if let tempVar = category["storeName"] as? String {
                         storeName.append(tempVar)
+                    } else {
+                        storeName.append("Not Available")
                     }
                     
                     if let tempVar = category["profileImageUrl"] as? String {
                         profileImageUrl.append(tempVar)
+                    } else {
+                        profileImageUrl.append("")
                     }
                     
-                    if !(category["specialty"] is NSNull) {
-                        specialty.append(category["specialty"] as! String)
+                    if let tempVar = category["specialty"] as? String {
+                        specialty.append(tempVar)
                     } else {
-                        specialty.append("")
+                        specialty.append("Not Available")
                     }
                     
                     if let tempVar = category["rating"] as? Int {
                         rating.append(tempVar)
+                    } else {
+                        rating.append(0)
                     }
                 }
-                
             }
             
         } // dictionary
