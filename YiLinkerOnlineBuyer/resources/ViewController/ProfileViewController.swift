@@ -10,6 +10,7 @@ import UIKit
 
 class ProfileViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, ProfileTableViewCellDelegate {
     
+    //Cell Unique Identifier
     let cellHeaderIdentifier: String = "ProfileHeaderTableViewCell"
     let cellContentIdentifier: String = "ProfileTableViewCell"
     
@@ -17,17 +18,16 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     
     @IBOutlet weak var tableView: UITableView!
     var hud: MBProgressHUD?
-
+    
     var profileDetails: ProfileUserDetailsModel!
-    var errorLocalizeString: String  = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         initializeViews()
         registerNibs()
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
@@ -39,15 +39,11 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     
     
     //MARK: - Initializations
-    func initializeLocalizedString() {
-        //Initialized Localized String
-        errorLocalizeString = StringHelper.localizedStringWithKey("ERROR_LOCALIZE_KEY")
-    }
-    
     func initializeViews() {
         tableView.tableFooterView = UIView(frame: CGRectZero)
     }
-
+    
+    //Register nibs of the table view
     func registerNibs() {
         var nibHeader = UINib(nibName: cellHeaderIdentifier, bundle: nil)
         tableView.registerNib(nibHeader, forCellReuseIdentifier: cellHeaderIdentifier)
@@ -59,14 +55,26 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     
     //MARK: - API Requests
     //MARK: - Fire Get User Info
+    /* Function to request get user information data.
+    *
+    * It will check first if the 'profileDetails'(Object for User Details) is equal to nil,
+    * if it is equal to nil, it will show the loader(HUD), if it is not equal to nil,
+    * it will show the network activity indicator in the status bar. Then call the API request.
+    *
+    * If the API request is successful, it will convert the 'responseObject' to NSDictionary,
+    * parse the 'data' object in the dictionary and set the values in the 'SessionManager'
+    *
+    * If the API request is unsuccessful, it will check 'requestErrorType'
+    * and proceed/do some actions based on the error type
+    */
     func fireGetUserInfo() {
+        //Check the 'profileDetails' to identify what loader indicator will be shown
         if self.profileDetails == nil {
             self.tableView.hidden = true
             self.showHUD()
         } else {
             UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         }
-        
         
         WebServiceManager.fireGetUserInfoWithUrl(APIAtlas.getUserInfoUrl, accessToken: SessionManager.accessToken()) { (successful, responseObject, requestErrorType) -> Void in
             self.hud?.hide(true)
@@ -139,14 +147,16 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
             } else {
                 //Forcing user to logout.
                 UIAlertController.displayAlertRedirectionToLogin(self, actionHandler: { (sucess) -> Void in
-                    //self.logout()
+                    SessionManager.logoutWithTarget(self)
                 })
             }
         })
     }
     
+    //MARK: -
     //MARK: - Util Functions
-    //Loader function
+    
+    //Show Loader
     func showHUD() {
         if self.hud != nil {
             self.hud!.hide(true)
@@ -160,6 +170,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         self.hud?.show(true)
     }
     
+    //Hide Loader
     func dismissLoader() {
         self.hud?.hide(true)
         UIApplication.sharedApplication().networkActivityIndicatorVisible = false
@@ -176,6 +187,7 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
+        //Check what row of the table to set the correct tableview cell
         if indexPath.row == 0 {
             let cell = tableView.dequeueReusableCellWithIdentifier(cellHeaderIdentifier, forIndexPath: indexPath) as! ProfileHeaderTableViewCell
             if profileDetails != nil {
@@ -207,42 +219,48 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
 
 //MARK: - Profile Table View cell Delegate
 extension ProfileViewController: ProfileTableViewCellDelegate {
+    //Redirect to Edit Profile View Controller
     func editProfileTapAction() {
         var editViewController = EditProfileTableViewController(nibName: "EditProfileTableViewController", bundle: nil)
         editViewController.passModel(profileDetails!)
         self.navigationController?.pushViewController(editViewController, animated:true)
     }
     
+    //Redirect to Transaction View Controller
     func transactionsTapAction() {
         var transactionViewController = TransactionViewController(nibName: "TransactionViewController", bundle: nil)
+        //Prevent overlapping of tab bar and
         if transactionViewController.respondsToSelector("edgesForExtendedLayout") {
             transactionViewController.edgesForExtendedLayout = UIRectEdge.None
         }
         self.navigationController?.pushViewController(transactionViewController, animated:true)
     }
     
+    //Redirect to Activity Logs Controller
     func activityLogTapAction() {
         var activityViewController = ActivityLogTableViewController(nibName: "ActivityLogTableViewController", bundle: nil)
         self.navigationController?.pushViewController(activityViewController, animated:true)
     }
     
+    //Redirect to My Points Controller
     func myPointsTapAction(){
-        
         var myPointsViewController = MyPointsTableViewController(nibName: "MyPointsTableViewController", bundle: nil)
         self.navigationController?.pushViewController(myPointsViewController, animated:true)
     }
     
+    //Redirect to Resolution Center Controller
     func resolutionTapAction() {
         let storyboard = UIStoryboard(name: "HomeStoryBoard", bundle: nil)
         let resolutionCenter = storyboard.instantiateViewControllerWithIdentifier("ResolutionCenterViewController")
             as! ResolutionCenterViewController
         resolutionCenter.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(resolutionCenter, animated:true)
-        
     }
     
+    //Redirect to Settings Controller
     func settingsTapAction(){
         var settingsViewController = ProfileSettingsViewController(nibName: "ProfileSettingsViewController", bundle: nil)
+        //Set status of SMS and Email Notification
         settingsViewController.tableDataStatus.removeAll(keepCapacity: false)
         settingsViewController.tableDataStatus.append(profileDetails.isSmsSubscribed)
         settingsViewController.tableDataStatus.append(profileDetails.isEmailSubscribed)
