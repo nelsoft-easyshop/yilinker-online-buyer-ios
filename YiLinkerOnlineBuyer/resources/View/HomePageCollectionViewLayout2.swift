@@ -9,7 +9,14 @@
 import UIKit
 
 struct SectionHeight {
-    static let sectionOne: CGFloat = 180.0
+    static func sectionOneHeight() -> CGFloat {
+        //ratio 8:3
+        let screenSize: CGRect = UIScreen.mainScreen().bounds
+        return (screenSize.width * 3) / 8
+        //return 500
+    }
+    
+    static let sectionOne: CGFloat = SectionHeight.sectionOneHeight()
     static let sectionTwo: CGFloat = 70.0
     static let sectionThree: CGFloat = 120.0
     static let sectionFive: CGFloat = 230.0
