@@ -66,7 +66,6 @@ class WebServiceManager: NSObject {
     // productId
     static let unitIdKey = "unitId"
     static let quantityKey = "quantity"
-//    static let wishlistKey = "wishlist"
     // wishlist
     
     // Cart to Checkout
