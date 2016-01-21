@@ -104,6 +104,10 @@ class FABCollectionViewLayout: UICollectionViewLayout {
         return true
     }
     
+    func test() {
+        //This is just a test. A func that will destroy everything.
+    }
+    
     //MARK: - 
     //MARK: - Collection View Animation Layout
     override func finalLayoutAttributesForDisappearingItemAtIndexPath(itemIndexPath: NSIndexPath) -> UICollectionViewLayoutAttributes? {
