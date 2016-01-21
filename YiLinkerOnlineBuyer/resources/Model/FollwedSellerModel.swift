@@ -8,12 +8,14 @@
 
 import Foundation
 
+typealias FollowedSellerElement = (id: Int, fullName: String, storeName: String, profileImageUrl: String, specialty: String, rating: Int)
+
 class FollowedSellerModel {
     
     var message: String = ""
     var isSuccessful: Bool = false
     var error_description: String = ""
-    
+
     var id: [Int] = []
     var fullName: [String] = []
     var storeName: [String] = []
@@ -43,62 +45,32 @@ class FollowedSellerModel {
     
     class func parseDataWithDictionary(dictionary: AnyObject) -> FollowedSellerModel {
         
-        var message: String = ""
-        var isSuccessful: Bool = false
-        
-        var id: [Int] = []
-        var fullName: [String] = []
-        var storeName: [String] = []
-        var profileImageUrl: [String] = []
-        var specialty: [String] = []
-        var rating: [Int] = []
-        
         if dictionary.isKindOfClass(NSDictionary) {
-            
-            if let tempVar = dictionary["message"] as? String {
-                message = tempVar
-            }
-            
-            if let tempVar = dictionary["isSuccessful"] as? Bool {
-                isSuccessful = tempVar
-            }
-            
+            let isSuccessful = ParseHelper.bool(dictionary, key: "isSuccessful", defaultValue: false)
+            let message = ParseHelper.string(dictionary, key: "message", defaultValue: "")
+
+            var id: [Int] = []
+            var fullName: [String] = []
+            var storeName: [String] = []
+            var profileImageUrl: [String] = []
+            var specialty: [String] = []
+            var rating: [Int] = []
+
             if let categories: AnyObject = dictionary["data"] {
                 
                 for category in categories as! NSArray {
-                    if let tempVar = category["sellerId"] as? Int {
-                        id.append(tempVar)
-                    }
-                    
-                    if let tempVar = category["fullName"] as? String {
-                        fullName.append(tempVar)
-                    }
-                    
-                    if let tempVar = category["storeName"] as? String {
-                        storeName.append(tempVar)
-                    }
-                    
-                    if let tempVar = category["profileImageUrl"] as? String {
-                        profileImageUrl.append(tempVar)
-                    }
-                    
-                    if !(category["specialty"] is NSNull) {
-                        specialty.append(category["specialty"] as! String)
-                    } else {
-                        specialty.append("")
-                    }
-                    
-                    if let tempVar = category["rating"] as? Int {
-                        rating.append(tempVar)
-                    }
+                    id.append(ParseHelper.int(category, key: "sellerId", defaultValue: 0))
+                    fullName.append(ParseHelper.string(category, key: "fullName", defaultValue: "-"))
+                    storeName.append(ParseHelper.string(category, key: "storeName", defaultValue: "-"))
+                    profileImageUrl.append(ParseHelper.string(category, key: "thumbnailImageUrl", defaultValue: "-"))
+                    specialty.append(ParseHelper.string(category, key: "specialty", defaultValue: "-"))
+                    rating.append(ParseHelper.int(category, key: "rating", defaultValue: 0))
                 }
-                
             }
-            
-        } // dictionary
-        
-        
-        return FollowedSellerModel(message: message, isSuccessful: isSuccessful, id: id, fullName: fullName, storeName: storeName, profileImageUrl: profileImageUrl, specialty: specialty, rating: rating)
+            return FollowedSellerModel(message: message, isSuccessful: isSuccessful, id: id, fullName: fullName, storeName: storeName, profileImageUrl: profileImageUrl, specialty: specialty, rating: rating)
+        } else {
+            return FollowedSellerModel(message: "", isSuccessful: false, id: [Int](), fullName: [String](), storeName: [String](), profileImageUrl: [String](), specialty: [String](), rating: [Int]())
+        }
     }
     
     class func parseFollowSellerDataWithDictionary(dictionary: AnyObject) -> FollowedSellerModel {

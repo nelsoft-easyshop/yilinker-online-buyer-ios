@@ -11,26 +11,29 @@ import UIKit
 class FollowedSellerViewController: UIViewController, EmptyViewDelegate {
 
     @IBOutlet weak var tableView: UITableView!
-
     @IBOutlet weak var emptyLabel: UILabel!
     var hud: MBProgressHUD?
     var emptyView: EmptyView?
     var followedSellerModel: FollowedSellerModel!
     
+    // MARK: - View Life Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        
-        
+        // Register custom cell
         let nib = UINib(nibName: "FollowedSellerTableViewCell", bundle: nil)
         self.tableView.registerNib(nib, forCellReuseIdentifier: "FollowedSellerIdentifier")
         
-        customizedNavigationBar()
+        // Setup navigation bar
+        setupNavigationBar()
     }
     
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
 
+        // To update list every time it appears
+        // show hud when no data in list and loader in status bar when there's a result
         if followedSellerModel != nil {
             if followedSellerModel.id.count == 0 {
                 self.showHUD()
@@ -41,22 +44,24 @@ class FollowedSellerViewController: UIViewController, EmptyViewDelegate {
             self.showHUD()
         }
         
+        // Request followed sellers when there's an internet
         if Reachability.isConnectedToNetwork() {
-            requestFollowedSelers()
+            fireGetFollowedSellers()
         } else {
             addEmptyView()
         }
     }
     
-    // MARK: - Methods
+    // MARK: - Functions
     
-    func customizedNavigationBar() {
+    func setupNavigationBar() {
         let backButton: UIBarButtonItem = UIBarButtonItem(image: UIImage(named: "back-white"), style: UIBarButtonItemStyle.Plain, target: self, action: "backAction")
         let navigationSpacer: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
         navigationSpacer.width = -10
         self.navigationItem.leftBarButtonItems = [navigationSpacer, backButton]
         self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
         
+        // Set text for empty view
         self.emptyLabel.text = StringHelper.localizedStringWithKey("FOLLOWED_SELLERS_EMPTY_LOCALIZE_KEY")
     }
     
@@ -82,16 +87,15 @@ class FollowedSellerViewController: UIViewController, EmptyViewDelegate {
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if followedSellerModel != nil {
             return followedSellerModel.id.count
-        } else {
-            return 0
         }
+        return 0
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell: FollowedSellerTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("FollowedSellerIdentifier") as! FollowedSellerTableViewCell
         
+        // set cell's details
         cell.selectionStyle = .None
-        
         cell.nameLabel.text = followedSellerModel.storeName[indexPath.row]
         cell.specialtyLabel.text = String(StringHelper.localizedStringWithKey("SPECIALTY_LOCALIZE_KEY") + ": ") + followedSellerModel.specialty[indexPath.row]
         cell.setPicture(followedSellerModel.profileImageUrl[indexPath.row])
@@ -110,14 +114,12 @@ class FollowedSellerViewController: UIViewController, EmptyViewDelegate {
     
     // MARK: - Request
     
-    func requestFollowedSelers() {
+    func fireGetFollowedSellers() {
         let manager = APIManager.sharedInstance
-        let params = ["access_token": SessionManager.accessToken(),
-            "page": "1", "limit": "999"]
+        let params = ["access_token": SessionManager.accessToken(), "page": "1", "limit": "999"]
         
         manager.POST(APIAtlas.getFollowedSellers, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            println(responseObject)
             self.followedSellerModel = FollowedSellerModel.parseDataWithDictionary(responseObject)
             
             if self.followedSellerModel.id.count != 0 {
@@ -131,7 +133,7 @@ class FollowedSellerViewController: UIViewController, EmptyViewDelegate {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                 if task.statusCode == 401 {
-                    self.requestRefreshToken()
+                    self.fireRefreshToken()
                 } else {
                     self.addEmptyView()
                     self.hud?.hide(true)
@@ -140,7 +142,7 @@ class FollowedSellerViewController: UIViewController, EmptyViewDelegate {
         })
     }
     
-    func requestRefreshToken() {
+    func fireRefreshToken() {
         let params: NSDictionary = ["client_id": Constants.Credentials.clientID(),
             "client_secret": Constants.Credentials.clientSecret(),
             "grant_type": Constants.Credentials.grantRefreshToken,
@@ -151,7 +153,7 @@ class FollowedSellerViewController: UIViewController, EmptyViewDelegate {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
                 SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
-                self.requestFollowedSelers()
+                self.fireGetFollowedSellers()
 
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
@@ -174,7 +176,7 @@ class FollowedSellerViewController: UIViewController, EmptyViewDelegate {
     
     func didTapReload() {
         if Reachability.isConnectedToNetwork() {
-            requestFollowedSelers()
+            fireGetFollowedSellers()
         } else {
             addEmptyView()
         }
