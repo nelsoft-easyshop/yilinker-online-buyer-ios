@@ -111,7 +111,7 @@ class ResolutionCenterViewController: UIViewController, UITableViewDataSource, U
         // Title text in Navigation Bar will now turn WHITE
         self.title = ResolutionStrings.title
         self.navigationController!.navigationBar.barStyle = UIBarStyle.Black
-        
+        self.navigationController?.navigationBar.tintColor = .whiteColor()
         // Back button
         let backButton = UIBarButtonItem(title:" ", style:.Plain, target: self, action:"goBackButton")
         backButton.image = UIImage(named: "back-white")
@@ -373,11 +373,9 @@ class ResolutionCenterViewController: UIViewController, UITableViewDataSource, U
         }
         println(parameters)
         
-        manager.GET(urlString, parameters: parameters, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+        WebServiceManager.fireGetCasesWithUrl(urlString, parameter: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
             self.resolutionCenterModel = ResolutionCenterModel.parseDataWithDictionary(responseObject)
-            println(responseObject)
-            if self.resolutionCenterModel.isSuccessful {
+            if successful {
                 if self.resolutionCenterModel.resolutionArray.count == 0 {
                     self.emptyLabel.hidden = false
                 } else {
@@ -386,26 +384,28 @@ class ResolutionCenterViewController: UIViewController, UITableViewDataSource, U
                     self.resolutionTableView.reloadData()
                 }
             } else {
-                println(responseObject["message"])
-                self.emptyLabel.hidden = false
-            }
-            
-            self.hud?.hide(true)
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
                 self.hud?.hide(true)
-                
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                
-                if task.statusCode == 401 {
+                if requestErrorType == .ResponseError {
+                    //Error in api requirements
+                    self.emptyLabel.hidden = false
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                } else if requestErrorType == .AccessTokenExpired {
                     self.fireRefreshToken("cases")
-                } else {
-                    if task.statusCode != 404 {
-                        println(error.userInfo)
-                    }
+                } else if requestErrorType == .PageNotFound {
+                    //Page not found
+                    Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    //No internet connection
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    //Request timeout
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    //Unhandled error
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "", title: ProductStrings.alertWentWrong)
                 }
-                
-                println(error)
+            }
         })
     }
     
@@ -440,36 +440,43 @@ class ResolutionCenterViewController: UIViewController, UITableViewDataSource, U
     
     func requestGetTransactionsIds() {
         self.showHUD()
-        let manager = APIManager.sharedInstance
-        manager.GET(APIAtlas.transactionLogs + "\(SessionManager.accessToken())" + "&perPage=999" + "&type=for-resolution", parameters: nil, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            self.transactionModel = TransactionModel.parseDataFromDictionary(responseObject as! NSDictionary)
-            self.transactionIds = self.transactionModel.invoice_number
-            println(responseObject)
-            if self.transactionIds.count != 0 {
-                let newDispute = self.storyboard?.instantiateViewControllerWithIdentifier("NewDisputeTableViewController")
-                    as! NewDisputeTableViewController
-                newDispute.transactionIds = self.transactionIds
-                self.navigationController?.pushViewController(newDispute, animated:true)
-            } else {
-                self.view.makeToast(DisputeStrings.noAvailableTransaction, duration: 3.0, position: CSToastPositionBottom, style: CSToastManager.sharedStyle())
-                self.hud?.hide(true)
-            }
-
-            }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
-                self.hud?.hide(true)
-                
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                
-                if task.statusCode == 401 {
-                    self.fireRefreshToken("id")
+        
+        WebServiceManager.fireGetTransactionIdsWithUrl(APIAtlas.transactionLogs + "\(SessionManager.accessToken())" + "&perPage=999" + "&type=for-resolution", actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+            if successful {
+                self.transactionModel = TransactionModel.parseDataFromDictionary(responseObject as! NSDictionary)
+                self.transactionIds = self.transactionModel.invoice_number
+                if self.transactionIds.count != 0 {
+                    let newDispute = self.storyboard?.instantiateViewControllerWithIdentifier("NewDisputeTableViewController")
+                        as! NewDisputeTableViewController
+                    newDispute.transactionIds = self.transactionIds
+                    self.navigationController?.pushViewController(newDispute, animated:true)
                 } else {
-                    if task.statusCode != 404 {
-                        println(error.userInfo)
-                    }
+                    self.view.makeToast(DisputeStrings.noAvailableTransaction, duration: 3.0, position: CSToastPositionBottom, style: CSToastManager.sharedStyle())
                 }
-                
-                println(error.userInfo)
+                self.hud?.hide(true)
+            } else {
+                self.hud?.hide(true)
+                if requestErrorType == .ResponseError {
+                    //Error in api requirements
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+//                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: ProductStrings.alertError)
+                } else if requestErrorType == .AccessTokenExpired {
+                    self.fireRefreshToken("id")
+                } else if requestErrorType == .PageNotFound {
+                    //Page not found
+                    Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    //No internet connection
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    //Request timeout
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    //Unhandled error
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "", title: ProductStrings.alertWentWrong)
+                }
+            }
         })
     }
 }
