@@ -77,6 +77,9 @@ class WebServiceManager: NSObject {
     //OverView
     static let transactionIdKey = "transactionId"
     
+    //Settings
+    static let isSubscribeKey = "isSubscribe"
+    
     //MARK: -
     //MARK: - Fire Login Request With URL
     class func fireLoginRequestWithUrl(url: String, emailAddress: String, password: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) -> NSURLSessionDataTask {
@@ -212,6 +215,22 @@ class WebServiceManager: NSObject {
     //MARK: - Fire Logout User
     class func fireLogoutUserWithUrl(url: String, registrationId: String, deviceType: String, access_token: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
         let parameters: NSDictionary = [registrationIdKey: registrationId, deviceTypeKey: deviceType]
+        self.firePostRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+    }
+    
+    //MARK: - Fire Set Notification Settings
+    class func fireSetNotificationSettingsWithUrl(url: String, accessToken: String, isSubscribe: Bool, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+        let tempURL = "\(url)?access_token=\(accessToken)&\(isSubscribeKey)=\(isSubscribe)"
+        self.firePostRequestWithUrl(tempURL, parameters: []) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+    }
+    
+    //MARK: - Fire Set Notification Settings
+    class func fireDeactivateWithUrl(url: String, accessToken: String, password: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+        let parameters: NSDictionary = [accessTokenKey: accessToken, passwordKey: password]
         self.firePostRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
             actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
         }
