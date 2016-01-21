@@ -241,8 +241,9 @@
 		0CE35EB81B76711400AAA8F1 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CE35EB71B76711400AAA8F1 /* RegisterViewController.swift */; };
 		0CFF5EA71B98590200F13699 /* ErrorModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CFF5EA61B98590200F13699 /* ErrorModel.swift */; };
 		262626B71C00D28E0068E876 /* UserMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 262626B61C00D28E0068E876 /* UserMapView.swift */; };
+		26273BC21C50CE4500D6994B /* ParseHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26273BC11C50CE4500D6994B /* ParseHelper.swift */; };
 		2632F5211B7F8690006931E4 /* FollowedSellerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2632F51F1B7F8690006931E4 /* FollowedSellerTableViewCell.swift */; };
-		2632F5241B7F8EFF006931E4 /* FollwedSellerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2632F5231B7F8EFF006931E4 /* FollwedSellerModel.swift */; };
+		2632F5241B7F8EFF006931E4 /* FollowedSellerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2632F5231B7F8EFF006931E4 /* FollowedSellerModel.swift */; };
 		2638614D1C3E5DD200D2ECE2 /* ProductExtendedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2638614C1C3E5DD200D2ECE2 /* ProductExtendedView.swift */; };
 		2666F5281C0022CD00BABA82 /* ProductFullScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2666F5261C0022CD00BABA82 /* ProductFullScreenViewController.swift */; };
 		2666F5291C0022CD00BABA82 /* ProductFullScreenViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2666F5271C0022CD00BABA82 /* ProductFullScreenViewController.xib */; };
@@ -797,8 +798,9 @@
 		0CE35EB71B76711400AAA8F1 /* RegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		0CFF5EA61B98590200F13699 /* ErrorModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorModel.swift; sourceTree = "<group>"; };
 		262626B61C00D28E0068E876 /* UserMapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserMapView.swift; path = YiLinkerOnlineBuyer/resources/ViewController/UserMapView.swift; sourceTree = SOURCE_ROOT; };
+		26273BC11C50CE4500D6994B /* ParseHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ParseHelper.swift; path = YiLinkerOnlineBuyer/resources/Helper/ParseHelper.swift; sourceTree = SOURCE_ROOT; };
 		2632F51F1B7F8690006931E4 /* FollowedSellerTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FollowedSellerTableViewCell.swift; path = YiLinkerOnlineBuyer/resources/ViewController/FollowedSellerTableViewCell.swift; sourceTree = SOURCE_ROOT; };
-		2632F5231B7F8EFF006931E4 /* FollwedSellerModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FollwedSellerModel.swift; path = YiLinkerOnlineBuyer/resources/Model/FollwedSellerModel.swift; sourceTree = SOURCE_ROOT; };
+		2632F5231B7F8EFF006931E4 /* FollowedSellerModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FollowedSellerModel.swift; path = YiLinkerOnlineBuyer/resources/Model/FollowedSellerModel.swift; sourceTree = SOURCE_ROOT; };
 		2638614C1C3E5DD200D2ECE2 /* ProductExtendedView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProductExtendedView.swift; path = YiLinkerOnlineBuyer/resources/View/ProductExtendedView.swift; sourceTree = SOURCE_ROOT; };
 		2666F5261C0022CD00BABA82 /* ProductFullScreenViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProductFullScreenViewController.swift; path = YiLinkerOnlineBuyer/resources/ViewController/ProductFullScreenViewController.swift; sourceTree = SOURCE_ROOT; };
 		2666F5271C0022CD00BABA82 /* ProductFullScreenViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProductFullScreenViewController.xib; path = YiLinkerOnlineBuyer/resources/ViewController/ProductFullScreenViewController.xib; sourceTree = SOURCE_ROOT; };
@@ -1427,6 +1429,7 @@
 				0C74406D1BDF4A8A0019792A /* Delay.swift */,
 				0C79FD931C3B51FF00B6F2DF /* WebServiceManager.swift */,
 				0CD4C80C1C464D260031E4FE /* LanguageHelper.swift */,
+				26273BC11C50CE4500D6994B /* ParseHelper.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -1456,7 +1459,7 @@
 				26C285471B8FF546005EBD3A /* CityModel.swift */,
 				0CFF5EA61B98590200F13699 /* ErrorModel.swift */,
 				7971F73C1B86189100322861 /* FilterAttributeModel.swift */,
-				2632F5231B7F8EFF006931E4 /* FollwedSellerModel.swift */,
+				2632F5231B7F8EFF006931E4 /* FollowedSellerModel.swift */,
 				26C285411B8FAA48005EBD3A /* GetAddressesModel.swift */,
 				0C9937051B750583000D6074 /* HomePageProductModel.swift */,
 				79E68B901B8B0AE9008626E4 /* PointModel.swift */,
@@ -2358,7 +2361,7 @@
 				0C5926061B836EA30021EA76 /* AddressModel.swift in Sources */,
 				0CB9DB3B1B6A3EA100F2CA13 /* StarterContentPageViewController.swift in Sources */,
 				F7C637C91BD9F6FC00C29C47 /* TransactionDeliveryLogSignatureTableViewCell.swift in Sources */,
-				2632F5241B7F8EFF006931E4 /* FollwedSellerModel.swift in Sources */,
+				2632F5241B7F8EFF006931E4 /* FollowedSellerModel.swift in Sources */,
 				0CDA117A1B760E1A007B5DED /* LoginViewController.swift in Sources */,
 				B77B8DC61B9B54E80002C513 /* RoundedView.swift in Sources */,
 				F7CCDAA41B943CF7000F5AD4 /* GeneralRatingTableViewCell.swift in Sources */,
@@ -2475,6 +2478,7 @@
 				0C538AE31B99F07100EB64AB /* PaymentDataModel.swift in Sources */,
 				26AFB39A1B79DDEA00E50926 /* ProductDetailsModel.swift in Sources */,
 				B77B8DD61B9B554A0002C513 /* ImageVC.swift in Sources */,
+				26273BC21C50CE4500D6994B /* ParseHelper.swift in Sources */,
 				F7CCDAA01B943CF7000F5AD4 /* ProductResultGridCollectionViewCell.swift in Sources */,
 				0C9937481B750583000D6074 /* FullImageCollectionViewCell.swift in Sources */,
 				B77B8DD41B9B554A0002C513 /* ConversationVC.swift in Sources */,
