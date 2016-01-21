@@ -243,13 +243,15 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
 
-        if self.lastContentOffset > scrollView.contentOffset.y && scrollView.contentOffset.y <= 140.0 { // hide
-            if visibility >= 0.0 && visibility <= 1.0 {
-                visibility -= Double(scrollView.contentOffset.y / 14) * 0.005
-            }
-        } else if self.lastContentOffset < scrollView.contentOffset.y && scrollView.contentOffset.y >= 140.0 { // show
-            if  visibility <= 1.0 && visibility >= 0.0 {
-                visibility += Double(scrollView.contentOffset.y / 14) * 0.005
+        if scrollView.contentOffset.y > 0 {
+            if self.lastContentOffset > scrollView.contentOffset.y && scrollView.contentOffset.y <= 140.0 { // hide
+                if visibility >= 0.0 && visibility <= 1.0 {
+                    visibility -= Double(scrollView.contentOffset.y / 14) * 0.005
+                }
+            } else if self.lastContentOffset < scrollView.contentOffset.y && scrollView.contentOffset.y >= 140.0 { // show
+                if  visibility <= 1.0 && visibility >= 0.0 {
+                    visibility += Double(scrollView.contentOffset.y / 14) * 0.005
+                }
             }
         }
         

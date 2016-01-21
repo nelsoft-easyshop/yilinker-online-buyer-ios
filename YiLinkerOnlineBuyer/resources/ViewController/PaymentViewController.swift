@@ -23,6 +23,8 @@ class PaymentViewController: UIViewController, PaymentTableViewCellDelegate {
     var paymentHeader: PaymentTableViewCell?
     var paymentFooterView: DeliverToTableViewCell?
     
+    //MARK: -
+    //MARK: - Life Cycle
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         if self.tableView != nil {
@@ -95,10 +97,14 @@ class PaymentViewController: UIViewController, PaymentTableViewCellDelegate {
         // Dispose of any resources that can be recreated.
     }
     
+    //MARK: - 
+    //MARK: - Table View Data Source
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 0
     }
     
+    //MARK: - 
+    //MARK: - Payment Table View Cell
     func paymentTableViewCell(didChoosePaymentType paymentType: PaymentType) {
         self.paymentType = paymentType
         SessionManager.setPaymentType(paymentType)

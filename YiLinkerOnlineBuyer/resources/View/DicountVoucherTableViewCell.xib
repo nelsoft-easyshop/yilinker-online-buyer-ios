@@ -19,7 +19,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" tag="20" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Discount Value: Php 500" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="7" translatesAutoresizingMaskIntoConstraints="NO" id="ZUO-hn-Df2">
-                        <rect key="frame" x="8" y="6" width="250" height="21"/>
+                        <rect key="frame" x="16" y="6" width="250" height="21"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="21" id="262-up-qSk"/>
                         </constraints>
@@ -29,9 +29,9 @@
                     </label>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="trailing" secondItem="ZUO-hn-Df2" secondAttribute="trailing" constant="9" id="5OR-xh-DtS"/>
+                    <constraint firstAttribute="trailing" secondItem="ZUO-hn-Df2" secondAttribute="trailing" constant="1" id="5OR-xh-DtS"/>
                     <constraint firstItem="ZUO-hn-Df2" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="6" id="cWK-sE-Nal"/>
-                    <constraint firstItem="ZUO-hn-Df2" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="wSb-16-esm"/>
+                    <constraint firstItem="ZUO-hn-Df2" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="wSb-16-esm"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>

@@ -145,73 +145,8 @@ class ProfileSettingsViewController: UIViewController, UITableViewDataSource, UI
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         
         if indexPath.row == tableData.count {
-            self.fireDeleteRegistration(SessionManager.gcmToken())
+            SessionManager.logoutWithTarget(self)
         }
-    }
-    
-    //Delete GCM registration ID to stop receiving notifications
-    func fireDeleteRegistration(registrationID : String) {
-        var URL: String = "\(APIAtlas.ACTION_GCM_DELETE_V2)?access_token=\(SessionManager.accessToken())"
-        self.showHUD()
-        
-        WebServiceManager.fireLogoutUserWithUrl(URL, registrationId: SessionManager.gcmToken(), deviceType: "1", access_token: SessionManager.accessToken(), actionHandler: { (successful, responseObject, requestErrorType) -> Void in
-            
-            self.hud?.hide(true)
-            if successful || requestErrorType == .ResponseError {
-                self.logoutUser()
-            } else {
-                if requestErrorType == .AccessTokenExpired {
-                    self.fireRefreshToken()
-                } else if requestErrorType == .PageNotFound {
-                    //Page not found
-                    Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
-                } else if requestErrorType == .NoInternetConnection {
-                    //No internet connection
-                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
-                } else if requestErrorType == .RequestTimeOut {
-                    //Request timeout
-                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
-                } else if requestErrorType == .UnRecognizeError {
-                    //Unhandled error
-                    Toast.displayToastWithMessage(Constants.Localized.error, duration: 1.5, view: self.view)
-                }
-            }
-        })
-    }
-    
-    //MARK: - Fire Refresh Token
-    func fireRefreshToken() {
-        self.showHUD()
-        WebServiceManager.fireRefreshTokenWithUrl(APIAtlas.refreshTokenUrl, actionHandler: {
-            (successful, responseObject, requestErrorType) -> Void in
-            self.hud?.hide(true)
-            
-            if successful {
-                SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
-                self.fireDeleteRegistration(SessionManager.gcmToken())
-            } else {
-                //Forcing user to logout.
-                UIAlertController.displayAlertRedirectionToLogin(self, actionHandler: { (sucess) -> Void in
-                    SessionManager.logout()
-                    FBSDKLoginManager().logOut()
-                    GPPSignIn.sharedInstance().signOut()
-                    let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-                    appDelegate.startPage()
-                })
-            }
-        })
-    }
-    
-    // Clear all save data and redirect to homepage
-    func logoutUser() {
-        let registrationToken = SessionManager.gcmToken()
-        SessionManager.logout()
-        SessionManager.setGcmToken(registrationToken)
-        FBSDKLoginManager().logOut()
-        GPPSignIn.sharedInstance().signOut()
-        self.dismissViewControllerAnimated(false, completion: nil)
-        let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-        appDelegate.changeRootToHomeView()
     }
     
     // MARK: - ProfileSettingsTableViewCellDelegate
