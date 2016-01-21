@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ProfileViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, ProfileTableViewCellDelegate {
+class ProfileViewController: UIViewController{
     
     //Cell Unique Identifier
     let cellHeaderIdentifier: String = "ProfileHeaderTableViewCell"
