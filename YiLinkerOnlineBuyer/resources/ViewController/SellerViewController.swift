@@ -81,10 +81,8 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.backButton()
         //Register nib classes
         self.registerNib()
-        //Set title of navigation bar
-        self.titleView()
         //Get seller/store info
-        println(self.sellerId)
+        println(self.vendorTitle)
         self.fireSeller()
         //Get seller ratings and feebback
         self.fireSellerFeedback()
@@ -115,9 +113,9 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     //MARK: -
     //MARK: Set title of navigation bar
-    func titleView() {
+    func titleView(vendorName: String) {
         let label: UILabel = UILabel(frame: CGRectMake(0, 0, 100, 50))
-        label.text = vendorTitle
+        label.text = vendorName
         label.font = UIFont (name: "Panton-Regular", size: 20)
         label.textAlignment = NSTextAlignment.Center
         label.textColor = UIColor.whiteColor()
@@ -226,6 +224,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
                     self.sellerModel = SellerModel.parseSellerDataFromDictionary(responseObject as! NSDictionary)
                     self.is_successful = self.sellerModel!.is_allowed
                     self.hud!.hide(true)
+                    self.titleView(self.sellerModel!.store_name)
                     self.populateData()
                 } else {
                     self.showAlert(title: "Error", message: responseObject["message"] as! String)
@@ -658,19 +657,20 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
                     self.tableView.reloadData()
                     }, failure: {
                         (task: NSURLSessionDataTask!, error: NSError!) in
-                        let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                        
-                        if task.statusCode == 401 {
-                            if (SessionManager.isLoggedIn()){
-                                self.fireRefreshToken()
+                        if let task: NSHTTPURLResponse = task.response as? NSHTTPURLResponse {
+                            if task.statusCode == 401 {
+                                if (SessionManager.isLoggedIn()){
+                                    self.fireRefreshToken()
+                                }
+                            } else {
+                                if (SessionManager.isLoggedIn()){
+                                    self.showAlert(title: Constants.Localized.error, message: Constants.Localized.someThingWentWrong)
+                                }
                             }
-                        } else {
-                            if (SessionManager.isLoggedIn()){
-                                self.showAlert(title: Constants.Localized.error, message: Constants.Localized.someThingWentWrong)
-                            } 
+                            
+                            self.contacts = Array<W_Contact>()
                         }
                         
-                        self.contacts = Array<W_Contact>()
                         self.hud?.hide(true)
                 })
             }
