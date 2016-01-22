@@ -8,6 +8,12 @@
 
 import UIKit
 
+enum VerifyMobileNumberRequestType {
+    case GetCode
+    case UpdateMobileNumber
+    case VerifyCode
+}
+
 protocol VerifyMobileNumberViewControllerDelegate {
     func closeVerifyMobileNumberViewController()
     func verifyMobileNumberAction(isSuccessful: Bool)
@@ -49,102 +55,107 @@ class VerifyMobileNumberViewController: UIViewController {
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
-        initializeViews()
-        initializeLocalizeStrings()
-        getCode()
+        self.initializeViews()
+        self.initializeLocalizeStrings()
+        self.getCode()
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
     
     override func viewDidDisappear(animated: Bool) {
-        timer.invalidate()
+        self.timer.invalidate()
     }
     
-    func startTimer() {
-        seconds = 300
-        timer.invalidate()
-        timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: Selector("subtractTime"), userInfo: nil, repeats: true)
-    }
-    
+    //MARK: Initialization
+    //Initializes views
     func initializeViews() {
-        mainView.layer.cornerRadius = 8
-        verifyButton.layer.cornerRadius = 5
-        mainViewOriginalFrame = mainView.frame
+        self.mainView.layer.cornerRadius = 8
+        self.verifyButton.layer.cornerRadius = 5
+        self.mainViewOriginalFrame = mainView.frame
         
         // Add tap event to Sort View
-        var viewType = UITapGestureRecognizer(target:self, action:"tapMainViewAction")
+        var viewType = UITapGestureRecognizer(target:self, action:"tapMainAction")
         self.tapView.addGestureRecognizer(viewType)
         
         var view = UITapGestureRecognizer(target:self, action:"tapMainAction")
         self.mainView.addGestureRecognizer(view)
         
         let screenSize: CGRect = UIScreen.mainScreen().bounds
-        screenHeight = screenSize.height
+        self.screenHeight = screenSize.height
         
-        topMarginConstraint.constant = (screenHeight! / 2) - (mainView.frame.height / 2)
+        self.topMarginConstraint.constant = (screenHeight! / 2) - (mainView.frame.height / 2)
     }
     
+    //Initializes the localized string
     func initializeLocalizeStrings() {
-        titleLabel.text = StringHelper.localizedStringWithKey("VERIFY_NUMBER_LOCALIZED_KEY")
-        pleaseLabel.text = StringHelper.localizedStringWithKey("PLEASE_ENTER_VERIFY_NUMBER_LOCALIZED_KEY")
-        timeLeftLabel.text = StringHelper.localizedStringWithKey("TIME_LEFT_LOCALIZED_KEY")
-        verifyButton.setTitle(StringHelper.localizedStringWithKey("VERIFY_NUMBER_LOCALIZED_KEY"), forState: .Normal)
-        requestButton.setTitle(StringHelper.localizedStringWithKey("REQUEST_NEW_CODE_LOCALIZED_KEY"), forState: .Normal)
+        self.titleLabel.text = StringHelper.localizedStringWithKey("VERIFY_NUMBER_LOCALIZED_KEY")
+        self.pleaseLabel.text = StringHelper.localizedStringWithKey("PLEASE_ENTER_VERIFY_NUMBER_LOCALIZED_KEY")
+        self.timeLeftLabel.text = StringHelper.localizedStringWithKey("TIME_LEFT_LOCALIZED_KEY")
+        self.verifyButton.setTitle(StringHelper.localizedStringWithKey("VERIFY_NUMBER_LOCALIZED_KEY"), forState: .Normal)
+        self.requestButton.setTitle(StringHelper.localizedStringWithKey("REQUEST_NEW_CODE_LOCALIZED_KEY"), forState: .Normal)
     }
     
-    @IBAction func editBegin(sender: AnyObject) {
-        if IphoneType.isIphone4() {
-            topMarginConstraint.constant = screenHeight! / 10
-        } else if IphoneType.isIphone5() {
-            topMarginConstraint.constant = screenHeight! / 5
-        }
-    }
     
-    func subtractTime() {
-        seconds--
-        var secondsTemp: Int = seconds % 60
-        var minutes: Int = Int(seconds / 60)
-        if secondsTemp < 10 {
-            timeLabel.text = "0\(minutes):0\(secondsTemp)"
-        } else {
-            timeLabel.text = "0\(minutes):\(secondsTemp)"
-        }
-        
-        if(seconds == 0)  {
-            timer.invalidate()
-            timeLabel.text = "00:00"
-            self.dismissViewControllerAnimated(true, completion: nil)
-            delegate?.verifyMobileNumberAction(false)
-        }
-    }
-    
-    func tapMainViewAction() {
-        tapMainAction()
-    }
-    
-    func tapMainAction() {
-        codeTextField.resignFirstResponder()
-        
-        topMarginConstraint.constant = (screenHeight! / 2) - (mainView.frame.height / 2)
-    }
-    
+    //MARK: - IBAction
     @IBAction func buttonAction(sender: AnyObject) {
         if sender as! UIButton == closeButton {
             SessionManager.setMobileNumber("")
-            setNewMobileNumber("")
+            self.setNewMobileNumber("")
             self.dismissViewControllerAnimated(true, completion: nil)
-            delegate?.closeVerifyMobileNumberViewController()
+            self.delegate?.closeVerifyMobileNumberViewController()
         } else if sender as! UIButton == verifyButton {
-            fireVerify(APIAtlas.smsVerification, params: NSDictionary(dictionary: [
-                "access_token": SessionManager.accessToken(),
-                "code": codeTextField.text]))
+            self.fireVerifyVerificationCode(codeTextField.text)
         } else if sender as! UIButton == requestButton {
             self.getCode()
         }
     }
     
+    @IBAction func editBegin(sender: AnyObject) {
+        if IphoneType.isIphone4() {
+            self.topMarginConstraint.constant = screenHeight! / 10
+        } else if IphoneType.isIphone5() {
+            self.topMarginConstraint.constant = screenHeight! / 5
+        }
+    }
+    
+    
+    //MARK/: - Util function
     //Loader function
+    
+    //Start the time
+    func startTimer() {
+        self.seconds = 300
+        self.timer.invalidate()
+        self.timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: Selector("subtractTime"), userInfo: nil, repeats: true)
+    }
+    
+    //Decrement the time and set the values to the 'timeLabel'
+    func subtractTime() {
+        self.seconds--
+        var secondsTemp: Int = seconds % 60
+        var minutes: Int = Int(seconds / 60)
+        if secondsTemp < 10 {
+            self.timeLabel.text = "0\(minutes):0\(secondsTemp)"
+        } else {
+            self.timeLabel.text = "0\(minutes):\(secondsTemp)"
+        }
+        
+        if(seconds == 0)  {
+            self.timer.invalidate()
+            self.timeLabel.text = "00:00"
+            self.dismissViewControllerAnimated(true, completion: nil)
+            self.delegate?.verifyMobileNumberAction(false)
+        }
+    }
+    
+    //Return the position of the view to the center when the main view(dim view) is tapped
+    func tapMainAction() {
+        self.codeTextField.resignFirstResponder()
+        self.topMarginConstraint.constant = (screenHeight! / 2) - (mainView.frame.height / 2)
+    }
+    
+    //Show loader
     func showLoader() {
         if self.hud != nil {
             self.hud!.hide(true)
@@ -158,40 +169,46 @@ class VerifyMobileNumberViewController: UIViewController {
         self.hud?.show(true)
     }
     
+    //Hide loader
     func dismissLoader() {
         self.hud?.hide(true)
     }
     
+    //Check the mobile number to identify what specific request is needed.
     func getCode() {
         if !SessionManager.isMobileVerified(){
             if SessionManager.mobileNumber().isEmpty {
-                fireUpdateProfile(APIAtlas.updateMobileNumber, params: NSDictionary(dictionary: ["access_token" : SessionManager.accessToken(),
+                self.fireChangeMobileNumber(NSDictionary(dictionary: ["access_token" : SessionManager.accessToken(),
                     "newContactNumber": getNewMobileNumber()]))
             } else {
                 if SessionManager.mobileNumber() == getNewMobileNumber() {
-                    fireGetCode()
+                    self.fireGetVerificationCode()
                 } else {
-                    fireUpdateProfile(APIAtlas.updateMobileNumber, params: NSDictionary(dictionary: ["access_token" : SessionManager.accessToken(),
+                    self.fireChangeMobileNumber(NSDictionary(dictionary: [
+                        "access_token" : SessionManager.accessToken(),
                         "newContactNumber": getNewMobileNumber(),
                         "oldContactNumber": SessionManager.mobileNumber()]))
                 }
             }
         } else {
             if SessionManager.mobileNumber() == getNewMobileNumber() {
-                fireGetCode()
+                self.fireGetVerificationCode()
             } else {
-                fireUpdateProfile(APIAtlas.updateMobileNumber, params: NSDictionary(dictionary: ["access_token" : SessionManager.accessToken(),
+                self.fireChangeMobileNumber(NSDictionary(dictionary: [
+                    "access_token" : SessionManager.accessToken(),
                     "newContactNumber": getNewMobileNumber(),
                     "oldContactNumber": SessionManager.mobileNumber()]))
             }
         }
     }
     
+    //Set the Value of temporary new mobile number
     func setNewMobileNumber(newMobileNumber: String) {
         NSUserDefaults.standardUserDefaults().setObject(newMobileNumber, forKey: "newMobileNumber")
         NSUserDefaults.standardUserDefaults().synchronize()
     }
     
+    //Get the Value of temporary new mobile number
     func getNewMobileNumber() -> String {
         var result: String = ""
         if let val: AnyObject = NSUserDefaults.standardUserDefaults().objectForKey("newMobileNumber") as? String {
@@ -200,179 +217,183 @@ class VerifyMobileNumberViewController: UIViewController {
         return result
     }
     
-    // MARK: - GET CODE
     
-    func fireGetCode() {
-        let manager: APIManager = APIManager.sharedInstance
-        //seller@easyshop.ph
-        //password
-        let parameters: NSDictionary = ["access_token": SessionManager.accessToken()]
-        showLoader()
-        manager.POST(APIAtlas.verificationGetCodeUrl, parameters: parameters, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            println(responseObject)
-            self.dismissLoader()
-            if responseObject["isSuccessful"] as! Bool {
-                self.startTimer()
-            } else {
-               self.showAlertError(responseObject["message"] as! String)
-            }
-            
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                
-                if task.statusCode == 401 {
-                    self.requestRefreshToken("changeNumber", url: "", params:parameters)
-                } else {
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
-                    self.delegate?.closeVerifyMobileNumberViewController()
-                    self.hud?.hide(true)
-                }
-                
-        })
-    }
+    //MARK: - API Requests
+    //MARK: - Fire Get Mobile Verification Code
     
-    func fireUpdateProfile(url: String, params: NSDictionary!) {
-        showLoader()
+    /* Function to request new verification code
+     *
+     * If the API request is successful, it will star the countdown timer before the code will expire.
+     *
+     * If the API request is unsuccessful, it will check 'requestErrorType'
+     * and proceed/do some actions based on the error type
+    */
+    func fireGetVerificationCode() {
+        self.showLoader()
+        let url: String = APIAtlas.verificationGetCodeUrl
         
-        manager.POST(url, parameters: params, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in print(responseObject as! NSDictionary)
+        WebServiceManager.fireGetMobileCode(url, accessToken: SessionManager.accessToken(), actionHandler:  { (successful, responseObject, requestErrorType) -> Void in
             
             self.dismissLoader()
-            if responseObject["isSuccessful"] as! Bool {
-                self.startTimer()
-            } else {
-                self.showAlertError(responseObject["message"] as! String)
-            }
-            
-            println(responseObject)
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                
-                if task.statusCode == 401 {
-                    self.requestRefreshToken("getCode", url: "", params:params)
-                } else {
-                    if Reachability.isConnectedToNetwork() {
-                        var info = error.userInfo!
-                        
-                        if let data = info["data"] as? NSDictionary {
-                            if let errors = data["errors"] as? NSArray {
-                                if errors.count == 0 {
-                                    if let message = info["message"] as? NSString {
-                                        self.showAlertError(message as String)
-                                    }
-                                    
-                                } else {
-                                    self.showAlertError(errors[0] as! String)
-                                }
-                            }
-                        } else {
-                            UIAlertController.displaySomethingWentWrongError(self)
-                        }
-                        
+            if successful {
+                if let isSuccessful: Bool = responseObject["isSuccessful"] as? Bool {
+                    if isSuccessful {
+                        self.startTimer()
                     } else {
-                        UIAlertController.displayNoInternetConnectionError(self)
+                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: responseObject["message"] as! String)
                     }
-                    
-                    self.dismissLoader()
+                } else {
+                    UIAlertController.displaySomethingWentWrongError(self)
                 }
+                
+            } else {
+                self.handleErrorWithType(requestErrorType, requestType: VerifyMobileNumberRequestType.GetCode, responseObject: responseObject, params: NSDictionary(), code: "")
+            }
         })
-        
     }
     
-    
-    func fireVerify(url: String, params: NSDictionary!) {
-        showLoader()
-        manager.POST(url, parameters: params, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in print(responseObject as! NSDictionary)
-            if responseObject.objectForKey("error") != nil {
-                self.requestRefreshToken("verifyCode", url: url, params: params)
-            } else {
-                if responseObject["isSuccessful"] as! Bool {
-                    self.dismissViewControllerAnimated(true, completion: nil)
-                    SessionManager.setIsMobileVerified(true)
-                    SessionManager.setMobileNumber(self.getNewMobileNumber())
-                    self.delegate?.verifyMobileNumberAction(true)
-                    self.dismissLoader()
+     //MARK: - Fire Change Mobile Number
+    /* Function to change/update the mobile number.
+    *
+    * (Parameter) params: NSDictionary  --  Parameters of the request
+    *
+    * If the API request is successful, it will start the countdown timer before the code will expire.
+    *
+    * If the API request is unsuccessful, it will check 'requestErrorType'
+    * and proceed/do some actions based on the error type
+    */
+    func fireChangeMobileNumber(params: NSDictionary) {
+        self.showLoader()
+        
+        WebServiceManager.fireChangeMobileNumber(APIAtlas.updateMobileNumber, accessToken: SessionManager.accessToken(), parameters: params, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+            self.hud?.hide(true)
+            if successful {
+                if let isSuccessful: Bool = responseObject["isSuccessful"] as? Bool {
+                    if isSuccessful {
+                        self.startTimer()
+                    } else {
+                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: responseObject["message"] as! String)
+                    }
                 } else {
-                    self.dismissLoader()
-                    self.dismissViewControllerAnimated(true, completion: nil)
-                    self.delegate?.verifyMobileNumberAction(false)
+                    UIAlertController.displaySomethingWentWrongError(self)
                 }
+            } else {
+                self.handleErrorWithType(requestErrorType, requestType: VerifyMobileNumberRequestType.UpdateMobileNumber, responseObject: responseObject, params: params, code: "")
             }
-            println(responseObject)
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                
-                if task.statusCode == 401 {
-                    self.requestRefreshToken("verifyCode", url: "", params:params)
-                } else {
-                    if Reachability.isConnectedToNetwork() {
-                        if error.userInfo != nil {
-                            if let jsonResult = error.userInfo as? Dictionary<String, AnyObject> {
-                                let errorDescription: String = jsonResult["message"] as! String
-                                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorDescription)
-                            }
-                        } else {
-                            UIAlertController.displaySomethingWentWrongError(self)
-                        }
+        })
+    }
+    
+     //MARK: - Fire Verify Code
+    /* Function to verify the verification code sent to the mobile number.
+    * (Parameter) code: String -- the verification code.
+    *
+    * If the API request is successful, it will set the values from the server to the local data('SessionManager') 
+    * and call the 'verifyMobileNumberAction(true)' of the 'delegate' with 'true' parameter
+    *
+    * If the API request is unsuccessful, it will check 'requestErrorType'
+    * and proceed/do some actions based on the error type
+    */
+    func fireVerifyVerificationCode(code: String) {
+        self.showLoader()
+        WebServiceManager.fireVerifyVerificationCode(APIAtlas.smsVerification, accessToken: SessionManager.accessToken(), code: code, actionHandler:  { (successful, responseObject, requestErrorType) -> Void in
+            self.hud?.hide(true)
+            if successful {
+                if let isSuccessful: Bool = responseObject["isSuccessful"] as? Bool {
+                    if isSuccessful {
+                        self.dismissViewControllerAnimated(true, completion: nil)
+                        SessionManager.setIsMobileVerified(true)
+                        SessionManager.setMobileNumber(self.getNewMobileNumber())
+                        self.delegate?.verifyMobileNumberAction(true)
                         self.dismissLoader()
                     } else {
-                        UIAlertController.displayNoInternetConnectionError(self)
+                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: responseObject["message"] as! String)
+                        self.dismissViewControllerAnimated(true, completion: nil)
+                        self.delegate?.verifyMobileNumberAction(false)
                     }
-                    
-                    println(error)
+                } else {
+                    UIAlertController.displaySomethingWentWrongError(self)
                 }
-                
+            } else {
+                self.handleErrorWithType(requestErrorType, requestType: VerifyMobileNumberRequestType.VerifyCode, responseObject: responseObject, params: NSDictionary(), code: code)
+            }
         })
-        
     }
     
-    func requestRefreshToken(type: String, url: String, params: NSDictionary!) {
-        let urlTemp: String = "http://online.api.easydeal.ph/api/v1/login"
-        let params: NSDictionary = ["client_id": Constants.Credentials.clientID(),
-            "client_secret": Constants.Credentials.clientSecret(),
-            "grant_type": Constants.Credentials.grantRefreshToken,
-            "refresh_token": SessionManager.refreshToken()]
-        
-        let manager = APIManager.sharedInstance
-        manager.POST(urlTemp, parameters: params, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+    
+    
+    //MARK: - Handling of API Request Error
+    /* Function to handle the error and proceed/do some actions based on the error type
+    *
+    * (Parameters) requestErrorType: RequestErrorType -- type of error being thrown by the web service. It is used to identify what specific action is needed to be execute based on the error type.
+    
+    *              responseObject: AnyObject -- response coming from the server. It is used to identify what specific error message is being thrown by the server
+    *               requestType: VerifyMobileNumberRequestType -- the type of request so that it can identify
+    *                                                           what specific request if the who called the 'fireRefreshToken' function/
+    *
+    * This function is for checking of 'requestErrorType' and proceed/do some actions based on the error type
+    */
+    func handleErrorWithType(requestErrorType: RequestErrorType, requestType: VerifyMobileNumberRequestType, responseObject: AnyObject, params: NSDictionary, code: String) {
+        if requestErrorType == .ResponseError {
+            //Error in api requirements
+            let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+            Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+            self.delegate?.verifyMobileNumberAction(false)
+        } else if requestErrorType == .AccessTokenExpired {
+            self.fireRefreshToken(requestType, params: params, code: code)
+        } else if requestErrorType == .PageNotFound {
+            //Page not found
+            Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
+        } else if requestErrorType == .NoInternetConnection {
+            //No internet connection
+            Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+        } else if requestErrorType == .RequestTimeOut {
+            //Request timeout
+            Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+        } else if requestErrorType == .UnRecognizeError {
+            //Unhandled error
+            Toast.displayToastWithMessage(Constants.Localized.error, duration: 1.5, view: self.view)
+        }
+    }
+    
+    
+    //MARK: - Fire Refresh Token
+    /* Function called when access_token is already expired.
+    * (Parameter) requestType: VerifyMobileNumberRequestType -- the type of request so that it can identify
+    *                                                           what specific request if the who called the 'fireRefreshToken' function/
+    *             params: NSDictionary  --  Parameters of the request
+    *             code: String -- the verification code.
+    *
+    * This function is for requesting of access token and parse it to save in SessionManager.
+    * If request is successful, it will check the requestType and redirect/call the API request
+    * function based on the requestType.
+    * If the request us unsuccessful, it will forcely logout the user
+    */
+    func fireRefreshToken(requestType: VerifyMobileNumberRequestType, params: NSDictionary, code: String) {
+        self.showLoader()
+        WebServiceManager.fireRefreshTokenWithUrl(APIAtlas.refreshTokenUrl, actionHandler: {
+            (successful, responseObject, requestErrorType) -> Void in
             self.dismissLoader()
             
-            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
-            
-            var paramsTemp: Dictionary<String, String> = params as! Dictionary<String, String>
-            paramsTemp["access_token"] = SessionManager.accessToken()
-            
-            if type == "getCode" {
-                self.fireGetCode()
-            } else if type == "verifyCode" {
-                self.fireVerify(url, params: paramsTemp)
-            }  else if type == "changeNumber" {
-                self.fireUpdateProfile(url, params: paramsTemp)
+            if successful {
+                SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+                
+                switch requestType {
+                case .GetCode:
+                    self.fireGetVerificationCode()
+                case .UpdateMobileNumber:
+                    var paramsTemp: Dictionary<String, String> = params as! Dictionary<String, String>
+                    paramsTemp["access_token"] = SessionManager.accessToken()
+                    self.fireChangeMobileNumber(paramsTemp)
+                case .VerifyCode:
+                    self.fireVerifyVerificationCode(code)
+                }
+            } else {
+                //Show UIAlert and force the user to logout
+                UIAlertController.displayAlertRedirectionToLogin(self, actionHandler: { (sucess) -> Void in
+                    SessionManager.logoutWithTarget(self)
+                })
             }
-            
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                self.dismissLoader()
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                
-                UIAlertController.displaySomethingWentWrongError(self)
-                
         })
-    }
-    
-    
-    func showAlertError(error: String) {
-        let alert = UIAlertController(title: Constants.Localized.error, message: error, preferredStyle: UIAlertControllerStyle.Alert)
-        let OKAction = UIAlertAction(title: Constants.Localized.ok, style: .Default) { (action) in self.dismissViewControllerAnimated(true, completion: nil)
-            self.delegate?.closeVerifyMobileNumberViewController()}
-        alert.addAction(OKAction)
-        self.presentViewController(alert, animated: true, completion: nil)
     }
     
 }
