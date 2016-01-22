@@ -158,30 +158,33 @@ class NewDisputeTableViewController: UITableViewController, UIPickerViewDataSour
         
         println(parameters)
         
-        manager.POST(APIAtlas.postResolutionCenterAddCase, parameters: parameters, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            self.hud?.hide(true)
-            
-            if responseObject["isSuccessful"] as! Bool {
+        WebServiceManager.fireSubmitDispute(APIAtlas.postResolutionCenterAddCase, parameter: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+            if successful {
                 self.navigationController?.popViewControllerAnimated(true)
-            } else {
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: responseObject["message"] as! String, title: "Error")
-            }
-            
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-//                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
                 self.hud?.hide(true)
-                
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                
-                if task.statusCode == 401 {
+            } else {
+                self.hud?.hide(true)
+                if requestErrorType == .ResponseError {
+                    //Error in api requirements
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+//                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: ProductStrings.alertError)
+                } else if requestErrorType == .AccessTokenExpired {
                     self.fireRefreshToken("submit")
-                } else {
-                    if task.statusCode != 404 {
-                        println(error.userInfo)
-                    }
+                } else if requestErrorType == .PageNotFound {
+                    //Page not found
+                    Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    //No internet connection
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    //Request timeout
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    //Unhandled error
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "", title: ProductStrings.alertWentWrong)
                 }
+            }
         })
     }
     
@@ -385,31 +388,38 @@ class NewDisputeTableViewController: UITableViewController, UIPickerViewDataSour
     }
     
     func requestGetReasons() {
-
-        let manager = APIManager.sharedInstance
-        manager.GET(APIAtlas.getReasons + "\(SessionManager.accessToken())", parameters: nil, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            self.disputeReasonModel = DisputeReasonsModel.parseDataWithDictionary(responseObject)
-            println(responseObject)
-            self.tableView.reloadData()
-            self.hud?.hide(true)
-//            self.isReasonsDone = true
-//            self.requestChecker()
-            }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
-//                self.hud?.hide(true)
-                println(error.userInfo)
-                self.hud?.hide(true)
-                
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                
-                if task.statusCode == 401 {
-                    self.fireRefreshToken("reasons")
+        
+        WebServiceManager.fireGetReasonsWithUrl(APIAtlas.getReasons + "\(SessionManager.accessToken())", actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+            if successful {
+                if responseObject["isSuccessful"] as! Bool {
+                    self.disputeReasonModel = DisputeReasonsModel.parseDataWithDictionary(responseObject)
+                    self.tableView.reloadData()
                 } else {
-                    if task.statusCode != 404 {
-                        println(error.userInfo)
-//                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
-                    }
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: responseObject["message"] as! String, title: ProductStrings.alertError)
                 }
+                self.hud?.hide(true)
+            } else {
+                self.hud?.hide(true)
+                if requestErrorType == .ResponseError {
+                    //Error in api requirements
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                } else if requestErrorType == .AccessTokenExpired {
+                    self.fireRefreshToken("reasons")
+                } else if requestErrorType == .PageNotFound {
+                    //Page not found
+                    Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    //No internet connection
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    //Request timeout
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    //Unhandled error
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "", title: ProductStrings.alertWentWrong)
+                }
+            }
         })
     }
     
@@ -422,30 +432,24 @@ class NewDisputeTableViewController: UITableViewController, UIPickerViewDataSour
     
     func fireRefreshToken(type: String) {
         self.showHUD()
-        let manager = APIManager.sharedInstance
-        let parameters: NSDictionary = [
-            "client_id": Constants.Credentials.clientID(),
-            "client_secret": Constants.Credentials.clientSecret(),
-            "grant_type": Constants.Credentials.grantRefreshToken,
-            "refresh_token": SessionManager.refreshToken()]
-        
-        manager.POST(APIAtlas.refreshTokenUrl, parameters: parameters, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+        WebServiceManager.fireRefreshTokenWithUrl(APIAtlas.refreshTokenUrl, actionHandler: {
+            (successful, responseObject, requestErrorType) -> Void in
+            self.hud?.hide(true)
             
-            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
-            
-            if type == "reasons" {
+            if successful {
+                SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
                 self.requestGetCaseDetails()
             } else {
-                
+                //Forcing user to logout.
+                UIAlertController.displayAlertRedirectionToLogin(self, actionHandler: { (sucess) -> Void in
+                    SessionManager.logout()
+                    FBSDKLoginManager().logOut()
+                    GPPSignIn.sharedInstance().signOut()
+                    let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+                    appDelegate.startPage()
+                })
             }
-            
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                self.hud?.hide(true)
         })
-        
     }
     
     // MARK: - Text Field delegate

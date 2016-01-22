@@ -55,7 +55,6 @@ class FollowedSellerModel {
             var rating: [Int] = []
 
             if let categories: AnyObject = dictionary["data"] {
-                
                 for category in categories as! NSArray {
                     id.append(ParseHelper.int(category, key: "sellerId", defaultValue: 0))
                     fullName.append(ParseHelper.string(category, key: "fullName", defaultValue: "-"))

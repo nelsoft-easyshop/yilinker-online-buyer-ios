@@ -52,11 +52,35 @@ class WebServiceManager: NSObject {
     static let sellerIdKey = "sellerId"
     static let userIdKey = "userId"
     
-    //Wishlist
-    static let wishlistKey = "wishlist"
+    // Followed Sellers keys
+    // page
+    // limit
+    
+    // Review Details keys
     static let productIdKey = "productId"
+    
+    // Seller Details keys
+    // userIdKey
+    
+    // Update Wishlist keys
+    // productId
     static let unitIdKey = "unitId"
     static let quantityKey = "quantity"
+    // wishlist
+    
+    // Cart to Checkout
+    static let cartKey = "cart"
+    
+    // Get Contacts
+    // page
+    // limit
+    // keyword
+    
+    //Wishlist
+    static let wishlistKey = "wishlist"
+    // productId
+    // unitId
+    // quantity
     static let itemIdsKey = "itemIds[]"
     
     //Address
@@ -624,6 +648,96 @@ class WebServiceManager: NSObject {
     class func fireUnFollowSellerWithUrl(url: String, sellerId: Int, accessToken: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
         var parameters: NSDictionary = [self.sellerIdKey: sellerId, self.accessTokenKey: accessToken]
         self.firePostRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+    }
+    
+    // MARK: - Followed Sellers
+    // Get Followed Sellers
+    class func fireFollwedSellersWithUrl(url: String, page: String, limit: String, accessToken: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+        var parameters: NSDictionary = [self.pageKey: page, self.limitKey: limit, self.accessTokenKey: accessToken]
+        self.firePostRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+    }
+    
+    // MARK: - Product Details Calls
+    // Get Product Details
+    class func fireGetProductDetailsWithUrl(url: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+        self.fireGetRequestWithUrl(url, parameters: []) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+    }
+    
+    // Get Review Details
+    class func fireGetReviewDetailsWithUrl(url: String, productId: String, accessToken: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+        var parameters: NSDictionary = [self.productIdKey: productId]
+        self.firePostRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+    }
+    
+    // Get Seller Details
+    class func fireGetSellerDetailsWithUrl(url: String, userId: Int, accessToken: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+        var parameters: NSDictionary = [self.userIdKey: userId, self.accessTokenKey: accessToken]
+        self.firePostRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+    }
+    
+    // Update Wishlist
+    class func fireUpdateWishlistWithUrl(url: String, productId: String, unitId: String, quantity: String, wishlist: String, accessToken: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+        var parameters: NSDictionary = [self.productIdKey: productId, self.unitIdKey: unitId, self.quantityKey: quantity, self.wishlistKey: wishlist, self.accessTokenKey: accessToken]
+        self.firePostRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+    }
+    
+    // Add Item To Cart
+    class func fireAddToCartWithUrl(url: String, productId: String, unitId: String, quantity: Int, accessToken: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+        var parameters: NSDictionary = [self.productIdKey: productId, self.unitIdKey: unitId, self.quantityKey: quantity, self.accessTokenKey: accessToken]
+        self.firePostRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+    }
+    
+    // Cart To Checkout
+    class func fireCartToCheckoutWithUrl(url: String, cart: [Int], accessToken: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+        var parameters: NSDictionary = [self.cartKey: cart, self.accessTokenKey: accessToken]
+        self.firePostRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+    }
+    
+    // Get Contact Details
+    class func fireGetContacttDetailsWithUrl(url: String, page: String, limit: String, keyword: String, accessToken: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+        var parameters: NSDictionary = [self.pageKey: page, self.limitKey: limit, self.keywordKey: keyword, self.accessTokenKey: accessToken]
+        self.firePostRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+    }
+    
+    // MARK: - Resolution Center Calls
+    class func fireGetCasesWithUrl(url: String, parameter: NSDictionary, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+        self.fireGetRequestWithUrl(url, parameters: parameter) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+    }
+    
+    class func fireGetTransactionIdsWithUrl(url: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+        self.fireGetRequestWithUrl(url, parameters: []) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+    }
+    
+    class func fireGetReasonsWithUrl(url: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+        self.fireGetRequestWithUrl(url, parameters: []) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+    }
+    
+    class func fireSubmitDispute(url: String, parameter: NSDictionary, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+        self.firePostRequestWithUrl(url, parameters: parameter) { (successful, responseObject, requestErrorType) -> Void in
             actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
         }
     }

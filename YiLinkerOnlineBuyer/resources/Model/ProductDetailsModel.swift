@@ -81,47 +81,64 @@ class ProductDetailsModel {
             
             if let value: AnyObject = dictionary["data"] {
                 
-                if let tempVar = value["id"] as? String {
-                    id = tempVar
-                }
-                
-                if let tempVar = value["title"] as? String {
-                    title = tempVar
-                }
-                
-                if let tempVar = value["slug"] as? String {
-                    slug = tempVar
-                }
-                
-                if let tempVar = value["image"] as? String {
-                    image = tempVar
-                }
-
-                for subValue in value["images"] as! NSArray {
-                    let model: ProductImagesModel = ProductImagesModel.parseProductImagesModel(subValue as! NSDictionary)
-                    images.append(model)
-                }
-                
-                if let tempVar = value["shortDescription"] as? String {
-                    shortDescription = tempVar
-                }
-                
-                if let tempVar = value["fullDescription"] as? String {
-                    fullDescription = tempVar
-                }
-                
-                if let tempVar = value["sellerId"] as? Int {
-                    sellerId = tempVar
-                }
-                
-                for subValue in value["attributes"] as! NSArray {
-                    let model: ProductAttributeModel = ProductAttributeModel.parseAttribute(subValue as! NSDictionary)
-                    attributes.append(model)
-                }
-
-                for subValue in value["productUnits"] as! NSArray {
-                    let model: ProductUnitsModel = ProductUnitsModel.parseProductUnits(subValue as! NSDictionary)
-                    productUnits.append(model)
+                let keyExists = value["id"] != nil
+                if keyExists {
+                    if let tempVar = value["id"] as? String {
+                        id = tempVar
+                    } else {
+                        id = "0"
+                    }
+                    
+                    if let tempVar = value["title"] as? String {
+                        title = tempVar
+                    } else {
+                        title = "Not Available"
+                    }
+                    
+                    if let tempVar = value["slug"] as? String {
+                        slug = tempVar
+                    } else {
+                        slug = "not-available"
+                    }
+                    
+                    if let tempVar = value["image"] as? String {
+                        image = tempVar
+                    } else {
+                        image = "Not Available"
+                    }
+                    
+                    for subValue in value["images"] as! NSArray {
+                        let model: ProductImagesModel = ProductImagesModel.parseProductImagesModel(subValue as! NSDictionary)
+                        images.append(model)
+                    }
+                    
+                    if let tempVar = value["shortDescription"] as? String {
+                        shortDescription = tempVar
+                    } else {
+                        shortDescription = "Not Available"
+                    }
+                    
+                    if let tempVar = value["fullDescription"] as? String {
+                        fullDescription = tempVar
+                    } else {
+                        fullDescription = "Not Available"
+                    }
+                    
+                    if let tempVar = value["sellerId"] as? Int {
+                        sellerId = tempVar
+                    } else {
+                        sellerId = 0
+                    }
+                    
+                    for subValue in value["attributes"] as! NSArray {
+                        let model: ProductAttributeModel = ProductAttributeModel.parseAttribute(subValue as! NSDictionary)
+                        attributes.append(model)
+                    }
+                    
+                    for subValue in value["productUnits"] as! NSArray {
+                        let model: ProductUnitsModel = ProductUnitsModel.parseProductUnits(subValue as! NSDictionary)
+                        productUnits.append(model)
+                    }
                 }
                 
             } // data
