@@ -35,115 +35,29 @@ class ProductUnitsModel {
         var model = ProductUnitsModel()
         
         if dictionary.isKindOfClass(NSDictionary) {
-            let keyExists = dictionary["productUnitId"] != nil
-            if keyExists {
-                if let tempVar = dictionary["productUnitId"] as? String {
-                    model.productUnitId = tempVar
-                } else {
-                    model.productUnitId = "0"
-                }
+            model.productUnitId = ParseHelper.string(dictionary, key: "productUnitId", defaultValue: "0")
+            model.quantity = ParseHelper.int(dictionary, key: "quantity", defaultValue: 0)
+            model.sku = ParseHelper.string(dictionary, key: "sku", defaultValue: "0")
+            model.price = ParseHelper.string(dictionary, key: "price", defaultValue: "0")
+            model.discount = ParseHelper.int(dictionary, key: "discount", defaultValue: 0)
+            model.discountedPrice = ParseHelper.string(dictionary, key: "discountedPrice", defaultValue: "0")
+            model.status = ParseHelper.int(dictionary, key: "status", defaultValue: 0)
+            model.imageIds = ParseHelper.array(dictionary, key: "imageIds", defaultValue: []) as! [String]
+            model.primaryImage = ParseHelper.string(dictionary, key: "primaryImage", defaultValue: "0")
+            model.combination = ParseHelper.array(dictionary, key: "combination", defaultValue: []) as! [String]
+            model.combinationNames = ParseHelper.array(dictionary, key: "combinationNames", defaultValue: []) as! [String]
                 
-                if let tempVar = dictionary["quantity"] as? Int {
-                    model.quantity = tempVar
-                } else {
-                    model.quantity = 0
-                }
-                
-                if let tempVar = dictionary["sku"] as? String {
-                    model.sku = tempVar
-                } else {
-                    model.sku = "0"
-                }
-                
-                if let tempVar = dictionary["price"] as? String {
-                    model.price = tempVar
-                } else {
-                    model.price = "0"
-                }
-                
-                if let tempVar = dictionary["discount"] as? Int {
-                    model.discount = tempVar
-                } else {
-                    model.discount = 0
-                }
-                
-                if let tempVar = dictionary["discountedPrice"] as? String {
-                    model.discountedPrice = tempVar
-                } else {
-                    model.discountedPrice = "0"
-                }
-                
-                if let created: AnyObject = dictionary["dateCreated"] {
-                    if let tempVar = created["date"] as? String {
-                        model.createdDate = tempVar
-                    } else {
-                        model.createdDate = "0"
-                    }
-                    
-                    if let tempVar = created["timezone_type"] as? Int {
-                        model.createdTimzeZoneType = tempVar
-                    } else {
-                        model.createdTimzeZoneType = 0
-                    }
-                    
-                    if let tempVar = created["timezone"] as? String {
-                        model.createdTimezone = tempVar
-                    } else {
-                        model.createdTimezone = "0"
-                    }
-                }
-                
-                if let lastModified: AnyObject = dictionary["dateLastModified"] {
-                    if let tempVar = lastModified["date"] as? String {
-                        model.lastModifiedDate = tempVar
-                    } else {
-                        model.lastModifiedDate = "0"
-                    }
-                    
-                    if let tempVar = lastModified["timezone_type"] as? Int {
-                        model.lastModifiedTimeZoneType = tempVar
-                    } else {
-                        model.lastModifiedTimeZoneType = 0
-                    }
-                    
-                    if let tempVar = lastModified["timezone"] as? String {
-                        model.lastModifiedTimeZone = tempVar
-                    } else {
-                        model.lastModifiedTimeZone = "0"
-                    }
-                    
-                }
-                
-                if let tempVar = dictionary["status"] as? Int {
-                    model.status = tempVar
-                } else {
-                    model.productUnitId = "0"
-                }
-                
-                if let tempVar = dictionary["imageIds"] as? NSArray {
-                    model.imageIds = tempVar as! [String]
-                } else {
-                    model.imageIds = []
-                }
-                
-                if let tempVar = dictionary["primaryImage"] as? String {
-                    model.primaryImage = tempVar
-                } else {
-                    model.primaryImage = ""
-                }
-                
-                if let tempVar = dictionary["combination"] as? NSArray {
-                    model.combination = tempVar as! [String]
-                } else {
-                    model.combination = []
-                }
-                
-                if let tempVar = dictionary["combinationNames"] as? NSArray {
-                    model.combinationNames = tempVar as! [String]
-                } else {
-                    model.combinationNames = []
-                }
-            } // if exists
+            if let created: AnyObject = dictionary["dateCreated"] {
+                model.createdDate = ParseHelper.string(created, key: "date", defaultValue: "0")
+                model.createdTimzeZoneType = ParseHelper.int(created, key: "timezone_type", defaultValue: 0)
+                model.createdTimezone = ParseHelper.string(created, key: "timezone", defaultValue: "0")
+            }
+            
+            if let lastModified: AnyObject = dictionary["dateLastModified"] {
+                model.lastModifiedDate = ParseHelper.string(lastModified, key: "date", defaultValue: "0")
+                model.lastModifiedTimeZoneType = ParseHelper.int(lastModified, key: "timezone_type", defaultValue: 0)
+                model.lastModifiedTimeZone = ParseHelper.string(lastModified, key: "timezone", defaultValue: "0")
+            }
             
         } // if dictionary
         

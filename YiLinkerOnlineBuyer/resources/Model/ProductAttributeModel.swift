@@ -21,19 +21,16 @@ class ProductAttributeModel {
         var model = ProductAttributeModel()
         
         if attributes.isKindOfClass(NSDictionary) {
-            let keyExists = attributes["id"] != nil
-            if keyExists {
-                model.attributeId = attributes["id"] as! String
-                model.attributeName = attributes["groupName"] as! String
-                
-                for value in attributes["items"] as! NSArray {
-                    model.valueId.append(value["id"] as! String)
-                    model.valueName.append(value["name"] as! String)
-                }
-                
-                for value in attributes["choices"] as! NSArray {
-                    model.choices.append(value as! String)
-                }
+            model.attributeId = ParseHelper.string(attributes, key: "id", defaultValue: "")
+            model.attributeName = ParseHelper.string(attributes, key: "groupName", defaultValue: "")
+            
+            for value in attributes["items"] as! NSArray {
+                model.valueId.append(ParseHelper.string(value, key: "id", defaultValue: ""))
+                model.valueName.append(ParseHelper.string(value, key: "name", defaultValue: ""))
+            }
+            
+            for value in attributes["choices"] as! NSArray {
+                model.choices.append(value as! String)
             }
         }
         

@@ -19,16 +19,13 @@ class ProductImagesModel {
     class func parseProductImagesModel(images: NSDictionary) -> ProductImagesModel! {
         var model = ProductImagesModel()
         
-        let keyExists = images["id"] != nil
-        if keyExists {
-            model.id = images["id"] as! String
-            model.imageLocation = images["imageLocation"] as! String
-            model.imageLocation = model.imageLocation.stringByReplacingOccurrencesOfString(" ", withString: "%20", options: nil, range: nil)
-            model.fullImageLocation = images["fullImageLocation"] as! String
-            model.fullImageLocation = model.fullImageLocation.stringByReplacingOccurrencesOfString(" ", withString: "%20", options: nil, range: nil)
-            model.isPrimary = images["isPrimary"] as! Bool
-            model.isDeleted = images["isDeleted"] as! Bool
-        }
+        model.id = ParseHelper.string(images, key: "id", defaultValue: "")
+        model.imageLocation = ParseHelper.string(images, key: "imageLocation", defaultValue: "")
+        model.imageLocation = model.imageLocation.stringByReplacingOccurrencesOfString(" ", withString: "%20", options: nil, range: nil)
+        model.fullImageLocation = ParseHelper.string(images, key: "fullImageLocation", defaultValue: "")
+        model.fullImageLocation = model.fullImageLocation.stringByReplacingOccurrencesOfString(" ", withString: "%20", options: nil, range: nil)
+        model.isPrimary = ParseHelper.bool(images, key: "isPrimary", defaultValue: false)
+        model.isDeleted = ParseHelper.bool(images, key: "isDeleted", defaultValue: false)
         
         return model
     }
