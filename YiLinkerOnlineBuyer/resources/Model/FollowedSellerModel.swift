@@ -8,8 +8,6 @@
 
 import Foundation
 
-typealias FollowedSellerElement = (id: Int, fullName: String, storeName: String, profileImageUrl: String, specialty: String, rating: Int)
-
 class FollowedSellerModel {
     
     var message: String = ""
