@@ -101,6 +101,9 @@ class WebServiceManager: NSObject {
     //OverView
     static let transactionIdKey = "transactionId"
     
+    //Search
+    static let queryStringKey = "queryString"
+    
     //MARK: -
     //MARK: - Fire Login Request With URL
     class func fireLoginRequestWithUrl(url: String, emailAddress: String, password: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) -> NSURLSessionDataTask {
@@ -328,6 +331,19 @@ class WebServiceManager: NSObject {
         self.firePostRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
             actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
         }
+    }
+    
+    //MARK: - Search Product
+    class func fireSearcProducthWithUrl(url: String, queryString:String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) -> NSURLSessionDataTask {
+        let manager: APIManager = APIManager.sharedInstance
+        
+        let parameters: NSDictionary = [self.queryStringKey: queryString]
+        
+        let sessionDataTask: NSURLSessionDataTask = self.fireGetRequestSessionDataTaskWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+        
+        return sessionDataTask
     }
     
     //MARK: -

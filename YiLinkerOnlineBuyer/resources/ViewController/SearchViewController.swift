@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
+class SearchViewController: UIViewController {
     
     let manager = APIManager.sharedInstance
     
@@ -18,8 +18,6 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var searchResultTableView: UITableView!
-
-    var isQueueCancelled: Bool = false
     
     var tableData: [SearchSuggestionModel] = []
     
@@ -36,11 +34,6 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationController?.navigationBar.alpha = 1
-        self.navigationController?.navigationBar.barTintColor = Constants.Colors.appTheme
-        self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
-        
-        isQueueCancelled = false
     }
     
     override func didReceiveMemoryWarning() {
@@ -48,6 +41,7 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         // Dispose of any resources that can be recreated.
     }
     
+    //MARK: - Initializations
     func initializeViews() {
         // Connect all delegate prototypes
         self.searchBar.delegate = self
@@ -67,12 +61,12 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         //Register Nib to Tableview
         var nib = UINib(nibName: "SearchSuggestionTableViewCell", bundle: nil)
-        searchResultTableView.registerNib(nib, forCellReuseIdentifier: "SearchSuggestionTableViewCell")
+        self.searchResultTableView.registerNib(nib, forCellReuseIdentifier: "SearchSuggestionTableViewCell")
         
         //Add scopebar
         let sellerLocalizeString: String = StringHelper.localizedStringWithKey("SELLER_LOCALIZE_KEY")
         let productLocalizeString: String = StringHelper.localizedStringWithKey("PRODUCT_LOCALIZE_KEY")
-        searchBar.scopeButtonTitles = [productLocalizeString, sellerLocalizeString]
+        self.searchBar.scopeButtonTitles = [productLocalizeString, sellerLocalizeString]
         
         UITextField.my_appearanceWhenContainedIn(SearchViewController.self).tintColor = Constants.Colors.grayLine
         
@@ -84,86 +78,78 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func initializeLocalizedString() {
-        searchLocalizeString = StringHelper.localizedStringWithKey("SEARCH_LOCALIZE_KEY")
-        browseLocalizeString = StringHelper.localizedStringWithKey("BROWSECATEGORY_LOCALIZE_KEY")
+        self.searchLocalizeString = StringHelper.localizedStringWithKey("SEARCH_LOCALIZE_KEY")
+        self.browseLocalizeString = StringHelper.localizedStringWithKey("BROWSECATEGORY_LOCALIZE_KEY")
     }
     
-    // Mark: - UISearchBarDelegate
-    func searchBarShouldBeginEditing(searchBar: UISearchBar) -> Bool {
-        // Show Scope bar with cancel
-        self.searchBar.showsScopeBar = true
-        self.searchBar.sizeToFit()
-        self.searchBar.setShowsCancelButton(true, animated: true)
-        
-        return true
-    }
     
-    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
-        if searchBar.selectedScopeButtonIndex == 0 {
-            if count(searchText) > 1 {
-                requestSearch(APIAtlas.searchUrl, params: NSDictionary(dictionary: ["queryString" : searchText]))
-            } else {
-                tableData.removeAll(keepCapacity: false)
-                addBrowseCategory()
-                searchResultTableView.reloadData()
-            }
-        }
-    }
-    
-    func searchBarShouldEndEditing(searchBar: UISearchBar) -> Bool {
-        self.searchBar.showsScopeBar = false
-        self.searchBar.sizeToFit()
-        self.searchBar.setShowsCancelButton(false, animated: true)
-        return true
-    }
-    
-    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+    //MARK: - API Request
+    func fireSearch(queryString: String){
         if (self.searchTask != nil) {
-            searchTask?.cancel()
-            manager.operationQueue.cancelAllOperations()
-            searchTask = nil
-        }
-        isQueueCancelled = true
-        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-        self.searchBar.resignFirstResponder()
-        let newString = searchBar.text.stringByReplacingOccurrencesOfString(" ", withString: "+")
-        
-        var resultController = ResultViewController(nibName: "ResultViewController", bundle: nil)
-        
-        if searchBar.selectedScopeButtonIndex == 0 {
-            resultController.isSellerSearch = false
-            resultController.passModel(SearchSuggestionModel(suggestion: searchBar.text, imageURL: "", searchUrl: "\(APIAtlas.searchBuyer)\(newString)"))
-        } else {
-            resultController.isSellerSearch = true
-            resultController.passModel(SearchSuggestionModel(suggestion: searchBar.text, imageURL: "", searchUrl: "\(APIAtlas.searchSeller)\(newString)"))
+            self.searchTask?.cancel()
+            self.searchTask = nil
+            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
         }
         
-        self.navigationController?.pushViewController(resultController, animated:true);
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         
-    }
-    
-    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
-        self.searchBar.resignFirstResponder()
-    }
-    
-    
-    func searchBar(searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
-        tableData.removeAll(keepCapacity: false)
-        searchResultTableView.reloadData()
-        if selectedScope == 0 {
-            if count(searchBar.text) > 1 {
-                requestSearch(APIAtlas.searchUrl, params: NSDictionary(dictionary: ["queryString" : searchBar.text]))
+        self.searchTask = WebServiceManager.fireSearcProducthWithUrl(APIAtlas.searchUrl, queryString: queryString, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+            if successful {
+                if  let dictionary: NSDictionary = responseObject as? NSDictionary {
+                    if let isSuccessful: Bool = dictionary["isSuccessful"] as? Bool{
+                        if isSuccessful {
+                            self.tableData.removeAll(keepCapacity: false)
+                            if let value: AnyObject = responseObject["data"] {
+                                for subValue in value as! NSArray {
+                                    let model: SearchSuggestionModel = SearchSuggestionModel.parseDataFromDictionary(subValue as! NSDictionary)
+                                    
+                                    self.tableData.append(model)
+                                }
+                                self.searchResultTableView.reloadData()
+                            }
+                            self.addBrowseCategory()
+                        }
+                    }
+                } else {
+                    UIAlertController.displaySomethingWentWrongError(self)
+                }
             } else {
-                tableData.removeAll(keepCapacity: false)
-                addBrowseCategory()
-                searchResultTableView.reloadData()
+                if requestErrorType == .ResponseError {
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                } else if requestErrorType == .PageNotFound {
+                    Toast.displayToastWithMessage("Page not found.", duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    Toast.displayToastWithMessage(Constants.Localized.error, duration: 1.5, view: self.view)
+                } else if requestErrorType == .Cancel {
+                } else {
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                }
             }
-        } else {
-            
-        }
+        })
     }
     
-    // Mark: - UITableViewDataSource methods
+    //MARK: - Util Functions
+    
+    //Add Browse category in the table view
+    func addBrowseCategory() {
+        var temp: SearchSuggestionModel = SearchSuggestionModel(suggestion: browseLocalizeString, imageURL: "SearchBrowseCategory", searchUrl: "") as SearchSuggestionModel
+        
+        self.tableData.append(temp)
+        self.searchResultTableView.reloadData()
+    }
+}
+
+//MARK: - Delegates and Data Source
+//MARK: - UITableViewDataSource methods
+extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
+    
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
@@ -187,7 +173,6 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         return cell
     }
     
-    // Mark: - UITableViewDelegate methods
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         var tempModel: SearchSuggestionModel = tableData[indexPath.row]
         
@@ -202,79 +187,90 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
             self.navigationController?.pushViewController(resultController, animated:true);
         }
         
-        searchBar.resignFirstResponder()
+        self.searchBar.resignFirstResponder()
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         
     }
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
-        searchBar.resignFirstResponder()
+        self.searchBar.resignFirstResponder()
+    }
+}
+
+//MARK: - UISearchBarDelegate
+extension SearchViewController: UISearchBarDelegate{
+    
+    func searchBarShouldBeginEditing(searchBar: UISearchBar) -> Bool {
+        // Show Scope bar with cancel
+        self.searchBar.showsScopeBar = true
+        self.searchBar.sizeToFit()
+        self.searchBar.setShowsCancelButton(true, animated: true)
+        
+        return true
     }
     
-    func requestSearch(url: String, params: NSDictionary!) {
-        if (self.searchTask != nil) {
-            searchTask?.cancel()
-            manager.operationQueue.cancelAllOperations()
-            searchTask = nil
-            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-        }
-        
-        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
-        searchTask = manager.GET(url, parameters: params, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in print(responseObject as! NSDictionary)
-            if responseObject.objectForKey("error") != nil {
+    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchBar.selectedScopeButtonIndex == 0 {
+            if count(searchText) > 1 {          //Request only when the characters of queryString is greater than 1
+                self.fireSearch(searchText)
             } else {
-                self.populateTableView(responseObject)
+                self.tableData.removeAll(keepCapacity: false)
+                self.addBrowseCategory()
+                self.searchResultTableView.reloadData()
             }
-            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                println(error)
-                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-                if (task.response as? NSHTTPURLResponse != nil) {
-                    let response: NSHTTPURLResponse  = task.response as! NSHTTPURLResponse
-                    let statusCode: Int = response.statusCode
-                    println("STATUS CODE \(statusCode)")
-                    if statusCode == -1009 {
-                        if !Reachability.isConnectedToNetwork() {
-                            UIAlertController.displayNoInternetConnectionError(self)
-                        }
-                    }else if(statusCode != -999) {
-                        UIAlertController.displaySomethingWentWrongError(self)
-                    } else {
-                        self.requestSearch(url, params: params)
-                    }
-                } else {
-                    if !Reachability.isConnectedToNetwork() {
-                        UIAlertController.displayNoInternetConnectionError(self)
-                    }
-                }
-        })
+        }
     }
     
-    func populateTableView(responseObject: AnyObject) {
-        tableData.removeAll(keepCapacity: false)
-        if let value: AnyObject = responseObject["data"] {
-            for subValue in value as! NSArray {
-                let model: SearchSuggestionModel = SearchSuggestionModel.parseDataFromDictionary(subValue as! NSDictionary)
-                
-                self.tableData.append(model)
-            }
-            self.searchResultTableView.reloadData()
+    func searchBarShouldEndEditing(searchBar: UISearchBar) -> Bool {
+        self.searchBar.showsScopeBar = false
+        self.searchBar.sizeToFit()
+        self.searchBar.setShowsCancelButton(false, animated: true)
+        return true
+    }
+    
+    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+        if (self.searchTask != nil) {
+            self.searchTask?.cancel()
+            searchTask = nil
         }
         
-//        if tableData.count == 0 && !isQueueCancelled {
-//            let noResultLocalizeString = StringHelper.localizedStringWithKey("NORESULT_LOCALIZE_KEY")
-//            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: noResultLocalizeString, title: searchLocalizeString)
-//        }
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+        self.searchBar.resignFirstResponder()
+        let newString = searchBar.text.stringByReplacingOccurrencesOfString(" ", withString: "+")
         
-        addBrowseCategory()
+        var resultController = ResultViewController(nibName: "ResultViewController", bundle: nil)
+        
+        if searchBar.selectedScopeButtonIndex == 0 {
+            resultController.isSellerSearch = false
+            resultController.passModel(SearchSuggestionModel(suggestion: searchBar.text, imageURL: "", searchUrl: "\(APIAtlas.searchBuyer)\(newString)"))
+        } else {
+            resultController.isSellerSearch = true
+            resultController.passModel(SearchSuggestionModel(suggestion: searchBar.text, imageURL: "", searchUrl: "\(APIAtlas.searchSeller)\(newString)"))
+        }
+        
+        self.navigationController?.pushViewController(resultController, animated:true);
+        
     }
     
-    func addBrowseCategory() {
-        var temp: SearchSuggestionModel = SearchSuggestionModel(suggestion: browseLocalizeString, imageURL: "SearchBrowseCategory", searchUrl: "") as SearchSuggestionModel
-        
-        tableData.append(temp)
-        self.searchResultTableView.reloadData()
+    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+        self.searchBar.resignFirstResponder()
     }
+    
+    
+    // Scope 0 = Buyer
+    // Scope 1 = Seller
+    func searchBar(searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
+        self.tableData.removeAll(keepCapacity: false)
+        self.searchResultTableView.reloadData()
+        if selectedScope == 0 {
+            if count(searchBar.text) > 1 {          //Request only when the characters of queryString is greater than 1
+                self.fireSearch(searchBar.text)
+            } else {
+                self.tableData.removeAll(keepCapacity: false)
+                self.addBrowseCategory()
+                self.searchResultTableView.reloadData()
+            }
+        }
+    }
+
 }
