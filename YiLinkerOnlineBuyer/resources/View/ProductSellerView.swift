@@ -24,6 +24,8 @@ class ProductSellerView: UIView, UICollectionViewDataSource, UICollectionViewDel
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var subInfoLabel: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var loaderView: UIView!
+    @IBOutlet weak var activityIndicatior: UIActivityIndicatorView!
     
     var images: NSArray = []
     var ids: [String] = []
@@ -90,7 +92,10 @@ class ProductSellerView: UIView, UICollectionViewDataSource, UICollectionViewDel
         self.ids = model.productId
         
         self.collectionView.reloadData()
-
+        
+        self.activityIndicatior.stopAnimating()
+        self.loaderView.hidden = true
+        self.userInteractionEnabled = true
     }
     
 }

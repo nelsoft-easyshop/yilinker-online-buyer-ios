@@ -103,6 +103,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     
     @IBOutlet weak var buttonsContainerVerticalConstraint: NSLayoutConstraint!
     @IBOutlet weak var buttonsContainerHeight: NSLayoutConstraint!
+    
     // MARK: Request Checker
     var productRequest = false
     var reviewRequest = false
@@ -152,7 +153,8 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         
         if Reachability.isConnectedToNetwork() {
             requestProductDetails()
-            requestReviewDetails()
+//            requestReviewDetails()
+            requestContactsFromEndpoint()
         } else {
             addEmptyView()
         }
@@ -162,7 +164,6 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         addToCartButton.setTitle(ProductStrings.addToCart, forState: .Normal)
         buyItNowLabel.text = ProductStrings.buytItNow
         
-//        self.closeButton.layer.zPosition = 2
         self.closeButton.layer.cornerRadius = self.closeButton.frame.size.width / 2
         self.closeButton.layer.borderWidth  = 1.5
         self.closeButton.layer.borderColor = UIColor.grayColor().CGColor
@@ -170,7 +171,6 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         tap.numberOfTapsRequired = 1
         tap.addTarget(self, action: "closeAction:")
         self.closeButton.addGestureRecognizer(tap)
-//        self.closeButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "closeAction:"))
         let extendedViewController: ProductDetailsExtendedViewController = ProductDetailsExtendedViewController(nibName: "ProductDetailsExtendedViewController", bundle: nil)
         self.addChildViewController(extendedViewController)
         
@@ -391,12 +391,6 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
             self.productDescriptionView.frame.size.width = self.view.frame.size.width
             
             self.productDescriptionView.descriptionTitleLabel.text = ProductStrings.description
-            
-            var seeMoreLabel = UILabel(frame: CGRectMake(0, 0, 90, 41))
-            seeMoreLabel.text = ProductStrings.seeMore
-            seeMoreLabel.textColor = .blueColor()
-            seeMoreLabel.font = UIFont.systemFontOfSize(15.0)
-            seeMoreLabel.textAlignment = .Center
         }
         return self.productDescriptionView
     }
@@ -414,27 +408,6 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         if self.productReviewFooterView == nil {
             self.productReviewFooterView = XibHelper.puffViewWithNibName("ProductViewsViewController", index: 3) as! ProductReviewFooterView
             self.productReviewFooterView.frame.size.width = self.view.frame.size.width
-            
-            var seeMoreLabel = UILabel(frame: self.productReviewFooterView.frame)
-            seeMoreLabel.frame.size.width = 90
-            seeMoreLabel.font = UIFont.systemFontOfSize(15.0)
-            seeMoreLabel.textAlignment = .Center
-            
-            if self.productReviewModel != nil && self.productReviewModel.reviews.count != 0 {
-                seeMoreLabel.text = ProductStrings.seeMore
-                seeMoreLabel.textColor = .blueColor()
-                
-                var seeMoreImageView = UIImageView(frame: CGRectMake(seeMoreLabel.frame.size.width, (seeMoreLabel.frame.size.height / 2) - 6, 8, 12))
-                seeMoreImageView.image = UIImage(named: "seeMore")
-                seeMoreLabel.addSubview(seeMoreImageView)
-            } else {
-                seeMoreLabel.frame.size.width = self.productReviewFooterView.frame.size.width
-                seeMoreLabel.text = ProductStrings.alertNoReviews
-                seeMoreLabel.textColor = .grayColor()
-            }
-            
-            seeMoreLabel.center.x = self.view.center.x - 5
-            self.productReviewFooterView.addSubview(seeMoreLabel)
         }
         return self.productReviewFooterView
     }
@@ -495,11 +468,21 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
                 self.getUnitIdIndexFrom()
                 
                 self.attributes = self.productDetailsModel.attributes
-                self.requestSellerDetails()
                 
-                self.productRequest = true
-                self.productSuccess = true
-                self.checkRequests()
+                self.populateProductDetails()
+                let delay = 3.0 * Double(NSEC_PER_SEC)  // nanoseconds per seconds
+                var dispatchTime = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
+                dispatch_after(dispatchTime, dispatch_get_main_queue(), {
+                    
+                    self.requestSellerDetails()
+                    self.requestReviewDetails()
+                    
+                })
+//                self.requestSellerDetails()
+//                self.requestReviewDetails()
+//                self.productRequest = true
+//                self.productSuccess = true
+//                self.checkRequests()
             } else {
                 self.productRequest = true
                 self.productSuccess = false
@@ -539,9 +522,10 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         WebServiceManager.fireGetReviewDetailsWithUrl(APIAtlas.productReviews, productId: productId, accessToken: SessionManager.accessToken(), actionHandler: { (successful, responseObject, requestErrorType) -> Void in
             if successful {
                 self.productReviewModel = ProductReviewModel.parseDataWithDictionary(responseObject)
-                self.reviewRequest = true
-                self.reviewSuccess = true
-                self.checkRequests()
+                self.populateReviewDetails()
+//                self.reviewRequest = true
+//                self.reviewSuccess = true
+//                self.checkRequests()
             } else {
                 println("review failed")
                 self.reviewRequest = true
@@ -575,10 +559,10 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         WebServiceManager.fireGetSellerDetailsWithUrl(APIAtlas.getSellerInfo, userId: self.productDetailsModel.sellerId, accessToken: SessionManager.accessToken(), actionHandler: { (successful, responseObject, requestErrorType) -> Void in
             if successful {
                 self.productSellerModel = ProductSellerModel.parseDataWithDictionary(responseObject)
-                self.sellerRequest = true
-                self.sellerSuccess = true
-                self.requestContactsFromEndpoint()
-                self.checkRequests()
+                self.populateSellerDetails()
+//                self.sellerRequest = true
+//                self.sellerSuccess = true
+//                self.checkRequests()
             } else {
                 println("seller failed")
                 self.sellerRequest = true
@@ -893,6 +877,138 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         view.layer.cornerRadius = radius
     }
     
+    func populateProductDetails() {
+        if self.closeButton != nil {
+            self.closeButton.removeFromSuperview()
+        }
+        self.tableView.hidden = false
+        self.buttonsContainer.hidden = false
+        
+        self.getHeaderView().addSubview(self.getProductImagesView())
+        self.getHeaderView().addSubview(self.getProductDetailsView())
+        self.getHeaderView().addSubview(self.getProductAttributeView())
+        self.getHeaderView().addSubview(self.getProductReviewHeaderView())
+        
+        self.getFooterView().addSubview(self.getProductReviewFooterView())
+        self.getFooterView().addSubview(self.getProductSellerView())
+        self.getFooterView().addSubview(self.getProductDescriptionView())
+        self.getFooterView().addSubview(self.getProductDetailsBottomView())
+        
+        if !isFromCart {
+            self.quantity = self.productDetailsModel.productUnits[0].quantity
+            self.unitId = self.productDetailsModel.productUnits[0].productUnitId
+            getUnitIdIndexFrom()
+            
+            if self.quantity != 0 {
+                self.quantity = 1
+            } else if self.quantity == 0 {
+                self.quantity = 0
+                self.unitIdIndex = 0
+            }
+            
+            self.productImagesView.setDetails(self.productDetailsModel, unitId: unitIdIndex, width: self.view.frame.size.width)
+        } else {
+            isDefault = false
+            self.getUnitIdIndexFrom()
+            var images: [String] = []
+            for productUnit in self.productDetailsModel.productUnits {
+                if self.unitId == productUnit.productUnitId {
+                    if productUnit.imageIds.count != 0 {
+                        for j in 0..<productUnit.imageIds.count {
+                            for l in 0..<self.productDetailsModel.images.count {
+                                if productUnit.imageIds[j] == self.productDetailsModel.images[l].id {
+                                    images.append(self.productDetailsModel.images[l].imageLocation)
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            
+            self.productImagesView.setDetails(self.productDetailsModel, unitId: unitIdIndex, width: self.view.frame.size.width)
+            self.productImagesView.updateDetails(self.productDetailsModel, unitId: unitIdIndex, images: images)
+        }
+        
+        self.setDetails([ProductStrings.freeShipping, ProductStrings.sevenDayReturn])
+        
+        self.setAttributes(self.productDetailsModel.attributes, productUnits: self.productDetailsModel.productUnits, unitId: self.unitId, quantity: self.quantity)
+        self.productDescriptionView.setDescription(productDetailsModel.shortDescription, full: productDetailsModel.fullDescription)
+        
+//        if self.productReviewModel != nil {
+//            self.productReviewHeaderView.setRating(self.productReviewModel.ratingAverage)
+//        }
+//        
+//        self.tableView.reloadData()
+//        
+//        if self.productSellerModel != nil {
+//            if self.productSellerModel.images.count < 1 {
+//                self.productSellerView.collectionView.hidden = true
+//                self.productSellerView.frame.size.height = 123.0
+//            }
+//            self.productSellerView.setSellerDetails(self.productSellerModel)
+//        }
+        
+        setUpViews()
+        
+        self.productImagesView.delegate = self
+        self.productReviewFooterView.delegate = self
+        self.productSellerView.delegate = self
+        
+        self.hud?.hide(true)
+        
+        self.buttonsContainer.layer.zPosition = 2
+        
+        if isFromCart {
+            buttonsContainerHeight.constant = 0.0
+            self.view.layoutIfNeeded()
+            self.buttonsContainer.hidden = true
+            self.productDetailsExtendedView.frame.size.height += 65
+        }
+        
+        self.containerScrollView.addSubview(self.tableView)
+        self.containerScrollView.addSubview(self.getProductExtendedView())
+        self.productExtendedView.frame.origin.y = self.containerScrollView.frame.size.height
+        self.containerScrollView.contentSize = CGSizeMake(self.containerScrollView.frame.size.width, self.containerScrollView.frame.size.height + self.productExtendedView.frame.size.height)
+    }
+    
+    func populateReviewDetails() {
+        if self.productReviewModel != nil {
+            self.productReviewHeaderView.setRating(self.productReviewModel.ratingAverage)
+            
+            var seeMoreLabel = UILabel(frame: self.productReviewFooterView.frame)
+            seeMoreLabel.frame.size.width = 90
+            seeMoreLabel.font = UIFont.systemFontOfSize(15.0)
+            seeMoreLabel.textAlignment = .Center
+            
+            if self.productReviewModel.reviews.count != 0 {
+                seeMoreLabel.text = ProductStrings.seeMore
+                seeMoreLabel.textColor = .blueColor()
+                
+                var seeMoreImageView = UIImageView(frame: CGRectMake(seeMoreLabel.frame.size.width, (seeMoreLabel.frame.size.height / 2) - 6, 8, 12))
+                seeMoreImageView.image = UIImage(named: "seeMore")
+                seeMoreLabel.addSubview(seeMoreImageView)
+            } else {
+                seeMoreLabel.frame.size.width = self.productReviewFooterView.frame.size.width
+                seeMoreLabel.text = ProductStrings.alertNoReviews
+                seeMoreLabel.textColor = .grayColor()
+            }
+            self.productReviewFooterView.activityIndicator.stopAnimating()
+            seeMoreLabel.center.x = self.view.center.x - 5
+            self.productReviewFooterView.addSubview(seeMoreLabel)
+            self.tableView.reloadData()
+        }
+    }
+    
+    func populateSellerDetails() {
+        if self.productSellerModel != nil {
+            if self.productSellerModel.images.count < 1 {
+                self.productSellerView.collectionView.hidden = true
+                self.productSellerView.frame.size.height = 123.0
+            }
+            self.productSellerView.setSellerDetails(self.productSellerModel)
+        }
+    }
+    
     func loadViewsWithDetails() {
         if self.closeButton != nil {
             self.closeButton.removeFromSuperview()
@@ -909,21 +1025,8 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         self.getFooterView().addSubview(self.getProductSellerView())
         self.getFooterView().addSubview(self.getProductDescriptionView())
         self.getFooterView().addSubview(self.getProductDetailsBottomView())
-//        self.getFooterView().addSubview(self.getBottomSpace())
         
         if !isFromCart {
-//            for i in 0..<self.productDetailsModel.productUnits.count {
-//                if self.productDetailsModel.productUnits[i].quantity != 0 {
-//                    self.quantity = self.productDetailsModel.productUnits[i].quantity
-//                    self.unitId = self.productDetailsModel.productUnits[i].productUnitId
-//                    getUnitIdIndexFrom()
-//                    break
-//                } else if self.productDetailsModel.productUnits[i].quantity == 0 && i == self.productDetailsModel.productUnits.count - 1 {
-//                    self.quantity = 0
-//                    self.unitIdIndex = 0
-//                }
-//            }
-            
             self.quantity = self.productDetailsModel.productUnits[0].quantity
             self.unitId = self.productDetailsModel.productUnits[0].productUnitId
             getUnitIdIndexFrom()
@@ -958,25 +1061,24 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
             self.productImagesView.updateDetails(self.productDetailsModel, unitId: unitIdIndex, images: images)
         }
         
-//        self.setDetails(productDetailsModel.details)
         self.setDetails([ProductStrings.freeShipping, ProductStrings.sevenDayReturn])
         
         self.setAttributes(self.productDetailsModel.attributes, productUnits: self.productDetailsModel.productUnits, unitId: self.unitId, quantity: self.quantity)
         self.productDescriptionView.setDescription(productDetailsModel.shortDescription, full: productDetailsModel.fullDescription)
         
-        if self.productReviewModel != nil {
-            self.productReviewHeaderView.setRating(self.productReviewModel.ratingAverage)
-        }
+//        if self.productReviewModel != nil {
+//            self.productReviewHeaderView.setRating(self.productReviewModel.ratingAverage)
+//        }
+//        
+//        self.tableView.reloadData()
         
-        self.tableView.reloadData()
-        
-        if self.productSellerModel != nil {
-            if self.productSellerModel.images.count < 1 {
-                self.productSellerView.collectionView.hidden = true
-                self.productSellerView.frame.size.height = 123.0
-            }
-            self.productSellerView.setSellerDetails(self.productSellerModel)
-        }
+//        if self.productSellerModel != nil {
+//            if self.productSellerModel.images.count < 1 {
+//                self.productSellerView.collectionView.hidden = true
+//                self.productSellerView.frame.size.height = 123.0
+//            }
+//            self.productSellerView.setSellerDetails(self.productSellerModel)
+//        }
         
         setUpViews()
         
@@ -1121,17 +1223,17 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     
     func checkRequests() {
         
-        if productRequest && reviewRequest && sellerRequest {
-            if productSuccess {
-                self.emptyView?.hidden = true
-                self.loadViewsWithDetails()
-            } else {
-                if sellerRequest {
-                    addEmptyView()
-                    self.hud?.hide(true)
-                }
-            }
-        }
+//        if productRequest && reviewRequest && sellerRequest {
+//            if productSuccess {
+//                self.emptyView?.hidden = true
+//                self.loadViewsWithDetails()
+//            } else {
+//                if sellerRequest {
+//                    addEmptyView()
+//                    self.hud?.hide(true)
+//                }
+//            }
+//        }
         
     }
     
@@ -1211,17 +1313,6 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
             self.view.transform = CGAffineTransformMakeScale(0.92, 0.95)
             self.navigationController?.navigationBar.alpha = 0.0
         })
-    }
-    
-    func addExtendedView() {
-        self.productDetailsExtendedView = XibHelper.puffViewWithNibName("ProductDetailsExtendedView", index: 0) as! ProductDetailsExtendedView
-        self.productDetailsExtendedView.delegate = self
-        self.productDetailsExtendedView.frame = self.productImagesView.bounds
-        self.productDetailsExtendedView.frame.origin.y = self.view.frame.size.height
-        self.productDetailsExtendedView.backgroundColor = .clearColor()
-        self.productDetailsExtendedView.url = self.productDetailsModel.fullDescription
-        self.productDetailsExtendedView.loadUrl(self.productDetailsModel.fullDescription)
-        self.view.addSubview(self.productDetailsExtendedView)
     }
     
     func checkViewSize() {
@@ -1340,8 +1431,6 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     func pressedCancelReview(controller: ProductReviewViewController) {
         UIView.animateWithDuration(0.3, animations: {
             self.view.transform = CGAffineTransformMakeTranslation(1, 1)
-//            self.dimView.alpha = 0
-//            self.dimView.layer.zPosition = -1
             self.dimV.alpha = 0.0
             self.navigationController?.navigationBar.alpha = CGFloat(self.visibility)
         })
@@ -1443,37 +1532,10 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         self.barCloseAction()
     }
     
-    func openExtendedProductDetails() {
-//        var extendedProductDetails = ProductDetailsExtendedViewController(nibName: "ProductDetailsExtendedViewController", bundle: nil)
-//        extendedProductDetails.delegate = self
-//        extendedProductDetails.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
-//        extendedProductDetails.providesPresentationContextTransitionStyle = true
-//        extendedProductDetails.definesPresentationContext = true
-//        extendedProductDetails.view.backgroundColor = UIColor.clearColor()
-//        extendedProductDetails.url = self.productDetailsModel.fullDescription
-//        self.tabBarController?.presentViewController(extendedProductDetails, animated: true, completion: nil)
-        
-//        self.navigationController?.navigationBarHidden = true
-//        UIApplication.sharedApplication().statusBarHidden = true
-//        self.productDetailsExtendedView.setDelegate()
-//
-//        UIView.animateWithDuration(0.5, animations: {
-//            self.productDetailsExtendedView.frame.origin.y = 0.0
-//        })
-        
-        isExiting = false
-        let description = ProductDescriptionViewController(nibName: "ProductDescriptionViewController", bundle: nil)
-        description.url = self.productDetailsModel.fullDescription
-        description.title = self.productDetailsModel.title
-        let root: UINavigationController = UINavigationController(rootViewController: description)
-        self.tabBarController?.presentViewController(root, animated: true, completion: nil)
-    }
-    
     // MARK: - Navigation Bar Actions
     
     func barCloseAction() {
         self.navigationController?.popViewControllerAnimated(true)
-//        self.navigationController?.popToRootViewControllerAnimated(true)
     }
     
     func barWishlistAction() {
@@ -1496,18 +1558,12 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
             reviewModal.passModel(self.productReviewModel)
             self.tabBarController?.presentViewController(reviewModal, animated: true, completion: nil)
 
-//            self.navigationController?.navigationBar.addSubview(self.dimView)
             UIView.animateWithDuration(0.3, animations: {
-//                self.dimView.alpha = 0.5
-//                self.dimView.layer.zPosition = 2
                 self.dimV.alpha = 0.50
                 self.view.transform = CGAffineTransformMakeScale(0.92, 0.93)
                 self.navigationController?.navigationBar.alpha = 0.0
             })
         }
-//        else {
-//            self.showAlert(title: ProductStrings.alertNoReviews, message: nil)
-//        }
     }
     
     func barMessageAction() {
@@ -1539,12 +1595,12 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
             } else {
                 self.showAlert(title: StringHelper.localizedStringWithKey("MESSAGING_TITLE"), message: ProductStrings.alertSellerNotAvailable)
             }
-            //UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "You're allowed to message this seller. Please login first.", title: "Error")
         }
     }
     
     func barShareAction() {
         var sharingItems = [AnyObject]()
+        println(APIAtlas.baseUrl)
         sharingItems.append(NSURL(string: "http://online.api.easydeal.ph/item/" + self.productDetailsModel.slug)!)
         
         let shareViewController = UIActivityViewController(activityItems: sharingItems, applicationActivities: nil)

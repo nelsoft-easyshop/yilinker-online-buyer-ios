@@ -15,6 +15,7 @@ protocol ProductReviewFooterViewDelegate {
 class ProductReviewFooterView: UIView {
 
     @IBOutlet weak var seeMoreView: UIView!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     var delegate: ProductReviewFooterViewDelegate?
     
