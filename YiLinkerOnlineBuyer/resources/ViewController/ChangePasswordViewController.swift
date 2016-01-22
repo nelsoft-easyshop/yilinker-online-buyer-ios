@@ -50,8 +50,8 @@ class ChangePasswordViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        initializeViews()
-        initializeLocalizedString()
+        self.initializeViews()
+        self.initializeLocalizedString()
     }
 
     override func didReceiveMemoryWarning() {
@@ -59,10 +59,11 @@ class ChangePasswordViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    //MARK: - Initializations
     func initializeViews() {
-        mainView.layer.cornerRadius = 8
-        submitButton.layer.cornerRadius = 5
-        mainViewOriginalFrame = mainView.frame
+        self.mainView.layer.cornerRadius = 8
+        self.submitButton.layer.cornerRadius = 5
+        self.mainViewOriginalFrame = mainView.frame
         
         // Add tap event to Sort View
         var viewType = UITapGestureRecognizer(target:self, action:"tapMainViewAction")
@@ -72,17 +73,17 @@ class ChangePasswordViewController: UIViewController {
         self.mainView.addGestureRecognizer(view)
         
         let screenSize: CGRect = UIScreen.mainScreen().bounds
-        screenHeight = screenSize.height
+        self.screenHeight = screenSize.height
         
-        topMarginConstraint.constant = (screenHeight! / 2) - (mainView.frame.height / 2)
+        self.topMarginConstraint.constant = (screenHeight! / 2) - (mainView.frame.height / 2)
     }
     
     func initializeLocalizedString() {
         //Initialized Localized String
-        errorLocalizeString = StringHelper.localizedStringWithKey("ERROR_LOCALIZE_KEY")
-        somethingWrongLocalizeString = StringHelper.localizedStringWithKey("SOMETHINGWENTWRONG_LOCALIZE_KEY")
-        connectionLocalizeString = StringHelper.localizedStringWithKey("CONNECTIONUNREACHABLE_LOCALIZE_KEY")
-        connectionMessageLocalizeString = StringHelper.localizedStringWithKey("CONNECTIONERRORMESSAGE_LOCALIZE_KEY")
+        self.errorLocalizeString = StringHelper.localizedStringWithKey("ERROR_LOCALIZE_KEY")
+        self.somethingWrongLocalizeString = StringHelper.localizedStringWithKey("SOMETHINGWENTWRONG_LOCALIZE_KEY")
+        self.connectionLocalizeString = StringHelper.localizedStringWithKey("CONNECTIONUNREACHABLE_LOCALIZE_KEY")
+        self.connectionMessageLocalizeString = StringHelper.localizedStringWithKey("CONNECTIONERRORMESSAGE_LOCALIZE_KEY")
         
         var changePasswordLocalizeString = StringHelper.localizedStringWithKey("CHANGEPASSWORD_LOCALIZE_KEY")
         var oldPasswordLocalizeString = StringHelper.localizedStringWithKey("OLDPASSWORD_LOCALIZE_KEY")
@@ -90,80 +91,69 @@ class ChangePasswordViewController: UIViewController {
         var confirmPasswordLocalizeString = StringHelper.localizedStringWithKey("CONFIRMPASSWORD_LOCALIZE_KEY")
         var submitLocalizeString = StringHelper.localizedStringWithKey("SUBMIT_LOCALIZE_KEY")
         
-        submitButton.setTitle(submitLocalizeString, forState: UIControlState.Normal)
+        self.submitButton.setTitle(submitLocalizeString, forState: UIControlState.Normal)
         
-        titleLabel.text = changePasswordLocalizeString
-        oldPasswordLabel.text = oldPasswordLocalizeString
-        newPasswordLabel.text = newPasswordLocalizeString
-        confirmPasswordLabel.text = confirmPasswordLocalizeString
+        self.titleLabel.text = changePasswordLocalizeString
+        self.oldPasswordLabel.text = oldPasswordLocalizeString
+        self.newPasswordLabel.text = newPasswordLocalizeString
+        self.confirmPasswordLabel.text = confirmPasswordLocalizeString
     }
     
-    @IBAction func editBegin(sender: AnyObject) {
+    //MARK - IBActions
+        @IBAction func editBegin(sender: AnyObject) {
         if IphoneType.isIphone4() || IphoneType.isIphone5() {
-            topMarginConstraint.constant = screenHeight! / 10
+            self.topMarginConstraint.constant = screenHeight! / 10
         }
         else if IphoneType.isIphone6() {
-            topMarginConstraint.constant = screenHeight! / 4
+            self.topMarginConstraint.constant = screenHeight! / 4
         }
     }
-    
-    func tapMainViewAction() {
-        if IphoneType.isIphone4() || IphoneType.isIphone5() {
-            if topMarginConstraint.constant == screenHeight! / 10 ||  topMarginConstraint.constant == screenHeight! / 4 {
-                tapMainAction()
-            } else {
-                buttonAction(closeButton)
-            }
-        } else {
-            buttonAction(closeButton)
-        }
-    }
-    
-    func tapMainAction() {
-        oldPasswordTextField.resignFirstResponder()
-        newPasswordTextField.resignFirstResponder()
-        confirmPasswordTextField.resignFirstResponder()
-        
-        topMarginConstraint.constant = (screenHeight! / 2) - (mainView.frame.height / 2)
-    }
-    
-    func showAlert(#title: String!, message: String!) {
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
-        var okLocalizeString = StringHelper.localizedStringWithKey("OKBUTTON_LOCALIZE_KEY")
-        let defaultAction = UIAlertAction(title: okLocalizeString, style: .Default, handler: nil)
-        alertController.addAction(defaultAction)
-        presentViewController(alertController, animated: true, completion: nil)
-    }
-    
     
     @IBAction func buttonAction(sender: AnyObject) {
         if sender as! UIButton == closeButton {
             self.dismissViewControllerAnimated(true, completion: nil)
             self.delegate?.closeChangePasswordViewController()
-        } else if sender as! UIButton == submitButton {
+        } else if sender as! UIButton == self.submitButton {
             tapMainAction()
-            if oldPasswordTextField.text.isEmpty ||  newPasswordTextField.text.isEmpty || confirmPasswordTextField.text.isEmpty {
+            if self.oldPasswordTextField.text.isEmpty || self.newPasswordTextField.text.isEmpty || self.confirmPasswordTextField.text.isEmpty {
                 var completeLocalizeString = StringHelper.localizedStringWithKey("COMPLETEFIELDS_LOCALIZE_KEY")
-                showAlert(title: self.errorLocalizeString, message: completeLocalizeString)
-            } else if newPasswordTextField.text != confirmPasswordTextField.text {
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: completeLocalizeString)
+            } else if self.newPasswordTextField.text != self.confirmPasswordTextField.text {
                 var passwordLocalizeString = StringHelper.localizedStringWithKey("PASSWORDMISMATCH_LOCALIZE_KEY")
-                showAlert(title: self.errorLocalizeString, message: passwordLocalizeString)
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: passwordLocalizeString)
             } else if !self.newPasswordTextField.isAlphaNumeric() {
                 var passwordLocalizeString = StringHelper.localizedStringWithKey("ILLEGAL_PASSWORD_LOCALIZE_KEY")
-                showAlert(title: self.errorLocalizeString, message: passwordLocalizeString)
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: passwordLocalizeString)
             } else if !self.newPasswordTextField.isValidPassword() {
                 var passwordLocalizeString = StringHelper.localizedStringWithKey("NUMBER_LETTERS_LOCALIZE_KEY")
-                showAlert(title: self.errorLocalizeString, message: passwordLocalizeString)
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: passwordLocalizeString)
             } else {
-                fireUpdateProfile(APIAtlas.changePassword, params: NSDictionary(dictionary: [
-                    "access_token": SessionManager.accessToken(),
-                    "oldPassword": oldPasswordTextField.text,
-                    "newPassword": newPasswordTextField.text,
-                    "newPasswordConfirm": confirmPasswordTextField.text]))
+                self.fireChangePassword(self.oldPasswordTextField.text, newPassword: self.newPasswordTextField.text)
             }
         }
     }
     
+    //MARK - Util Fucntion
+    
+    func tapMainViewAction() {
+        if IphoneType.isIphone4() || IphoneType.isIphone5() {
+            if topMarginConstraint.constant == screenHeight! / 10 ||  topMarginConstraint.constant == self.screenHeight! / 4 {
+                self.tapMainAction()
+            } else {
+                self.buttonAction(closeButton)
+            }
+        } else {
+            self.buttonAction(closeButton)
+        }
+    }
+    
+    func tapMainAction() {
+        self.oldPasswordTextField.resignFirstResponder()
+        self.newPasswordTextField.resignFirstResponder()
+        self.confirmPasswordTextField.resignFirstResponder()
+        
+        self.topMarginConstraint.constant = (screenHeight! / 2) - (mainView.frame.height / 2)
+    }
     
     //Loader function
     func showLoader() {
@@ -183,78 +173,72 @@ class ChangePasswordViewController: UIViewController {
         self.hud?.hide(true)
     }
     
-    func fireUpdateProfile(url: String, params: NSDictionary!) {
-        showLoader()
-        
-        self.manager.responseSerializer = JSONResponseSerializer()
-        manager.POST(url, parameters: params, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in print(responseObject as! NSDictionary)
-            if responseObject.objectForKey("error") != nil {
-                self.requestRefreshToken(url, params: params)
-            } else {
-                if responseObject["isSuccessful"] as! Bool {
-                    self.dismissViewControllerAnimated(true, completion: nil)
-                    self.dismissLoader()
-                    self.delegate?.submitChangePasswordViewController()
+    //MARK: API Requests
+    func fireChangePassword(oldPassword: String, newPassword: String) {
+        self.showLoader()
+        WebServiceManager.fireChangePassword(APIAtlas.changePassword, accessToken: SessionManager.accessToken(), oldPassword: oldPassword, newPassword: newPassword, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+            
+            self.dismissLoader()
+            if successful {
+                if let isSuccessful: Bool = responseObject["isSuccessful"] as? Bool {
+                    if isSuccessful {
+                        self.dismissViewControllerAnimated(true, completion: nil)
+                        self.delegate?.submitChangePasswordViewController()
+                    } else {
+                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: responseObject["message"] as! String)
+                    }
                 } else {
-                    self.showAlert(title: self.errorLocalizeString, message: responseObject["message"] as! String)
-                    self.dismissLoader()
+                    UIAlertController.displaySomethingWentWrongError(self)
+                }
+            } else {
+                if requestErrorType == .ResponseError {
+                    //Error in api requirements
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                } else if requestErrorType == .AccessTokenExpired {
+                    self.fireRefreshToken(oldPassword, newPassword: newPassword)
+                } else if requestErrorType == .PageNotFound {
+                    //Page not found
+                    Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    //No internet connection
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    //Request timeout
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    //Unhandled error
+                    Toast.displayToastWithMessage(Constants.Localized.error, duration: 1.5, view: self.view)
                 }
             }
-            println(responseObject)
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                
-                if task.statusCode == 401 {
-                    self.requestRefreshToken(url, params: params)
-                } else {
-                    if Reachability.isConnectedToNetwork() {
-                        var info = error.userInfo!
-                        
-                        self.dismissLoader()
-                        
-                        if let data = info["message"] as? NSString {
-                            self.showAlert(title: self.errorLocalizeString, message: data as String)
-                        } else {
-                            self.showAlert(title: self.errorLocalizeString, message: self.somethingWrongLocalizeString)
-                        }
-                        
-                    } else {
-                        self.showAlert(title: self.connectionLocalizeString, message: self.connectionMessageLocalizeString)
-                    }
-                }
-                
         })
-        
     }
     
-    func requestRefreshToken(url: String, params: NSDictionary!) {
-        let urlTemp: String = "http://online.api.easydeal.ph/api/v1/login"
-        let params: NSDictionary = ["client_id": Constants.Credentials.clientID(),
-            "client_secret": Constants.Credentials.clientSecret(),
-            "grant_type": Constants.Credentials.grantRefreshToken,
-            "refresh_token": SessionManager.refreshToken()]
-        
-        let manager = APIManager.sharedInstance
-        manager.POST(urlTemp, parameters: params, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+    //MARK: - Fire Refresh Token
+    /* Function called when access_token is already expired.
+    * (Parameter) params: TemporaryParameters -- collection of all params
+    * needed by all API request in the Wishlist.
+    *
+    * This function is for requesting of access token and parse it to save in SessionManager.
+    * If request is successful, it will check the requestType and redirect/call the API request
+    * function based on the requestType.
+    * If the request us unsuccessful, it will forcely logout the user
+    */
+    func fireRefreshToken(oldPassword: String, newPassword: String) {
+        self.showLoader()
+        WebServiceManager.fireRefreshTokenWithUrl(APIAtlas.refreshTokenUrl, actionHandler: {
+            (successful, responseObject, requestErrorType) -> Void in
             self.dismissLoader()
             
-            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
-            
-            var paramsTemp: Dictionary<String, String> = params as! Dictionary<String, String>
-            paramsTemp["access_token"] = SessionManager.accessToken()
-
-            self.fireUpdateProfile(url, params: paramsTemp)
-            
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                self.dismissLoader()
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                
-                self.showAlert(title: self.errorLocalizeString, message: self.somethingWrongLocalizeString)
-                
+            if successful {
+                SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+                self.fireChangePassword(oldPassword, newPassword: newPassword)
+            } else {
+                //Show UIAlert and force the user to logout
+                UIAlertController.displayAlertRedirectionToLogin(self, actionHandler: { (sucess) -> Void in
+                    SessionManager.logoutWithTarget(self)
+                })
+            }
         })
     }
 }

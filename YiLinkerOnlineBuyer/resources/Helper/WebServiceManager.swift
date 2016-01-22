@@ -87,6 +87,11 @@ class WebServiceManager: NSObject {
     //Verify Mobile Number
     static let codeKey = "code"
     
+    //Change Password
+    static let oldPasswordKey = "oldPassword"
+    static let newPasswordKey = "newPassword"
+    static let newPasswordConfirmKey = "newPasswordConfirm"
+    
     //MARK: -
     //MARK: - Fire Login Request With URL
     class func fireLoginRequestWithUrl(url: String, emailAddress: String, password: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) -> NSURLSessionDataTask {
@@ -256,6 +261,14 @@ class WebServiceManager: NSObject {
             self.firePostRequestWithUrl(tempUrl, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
                 actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
             }
+        }
+    }
+    
+    //MARK: - Fire Change Password
+    class func fireChangePassword(url: String, accessToken: String, oldPassword: String, newPassword: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+        let parameters: NSDictionary = [self.accessTokenKey: accessToken, self.oldPasswordKey: oldPassword, self.newPasswordKey: newPassword, self.newPasswordConfirmKey: newPassword]
+        self.firePostRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
         }
     }
     
