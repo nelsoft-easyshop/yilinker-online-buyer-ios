@@ -1560,7 +1560,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                 if urlArray[1].toInt() != nil {
                     sellerViewController.sellerId  = urlArray[1].toInt()!
                 } else {
-                    self.tabBarController!.view.makeToast(Constants.Localized.targetNotAvailable, duration: 1.5, position: CSToastPositionBottom, style: CSToastManager.sharedStyle())
+                    self.tabBarController!.view.makeToast(Constants.Localized.targetNotAvailable, duration: 1.5, position: CSToastPositionTop, style: CSToastManager.sharedStyle())
                 }
             }
             self.navigationController!.pushViewController(sellerViewController, animated: true)
@@ -1585,9 +1585,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             let webViewController: WebViewController = WebViewController(nibName: "WebViewController", bundle: nil)
             webViewController.urlString = target
             self.navigationController!.pushViewController(webViewController, animated: true)
-        } else {
-            self.tabBarController!.view.makeToast(Constants.Localized.targetNotAvailable, duration: 1.5, position: CSToastPositionBottom, style: CSToastManager.sharedStyle())
-        }
+        } 
     }
     
     //MARK: -
