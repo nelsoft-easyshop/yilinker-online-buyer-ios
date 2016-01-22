@@ -45,4 +45,16 @@ class ParseHelper: NSObject {
         
         return defaultValue
     }
+    
+    // Use this when parsing array
+    class func array(object: AnyObject, key: String, defaultValue: NSArray) -> NSArray {
+        let dictionary = object as! NSDictionary
+        if dictionary[key] != nil {
+            if let parsedValue = dictionary[key] as? NSArray {
+                return parsedValue
+            }
+        }
+        
+        return defaultValue
+    }
 }
