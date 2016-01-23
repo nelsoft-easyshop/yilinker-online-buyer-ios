@@ -1014,7 +1014,9 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         selectedValue = []
         selectedId = []
         selectedName.append(ProductStrings.quantity)
-        if quantity == 0 {
+        if isDefault {
+            selectedValue.append("-")
+        } else if quantity == 0 {
             selectedValue.append(ProductStrings.outOfStock)
             self.quantity = 0
         } else {
