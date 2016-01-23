@@ -98,3 +98,13 @@ enum LanguageType {
     case English
     case Chinese
 }
+
+enum ProductDetailsRefreshType {
+    case details
+    case review
+    case seller
+    case wishlist
+    case cart
+    case buy
+    case contacts
+}

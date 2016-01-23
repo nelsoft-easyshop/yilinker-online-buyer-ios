@@ -8,15 +8,9 @@
 
 import UIKit
 
-protocol ProductExtendedViewDelegate {
-    func pullAction(controller: ProductExtendedView)
-}
-
 class ProductExtendedView: UIView {
 
     @IBOutlet weak var webView: UIWebView!
-    
-    var delegate: ProductExtendedViewDelegate?
     
     override func awakeFromNib() {
         self.webView.frame = self.bounds
@@ -26,5 +20,4 @@ class ProductExtendedView: UIView {
     func setDescription(htmlString: String) {
         webView.loadHTMLString(htmlString, baseURL: nil)
     }
-
 }

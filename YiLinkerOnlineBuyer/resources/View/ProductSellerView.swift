@@ -10,6 +10,7 @@ import UIKit
 
 protocol ProductSellerViewDelegate {
     func seeMoreSeller(controller: ProductSellerView)
+    func reloadSeller(controller: ProductSellerView)
     func gotoSellerProduct(controller: ProductSellerView, id: String)
 }
 
@@ -25,7 +26,8 @@ class ProductSellerView: UIView, UICollectionViewDataSource, UICollectionViewDel
     @IBOutlet weak var subInfoLabel: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var loaderView: UIView!
-    @IBOutlet weak var activityIndicatior: UIActivityIndicatorView!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var reloadButton: UIButton!
     
     var images: NSArray = []
     var ids: [String] = []
@@ -42,10 +44,7 @@ class ProductSellerView: UIView, UICollectionViewDataSource, UICollectionViewDel
         var nib = UINib(nibName: "ProductSellerViewCollectionViewCell", bundle:nil)
         self.collectionView.registerNib(nib, forCellWithReuseIdentifier: "productSellerIdentifier")
         
-        var tap = UITapGestureRecognizer()
-        tap.numberOfTapsRequired = 1
-        tap.addTarget(self, action: "seeMoreAction:")
-        self.sellerLabel.addGestureRecognizer(tap)
+        self.sellerLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "seeMoreAction:"))
     }
 
     // MARK: - Collection View Data Source
@@ -78,11 +77,15 @@ class ProductSellerView: UIView, UICollectionViewDataSource, UICollectionViewDel
     // MARK: - Action
     
     func seeMoreAction(gesture: UIGestureRecognizer) {
-        if let delegate = self.delegate {
-            delegate.seeMoreSeller(self)
-        }
+        delegate!.seeMoreSeller(self)
     }
 
+    @IBAction func reloadAction(sender: AnyObject) {
+        delegate?.reloadSeller(self)
+    }
+    
+    // MARK: - Functions
+    
     func setSellerDetails(model: ProductSellerModel) {
 
         self.nameLabel.text = model.storeName
@@ -93,7 +96,7 @@ class ProductSellerView: UIView, UICollectionViewDataSource, UICollectionViewDel
         
         self.collectionView.reloadData()
         
-        self.activityIndicatior.stopAnimating()
+        self.activityIndicator.stopAnimating()
         self.loaderView.hidden = true
         self.userInteractionEnabled = true
     }

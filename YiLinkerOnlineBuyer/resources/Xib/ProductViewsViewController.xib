@@ -385,13 +385,32 @@
                 <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="Www-t1-lVk">
                     <rect key="frame" x="177" y="11" width="20" height="20"/>
                 </activityIndicatorView>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="R7z-xk-F8p">
+                    <rect key="frame" x="164" y="6" width="256" height="256"/>
+                    <state key="normal" image="refresh">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                </button>
+                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9nh-W4-R1z">
+                    <rect key="frame" x="177" y="10" width="20" height="22"/>
+                    <state key="normal" image="refresh">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="reloadAction:" destination="TvZ-9r-jaQ" eventType="touchUpInside" id="cwK-1i-Pd5"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
+                <constraint firstItem="9nh-W4-R1z" firstAttribute="leading" secondItem="TvZ-9r-jaQ" secondAttribute="leading" constant="177" id="6hK-xJ-Kyf"/>
+                <constraint firstAttribute="trailing" secondItem="9nh-W4-R1z" secondAttribute="trailing" constant="178" id="A0p-iG-iIz"/>
                 <constraint firstAttribute="trailing" secondItem="Www-t1-lVk" secondAttribute="trailing" constant="178" id="ASB-1W-XN2"/>
                 <constraint firstItem="EN7-di-dBw" firstAttribute="top" secondItem="TvZ-9r-jaQ" secondAttribute="top" id="BJf-3V-MSM"/>
                 <constraint firstItem="Www-t1-lVk" firstAttribute="leading" secondItem="TvZ-9r-jaQ" secondAttribute="leading" constant="177" id="K71-AM-NeI"/>
                 <constraint firstAttribute="bottom" secondItem="Www-t1-lVk" secondAttribute="bottom" constant="10" id="OGP-RX-mRj"/>
+                <constraint firstAttribute="bottom" secondItem="9nh-W4-R1z" secondAttribute="bottom" constant="9" id="RvV-tc-Ebw"/>
+                <constraint firstItem="9nh-W4-R1z" firstAttribute="top" secondItem="EN7-di-dBw" secondAttribute="bottom" constant="9" id="a7M-1z-yXe"/>
                 <constraint firstItem="Www-t1-lVk" firstAttribute="top" secondItem="EN7-di-dBw" secondAttribute="bottom" constant="10" id="kfC-SK-6YA"/>
                 <constraint firstItem="EN7-di-dBw" firstAttribute="leading" secondItem="TvZ-9r-jaQ" secondAttribute="leading" id="pVJ-MR-unm"/>
                 <constraint firstAttribute="trailing" secondItem="EN7-di-dBw" secondAttribute="trailing" id="sva-fl-mfv"/>
@@ -399,14 +418,15 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="activityIndicator" destination="Www-t1-lVk" id="6Zh-fc-4G9"/>
+                <outlet property="reloadButton" destination="9nh-W4-R1z" id="ZpL-AS-qdO"/>
             </connections>
             <point key="canvasLocation" x="364.5" y="1155.5"/>
         </view>
-        <view clearsContextBeforeDrawing="NO" userInteractionEnabled="NO" contentMode="scaleToFill" id="b5m-Sg-d34" customClass="ProductSellerView" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="b5m-Sg-d34" customClass="ProductSellerView" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="375" height="243"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Seller" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kzu-Kc-e0E">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Seller" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kzu-Kc-e0E">
                     <rect key="frame" x="10" y="0.0" width="357" height="42"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="42" id="bj6-jq-Fa1"/>
@@ -501,6 +521,15 @@
                 <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="nzx-Jq-Cdj">
                     <rect key="frame" x="177" y="112" width="20" height="20"/>
                 </activityIndicatorView>
+                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EA2-9c-kL3">
+                    <rect key="frame" x="177" y="111" width="20" height="22"/>
+                    <state key="normal" image="refresh">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="reloadAction:" destination="b5m-Sg-d34" eventType="touchUpInside" id="Tm9-FF-gCT"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
@@ -511,10 +540,13 @@
                 <constraint firstItem="Kzu-Kc-e0E" firstAttribute="leading" secondItem="b5m-Sg-d34" secondAttribute="leading" constant="10" id="Ahc-d2-0T9"/>
                 <constraint firstItem="waL-E6-G39" firstAttribute="leading" secondItem="4Jc-lG-UFt" secondAttribute="trailing" constant="32" id="BYD-rp-nLe"/>
                 <constraint firstItem="nzx-Jq-Cdj" firstAttribute="top" secondItem="b5m-Sg-d34" secondAttribute="top" constant="112" id="Fsq-DM-AAy"/>
+                <constraint firstAttribute="trailing" secondItem="EA2-9c-kL3" secondAttribute="trailing" constant="178" id="Gmq-b8-zuX"/>
                 <constraint firstItem="1Ic-lg-NFJ" firstAttribute="leading" secondItem="JQN-fu-kVc" secondAttribute="trailing" constant="16" id="INJ-Va-02F"/>
+                <constraint firstItem="EA2-9c-kL3" firstAttribute="top" secondItem="b5m-Sg-d34" secondAttribute="top" constant="111" id="O0E-Bh-f9r"/>
                 <constraint firstAttribute="trailing" secondItem="Kzu-Kc-e0E" secondAttribute="trailing" constant="8" id="OKR-ru-SEx"/>
                 <constraint firstItem="QSa-up-KMN" firstAttribute="top" secondItem="9eV-P8-MMr" secondAttribute="bottom" constant="11" id="PQW-1n-4Fw"/>
                 <constraint firstAttribute="trailing" secondItem="bgc-Qk-Kc4" secondAttribute="trailing" id="QWl-9I-1ER"/>
+                <constraint firstItem="EA2-9c-kL3" firstAttribute="leading" secondItem="b5m-Sg-d34" secondAttribute="leading" constant="177" id="SX1-rF-uYi"/>
                 <constraint firstAttribute="trailing" secondItem="bki-x5-vSh" secondAttribute="trailing" id="WSu-Wd-6Ox"/>
                 <constraint firstItem="JQN-fu-kVc" firstAttribute="top" secondItem="QSa-up-KMN" secondAttribute="bottom" constant="16" id="XRe-ug-TEc"/>
                 <constraint firstItem="hi6-R0-3Kc" firstAttribute="leading" secondItem="1Ic-lg-NFJ" secondAttribute="trailing" constant="29" id="ZV6-tc-Y05"/>
@@ -534,12 +566,13 @@
                 <constraint firstItem="waL-E6-G39" firstAttribute="top" secondItem="QSa-up-KMN" secondAttribute="bottom" constant="24" id="rN8-KT-RHt"/>
                 <constraint firstItem="JQN-fu-kVc" firstAttribute="leading" secondItem="b5m-Sg-d34" secondAttribute="leading" constant="10" id="rgI-Fo-ylu"/>
                 <constraint firstItem="9eV-P8-MMr" firstAttribute="top" secondItem="b5m-Sg-d34" secondAttribute="top" constant="13" id="woF-ki-iyj"/>
+                <constraint firstAttribute="bottom" secondItem="EA2-9c-kL3" secondAttribute="bottom" constant="110" id="wso-fg-xC7"/>
                 <constraint firstAttribute="trailing" secondItem="nzx-Jq-Cdj" secondAttribute="trailing" constant="178" id="www-rE-TRe"/>
                 <constraint firstItem="nzx-Jq-Cdj" firstAttribute="leading" secondItem="b5m-Sg-d34" secondAttribute="leading" constant="177" id="yoA-fb-Hph"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
-                <outlet property="activityIndicatior" destination="nzx-Jq-Cdj" id="hJ4-R5-9Pg"/>
+                <outlet property="activityIndicator" destination="nzx-Jq-Cdj" id="o7z-i5-ruQ"/>
                 <outlet property="badge1ImageView" destination="4Jc-lG-UFt" id="bfg-a1-XA4"/>
                 <outlet property="badge2ImageView" destination="hi6-R0-3Kc" id="QSa-C2-Zyo"/>
                 <outlet property="badge3ImageView" destination="waL-E6-G39" id="HrO-D1-x9m"/>
@@ -547,6 +580,7 @@
                 <outlet property="displayPictureImageView" destination="JQN-fu-kVc" id="P3u-PV-7jW"/>
                 <outlet property="loaderView" destination="bki-x5-vSh" id="8Am-sq-HWH"/>
                 <outlet property="nameLabel" destination="1Ic-lg-NFJ" id="YN4-us-PkO"/>
+                <outlet property="reloadButton" destination="EA2-9c-kL3" id="5uG-vp-s8E"/>
                 <outlet property="sellerLabel" destination="Kzu-Kc-e0E" id="lI8-Gv-Wda"/>
                 <outlet property="subInfoLabel" destination="uIJ-km-82t" id="TCe-Xz-4bC"/>
             </connections>
@@ -605,6 +639,7 @@
         <image name="guarantee" width="200" height="131"/>
         <image name="msg" width="22" height="22"/>
         <image name="rating" width="22" height="21"/>
+        <image name="refresh" width="20" height="20"/>
         <image name="right-gray" width="97" height="200"/>
         <image name="seeMore" width="97" height="200"/>
         <image name="share" width="22" height="27"/>

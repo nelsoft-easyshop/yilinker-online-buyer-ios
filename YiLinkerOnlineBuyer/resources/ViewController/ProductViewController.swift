@@ -55,7 +55,7 @@ protocol ProductViewControllerDelegate {
     func pressedDimViewFromProductPage(controller: ProductViewController)
 }
 
-class ProductViewController: UIViewController, ProductImagesViewDelegate, ProductReviewFooterViewDelegate, ProductSellerViewDelegate, ProductReviewViewControllerDelegate, ProductAttributeViewControllerDelegate, EmptyViewDelegate, ProductDetailsExtendedViewDelegate, ProductExtendedViewDelegate, UIScrollViewDelegate {
+class ProductViewController: UIViewController, ProductImagesViewDelegate, ProductReviewFooterViewDelegate, ProductSellerViewDelegate, ProductReviewViewControllerDelegate, ProductAttributeViewControllerDelegate, EmptyViewDelegate, UIScrollViewDelegate {
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var dimView: UIView!
@@ -66,6 +66,9 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     @IBOutlet weak var buyItNowLabel: UILabel!
     @IBOutlet weak var blockerView: UIView!
     @IBOutlet weak var containerScrollView: UIScrollView!
+    @IBOutlet weak var buttonsContainerVerticalConstraint: NSLayoutConstraint!
+    @IBOutlet weak var buttonsContainerHeight: NSLayoutConstraint!
+    @IBOutlet weak var closeButton: UIView!
     
     var headerView: UIView!
     var footerView: UIView!
@@ -80,9 +83,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     var productDetailsBottomView: ProductDetailsBottomView!
     var productExtendedView: ProductExtendedView!
     var productDetailsExtendedView = ProductDetailsExtendedView()
-    var bottomSpace: UIView!
     
-    let manager = APIManager.sharedInstance
     var productDetailsModel: ProductDetailsModel!
     var attributes: [ProductAttributeModel] = []
     var combinations: [ProductAvailableAttributeCombinationModel] = []
@@ -100,9 +101,6 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     var canShowExtendedDetails: Bool = false
     var isScrollingUp: Bool = false
     var dimV: UIView!
-    
-    @IBOutlet weak var buttonsContainerVerticalConstraint: NSLayoutConstraint!
-    @IBOutlet weak var buttonsContainerHeight: NSLayoutConstraint!
     
     // MARK: Request Checker
     var productRequest = false
@@ -125,8 +123,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     var isAlreadyMoveOffset: Bool = false
     var isDefault: Bool = true
     var isFirstView: Bool = true
-
-    @IBOutlet weak var closeButton: UIView!
+    var isReloading: Bool = false
     
     // Messaging
     var selectedContact : W_Contact?
@@ -150,11 +147,12 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         
         setBorderOf(view: addToCartButton, width: 1, color: .grayColor(), radius: 3)
         setBorderOf(view: buyItNowView, width: 1, color: .grayColor(), radius: 3)
-        
+        setBorderOf(view: closeButton, width: 1.5, color: .grayColor(), radius: closeButton.frame.size.width / 2)
+
         if Reachability.isConnectedToNetwork() {
-            requestProductDetails()
-//            requestReviewDetails()
-            requestContactsFromEndpoint()
+            fireProductDetails()
+//            fireReviewDetails()
+            fireContactsFromEndpoint()
         } else {
             addEmptyView()
         }
@@ -163,10 +161,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         
         addToCartButton.setTitle(ProductStrings.addToCart, forState: .Normal)
         buyItNowLabel.text = ProductStrings.buytItNow
-        
-        self.closeButton.layer.cornerRadius = self.closeButton.frame.size.width / 2
-        self.closeButton.layer.borderWidth  = 1.5
-        self.closeButton.layer.borderColor = UIColor.grayColor().CGColor
+
         let tap = UITapGestureRecognizer()
         tap.numberOfTapsRequired = 1
         tap.addTarget(self, action: "closeAction:")
@@ -204,7 +199,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         self.hud?.hide(true)
     }
     
-    // MARK: - Table View Data Source and Delegates
+    // MARK: - Table View Data Source
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if productReviewModel != nil && productReviewModel.reviews.count > 1 {
@@ -229,17 +224,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         return cell
     }
     
-    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-        if cell.respondsToSelector("setSeparatorInset:") {
-            cell.separatorInset = UIEdgeInsetsZero
-        }
-        if cell.respondsToSelector("setLayoutMargins:") {
-            cell.layoutMargins = UIEdgeInsetsZero
-        }
-        if cell.respondsToSelector("setPreservesSuperviewLayoutMargins:") {
-            cell.preservesSuperviewLayoutMargins = false
-        }
-    }
+    // MARK: - Table View Delegates
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
 
@@ -283,14 +268,13 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
                 self.isScrollingUp = true
             }
             
-            
             self.tableView.transform = CGAffineTransformMakeTranslation(0.0, self.containerScrollView.contentOffset.y * -1.0)
         }
         
         self.lastContentOffset = scrollView.contentOffset.y
     }
 
-    // Scroll to position when reached position
+    // Scroll to position when end dragging
     func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         if scrollView == self.containerScrollView {
             checkScrollDirectionAndSetPosition()
@@ -315,10 +299,6 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     
     func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
         setMessageForDetails()
-    }
-    
-    func scrolledPastBottomThresholdInTableView(tableView: UITableView) -> Bool {
-        return (tableView.contentOffset.y - 30.0 >= (tableView.contentSize.height - tableView.frame.size.height))
     }
     
     // MARK: - Init Views
@@ -437,23 +417,14 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
             self.productExtendedView = XibHelper.puffViewWithNibName("ProductViewsViewController", index: 6) as! ProductExtendedView
             self.productExtendedView.frame.size.width = self.view.frame.size.width
             self.productExtendedView.frame.size.height = self.view.frame.size.height - 114
-            self.productExtendedView.delegate = self
             self.productExtendedView.setDescription(productDetailsModel.fullDescription)
         }
         return self.productExtendedView
     }
     
-    func getBottomSpace() -> UIView {
-        if self.bottomSpace == nil {
-            self.bottomSpace = UIView(frame: CGRectMake(0, 0, self.view.frame.size.width, 20))
-            self.bottomSpace.backgroundColor = UIColor.redColor()
-        }
-        return self.bottomSpace
-    }
-    
     // MARK: - Requests
     
-    func requestProductDetails() {
+    func fireProductDetails() {
         self.showHUD()
         
         productId = productId.stringByReplacingOccurrencesOfString("/api/v1/product/getProductDetail?productId=", withString: "", options: nil, range: nil)
@@ -467,9 +438,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
                 if !self.isFromCart {
                     self.unitId = self.productDetailsModel.productUnits[0].productUnitId
                 }
-                
                 self.getUnitIdIndexFrom()
-                
                 self.attributes = self.productDetailsModel.attributes
                 
                 self.populateProductDetails()
@@ -477,8 +446,8 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
                 var dispatchTime = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
                 dispatch_after(dispatchTime, dispatch_get_main_queue(), {
                     
-                    self.requestSellerDetails()
-                    self.requestReviewDetails()
+                    self.fireSellerDetails()
+                    self.fireReviewDetails()
                     
                 })
             } else {
@@ -494,7 +463,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
                     self.hud?.hide(true)
                     self.addEmptyView()
                 } else if requestErrorType == .AccessTokenExpired {
-                    self.requestRefreshToken("details")
+                    self.fireRefreshToken(.details)
                 } else if requestErrorType == .PageNotFound {
                     //Page not found
                     Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
@@ -512,7 +481,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         })
     }
     
-    func requestReviewDetails() {
+    func fireReviewDetails() {
         
         WebServiceManager.fireGetReviewDetailsWithUrl(APIAtlas.productReviews, productId: productId, accessToken: SessionManager.accessToken(), actionHandler: { (successful, responseObject, requestErrorType) -> Void in
             if successful {
@@ -520,30 +489,34 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
                 self.populateReviewDetails()
             } else {
                 println("review failed")
-                if requestErrorType == .ResponseError {
-                    //Error in api requirements
-//                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
-//                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
-                } else if requestErrorType == .AccessTokenExpired {
-                    self.requestRefreshToken("details")
-                } else if requestErrorType == .PageNotFound {
-                    //Page not found
-                    Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
-                } else if requestErrorType == .NoInternetConnection {
-                    //No internet connection
-                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
-                } else if requestErrorType == .RequestTimeOut {
-                    //Request timeout
-                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
-                } else if requestErrorType == .UnRecognizeError {
-                    //Unhandled error
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "", title: ProductStrings.alertWentWrong)
+                self.productReviewFooterView.reloadButton.hidden = false
+                self.productReviewFooterView.activityIndicator.stopAnimating()
+                if self.isReloading {
+                    if requestErrorType == .ResponseError {
+                        //Error in api requirements
+                        let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                        Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                    } else if requestErrorType == .AccessTokenExpired {
+                        self.fireRefreshToken(.review)
+                    } else if requestErrorType == .PageNotFound {
+                        //Page not found
+                        Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
+                    } else if requestErrorType == .NoInternetConnection {
+                        //No internet connection
+                        Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                    } else if requestErrorType == .RequestTimeOut {
+                        //Request timeout
+                        Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                    } else if requestErrorType == .UnRecognizeError {
+                        //Unhandled error
+                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "", title: ProductStrings.alertWentWrong)
+                    }
                 }
             }
         })
     }
     
-    func requestSellerDetails() {
+    func fireSellerDetails() {
 
         WebServiceManager.fireGetSellerDetailsWithUrl(APIAtlas.getSellerInfo, userId: self.productDetailsModel.sellerId, accessToken: SessionManager.accessToken(), actionHandler: { (successful, responseObject, requestErrorType) -> Void in
             if successful {
@@ -551,32 +524,35 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
                 self.populateSellerDetails()
             } else {
                 println("seller failed")
-                if requestErrorType == .ResponseError {
-                    //Error in api requirements
-                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
-                    self.showAlert(title: ProductStrings.alertError, message: errorModel.message)
-                    self.hud?.hide(true)
-                    self.addEmptyView()
-                } else if requestErrorType == .AccessTokenExpired {
-                    self.requestRefreshToken("details")
-                } else if requestErrorType == .PageNotFound {
-                    //Page not found
-                    Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
-                } else if requestErrorType == .NoInternetConnection {
-                    //No internet connection
-                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
-                } else if requestErrorType == .RequestTimeOut {
-                    //Request timeout
-                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
-                } else if requestErrorType == .UnRecognizeError {
-                    //Unhandled error
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "", title: ProductStrings.alertWentWrong)
+                self.productSellerView.reloadButton.hidden = false
+                self.productSellerView.activityIndicator.stopAnimating()
+                if self.isReloading {
+                    if requestErrorType == .ResponseError {
+                        //Error in api requirements
+                        let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                        self.showAlert(title: ProductStrings.alertError, message: errorModel.message)
+                    } else if requestErrorType == .AccessTokenExpired {
+                        self.fireRefreshToken(.seller)
+                    } else if requestErrorType == .PageNotFound {
+                        //Page not found
+                        Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
+                    } else if requestErrorType == .NoInternetConnection {
+                        //No internet connection
+                        Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                    } else if requestErrorType == .RequestTimeOut {
+                        //Request timeout
+                        Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                    } else if requestErrorType == .UnRecognizeError {
+                        //Unhandled error
+                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "", title: ProductStrings.alertWentWrong)
+                    }
+
                 }
             }
         })
     }
     
-    func requestUpdateWishlistItem() {
+    func fireUpdateWishlistItem() {
         
         self.showHUD()
         
@@ -593,7 +569,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
                     let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
                     self.showAlert(title: ProductStrings.alertError, message: errorModel.message)
                 } else if requestErrorType == .AccessTokenExpired {
-                    self.requestRefreshToken("wishlist")
+                    self.fireRefreshToken(.wishlist)
                 } else if requestErrorType == .PageNotFound {
                     //Page not found
                     Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
@@ -612,7 +588,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         })
     }
     
-    func requestAddCartItem(type: String) {
+    func fireAddCartItem(type: ProductDetailsRefreshType) {
         
         self.showHUD()
         
@@ -622,7 +598,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
                 
                 var items: NSArray = data["items"] as! NSArray
                 
-                if type == "buyitnow" {
+                if type == .buy {
                     var itemProductId: String = ""
                     var itemUnitId: String = ""
                     
@@ -639,13 +615,13 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
                                 var quantity: String = item["quantity"] as! String
                                 var price: Double = (productUnit["discountedPrice"] as! NSString).doubleValue
                                 var iQuantity: Double = (quantity as NSString).doubleValue
-                                self.requestCartToCheckout(item["itemId"] as! Int, totalAmount: (iQuantity * price))
+                                self.fireCartToCheckout(item["itemId"] as! Int, totalAmount: (iQuantity * price))
                                 break
                             }
                             
                         } // loop for product unit
                     } // loop for items
-                } else {
+                } else if type == .cart {
                     self.showAlert(title: nil, message: ProductStrings.alertCart)
                     println(items.count)
                     SessionManager.setCartCount(data["total"] as! Int)
@@ -659,10 +635,10 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
                     self.showAlert(title: ProductStrings.alertError, message: errorModel.message)
                     self.hud?.hide(true)
                 } else if requestErrorType == .AccessTokenExpired {
-                    if type == "buyitnow" {
-                        self.requestRefreshToken("buy")
+                    if type == .buy {
+                        self.fireRefreshToken(.buy)
                     } else {
-                        self.requestRefreshToken("cart")
+                        self.fireRefreshToken(.cart)
                     }
                 } else if requestErrorType == .PageNotFound {
                     //Page not found
@@ -678,11 +654,10 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
                     UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "", title: ProductStrings.alertWentWrong)
                 }
             }
-            self.hud?.hide(true)
         })
     }
     
-    func requestCartToCheckout(id: Int, totalAmount: Double) {
+    func fireCartToCheckout(id: Int, totalAmount: Double) {
         
         let item: [Int] = [id]
         let params: NSDictionary = ["access_token": SessionManager.accessToken(), "cart": item]
@@ -711,7 +686,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
                     let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
                     self.showAlert(title: ProductStrings.alertError, message: errorModel.message)
                 } else if requestErrorType == .AccessTokenExpired {
-                    self.requestRefreshToken("cart")
+                    self.fireRefreshToken(.cart)
                 } else if requestErrorType == .PageNotFound {
                     //Page not found
                     Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
@@ -730,7 +705,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         })
     }
     
-    func requestContactsFromEndpoint(){
+    func fireContactsFromEndpoint(){
         
         if (Reachability.isConnectedToNetwork()) {
             let url = APIAtlas.baseUrl + APIAtlas.ACTION_GET_CONTACTS
@@ -744,7 +719,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
 //                        Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
                     } else if requestErrorType == .AccessTokenExpired {
                         if (SessionManager.isLoggedIn()){
-                            self.requestRefreshToken("message")
+                            self.fireRefreshToken(.contacts)
                         }
                     } else if requestErrorType == .PageNotFound {
                         //Page not found
@@ -761,12 +736,11 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
                     }
                     self.contacts = Array<W_Contact>()
                 }
-                self.hud?.hide(true)
             })
         }
     }
     
-    func requestRefreshToken(type: String) {
+    func fireRefreshToken(type: ProductDetailsRefreshType) {
         println("REFRESHING TOKEN")
         WebServiceManager.fireRefreshTokenWithUrl(APIAtlas.refreshTokenUrl, actionHandler: {
             (successful, responseObject, requestErrorType) -> Void in
@@ -774,16 +748,20 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
             
             if successful {
                 SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
-                if type == "details" {
-                    self.requestProductDetails()
-                } else if type == "buy" {
-                    self.requestAddCartItem("buyitnow")
-                } else if type == "cart" {
-                    self.requestAddCartItem("")
-                } else if type == "wishlist" {
-                    self.requestUpdateWishlistItem()
-                } else if type == "message" {
-                    self.requestContactsFromEndpoint()
+                if type == .details {
+                    self.fireProductDetails()
+                } else if type == .review {
+                    self.fireReviewDetails()
+                } else if type == .seller {
+                    self.fireSellerDetails()
+                } else if type == .buy {
+                    self.fireAddCartItem(.buy)
+                } else if type == .cart {
+                    self.fireAddCartItem(.cart)
+                } else if type == .wishlist {
+                    self.fireUpdateWishlistItem()
+                } else if type == .contacts {
+                    self.fireContactsFromEndpoint()
                 } else {
                     println("else in product view refresh token")
                 }
@@ -918,8 +896,6 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         
         setUpViews()
         
-        self.hud?.hide(true)
-        
         self.buttonsContainer.layer.zPosition = 2
         
         if isFromCart {
@@ -933,6 +909,8 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         self.containerScrollView.addSubview(self.getProductExtendedView())
         self.productExtendedView.frame.origin.y = self.containerScrollView.frame.size.height
         self.containerScrollView.contentSize = CGSizeMake(self.containerScrollView.frame.size.width, self.containerScrollView.frame.size.height + self.productExtendedView.frame.size.height)
+        
+        self.hud?.hide(true)
     }
     
     func populateReviewDetails() {
@@ -965,11 +943,8 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     
     func populateSellerDetails() {
         if self.productSellerModel != nil {
-            if self.productSellerModel.images.count < 1 {
-                self.productSellerView.collectionView.hidden = true
-                self.productSellerView.frame.size.height = 123.0
-            }
             self.productSellerView.setSellerDetails(self.productSellerModel)
+            self.productSellerView.sellerLabel.userInteractionEnabled = true
         }
     }
     
@@ -1283,23 +1258,15 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     
     // MARK: - Product Review Delegate
     
-    func pressedCancelReview(controller: ProductReviewViewController) {
-        UIView.animateWithDuration(0.3, animations: {
-            self.view.transform = CGAffineTransformMakeTranslation(1, 1)
-            self.dimV.alpha = 0.0
-            self.navigationController?.navigationBar.alpha = CGFloat(self.visibility)
-        })
-    }
-    
     func seeMoreReview(controller: ProductReviewFooterView) {
         self.barRateAction()
     }
     
-    // MARK: - Product Details Extended Delegate
-    
-    func closedExtendedDetails() {
-        self.navigationController?.navigationBarHidden = false
-        UIApplication.sharedApplication().statusBarHidden = false
+    func reloadReview(controller: ProductReviewFooterView) {
+        isReloading = true
+        self.productReviewFooterView.reloadButton.hidden = true
+        self.productReviewFooterView.activityIndicator.startAnimating()
+        self.fireReviewDetails()
     }
     
     // MARK: - Product Seller Delegate
@@ -1316,10 +1283,21 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         self.navigationController?.pushViewController(productView, animated: true)
     }
     
-    // MARK: - Product Extended View Delegate
+    func reloadSeller(controller: ProductSellerView) {
+        isReloading = true
+        self.productSellerView.reloadButton.hidden = true
+        self.productSellerView.activityIndicator.startAnimating()
+        self.fireSellerDetails()
+    }
     
-    func pullAction(controller: ProductExtendedView) {
-        println("Boom")
+    // MARK: - Review Controller Delegate 
+    
+    func pressedCancelReview(controller: ProductReviewViewController) {
+        UIView.animateWithDuration(0.3, animations: {
+            self.view.transform = CGAffineTransformMakeTranslation(1, 1)
+            self.dimV.alpha = 0.0
+            self.navigationController?.navigationBar.alpha = CGFloat(self.visibility)
+        })
     }
     
     // MARK: Actions
@@ -1330,7 +1308,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         } else if self.quantity == 0 {
             self.showAlert(title: ProductStrings.alertCannotProcceed, message: ProductStrings.alertOutOfStock)
         } else {
-            requestAddCartItem("cart")
+            fireAddCartItem(.cart)
         }
     }
     
@@ -1340,7 +1318,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         } else if self.quantity == 0 {
             self.showAlert(title: ProductStrings.alertCannotProcceed, message: ProductStrings.alertOutOfStock)
         } else {
-            requestAddCartItem("buyitnow")
+            fireAddCartItem(.buy)
         }
         
         /*let alertController = UIAlertController(title: "Feature Not Available", message: "Check-out not available in Beta Testing", preferredStyle: .Alert)
@@ -1378,8 +1356,8 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     func didTapReload() {
         if Reachability.isConnectedToNetwork() {
             self.emptyView?.hidden = true
-            requestProductDetails()
-            requestReviewDetails()
+            fireProductDetails()
+            fireReviewDetails()
         }
     }
     
@@ -1395,7 +1373,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     
     func barWishlistAction() {
         if SessionManager.isLoggedIn() {
-            requestUpdateWishlistItem()
+            fireUpdateWishlistItem()
         } else {
             showAlert(title: ProductStrings.alertFailed, message: ProductStrings.alertLogin)
         }

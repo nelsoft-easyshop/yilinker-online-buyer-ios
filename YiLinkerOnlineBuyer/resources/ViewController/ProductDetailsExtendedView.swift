@@ -8,10 +8,6 @@
 
 import UIKit
 
-protocol ProductDetailsExtendedViewDelegate {
-    func closedExtendedDetails()
-}
-
 class ProductDetailsExtendedView: UIView, UIScrollViewDelegate, UIWebViewDelegate {
 
     @IBOutlet weak var webView: UIWebView!
@@ -19,7 +15,6 @@ class ProductDetailsExtendedView: UIView, UIScrollViewDelegate, UIWebViewDelegat
     @IBOutlet weak var closeButton: UIButton!
     
     var url: String = ""
-    var delegate: ProductDetailsExtendedViewDelegate?
     
     override func awakeFromNib() {
         webView.scrollView.backgroundColor = .clearColor()
@@ -28,7 +23,6 @@ class ProductDetailsExtendedView: UIView, UIScrollViewDelegate, UIWebViewDelegat
         self.activityIndicator.stopAnimating()
         self.webView.scrollView.showsHorizontalScrollIndicator = false
         
-//        webView.loadRequest(NSURLRequest(URL: NSURL(string: "https://www.yilinker.com")!))
     }
 
     func loadUrl(url: String) {
@@ -85,7 +79,6 @@ class ProductDetailsExtendedView: UIView, UIScrollViewDelegate, UIWebViewDelegat
             }
 
             }, completion: { (value: Bool) in
-                self.delegate?.closedExtendedDetails()
                 self.frame.origin.y = self.frame.size.height + 100
         })
     }

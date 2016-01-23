@@ -10,12 +10,14 @@ import UIKit
 
 protocol ProductReviewFooterViewDelegate {
     func seeMoreReview(controller: ProductReviewFooterView)
+    func reloadReview(controller: ProductReviewFooterView)
 }
 
 class ProductReviewFooterView: UIView {
 
     @IBOutlet weak var seeMoreView: UIView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var reloadButton: UIButton!
     
     var delegate: ProductReviewFooterViewDelegate?
     
@@ -29,9 +31,10 @@ class ProductReviewFooterView: UIView {
     }
 
     func seeMoreAction(gesture: UIGestureRecognizer) {
-        if let delegate = self.delegate {
-            delegate.seeMoreReview(self)
-        }
+        delegate!.seeMoreReview(self)
     }
     
+    @IBAction func reloadAction(sender: AnyObject) {
+        delegate?.reloadReview(self)
+    }
 }
