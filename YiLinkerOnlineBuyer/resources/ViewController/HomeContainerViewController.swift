@@ -33,7 +33,7 @@ struct FABStrings {
     static let profile: String = StringHelper.localizedStringWithKey("PROFILE_LOCALIZE_KEY")
 }
 
-class HomeContainerViewController: UIViewController, UITabBarControllerDelegate, EmptyViewDelegate, CarouselCollectionViewCellDataSource, CarouselCollectionViewCellDelegate, HalfPagerCollectionViewCellDelegate, HalfPagerCollectionViewCellDataSource, FlashSaleCollectionViewCellDelegate, LayoutHeaderCollectionViewCellDelegate, SellerCarouselCollectionViewCellDataSource, SellerCarouselCollectionViewCellDelegate, LayoutNineCollectionViewCellDelegate, DailyLoginCollectionViewCellDataSource, DailyLoginCollectionViewCellDelegate {
+class HomeContainerViewController: UIViewController, UITabBarControllerDelegate, EmptyViewDelegate, CarouselCollectionViewCellDataSource, CarouselCollectionViewCellDelegate, HalfPagerCollectionViewCellDelegate, HalfPagerCollectionViewCellDataSource, FlashSaleCollectionViewCellDelegate, LayoutHeaderCollectionViewCellDelegate, SellerCarouselCollectionViewCellDataSource, SellerCarouselCollectionViewCellDelegate, LayoutNineCollectionViewCellDelegate, DailyLoginCollectionViewCellDataSource, DailyLoginCollectionViewCellDelegate, FABViewControllerDelegate {
     
     var searchViewContoller: SearchViewController?
     var circularMenuViewController: CircularMenuViewController?
@@ -149,7 +149,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         //set customTabbar
         self.customTabBarController = self.tabBarController as? CustomTabBarController
         self.customTabBarController?.isValidToSwitchToMenuTabBarItems = false
-        self.circularDraweView()
+        self.circularDraweView("circular-drawer")
         self.tabBarController!.delegate = self
         
         self.backToTopButton.layer.cornerRadius = 15
@@ -262,7 +262,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                 if let data2 = data.dataUsingEncoding(NSUTF8StringEncoding){
                     if let json = NSJSONSerialization.JSONObjectWithData(data2, options: .MutableContainers, error: nil) as? [String:AnyObject] {
                         if self.oldPushNotifData != data {
-                            self.circularDraweView()
+                            self.circularDraweView("circular-drawer")
                         }
                     }
                 }
@@ -320,6 +320,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         self.collectionView.hidden = true
     }
     
+    //MARK: -
     //MARK: - Tab Bar Delegate
     func tabBarController(tabBarController: UITabBarController, shouldSelectViewController viewController: UIViewController) -> Bool {
         if viewController == tabBarController.viewControllers![4] as! UIViewController {
@@ -333,51 +334,51 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             }
         } else if self != viewController && viewController != tabBarController.viewControllers![2] as! UIViewController {
             return true
-        } else if self.customTabBarController?.isValidToSwitchToMenuTabBarItems != true {
-            let storyBoard: UIStoryboard = UIStoryboard(name: "HomeStoryBoard", bundle: nil)
-            var animatedViewController: CircularMenuViewController?
-            animatedViewController  = storyBoard.instantiateViewControllerWithIdentifier("CircularMenuViewController") as? CircularMenuViewController
-            animatedViewController!.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
-            animatedViewController!.providesPresentationContextTransitionStyle = true
-            animatedViewController!.definesPresentationContext = true
-            animatedViewController!.view.backgroundColor = UIColor.clearColor()
+        } else {
+            self.circularDraweView("circular-drawer")
+            let storyBoard: UIStoryboard = UIStoryboard(name: "FAB", bundle: nil)
+            var fabViewController: FABViewController?
+            fabViewController  = storyBoard.instantiateViewControllerWithIdentifier("FABViewController") as? FABViewController
+            fabViewController!.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
+            fabViewController!.providesPresentationContextTransitionStyle = true
+            fabViewController!.definesPresentationContext = true
+            fabViewController!.view.backgroundColor = UIColor.clearColor()
+            fabViewController!.delegate = self
             
             if SessionManager.isLoggedIn() {
-                var buttonImages: [String] = ["fab_following", "fab_messaging", "fab_category", "fab_help", SessionManager.profileImageStringUrl()]
-                var buttonTitles: [String] = [FABStrings.followedSeller, FABStrings.messaging, FABStrings.categories, FABStrings.help, FABStrings.profile]
-                
-                var buttonRightText: [String] = ["", SessionManager.unreadMessageCount(), "", "", "\(SessionManager.userFullName()) \n \(SessionManager.city()) \(SessionManager.province())"]
-                
-                animatedViewController?.buttonImages = buttonImages
-                animatedViewController?.buttonTitles = buttonTitles
-                animatedViewController?.buttonRightText = buttonRightText
+                fabViewController!.addtextAndIconsWithLeftText("FOLLOWED SELLER", rightText: "", icon: "fab_following", isProfile: false)
+                fabViewController!.addtextAndIconsWithLeftText("MESSAGING", rightText: "\(SessionManager.getUnReadMessagesCount()) unread message(s)", icon: "fab_messaging", isProfile: false)
+                fabViewController!.addtextAndIconsWithLeftText("CATEGORIES", rightText: "", icon: "fab_promo", isProfile: false)
+                fabViewController!.addtextAndIconsWithLeftText("HELP", rightText: "", icon: "fab_help", isProfile: false)
+                fabViewController!.addtextAndIconsWithLeftText("PROFILE", rightText: "\(SessionManager.userFullName()) \(SessionManager.city()) \(SessionManager.province())", icon: SessionManager.profileImageStringUrl(), isProfile: true)
+                self.tabBarController!.presentViewController(fabViewController!, animated: false) { () -> Void in
+                    
+                }
             } else {
-                var buttonImages: [String] = ["fab_register", "fab_signin", "fab_category", "fab_help"]
-                var buttonTitles: [String] = ["REGISTER", FABStrings.signIn, FABStrings.categories, FABStrings.help]
-                var buttonRightText: [String] = ["", "", "", "", ""]
+                self.circularDraweView("circular-drawer")
+                fabViewController!.addtextAndIconsWithLeftText(FABStrings.register, rightText: "", icon: "fab_register", isProfile: false)
+                fabViewController!.addtextAndIconsWithLeftText(FABStrings.signIn, rightText: "", icon: "fab_signin", isProfile: false)
+                fabViewController!.addtextAndIconsWithLeftText(FABStrings.categories, rightText: "", icon: "fab_category", isProfile: false)
+                fabViewController!.addtextAndIconsWithLeftText(FABStrings.help, rightText: "", icon: "fab_help", isProfile: false)
                 
-                animatedViewController?.buttonImages = buttonImages
-                animatedViewController?.buttonTitles = buttonTitles
-                animatedViewController?.buttonRightText = buttonRightText
+                self.tabBarController!.presentViewController(fabViewController!, animated: false) { () -> Void in
+                    
+                }
             }
-            animatedViewController?.customTabBarController = self.customTabBarController!
-            self.tabBarController?.presentViewController(animatedViewController!, animated: false, completion: nil)
+            
             return false
-        } else {
-            return true
         }
-        
-        
     }
     
     //MARK: - Circular Drawer View
     //Function for changin tabBar item to circle
-    func circularDraweView() {
-        let unselectedImage: UIImage = UIImage(named: "circular-drawer")!.imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
+    func circularDraweView(imageName: String) {
+        let unselectedImage: UIImage = UIImage(named: imageName)!.imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
         let item2: UITabBarItem = self.tabBarController?.tabBar.items![2] as! UITabBarItem
         item2.selectedImage = unselectedImage
         item2.image = unselectedImage
         item2.imageInsets = UIEdgeInsets(top: 6, left: 0, bottom: -6, right: 0)
+        
         if SessionManager.getUnReadMessagesCount() != 0 {
             item2.badgeValue = "\(SessionManager.getUnReadMessagesCount())"
         }
@@ -1685,5 +1686,26 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     func itemWidthInDailyLoginCollectionViewCell(dailyLoginCollectionViewCell: DailyLoginCollectionViewCell) -> CGFloat {
         dailyLoginCollectionViewCell.layoutIfNeeded()
         return dailyLoginCollectionViewCell.collectionView.frame.size.width
+    }
+    
+    //MARK: - 
+    //MARK: - FAB View Controller Delegate
+    func fabViewController(viewController: FABViewController, didSelectIndex index: Int) {
+        self.redirectToHiddenWithIndex(index)
+    }
+    
+    func redirectToHiddenWithIndex(index: Int) {
+        self.customTabBarController?.selectedIndex = 2
+        let navigationController: UINavigationController = self.customTabBarController!.viewControllers![2] as! UINavigationController
+        let hiddenViewController: HiddenViewController = navigationController.viewControllers[0] as! HiddenViewController
+        hiddenViewController.selectViewControllerAtIndex(index)
+        self.customTabBarController!.isValidToSwitchToMenuTabBarItems = false
+    }
+    
+    func redirectToLoginRegister() {
+        let storyBoard: UIStoryboard = UIStoryboard(name: "StartPageStoryBoard", bundle: nil)
+        let loginRegisterViewController: LoginAndRegisterContentViewController = storyBoard.instantiateViewControllerWithIdentifier("LoginAndRegisterContentViewController5") as! LoginAndRegisterContentViewController
+        
+        self.customTabBarController!.presentViewController(loginRegisterViewController, animated: true, completion: nil)
     }
 }

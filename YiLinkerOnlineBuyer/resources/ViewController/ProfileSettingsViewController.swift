@@ -8,7 +8,18 @@
 
 import UIKit
 
-class ProfileSettingsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, ProfileSettingsTableViewCellDelegate, DeactivateModalViewControllerDelegate {
+enum NotificationType{
+    case Email
+    case SMS
+}
+
+struct ProfileSettingsLocalizedStrings {
+    static let smsLocalizeString = StringHelper.localizedStringWithKey("SETTINGSSMS_LOCALIZE_KEY")
+    static let emailLocalizeString = StringHelper.localizedStringWithKey("SETTINGSEMAIL_LOCALIZE_KEY")
+    static let deactivateLocalizeString = StringHelper.localizedStringWithKey("SETTINGSDEACTIVATE_LOCALIZE_KEY")
+}
+
+class ProfileSettingsViewController: UIViewController, DeactivateModalViewControllerDelegate {
 
     let profileSettingsIdentifier: String = "ProfileSettingsTableViewCell"
     
@@ -29,19 +40,20 @@ class ProfileSettingsViewController: UIViewController, UITableViewDataSource, UI
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        initializeViews()
-        initializeLocalizedString()
-        titleView()
-        backButton()
-        registerNibs()
+        self.initializeViews()
+        self.backButton()
+        self.registerNibs()
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
+    //MARK: - Initializations
+    
     func initializeViews() {
+        self.title = StringHelper.localizedStringWithKey("SETTINGS_LOCALIZE_KEY")
+        
         //Add Nav Bar
         if self.respondsToSelector("edgesForExtendedLayout") {
             self.edgesForExtendedLayout = UIRectEdge.None
@@ -49,36 +61,22 @@ class ProfileSettingsViewController: UIViewController, UITableViewDataSource, UI
         
         tableView.tableFooterView = UIView(frame: CGRectZero)
         
+        //Initialize the 'dimView' (background of 'DeactivateModalViewController')
         dimView = UIView(frame: UIScreen.mainScreen().bounds)
         dimView?.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
         self.navigationController?.view.addSubview(dimView!)
-        //self.view.addSubview(dimView!)
         dimView?.hidden = true
         dimView?.alpha = 0
-    }
-    
-    func initializeLocalizedString() {
-        //Initialized Localized String
-        errorLocalizeString = StringHelper.localizedStringWithKey("ERROR_LOCALIZE_KEY")
-        somethingWrongLocalizeString = StringHelper.localizedStringWithKey("SOMETHINGWENTWRONG_LOCALIZE_KEY")
-        connectionLocalizeString = StringHelper.localizedStringWithKey("CONNECTIONUNREACHABLE_LOCALIZE_KEY")
-        connectionMessageLocalizeString = StringHelper.localizedStringWithKey("CONNECTIONERRORMESSAGE_LOCALIZE_KEY")
         
-        let smsLocalizeString = StringHelper.localizedStringWithKey("SETTINGSSMS_LOCALIZE_KEY")
-        let emailLocalizeString = StringHelper.localizedStringWithKey("SETTINGSEMAIL_LOCALIZE_KEY")
-        let deactivateLocalizeString = StringHelper.localizedStringWithKey("SETTINGSDEACTIVATE_LOCALIZE_KEY")
-        
-        tableData.append(smsLocalizeString)
-        tableData.append(emailLocalizeString)
-        tableData.append(deactivateLocalizeString)
+        //Add data to the tableView
+        tableData.append(ProfileSettingsLocalizedStrings.smsLocalizeString)
+        tableData.append(ProfileSettingsLocalizedStrings.emailLocalizeString)
+        tableData.append(ProfileSettingsLocalizedStrings.deactivateLocalizeString)
         
         tableView.reloadData()
     }
     
-    func titleView() {
-        self.title = StringHelper.localizedStringWithKey("SETTINGS_LOCALIZE_KEY")
-    }
-    
+    //Add back button to Nav Bar
     func backButton() {
         var backButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
         backButton.frame = CGRectMake(0, 0, 40, 40)
@@ -91,28 +89,165 @@ class ProfileSettingsViewController: UIViewController, UITableViewDataSource, UI
         self.navigationItem.leftBarButtonItems = [navigationSpacer, customBackButton]
     }
     
+    //Function to close the current viewcontroller
     func back() {
         self.navigationController!.popViewControllerAnimated(true)
     }
     
+    //Register nibs of the table view
     func registerNibs() {
         var nib = UINib(nibName: profileSettingsIdentifier, bundle: nil)
-        tableView.registerNib(nib, forCellReuseIdentifier: profileSettingsIdentifier)
+        self.tableView.registerNib(nib, forCellReuseIdentifier: profileSettingsIdentifier)
     }
     
     
-    // MARK: - Table view data source
+    //MARK: -
+    //MARK: - API Request
     
+    //MARK: - Fire Post Settings
+    /* Function called when access_token is already expired.
+    * (Parameter) type: NotificationType -- Type of notification(SMS or Email) needed to identify
+    *                                        the url to be used for the API request
+    *             isON: Bool -- Requested status of the choosen 'NotificationType'
+    *
+    * This function is for requesting of to update the current of the choosen notification.
+    * (ALlow to be notified or not)
+    *
+    * At first it will check the 'NotificationType' to identify the url to be used for the API request.
+    *
+    * If the API request is unsuccessful, it will check the r'equestErrorType'  
+    * and execute/do action/s  based on the error type)
+    */
+    func firePostSettings(type: NotificationType, isOn: Bool) {
+        self.showHUD()
+        
+        var url: String = ""
+        switch type {
+        case .SMS:
+            url = APIAtlas.postSMSNotif
+        case .Email:
+            url = APIAtlas.postEmailNotif
+        }
+        
+        WebServiceManager.fireSetNotificationSettingsWithUrl(url, accessToken: SessionManager.accessToken(), isSubscribe: isOn) { (successful, responseObject, requestErrorType) -> Void in
+            self.hud?.hide(true)
+            println(responseObject)
+            if !successful {
+                if requestErrorType == .ResponseError {
+                    //Error in api requirements
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    
+                    if errorModel.message == "The access token provided is invalid." {
+                        UIAlertController.displayAlertRedirectionToLogin(self, actionHandler: { (sucess) -> Void in
+                        })
+                    } else {
+                        Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                    }
+                    
+                } else if requestErrorType == .AccessTokenExpired {
+                    self.fireRefreshToken(type, isON: isOn)
+                } else if requestErrorType == .PageNotFound {
+                    //Page not found
+                    Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    //No internet connection
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    //Request timeout
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    //Unhandled error
+                    Toast.displayToastWithMessage(Constants.Localized.error, duration: 1.5, view: self.view)
+                }
+            }
+        }
+    }
+    
+    //MARK: - Fire Refresh Token
+    /* Function called when access_token is already expired.
+    * (Parameter) type: NotificationType -- Type of notification(SMS or Email) needed to identify 
+    *                                        the url to be used for the API request
+    *             isON: Bool -- Requested status of the choosen 'NotificationType'
+    *
+    * This function is for requesting of access token and parse it to save in SessionManager.
+    * If request is successful, it will check the requestType and redirect/call the API request
+    * function based on the requestType.
+    * If the request us unsuccessful, it will forcely logout the user
+    */
+    func fireRefreshToken(type: NotificationType, isON: Bool) {
+        self.showHUD()
+        WebServiceManager.fireRefreshTokenWithUrl(APIAtlas.refreshTokenUrl, actionHandler: {
+            (successful, responseObject, requestErrorType) -> Void in
+            self.hud?.hide(true)
+            
+            if successful {
+                SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+                self.firePostSettings(type, isOn: isON)
+            } else {
+                //Forcing user to logout.
+                UIAlertController.displayAlertRedirectionToLogin(self, actionHandler: { (sucess) -> Void in
+                    SessionManager.logoutWithTarget(self)
+                })
+            }
+        })
+    }
+    
+    //MARK: -
+    //MARK: - Util Functions
+    //Show loader
+    func showHUD() {
+        if self.hud != nil {
+            self.hud!.hide(true)
+            self.hud = nil
+        }
+        
+        self.hud = MBProgressHUD(view: self.view)
+        self.hud?.removeFromSuperViewOnHide = true
+        self.hud?.dimBackground = false
+        self.view.addSubview(self.hud!)
+        self.hud?.show(true)
+    }
+    
+    //Set attributes and open 'DeactivateModalViewController'
+    func showDeactivateModal(){
+        //Open 'DeactivateModalViewController' (Controller where the user input his/her password to )
+        var deactivateModal = DeactivateModalViewController(nibName: "DeactivateModalViewController", bundle: nil)
+        deactivateModal.delegate = self
+        deactivateModal.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
+        deactivateModal.providesPresentationContextTransitionStyle = true
+        deactivateModal.definesPresentationContext = true
+        deactivateModal.view.backgroundColor = UIColor.clearColor()
+        deactivateModal.view.frame.origin.y = 0
+        self.tabBarController?.presentViewController(deactivateModal, animated: true, completion: nil)
+        
+        //Show 'dimView'(background of 'DeactivateModalViewController') with fade in animation
+        self.dimView!.hidden = false
+        UIView.animateWithDuration(0.3, animations: {
+            self.dimView!.alpha = 1
+            }, completion: { finished in
+        })
+    }
+    
+    //Hide 'dimView'(background of 'DeactivateModalViewController') with fade out animation
+    func hideDimView() {
+        UIView.animateWithDuration(0.3, animations: {
+            self.dimView!.alpha = 0
+            }, completion: { finished in
+                self.dimView!.hidden = true
+        })
+    }
+}
+
+
+// MARK: - Delegates and Data Source
+// MARK: - Table View Delegate and Data Source
+extension ProfileSettingsViewController: UITableViewDataSource, UITableViewDelegate {
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // #warning Potentially incomplete method implementation.
-        // Return the number of sections.
         return 1
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete method implementation.
-        // Return the number of rows in the section.
-        return tableData.count + 1
+        return self.tableData.count + 1
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -132,8 +267,6 @@ class ProfileSettingsViewController: UIViewController, UITableViewDataSource, UI
             cell.settingsLabel?.textAlignment = NSTextAlignment.Left
             cell.switchContraint.constant = 49
         }
-        
-        
         return cell
     }
     
@@ -143,193 +276,45 @@ class ProfileSettingsViewController: UIViewController, UITableViewDataSource, UI
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        
         if indexPath.row == tableData.count {
             SessionManager.logoutWithTarget(self)
         }
     }
-    
-    // MARK: - ProfileSettingsTableViewCellDelegate
+}
+
+//MARK: - ProfileSettingsTableViewCellDelegate
+extension ProfileSettingsViewController: ProfileSettingsTableViewCellDelegate {
     func settingsSwitchAction(sender: AnyObject, value: Bool) {
         var pathOfTheCell: NSIndexPath = tableView.indexPathForCell(sender as! UITableViewCell)!
         var rowOfTheCell: Int = pathOfTheCell.row
         
         if rowOfTheCell == 0 {
-            tableDataStatus[0] = value
-            firePostSettings("email", isOn: value)
+            self.tableDataStatus[0] = value
+            self.firePostSettings(.SMS, isOn: value)
         } else if rowOfTheCell == 1 {
-            tableDataStatus[1] = value
-            firePostSettings("sms", isOn: value)
+            self.tableDataStatus[1] = value
+            self.firePostSettings(.Email, isOn: value)
         } else {
-            tableDataStatus[2] = value
-            showDeactivateModal()
-        }
-    }
-    
-    func showHUD() {
-        if self.hud != nil {
-            self.hud!.hide(true)
-            self.hud = nil
-        }
-        
-        self.hud = MBProgressHUD(view: self.view)
-        self.hud?.removeFromSuperViewOnHide = true
-        self.hud?.dimBackground = false
-        self.view.addSubview(self.hud!)
-        self.hud?.show(true)
-    }
-    
-    
-    
-    func firePostSettings(type: String, isOn: Bool) {
-        showHUD()
-        let manager = APIManager.sharedInstance
-        var parameters: NSDictionary
-        var url: String = ""
-        
-        if type == "email" {
-            url = APIAtlas.postEmailNotif
-        } else if type == "sms" {
-            url = APIAtlas.postSMSNotif
-        }
-        url = "\(url)?access_token=\(SessionManager.accessToken())&isSubscribe=\(isOn)"
-        
-        manager.POST(url, parameters: nil, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            
-            println("RESPONSE \(responseObject)")
-            self.hud?.hide(true)
-            
-            if let tempDict = responseObject as? NSDictionary {
-                let tempVar = tempDict["isSuccessful"] as! Bool
-                if !(tempVar){
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: tempDict["message"] as! String, title: self.errorLocalizeString)
-                } else {
-                    let notifLocalizeString = StringHelper.localizedStringWithKey("NOTIFICATION_LOCALIZE_KEY")
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: tempDict["message"] as! String, title: notifLocalizeString)
-                }
-            }
-            }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
-                self.hud?.hide(true)
-                
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                
-                if task.statusCode == 401 {
-                    self.fireRefreshToken(type, isON: isOn)
-                } else {
-                    if Reachability.isConnectedToNetwork() {
-                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: self.somethingWrongLocalizeString, title: self.errorLocalizeString)
-                    } else {
-                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: self.connectionMessageLocalizeString, title: self.errorLocalizeString)
-                    }
-                    println(error)
-                }
-        })
-    }
-    
-    func fireRefreshToken(type: String, isON: Bool) {
-        self.showHUD()
-        let manager = APIManager.sharedInstance
-        let parameters: NSDictionary = [
-            "client_id": Constants.Credentials.clientID(),
-            "client_secret": Constants.Credentials.clientSecret(),
-            "grant_type": Constants.Credentials.grantRefreshToken,
-            "refresh_token": SessionManager.refreshToken()]
-        
-        manager.POST(APIAtlas.refreshTokenUrl, parameters: parameters, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            
-            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
-            self.firePostSettings(type, isOn: isON)
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                self.hud?.hide(true)
-        })
-        
-    }
-    
-    //Method for
-    func handleIOS8(){
-        let deactivateAccountLocalizeString = StringHelper.localizedStringWithKey("DEACTIVATEACCOUNT_LOCALIZE_KEY")
-        let deactivateLocalizeString = StringHelper.localizedStringWithKey("DEACTIVATE_LOCALIZE_KEY")
-        let cancelLocalizeString = StringHelper.localizedStringWithKey("CANCEL_LOCALIZE_KEY")
-        
-        let alert = UIAlertController(title: deactivateAccountLocalizeString, message: "", preferredStyle: UIAlertControllerStyle.ActionSheet)
-        let libButton = UIAlertAction(title: deactivateLocalizeString, style: UIAlertActionStyle.Destructive) { (alert) -> Void in
+            self.tableDataStatus[2] = value
             self.showDeactivateModal()
         }
-        
-        let cancelButton = UIAlertAction(title: cancelLocalizeString, style: UIAlertActionStyle.Cancel) { (alert) -> Void in
-            println("Cancel Pressed")
-        }
-        
-        alert.addAction(libButton)
-        alert.addAction(cancelButton)
-        
-        self.presentViewController(alert, animated: true, completion: nil)
     }
-    
-    func controllerAvailable() -> Bool {
-        if let gotModernAlert: AnyClass = NSClassFromString("UIAlertController") {
-            return true;
-        }
-        else {
-            return false;
-        }
-    }
-    
-    func actionSheet(actionSheet: UIActionSheet, clickedButtonAtIndex buttonIndex: Int) {
-        println("Title : \(actionSheet.buttonTitleAtIndex(buttonIndex))")
-        println("Button Index : \(buttonIndex)")
-        
-        if buttonIndex == 0 {
-            self.showDeactivateModal()
-        } else if buttonIndex == 1 {
-        } else {
-            
-        }
-    }
-    
-    func showDeactivateModal(){
-        var deactivateModal = DeactivateModalViewController(nibName: "DeactivateModalViewController", bundle: nil)
-        deactivateModal.delegate = self
-        deactivateModal.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
-        deactivateModal.providesPresentationContextTransitionStyle = true
-        deactivateModal.definesPresentationContext = true
-        deactivateModal.view.backgroundColor = UIColor.clearColor()
-        deactivateModal.view.frame.origin.y = 0
-        self.tabBarController?.presentViewController(deactivateModal, animated: true, completion: nil)
-        
-        self.dimView!.hidden = false
-        UIView.animateWithDuration(0.3, animations: {
-            self.dimView!.alpha = 1
-            }, completion: { finished in
-        })
-    }
-    
-    func hideDimView() {
-        UIView.animateWithDuration(0.3, animations: {
-            self.dimView!.alpha = 0
-            }, completion: { finished in
-                self.dimView!.hidden = true
-        })
-    }
-    // MARK : DeactivateModalViewControllerDelegate
-    func closeDeactivateModal(){
-        tableDataStatus[2] = false
-        hideDimView()
-        tableView.reloadData()
-    }
+}
 
+
+//MARK: - DeactivateModalViewControllerDelegate
+extension ProfileSettingsViewController: DeactivateModalViewControllerDelegate {
+    func closeDeactivateModal(){
+        self.tableDataStatus[2] = false
+        self.hideDimView()
+        self.tableView.reloadData()
+    }
     
     func submitDeactivateModal(password: String){
-        tableDataStatus[2] = false
-        hideDimView()
-        tableView.reloadData()
+        self.tableDataStatus[2] = false
+        self.hideDimView()
+        self.tableView.reloadData()
         
-        SessionManager.logout()
-        let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-        appDelegate.changeRootToHomeView()
+        SessionManager.logoutWithTarget(self)
     }
 }

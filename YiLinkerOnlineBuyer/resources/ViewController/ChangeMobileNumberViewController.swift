@@ -44,12 +44,8 @@ class ChangeMobileNumberViewController: UIViewController {
     
     var hud: MBProgressHUD?
     
-    var errorLocalizeString: String  = ""
-    var somethingWrongLocalizeString: String = ""
-    
     var isFromCheckout: Bool = false
 
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -91,32 +87,11 @@ class ChangeMobileNumberViewController: UIViewController {
                 mainViewConstant.constant = mainViewConstant.constant - 50
 
                 newNumberTextField.text = mobileNumber
-//                newNumberTextField.enabled = false
             }
         }
-        
-//        if SessionManager.mobileNumber().isEmpty || !SessionManager.isMobileVerified(){
-//            oldNumberTextField.hidden = true
-//            oldNumberLabel.hidden = true
-//            oldNumberConstant.constant = 0
-//            oldNumberTextConstant.constant = 0
-//            mainViewConstant.constant = mainViewConstant.constant - 50
-//            if isFromCheckout {
-//                newNumberTextField.text = mobileNumber
-//                newNumberTextField.enabled = false
-//            }
-//        } else {
-//            if isFromCheckout {
-//                newNumberTextField.text = SessionManager.mobileNumber()
-//                newNumberTextField.enabled = false
-//            }
-//        }
     }
     
     func initializeLocalizedString() {
-        //Initialized Localized String
-        errorLocalizeString = StringHelper.localizedStringWithKey("ERROR_LOCALIZE_KEY")
-        somethingWrongLocalizeString = StringHelper.localizedStringWithKey("SOMETHINGWENTWRONG_LOCALIZE_KEY")
         
         var changeMobileLocalizeString = StringHelper.localizedStringWithKey("CHANGEMOBILE_LOCALIZE_KEY")
         var oldNumberLocalizeString = StringHelper.localizedStringWithKey("OLDNUMBER_LOCALIZE_KEY")
@@ -128,12 +103,6 @@ class ChangeMobileNumberViewController: UIViewController {
         changeMobileLabel.text = changeMobileLocalizeString
         oldNumberLabel.text = oldNumberLocalizeString
         newNumberLabel.text = newNumberLocalizeString
-        
-//        if SessionManager.mobileNumber().isEmpty || !SessionManager.isMobileVerified(){
-//            newNumberLabel.text = StringHelper.localizedStringWithKey("MOBILE_LOCALIZED_KEY")
-//            newNumberTextField.placeholder = StringHelper.localizedStringWithKey("MOBILE_LOCALIZED_KEY")
-//            submitButton.setTitle(StringHelper.localizedStringWithKey("SEND_CODE_LOCALIZED_KEY"), forState: UIControlState.Normal)
-//        }
         
         if !SessionManager.isMobileVerified() {
             titleLabel.text = StringHelper.localizedStringWithKey("YOUR_MOBILE_LOCALIZE_KEY")
@@ -189,21 +158,16 @@ class ChangeMobileNumberViewController: UIViewController {
             if !SessionManager.isMobileVerified(){
                 if newNumberTextField.text.isEmpty{
                     var completeLocalizeString = StringHelper.localizedStringWithKey("COMPLETEFIELDS_LOCALIZE_KEY")
-                    showAlert(title: errorLocalizeString, message: completeLocalizeString)
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: completeLocalizeString)
                 } else {
                     if SessionManager.mobileNumber().isEmpty {
                         setNewMobileNumber(newNumberTextField.text)
-//                        fireUpdateProfile(APIAtlas.updateMobileNumber, params: NSDictionary(dictionary: ["access_token" : SessionManager.accessToken(),
-//                            "newContactNumber": newNumberTextField.text ]))
                     } else {
                         if SessionManager.mobileNumber() == newNumberTextField.text {
                             SessionManager.setMobileNumber(SessionManager.mobileNumber())
                             setNewMobileNumber(SessionManager.mobileNumber())
                         } else {
                             setNewMobileNumber(newNumberTextField.text)
-//                            fireUpdateProfile(APIAtlas.updateMobileNumber, params: NSDictionary(dictionary: ["access_token" : SessionManager.accessToken(),
-//                                "newContactNumber": newNumberTextField.text ,
-//                                "oldContactNumber": SessionManager.mobileNumber()]))
                         }
                     }
                     self.dismissViewControllerAnimated(true, completion: nil)
@@ -212,18 +176,15 @@ class ChangeMobileNumberViewController: UIViewController {
             } else {
                 if oldNumberTextField.text.isEmpty ||  newNumberTextField.text.isEmpty{
                     var completeLocalizeString = StringHelper.localizedStringWithKey("COMPLETEFIELDS_LOCALIZE_KEY")
-                    showAlert(title: errorLocalizeString, message: completeLocalizeString)
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: completeLocalizeString)
                 } else if oldNumberTextField.text != mobileNumber {
                     var incorrectLocalizeString = StringHelper.localizedStringWithKey("INCORRECTMOBILE_LOCALIZE_KEY")
-                    showAlert(title: errorLocalizeString, message: incorrectLocalizeString)
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: incorrectLocalizeString)
                 } else {
                     SessionManager.setMobileNumber(oldNumberTextField.text)
                     setNewMobileNumber(newNumberTextField.text)
                     self.dismissViewControllerAnimated(true, completion: nil)
                     self.delegate?.submitChangeNumberViewController()
-//                    fireUpdateProfile(APIAtlas.updateMobileNumber, params: NSDictionary(dictionary: ["access_token" : SessionManager.accessToken(),
-//                        "oldContactNumber": oldNumberTextField.text,
-//                        "newContactNumber": newNumberTextField.text]))
                 }
             }
         }
@@ -232,14 +193,6 @@ class ChangeMobileNumberViewController: UIViewController {
     func setNewMobileNumber(newMobileNumber: String) {
         NSUserDefaults.standardUserDefaults().setObject(newMobileNumber, forKey: "newMobileNumber")
         NSUserDefaults.standardUserDefaults().synchronize()
-    }
-
-    func showAlert(#title: String!, message: String!) {
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
-        var okLocalizeString = StringHelper.localizedStringWithKey("OKBUTTON_LOCALIZE_KEY")
-        let defaultAction = UIAlertAction(title: okLocalizeString, style: .Default, handler: nil)
-        alertController.addAction(defaultAction)
-        presentViewController(alertController, animated: true, completion: nil)
     }
     
     //Loader function
@@ -259,88 +212,4 @@ class ChangeMobileNumberViewController: UIViewController {
     func dismissLoader() {
         self.hud?.hide(true)
     }
-    
-    func fireUpdateProfile(url: String, params: NSDictionary!) {
-        showLoader()
-
-            manager.POST(url, parameters: params, success: {
-                (task: NSURLSessionDataTask!, responseObject: AnyObject!) in print(responseObject as! NSDictionary)
-                if responseObject.objectForKey("error") != nil {
-                    self.requestRefreshToken("change", url: url, params: params)
-                } else {
-                    if responseObject["isSuccessful"] as! Bool {
-                        SessionManager.setMobileNumber(self.newNumberTextField.text)
-                        SessionManager.setIsMobileVerified(true)
-                        self.dismissViewControllerAnimated(true, completion: nil)
-                        self.delegate?.submitChangeNumberViewController()
-                        self.dismissLoader()
-                    } else {
-                        self.showAlert(title: self.errorLocalizeString, message: responseObject["message"] as! String)
-                        self.dismissLoader()
-                    }
-                }
-                println(responseObject)
-                }, failure: {
-                    (task: NSURLSessionDataTask!, error: NSError!) in
-                    
-                    println(error)
-                    if Reachability.isConnectedToNetwork() {
-                        var info = error.userInfo!
-                        
-                        if let data = info["data"] as? NSDictionary {
-                            if let errors = data["errors"] as? NSArray {
-                                if errors.count == 0 {
-                                    if let message = info["message"] as? NSString {
-                                        self.showAlert(title: self.errorLocalizeString, message: message as String)
-                                    }
-                                    
-                                } else {
-                                    self.showAlert(title: self.errorLocalizeString, message: errors[0] as! String)
-                                }
-                            }
-                        } else {
-                            UIAlertController.displaySomethingWentWrongError(self)
-                        }
-                        
-                    } else {
-                        UIAlertController.displayNoInternetConnectionError(self)
-                    }
-                    
-                    self.dismissLoader()
-                    
-            })
-
-    }
-    
-    
-    func requestRefreshToken(type: String, url: String, params: NSDictionary!) {
-        let urlTemp: String = APIAtlas.loginUrl
-        let params: NSDictionary = ["client_id": Constants.Credentials.clientID(),
-            "client_secret": Constants.Credentials.clientSecret(),
-            "grant_type": Constants.Credentials.grantRefreshToken,
-            "refresh_token": SessionManager.refreshToken()]
-        
-        let manager = APIManager.sharedInstance
-        manager.POST(urlTemp, parameters: params, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            self.dismissLoader()
-            
-            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
-            if type == "change" {
-                self.fireUpdateProfile(url, params: params)
-            }
-            
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                self.dismissLoader()
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                
-                self.showAlert(title: self.errorLocalizeString, message: self.somethingWrongLocalizeString)
-                
-        })
-    }
-    
-
-
-
 }

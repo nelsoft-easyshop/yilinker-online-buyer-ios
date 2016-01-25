@@ -262,11 +262,7 @@ class WishlistViewController: UIViewController {
             } else {
                 //Show UIAlert and force the user to logout
                 UIAlertController.displayAlertRedirectionToLogin(self, actionHandler: { (sucess) -> Void in
-                    SessionManager.logout()                 //Clear NsUserDefaults values
-                    FBSDKLoginManager().logOut()            //Logout FB
-                    GPPSignIn.sharedInstance().signOut()    //Logout Google Login
-                    let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-                    appDelegate.startPage()                 //Redirect to start page
+                    SessionManager.logoutWithTarget(self)
                 })
             }
         })

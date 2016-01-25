@@ -8,47 +8,42 @@
 
 import UIKit
 
-class ProfileViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, ProfileTableViewCellDelegate {
+class ProfileViewController: UIViewController{
+    
+    //Cell Unique Identifier
     let cellHeaderIdentifier: String = "ProfileHeaderTableViewCell"
     let cellContentIdentifier: String = "ProfileTableViewCell"
     
     let manager = APIManager.sharedInstance
     
     @IBOutlet weak var tableView: UITableView!
-
-    var profileDetails: ProfileUserDetailsModel!
-    
     var hud: MBProgressHUD?
     
-    var errorLocalizeString: String  = ""
+    var profileDetails: ProfileUserDetailsModel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         initializeViews()
         registerNibs()
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        requestProfileDetails(APIAtlas.profileUrl, params: NSDictionary(dictionary: ["access_token": SessionManager.accessToken()]), showLoader: false)
+        self.fireGetUserInfo()
     }
     
-    func initializeLocalizedString() {
-        //Initialized Localized String
-        errorLocalizeString = StringHelper.localizedStringWithKey("ERROR_LOCALIZE_KEY")
-    }
     
+    //MARK: - Initializations
     func initializeViews() {
-        
         tableView.tableFooterView = UIView(frame: CGRectZero)
     }
-
+    
+    //Register nibs of the table view
     func registerNibs() {
         var nibHeader = UINib(nibName: cellHeaderIdentifier, bundle: nil)
         tableView.registerNib(nibHeader, forCellReuseIdentifier: cellHeaderIdentifier)
@@ -57,46 +52,134 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         tableView.registerNib(nibContent, forCellReuseIdentifier: cellContentIdentifier)
     }
     
-    func requestProfileDetails(url: String, params: NSDictionary!, showLoader: Bool) {
-        if showLoader {
-            self.showLoader()
+    
+    //MARK: - API Requests
+    //MARK: - Fire Get User Info
+    /* Function to request get user information data.
+    *
+    * It will check first if the 'profileDetails'(Object for User Details) is equal to nil,
+    * if it is equal to nil, it will show the loader(HUD), if it is not equal to nil,
+    * it will show the network activity indicator in the status bar. Then call the API request.
+    *
+    * If the API request is successful, it will convert the 'responseObject' to NSDictionary,
+    * parse the 'data' object in the dictionary and set the values in the 'SessionManager'
+    *
+    * If the API request is unsuccessful, it will check 'requestErrorType'
+    * and proceed/do some actions based on the error type
+    */
+    func fireGetUserInfo() {
+        //Check the 'profileDetails' to identify what loader indicator will be shown
+        if self.profileDetails == nil {
+            self.tableView.hidden = true
+            self.showHUD()
         } else {
             UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         }
         
-        
-        manager.GET(url, parameters: params, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in print(responseObject as! NSDictionary)
-            if responseObject.objectForKey("error") != nil {
-                self.requestRefreshToken("requestProfileDetails", url: url, params: params, showLoader: showLoader)
-            } else {
-                if let value: AnyObject = responseObject["data"] {
-                    self.profileDetails = ProfileUserDetailsModel.parseDataWithDictionary(value as! NSDictionary)
-                }
-                
-                self.tableView.reloadData()
-                self.dismissLoader()
-            }
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                if task.response as? NSHTTPURLResponse != nil {
-                    let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                    
-                    if task.statusCode == 401 {
-                        self.requestRefreshToken("requestProfileDetails", url: url, params: params, showLoader: showLoader)
-                    } else {
-                        UIAlertController.displaySomethingWentWrongError(self)
+        WebServiceManager.fireGetUserInfoWithUrl(APIAtlas.getUserInfoUrl, accessToken: SessionManager.accessToken()) { (successful, responseObject, requestErrorType) -> Void in
+            self.hud?.hide(true)
+            if successful {
+                if  let dictionary: NSDictionary = responseObject as? NSDictionary {
+                    if let value: AnyObject = dictionary["data"] {
+                        self.profileDetails = ProfileUserDetailsModel.parseDataWithDictionary(value)
+                        //Insert Data to Session Manager
+                        SessionManager.setFullAddress(self.profileDetails.address.fullLocation)
+                        SessionManager.setUserFullName(self.profileDetails.fullName)
+                        SessionManager.setAddressId(self.profileDetails.address.userAddressId)
+                        SessionManager.setCartCount(self.profileDetails.cartCount)
+                        SessionManager.setWishlistCount(self.profileDetails.wishlistCount)
+                        SessionManager.setProfileImage(self.profileDetails.profileImageUrl)
+                        
+                        SessionManager.setCity(self.profileDetails.address.city)
+                        SessionManager.setProvince(self.profileDetails.address.province)
+                        
+                        SessionManager.setLang(self.profileDetails.address.latitude)
+                        SessionManager.setLong(self.profileDetails.address.longitude)
+                        
+                        self.tableView.hidden = false
+                        self.tableView.reloadData()
                         self.dismissLoader()
                     }
                 }
+            } else {
+                self.hud?.hide(true)
+                if requestErrorType == .ResponseError {
+                    //Error in api requirements
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    
+                    if errorModel.message == "The access token provided is invalid." {
+                        UIAlertController.displayAlertRedirectionToLogin(self, actionHandler: { (sucess) -> Void in
+                        })
+                    } else {
+                        Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                    }
+                    
+                } else if requestErrorType == .AccessTokenExpired {
+                    self.fireRefreshToken()
+                } else if requestErrorType == .PageNotFound {
+                    //Page not found
+                    Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    //No internet connection
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    //Request timeout
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    //Unhandled error
+                    Toast.displayToastWithMessage(Constants.Localized.error, duration: 1.5, view: self.view)
+                }
+            }
+        }
+    }
+    
+    //MARK: -
+    //MARK: - Fire Refresh Token
+    func fireRefreshToken() {
+        self.showHUD()
+        WebServiceManager.fireRefreshTokenWithUrl(APIAtlas.refreshTokenUrl, actionHandler: {
+            (successful, responseObject, requestErrorType) -> Void in
+            self.hud?.hide(true)
+            
+            if successful {
+                SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+                self.fireGetUserInfo()
+            } else {
+                //Forcing user to logout.
+                UIAlertController.displayAlertRedirectionToLogin(self, actionHandler: { (sucess) -> Void in
+                    SessionManager.logoutWithTarget(self)
+                })
+            }
         })
     }
     
-    // MARK: - Table view data source
+    //MARK: -
+    //MARK: - Util Functions
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1
+    //Show Loader
+    func showHUD() {
+        if self.hud != nil {
+            self.hud!.hide(true)
+            self.hud = nil
+        }
+        
+        self.hud = MBProgressHUD(view: self.view)
+        self.hud?.removeFromSuperViewOnHide = true
+        self.hud?.dimBackground = false
+        self.view.addSubview(self.hud!)
+        self.hud?.show(true)
     }
+    
+    //Hide Loader
+    func dismissLoader() {
+        self.hud?.hide(true)
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+    }
+}
+
+// MARK: - Delegates and Data Source
+// MARK: - Table View Delegate and Data Source
+extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 2
@@ -104,6 +187,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
+        //Check what row of the table to set the correct tableview cell
         if indexPath.row == 0 {
             let cell = tableView.dequeueReusableCellWithIdentifier(cellHeaderIdentifier, forIndexPath: indexPath) as! ProfileHeaderTableViewCell
             if profileDetails != nil {
@@ -131,97 +215,56 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
             return 375
         }
     }
-    
-    // MARK: - Profile Table View cell Delegate
+}
+
+//MARK: - Profile Table View cell Delegate
+extension ProfileViewController: ProfileTableViewCellDelegate {
+    //Redirect to Edit Profile View Controller
     func editProfileTapAction() {
         var editViewController = EditProfileTableViewController(nibName: "EditProfileTableViewController", bundle: nil)
         editViewController.passModel(profileDetails!)
         self.navigationController?.pushViewController(editViewController, animated:true)
     }
     
+    //Redirect to Transaction View Controller
     func transactionsTapAction() {
         var transactionViewController = TransactionViewController(nibName: "TransactionViewController", bundle: nil)
+        //Prevent overlapping of tab bar and
         if transactionViewController.respondsToSelector("edgesForExtendedLayout") {
             transactionViewController.edgesForExtendedLayout = UIRectEdge.None
         }
         self.navigationController?.pushViewController(transactionViewController, animated:true)
     }
     
+    //Redirect to Activity Logs Controller
     func activityLogTapAction() {
         var activityViewController = ActivityLogTableViewController(nibName: "ActivityLogTableViewController", bundle: nil)
         self.navigationController?.pushViewController(activityViewController, animated:true)
     }
     
+    //Redirect to My Points Controller
     func myPointsTapAction(){
-
         var myPointsViewController = MyPointsTableViewController(nibName: "MyPointsTableViewController", bundle: nil)
         self.navigationController?.pushViewController(myPointsViewController, animated:true)
     }
     
+    //Redirect to Resolution Center Controller
     func resolutionTapAction() {
         let storyboard = UIStoryboard(name: "HomeStoryBoard", bundle: nil)
         let resolutionCenter = storyboard.instantiateViewControllerWithIdentifier("ResolutionCenterViewController")
             as! ResolutionCenterViewController
         resolutionCenter.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(resolutionCenter, animated:true)
-        
     }
     
+    //Redirect to Settings Controller
     func settingsTapAction(){
         var settingsViewController = ProfileSettingsViewController(nibName: "ProfileSettingsViewController", bundle: nil)
+        //Set status of SMS and Email Notification
         settingsViewController.tableDataStatus.removeAll(keepCapacity: false)
         settingsViewController.tableDataStatus.append(profileDetails.isSmsSubscribed)
         settingsViewController.tableDataStatus.append(profileDetails.isEmailSubscribed)
         settingsViewController.tableDataStatus.append(false)
         self.navigationController?.pushViewController(settingsViewController, animated:true)
-        
-//        let webViewController: WebViewController = WebViewController(nibName: "WebViewController", bundle: nil)
-//        webViewController.webviewSource = WebviewSource.FlashSale
-//        self.navigationController!.pushViewController(webViewController, animated: true)
-    }
-    
-    //Loader function
-    func showLoader() {
-        if self.hud != nil {
-            self.hud!.hide(true)
-            self.hud = nil
-        }
-        
-        self.hud = MBProgressHUD(view: self.view)
-        self.hud?.removeFromSuperViewOnHide = true
-        self.hud?.dimBackground = false
-        self.view.addSubview(self.hud!)
-        self.hud?.show(true)
-    }
-    
-    func dismissLoader() {
-        self.hud?.hide(true)
-        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-    }
-
-    func requestRefreshToken(type: String, url: String, params: NSDictionary!, showLoader: Bool) {
-        let urlTemp: String = APIAtlas.refreshTokenUrl
-        let paramsRefresh: NSDictionary = ["client_id": Constants.Credentials.clientID(),
-            "client_secret": Constants.Credentials.clientSecret(),
-            "grant_type": Constants.Credentials.grantRefreshToken,
-            "refresh_token": SessionManager.refreshToken()]
-        
-        let manager = APIManager.sharedInstance
-        manager.POST(urlTemp, parameters: paramsRefresh, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            
-            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
-            var paramsTemp: Dictionary<String, String> = params as! Dictionary<String, String>
-            paramsTemp["access_token"] = SessionManager.accessToken()
-            
-            self.requestProfileDetails(url, params: paramsTemp, showLoader: showLoader)
-            
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                SVProgressHUD.dismiss()
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                UIAlertController.displaySomethingWentWrongError(self)
-                
-        })
     }
 }
