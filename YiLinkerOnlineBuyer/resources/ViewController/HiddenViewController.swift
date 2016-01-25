@@ -31,7 +31,7 @@ class HiddenViewController: UIViewController {
     var messagingViewController: MessagingConversationListViewController?
     var customizeShoppingViewController: CustomizeShoppingViewController?
     var resultViewController: ResultViewController?
-    var categoriesViewController: CategoriesViewController?
+    var categoriesViewController: WebViewController?
     
     var followedSellerViewController: FollowedSellerViewController?
     var profileViewController: ProfileViewController?
@@ -132,7 +132,7 @@ class HiddenViewController: UIViewController {
             self.customizeShoppingViewController = CustomizeShoppingViewController(nibName: "CustomizeShoppingViewController", bundle: nil)
             self.resultViewController = ResultViewController(nibName: "ResultViewController", bundle: nil)
             self.resultViewController!.targetType = TargetType.TodaysPromo
-            self.categoriesViewController = CategoriesViewController(nibName: "CategoriesViewController", bundle: nil)
+            self.categoriesViewController = WebViewController(nibName: "WebViewController", bundle: nil)
             self.profileViewController = ProfileViewController(nibName: "ProfileViewController", bundle: nil)
             //ConversationVC
             
@@ -169,7 +169,7 @@ class HiddenViewController: UIViewController {
             self.messagingViewController = MessagingConversationListViewController(nibName: "MessagingConversationListViewController", bundle: nil)
             self.customizeShoppingViewController = CustomizeShoppingViewController(nibName: "CustomizeShoppingViewController", bundle: nil)
             self.resultViewController = ResultViewController(nibName: "ResultViewController", bundle: nil)
-            self.categoriesViewController = CategoriesViewController(nibName: "CategoriesViewController", bundle: nil)
+            self.categoriesViewController = WebViewController(nibName: "WebViewController", bundle: nil)
             
             self.viewControllers.append(self.registerViewController!)
             self.viewControllers.append(self.loginViewController!)
@@ -177,7 +177,8 @@ class HiddenViewController: UIViewController {
             self.viewControllers.append(self.helpViewController!)
         }
         
-        self.categoriesViewController?.isFromFAB = true
+        self.categoriesViewController?.isFromFab = true
+        self.categoriesViewController?.webviewSource = WebviewSource.Category
     }
 
     override func didReceiveMemoryWarning() {
