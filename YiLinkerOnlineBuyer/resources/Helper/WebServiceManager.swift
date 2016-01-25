@@ -346,6 +346,15 @@ class WebServiceManager: NSObject {
         return sessionDataTask
     }
     
+    //MARK: - Get Product/Seller List
+    class func fireGetProductSellerListWithUrl(url: String,actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+        let manager: APIManager = APIManager.sharedInstance
+        
+        self.fireGetRequestWithUrl(url, parameters: []) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+    }
+    
     //MARK: -
     //MARK: - Post Request With Url
     //This function is for removing repeated codes in handler
