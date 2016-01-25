@@ -146,6 +146,8 @@
 		0C6ABA331C0D3B70003DFFA3 /* LayoutFiveModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C6ABA321C0D3B70003DFFA3 /* LayoutFiveModel.swift */; };
 		0C6ABA351C0D4FDF003DFFA3 /* LayoutSixModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C6ABA341C0D4FDF003DFFA3 /* LayoutSixModel.swift */; };
 		0C6ABA371C0D5B89003DFFA3 /* LayoutSevenModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C6ABA361C0D5B89003DFFA3 /* LayoutSevenModel.swift */; };
+		0C6BCD781C560335001D1538 /* YiHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C6BCD761C560335001D1538 /* YiHUD.swift */; };
+		0C6BCD791C560335001D1538 /* YiHUD.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C6BCD771C560335001D1538 /* YiHUD.xib */; };
 		0C6D45DD1BF4692900D330DB /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C6D45DB1BF4692900D330DB /* WebViewController.swift */; };
 		0C6D45DE1BF4692900D330DB /* WebViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C6D45DC1BF4692900D330DB /* WebViewController.xib */; };
 		0C6EFF2C1C0C795800064F69 /* LayoutFourModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C6EFF2B1C0C795800064F69 /* LayoutFourModel.swift */; };
@@ -698,6 +700,8 @@
 		0C6ABA321C0D3B70003DFFA3 /* LayoutFiveModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayoutFiveModel.swift; sourceTree = "<group>"; };
 		0C6ABA341C0D4FDF003DFFA3 /* LayoutSixModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayoutSixModel.swift; sourceTree = "<group>"; };
 		0C6ABA361C0D5B89003DFFA3 /* LayoutSevenModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayoutSevenModel.swift; sourceTree = "<group>"; };
+		0C6BCD761C560335001D1538 /* YiHUD.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YiHUD.swift; sourceTree = "<group>"; };
+		0C6BCD771C560335001D1538 /* YiHUD.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YiHUD.xib; sourceTree = "<group>"; };
 		0C6D45DB1BF4692900D330DB /* WebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		0C6D45DC1BF4692900D330DB /* WebViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = WebViewController.xib; path = ../ViewController/WebViewController.xib; sourceTree = "<group>"; };
 		0C6EFF2B1C0C795800064F69 /* LayoutFourModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayoutFourModel.swift; sourceTree = "<group>"; };
@@ -1233,6 +1237,15 @@
 			path = Panton;
 			sourceTree = "<group>";
 		};
+		0C6BCD751C560322001D1538 /* Yibo Loader */ = {
+			isa = PBXGroup;
+			children = (
+				0C6BCD761C560335001D1538 /* YiHUD.swift */,
+				0C6BCD771C560335001D1538 /* YiHUD.xib */,
+			);
+			name = "Yibo Loader";
+			sourceTree = "<group>";
+		};
 		0C6D45D21BF463D500D330DB /* Home */ = {
 			isa = PBXGroup;
 			children = (
@@ -1511,6 +1524,7 @@
 		0C99370B1B750583000D6074 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				0C6BCD751C560322001D1538 /* Yibo Loader */,
 				79FE2BEA1C3FC4360055D894 /* Messaging V2 */,
 				0C1778011C045B7200C310D9 /* Home */,
 				2689FBF51B80412D007BEA68 /* CategoriesTableViewCell.swift */,
@@ -2267,6 +2281,7 @@
 				F7C569F81BB1790A004740E1 /* TransactionCancelOrderStatusViewController.xib in Resources */,
 				0CB333671C05720D00625903 /* DailyLoginCollectionViewCell.xib in Resources */,
 				0C2F44DE1B85840F00021F45 /* CheckoutViews.xib in Resources */,
+				0C6BCD791C560335001D1538 /* YiHUD.xib in Resources */,
 				79A1C6FB1B83787B0043AA36 /* SellerResultCollectionViewCell.xib in Resources */,
 				0C374F441B88E3790050AE1D /* ResultViewController.xib in Resources */,
 				79044D9E1C44963E00D3E41C /* MessagingThreadViewController.xib in Resources */,
@@ -2507,6 +2522,7 @@
 				0C5007691B861B1600BC0445 /* ChangeAddressFooterCollectionViewCell.swift in Sources */,
 				0C374F081B88DC440050AE1D /* TotalTableViewCell.swift in Sources */,
 				2632F5211B7F8690006931E4 /* FollowedSellerTableViewCell.swift in Sources */,
+				0C6BCD781C560335001D1538 /* YiHUD.swift in Sources */,
 				0C11D2221C0DA15B0063D06E /* LayoutTenModel.swift in Sources */,
 				79E68BA91B8B4780008626E4 /* EditProfileAddPhotoTableViewCell.swift in Sources */,
 				0C99374E1B750583000D6074 /* NewSellerScrollableCollectionViewCell.swift in Sources */,
