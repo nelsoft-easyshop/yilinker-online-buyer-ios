@@ -1122,6 +1122,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         
         if layoutNineModel.data.count >= 5 {
             layoutNineCollectionViewCell.productOneNameLabel.text = layoutNineModel.data[0].name
+            layoutNineCollectionViewCell.productImageViewOne.title = layoutNineModel.data[0].name
             layoutNineCollectionViewCell.productImageViewOne.target = layoutNineModel.data[0].target.targetUrl
             layoutNineCollectionViewCell.productImageViewOne.targetType = layoutNineModel.data[0].target.targetType
             layoutNineCollectionViewCell.productImageViewOne.sd_setImageWithURL(NSURL(string: layoutNineModel.data[0].image), placeholderImage: UIImage(named: self.placeHolder), completed: { (downloadedImage, NSError, SDImageCacheType, NSURL) -> Void in
@@ -1141,9 +1142,10 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                     }
                 }
             })
+            
             layoutNineCollectionViewCell.productImageViewTwo.target = layoutNineModel.data[1].target.targetUrl
             layoutNineCollectionViewCell.productImageViewTwo.targetType = layoutNineModel.data[1].target.targetType
-            
+            layoutNineCollectionViewCell.productImageViewTwo.title = layoutNineModel.data[1].name
             
             layoutNineCollectionViewCell.productThreeNameLabel.text = layoutNineModel.data[2].name
             layoutNineCollectionViewCell.productImageViewThree.sd_setImageWithURL(NSURL(string: layoutNineModel.data[2].image), placeholderImage: UIImage(named: self.placeHolder), completed: { (downloadedImage, NSError, SDImageCacheType, NSURL) -> Void in
@@ -1153,9 +1155,10 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                     }
                 }
             })
+            
             layoutNineCollectionViewCell.productImageViewThree.target = layoutNineModel.data[2].target.targetUrl
             layoutNineCollectionViewCell.productImageViewThree.targetType = layoutNineModel.data[2].target.targetType
-            
+            layoutNineCollectionViewCell.productImageViewThree.title = layoutNineModel.data[2].name
             
             layoutNineCollectionViewCell.productFourNameLabel.text = layoutNineModel.data[3].name
             layoutNineCollectionViewCell.productImageViewFour.sd_setImageWithURL(NSURL(string: layoutNineModel.data[3].image), placeholderImage: UIImage(named: self.placeHolder), completed: { (downloadedImage, NSError, SDImageCacheType, NSURL) -> Void in
@@ -1167,7 +1170,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             })
             layoutNineCollectionViewCell.productImageViewFour.target = layoutNineModel.data[3].target.targetUrl
             layoutNineCollectionViewCell.productImageViewFour.targetType = layoutNineModel.data[3].target.targetType
-            
+            layoutNineCollectionViewCell.productImageViewFour.title = layoutNineModel.data[3].name
             
             
             layoutNineCollectionViewCell.productFiveNameLabel.text = layoutNineModel.data[4].name
@@ -1178,8 +1181,10 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                     }
                 }
             })
+            
             layoutNineCollectionViewCell.productImageViewFive.target = layoutNineModel.data[4].target.targetUrl
             layoutNineCollectionViewCell.productImageViewFive.targetType = layoutNineModel.data[4].target.targetType
+            layoutNineCollectionViewCell.productImageViewFive.title = layoutNineModel.data[4].name
         }
         
         return layoutNineCollectionViewCell
@@ -1188,7 +1193,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     //MARK: -
     //MARK: - Layout Nine Collection View Cell Delegate
     func layoutNineCollectionViewCellDidClickProductImage(productImage: ProductImageView) {
-        self.didClickItemWithTarget(productImage.target, targetType: productImage.targetType)
+        self.didClickItemWithTarget(productImage.target, targetType: productImage.targetType, sectionTitle: productImage.title)
     }
     
     //MARK: -
