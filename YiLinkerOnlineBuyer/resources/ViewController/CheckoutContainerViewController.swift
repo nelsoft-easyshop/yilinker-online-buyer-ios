@@ -6,6 +6,76 @@
 //  Copyright (c) 2015 yiLinker-online-buyer. All rights reserved.
 //
 
+
+
+/*
+For getting the province, city and barangay. First request all the province and if the fireProvince request is successful
+request for the city and if the request of city is successful reques the barangay. Because barangay and city has a parameter cityId and
+province id.
+*/
+
+/*
+*** self.selectedIndex is important because this is the index of which containerView will present.
+
+*** self.setSelectedViewControllerWithIndex(self.selectedIndex) this function is for setting child view controller logic codes before presenting the view.
+
+*** setSelectedViewController(viewController) this function is for changing the child views of the container. For short presenting the views.
+
+Increment/Decrement selectedIndex ----->  setSelectedViewControllerWithIndex(self.selectedIndex) ------->  setSelectedViewController(viewController)
+
+*** saveAndContinue func is always been called if the user tapped the button at the bottom of the screen.
+
+if self.selectedIndex == 0
+Show Summary View Controller
+
+if  self.selectedIndex == 1
+Show Payment View Controller
+
+if self.selectedIndex == 2
+Show Over View View Controller
+
+if self.selectedIndex > 2
+Redirect to Home Page
+
+
+Checkout Process
+
+1) Present the summary view controller and pass all the items in cart.
+
+Check if the user is logged In, If the user is logged in, make a request for the checkout address. If theres no user address create address or select address.
+
+If User is not logged In Show the guest checkout fields and validate if all required fields are filled up. If yes Fire the guest checkout action which includes cookies
+in the request.
+
+If user is not logged in request for address location (province, city, baranagay).
+
+- Optional
+
+Make a voucher code request and display the result to summary view controller
+
+If all the required fields are filled up and checkout address or guest checkout request is successful, change the value of isValidToSelectPayment to true
+If the isValidToSelectPayment is equal to true present the payment view controller, if false show an alert message with title can't proceed or incomplete details.
+
+2) Present the Payment View Controller and select COD or PesoPay
+- to set Payment Type SessionManager.setPaymentType(paymentType)
+- to get payment Type SessionManager.paymentType(paymentType)
+
+If paymentType is COD fire the cash on delivery request and that request will return a data needed by PaymentSuccessModel
+If PaymentSuccessModel.isSuccessful is Equal to true redirect to success page.
+
+If paymentType is equal to peso pay, fire the request firePesopay() on getting the url's (success, cancel, failed).
+If pesoPayModel.isSuccessful is equal to true present the Payment web view controller.
+Once the request url is equal to the successUrl request fireOverView with the transationId to get the over view of the items and redirect it to the success page.
+If the peso pay urls is equal to failed or cancel peso pay view controller delegate will be trigered and will decrease the selected index and will dismiss the payment web view controller.
+
+3) If Logged in redirect to home page.
+
+If the user is not logged in. App Will show an alert to ask the guest user if he wants to register or continue shopping.
+- We will get the previous information in checkout and use it to our register model.
+- Redirect the user to register page. Disabled all the fields except for password and confirm password.
+- Register the user and redirect to home page.
+*/
+
 import UIKit
 
 struct CheckoutStrings {
@@ -137,76 +207,8 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
             self.changeMobileNumberAction()
         }
         
-        self.setSelectedViewControllerWithIndex(0)
+        self.setSelectedViewControllerWithIndex(0, transition: UIViewAnimationOptions.TransitionNone)
     }
-    
-    /*
-        For getting the province, city and barangay. First request all the province and if the fireProvince request is successful
-        request for the city and if the request of city is successful reques the barangay. Because barangay and city has a parameter cityId and 
-        province id.
-    */
-    
-    /*
-        *** self.selectedIndex is important because this is the index of which containerView will present.
-    
-        *** self.setSelectedViewControllerWithIndex(self.selectedIndex) this function is for setting child view controller logic codes before presenting the view.
-        
-        *** setSelectedViewController(viewController) this function is for changing the child views of the container. For short presenting the views.
-    
-        Increment/Decrement selectedIndex ----->  setSelectedViewControllerWithIndex(self.selectedIndex) ------->  setSelectedViewController(viewController)
-        
-        *** saveAndContinue func is always been called if the user tapped the button at the bottom of the screen.
-
-        if self.selectedIndex == 0
-            Show Summary View Controller
-        
-        if  self.selectedIndex == 1
-            Show Payment View Controller
-        
-        if self.selectedIndex == 2
-            Show Over View View Controller
-        
-        if self.selectedIndex > 2
-            Redirect to Home Page
-            
-    
-        Checkout Process
-        
-        1) Present the summary view controller and pass all the items in cart. 
-           
-           Check if the user is logged In, If the user is logged in, make a request for the checkout address. If theres no user address create address or select address.
-           
-           If User is not logged In Show the guest checkout fields and validate if all required fields are filled up. If yes Fire the guest checkout action which includes cookies
-           in the request.
-            
-           If user is not logged in request for address location (province, city, baranagay).
-    
-           - Optional
-            
-           Make a voucher code request and display the result to summary view controller
-           
-           If all the required fields are filled up and checkout address or guest checkout request is successful, change the value of isValidToSelectPayment to true
-           If the isValidToSelectPayment is equal to true present the payment view controller, if false show an alert message with title can't proceed or incomplete details.
-    
-        2) Present the Payment View Controller and select COD or PesoPay
-          - to set Payment Type SessionManager.setPaymentType(paymentType)
-          - to get payment Type SessionManager.paymentType(paymentType)
-    
-          If paymentType is COD fire the cash on delivery request and that request will return a data needed by PaymentSuccessModel
-          If PaymentSuccessModel.isSuccessful is Equal to true redirect to success page.
-    
-          If paymentType is equal to peso pay, fire the request firePesopay() on getting the url's (success, cancel, failed).
-          If pesoPayModel.isSuccessful is equal to true present the Payment web view controller.
-          Once the request url is equal to the successUrl request fireOverView with the transationId to get the over view of the items and redirect it to the success page. 
-          If the peso pay urls is equal to failed or cancel peso pay view controller delegate will be trigered and will decrease the selected index and will dismiss the payment web view controller.
-        
-        3) If Logged in redirect to home page.
-           
-           If the user is not logged in. App Will show an alert to ask the guest user if he wants to register or continue shopping.
-           - We will get the previous information in checkout and use it to our register model.
-           - Redirect the user to register page. Disabled all the fields except for password and confirm password. 
-           - Register the user and redirect to home page.
-    */
     
     //MARK: -
     //MARK: - Fire Province
@@ -480,7 +482,7 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
     //MARK: -
     //MARK: - Set Selected View Controller With Index
     // This function is for executing child view logic code
-    func setSelectedViewControllerWithIndex(index: Int) {
+    func setSelectedViewControllerWithIndex(index: Int, transition: UIViewAnimationOptions) {
         if index == 0 {
             self.firsCircle()
             self.continueButton(CheckoutStrings.saveAndContinue)
@@ -490,7 +492,7 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
         }
         
         let viewController: UIViewController = viewControllers[index]
-        setSelectedViewController(viewController)
+        setSelectedViewController(viewController, transition: transition)
         
     }
     
@@ -574,20 +576,33 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
     
     //MARK: -
     //MARK: - Set Selected View Controller
-    func setSelectedViewController(viewController: UIViewController) {
-        if !(selectedChildViewController == viewController) {
-            if self.isViewLoaded() {
-                selectedChildViewController?.willMoveToParentViewController(self)
-                selectedChildViewController?.view.removeFromSuperview()
-                selectedChildViewController?.removeFromParentViewController()
-            }
-        }
+    func setSelectedViewController(viewController: UIViewController, transition: UIViewAnimationOptions) {
+        self.view.layoutIfNeeded()
+        self.addChildViewController(viewController)
         self.view.layoutIfNeeded()
         self.addChildViewController(viewController)
         viewController.view.frame = self.contentViewFrame!
-        contentView.addSubview(viewController.view)
-        viewController.didMoveToParentViewController(self)
-        selectedChildViewController = viewController
+        
+        self.contentView.addSubview(viewController.view)
+        
+        if self.selectedChildViewController != nil {
+            self.transitionFromViewController(self.selectedChildViewController!, toViewController: viewController, duration: 0.3, options: transition, animations: nil) { (Bool) -> Void in
+                viewController.didMoveToParentViewController(self)
+                
+                if !(self.selectedChildViewController == viewController) {
+                    if self.isViewLoaded() {
+                        self.selectedChildViewController?.willMoveToParentViewController(self)
+                        self.selectedChildViewController?.view.removeFromSuperview()
+                        self.selectedChildViewController?.removeFromParentViewController()
+                    }
+                }
+                
+                self.selectedChildViewController = viewController
+            }
+        } else {
+                viewController.didMoveToParentViewController(self)
+                self.selectedChildViewController = viewController
+        }
     }
     
     //MARK: -
@@ -702,7 +717,7 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
     func back() {
         if self.selectedIndex != 0 {
             self.selectedIndex--
-            self.setSelectedViewControllerWithIndex(self.selectedIndex)
+            self.setSelectedViewControllerWithIndex(self.selectedIndex, transition: UIViewAnimationOptions.TransitionFlipFromRight)
         } else {
             self.dismissViewControllerAnimated(true, completion: nil)
         }
@@ -715,7 +730,7 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
             if SessionManager.isLoggedIn() {
                 if self.isValidToSelectPayment {
                     self.selectedIndex++
-                    self.setSelectedViewControllerWithIndex(self.selectedIndex)
+                    self.setSelectedViewControllerWithIndex(self.selectedIndex, transition: UIViewAnimationOptions.TransitionFlipFromLeft)
                 } else {
                     UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Please choose a checkout address.")
                 }
@@ -803,7 +818,7 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
         self.selectedIndex++
         self.overViewViewController?.paymentSuccessModel = paymentSuccessModel
         let viewController: UIViewController = viewControllers[2]
-        setSelectedViewController(viewController)
+        setSelectedViewController(viewController, transition: UIViewAnimationOptions.TransitionNone)
         self.navigationItem.leftBarButtonItems = []
         self.navigationItem.rightBarButtonItems = []
         self.continueButton(CheckoutStrings.continueShopping)
@@ -851,7 +866,7 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
                     self.isValidToSelectPayment = true
                     
                     self.selectedIndex++
-                    self.setSelectedViewControllerWithIndex(self.selectedIndex)
+                    self.setSelectedViewControllerWithIndex(self.selectedIndex, transition: UIViewAnimationOptions.TransitionNone)
                 } else {
                     let message: String = dictionary["message"] as! String
                     UIAlertController.displayErrorMessageWithTarget(self, errorMessage: message)
