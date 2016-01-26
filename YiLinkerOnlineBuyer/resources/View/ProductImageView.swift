@@ -11,6 +11,7 @@ import UIKit
 class ProductImageView: UIImageView {
     var target: String = ""
     var targetType: String = ""
+    var title: String = ""
     
     override func awakeFromNib() {
       
