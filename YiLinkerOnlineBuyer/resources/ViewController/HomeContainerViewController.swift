@@ -429,7 +429,13 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                     
                 } else if requestErrorType == .RequestTimeOut {
                     //Request timeout
-                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                    if self.isJsonStringEmpty() {
+                        self.addEmptyView()
+                    } else {
+                        //show cached data
+                        self.showNoDataBanner()
+                        self.populateHomePageWithDictionary(self.coreDataJsonString())
+                    }
                 } else if requestErrorType == .UnRecognizeError {
                     //Unhandled error
                     Toast.displayToastWithMessage(Constants.Localized.error, duration: 1.5, view: self.view)
