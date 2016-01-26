@@ -169,7 +169,7 @@ class ResultViewController: UIViewController {
     func registerNibs() {
         var nib = UINib(nibName: "SortTableViewCell", bundle: nil)
         self.sortPickerTableView.registerNib(nib, forCellReuseIdentifier: "SortTableViewCell")
-
+        
         var cellNibGrid = UINib(nibName: reuseIdentifierGrid, bundle: nil)
         self.resultCollectionView?.registerNib(cellNibGrid, forCellWithReuseIdentifier: reuseIdentifierGrid)
         
@@ -213,17 +213,17 @@ class ResultViewController: UIViewController {
     //MARK: - Fucntions Pass Details
     func passCategoryID(id: Int) {
         self.baseSearchURL = "\(APIAtlas.productList)?categoryIds=\(id)"
-        //Todo fire search
+        self.fireSearch()
     }
     
     func passCustomCategoryID(id: Int) {
         self.baseSearchURL = "\(APIAtlas.productList)?customCategoryId=\(id)"
-        //Todo fire search
+        self.fireSearch()
     }
     
     func passSellerID(id: String) {
         self.baseSearchURL = "\(APIAtlas.productList)?sellerIds=\(id)"
-        //Todo fire search
+        self.fireSearch()
     }
     
     func passModel(searchSuggestion: SearchSuggestionModel) {
@@ -291,6 +291,26 @@ class ResultViewController: UIViewController {
     
     //MARK: - API Requests
     func fireSearch() {
+        if self.isSellerSearch {
+            if (self.sellerCollectionViewData.count % 15) == 0 {
+                self.fireSearchRequest()
+            } else {
+                let noMoreLocalizeString: String = StringHelper.localizedStringWithKey("NOMORERESULTS_LOCALIZE_KEY")
+                let resultsLocalizeString: String = StringHelper.localizedStringWithKey("RESULTS_LOCALIZE_KEY")
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: noMoreLocalizeString, title: resultsLocalizeString)
+            }
+        } else {
+            if (self.productCollectionViewData.count % 15) == 0 {
+                self.fireSearchRequest()
+            } else {
+                let noMoreLocalizeString: String = StringHelper.localizedStringWithKey("NOMORERESULTS_LOCALIZE_KEY")
+                let resultsLocalizeString: String = StringHelper.localizedStringWithKey("RESULTS_LOCALIZE_KEY")
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: noMoreLocalizeString, title: resultsLocalizeString)
+            }
+        }
+    }
+    
+    func fireSearchRequest() {
         self.showLoader()
         let url = self.generateSearchURL()
         
@@ -318,6 +338,10 @@ class ResultViewController: UIViewController {
                     }
                 }
             } else {
+                if self.sellerCollectionViewData.count == 0 && self.productCollectionViewData.count == 0{
+                    self.noResultLabel.hidden = false
+                }
+                
                 if requestErrorType == .ResponseError {
                     //Error in api requirements
                     let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
@@ -531,7 +555,7 @@ extension ResultViewController: UICollectionViewDataSource, UICollectionViewDele
             cell.setNewPrice(tempModel.newPrice.formatToPeso())
             cell.setDiscount("\(tempModel.discount)")
             return cell
-
+            
         case .Seller:
             let cell: SellerResultCollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifierSeller, forIndexPath: indexPath) as! SellerResultCollectionViewCell
             var tempModel: SearchSellerModel = self.sellerCollectionViewData[indexPath.row]
@@ -641,7 +665,7 @@ extension ResultViewController: FilterViewControllerDelegate {
     
     func cancelFilterViewControllerAction() {
         //TOdo hide dimview
-         self.hideDimView()
+        self.hideDimView()
     }
     
     func applyFilterViewControllerAction(maxPrice: Double, minPrice: Double, filters: NSDictionary) {
