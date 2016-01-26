@@ -19,8 +19,9 @@ class WishlistTableViewCell: UITableViewCell, UIScrollViewDelegate {
     var delegate: WishlistTableViewCellDelegate?
     
     var isSwipeViewOpen: Bool = false
+    var swipeCtr: Int = 0
     
-    let buttonViewWidth: CGFloat = 163
+    let buttonViewWidth: CGFloat = 163          //Size of the hidden swipe buttons
     let swipeForOptionsCellEnclosingTableViewDidBeginScrollingNotification: String = "SwipeForOptionsCellEnclosingTableViewDidBeginScrollingNotification"
     
     @IBOutlet weak var cellScrollView: UIScrollView!
@@ -59,6 +60,10 @@ class WishlistTableViewCell: UITableViewCell, UIScrollViewDelegate {
             updateSwipeViewStatus()
             delegate!.addToCartButtonActionForIndex(self)
         } else if(sender as! NSObject == swipeIndicatorButton) {
+            self.swipeCtr = 1
+            if !isSwipeViewOpen {
+                cellScrollView.contentOffset.x = 1
+            }
             updateSwipeViewStatus()
         } else {
             println("Unknown button was clicked!")
@@ -70,10 +75,14 @@ class WishlistTableViewCell: UITableViewCell, UIScrollViewDelegate {
         var width = bounds.size.width
         var height = bounds.size.height
         
+        /*Set the width of the 'cellScrollView' to same as width of the screeen and
+        * set the contentSize of the 'cellScrollView' to width of the screeen plus the 
+        * width of the hidden swipe buttons */
         cellScrollView.frame = CGRectMake(0, 0, width, CGRectGetHeight(self.bounds))
         cellScrollView.contentSize = CGSize(width: width + buttonViewWidth, height: 0)
         cellScrollView.delegate = self
         
+        //Set the width of the 'cellButtonView' to 'buttonViewWidth'(63)
         cellButtonView.frame = CGRectMake(width, 0, buttonViewWidth, CGRectGetHeight(self.bounds))
         
         deleteButton.imageView?.contentMode = UIViewContentMode.ScaleAspectFit
@@ -82,33 +91,39 @@ class WishlistTableViewCell: UITableViewCell, UIScrollViewDelegate {
         cellContentView.frame = CGRectMake(0, 0, width, CGRectGetHeight(self.bounds))
         swipeIndicatorView.frame = CGRectMake((width - 25), 0, 25, CGRectGetHeight(self.bounds))
         
+        //Add observer for the cell swipe
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "closeSwipeView", name: swipeForOptionsCellEnclosingTableViewDidBeginScrollingNotification, object: nil)
         
         addToCartLabel.text = StringHelper.localizedStringWithKey("WISHLIST_ADD_LOCALIZE_KEY")
         deleteLabel.text = StringHelper.localizedStringWithKey("WISHLIST_DELETE_LOCALIZE_KEY")
         
+        /*Set the width of the 'productNameLabel', 'productDetailsLabel' and 'productPriceLabel' to width of the screeen minus
+        * the width of product image and swipe indicator button (160). */
         productNameLabel.frame = CGRectMake(productNameLabel.frame.origin.x, productNameLabel.frame.origin.y, (width - 160), productNameLabel.frame.height)
         productDetailsLabel.frame = CGRectMake(productDetailsLabel.frame.origin.x, productDetailsLabel.frame.origin.y, (width - 160), productDetailsLabel.frame.height)
         productPriceLabel.frame = CGRectMake(productPriceLabel.frame.origin.x, productPriceLabel.frame.origin.y, (width - 160), productPriceLabel.frame.height)
         
     }
     
+    //Functon in updating the status and scrollview's contentOffSet(Either show the hidden swipe button or hide it)
     func updateSwipeViewStatus(){
-        if isSwipeViewOpen {
-            isSwipeViewOpen = false
-            swipeIndicatorButton.setImage(UIImage(named: "left"), forState: UIControlState.Normal)
-            swipeIndicatorButton.alpha = 1.0
-            dispatch_async(dispatch_get_main_queue(), {
-                self.cellScrollView.setContentOffset(CGPointZero, animated: true)
-            })
-        } else {
-            if cellScrollView.contentOffset.x > 0 {
-                isSwipeViewOpen = true
-                swipeIndicatorButton.setImage(UIImage(named: "right"), forState: UIControlState.Normal)
-                swipeIndicatorButton.alpha = 0.5
+        if self.swipeCtr == 1 {
+            if isSwipeViewOpen {
+                isSwipeViewOpen = false
+                swipeIndicatorButton.setImage(UIImage(named: "left"), forState: UIControlState.Normal)
+                swipeIndicatorButton.alpha = 1.0
                 dispatch_async(dispatch_get_main_queue(), {
-                    self.cellScrollView.setContentOffset(CGPoint(x: self.buttonViewWidth, y: 0), animated: true)
+                    self.cellScrollView.setContentOffset(CGPointZero, animated: true)
                 })
+            } else {
+                if cellScrollView.contentOffset.x > 0 {
+                    isSwipeViewOpen = true
+                    swipeIndicatorButton.setImage(UIImage(named: "right"), forState: UIControlState.Normal)
+                    swipeIndicatorButton.alpha = 0.5
+                    dispatch_async(dispatch_get_main_queue(), {
+                        self.cellScrollView.setContentOffset(CGPoint(x: self.buttonViewWidth, y: 0), animated: true)
+                    })
+                }
             }
         }
     }
@@ -128,18 +143,22 @@ class WishlistTableViewCell: UITableViewCell, UIScrollViewDelegate {
         }
     }
     
+    func scrollViewWillBeginDragging(scrollView: UIScrollView) {
+        self.swipeCtr = 0
+    }
+    
     func scrollViewWillEndDragging(scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         delegate?.swipeViewDidScroll(self)
+        self.swipeCtr++
         if scrollView.contentOffset.x > buttonViewWidth {
             Float(targetContentOffset.memory.x) == Float(buttonViewWidth)
-            if !isSwipeViewOpen{
+            if !isSwipeViewOpen {
                 updateSwipeViewStatus()
             }
         }
         else {
             updateSwipeViewStatus()
         }
-        
     }
     
 }

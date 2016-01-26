@@ -6,6 +6,76 @@
 //  Copyright (c) 2015 yiLinker-online-buyer. All rights reserved.
 //
 
+
+
+/*
+For getting the province, city and barangay. First request all the province and if the fireProvince request is successful
+request for the city and if the request of city is successful reques the barangay. Because barangay and city has a parameter cityId and
+province id.
+*/
+
+/*
+*** self.selectedIndex is important because this is the index of which containerView will present.
+
+*** self.setSelectedViewControllerWithIndex(self.selectedIndex) this function is for setting child view controller logic codes before presenting the view.
+
+*** setSelectedViewController(viewController) this function is for changing the child views of the container. For short presenting the views.
+
+Increment/Decrement selectedIndex ----->  setSelectedViewControllerWithIndex(self.selectedIndex) ------->  setSelectedViewController(viewController)
+
+*** saveAndContinue func is always been called if the user tapped the button at the bottom of the screen.
+
+if self.selectedIndex == 0
+Show Summary View Controller
+
+if  self.selectedIndex == 1
+Show Payment View Controller
+
+if self.selectedIndex == 2
+Show Over View View Controller
+
+if self.selectedIndex > 2
+Redirect to Home Page
+
+
+Checkout Process
+
+1) Present the summary view controller and pass all the items in cart.
+
+Check if the user is logged In, If the user is logged in, make a request for the checkout address. If theres no user address create address or select address.
+
+If User is not logged In Show the guest checkout fields and validate if all required fields are filled up. If yes Fire the guest checkout action which includes cookies
+in the request.
+
+If user is not logged in request for address location (province, city, baranagay).
+
+- Optional
+
+Make a voucher code request and display the result to summary view controller
+
+If all the required fields are filled up and checkout address or guest checkout request is successful, change the value of isValidToSelectPayment to true
+If the isValidToSelectPayment is equal to true present the payment view controller, if false show an alert message with title can't proceed or incomplete details.
+
+2) Present the Payment View Controller and select COD or PesoPay
+- to set Payment Type SessionManager.setPaymentType(paymentType)
+- to get payment Type SessionManager.paymentType(paymentType)
+
+If paymentType is COD fire the cash on delivery request and that request will return a data needed by PaymentSuccessModel
+If PaymentSuccessModel.isSuccessful is Equal to true redirect to success page.
+
+If paymentType is equal to peso pay, fire the request firePesopay() on getting the url's (success, cancel, failed).
+If pesoPayModel.isSuccessful is equal to true present the Payment web view controller.
+Once the request url is equal to the successUrl request fireOverView with the transationId to get the over view of the items and redirect it to the success page.
+If the peso pay urls is equal to failed or cancel peso pay view controller delegate will be trigered and will decrease the selected index and will dismiss the payment web view controller.
+
+3) If Logged in redirect to home page.
+
+If the user is not logged in. App Will show an alert to ask the guest user if he wants to register or continue shopping.
+- We will get the previous information in checkout and use it to our register model.
+- Redirect the user to register page. Disabled all the fields except for password and confirm password.
+- Register the user and redirect to home page.
+*/
+
 import UIKit
 
 struct CheckoutStrings {
@@ -66,23 +136,35 @@ struct AddressStrings {
     static let zipCodeRequired: String = StringHelper.localizedStringWithKey("ZIP_CODE_REQUIRED_LOCALIZE_KEY")
 }
 
-class CheckoutContainerViewController: UIViewController, PaymentWebViewViewControllerDelegate, RegisterModalViewControllerDelegate, ChangeMobileNumberViewControllerDelegate, VerifyMobileNumberViewControllerDelegate, VerifyMobileNumberStatusViewControllerDelegate {
+class CheckoutContainerViewController: UIViewController, PaymentWebViewViewControllerDelegate, ChangeMobileNumberViewControllerDelegate, VerifyMobileNumberViewControllerDelegate, VerifyMobileNumberStatusViewControllerDelegate {
     
+    //view controller fragments
     var summaryViewController: SummaryViewController?
     var paymentViewController: PaymentViewController?
     var overViewViewController: OverViewViewController?
-    
+
+    //view controller container
     var viewControllers = [UIViewController]()
+    
+    //active view controller fragment
     var selectedChildViewController: UIViewController?
     
+    //content view frame
     var contentViewFrame: CGRect?
+    
+    //If this variable set to true, it means checkout address validation pass and will move on to the payment selection
+    var isValidToSelectPayment: Bool = false
+    
+    //cart items to be displayed in summary view controller
+    var carItems: [CartProductDetailsModel] = []
+    
     var selectedIndex: Int = 0
     var totalPrice: String = ""
     
     @IBOutlet weak var contentView: UIView!
     @IBOutlet weak var continueButton: UIButton!
     
-    
+    //header displays
     @IBOutlet weak var firstCircleLabel: DynamicRoundedLabel!
     @IBOutlet weak var secondCircleLabel: DynamicRoundedLabel!
     @IBOutlet weak var thirdCircleLabel: DynamicRoundedLabel!
@@ -92,19 +174,23 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
     @IBOutlet weak var overViewLabel: UILabel!
     
     var hud: MBProgressHUD?
-    var isValidGuestUser: Bool = false
-
-    var carItems: [CartProductDetailsModel] = []
-    
-    var guestEmail: String = ""
-    var guestFirstName: String = ""
-    var guestLastName: String = ""
-    
-    var alertHasShown: Bool = false
-    
-    var guestRegisterModel: RegisterModel = RegisterModel()
     
     var dimView: UIView?
+    
+    
+    //Models for address
+    var provinceModel: ProvinceModel = ProvinceModel()
+    var cityModel: CityModel = CityModel()
+    var barangayModel: BarangayModel = BarangayModel()
+    
+    var addressModel: AddressModelV2 = AddressModelV2()
+    
+    //for selected values in picker view
+    var barangayRow: Int = 0
+    var cityRow: Int = 0
+    var provinceRow: Int = 0
+    
+    var selectedRow: Int = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -115,8 +201,139 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
             self.edgesForExtendedLayout = UIRectEdge.None
         }
         
+        self.setUpInitialViews()
+        
+        if !SessionManager.isMobileVerified() && SessionManager.isLoggedIn() {
+            self.changeMobileNumberAction()
+        }
+        
+        self.setSelectedViewControllerWithIndex(0, transition: UIViewAnimationOptions.TransitionNone)
+    }
+    
+    //MARK: -
+    //MARK: - Fire Province
+    func fireProvinces() {
+        self.showHUD()
+        WebServiceManager.fireProvince(APIAtlas.provinceUrl, actionHandler: {
+            (successful, responseObject, requestErrorType) -> Void in
+            if successful {
+                self.provinceModel = ProvinceModel.parseDataWithDictionary(responseObject as! NSDictionary)
+                
+                self.addressModel.province = self.provinceModel.location[0]
+                self.addressModel.provinceId = self.provinceModel.provinceId[0]
+                
+                self.provinceRow = 0
+                self.cityRow = 0
+                self.barangayRow = 0
+                
+                self.addressModel.province = self.provinceModel.location[0]
+                self.addressModel.barangay = ""
+                
+                //clear text field of summary view controller
+                self.summaryViewController!.clearCityAndBarangayTextField()
+                //get all cities
+                self.fireCitiesWithProvinceId("\(self.addressModel.provinceId)")
+                //set text to default province value
+                self.summaryViewController!.setProvinceTextFieldTextWithString(self.provinceModel.location[0])
+            } else {
+                self.hud?.hide(true)
+                if requestErrorType == .ResponseError {
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                } else if requestErrorType == .PageNotFound {
+                    Toast.displayToastWithMessage("Page not found.", duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    Toast.displayToastWithMessage(Constants.Localized.error, duration: 1.5, view: self.view)
+                }
+            }
+
+        })
+    }
+    
+    //MARK: -
+    //MARK: - Fire Cities
+    func fireCitiesWithProvinceId(provinceId: String) {
+        self.showHUD()
+        WebServiceManager.fireCityWithProvinceId(APIAtlas.citiesUrl, provinceId: provinceId, actionHandler: {
+            (successful, responseObject, requestErrorType) -> Void in
+            if successful {
+                self.cityModel = CityModel.parseDataWithDictionary(responseObject as! NSDictionary)
+                
+                self.addressModel.city = self.cityModel.location[0]
+                self.addressModel.cityId = self.cityModel.cityId[0]
+                
+                self.addressModel.barangay = ""
+                
+                self.cityRow = 0
+                self.barangayRow = 0
+                //set city text field to default
+                self.summaryViewController!.setCityTextFieldTextWithString(self.cityModel.location[0])
+                
+                self.fireBarangaysWithCityId("\(self.addressModel.cityId)")
+            } else {
+                self.hud?.hide(true)
+                if requestErrorType == .ResponseError {
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                } else if requestErrorType == .PageNotFound {
+                    Toast.displayToastWithMessage("Page not found.", duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    Toast.displayToastWithMessage(Constants.Localized.error, duration: 1.5, view: self.view)
+                }
+            }
+            
+        })
+    }
+    
+    //MARK: - 
+    //MARK: - Fire Barangays With City Id
+    func fireBarangaysWithCityId(cityId: String) {
+        self.showHUD()
+        WebServiceManager.fireBarangaysWithCityId(APIAtlas.barangay, cityId: cityId, actionHandler: {
+            (successful, responseObject, requestErrorType) -> Void in
+            if successful {
+                self.barangayModel = BarangayModel.parseDataWithDictionary(responseObject)
+                
+                if self.barangayModel.barangayId.count != 0 {
+                    self.addressModel.barangayId = self.barangayModel.barangayId[0]
+                    self.addressModel.barangay = self.barangayModel.location[0]
+                }
+                
+                //set city text field to default
+                self.summaryViewController!.setBarangayTextFieldTextWithString(self.barangayModel.location[0])
+                self.hud?.hide(true)
+            } else {
+                self.hud?.hide(true)
+                if requestErrorType == .ResponseError {
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                } else if requestErrorType == .PageNotFound {
+                    Toast.displayToastWithMessage("Page not found.", duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    Toast.displayToastWithMessage(Constants.Localized.error, duration: 1.5, view: self.view)
+                }
+            }
+        })
+    }
+    
+    
+    //MARK: -
+    //MARK: - Setup Initial Views
+    func setUpInitialViews() {
         self.initViewController()
-        self.setSelectedViewControllerWithIndex(self.selectedIndex)
+        
         self.backButton()
         
         self.summaryLabel.text = CheckoutStrings.summary
@@ -124,12 +341,7 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
         self.overViewLabel.text = CheckoutStrings.overView
         
         self.continueButton.setTitle(CheckoutStrings.saveAndContinue, forState: UIControlState.Normal)
-        
         self.initDimView()
-        
-        if !SessionManager.isMobileVerified() && SessionManager.isLoggedIn() {
-            self.changeMobileNumberAction()
-        }
     }
     
     override func viewDidLayoutSubviews() {
@@ -141,6 +353,19 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
         // Dispose of any resources that can be recreated.
     }
     
+    //MARK: -
+    //MARK: - Dim View
+    func initDimView() {
+        let screenSize: CGRect = UIScreen.mainScreen().bounds
+        dimView = UIView(frame: screenSize)
+        dimView?.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
+        self.navigationController!.view.addSubview(dimView!)
+        //self.view.addSubview(dimView!)
+        dimView?.hidden = true
+        dimView?.alpha = 0
+    }
+    
+    //MARK: -
     //MARK: - Show HUD
     func showHUD() {
         if self.hud != nil {
@@ -155,65 +380,123 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
         self.hud?.show(true)
     }
     
+    //MARK: -
     //MARK: - Title View
     func titleView() {
         self.navigationController!.navigationBar.topItem!.title = "Checkout"
     }
     
-    //MARK: - Set Selected View Controller With Index
-    // This function is for executing child view logic code
-    func setSelectedViewControllerWithIndex(index: Int) {
-        if index == 0 {
-            self.firsCircle()
-            self.continueButton(CheckoutStrings.saveAndContinue)
-            let viewController: UIViewController = viewControllers[index]
-            setSelectedViewController(viewController)
-        } else if index == 1 {
-            if SessionManager.isLoggedIn() || self.isValidGuestUser {
-                self.isValidGuestUser = false
-                self.secondCircle()
-                self.continueButton(CheckoutStrings.saveAndGoToPayment)
-                let viewController: UIViewController = viewControllers[index]
-                setSelectedViewController(viewController)
-            } else {
-                self.selectedIndex--
-                if self.summaryViewController!.guestCheckoutTableViewCell.firstNameTextField.text!.isEmpty {
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: RegisterStrings.firstNameRequired, title: AddressStrings.incompleteInformation)
-                } else if !self.summaryViewController!.guestCheckoutTableViewCell.firstNameTextField.text!.isValidName() {
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: RegisterStrings.illegalFirstName, title: AddressStrings.incompleteInformation)
-                } else if self.summaryViewController!.guestCheckoutTableViewCell.lastNameTextField.text!.isEmpty {
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: RegisterStrings.lastNameRequired, title: AddressStrings.incompleteInformation)
-                } else if !self.summaryViewController!.guestCheckoutTableViewCell.lastNameTextField.text!.isValidName() {
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: RegisterStrings.invalidLastName, title: AddressStrings.incompleteInformation)
-                } else if self.summaryViewController!.guestCheckoutTableViewCell.mobileNumberTextField.text!.isEmpty {
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: AddressStrings.mobileNumberIsRequired, title: AddressStrings.incompleteInformation)
-                } else if self.summaryViewController!.guestCheckoutTableViewCell.emailTextField.text!.isEmpty {
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: RegisterStrings.emailRequired, title: AddressStrings.incompleteInformation)
-                } else if !self.summaryViewController!.guestCheckoutTableViewCell.emailTextField.text!.isValidEmail() {
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: RegisterStrings.invalidEmail, title: AddressStrings.incompleteInformation)
-                } else if self.summaryViewController!.guestCheckoutTableViewCell.streetNameTextField.text!.isEmpty {
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: AddressStrings.addressIsRequired, title: AddressStrings.incompleteInformation)
-                } else {
-                    self.guestEmail = self.summaryViewController!.guestCheckoutTableViewCell.emailTextField.text
-                    self.guestFirstName = self.summaryViewController!.guestCheckoutTableViewCell.firstNameTextField.text
-                    self.guestLastName = self.summaryViewController!.guestCheckoutTableViewCell.lastNameTextField.text
-                    
-                    guestRegisterModel = RegisterModel(firstName: self.summaryViewController!.guestCheckoutTableViewCell.firstNameTextField.text,
-                        lastName: self.summaryViewController!.guestCheckoutTableViewCell.lastNameTextField.text,
-                        emailAddress: self.summaryViewController!.guestCheckoutTableViewCell.emailTextField.text,
-                        mobileNumber: self.summaryViewController!.guestCheckoutTableViewCell.mobileNumberTextField.text)
-                    
-                    self.summaryViewController!.fireGuestUser()
-                }
-
+    //MARK: -
+    //MARK: - Change Mobile Number Action
+    func changeMobileNumberAction(){
+        var changeNumberModal = ChangeMobileNumberViewController(nibName: "ChangeMobileNumberViewController", bundle: nil)
+        changeNumberModal.delegate = self
+        changeNumberModal.mobileNumber = SessionManager.mobileNumber()
+        changeNumberModal.isFromCheckout = true
+        changeNumberModal.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
+        changeNumberModal.providesPresentationContextTransitionStyle = true
+        changeNumberModal.definesPresentationContext = true
+        changeNumberModal.view.backgroundColor = UIColor.clearColor()
+        changeNumberModal.view.frame.origin.y = 0
+        
+        self.navigationController!.presentViewController(changeNumberModal, animated: true, completion: nil)
+        
+        self.dimView!.hidden = false
+        UIView.animateWithDuration(0.3, animations: {
+            self.dimView!.alpha = 1
+            }, completion: { finished in
+        })
+    }
+    
+    func closeChangeNumbderViewController(){
+        hideDimView()
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func submitChangeNumberViewController(){
+        var verifyNumberModal = VerifyMobileNumberViewController(nibName: "VerifyMobileNumberViewController", bundle: nil)
+        verifyNumberModal.delegate = self
+        verifyNumberModal.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
+        verifyNumberModal.providesPresentationContextTransitionStyle = true
+        verifyNumberModal.definesPresentationContext = true
+        verifyNumberModal.view.backgroundColor = UIColor.clearColor()
+        verifyNumberModal.view.frame.origin.y = 0
+        self.navigationController!.presentViewController(verifyNumberModal, animated: true, completion: nil)
+        
+        self.dimView!.hidden = false
+        UIView.animateWithDuration(0.3, animations: {
+            self.dimView!.alpha = 1
+            }, completion: { finished in
+        })
+    }
+    
+    func closeVerifyMobileNumberViewController() {
+        hideDimView()
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func verifyMobileNumberAction(isSuccessful: Bool) {
+        var verifyStatusModal = VerifyMobileNumberStatusViewController(nibName: "VerifyMobileNumberStatusViewController", bundle: nil)
+        verifyStatusModal.delegate = self
+        verifyStatusModal.isSuccessful = isSuccessful
+        verifyStatusModal.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
+        verifyStatusModal.providesPresentationContextTransitionStyle = true
+        verifyStatusModal.definesPresentationContext = true
+        verifyStatusModal.view.backgroundColor = UIColor.clearColor()
+        verifyStatusModal.view.frame.origin.y = 0
+        self.navigationController!.presentViewController(verifyStatusModal, animated: true, completion: nil)
+        
+        self.dimView!.hidden = false
+        UIView.animateWithDuration(0.3, animations: {
+            self.dimView!.alpha = 1
+            }, completion: { finished in
+        })
+    }
+    
+    func requestNewCodeAction() {
+        submitChangeNumberViewController()
+    }
+    
+    //MARK: -
+    //MARK: - VerifyMobileNumberStatusViewControllerDelegate
+    func closeVerifyMobileNumberStatusViewController() {
+        hideDimView()
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func continueVerifyMobileNumberAction(isSuccessful: Bool) {
+        hideDimView()
+        if isSuccessful {
+            if SessionManager.addressId() != 0 {
+                self.fireSetCheckoutAddressWithAddressId("\(SessionManager.addressId())")
             }
-        } else if index == 2 {
-            
-        } else if index == 3 {
-     
+        } else {
+            self.dismissViewControllerAnimated(true, completion: nil)
         }
     }
     
+    func requestNewVerificationCodeAction() {
+        submitChangeNumberViewController()
+    }
+    
+    //MARK: -
+    //MARK: - Set Selected View Controller With Index
+    // This function is for executing child view logic code
+    func setSelectedViewControllerWithIndex(index: Int, transition: UIViewAnimationOptions) {
+        if index == 0 {
+            self.firsCircle()
+            self.continueButton(CheckoutStrings.saveAndContinue)
+        } else if index == 1 {
+            self.secondCircle()
+            self.continueButton(CheckoutStrings.saveAndGoToPayment)
+        }
+        
+        let viewController: UIViewController = viewControllers[index]
+        setSelectedViewController(viewController, transition: transition)
+        
+    }
+    
+    //MARK: -
     //MARK: - First Circle
     func firsCircle() {
         for imageView in self.firstCircleLabel.subviews {
@@ -233,6 +516,7 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
         self.overViewLabel.textColor = UIColor.lightGrayColor()
     }
     
+    //MARK: -
     //MARK: - Second Circle
     func secondCircle() {
         self.firstCircleLabel.backgroundColor = Constants.Colors.appTheme
@@ -257,6 +541,7 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
         self.overViewLabel.textColor = UIColor.lightGrayColor()
     }
     
+    //MARK: -
     //MARK: - Third Circle
     func thirdCircle() {
         self.firstCircleLabel.backgroundColor = Constants.Colors.appTheme
@@ -289,23 +574,38 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
         self.overViewLabel.textColor = UIColor.whiteColor()
     }
     
+    //MARK: -
     //MARK: - Set Selected View Controller
-    func setSelectedViewController(viewController: UIViewController) {
-        if !(selectedChildViewController == viewController) {
-            if self.isViewLoaded() {
-                selectedChildViewController?.willMoveToParentViewController(self)
-                selectedChildViewController?.view.removeFromSuperview()
-                selectedChildViewController?.removeFromParentViewController()
-            }
-        }
+    func setSelectedViewController(viewController: UIViewController, transition: UIViewAnimationOptions) {
+        self.view.layoutIfNeeded()
+        self.addChildViewController(viewController)
         self.view.layoutIfNeeded()
         self.addChildViewController(viewController)
         viewController.view.frame = self.contentViewFrame!
-        contentView.addSubview(viewController.view)
-        viewController.didMoveToParentViewController(self)
-        selectedChildViewController = viewController
+        
+        self.contentView.addSubview(viewController.view)
+        
+        if self.selectedChildViewController != nil {
+            self.transitionFromViewController(self.selectedChildViewController!, toViewController: viewController, duration: 0.3, options: transition, animations: nil) { (Bool) -> Void in
+                viewController.didMoveToParentViewController(self)
+                
+                if !(self.selectedChildViewController == viewController) {
+                    if self.isViewLoaded() {
+                        self.selectedChildViewController?.willMoveToParentViewController(self)
+                        self.selectedChildViewController?.view.removeFromSuperview()
+                        self.selectedChildViewController?.removeFromParentViewController()
+                    }
+                }
+                
+                self.selectedChildViewController = viewController
+            }
+        } else {
+                viewController.didMoveToParentViewController(self)
+                self.selectedChildViewController = viewController
+        }
     }
     
+    //MARK: -
     //MARK: - Init View Controller
     func initViewController() {
         summaryViewController = SummaryViewController(nibName: "SummaryViewController", bundle: nil)
@@ -319,6 +619,7 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
         self.viewControllers.append(overViewViewController!)
     }
     
+    //MARK: -
     //MARK: - Back Button
     func backButton() {
         var backButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
@@ -333,59 +634,266 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
         self.navigationItem.leftBarButtonItems = [navigationSpacer, customBackButton]
     }
     
+    //MARK: - 
+    //MARK: - Fire Set Checkout Address
+    func fireSetCheckoutAddressWithAddressId(addressId: String) {
+        self.showHUD()
+        WebServiceManager.fireSetCheckoutAddressWithUrl(APIAtlas.setCheckoutAddressUrl, accessToken: SessionManager.accessToken(), addressId: addressId) {
+            (successful, responseObject, requestErrorType) -> Void in
+            self.hud!.hide(true)
+            
+            if successful {
+                let jsonResult: NSDictionary = responseObject as! NSDictionary
+                if jsonResult["isSuccessful"] as! Bool != true {
+                    self.isValidToSelectPayment = false
+                    //self.displayAlertAndRedirectToChangeAddressWithMessage(jsonResult["message"] as! String)
+                } else {
+                    self.isValidToSelectPayment = true
+                }
+            } else {
+                if requestErrorType == .ResponseError {
+                    //Error in api requirements
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                } else if requestErrorType == .AccessTokenExpired {
+                    self.fireRefreshToken(.SetAddress, values: [])
+                } else if requestErrorType == .PageNotFound {
+                    //Page not found
+                    Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    //No internet connection
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    //Request timeout
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    //Unhandled error
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
+                }
+            }
+        }
+    }
+    
+    //MARK: - 
+    //MARK: - Fire Voucher With Voucher Id
+    func fireVoucherWithVoucherId(voucherId: String) {
+        self.showHUD()
+        WebServiceManager.fireVoucherWithUrl(APIAtlas.voucherUrl, accessToken: SessionManager.accessToken(), voucherCode: voucherId) {
+            (successful, responseObject, requestErrorType) -> Void in
+            self.hud?.hide(true)
+            if successful {
+                let voucherModel = VoucherModel.parseDataFromDictionary(responseObject as! NSDictionary)
+                //pass the voucher model created and populate it on the summary view controller
+                self.summaryViewController!.voucherRequestIsSuccessful(voucherModel)
+                //self.voucherRequestIsSuccessful(cell, voucherModel: self.voucherModel)
+                //self.changeButtonState(cell.addButton)
+            } else {
+                if requestErrorType == .ResponseError {
+                    //Error in api requirements
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                } else if requestErrorType == .AccessTokenExpired {
+                    self.fireRefreshToken(.Voucher, values: [voucherId])
+                } else if requestErrorType == .PageNotFound {
+                    //Page not found
+                    Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    //No internet connection
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    //Request timeout
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    //Unhandled error
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
+                }
+            }
+        }
+    }
+    
+    
+    //MARK: -
     //MARK: - Back
     func back() {
         if self.selectedIndex != 0 {
             self.selectedIndex--
-            self.setSelectedViewControllerWithIndex(self.selectedIndex)
+            self.setSelectedViewControllerWithIndex(self.selectedIndex, transition: UIViewAnimationOptions.TransitionFlipFromRight)
         } else {
             self.dismissViewControllerAnimated(true, completion: nil)
         }
     }
     
+    //MARK: -
     //MARK: - Save And Continue
     @IBAction func saveAndContinue(sender: AnyObject) {
-        var limit: Int = self.viewControllers.count
-        
-        if selectedIndex < limit {
-            self.selectedIndex++
-        }
-        
-        if self.selectedIndex == 1 {
-            if summaryViewController!.isValidToSelectPayment {
-                self.setSelectedViewControllerWithIndex(self.selectedIndex)
+        if self.selectedIndex == 0 {
+            if SessionManager.isLoggedIn() {
+                if self.isValidToSelectPayment {
+                    self.selectedIndex++
+                    self.setSelectedViewControllerWithIndex(self.selectedIndex, transition: UIViewAnimationOptions.TransitionFlipFromLeft)
+                } else {
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Please choose a checkout address.")
+                }
             } else {
-                self.selectedIndex--
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.serverError, title: Constants.Localized.someThingWentWrong)
+                //Validate all required fields before accessing fire guest checkout
+                if self.summaryViewController!.guestCheckoutTableViewCell.firstNameTextField.text!.isEmpty {
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: RegisterStrings.firstNameRequired, title: AddressStrings.incompleteInformation)
+                } else if !self.summaryViewController!.guestCheckoutTableViewCell.firstNameTextField.text!.isValidName() {
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: RegisterStrings.illegalFirstName, title: AddressStrings.incompleteInformation)
+                } else if self.summaryViewController!.guestCheckoutTableViewCell.lastNameTextField.text!.isEmpty {
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: RegisterStrings.lastNameRequired, title: AddressStrings.incompleteInformation)
+                } else if !self.summaryViewController!.guestCheckoutTableViewCell.lastNameTextField.text!.isValidName() {
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: RegisterStrings.invalidLastName, title: AddressStrings.incompleteInformation)
+                } else if self.summaryViewController!.guestCheckoutTableViewCell.mobileNumberTextField.text!.isEmpty {
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: AddressStrings.mobileNumberIsRequired, title: AddressStrings.incompleteInformation)
+                } else if self.summaryViewController!.guestCheckoutTableViewCell.emailTextField.text!.isEmpty {
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: RegisterStrings.emailRequired, title: AddressStrings.incompleteInformation)
+                } else if !self.summaryViewController!.guestCheckoutTableViewCell.emailTextField.text!.isValidEmail() {
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: RegisterStrings.invalidEmail, title: AddressStrings.incompleteInformation)
+                } else if self.summaryViewController!.guestCheckoutTableViewCell.streetNameTextField.text!.isEmpty {
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: AddressStrings.addressIsRequired, title: AddressStrings.incompleteInformation)
+                } else {
+                    self.fireGuestCheckout()
+                }
             }
-        } else if self.selectedIndex == 2 {
+        } else if self.selectedIndex == 1 {
+            //Check if what payment type user choose
             if self.paymentViewController!.paymentType == PaymentType.COD {
                 self.fireCOD()
             } else {
                 self.firePesoPay()
             }
-        } else if self.selectedIndex == 3 {
+        } else {
             if SessionManager.isLoggedIn() {
                 self.redirectToHomeView()
             } else {
-                if !alertHasShown {
-                    self.showRegisterAlert()
-                } else {
-                    self.redirectToHomeView()
-                }
+                let registerModel: RegisterModel = self.summaryViewController!.guestUser()
+                UIAlertController.showAlertYesOrNoWithTitle("\(Constants.Localized.hi) \(registerModel.firstName)", message: RegisterModalStrings.doYouWant, viewController: self, actionHandler: { (isYes) -> Void in
+                    if isYes {
+                        self.redirectToRegister()
+                    } else {
+                        self.redirectToHomeView()
+                    }
+                })
             }
-        } else {
-            self.redirectToHomeView()
         }
-
     }
     
+    //MARK: -
     //MARK: - Redirect To Home View
     func redirectToHomeView() {
         let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         appDelegate.changeRootToHomeView()
     }
     
+    //MARK: -
+    //MARK: - Continue Button
+    func continueButton(title: String) {
+        if self.continueButton != nil {
+            self.continueButton.setTitle(title, forState: UIControlState.Normal)
+        }
+    }
+    
+    //MARK: -
+    //MARK: - Show Success Message
+    func showSuccessMessage() {
+        let alertController = UIAlertController(title: Constants.Localized.success, message: LoginStrings.successMessage, preferredStyle: .Alert)
+        
+        let OKAction = UIAlertAction(title: Constants.Localized.ok, style: .Default) { (action) in
+            alertController.dismissViewControllerAnimated(true, completion: nil)
+            let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+            appDelegate.changeRootToHomeView()
+        }
+        
+        alertController.addAction(OKAction)
+        
+        self.presentViewController(alertController, animated: true) {
+            
+        }
+    }
+    
+    //MARK: -
+    //MARK: - Redirect to Success Page
+    func redirectToSuccessPage(paymentSuccessModel: PaymentSuccessModel) {
+        self.selectedIndex++
+        self.overViewViewController?.paymentSuccessModel = paymentSuccessModel
+        let viewController: UIViewController = viewControllers[2]
+        setSelectedViewController(viewController, transition: UIViewAnimationOptions.TransitionNone)
+        self.navigationItem.leftBarButtonItems = []
+        self.navigationItem.rightBarButtonItems = []
+        self.continueButton(CheckoutStrings.continueShopping)
+        self.thirdCircle()
+    }
+    
+    //MARK: -
+    //MARK: - Redirect To Register
+    func redirectToRegister() {
+        let storyBoard: UIStoryboard = UIStoryboard(name: "StartPageStoryBoard", bundle: nil)
+        let registerViewController: LoginAndRegisterContentViewController?
+        if IphoneType.isIphone5() {
+            registerViewController = storyBoard.instantiateViewControllerWithIdentifier("LoginAndRegisterContentViewController5") as? LoginAndRegisterContentViewController
+        } else if IphoneType.isIphone4() {
+            registerViewController = storyBoard.instantiateViewControllerWithIdentifier("LoginAndRegisterContentViewController4") as? LoginAndRegisterContentViewController
+        } else {
+            registerViewController = storyBoard.instantiateViewControllerWithIdentifier("LoginAndRegisterContentViewController") as? LoginAndRegisterContentViewController
+        }
+        
+        registerViewController!.registerModel = self.summaryViewController!.guestUser()
+        registerViewController!.defaultViewControllerIndex = 1
+        self.navigationController?.presentViewController(registerViewController!, animated: true, completion: nil)
+    }
+    
+    //MARK: - 
+    //MARK: - Fire Guest Checkout
+    func fireGuestCheckout() {
+        self.showHUD()
+        let registerModel: RegisterModel = self.summaryViewController!.guestUser()
+        WebServiceManager.fireGuestCheckoutWithUrl(APIAtlas.guestUserUrl, firstName: registerModel.firstName, lastName: registerModel.lastName, email: registerModel.emailAddress, contactNumber: registerModel.mobileNumber, title: registerModel.title, streetName: registerModel.streetName, zipCode: registerModel.zipCode, location: registerModel.location) {
+            (successful, responseObject, requestErrorType) -> Void in
+            self.hud?.hide(true)
+            if successful {
+                println(responseObject)
+                let dictionary: NSDictionary = responseObject as! NSDictionary
+                
+                let isSuccessful: Bool = dictionary["isSuccessful"] as! Bool
+                
+                if isSuccessful {
+                    let address: String = "\(registerModel.streetName) \(self.addressModel.barangay) \(self.addressModel.city) \(self.addressModel.province)"
+                    let fullName: String = "\(registerModel.firstName) \(registerModel.lastName)"
+                    SessionManager.setUserFullName(fullName)
+                    SessionManager.setFullAddress(address)
+                    
+                    self.isValidToSelectPayment = true
+                    
+                    self.selectedIndex++
+                    self.setSelectedViewControllerWithIndex(self.selectedIndex, transition: UIViewAnimationOptions.TransitionNone)
+                } else {
+                    let message: String = dictionary["message"] as! String
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: message)
+                }
+            } else {
+                if requestErrorType == .ResponseError {
+                    //Error in api requirements
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                } else if requestErrorType == .PageNotFound {
+                    //Page not found
+                    Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    //No internet connection
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    //Request timeout
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    //Unhandled error
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
+                }
+            }
+        }
+    }
+    
+    //MARK: -
     //MARK: - Fire COD
     func fireCOD() {
         self.showHUD()
@@ -407,7 +915,7 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
                     let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
                     Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
                 } else if requestErrorType == .AccessTokenExpired {
-                     self.fireRefreshToken(CheckoutRefreshType.COD)
+                    self.fireRefreshToken(.COD, values: [])
                 } else if requestErrorType == .PageNotFound {
                     //Page not found
                     Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
@@ -446,7 +954,7 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
                     let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
                     Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
                 } else if requestErrorType == .AccessTokenExpired {
-                    self.fireRefreshToken(CheckoutRefreshType.Credit)
+                    self.fireRefreshToken(.Credit, values: [])
                 } else if requestErrorType == .PageNotFound {
                     //Page not found
                     Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
@@ -464,13 +972,44 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
         }
     }
     
-    //MARK: - Continue Button
-    func continueButton(title: String) {
-        if self.continueButton != nil {
-            self.continueButton.setTitle(title, forState: UIControlState.Normal)
+    //MARK: -
+    //MARK: - Fire Over View
+    func fireOverView(transactionId: String, modalViewController: UIViewController) {
+        self.showHUD()
+        WebServiceManager.fireOverViewWith(APIAtlas.overViewUrl, accessToken: SessionManager.accessToken(), transactionId: transactionId) {
+            (successful, responseObject, requestErrorType) -> Void in
+            self.hud?.hide(true)
+            if successful {
+                let paymentSuccessModel: PaymentSuccessModel = PaymentSuccessModel.parseDataWithDictionary(responseObject as! NSDictionary)
+                if paymentSuccessModel.isSuccessful {
+                    self.redirectToSuccessPage(paymentSuccessModel)
+                    modalViewController.dismissViewControllerAnimated(true, completion: nil)
+                }
+            } else {
+                if requestErrorType == .ResponseError {
+                    //Error in api requirements
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                } else if requestErrorType == .AccessTokenExpired {
+                    self.fireRefreshToken(.OverView, values: [transactionId, modalViewController])
+                } else if requestErrorType == .PageNotFound {
+                    //Page not found
+                    Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    //No internet connection
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    //Request timeout
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    //Unhandled error
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
+                }
+            }
         }
     }
     
+    //MARK: -
     //MARK: - Redirect to Payment WebView With Url
     func redirectToPaymentWebViewWithUrl(pesoPayModel: PesoPayModel) {
         let paymentWebViewController = PaymentWebViewViewController(nibName: "PaymentWebViewViewController", bundle: nil)
@@ -481,33 +1020,19 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
         self.presentViewController(navigationController, animated: true, completion: nil)
     }
     
+    //MARK: -
     //MARK: - Payment Web View Controller Delegate
     func paymentWebViewController(paymentDidCancel paymentWebViewController: PaymentWebViewViewController) {
         self.selectedIndex--
-    }
-    
-    func paymentWebViewController(paymentDidSucceed paymentWebViewController: PaymentWebViewViewController, paymentSuccessModel: PaymentSuccessModel) {
-        self.redirectToSuccessPage(paymentSuccessModel)
     }
     
     func paymentWebViewController(paymentDidNotSucceed paymentWebViewController: PaymentWebViewViewController) {
         self.selectedIndex--
     }
     
-    //MARK: - Redirect to Success Page
-    func redirectToSuccessPage(paymentSuccessModel: PaymentSuccessModel) {
-        self.selectedIndex++
-        self.overViewViewController?.paymentSuccessModel = paymentSuccessModel
-        let viewController: UIViewController = viewControllers[2]
-        setSelectedViewController(viewController)
-        self.navigationItem.leftBarButtonItems = []
-        self.navigationItem.rightBarButtonItems = []
-        self.continueButton(CheckoutStrings.continueShopping)
-        self.thirdCircle()
-    }
-    
+    //MARK: -
     //MARK: - Fire Refresh Token
-    func fireRefreshToken(refreshType: CheckoutRefreshType) {
+    func fireRefreshToken(refreshType: CheckoutRefreshType, values: [AnyObject]) {
         self.showHUD()
         WebServiceManager.fireRefreshTokenWithUrl(APIAtlas.refreshTokenUrl, actionHandler: {
             (successful, responseObject, requestErrorType) -> Void in
@@ -519,6 +1044,12 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
                     self.fireCOD()
                 } else if refreshType == CheckoutRefreshType.Credit {
                     self.firePesoPay()
+                } else if refreshType == .SetAddress {
+                    self.fireSetCheckoutAddressWithAddressId("\(SessionManager.addressId())")
+                } else if refreshType == .Voucher {
+                    self.fireVoucherWithVoucherId(values.first! as! String)
+                }  else if refreshType == .OverView {
+                    self.fireOverView(values.first as! String, modalViewController: values[1] as! UIViewController)
                 }
             } else {
                 //Forcing user to logout.
@@ -533,92 +1064,8 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
         })
     }
     
-    //MARK: - Show Register Alert
-    func showRegisterAlert() {
-        self.view.layoutIfNeeded()
-        
-        let dimView: UIView = UIView(frame: UIScreen.mainScreen().bounds)
-        dimView.backgroundColor = UIColor.blackColor()
-        dimView.alpha = 0.0
-        dimView.tag = 100
-        self.navigationController!.view.addSubview(dimView)
-        
-        UIView.animateWithDuration(0.5, delay: 0.0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
-            dimView.alpha = 0.5
-            }, completion: nil)
-        
-        let registerModelViewController: RegisterModalViewController = RegisterModalViewController(nibName:"RegisterModalViewController", bundle: nil)
-        registerModelViewController.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
-        registerModelViewController.providesPresentationContextTransitionStyle = true
-        registerModelViewController.definesPresentationContext = true
-        registerModelViewController.view.backgroundColor = UIColor.clearColor()
-        registerModelViewController.delegate = self
-        self.navigationController!.presentViewController(registerModelViewController, animated: true, completion: nil)
-    }
     
-    //MARK: - Register Modal ViewController Delegate
-    func registerModalViewController(didExit view: RegisterModalViewController, isShowRegister: Bool) {
-        for dimView in self.navigationController!.view.subviews {
-            if dimView.tag == 100 {
-                let dimView2: UIView = dimView as! UIView
-                UIView.animateWithDuration(0.5, animations: { () -> Void in
-                    dimView2.alpha = 0.0
-                    }, completion: { (Bool) -> Void in
-                        dimView2.removeFromSuperview()
-                        self.alertHasShown = true
-                        
-                        if isShowRegister {
-                            self.redirectToRegister()
-                        }
-                })
-            }
-        }
-    }
-    
-    //MARK: - Show Success Message
-    func showSuccessMessage() {
-        let alertController = UIAlertController(title: Constants.Localized.success, message: LoginStrings.successMessage, preferredStyle: .Alert)
-        
-        let OKAction = UIAlertAction(title: Constants.Localized.ok, style: .Default) { (action) in
-            alertController.dismissViewControllerAnimated(true, completion: nil)
-            let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-            appDelegate.changeRootToHomeView()
-        }
-        
-        alertController.addAction(OKAction)
-        
-        self.presentViewController(alertController, animated: true) {
-            
-        }
-    }
-
-    //MARK: - Redirect To Register
-    func redirectToRegister() {
-        let storyBoard: UIStoryboard = UIStoryboard(name: "StartPageStoryBoard", bundle: nil)
-        let registerViewController: LoginAndRegisterContentViewController?
-        if IphoneType.isIphone5() {
-            registerViewController = storyBoard.instantiateViewControllerWithIdentifier("LoginAndRegisterContentViewController5") as? LoginAndRegisterContentViewController
-        } else if IphoneType.isIphone4() {
-            registerViewController = storyBoard.instantiateViewControllerWithIdentifier("LoginAndRegisterContentViewController4") as? LoginAndRegisterContentViewController
-        } else {
-            registerViewController = storyBoard.instantiateViewControllerWithIdentifier("LoginAndRegisterContentViewController") as? LoginAndRegisterContentViewController
-        }
-        registerViewController?.registerModel = self.guestRegisterModel
-        registerViewController!.defaultViewControllerIndex = 1
-        self.navigationController?.presentViewController(registerViewController!, animated: true, completion: nil)
-    }
-    
-    //MARK: - Dim View
-    func initDimView() {
-        let screenSize: CGRect = UIScreen.mainScreen().bounds
-        dimView = UIView(frame: screenSize)
-        dimView?.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
-        self.navigationController!.view.addSubview(dimView!)
-        //self.view.addSubview(dimView!)
-        dimView?.hidden = true
-        dimView?.alpha = 0
-    }
-    
+    //MARK: -
     //MARK: - Hide Dim View
     func hideDimView() {
         UIView.animateWithDuration(0.3, animations: {
@@ -626,96 +1073,5 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
             }, completion: { finished in
                 
         })
-    }
-    
-    //MARK: - Change Mobile Number Action
-    func changeMobileNumberAction(){
-        var changeNumberModal = ChangeMobileNumberViewController(nibName: "ChangeMobileNumberViewController", bundle: nil)
-        changeNumberModal.delegate = self
-        changeNumberModal.mobileNumber = SessionManager.mobileNumber()
-        changeNumberModal.isFromCheckout = true
-        changeNumberModal.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
-        changeNumberModal.providesPresentationContextTransitionStyle = true
-        changeNumberModal.definesPresentationContext = true
-        changeNumberModal.view.backgroundColor = UIColor.clearColor()
-        changeNumberModal.view.frame.origin.y = 0
-        
-        self.navigationController!.presentViewController(changeNumberModal, animated: true, completion: nil)
-        
-        self.dimView!.hidden = false
-        UIView.animateWithDuration(0.3, animations: {
-            self.dimView!.alpha = 1
-            }, completion: { finished in
-        })
-    }
-    
-    // MARK: - Change Mobile Number ViewController Delegate
-    func closeChangeNumbderViewController(){
-        hideDimView()
-        self.dismissViewControllerAnimated(true, completion: nil)
-    }
-    
-    func submitChangeNumberViewController(){
-        var verifyNumberModal = VerifyMobileNumberViewController(nibName: "VerifyMobileNumberViewController", bundle: nil)
-        verifyNumberModal.delegate = self
-        verifyNumberModal.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
-        verifyNumberModal.providesPresentationContextTransitionStyle = true
-        verifyNumberModal.definesPresentationContext = true
-        verifyNumberModal.view.backgroundColor = UIColor.clearColor()
-        verifyNumberModal.view.frame.origin.y = 0
-        self.navigationController!.presentViewController(verifyNumberModal, animated: true, completion: nil)
-        
-        self.dimView!.hidden = false
-        UIView.animateWithDuration(0.3, animations: {
-            self.dimView!.alpha = 1
-            }, completion: { finished in
-        })
-    }
-    
-    // MARK: - Verify Mobile Number ViewController Delegate
-    func closeVerifyMobileNumberViewController() {
-        hideDimView()
-        self.dismissViewControllerAnimated(true, completion: nil)
-    }
-    
-    func verifyMobileNumberAction(isSuccessful: Bool) {
-        var verifyStatusModal = VerifyMobileNumberStatusViewController(nibName: "VerifyMobileNumberStatusViewController", bundle: nil)
-        verifyStatusModal.delegate = self
-        verifyStatusModal.isSuccessful = isSuccessful
-        verifyStatusModal.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
-        verifyStatusModal.providesPresentationContextTransitionStyle = true
-        verifyStatusModal.definesPresentationContext = true
-        verifyStatusModal.view.backgroundColor = UIColor.clearColor()
-        verifyStatusModal.view.frame.origin.y = 0
-        self.navigationController!.presentViewController(verifyStatusModal, animated: true, completion: nil)
-        
-        self.dimView!.hidden = false
-        UIView.animateWithDuration(0.3, animations: {
-            self.dimView!.alpha = 1
-            }, completion: { finished in
-        })
-    }
-    
-    func requestNewCodeAction() {
-        submitChangeNumberViewController()
-    }
-    
-    // MARK: - VerifyMobileNumberStatusViewControllerDelegate
-    func closeVerifyMobileNumberStatusViewController() {
-        hideDimView()
-        self.dismissViewControllerAnimated(true, completion: nil)
-    }
-    
-    func continueVerifyMobileNumberAction(isSuccessful: Bool) {
-        hideDimView()
-        if isSuccessful {
-            self.summaryViewController?.fireSetCheckoutAddress("\(SessionManager.addressId())")
-        } else {
-            self.dismissViewControllerAnimated(true, completion: nil)
-        }
-    }
-    
-    func requestNewVerificationCodeAction() {
-        submitChangeNumberViewController()
     }
 }

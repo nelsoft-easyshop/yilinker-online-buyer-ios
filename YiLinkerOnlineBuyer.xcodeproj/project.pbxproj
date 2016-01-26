@@ -239,6 +239,13 @@
 		0CDA117C1B764015007B5DED /* LoginAndRegisterContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CDA117B1B764015007B5DED /* LoginAndRegisterContentViewController.swift */; };
 		0CDA117E1B764B79007B5DED /* DynamicRoundedTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CDA117D1B764B79007B5DED /* DynamicRoundedTextField.swift */; };
 		0CE35EB81B76711400AAA8F1 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CE35EB71B76711400AAA8F1 /* RegisterViewController.swift */; };
+		0CE6A19C1C50B7C1009C2873 /* FAB.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0CE6A19B1C50B7C1009C2873 /* FAB.storyboard */; };
+		0CE6A19F1C50B7E1009C2873 /* FABCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CE6A19D1C50B7E1009C2873 /* FABCollectionViewLayout.swift */; };
+		0CE6A1A01C50B7E1009C2873 /* FABViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CE6A19E1C50B7E1009C2873 /* FABViewController.swift */; };
+		0CE6A1A61C50BA05009C2873 /* FABCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CE6A1A21C50BA05009C2873 /* FABCollectionViewCell.swift */; };
+		0CE6A1A71C50BA05009C2873 /* FABCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CE6A1A31C50BA05009C2873 /* FABCollectionViewCell.xib */; };
+		0CE6A1A81C50BA05009C2873 /* FABProfileCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CE6A1A41C50BA05009C2873 /* FABProfileCollectionViewCell.swift */; };
+		0CE6A1A91C50BA05009C2873 /* FABProfileCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CE6A1A51C50BA05009C2873 /* FABProfileCollectionViewCell.xib */; };
 		0CFF5EA71B98590200F13699 /* ErrorModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CFF5EA61B98590200F13699 /* ErrorModel.swift */; };
 		262626B71C00D28E0068E876 /* UserMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 262626B61C00D28E0068E876 /* UserMapView.swift */; };
 		2632F5211B7F8690006931E4 /* FollowedSellerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2632F51F1B7F8690006931E4 /* FollowedSellerTableViewCell.swift */; };
@@ -795,6 +802,13 @@
 		0CDA117B1B764015007B5DED /* LoginAndRegisterContentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginAndRegisterContentViewController.swift; sourceTree = "<group>"; };
 		0CDA117D1B764B79007B5DED /* DynamicRoundedTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DynamicRoundedTextField.swift; sourceTree = "<group>"; };
 		0CE35EB71B76711400AAA8F1 /* RegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
+		0CE6A19B1C50B7C1009C2873 /* FAB.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = FAB.storyboard; sourceTree = "<group>"; };
+		0CE6A19D1C50B7E1009C2873 /* FABCollectionViewLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FABCollectionViewLayout.swift; sourceTree = "<group>"; };
+		0CE6A19E1C50B7E1009C2873 /* FABViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FABViewController.swift; sourceTree = "<group>"; };
+		0CE6A1A21C50BA05009C2873 /* FABCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FABCollectionViewCell.swift; sourceTree = "<group>"; };
+		0CE6A1A31C50BA05009C2873 /* FABCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FABCollectionViewCell.xib; sourceTree = "<group>"; };
+		0CE6A1A41C50BA05009C2873 /* FABProfileCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FABProfileCollectionViewCell.swift; sourceTree = "<group>"; };
+		0CE6A1A51C50BA05009C2873 /* FABProfileCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FABProfileCollectionViewCell.xib; sourceTree = "<group>"; };
 		0CFF5EA61B98590200F13699 /* ErrorModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorModel.swift; sourceTree = "<group>"; };
 		262626B61C00D28E0068E876 /* UserMapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserMapView.swift; path = YiLinkerOnlineBuyer/resources/ViewController/UserMapView.swift; sourceTree = SOURCE_ROOT; };
 		2632F51F1B7F8690006931E4 /* FollowedSellerTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FollowedSellerTableViewCell.swift; path = YiLinkerOnlineBuyer/resources/ViewController/FollowedSellerTableViewCell.swift; sourceTree = SOURCE_ROOT; };
@@ -1502,6 +1516,7 @@
 		0C9937081B750583000D6074 /* StoryBoard */ = {
 			isa = PBXGroup;
 			children = (
+				0CE6A19B1C50B7C1009C2873 /* FAB.storyboard */,
 				0C9937091B750583000D6074 /* HomeStoryBoard.storyboard */,
 				0CB9DB061B6A1E6600F2CA13 /* StartPageStoryBoard.storyboard */,
 			);
@@ -1511,6 +1526,7 @@
 		0C99370B1B750583000D6074 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				0CE6A1A11C50B7E5009C2873 /* FAB */,
 				79FE2BEA1C3FC4360055D894 /* Messaging V2 */,
 				0C1778011C045B7200C310D9 /* Home */,
 				2689FBF51B80412D007BEA68 /* CategoriesTableViewCell.swift */,
@@ -1866,6 +1882,19 @@
 			path = AppDelegate;
 			sourceTree = "<group>";
 		};
+		0CE6A1A11C50B7E5009C2873 /* FAB */ = {
+			isa = PBXGroup;
+			children = (
+				0CE6A1A21C50BA05009C2873 /* FABCollectionViewCell.swift */,
+				0CE6A1A31C50BA05009C2873 /* FABCollectionViewCell.xib */,
+				0CE6A1A41C50BA05009C2873 /* FABProfileCollectionViewCell.swift */,
+				0CE6A1A51C50BA05009C2873 /* FABProfileCollectionViewCell.xib */,
+				0CE6A19D1C50B7E1009C2873 /* FABCollectionViewLayout.swift */,
+				0CE6A19E1C50B7E1009C2873 /* FABViewController.swift */,
+			);
+			name = FAB;
+			sourceTree = "<group>";
+		};
 		4B7F3416B5D5AAFB972FEF8E /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -2132,6 +2161,7 @@
 				7971F7471B862D3A00322861 /* SortTableViewCell.xib in Resources */,
 				26AFB3CA1B79DE5C00E50926 /* ProductAttributeCollectionViewCell.xib in Resources */,
 				0C374F2C1B88E3790050AE1D /* CheckoutContainerViewController.xib in Resources */,
+				0CE6A1A91C50BA05009C2873 /* FABProfileCollectionViewCell.xib in Resources */,
 				0C374F5B1B8A03CC0050AE1D /* CustomizeShoppingTableViewCell.xib in Resources */,
 				0C374F491B88E3790050AE1D /* TodaysPromoViewController.xib in Resources */,
 				0C2F44C91B8576FE00021F45 /* Panton ExtraLight Italic.otf in Resources */,
@@ -2140,6 +2170,8 @@
 				F7DB29BA1C1EF44C006E0140 /* TransactionLeaveProductFeedbackRateTableViewCell.xib in Resources */,
 				26D688C31C021614003ED151 /* ProductDetailsExtendedViewController.xib in Resources */,
 				0C374F3E1B88E3790050AE1D /* ChangeAddressFooterCollectionViewCell.xib in Resources */,
+				0CE6A19C1C50B7C1009C2873 /* FAB.storyboard in Resources */,
+				0CE6A1A71C50BA05009C2873 /* FABCollectionViewCell.xib in Resources */,
 				F7CCDA971B943CBB000F5AD4 /* TodaysPromoViewController.xib in Resources */,
 				26AFB3C91B79DE5C00E50926 /* ProductAttributeTableViewCell.xib in Resources */,
 				0C1179391BA8291900AA1554 /* LaunchScreen.xib in Resources */,
@@ -2542,6 +2574,7 @@
 				961BE5A61B994BF000E8631A /* ResolutionCenterCell.swift in Sources */,
 				79F40FD51BCF99F100E5D70E /* UIAppearance+Swift.m in Sources */,
 				0C99374D1B750583000D6074 /* NewSellerCollectionViewCell.swift in Sources */,
+				0CE6A1A81C50BA05009C2873 /* FABProfileCollectionViewCell.swift in Sources */,
 				26AFB39B1B79DDEA00E50926 /* ProductAttributeModel.swift in Sources */,
 				0C99373D1B750583000D6074 /* IPhoneType.swift in Sources */,
 				F7C569B21BB1762C004740E1 /* TransactionDeliveryLog2TableViewCell.swift in Sources */,
@@ -2583,10 +2616,12 @@
 				0C1004301B87AB9100CAA17A /* PaymentTableViewCell.swift in Sources */,
 				F7C637C61BD9EC8200C29C47 /* DeliveryLogsSectionModel.swift in Sources */,
 				961BE5A01B994B7D00E8631A /* DisputeViewController.swift in Sources */,
+				0CE6A19F1C50B7E1009C2873 /* FABCollectionViewLayout.swift in Sources */,
 				0CFF5EA71B98590200F13699 /* ErrorModel.swift in Sources */,
 				26AFB3AB1B79DE2900E50926 /* ProductReviewFooterView.swift in Sources */,
 				F7A66B261C03195200D8E688 /* TransactionDetailsTableViewCell.swift in Sources */,
 				F7C56A041BB1790A004740E1 /* TransactionProductDetailsViewController.swift in Sources */,
+				0CE6A1A61C50BA05009C2873 /* FABCollectionViewCell.swift in Sources */,
 				0C11D21E1C0D81640063D06E /* HomeSellerModel.swift in Sources */,
 				0C11D2281C0EF4C00063D06E /* OneByOneCollectionViewFlowLayout.swift in Sources */,
 				B77B8DC21B9B54B40002C513 /* W_Contact.swift in Sources */,
@@ -2599,6 +2634,7 @@
 				0C1777FF1C045B6600C310D9 /* CarouselCollectionViewCell.swift in Sources */,
 				79E85FBF1B89DE1C00428AA1 /* ProfileTableViewCell.swift in Sources */,
 				26AFB39C1B79DDEA00E50926 /* ProductAvailableAttributeCombinationModel.swift in Sources */,
+				0CE6A1A01C50B7E1009C2873 /* FABViewController.swift in Sources */,
 				F7C569B11BB1762C004740E1 /* TransactionCancelOrderView.swift in Sources */,
 				0C329E841B7B738E005BE2B6 /* CustomizeShoppingViewController.swift in Sources */,
 				79F2F5541B859AD100F57E4B /* WishlistProductDetailsModel.swift in Sources */,

@@ -8,10 +8,6 @@
 
 import UIKit
 
-protocol ProductDescriptionViewDelegate {
-    func seeMoreDescription(controller: ProductDescriptionView)
-}
-
 class ProductDescriptionView: UIView {
 
     @IBOutlet weak var descriptionTitleLabel: UILabel!
@@ -20,20 +16,7 @@ class ProductDescriptionView: UIView {
     
     var fullDescription: String = ""
     
-    var delegate: ProductDescriptionViewDelegate?
-    
     override func awakeFromNib() {
-        
-        var tap = UITapGestureRecognizer()
-        tap.numberOfTapsRequired = 1
-        tap.addTarget(self, action: "seeMoreAction:")
-        self.addGestureRecognizer(tap)
-    }
-    
-    func seeMoreAction(gesture: UIGestureRecognizer) {
-        if let delegate = self.delegate {
-            delegate.seeMoreDescription(self)
-        }
     }
     
     func setDescription(short: String, full: String) {

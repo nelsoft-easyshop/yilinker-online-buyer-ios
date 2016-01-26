@@ -13,7 +13,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="392" height="200"/>
                 <subviews>
                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="YIe-7I-dDv">
-                        <rect key="frame" x="5" y="9" width="379" height="190"/>
+                        <rect key="frame" x="0.0" y="0.0" width="392" height="200"/>
                         <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
                         <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="iwS-Lp-AUP">
                             <size key="itemSize" width="50" height="200"/>
@@ -28,24 +28,24 @@
                         </connections>
                     </collectionView>
                     <pageControl opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" hidesForSinglePage="YES" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="DlP-SB-GWN">
-                        <rect key="frame" x="8" y="165" width="376" height="37"/>
+                        <rect key="frame" x="8" y="172" width="376" height="37"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="37" id="vN5-Aa-avc"/>
+                            <constraint firstAttribute="height" constant="37" id="f8I-qa-Rix"/>
                         </constraints>
                         <color key="pageIndicatorTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </pageControl>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </view>
-            <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
+            <color key="backgroundColor" red="0.89631470960000004" green="0.029226388759999999" blue="0.12704667019999999" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
-                <constraint firstAttribute="bottom" secondItem="DlP-SB-GWN" secondAttribute="bottom" constant="-2" id="2yR-3D-5tV"/>
-                <constraint firstItem="YIe-7I-dDv" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="9" id="6Xl-CX-w0T"/>
-                <constraint firstAttribute="bottom" secondItem="YIe-7I-dDv" secondAttribute="bottom" constant="1" id="N3T-Os-Ibs"/>
-                <constraint firstAttribute="trailing" secondItem="DlP-SB-GWN" secondAttribute="trailing" constant="8" id="PQq-bm-fYM"/>
-                <constraint firstAttribute="trailing" secondItem="YIe-7I-dDv" secondAttribute="trailing" constant="8" id="Wkv-WR-anW"/>
-                <constraint firstItem="YIe-7I-dDv" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="5" id="b1o-Jx-420"/>
-                <constraint firstItem="DlP-SB-GWN" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="8" id="blZ-Jb-hGj"/>
+                <constraint firstItem="YIe-7I-dDv" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="6Xl-CX-w0T"/>
+                <constraint firstAttribute="bottom" secondItem="YIe-7I-dDv" secondAttribute="bottom" id="N3T-Os-Ibs"/>
+                <constraint firstItem="DlP-SB-GWN" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="8" id="W55-0M-53D"/>
+                <constraint firstAttribute="trailing" secondItem="YIe-7I-dDv" secondAttribute="trailing" id="Wkv-WR-anW"/>
+                <constraint firstItem="YIe-7I-dDv" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="b1o-Jx-420"/>
+                <constraint firstAttribute="bottom" secondItem="DlP-SB-GWN" secondAttribute="bottom" constant="-9" id="gZs-Ux-9hs"/>
+                <constraint firstAttribute="trailing" secondItem="DlP-SB-GWN" secondAttribute="trailing" constant="8" id="iOr-v5-16o"/>
             </constraints>
             <size key="customSize" width="392" height="200"/>
             <connections>
