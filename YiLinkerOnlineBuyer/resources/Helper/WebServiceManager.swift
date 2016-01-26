@@ -361,6 +361,22 @@ class WebServiceManager: NSObject {
         }
     }
     
+    //MARK: - Fire Get Cart data list With Url
+    class func fireGetCartWithUrl(url: String, access_token: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+        let parameters: NSDictionary = [self.accessTokenKey: access_token]
+        self.fireGetRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+    }
+    
+    //MARK: - Fire Delete Cart Item
+    class func fireDeleteCartItemWithUrl(url: String, access_token: String, productId: String, unitId: String, quantity: Int, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+        let parameters: NSDictionary = [self.accessTokenKey: access_token, self.productIdKey: productId, self.unitIdKey: unitId, self.quantityKey: quantity]
+        self.firePostRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+    }
+    
     //MARK: -
     //MARK: - Fire Province
     class func fireProvince(url: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
