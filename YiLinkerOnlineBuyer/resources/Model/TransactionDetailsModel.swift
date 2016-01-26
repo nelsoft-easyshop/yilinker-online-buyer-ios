@@ -300,17 +300,20 @@ class TransactionDetailsModel: NSObject {
                     transactionShippingFee = ""
                 }
                 
-                let vouchers: NSArray = value["vouchers"] as! NSArray
-                for voucher in vouchers as! [NSDictionary] {
-                    if voucher.count != 0 {
-                        if value["amount"] is NSNull {
-                            voucherDiscount = "0.00"
+                if let vouchers: NSArray = value["vouchers"] as? NSArray {
+                    for voucher in vouchers as! [NSDictionary] {
+                        if voucher.count != 0 {
+                            if value["amount"] is NSNull {
+                                voucherDiscount = "0.00"
+                            } else {
+                                voucherDiscount = voucher["amount"] as! String
+                            }
                         } else {
-                            voucherDiscount = voucher["amount"] as! String
+                            voucherDiscount = "0.00"
                         }
-                    } else {
-                        voucherDiscount = "0.00"
                     }
+                } else {
+                    voucherDiscount = "0.00"
                 }
                 
                 let transactions: NSArray = value["transactionItems"] as! NSArray
@@ -326,10 +329,14 @@ class TransactionDetailsModel: NSObject {
                     sellerContactNumber.append(transaction["sellerContactNumber"] as! String)
                     hasFeedback.append(transaction["sellerHasFeedback"] as! Bool)
                     
-                    if value["isAffiliate"] is NSNull {
-                        isReseller.append(false)
+                    if let affiliate = value["isAffiliate"] as? Bool {
+                        if value["isAffiliate"] is NSNull {
+                            isReseller.append(false)
+                        } else {
+                            isReseller.append(transaction["isAffiliate"] as! Bool)
+                        }
                     } else {
-                       isReseller.append(transaction["isAffiliate"] as! Bool)
+                        isReseller.append(false)
                     }
                     
                     let products: NSArray = transaction["products"] as! NSArray
