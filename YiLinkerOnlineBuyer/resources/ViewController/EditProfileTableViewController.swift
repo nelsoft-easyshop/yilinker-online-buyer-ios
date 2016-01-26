@@ -7,9 +7,22 @@
 //
 
 import UIKit
-import CoreLocation
 
-class EditProfileTableViewController: UITableViewController, UINavigationControllerDelegate, EditProfileAddPhotoTableViewCellDelegate, EditProfileAddressTableViewCellDelegate, EditProfileAccountInformationTableViewCellDelegate, UIImagePickerControllerDelegate, UIActionSheetDelegate, EditProfilePersonalInformationTableViewCellDelegate, ChangePasswordViewControllerDelegate, ChangeAddressViewControllerDelegate, ChangeMobileNumberViewControllerDelegate, VerifyMobileNumberViewControllerDelegate, VerifyMobileNumberStatusViewControllerDelegate, ViewImageViewControllerDelegate, CLLocationManagerDelegate {
+enum EditProfileRequestType {
+    case GetUserInfo
+    case UpdateProfile
+}
+
+struct EditProfileLocalizedStrings {
+    static let editProfileLocalizeString = StringHelper.localizedStringWithKey("EDITPROFILE_LOCALIZE_KEY")
+    static let editPhotoLocalizeString = StringHelper.localizedStringWithKey("EDITPHOTO_LOCALIZE_KEY")
+    static let addPhotoLocalizeString = StringHelper.localizedStringWithKey("ADDPHOTO_LOCALIZE_KEY")
+    static let selectPhotoLocalizeString = StringHelper.localizedStringWithKey("SELECTPHOTO_LOCALIZE_KEY")
+    static let takePhotoLocalizeString = StringHelper.localizedStringWithKey("TAKEPHOTO_LOCALIZE_KEY")
+    static let cancelLocalizeString = StringHelper.localizedStringWithKey("CANCEL_LOCALIZE_KEY")
+}
+
+class EditProfileTableViewController: UITableViewController, UINavigationControllerDelegate {
     
     let manager = APIManager.sharedInstance
     
@@ -35,8 +48,6 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
     var mobileNumber: String = ""
     var emailAddress: String = ""
     var password: String = ""
-    var latitude: String = ""
-    var longitude: String = ""
     
     var profileImageData: NSData?
     var validIDImageData: NSData?
@@ -49,35 +60,15 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
     var validIDImage: UIImage?
     var isForProfilePicture: Bool = false
     
-    var errorLocalizeString: String  = ""
-    var somethingWrongLocalizeString: String = ""
-    var connectionLocalizeString: String = ""
-    var connectionMessageLocalizeString: String = ""
-    
-    var editPhotoLocalizeString: String  = ""
-    var addPhotoLocalizeString: String  = ""
-    var selectPhotoLocalizeString: String  = ""
-    var takePhotoLocalizeString: String  = ""
-    var cancelLocalizeString: String  = ""
-    var tryAgainLocalizeString: String = "|"
-    //var locationManager: CLLocationManager?
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        initializeViews()
-        initializeLocalizedString()
-        backButton()
-        titleView()
-        registerNibs()
+        self.initializeViews()
+        self.addBackButton()
+        self.registerNibs()
     }
     
     override func viewDidAppear(animated: Bool) {
-//        let locationManager = CLLocationManager()
-//        locationManager.delegate = self
-//        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-//        locationManager.requestWhenInUseAuthorization()
-//        locationManager.startUpdatingLocation()
-        
         self.tableView.reloadData()
     }
     
@@ -85,44 +76,7 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
         super.didReceiveMemoryWarning()
     }
     
-    func initializeViews() {
-        if self.respondsToSelector("edgesForExtendedLayout") {
-            self.edgesForExtendedLayout = UIRectEdge.None
-        }
-        self.tableView.separatorInset = UIEdgeInsetsZero
-        self.tableView.layoutMargins = UIEdgeInsetsZero
-        
-        self.tableView.tableFooterView = UIView(frame: CGRectZero)
-        
-        var tapTableView = UITapGestureRecognizer(target:self, action:"hideKeyboard")
-        self.tableView.addGestureRecognizer(tapTableView)
-        
-        
-        dimView = UIView(frame: UIScreen.mainScreen().bounds)
-        dimView?.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
-        self.navigationController?.view.addSubview(dimView!)
-        //self.view.addSubview(dimView!)
-        dimView?.hidden = true
-        dimView?.alpha = 0
-    
-    }
-    
-    func initializeLocalizedString() {
-        //Initialized Localized String
-        errorLocalizeString = StringHelper.localizedStringWithKey("ERROR_LOCALIZE_KEY")
-        somethingWrongLocalizeString = StringHelper.localizedStringWithKey("SOMETHINGWENTWRONG_LOCALIZE_KEY")
-        connectionLocalizeString = StringHelper.localizedStringWithKey("CONNECTIONUNREACHABLE_LOCALIZE_KEY")
-        connectionMessageLocalizeString = StringHelper.localizedStringWithKey("CONNECTIONERRORMESSAGE_LOCALIZE_KEY")
-        tryAgainLocalizeString = StringHelper.localizedStringWithKey("EDITPROFILE_TRY_AGAIN")
-        
-        editPhotoLocalizeString = StringHelper.localizedStringWithKey("EDITPHOTO_LOCALIZE_KEY")
-        addPhotoLocalizeString = StringHelper.localizedStringWithKey("ADDPHOTO_LOCALIZE_KEY")
-        selectPhotoLocalizeString = StringHelper.localizedStringWithKey("SELECTPHOTO_LOCALIZE_KEY")
-        takePhotoLocalizeString = StringHelper.localizedStringWithKey("TAKEPHOTO_LOCALIZE_KEY")
-        
-        cancelLocalizeString = StringHelper.localizedStringWithKey("CANCEL_LOCALIZE_KEY")
-    }
-    
+    //Accepts 'ProfileUserDetailsModel' object from ProfileViewController and set it to the local variables
     func passModel(profileModel: ProfileUserDetailsModel){
         profileUserDetailsModel = profileModel
         firstName = profileModel.firstName
@@ -131,12 +85,34 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
         emailAddress = profileModel.email
     }
     
-    func titleView() {
-        var editProfileLocalizeString = StringHelper.localizedStringWithKey("EDITPROFILE_LOCALIZE_KEY")
-        self.title = editProfileLocalizeString
+    //MARK: Initializations
+    func initializeViews() {
+        //Set title of the Navigation Bar
+        self.title = EditProfileLocalizedStrings.editProfileLocalizeString
+        
+        //Avoid overlapping of tab bar and navigation bar to the mainview
+        if self.respondsToSelector("edgesForExtendedLayout") {
+            self.edgesForExtendedLayout = UIRectEdge.None
+        }
+        
+        //Initializes 'tableView' attributes
+        self.tableView.separatorInset = UIEdgeInsetsZero
+        self.tableView.layoutMargins = UIEdgeInsetsZero
+        self.tableView.tableFooterView = UIView(frame: CGRectZero)
+        
+        var tapTableView = UITapGestureRecognizer(target:self, action:"hideKeyboard")
+        self.tableView.addGestureRecognizer(tapTableView)
+        
+        //Initializes 'dimView' (backround of the modals) attributes
+        self.dimView = UIView(frame: UIScreen.mainScreen().bounds)
+        self.dimView?.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
+        self.navigationController?.view.addSubview(dimView!)
+        self.dimView?.hidden = true
+        self.dimView?.alpha = 0
     }
     
-    func backButton() {
+    //Add cutomize back button to the navigation bar
+    func addBackButton() {
         var backButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
         backButton.frame = CGRectMake(0, 0, 40, 40)
         backButton.addTarget(self, action: "back", forControlEvents: UIControlEvents.TouchUpInside)
@@ -152,6 +128,7 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
         self.navigationController!.popViewControllerAnimated(true)
     }
     
+    //Register nibs for the tableView
     func registerNibs() {
         var nibPhoto = UINib(nibName: addPhotoCellIndetifier, bundle: nil)
         self.tableView.registerNib(nibPhoto, forCellReuseIdentifier: addPhotoCellIndetifier)
@@ -166,33 +143,26 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
         self.tableView.registerNib(nibAccount, forCellReuseIdentifier: accountCellIdentifier)
     }
     
-    // MARK: - CLLocationManagerDelegate
-    func locationManager(manager: CLLocationManager!, didFailWithError error: NSError!) {
-        println("Error while updating location " + error.localizedDescription)
-    }
-    
-    func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
-        if let var location: CLLocation = locations.last as? CLLocation {
-            latitude = "\(location.coordinate.latitude)"
-            longitude = "\(location.coordinate.longitude)"
-        }
-    }
-    
-    // MARK: - Table view data source
-    
+    //MARK: -
+    //MARK: - Table view Data Source and Delegate
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // #warning Potentially incomplete method implementation.
-        // Return the number of sections.
         return 1
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete method implementation.
-        // Return the number of rows in the section.
         return 4
     }
     
     
+    /* Set cell for the tableView and it's contents
+    *
+    *   First cell  =   EditProfileAddPhotoTableViewCell (Editting of profile image)
+    *   Second cell =   EditProfilePersonalInformationTableViewCell (Editting of Firstname, 
+    *                   Lastname, Mobile Number, and Identification Photo)
+    *   Third cell  =   EditProfileAddressTableViewCell (Editting of address)
+    *   Fourt cell  =   EditProfileAccountInformationTableViewCell (Editting of email address and password. 
+    *                   It also contains the save button)
+    */
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         if indexPath.row == 0 {
@@ -203,9 +173,9 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
             
             if profileUserDetailsModel.profileImageUrl.isNotEmpty() {
                 cell.profileImageView.hidden = false
-                cell.addPhotoLabel.text = editPhotoLocalizeString
+                cell.addPhotoLabel.text = EditProfileLocalizedStrings.editPhotoLocalizeString
             } else {
-                cell.addPhotoLabel.text = addPhotoLocalizeString
+                cell.addPhotoLabel.text = EditProfileLocalizedStrings.addPhotoLocalizeString
             }
             
             if profileImage != nil {
@@ -220,7 +190,7 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
             cell.firstNameTextField.text = profileUserDetailsModel.firstName
             cell.lastNameTextField.text = profileUserDetailsModel.lastName
             cell.mobilePhoneTextField.text = profileUserDetailsModel.contactNumber
-        
+            
             if profileUserDetailsModel.userDocuments.isEmpty  {
                 cell.addIDButton.setTitle(cell.addLocalizeString, forState: UIControlState.Normal)
                 cell.viewImageConstraint.constant = 0
@@ -260,27 +230,189 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
         }
     }
     
-    // MARK: - EditProfileAddPhotoTableViewCellDelegate
-    func addPhotoAction(sender: AnyObject) {
-        isForProfilePicture = true
-        openImageActionSheet()
+    //MARK: - API Requests
+    //MARK: - Fire Get User Info
+    
+    /* Function to request get user information data.
+    *
+    * If the API request is successful, it will call the 'fireGetUserInfo()' function
+    * to update the values in the 'SessionManager'
+    *
+    * If the API request is unsuccessful, it will check 'requestErrorType'
+    * and proceed/do some actions based on the error type
+    */
+
+    func fireUpdateProfile(hasImage: Bool, firstName: String, lastName: String, profilePhoto: NSData? = nil, userDocument: NSData? = nil) {
+        self.showLoader()
+        let url: String = APIAtlas.editProfileUrl
+        
+        WebServiceManager.fireUpdateProfileWithUrl(url, hasImage: hasImage, accessToken: SessionManager.accessToken(), firstName: firstName, lastName: lastName, profilePhoto: profilePhoto, userDocument: userDocument, actionHandler:  { (successful, responseObject, requestErrorType) -> Void in
+            
+            self.dismissLoader()
+            if successful {
+                self.fireGetUserInfo()
+            } else {
+                self.handleErrorWithType(requestErrorType, requestType: .UpdateProfile, responseObject: responseObject, hasImage: hasImage, firstName: firstName, lastName: lastName, profilePhoto: profilePhoto, userDocument: userDocument)
+            }
+        })
     }
     
+    /* Function to request get user information data.
+    *
+    * If the API request is successful, it will convert the 'responseObject' to NSDictionary,
+    * parse the 'data' object in the dictionary and set the values in the 'SessionManager'
+    *
+    * If the API request is unsuccessful, it will check 'requestErrorType'
+    * and proceed/do some actions based on the error type
+    */
+    func fireGetUserInfo() {
+        self.showLoader()
+        
+        WebServiceManager.fireGetUserInfoWithUrl(APIAtlas.getUserInfoUrl, accessToken: SessionManager.accessToken()) { (successful, responseObject, requestErrorType) -> Void in
+            self.hud?.hide(true)
+            if successful {
+                if  let dictionary: NSDictionary = responseObject as? NSDictionary {
+                    if let value: AnyObject = dictionary["data"] {
+                        self.profileUserDetailsModel = ProfileUserDetailsModel.parseDataWithDictionary(value)
+                        //Insert Data to Session Manager
+                        SessionManager.setFullAddress(self.profileUserDetailsModel.address.fullLocation)
+                        SessionManager.setUserFullName(self.profileUserDetailsModel.fullName)
+                        SessionManager.setAddressId(self.profileUserDetailsModel.address.userAddressId)
+                        SessionManager.setCartCount(self.profileUserDetailsModel.cartCount)
+                        SessionManager.setWishlistCount(self.profileUserDetailsModel.wishlistCount)
+                        SessionManager.setProfileImage(self.profileUserDetailsModel.profileImageUrl)
+                        
+                        SessionManager.setCity(self.profileUserDetailsModel.address.city)
+                        SessionManager.setProvince(self.profileUserDetailsModel.address.province)
+                        
+                        SessionManager.setLang(self.profileUserDetailsModel.address.latitude)
+                        SessionManager.setLong(self.profileUserDetailsModel.address.longitude)
+                
+                        self.tableView.reloadData()
+                        self.dismissLoader()
+                    }
+                }
+            } else {
+                self.hud?.hide(true)
+                 self.handleErrorWithType(requestErrorType, requestType: EditProfileRequestType.GetUserInfo, responseObject: responseObject, hasImage: false, firstName: "", lastName: "", profilePhoto: NSData(), userDocument: NSData())
+            }
+        }
+    }
+
     
-    // MARK: - ViewImageViewControllerDelegate
-    func dismissViewImageViewController() {
-        hideDimView()
+    //MARK: - Handling of API Request Error
+    /* Function to handle the error and proceed/do some actions based on the error type
+    *
+    * (Parameters) requestErrorType: RequestErrorType -- type of error being thrown by the web service. It is used to identify what specific action is needed to be execute based on the error type.
+    *              responseObject: AnyObject -- response coming from the server. It is used to identify what specific error message is being thrown by the server
+    *              params: TemporaryParameters -- collection of all params needed by all API request in the Wishlist.
+    *
+    * This function is for checking of 'requestErrorType' and proceed/do some actions based on the error type
+    */
+    func handleErrorWithType(requestErrorType: RequestErrorType, requestType: EditProfileRequestType, responseObject: AnyObject, hasImage: Bool, firstName: String, lastName: String, profilePhoto: NSData? = nil, userDocument: NSData? = nil) {
+        if requestErrorType == .ResponseError {
+            //Error in api requirements
+            let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+            Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+        } else if requestErrorType == .AccessTokenExpired {
+            self.fireRefreshToken(requestType, hasImage: hasImage, firstName: firstName, lastName: lastName, profilePhoto: profilePhoto, userDocument: userDocument)
+        } else if requestErrorType == .PageNotFound {
+            //Page not found
+            Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
+        } else if requestErrorType == .NoInternetConnection {
+            //No internet connection
+            Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+        } else if requestErrorType == .RequestTimeOut {
+            //Request timeout
+            Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+        } else if requestErrorType == .UnRecognizeError {
+            //Unhandled error
+            Toast.displayToastWithMessage(Constants.Localized.error, duration: 1.5, view: self.view)
+        }
+    }
+
+    
+    //MARK: - Fire Refresh Token
+    /* Function called when access_token is already expired.
+    * (Parameter) params: TemporaryParameters -- collection of all params
+    * needed by all API request in the Wishlist.
+    *
+    * This function is for requesting of access token and parse it to save in SessionManager.
+    * If request is successful, it will check the requestType and redirect/call the API request
+    * function based on the requestType.
+    * If the request us unsuccessful, it will forcely logout the user
+    */
+    func fireRefreshToken(requestType: EditProfileRequestType, hasImage: Bool, firstName: String, lastName: String, profilePhoto: NSData? = nil, userDocument: NSData? = nil) {
+        self.showLoader()
+        WebServiceManager.fireRefreshTokenWithUrl(APIAtlas.refreshTokenUrl, actionHandler: {
+            (successful, responseObject, requestErrorType) -> Void in
+            self.dismissLoader()
+            
+            if successful {
+                SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+                switch requestType {
+                case .GetUserInfo:
+                    self.fireGetUserInfo()
+                case .UpdateProfile:
+                    self.fireUpdateProfile(hasImage, firstName: firstName, lastName: lastName, profilePhoto: profilePhoto, userDocument: userDocument)
+                }
+            } else {
+                //Show UIAlert and force the user to logout
+                UIAlertController.displayAlertRedirectionToLogin(self, actionHandler: { (sucess) -> Void in
+                    SessionManager.logoutWithTarget(self)
+                })
+            }
+        })
     }
     
+    //MARK: - Util Function
+    //Loader function
+    func showLoader() {
+        if self.hud != nil {
+            self.hud!.hide(true)
+            self.hud = nil
+        }
+        
+        self.hud = MBProgressHUD(view: self.view)
+        self.hud?.removeFromSuperViewOnHide = true
+        self.hud?.dimBackground = false
+        self.navigationController?.view.addSubview(self.hud!)
+        self.hud?.show(true)
+    }
+    
+    //Hide loader
+    func dismissLoader() {
+        self.hud?.hide(true)
+    }
+    
+    // Hide Keyboard
+    func hideKeyboard() {
+        self.view.endEditing(true)
+    }
+    
+    func hideDimView() {
+        UIView.animateWithDuration(0.3, animations: {
+            self.dimView!.alpha = 0
+            }, completion: { finished in
+                self.dimView!.hidden = true
+        })
+    }
+}
+
+//MARK: -
+//MARK: - Delegates and Data Source
+
+//MARK: - UIImagePickerControllerDelegate, UIActionSheetDelegate
+extension EditProfileTableViewController: UIImagePickerControllerDelegate, UIActionSheetDelegate {
     func openImageActionSheet(){
-        if( controllerAvailable()){
+        if(checkIfUIAlertControllerIsAvailable()){
             handleIOS8()
         } else {
             var actionSheet:UIActionSheet
             if(UIImagePickerController .isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera)){
-                actionSheet = UIActionSheet(title: addPhotoLocalizeString, delegate: self, cancelButtonTitle: cancelLocalizeString, destructiveButtonTitle: nil,otherButtonTitles: selectPhotoLocalizeString, takePhotoLocalizeString)
+                actionSheet = UIActionSheet(title: EditProfileLocalizedStrings.addPhotoLocalizeString, delegate: self, cancelButtonTitle: EditProfileLocalizedStrings.cancelLocalizeString, destructiveButtonTitle: nil,otherButtonTitles: EditProfileLocalizedStrings.selectPhotoLocalizeString, EditProfileLocalizedStrings.takePhotoLocalizeString)
             } else {
-                actionSheet = UIActionSheet(title: addPhotoLocalizeString, delegate: self, cancelButtonTitle: cancelLocalizeString, destructiveButtonTitle: nil,otherButtonTitles: selectPhotoLocalizeString)
+                actionSheet = UIActionSheet(title: EditProfileLocalizedStrings.addPhotoLocalizeString, delegate: self, cancelButtonTitle: EditProfileLocalizedStrings.cancelLocalizeString, destructiveButtonTitle: nil,otherButtonTitles: EditProfileLocalizedStrings.selectPhotoLocalizeString)
             }
             actionSheet.delegate = self
             actionSheet.showInView(self.view)
@@ -293,13 +425,13 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
         let imageController = UIImagePickerController()
         imageController.editing = false
         imageController.delegate = self
-        let alert = UIAlertController(title: addPhotoLocalizeString, message: "", preferredStyle: UIAlertControllerStyle.ActionSheet)
-        let libButton = UIAlertAction(title: selectPhotoLocalizeString, style: UIAlertActionStyle.Default) { (alert) -> Void in
+        let alert = UIAlertController(title: EditProfileLocalizedStrings.addPhotoLocalizeString, message: "", preferredStyle: UIAlertControllerStyle.ActionSheet)
+        let libButton = UIAlertAction(title: EditProfileLocalizedStrings.selectPhotoLocalizeString, style: UIAlertActionStyle.Default) { (alert) -> Void in
             imageController.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
             self.presentViewController(imageController, animated: true, completion: nil)
         }
         if(UIImagePickerController .isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera)){
-            let cameraButton = UIAlertAction(title:takePhotoLocalizeString, style: UIAlertActionStyle.Default) { (alert) -> Void in
+            let cameraButton = UIAlertAction(title: EditProfileLocalizedStrings.takePhotoLocalizeString, style: UIAlertActionStyle.Default) { (alert) -> Void in
                 imageController.sourceType = UIImagePickerControllerSourceType.Camera
                 self.presentViewController(imageController, animated: true, completion: nil)
                 
@@ -308,7 +440,7 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
         } else {
             
         }
-        let cancelButton = UIAlertAction(title: cancelLocalizeString, style: UIAlertActionStyle.Cancel) { (alert) -> Void in
+        let cancelButton = UIAlertAction(title: EditProfileLocalizedStrings.cancelLocalizeString, style: UIAlertActionStyle.Cancel) { (alert) -> Void in
         }
         
         alert.addAction(libButton)
@@ -326,7 +458,7 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
             
             addPhotoCell!.profileImageView.hidden = false
             addPhotoCell!.profileImageView.image = image
-            addPhotoCell!.addPhotoLabel.text = editPhotoLocalizeString
+            addPhotoCell!.addPhotoLabel.text = EditProfileLocalizedStrings.editPhotoLocalizeString
             
             profileImage = image
             profileImageData = self.resizeIfNeeded(image, imageData: UIImageJPEGRepresentation(image, 0.25))
@@ -345,6 +477,7 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
         }
     }
     
+    //Function that resize the image to mi
     func resizeIfNeeded(image: UIImage, imageData:NSData) -> NSData {
         if (Double)(imageData.length / 1024) > 100 {
             return UIImageJPEGRepresentation(image.normalizedImage().resize(0.25), 0.25)
@@ -367,7 +500,7 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
         self.presentViewController(imageController, animated: true, completion: nil)
     }
     
-    func controllerAvailable() -> Bool {
+    func checkIfUIAlertControllerIsAvailable() -> Bool {
         if let gotModernAlert: AnyClass = NSClassFromString("UIAlertController") {
             return true;
         }
@@ -375,37 +508,26 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
             return false;
         }
     }
-    
-    // MARK: - EditProfileAddressTableViewCellDelegate
-    func changeAddressAction(sender: AnyObject){
-        let changeAddressViewController: ChangeAddressViewController = ChangeAddressViewController(nibName: "ChangeAddressViewController", bundle: nil)
-        changeAddressViewController.delegate = self
-        self.navigationController!.pushViewController(changeAddressViewController, animated: true)
-    }
-    
-    // MARK: ChangeAddressViewControllerDelegate
-    func changeAddressViewController(didSelectAddress address: String) {
-        profileUserDetailsModel.address.fullLocation = address
+}
 
-        var indexPath = NSIndexPath(forRow: 2, inSection: 0)
-        self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Top)
+//MARK: - EditProfileAddPhotoTableViewCellDelegate
+extension EditProfileTableViewController: EditProfileAddPhotoTableViewCellDelegate {
+    func addPhotoAction(sender: AnyObject) {
+        self.isForProfilePicture = true
+        self.openImageActionSheet()
     }
-    
-    
-    // Hide Keyboard
-    func hideKeyboard() {
-        self.view.endEditing(true)
-    }
-    
-    // MARK: - EditProfilePersonalInformationTableViewCellDelegate
+}
+
+//MARK: - EditProfilePersonalInformationTableViewCellDelegate
+extension EditProfileTableViewController: EditProfilePersonalInformationTableViewCellDelegate {
     func passPersonalInformation(firstName: String, lastName: String, mobileNumber: String) {
         self.firstName = firstName
         self.lastName = lastName
         self.mobileNumber = mobileNumber
         
-        profileUserDetailsModel.firstName = firstName
-        profileUserDetailsModel.lastName = lastName
-        profileUserDetailsModel.contactNumber = mobileNumber
+        self.profileUserDetailsModel.firstName = firstName
+        self.profileUserDetailsModel.lastName = lastName
+        self.profileUserDetailsModel.contactNumber = mobileNumber
     }
     
     func changeMobileNumberAction(){
@@ -431,8 +553,8 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
     }
     
     func addValidIDAction() {
-        isForProfilePicture = false
-        openImageActionSheet()
+        self.isForProfilePicture = false
+        self.openImageActionSheet()
     }
     
     func viewImageAction() {
@@ -458,8 +580,99 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
             })
         }
     }
+}
+
+// MARK: - ViewImageViewControllerDelegate
+extension EditProfileTableViewController: ViewImageViewControllerDelegate {
+    func dismissViewImageViewController() {
+        hideDimView()
+    }
+}
+
+
+//MARK: - EditProfileAddressTableViewCellDelegate
+extension EditProfileTableViewController: EditProfileAddressTableViewCellDelegate {
+    func changeAddressAction(sender: AnyObject){
+        let changeAddressViewController: ChangeAddressViewController = ChangeAddressViewController(nibName: "ChangeAddressViewController", bundle: nil)
+        changeAddressViewController.delegate = self
+        self.navigationController!.pushViewController(changeAddressViewController, animated: true)
+    }
+}
+
+//MARK: - EditProfileAccountInformationTableViewCellDelegate
+extension EditProfileTableViewController: EditProfileAccountInformationTableViewCellDelegate {
+    func saveAction(sender: AnyObject) {
+        
+        var errorMessage: String = ""
+        
+        if firstName.isEmpty {
+            errorMessage = "First name is required."
+        } else if !firstName.isValidName() {
+            errorMessage = "First name contains illegal characters. It can only contain letters, numbers and underscores."
+        } else if lastName.isEmpty {
+            errorMessage = "Last name is required."
+        } else if !lastName.isValidName() {
+            errorMessage = "Last name contains illegal characters. It can only contain letters, numbers and underscores."
+        }
+        
+        if errorMessage != "" {
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorMessage)
+        } else {
+            var hasImage: Bool = false
+            if profileImageData != nil || validIDImageData != nil {
+                hasImage = true
+            } else {
+                hasImage = false
+            }
+            
+            self.fireUpdateProfile(hasImage, firstName: self.firstName, lastName: self.lastName, profilePhoto: self.profileImageData, userDocument: self.validIDImageData)
+        }
+    }
     
-    // MARK: - ChangeMobileNumberViewControllerDelegate
+    func editPasswordAction() {
+        var editPasswordModal = ChangePasswordViewController(nibName: "ChangePasswordViewController", bundle: nil)
+        editPasswordModal.delegate = self
+        editPasswordModal.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
+        editPasswordModal.providesPresentationContextTransitionStyle = true
+        editPasswordModal.definesPresentationContext = true
+        editPasswordModal.view.backgroundColor = UIColor.clearColor()
+        editPasswordModal.view.frame.origin.y = 0
+        self.tabBarController?.presentViewController(editPasswordModal, animated: true, completion: nil)
+        
+        self.dimView!.hidden = false
+        UIView.animateWithDuration(0.3, animations: {
+            self.dimView!.alpha = 1
+            }, completion: { finished in
+        })
+    }
+}
+
+// MARK: - ChangePasswordViewControllerDelegate
+extension EditProfileTableViewController: ChangePasswordViewControllerDelegate {
+    func closeChangePasswordViewController(){
+        hideDimView()
+    }
+    
+    func submitChangePasswordViewController(){
+        hideDimView()
+        var changeLocalizeString = StringHelper.localizedStringWithKey("CHANGEPASSWORD_LOCALIZE_KEY")
+        var successLocalizeString = StringHelper.localizedStringWithKey("SUCCESSCHANGEPASSWORD_LOCALIZE_KEY")
+        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: successLocalizeString, title: changeLocalizeString)
+    }
+}
+
+// MARK: ChangeAddressViewControllerDelegate
+extension EditProfileTableViewController: ChangeAddressViewControllerDelegate {
+    func changeAddressViewController(didSelectAddress address: String) {
+        profileUserDetailsModel.address.fullLocation = address
+        
+        var indexPath = NSIndexPath(forRow: 2, inSection: 0)
+        self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Top)
+    }
+}
+
+// MARK: - ChangeMobileNumberViewControllerDelegate
+extension EditProfileTableViewController: ChangeMobileNumberViewControllerDelegate {
     func closeChangeNumbderViewController(){
         hideDimView()
     }
@@ -481,7 +694,11 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
         })
     }
     
-    // MARK: - VerifyMobileNumberViewControllerDelegate
+}
+
+// MARK: - VerifyMobileNumberViewControllerDelegate
+extension EditProfileTableViewController: VerifyMobileNumberViewControllerDelegate {
+    
     func closeVerifyMobileNumberViewController() {
         hideDimView()
     }
@@ -507,7 +724,9 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
     func requestNewCodeAction() {
         submitChangeNumberViewController()
     }
-    
+}
+
+extension EditProfileTableViewController: VerifyMobileNumberStatusViewControllerDelegate {
     // MARK: - VerifyMobileNumberStatusViewControllerDelegate
     func closeVerifyMobileNumberStatusViewController() {
         hideDimView()
@@ -519,283 +738,5 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
     
     func requestNewVerificationCodeAction() {
         submitChangeNumberViewController()
-    }
-    
-    func getNewMobileNumber() -> String {
-        var result: String = ""
-        if let val: AnyObject = NSUserDefaults.standardUserDefaults().objectForKey("newMobileNumber") as? String {
-            result = val as! String
-        }
-        return result
-    }
-    
-    
-    // MARK: - ChangePasswordViewControllerDelegate
-    func closeChangePasswordViewController(){
-        hideDimView()
-    }
-    
-    func submitChangePasswordViewController(){
-        hideDimView()
-        var changeLocalizeString = StringHelper.localizedStringWithKey("CHANGEPASSWORD_LOCALIZE_KEY")
-        var successLocalizeString = StringHelper.localizedStringWithKey("SUCCESSCHANGEPASSWORD_LOCALIZE_KEY")
-        self.showAlert(changeLocalizeString, message: successLocalizeString)
-    }
-    
-    func hideDimView() {
-        UIView.animateWithDuration(0.3, animations: {
-            self.dimView!.alpha = 0
-            }, completion: { finished in
-                self.dimView!.hidden = true
-        })
-    }
-    
-    // MARK: - EditProfileAccountInformationTableViewCellDelegate
-    func saveAction(sender: AnyObject) {
-        println("saveAction")
-        
-        var errorMessage: String = ""
-        
-    
-        if firstName.isEmpty {
-            errorMessage = "First name is required."
-        } else if !firstName.isValidName() {
-            errorMessage = "First name contains illegal characters. It can only contain letters, numbers and underscores."
-        } else if lastName.isEmpty {
-            errorMessage = "Last name is required."
-        } else if !lastName.isValidName() {
-            errorMessage = "Last name contains illegal characters. It can only contain letters, numbers and underscores."
-        } //        } else if emailAddress.isNotEmpty() {
-//            errorMessage = "Email is required."
-//        } else if emailAddress.isValidEmail() {
-//            errorMessage = "The email address you enter is not a valid email address."
-//        } else if password.isNotEmpty() {
-//            errorMessage = "Password is required."
-//        } else if password.isAlphaNumeric() {
-//            errorMessage = "Password contains illegal characters. It can only contain letters, numbers and underscores."
-//        }
-        
-        if errorMessage != "" {
-            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorMessage)
-        } else {
-            if Reachability.isConnectedToNetwork(){
-                if profileImageData != nil || validIDImageData != nil{
-                    var params: NSDictionary = [
-                        "firstName": firstName as String,
-                        "lastName": lastName as String,
-                        "latitude": latitude,
-                        "longitude": longitude]
-                    
-                    fireUpdateProfile(APIAtlas.editProfileUrl + "?access_token=" + SessionManager.accessToken(), params: params, withImage: true)
-                } else {
-                    var params: NSDictionary = [
-                        "firstName": firstName as String,
-                        "lastName": lastName as String,
-                        "latitude": latitude,
-                        "longitude": longitude,
-                        "profilePhoto": profileUserDetailsModel.profileImageUrl as String,
-                        "userDocument": profileUserDetailsModel.profileImageUrl as String]
-                    
-                    fireUpdateProfile(APIAtlas.editProfileUrl + "?access_token=" + SessionManager.accessToken(), params: params, withImage: false)
-                }
-            }
-            else {
-                showAlert(self.connectionLocalizeString, message: self.connectionMessageLocalizeString)
-            }
-        }
-            
-    }
-    
-    func editPasswordAction() {
-        var editPasswordModal = ChangePasswordViewController(nibName: "ChangePasswordViewController", bundle: nil)
-        editPasswordModal.delegate = self
-        editPasswordModal.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
-        editPasswordModal.providesPresentationContextTransitionStyle = true
-        editPasswordModal.definesPresentationContext = true
-        editPasswordModal.view.backgroundColor = UIColor.clearColor()
-        editPasswordModal.view.frame.origin.y = 0
-        self.tabBarController?.presentViewController(editPasswordModal, animated: true, completion: nil)
-        
-        self.dimView!.hidden = false
-        UIView.animateWithDuration(0.3, animations: {
-            self.dimView!.alpha = 1
-            }, completion: { finished in
-        })
-    }
-    
-    
-    func fireUpdateProfile(url: String, params: NSDictionary!, withImage: Bool) {
-        showLoader()
-        if withImage {
-            manager.POST(url, parameters: params, constructingBodyWithBlock: { (data: AFMultipartFormData!) in
-                if self.profileImageData != nil {
-                    data.appendPartWithFileData(self.profileImageData!, name: "profilePhoto", fileName: "photo", mimeType: "image/jpeg")
-                }
-                
-                if self.validIDImageData != nil {
-                    data.appendPartWithFileData(self.validIDImageData!, name: "userDocument", fileName: "photo", mimeType: "image/jpeg")
-                }
-                //println(self.validIDImageData.length / 1024.0 / 1024.0)
-                }, success: {
-                    (task: NSURLSessionDataTask!, responseObject: AnyObject!) in print(responseObject as! NSDictionary)
-                    
-                    if responseObject.objectForKey("error") != nil {
-                        self.requestRefreshToken("updateProfile", url: url, params: params, withImage: withImage)
-                    }
-                    
-                    self.fireGetUserInfo()
-                    
-                }, failure: {
-                    (task: NSURLSessionDataTask!, error: NSError!) in
-                    
-                    let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                    
-                    if task.statusCode == 401 {
-                        self.requestRefreshToken("updateProfile", url: url, params: params, withImage: withImage)
-                    } else  if task.statusCode == 500 {
-//                        self.dismissLoader()
-//                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: self.tryAgainLocalizeString)
-                        self.saveAction(self)
-                    } else {
-                        self.dismissLoader()
-                        self.showAlert(self.errorLocalizeString, message: self.somethingWrongLocalizeString)
-                        println(error)
-                    }
-            })
-        } else {
-            manager.POST(url, parameters: params, success: {
-                    (task: NSURLSessionDataTask!, responseObject: AnyObject!) in print(responseObject as! NSDictionary)
-                    if responseObject.objectForKey("error") != nil {
-                        self.requestRefreshToken("updateProfile", url: url, params: params, withImage: withImage)
-                    }
-                    self.dismissLoader()
-                    var changeLocalizeString = StringHelper.localizedStringWithKey("SUCCESS_LOCALIZE_KEY")
-                    var successLocalizeString = StringHelper.localizedStringWithKey("SUCCESSUPDATEPROFILE_LOCALIZE_KEY")
-                    self.showAlert(changeLocalizeString, message: successLocalizeString)
-                
-                    println(responseObject)
-                }, failure: {
-                    (task: NSURLSessionDataTask!, error: NSError!) in
-                    
-                    let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                    
-                    if task.statusCode == 401 {
-                        self.requestRefreshToken("updateProfile", url: url, params: params, withImage: withImage)
-                    } else  if task.statusCode == 500 {
-//                        self.dismissLoader()
-//                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: self.tryAgainLocalizeString)
-                        self.saveAction(self)
-                    } else {
-                        self.dismissLoader()
-                        self.showAlert(self.errorLocalizeString, message: self.somethingWrongLocalizeString)
-                    }
-            })
-        }
-        
-    }
-    
-    //Loader function
-    func showLoader() {
-        if self.hud != nil {
-            self.hud!.hide(true)
-            self.hud = nil
-        }
-        
-        self.hud = MBProgressHUD(view: self.view)
-        self.hud?.removeFromSuperViewOnHide = true
-        self.hud?.dimBackground = false
-        self.navigationController?.view.addSubview(self.hud!)
-        self.hud?.show(true)
-    }
-    
-    func dismissLoader() {
-        self.hud?.hide(true)
-    }
-    
-    func requestRefreshToken(type: String, url: String, params: NSDictionary!, withImage: Bool) {
-        let urlTemp: String = APIAtlas.refreshTokenUrl
-        let paramsTemp: NSDictionary = ["client_id": Constants.Credentials.clientID(),
-            "client_secret": Constants.Credentials.clientSecret(),
-            "grant_type": Constants.Credentials.grantRefreshToken,
-            "refresh_token": SessionManager.refreshToken()]
-        
-        let manager = APIManager.sharedInstance
-            manager.POST(urlTemp, parameters: paramsTemp, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            
-            SVProgressHUD.dismiss()
-            
-            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
-            var paramsTemp: Dictionary<String, String> = params as! Dictionary<String, String>
-            paramsTemp["access_token"] = SessionManager.accessToken()
-            
-            if type == "updateProfile" {
-                self.fireUpdateProfile(APIAtlas.editProfileUrl + "?access_token=" + SessionManager.accessToken(), params: paramsTemp, withImage: withImage)
-            } else {
-                self.fireGetUserInfo()
-            }
-            
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                SVProgressHUD.dismiss()
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                
-                self.showAlert(self.errorLocalizeString, message: self.somethingWrongLocalizeString)
-        })
-    }
-    
-    func showAlert(title: String, message: String) {
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
-        var okLocalizeString = StringHelper.localizedStringWithKey("OKBUTTON_LOCALIZE_KEY")
-        let OKAction = UIAlertAction(title: okLocalizeString, style: .Default) { (action) in
-            alertController.dismissViewControllerAnimated(true, completion: nil)
-        }
-        
-        alertController.addAction(OKAction)
-        
-        self.presentViewController(alertController, animated: true) {
-            
-        }
-    }
-    
-    //MARK: - Getting User Info
-    func fireGetUserInfo() {
-        let manager: APIManager = APIManager.sharedInstance
-        let parameters: NSDictionary = ["access_token": SessionManager.accessToken()]
-        manager.POST(APIAtlas.getUserInfoUrl, parameters: parameters, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            let dictionary: NSDictionary = responseObject as! NSDictionary
-            let profileModel: ProfileUserDetailsModel = ProfileUserDetailsModel.parseDataWithDictionary(dictionary["data"]!)
-            //Insert Data to Session Manager
-            SessionManager.setFullAddress(profileModel.address.fullLocation)
-            SessionManager.setUserFullName(profileModel.fullName)
-            SessionManager.setAddressId(profileModel.address.userAddressId)
-            SessionManager.setCartCount(profileModel.cartCount)
-            SessionManager.setWishlistCount(profileModel.wishlistCount)
-            SessionManager.setProfileImage(profileModel.profileImageUrl)
-            
-            SessionManager.setCity(profileModel.address.city)
-            SessionManager.setProvince(profileModel.address.province)
-            
-            self.dismissLoader()
-            
-            var changeLocalizeString = StringHelper.localizedStringWithKey("SUCCESS_LOCALIZE_KEY")
-            var successLocalizeString = StringHelper.localizedStringWithKey("SUCCESSUPDATEPROFILE_LOCALIZE_KEY")
-            self.showAlert(changeLocalizeString, message: successLocalizeString)
-            self.profileImageData = nil
-            self.profileImage = nil
-            
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                
-                if task.statusCode == 401 {
-                    self.requestRefreshToken("userInfo", url: APIAtlas.getUserInfoUrl, params: nil, withImage: false)
-                } else {
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: HomeStrings.somethingWentWrong, title: HomeStrings.error)
-                }
-                
-                self.hud?.hide(true)
-        })
     }
 }
