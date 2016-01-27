@@ -199,17 +199,9 @@ class StartPageViewController: UIViewController, UIPageViewControllerDataSource,
         self.presentViewController(tabController, animated: true, completion: nil)
     }
     
-    
     @IBAction func signIn(sender: AnyObject) {
-        var loginContainerView: LoginAndRegisterContentViewController
-        if IphoneType.isIphone5() || IphoneType.isIphone4() {
-            loginContainerView = self.storyboard!.instantiateViewControllerWithIdentifier("LoginAndRegisterContentViewController5") as! LoginAndRegisterContentViewController
-        } else {
-            loginContainerView = self.storyboard!.instantiateViewControllerWithIdentifier("LoginAndRegisterContentViewController") as! LoginAndRegisterContentViewController
-        }
+        var loginContainerView: LoginAndRegisterTableViewController = self.storyboard?.instantiateViewControllerWithIdentifier("LoginAndRegisterTableViewController") as! LoginAndRegisterTableViewController
         
         self.presentViewController(loginContainerView, animated: true, completion: nil)
     }
-    
-    
 }

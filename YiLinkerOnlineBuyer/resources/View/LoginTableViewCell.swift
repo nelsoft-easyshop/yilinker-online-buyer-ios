@@ -9,10 +9,10 @@
 import UIKit
 
 protocol LoginTableViewCellDelegate {
-    func loginTableViewCellDelegate(loginTableViewCell: LoginTableViewCell, textFieldShouldReturn textField: UITextField)
-    func loginTableViewCellDelegate(loginTableViewCell: LoginTableViewCell, didTapSignIn signInButton: UIButton)
-    func loginTableViewCellDelegate(loginTableViewCell: LoginTableViewCell, didTapSuccessOnFacebookSignIn facebookButton: UIButton)
-    func loginTableViewCellDelegate(loginTableViewCell: LoginTableViewCell, didTapForgotPassword forgotPasswordButton: UIButton)
+    func loginTableViewCell(loginTableViewCell: LoginTableViewCell, textFieldShouldReturn textField: UITextField)
+    func loginTableViewCell(loginTableViewCell: LoginTableViewCell, didTapSignIn signInButton: UIButton)
+    func loginTableViewCell(loginTableViewCell: LoginTableViewCell, didTapSuccessOnFacebookSignIn facebookButton: UIButton)
+    func loginTableViewCell(loginTableViewCell: LoginTableViewCell, didTapForgotPassword forgotPasswordButton: UIButton)
 }
 
 class LoginTableViewCell: UITableViewCell, UITextFieldDelegate, FBSDKLoginButtonDelegate {
@@ -61,14 +61,14 @@ class LoginTableViewCell: UITableViewCell, UITextFieldDelegate, FBSDKLoginButton
     //MARK: - 
     //MARK: - TextField Delegate
     func textFieldShouldReturn(textField: UITextField) -> Bool {
-        self.delegate?.loginTableViewCellDelegate(self, textFieldShouldReturn: textField)
+        self.delegate?.loginTableViewCell(self, textFieldShouldReturn: textField)
         return true
     }
     
     //MARK: - 
     //MARK: - SignIn
     @IBAction func signIn(sender: UIButton) {
-        self.delegate?.loginTableViewCellDelegate(self, didTapSignIn: sender)
+        self.delegate?.loginTableViewCell(self, didTapSignIn: sender)
     }
     
     //MARK: - 
@@ -85,7 +85,7 @@ class LoginTableViewCell: UITableViewCell, UITextFieldDelegate, FBSDKLoginButton
             // If you ask for multiple permissions at once, you
             // should check if specific permissions missing
             if result.grantedPermissions.contains("email") {
-                self.delegate?.loginTableViewCellDelegate(self, didTapSuccessOnFacebookSignIn: self.facebookButton)
+                self.delegate?.loginTableViewCell(self, didTapSuccessOnFacebookSignIn: self.facebookButton)
             }
         }
     }
@@ -102,7 +102,7 @@ class LoginTableViewCell: UITableViewCell, UITextFieldDelegate, FBSDKLoginButton
                FBSDKLoginManager().logOut()
             }
             else {
-                self.delegate?.loginTableViewCellDelegate(self, didTapSuccessOnFacebookSignIn: self.facebookButton)
+                self.delegate?.loginTableViewCell(self, didTapSuccessOnFacebookSignIn: self.facebookButton)
             }
         })
     }
@@ -110,6 +110,6 @@ class LoginTableViewCell: UITableViewCell, UITextFieldDelegate, FBSDKLoginButton
     //MARK: - 
     //MARK: - Forgot Password
     @IBAction func forgotPassword(sender: UIButton) {
-        self.delegate?.loginTableViewCellDelegate(self, didTapForgotPassword: sender)
+        self.delegate?.loginTableViewCell(self, didTapForgotPassword: sender)
     }
 }
