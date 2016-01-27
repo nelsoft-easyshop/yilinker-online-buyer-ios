@@ -25,8 +25,8 @@ struct HiddenStrings {
 class HiddenViewController: UIViewController {
 
     var helpViewController: HelpViewController?
-    var registerViewController: LoginAndRegisterContentViewController?
-    var loginViewController: LoginAndRegisterContentViewController?
+    var registerViewController: LoginAndRegisterTableViewController?
+    var loginViewController: LoginAndRegisterTableViewController?
 //    var messagingViewController: ConversationVC?
     var messagingViewController: MessagingConversationListViewController?
     var customizeShoppingViewController: CustomizeShoppingViewController?
@@ -75,12 +75,8 @@ class HiddenViewController: UIViewController {
         } else {
             if index == 0 {
                 self.setNavigationBarTitle(HiddenStrings.register)
-                self.registerViewController?.defaultViewControllerIndex = 1
-                self.registerViewController?.closeButton.hidden = true
             } else if index == 1 {
                 self.setNavigationBarTitle(HiddenStrings.signIn)
-                self.loginViewController?.defaultViewControllerIndex = 0
-                self.loginViewController?.closeButton.hidden = true
             } else if index == 2 {
                 self.setNavigationBarTitle(HiddenStrings.categories)
             }  else if index == 3 {
@@ -110,11 +106,7 @@ class HiddenViewController: UIViewController {
         self.view.layoutIfNeeded()
         self.addChildViewController(viewController)
         viewController.view.frame = contentViewFrame!
-        
-        if viewController.isKindOfClass(LoginAndRegisterContentViewController) {
-            viewController.view.frame = CGRectMake(0, 20, viewController.view.frame.size.width, viewController.view.frame.size.height)
-        }
-        
+   
         contentView.addSubview(viewController.view)
         viewController.didMoveToParentViewController(self)
         selectedChildViewController = viewController
@@ -146,26 +138,17 @@ class HiddenViewController: UIViewController {
             
             let storyBoard: UIStoryboard = UIStoryboard(name: "StartPageStoryBoard", bundle: nil)
             
-            if IphoneType.isIphone5() {
-                self.registerViewController = storyBoard.instantiateViewControllerWithIdentifier("LoginAndRegisterContentViewController5") as? LoginAndRegisterContentViewController
-                
-                self.loginViewController =  storyBoard.instantiateViewControllerWithIdentifier("LoginAndRegisterContentViewController5") as? LoginAndRegisterContentViewController
-            } else if IphoneType.isIphone4() {
-                self.registerViewController = storyBoard.instantiateViewControllerWithIdentifier("LoginAndRegisterContentViewController4") as? LoginAndRegisterContentViewController
-                
-                self.loginViewController =  storyBoard.instantiateViewControllerWithIdentifier("LoginAndRegisterContentViewController4") as? LoginAndRegisterContentViewController
-            } else {
-                self.registerViewController = storyBoard.instantiateViewControllerWithIdentifier("LoginAndRegisterContentViewController") as? LoginAndRegisterContentViewController
-                
-                self.loginViewController =  storyBoard.instantiateViewControllerWithIdentifier("LoginAndRegisterContentViewController") as? LoginAndRegisterContentViewController
-
-            }
+            self.registerViewController = storyBoard.instantiateViewControllerWithIdentifier("LoginAndRegisterTableViewController") as? LoginAndRegisterTableViewController
             
-            self.registerViewController?.isFromTab = true
-            self.loginViewController?.isFromTab = true
+            self.loginViewController =  storyBoard.instantiateViewControllerWithIdentifier("LoginAndRegisterTableViewController") as? LoginAndRegisterTableViewController
+            
+            self.registerViewController?.isHideCloseButton = true
+            self.loginViewController?.isHideCloseButton = true
+
+            self.loginViewController?.isLogin = true
+            self.registerViewController?.isLogin = false
             
             let storyBoard1: UIStoryboard = UIStoryboard(name: "HomeStoryBoard", bundle: nil)
-//            self.messagingViewController = storyBoard1.instantiateViewControllerWithIdentifier("ConversationVC") as? ConversationVC
             self.messagingViewController = MessagingConversationListViewController(nibName: "MessagingConversationListViewController", bundle: nil)
             self.customizeShoppingViewController = CustomizeShoppingViewController(nibName: "CustomizeShoppingViewController", bundle: nil)
             self.resultViewController = ResultViewController(nibName: "ResultViewController", bundle: nil)

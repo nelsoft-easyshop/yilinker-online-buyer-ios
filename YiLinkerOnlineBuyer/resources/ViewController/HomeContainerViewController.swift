@@ -36,7 +36,6 @@ struct FABStrings {
 class HomeContainerViewController: UIViewController, UITabBarControllerDelegate, EmptyViewDelegate, CarouselCollectionViewCellDataSource, CarouselCollectionViewCellDelegate, HalfPagerCollectionViewCellDelegate, HalfPagerCollectionViewCellDataSource, FlashSaleCollectionViewCellDelegate, LayoutHeaderCollectionViewCellDelegate, SellerCarouselCollectionViewCellDataSource, SellerCarouselCollectionViewCellDelegate, LayoutNineCollectionViewCellDelegate, DailyLoginCollectionViewCellDataSource, DailyLoginCollectionViewCellDelegate, FABViewControllerDelegate {
     
     var searchViewContoller: SearchViewController?
-    var circularMenuViewController: CircularMenuViewController?
     var wishlisViewController: WishlistViewController?
     var cartViewController: CartViewController?
     
@@ -1721,7 +1720,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     
     func redirectToLoginRegister() {
         let storyBoard: UIStoryboard = UIStoryboard(name: "StartPageStoryBoard", bundle: nil)
-        let loginRegisterViewController: LoginAndRegisterContentViewController = storyBoard.instantiateViewControllerWithIdentifier("LoginAndRegisterContentViewController5") as! LoginAndRegisterContentViewController
+        let loginRegisterViewController: LoginAndRegisterTableViewController = storyBoard.instantiateViewControllerWithIdentifier("LoginAndRegisterTableViewController") as! LoginAndRegisterTableViewController
         
         self.customTabBarController!.presentViewController(loginRegisterViewController, animated: true, completion: nil)
     }
