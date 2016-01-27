@@ -1711,17 +1711,33 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     }
     
     func redirectToHiddenWithIndex(index: Int) {
-        self.customTabBarController?.selectedIndex = 2
-        let navigationController: UINavigationController = self.customTabBarController!.viewControllers![2] as! UINavigationController
-        let hiddenViewController: HiddenViewController = navigationController.viewControllers[0] as! HiddenViewController
-        hiddenViewController.selectViewControllerAtIndex(index)
-        self.customTabBarController!.isValidToSwitchToMenuTabBarItems = false
+        if SessionManager.isLoggedIn() {
+            let navigationController: UINavigationController = self.customTabBarController!.viewControllers![2] as! UINavigationController
+            let hiddenViewController: HiddenViewController = navigationController.viewControllers[0] as! HiddenViewController
+            hiddenViewController.selectViewControllerAtIndex(index)
+            self.customTabBarController!.isValidToSwitchToMenuTabBarItems = false
+        } else {
+            if index == 0 {
+                Delay.delayWithDuration(0.5, completionHandler: { (success) -> Void in
+                    self.redirectToLoginRegister(false)
+                })
+            } else if index == 1 {
+                Delay.delayWithDuration(0.5, completionHandler: { (success) -> Void in
+                    self.redirectToLoginRegister(true)
+                })
+            } else {
+                let navigationController: UINavigationController = self.customTabBarController!.viewControllers![2] as! UINavigationController
+                let hiddenViewController: HiddenViewController = navigationController.viewControllers[0] as! HiddenViewController
+                hiddenViewController.selectViewControllerAtIndex(index)
+                self.customTabBarController!.isValidToSwitchToMenuTabBarItems = false
+            }
+        }
     }
     
-    func redirectToLoginRegister() {
+    func redirectToLoginRegister(isLogin: Bool) {
         let storyBoard: UIStoryboard = UIStoryboard(name: "StartPageStoryBoard", bundle: nil)
         let loginRegisterViewController: LoginAndRegisterTableViewController = storyBoard.instantiateViewControllerWithIdentifier("LoginAndRegisterTableViewController") as! LoginAndRegisterTableViewController
-        
+        loginRegisterViewController.isLogin = isLogin
         self.customTabBarController!.presentViewController(loginRegisterViewController, animated: true, completion: nil)
     }
 }
