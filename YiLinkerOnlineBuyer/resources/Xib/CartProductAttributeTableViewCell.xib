@@ -51,6 +51,7 @@
             </tableViewCellContentView>
             <connections>
                 <outlet property="attributeLabel" destination="77J-A0-UmY" id="IcZ-Fd-6dg"/>
+                <outlet property="heightConstraint" destination="hZn-Ph-Mof" id="VW9-p9-7zk"/>
                 <outlet property="scrollView" destination="30z-pk-wUf" id="lbZ-um-Oe3"/>
             </connections>
             <point key="canvasLocation" x="383.5" y="234"/>
