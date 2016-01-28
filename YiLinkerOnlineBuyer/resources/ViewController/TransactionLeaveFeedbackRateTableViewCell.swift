@@ -107,10 +107,9 @@ class TransactionLeaveFeedbackRateTableViewCell: UITableViewCell {
     }
     
     // MARK: Private methods
-    // MARK: Set the selected stars for 'Item Quality' based on the index value.
+    // MARK: Set the selected stars for 'Item Quality' and 'Communication' based on the index value.
     func updateRate(index: Int, type: Int, buttons: [UIButton]) {
         self.rate = index
-        
         if type == 0 {
            self.delegate?.rateItemQuality(self.rate)
         } else {
@@ -127,18 +126,4 @@ class TransactionLeaveFeedbackRateTableViewCell: UITableViewCell {
             buttons[i].frame.size = CGSize(width: 35, height: 30)
         }
     }
-    /*
-    // MARK: Set the selected stars for 'Communication' based on the index value.
-    func updateCommRate(index: Int) {
-        self.rateComm = index
-        self.delegate?.rateCommunication(self.rateComm)
-        for i in 0..<5 {
-            if i < index {
-                self.rateCommButtons[i].setImage(UIImage(named: "rating2"), forState: .Normal)
-            } else {
-                self.rateCommButtons[i].setImage(UIImage(named: "rating"), forState: .Normal)
-            }
-            self.rateCommButtons[i].frame.size = CGSize(width: 35, height: 30)
-        }
-    }*/
 }
