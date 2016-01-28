@@ -8,32 +8,41 @@
 
 import UIKit
 
+// MARK: Delegate
+// TransactionLeaveFeedbackFieldTableViewCell Delegate method
 protocol TransactionLeaveFeedbackFieldTableViewCellDelegate {
     func submitAction(feedback: String)
 }
 
 class TransactionLeaveFeedbackFieldTableViewCell: UITableViewCell {
     
+    // Buttons
     @IBOutlet weak var sendButton: UIButton!
+    
+    // Textfields
     @IBOutlet weak var inputTextField: UITextField!
+    
+    // Views
     @IBOutlet weak var typingAreaView: UIView!
     @IBOutlet weak var cameraView: UIView!
     
+    // Local Strings
     var typeFeedback = StringHelper.localizedStringWithKey("TRANSACTION_LEAVE_FEEDBACK_TYPE_LOCALIZE_KEY")
     var sendTitle = StringHelper.localizedStringWithKey("TRANSACTION_LEAVE_FEEDBACK_SEND_LOCALIZE_KEY")
     
+    // Initialize TransactionLeaveFeedbackFieldTableViewCellDelegate
     var delegate: TransactionLeaveFeedbackFieldTableViewCellDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
         
-        self.inputTextField.placeholder = typeFeedback
-        self.sendButton.setTitle(sendTitle, forState: UIControlState.Normal)
         self.cameraView.hidden = true
+        self.inputTextField.placeholder = self.typeFeedback
+        self.inputTextField.becomeFirstResponder()
+        self.sendButton.setTitle(self.sendTitle, forState: UIControlState.Normal)
         self.typingAreaView.layer.borderWidth = 1.0
         self.typingAreaView.layer.borderColor = UIColor.lightGrayColor().CGColor
-        self.inputTextField.becomeFirstResponder()
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
@@ -42,6 +51,7 @@ class TransactionLeaveFeedbackFieldTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    // MARK: Button action
     @IBAction func submit(sender: AnyObject) {
         self.delegate!.submitAction(self.inputTextField.text)
     }
