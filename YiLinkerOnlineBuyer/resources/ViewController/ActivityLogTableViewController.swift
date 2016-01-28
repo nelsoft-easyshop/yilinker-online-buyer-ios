@@ -87,6 +87,7 @@ class ActivityLogTableViewController: UITableViewController {
         return dateFormatter.stringFromDate(date)
     }
     
+    // MARK: Initialize activity log
     // Add all possible date in 'tableData' append all the activities belong to that date. 
     // It's where the process of splitting up dates and splitting up activities into dates.
     func initializeActivityLogsItem() {
@@ -129,6 +130,7 @@ class ActivityLogTableViewController: UITableViewController {
         tableView.registerNib(nib, forCellReuseIdentifier: "ActivityLogTableViewCell")
     }
     
+    // MARK: Show alert view
     func showAlert(#title: String!, message: String!) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
         let defaultAction = UIAlertAction(title: Constants.Localized.ok, style: .Default, handler: nil)
@@ -136,6 +138,7 @@ class ActivityLogTableViewController: UITableViewController {
         presentViewController(alertController, animated: true, completion: nil)
     }
     
+    // MARK: Show HUD
     func showHUD() {
         if self.hud != nil {
             self.hud!.hide(true)
