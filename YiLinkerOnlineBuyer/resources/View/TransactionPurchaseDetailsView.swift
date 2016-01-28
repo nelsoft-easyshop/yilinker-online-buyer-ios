@@ -10,15 +10,14 @@ import UIKit
 
 class TransactionPurchaseDetailsView: UIView {
 
-    @IBOutlet weak var quantityLabel: UILabel!
+    // Labels
     @IBOutlet weak var priceLabel: UILabel!
-    @IBOutlet weak var totalCostLabel: UILabel!
-    
-    @IBOutlet weak var quantityTitleLabel: UILabel!
     @IBOutlet weak var priceTitleLabel: UILabel!
-    @IBOutlet weak var totalCostTitleLabel: UILabel!
     @IBOutlet weak var purchaseDetailsLabel: UILabel!
-    
+    @IBOutlet weak var quantityLabel: UILabel!
+    @IBOutlet weak var quantityTitleLabel: UILabel!
+    @IBOutlet weak var totalCostLabel: UILabel!
+    @IBOutlet weak var totalCostTitleLabel: UILabel!
     
     override func awakeFromNib() {
         
