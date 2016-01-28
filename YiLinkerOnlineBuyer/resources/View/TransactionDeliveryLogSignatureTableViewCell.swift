@@ -9,39 +9,45 @@
 import UIKit
 
 class TransactionDeliveryLogSignatureTableViewCell: UITableViewCell {
-
-    @IBOutlet weak var signatureImageView: UIImageView!
-    @IBOutlet weak var mainView: UIView!
+    
+    // Imageviews
     @IBOutlet weak var iconImageView: UIImageView!
-    @IBOutlet weak var typeLabel: UILabel!
-    @IBOutlet weak var timeLabel: UILabel!
+    @IBOutlet weak var signatureImageView: UIImageView!
+    
+    // Labels
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var locationLabel: UILabel!
     @IBOutlet weak var riderLabel: UILabel!
+    @IBOutlet weak var timeLabel: UILabel!
+    @IBOutlet weak var typeLabel: UILabel!
+    
+    // Views
+    @IBOutlet weak var mainView: UIView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        initializeViews()
+        self.initializeViews()
     }
     
+    // MARK: Set rounded corner of mainView
     func initializeViews() {
-        mainView.layer.cornerRadius = 8
+        self.mainView.layer.cornerRadius = 8
     }
     
+    // MARK: Set action type image and text depending on the passed parameter in 'type'
     func setActionType(type: String) {
         if type == "pickup-product" {
-            typeLabel.text = "Pickup Product"
-            iconImageView.image = UIImage(named: "product-1")
+            self.typeLabel.text = "Pickup Product"
+            self.iconImageView.image = UIImage(named: "product-1")
         } else if type == "in-transit" {
-            typeLabel.text = "In Transit"
-            iconImageView.image = UIImage(named: "transit")
+            self.typeLabel.text = "In Transit"
+            self.iconImageView.image = UIImage(named: "transit")
         } else if type == "warehouse-checkin" {
-            typeLabel.text = "Warehouse Checkin"
-            iconImageView.image = UIImage(named: "warehouse")
+            self.typeLabel.text = "Warehouse Checkin"
+            self.iconImageView.image = UIImage(named: "warehouse")
         } else if type == "delivery-complete" {
-            typeLabel.text = "Delivery Complete"
-            iconImageView.image = UIImage(named: "complete")
+            self.typeLabel.text = "Delivery Complete"
+            self.iconImageView.image = UIImage(named: "complete")
         }
     }
-    
 }

@@ -8,6 +8,8 @@
 
 import UIKit
 
+// MARK: Delegate
+// TransactionDeliveryStatusView Delegate Methods
 protocol TransactionDeliveryStatusViewDelegate {
     func pickupSmsAction()
     func pickupCallAction()

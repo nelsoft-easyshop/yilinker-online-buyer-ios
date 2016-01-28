@@ -10,14 +10,17 @@ import UIKit
 
 class TransactionDeliveryLog2TableViewCell: UITableViewCell {
 
+    // Imageviews
+    @IBOutlet weak var signatureImageView: UIImageView!
+    
+    // Views
     @IBOutlet weak var containerView: UIView!
-    @IBOutlet weak var processImageView: UIView!
-    @IBOutlet weak var processLabel: UIView!
-    @IBOutlet weak var timeLabel: UIView!
     @IBOutlet weak var dateLabel: UIView!
     @IBOutlet weak var locationLabel: UIView!
+    @IBOutlet weak var processImageView: UIView!
+    @IBOutlet weak var processLabel: UIView!
     @IBOutlet weak var riderLabel: UIView!
-    @IBOutlet weak var signatureImageView: UIImageView!
+    @IBOutlet weak var timeLabel: UIView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
