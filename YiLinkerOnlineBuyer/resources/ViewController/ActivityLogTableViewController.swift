@@ -27,13 +27,13 @@ class ActivityLogTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        initializeViews()
-        titleView()
-        backButton()
-        registerNibs()
+        self.backButton()
+        self.initializeViews()
+        self.registerNibs()
+        self.titleView()
         
-        page = 0
-        fireActivityLog()
+        self.page = 0
+        self.fireActivityLog()
     }
 
     override func didReceiveMemoryWarning() {
@@ -91,20 +91,20 @@ class ActivityLogTableViewController: UITableViewController {
     // Add all possible date in 'tableData' append all the activities belong to that date. 
     // It's where the process of splitting up dates and splitting up activities into dates.
     func initializeActivityLogsItem() {
-        tableData.removeAll(keepCapacity: false)
+        self.tableData.removeAll(keepCapacity: false)
         var tempDates: [String] = []
         
-        for subValue in activities.activities {
-            if !contains(tempDates, formatDateToCompleteString(formatStringToDate(subValue.date))) {
-                tempDates.append(formatDateToCompleteString(formatStringToDate(subValue.date)))
-                tableData.append(ActivityLogModel(date: formatDateToCompleteString(formatStringToDate(subValue.date)), activities: []))
+        for subValue in self.activities.activities {
+            if !contains(tempDates, self.formatDateToCompleteString(self.formatStringToDate(subValue.date))) {
+                tempDates.append(self.formatDateToCompleteString(formatStringToDate(subValue.date)))
+                self.tableData.append(ActivityLogModel(date: self.formatDateToCompleteString(self.formatStringToDate(subValue.date)), activities: []))
             }
         }
         
-        for var i = 0; i < tableData.count; i++ {
-            for subValue in activities.activities {
-                if formatDateToCompleteString(formatStringToDate(subValue.date)) == tableData[i].date {
-                    tableData[i].activities.append(ActivityModel(time: formatDateToTimeString(formatStringToDate(subValue.date)), details: subValue.text))
+        for var i = 0; i < self.tableData.count; i++ {
+            for subValue in self.activities.activities {
+                if self.formatDateToCompleteString(self.formatStringToDate(subValue.date)) == self.tableData[i].date {
+                    self.tableData[i].activities.append(ActivityModel(time: self.formatDateToTimeString(self.formatStringToDate(subValue.date)), details: subValue.text))
                 }
             }
         }
@@ -186,14 +186,14 @@ class ActivityLogTableViewController: UITableViewController {
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Potentially incomplete method implementation.
         // Return the number of sections.
-        return tableData.count
+        return self.tableData.count
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete method implementation.
         // Return the number of rows in the section.
         if self.tableData.count != 0 {
-            return tableData[section].activities.count
+            return self.tableData[section].activities.count
         } else {
             return 0
         }
@@ -203,8 +203,8 @@ class ActivityLogTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCellWithIdentifier("ActivityLogTableViewCell", forIndexPath: indexPath) as! ActivityLogTableViewCell
       
         if (self.tableData.count != 0) {
-            cell.detailsLabel?.text = tableData[indexPath.section].activities[indexPath.row].details
-            cell.timeLabel?.text =  tableData[indexPath.section].activities[indexPath.row].time
+            cell.detailsLabel?.text = self.tableData[indexPath.section].activities[indexPath.row].details
+            cell.timeLabel?.text =  self.tableData[indexPath.section].activities[indexPath.row].time
         }
        
         return cell
@@ -212,9 +212,9 @@ class ActivityLogTableViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         if self.tableData.count != 0 {
-            return setSectionHeader(tableData[section].date)
+            return self.setSectionHeader(self.tableData[section].date)
         } else {
-            return setSectionHeader("MM-DD-YYYY")
+            return self.setSectionHeader("MM-DD-YYYY")
         }
     }
     
@@ -251,11 +251,14 @@ class ActivityLogTableViewController: UITableViewController {
         if !isPageEnd {
             
             self.showHUD()
-            page++
+            self.page++
             
+            let perPage: String = "&perPage=15&"
+            let page: String = "page=\(self.page)"
+            let url: String = "\(APIAtlas.activityLogs)(\(SessionManager.accessToken())&\(perPage))\(page))"
             var parameters: NSDictionary = [:]
             
-            WebServiceManager.fireGetActivityLogWithUrl(APIAtlas.activityLogs+"\(SessionManager.accessToken())&perPage=15&page=\(page)", parameters: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+            WebServiceManager.fireGetActivityLogWithUrl(url, parameters: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
                 if successful {
                     let activityLogs: ActivityLogItemsModel = ActivityLogItemsModel.parseDataWithDictionary(responseObject as! NSDictionary)
                     
