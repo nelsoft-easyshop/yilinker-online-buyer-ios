@@ -40,7 +40,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     var cartViewController: CartViewController?
     
     var emptyView: EmptyView?
-    var hud: MBProgressHUD?
+    var yiHud: YiHUD?
     var profileModel: ProfileUserDetailsModel = ProfileUserDetailsModel()
     var customTabBarController: CustomTabBarController?
     
@@ -287,7 +287,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         manager.POST(url, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
-            self.hud?.hide(true)
+            self.yiHud?.hide()
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 
@@ -303,7 +303,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                         UIAlertController.displayErrorMessageWithTarget(self, errorMessage: HomeStrings.somethingWentWrong, title: HomeStrings.error)
                     }
                 }
-                self.hud?.hide(true)
+                self.yiHud?.hide()
         })
     }
     
@@ -394,7 +394,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             (successful, responseObject, requestErrorType) -> Void in
             if successful {
                 self.populateHomePageWithDictionary(responseObject as! NSDictionary)
-                self.hud?.hide(true)
+                self.yiHud?.hide()
                 
                 self.addOrUpdateHomeDataToCoreDataWithDataString(StringHelper.convertDictionaryToJsonString(responseObject as! NSDictionary) as String)
                 
@@ -406,7 +406,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                     SessionManager.saveCookies()
                 }
             } else {
-                self.hud?.hide(true)
+                self.yiHud?.hide()
                 
                 if requestErrorType == .ResponseError {
                     //Error in api requirements
@@ -557,7 +557,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     func fireGetUserInfo() {
         self.showHUD()
         WebServiceManager.fireGetUserInfoWithUrl(APIAtlas.getUserInfoUrl, accessToken: SessionManager.accessToken()) { (successful, responseObject, requestErrorType) -> Void in
-            self.hud?.hide(true)
+            self.yiHud?.hide()
             if successful {
                 let dictionary: NSDictionary = responseObject as! NSDictionary
                 self.profileModel = ProfileUserDetailsModel.parseDataWithDictionary(dictionary["data"]!)
@@ -578,7 +578,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                 //Update tab bar icons badges
                 self.updateTabBarBadge()
             } else {
-                self.hud?.hide(true)
+                self.yiHud?.hide()
                 if requestErrorType == .ResponseError {
                     //Error in api requirements
                     let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
@@ -634,7 +634,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         self.showHUD()
         WebServiceManager.fireRefreshTokenWithUrl(APIAtlas.refreshTokenUrl, actionHandler: {
             (successful, responseObject, requestErrorType) -> Void in
-            self.hud?.hide(true)
+            self.yiHud?.hide()
             
             if successful {
                 SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
@@ -661,16 +661,8 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     //MARK: -
     //MARK: - Show HUD
     func showHUD() {
-        if self.hud != nil {
-            self.hud!.hide(true)
-            self.hud = nil
-        }
-        
-        self.hud = MBProgressHUD(view: self.view)
-        self.hud?.removeFromSuperViewOnHide = true
-        self.hud?.dimBackground = false
-        self.tabBarController!.view.addSubview(self.hud!)
-        self.hud?.show(true)
+       self.yiHud = YiHUD.initHud()
+       self.yiHud!.showHUDToView(self.view)
     }
     
     //MARK: -
