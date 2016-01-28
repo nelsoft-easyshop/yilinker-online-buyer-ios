@@ -8,12 +8,11 @@
 
 import UIKit
 
-class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, SellerTableHeaderViewDelegate, ProductsTableViewCellDelegate, ViewFeedBackViewControllerDelegate, EmptyViewDelegate, UIScrollViewDelegate {
+class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, SellerTableHeaderViewDelegate, ProductsTableViewCellDelegate, ViewFeedBackViewControllerDelegate, EmptyViewDelegate, UIScrollViewDelegate, FeedBackViewControllerDelegate {
     
     @IBOutlet weak var tableView: UITableView!
     
     var sellerModel: SellerModel?
-    var sellerModel2: SellerModel?
     var followSellerModel: FollowedSellerModel?
     var productReviewModel: ProductReviewsModel?
     var productReviews: [ProductReviewsModel] = [ProductReviewsModel]()
@@ -25,7 +24,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
     var sellerId: Int = 0
     var sellerContactNumber: String = ""
     var sellerName: String = ""
-
+    
     let sellerTableHeaderView: SellerTableHeaderView = SellerTableHeaderView.loadFromNibNamed("SellerTableHeaderView", bundle: nil) as! SellerTableHeaderView
     
     //Localized strings
@@ -45,7 +44,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
     let ok: String = StringHelper.localizedStringWithKey("OKBUTTON_LOCALIZE_KEY")
     let somethingWentWrong: String = StringHelper.localizedStringWithKey("SOMETHINGWENTWRONG_LOCALIZE_KEY")
     let error: String = StringHelper.localizedStringWithKey("ERROR_LOCALIZE_KEY")
-
+    
     //Contacts
     var selectedContact : W_Contact?
     var emptyView : EmptyView?
@@ -54,14 +53,17 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
     var contentViewFrame: CGRect?
     var canMessage: Bool = false
     
-    let kTableHeaderHeight: CGFloat = 280.0
+    let kTableHeaderHeight: CGFloat = 300
     
     var sellerHeaderView: SellerTableHeaderView = SellerTableHeaderView()
     
+    //MARK: -
     //MARK: - Life Cycle
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(true)
+        
         self.navigationController?.setNavigationBarHidden(false, animated: true)
+        UIApplication.sharedApplication().statusBarStyle = .LightContent
     }
     
     override func viewDidLoad() {
@@ -82,7 +84,6 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         //Register nib classes
         self.registerNib()
         //Get seller/store info
-        println(self.vendorTitle)
         self.fireSeller()
         //Get seller ratings and feebback
         self.fireSellerFeedback()
@@ -121,7 +122,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         label.textColor = UIColor.whiteColor()
         self.navigationItem.titleView = label
     }
-
+    
     //MARK: -
     //MARK: Adding header view to tableview
     func headerView() {
@@ -153,7 +154,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         sellerTableHeaderView.profileImageView.addSubview(imageView)
         sellerTableHeaderView.sellernameLabel.text = sellerModel!.store_name
         sellerTableHeaderView.addressLabel.text = sellerModel!.store_address
-
+        
         self.sellerName = self.sellerModel!.store_name
         self.sellerContactNumber = sellerModel!.contact_number
         
@@ -164,7 +165,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         tableView.tableHeaderView = nil
         
         self.tableView.addSubview(sellerHeaderView)
-        self.tableView.contentInset = UIEdgeInsets(top: kTableHeaderHeight, left: 0, bottom: 0, right: 0)
+        self.tableView.contentInset = UIEdgeInsets(top: kTableHeaderHeight, left: 0, bottom: 40, right: 0)
         self.tableView.contentOffset = CGPoint(x: 0, y: -kTableHeaderHeight)
         self.sellerHeaderView.gradient()
     }
@@ -195,7 +196,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.tableView.registerNib(generalRatingNib, forCellReuseIdentifier: Constants.Seller.generalRatingTableViewCellNibNameAndIndentifier)
         
         let reviewNib: UINib = UINib(nibName: Constants.Seller.reviewNibName, bundle: nil)
-        self.tableView.registerNib(reviewNib, forCellReuseIdentifier: Constants.Seller.reviewIdentifier)
+        self.tableView.registerNib(reviewNib, forCellReuseIdentifier: Constants.Seller.reviewNibName)
         
         let noReviewNib: UINib = UINib(nibName: "NoReviewTableViewCell", bundle: nil)
         self.tableView.registerNib(noReviewNib, forCellReuseIdentifier: "NoReviewTableViewCell")
@@ -263,7 +264,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
             (successful, responseObject, requestErrorType) -> Void in
             if successful {
                 if responseObject["isSuccessful"] as! Bool {
-                    self.sellerModel2 = SellerModel.parseSellerReviewsDataFromDictionary(responseObject as! NSDictionary)
+                    self.sellerModel = SellerModel.parseSellerReviewsDataFromDictionary(responseObject as! NSDictionary)
                     self.tableView.reloadData()
                 } else {
                     self.showAlert(title: Constants.Localized.error, message: responseObject["message"] as! String)
@@ -423,7 +424,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     //MARK: -
-    //MARK: Back action for navigation's back button
+    //MARK: Back
     func back() {
         self.navigationController!.popViewControllerAnimated(true)
     }
@@ -436,19 +437,25 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
     //MARK: -
     //MARK: UiTableView delegate methods
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        if section != 3 {
+            return 1
+        } else {
+            if self.sellerModel != nil {
+                if self.sellerModel!.reviews.count > 3 {
+                    return 4
+                } else if self.sellerModel!.reviews.count == 0 {
+                    return 1
+                } else {
+                    return self.sellerModel!.reviews.count
+                }
+            } else {
+                return 0
+            }
+        }
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        if self.sellerModel2 != nil {
-            if self.sellerModel2!.reviews.count == 0 {
-                return 4
-            } else {
-                return self.sellerModel2!.reviews.count + 3
-            }
-        } else {
-            return 1
-        }
+        return 4
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -474,25 +481,31 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
             
             generalRatingTableViewCell.productRatingLabel.text = productRatings
             
-            if self.sellerModel2 != nil {
-                generalRatingTableViewCell.setRating(self.sellerModel2!.rating)
+            if self.sellerModel != nil {
+                generalRatingTableViewCell.setRating(self.sellerModel!.rating)
             } else {
                 generalRatingTableViewCell.setRating(0)
             }
             
             return generalRatingTableViewCell
         } else {
-            if self.sellerModel2!.reviews.count != 0 {
-                let index: Int = indexPath.section - 3
-                let reviewCell: ReviewTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(Constants.Seller.reviewIdentifier) as! ReviewTableViewCell
-                let reviewModel: ProductReviewsModel = self.sellerModel2!.reviews[index]
-                
-                reviewCell.displayPictureImageView.sd_setImageWithURL(NSURL(string: reviewModel.imageUrl)!, placeholderImage: UIImage(named: "dummy-placeholder"))
-                reviewCell.messageLabel.text = reviewModel.review
-                reviewCell.nameLabel.text = reviewModel.fullName
-                reviewCell.setRating(reviewModel.ratingSellerReview)
-                
-                return reviewCell
+            if self.sellerModel!.reviews.count != 0 {
+                if indexPath.row == 3 {
+                    let noReviewCell: NoReviewTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("NoReviewTableViewCell") as! NoReviewTableViewCell
+                    noReviewCell.noReviewsLabel.text = "Tap to see more."
+                    
+                    return noReviewCell
+                } else {
+                    let reviewCell: ReviewTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("ReviewTableViewCell") as! ReviewTableViewCell
+                    let reviewModel: ProductReviewsModel = self.sellerModel!.reviews[indexPath.row]
+                    
+                    reviewCell.displayPictureImageView.sd_setImageWithURL(NSURL(string: reviewModel.imageUrl)!, placeholderImage: UIImage(named: "dummy-placeholder"))
+                    reviewCell.messageLabel.text = reviewModel.review
+                    reviewCell.nameLabel.text = reviewModel.fullName
+                    reviewCell.setRating(reviewModel.ratingSellerReview)
+                    
+                    return reviewCell
+                }
             } else {
                 let noReviewCell: NoReviewTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("NoReviewTableViewCell") as! NoReviewTableViewCell
                 noReviewCell.noReviewsLabel.text = StringHelper.localizedStringWithKey("TRANSACTION_NO_REVIEWS_LOCALIZE_KEY")
@@ -501,15 +514,19 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         }
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        return UIView(frame: CGRectMake(0, 0, self.tableView.frame.size.width, 10))
     }
     
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if section == 0 || section >= 3 {
-            return 0
-        } else {
-            return 0
+        return 10
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        
+        if indexPath.section == 3 && indexPath.row == 3 {
+            self.sellerTableHeaderViewDidViewFeedBack()
         }
     }
     
@@ -537,19 +554,30 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
     //MARK: Seller Header View Delegate
     //Show seller's ratings and feedback
     func sellerTableHeaderViewDidViewFeedBack() {
-        
-        self.showView()
-        
-        var attributeModal = ViewFeedBackViewController(nibName: "ViewFeedBackViewController", bundle: nil)
-        attributeModal.delegate = self
-        attributeModal.sellerId = self.sellerId
-        attributeModal.feedback = true
-        attributeModal.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
-        attributeModal.providesPresentationContextTransitionStyle = true
-        attributeModal.definesPresentationContext = true
-        attributeModal.screenWidth = self.view.frame.width
-        self.tabBarController?.presentViewController(attributeModal, animated: true, completion: nil)
-        
+        if self.sellerModel != nil {
+            if sellerModel?.reviews.count > 5 {
+                self.showView()
+                var feedBackViewController = FeedBackViewController(nibName: "FeedBackViewController", bundle: nil)
+                feedBackViewController.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
+                feedBackViewController.providesPresentationContextTransitionStyle = true
+                feedBackViewController.definesPresentationContext = true
+                feedBackViewController.view.backgroundColor = UIColor.clearColor()
+                feedBackViewController.delegate = self
+                feedBackViewController.sellerModel = self.sellerModel!
+                feedBackViewController.populateData()
+                self.tabBarController?.presentViewController(feedBackViewController, animated: true, completion: nil)
+            } else {
+                var row = 0
+                
+                if self.sellerModel!.reviews.count - 1 >= 0 {
+                    row = self.sellerModel!.reviews.count - 1
+                }
+                
+                self.tableView.scrollToRowAtIndexPath(NSIndexPath(forItem: row, inSection: 3), atScrollPosition: .Bottom, animated: true)
+            }
+        } else {
+            Toast.displayToastWithMessage("Fetching seller feedback", view: self.tableView)
+        }
     }
     
     //MARK: -
@@ -674,7 +702,6 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
                         self.hud?.hide(true)
                 })
             }
-            
     }
     
     //MARK: -
@@ -697,8 +724,8 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         let parameters: NSDictionary = ["client_id": Constants.Credentials.clientID(), "client_secret": Constants.Credentials.clientSecret(), "grant_type": Constants.Credentials.grantRefreshToken, "refresh_token":  SessionManager.refreshToken()]
         manager.POST(APIAtlas.refreshTokenUrl, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-                SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
-                self.getContactsFromEndpoint("1", limit: "30", keyword: "")
+            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+            self.getContactsFromEndpoint("1", limit: "30", keyword: "")
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
@@ -752,14 +779,15 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
             self.dimView.hidden = false
             self.dimView.alpha = 0.5
             self.dimView.layer.zPosition = 2
-            self.view.transform = CGAffineTransformMakeScale(0.92, 0.93)
+            self.navigationController?.setNavigationBarHidden(true, animated: true)
         })
     }
     
     func dismissDimView() {
         UIView.animateWithDuration(0.3, animations: {
+            UIApplication.sharedApplication().statusBarStyle = .LightContent
+            self.navigationController?.setNavigationBarHidden(false, animated: false)
             self.dimView.hidden = true
-            self.view.transform = CGAffineTransformMakeTranslation(1, 1)
             self.dimView.alpha = 0
             self.dimView.layer.zPosition = -1
         })
@@ -778,5 +806,11 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
     //MARK: - Scroll View Delegate
     func scrollViewDidScroll(scrollView: UIScrollView) {
         self.updateHeaderView()
+    }
+    
+    //MARK: -
+    //MARK: - FeedBack View Controller Delegate
+    func feedBackViewControllerDidDismiss(feedBackViewController: FeedBackViewController) {
+        self.dismissDimView()
     }
 }
