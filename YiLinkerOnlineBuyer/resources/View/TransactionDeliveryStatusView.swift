@@ -20,76 +20,47 @@ protocol TransactionDeliveryStatusViewDelegate {
 
 class TransactionDeliveryStatusView: UIView {
 
+    // Buttons
+    @IBOutlet weak var deliveryLogsButton: UIButton!
     
+    // Labels
     @IBOutlet weak var dateLabel: UILabel!
-    @IBOutlet weak var nameAndPlaceLabel: UILabel!
-    @IBOutlet weak var pickupRiderLabel: UILabel!
-    @IBOutlet weak var deliveryRiderLabel: UILabel!
-    
-    @IBOutlet weak var deliveryStatusLabel: UILabel!
-    @IBOutlet weak var nameAndPlaceTitleLabel: UILabel!
-    @IBOutlet weak var pickupRiderTitleLabel: UILabel!
-    @IBOutlet weak var deliveryRiderTitleLabel: UILabel!
-    
     @IBOutlet var deliveryContactLabel: UILabel!
+    @IBOutlet weak var deliveryRiderLabel: UILabel!
+    @IBOutlet weak var deliveryStatusLabel: UILabel!
+    @IBOutlet weak var deliveryRiderTitleLabel: UILabel!
+    @IBOutlet weak var nameAndPlaceLabel: UILabel!
+    @IBOutlet weak var nameAndPlaceTitleLabel: UILabel!
+    @IBOutlet weak var pickupRiderLabel: UILabel!
+    @IBOutlet weak var pickupRiderTitleLabel: UILabel!
     @IBOutlet var riderContactLabel: UILabel!
-    @IBOutlet weak var pickupSms: UIImageView!
-    @IBOutlet weak var pickupCall: UIImageView!
     
-    @IBOutlet weak var deliverySms: UIImageView!
+    // Imageviews
     @IBOutlet weak var deliveryCall: UIImageView!
     @IBOutlet weak var deliveryLogs: UIImageView!
+    @IBOutlet weak var deliverySms: UIImageView!
+    @IBOutlet weak var pickupCall: UIImageView!
+    @IBOutlet weak var pickupSms: UIImageView!
     
-    @IBOutlet weak var deliveryLogsButton: UIButton!
-    //@IBOutlet weak var arrowImageView: UIImageView!
-
+    // Initiliaze TransactionDeliveryStatusViewDelegate
     var delegate: TransactionDeliveryStatusViewDelegate?
     
     override func awakeFromNib() {
-        
-        
-        addViewsActions()
-    }
-
-    // MARK: - Actions
-    
-    func pickupSmsAction(gesture: UIGestureRecognizer) {
-        self.delegate?.pickupSmsAction()
-        println("pickup sms")
+        self.addViewsActions()
     }
     
-    func pickupCallAction(gesture: UIGestureRecognizer) {
-        println("pickup call")
-        self.delegate?.pickupCallAction()
-    }
-    
-    func deliverySmsAction(gesture: UIGestureRecognizer) {
-        println("delivery sms")
-        self.delegate?.deliverySmsAction()
-    }
-    
-    func deliveryCallAction(gesture: UIGestureRecognizer) {
-        println("delivery call")
-        self.delegate?.deliveryCallAction()
-    }
-    
-    func arrowImageViewAction(gesture: UIGestureRecognizer) {
-        println("arrow action")
+    // MARK: Button action
+    @IBAction func deliveryLogs(sender: UIButton){
         self.delegate?.deliveryLogsAction()
     }
-    
-    
-    
-    // MARK: - Methods
-    
+
+    // MARK: - Add actions to imageviews when tapped
     func addViewsActions() {
         self.pickupSms.addGestureRecognizer(tap("pickupSmsAction:"))
         self.pickupCall.addGestureRecognizer(tap("pickupCallAction:"))
         self.deliverySms.addGestureRecognizer(tap("deliverySmsAction:"))
         self.deliveryCall.addGestureRecognizer(tap("deliveryCallAction:"))
-        
         self.deliveryLogs.addGestureRecognizer(tap("arrowImageViewAction:"))
-       // self.arrowImageView.addGestureRecognizer(tap("arrowImageViewAction:"))
     }
     
     func tap(action: Selector) -> UITapGestureRecognizer {
@@ -99,7 +70,24 @@ class TransactionDeliveryStatusView: UIView {
         return tap
     }
     
-    @IBAction func deliveryLogs(sender: UIButton){
+    // MARK: - Imageviews actions when tapped
+    func arrowImageViewAction(gesture: UIGestureRecognizer) {
         self.delegate?.deliveryLogsAction()
+    }
+    
+    func deliverySmsAction(gesture: UIGestureRecognizer) {
+        self.delegate?.deliverySmsAction()
+    }
+    
+    func deliveryCallAction(gesture: UIGestureRecognizer) {
+        self.delegate?.deliveryCallAction()
+    }
+    
+    func pickupSmsAction(gesture: UIGestureRecognizer) {
+        self.delegate?.pickupSmsAction()
+    }
+    
+    func pickupCallAction(gesture: UIGestureRecognizer) {
+        self.delegate?.pickupCallAction()
     }
 }
