@@ -9,10 +9,13 @@
 import UIKit
 
 class ActivityLogTableViewCell: UITableViewCell {
-
-    @IBOutlet weak var cellView: UIView!
+    
+    // Labels
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var detailsLabel: UILabel!
+    
+    // Views
+    @IBOutlet weak var cellView: UIView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
