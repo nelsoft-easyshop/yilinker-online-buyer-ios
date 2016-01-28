@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="LoginHeaderTableViewCell" rowHeight="262" id="KGk-i7-Jjw" customClass="LoginHeaderTableViewCell" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="400" height="262"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zRM-wq-EYE">
+                        <rect key="frame" x="8" y="18" width="40" height="40"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="40" id="dh9-v1-qsm"/>
+                            <constraint firstAttribute="height" constant="40" id="jRH-pT-x9F"/>
+                        </constraints>
+                        <state key="normal" image="close">
+                            <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <connections>
+                            <action selector="close:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Dc4-sW-shi"/>
+                        </connections>
+                    </button>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gh1-jp-Iu0">
+                        <rect key="frame" x="11" y="201" width="379" height="1"/>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="1" id="fQ1-pR-CWT"/>
+                        </constraints>
+                    </view>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="krh-1V-gDV">
+                        <rect key="frame" x="11" y="259" width="379" height="1"/>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="1" id="tzW-pA-zs9"/>
+                        </constraints>
+                    </view>
+                    <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pCf-6R-zmk">
+                        <rect key="frame" x="203" y="210" width="180" height="40"/>
+                        <color key="backgroundColor" red="0.3803921569" green="0.12549019610000001" blue="0.46666666670000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="width" priority="750" constant="180" id="G2s-zE-Zve"/>
+                            <constraint firstAttribute="height" constant="40" id="vPE-7M-vqw"/>
+                        </constraints>
+                        <state key="normal" title="REGISTER">
+                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <connections>
+                            <action selector="register:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="fev-00-wWU"/>
+                        </connections>
+                    </button>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YSE-dw-ssO">
+                        <rect key="frame" x="18" y="210" width="180" height="40"/>
+                        <color key="backgroundColor" red="0.3803921569" green="0.12549019610000001" blue="0.46666666670000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="width" priority="750" constant="180" id="3ov-Ae-xy2"/>
+                            <constraint firstAttribute="height" constant="40" id="y7b-fR-ihN"/>
+                        </constraints>
+                        <state key="normal" title="SIGN IN">
+                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <connections>
+                            <action selector="login:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="88G-lb-27h"/>
+                        </connections>
+                    </button>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="YiLinker-main" translatesAutoresizingMaskIntoConstraints="NO" id="FqB-eM-4ym">
+                        <rect key="frame" x="123" y="29" width="172" height="159"/>
+                    </imageView>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="YSE-dw-ssO" firstAttribute="top" secondItem="gh1-jp-Iu0" secondAttribute="bottom" constant="8" id="1dT-Lu-Oby"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="gh1-jp-Iu0" secondAttribute="trailing" constant="2" id="9uk-Qr-A2o"/>
+                    <constraint firstItem="pCf-6R-zmk" firstAttribute="height" secondItem="YSE-dw-ssO" secondAttribute="height" id="CWI-2b-iNB"/>
+                    <constraint firstItem="krh-1V-gDV" firstAttribute="top" secondItem="pCf-6R-zmk" secondAttribute="bottom" constant="9" id="Isb-db-zLF"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="krh-1V-gDV" secondAttribute="bottom" constant="-7" id="LrO-Q9-RxX"/>
+                    <constraint firstItem="gh1-jp-Iu0" firstAttribute="top" secondItem="FqB-eM-4ym" secondAttribute="bottom" constant="13" id="N3f-RC-pmV"/>
+                    <constraint firstItem="pCf-6R-zmk" firstAttribute="width" secondItem="YSE-dw-ssO" secondAttribute="width" id="PIp-YE-OAX"/>
+                    <constraint firstItem="zRM-wq-EYE" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="Qdx-6K-ucK"/>
+                    <constraint firstItem="YSE-dw-ssO" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="10" id="Ssi-tm-yug"/>
+                    <constraint firstItem="krh-1V-gDV" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="3" id="Svw-VF-62G"/>
+                    <constraint firstItem="zRM-wq-EYE" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="10" id="X3w-M8-Cx4"/>
+                    <constraint firstItem="FqB-eM-4ym" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="21" id="bAn-So-B36"/>
+                    <constraint firstItem="pCf-6R-zmk" firstAttribute="leading" secondItem="YSE-dw-ssO" secondAttribute="trailing" constant="5" id="e86-pf-egM"/>
+                    <constraint firstItem="krh-1V-gDV" firstAttribute="top" secondItem="YSE-dw-ssO" secondAttribute="bottom" constant="9" id="e8a-YM-VVV"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="pCf-6R-zmk" secondAttribute="trailing" constant="9" id="kDR-YH-42q"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="FqB-eM-4ym" secondAttribute="trailing" constant="97" id="qlj-UC-M7a"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="krh-1V-gDV" secondAttribute="trailing" constant="2" id="sxD-dY-ekp"/>
+                    <constraint firstItem="gh1-jp-Iu0" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="3" id="tm3-tE-Twb"/>
+                    <constraint firstItem="FqB-eM-4ym" firstAttribute="leading" secondItem="zRM-wq-EYE" secondAttribute="trailing" constant="75" id="zsL-ui-Mnz"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="crossOutButton" destination="zRM-wq-EYE" id="gAv-3Q-N8F"/>
+                <outlet property="loginButton" destination="YSE-dw-ssO" id="HY5-gc-hwA"/>
+                <outlet property="registerButton" destination="pCf-6R-zmk" id="gqM-c5-tT0"/>
+            </connections>
+            <point key="canvasLocation" x="277" y="325"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="YiLinker-main" width="537" height="498"/>
+        <image name="close" width="22" height="22"/>
+    </resources>
+</document>
