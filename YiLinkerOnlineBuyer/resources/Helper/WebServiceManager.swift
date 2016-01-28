@@ -82,6 +82,7 @@ class WebServiceManager: NSObject {
     // unitId
     // quantity
     static let itemIdsKey = "itemIds[]"
+    static let itemIdKey = "itemId"
     
     //Address
     static let provinceIdKey = "provinceId"
@@ -356,6 +357,38 @@ class WebServiceManager: NSObject {
     //MARK: - Fire Add Wishlist Item to Cart
     class func fireAddWishlistItemToCartWithUrl(url: String, access_token: String, itemIds: Int, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
         let parameters: NSDictionary = [self.accessTokenKey: access_token, self.itemIdsKey: itemIds]
+        self.firePostRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+    }
+    
+    //MARK: - Fire Get Cart data list With Url
+    class func fireGetCartWithUrl(url: String, access_token: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+        let parameters: NSDictionary = [self.accessTokenKey: access_token]
+        self.fireGetRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+    }
+    
+    //MARK: - Fire Delete Cart Item
+    class func fireDeleteCartItemWithUrl(url: String, access_token: String, productId: String, unitId: String, quantity: Int, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+        let parameters: NSDictionary = [self.accessTokenKey: access_token, self.productIdKey: productId, self.unitIdKey: unitId, self.quantityKey: quantity]
+        self.firePostRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+    }
+
+    //MARK: - Fire Update Cart Item
+    class func fireUpdateCartItemWithUrl(url: String, access_token: String, productId: String, unitId: String, itemId: String, quantity: Int, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+        let parameters: NSDictionary = [self.accessTokenKey: access_token, self.productIdKey: productId, self.unitIdKey: unitId, self.itemIdKey: itemId, self.quantityKey: quantity]
+        self.firePostRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+    }
+    
+    //MARK: - Fire Checkout Cart Item
+    class func fireCheckoutCartItemWithUrl(url: String, access_token: String, cart: [Int], actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+        let parameters: NSDictionary = [self.accessTokenKey: access_token, self.cartKey: cart]
         self.firePostRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
             actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
         }
