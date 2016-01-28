@@ -37,6 +37,8 @@
 		0C1778031C045FB800C310D9 /* HomePageCollectionViewLayout2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C1778021C045FB800C310D9 /* HomePageCollectionViewLayout2.swift */; };
 		0C1C3A851B9406BD00E6180D /* JSONResponseSerializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C1C3A841B9406BD00E6180D /* JSONResponseSerializer.swift */; };
 		0C2670CF1B772E4B00394E29 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C2670CE1B772E4B00394E29 /* Enums.swift */; };
+		0C27A25C1C5A1A10000F5821 /* YiHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C27A25A1C5A1A10000F5821 /* YiHUD.swift */; };
+		0C27A25D1C5A1A10000F5821 /* YiHUD.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C27A25B1C5A1A10000F5821 /* YiHUD.xib */; };
 		0C2E8A271B9AA3EE00D50455 /* PesoPayModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C2E8A261B9AA3EE00D50455 /* PesoPayModel.swift */; };
 		0C2F44A51B848B3A00021F45 /* SummaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C2F44A31B848B3A00021F45 /* SummaryViewController.swift */; };
 		0C2F44A91B848B5400021F45 /* PaymentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C2F44A71B848B5300021F45 /* PaymentViewController.swift */; };
@@ -598,6 +600,8 @@
 		0C1C3A841B9406BD00E6180D /* JSONResponseSerializer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONResponseSerializer.swift; sourceTree = "<group>"; };
 		0C25D94D1B76F81A00E9EFA6 /* YiLinkerOnlineBuyer-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "YiLinkerOnlineBuyer-Bridging-Header.h"; sourceTree = "<group>"; };
 		0C2670CE1B772E4B00394E29 /* Enums.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
+		0C27A25A1C5A1A10000F5821 /* YiHUD.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YiHUD.swift; sourceTree = "<group>"; };
+		0C27A25B1C5A1A10000F5821 /* YiHUD.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YiHUD.xib; sourceTree = "<group>"; };
 		0C2E8A261B9AA3EE00D50455 /* PesoPayModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PesoPayModel.swift; sourceTree = "<group>"; };
 		0C2F44A31B848B3A00021F45 /* SummaryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SummaryViewController.swift; sourceTree = "<group>"; };
 		0C2F44A71B848B5300021F45 /* PaymentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentViewController.swift; sourceTree = "<group>"; };
@@ -1220,6 +1224,15 @@
 			name = Home;
 			sourceTree = "<group>";
 		};
+		0C27A2591C5A1A03000F5821 /* YiBo Loader */ = {
+			isa = PBXGroup;
+			children = (
+				0C27A25A1C5A1A10000F5821 /* YiHUD.swift */,
+				0C27A25B1C5A1A10000F5821 /* YiHUD.xib */,
+			);
+			name = "YiBo Loader";
+			sourceTree = "<group>";
+		};
 		0C2F44AF1B8576FE00021F45 /* Font */ = {
 			isa = PBXGroup;
 			children = (
@@ -1542,6 +1555,7 @@
 		0C99370B1B750583000D6074 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				0C27A2591C5A1A03000F5821 /* YiBo Loader */,
 				0C697BF01C575D85000CE47F /* LoginAndRegister */,
 				0CE6A1A11C50B7E5009C2873 /* FAB */,
 				79FE2BEA1C3FC4360055D894 /* Messaging V2 */,
@@ -2335,6 +2349,7 @@
 				799AEA0E1C44DA5800F9AB88 /* MessagingReceiverTableViewCell.xib in Resources */,
 				0C9937661B750583000D6074 /* NewSellerScrollableCollectionViewCell.xib in Resources */,
 				79FE2BEE1C3FC4600055D894 /* MessagingConversationTableViewCell.xib in Resources */,
+				0C27A25D1C5A1A10000F5821 /* YiHUD.xib in Resources */,
 				B7B1D8321BA15B0C006A5DF5 /* old_GoogleService-Info.plist in Resources */,
 				2666F5291C0022CD00BABA82 /* ProductFullScreenViewController.xib in Resources */,
 			);
@@ -2559,6 +2574,7 @@
 				2632F5211B7F8690006931E4 /* FollowedSellerTableViewCell.swift in Sources */,
 				0C11D2221C0DA15B0063D06E /* LayoutTenModel.swift in Sources */,
 				79E68BA91B8B4780008626E4 /* EditProfileAddPhotoTableViewCell.swift in Sources */,
+				0C27A25C1C5A1A10000F5821 /* YiHUD.swift in Sources */,
 				0C99374E1B750583000D6074 /* NewSellerScrollableCollectionViewCell.swift in Sources */,
 				79E68BA41B8B4376008626E4 /* EditProfileTableViewController.swift in Sources */,
 				0C2F44AD1B848B7E00021F45 /* OverViewViewController.swift in Sources */,
