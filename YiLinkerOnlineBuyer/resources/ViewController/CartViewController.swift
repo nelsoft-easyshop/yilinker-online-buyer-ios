@@ -32,7 +32,7 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
     var selectedItemIDs: [Int] = []     //Selected ids in the cart
     
     var emptyView: EmptyView?
-    var hud: MBProgressHUD?
+    var hud: YiHUD?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -345,20 +345,14 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     // MARK: - Loader function
     func showLoader() {
-        if self.hud != nil {
-            self.hud!.hide(true)
-            self.hud = nil
-        }
-        
-        self.hud = MBProgressHUD(view: self.view)
-        self.hud?.removeFromSuperViewOnHide = true
-        self.hud?.dimBackground = false
-        self.view.addSubview(self.hud!)
-        self.hud?.show(true)
+        self.hud = YiHUD.initHud()
+        self.hud?.showHUDToView(self.view)
+        self.view.userInteractionEnabled = false
     }
     
     func dismissLoader() {
-        self.hud?.hide(true)
+        self.hud?.hide()
+        self.view.userInteractionEnabled = true
     }
     
     func calculateTotalPrice() {

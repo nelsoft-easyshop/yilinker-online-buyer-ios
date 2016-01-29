@@ -53,7 +53,7 @@ class ResultViewController: UIViewController {
     
     //Util Views
     var fullDimView: UIView?    //Dim view for filter
-    var hud: MBProgressHUD?
+    var hud: YiHUD?
     
     //View attribute
     var pageTitle: String = ""
@@ -494,20 +494,12 @@ class ResultViewController: UIViewController {
     
     //Loader function
     func showLoader() {
-        if self.hud != nil {
-            self.hud!.hide(true)
-            self.hud = nil
-        }
-        
-        self.hud = MBProgressHUD(view: self.view)
-        self.hud?.removeFromSuperViewOnHide = true
-        self.hud?.dimBackground = false
-        self.view.addSubview(self.hud!)
-        self.hud?.show(true)
+        self.hud = YiHUD.initHud()
+        self.hud?.showHUDToView(self.view)
     }
     
     func dismissLoader() {
-        self.hud?.hide(true)
+        self.hud?.hide()
     }
     
     func hideDimView() {
