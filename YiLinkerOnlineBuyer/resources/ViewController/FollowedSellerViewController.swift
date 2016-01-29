@@ -11,8 +11,9 @@ import UIKit
 class FollowedSellerViewController: UIViewController, EmptyViewDelegate {
 
     @IBOutlet weak var tableView: UITableView!
-
     @IBOutlet weak var emptyLabel: UILabel!
+    
+    var yiHud: YiHUD?
     var hud: MBProgressHUD?
     var emptyView: EmptyView?
     var followedSellerModel: FollowedSellerModel!
@@ -65,16 +66,8 @@ class FollowedSellerViewController: UIViewController, EmptyViewDelegate {
     }
     
     func showHUD() {
-        if self.hud != nil {
-            self.hud!.hide(true)
-            self.hud = nil
-        }
-        
-        self.hud = MBProgressHUD(view: self.view)
-        self.hud?.removeFromSuperViewOnHide = true
-        self.hud?.dimBackground = false
-        self.view.addSubview(self.hud!)
-        self.hud?.show(true)
+        self.yiHud = YiHUD.initHud()
+        self.yiHud!.showHUDToView(self.view)
     }
     
     // MARK: - Table View Data Source

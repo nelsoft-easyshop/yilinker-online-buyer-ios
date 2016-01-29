@@ -66,6 +66,8 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
     var hud: MBProgressHUD?
     var isEditingAttributes: Bool = false
     
+    var yiHud: YiHUD?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -431,16 +433,8 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
     }
     
     func showHUD() {
-        if self.hud != nil {
-            self.hud!.hide(true)
-            self.hud = nil
-        }
-        
-        self.hud = MBProgressHUD(view: self.view)
-        self.hud?.removeFromSuperViewOnHide = true
-        self.hud?.dimBackground = false
-        self.view.addSubview(self.hud!)
-        self.hud?.show(true)
+        self.yiHud = YiHUD.initHud()
+        self.yiHud!.showHUDToView(self.view)
     }
     
     func selectedNotAvailable() {
@@ -470,7 +464,7 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
         
         WebServiceManager.fireAddToCartWithUrl(APIAtlas.updateCart(), productId: self.productDetailsModel.id, unitId: unitId, quantity: quantity, accessToken: SessionManager.accessToken(), actionHandler: { (successful, responseObject, requestErrorType) -> Void in
             if successful {
-                self.hud?.hide(true)
+                self.yiHud?.hide()
                 if responseObject["isSuccessful"] as! Bool {
                     var data: NSDictionary = responseObject["data"] as! NSDictionary
                     var items: NSArray = data["items"] as! NSArray
@@ -488,7 +482,7 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
                     }
                 }
             } else {
-                self.hud?.hide(true)
+                self.yiHud?.hide()
                 if requestErrorType == .ResponseError {
                     //Error in api requirements
                     let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
@@ -509,7 +503,7 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
                     UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "", title: ProductStrings.alertWentWrong)
                 }
             }
-            self.hud?.hide(true)
+            self.yiHud?.hide()
         })
     }
     
@@ -517,7 +511,7 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
         
         WebServiceManager.fireRefreshTokenWithUrl(APIAtlas.refreshTokenUrl, actionHandler: {
             (successful, responseObject, requestErrorType) -> Void in
-            self.hud?.hide(true)
+            self.yiHud?.hide()
             
             if successful {
                 if responseObject["isSuccessful"] as! Bool {
