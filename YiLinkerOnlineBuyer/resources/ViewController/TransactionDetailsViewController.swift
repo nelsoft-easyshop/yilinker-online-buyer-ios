@@ -48,6 +48,7 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
     var orderId: String = ""
     
     var hud: MBProgressHUD?
+    var yiHud: YiHUD?
     
     var table: [TransactionDetailsModel] = []
     var tableSectionContents: TransactionDetailsProductsModel!
@@ -551,7 +552,7 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
             } else {
                 self.showAlert(title: "Error", message: responseObject["message"] as! String)
             }
-            self.hud?.hide(true)
+            self.yiHud?.hide()
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 
@@ -564,7 +565,7 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
                     let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
                     UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: Constants.Localized.someThingWentWrong)
                     //self.showAlert(title: Constants.Localized.someThingWentWrong, message: nil)
-                    self.hud?.hide(true)
+                    self.yiHud?.hide()
                 }
         })
     }
@@ -708,7 +709,7 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
                             let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
                             let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
                             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: Constants.Localized.someThingWentWrong)
-                            self.hud?.hide(true)
+                            self.yiHud?.hide()
                             //self.showAlert(title: self.error, message: self.somethingWentWrong)
                         }
                         
@@ -763,7 +764,7 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
         if self.refreshPage {
             UIApplication.sharedApplication().networkActivityIndicatorVisible = false
         } else {
-            self.hud?.hide(true)
+            self.yiHud?.hide()
         }
     }
     
@@ -777,16 +778,8 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
     
     //MARK: Show HUD
     func showHUD() {
-        if self.hud != nil {
-            self.hud!.hide(true)
-            self.hud = nil
-        }
-        
-        self.hud = MBProgressHUD(view: self.view)
-        self.hud?.removeFromSuperViewOnHide = true
-        self.hud?.dimBackground = false
-        self.navigationController?.view.addSubview(self.hud!)
-        self.hud?.show(true)
+        self.yiHud = YiHUD.initHud()
+        self.yiHud!.showHUDToView(self.view)
     }
     
     //MARK: Show and hide dim view

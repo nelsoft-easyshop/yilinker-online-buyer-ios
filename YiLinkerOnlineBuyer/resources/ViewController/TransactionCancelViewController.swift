@@ -29,6 +29,7 @@ class TransactionCancelViewController: UIViewController, UITextViewDelegate, UIP
     var cancellationModels: [TransactionCancellationModel] = []
     
     var hud: MBProgressHUD?
+    var yiHud: YiHUD?
     
     var selectedRow: Int = 0
     var invoiceNumber: String = ""
@@ -160,7 +161,7 @@ class TransactionCancelViewController: UIViewController, UITextViewDelegate, UIP
                 self.delegate?.dismissView()
             }
 
-            self.hud?.hide(true)
+            self.yiHud?.hide()
             
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
                 
@@ -184,7 +185,7 @@ class TransactionCancelViewController: UIViewController, UITextViewDelegate, UIP
                     self.delegate?.dismissView()
                 }
                 
-                self.hud?.hide(true)
+                self.yiHud?.hide()
         })
     }
     
@@ -213,7 +214,7 @@ class TransactionCancelViewController: UIViewController, UITextViewDelegate, UIP
                 //self.delegate?.dismissView()
             }
             
-            self.hud?.hide(true)
+            self.yiHud?.hide()
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
                 
                 if Reachability.isConnectedToNetwork() {
@@ -235,7 +236,7 @@ class TransactionCancelViewController: UIViewController, UITextViewDelegate, UIP
                     self.delegate?.dismissView()
                 }
                 
-                self.hud?.hide(true)
+                self.yiHud?.hide()
         })
     }
     
@@ -269,22 +270,14 @@ class TransactionCancelViewController: UIViewController, UITextViewDelegate, UIP
                 let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
                 let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
                 UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: Constants.Localized.someThingWentWrong)
-                self.hud?.hide(true)
+                self.yiHud?.hide()
         }) 
     }
     
     //MARK: Show HUD
     func showHUD() {
-        if self.hud != nil {
-            self.hud!.hide(true)
-            self.hud = nil
-        }
-        
-        self.hud = MBProgressHUD(view: self.view)
-        self.hud?.removeFromSuperViewOnHide = true
-        self.hud?.dimBackground = false
-        self.view.addSubview(self.hud!)
-        self.hud?.show(true)
+        self.yiHud = YiHUD.initHud()
+        self.yiHud!.showHUDToView(self.view)
     }
 
     /*

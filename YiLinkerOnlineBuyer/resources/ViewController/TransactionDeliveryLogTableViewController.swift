@@ -17,6 +17,8 @@ class TransactionDeliveryLogTableViewController: UITableViewController {
     var transactionId: String = ""
     
     var hud: MBProgressHUD?
+    var yiHud: YiHUD?
+    
     var tableHeaderView: UIView!
     var tidLabel: UILabel!
     var noDeliveryLog: UIView!
@@ -180,16 +182,8 @@ class TransactionDeliveryLogTableViewController: UITableViewController {
     }
     
     func showHUD() {
-        if self.hud != nil {
-            self.hud!.hide(true)
-            self.hud = nil
-        }
-        
-        self.hud = MBProgressHUD(view: self.view)
-        self.hud?.removeFromSuperViewOnHide = true
-        self.hud?.dimBackground = false
-        self.navigationController?.view.addSubview(self.hud!)
-        self.hud?.show(true)
+        self.yiHud = YiHUD.initHud()
+        self.yiHud!.showHUDToView(self.view)
     }
     
     func initializeDeliveryLogsItem() {

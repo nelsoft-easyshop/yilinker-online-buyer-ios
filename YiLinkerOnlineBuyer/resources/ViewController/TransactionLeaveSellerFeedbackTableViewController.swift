@@ -19,6 +19,7 @@ class TransactionLeaveSellerFeedbackTableViewController: UITableViewController, 
     var feedback: String = ""
     
     var hud: MBProgressHUD?
+    var yiHud: YiHUD?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -232,16 +233,8 @@ class TransactionLeaveSellerFeedbackTableViewController: UITableViewController, 
     
     //MARK: Show HUD
     func showHUD() {
-        if self.hud != nil {
-            self.hud!.hide(true)
-            self.hud = nil
-        }
-        
-        self.hud = MBProgressHUD(view: self.view)
-        self.hud?.removeFromSuperViewOnHide = true
-        self.hud?.dimBackground = false
-        self.navigationController?.view.addSubview(self.hud!)
-        self.hud?.show(true)
+        self.yiHud = YiHUD.initHud()
+        self.yiHud!.showHUDToView(self.view)
     }
     
     //MARK: Show alert dialog box

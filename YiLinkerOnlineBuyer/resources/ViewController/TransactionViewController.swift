@@ -57,6 +57,8 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
     
     //MBProgressHUD declaration and initialization
     var hud: MBProgressHUD?
+    var yiHud: YiHUD?
+    
     //EmptyView declatation and initialization - used to add view if encountered an error from the api like Server Error
     var emptyView : EmptyView?
     
@@ -440,16 +442,8 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
     
     //MARK: Show HUD
     func showHUD() {
-        if self.hud != nil {
-            self.hud!.hide(true)
-            self.hud = nil
-        }
-        
-        self.hud = MBProgressHUD(view: self.view)
-        self.hud?.removeFromSuperViewOnHide = true
-        self.hud?.dimBackground = false
-        self.navigationController?.view.addSubview(self.hud!)
-        self.hud?.show(true)
+        self.yiHud = YiHUD.initHud()
+        self.yiHud!.showHUDToView(self.view)
     }
 
     //MARK: Customize navigation bar

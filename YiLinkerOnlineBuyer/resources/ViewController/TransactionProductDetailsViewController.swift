@@ -53,6 +53,8 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
     
     var myTimer: NSTimer?
     var hud: MBProgressHUD?
+    var yiHud: YiHUD?
+    
     var table: [TransactionDetailsModel] = []
     var transactionProductDetailsModel: TransactionProductDetailsModel!
     var transactionDeliveryStatus: TransactionProductDetailsDeliveryStatusModel!
@@ -773,7 +775,7 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
             self.hideProgressBar()
             
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
-                //self.hud?.hide(true)
+                //self.yiHud?.hide()
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                 
                 if task.statusCode == 401 {
@@ -803,7 +805,7 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
             }
             self.hideProgressBar()
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
-                //self.hud?.hide(true)
+                //self.yiHud?.hide()
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                 if task.statusCode == 401 {
                     self.fireRefreshToken()
@@ -863,16 +865,8 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
     
     //MARK: Show HUD
     func showHUD() {
-        if self.hud != nil {
-            self.hud!.hide(true)
-            self.hud = nil
-        }
-        
-        self.hud = MBProgressHUD(view: self.view)
-        self.hud?.removeFromSuperViewOnHide = true
-        self.hud?.dimBackground = false
-        self.navigationController?.view.addSubview(self.hud!)
-        self.hud?.show(true)
+        self.yiHud = YiHUD.initHud()
+        self.yiHud!.showHUDToView(self.view)
     }
     
     func showProgressBar() {
@@ -887,7 +881,7 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
         if self.refreshPage {
             UIApplication.sharedApplication().networkActivityIndicatorVisible = false
         } else {
-            self.hud?.hide(true)
+            self.yiHud?.hide()
         }
     }
     
