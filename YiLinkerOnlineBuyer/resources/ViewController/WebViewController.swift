@@ -49,7 +49,7 @@ class WebViewController: UIViewController, UIWebViewDelegate, EmptyViewDelegate 
     var webviewSource = WebviewSource.Default
     var isFromFab: Bool = false
     
-    var hud: MBProgressHUD?
+    var hud: YiHUD?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -252,18 +252,10 @@ class WebViewController: UIViewController, UIWebViewDelegate, EmptyViewDelegate 
     //MARK: - Show Network Status Indicator
     func showNetworkStatusIndicator(isShow: Bool) {
         if isShow {
-            if self.hud != nil {
-                self.hud!.hide(true)
-                self.hud = nil
-            }
-            
-            self.hud = MBProgressHUD(view: self.view)
-            self.hud?.removeFromSuperViewOnHide = true
-            self.hud?.dimBackground = false
-            self.view.addSubview(self.hud!)
-            self.hud?.show(true)
+            self.hud = YiHUD.initHud()
+            self.hud?.showHUDToView(self.view)
         } else {
-            self.hud?.hide(true)
+            self.hud?.hide()
         }
     }
     

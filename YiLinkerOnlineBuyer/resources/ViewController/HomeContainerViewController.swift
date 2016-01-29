@@ -1707,7 +1707,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             let navigationController: UINavigationController = self.customTabBarController!.viewControllers![2] as! UINavigationController
             let hiddenViewController: HiddenViewController = navigationController.viewControllers[0] as! HiddenViewController
             hiddenViewController.selectViewControllerAtIndex(index)
-            self.customTabBarController!.isValidToSwitchToMenuTabBarItems = false
+            self.customTabBarController!.selectedIndex = 2
         } else {
             if index == 0 {
                 Delay.delayWithDuration(0.5, completionHandler: { (success) -> Void in
@@ -1721,7 +1721,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                 let navigationController: UINavigationController = self.customTabBarController!.viewControllers![2] as! UINavigationController
                 let hiddenViewController: HiddenViewController = navigationController.viewControllers[0] as! HiddenViewController
                 hiddenViewController.selectViewControllerAtIndex(index)
-                self.customTabBarController!.isValidToSwitchToMenuTabBarItems = false
+                self.customTabBarController!.selectedIndex = 2
             }
         }
     }

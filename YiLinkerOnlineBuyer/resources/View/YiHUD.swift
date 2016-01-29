@@ -17,6 +17,8 @@ class YiHUD: UIView {
     override func awakeFromNib() {
         let bounds = CGRect(x: 0, y: 0, width: self.frame.size.width, height: self.frame.size.height)
         
+        self.yiboImageView.layer.zPosition = 1000
+        
         //draw a rect in circle form
         // Create CAShapeLayerS
         let rectShape = CAShapeLayer()

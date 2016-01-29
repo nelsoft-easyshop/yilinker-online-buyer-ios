@@ -32,7 +32,7 @@ class WishlistViewController: UIViewController {
     @IBOutlet var wishListCounterLabel: UILabel!
     
     var emptyView: EmptyView?
-    var hud: MBProgressHUD?
+    var hud: YiHUD?
     
     var tableData: [WishlistProductDetailsModel] = []
     
@@ -297,21 +297,13 @@ class WishlistViewController: UIViewController {
     
     //MARK: Loader function
     func showLoader() {
-        if self.hud != nil {
-            self.hud!.hide(true)
-            self.hud = nil
-        }
-        
-        self.hud = MBProgressHUD(view: self.view)
-        self.hud?.removeFromSuperViewOnHide = true
-        self.hud?.dimBackground = false
-        self.view.addSubview(self.hud!)
-        self.hud?.show(true)
+        self.hud = YiHUD.initHud()
+        self.hud?.showHUDToView(self.view)
     }
     
     //Hide loader
     func dismissLoader() {
-        self.hud?.hide(true)
+        self.hud?.hide()
     }
     
     //Get te row of the cell
