@@ -54,12 +54,6 @@ class HiddenViewController: UIViewController {
     
     // This function is for executing child view logic code
     func setSelectedViewControllerWithIndex(index: Int) {
-        if self.viewControllers.count != 0 {
-            let viewController: UIViewController = viewControllers[index]
-            setSelectedViewController(viewController)
-        }
-        
-        
         if SessionManager.isLoggedIn() {
             if index == 0 {
                 self.setNavigationBarTitle(HiddenStrings.followedSeller)
@@ -82,6 +76,11 @@ class HiddenViewController: UIViewController {
             }  else if index == 3 {
                 self.setNavigationBarTitle(HiddenStrings.help)
             }
+        }
+        
+        if self.viewControllers.count != 0 {
+            let viewController: UIViewController = viewControllers[index]
+            setSelectedViewController(viewController)
         }
     }
     
