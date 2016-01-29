@@ -60,11 +60,13 @@ class SellerTableHeaderView: UIView {
     }
     
     func gradient() {
-        self.coverPhotoImageView.layer.sublayers = nil
-        let adjustmentInGradient: CGFloat = 50
-        let background = CAGradientLayer().gradient()
-        background.frame = CGRectMake(0, 0, self.coverPhotoImageView.frame.size.width, self.coverPhotoImageView.frame.size.height + adjustmentInGradient)
-        self.coverPhotoImageView.layer.insertSublayer(background, atIndex: 0)
+        if self.coverPhotoImageView != nil {
+            self.coverPhotoImageView.layer.sublayers = nil
+            let adjustmentInGradient: CGFloat = 50
+            let background = CAGradientLayer().gradient()
+            background.frame = CGRectMake(0, 0, self.coverPhotoImageView.frame.size.width, self.coverPhotoImageView.frame.size.height + adjustmentInGradient)
+            self.coverPhotoImageView.layer.insertSublayer(background, atIndex: 0)
+        }
     }
     
     @IBAction func feedBack(sender: AnyObject) {

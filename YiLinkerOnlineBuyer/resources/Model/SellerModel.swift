@@ -40,6 +40,10 @@ class SellerModel: NSObject {
     var user_rating: String = ""
     var message: String = ""
     
+    override init() {
+        
+    }
+    
     init(name: String, avatar: NSURL, specialty: String, target: String, products: [HomePageProductModel]) {
         self.name = name
         self.avatar = avatar
@@ -194,78 +198,14 @@ class SellerModel: NSObject {
             } else {
                 isAffiliated = false
             }
-            
-            var myArrayOfDictProducts: NSArray = [
-
-                ["name": "Nike",
-                    "image": "http://www.dividend.com/assets/dividend/nke/nike-shoes-bb098f57129e558e1cdf393c308987bf.jpg",
-                    "target": "nike1",
-                    "targetType": ""]
-                ,
-                ["name": "Nike", "image": "http://www.dividend.com/assets/dividend/nke/nike-shoes-bb098f57129e558e1cdf393c308987bf.jpg", "target": "nike1", "targetType": ""]
-
-                , ["name": "vans shoes",
-                    "image": "http://content.nike.com/content/dam/one-nike/en_us/season-2013-ho/Shop/NIKEiD/NIKEiD_P2_Basketball_20131112_FILT.jpg.transform/full-screen/image.jpg",
-                    "target": "",
-                    "targetType": ""]
-                , ["name": "rebook shoes",
-                    "image": "http://www.vulcan100.com/image/data/0/nike-vip/Nike-Air-Max-Mens/Air-Max-90-Mens-Shoes/Air-Max-90-Hyperfuse-Prm/New-Release-Nike-Air-Max-90-Hyperfuse-PRM-Mens-Shoes-2014-Dark-Blue-Buy-Online-3569.jpg",
-                    "target": "",
-                    "targetType": ""]
-                , ["name": "vans shoes",
-                    "image": "http://picture-cdn.wheretoget.it/e9ptj2-l-610x610-shoes-nike-nike+roshe+run-tropical+print-womens+nike+shoes+roshe+runs-nike+roshe+run+running+shoes-earphones-gloves-nike+running+shoes-flower+print-hawaiian+print-summer-nike+tropi.jpg",
-                    "target": "",
-                    "targetType": ""]
-            ]
-            
-            println("\(myArrayOfDictProducts)")
-            var dictProducts:NSDictionary = ["products" : myArrayOfDictProducts]
-            
-            //if let val: AnyObject = value["products"] {
-                let products: NSArray = value["products"] as! NSArray
-                for productDictionary in products as! [NSDictionary] {
-                    let productModel: HomePageProductModel = HomePageProductModel.parseDataWithDictionary(productDictionary)
-                    sellerProductModel.append(productModel)
-                }
-            //}
-            /*
-            var myArrayOfDictRatings: NSArray = [
-                ["name": "Alvin Tandoc",
-                    "imageUrl": "https://c1.staticflickr.com/7/6149/6196728559_c3a57d2711_b.jpg",
-                    "rating": 5,
-                    "message": "My order delivered on time! Thank you and God Bless"]
-                , ["name": "Joriel Fronda",
-                    "imageUrl": "https://c2.staticflickr.com/4/3382/3545724212_986ae8f5f9.jpg",
-                    "rating": 2,
-                    "message": "I received the item with slight scratches. :("]
-                , ["name": "RJ Constantino",
-                    "imageUrl": "http://36.media.tumblr.com/tumblr_md2ljah1Xa1rwzadbo1_500.jpg",
-                    "rating": 5,
-                    "message": "Thank you for this! I like it!"]
-                , [ "name": "JP Chan",
-                    "imageUrl": "https://c2.staticflickr.com/4/3382/3545724212_986ae8f5f9.jpg",
-                    "rating": 2,
-                    "message": "The item is damaged!"]
-
-            ]
-            */
-            //var dictReviews:NSDictionary = ["reviews" : myArrayOfDictRatings]
-            /*
-            var reviewArray: NSArray = value["reviews"] as! NSArray
-            
-            if let val: AnyObject = value["reviews"] {
-                var reviewArray: NSArray = value["reviews"] as! NSArray
-                
-                for (index, review) in enumerate(reviewArray) {
-                    let reviewDictionary: NSDictionary = review as! NSDictionary
-                    let productReviewModel: ProductReviewsModel = ProductReviewsModel.parseSellerProductReviesModel(reviewDictionary)
-                    productReviews.append(productReviewModel)
-                }
+           
+            let products: NSArray = value["products"] as! NSArray
+            for productDictionary in products as! [NSDictionary] {
+                let productModel: HomePageProductModel = HomePageProductModel.parseDataWithDictionary(productDictionary)
+                sellerProductModel.append(productModel)
             }
-            */
             
             if let val: AnyObject = value["storeAddress"] {
-               // var reviewArray: NSDictionary = dictReviews["storeAddress"] as! NSDictionary
                 var unitNumber: String = ""
                 var bldgName: String = ""
                 var streetNumber: String = ""
@@ -273,11 +213,7 @@ class SellerModel: NSObject {
                 var subdivision: String = ""
                 var zipCode: String = ""
                 var fullLocation: String = ""
-                /*var streetAddress: String = ""
-                var province: String = ""
-                var city: String = ""
-                var municipality: String = ""
-                var barangay: String = ""*/
+                
                 if let temUnitNo = val["unitNumber"] as? String {
                     unitNumber = temUnitNo
                 }
@@ -416,6 +352,7 @@ class SellerModel: NSObject {
         }
     }
     
+    //use this one
     class func parseSellerReviewsDataFromDictionary(dictionary: NSDictionary) -> SellerModel {
         
         var rating: Int = 0
@@ -439,7 +376,6 @@ class SellerModel: NSObject {
         
         let sellerModel: SellerModel = SellerModel(rating: rating, product_reviews: productReviews)
         return sellerModel
-        
     }
     
     class func parseSellerReviewsDataFromDictionary2(dictionary: NSDictionary) -> SellerModel {

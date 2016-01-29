@@ -150,6 +150,7 @@ class ViewFeedBackViewController: UIViewController, UITableViewDelegate, UITable
         let manager = APIManager.sharedInstance
         var parameters: NSDictionary?
         var url: String = ""
+       
         if self.feedback {
             parameters = ["sellerId" : self.sellerId]
             url = "\(APIAtlas.buyerSellerFeedbacks)?access_token=\(SessionManager.accessToken())"
@@ -194,7 +195,6 @@ class ViewFeedBackViewController: UIViewController, UITableViewDelegate, UITable
                     }
                 }
             } else {
-                //self.showAlert(title: Constants.Localized.error, message: responseObject["message"] as! String)
                 self.ratingAndReviewsTableView.hidden = true
                 self.loadingLabel.hidden = false
                 self.loadingLabel.text = StringHelper.localizedStringWithKey("TRANSACTION_NO_REVIEWS_LOCALIZE_KEY")
@@ -303,15 +303,4 @@ class ViewFeedBackViewController: UIViewController, UITableViewDelegate, UITable
         })
         
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
