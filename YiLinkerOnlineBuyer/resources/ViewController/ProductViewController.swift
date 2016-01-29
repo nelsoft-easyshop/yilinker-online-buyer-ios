@@ -101,6 +101,8 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     var isScrollingUp: Bool = false
     var dimV: UIView!
     
+    var yiHud: YiHUD?
+    
     @IBOutlet weak var buttonsContainerVerticalConstraint: NSLayoutConstraint!
     @IBOutlet weak var buttonsContainerHeight: NSLayoutConstraint!
     // MARK: Request Checker
@@ -201,7 +203,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
             self.navigationController?.navigationBar.barTintColor = Constants.Colors.appTheme
             UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.LightContent
         }
-        self.hud?.hide(true)
+        self.yiHud?.hide()
     }
     
     // MARK: - Table View Data Source and Delegates
@@ -513,7 +515,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
                     }
                     alert.addAction(okButton)
                     self.presentViewController(alert, animated: true, completion: nil)
-                    self.hud?.hide(true)
+                    self.yiHud?.hide()
                     self.addEmptyView()
                 } else if requestErrorType == .AccessTokenExpired {
                     self.requestRefreshToken("details")
@@ -588,7 +590,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
                     //Error in api requirements
                     let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
                     self.showAlert(title: ProductStrings.alertError, message: errorModel.message)
-                    self.hud?.hide(true)
+                    self.yiHud?.hide()
                     self.addEmptyView()
                 } else if requestErrorType == .AccessTokenExpired {
                     self.requestRefreshToken("details")
@@ -641,7 +643,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
                     UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "", title: ProductStrings.alertWentWrong)
                 }
             }
-            self.hud?.hide(true)
+            self.yiHud?.hide()
         })
     }
     
@@ -683,14 +685,14 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
                     println(items.count)
                     SessionManager.setCartCount(data["total"] as! Int)
                     self.addBadge("cart")
-                    self.hud?.hide(true)
+                    self.yiHud?.hide()
                 }
             } else {
                 if requestErrorType == .ResponseError {
                     //Error in api requirements
                     let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
                     self.showAlert(title: ProductStrings.alertError, message: errorModel.message)
-                    self.hud?.hide(true)
+                    self.yiHud?.hide()
                 } else if requestErrorType == .AccessTokenExpired {
                     if type == "buyitnow" {
                         self.requestRefreshToken("buy")
@@ -711,7 +713,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
                     UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "", title: ProductStrings.alertWentWrong)
                 }
             }
-            self.hud?.hide(true)
+            self.yiHud?.hide()
         })
     }
     
@@ -759,7 +761,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
                     UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "", title: ProductStrings.alertWentWrong)
                 }
             }
-            self.hud?.hide(true)
+            self.yiHud?.hide()
         })
     }
     
@@ -794,7 +796,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
                     }
                     self.contacts = Array<W_Contact>()
                 }
-                self.hud?.hide(true)
+                self.yiHud?.hide()
             })
         }
     }
@@ -984,7 +986,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         self.productReviewFooterView.delegate = self
         self.productSellerView.delegate = self
         
-        self.hud?.hide(true)
+        self.yiHud?.hide()
         
 //        addExtendedView()
         self.buttonsContainer.layer.zPosition = 2
@@ -1128,7 +1130,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
             } else {
                 if sellerRequest {
                     addEmptyView()
-                    self.hud?.hide(true)
+                    self.yiHud?.hide()
                 }
             }
         }
@@ -1155,19 +1157,8 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     }
     
     func showHUD() {
-        if self.hud != nil {
-            self.hud!.hide(true)
-            self.hud = nil
-        }
-        
-        self.hud = MBProgressHUD(view: self.view)
-        self.hud?.removeFromSuperViewOnHide = true
-        self.hud?.dimBackground = false
-        self.view.addSubview(self.hud!)
-        self.hud?.show(true)
-        if self.closeButton != nil {
-            self.view.bringSubviewToFront(self.closeButton)
-        }
+        self.yiHud = YiHUD.initHud()
+        self.yiHud!.showHUDToView(self.view)
     }
     
     func addBadge(type: String) {
