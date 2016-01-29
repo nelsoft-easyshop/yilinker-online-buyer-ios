@@ -20,6 +20,7 @@ class CartProductAttributeTableViewCell: UITableViewCell {
     @IBOutlet weak var attributeLabel: UILabel!
     @IBOutlet weak var scrollView: UIScrollView!
     
+    @IBOutlet weak var heightConstraint: NSLayoutConstraint!
     var filter: FilterAttributeModel!
     var productAttribute: ProductAttributeModel!
     var selectedAttributes: [String] = []
@@ -37,11 +38,17 @@ class CartProductAttributeTableViewCell: UITableViewCell {
     }
     
     func initializeScrollView() {
+        let screenSize: CGRect = UIScreen.mainScreen().bounds
+        
+        let screenWidth = screenSize.width
+        
         attributeLabel.text = filter.title
         
-        var x: Int = 0
+        var x: CGFloat = 0
+        var y: CGFloat = 8
         var contentWidth = 0
-        println(filter.attributes.count)
+        var cellHeight: CGFloat = 34
+        var width = (screenWidth / 2) - 24
         
         let subviews = self.scrollView.subviews
         for subview in subviews{
@@ -49,9 +56,22 @@ class CartProductAttributeTableViewCell: UITableViewCell {
         }
         
         for var i = 0; i < filter.attributes.count; i++ {
-            var width = (count(filter.attributes[i]) * 10) + 20
             
-            var button = UIButton(frame: CGRectMake(CGFloat(x), CGFloat(10), CGFloat(width), scrollView.frame.height/1.5))
+            if i % 2 == 0 {
+                x = 0
+            } else {
+                x = width + 8
+            }
+            
+            if i != 0 {
+                if i % 2 == 0 {
+                    y += 8 + cellHeight
+                }
+            }
+            
+            
+            
+            var button = UIButton(frame: CGRectMake(x, y, CGFloat(width), cellHeight))
             button.setTitle(filter.attributes[i] as String, forState: .Normal)
             button.titleLabel?.font = UIFont.boldSystemFontOfSize(15.0)
             button.setTitleColor(UIColor.darkGrayColor(), forState: .Normal)
@@ -62,8 +82,6 @@ class CartProductAttributeTableViewCell: UITableViewCell {
             button.tag = i
             button.addTarget(self, action: "clickedAttribute:", forControlEvents: .TouchUpInside)
             
-            x += width + 10
-            
             if contains(selectedAttributes, filter.attributes[i]){
                 SelectButton(button)
             } else {
@@ -72,7 +90,8 @@ class CartProductAttributeTableViewCell: UITableViewCell {
             scrollView.addSubview(button)
         }
         
-        scrollView.contentSize = CGSize(width: CGFloat(x), height: scrollView.frame.size.height)
+        scrollView.contentSize = CGSize(width: scrollView.frame.size.height, height: (y + cellHeight + 8))
+        heightConstraint.constant = (y + cellHeight + 8)
     }
     
     func uniq<S : SequenceType, T : Hashable where S.Generator.Element == T>(source: S) -> [T] {

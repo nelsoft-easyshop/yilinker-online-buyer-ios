@@ -828,19 +828,14 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
     //MARK: -
     //MARK: - Redirect To Register
     func redirectToRegister() {
-        let storyBoard: UIStoryboard = UIStoryboard(name: "StartPageStoryBoard", bundle: nil)
-        let registerViewController: LoginAndRegisterContentViewController?
-        if IphoneType.isIphone5() {
-            registerViewController = storyBoard.instantiateViewControllerWithIdentifier("LoginAndRegisterContentViewController5") as? LoginAndRegisterContentViewController
-        } else if IphoneType.isIphone4() {
-            registerViewController = storyBoard.instantiateViewControllerWithIdentifier("LoginAndRegisterContentViewController4") as? LoginAndRegisterContentViewController
-        } else {
-            registerViewController = storyBoard.instantiateViewControllerWithIdentifier("LoginAndRegisterContentViewController") as? LoginAndRegisterContentViewController
-        }
+        let storyBoard: UIStoryboard = UIStoryboard(name: "LoginAndRegisterTableViewController", bundle: nil)
         
-        registerViewController!.registerModel = self.summaryViewController!.guestUser()
-        registerViewController!.defaultViewControllerIndex = 1
-        self.navigationController?.presentViewController(registerViewController!, animated: true, completion: nil)
+        let registerViewController: LoginAndRegisterTableViewController = storyBoard.instantiateViewControllerWithIdentifier("LoginAndRegisterTableViewController") as! LoginAndRegisterTableViewController
+        
+        registerViewController.registerModel = self.summaryViewController!.guestUser()
+        registerViewController.isGuestUser = true
+        
+        self.navigationController?.presentViewController(registerViewController, animated: true, completion: nil)
     }
     
     //MARK: - 

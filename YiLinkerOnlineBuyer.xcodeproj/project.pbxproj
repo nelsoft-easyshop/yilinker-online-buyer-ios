@@ -37,6 +37,8 @@
 		0C1778031C045FB800C310D9 /* HomePageCollectionViewLayout2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C1778021C045FB800C310D9 /* HomePageCollectionViewLayout2.swift */; };
 		0C1C3A851B9406BD00E6180D /* JSONResponseSerializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C1C3A841B9406BD00E6180D /* JSONResponseSerializer.swift */; };
 		0C2670CF1B772E4B00394E29 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C2670CE1B772E4B00394E29 /* Enums.swift */; };
+		0C27A25C1C5A1A10000F5821 /* YiHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C27A25A1C5A1A10000F5821 /* YiHUD.swift */; };
+		0C27A25D1C5A1A10000F5821 /* YiHUD.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C27A25B1C5A1A10000F5821 /* YiHUD.xib */; };
 		0C2E8A271B9AA3EE00D50455 /* PesoPayModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C2E8A261B9AA3EE00D50455 /* PesoPayModel.swift */; };
 		0C2F44A51B848B3A00021F45 /* SummaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C2F44A31B848B3A00021F45 /* SummaryViewController.swift */; };
 		0C2F44A91B848B5400021F45 /* PaymentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C2F44A71B848B5300021F45 /* PaymentViewController.swift */; };
@@ -143,6 +145,13 @@
 		0C65BBB01C019A0800C66C39 /* NetTotalTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C65BBAE1C019A0800C66C39 /* NetTotalTableViewCell.xib */; };
 		0C677BD11BA03EFA007D8E03 /* GuestCheckoutTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C677BCF1BA03EFA007D8E03 /* GuestCheckoutTableViewCell.swift */; };
 		0C677BD21BA03EFA007D8E03 /* GuestCheckoutTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C677BD01BA03EFA007D8E03 /* GuestCheckoutTableViewCell.xib */; };
+		0C697BEF1C5759EF000CE47F /* LoginAndRegisterTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C697BEE1C5759EF000CE47F /* LoginAndRegisterTableViewController.swift */; };
+		0C697BF31C575DAA000CE47F /* LoginHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C697BF11C575DAA000CE47F /* LoginHeaderTableViewCell.swift */; };
+		0C697BF41C575DAA000CE47F /* LoginHeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C697BF21C575DAA000CE47F /* LoginHeaderTableViewCell.xib */; };
+		0C697BF71C576E42000CE47F /* LoginTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C697BF51C576E42000CE47F /* LoginTableViewCell.swift */; };
+		0C697BF81C576E42000CE47F /* LoginTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C697BF61C576E42000CE47F /* LoginTableViewCell.xib */; };
+		0C697BFB1C577299000CE47F /* RegisterTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C697BF91C577299000CE47F /* RegisterTableViewCell.swift */; };
+		0C697BFC1C577299000CE47F /* RegisterTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C697BFA1C577299000CE47F /* RegisterTableViewCell.xib */; };
 		0C6ABA331C0D3B70003DFFA3 /* LayoutFiveModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C6ABA321C0D3B70003DFFA3 /* LayoutFiveModel.swift */; };
 		0C6ABA351C0D4FDF003DFFA3 /* LayoutSixModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C6ABA341C0D4FDF003DFFA3 /* LayoutSixModel.swift */; };
 		0C6ABA371C0D5B89003DFFA3 /* LayoutSevenModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C6ABA361C0D5B89003DFFA3 /* LayoutSevenModel.swift */; };
@@ -192,7 +201,6 @@
 		0C9937591B750583000D6074 /* VerticalImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C9937201B750583000D6074 /* VerticalImageCollectionViewCell.swift */; };
 		0C99375A1B750583000D6074 /* ViewMoreFooterCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C9937211B750583000D6074 /* ViewMoreFooterCollectionViewCell.swift */; };
 		0C99375B1B750583000D6074 /* CartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C9937231B750583000D6074 /* CartViewController.swift */; };
-		0C99375C1B750583000D6074 /* CircularMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C9937241B750583000D6074 /* CircularMenuViewController.swift */; };
 		0C99375D1B750583000D6074 /* HomeContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C9937251B750583000D6074 /* HomeContainerViewController.swift */; };
 		0C99375E1B750583000D6074 /* HomePageCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C9937261B750583000D6074 /* HomePageCollectionViewController.swift */; };
 		0C99375F1B750583000D6074 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C9937271B750583000D6074 /* SearchViewController.swift */; };
@@ -235,10 +243,7 @@
 		0CCA7DF61C0736A100071DD4 /* LayoutNineCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CCA7DF41C0736A100071DD4 /* LayoutNineCollectionViewCell.xib */; };
 		0CD103EC1B8B4769002E15F4 /* DynamicRoundedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CD103EB1B8B4769002E15F4 /* DynamicRoundedView.swift */; };
 		0CD4C80D1C464D260031E4FE /* LanguageHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CD4C80C1C464D260031E4FE /* LanguageHelper.swift */; };
-		0CDA117A1B760E1A007B5DED /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CDA11791B760E1A007B5DED /* LoginViewController.swift */; };
-		0CDA117C1B764015007B5DED /* LoginAndRegisterContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CDA117B1B764015007B5DED /* LoginAndRegisterContentViewController.swift */; };
 		0CDA117E1B764B79007B5DED /* DynamicRoundedTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CDA117D1B764B79007B5DED /* DynamicRoundedTextField.swift */; };
-		0CE35EB81B76711400AAA8F1 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CE35EB71B76711400AAA8F1 /* RegisterViewController.swift */; };
 		0CE6A19C1C50B7C1009C2873 /* FAB.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0CE6A19B1C50B7C1009C2873 /* FAB.storyboard */; };
 		0CE6A19F1C50B7E1009C2873 /* FABCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CE6A19D1C50B7E1009C2873 /* FABCollectionViewLayout.swift */; };
 		0CE6A1A01C50B7E1009C2873 /* FABViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CE6A19E1C50B7E1009C2873 /* FABViewController.swift */; };
@@ -595,6 +600,8 @@
 		0C1C3A841B9406BD00E6180D /* JSONResponseSerializer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONResponseSerializer.swift; sourceTree = "<group>"; };
 		0C25D94D1B76F81A00E9EFA6 /* YiLinkerOnlineBuyer-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "YiLinkerOnlineBuyer-Bridging-Header.h"; sourceTree = "<group>"; };
 		0C2670CE1B772E4B00394E29 /* Enums.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
+		0C27A25A1C5A1A10000F5821 /* YiHUD.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YiHUD.swift; sourceTree = "<group>"; };
+		0C27A25B1C5A1A10000F5821 /* YiHUD.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YiHUD.xib; sourceTree = "<group>"; };
 		0C2E8A261B9AA3EE00D50455 /* PesoPayModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PesoPayModel.swift; sourceTree = "<group>"; };
 		0C2F44A31B848B3A00021F45 /* SummaryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SummaryViewController.swift; sourceTree = "<group>"; };
 		0C2F44A71B848B5300021F45 /* PaymentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentViewController.swift; sourceTree = "<group>"; };
@@ -702,6 +709,13 @@
 		0C65BBAE1C019A0800C66C39 /* NetTotalTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NetTotalTableViewCell.xib; sourceTree = "<group>"; };
 		0C677BCF1BA03EFA007D8E03 /* GuestCheckoutTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuestCheckoutTableViewCell.swift; sourceTree = "<group>"; };
 		0C677BD01BA03EFA007D8E03 /* GuestCheckoutTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = GuestCheckoutTableViewCell.xib; path = ../View/GuestCheckoutTableViewCell.xib; sourceTree = "<group>"; };
+		0C697BEE1C5759EF000CE47F /* LoginAndRegisterTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginAndRegisterTableViewController.swift; sourceTree = "<group>"; };
+		0C697BF11C575DAA000CE47F /* LoginHeaderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginHeaderTableViewCell.swift; sourceTree = "<group>"; };
+		0C697BF21C575DAA000CE47F /* LoginHeaderTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginHeaderTableViewCell.xib; sourceTree = "<group>"; };
+		0C697BF51C576E42000CE47F /* LoginTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginTableViewCell.swift; sourceTree = "<group>"; };
+		0C697BF61C576E42000CE47F /* LoginTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginTableViewCell.xib; sourceTree = "<group>"; };
+		0C697BF91C577299000CE47F /* RegisterTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterTableViewCell.swift; sourceTree = "<group>"; };
+		0C697BFA1C577299000CE47F /* RegisterTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RegisterTableViewCell.xib; sourceTree = "<group>"; };
 		0C6ABA321C0D3B70003DFFA3 /* LayoutFiveModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayoutFiveModel.swift; sourceTree = "<group>"; };
 		0C6ABA341C0D4FDF003DFFA3 /* LayoutSixModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayoutSixModel.swift; sourceTree = "<group>"; };
 		0C6ABA361C0D5B89003DFFA3 /* LayoutSevenModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayoutSevenModel.swift; sourceTree = "<group>"; };
@@ -755,7 +769,6 @@
 		0C9937201B750583000D6074 /* VerticalImageCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VerticalImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		0C9937211B750583000D6074 /* ViewMoreFooterCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewMoreFooterCollectionViewCell.swift; sourceTree = "<group>"; };
 		0C9937231B750583000D6074 /* CartViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CartViewController.swift; sourceTree = "<group>"; };
-		0C9937241B750583000D6074 /* CircularMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircularMenuViewController.swift; sourceTree = "<group>"; };
 		0C9937251B750583000D6074 /* HomeContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeContainerViewController.swift; sourceTree = "<group>"; };
 		0C9937261B750583000D6074 /* HomePageCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomePageCollectionViewController.swift; sourceTree = "<group>"; };
 		0C9937271B750583000D6074 /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
@@ -798,10 +811,7 @@
 		0CCA7DF41C0736A100071DD4 /* LayoutNineCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LayoutNineCollectionViewCell.xib; sourceTree = "<group>"; };
 		0CD103EB1B8B4769002E15F4 /* DynamicRoundedView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DynamicRoundedView.swift; sourceTree = "<group>"; };
 		0CD4C80C1C464D260031E4FE /* LanguageHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguageHelper.swift; sourceTree = "<group>"; };
-		0CDA11791B760E1A007B5DED /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
-		0CDA117B1B764015007B5DED /* LoginAndRegisterContentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginAndRegisterContentViewController.swift; sourceTree = "<group>"; };
 		0CDA117D1B764B79007B5DED /* DynamicRoundedTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DynamicRoundedTextField.swift; sourceTree = "<group>"; };
-		0CE35EB71B76711400AAA8F1 /* RegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		0CE6A19B1C50B7C1009C2873 /* FAB.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = FAB.storyboard; sourceTree = "<group>"; };
 		0CE6A19D1C50B7E1009C2873 /* FABCollectionViewLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FABCollectionViewLayout.swift; sourceTree = "<group>"; };
 		0CE6A19E1C50B7E1009C2873 /* FABViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FABViewController.swift; sourceTree = "<group>"; };
@@ -1214,6 +1224,15 @@
 			name = Home;
 			sourceTree = "<group>";
 		};
+		0C27A2591C5A1A03000F5821 /* YiBo Loader */ = {
+			isa = PBXGroup;
+			children = (
+				0C27A25A1C5A1A10000F5821 /* YiHUD.swift */,
+				0C27A25B1C5A1A10000F5821 /* YiHUD.xib */,
+			);
+			name = "YiBo Loader";
+			sourceTree = "<group>";
+		};
 		0C2F44AF1B8576FE00021F45 /* Font */ = {
 			isa = PBXGroup;
 			children = (
@@ -1247,6 +1266,19 @@
 			path = Panton;
 			sourceTree = "<group>";
 		};
+		0C697BF01C575D85000CE47F /* LoginAndRegister */ = {
+			isa = PBXGroup;
+			children = (
+				0C697BF11C575DAA000CE47F /* LoginHeaderTableViewCell.swift */,
+				0C697BF21C575DAA000CE47F /* LoginHeaderTableViewCell.xib */,
+				0C697BF51C576E42000CE47F /* LoginTableViewCell.swift */,
+				0C697BF61C576E42000CE47F /* LoginTableViewCell.xib */,
+				0C697BF91C577299000CE47F /* RegisterTableViewCell.swift */,
+				0C697BFA1C577299000CE47F /* RegisterTableViewCell.xib */,
+			);
+			name = LoginAndRegister;
+			sourceTree = "<group>";
+		};
 		0C6D45D21BF463D500D330DB /* Home */ = {
 			isa = PBXGroup;
 			children = (
@@ -1268,11 +1300,9 @@
 			isa = PBXGroup;
 			children = (
 				0C4E5CD11BA1873E0098224A /* RegisterModalViewController.swift */,
-				0CE35EB71B76711400AAA8F1 /* RegisterViewController.swift */,
 				0CB9DB3A1B6A3EA100F2CA13 /* StarterContentPageViewController.swift */,
 				0CB9DB381B6A3DC700F2CA13 /* StartPageViewController.swift */,
-				0CDA117B1B764015007B5DED /* LoginAndRegisterContentViewController.swift */,
-				0CDA11791B760E1A007B5DED /* LoginViewController.swift */,
+				0C697BEE1C5759EF000CE47F /* LoginAndRegisterTableViewController.swift */,
 			);
 			name = "Login And Register";
 			sourceTree = "<group>";
@@ -1281,7 +1311,6 @@
 			isa = PBXGroup;
 			children = (
 				0C329E941B7B7C5B005BE2B6 /* CustomTabBarController.swift */,
-				0C9937241B750583000D6074 /* CircularMenuViewController.swift */,
 				0C329E921B7B7B2F005BE2B6 /* HiddenViewController.swift */,
 			);
 			name = "Hidden View - FAB";
@@ -1526,6 +1555,8 @@
 		0C99370B1B750583000D6074 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				0C27A2591C5A1A03000F5821 /* YiBo Loader */,
+				0C697BF01C575D85000CE47F /* LoginAndRegister */,
 				0CE6A1A11C50B7E5009C2873 /* FAB */,
 				79FE2BEA1C3FC4360055D894 /* Messaging V2 */,
 				0C1778011C045B7200C310D9 /* Home */,
@@ -2179,6 +2210,7 @@
 				F7D37CA21B92B09100FA7B16 /* ViewFeedBackViewController.xib in Resources */,
 				F7C569E31BB1776F004740E1 /* TransactionViewController.xib in Resources */,
 				266A5C611BB0029200343DB4 /* DisputeAddItemViewController.xib in Resources */,
+				0C697BF81C576E42000CE47F /* LoginTableViewCell.xib in Resources */,
 				0C6D45DE1BF4692900D330DB /* WebViewController.xib in Resources */,
 				26AFB3BF1B79DE5600E50926 /* ProductViewController.xib in Resources */,
 				0C10042D1B877F8400CAA17A /* AddAddressTableViewController.xib in Resources */,
@@ -2214,6 +2246,7 @@
 				F7C569E61BB17823004740E1 /* TransactionProductDetailsTableViewCell.xib in Resources */,
 				0C9937641B750583000D6074 /* LayoutHeaderCollectionViewCell.xib in Resources */,
 				79E68B831B8AEC85008626E4 /* PointsEarnedTableViewCell.xib in Resources */,
+				0C697BFC1C577299000CE47F /* RegisterTableViewCell.xib in Resources */,
 				79A66A6E1C01A176003D62AD /* ViewImageViewController.xib in Resources */,
 				B7EE726C1BF1DD5D003724CB /* GoogleService-Info.plist in Resources */,
 				0C11D22E1C103B620063D06E /* pulltorefresharrow.png in Resources */,
@@ -2264,6 +2297,7 @@
 				79E68BA11B8B428B008626E4 /* ProfileSettingsViewController.xib in Resources */,
 				0C677BD21BA03EFA007D8E03 /* GuestCheckoutTableViewCell.xib in Resources */,
 				0C374EFD1B8862F50050AE1D /* SuccessTableHeaderViewCell.xib in Resources */,
+				0C697BF41C575DAA000CE47F /* LoginHeaderTableViewCell.xib in Resources */,
 				0C374F391B88E3790050AE1D /* ShipToTableViewCell.xib in Resources */,
 				0C2F44C61B8576FE00021F45 /* Panton Bold.otf in Resources */,
 				F7CCDA951B943CBB000F5AD4 /* SellerViewController.xib in Resources */,
@@ -2316,6 +2350,7 @@
 				799AEA0E1C44DA5800F9AB88 /* MessagingReceiverTableViewCell.xib in Resources */,
 				0C9937661B750583000D6074 /* NewSellerScrollableCollectionViewCell.xib in Resources */,
 				79FE2BEE1C3FC4600055D894 /* MessagingConversationTableViewCell.xib in Resources */,
+				0C27A25D1C5A1A10000F5821 /* YiHUD.xib in Resources */,
 				B7B1D8321BA15B0C006A5DF5 /* old_GoogleService-Info.plist in Resources */,
 				2666F5291C0022CD00BABA82 /* ProductFullScreenViewController.xib in Resources */,
 			);
@@ -2392,7 +2427,6 @@
 				0CB9DB3B1B6A3EA100F2CA13 /* StarterContentPageViewController.swift in Sources */,
 				F7C637C91BD9F6FC00C29C47 /* TransactionDeliveryLogSignatureTableViewCell.swift in Sources */,
 				2632F5241B7F8EFF006931E4 /* FollwedSellerModel.swift in Sources */,
-				0CDA117A1B760E1A007B5DED /* LoginViewController.swift in Sources */,
 				B77B8DC61B9B54E80002C513 /* RoundedView.swift in Sources */,
 				F7CCDAA41B943CF7000F5AD4 /* GeneralRatingTableViewCell.swift in Sources */,
 				0C99373A1B750583000D6074 /* APIManager.swift in Sources */,
@@ -2496,13 +2530,11 @@
 				F7C569B91BB1762C004740E1 /* TransactionIdView.swift in Sources */,
 				0CC53C7C1C00C325002361D4 /* VoucherTableViewCell.swift in Sources */,
 				79F417761B7C3ADB0047D02D /* CartProductAttributeViewController.swift in Sources */,
-				0CDA117C1B764015007B5DED /* LoginAndRegisterContentViewController.swift in Sources */,
 				0C99374A1B750583000D6074 /* HalfVerticalImageCollectionViewCell.swift in Sources */,
 				B77B8DC31B9B54B40002C513 /* W_Conversation.swift in Sources */,
 				0C11D2311C103B620063D06E /* UIScrollViewExtension.swift in Sources */,
 				F7D9BAB91BBD70830097B76C /* TransactionProductDetailsDescriptionViewController.swift in Sources */,
 				B77B8DD91B9B554A0002C513 /* MessageThreadVC.swift in Sources */,
-				0C99375C1B750583000D6074 /* CircularMenuViewController.swift in Sources */,
 				2638614D1C3E5DD200D2ECE2 /* ProductExtendedView.swift in Sources */,
 				B77B8DD71B9B554A0002C513 /* MessageThreadImageTVC.swift in Sources */,
 				0C538AE31B99F07100EB64AB /* PaymentDataModel.swift in Sources */,
@@ -2528,6 +2560,7 @@
 				F7C637C21BD9EC3D00C29C47 /* DeliveryLogsItemModel.swift in Sources */,
 				0C329E931B7B7B2F005BE2B6 /* HiddenViewController.swift in Sources */,
 				0C9937581B750583000D6074 /* TwoColumnGridCollectionViewCell.swift in Sources */,
+				0C697BEF1C5759EF000CE47F /* LoginAndRegisterTableViewController.swift in Sources */,
 				F70EFB231BC6BF190077B8ED /* TransactionLeaveFeedbackRateTableViewCell.swift in Sources */,
 				0C99375A1B750583000D6074 /* ViewMoreFooterCollectionViewCell.swift in Sources */,
 				79A1C6ED1B8329200043AA36 /* SearchSuggestionModel.swift in Sources */,
@@ -2542,11 +2575,11 @@
 				2632F5211B7F8690006931E4 /* FollowedSellerTableViewCell.swift in Sources */,
 				0C11D2221C0DA15B0063D06E /* LayoutTenModel.swift in Sources */,
 				79E68BA91B8B4780008626E4 /* EditProfileAddPhotoTableViewCell.swift in Sources */,
+				0C27A25C1C5A1A10000F5821 /* YiHUD.swift in Sources */,
 				0C99374E1B750583000D6074 /* NewSellerScrollableCollectionViewCell.swift in Sources */,
 				79E68BA41B8B4376008626E4 /* EditProfileTableViewController.swift in Sources */,
 				0C2F44AD1B848B7E00021F45 /* OverViewViewController.swift in Sources */,
 				79BBF0EC1C438C80005DB226 /* MessagingContactListViewController.swift in Sources */,
-				0CE35EB81B76711400AAA8F1 /* RegisterViewController.swift in Sources */,
 				F7C5699D1BB175F1004740E1 /* TransactionDetailsModel.swift in Sources */,
 				F7C569FF1BB1790A004740E1 /* TransactionDetailsViewController.swift in Sources */,
 				F7C56A001BB1790A004740E1 /* TransactionLeaveFeedbackViewController.swift in Sources */,
@@ -2576,6 +2609,7 @@
 				79F40FD51BCF99F100E5D70E /* UIAppearance+Swift.m in Sources */,
 				0C99374D1B750583000D6074 /* NewSellerCollectionViewCell.swift in Sources */,
 				0CE6A1A81C50BA05009C2873 /* FABProfileCollectionViewCell.swift in Sources */,
+				0C697BFB1C577299000CE47F /* RegisterTableViewCell.swift in Sources */,
 				26AFB39B1B79DDEA00E50926 /* ProductAttributeModel.swift in Sources */,
 				0C99373D1B750583000D6074 /* IPhoneType.swift in Sources */,
 				F7C569B21BB1762C004740E1 /* TransactionDeliveryLog2TableViewCell.swift in Sources */,
@@ -2612,6 +2646,7 @@
 				0C374F5D1B8A2DBF0050AE1D /* CustomizeShoppingFlowLayout.swift in Sources */,
 				262626B71C00D28E0068E876 /* UserMapView.swift in Sources */,
 				B77B8DD21B9B554A0002C513 /* ContactListVC.swift in Sources */,
+				0C697BF71C576E42000CE47F /* LoginTableViewCell.swift in Sources */,
 				0C329E881B7B73A4005BE2B6 /* TodaysPromoViewController.swift in Sources */,
 				0C1C3A851B9406BD00E6180D /* JSONResponseSerializer.swift in Sources */,
 				0C1004301B87AB9100CAA17A /* PaymentTableViewCell.swift in Sources */,
@@ -2639,6 +2674,7 @@
 				F7C569B11BB1762C004740E1 /* TransactionCancelOrderView.swift in Sources */,
 				0C329E841B7B738E005BE2B6 /* CustomizeShoppingViewController.swift in Sources */,
 				79F2F5541B859AD100F57E4B /* WishlistProductDetailsModel.swift in Sources */,
+				0C697BF31C575DAA000CE47F /* LoginHeaderTableViewCell.swift in Sources */,
 				F7C569BE1BB1762C004740E1 /* TransactionSectionFooterView.swift in Sources */,
 				26AFB39D1B79DDEA00E50926 /* ProductReviewModel.swift in Sources */,
 				79F2F5521B85795C00F57E4B /* WishlistModel.swift in Sources */,

@@ -36,12 +36,11 @@ struct FABStrings {
 class HomeContainerViewController: UIViewController, UITabBarControllerDelegate, EmptyViewDelegate, CarouselCollectionViewCellDataSource, CarouselCollectionViewCellDelegate, HalfPagerCollectionViewCellDelegate, HalfPagerCollectionViewCellDataSource, FlashSaleCollectionViewCellDelegate, LayoutHeaderCollectionViewCellDelegate, SellerCarouselCollectionViewCellDataSource, SellerCarouselCollectionViewCellDelegate, LayoutNineCollectionViewCellDelegate, DailyLoginCollectionViewCellDataSource, DailyLoginCollectionViewCellDelegate, FABViewControllerDelegate {
     
     var searchViewContoller: SearchViewController?
-    var circularMenuViewController: CircularMenuViewController?
     var wishlisViewController: WishlistViewController?
     var cartViewController: CartViewController?
     
     var emptyView: EmptyView?
-    var hud: MBProgressHUD?
+    var yiHud: YiHUD?
     var profileModel: ProfileUserDetailsModel = ProfileUserDetailsModel()
     var customTabBarController: CustomTabBarController?
     
@@ -288,7 +287,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         manager.POST(url, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
-            self.hud?.hide(true)
+            self.yiHud?.hide()
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 
@@ -304,7 +303,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                         UIAlertController.displayErrorMessageWithTarget(self, errorMessage: HomeStrings.somethingWentWrong, title: HomeStrings.error)
                     }
                 }
-                self.hud?.hide(true)
+                self.yiHud?.hide()
         })
     }
     
@@ -395,7 +394,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             (successful, responseObject, requestErrorType) -> Void in
             if successful {
                 self.populateHomePageWithDictionary(responseObject as! NSDictionary)
-                self.hud?.hide(true)
+                self.yiHud?.hide()
                 
                 self.addOrUpdateHomeDataToCoreDataWithDataString(StringHelper.convertDictionaryToJsonString(responseObject as! NSDictionary) as String)
                 
@@ -407,7 +406,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                     SessionManager.saveCookies()
                 }
             } else {
-                self.hud?.hide(true)
+                self.yiHud?.hide()
                 
                 if requestErrorType == .ResponseError {
                     //Error in api requirements
@@ -558,7 +557,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     func fireGetUserInfo() {
         self.showHUD()
         WebServiceManager.fireGetUserInfoWithUrl(APIAtlas.getUserInfoUrl, accessToken: SessionManager.accessToken()) { (successful, responseObject, requestErrorType) -> Void in
-            self.hud?.hide(true)
+            self.yiHud?.hide()
             if successful {
                 let dictionary: NSDictionary = responseObject as! NSDictionary
                 self.profileModel = ProfileUserDetailsModel.parseDataWithDictionary(dictionary["data"]!)
@@ -579,7 +578,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                 //Update tab bar icons badges
                 self.updateTabBarBadge()
             } else {
-                self.hud?.hide(true)
+                self.yiHud?.hide()
                 if requestErrorType == .ResponseError {
                     //Error in api requirements
                     let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
@@ -635,7 +634,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         self.showHUD()
         WebServiceManager.fireRefreshTokenWithUrl(APIAtlas.refreshTokenUrl, actionHandler: {
             (successful, responseObject, requestErrorType) -> Void in
-            self.hud?.hide(true)
+            self.yiHud?.hide()
             
             if successful {
                 SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
@@ -662,16 +661,8 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     //MARK: -
     //MARK: - Show HUD
     func showHUD() {
-        if self.hud != nil {
-            self.hud!.hide(true)
-            self.hud = nil
-        }
-        
-        self.hud = MBProgressHUD(view: self.view)
-        self.hud?.removeFromSuperViewOnHide = true
-        self.hud?.dimBackground = false
-        self.tabBarController!.view.addSubview(self.hud!)
-        self.hud?.show(true)
+       self.yiHud = YiHUD.initHud()
+       self.yiHud!.showHUDToView(self.view)
     }
     
     //MARK: -
@@ -1128,6 +1119,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         
         if layoutNineModel.data.count >= 5 {
             layoutNineCollectionViewCell.productOneNameLabel.text = layoutNineModel.data[0].name
+            layoutNineCollectionViewCell.productImageViewOne.title = layoutNineModel.data[0].name
             layoutNineCollectionViewCell.productImageViewOne.target = layoutNineModel.data[0].target.targetUrl
             layoutNineCollectionViewCell.productImageViewOne.targetType = layoutNineModel.data[0].target.targetType
             layoutNineCollectionViewCell.productImageViewOne.sd_setImageWithURL(NSURL(string: layoutNineModel.data[0].image), placeholderImage: UIImage(named: self.placeHolder), completed: { (downloadedImage, NSError, SDImageCacheType, NSURL) -> Void in
@@ -1147,9 +1139,10 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                     }
                 }
             })
+            
             layoutNineCollectionViewCell.productImageViewTwo.target = layoutNineModel.data[1].target.targetUrl
             layoutNineCollectionViewCell.productImageViewTwo.targetType = layoutNineModel.data[1].target.targetType
-            
+            layoutNineCollectionViewCell.productImageViewTwo.title = layoutNineModel.data[1].name
             
             layoutNineCollectionViewCell.productThreeNameLabel.text = layoutNineModel.data[2].name
             layoutNineCollectionViewCell.productImageViewThree.sd_setImageWithURL(NSURL(string: layoutNineModel.data[2].image), placeholderImage: UIImage(named: self.placeHolder), completed: { (downloadedImage, NSError, SDImageCacheType, NSURL) -> Void in
@@ -1159,9 +1152,10 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                     }
                 }
             })
+            
             layoutNineCollectionViewCell.productImageViewThree.target = layoutNineModel.data[2].target.targetUrl
             layoutNineCollectionViewCell.productImageViewThree.targetType = layoutNineModel.data[2].target.targetType
-            
+            layoutNineCollectionViewCell.productImageViewThree.title = layoutNineModel.data[2].name
             
             layoutNineCollectionViewCell.productFourNameLabel.text = layoutNineModel.data[3].name
             layoutNineCollectionViewCell.productImageViewFour.sd_setImageWithURL(NSURL(string: layoutNineModel.data[3].image), placeholderImage: UIImage(named: self.placeHolder), completed: { (downloadedImage, NSError, SDImageCacheType, NSURL) -> Void in
@@ -1173,7 +1167,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             })
             layoutNineCollectionViewCell.productImageViewFour.target = layoutNineModel.data[3].target.targetUrl
             layoutNineCollectionViewCell.productImageViewFour.targetType = layoutNineModel.data[3].target.targetType
-            
+            layoutNineCollectionViewCell.productImageViewFour.title = layoutNineModel.data[3].name
             
             
             layoutNineCollectionViewCell.productFiveNameLabel.text = layoutNineModel.data[4].name
@@ -1184,8 +1178,10 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                     }
                 }
             })
+            
             layoutNineCollectionViewCell.productImageViewFive.target = layoutNineModel.data[4].target.targetUrl
             layoutNineCollectionViewCell.productImageViewFive.targetType = layoutNineModel.data[4].target.targetType
+            layoutNineCollectionViewCell.productImageViewFive.title = layoutNineModel.data[4].name
         }
         
         return layoutNineCollectionViewCell
@@ -1194,7 +1190,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     //MARK: -
     //MARK: - Layout Nine Collection View Cell Delegate
     func layoutNineCollectionViewCellDidClickProductImage(productImage: ProductImageView) {
-        self.didClickItemWithTarget(productImage.target, targetType: productImage.targetType)
+        self.didClickItemWithTarget(productImage.target, targetType: productImage.targetType, sectionTitle: productImage.title)
     }
     
     //MARK: -
@@ -1707,17 +1703,33 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     }
     
     func redirectToHiddenWithIndex(index: Int) {
-        self.customTabBarController?.selectedIndex = 2
-        let navigationController: UINavigationController = self.customTabBarController!.viewControllers![2] as! UINavigationController
-        let hiddenViewController: HiddenViewController = navigationController.viewControllers[0] as! HiddenViewController
-        hiddenViewController.selectViewControllerAtIndex(index)
-        self.customTabBarController!.isValidToSwitchToMenuTabBarItems = false
+        if SessionManager.isLoggedIn() {
+            let navigationController: UINavigationController = self.customTabBarController!.viewControllers![2] as! UINavigationController
+            let hiddenViewController: HiddenViewController = navigationController.viewControllers[0] as! HiddenViewController
+            hiddenViewController.selectViewControllerAtIndex(index)
+            self.customTabBarController!.isValidToSwitchToMenuTabBarItems = false
+        } else {
+            if index == 0 {
+                Delay.delayWithDuration(0.5, completionHandler: { (success) -> Void in
+                    self.redirectToLoginRegister(false)
+                })
+            } else if index == 1 {
+                Delay.delayWithDuration(0.5, completionHandler: { (success) -> Void in
+                    self.redirectToLoginRegister(true)
+                })
+            } else {
+                let navigationController: UINavigationController = self.customTabBarController!.viewControllers![2] as! UINavigationController
+                let hiddenViewController: HiddenViewController = navigationController.viewControllers[0] as! HiddenViewController
+                hiddenViewController.selectViewControllerAtIndex(index)
+                self.customTabBarController!.isValidToSwitchToMenuTabBarItems = false
+            }
+        }
     }
     
-    func redirectToLoginRegister() {
+    func redirectToLoginRegister(isLogin: Bool) {
         let storyBoard: UIStoryboard = UIStoryboard(name: "StartPageStoryBoard", bundle: nil)
-        let loginRegisterViewController: LoginAndRegisterContentViewController = storyBoard.instantiateViewControllerWithIdentifier("LoginAndRegisterContentViewController5") as! LoginAndRegisterContentViewController
-        
+        let loginRegisterViewController: LoginAndRegisterTableViewController = storyBoard.instantiateViewControllerWithIdentifier("LoginAndRegisterTableViewController") as! LoginAndRegisterTableViewController
+        loginRegisterViewController.isLogin = isLogin
         self.customTabBarController!.presentViewController(loginRegisterViewController, animated: true, completion: nil)
     }
 }

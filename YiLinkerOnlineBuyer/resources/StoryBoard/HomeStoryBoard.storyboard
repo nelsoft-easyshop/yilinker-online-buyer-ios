@@ -63,6 +63,9 @@
             <string>Panton-Regular</string>
             <string>Panton-Regular</string>
             <string>Panton-Regular</string>
+            <string>Panton-Regular</string>
+            <string>Panton-Regular</string>
+            <string>Panton-Regular</string>
         </mutableArray>
     </customFonts>
     <scenes>
@@ -385,7 +388,7 @@
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" -" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PGR-Y7-dO2">
                                         <rect key="frame" x="8" y="7" width="359" height="21"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="14"/>
                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -407,7 +410,7 @@
                                         <constraints>
                                             <constraint firstAttribute="height" constant="21" id="Knz-a7-tCK"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="12"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -431,7 +434,7 @@
                                             <constraint firstAttribute="height" constant="45" id="63b-mY-yEr"/>
                                             <constraint firstAttribute="width" constant="166" id="Vr2-N4-Hqc"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="14"/>
                                         <state key="normal" title="CHECKOUT">
                                             <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>

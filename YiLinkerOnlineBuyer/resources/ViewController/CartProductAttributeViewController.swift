@@ -90,8 +90,22 @@ class CartProductAttributeViewController: UIViewController, UITableViewDelegate,
         
         var productAttribute: ProductAttributeModel = productDetailModel!.attributes[indexPath.row]
         cell.delegate = self
+        cell.productAttribute = productAttribute
+        cell.filter = FilterAttributeModel(title: productAttribute.attributeName, selectedIndex: 0, attributes: uniq(productAttribute.valueName))
         cell.passModel(productAttribute, selectedAttributes: selectedCombinations)
         return cell
+    }
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        
+        var ret: CGFloat = 0
+        if productDetailModel!.attributes[indexPath.row].choices.count <= 2 {
+            ret = 104
+        } else {
+            ret = CGFloat(Int(productDetailModel!.attributes[indexPath.row].choices.count / 2) * 42 + 104)
+        }
+        
+        return ret
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -207,6 +221,18 @@ class CartProductAttributeViewController: UIViewController, UITableViewDelegate,
         return ""
     }
     
+    func uniq<S : SequenceType, T : Hashable where S.Generator.Element == T>(source: S) -> [T] {
+        var buffer = [T]()
+        var added = Set<T>()
+        for elem in source {
+            if !added.contains(elem) {
+                buffer.append(elem)
+                added.insert(elem)
+            }
+        }
+        return buffer
+    }
+    
     func updateDetails(unitId: String) {
         if !unitId.isEmpty {
             for tempProductUnit in productDetailModel!.productUnits {
@@ -262,6 +288,7 @@ class CartProductAttributeViewController: UIViewController, UITableViewDelegate,
         } else if maximumStock == 1 {
             disableButton(increaseButton)
             disableButton(decreaseButton)
+            stocksLabel.alpha = 1.0
         } else if stocks == maximumStock {
             stocksLabel.alpha = 1.0
             disableButton(increaseButton)
