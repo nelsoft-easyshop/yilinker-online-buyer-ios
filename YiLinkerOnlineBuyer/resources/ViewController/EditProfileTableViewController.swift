@@ -77,7 +77,7 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
     }
     
     //Accepts 'ProfileUserDetailsModel' object from ProfileViewController and set it to the local variables
-    func passModel(profileModel: ProfileUserDetailsModel){
+    func passModel(profileModel: ProfileUserDetailsModel) {
         profileUserDetailsModel = profileModel
         firstName = profileModel.firstName
         lastName = profileModel.lastName
@@ -141,6 +141,9 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
         
         var nibAccount = UINib(nibName: accountCellIdentifier, bundle: nil)
         self.tableView.registerNib(nibAccount, forCellReuseIdentifier: accountCellIdentifier)
+        
+        var nibReferralCode: UINib = UINib(nibName: ReferralCodeTableViewCell.nibNameAndIdentifier(), bundle: nil)
+        self.tableView.registerNib(nibReferralCode, forCellReuseIdentifier: ReferralCodeTableViewCell.nibNameAndIdentifier())
     }
     
     //MARK: -
@@ -150,7 +153,7 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 4
+        return 5
     }
     
     
@@ -204,6 +207,9 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
             
             return cell
         } else if indexPath.row == 2 {
+            let cell: ReferralCodeTableViewCell = tableView.dequeueReusableCellWithIdentifier(ReferralCodeTableViewCell.nibNameAndIdentifier(), forIndexPath: indexPath) as! ReferralCodeTableViewCell
+            return cell
+        }  else if indexPath.row == 3 {
             let cell = tableView.dequeueReusableCellWithIdentifier(addressCellIdentifier, forIndexPath: indexPath) as! EditProfileAddressTableViewCell
             cell.delegate = self
             addressIndexPath = indexPath
@@ -223,7 +229,9 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
             return 150
         } else if indexPath.row == 1 {
             return 200
-        }  else if indexPath.row == 2 {
+        } else if indexPath.row == 2 {
+            return 180
+        }  else if indexPath.row == 3 {
             return 145
         } else {
             return 270
