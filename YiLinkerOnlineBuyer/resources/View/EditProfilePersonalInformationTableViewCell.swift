@@ -69,7 +69,6 @@ class EditProfilePersonalInformationTableViewCell: UITableViewCell, UITextFieldD
         firstNameLabel.required()
         lastNameLabel.required()
         mobilePhoneLabel.required()
-        //validIDLabel.required()
     }
     
     func initializeLocalizedString() {
