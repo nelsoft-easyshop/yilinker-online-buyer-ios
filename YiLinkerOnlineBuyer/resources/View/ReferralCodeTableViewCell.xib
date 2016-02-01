@@ -1,18 +1,141 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6211" systemVersion="14A298i" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6204"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Panton Bold.otf">
+            <string>Panton-Bold</string>
+        </mutableArray>
+        <mutableArray key="Panton.otf">
+            <string>Panton-Regular</string>
+            <string>Panton-Regular</string>
+            <string>Panton-Regular</string>
+            <string>Panton-Regular</string>
+            <string>Panton-Regular</string>
+        </mutableArray>
+    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="KGk-i7-Jjw" customClass="ReferralCodeTableViewCell" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ReferralCodeTableViewCell" rowHeight="0.0" id="KGk-i7-Jjw" customClass="ReferralCodeTableViewCell" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="376" height="180"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
                 <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                 <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZDM-uR-zAS" userLabel="Title">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="35"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Account Information" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EWn-76-8vv">
+                                <rect key="frame" x="8" y="7" width="359" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="VLd-Bm-uJ6"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="12"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="EWn-76-8vv" firstAttribute="leading" secondItem="ZDM-uR-zAS" secondAttribute="leading" constant="8" id="6gD-GR-Cvt"/>
+                            <constraint firstAttribute="trailing" secondItem="EWn-76-8vv" secondAttribute="trailing" constant="8" id="WKL-0X-gNq"/>
+                            <constraint firstItem="EWn-76-8vv" firstAttribute="top" secondItem="ZDM-uR-zAS" secondAttribute="top" constant="7" id="j7D-vd-hje"/>
+                            <constraint firstAttribute="height" constant="35" id="tUT-9g-M7u"/>
+                        </constraints>
+                    </view>
+                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="CsJ-qV-52X">
+                        <rect key="frame" x="9" y="74" width="359" height="30"/>
+                        <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="30" id="wzc-k9-ezb"/>
+                        </constraints>
+                        <color key="textColor" red="0.61960784313725492" green="0.61960784313725492" blue="0.61960784313725492" alpha="1" colorSpace="calibratedRGB"/>
+                        <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="12"/>
+                        <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                    </textField>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9yn-DE-Was">
+                        <rect key="frame" x="293" y="75" width="75" height="28"/>
+                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="75" id="T7p-hM-CI1"/>
+                            <constraint firstAttribute="height" constant="28" id="giN-jC-UAW"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="10"/>
+                        <state key="normal" title="COPY">
+                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                <real key="value" value="5"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                        <connections>
+                            <action selector="copyAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="kKe-ZH-OQe"/>
+                        </connections>
+                    </button>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Referral Person" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Iu8-oo-zN4">
+                        <rect key="frame" x="8" y="112" width="359" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="tbu-LV-1AE"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="12"/>
+                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your Referral Codes" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Dw-l8-dia">
+                        <rect key="frame" x="9" y="53" width="359" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="m49-bo-ohO"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="12"/>
+                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="fOX-g3-zBN">
+                        <rect key="frame" x="8" y="133" width="359" height="30"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="30" id="Inp-cd-XQw"/>
+                        </constraints>
+                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="12"/>
+                        <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                    </textField>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="ZDM-uR-zAS" secondAttribute="trailing" constant="1" id="0eT-Rn-Dou"/>
+                    <constraint firstItem="fOX-g3-zBN" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="226-Es-IZs"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="fOX-g3-zBN" secondAttribute="trailing" constant="1" id="69M-Kh-iN8"/>
+                    <constraint firstItem="Iu8-oo-zN4" firstAttribute="top" secondItem="CsJ-qV-52X" secondAttribute="bottom" constant="8" id="6nU-r9-AB3"/>
+                    <constraint firstItem="ZDM-uR-zAS" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="9K5-hS-oK3"/>
+                    <constraint firstItem="Iu8-oo-zN4" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="ABL-zi-fpE"/>
+                    <constraint firstItem="7Dw-l8-dia" firstAttribute="top" secondItem="ZDM-uR-zAS" secondAttribute="bottom" constant="18" id="Ge0-Ep-B3L"/>
+                    <constraint firstItem="9yn-DE-Was" firstAttribute="top" secondItem="7Dw-l8-dia" secondAttribute="bottom" constant="1" id="K3Y-Rc-R8u"/>
+                    <constraint firstItem="CsJ-qV-52X" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="1" id="MWh-HU-tyP"/>
+                    <constraint firstItem="fOX-g3-zBN" firstAttribute="top" secondItem="Iu8-oo-zN4" secondAttribute="bottom" id="STd-ND-2db"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="Iu8-oo-zN4" secondAttribute="trailing" constant="1" id="VlC-FC-2Ul"/>
+                    <constraint firstItem="7Dw-l8-dia" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="1" id="WMm-Yd-bOB"/>
+                    <constraint firstItem="9yn-DE-Was" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="fxU-wd-uOd"/>
+                    <constraint firstItem="7Dw-l8-dia" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="gkv-dn-sRg"/>
+                    <constraint firstItem="ZDM-uR-zAS" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="i8g-mb-YRQ"/>
+                    <constraint firstItem="CsJ-qV-52X" firstAttribute="top" secondItem="7Dw-l8-dia" secondAttribute="bottom" id="klE-aa-XwV"/>
+                    <constraint firstItem="CsJ-qV-52X" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="vjf-cG-eJt"/>
+                </constraints>
             </tableViewCellContentView>
+            <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
+            <connections>
+                <outlet property="copyButton" destination="9yn-DE-Was" id="yaq-6d-Lur"/>
+                <outlet property="referralPersonLabel" destination="Iu8-oo-zN4" id="GJH-bl-fvL"/>
+                <outlet property="referralPersonTextField" destination="fOX-g3-zBN" id="NFy-8R-aVo"/>
+                <outlet property="titleLabel" destination="EWn-76-8vv" id="hUP-p8-gNr"/>
+                <outlet property="yourReferralCodeLabel" destination="7Dw-l8-dia" id="aoI-VL-yBi"/>
+                <outlet property="yourReferralCodeTextField" destination="CsJ-qV-52X" id="pdu-bU-qMc"/>
+            </connections>
+            <point key="canvasLocation" x="302" y="196"/>
         </tableViewCell>
     </objects>
 </document>
