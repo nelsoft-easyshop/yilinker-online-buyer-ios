@@ -67,6 +67,7 @@ class ProfileViewController: UIViewController{
     * If the API request is unsuccessful, it will check 'requestErrorType'
     * and proceed/do some actions based on the error type
     */
+    
     func fireGetUserInfo() {
         //Check the 'profileDetails' to identify what loader indicator will be shown
         if self.profileDetails == nil {

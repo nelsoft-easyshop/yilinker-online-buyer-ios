@@ -225,6 +225,8 @@
 		0C9937711B75063B000D6074 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C9937701B75063B000D6074 /* AppDelegate.swift */; };
 		0CAAE9261C5F4BC7009BE3E0 /* IncompleteRequirementsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAAE9241C5F4BC7009BE3E0 /* IncompleteRequirementsTableViewCell.swift */; };
 		0CAAE9271C5F4BC7009BE3E0 /* IncompleteRequirementsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CAAE9251C5F4BC7009BE3E0 /* IncompleteRequirementsTableViewCell.xib */; };
+		0CAAE91C1C5EFC63009BE3E0 /* ReferralCodeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAAE91A1C5EFC63009BE3E0 /* ReferralCodeTableViewCell.swift */; };
+		0CAAE91D1C5EFC63009BE3E0 /* ReferralCodeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CAAE91B1C5EFC63009BE3E0 /* ReferralCodeTableViewCell.xib */; };
 		0CAE2F771C05B5400019165A /* FlashSaleCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAE2F751C05B5400019165A /* FlashSaleCollectionViewCell.swift */; };
 		0CAE2F781C05B5400019165A /* FlashSaleCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CAE2F761C05B5400019165A /* FlashSaleCollectionViewCell.xib */; };
 		0CAE2F7B1C070DB10019165A /* SellerCarouselCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAE2F791C070DB10019165A /* SellerCarouselCollectionViewCell.swift */; };
@@ -799,6 +801,8 @@
 		0C9937701B75063B000D6074 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0CAAE9241C5F4BC7009BE3E0 /* IncompleteRequirementsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IncompleteRequirementsTableViewCell.swift; sourceTree = "<group>"; };
 		0CAAE9251C5F4BC7009BE3E0 /* IncompleteRequirementsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IncompleteRequirementsTableViewCell.xib; sourceTree = "<group>"; };
+		0CAAE91A1C5EFC63009BE3E0 /* ReferralCodeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReferralCodeTableViewCell.swift; sourceTree = "<group>"; };
+		0CAAE91B1C5EFC63009BE3E0 /* ReferralCodeTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReferralCodeTableViewCell.xib; sourceTree = "<group>"; };
 		0CAE2F751C05B5400019165A /* FlashSaleCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlashSaleCollectionViewCell.swift; sourceTree = "<group>"; };
 		0CAE2F761C05B5400019165A /* FlashSaleCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FlashSaleCollectionViewCell.xib; sourceTree = "<group>"; };
 		0CAE2F791C070DB10019165A /* SellerCarouselCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SellerCarouselCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -1578,6 +1582,7 @@
 			children = (
 				0CAAE9241C5F4BC7009BE3E0 /* IncompleteRequirementsTableViewCell.swift */,
 				0CAAE9251C5F4BC7009BE3E0 /* IncompleteRequirementsTableViewCell.xib */,
+				0CAAE9191C5EFC0C009BE3E0 /* Profile */,
 				0C742FA41C58A58B00A31441 /* FeedBack */,
 				0C27A2591C5A1A03000F5821 /* YiBo Loader */,
 				0C697BF01C575D85000CE47F /* LoginAndRegister */,
@@ -1622,10 +1627,6 @@
 				0C99370E1B750583000D6074 /* DynamicRoundedLabel.swift */,
 				0CDA117D1B764B79007B5DED /* DynamicRoundedTextField.swift */,
 				0CD103EB1B8B4769002E15F4 /* DynamicRoundedView.swift */,
-				79E68BB61B8B5C58008626E4 /* EditProfileAccountInformationTableViewCell.swift */,
-				79E68BA81B8B4780008626E4 /* EditProfileAddPhotoTableViewCell.swift */,
-				79E68BB21B8B5862008626E4 /* EditProfileAddressTableViewCell.swift */,
-				79E68BAC1B8B5081008626E4 /* EditProfilePersonalInformationTableViewCell.swift */,
 				0C329E781B7B47FF005BE2B6 /* EmptyView.swift */,
 				7971F7401B861AC900322861 /* FilterTableViewCell.swift */,
 				2632F51F1B7F8690006931E4 /* FollowedSellerTableViewCell.swift */,
@@ -1659,9 +1660,6 @@
 				26AFB3A71B79DE2900E50926 /* ProductSellerViewCollectionViewCell.swift */,
 				F7CCDA9E1B943CF7000F5AD4 /* ProductsTableViewCell.swift */,
 				0C9937181B750583000D6074 /* ProductWithCenterNameCollectionViewCell.swift */,
-				79E85FB91B89DC1500428AA1 /* ProfileHeaderTableViewCell.swift */,
-				79E68B9A1B8B4239008626E4 /* ProfileSettingsTableViewCell.swift */,
-				79E85FBD1B89DE1C00428AA1 /* ProfileTableViewCell.swift */,
 				26AFB3A51B79DE2900E50926 /* ReviewTableViewCell.swift */,
 				F7F082B41C0988BF00761072 /* NoReviewTableViewCell.swift */,
 				F7F082B51C0988BF00761072 /* NoReviewTableViewCell.xib */,
@@ -1937,6 +1935,22 @@
 				0C9937701B75063B000D6074 /* AppDelegate.swift */,
 			);
 			path = AppDelegate;
+			sourceTree = "<group>";
+		};
+		0CAAE9191C5EFC0C009BE3E0 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				79E68BB61B8B5C58008626E4 /* EditProfileAccountInformationTableViewCell.swift */,
+				79E68BA81B8B4780008626E4 /* EditProfileAddPhotoTableViewCell.swift */,
+				79E68BB21B8B5862008626E4 /* EditProfileAddressTableViewCell.swift */,
+				79E68BAC1B8B5081008626E4 /* EditProfilePersonalInformationTableViewCell.swift */,
+				79E85FB91B89DC1500428AA1 /* ProfileHeaderTableViewCell.swift */,
+				79E68B9A1B8B4239008626E4 /* ProfileSettingsTableViewCell.swift */,
+				79E85FBD1B89DE1C00428AA1 /* ProfileTableViewCell.swift */,
+				0CAAE91A1C5EFC63009BE3E0 /* ReferralCodeTableViewCell.swift */,
+				0CAAE91B1C5EFC63009BE3E0 /* ReferralCodeTableViewCell.xib */,
+			);
+			name = Profile;
 			sourceTree = "<group>";
 		};
 		0CE6A1A11C50B7E5009C2873 /* FAB */ = {
@@ -2332,6 +2346,7 @@
 				0C374F2E1B88E3790050AE1D /* PlainTableViewCell.xib in Resources */,
 				F7D9BABA1BBD70830097B76C /* TransactionProductDetailsDescriptionViewController.xib in Resources */,
 				0C11D2261C0EE24F0063D06E /* ScrollToTopView.xib in Resources */,
+				0CAAE91D1C5EFC63009BE3E0 /* ReferralCodeTableViewCell.xib in Resources */,
 				79E68BAB1B8B4EB9008626E4 /* EditProfilePersonalInformationTableViewCell.xib in Resources */,
 				79EBE8861B95F50700434B42 /* ChangePasswordViewController.xib in Resources */,
 				F7D9BABC1BBD70AA0097B76C /* TransactionViews.xib in Resources */,
@@ -2453,6 +2468,7 @@
 				0C374F4C1B8998F30050AE1D /* CustomizeShoppingCollectionViewCell.swift in Sources */,
 				0C5926061B836EA30021EA76 /* AddressModel.swift in Sources */,
 				0CB9DB3B1B6A3EA100F2CA13 /* StarterContentPageViewController.swift in Sources */,
+				0CAAE91C1C5EFC63009BE3E0 /* ReferralCodeTableViewCell.swift in Sources */,
 				F7C637C91BD9F6FC00C29C47 /* TransactionDeliveryLogSignatureTableViewCell.swift in Sources */,
 				2632F5241B7F8EFF006931E4 /* FollwedSellerModel.swift in Sources */,
 				B77B8DC61B9B54E80002C513 /* RoundedView.swift in Sources */,
