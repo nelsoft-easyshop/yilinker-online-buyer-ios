@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, ShipToTableViewCellDelegate, ChangeAddressViewControllerDelegate, GuestCheckoutTableViewCellDelegate, UIScrollViewDelegate, UIPickerViewDataSource, UIPickerViewDelegate, VoucherTableViewCellDelegate {
+class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, ShipToTableViewCellDelegate, ChangeAddressViewControllerDelegate, GuestCheckoutTableViewCellDelegate, UIScrollViewDelegate, UIPickerViewDataSource, UIPickerViewDelegate, VoucherTableViewCellDelegate, IncompleteRequirementsTableViewCellDelegate {
 
     @IBOutlet weak var tableView: UITableView!
     
@@ -40,6 +40,10 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
     var additionalCellCount: Int = 2
     
     var checkoutContainerViewController: CheckoutContainerViewController = CheckoutContainerViewController()
+    
+    var isIncompleteInformation: Bool = true
+    
+    let kHalfSecond: NSTimeInterval = 0.5
     
     //MARK: - 
     //MARK: - Life Cycle
@@ -120,6 +124,9 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         let mapNib: UINib = UINib(nibName: self.mapCellNibName, bundle: nil)
         self.tableView.registerNib(mapNib, forCellReuseIdentifier: self.mapCellNibName)
+        
+        let incompeleteInformationNib: UINib = UINib(nibName: IncompleteRequirementsTableViewCell.nibNameAndIdentifier(), bundle: nil)
+        self.tableView.registerNib(incompeleteInformationNib, forCellReuseIdentifier: IncompleteRequirementsTableViewCell.nibNameAndIdentifier())
     }
     
     //MARK: -
@@ -136,13 +143,13 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
             if indexPath.row < self.cartItems.count {
                 //Make a func for creating orderSemmaryTableViewCell for cleaner code.
                 return self.orderSummaryTableViewCellWithIndexPath(indexPath)
-            } else if indexPath.row == ((self.cartItems.count - 1) + 1) {// 1 = to cell below the cart items
+            } else if indexPath.row == self.cartItems.count {// 1 = to cell below the cart items
                 
                 return self.totalSummaryPriceTableViewCellWithIndexPath(indexPath)
-            } else if indexPath.row == ((self.cartItems.count - 1) + 2)  {
+            } else if indexPath.row == (self.cartItems.count + 1)  {
                 
                 return self.voucherTableViewCellWithIndexPath(indexPath)
-            } else if indexPath.row == ((self.cartItems.count - 1) + 3) {
+            } else if indexPath.row == (self.cartItems.count + 2) {
                 
                 return self.discountVoucherTotalViewCellWithIndexPath(indexPath)
             } else {
@@ -151,25 +158,35 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
                 return netTotalTableViewCell
             }
         } else {
-            if indexPath.row == 0 {
-                if SessionManager.isLoggedIn() {
-                    return self.shipToTableViewCellWithIndexPath(indexPath)
-                } else {
-                    return self.guestCheckoutTableViewCellWithindexPath(indexPath)
-                }
-                
+            if !self.isIncompleteInformation {
+               return self.cellWithPath(indexPath)
             } else {
-                return self.mapTableViewCellWithIndexPath(indexPath)
+                if indexPath.section == 1 {
+                    return self.incompleteRequirementsTableViewCellWithIndexPath(indexPath)
+                } else {
+                    return self.cellWithPath(indexPath)
+                }
             }
         }
     }
     
-    //MARK: - Height For Footer in Section
+    func cellWithPath(indexPath: NSIndexPath) -> UITableViewCell {
+        if indexPath.row == 0 {
+            if SessionManager.isLoggedIn() {
+                return self.shipToTableViewCellWithIndexPath(indexPath)
+            } else {
+                return self.guestCheckoutTableViewCellWithindexPath(indexPath)
+            }
+            
+        } else {
+            return self.mapTableViewCellWithIndexPath(indexPath)
+        }
+    }
+    
     func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return 0
     }
     
-    //MARK: - Height For Header in Section
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         if section == 0 {
             return 41
@@ -178,9 +195,9 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
         }
     }
     
-    //MARK: - View For Header in Section
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         var headerView: CheckoutViews
+        
         if section == 0 {
             headerView = XibHelper.puffViewWithNibName("CheckoutViews", index: 0) as! CheckoutViews
         } else {
@@ -192,7 +209,6 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
         return headerView
     }
     
-    //MARK: - View For Footer in Section
     func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         if section == 0 {
             return UIView(frame: CGRectZero)
@@ -200,45 +216,79 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
             return UIView(frame: CGRectZero)
         }
     }
-    
-    //MARK: - Number Of Rows In Section
+
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 0 {
-            return cartItems.count + additionalCellCount
+        if !self.isIncompleteInformation {
+            if section == 0 {
+                return cartItems.count + additionalCellCount
+            } else {
+                return 2
+            }
         } else {
-            return 2
+            if section == 0 {
+                return cartItems.count + additionalCellCount
+            } else if section == 1 {
+                return 1
+            } else {
+                return 2
+            }
         }
     }
     
-    //MARK: - Number Of Sections
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         if SessionManager.isLoggedIn() {
-            return 2
+            if self.isIncompleteInformation {
+                return 3
+            } else {
+                return 2
+            }
         } else {
             return 2
         }
     }
     
-    //MARK: - Height For Row At IndexPath
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        let kIncompleteInformationCellHeight: CGFloat = 170
+        let kVoucherCellHeight: CGFloat = 60
+        let kVoucherNetTotalCellHeight: CGFloat = 34
+        let kGuestCheckoutForm: CGFloat = 480
+        let kMapCellHeight: CGFloat = 199
+        let kCheckoutAddressHeight: CGFloat = 130
+        
         if indexPath.section == 0 {
-            if indexPath.row == ((self.cartItems.count - 1) + 2) {
-                return 59
-            } else if indexPath.row == ((self.cartItems.count - 1) + 3) {
-                return 34
+            if indexPath.row == ((self.cartItems.count) + 1) {
+                return kVoucherCellHeight
+            } else if indexPath.row == ((self.cartItems.count) + 2) {
+                return kVoucherNetTotalCellHeight
             } else {
                 return UITableViewAutomaticDimension
             }
             
         } else {
-            if indexPath.row == 0 {
-                if SessionManager.isLoggedIn() {
-                    return 130
+            if !self.isIncompleteInformation {
+                if indexPath.row == 0 {
+                    if SessionManager.isLoggedIn() {
+                        return kCheckoutAddressHeight
+                    } else {
+                        return kGuestCheckoutForm
+                    }
                 } else {
-                    return 480
+                    return kMapCellHeight
                 }
             } else {
-                return 199
+                if indexPath.section == 1 {
+                    return kIncompleteInformationCellHeight
+                } else {
+                    if indexPath.row == 0 {
+                        if SessionManager.isLoggedIn() {
+                            return kCheckoutAddressHeight
+                        } else {
+                            return kGuestCheckoutForm
+                        }
+                    } else {
+                        return kMapCellHeight
+                    }
+                }
             }
         }
     }
@@ -362,7 +412,6 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
                     } else {
                         contentInset.top = contentInset.top - (60 * CGFloat(textfieldTag))
                     }
-                    
                 }
             } else if IphoneType.isIphone5() {
                 if textfieldTag == 3 {
@@ -481,6 +530,11 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
         } else {
             self.voucherRequestNotSuccessful(cell)
         }
+    }
+    
+    func voucherTableViewCell(voucherTableViewCell: VoucherTableViewCell, startEditingAtTextField textField: UITextField) {
+        var indexPath: NSIndexPath = self.tableView.indexPathForCell(voucherTableViewCell)!
+        self.tableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: UITableViewScrollPosition.Top, animated: true)
     }
     
     //MARK: -
@@ -690,6 +744,14 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
         return orderSummaryCell
     }
     
+    func incompleteRequirementsTableViewCellWithIndexPath(indexPath: NSIndexPath) -> IncompleteRequirementsTableViewCell {
+        let cell: IncompleteRequirementsTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(IncompleteRequirementsTableViewCell.nibNameAndIdentifier()) as! IncompleteRequirementsTableViewCell
+        cell.selectionStyle = UITableViewCellSelectionStyle.None
+        cell.delegate = self
+        
+        return cell
+    }
+    
     //MARK: - 
     //MARK: - Clear City and Barangay TextField
     func clearCityAndBarangayTextField() {
@@ -719,5 +781,62 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
     //MARK: - Guest Checkout User
     func guestUser() -> RegisterModel {
         return RegisterModel(firstName: self.guestCheckoutTableViewCell.firstNameTextField.text, lastName: self.guestCheckoutTableViewCell.lastNameTextField.text, emailAddress: self.guestCheckoutTableViewCell.emailTextField.text, mobileNumber: self.guestCheckoutTableViewCell.mobileNumberTextField.text, title: "Guest Address", streetName: self.guestCheckoutTableViewCell.streetNameTextField.text, zipCode: self.guestCheckoutTableViewCell.zipCodeTextField.text, location: "\(self.checkoutContainerViewController.addressModel.barangayId)")
+    }
+    
+    //MARK: - 
+    //MARK: - Incomplete Requirements Table View Cell Delegate
+    func incompleteRequirementsTableViewCell(incompleteRequirementsTableViewCell: IncompleteRequirementsTableViewCell, didStartEditingAtTextField textField: UITextField) {
+        var contentInset: UIEdgeInsets = self.tableView.contentInset
+        contentInset.top = 0.0
+        
+        if textField.isEqual(incompleteRequirementsTableViewCell.firstNameTextField) || textField.isEqual(incompleteRequirementsTableViewCell.lastNameTextField) {
+            UIView.animateWithDuration(kHalfSecond, animations: { () -> Void in
+                if IphoneType.isIphone4() {
+                    textField.autocorrectionType = UITextAutocorrectionType.No
+                    contentInset.top = contentInset.top - 400
+                } else if IphoneType.isIphone5() {
+                    contentInset.top = contentInset.top - 350
+                } else if IphoneType.isIphone6() {
+                    contentInset.top = contentInset.top - 350
+                } else {
+                    contentInset.top = contentInset.top - 350
+                }
+                
+                self.tableView.contentInset = contentInset
+                self.tableView.scrollIndicatorInsets = contentInset
+            })
+        } else if textField.isEqual(incompleteRequirementsTableViewCell.mobileNumberTextField) || textField.isEqual(incompleteRequirementsTableViewCell.emailAddressTextField) {
+            UIView.animateWithDuration(kHalfSecond, animations: { () -> Void in
+                if IphoneType.isIphone4() {
+                    textField.autocorrectionType = UITextAutocorrectionType.No
+                    contentInset.top = contentInset.top - 450
+                } else if IphoneType.isIphone5() {
+                    contentInset.top = contentInset.top - 350
+                } else if IphoneType.isIphone6() {
+                    contentInset.top = contentInset.top - 350
+                } else {
+                    contentInset.top = contentInset.top - 350
+                }
+                
+                self.tableView.contentInset = contentInset
+                self.tableView.scrollIndicatorInsets = contentInset
+            })
+        }
+    }
+    
+    func incompleteRequirementsTableViewCell(incompleteRequirementsTableViewCell: IncompleteRequirementsTableViewCell, didChangeValueAtTextField textField: UITextField, textValue: String) {
+        
+    }
+    
+    func incompleteRequirementsTableViewCell(incompleteRequirementsTableViewCell: IncompleteRequirementsTableViewCell, didTapReturnAtTextField textField: UITextField) {
+        if textField.isEqual(incompleteRequirementsTableViewCell.firstNameTextField) {
+            incompleteRequirementsTableViewCell.lastNameTextField.becomeFirstResponder()
+        } else if textField.isEqual(incompleteRequirementsTableViewCell.lastNameTextField) {
+            incompleteRequirementsTableViewCell.mobileNumberTextField.becomeFirstResponder()
+        } else if textField.isEqual(incompleteRequirementsTableViewCell.mobileNumberTextField) {
+            incompleteRequirementsTableViewCell.emailAddressTextField.becomeFirstResponder()
+        }  else if textField.isEqual(incompleteRequirementsTableViewCell.emailAddressTextField) {
+            self.tableView.endEditing(true)
+        }
     }
 }
