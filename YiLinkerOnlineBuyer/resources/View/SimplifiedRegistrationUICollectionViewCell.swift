@@ -8,7 +8,16 @@
 
 import UIKit
 
+protocol SimplifiedRegistrationUICollectionViewCellDelegate {
+    func simplifiedRegistrationCell(simplifiedRegistrationCell: SimplifiedRegistrationUICollectionViewCell, textFieldShouldReturn textField: UITextField)
+    func simplifiedRegistrationCell(simplifiedRegistrationCell: SimplifiedRegistrationUICollectionViewCell, didTapAreaCode areaCodeView: UIView)
+    func simplifiedRegistrationCell(simplifiedRegistrationCell: SimplifiedRegistrationUICollectionViewCell, didTapSendActivationCode sendActivationCodeButton: UIButton)
+    func simplifiedRegistrationCell(simplifiedRegistrationCell: SimplifiedRegistrationUICollectionViewCell, didTapRegister registerButton: UIButton)
+}
+
 class SimplifiedRegistrationUICollectionViewCell: UICollectionViewCell {
+    
+    var delegate: SimplifiedRegistrationUICollectionViewCellDelegate?
     
     @IBOutlet weak var mobileNumberTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
@@ -28,6 +37,9 @@ class SimplifiedRegistrationUICollectionViewCell: UICollectionViewCell {
         // Initialization code
         
         self.initializeViews()
+        
+        let viewTapGesture = UITapGestureRecognizer(target:self, action:"didTapAreaCode")
+        self.areaCodeView.addGestureRecognizer(viewTapGesture)
     }
     
     func initializeViews() {
@@ -60,5 +72,26 @@ class SimplifiedRegistrationUICollectionViewCell: UICollectionViewCell {
         
         //Set placeholder
     }
+    
+    func didTapAreaCode() {
+        self.delegate?.simplifiedRegistrationCell(self, didTapAreaCode: self.areaCodeView)
+    }
+    
+    @IBAction func buttonAction(sender: AnyObject) {
+        if sender as! UIButton == self.sendActivationCodeButton {
+            self.delegate?.simplifiedRegistrationCell(self, didTapSendActivationCode: self.sendActivationCodeButton)
+        } else if sender as! UIButton == self.registerButton {
+            self.delegate?.simplifiedRegistrationCell(self, didTapRegister: self.registerButton)
+        }
+    }
+    
+}
 
+//MARK: -
+//MARK: - TextField Delegate
+extension SimplifiedRegistrationUICollectionViewCell: UITextFieldDelegate {
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        self.delegate?.simplifiedRegistrationCell(self, textFieldShouldReturn: textField)
+        return true
+    }
 }
