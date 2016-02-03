@@ -1,18 +1,149 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6211" systemVersion="14A298i" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6204"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Panton.otf">
+            <string>Panton-Regular</string>
+            <string>Panton-Regular</string>
+        </mutableArray>
+    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="SimplifiedRegistrationUICollectionViewCell" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" contentMode="center" reuseIdentifier="SimplifiedRegistrationUICollectionViewCell" id="gTV-IL-0wX" customClass="SimplifiedRegistrationUICollectionViewCell" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="342"/>
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                <rect key="frame" x="0.0" y="0.0" width="375" height="342"/>
+                <subviews>
+                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="IKW-Ge-ZNg">
+                        <rect key="frame" x="16" y="63" width="343" height="35"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="35" id="En9-1p-xvB"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="13"/>
+                        <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                    </textField>
+                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="Confirm Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="NPw-da-yDo">
+                        <rect key="frame" x="16" y="110" width="343" height="35"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="35" id="Pet-HK-GWt"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="13"/>
+                        <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                    </textField>
+                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="Referral Code" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="d98-k9-bVg">
+                        <rect key="frame" x="16" y="157" width="343" height="35"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="35" id="1Cr-LN-92U"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="13"/>
+                        <textInputTraits key="textInputTraits"/>
+                    </textField>
+                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="Activation Code" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1be-va-DaB">
+                        <rect key="frame" x="16" y="204" width="195" height="35"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="35" id="cLM-V5-a4F"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="13"/>
+                        <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                    </textField>
+                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="Mobile Number" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vOc-Jg-uDZ">
+                        <rect key="frame" x="84" y="16" width="275" height="35"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="35" id="RP1-ER-RhO"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="13"/>
+                        <textInputTraits key="textInputTraits"/>
+                    </textField>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ekh-6d-zIq">
+                        <rect key="frame" x="16" y="16" width="69" height="35"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="+63" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sxr-m8-pG5">
+                                <rect key="frame" x="8" y="7" width="30" height="21"/>
+                                <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="13"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="next" translatesAutoresizingMaskIntoConstraints="NO" id="Kdm-lu-OWv">
+                                <rect key="frame" x="45" y="10" width="15" height="15"/>
+                            </imageView>
+                        </subviews>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="35" id="AW9-p2-aE9"/>
+                            <constraint firstAttribute="width" constant="69" id="cI4-NR-wDa"/>
+                        </constraints>
+                    </view>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0ik-Ag-uNF">
+                        <rect key="frame" x="219" y="204" width="140" height="35"/>
+                        <color key="backgroundColor" red="0.37647058820000001" green="0.12549019610000001" blue="0.46666666670000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="35" id="Xt7-xQ-sAo"/>
+                            <constraint firstAttribute="width" constant="140" id="dTV-8E-2cM"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="10"/>
+                        <state key="normal" title="Send Activivation Code">
+                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                    </button>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pfo-Nv-Oqt">
+                        <rect key="frame" x="16" y="271" width="343" height="35"/>
+                        <color key="backgroundColor" red="0.27450980390000002" green="0.66274509800000003" blue="0.58823529409999997" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="35" id="lnu-80-onL"/>
+                        </constraints>
+                        <state key="normal" title="REGISTER">
+                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                    </button>
+                </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </view>
+            <constraints>
+                <constraint firstItem="1be-va-DaB" firstAttribute="top" secondItem="d98-k9-bVg" secondAttribute="bottom" constant="12" id="4Nu-sI-i3E"/>
+                <constraint firstItem="NPw-da-yDo" firstAttribute="top" secondItem="IKW-Ge-ZNg" secondAttribute="bottom" constant="12" id="83G-Ni-MUo"/>
+                <constraint firstAttribute="trailing" secondItem="IKW-Ge-ZNg" secondAttribute="trailing" constant="16" id="8XX-jN-gFp"/>
+                <constraint firstAttribute="trailing" secondItem="0ik-Ag-uNF" secondAttribute="trailing" constant="16" id="9ua-Jo-yS4"/>
+                <constraint firstItem="pfo-Nv-Oqt" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="16" id="Heh-1O-a2B"/>
+                <constraint firstItem="d98-k9-bVg" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="16" id="I6m-8P-kMX"/>
+                <constraint firstAttribute="trailing" secondItem="vOc-Jg-uDZ" secondAttribute="trailing" constant="16" id="Lrt-PS-ph0"/>
+                <constraint firstItem="pfo-Nv-Oqt" firstAttribute="top" secondItem="0ik-Ag-uNF" secondAttribute="bottom" constant="32" id="Rq9-NQ-N3A"/>
+                <constraint firstItem="NPw-da-yDo" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="16" id="SKV-2i-kId"/>
+                <constraint firstItem="0ik-Ag-uNF" firstAttribute="top" secondItem="d98-k9-bVg" secondAttribute="bottom" constant="12" id="TrY-6H-HQ8"/>
+                <constraint firstItem="Ekh-6d-zIq" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="16" id="Wct-S5-jt5"/>
+                <constraint firstItem="IKW-Ge-ZNg" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="16" id="a9V-yR-HDm"/>
+                <constraint firstAttribute="trailing" secondItem="NPw-da-yDo" secondAttribute="trailing" constant="16" id="d7v-2C-59k"/>
+                <constraint firstItem="IKW-Ge-ZNg" firstAttribute="top" secondItem="Ekh-6d-zIq" secondAttribute="bottom" constant="12" id="dfW-RS-xGQ"/>
+                <constraint firstAttribute="trailing" secondItem="pfo-Nv-Oqt" secondAttribute="trailing" constant="16" id="e4p-B7-a5Q"/>
+                <constraint firstItem="vOc-Jg-uDZ" firstAttribute="leading" secondItem="Ekh-6d-zIq" secondAttribute="trailing" constant="-1" id="fPK-Bu-T6t"/>
+                <constraint firstItem="Ekh-6d-zIq" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="16" id="lqu-Cw-My5"/>
+                <constraint firstAttribute="trailing" secondItem="d98-k9-bVg" secondAttribute="trailing" constant="16" id="t3K-w7-Ybz"/>
+                <constraint firstItem="d98-k9-bVg" firstAttribute="top" secondItem="NPw-da-yDo" secondAttribute="bottom" constant="12" id="trk-dF-fSh"/>
+                <constraint firstItem="0ik-Ag-uNF" firstAttribute="leading" secondItem="1be-va-DaB" secondAttribute="trailing" constant="8" id="u6a-gH-HtU"/>
+                <constraint firstItem="vOc-Jg-uDZ" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="16" id="wGA-IX-KQP"/>
+                <constraint firstItem="1be-va-DaB" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="16" id="zLv-nR-s8I"/>
+            </constraints>
+            <size key="customSize" width="379" height="156"/>
+            <connections>
+                <outlet property="activationCodeTextField" destination="1be-va-DaB" id="oU2-5T-tYP"/>
+                <outlet property="areaCodeLabel" destination="Sxr-m8-pG5" id="74m-wb-iPe"/>
+                <outlet property="areaCodeView" destination="Ekh-6d-zIq" id="fOy-6A-LB9"/>
+                <outlet property="confirmPasswordTextField" destination="NPw-da-yDo" id="Xsq-c6-1xC"/>
+                <outlet property="downImageView" destination="Kdm-lu-OWv" id="YDe-Ji-Z4e"/>
+                <outlet property="mobileNumberTextField" destination="vOc-Jg-uDZ" id="7OQ-dX-jGh"/>
+                <outlet property="passwordTextField" destination="IKW-Ge-ZNg" id="48w-nx-vMj"/>
+                <outlet property="referralCodeTextField" destination="d98-k9-bVg" id="bVv-Ar-8ZL"/>
+                <outlet property="registerButton" destination="pfo-Nv-Oqt" id="0Jn-ZC-grc"/>
+                <outlet property="sendActivationCodeButton" destination="0ik-Ag-uNF" id="76v-nW-qb0"/>
+            </connections>
+            <point key="canvasLocation" x="240.5" y="175"/>
         </collectionViewCell>
     </objects>
+    <resources>
+        <image name="next" width="22" height="22"/>
+    </resources>
 </document>
