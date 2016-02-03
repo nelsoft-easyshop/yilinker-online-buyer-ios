@@ -42,9 +42,6 @@
                         </constraints>
                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="13"/>
                         <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
-                        <connections>
-                            <outlet property="delegate" destination="-1" id="FgN-O7-xCo"/>
-                        </connections>
                     </textField>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nW8-Ch-5IR">
                         <rect key="frame" x="102" y="19" width="75" height="20"/>
@@ -78,9 +75,6 @@
                         </constraints>
                         <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="13"/>
                         <textInputTraits key="textInputTraits"/>
-                        <connections>
-                            <outlet property="delegate" destination="-1" id="eKr-ew-WRZ"/>
-                        </connections>
                     </textField>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DnF-m7-hIC">
                         <rect key="frame" x="16" y="234" width="343" height="1"/>

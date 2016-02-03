@@ -48,6 +48,8 @@ class SimplifiedLoginUICollectionViewCell: UICollectionViewCell {
     }
     
     func initializeViews() {
+        self.emailMobileTextField.delegate = self
+        self.passwordTextField.delegate = self
         
         self.downImageView.transform = CGAffineTransformMakeRotation(CGFloat(M_PI_2))
         
