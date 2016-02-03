@@ -136,7 +136,7 @@ struct AddressStrings {
     static let zipCodeRequired: String = StringHelper.localizedStringWithKey("ZIP_CODE_REQUIRED_LOCALIZE_KEY")
 }
 
-class CheckoutContainerViewController: UIViewController, PaymentWebViewViewControllerDelegate, ChangeMobileNumberViewControllerDelegate, VerifyMobileNumberViewControllerDelegate, VerifyMobileNumberStatusViewControllerDelegate {
+class CheckoutContainerViewController: UIViewController, PaymentWebViewViewControllerDelegate, ChangeMobileNumberViewControllerDelegate, VerifyMobileNumberViewControllerDelegate, VerifyMobileNumberStatusViewControllerDelegate, VerifyNumberViewControllerDelegate, SuccessModalViewControllerDelegate {
     
     //view controller fragments
     var summaryViewController: SummaryViewController?
@@ -173,7 +173,7 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
     @IBOutlet weak var paymentLabel: UILabel!
     @IBOutlet weak var overViewLabel: UILabel!
     
-    var hud: MBProgressHUD?
+    var yiHud: YiHUD?
     
     var dimView: UIView?
     
@@ -192,6 +192,8 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
     
     var selectedRow: Int = 0
     
+    var showSuccess: Bool = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -204,7 +206,7 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
         self.setUpInitialViews()
         
         if !SessionManager.isMobileVerified() && SessionManager.isLoggedIn() {
-            self.changeMobileNumberAction()
+            self.showVerifyNumberModal()
         }
         
         self.setSelectedViewControllerWithIndex(0, transition: UIViewAnimationOptions.TransitionNone)
@@ -236,7 +238,7 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
                 //set text to default province value
                 self.summaryViewController!.setProvinceTextFieldTextWithString(self.provinceModel.location[0])
             } else {
-                self.hud?.hide(true)
+                self.yiHud?.hide()
                 if requestErrorType == .ResponseError {
                     let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
                     Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
@@ -275,7 +277,7 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
                 
                 self.fireBarangaysWithCityId("\(self.addressModel.cityId)")
             } else {
-                self.hud?.hide(true)
+                self.yiHud?.hide()
                 if requestErrorType == .ResponseError {
                     let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
                     Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
@@ -309,9 +311,9 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
                 
                 //set city text field to default
                 self.summaryViewController!.setBarangayTextFieldTextWithString(self.barangayModel.location[0])
-                self.hud?.hide(true)
+                self.yiHud?.hide()
             } else {
-                self.hud?.hide(true)
+                self.yiHud?.hide()
                 if requestErrorType == .ResponseError {
                     let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
                     Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
@@ -368,16 +370,8 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
     //MARK: -
     //MARK: - Show HUD
     func showHUD() {
-        if self.hud != nil {
-            self.hud!.hide(true)
-            self.hud = nil
-        }
-        
-        self.hud = MBProgressHUD(view: self.view)
-        self.hud?.removeFromSuperViewOnHide = true
-        self.hud?.dimBackground = false
-        self.view.addSubview(self.hud!)
-        self.hud?.show(true)
+        self.yiHud = YiHUD.initHud()
+        self.yiHud!.showHUDToView(self.view)
     }
     
     //MARK: -
@@ -640,7 +634,7 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
         self.showHUD()
         WebServiceManager.fireSetCheckoutAddressWithUrl(APIAtlas.setCheckoutAddressUrl, accessToken: SessionManager.accessToken(), addressId: addressId) {
             (successful, responseObject, requestErrorType) -> Void in
-            self.hud!.hide(true)
+            self.yiHud?.hide()
             
             if successful {
                 let jsonResult: NSDictionary = responseObject as! NSDictionary
@@ -680,7 +674,7 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
         self.showHUD()
         WebServiceManager.fireVoucherWithUrl(APIAtlas.voucherUrl, accessToken: SessionManager.accessToken(), voucherCode: voucherId) {
             (successful, responseObject, requestErrorType) -> Void in
-            self.hud?.hide(true)
+            self.yiHud?.hide()
             if successful {
                 let voucherModel = VoucherModel.parseDataFromDictionary(responseObject as! NSDictionary)
                 //pass the voucher model created and populate it on the summary view controller
@@ -845,7 +839,7 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
         let registerModel: RegisterModel = self.summaryViewController!.guestUser()
         WebServiceManager.fireGuestCheckoutWithUrl(APIAtlas.guestUserUrl, firstName: registerModel.firstName, lastName: registerModel.lastName, email: registerModel.emailAddress, contactNumber: registerModel.mobileNumber, title: registerModel.title, streetName: registerModel.streetName, zipCode: registerModel.zipCode, location: registerModel.location) {
             (successful, responseObject, requestErrorType) -> Void in
-            self.hud?.hide(true)
+            self.yiHud?.hide()
             if successful {
                 println(responseObject)
                 let dictionary: NSDictionary = responseObject as! NSDictionary
@@ -894,7 +888,7 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
         self.showHUD()
         WebServiceManager.fireCODWithUrl(APIAtlas.COD(), accessToken: SessionManager.accessToken()) {
             (successful, responseObject, requestErrorType) -> Void in
-            self.hud?.hide(true)
+            self.yiHud?.hide()
             if successful {
                 let paymentSuccessModel: PaymentSuccessModel = PaymentSuccessModel.parseDataWithDictionary(responseObject as! NSDictionary)
                 if paymentSuccessModel.isSuccessful {
@@ -928,12 +922,13 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
         }
     }
     
+    //MARK: -
     //MARK: - Fire Peso Pay
     //This function is for getting the peso pay urls
     func firePesoPay() {
         WebServiceManager.firePesoPayWithUrl(APIAtlas.pesoPayUrl, accessToken: SessionManager.accessToken()) {
             (successful, responseObject, requestErrorType) -> Void in
-            self.hud?.hide(true)
+            self.yiHud?.hide()
             if successful {
                 let pesoPayModel: PesoPayModel = PesoPayModel.parseDataWithDictionary(responseObject as! NSDictionary)
                 if pesoPayModel.isSuccessful {
@@ -973,7 +968,7 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
         self.showHUD()
         WebServiceManager.fireOverViewWith(APIAtlas.overViewUrl, accessToken: SessionManager.accessToken(), transactionId: transactionId) {
             (successful, responseObject, requestErrorType) -> Void in
-            self.hud?.hide(true)
+            self.yiHud?.hide()
             if successful {
                 let paymentSuccessModel: PaymentSuccessModel = PaymentSuccessModel.parseDataWithDictionary(responseObject as! NSDictionary)
                 if paymentSuccessModel.isSuccessful {
@@ -1031,7 +1026,7 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
         self.showHUD()
         WebServiceManager.fireRefreshTokenWithUrl(APIAtlas.refreshTokenUrl, actionHandler: {
             (successful, responseObject, requestErrorType) -> Void in
-            self.hud?.hide(true)
+            self.yiHud?.hide()
             
             if successful {
                 SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
@@ -1068,5 +1063,97 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
             }, completion: { finished in
                 
         })
+    }
+    
+    //MARK: -
+    //MARK: - Show Verify Number Modal
+    func showVerifyNumberModal() {
+        var verifyNumberViewController = VerifyNumberViewController(nibName: "VerifyNumberViewController", bundle: nil)
+        verifyNumberViewController.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
+        verifyNumberViewController.providesPresentationContextTransitionStyle = true
+        verifyNumberViewController.definesPresentationContext = true
+        verifyNumberViewController.view.backgroundColor = UIColor.clearColor()
+        verifyNumberViewController.view.frame.origin.y = 0
+        verifyNumberViewController.delegate = self
+        self.navigationController!.presentViewController(verifyNumberViewController, animated: true, completion: nil)
+        
+        self.dimView!.hidden = false
+        UIView.animateWithDuration(0.3, animations: {
+            self.dimView!.alpha = 1
+            }, completion: { finished in
+        })
+    }
+    
+    //MARK: - 
+    //MARK: - Verify Number View Controller Delegate
+    func verifyNumberViewController(verifyNumberViewController: VerifyNumberViewController, didStartEditing textField: UITextField) {
+        if IphoneType.isIphone4() {
+            verifyNumberViewController.verticalSpacingConstant.constant = 40
+        } else if IphoneType.isIphone5() {
+            verifyNumberViewController.verticalSpacingConstant.constant = 80
+        }
+
+        UIView.animateWithDuration(0.5, animations: { () -> Void in
+            verifyNumberViewController.view.layoutIfNeeded()
+        })
+    }
+    
+    func verifyNumberViewController(verifyNumberViewController: VerifyNumberViewController, didTapSend textField: UITextField) {
+        verifyNumberViewController.moveScreenToDefaultPosition()
+        
+        verifyNumberViewController.startLoading()
+        
+        if verifyNumberViewController.submitButton.titleLabel!.text == "SUBMIT" {
+            Delay.delayWithDuration(3.0, completionHandler: { (success) -> Void in
+                verifyNumberViewController.stopLoading()
+                if self.showSuccess {
+                    verifyNumberViewController.dismissViewControllerAnimated(true, completion: { () -> Void in
+                        self.showSuccessModal()
+                    })
+                } else {
+                    self.showSuccess = true
+                    verifyNumberViewController.showWrongCodeLabel()
+                }
+            })
+        } else {
+            Delay.delayWithDuration(3.0, completionHandler: { (success) -> Void in
+                verifyNumberViewController.stopLoading()
+                verifyNumberViewController.updateUIToDefault()
+            })
+        }
+    }
+    
+    func verifyNumberViewController(verifyNumberViewController: VerifyNumberViewController, changeState modalState: ModalState) {
+        if modalState == .SessionExpired {
+            verifyNumberViewController.updateUIToSessionExpired()
+        } else if modalState == .WrongCode {
+            verifyNumberViewController.showWrongCodeLabel()
+        }
+    }
+    
+    //MARK: -
+    //MARK: - Show Success Modal
+    func showSuccessModal() {
+        var successModalViewController = SuccessModalViewController(nibName: "SuccessModalViewController", bundle: nil)
+        successModalViewController.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
+        successModalViewController.providesPresentationContextTransitionStyle = true
+        successModalViewController.definesPresentationContext = true
+        successModalViewController.view.backgroundColor = UIColor.clearColor()
+        successModalViewController.view.frame.origin.y = 0
+        successModalViewController.delegate = self
+        self.navigationController!.presentViewController(successModalViewController, animated: true, completion: nil)
+        
+        self.dimView!.hidden = false
+        UIView.animateWithDuration(0.3, animations: {
+            self.dimView!.alpha = 1
+            }, completion: { finished in
+        })
+    }
+    
+    //MARK: - 
+    //MARK: - Success Modal View Controller Delegate
+    func successModalViewController(successModalViewController: SuccessModalViewController, didTapButton doneButton: UIButton) {
+        successModalViewController.dismissViewControllerAnimated(true, completion: nil)
+        self.hideDimView()
     }
 }
