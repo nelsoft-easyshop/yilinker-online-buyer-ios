@@ -155,6 +155,7 @@ class LoginAndRegisterTableViewController: UITableViewController {
             return logoRegisterTableViewCell
         }  else {
             let loginRegisterTableViewCell: LoginRegisterTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(self.loginResgisterTableViewCellNibName) as! LoginRegisterTableViewCell
+            loginRegisterTableViewCell.delegate = self
             loginRegisterTableViewCell.selectionStyle = .None
             return loginRegisterTableViewCell
         }
@@ -351,4 +352,40 @@ class LoginAndRegisterTableViewController: UITableViewController {
                 self.hud?.hide(true)
         })
     }
+}
+
+extension LoginAndRegisterTableViewController: LoginRegisterTableViewCellDelegate {
+    func simplifiedLoginCell(simplifiedLoginCell: SimplifiedLoginUICollectionViewCell, textFieldShouldReturn textField: UITextField) {
+        
+    }
+    
+    func simplifiedLoginCell(simplifiedLoginCell: SimplifiedLoginUICollectionViewCell, didTapFBLogin facebookButton: FBSDKLoginButton) {
+        
+    }
+    
+    func simplifiedLoginCell(simplifiedLoginCell: SimplifiedLoginUICollectionViewCell, didTapForgotPassword forgotPasswordButton: UIButton) {
+        
+    }
+    
+    func simplifiedLoginCell(simplifiedLoginCell: SimplifiedLoginUICollectionViewCell, didTapSignin signInButton: UIButton) {
+        
+    }
+    
+    
+    func simplifiedRegistrationCell(simplifiedRegistrationCell: SimplifiedRegistrationUICollectionViewCell, textFieldShouldReturn textField: UITextField) {
+        
+    }
+    
+    func simplifiedRegistrationCell(simplifiedRegistrationCell: SimplifiedRegistrationUICollectionViewCell, didTapAreaCode areaCodeView: UIView) {
+        
+    }
+    
+    func simplifiedRegistrationCell(simplifiedRegistrationCell: SimplifiedRegistrationUICollectionViewCell, didTapSendActivationCode sendActivationCodeButton: UIButton) {
+        
+    }
+    
+    func simplifiedRegistrationCell(simplifiedRegistrationCell: SimplifiedRegistrationUICollectionViewCell, didTapRegister registerButton: UIButton) {
+        
+    }
+    
 }
