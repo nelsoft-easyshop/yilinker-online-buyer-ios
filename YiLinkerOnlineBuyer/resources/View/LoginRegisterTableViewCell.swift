@@ -8,9 +8,21 @@
 
 import UIKit
 
+protocol LoginRegisterTableViewCellDelegate {
+    func simplifiedLoginCell(simplifiedLoginCell: SimplifiedLoginUICollectionViewCell, textFieldShouldReturn textField: UITextField)
+    func simplifiedLoginCell(simplifiedLoginCell: SimplifiedLoginUICollectionViewCell, didTapFBLogin facebookButton: FBSDKLoginButton)
+    func simplifiedLoginCell(simplifiedLoginCell: SimplifiedLoginUICollectionViewCell, didTapForgotPassword forgotPasswordButton: UIButton)
+    func simplifiedLoginCell(simplifiedLoginCell: SimplifiedLoginUICollectionViewCell, didTapSignin signInButton: UIButton)
+    
+    func simplifiedRegistrationCell(simplifiedRegistrationCell: SimplifiedRegistrationUICollectionViewCell, textFieldShouldReturn textField: UITextField)
+    func simplifiedRegistrationCell(simplifiedRegistrationCell: SimplifiedRegistrationUICollectionViewCell, didTapAreaCode areaCodeView: UIView)
+    func simplifiedRegistrationCell(simplifiedRegistrationCell: SimplifiedRegistrationUICollectionViewCell, didTapSendActivationCode sendActivationCodeButton: UIButton)
+    func simplifiedRegistrationCell(simplifiedRegistrationCell: SimplifiedRegistrationUICollectionViewCell, didTapRegister registerButton: UIButton)
+}
+
 class LoginRegisterTableViewCell: UITableViewCell {
     
-    
+    var delegate: LoginRegisterTableViewCellDelegate?
 
     //Cell Identifier
     let reuseIdentifierLogin: String = "SimplifiedLoginUICollectionViewCell"
@@ -95,9 +107,11 @@ extension LoginRegisterTableViewCell: UICollectionViewDataSource, UICollectionVi
         
         if indexPath.row == 0 {
             let cell: SimplifiedLoginUICollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifierLogin, forIndexPath: indexPath) as! SimplifiedLoginUICollectionViewCell
+            cell.delegate = self
             return cell
         } else {
             let cell: SimplifiedRegistrationUICollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifierRegistration, forIndexPath: indexPath) as! SimplifiedRegistrationUICollectionViewCell
+            cell.delegate = self
             return cell
         }
     }
@@ -117,3 +131,43 @@ extension LoginRegisterTableViewCell: UICollectionViewDataSource, UICollectionVi
         }
     }
 }
+
+//MARK: -
+//MARK: -  SimplifiedLoginUICollectionViewCellDelegate
+extension LoginRegisterTableViewCell: SimplifiedLoginUICollectionViewCellDelegate{
+    func simplifiedLoginCell(simplifiedLoginCell: SimplifiedLoginUICollectionViewCell, textFieldShouldReturn textField: UITextField) {
+        self.delegate?.simplifiedLoginCell(simplifiedLoginCell, textFieldShouldReturn: textField)
+    }
+    
+    func simplifiedLoginCell(simplifiedLoginCell: SimplifiedLoginUICollectionViewCell, didTapFBLogin facebookButton: FBSDKLoginButton) {
+        self.delegate?.simplifiedLoginCell(simplifiedLoginCell, didTapFBLogin: facebookButton)
+    }
+    
+    func simplifiedLoginCell(simplifiedLoginCell: SimplifiedLoginUICollectionViewCell, didTapForgotPassword forgotPasswordButton: UIButton) {
+        self.delegate?.simplifiedLoginCell(simplifiedLoginCell, didTapForgotPassword: forgotPasswordButton)
+    }
+    
+    func simplifiedLoginCell(simplifiedLoginCell: SimplifiedLoginUICollectionViewCell, didTapSignin signInButton: UIButton) {
+        self.delegate?.simplifiedLoginCell(simplifiedLoginCell, didTapSignin: signInButton)
+    }
+}
+
+//MARK: -  SimplifiedRegistrationUICollectionViewCellDelegate
+extension LoginRegisterTableViewCell: SimplifiedRegistrationUICollectionViewCellDelegate {
+    func simplifiedRegistrationCell(simplifiedRegistrationCell: SimplifiedRegistrationUICollectionViewCell, textFieldShouldReturn textField: UITextField) {
+        self.delegate?.simplifiedRegistrationCell(simplifiedRegistrationCell, textFieldShouldReturn: textField)
+    }
+    
+    func simplifiedRegistrationCell(simplifiedRegistrationCell: SimplifiedRegistrationUICollectionViewCell, didTapAreaCode areaCodeView: UIView) {
+        self.delegate?.simplifiedRegistrationCell(simplifiedRegistrationCell, didTapAreaCode: areaCodeView)
+    }
+    
+    func simplifiedRegistrationCell(simplifiedRegistrationCell: SimplifiedRegistrationUICollectionViewCell, didTapSendActivationCode sendActivationCodeButton: UIButton) {
+        self.delegate?.simplifiedRegistrationCell(simplifiedRegistrationCell, didTapSendActivationCode: sendActivationCodeButton)
+    }
+    
+    func simplifiedRegistrationCell(simplifiedRegistrationCell: SimplifiedRegistrationUICollectionViewCell, didTapRegister registerButton: UIButton) {
+        self.delegate?.simplifiedRegistrationCell(simplifiedRegistrationCell, didTapRegister: registerButton)
+    }
+}
+
