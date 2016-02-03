@@ -48,7 +48,6 @@ class SimplifiedLoginUICollectionViewCell: UICollectionViewCell {
     }
     
     func initializeViews() {
-        
         self.downImageView.transform = CGAffineTransformMakeRotation(CGFloat(M_PI_2))
         
         self.signInButton.layer.cornerRadius = 3
@@ -70,8 +69,8 @@ class SimplifiedLoginUICollectionViewCell: UICollectionViewCell {
         self.buttonAction(self.byMobileButton)
     }
     
-    @IBAction func buttonAction(sender: AnyObject) {
-        if sender as! UIButton == self.byMobileButton {
+    @IBAction func buttonAction(sender: UIButton) {
+        if sender == self.byMobileButton {
             self.byMobileButton.setTitleColor(Constants.Colors.appTheme, forState: UIControlState.Normal)
             self.byEmailButton.setTitleColor(Constants.Colors.grayText, forState: UIControlState.Normal)
             self.emailMobileTextField.keyboardType = UIKeyboardType.PhonePad
@@ -79,7 +78,7 @@ class SimplifiedLoginUICollectionViewCell: UICollectionViewCell {
             UIView.animateWithDuration(0.25) {
                 self.layoutIfNeeded()
             }
-        } else if sender as! UIButton == self.byEmailButton {
+        } else if sender == self.byEmailButton {
             self.byEmailButton.setTitleColor(Constants.Colors.appTheme, forState: UIControlState.Normal)
             self.byMobileButton.setTitleColor(Constants.Colors.grayText, forState: UIControlState.Normal)
             self.emailMobileTextField.keyboardType = UIKeyboardType.EmailAddress
@@ -87,13 +86,12 @@ class SimplifiedLoginUICollectionViewCell: UICollectionViewCell {
             UIView.animateWithDuration(0.25) {
                 self.layoutIfNeeded()
             }
-        } else if sender as! UIButton == self.forgotPasswordButton {
+        } else if sender == self.forgotPasswordButton {
            self.delegate?.simplifiedLoginCell(self, didTapForgotPassword: self.forgotPasswordButton)
-        } else if sender as! UIButton == self.signInButton {
+        } else if sender == self.signInButton {
             self.delegate?.simplifiedLoginCell(self, didTapSignin: self.signInButton)
         }
     }
-
 }
 
 //MARK: -
@@ -142,4 +140,3 @@ extension SimplifiedLoginUICollectionViewCell: FBSDKLoginButtonDelegate {
         })
     }
 }
-

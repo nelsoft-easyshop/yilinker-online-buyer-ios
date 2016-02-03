@@ -59,12 +59,12 @@ class LoginRegisterTableViewCell: UITableViewCell {
         self.collectionView?.registerNib(cellNibRegistration, forCellWithReuseIdentifier: reuseIdentifierRegistration)
     }
     
-    @IBAction func buttonAction(sender: AnyObject) {
-        if sender as! UIButton == self.signInButton {
+    @IBAction func buttonAction(sender: UIButton) {
+        if sender == self.signInButton {
             self.activateButton(self.signInButton)
             self.deActivateButton(self.registerButton)
             self.collectionView.scrollToItemAtIndexPath(NSIndexPath(forRow: 0, inSection: 0), atScrollPosition: UICollectionViewScrollPosition.CenteredHorizontally, animated: true)
-        } else if sender as! UIButton == self.registerButton {
+        } else if sender == self.registerButton {
             self.deActivateButton(self.signInButton)
             self.activateButton(self.registerButton)
             self.collectionView.scrollToItemAtIndexPath(NSIndexPath(forRow: 1, inSection: 0), atScrollPosition: UICollectionViewScrollPosition.CenteredHorizontally, animated: true)
@@ -91,20 +91,19 @@ class LoginRegisterTableViewCell: UITableViewCell {
     }
 }
 
-//MARK: - Data source and Delegate
-//MARK: -  UICollectionViewDataSource and UICollectionViewDelegate
+//MARK: - Data Source And Delegate
+//MARK: -  Collection View Data Source And Delegate
 extension LoginRegisterTableViewCell: UICollectionViewDataSource, UICollectionViewDelegate {
+    //MARK: -  UICollectionViewDataSource
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         return 1
     }
-    
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 2
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        
         if indexPath.row == 0 {
             let cell: SimplifiedLoginUICollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifierLogin, forIndexPath: indexPath) as! SimplifiedLoginUICollectionViewCell
             cell.delegate = self
@@ -117,10 +116,10 @@ extension LoginRegisterTableViewCell: UICollectionViewDataSource, UICollectionVi
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        
         return CGSize(width: self.screenWidth, height:342)
     }
 
+    //MARK: -  UICollectionViewDelegate
     func scrollViewDidScroll(scrollView: UIScrollView) {
         if scrollView.contentOffset.x < screenWidth {
             self.activateButton(self.signInButton)
@@ -133,8 +132,8 @@ extension LoginRegisterTableViewCell: UICollectionViewDataSource, UICollectionVi
 }
 
 //MARK: -
-//MARK: -  SimplifiedLoginUICollectionViewCellDelegate
-extension LoginRegisterTableViewCell: SimplifiedLoginUICollectionViewCellDelegate{
+//MARK: -  Simplified Login UI CollectionViewCell Delegate
+extension LoginRegisterTableViewCell: SimplifiedLoginUICollectionViewCellDelegate {
     func simplifiedLoginCell(simplifiedLoginCell: SimplifiedLoginUICollectionViewCell, textFieldShouldReturn textField: UITextField) {
         self.delegate?.simplifiedLoginCell(simplifiedLoginCell, textFieldShouldReturn: textField)
     }

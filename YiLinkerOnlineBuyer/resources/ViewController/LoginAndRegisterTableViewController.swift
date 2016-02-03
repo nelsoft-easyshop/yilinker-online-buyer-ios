@@ -108,6 +108,8 @@ class LoginAndRegisterTableViewController: UITableViewController {
         let viewTapGesture = UITapGestureRecognizer(target:self, action:"closeKeyboard")
         self.view.addGestureRecognizer(viewTapGesture)
         
+        UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: true)
+        
         if (FBSDKAccessToken.currentAccessToken() != nil) {
             
         } else {
@@ -145,10 +147,8 @@ class LoginAndRegisterTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return self.headerCellHeight
     }
-    
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        
         if indexPath.row == 0 {
             let logoRegisterTableViewCell: LoginRegisterLogoTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(self.logoRegisterTableViewCellNibName) as! LoginRegisterLogoTableViewCell
             logoRegisterTableViewCell.selectionStyle = .None
@@ -163,7 +163,6 @@ class LoginAndRegisterTableViewController: UITableViewController {
   
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        
         if indexPath.row == 0 {
             return self.logoCellHeight
         }  else {
@@ -387,5 +386,4 @@ extension LoginAndRegisterTableViewController: LoginRegisterTableViewCellDelegat
     func simplifiedRegistrationCell(simplifiedRegistrationCell: SimplifiedRegistrationUICollectionViewCell, didTapRegister registerButton: UIButton) {
         
     }
-    
 }
