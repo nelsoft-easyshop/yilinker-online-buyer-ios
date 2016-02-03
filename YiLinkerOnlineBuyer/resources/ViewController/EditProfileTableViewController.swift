@@ -54,7 +54,7 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
     
     var dimView: UIView?
     
-    var hud: MBProgressHUD?
+    var hud: YiHUD?
     
     var profileImage: UIImage?
     var validIDImage: UIImage?
@@ -77,7 +77,7 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
     }
     
     //Accepts 'ProfileUserDetailsModel' object from ProfileViewController and set it to the local variables
-    func passModel(profileModel: ProfileUserDetailsModel){
+    func passModel(profileModel: ProfileUserDetailsModel) {
         profileUserDetailsModel = profileModel
         firstName = profileModel.firstName
         lastName = profileModel.lastName
@@ -141,6 +141,9 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
         
         var nibAccount = UINib(nibName: accountCellIdentifier, bundle: nil)
         self.tableView.registerNib(nibAccount, forCellReuseIdentifier: accountCellIdentifier)
+        
+        var nibReferralCode: UINib = UINib(nibName: ReferralCodeTableViewCell.nibNameAndIdentifier(), bundle: nil)
+        self.tableView.registerNib(nibReferralCode, forCellReuseIdentifier: ReferralCodeTableViewCell.nibNameAndIdentifier())
     }
     
     //MARK: -
@@ -150,7 +153,7 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 4
+        return 5
     }
     
     
@@ -204,6 +207,9 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
             
             return cell
         } else if indexPath.row == 2 {
+            let cell: ReferralCodeTableViewCell = tableView.dequeueReusableCellWithIdentifier(ReferralCodeTableViewCell.nibNameAndIdentifier(), forIndexPath: indexPath) as! ReferralCodeTableViewCell
+            return cell
+        }  else if indexPath.row == 3 {
             let cell = tableView.dequeueReusableCellWithIdentifier(addressCellIdentifier, forIndexPath: indexPath) as! EditProfileAddressTableViewCell
             cell.delegate = self
             addressIndexPath = indexPath
@@ -223,7 +229,9 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
             return 150
         } else if indexPath.row == 1 {
             return 200
-        }  else if indexPath.row == 2 {
+        } else if indexPath.row == 2 {
+            return 180
+        }  else if indexPath.row == 3 {
             return 145
         } else {
             return 270
@@ -269,7 +277,7 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
         self.showLoader()
         
         WebServiceManager.fireGetUserInfoWithUrl(APIAtlas.getUserInfoUrl, accessToken: SessionManager.accessToken()) { (successful, responseObject, requestErrorType) -> Void in
-            self.hud?.hide(true)
+            self.dismissLoader()
             if successful {
                 if  let dictionary: NSDictionary = responseObject as? NSDictionary {
                     if let value: AnyObject = dictionary["data"] {
@@ -293,7 +301,7 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
                     }
                 }
             } else {
-                self.hud?.hide(true)
+                self.dismissLoader()
                  self.handleErrorWithType(requestErrorType, requestType: EditProfileRequestType.GetUserInfo, responseObject: responseObject, hasImage: false, firstName: "", lastName: "", profilePhoto: NSData(), userDocument: NSData())
             }
         }
@@ -368,21 +376,15 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
     //MARK: - Util Function
     //Loader function
     func showLoader() {
-        if self.hud != nil {
-            self.hud!.hide(true)
-            self.hud = nil
-        }
-        
-        self.hud = MBProgressHUD(view: self.view)
-        self.hud?.removeFromSuperViewOnHide = true
-        self.hud?.dimBackground = false
-        self.navigationController?.view.addSubview(self.hud!)
-        self.hud?.show(true)
+        self.hud = YiHUD.initHud()
+        self.hud?.showHUDToView(self.navigationController!.view)
+        self.view.userInteractionEnabled = false
     }
     
     //Hide loader
     func dismissLoader() {
-        self.hud?.hide(true)
+        self.hud?.hide()
+        self.view.userInteractionEnabled = true
     }
     
     // Hide Keyboard

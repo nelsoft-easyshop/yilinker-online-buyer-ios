@@ -17,7 +17,7 @@ class ProfileViewController: UIViewController{
     let manager = APIManager.sharedInstance
     
     @IBOutlet weak var tableView: UITableView!
-    var hud: MBProgressHUD?
+    var hud: YiHUD?
     
     var profileDetails: ProfileUserDetailsModel!
     
@@ -67,6 +67,7 @@ class ProfileViewController: UIViewController{
     * If the API request is unsuccessful, it will check 'requestErrorType'
     * and proceed/do some actions based on the error type
     */
+    
     func fireGetUserInfo() {
         //Check the 'profileDetails' to identify what loader indicator will be shown
         if self.profileDetails == nil {
@@ -77,7 +78,7 @@ class ProfileViewController: UIViewController{
         }
         
         WebServiceManager.fireGetUserInfoWithUrl(APIAtlas.getUserInfoUrl, accessToken: SessionManager.accessToken()) { (successful, responseObject, requestErrorType) -> Void in
-            self.hud?.hide(true)
+            self.hud?.hide()
             if successful {
                 if  let dictionary: NSDictionary = responseObject as? NSDictionary {
                     if let value: AnyObject = dictionary["data"] {
@@ -102,7 +103,7 @@ class ProfileViewController: UIViewController{
                     }
                 }
             } else {
-                self.hud?.hide(true)
+                self.hud?.hide()
                 if requestErrorType == .ResponseError {
                     //Error in api requirements
                     let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
@@ -139,7 +140,7 @@ class ProfileViewController: UIViewController{
         self.showHUD()
         WebServiceManager.fireRefreshTokenWithUrl(APIAtlas.refreshTokenUrl, actionHandler: {
             (successful, responseObject, requestErrorType) -> Void in
-            self.hud?.hide(true)
+            self.hud?.hide()
             
             if successful {
                 SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
@@ -158,21 +159,13 @@ class ProfileViewController: UIViewController{
     
     //Show Loader
     func showHUD() {
-        if self.hud != nil {
-            self.hud!.hide(true)
-            self.hud = nil
-        }
-        
-        self.hud = MBProgressHUD(view: self.view)
-        self.hud?.removeFromSuperViewOnHide = true
-        self.hud?.dimBackground = false
-        self.view.addSubview(self.hud!)
-        self.hud?.show(true)
+        self.hud = YiHUD.initHud()
+        self.hud?.showHUDToView(self.view)
     }
     
     //Hide Loader
     func dismissLoader() {
-        self.hud?.hide(true)
+        self.hud?.hide()
         UIApplication.sharedApplication().networkActivityIndicatorVisible = false
     }
 }

@@ -28,7 +28,7 @@ class ProfileSettingsViewController: UIViewController, DeactivateModalViewContro
     var tableData: [String] = []
     var tableDataStatus: [Bool] = []
     
-    var hud: MBProgressHUD?
+    var hud: YiHUD?
     
     var dimView: UIView?
     
@@ -130,7 +130,7 @@ class ProfileSettingsViewController: UIViewController, DeactivateModalViewContro
         }
         
         WebServiceManager.fireSetNotificationSettingsWithUrl(url, accessToken: SessionManager.accessToken(), isSubscribe: isOn) { (successful, responseObject, requestErrorType) -> Void in
-            self.hud?.hide(true)
+            self.dismissLoader()
             println(responseObject)
             if !successful {
                 if requestErrorType == .ResponseError {
@@ -178,7 +178,7 @@ class ProfileSettingsViewController: UIViewController, DeactivateModalViewContro
         self.showHUD()
         WebServiceManager.fireRefreshTokenWithUrl(APIAtlas.refreshTokenUrl, actionHandler: {
             (successful, responseObject, requestErrorType) -> Void in
-            self.hud?.hide(true)
+            self.dismissLoader()
             
             if successful {
                 SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
@@ -196,16 +196,15 @@ class ProfileSettingsViewController: UIViewController, DeactivateModalViewContro
     //MARK: - Util Functions
     //Show loader
     func showHUD() {
-        if self.hud != nil {
-            self.hud!.hide(true)
-            self.hud = nil
-        }
-        
-        self.hud = MBProgressHUD(view: self.view)
-        self.hud?.removeFromSuperViewOnHide = true
-        self.hud?.dimBackground = false
-        self.view.addSubview(self.hud!)
-        self.hud?.show(true)
+        self.hud = YiHUD.initHud()
+        self.hud?.showHUDToView(self.view)
+        self.view.userInteractionEnabled = false
+    }
+    
+    //Hide loader
+    func dismissLoader() {
+        self.hud?.hide()
+        self.view.userInteractionEnabled = true
     }
     
     //Set attributes and open 'DeactivateModalViewController'
