@@ -375,6 +375,8 @@
 		79BBF0ED1C438C80005DB226 /* MessagingContactListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79BBF0EB1C438C80005DB226 /* MessagingContactListViewController.xib */; };
 		79BBF0F01C439065005DB226 /* MessagingContactTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79BBF0EE1C439065005DB226 /* MessagingContactTableViewCell.swift */; };
 		79BBF0F11C439065005DB226 /* MessagingContactTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79BBF0EF1C439065005DB226 /* MessagingContactTableViewCell.xib */; };
+		79CB1E9F1C61D3BB006EE5CB /* ForgotPasswordTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79CB1E9D1C61D3BB006EE5CB /* ForgotPasswordTableViewCell.swift */; };
+		79CB1EA01C61D3BB006EE5CB /* ForgotPasswordTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79CB1E9E1C61D3BB006EE5CB /* ForgotPasswordTableViewCell.xib */; };
 		79D5B14E1C0EB7EE009CBEEF /* HelpViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79D5B14D1C0EB7EE009CBEEF /* HelpViewController.xib */; };
 		79E68B731B8AB900008626E4 /* ActivityLogTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79E68B721B8AB900008626E4 /* ActivityLogTableViewCell.xib */; };
 		79E68B751B8AC390008626E4 /* ActivityLogTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79E68B741B8AC390008626E4 /* ActivityLogTableViewCell.swift */; };
@@ -960,6 +962,8 @@
 		79BBF0EB1C438C80005DB226 /* MessagingContactListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MessagingContactListViewController.xib; path = YiLinkerOnlineBuyer/resources/ViewController/MessagingContactListViewController.xib; sourceTree = SOURCE_ROOT; };
 		79BBF0EE1C439065005DB226 /* MessagingContactTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MessagingContactTableViewCell.swift; path = YiLinkerOnlineBuyer/resources/View/MessagingContactTableViewCell.swift; sourceTree = SOURCE_ROOT; };
 		79BBF0EF1C439065005DB226 /* MessagingContactTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MessagingContactTableViewCell.xib; path = YiLinkerOnlineBuyer/resources/View/MessagingContactTableViewCell.xib; sourceTree = SOURCE_ROOT; };
+		79CB1E9D1C61D3BB006EE5CB /* ForgotPasswordTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ForgotPasswordTableViewCell.swift; path = YiLinkerOnlineBuyer/resources/View/ForgotPasswordTableViewCell.swift; sourceTree = SOURCE_ROOT; };
+		79CB1E9E1C61D3BB006EE5CB /* ForgotPasswordTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ForgotPasswordTableViewCell.xib; path = YiLinkerOnlineBuyer/resources/View/ForgotPasswordTableViewCell.xib; sourceTree = SOURCE_ROOT; };
 		79D5B14D1C0EB7EE009CBEEF /* HelpViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HelpViewController.xib; sourceTree = "<group>"; };
 		79E68B721B8AB900008626E4 /* ActivityLogTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ActivityLogTableViewCell.xib; path = YiLinkerOnlineBuyer/resources/Xib/ActivityLogTableViewCell.xib; sourceTree = SOURCE_ROOT; };
 		79E68B741B8AC390008626E4 /* ActivityLogTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ActivityLogTableViewCell.swift; path = YiLinkerOnlineBuyer/resources/View/ActivityLogTableViewCell.swift; sourceTree = SOURCE_ROOT; };
@@ -1311,6 +1315,8 @@
 				79009FCA1C5F39DF0044CE34 /* SimplifiedLoginUICollectionViewCell.xib */,
 				79009FCD1C5F3FA60044CE34 /* LoginRegisterLogoTableViewCell.swift */,
 				79009FCE1C5F3FA60044CE34 /* LoginRegisterLogoTableViewCell.xib */,
+				79CB1E9D1C61D3BB006EE5CB /* ForgotPasswordTableViewCell.swift */,
+				79CB1E9E1C61D3BB006EE5CB /* ForgotPasswordTableViewCell.xib */,
 			);
 			name = LoginAndRegister;
 			sourceTree = "<group>";
@@ -2393,6 +2399,7 @@
 				79E68BA71B8B4572008626E4 /* EditProfileAddPhotoTableViewCell.xib in Resources */,
 				793A899F1BA004550030FDC7 /* VerifyMobileNumberStatusViewController.xib in Resources */,
 				F7C569F81BB1790A004740E1 /* TransactionCancelOrderStatusViewController.xib in Resources */,
+				79CB1EA01C61D3BB006EE5CB /* ForgotPasswordTableViewCell.xib in Resources */,
 				0CB333671C05720D00625903 /* DailyLoginCollectionViewCell.xib in Resources */,
 				0C2F44DE1B85840F00021F45 /* CheckoutViews.xib in Resources */,
 				79A1C6FB1B83787B0043AA36 /* SellerResultCollectionViewCell.xib in Resources */,
@@ -2724,6 +2731,7 @@
 				F7A66B261C03195200D8E688 /* TransactionDetailsTableViewCell.swift in Sources */,
 				F7C56A041BB1790A004740E1 /* TransactionProductDetailsViewController.swift in Sources */,
 				0CE6A1A61C50BA05009C2873 /* FABCollectionViewCell.swift in Sources */,
+				79CB1E9F1C61D3BB006EE5CB /* ForgotPasswordTableViewCell.swift in Sources */,
 				0C11D21E1C0D81640063D06E /* HomeSellerModel.swift in Sources */,
 				0C11D2281C0EF4C00063D06E /* OneByOneCollectionViewFlowLayout.swift in Sources */,
 				B77B8DC21B9B54B40002C513 /* W_Contact.swift in Sources */,
