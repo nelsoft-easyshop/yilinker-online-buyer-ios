@@ -72,14 +72,16 @@ struct RegisterStrings {
     static let eightCharacters: String = StringHelper.localizedStringWithKey("EIGHT_CHARACTERS_LOCALIZED_KEY")
 }
 
-class LoginAndRegisterTableViewController: UITableViewController, LoginHeaderTableViewCellDelegate, LoginTableViewCellDelegate, RegisterTableViewCellDelegate {
+class LoginAndRegisterTableViewController: UITableViewController {
     
     let headerViewNibName = "LoginHeaderTableViewCell"
-    let loginTableViewCellNibName = "LoginTableViewCell"
-    let registerTableViewCellNibName = "RegisterTableViewCell"
+    let loginResgisterTableViewCellNibName = "LoginRegisterTableViewCell"
+    let logoRegisterTableViewCellNibName = "LoginRegisterLogoTableViewCell"
 
-    let loginCellHeight: CGFloat = 230
-    let registerCellHeight: CGFloat = 250
+    let headerCellHeight: CGFloat = 64
+    let loginCellHeight: CGFloat = 400
+    let logoCellHeight: CGFloat = 190
+    let registerCellHeight: CGFloat = 412
     
     var hud: MBProgressHUD?
     
@@ -96,12 +98,15 @@ class LoginAndRegisterTableViewController: UITableViewController, LoginHeaderTab
     override func viewDidLoad() {
         super.viewDidLoad()
         self.registerCellWithIdentifier(self.headerViewNibName)
-        self.registerCellWithIdentifier(self.loginTableViewCellNibName)
-        self.registerCellWithIdentifier(self.registerTableViewCellNibName)
+        self.registerCellWithIdentifier(self.loginResgisterTableViewCellNibName)
+        self.registerCellWithIdentifier(self.logoRegisterTableViewCellNibName)
         
-        self.tableView.tableHeaderView = self.headerView()
         self.tableView.tableFooterView = self.footerView()
         self.tableView.separatorColor = .clearColor()
+        self.tableView.backgroundColor = UIColor.whiteColor()
+        
+        let viewTapGesture = UITapGestureRecognizer(target:self, action:"closeKeyboard")
+        self.view.addGestureRecognizer(viewTapGesture)
         
         if (FBSDKAccessToken.currentAccessToken() != nil) {
             
@@ -115,6 +120,10 @@ class LoginAndRegisterTableViewController: UITableViewController, LoginHeaderTab
         // Dispose of any resources that can be recreated.
     }
     
+    func closeKeyboard() {
+        self.view.endEditing(true)
+    }
+    
     //MARK: -
     //MARK: - Table view data source
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -126,42 +135,37 @@ class LoginAndRegisterTableViewController: UITableViewController, LoginHeaderTab
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete method implementation.
         // Return the number of rows in the section.
-        return 1
+        return 2
+    }
+    
+    override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        return self.headerView()
+    }
+    
+    override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return self.headerCellHeight
     }
     
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        if self.isLogin {
-            let loginTableViewCell: LoginTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(self.loginTableViewCellNibName) as! LoginTableViewCell
-            loginTableViewCell.selectionStyle = .None
-            loginTableViewCell.delegate = self
-            return loginTableViewCell
-        } else {
-            let registerTableViewCell: RegisterTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(self.registerTableViewCellNibName) as! RegisterTableViewCell
-            registerTableViewCell.selectionStyle = .None
-            registerTableViewCell.delegate = self
-            
-            if self.isGuestUser {
-                registerTableViewCell.firstNameTextField.enabled = false
-                registerTableViewCell.lastNameTextField.enabled = false
-                registerTableViewCell.emailAddressTextField.enabled = false
-                registerTableViewCell.mobileNumberTextField.enabled = false
-                
-                registerTableViewCell.firstNameTextField.text = self.registerModel.firstName
-                registerTableViewCell.lastNameTextField.text = self.registerModel.lastName
-                registerTableViewCell.emailAddressTextField.text = self.registerModel.emailAddress
-                registerTableViewCell.mobileNumberTextField.text = self.registerModel.mobileNumber
-            }
-            
-            return registerTableViewCell
+        
+        if indexPath.row == 0 {
+            let logoRegisterTableViewCell: LoginRegisterLogoTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(self.logoRegisterTableViewCellNibName) as! LoginRegisterLogoTableViewCell
+            logoRegisterTableViewCell.selectionStyle = .None
+            return logoRegisterTableViewCell
+        }  else {
+            let loginRegisterTableViewCell: LoginRegisterTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(self.loginResgisterTableViewCellNibName) as! LoginRegisterTableViewCell
+            loginRegisterTableViewCell.selectionStyle = .None
+            return loginRegisterTableViewCell
         }
     }
   
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        if self.isLogin {
-            return self.loginCellHeight
-        } else {
+        
+        if indexPath.row == 0 {
+            return self.logoCellHeight
+        }  else {
             return self.registerCellHeight
         }
     }
@@ -170,20 +174,6 @@ class LoginAndRegisterTableViewController: UITableViewController, LoginHeaderTab
     //MARK: - Header View
     func headerView() -> LoginHeaderTableViewCell {
         let loginHeaderView: LoginHeaderTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(self.headerViewNibName) as! LoginHeaderTableViewCell
-        loginHeaderView.delegate = self
-        
-        if self.isHideCloseButton {
-            loginHeaderView.crossOutButton.hidden = true
-        }
-        
-        if self.isLogin {
-            loginHeaderView.activateButton(loginHeaderView.loginButton)
-            loginHeaderView.deActivateButton(loginHeaderView.registerButton)
-        } else {
-            loginHeaderView.activateButton(loginHeaderView.registerButton)
-            loginHeaderView.deActivateButton(loginHeaderView.loginButton)
-        }
-        
         return loginHeaderView
     }
     
@@ -256,59 +246,6 @@ class LoginAndRegisterTableViewController: UITableViewController, LoginHeaderTab
         self.hud?.dimBackground = false
         self.view.addSubview(self.hud!)
         self.hud?.show(true)
-    }
-    
-    //MARK: -
-    //MARK: - Login HeaderTable View Cell Delegate
-    func loginHeaderTableViewCell(loginHeaderTableViewCell: LoginHeaderTableViewCell, didTapButton button: UIButton) {
-        if button == loginHeaderTableViewCell.loginButton {
-            self.isLogin = true
-        } else if button == loginHeaderTableViewCell.registerButton {
-            self.isLogin = false
-        } else {
-            self.dismissViewControllerAnimated(true, completion: nil)
-        }
-        
-        self.tableView.reloadData()
-    }
-    
-    //MARK: -
-    //MARK: - Login Table View Cell Delegate
-    func loginTableViewCell(loginTableViewCell: LoginTableViewCell, textFieldShouldReturn textField: UITextField) {
-        if textField == loginTableViewCell.emailTextField {
-            loginTableViewCell.passwordTextField.becomeFirstResponder()
-        } else {
-            self.view.endEditing(true)
-            
-            var errorMessage: String = ""
-            
-            if !loginTableViewCell.emailTextField.isNotEmpty() {
-                errorMessage = LoginStrings.emailIsRequired
-            } else if !loginTableViewCell.emailTextField.isValidEmail() {
-                errorMessage = LoginStrings.invalidEmail
-            } else if !loginTableViewCell.passwordTextField.isNotEmpty() {
-                errorMessage = LoginStrings.passwordIsRequired
-            }
-            
-            
-            if errorMessage != "" {
-                Toast.displayToastWithMessage(errorMessage, duration: 1.5, view: self.view)
-            } else {
-                self.fireLoginWithEmail(loginTableViewCell.emailTextField.text, password: loginTableViewCell.passwordTextField.text)
-            }
-        }
-    }
-    
-    func loginTableViewCell(loginTableViewCell: LoginTableViewCell, didTapSignIn signInButton: UIButton) {
-        self.fireLoginWithEmail(loginTableViewCell.emailTextField.text, password: loginTableViewCell.passwordTextField.text)
-    }
-    
-    func loginTableViewCell(loginTableViewCell: LoginTableViewCell, didTapSuccessOnFacebookSignIn facebookButton: UIButton) {
-        self.fireFacebookLoginWithToken(self.getFaceBookAccessToken())
-    }
-    
-    func loginTableViewCell(loginTableViewCell: LoginTableViewCell, didTapForgotPassword forgotPasswordButton: UIButton) {
-        UIApplication.sharedApplication().openURL(NSURL(string: LoginConstants.forgotPasswordUrlString)!)
     }
     
     //MARK: -
@@ -413,118 +350,5 @@ class LoginAndRegisterTableViewController: UITableViewController, LoginHeaderTab
                 Toast.displayToastWithMessage(Constants.Localized.someThingWentWrong, view: self.view)
                 self.hud?.hide(true)
         })
-    }
-    
-    //MARK: - 
-    //MARK: - Register Table View Cell Delegate
-    func registerTableViewCell(registerTableViewCell: RegisterTableViewCell, textFieldShouldReturn textField: UITextField) {
-        if textField != registerTableViewCell.mobileNumberTextField {
-            for textField2 in registerTableViewCell.contentView.subviews {
-                if textField2.isKindOfClass(UITextField) {
-                    if textField2.tag == textField.tag + 1 {
-                        textField2.becomeFirstResponder()
-                        break
-                    }
-                }
-            }
-        } else {
-            self.view.endEditing(true)
-        }
-    }
-    
-    func registerTableViewCell(registerTableViewCell: RegisterTableViewCell, didTapRegister button: UIButton) {
-        self.view.endEditing(true)
-        var errorMessage: String = ""
-        //validate fields
-        if !registerTableViewCell.firstNameTextField.isNotEmpty() {
-            errorMessage = RegisterStrings.firstNameRequired
-        } else if !registerTableViewCell.lastNameTextField.isNotEmpty() {
-            errorMessage = RegisterStrings.lastNameRequired
-        } else if !registerTableViewCell.emailAddressTextField.isNotEmpty() {
-            errorMessage = RegisterStrings.emailRequired
-        } else if !registerTableViewCell.emailAddressTextField.isValidEmail() {
-            errorMessage = RegisterStrings.invalidEmail
-        } else if !registerTableViewCell.passwordTextField.isNotEmpty() {
-            errorMessage = RegisterStrings.passwordRequired
-        } else if !registerTableViewCell.passwordTextField.isAlphaNumeric() {
-            errorMessage = RegisterStrings.illegalPassword
-        } else if !registerTableViewCell.passwordTextField.isValidPassword() {
-            errorMessage = RegisterStrings.numbersAndLettersOnly
-        } else if !registerTableViewCell.passwordTextField.isGreaterThanEightCharacters() {
-            errorMessage = RegisterStrings.eightCharacters
-        } else if !registerTableViewCell.reTypePasswordTextField.isNotEmpty() {
-            errorMessage = RegisterStrings.reTypePasswordError
-        } else if registerTableViewCell.passwordTextField.text != registerTableViewCell.reTypePasswordTextField.text {
-            errorMessage = RegisterStrings.passwordNotMatch
-        } else if registerTableViewCell.mobileNumberTextField.text == "" {
-            errorMessage = RegisterStrings.contactRequired
-        }
-        
-        if errorMessage != "" {
-            Toast.displayToastWithMessage(errorMessage, duration: 1.5, view: self.view)
-        } else {
-            self.showHUD()
-        
-            //check if the user is guest or not
-            if !self.isGuestUser {
-                //user is not guests
-                WebServiceManager.fireRegisterRequestWithUrl(APIAtlas.registerUrl, emailAddress: registerTableViewCell.emailAddressTextField.text,
-                    mobileNumber: registerTableViewCell.mobileNumberTextField.text, password: registerTableViewCell.passwordTextField.text,
-                    firstName: registerTableViewCell.firstNameTextField.text, lastName: registerTableViewCell.lastNameTextField.text,
-                    actionHandler: { (successful, responseObject, requestErrorType) -> Void in
-                        if successful {
-                            self.hud?.hide(true)
-                            let registerModel: RegisterModel = RegisterModel.parseDataFromDictionary(responseObject as! NSDictionary)
-                            if registerModel.isSuccessful {
-                                self.fireLoginWithEmail(registerTableViewCell.emailAddressTextField.text, password: registerTableViewCell.passwordTextField.text)
-                            } else {
-                                Toast.displayToastWithMessage(registerModel.message, duration: 2.0, view: self.view)
-                            }
-                        } else {
-                            self.hud?.hide(true)
-                            if requestErrorType == .ResponseError {
-                                let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
-                                Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
-                            } else if requestErrorType == .PageNotFound {
-                                Toast.displayToastWithMessage("Page not found.", duration: 1.5, view: self.view)
-                            } else if requestErrorType == .NoInternetConnection {
-                                Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
-                            } else if requestErrorType == .RequestTimeOut {
-                                Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
-                            } else if requestErrorType == .UnRecognizeError {
-                                Toast.displayToastWithMessage(Constants.Localized.error, duration: 1.5, view: self.view)
-                            }
-                        }
-                })
-            } else {
-                //user is guest
-                WebServiceManager.fireGuestRegisterRequestWithUrl(APIAtlas.guestUserRegisterUrl, password: registerTableViewCell.passwordTextField.text, referralCode: "", actionHandler: { (successful, responseObject, requestErrorType) -> Void in
-                    if successful {
-                        self.hud?.hide(true)
-                        let registerModel: RegisterModel = RegisterModel.parseDataFromDictionary(responseObject as! NSDictionary)
-                        if registerModel.isSuccessful {
-                            //Login User after successfully registered
-                            self.fireLoginWithEmail(registerTableViewCell.emailAddressTextField.text, password: registerTableViewCell.passwordTextField.text)
-                        } else {
-                            Toast.displayToastWithMessage(registerModel.message, duration: 2.0, view: self.view)
-                        }
-                    } else {
-                        self.hud?.hide(true)
-                        if requestErrorType == .ResponseError {
-                            let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
-                            Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
-                        } else if requestErrorType == .PageNotFound {
-                            Toast.displayToastWithMessage("Page not found.", duration: 1.5, view: self.view)
-                        } else if requestErrorType == .NoInternetConnection {
-                            Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
-                        } else if requestErrorType == .RequestTimeOut {
-                            Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
-                        } else if requestErrorType == .UnRecognizeError {
-                            Toast.displayToastWithMessage(Constants.Localized.error, duration: 1.5, view: self.view)
-                        }
-                    }
-                })
-            }
-        }
     }
 }

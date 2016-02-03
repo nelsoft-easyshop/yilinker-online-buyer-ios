@@ -319,6 +319,14 @@
 		26D688CF1C047389003ED151 /* ProductDetailsExtendedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26D688CE1C047389003ED151 /* ProductDetailsExtendedView.swift */; };
 		26D688D11C0475C4003ED151 /* ProductDetailsExtendedView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26D688D01C0475C4003ED151 /* ProductDetailsExtendedView.xib */; };
 		26DB062E1B981CF300D38EA8 /* ProductImagesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26DB062D1B981CF300D38EA8 /* ProductImagesModel.swift */; };
+		79009FBF1C5EF9D20044CE34 /* LoginRegisterTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79009FBD1C5EF9D20044CE34 /* LoginRegisterTableViewCell.swift */; };
+		79009FC01C5EF9D20044CE34 /* LoginRegisterTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79009FBE1C5EF9D20044CE34 /* LoginRegisterTableViewCell.xib */; };
+		79009FC71C5F2EE10044CE34 /* SimplifiedRegistrationUICollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79009FC51C5F2EE10044CE34 /* SimplifiedRegistrationUICollectionViewCell.swift */; };
+		79009FC81C5F2EE10044CE34 /* SimplifiedRegistrationUICollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79009FC61C5F2EE10044CE34 /* SimplifiedRegistrationUICollectionViewCell.xib */; };
+		79009FCB1C5F39DF0044CE34 /* SimplifiedLoginUICollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79009FC91C5F39DF0044CE34 /* SimplifiedLoginUICollectionViewCell.swift */; };
+		79009FCC1C5F39DF0044CE34 /* SimplifiedLoginUICollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79009FCA1C5F39DF0044CE34 /* SimplifiedLoginUICollectionViewCell.xib */; };
+		79009FCF1C5F3FA60044CE34 /* LoginRegisterLogoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79009FCD1C5F3FA60044CE34 /* LoginRegisterLogoTableViewCell.swift */; };
+		79009FD01C5F3FA60044CE34 /* LoginRegisterLogoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79009FCE1C5F3FA60044CE34 /* LoginRegisterLogoTableViewCell.xib */; };
 		79044D9D1C44963E00D3E41C /* MessagingThreadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79044D9B1C44963E00D3E41C /* MessagingThreadViewController.swift */; };
 		79044D9E1C44963E00D3E41C /* MessagingThreadViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79044D9C1C44963E00D3E41C /* MessagingThreadViewController.xib */; };
 		790B4BFE1BD8832C00E46AE7 /* VerifyMobileNumberInputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 790B4BFC1BD8832C00E46AE7 /* VerifyMobileNumberInputViewController.swift */; };
@@ -892,6 +900,14 @@
 		26D688D01C0475C4003ED151 /* ProductDetailsExtendedView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProductDetailsExtendedView.xib; path = YiLinkerOnlineBuyer/resources/ViewController/ProductDetailsExtendedView.xib; sourceTree = SOURCE_ROOT; };
 		26DB062D1B981CF300D38EA8 /* ProductImagesModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProductImagesModel.swift; path = YiLinkerOnlineBuyer/resources/Model/ProductImagesModel.swift; sourceTree = SOURCE_ROOT; };
 		5D038C18A7712E626564D2D3 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		79009FBD1C5EF9D20044CE34 /* LoginRegisterTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginRegisterTableViewCell.swift; path = YiLinkerOnlineBuyer/resources/View/LoginRegisterTableViewCell.swift; sourceTree = SOURCE_ROOT; };
+		79009FBE1C5EF9D20044CE34 /* LoginRegisterTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LoginRegisterTableViewCell.xib; path = YiLinkerOnlineBuyer/resources/View/LoginRegisterTableViewCell.xib; sourceTree = SOURCE_ROOT; };
+		79009FC51C5F2EE10044CE34 /* SimplifiedRegistrationUICollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SimplifiedRegistrationUICollectionViewCell.swift; path = YiLinkerOnlineBuyer/resources/View/SimplifiedRegistrationUICollectionViewCell.swift; sourceTree = SOURCE_ROOT; };
+		79009FC61C5F2EE10044CE34 /* SimplifiedRegistrationUICollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SimplifiedRegistrationUICollectionViewCell.xib; path = YiLinkerOnlineBuyer/resources/View/SimplifiedRegistrationUICollectionViewCell.xib; sourceTree = SOURCE_ROOT; };
+		79009FC91C5F39DF0044CE34 /* SimplifiedLoginUICollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SimplifiedLoginUICollectionViewCell.swift; path = YiLinkerOnlineBuyer/resources/View/SimplifiedLoginUICollectionViewCell.swift; sourceTree = SOURCE_ROOT; };
+		79009FCA1C5F39DF0044CE34 /* SimplifiedLoginUICollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SimplifiedLoginUICollectionViewCell.xib; path = YiLinkerOnlineBuyer/resources/View/SimplifiedLoginUICollectionViewCell.xib; sourceTree = SOURCE_ROOT; };
+		79009FCD1C5F3FA60044CE34 /* LoginRegisterLogoTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginRegisterLogoTableViewCell.swift; path = YiLinkerOnlineBuyer/resources/View/LoginRegisterLogoTableViewCell.swift; sourceTree = SOURCE_ROOT; };
+		79009FCE1C5F3FA60044CE34 /* LoginRegisterLogoTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LoginRegisterLogoTableViewCell.xib; path = YiLinkerOnlineBuyer/resources/View/LoginRegisterLogoTableViewCell.xib; sourceTree = SOURCE_ROOT; };
 		79044D9B1C44963E00D3E41C /* MessagingThreadViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MessagingThreadViewController.swift; path = YiLinkerOnlineBuyer/resources/ViewController/MessagingThreadViewController.swift; sourceTree = SOURCE_ROOT; };
 		79044D9C1C44963E00D3E41C /* MessagingThreadViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MessagingThreadViewController.xib; path = YiLinkerOnlineBuyer/resources/ViewController/MessagingThreadViewController.xib; sourceTree = SOURCE_ROOT; };
 		790B4BFC1BD8832C00E46AE7 /* VerifyMobileNumberInputViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VerifyMobileNumberInputViewController.swift; path = YiLinkerOnlineBuyer/resources/ViewController/VerifyMobileNumberInputViewController.swift; sourceTree = SOURCE_ROOT; };
@@ -1279,10 +1295,18 @@
 			children = (
 				0C697BF11C575DAA000CE47F /* LoginHeaderTableViewCell.swift */,
 				0C697BF21C575DAA000CE47F /* LoginHeaderTableViewCell.xib */,
+				79009FBD1C5EF9D20044CE34 /* LoginRegisterTableViewCell.swift */,
+				79009FBE1C5EF9D20044CE34 /* LoginRegisterTableViewCell.xib */,
 				0C697BF51C576E42000CE47F /* LoginTableViewCell.swift */,
 				0C697BF61C576E42000CE47F /* LoginTableViewCell.xib */,
 				0C697BF91C577299000CE47F /* RegisterTableViewCell.swift */,
 				0C697BFA1C577299000CE47F /* RegisterTableViewCell.xib */,
+				79009FC51C5F2EE10044CE34 /* SimplifiedRegistrationUICollectionViewCell.swift */,
+				79009FC61C5F2EE10044CE34 /* SimplifiedRegistrationUICollectionViewCell.xib */,
+				79009FC91C5F39DF0044CE34 /* SimplifiedLoginUICollectionViewCell.swift */,
+				79009FCA1C5F39DF0044CE34 /* SimplifiedLoginUICollectionViewCell.xib */,
+				79009FCD1C5F3FA60044CE34 /* LoginRegisterLogoTableViewCell.swift */,
+				79009FCE1C5F3FA60044CE34 /* LoginRegisterLogoTableViewCell.xib */,
 			);
 			name = LoginAndRegister;
 			sourceTree = "<group>";
@@ -2212,6 +2236,7 @@
 				7971F7471B862D3A00322861 /* SortTableViewCell.xib in Resources */,
 				26AFB3CA1B79DE5C00E50926 /* ProductAttributeCollectionViewCell.xib in Resources */,
 				0C374F2C1B88E3790050AE1D /* CheckoutContainerViewController.xib in Resources */,
+				79009FC81C5F2EE10044CE34 /* SimplifiedRegistrationUICollectionViewCell.xib in Resources */,
 				0CE6A1A91C50BA05009C2873 /* FABProfileCollectionViewCell.xib in Resources */,
 				0C374F5B1B8A03CC0050AE1D /* CustomizeShoppingTableViewCell.xib in Resources */,
 				0C374F491B88E3790050AE1D /* TodaysPromoViewController.xib in Resources */,
@@ -2268,6 +2293,7 @@
 				0C697BFC1C577299000CE47F /* RegisterTableViewCell.xib in Resources */,
 				79A66A6E1C01A176003D62AD /* ViewImageViewController.xib in Resources */,
 				B7EE726C1BF1DD5D003724CB /* GoogleService-Info.plist in Resources */,
+				79009FD01C5F3FA60044CE34 /* LoginRegisterLogoTableViewCell.xib in Resources */,
 				0C11D22E1C103B620063D06E /* pulltorefresharrow.png in Resources */,
 				79E68B8F1B8B0717008626E4 /* PointsTableViewCell.xib in Resources */,
 				F740F0921B90D1E200D23A34 /* close2.png in Resources */,
@@ -2275,6 +2301,7 @@
 				7971F73F1B861ABE00322861 /* FilterTableViewCell.xib in Resources */,
 				0C2F44CF1B8576FE00021F45 /* Panton Regular Italic.otf in Resources */,
 				F7DC7EDB1BA13FAC004F7FD4 /* SellerCategoryTableViewCell.xib in Resources */,
+				79009FC01C5EF9D20044CE34 /* LoginRegisterTableViewCell.xib in Resources */,
 				79FE2BE91C3FBBFD0055D894 /* MessagingConversationListViewController.xib in Resources */,
 				0C2F44D41B8576FE00021F45 /* Panton.otf in Resources */,
 				79E68BAF1B8B5306008626E4 /* EditProfileAddressTableViewCell.xib in Resources */,
@@ -2368,6 +2395,7 @@
 				0CB5C5D41C58ABB4000B2AE7 /* FeedBackViewController.xib in Resources */,
 				0C1B91EF1C5A0E57003EAB65 /* ViewFeedBackViewController.xib in Resources */,
 				F70EFB201BC6BEB80077B8ED /* TransactionLeaveFeedbackFieldTableViewCell.xib in Resources */,
+				79009FCC1C5F39DF0044CE34 /* SimplifiedLoginUICollectionViewCell.xib in Resources */,
 				799AEA0E1C44DA5800F9AB88 /* MessagingReceiverTableViewCell.xib in Resources */,
 				0C9937661B750583000D6074 /* NewSellerScrollableCollectionViewCell.xib in Resources */,
 				79FE2BEE1C3FC4600055D894 /* MessagingConversationTableViewCell.xib in Resources */,
@@ -2559,6 +2587,7 @@
 				B77B8DD71B9B554A0002C513 /* MessageThreadImageTVC.swift in Sources */,
 				0C538AE31B99F07100EB64AB /* PaymentDataModel.swift in Sources */,
 				26AFB39A1B79DDEA00E50926 /* ProductDetailsModel.swift in Sources */,
+				79009FCB1C5F39DF0044CE34 /* SimplifiedLoginUICollectionViewCell.swift in Sources */,
 				B77B8DD61B9B554A0002C513 /* ImageVC.swift in Sources */,
 				F7CCDAA01B943CF7000F5AD4 /* ProductResultGridCollectionViewCell.swift in Sources */,
 				0C9937481B750583000D6074 /* FullImageCollectionViewCell.swift in Sources */,
@@ -2667,6 +2696,7 @@
 				262626B71C00D28E0068E876 /* UserMapView.swift in Sources */,
 				B77B8DD21B9B554A0002C513 /* ContactListVC.swift in Sources */,
 				0C697BF71C576E42000CE47F /* LoginTableViewCell.swift in Sources */,
+				79009FBF1C5EF9D20044CE34 /* LoginRegisterTableViewCell.swift in Sources */,
 				0C329E881B7B73A4005BE2B6 /* TodaysPromoViewController.swift in Sources */,
 				0C1C3A851B9406BD00E6180D /* JSONResponseSerializer.swift in Sources */,
 				0C1004301B87AB9100CAA17A /* PaymentTableViewCell.swift in Sources */,
@@ -2694,6 +2724,7 @@
 				F7C569B11BB1762C004740E1 /* TransactionCancelOrderView.swift in Sources */,
 				0C329E841B7B738E005BE2B6 /* CustomizeShoppingViewController.swift in Sources */,
 				79F2F5541B859AD100F57E4B /* WishlistProductDetailsModel.swift in Sources */,
+				79009FC71C5F2EE10044CE34 /* SimplifiedRegistrationUICollectionViewCell.swift in Sources */,
 				0C697BF31C575DAA000CE47F /* LoginHeaderTableViewCell.swift in Sources */,
 				F7C569BE1BB1762C004740E1 /* TransactionSectionFooterView.swift in Sources */,
 				26AFB39D1B79DDEA00E50926 /* ProductReviewModel.swift in Sources */,
@@ -2770,6 +2801,7 @@
 				0C742FA71C58A5A800A31441 /* FeedBackTableViewCell.swift in Sources */,
 				0C9937461B750583000D6074 /* DynamicRoundedButton.swift in Sources */,
 				79A66A6D1C01A176003D62AD /* ViewImageViewController.swift in Sources */,
+				79009FCF1C5F3FA60044CE34 /* LoginRegisterLogoTableViewCell.swift in Sources */,
 				B77B8DD51B9B554A0002C513 /* DummyNavigationController.swift in Sources */,
 				26AFB3AA1B79DE2900E50926 /* ProductReviewHeaderView.swift in Sources */,
 			);
