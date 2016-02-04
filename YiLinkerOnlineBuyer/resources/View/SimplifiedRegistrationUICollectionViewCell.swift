@@ -35,8 +35,6 @@ class SimplifiedRegistrationUICollectionViewCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
-        
         self.initializeViews()
         
         let viewTapGesture = UITapGestureRecognizer(target:self, action:"didTapAreaCode")
@@ -77,6 +75,7 @@ class SimplifiedRegistrationUICollectionViewCell: UICollectionViewCell {
         self.activationCodeTextField.layer.borderWidth = 1
         self.areaCodeView.layer.borderWidth = 1
         
+        //TODO
         //Set placeholder
     }
     
@@ -84,14 +83,13 @@ class SimplifiedRegistrationUICollectionViewCell: UICollectionViewCell {
         self.delegate?.simplifiedRegistrationCell(self, didTapAreaCode: self.areaCodeView)
     }
     
-    @IBAction func buttonAction(sender: AnyObject) {
-        if sender as! UIButton == self.sendActivationCodeButton {
+    @IBAction func buttonAction(sender: UIButton) {
+        if sender == self.sendActivationCodeButton {
             self.delegate?.simplifiedRegistrationCell(self, didTapSendActivationCode: self.sendActivationCodeButton)
-        } else if sender as! UIButton == self.registerButton {
+        } else if sender == self.registerButton {
             self.delegate?.simplifiedRegistrationCell(self, didTapRegister: self.registerButton)
         }
     }
-    
 }
 
 //MARK: -

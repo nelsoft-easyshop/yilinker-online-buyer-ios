@@ -223,6 +223,8 @@
 		0C99376D1B750583000D6074 /* VerticalImageCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C9937361B750583000D6074 /* VerticalImageCollectionViewCell.xib */; };
 		0C99376E1B750583000D6074 /* ViewMoreFooterCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C9937371B750583000D6074 /* ViewMoreFooterCollectionViewCell.xib */; };
 		0C9937711B75063B000D6074 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C9937701B75063B000D6074 /* AppDelegate.swift */; };
+		0CAAE9261C5F4BC7009BE3E0 /* IncompleteRequirementsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAAE9241C5F4BC7009BE3E0 /* IncompleteRequirementsTableViewCell.swift */; };
+		0CAAE9271C5F4BC7009BE3E0 /* IncompleteRequirementsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CAAE9251C5F4BC7009BE3E0 /* IncompleteRequirementsTableViewCell.xib */; };
 		0CAAE91C1C5EFC63009BE3E0 /* ReferralCodeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAAE91A1C5EFC63009BE3E0 /* ReferralCodeTableViewCell.swift */; };
 		0CAAE91D1C5EFC63009BE3E0 /* ReferralCodeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CAAE91B1C5EFC63009BE3E0 /* ReferralCodeTableViewCell.xib */; };
 		0CAE2F771C05B5400019165A /* FlashSaleCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAE2F751C05B5400019165A /* FlashSaleCollectionViewCell.swift */; };
@@ -807,6 +809,8 @@
 		0C9937361B750583000D6074 /* VerticalImageCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VerticalImageCollectionViewCell.xib; sourceTree = "<group>"; };
 		0C9937371B750583000D6074 /* ViewMoreFooterCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ViewMoreFooterCollectionViewCell.xib; sourceTree = "<group>"; };
 		0C9937701B75063B000D6074 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		0CAAE9241C5F4BC7009BE3E0 /* IncompleteRequirementsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IncompleteRequirementsTableViewCell.swift; sourceTree = "<group>"; };
+		0CAAE9251C5F4BC7009BE3E0 /* IncompleteRequirementsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IncompleteRequirementsTableViewCell.xib; sourceTree = "<group>"; };
 		0CAAE91A1C5EFC63009BE3E0 /* ReferralCodeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReferralCodeTableViewCell.swift; sourceTree = "<group>"; };
 		0CAAE91B1C5EFC63009BE3E0 /* ReferralCodeTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReferralCodeTableViewCell.xib; sourceTree = "<group>"; };
 		0CAE2F751C05B5400019165A /* FlashSaleCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlashSaleCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -1606,6 +1610,8 @@
 		0C99370B1B750583000D6074 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				0CAAE9241C5F4BC7009BE3E0 /* IncompleteRequirementsTableViewCell.swift */,
+				0CAAE9251C5F4BC7009BE3E0 /* IncompleteRequirementsTableViewCell.xib */,
 				0CAAE9191C5EFC0C009BE3E0 /* Profile */,
 				0C742FA41C58A58B00A31441 /* FeedBack */,
 				0C27A2591C5A1A03000F5821 /* YiBo Loader */,
@@ -2297,6 +2303,7 @@
 				26D688D11C0475C4003ED151 /* ProductDetailsExtendedView.xib in Resources */,
 				F740F0901B90D1D800D23A34 /* address.png in Resources */,
 				0C374F3B1B88E3790050AE1D /* GeneralRatingTableViewCell.xib in Resources */,
+				0CAAE9271C5F4BC7009BE3E0 /* IncompleteRequirementsTableViewCell.xib in Resources */,
 				0C2F44C71B8576FE00021F45 /* Panton ExtraBold Italic.otf in Resources */,
 				0C1778001C045B6600C310D9 /* CarouselCollectionViewCell.xib in Resources */,
 				0C65BBB01C019A0800C66C39 /* NetTotalTableViewCell.xib in Resources */,
@@ -2575,6 +2582,7 @@
 				F7C569B61BB1762C004740E1 /* TransactionDeliveryStatusView.swift in Sources */,
 				79FE2BE21C3FA7920055D894 /* MessagingConversationModel.swift in Sources */,
 				0C9937601B750583000D6074 /* WishlistViewController.swift in Sources */,
+				0CAAE9261C5F4BC7009BE3E0 /* IncompleteRequirementsTableViewCell.swift in Sources */,
 				0C2F44A91B848B5400021F45 /* PaymentViewController.swift in Sources */,
 				0C6EFF2E1C0C95E000064F69 /* HomeProductModel.swift in Sources */,
 				F7CCDAA21B943CF7000F5AD4 /* SellerResultCollectionViewCell.swift in Sources */,
