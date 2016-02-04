@@ -49,6 +49,9 @@ class LoginRegisterTableViewCell: UITableViewCell {
         
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
+        
+        self.signInButton.setTitle(LoginStrings.signIn.uppercaseString, forState: .Normal)
+        self.registerButton.setTitle(RegisterStrings.register.uppercaseString, forState: .Normal)
     }
     
     func registerNibs() {

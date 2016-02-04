@@ -71,15 +71,25 @@ class SimplifiedLoginUICollectionViewCell: UICollectionViewCell {
         self.passwordTextField.layer.borderWidth = 1
         self.areaCodeView.layer.borderWidth = 1
         
+        //Set string
+        self.byMobileButton.setTitle(LoginStrings.byMobile, forState: .Normal)
+        self.byEmailButton.setTitle(LoginStrings.byEmail, forState: .Normal)
+        self.signInButton.setTitle(LoginStrings.signIn.uppercaseString, forState: .Normal)
+        self.emailMobileTextField.placeholder = LoginStrings.mobileNUmber
+        self.passwordTextField.placeholder = LoginStrings.emailAddress
+        
         self.buttonAction(self.byMobileButton)
     }
     
     @IBAction func buttonAction(sender: UIButton) {
+        self.endEditing(true)
         if sender == self.byMobileButton {
             self.isMobileLogin = true
             self.byMobileButton.setTitleColor(Constants.Colors.appTheme, forState: UIControlState.Normal)
             self.byEmailButton.setTitleColor(Constants.Colors.grayText, forState: UIControlState.Normal)
             self.emailMobileTextField.keyboardType = UIKeyboardType.PhonePad
+            self.emailMobileTextField.text = ""
+            self.emailMobileTextField.placeholder = LoginStrings.mobileNUmber
             self.areaCodeConstraint.constant = 69
             UIView.animateWithDuration(0.25) {
                 self.layoutIfNeeded()
@@ -89,6 +99,8 @@ class SimplifiedLoginUICollectionViewCell: UICollectionViewCell {
             self.byEmailButton.setTitleColor(Constants.Colors.appTheme, forState: UIControlState.Normal)
             self.byMobileButton.setTitleColor(Constants.Colors.grayText, forState: UIControlState.Normal)
             self.emailMobileTextField.keyboardType = UIKeyboardType.EmailAddress
+            self.emailMobileTextField.text = ""
+            self.emailMobileTextField.placeholder = LoginStrings.emailAddress
             self.areaCodeConstraint.constant = 0
             UIView.animateWithDuration(0.25) {
                 self.layoutIfNeeded()
