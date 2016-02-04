@@ -111,6 +111,7 @@ class WebServiceManager: NSObject {
     //Edit Profile
     static let profilePhotoKey = "profilePhoto"
     static let userDocumentKey = "userDocument"
+    static let referrerCodeKey = "referralCode"
     
     //Verify Mobile Number
     static let codeKey = "code"
@@ -306,15 +307,15 @@ class WebServiceManager: NSObject {
     }
     
     //MARK: - Fire Update Profile
-    class func fireUpdateProfileWithUrl(url: String, hasImage: Bool, accessToken: String, firstName: String, lastName: String, profilePhoto: NSData? = nil, userDocument: NSData? = nil, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+    class func fireUpdateProfileWithUrl(url: String, hasImage: Bool, accessToken: String, firstName: String, lastName: String, profilePhoto: NSData? = nil, userDocument: NSData? = nil, referrerPersonCode: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
         let tempUrl: String = url +  "?access_token=" + accessToken
         if hasImage {
-            let parameters: NSDictionary = [firstNameKey: firstName, lastNameKey: lastName]
+            let parameters: NSDictionary = [firstNameKey: firstName, lastNameKey: lastName, referrerCodeKey: referrerPersonCode]
             self.firePostRequestWithImages(tempUrl, parameters: parameters, imageData: [profilePhoto, userDocument], imageKeys: [profilePhotoKey, userDocumentKey]) { (successful, responseObject, requestErrorType) -> Void in
                 actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
             }
         } else {
-            let parameters: NSDictionary = [firstNameKey: firstName, lastNameKey: lastName]
+            let parameters: NSDictionary = [firstNameKey: firstName, lastNameKey: lastName, referrerCodeKey: referrerPersonCode]
             self.firePostRequestWithUrl(tempUrl, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
                 actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
             }
