@@ -610,6 +610,6 @@ PAGE_NOT_FOUND_LOCALIZE_KEY = "Page not found.";
 HI_LOCALIZE_KEY = "Hi";
 
 //MARK: - Referral Codes
-REFERRAL_LOCALIZE_KEY = "Referral Codes";
+REFERRAL_LOCALIZE_KEY = "Referral Code";
 YOUR_REFERRAL_LOCALIZE_KEY = "Your Referral Codes";
-REFERRAL_PERSON_LOCALIZE_KEY = "Referral Person";
+REFERRAL_PERSON_LOCALIZE_KEY = "Referred By";
