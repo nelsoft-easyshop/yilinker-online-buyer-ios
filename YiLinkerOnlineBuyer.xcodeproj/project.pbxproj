@@ -161,6 +161,10 @@
 		0C6D45DE1BF4692900D330DB /* WebViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C6D45DC1BF4692900D330DB /* WebViewController.xib */; };
 		0C6EFF2C1C0C795800064F69 /* LayoutFourModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C6EFF2B1C0C795800064F69 /* LayoutFourModel.swift */; };
 		0C6EFF2E1C0C95E000064F69 /* HomeProductModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C6EFF2D1C0C95E000064F69 /* HomeProductModel.swift */; };
+		0C70DED61C61CBD700FAB087 /* SuccessModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C70DED41C61CBD700FAB087 /* SuccessModalViewController.swift */; };
+		0C70DED71C61CBD700FAB087 /* SuccessModalViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C70DED51C61CBD700FAB087 /* SuccessModalViewController.xib */; };
+		0C73349E1C608DE600E609B3 /* VerifyNumberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C73349C1C608DE600E609B3 /* VerifyNumberViewController.swift */; };
+		0C73349F1C608DE600E609B3 /* VerifyNumberViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C73349D1C608DE600E609B3 /* VerifyNumberViewController.xib */; };
 		0C742FA71C58A5A800A31441 /* FeedBackTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C742FA51C58A5A800A31441 /* FeedBackTableViewCell.swift */; };
 		0C742FA81C58A5A800A31441 /* FeedBackTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C742FA61C58A5A800A31441 /* FeedBackTableViewCell.xib */; };
 		0C74406C1BDF42EB0019792A /* Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C74406B1BDF42EB0019792A /* Toast.swift */; };
@@ -743,6 +747,10 @@
 		0C6D45DC1BF4692900D330DB /* WebViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = WebViewController.xib; path = ../ViewController/WebViewController.xib; sourceTree = "<group>"; };
 		0C6EFF2B1C0C795800064F69 /* LayoutFourModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayoutFourModel.swift; sourceTree = "<group>"; };
 		0C6EFF2D1C0C95E000064F69 /* HomeProductModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeProductModel.swift; sourceTree = "<group>"; };
+		0C70DED41C61CBD700FAB087 /* SuccessModalViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SuccessModalViewController.swift; sourceTree = "<group>"; };
+		0C70DED51C61CBD700FAB087 /* SuccessModalViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SuccessModalViewController.xib; sourceTree = "<group>"; };
+		0C73349C1C608DE600E609B3 /* VerifyNumberViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VerifyNumberViewController.swift; sourceTree = "<group>"; };
+		0C73349D1C608DE600E609B3 /* VerifyNumberViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VerifyNumberViewController.xib; sourceTree = "<group>"; };
 		0C742FA51C58A5A800A31441 /* FeedBackTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedBackTableViewCell.swift; sourceTree = "<group>"; };
 		0C742FA61C58A5A800A31441 /* FeedBackTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FeedBackTableViewCell.xib; sourceTree = "<group>"; };
 		0C74406B1BDF42EB0019792A /* Toast.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Toast.swift; sourceTree = "<group>"; };
@@ -1819,6 +1827,10 @@
 				26D688CB1C02E92D003ED151 /* FullScreenImageCollectionViewCell.xib */,
 				0CB5C5D11C58ABB4000B2AE7 /* FeedBackViewController.swift */,
 				0CB5C5D21C58ABB4000B2AE7 /* FeedBackViewController.xib */,
+				0C73349C1C608DE600E609B3 /* VerifyNumberViewController.swift */,
+				0C73349D1C608DE600E609B3 /* VerifyNumberViewController.xib */,
+				0C70DED41C61CBD700FAB087 /* SuccessModalViewController.swift */,
+				0C70DED51C61CBD700FAB087 /* SuccessModalViewController.xib */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -2268,6 +2280,7 @@
 				0C374F491B88E3790050AE1D /* TodaysPromoViewController.xib in Resources */,
 				0C2F44C91B8576FE00021F45 /* Panton ExtraLight Italic.otf in Resources */,
 				79D5B14E1C0EB7EE009CBEEF /* HelpViewController.xib in Resources */,
+				0C70DED71C61CBD700FAB087 /* SuccessModalViewController.xib in Resources */,
 				0C1179461BA82BE700AA1554 /* LocalizableString.strings in Resources */,
 				F7DB29BA1C1EF44C006E0140 /* TransactionLeaveProductFeedbackRateTableViewCell.xib in Resources */,
 				26D688C31C021614003ED151 /* ProductDetailsExtendedViewController.xib in Resources */,
@@ -2411,6 +2424,7 @@
 				0C2F44DE1B85840F00021F45 /* CheckoutViews.xib in Resources */,
 				79A1C6FB1B83787B0043AA36 /* SellerResultCollectionViewCell.xib in Resources */,
 				0C374F441B88E3790050AE1D /* ResultViewController.xib in Resources */,
+				0C73349F1C608DE600E609B3 /* VerifyNumberViewController.xib in Resources */,
 				79044D9E1C44963E00D3E41C /* MessagingThreadViewController.xib in Resources */,
 				0CC53C851C00D345002361D4 /* DicountVoucherTableViewCell.xib in Resources */,
 				0C374F371B88E3790050AE1D /* PaymentViewController.xib in Resources */,
@@ -2544,6 +2558,7 @@
 				F7C569BB1BB1762C004740E1 /* TransactionProductDetailsView.swift in Sources */,
 				0C2E8A271B9AA3EE00D50455 /* PesoPayModel.swift in Sources */,
 				F7DC7ED61BA13E3D004F7FD4 /* SellerCategoryViewController.swift in Sources */,
+				0C70DED61C61CBD700FAB087 /* SuccessModalViewController.swift in Sources */,
 				0C329E951B7B7C5B005BE2B6 /* CustomTabBarController.swift in Sources */,
 				26D688CF1C047389003ED151 /* ProductDetailsExtendedView.swift in Sources */,
 				0C8FEC581C44F9FF00B33C4D /* HomeEntity.swift in Sources */,
@@ -2560,6 +2575,7 @@
 				961BE5A81B994C1000E8631A /* ButtonToTabBehaviorizer.swift in Sources */,
 				0C329E801B7B7376005BE2B6 /* MessagingViewController.swift in Sources */,
 				2689FBFA1B8044CF007BEA68 /* CategoryModel.swift in Sources */,
+				0C73349E1C608DE600E609B3 /* VerifyNumberViewController.swift in Sources */,
 				F7C569B81BB1762C004740E1 /* TransactionDetailsView.swift in Sources */,
 				0C329E8C1B7B73B7005BE2B6 /* CategoriesViewController.swift in Sources */,
 				0C5926041B836C670021EA76 /* ProfileModel.swift in Sources */,

@@ -98,3 +98,9 @@ enum LanguageType {
     case English
     case Chinese
 }
+
+enum ModalState {
+    case SessionExpired
+    case WrongCode
+    case DismissModal
+}
