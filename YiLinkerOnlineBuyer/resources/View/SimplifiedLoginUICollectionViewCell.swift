@@ -34,6 +34,8 @@ class SimplifiedLoginUICollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var downImageView: UIImageView!
     
+    var isMobileLogin: Bool = true
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -74,6 +76,7 @@ class SimplifiedLoginUICollectionViewCell: UICollectionViewCell {
     
     @IBAction func buttonAction(sender: UIButton) {
         if sender == self.byMobileButton {
+            self.isMobileLogin = true
             self.byMobileButton.setTitleColor(Constants.Colors.appTheme, forState: UIControlState.Normal)
             self.byEmailButton.setTitleColor(Constants.Colors.grayText, forState: UIControlState.Normal)
             self.emailMobileTextField.keyboardType = UIKeyboardType.PhonePad
@@ -82,6 +85,7 @@ class SimplifiedLoginUICollectionViewCell: UICollectionViewCell {
                 self.layoutIfNeeded()
             }
         } else if sender == self.byEmailButton {
+            self.isMobileLogin = false
             self.byEmailButton.setTitleColor(Constants.Colors.appTheme, forState: UIControlState.Normal)
             self.byMobileButton.setTitleColor(Constants.Colors.grayText, forState: UIControlState.Normal)
             self.emailMobileTextField.keyboardType = UIKeyboardType.EmailAddress

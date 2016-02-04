@@ -259,7 +259,37 @@ class LoginAndRegisterTableViewController: UITableViewController {
     //MARK: - Fire Login With Email
     func fireLoginWithEmail(email: String, password: String) {
         self.showHUD()
-        self.loginSessionDataTask = WebServiceManager.fireLoginRequestWithUrl(APIAtlas.loginUrl, emailAddress: email, password: password, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+        self.loginSessionDataTask = WebServiceManager.fireEmailLoginRequestWithUrl(APIAtlas.loginUrl, emailAddress: email, password: password, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+            if successful {
+                SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+                self.hud?.hide(true)
+                self.showSuccessMessage()
+                self.fireCreateRegistration(SessionManager.gcmToken())
+            } else {
+                self.hud?.hide(true)
+                if requestErrorType == .ResponseError {
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                } else if requestErrorType == .PageNotFound {
+                    Toast.displayToastWithMessage("Page not found.", duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    Toast.displayToastWithMessage(Constants.Localized.error, duration: 1.5, view: self.view)
+                } else if requestErrorType == .Cancel {
+                    //Do nothing
+                }
+            }
+        })
+    }
+    
+    //MARK: -
+    //MARK: - Fire Login With Contact Number
+    func fireLoginWithContactNumber(contactNo: String, password: String) {
+        self.showHUD()
+        self.loginSessionDataTask = WebServiceManager.fireContactNumberLoginRequestWithUrl(APIAtlas.loginUrl, contactNo: contactNo, password: password, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
             if successful {
                 SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
                 self.hud?.hide(true)
@@ -362,11 +392,15 @@ class LoginAndRegisterTableViewController: UITableViewController {
 
 extension LoginAndRegisterTableViewController: LoginRegisterTableViewCellDelegate {
     func simplifiedLoginCell(simplifiedLoginCell: SimplifiedLoginUICollectionViewCell, textFieldShouldReturn textField: UITextField) {
-        
+        if simplifiedLoginCell.isMobileLogin {
+            self.fireLoginWithContactNumber(simplifiedLoginCell.emailMobileTextField.text, password: simplifiedLoginCell.passwordTextField.text)
+        } else {
+            self.fireLoginWithEmail(simplifiedLoginCell.emailMobileTextField.text, password: simplifiedLoginCell.passwordTextField.text)
+        }
     }
     
     func simplifiedLoginCell(simplifiedLoginCell: SimplifiedLoginUICollectionViewCell, didTapFBLogin facebookButton: FBSDKLoginButton) {
-        
+        self.fireFacebookLoginWithToken(self.getFaceBookAccessToken())
     }
     
     func simplifiedLoginCell(simplifiedLoginCell: SimplifiedLoginUICollectionViewCell, didTapForgotPassword forgotPasswordButton: UIButton) {
@@ -378,7 +412,11 @@ extension LoginAndRegisterTableViewController: LoginRegisterTableViewCellDelegat
     }
     
     func simplifiedLoginCell(simplifiedLoginCell: SimplifiedLoginUICollectionViewCell, didTapSignin signInButton: UIButton) {
-        
+        if simplifiedLoginCell.isMobileLogin {
+            self.fireLoginWithContactNumber(simplifiedLoginCell.emailMobileTextField.text, password: simplifiedLoginCell.passwordTextField.text)
+        } else {
+            self.fireLoginWithEmail(simplifiedLoginCell.emailMobileTextField.text, password: simplifiedLoginCell.passwordTextField.text)
+        }
     }
     
     
