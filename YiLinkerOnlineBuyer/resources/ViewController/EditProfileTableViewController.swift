@@ -20,6 +20,8 @@ struct EditProfileLocalizedStrings {
     static let selectPhotoLocalizeString = StringHelper.localizedStringWithKey("SELECTPHOTO_LOCALIZE_KEY")
     static let takePhotoLocalizeString = StringHelper.localizedStringWithKey("TAKEPHOTO_LOCALIZE_KEY")
     static let cancelLocalizeString = StringHelper.localizedStringWithKey("CANCEL_LOCALIZE_KEY")
+    static let copiedToClipBoard = StringHelper.localizedStringWithKey("COPY_LOCALIZE_KEY")
+    static let successfullyUpdateProfile = StringHelper.localizedStringWithKey("UPDATE_PROF_LOCALIZE_KEY")
 }
 
 class EditProfileTableViewController: UITableViewController, UINavigationControllerDelegate {
@@ -258,7 +260,7 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
             
             self.dismissLoader()
             if successful {
-                Toast.displayToastWithMessage("Successfully updated your profile", duration: 2.0, view: self.navigationController!.view)
+                Toast.displayToastWithMessage(EditProfileLocalizedStrings.successfullyUpdateProfile, duration: 2.0, view: self.navigationController!.view)
                 self.navigationController?.popViewControllerAnimated(true)
             } else {
                 self.handleErrorWithType(requestErrorType, requestType: .UpdateProfile, responseObject: responseObject, hasImage: hasImage, firstName: firstName, lastName: lastName, profilePhoto: profilePhoto, userDocument: userDocument, referrerPersonCode: referrerPersonCode)
@@ -769,7 +771,7 @@ extension EditProfileTableViewController: ReferralCodeTableViewCellDelegate {
     
     func referralCodeTableViewCell(referralCodeTableViewCell: ReferralCodeTableViewCell, didClickCopyButtonWithString yourReferralCodeTextFieldText: String) {
         UIPasteboard.generalPasteboard().string = yourReferralCodeTextFieldText
-        Toast.displayToastWithMessage("Copied to clipboard", duration: 2.0, view: self.navigationController!.view)
+        Toast.displayToastWithMessage(EditProfileLocalizedStrings.copiedToClipBoard, duration: 2.0, view: self.navigationController!.view)
     }
     
     func referralCodeTableViewCell(referralCodeTableViewCell: ReferralCodeTableViewCell, didTappedReturn textField: UITextField) {
