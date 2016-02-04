@@ -207,8 +207,7 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
             
             return cell
         } else if indexPath.row == 2 {
-            let cell: ReferralCodeTableViewCell = tableView.dequeueReusableCellWithIdentifier(ReferralCodeTableViewCell.nibNameAndIdentifier(), forIndexPath: indexPath) as! ReferralCodeTableViewCell
-            return cell
+            return self.referralCodeTableViewCellWithIndexPath(indexPath)
         }  else if indexPath.row == 3 {
             let cell = tableView.dequeueReusableCellWithIdentifier(addressCellIdentifier, forIndexPath: indexPath) as! EditProfileAddressTableViewCell
             cell.delegate = self
@@ -582,6 +581,22 @@ extension EditProfileTableViewController: EditProfilePersonalInformationTableVie
             })
         }
     }
+    
+    //MARK: - 
+    //MARK: - Referral Code Table View Cell With Index Path
+    func referralCodeTableViewCellWithIndexPath(indexPath: NSIndexPath) -> ReferralCodeTableViewCell {
+        let cell: ReferralCodeTableViewCell = tableView.dequeueReusableCellWithIdentifier(ReferralCodeTableViewCell.nibNameAndIdentifier(), forIndexPath: indexPath) as! ReferralCodeTableViewCell
+        
+        if self.profileUserDetailsModel.referralCode != "" {
+            cell.setYourReferralCodeWithCode(self.profileUserDetailsModel.referralCode)
+        }
+        
+        if self.profileUserDetailsModel.referrerCode != "" {
+            cell.setReferrerCodeWithCode(self.profileUserDetailsModel.referrerCode)
+        }
+        
+        return cell
+    }
 }
 
 // MARK: - ViewImageViewControllerDelegate
@@ -741,4 +756,22 @@ extension EditProfileTableViewController: VerifyMobileNumberStatusViewController
     func requestNewVerificationCodeAction() {
         submitChangeNumberViewController()
     }
+}
+
+//MARK: - 
+//MARK: - Referral Code Table View Cell Delegate
+extension EditProfileTableViewController: ReferralCodeTableViewCellDelegate {
+    
+    func referralCodeTableViewCell(referralCodeTableViewCell: ReferralCodeTableViewCell, didClickCopyButtonWithString yourReferralCodeTextFieldText: String) {
+        
+    }
+    
+    func referralCodeTableViewCell(referralCodeTableViewCell: ReferralCodeTableViewCell, didStartEditingAtTextField textField: UITextField) {
+        
+    }
+    
+    func referralCodeTableViewCell(referralCodeTableViewCell: ReferralCodeTableViewCell, didTappedReturn textField: UITextField) {
+        
+    }
+    
 }
