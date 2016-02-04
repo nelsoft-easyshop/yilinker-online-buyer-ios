@@ -16,9 +16,11 @@ struct ReferralStrings {
 
 protocol ReferralCodeTableViewCellDelegate {
     func referralCodeTableViewCell(referralCodeTableViewCell: ReferralCodeTableViewCell, didClickCopyButtonWithString yourReferralCodeTextFieldText: String)
+    func referralCodeTableViewCell(referralCodeTableViewCell: ReferralCodeTableViewCell, didStartEditingAtTextField textField: UITextField)
+    func referralCodeTableViewCell(referralCodeTableViewCell: ReferralCodeTableViewCell, didTappedReturn textField: UITextField)
 }
 
-class ReferralCodeTableViewCell: UITableViewCell {
+class ReferralCodeTableViewCell: UITableViewCell, UITextFieldDelegate {
     
     private static let nibNameAndIdentifierKey = "ReferralCodeTableViewCell"
     
@@ -40,6 +42,8 @@ class ReferralCodeTableViewCell: UITableViewCell {
         self.titleLabel.text = ReferralStrings.referral
         self.yourReferralCodeLabel.text = ReferralStrings.yourReferral
         self.referralPersonLabel.text = ReferralStrings.referralPerson
+        
+        self.referralPersonTextField.delegate = self
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
@@ -58,5 +62,30 @@ class ReferralCodeTableViewCell: UITableViewCell {
     //MARK: - Nib Name And Identifier
     class func nibNameAndIdentifier()  -> String {
         return ReferralCodeTableViewCell.nibNameAndIdentifierKey
+    }
+    
+    //MARK: - 
+    //MARK: - Set Your Referral Code With Code
+    func setYourReferralCodeWithCode(code: String) {
+        self.yourReferralCodeTextField.text = code
+        self.yourReferralCodeTextField.enabled = false
+    }
+    
+    //MARK: -
+    //MARK: - Set Referrer Code With Code
+    func setReferrerCodeWithCode(code: String) {
+        self.referralPersonTextField.text = code
+        self.referralPersonTextField.enabled = false
+    }
+    
+    //MARK: - 
+    //MARK: - Text Field Delegate
+    func textFieldDidBeginEditing(textField: UITextField) {
+        self.delegate?.referralCodeTableViewCell(self, didStartEditingAtTextField: textField)
+    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        self.delegate?.referralCodeTableViewCell(self, didTappedReturn: textField)
+       return true
     }
 }
