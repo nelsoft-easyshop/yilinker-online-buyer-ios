@@ -48,6 +48,7 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
     var mobileNumber: String = ""
     var emailAddress: String = ""
     var password: String = ""
+    var referrerPersonCode: String = ""
     
     var profileImageData: NSData?
     var validIDImageData: NSData?
@@ -249,17 +250,18 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
     * and proceed/do some actions based on the error type
     */
 
-    func fireUpdateProfile(hasImage: Bool, firstName: String, lastName: String, profilePhoto: NSData? = nil, userDocument: NSData? = nil) {
+    func fireUpdateProfile(hasImage: Bool, firstName: String, lastName: String, profilePhoto: NSData? = nil, userDocument: NSData? = nil, referrerPersonCode: String) {
         self.showLoader()
         let url: String = APIAtlas.editProfileUrl
         
-        WebServiceManager.fireUpdateProfileWithUrl(url, hasImage: hasImage, accessToken: SessionManager.accessToken(), firstName: firstName, lastName: lastName, profilePhoto: profilePhoto, userDocument: userDocument, actionHandler:  { (successful, responseObject, requestErrorType) -> Void in
+        WebServiceManager.fireUpdateProfileWithUrl(url, hasImage: hasImage, accessToken: SessionManager.accessToken(), firstName: firstName, lastName: lastName, profilePhoto: profilePhoto, userDocument: userDocument, referrerPersonCode: self.referrerPersonCode, actionHandler:  { (successful, responseObject, requestErrorType) -> Void in
             
             self.dismissLoader()
             if successful {
-                self.fireGetUserInfo()
+                Toast.displayToastWithMessage("Successfully updated your profile", duration: 2.0, view: self.navigationController!.view)
+                self.navigationController?.popViewControllerAnimated(true)
             } else {
-                self.handleErrorWithType(requestErrorType, requestType: .UpdateProfile, responseObject: responseObject, hasImage: hasImage, firstName: firstName, lastName: lastName, profilePhoto: profilePhoto, userDocument: userDocument)
+                self.handleErrorWithType(requestErrorType, requestType: .UpdateProfile, responseObject: responseObject, hasImage: hasImage, firstName: firstName, lastName: lastName, profilePhoto: profilePhoto, userDocument: userDocument, referrerPersonCode: referrerPersonCode)
             }
         })
     }
@@ -280,6 +282,7 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
             if successful {
                 if  let dictionary: NSDictionary = responseObject as? NSDictionary {
                     if let value: AnyObject = dictionary["data"] {
+
                         self.profileUserDetailsModel = ProfileUserDetailsModel.parseDataWithDictionary(value)
                         //Insert Data to Session Manager
                         SessionManager.setFullAddress(self.profileUserDetailsModel.address.fullLocation)
@@ -301,7 +304,7 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
                 }
             } else {
                 self.dismissLoader()
-                 self.handleErrorWithType(requestErrorType, requestType: EditProfileRequestType.GetUserInfo, responseObject: responseObject, hasImage: false, firstName: "", lastName: "", profilePhoto: NSData(), userDocument: NSData())
+                self.handleErrorWithType(requestErrorType, requestType: EditProfileRequestType.GetUserInfo, responseObject: responseObject, hasImage: false, firstName: "", lastName: "", profilePhoto: NSData(), userDocument: NSData(), referrerPersonCode: self.referrerPersonCode)
             }
         }
     }
@@ -316,13 +319,13 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
     *
     * This function is for checking of 'requestErrorType' and proceed/do some actions based on the error type
     */
-    func handleErrorWithType(requestErrorType: RequestErrorType, requestType: EditProfileRequestType, responseObject: AnyObject, hasImage: Bool, firstName: String, lastName: String, profilePhoto: NSData? = nil, userDocument: NSData? = nil) {
+    func handleErrorWithType(requestErrorType: RequestErrorType, requestType: EditProfileRequestType, responseObject: AnyObject, hasImage: Bool, firstName: String, lastName: String, profilePhoto: NSData? = nil, userDocument: NSData? = nil, referrerPersonCode: String) {
         if requestErrorType == .ResponseError {
             //Error in api requirements
             let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
             Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
         } else if requestErrorType == .AccessTokenExpired {
-            self.fireRefreshToken(requestType, hasImage: hasImage, firstName: firstName, lastName: lastName, profilePhoto: profilePhoto, userDocument: userDocument)
+            self.fireRefreshToken(requestType, hasImage: hasImage, firstName: firstName, lastName: lastName, profilePhoto: profilePhoto, userDocument: userDocument, referrerPersonCode: self.referrerPersonCode)
         } else if requestErrorType == .PageNotFound {
             //Page not found
             Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
@@ -349,7 +352,7 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
     * function based on the requestType.
     * If the request us unsuccessful, it will forcely logout the user
     */
-    func fireRefreshToken(requestType: EditProfileRequestType, hasImage: Bool, firstName: String, lastName: String, profilePhoto: NSData? = nil, userDocument: NSData? = nil) {
+    func fireRefreshToken(requestType: EditProfileRequestType, hasImage: Bool, firstName: String, lastName: String, profilePhoto: NSData? = nil, userDocument: NSData? = nil, referrerPersonCode: String) {
         self.showLoader()
         WebServiceManager.fireRefreshTokenWithUrl(APIAtlas.refreshTokenUrl, actionHandler: {
             (successful, responseObject, requestErrorType) -> Void in
@@ -361,7 +364,7 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
                 case .GetUserInfo:
                     self.fireGetUserInfo()
                 case .UpdateProfile:
-                    self.fireUpdateProfile(hasImage, firstName: firstName, lastName: lastName, profilePhoto: profilePhoto, userDocument: userDocument)
+                    self.fireUpdateProfile(hasImage, firstName: firstName, lastName: lastName, profilePhoto: profilePhoto, userDocument: userDocument, referrerPersonCode: referrerPersonCode)
                 }
             } else {
                 //Show UIAlert and force the user to logout
@@ -592,8 +595,10 @@ extension EditProfileTableViewController: EditProfilePersonalInformationTableVie
         }
         
         if self.profileUserDetailsModel.referrerCode != "" {
-            cell.setReferrerCodeWithCode(self.profileUserDetailsModel.referrerCode)
+            cell.setReferrerCodeWithCode("\(self.profileUserDetailsModel.referrerCode) - \(self.profileUserDetailsModel.referrerName)")
         }
+        
+        cell.delegate = self
         
         return cell
     }
@@ -642,7 +647,7 @@ extension EditProfileTableViewController: EditProfileAccountInformationTableView
                 hasImage = false
             }
             
-            self.fireUpdateProfile(hasImage, firstName: self.firstName, lastName: self.lastName, profilePhoto: self.profileImageData, userDocument: self.validIDImageData)
+            self.fireUpdateProfile(hasImage, firstName: self.firstName, lastName: self.lastName, profilePhoto: self.profileImageData, userDocument: self.validIDImageData, referrerPersonCode: self.referrerPersonCode)
         }
     }
     
@@ -763,15 +768,16 @@ extension EditProfileTableViewController: VerifyMobileNumberStatusViewController
 extension EditProfileTableViewController: ReferralCodeTableViewCellDelegate {
     
     func referralCodeTableViewCell(referralCodeTableViewCell: ReferralCodeTableViewCell, didClickCopyButtonWithString yourReferralCodeTextFieldText: String) {
-        
-    }
-    
-    func referralCodeTableViewCell(referralCodeTableViewCell: ReferralCodeTableViewCell, didStartEditingAtTextField textField: UITextField) {
-        
+        UIPasteboard.generalPasteboard().string = yourReferralCodeTextFieldText
+        Toast.displayToastWithMessage("Copied to clipboard", duration: 2.0, view: self.navigationController!.view)
     }
     
     func referralCodeTableViewCell(referralCodeTableViewCell: ReferralCodeTableViewCell, didTappedReturn textField: UITextField) {
-        
+        self.view.endEditing(true)
     }
     
+    func referralCodeTableViewCell(referralCodeTableViewCell: ReferralCodeTableViewCell, didChangeValueAtTextField textField: UITextField, textValue: String) {
+        self.referrerPersonCode = textValue
+        println("textValue: \(textValue)")
+    }
 }
