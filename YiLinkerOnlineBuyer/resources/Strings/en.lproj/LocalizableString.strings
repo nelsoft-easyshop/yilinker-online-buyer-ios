@@ -83,6 +83,8 @@ OR_LOCALIZE_KEY = "or";
 GET_STARTED_LOCALIZE_KEY = "GET STARTED";
 
 // MARK: - Sign In
+BY_MOBILE_LOCALIZE_KEY = "BY MOBILE";
+BY_EMAIL_LOCALIZE_KEY = "BY EMAIL";
 ENTER_EMAIL_ADDRESS_LOCALIZE_KEY = "Enter email address";
 ENTER_PASSWORD_ADDRESS_LOCALIZE_KEY = "Enter password";
 FORGOT_PASSWORD_LOCALIZE_KEY = "Forgot your password?";
@@ -94,6 +96,9 @@ LOGIN_FAILED_LOCALIZE_KEY = "Login Failed";
 EMAIL_IS_REQUIRED_LOCALIZE_KEY = "Email is required";
 INVALID_EMAIL_REQUIRED_LOCALIZE_KEY = "Email Address is not valid";
 PASSWORD_IS_REQUIRED_LOCALIZE_KEY = "Password is required";
+
+MOBILE_IS_REQUIRED_LOCALIZE_KEY = "Mobile Number is required";
+INVALID_MOBILE_REQUIRED_LOCALIZE_KEY = "Mobile Number is not valid";
 
 // MARK: - Sing In Success Message
 SUCCESS_LOGIN_LOCALIZE_KEY = "Successfully login.";
