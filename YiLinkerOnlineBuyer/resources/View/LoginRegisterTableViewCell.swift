@@ -18,6 +18,7 @@ protocol LoginRegisterTableViewCellDelegate {
     func simplifiedRegistrationCell(simplifiedRegistrationCell: SimplifiedRegistrationUICollectionViewCell, didTapAreaCode areaCodeView: UIView)
     func simplifiedRegistrationCell(simplifiedRegistrationCell: SimplifiedRegistrationUICollectionViewCell, didTapSendActivationCode sendActivationCodeButton: UIButton)
     func simplifiedRegistrationCell(simplifiedRegistrationCell: SimplifiedRegistrationUICollectionViewCell, didTapRegister registerButton: UIButton)
+    func simplifiedRegistrationCell(simplifiedRegistrationCell: SimplifiedRegistrationUICollectionViewCell, didTimerEnded registerButton: UIButton)
 }
 
 class LoginRegisterTableViewCell: UITableViewCell {
@@ -170,6 +171,10 @@ extension LoginRegisterTableViewCell: SimplifiedRegistrationUICollectionViewCell
     
     func simplifiedRegistrationCell(simplifiedRegistrationCell: SimplifiedRegistrationUICollectionViewCell, didTapRegister registerButton: UIButton) {
         self.delegate?.simplifiedRegistrationCell(simplifiedRegistrationCell, didTapRegister: registerButton)
+    }
+    
+    func simplifiedRegistrationCell(simplifiedRegistrationCell: SimplifiedRegistrationUICollectionViewCell, didTimerEnded sendActivationCodeButton: UIButton) {
+        self.delegate?.simplifiedRegistrationCell(simplifiedRegistrationCell, didTimerEnded: sendActivationCodeButton)
     }
 }
 
