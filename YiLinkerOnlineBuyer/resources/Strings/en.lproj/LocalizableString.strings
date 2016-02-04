@@ -129,6 +129,7 @@ RETYPE_REQUIRED_LOCALIZE_KEY = "Re-type password is required.";
 PASSWORD_NOT_MATCH_LOCALIZE_KEY = "The password does not match.";
 CONTACT_REQUIRED_LOCALIZE_KEY = "Contact number is required.";
 EIGHT_CHARACTERS_LOCALIZED_KEY = "Password must be eight characters.";
+ACTIVATION_CODE_REQUIRED_LOCALIZE_KEY = "Activation Code is required.";
 
 // MARK: - Customize Shopping
 CATEGORIES_CS_LOCALIZE_KEY = "Categories";
