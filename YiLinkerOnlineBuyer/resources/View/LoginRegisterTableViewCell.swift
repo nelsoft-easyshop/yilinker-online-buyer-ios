@@ -18,6 +18,7 @@ protocol LoginRegisterTableViewCellDelegate {
     func simplifiedRegistrationCell(simplifiedRegistrationCell: SimplifiedRegistrationUICollectionViewCell, didTapAreaCode areaCodeView: UIView)
     func simplifiedRegistrationCell(simplifiedRegistrationCell: SimplifiedRegistrationUICollectionViewCell, didTapSendActivationCode sendActivationCodeButton: UIButton)
     func simplifiedRegistrationCell(simplifiedRegistrationCell: SimplifiedRegistrationUICollectionViewCell, didTapRegister registerButton: UIButton)
+    func simplifiedRegistrationCell(simplifiedRegistrationCell: SimplifiedRegistrationUICollectionViewCell, didTimerEnded registerButton: UIButton)
 }
 
 class LoginRegisterTableViewCell: UITableViewCell {
@@ -49,6 +50,9 @@ class LoginRegisterTableViewCell: UITableViewCell {
         
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
+        
+        self.signInButton.setTitle(LoginStrings.signIn.uppercaseString, forState: .Normal)
+        self.registerButton.setTitle(RegisterStrings.register.uppercaseString, forState: .Normal)
     }
     
     func registerNibs() {
@@ -167,6 +171,10 @@ extension LoginRegisterTableViewCell: SimplifiedRegistrationUICollectionViewCell
     
     func simplifiedRegistrationCell(simplifiedRegistrationCell: SimplifiedRegistrationUICollectionViewCell, didTapRegister registerButton: UIButton) {
         self.delegate?.simplifiedRegistrationCell(simplifiedRegistrationCell, didTapRegister: registerButton)
+    }
+    
+    func simplifiedRegistrationCell(simplifiedRegistrationCell: SimplifiedRegistrationUICollectionViewCell, didTimerEnded sendActivationCodeButton: UIButton) {
+        self.delegate?.simplifiedRegistrationCell(simplifiedRegistrationCell, didTimerEnded: sendActivationCodeButton)
     }
 }
 
