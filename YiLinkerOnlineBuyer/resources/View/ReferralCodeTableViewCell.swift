@@ -16,8 +16,8 @@ struct ReferralStrings {
 
 protocol ReferralCodeTableViewCellDelegate {
     func referralCodeTableViewCell(referralCodeTableViewCell: ReferralCodeTableViewCell, didClickCopyButtonWithString yourReferralCodeTextFieldText: String)
-    func referralCodeTableViewCell(referralCodeTableViewCell: ReferralCodeTableViewCell, didStartEditingAtTextField textField: UITextField)
     func referralCodeTableViewCell(referralCodeTableViewCell: ReferralCodeTableViewCell, didTappedReturn textField: UITextField)
+    func referralCodeTableViewCell(referralCodeTableViewCell: ReferralCodeTableViewCell, didChangeValueAtTextField textField: UITextField, textValue: String)
 }
 
 class ReferralCodeTableViewCell: UITableViewCell, UITextFieldDelegate {
@@ -44,6 +44,8 @@ class ReferralCodeTableViewCell: UITableViewCell, UITextFieldDelegate {
         self.referralPersonLabel.text = ReferralStrings.referralPerson
         
         self.referralPersonTextField.delegate = self
+        
+        self.referralPersonTextField.addTarget(self, action: "textFieldDidChange:", forControlEvents: UIControlEvents.EditingChanged)
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
@@ -80,12 +82,12 @@ class ReferralCodeTableViewCell: UITableViewCell, UITextFieldDelegate {
     
     //MARK: - 
     //MARK: - Text Field Delegate
-    func textFieldDidBeginEditing(textField: UITextField) {
-        self.delegate?.referralCodeTableViewCell(self, didStartEditingAtTextField: textField)
-    }
-    
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         self.delegate?.referralCodeTableViewCell(self, didTappedReturn: textField)
        return true
+    }
+    
+    func textFieldDidChange(textField: UITextField) {
+        self.delegate?.referralCodeTableViewCell(self, didChangeValueAtTextField: textField, textValue: textField.text)
     }
 }
