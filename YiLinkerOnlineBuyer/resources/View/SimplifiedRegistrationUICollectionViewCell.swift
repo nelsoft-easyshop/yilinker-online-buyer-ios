@@ -13,6 +13,7 @@ protocol SimplifiedRegistrationUICollectionViewCellDelegate {
     func simplifiedRegistrationCell(simplifiedRegistrationCell: SimplifiedRegistrationUICollectionViewCell, didTapAreaCode areaCodeView: UIView)
     func simplifiedRegistrationCell(simplifiedRegistrationCell: SimplifiedRegistrationUICollectionViewCell, didTapSendActivationCode sendActivationCodeButton: UIButton)
     func simplifiedRegistrationCell(simplifiedRegistrationCell: SimplifiedRegistrationUICollectionViewCell, didTapRegister registerButton: UIButton)
+    func simplifiedRegistrationCell(simplifiedRegistrationCell: SimplifiedRegistrationUICollectionViewCell, didTimerEnded sendActivationCodeButton: UIButton)
 }
 
 class SimplifiedRegistrationUICollectionViewCell: UICollectionViewCell {
@@ -32,6 +33,9 @@ class SimplifiedRegistrationUICollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var registerButton: UIButton!
     
     @IBOutlet weak var downImageView: UIImageView!
+    
+    var seconds: Int = 60
+    var timer = NSTimer()
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -88,6 +92,28 @@ class SimplifiedRegistrationUICollectionViewCell: UICollectionViewCell {
             self.delegate?.simplifiedRegistrationCell(self, didTapSendActivationCode: self.sendActivationCodeButton)
         } else if sender == self.registerButton {
             self.delegate?.simplifiedRegistrationCell(self, didTapRegister: self.registerButton)
+        }
+    }
+    
+    //Start the time
+    func startTimer() {
+        self.seconds = 60
+        self.timer.invalidate()
+        self.timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: Selector("subtractTime"), userInfo: nil, repeats: true)
+        self.sendActivationCodeButton.enabled = false
+        self.sendActivationCodeButton.alpha = 0.5
+    }
+    
+    //Decrement the time
+    func subtractTime() {
+        self.sendActivationCodeButton.setTitle("\(self.seconds)", forState: UIControlState.Normal)
+        self.seconds--
+        if(seconds == 0)  {
+            self.timer.invalidate()
+            self.sendActivationCodeButton.setTitle("Send Activation Code", forState: UIControlState.Normal)
+            self.sendActivationCodeButton.enabled = true
+            self.sendActivationCodeButton.alpha = 1.0
+            self.delegate?.simplifiedRegistrationCell(self, didTimerEnded: self.sendActivationCodeButton)
         }
     }
 }
