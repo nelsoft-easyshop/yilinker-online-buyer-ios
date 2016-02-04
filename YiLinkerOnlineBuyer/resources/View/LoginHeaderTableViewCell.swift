@@ -8,18 +8,32 @@
 
 import UIKit
 
+protocol LoginHeaderTableViewCellDelegate {
+    func loginHeaderTableViewCell(loginHeaderTableViewCell: LoginHeaderTableViewCell, didTapBack navBarButton: UIButton)
+}
+
 class LoginHeaderTableViewCell: UITableViewCell {
+    
+    var delegate: LoginHeaderTableViewCellDelegate?
     
     //MARK: - 
     //MARK: - Life Cycle
+    @IBOutlet weak var navBar: UINavigationBar!
+    @IBOutlet weak var navBarButton: UIButton!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
     }
-
-    override func setSelected(selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+    
+    func setTitle(title: String) {
+        self.navBar.topItem?.title = title
     }
     
+    func setBackButtonHidden(hide: Bool) {
+        self.navBarButton.hidden = hide
+    }
+    
+    @IBAction func backAction(sender: AnyObject) {
+        self.delegate?.loginHeaderTableViewCell(self, didTapBack: self.navBarButton)
+    }
 }

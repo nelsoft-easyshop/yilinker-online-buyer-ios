@@ -77,6 +77,7 @@ class LoginAndRegisterTableViewController: UITableViewController {
     let headerViewNibName = "LoginHeaderTableViewCell"
     let loginResgisterTableViewCellNibName = "LoginRegisterTableViewCell"
     let logoRegisterTableViewCellNibName = "LoginRegisterLogoTableViewCell"
+    let resetPasswordTableViewCellNibName = "ForgotPasswordTableViewCell"
 
     let headerCellHeight: CGFloat = 64
     let loginCellHeight: CGFloat = 400
@@ -90,6 +91,8 @@ class LoginAndRegisterTableViewController: UITableViewController {
     var isHideCloseButton: Bool = false
     var isGuestUser: Bool = false
     var isLogin: Bool = true
+    var isResetPassword: Bool = false
+    var hideBackButton: Bool = true
     
     var registerModel: RegisterModel = RegisterModel()
     
@@ -100,6 +103,7 @@ class LoginAndRegisterTableViewController: UITableViewController {
         self.registerCellWithIdentifier(self.headerViewNibName)
         self.registerCellWithIdentifier(self.loginResgisterTableViewCellNibName)
         self.registerCellWithIdentifier(self.logoRegisterTableViewCellNibName)
+        self.registerCellWithIdentifier(self.resetPasswordTableViewCellNibName)
         
         self.tableView.tableFooterView = self.footerView()
         self.tableView.separatorColor = .clearColor()
@@ -141,7 +145,10 @@ class LoginAndRegisterTableViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        return self.headerView()
+        let loginHeaderView = tableView.dequeueReusableCellWithIdentifier(self.headerViewNibName) as! LoginHeaderTableViewCell
+        loginHeaderView.setBackButtonHidden(hideBackButton)
+        loginHeaderView.delegate = self
+        return loginHeaderView
     }
     
     override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -154,10 +161,16 @@ class LoginAndRegisterTableViewController: UITableViewController {
             logoRegisterTableViewCell.selectionStyle = .None
             return logoRegisterTableViewCell
         }  else {
-            let loginRegisterTableViewCell: LoginRegisterTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(self.loginResgisterTableViewCellNibName) as! LoginRegisterTableViewCell
-            loginRegisterTableViewCell.delegate = self
-            loginRegisterTableViewCell.selectionStyle = .None
-            return loginRegisterTableViewCell
+            if self.isResetPassword {
+                let resetPasswordTableViewCell: ForgotPasswordTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(self.resetPasswordTableViewCellNibName) as! ForgotPasswordTableViewCell
+                resetPasswordTableViewCell.selectionStyle = .None
+                return resetPasswordTableViewCell
+            } else {
+                let loginRegisterTableViewCell: LoginRegisterTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(self.loginResgisterTableViewCellNibName) as! LoginRegisterTableViewCell
+                loginRegisterTableViewCell.delegate = self
+                loginRegisterTableViewCell.selectionStyle = .None
+                return loginRegisterTableViewCell
+            }
         }
     }
   
@@ -169,13 +182,7 @@ class LoginAndRegisterTableViewController: UITableViewController {
             return self.registerCellHeight
         }
     }
-    
-    //MARK: - 
-    //MARK: - Header View
-    func headerView() -> LoginHeaderTableViewCell {
-        let loginHeaderView: LoginHeaderTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(self.headerViewNibName) as! LoginHeaderTableViewCell
-        return loginHeaderView
-    }
+
     
     //MARK: - 
     //MARK: - Footer View
@@ -363,7 +370,11 @@ extension LoginAndRegisterTableViewController: LoginRegisterTableViewCellDelegat
     }
     
     func simplifiedLoginCell(simplifiedLoginCell: SimplifiedLoginUICollectionViewCell, didTapForgotPassword forgotPasswordButton: UIButton) {
-        
+        self.isResetPassword = true
+        self.hideBackButton = false
+        var indexPath = NSIndexPath(forRow: 1, inSection: 0)
+        self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Left)
+        self.tableView.reloadData()
     }
     
     func simplifiedLoginCell(simplifiedLoginCell: SimplifiedLoginUICollectionViewCell, didTapSignin signInButton: UIButton) {
@@ -385,5 +396,15 @@ extension LoginAndRegisterTableViewController: LoginRegisterTableViewCellDelegat
     
     func simplifiedRegistrationCell(simplifiedRegistrationCell: SimplifiedRegistrationUICollectionViewCell, didTapRegister registerButton: UIButton) {
         
+    }
+}
+
+extension LoginAndRegisterTableViewController: LoginHeaderTableViewCellDelegate {
+    func loginHeaderTableViewCell(loginHeaderTableViewCell: LoginHeaderTableViewCell, didTapBack navBarButton: UIButton) {
+        self.isResetPassword = false
+        self.hideBackButton = true
+        var indexPath = NSIndexPath(forRow: 1, inSection: 0)
+        self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Right)
+        self.tableView.reloadData()
     }
 }
