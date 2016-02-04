@@ -205,9 +205,10 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
         
         self.setUpInitialViews()
         
-        if !SessionManager.isMobileVerified() && SessionManager.isLoggedIn() {
-            self.showVerifyNumberModal()
-        }
+        //TODO: Hide this function for now, because it will be move into the last part of the transaction.
+        /*if !SessionManager.isMobileVerified() && SessionManager.isLoggedIn() {
+            self.changeMobileNumberAction()
+        }*/
         
         self.setSelectedViewControllerWithIndex(0, transition: UIViewAnimationOptions.TransitionNone)
     }

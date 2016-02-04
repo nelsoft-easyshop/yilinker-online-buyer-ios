@@ -11,9 +11,10 @@ import UIKit
 protocol VoucherTableViewCellDelegate {
     func voucherTableViewCell(didTapAddButton cell: VoucherTableViewCell)
     func voucherTableViewCell(textFieldDidChange cell: VoucherTableViewCell)
+    func voucherTableViewCell(voucherTableViewCell: VoucherTableViewCell, startEditingAtTextField textField: UITextField)
 }
 
-class VoucherTableViewCell: UITableViewCell {
+class VoucherTableViewCell: UITableViewCell, UITextFieldDelegate {
     @IBOutlet weak var addTextField: UIButton!
     @IBOutlet weak var voucherTextField: UITextField!
     @IBOutlet weak var voucherLabel: UILabel!
@@ -30,6 +31,8 @@ class VoucherTableViewCell: UITableViewCell {
         if count(self.voucherTextField.text) < 6 {
             self.addButton.enabled = false
         }
+        
+         self.voucherTextField.delegate = self
     }
     
     override func setSelected(selected: Bool, animated: Bool) {
@@ -42,8 +45,16 @@ class VoucherTableViewCell: UITableViewCell {
         self.delegate?.voucherTableViewCell(didTapAddButton: self)
     }
     
+    //MARK: -
     //MARK: - Textfield Did Change
     func textFieldDidChange(textField: UITextField) { //Handle the text changes here
         self.delegate?.voucherTableViewCell(textFieldDidChange: self)
+    }
+    
+    //MARK: - 
+    //MARK: - TextField Delegate
+    func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
+        self.delegate?.voucherTableViewCell(self, startEditingAtTextField: textField)
+        return true
     }
 }
