@@ -17,11 +17,19 @@ struct LoginStrings {
     
     static let emailIsRequired: String = StringHelper.localizedStringWithKey("INVALID_EMAIL_REQUIRED_LOCALIZE_KEY")
     static let invalidEmail: String = StringHelper.localizedStringWithKey("INVALID_EMAIL_REQUIRED_LOCALIZE_KEY")
+    static let mobileIsRequired: String = StringHelper.localizedStringWithKey("MOBILE_IS_REQUIRED_LOCALIZE_KEY")
+    static let invalidMobile: String = StringHelper.localizedStringWithKey("INVALID_MOBILE_REQUIRED_LOCALIZE_KEY")
     static let passwordIsRequired: String = StringHelper.localizedStringWithKey("PASSWORD_IS_REQUIRED_LOCALIZE_KEY")
     
     static let successMessage: String = StringHelper.localizedStringWithKey("SUCCESS_LOGIN_LOCALIZE_KEY")
     static let or: String = StringHelper.localizedStringWithKey("OR_LOCALIZE_KEY")
     static let forgotPasswordd: String = StringHelper.localizedStringWithKey("FORGOT_PASSWORD_LOCALIZE_KEY")
+    static let signIn: String = StringHelper.localizedStringWithKey("SIGNIN_HIDDEN_LOCALIZE_KEY")
+    static let byMobile: String = StringHelper.localizedStringWithKey("BY_MOBILE_LOCALIZE_KEY")
+    static let byEmail: String = StringHelper.localizedStringWithKey("BY_EMAIL_LOCALIZE_KEY")
+    static let mobileNUmber: String = StringHelper.localizedStringWithKey("MOBILE_NUMBER_LOCALIZE_KEY")
+    static let emailAddress: String = StringHelper.localizedStringWithKey("EMAIL_ADDRESS_LOCALIZE_KEY")
+    static let forgotPassword: String = StringHelper.localizedStringWithKey("FORGOT_PASSWORD_LOCALIZE_KEY")
 }
 
 
@@ -70,6 +78,7 @@ struct RegisterStrings {
     static let thankyou: String = StringHelper.localizedStringWithKey("THANKYOU_LOCALIZED_KEY")
     
     static let eightCharacters: String = StringHelper.localizedStringWithKey("EIGHT_CHARACTERS_LOCALIZED_KEY")
+    static let register: String = StringHelper.localizedStringWithKey("REGISTER_HIDDEN_LOCALIZE_KEY")
 }
 
 class LoginAndRegisterTableViewController: UITableViewController {
@@ -391,11 +400,43 @@ class LoginAndRegisterTableViewController: UITableViewController {
 }
 
 extension LoginAndRegisterTableViewController: LoginRegisterTableViewCellDelegate {
-    func simplifiedLoginCell(simplifiedLoginCell: SimplifiedLoginUICollectionViewCell, textFieldShouldReturn textField: UITextField) {
+    func loginChecker(simplifiedLoginCell: SimplifiedLoginUICollectionViewCell) {
+        self.view.endEditing(true)
+        
+        var errorMessage: String = ""
+        
         if simplifiedLoginCell.isMobileLogin {
-            self.fireLoginWithContactNumber(simplifiedLoginCell.emailMobileTextField.text, password: simplifiedLoginCell.passwordTextField.text)
+            if !simplifiedLoginCell.emailMobileTextField.isNotEmpty() {
+                errorMessage = LoginStrings.mobileIsRequired
+            } else if !simplifiedLoginCell.passwordTextField.isNotEmpty() {
+                errorMessage = LoginStrings.passwordIsRequired
+            }
         } else {
-            self.fireLoginWithEmail(simplifiedLoginCell.emailMobileTextField.text, password: simplifiedLoginCell.passwordTextField.text)
+            if !simplifiedLoginCell.emailMobileTextField.isNotEmpty() {
+                errorMessage = LoginStrings.emailIsRequired
+            } else if !simplifiedLoginCell.emailMobileTextField.isValidEmail() {
+                errorMessage = LoginStrings.invalidEmail
+            } else if !simplifiedLoginCell.passwordTextField.isNotEmpty() {
+                errorMessage = LoginStrings.passwordIsRequired
+            }
+        }
+        
+        if errorMessage != "" {
+            Toast.displayToastWithMessage(errorMessage, duration: 1.5, view: self.view)
+        } else {
+            if simplifiedLoginCell.isMobileLogin {
+                self.fireLoginWithContactNumber(simplifiedLoginCell.emailMobileTextField.text, password: simplifiedLoginCell.passwordTextField.text)
+            } else {
+                self.fireLoginWithEmail(simplifiedLoginCell.emailMobileTextField.text, password: simplifiedLoginCell.passwordTextField.text)
+            }
+        }
+    }
+    
+    func simplifiedLoginCell(simplifiedLoginCell: SimplifiedLoginUICollectionViewCell, textFieldShouldReturn textField: UITextField) {
+        if textField == simplifiedLoginCell.emailMobileTextField {
+            simplifiedLoginCell.passwordTextField.becomeFirstResponder()
+        } else {
+            self.loginChecker(simplifiedLoginCell)
         }
     }
     
@@ -412,11 +453,7 @@ extension LoginAndRegisterTableViewController: LoginRegisterTableViewCellDelegat
     }
     
     func simplifiedLoginCell(simplifiedLoginCell: SimplifiedLoginUICollectionViewCell, didTapSignin signInButton: UIButton) {
-        if simplifiedLoginCell.isMobileLogin {
-            self.fireLoginWithContactNumber(simplifiedLoginCell.emailMobileTextField.text, password: simplifiedLoginCell.passwordTextField.text)
-        } else {
-            self.fireLoginWithEmail(simplifiedLoginCell.emailMobileTextField.text, password: simplifiedLoginCell.passwordTextField.text)
-        }
+        self.loginChecker(simplifiedLoginCell)
     }
     
     
