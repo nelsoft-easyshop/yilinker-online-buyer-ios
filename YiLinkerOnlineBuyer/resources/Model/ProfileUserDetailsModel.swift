@@ -33,7 +33,11 @@ class ProfileUserDetailsModel: NSObject {
     var isEmailVerified: Bool = false
     var isMobileVerified: Bool = false
     
-    init(userId: String, fullName: String, firstName: String, lastName: String, email: String, contactNumber: String, profileImageUrl: String, coverPhoto: String, gender: String, birthdate: String, address: AddressModelV2, userDocuments: String, transactionCount: Int, wishlistCount: Int, cartCount: Int, messageCount: Int, followingCount: Int, isEmailSubscribed: Bool, isSmsSubscribed: Bool, isEmailVerified: Bool, isMobileVerified: Bool){
+    var referralCode: String = ""
+    var referrerCode: String = ""
+    var referrerName: String = ""
+    
+    init(userId: String, fullName: String, firstName: String, lastName: String, email: String, contactNumber: String, profileImageUrl: String, coverPhoto: String, gender: String, birthdate: String, address: AddressModelV2, userDocuments: String, transactionCount: Int, wishlistCount: Int, cartCount: Int, messageCount: Int, followingCount: Int, isEmailSubscribed: Bool, isSmsSubscribed: Bool, isEmailVerified: Bool, isMobileVerified: Bool, referralCode: String, referrerCode: String, referrerName: String) {
         self.userId = userId
         self.fullName = fullName
         self.firstName = firstName
@@ -55,6 +59,9 @@ class ProfileUserDetailsModel: NSObject {
         self.isSmsSubscribed = isSmsSubscribed
         self.isEmailVerified = isEmailVerified
         self.isMobileVerified = isMobileVerified
+        self.referralCode = referralCode
+        self.referrerCode = referrerCode
+        self.referrerName = referrerName
     }
     
     override init() {
@@ -84,6 +91,10 @@ class ProfileUserDetailsModel: NSObject {
         var isSmsSubscribed: Bool = false
         var isEmailVerified: Bool = false
         var isMobileVerified: Bool = false
+        
+        var referralCode: String = ""
+        var referrerCode: String = ""
+        var referrerName: String = ""
         
         if let value: AnyObject = dictionary["userId"] {
             if value as! NSObject != NSNull() {
@@ -232,6 +243,18 @@ class ProfileUserDetailsModel: NSObject {
             }
         }
         
+        if let value = dictionary["referralCode"] as? String {
+            referralCode = value
+        }
+        
+        if let value = dictionary["referrerCode"] as? String {
+            referrerCode = value
+        }
+        
+        if let value = dictionary["referrerName"] as? String {
+            referrerName = value
+        }
+        
         return ProfileUserDetailsModel(userId: userId,
             fullName: fullName,
             firstName: firstName,
@@ -252,7 +275,7 @@ class ProfileUserDetailsModel: NSObject {
             isEmailSubscribed: isEmailSubscribed,
             isSmsSubscribed: isSmsSubscribed,
             isEmailVerified: isEmailVerified,
-            isMobileVerified: isMobileVerified)
+            isMobileVerified: isMobileVerified, referralCode: referralCode, referrerCode: referrerCode, referrerName: referrerName)
     }
     
 
