@@ -19,6 +19,9 @@ protocol LoginRegisterTableViewCellDelegate {
     func simplifiedRegistrationCell(simplifiedRegistrationCell: SimplifiedRegistrationUICollectionViewCell, didTapSendActivationCode sendActivationCodeButton: UIButton)
     func simplifiedRegistrationCell(simplifiedRegistrationCell: SimplifiedRegistrationUICollectionViewCell, didTapRegister registerButton: UIButton)
     func simplifiedRegistrationCell(simplifiedRegistrationCell: SimplifiedRegistrationUICollectionViewCell, didTimerEnded registerButton: UIButton)
+    
+    func loginRegisterTableViewCell(loginRegisterTableViewCell: LoginRegisterTableViewCell, didTapSignIn signInButton: UIButton)
+    func loginRegisterTableViewCell(loginRegisterTableViewCell: LoginRegisterTableViewCell, didTapRegister registerButton: UIButton)
 }
 
 class LoginRegisterTableViewCell: UITableViewCell {
@@ -65,10 +68,12 @@ class LoginRegisterTableViewCell: UITableViewCell {
     
     @IBAction func buttonAction(sender: UIButton) {
         if sender == self.signInButton {
+            self.delegate?.loginRegisterTableViewCell(self, didTapSignIn: sender)
             self.activateButton(self.signInButton)
             self.deActivateButton(self.registerButton)
             self.collectionView.scrollToItemAtIndexPath(NSIndexPath(forRow: 0, inSection: 0), atScrollPosition: UICollectionViewScrollPosition.CenteredHorizontally, animated: true)
         } else if sender == self.registerButton {
+            self.delegate?.loginRegisterTableViewCell(self, didTapRegister: sender)
             self.deActivateButton(self.signInButton)
             self.activateButton(self.registerButton)
             self.collectionView.scrollToItemAtIndexPath(NSIndexPath(forRow: 1, inSection: 0), atScrollPosition: UICollectionViewScrollPosition.CenteredHorizontally, animated: true)
@@ -126,9 +131,11 @@ extension LoginRegisterTableViewCell: UICollectionViewDataSource, UICollectionVi
     //MARK: -  UICollectionViewDelegate
     func scrollViewDidScroll(scrollView: UIScrollView) {
         if scrollView.contentOffset.x < screenWidth {
+            self.delegate?.loginRegisterTableViewCell(self, didTapSignIn: self.signInButton)
             self.activateButton(self.signInButton)
             self.deActivateButton(self.registerButton)
         } else {
+            self.delegate?.loginRegisterTableViewCell(self, didTapRegister: self.registerButton)
             self.deActivateButton(self.signInButton)
             self.activateButton(self.registerButton)
         }

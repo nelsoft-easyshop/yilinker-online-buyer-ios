@@ -111,7 +111,7 @@ class LoginAndRegisterTableViewController: UITableViewController {
     var isGuestUser: Bool = false
     var isLogin: Bool = true
     var isResetPassword: Bool = false
-    var hideBackButton: Bool = true
+    var isCloseButton: Bool = true
     var pageTitle: String = LoginStrings.accountTitle
     
     var registerModel: RegisterModel = RegisterModel()
@@ -169,7 +169,7 @@ class LoginAndRegisterTableViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let loginHeaderView = tableView.dequeueReusableCellWithIdentifier(self.headerViewNibName) as! LoginHeaderTableViewCell
-        loginHeaderView.setBackButtonHidden(hideBackButton)
+        loginHeaderView.setBackButtonToClose(isCloseButton)
         loginHeaderView.setTitle(self.pageTitle)
         loginHeaderView.delegate = self
         return loginHeaderView
@@ -416,8 +416,9 @@ class LoginAndRegisterTableViewController: UITableViewController {
                 self.hud?.hide(true)
                 Toast.displayToastWithMessage(LoginStrings.successForgotPassword, duration: 1.5, view: self.view)
                 
+                self.pageTitle = LoginStrings.accountTitle
                 self.isResetPassword = false
-                self.hideBackButton = true
+                self.isCloseButton = true
                 var indexPath = NSIndexPath(forRow: 1, inSection: 0)
                 self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Right)
                 self.tableView.reloadData()
@@ -573,8 +574,9 @@ extension LoginAndRegisterTableViewController: LoginRegisterTableViewCellDelegat
     }
     
     func simplifiedLoginCell(simplifiedLoginCell: SimplifiedLoginUICollectionViewCell, didTapForgotPassword forgotPasswordButton: UIButton) {
+        self.pageTitle = LoginStrings.resetTitle
         self.isResetPassword = true
-        self.hideBackButton = false
+        self.isCloseButton = false
         var indexPath = NSIndexPath(forRow: 1, inSection: 0)
         self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Left)
         self.tableView.reloadData()
@@ -651,15 +653,38 @@ extension LoginAndRegisterTableViewController: LoginRegisterTableViewCellDelegat
     func simplifiedRegistrationCell(simplifiedRegistrationCell: SimplifiedRegistrationUICollectionViewCell, didTimerEnded registerButton: UIButton) {
         self.tempSimplifiedRegistrationCell = simplifiedRegistrationCell
     }
+    
+    
+    //MARK: - Login Register Delegate
+    func loginRegisterTableViewCell(loginRegisterTableViewCell: LoginRegisterTableViewCell, didTapSignIn signInButton: UIButton) {
+        self.pageTitle = LoginStrings.accountTitle
+        self.isResetPassword = false
+        self.isCloseButton = true
+        var indexPath = NSIndexPath(forRow: 1, inSection: 0)
+        self.tableView.reloadData()
+    }
+    
+    func loginRegisterTableViewCell(loginRegisterTableViewCell: LoginRegisterTableViewCell, didTapRegister registerButton: UIButton) {
+        self.pageTitle = LoginStrings.registerTitle
+        self.isResetPassword = false
+        self.isCloseButton = true
+        var indexPath = NSIndexPath(forRow: 1, inSection: 0)
+        self.tableView.reloadData()
+    }
 }
 
 extension LoginAndRegisterTableViewController: LoginHeaderTableViewCellDelegate {
     func loginHeaderTableViewCell(loginHeaderTableViewCell: LoginHeaderTableViewCell, didTapBack navBarButton: UIButton) {
-        self.isResetPassword = false
-        self.hideBackButton = true
-        var indexPath = NSIndexPath(forRow: 1, inSection: 0)
-        self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Right)
-        self.tableView.reloadData()
+        if self.isResetPassword {
+            self.pageTitle = LoginStrings.accountTitle
+            self.isResetPassword = false
+            self.isCloseButton = true
+            var indexPath = NSIndexPath(forRow: 1, inSection: 0)
+            self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Right)
+            self.tableView.reloadData()
+        } else {
+            self.dismissViewControllerAnimated(true, completion: nil)
+        }
     }
 }
 
