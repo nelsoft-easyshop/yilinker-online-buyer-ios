@@ -103,7 +103,7 @@ class LoginAndRegisterTableViewController: UITableViewController {
     let logoCellHeight: CGFloat = 190
     let registerCellHeight: CGFloat = 412
     
-    var hud: MBProgressHUD?
+    var hud: YiHUD?
     
     var loginSessionDataTask: NSURLSessionDataTask = NSURLSessionDataTask()
     
@@ -151,6 +151,20 @@ class LoginAndRegisterTableViewController: UITableViewController {
     
     func closeKeyboard() {
         self.view.endEditing(true)
+    }
+    
+    //MARK: - Util Function
+    //Loader function
+    func showLoader() {
+        self.hud = YiHUD.initHud()
+        self.hud?.showHUDToView(self.view)
+        self.view.userInteractionEnabled = false
+    }
+    
+    //Hide loader
+    func dismissLoader() {
+        self.hud?.hide()
+        self.view.userInteractionEnabled = true
     }
     
     //MARK: -
@@ -263,34 +277,20 @@ class LoginAndRegisterTableViewController: UITableViewController {
             appDelegate.changeRootToHomeView()
         })
     }
-    
-    //MARK: -
-    //MARK: - Show HUD
-    func showHUD() {
-        if self.hud != nil {
-            self.hud!.hide(true)
-            self.hud = nil
-        }
-        
-        self.hud = MBProgressHUD(view: self.view)
-        self.hud?.removeFromSuperViewOnHide = true
-        self.hud?.dimBackground = false
-        self.view.addSubview(self.hud!)
-        self.hud?.show(true)
-    }
+
     
     //MARK: -
     //MARK: - Fire Login With Email
     func fireLoginWithEmail(email: String, password: String) {
-        self.showHUD()
+        self.showLoader()
         self.loginSessionDataTask = WebServiceManager.fireEmailLoginRequestWithUrl(APIAtlas.loginUrl, emailAddress: email, password: password, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
             if successful {
                 SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
-                self.hud?.hide(true)
+                self.dismissLoader()
                 self.showSuccessMessage()
                 self.fireCreateRegistration(SessionManager.gcmToken())
             } else {
-                self.hud?.hide(true)
+                self.dismissLoader()
                 if requestErrorType == .ResponseError {
                     let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
                     Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
@@ -312,15 +312,15 @@ class LoginAndRegisterTableViewController: UITableViewController {
     //MARK: -
     //MARK: - Fire Login With Contact Number
     func fireLoginWithContactNumber(contactNo: String, password: String) {
-        self.showHUD()
+        self.showLoader()
         self.loginSessionDataTask = WebServiceManager.fireContactNumberLoginRequestWithUrl(APIAtlas.loginUrl, contactNo: contactNo, password: password, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
             if successful {
                 SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
-                self.hud?.hide(true)
+                self.dismissLoader()
                 self.showSuccessMessage()
                 self.fireCreateRegistration(SessionManager.gcmToken())
             } else {
-                self.hud?.hide(true)
+                self.dismissLoader()
                 if requestErrorType == .ResponseError {
                     let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
                     Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
@@ -342,18 +342,18 @@ class LoginAndRegisterTableViewController: UITableViewController {
     //MARK: -
     //MARK: - Fire Login With Contact Number
     func fireGetOTP(contactNumber: String, areaCode: String, type: String, storeType: String) {
-        self.showHUD()
+        self.showLoader()
         
         WebServiceManager.fireUnauthenticatedOTPRequestWithUrl(APIAtlas.unauthenticateOTP, contactNumber: contactNumber, areaCode: areaCode, type: type, storeType: storeType, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
             if successful {
-                self.hud?.hide(true)
+                self.dismissLoader()
                 if self.isResetPassword {
                     self.tempForgotPasswordCell?.startTimer()
                 } else {
                     self.tempSimplifiedRegistrationCell!.startTimer()
                 }
             } else {
-                self.hud?.hide(true)
+                self.dismissLoader()
                 if requestErrorType == .ResponseError {
                     let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
                     Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
@@ -375,11 +375,11 @@ class LoginAndRegisterTableViewController: UITableViewController {
     //MARK: -
     //MARK: - Fire Register User
     func fireRegisterUser(contactNumber: String, password: String, areaCode: String, referralCode: String, verificationCode: String) {
-        self.showHUD()
+        self.showLoader()
         
         WebServiceManager.fireRegisterRequestWithUrl(APIAtlas.registerV2, contactNumber: contactNumber, password: password, areaCode: areaCode, referralCode: referralCode, verificationCode: verificationCode, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
             if successful {
-                self.hud?.hide(true)
+                self.dismissLoader()
                 let registerModel: RegisterModel = RegisterModel.parseDataFromDictionary(responseObject as! NSDictionary)
                 if registerModel.isSuccessful {
                     self.fireLoginWithContactNumber(self.tempSimplifiedRegistrationCell!.mobileNumberTextField.text!, password: self.tempSimplifiedRegistrationCell!.passwordTextField.text)
@@ -387,7 +387,7 @@ class LoginAndRegisterTableViewController: UITableViewController {
                     Toast.displayToastWithMessage(registerModel.message, duration: 2.0, view: self.view)
                 }
             } else {
-                self.hud?.hide(true)
+                self.dismissLoader()
                 if requestErrorType == .ResponseError {
                     let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
                     Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
@@ -409,11 +409,11 @@ class LoginAndRegisterTableViewController: UITableViewController {
     //MARK: -
     //MARK: - Fire Forgot Password
     func fireForgotPassword(verficationCode: String, newPassword: String, storeType: String) {
-        self.showHUD()
+        self.showLoader()
         
         WebServiceManager.fireForgotPasswordrRequestWithUrl(APIAtlas.forgotPasswordV2, verficationCode: verficationCode, newPassword: newPassword, storeType: storeType, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
             if successful {
-                self.hud?.hide(true)
+                self.dismissLoader()
                 Toast.displayToastWithMessage(LoginStrings.successForgotPassword, duration: 1.5, view: self.view)
                 
                 self.pageTitle = LoginStrings.accountTitle
@@ -424,7 +424,7 @@ class LoginAndRegisterTableViewController: UITableViewController {
                 self.tableView.reloadData()
                 
             } else {
-                self.hud?.hide(true)
+                self.dismissLoader()
                 if requestErrorType == .ResponseError {
                     let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
                     Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
@@ -446,7 +446,7 @@ class LoginAndRegisterTableViewController: UITableViewController {
     //MARK: -
     //MARK: - Fire Facebook With Login
     func fireFacebookLoginWithToken(token: String) {
-        self.showHUD()
+        self.showLoader()
         let manager: APIManager = APIManager.sharedInstance
         
         let parameters: NSDictionary = [LoginConstants.tokenKey: token, LoginConstants.clientIdKey: Constants.Credentials.clientID(), LoginConstants.clientSecretKey: Constants.Credentials.clientSecret(), LoginConstants.grantTypeKey: Constants.Credentials.grantBuyer]
@@ -454,7 +454,7 @@ class LoginAndRegisterTableViewController: UITableViewController {
         manager.POST(APIAtlas.facebookUrl, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
-            self.hud?.hide(true)
+            self.dismissLoader()
             println(responseObject.description)
             
             let loginModel: LoginModel = LoginModel.parseDataFromDictionary(responseObject as! NSDictionary)
@@ -481,14 +481,14 @@ class LoginAndRegisterTableViewController: UITableViewController {
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 Toast.displayToastWithMessage(Constants.Localized.someThingWentWrong, view: self.view)
-                self.hud?.hide(true)
+                self.dismissLoader()
         })
     }
     
     //MARK: -
     //MARK: - Merge Account
     func mergeAccount(facebookAccessToken: String) {
-        self.showHUD()
+        self.showLoader()
         let manager: APIManager = APIManager.sharedInstance
         
         let parameters: NSDictionary = [LoginConstants.clientIdKey: Constants.Credentials.clientID(), LoginConstants.clientSecretKey: Constants.Credentials.clientSecret(), LoginConstants.clientSecretKey: Constants.Credentials.grantBuyer, "token": facebookAccessToken, "accountType": "facebook"]
@@ -496,7 +496,7 @@ class LoginAndRegisterTableViewController: UITableViewController {
         manager.POST(APIAtlas.mergeFacebook, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
-            self.hud?.hide(true)
+            self.dismissLoader()
             
             let loginModel: LoginModel = LoginModel.parseDataFromDictionary(responseObject as! NSDictionary)
             if loginModel.isSuccessful {
@@ -513,7 +513,7 @@ class LoginAndRegisterTableViewController: UITableViewController {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                 Toast.displayToastWithMessage(Constants.Localized.someThingWentWrong, view: self.view)
-                self.hud?.hide(true)
+                self.dismissLoader()
         })
     }
 }
