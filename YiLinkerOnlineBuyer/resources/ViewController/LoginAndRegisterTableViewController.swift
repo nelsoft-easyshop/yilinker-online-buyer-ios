@@ -14,6 +14,7 @@ struct LoginStrings {
     
     static let mismatch: String = StringHelper.localizedStringWithKey("MISMATCH_LOCALIZE_KEY")
     static let loginFailed: String = StringHelper.localizedStringWithKey("LOGIN_FAILED_LOCALIZE_KEY")
+    static let password: String = StringHelper.localizedStringWithKey("PASSWORD_LOCALIZE_KEY")
     
     static let emailIsRequired: String = StringHelper.localizedStringWithKey("INVALID_EMAIL_REQUIRED_LOCALIZE_KEY")
     static let invalidEmail: String = StringHelper.localizedStringWithKey("INVALID_EMAIL_REQUIRED_LOCALIZE_KEY")
@@ -30,6 +31,7 @@ struct LoginStrings {
     static let mobileNUmber: String = StringHelper.localizedStringWithKey("MOBILE_NUMBER_LOCALIZE_KEY")
     static let emailAddress: String = StringHelper.localizedStringWithKey("EMAIL_ADDRESS_LOCALIZE_KEY")
     static let forgotPassword: String = StringHelper.localizedStringWithKey("FORGOT_PASSWORD_LOCALIZE_KEY")
+    static let successForgotPassword: String = StringHelper.localizedStringWithKey("FORGOT_PASSWORD_SUCCESS_LOCALIZE_KEY")
 }
 
 
@@ -107,6 +109,7 @@ class LoginAndRegisterTableViewController: UITableViewController {
     var registerModel: RegisterModel = RegisterModel()
     
     var tempSimplifiedRegistrationCell: SimplifiedRegistrationUICollectionViewCell?
+    var tempForgotPasswordCell: ForgotPasswordTableViewCell?
     
     //MARK: - 
     //MARK: - View Did Load
@@ -175,6 +178,7 @@ class LoginAndRegisterTableViewController: UITableViewController {
         }  else {
             if self.isResetPassword {
                 let resetPasswordTableViewCell: ForgotPasswordTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(self.resetPasswordTableViewCellNibName) as! ForgotPasswordTableViewCell
+                resetPasswordTableViewCell.delegate = self
                 resetPasswordTableViewCell.selectionStyle = .None
                 return resetPasswordTableViewCell
             } else {
@@ -334,7 +338,11 @@ class LoginAndRegisterTableViewController: UITableViewController {
         WebServiceManager.fireUnauthenticatedOTPRequestWithUrl(APIAtlas.unauthenticateOTP, contactNumber: contactNumber, areaCode: areaCode, type: type, storeType: storeType, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
             if successful {
                 self.hud?.hide(true)
-                self.tempSimplifiedRegistrationCell!.startTimer()
+                if self.isResetPassword {
+                    self.tempForgotPasswordCell?.startTimer()
+                } else {
+                    self.tempSimplifiedRegistrationCell!.startTimer()
+                }
             } else {
                 self.hud?.hide(true)
                 if requestErrorType == .ResponseError {
@@ -356,7 +364,7 @@ class LoginAndRegisterTableViewController: UITableViewController {
     }
     
     //MARK: -
-    //MARK: - Fire Login With Contact Number
+    //MARK: - Fire Register User
     func fireRegisterUser(contactNumber: String, password: String, areaCode: String, referralCode: String, verificationCode: String) {
         self.showHUD()
         
@@ -369,6 +377,42 @@ class LoginAndRegisterTableViewController: UITableViewController {
                 } else {
                     Toast.displayToastWithMessage(registerModel.message, duration: 2.0, view: self.view)
                 }
+            } else {
+                self.hud?.hide(true)
+                if requestErrorType == .ResponseError {
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                } else if requestErrorType == .PageNotFound {
+                    Toast.displayToastWithMessage("Page not found.", duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    Toast.displayToastWithMessage(Constants.Localized.error, duration: 1.5, view: self.view)
+                } else if requestErrorType == .Cancel {
+                    //Do nothing
+                }
+            }
+        })
+    }
+    
+    //MARK: -
+    //MARK: - Fire Forgot Password
+    func fireForgotPassword(verficationCode: String, newPassword: String, storeType: String) {
+        self.showHUD()
+        
+        WebServiceManager.fireForgotPasswordrRequestWithUrl(APIAtlas.forgotPasswordV2, verficationCode: verficationCode, newPassword: newPassword, storeType: storeType, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+            if successful {
+                self.hud?.hide(true)
+                Toast.displayToastWithMessage(LoginStrings.successForgotPassword, duration: 1.5, view: self.view)
+                
+                self.isResetPassword = false
+                self.hideBackButton = true
+                var indexPath = NSIndexPath(forRow: 1, inSection: 0)
+                self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Right)
+                self.tableView.reloadData()
+                
             } else {
                 self.hud?.hide(true)
                 if requestErrorType == .ResponseError {
@@ -465,9 +509,10 @@ class LoginAndRegisterTableViewController: UITableViewController {
 }
 
 extension LoginAndRegisterTableViewController: LoginRegisterTableViewCellDelegate {
-    func loginChecker(simplifiedLoginCell: SimplifiedLoginUICollectionViewCell) {
-        self.view.endEditing(true)
-        
+    
+    //MARK: - Login
+    //MARK: - Login Functions
+    func checkLoginError(simplifiedLoginCell: SimplifiedLoginUICollectionViewCell) -> String {
         var errorMessage: String = ""
         
         if simplifiedLoginCell.isMobileLogin {
@@ -486,6 +531,14 @@ extension LoginAndRegisterTableViewController: LoginRegisterTableViewCellDelegat
             }
         }
         
+        return errorMessage
+    }
+    
+    func loginChecker(simplifiedLoginCell: SimplifiedLoginUICollectionViewCell) {
+        self.view.endEditing(true)
+        
+        var errorMessage: String = self.checkLoginError(simplifiedLoginCell)
+        
         if errorMessage != "" {
             Toast.displayToastWithMessage(errorMessage, duration: 1.5, view: self.view)
         } else {
@@ -497,6 +550,7 @@ extension LoginAndRegisterTableViewController: LoginRegisterTableViewCellDelegat
         }
     }
     
+    //MARK: - Login Delegates
     func simplifiedLoginCell(simplifiedLoginCell: SimplifiedLoginUICollectionViewCell, textFieldShouldReturn textField: UITextField) {
         if textField == simplifiedLoginCell.emailMobileTextField {
             simplifiedLoginCell.passwordTextField.becomeFirstResponder()
@@ -522,24 +576,9 @@ extension LoginAndRegisterTableViewController: LoginRegisterTableViewCellDelegat
     }
     
     
-    func simplifiedRegistrationCell(simplifiedRegistrationCell: SimplifiedRegistrationUICollectionViewCell, textFieldShouldReturn textField: UITextField) {
-        self.tempSimplifiedRegistrationCell = simplifiedRegistrationCell
-    }
-    
-    func simplifiedRegistrationCell(simplifiedRegistrationCell: SimplifiedRegistrationUICollectionViewCell, didTapAreaCode areaCodeView: UIView) {
-        self.tempSimplifiedRegistrationCell = simplifiedRegistrationCell
-    }
-    
-    func simplifiedRegistrationCell(simplifiedRegistrationCell: SimplifiedRegistrationUICollectionViewCell, didTapSendActivationCode sendActivationCodeButton: UIButton) {
-        self.closeKeyboard()
-        self.tempSimplifiedRegistrationCell = simplifiedRegistrationCell
-        self.fireGetOTP(simplifiedRegistrationCell.mobileNumberTextField.text, areaCode: "63", type: "register", storeType: "0")
-    }
-    
-    func simplifiedRegistrationCell(simplifiedRegistrationCell: SimplifiedRegistrationUICollectionViewCell, didTapRegister registerButton: UIButton) {
-        self.closeKeyboard()
-        self.tempSimplifiedRegistrationCell = simplifiedRegistrationCell
-        
+    //MARK: - Registration
+    //MARK: - Registration Function
+    func checkRegistrationError(simplifiedRegistrationCell: SimplifiedRegistrationUICollectionViewCell) -> String {
         var errorMessage: String = ""
         //validate fields
         if simplifiedRegistrationCell.mobileNumberTextField.text == "" {
@@ -560,11 +599,44 @@ extension LoginAndRegisterTableViewController: LoginRegisterTableViewCellDelegat
             errorMessage = RegisterStrings.activationCodeRequired
         }
         
+        return errorMessage
+    }
+    
+    func registrationChecker(simplifiedRegistrationCell: SimplifiedRegistrationUICollectionViewCell) {
+        self.view.endEditing(true)
+        
+        var errorMessage: String = self.checkRegistrationError(simplifiedRegistrationCell)
+        
         if errorMessage != "" {
             Toast.displayToastWithMessage(errorMessage, duration: 1.5, view: self.view)
         } else {
             self.fireRegisterUser(simplifiedRegistrationCell.mobileNumberTextField.text, password: simplifiedRegistrationCell.passwordTextField.text, areaCode: "63", referralCode: simplifiedRegistrationCell.referralCodeTextField.text, verificationCode: simplifiedRegistrationCell.activationCodeTextField.text)
         }
+    }
+    
+    //MARK: - Registration Delegate
+    func simplifiedRegistrationCell(simplifiedRegistrationCell: SimplifiedRegistrationUICollectionViewCell, textFieldShouldReturn textField: UITextField) {
+        self.tempSimplifiedRegistrationCell = simplifiedRegistrationCell
+    }
+    
+    func simplifiedRegistrationCell(simplifiedRegistrationCell: SimplifiedRegistrationUICollectionViewCell, didTapAreaCode areaCodeView: UIView) {
+        self.tempSimplifiedRegistrationCell = simplifiedRegistrationCell
+    }
+    
+    func simplifiedRegistrationCell(simplifiedRegistrationCell: SimplifiedRegistrationUICollectionViewCell, didTapSendActivationCode sendActivationCodeButton: UIButton) {
+        self.closeKeyboard()
+        self.tempSimplifiedRegistrationCell = simplifiedRegistrationCell
+        if simplifiedRegistrationCell.mobileNumberTextField.isNotEmpty() {
+            self.fireGetOTP(simplifiedRegistrationCell.mobileNumberTextField.text, areaCode: "63", type: "register", storeType: "")
+        } else {
+            Toast.displayToastWithMessage(RegisterStrings.contactRequired, duration: 1.5, view: self.view)
+        }
+    }
+    
+    func simplifiedRegistrationCell(simplifiedRegistrationCell: SimplifiedRegistrationUICollectionViewCell, didTapRegister registerButton: UIButton) {
+        self.closeKeyboard()
+        self.tempSimplifiedRegistrationCell = simplifiedRegistrationCell
+        self.registrationChecker(simplifiedRegistrationCell)
     }
     
     func simplifiedRegistrationCell(simplifiedRegistrationCell: SimplifiedRegistrationUICollectionViewCell, didTimerEnded registerButton: UIButton) {
@@ -579,5 +651,76 @@ extension LoginAndRegisterTableViewController: LoginHeaderTableViewCellDelegate 
         var indexPath = NSIndexPath(forRow: 1, inSection: 0)
         self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Right)
         self.tableView.reloadData()
+    }
+}
+
+extension LoginAndRegisterTableViewController: ForgotPasswordTableViewCellDelegate {
+    
+    //MARK: - Forgot Password Function
+    func checkForgotPasswordError(forgotPasswordCell: ForgotPasswordTableViewCell) -> String {
+        var errorMessage: String = ""
+        //validate fields
+        if forgotPasswordCell.mobileNumberTextField.text == "" {
+            errorMessage = RegisterStrings.contactRequired
+        } else if !forgotPasswordCell.passwordTextField.isNotEmpty() {
+            errorMessage = RegisterStrings.passwordRequired
+        } else if !forgotPasswordCell.passwordTextField.isAlphaNumeric() {
+            errorMessage = RegisterStrings.illegalPassword
+        } else if !forgotPasswordCell.passwordTextField.isValidPassword() {
+            errorMessage = RegisterStrings.numbersAndLettersOnly
+        } else if !forgotPasswordCell.passwordTextField.isGreaterThanEightCharacters() {
+            errorMessage = RegisterStrings.eightCharacters
+        } else if !forgotPasswordCell.confirmPasswordTextField.isNotEmpty() {
+            errorMessage = RegisterStrings.reTypePasswordError
+        } else if forgotPasswordCell.passwordTextField.text != forgotPasswordCell.confirmPasswordTextField.text {
+            errorMessage = RegisterStrings.passwordNotMatch
+        } else if forgotPasswordCell.activationCodeTextField.text.isEmpty {
+            errorMessage = RegisterStrings.activationCodeRequired
+        }
+        
+        return errorMessage
+    }
+    
+    func forgotPasswordChecker(forgotPasswordCell: ForgotPasswordTableViewCell) {
+        self.view.endEditing(true)
+        
+        var errorMessage: String = self.checkForgotPasswordError(forgotPasswordCell)
+        
+        if errorMessage != "" {
+            Toast.displayToastWithMessage(errorMessage, duration: 1.5, view: self.view)
+        } else {
+            self.fireForgotPassword(forgotPasswordCell.activationCodeTextField.text, newPassword: forgotPasswordCell.passwordTextField.text, storeType: "")
+        }
+    }
+    
+    //MARK: - Forgot Password Delegate
+    
+    func forgotPasswordTableViewCell(forgotPasswordTableViewCell: ForgotPasswordTableViewCell, textFieldShouldReturn textField: UITextField) {
+        self.tempForgotPasswordCell = forgotPasswordTableViewCell
+    }
+    
+    func forgotPasswordTableViewCell(forgotPasswordTableViewCell: ForgotPasswordTableViewCell, didTapAreaCode areaCodeView: UIView) {
+        self.tempForgotPasswordCell = forgotPasswordTableViewCell
+        self.closeKeyboard()
+    }
+    
+    func forgotPasswordTableViewCell(forgotPasswordTableViewCell: ForgotPasswordTableViewCell, didTapSendActivationCode sendActivationCodeButton: UIButton) {
+        self.tempForgotPasswordCell = forgotPasswordTableViewCell
+        self.closeKeyboard()
+        if forgotPasswordTableViewCell.mobileNumberTextField.isNotEmpty() {
+            self.fireGetOTP(forgotPasswordTableViewCell.mobileNumberTextField.text, areaCode: "63", type: "forgot-password", storeType: "")
+        } else {
+            Toast.displayToastWithMessage(RegisterStrings.contactRequired, duration: 1.5, view: self.view)
+        }
+    }
+    
+    func forgotPasswordTableViewCell(forgotPasswordTableViewCell: ForgotPasswordTableViewCell, didTapResetPassword resetPasswordButton: UIButton) {
+        self.tempForgotPasswordCell = forgotPasswordTableViewCell
+        self.closeKeyboard()
+        self.forgotPasswordChecker(forgotPasswordTableViewCell)
+    }
+    
+    func forgotPasswordTableViewCell(forgotPasswordTableViewCell: ForgotPasswordTableViewCell, didTimerEnded sendActivationCodeButton: UIButton) {
+        self.tempForgotPasswordCell = forgotPasswordTableViewCell
     }
 }
