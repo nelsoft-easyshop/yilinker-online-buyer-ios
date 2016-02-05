@@ -79,8 +79,13 @@ class SimplifiedRegistrationUICollectionViewCell: UICollectionViewCell {
         self.activationCodeTextField.layer.borderWidth = 1
         self.areaCodeView.layer.borderWidth = 1
         
-        //TODO
         //Set placeholder
+        self.mobileNumberTextField.attributedPlaceholder = StringHelper.required(RegisterStrings.mobileNumber)
+        self.passwordTextField.attributedPlaceholder = StringHelper.required(RegisterStrings.password)
+        self.confirmPasswordTextField.attributedPlaceholder = StringHelper.required(RegisterStrings.confirmPassword)
+        self.activationCodeTextField.attributedPlaceholder = StringHelper.required(RegisterStrings.activationCode)
+        self.sendActivationCodeButton.setTitle(RegisterStrings.getActivation, forState: .Normal)
+        self.registerButton.setTitle(RegisterStrings.register.uppercaseString, forState: .Normal)
     }
     
     func didTapAreaCode() {
@@ -110,7 +115,7 @@ class SimplifiedRegistrationUICollectionViewCell: UICollectionViewCell {
         self.seconds--
         if(seconds == 0)  {
             self.timer.invalidate()
-            self.sendActivationCodeButton.setTitle("Send Activation Code", forState: UIControlState.Normal)
+            self.sendActivationCodeButton.setTitle(RegisterStrings.getActivation, forState: UIControlState.Normal)
             self.sendActivationCodeButton.enabled = true
             self.sendActivationCodeButton.alpha = 1.0
             self.delegate?.simplifiedRegistrationCell(self, didTimerEnded: self.sendActivationCodeButton)
