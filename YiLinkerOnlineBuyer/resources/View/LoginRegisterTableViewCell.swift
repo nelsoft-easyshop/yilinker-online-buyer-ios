@@ -38,6 +38,9 @@ class LoginRegisterTableViewCell: UITableViewCell {
     
     var screenWidth: CGFloat = 0
     
+    var tempCtr: Int = 0
+    var oldScrollValue: CGFloat = 0
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -130,15 +133,25 @@ extension LoginRegisterTableViewCell: UICollectionViewDataSource, UICollectionVi
 
     //MARK: -  UICollectionViewDelegate
     func scrollViewDidScroll(scrollView: UIScrollView) {
-        if scrollView.contentOffset.x < screenWidth {
-            self.delegate?.loginRegisterTableViewCell(self, didTapSignIn: self.signInButton)
-            self.activateButton(self.signInButton)
-            self.deActivateButton(self.registerButton)
-        } else {
-            self.delegate?.loginRegisterTableViewCell(self, didTapRegister: self.registerButton)
-            self.deActivateButton(self.signInButton)
-            self.activateButton(self.registerButton)
+        if self.tempCtr == 0 {
+            let contentOffset = scrollView.contentOffset.x
+            
+            if self.oldScrollValue > contentOffset {
+                self.delegate?.loginRegisterTableViewCell(self, didTapSignIn: self.signInButton)
+                self.activateButton(self.signInButton)
+                self.deActivateButton(self.registerButton)
+            } else {
+                self.delegate?.loginRegisterTableViewCell(self, didTapRegister: self.registerButton)
+                self.deActivateButton(self.signInButton)
+                self.activateButton(self.registerButton)
+            }
+            
+            self.oldScrollValue = contentOffset
         }
+    }
+    
+    func scrollViewDidEndScrollingAnimation(scrollView: UIScrollView) {
+        self.tempCtr = 0
     }
 }
 
