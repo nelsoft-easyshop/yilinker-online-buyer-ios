@@ -214,6 +214,9 @@ struct APIAtlas {
     
     //Register
     static let registerV2 = "v2/user/register"
+    
+    //Fogot Password
+    static let forgotPasswordV2 = "v2/user/resetPassword"
 }
 
 class APIManager: AFHTTPSessionManager {
