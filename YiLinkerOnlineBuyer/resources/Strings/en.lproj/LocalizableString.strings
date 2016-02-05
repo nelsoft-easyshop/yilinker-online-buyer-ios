@@ -131,6 +131,9 @@ CONTACT_REQUIRED_LOCALIZE_KEY = "Contact number is required.";
 EIGHT_CHARACTERS_LOCALIZED_KEY = "Password must be eight characters.";
 ACTIVATION_CODE_REQUIRED_LOCALIZE_KEY = "Activation Code is required.";
 
+//MARK- Fogot Password
+FORGOT_PASSWORD_SUCCESS_LOCALIZE_KEY = "Successfully changed password.";
+
 // MARK: - Customize Shopping
 CATEGORIES_CS_LOCALIZE_KEY = "Categories";
 SELLER_CS_LOCALIZE_KEY = "Seller";
