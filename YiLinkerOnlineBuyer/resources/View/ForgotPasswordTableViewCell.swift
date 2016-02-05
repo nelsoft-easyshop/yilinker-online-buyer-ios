@@ -81,7 +81,7 @@ class ForgotPasswordTableViewCell: UITableViewCell {
         self.confirmPasswordTextField.attributedPlaceholder = StringHelper.required(RegisterStrings.confirmPassword)
         self.activationCodeTextField.attributedPlaceholder = StringHelper.required(RegisterStrings.activationCode)
         self.sendActivationCodeButton.setTitle(RegisterStrings.getActivation, forState: .Normal)
-        self.resetPasswordButton.setTitle(RegisterStrings.resetPassword, forState: .Normal)
+        self.resetPasswordButton.setTitle(RegisterStrings.resetPassword.uppercaseString, forState: .Normal)
         
     }
     

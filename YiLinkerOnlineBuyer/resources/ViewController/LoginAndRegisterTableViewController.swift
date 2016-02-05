@@ -32,6 +32,10 @@ struct LoginStrings {
     static let emailAddress: String = StringHelper.localizedStringWithKey("EMAIL_ADDRESS_LOCALIZE_KEY")
     static let forgotPassword: String = StringHelper.localizedStringWithKey("FORGOT_PASSWORD_LOCALIZE_KEY")
     static let successForgotPassword: String = StringHelper.localizedStringWithKey("FORGOT_PASSWORD_SUCCESS_LOCALIZE_KEY")
+    
+    static let accountTitle: String = StringHelper.localizedStringWithKey("ACCOUNT_TITLE_LOCLAIZE_KEY")
+    static let registerTitle: String = StringHelper.localizedStringWithKey("REGISTER_TITLE_LOCALIZE_KEY")
+    static let resetTitle: String = StringHelper.localizedStringWithKey("RESET_PASSWORD_TITLE_LOCALIZE_KEY")
 }
 
 
@@ -108,6 +112,7 @@ class LoginAndRegisterTableViewController: UITableViewController {
     var isLogin: Bool = true
     var isResetPassword: Bool = false
     var hideBackButton: Bool = true
+    var pageTitle: String = LoginStrings.accountTitle
     
     var registerModel: RegisterModel = RegisterModel()
     
@@ -165,6 +170,7 @@ class LoginAndRegisterTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let loginHeaderView = tableView.dequeueReusableCellWithIdentifier(self.headerViewNibName) as! LoginHeaderTableViewCell
         loginHeaderView.setBackButtonHidden(hideBackButton)
+        loginHeaderView.setTitle(self.pageTitle)
         loginHeaderView.delegate = self
         return loginHeaderView
     }
