@@ -13,6 +13,7 @@ protocol ForgotPasswordTableViewCellDelegate {
     func forgotPasswordTableViewCell(forgotPasswordTableViewCell: ForgotPasswordTableViewCell, didTapAreaCode areaCodeView: UIView)
     func forgotPasswordTableViewCell(forgotPasswordTableViewCell: ForgotPasswordTableViewCell, didTapSendActivationCode sendActivationCodeButton: UIButton)
     func forgotPasswordTableViewCell(forgotPasswordTableViewCell: ForgotPasswordTableViewCell, didTapResetPassword resetPasswordButton: UIButton)
+    func forgotPasswordTableViewCell(forgotPasswordTableViewCell: ForgotPasswordTableViewCell, didTimerEnded sendActivationCodeButton: UIButton)
 }
 
 class ForgotPasswordTableViewCell: UITableViewCell {
@@ -31,6 +32,9 @@ class ForgotPasswordTableViewCell: UITableViewCell {
     @IBOutlet weak var resetPasswordButton: UIButton!
     
     @IBOutlet weak var downImageView: UIImageView!
+    
+    var seconds: Int = 60
+    var timer = NSTimer()
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -72,6 +76,13 @@ class ForgotPasswordTableViewCell: UITableViewCell {
         self.areaCodeView.layer.borderWidth = 1
         
         //Set placeholder
+        self.mobileNumberTextField.attributedPlaceholder = StringHelper.required(RegisterStrings.mobileNumber)
+        self.passwordTextField.attributedPlaceholder = StringHelper.required(RegisterStrings.password)
+        self.confirmPasswordTextField.attributedPlaceholder = StringHelper.required(RegisterStrings.confirmPassword)
+        self.activationCodeTextField.attributedPlaceholder = StringHelper.required(RegisterStrings.activationCode)
+        self.sendActivationCodeButton.setTitle(RegisterStrings.getActivation, forState: .Normal)
+        self.resetPasswordButton.setTitle(RegisterStrings.resetPassword.uppercaseString, forState: .Normal)
+        
     }
     
     func didTapAreaCode() {
@@ -85,6 +96,29 @@ class ForgotPasswordTableViewCell: UITableViewCell {
             self.delegate?.forgotPasswordTableViewCell(self, didTapResetPassword: sender)
         }
     }
+    
+    //Start the time
+    func startTimer() {
+        self.seconds = 60
+        self.timer.invalidate()
+        self.timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: Selector("subtractTime"), userInfo: nil, repeats: true)
+        self.sendActivationCodeButton.enabled = false
+        self.sendActivationCodeButton.alpha = 0.5
+    }
+    
+    //Decrement the time
+    func subtractTime() {
+        self.sendActivationCodeButton.setTitle("\(self.seconds)", forState: UIControlState.Normal)
+        self.seconds--
+        if(seconds == 0)  {
+            self.timer.invalidate()
+            self.sendActivationCodeButton.setTitle(RegisterStrings.getActivation, forState: UIControlState.Normal)
+            self.sendActivationCodeButton.enabled = true
+            self.sendActivationCodeButton.alpha = 1.0
+            self.delegate?.forgotPasswordTableViewCell(self, didTimerEnded: self.sendActivationCodeButton)
+        }
+    }
+
 }
 
 //MARK: -

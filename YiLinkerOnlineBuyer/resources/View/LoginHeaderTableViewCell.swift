@@ -29,8 +29,12 @@ class LoginHeaderTableViewCell: UITableViewCell {
         self.navBar.topItem?.title = title
     }
     
-    func setBackButtonHidden(hide: Bool) {
-        self.navBarButton.hidden = hide
+    func setBackButtonToClose(close: Bool) {
+        if close {
+            self.navBarButton.setImage(UIImage(named: "filter-close"), forState: .Normal)
+        } else{
+            self.navBarButton.setImage(UIImage(named: "back-white"), forState: .Normal)
+        }
     }
     
     @IBAction func backAction(sender: AnyObject) {
