@@ -115,6 +115,8 @@ SUCCESS_REGISTER_LOCALIZED_KEY = "Successfully registered.";
 THANKYOU_LOCALIZED_KEY = "Thank you";
 MOBILE_LOCALIZED_KEY = "Mobile Number";
 REFERRAL_LOCALIZED_KEY = "Referral Code";
+GET_ACTIVATION_LOCALIZED_KEY = "Get Activation Key";
+ACTIVATION_CODE_LOCALIZED_KEY = "Activation Code";
 
 // MARK: - Register Error
 FIRST_NAME_REQUIRED_LOCALIZE_KEY = "First name is required";
@@ -133,6 +135,7 @@ ACTIVATION_CODE_REQUIRED_LOCALIZE_KEY = "Activation Code is required.";
 
 //MARK- Fogot Password
 FORGOT_PASSWORD_SUCCESS_LOCALIZE_KEY = "Successfully changed password.";
+RESET_PASSWORD_LOCALIZED_KEY = "RESET PASSWORD";
 
 // MARK: - Customize Shopping
 CATEGORIES_CS_LOCALIZE_KEY = "Categories";

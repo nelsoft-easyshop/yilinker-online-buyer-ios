@@ -56,7 +56,7 @@ struct RegisterStrings {
     static let lastName: String = StringHelper.localizedStringWithKey("LAST_NAME_LOCALIZE_KEY")
     static let emailAddress: String = StringHelper.localizedStringWithKey("EMAIL_ADDRESS_LOCALIZE_KEY")
     static let password: String = StringHelper.localizedStringWithKey("PASSWORD_LOCALIZE_KEY")
-    
+    static let confirmPassword: String = StringHelper.localizedStringWithKey("CONFIRMPASSWORD_LOCALIZE_KEY")
     static let mobileNumber: String = StringHelper.localizedStringWithKey("MOBILE_LOCALIZED_KEY")
     static let referral: String = StringHelper.localizedStringWithKey("REFERRAL_LOCALIZED_KEY")
     
@@ -82,6 +82,9 @@ struct RegisterStrings {
     
     static let eightCharacters: String = StringHelper.localizedStringWithKey("EIGHT_CHARACTERS_LOCALIZED_KEY")
     static let register: String = StringHelper.localizedStringWithKey("REGISTER_HIDDEN_LOCALIZE_KEY")
+    static let getActivation: String = StringHelper.localizedStringWithKey("GET_ACTIVATION_LOCALIZED_KEY")
+    static let activationCode: String = StringHelper.localizedStringWithKey("ACTIVATION_CODE_LOCALIZED_KEY")
+    static let resetPassword: String = StringHelper.localizedStringWithKey("RESET_PASSWORD_LOCALIZED_KEY")
 }
 
 class LoginAndRegisterTableViewController: UITableViewController {
