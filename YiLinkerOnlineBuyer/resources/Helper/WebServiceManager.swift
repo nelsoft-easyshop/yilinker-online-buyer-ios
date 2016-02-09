@@ -883,6 +883,39 @@ class WebServiceManager: NSObject {
     }
     
     //MARK: -
+    //MARK: - Fire Get Authenticated OTP (One Time Password) With URL
+    //Parameters  "type":"register/forgot-password", "storeType":"0/1"
+    class func fireAuthenticatedOTPRequestWithUrl(url: String, accessToken: String, type: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+        let manager: APIManager = APIManager.sharedInstance
+        
+        let parameters: NSDictionary = [self.accessTokenKey: accessToken, self.typeKey: type]
+        
+        if Reachability.isConnectedToNetwork() {
+            manager.POST(url, parameters: parameters, success: {
+                (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+                actionHandler(successful: true, responseObject: responseObject, requestErrorType: .NoError)
+                }, failure: {
+                    (task: NSURLSessionDataTask!, error: NSError!) in
+                    if let task = task.response as? NSHTTPURLResponse {
+                        if error.userInfo != nil {
+                            actionHandler(successful: false, responseObject: error.userInfo!, requestErrorType: .ResponseError)
+                        } else if task.statusCode == Constants.WebServiceStatusCode.pageNotFound {
+                            actionHandler(successful: false, responseObject: [], requestErrorType: .PageNotFound)
+                        } else if task.statusCode == Constants.WebServiceStatusCode.requestTimeOut {
+                            actionHandler(successful: false, responseObject: [], requestErrorType: .RequestTimeOut)
+                        } else {
+                            actionHandler(successful: false, responseObject: [], requestErrorType: .UnRecognizeError)
+                        }
+                    } else {
+                        actionHandler(successful: false, responseObject: [], requestErrorType: .NoInternetConnection)
+                    }
+            })
+        } else {
+            actionHandler(successful: false, responseObject: [], requestErrorType: .NoInternetConnection)
+        }
+    }
+    
+    //MARK: -
     //MARK: - Fire Over View With Url
     class func fireOverViewWith(url: String, accessToken: String, transactionId: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
        let parameters = [self.accessTokenKey: accessToken, self.transactionIdKey: transactionId]
@@ -1031,5 +1064,33 @@ class WebServiceManager: NSObject {
         self.fireGetRequestWithUrl(url, parameters: []) { (successful, responseObject, requestErrorType) -> Void in
             actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
         }
+    }
+    
+    //MARK: -
+    //MARK: - Fire Save Update Basic Info With Url
+    class func fireSaveBasicInfoWithUrl(url: String, firstName: String, lastName: String, contactNo: String, accessToken: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) -> NSURLSessionDataTask {
+        let manager: APIManager = APIManager.sharedInstance
+        
+        let parameters: NSDictionary = [self.firstNameKey: firstName, self.lastNameKey: lastName, self.contactNoKey: contactNo, self.accessTokenKey: accessToken]
+        
+        let sessionDataTask: NSURLSessionDataTask = self.firePostRequestSessionDataTaskWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+        
+        return sessionDataTask
+    }
+    
+    //MARK: - 
+    //MARK: - Verify OTP Code
+    class func fireVerifyOTPCodeWithUrl(url: String, contactNo: String, verificationCode: String, type: String, storeType: String, accessToken: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) -> NSURLSessionDataTask {
+        let manager: APIManager = APIManager.sharedInstance
+        
+        let parameters: NSDictionary = [self.contactNumberKey: contactNo, self.verificationCodeKey: verificationCode, self.typeKey: type, self.storeTypeKey: storeType, self.accessTokenKey: accessToken]
+        
+        let sessionDataTask: NSURLSessionDataTask = self.firePostRequestSessionDataTaskWithUrl(url, parameters: parameters) { (successful,  responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+        
+        return sessionDataTask
     }
 }
