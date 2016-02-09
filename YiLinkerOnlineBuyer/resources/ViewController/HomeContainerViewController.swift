@@ -412,6 +412,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                     //Error in api requirements
                     let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
                     Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                    self.addEmptyView()
                 } else if requestErrorType == .PageNotFound {
                     //Page not found
                     Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
@@ -438,6 +439,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                 } else if requestErrorType == .UnRecognizeError {
                     //Unhandled error
                     Toast.displayToastWithMessage(Constants.Localized.error, duration: 1.5, view: self.view)
+                    self.addEmptyView()
                 }
             }
         })
@@ -574,6 +576,14 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                 
                 SessionManager.setLang(self.profileModel.address.latitude)
                 SessionManager.setLong(self.profileModel.address.longitude)
+                println(self.profileModel.firstName)
+                SessionManager.setFirstName(self.profileModel.firstName)
+                SessionManager.setLastName(self.profileModel.lastName)
+                SessionManager.setMobileNumber(self.profileModel.contactNumber)
+                
+                println("first name: \(self.profileModel.firstName)")
+                println("last name: \(self.profileModel.lastName)")
+                println("contact number: \(self.profileModel.contactNumber)")
                 
                 //Update tab bar icons badges
                 self.updateTabBarBadge()
