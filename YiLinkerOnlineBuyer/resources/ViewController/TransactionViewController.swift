@@ -74,6 +74,10 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        if self.respondsToSelector("edgesForExtendedLayout") {
+            self.edgesForExtendedLayout = UIRectEdge.None
+        }
+        
         //Set the navigation title of the view controller
         self.title = transactionTitle
         
@@ -454,20 +458,37 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
 
     //MARK: Customize navigation bar
     func backButton() {
-        var backButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
+        var backButton:UIButton = UIButton.buttonWithType(UIButtonType.DetailDisclosure) as! UIButton
         backButton.frame = CGRectMake(0, 0, 40, 40)
         backButton.addTarget(self, action: "back", forControlEvents: UIControlEvents.TouchUpInside)
-        backButton.setImage(UIImage(named: "back-white"), forState: UIControlState.Normal)
-        var customBackButton:UIBarButtonItem = UIBarButtonItem(customView: backButton)
+        
+        var customBackButton: UIBarButtonItem = UIBarButtonItem()
+        
+        var navigationSpacerValue: CGFloat = 0
+        
+        if self.presentingViewController != nil {
+            customBackButton = UIBarButtonItem(barButtonSystemItem: .Stop, target: self, action: "back")
+            self.navigationController!.navigationBar.tintColor = UIColor.whiteColor()
+        } else {
+            backButton.setImage(UIImage(named: "back-white"), forState: UIControlState.Normal)
+            customBackButton = UIBarButtonItem(customView: backButton)
+            navigationSpacerValue = -20
+            self.navigationController!.navigationBar.tintColor = UIColor.whiteColor()
+        }
         
         let navigationSpacer: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
-        navigationSpacer.width = -20
+        navigationSpacer.width = navigationSpacerValue
+
         self.navigationItem.leftBarButtonItems = [navigationSpacer, customBackButton]
     }
     
     //MARK: Back button action
     func back() {
-        self.navigationController!.popViewControllerAnimated(true)
+        if self.presentingViewController != nil {
+            self.dismissViewControllerAnimated(true, completion: nil)
+        } else {
+            self.navigationController!.popViewControllerAnimated(true)
+        }
     }
     
     //MARK: Add empty view to the current view
