@@ -97,6 +97,10 @@ class ProfileViewController: UIViewController{
                         SessionManager.setLang(self.profileDetails.address.latitude)
                         SessionManager.setLong(self.profileDetails.address.longitude)
                         
+                        SessionManager.setFirstName(self.profileDetails.firstName)
+                        SessionManager.setLastName(self.profileDetails.lastName)
+                        SessionManager.setMobileNumber(self.profileDetails.contactNumber)
+                        
                         self.tableView.hidden = false
                         self.tableView.reloadData()
                         self.dismissLoader()
