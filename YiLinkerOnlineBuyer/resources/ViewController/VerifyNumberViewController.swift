@@ -30,7 +30,7 @@ class VerifyNumberViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
-    var timeInterval: Int = 15
+    var timeInterval: Int = 300
     
     var delegate: VerifyNumberViewControllerDelegate?
     
