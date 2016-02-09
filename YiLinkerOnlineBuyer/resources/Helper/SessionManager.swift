@@ -72,6 +72,40 @@ class SessionManager {
         NSUserDefaults.standardUserDefaults().synchronize()
     }
     
+    //MARK: - 
+    //MARK: - Set First Name
+    class func setFirstName(firstName: String) {
+        NSUserDefaults.standardUserDefaults().setObject(firstName, forKey: "firstName")
+        NSUserDefaults.standardUserDefaults().synchronize()
+    }
+    
+    //MARK: - 
+    //MARK: - Set Last Name
+    class func setLastName(lastName: String) {
+        NSUserDefaults.standardUserDefaults().setObject(lastName, forKey: "lastName")
+        NSUserDefaults.standardUserDefaults().synchronize()
+    }
+    
+    //MARK: - 
+    //MARK: - First Name
+    class func firstName() -> String {
+        var result: String = ""
+        if let val: AnyObject = NSUserDefaults.standardUserDefaults().objectForKey("firstName") as? String {
+            result = val as! String
+        }
+        return result
+    }
+    
+    //MARK: -
+    //MARK: - Last Name
+    class func lastName() -> String {
+        var result: String = ""
+        if let val: AnyObject = NSUserDefaults.standardUserDefaults().objectForKey("lastName") as? String {
+            result = val as! String
+        }
+        return result
+    }
+    
     class func userId() -> String {
         var result: String = ""
         if let val: AnyObject = NSUserDefaults.standardUserDefaults().objectForKey("userId") as? String {
@@ -80,6 +114,8 @@ class SessionManager {
         return result
     }
     
+    //MARK: - 
+    //MARK: - Mobile Number
     class func mobileNumber() -> String {
         var result: String = ""
         if let val: AnyObject = NSUserDefaults.standardUserDefaults().objectForKey("mobileNumber") as? String {
