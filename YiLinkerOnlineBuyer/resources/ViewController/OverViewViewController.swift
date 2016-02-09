@@ -19,6 +19,9 @@ class OverViewViewController: UIViewController, UITableViewDelegate, UITableView
     @IBOutlet weak var tableView: UITableView!
     var paymentSuccessModel: PaymentSuccessModel = PaymentSuccessModel()
     
+    @IBOutlet weak var continueShoppingButton: UIButton!
+    @IBOutlet weak var viewTransactionButton: UIButton!
+    
     //MARK: - 
     //MARK: - Life Cycle
     override func viewDidAppear(animated: Bool) {
@@ -45,6 +48,9 @@ class OverViewViewController: UIViewController, UITableViewDelegate, UITableView
         
         self.tableView.tableFooterView = totalTableViewCell
         self.registerNib()
+        
+        self.continueShoppingButton.layer.cornerRadius = 5
+        self.viewTransactionButton.layer.cornerRadius = 5
     }
     
     //MARK: -
@@ -68,5 +74,45 @@ class OverViewViewController: UIViewController, UITableViewDelegate, UITableView
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.paymentSuccessModel.data.orderedProductsModel.count
+    }
+    
+    //MARK: - 
+    //MARK: - View Transaction
+    @IBAction func viewTransaction(sender: AnyObject) {
+        if SessionManager.isLoggedIn() {
+            self.redirectToTransaction()
+            
+        } else {
+            self.redirectToLogin()
+        }
+    }
+    
+    //MARK: -
+    //MARK: - Continue Shopping
+    @IBAction func continueShopping(sender: AnyObject) {
+        self.redirectToHomeView()
+    }
+    
+    //MARK: - 
+    //MARK: - Redirect To Transaction
+    func redirectToTransaction() {
+        let transactionViewController: TransactionViewController = TransactionViewController(nibName: "TransactionViewController", bundle: nil) as TransactionViewController
+        let transactionNavigationController: UINavigationController = UINavigationController(rootViewController: transactionViewController)
+        transactionNavigationController.navigationBar.barTintColor = Constants.Colors.appTheme
+        self.navigationController?.presentViewController(transactionNavigationController, animated: true, completion: nil)
+    }
+    
+    //MARK: - 
+    //MARK: - Redirect To Login
+    func redirectToLogin() {
+        let storyBoard: UIStoryboard = UIStoryboard(name: "StartPageStoryBoard", bundle: nil)
+        let loginRegisterViewController: LoginAndRegisterTableViewController = storyBoard.instantiateViewControllerWithIdentifier("LoginAndRegisterTableViewController") as! LoginAndRegisterTableViewController
+        loginRegisterViewController.isLogin = true
+        self.navigationController!.presentViewController(loginRegisterViewController, animated: true, completion: nil)
+    }
+    
+    func redirectToHomeView() {
+        let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        appDelegate.changeRootToHomeView()
     }
 }

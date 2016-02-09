@@ -38,9 +38,10 @@ class ErrorModel: NSObject {
         
         if let values: AnyObject = dictionary["data"] {
             if let temp = dictionary["data"] as? NSDictionary {
-                let errors: [String] = temp["errors"] as! [String]
-                for error in errors {
-                    message = "\(message) \(error)"
+                if let errors: [String] = temp["errors"] as? [String] {
+                    for error in errors {
+                        message = "\(message) \(error)"
+                    }
                 }
             }
         }

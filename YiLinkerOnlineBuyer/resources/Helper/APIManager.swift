@@ -214,6 +214,12 @@ struct APIAtlas {
     
     //Register
     static let registerV2 = "v2/user/register"
+    
+    //Sprint 1
+    static let saveBasicInfoUrl = "v1/auth/update-basic-info"
+    static let authenticatedOTP = "v2/auth/sms/send"
+    static let verifyAuthenticatedOTPCodeUrl = "v2/auth/token/validate"
+    
 }
 
 class APIManager: AFHTTPSessionManager {

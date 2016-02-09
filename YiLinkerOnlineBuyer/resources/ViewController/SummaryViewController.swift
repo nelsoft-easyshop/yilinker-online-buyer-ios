@@ -45,6 +45,10 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     let kHalfSecond: NSTimeInterval = 0.5
     
+    var firstName: String = ""
+    var lastName: String = ""
+    var mobileNumber: String = ""
+    
     //MARK: - 
     //MARK: - Life Cycle
     override func viewDidLoad() {
@@ -64,14 +68,28 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         if SessionManager.isLoggedIn() {
             self.tableView.layoutIfNeeded()
-            
-            if SessionManager.isMobileVerified() {
-                self.checkoutContainerViewController.fireSetCheckoutAddressWithAddressId("\(SessionManager.addressId())")
-            }
-            
+            self.checkoutContainerViewController.fireSetCheckoutAddressWithAddressId("\(SessionManager.addressId())")
         } else {
-            self.checkoutContainerViewController.fireProvinces()
+           self.checkoutContainerViewController.fireProvinces()
         }
+        
+        if SessionManager.mobileNumber() != "" && SessionManager.firstName() != "" && SessionManager.lastName() != "" {
+            self.isIncompleteInformation = false
+        }
+        
+        if SessionManager.firstName() != "" {
+            self.firstName = SessionManager.firstName()
+        }
+        
+        if SessionManager.lastName() != "" {
+            self.lastName = SessionManager.lastName()
+        }
+        
+        if SessionManager.mobileNumber() != "" {
+            self.mobileNumber = SessionManager.mobileNumber()
+        }
+        
+        self.tableView.reloadData()
     }
     
     override func viewDidLayoutSubviews() {
@@ -158,11 +176,15 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
                 return netTotalTableViewCell
             }
         } else {
-            if !self.isIncompleteInformation {
+            if !self.isIncompleteInformation && SessionManager.isLoggedIn() {
                return self.cellWithPath(indexPath)
             } else {
                 if indexPath.section == 1 {
-                    return self.incompleteRequirementsTableViewCellWithIndexPath(indexPath)
+                    if SessionManager.isLoggedIn() {
+                        return self.incompleteRequirementsTableViewCellWithIndexPath(indexPath)
+                    } else {
+                        return self.guestCheckoutTableViewCellWithindexPath(indexPath)
+                    }
                 } else {
                     return self.cellWithPath(indexPath)
                 }
@@ -265,30 +287,22 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
             }
             
         } else {
-            if !self.isIncompleteInformation {
+            if SessionManager.isLoggedIn() {
                 if indexPath.row == 0 {
-                    if SessionManager.isLoggedIn() {
-                        return kCheckoutAddressHeight
+                    if self.isIncompleteInformation {
+                        if indexPath.section == 1 {
+                            return kIncompleteInformationCellHeight
+                        } else {
+                            return kCheckoutAddressHeight
+                        }
                     } else {
-                        return kGuestCheckoutForm
+                        return kCheckoutAddressHeight
                     }
                 } else {
                     return kMapCellHeight
                 }
             } else {
-                if indexPath.section == 1 {
-                    return kIncompleteInformationCellHeight
-                } else {
-                    if indexPath.row == 0 {
-                        if SessionManager.isLoggedIn() {
-                            return kCheckoutAddressHeight
-                        } else {
-                            return kGuestCheckoutForm
-                        }
-                    } else {
-                        return kMapCellHeight
-                    }
-                }
+                return kGuestCheckoutForm
             }
         }
     }
@@ -396,6 +410,11 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     func guestCheckoutTableViewCell(guestCheckoutTableViewCell: GuestCheckoutTableViewCell, didStartEditingTextFieldWithTag textfieldTag: Int, textField: UITextField) {
         self.currentTextFieldTag = textfieldTag
+        
+        if textfieldTag < 4 {
+            var indexPath: NSIndexPath = self.tableView.indexPathForCell(self.guestCheckoutTableViewCell)!
+            self.tableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: UITableViewScrollPosition.Top, animated: true)
+        }
         
         UIView.animateWithDuration(0.5, animations: {
             var contentInset: UIEdgeInsets = self.tableView.contentInset
@@ -744,10 +763,22 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
         return orderSummaryCell
     }
     
+    //MARK: - 
+    //MARK: - Incomplete Requirements Table View Cell With Index Path
     func incompleteRequirementsTableViewCellWithIndexPath(indexPath: NSIndexPath) -> IncompleteRequirementsTableViewCell {
         let cell: IncompleteRequirementsTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(IncompleteRequirementsTableViewCell.nibNameAndIdentifier()) as! IncompleteRequirementsTableViewCell
         cell.selectionStyle = UITableViewCellSelectionStyle.None
         cell.delegate = self
+        
+        if SessionManager.firstName() != "" {
+            cell.setFirstNameAndDisabledTextFieldWithValue(SessionManager.firstName())
+        } else if SessionManager.lastName() != "" {
+            cell.setLastNameAndDisabledTextFieldWithValue(SessionManager.lastName())
+        } else if SessionManager.mobileNumber() != "" {
+            cell.setMobileNumberAndDisabledTextWithFieldWithValue(SessionManager.mobileNumber())
+        }
+        
+        cell.setEmailAndDisabledTextFieldWithValue("")
         
         return cell
     }
@@ -795,9 +826,9 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
                     textField.autocorrectionType = UITextAutocorrectionType.No
                     contentInset.top = contentInset.top - 400
                 } else if IphoneType.isIphone5() {
-                    contentInset.top = contentInset.top - 350
+                    contentInset.top = contentInset.top - 450
                 } else if IphoneType.isIphone6() {
-                    contentInset.top = contentInset.top - 350
+                    contentInset.top = contentInset.top - 300
                 } else {
                     contentInset.top = contentInset.top - 350
                 }
@@ -811,13 +842,13 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
                     textField.autocorrectionType = UITextAutocorrectionType.No
                     contentInset.top = contentInset.top - 450
                 } else if IphoneType.isIphone5() {
-                    contentInset.top = contentInset.top - 350
+                    textField.autocorrectionType = UITextAutocorrectionType.No
+                    contentInset.top = contentInset.top - 450
                 } else if IphoneType.isIphone6() {
                     contentInset.top = contentInset.top - 350
                 } else {
                     contentInset.top = contentInset.top - 350
                 }
-                
                 self.tableView.contentInset = contentInset
                 self.tableView.scrollIndicatorInsets = contentInset
             })
@@ -825,17 +856,31 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func incompleteRequirementsTableViewCell(incompleteRequirementsTableViewCell: IncompleteRequirementsTableViewCell, didChangeValueAtTextField textField: UITextField, textValue: String) {
-        
+        if textField == incompleteRequirementsTableViewCell.firstNameTextField {
+            self.firstName = textValue
+        } else if textField == incompleteRequirementsTableViewCell.lastNameTextField {
+            self.lastName = textValue
+        } else if textField == incompleteRequirementsTableViewCell.mobileNumberTextField {
+            self.mobileNumber = textValue
+        }
     }
     
     func incompleteRequirementsTableViewCell(incompleteRequirementsTableViewCell: IncompleteRequirementsTableViewCell, didTapReturnAtTextField textField: UITextField) {
         if textField.isEqual(incompleteRequirementsTableViewCell.firstNameTextField) {
-            incompleteRequirementsTableViewCell.lastNameTextField.becomeFirstResponder()
+            if incompleteRequirementsTableViewCell.lastNameTextField.enabled == true {
+                incompleteRequirementsTableViewCell.lastNameTextField.becomeFirstResponder()
+            } else if incompleteRequirementsTableViewCell.mobileNumberTextField.enabled == true {
+                incompleteRequirementsTableViewCell.mobileNumberTextField.becomeFirstResponder()
+            } else {
+                self.tableView.endEditing(true)
+            }
         } else if textField.isEqual(incompleteRequirementsTableViewCell.lastNameTextField) {
-            incompleteRequirementsTableViewCell.mobileNumberTextField.becomeFirstResponder()
+            if incompleteRequirementsTableViewCell.mobileNumberTextField.enabled == true {
+                incompleteRequirementsTableViewCell.mobileNumberTextField.becomeFirstResponder()
+            } else {
+                self.tableView.endEditing(true)
+            }
         } else if textField.isEqual(incompleteRequirementsTableViewCell.mobileNumberTextField) {
-            incompleteRequirementsTableViewCell.emailAddressTextField.becomeFirstResponder()
-        }  else if textField.isEqual(incompleteRequirementsTableViewCell.emailAddressTextField) {
             self.tableView.endEditing(true)
         }
     }

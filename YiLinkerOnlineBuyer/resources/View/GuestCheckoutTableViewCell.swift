@@ -106,6 +106,12 @@ class GuestCheckoutTableViewCell: UITableViewCell, UITextFieldDelegate {
             if view.isKindOfClass(UITextField) {
                 let textField: UITextField = view as! UITextField
                 if textField.tag == tag {
+                    if textField == self.emailAddressLabel {
+                        textField.becomeFirstResponder()
+                    } else {
+                        self.endEditing(true)
+                    }
+                    
                     textField.becomeFirstResponder()
                 }
             }

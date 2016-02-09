@@ -177,6 +177,8 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
     
     var dimView: UIView?
     
+    @IBOutlet weak var saveAndContinueButtonHeightConstraint: NSLayoutConstraint!
+    
     
     //Models for address
     var provinceModel: ProvinceModel = ProvinceModel()
@@ -371,8 +373,12 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
     //MARK: -
     //MARK: - Show HUD
     func showHUD() {
+        if self.yiHud != nil {
+           self.yiHud!.removeFromSuperview()
+        }
+        
         self.yiHud = YiHUD.initHud()
-        self.yiHud!.showHUDToView(self.view)
+        self.yiHud!.showHUDToView(self.navigationController!.view)
     }
     
     //MARK: -
@@ -641,7 +647,18 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
                 let jsonResult: NSDictionary = responseObject as! NSDictionary
                 if jsonResult["isSuccessful"] as! Bool != true {
                     self.isValidToSelectPayment = false
+                    var errorMessage = ""
+                    if let errorString = jsonResult["message"] as? String {
+                        errorMessage = errorString
+                    }
                     //self.displayAlertAndRedirectToChangeAddressWithMessage(jsonResult["message"] as! String)
+                    UIAlertController.showAlertYesOrNoWithTitle(Constants.Localized.error, message: "\(errorMessage) Add checkout address now?", viewController: self, actionHandler: { (isYes) -> Void in
+                        if isYes {
+                            self.summaryViewController!.redirectToAddress()
+                        } else {
+                            //No action
+                        }
+                    })
                 } else {
                     self.isValidToSelectPayment = true
                 }
@@ -724,10 +741,28 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
         if self.selectedIndex == 0 {
             if SessionManager.isLoggedIn() {
                 if self.isValidToSelectPayment {
-                    self.selectedIndex++
-                    self.setSelectedViewControllerWithIndex(self.selectedIndex, transition: UIViewAnimationOptions.TransitionFlipFromLeft)
+                    if self.summaryViewController!.isIncompleteInformation || SessionManager.isMobileVerified() {
+                        var errorMessage = ""
+                        if self.summaryViewController!.firstName == "" {
+                            errorMessage = "Please insert your first name."
+                        } else if self.summaryViewController!.lastName == "" {
+                            errorMessage = "Please insert your last name."
+                        } else if self.summaryViewController!.mobileNumber == "" {
+                            errorMessage = "Please insert your mobile Number."
+                        }
+                        
+                        if errorMessage == "" {
+                            self.fireSaveBasicInfoWithFirstName(self.summaryViewController!.firstName, lastName: self.summaryViewController!.lastName, mobileNumber: self.summaryViewController!.mobileNumber)
+                        } else {
+                            Toast.displayToastWithMessage(errorMessage, view: self.navigationController!.view)
+                        }
+                        
+                    } else {
+                        self.selectedIndex++
+                        self.setSelectedViewControllerWithIndex(self.selectedIndex, transition: UIViewAnimationOptions.TransitionFlipFromLeft)
+                    }
                 } else {
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Please choose a checkout address.")
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Please choose/add a checkout address.")
                 }
             } else {
                 //Validate all required fields before accessing fire guest checkout
@@ -741,15 +776,19 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
                     UIAlertController.displayErrorMessageWithTarget(self, errorMessage: RegisterStrings.invalidLastName, title: AddressStrings.incompleteInformation)
                 } else if self.summaryViewController!.guestCheckoutTableViewCell.mobileNumberTextField.text!.isEmpty {
                     UIAlertController.displayErrorMessageWithTarget(self, errorMessage: AddressStrings.mobileNumberIsRequired, title: AddressStrings.incompleteInformation)
-                } else if self.summaryViewController!.guestCheckoutTableViewCell.emailTextField.text!.isEmpty {
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: RegisterStrings.emailRequired, title: AddressStrings.incompleteInformation)
-                } else if !self.summaryViewController!.guestCheckoutTableViewCell.emailTextField.text!.isValidEmail() {
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: RegisterStrings.invalidEmail, title: AddressStrings.incompleteInformation)
                 } else if self.summaryViewController!.guestCheckoutTableViewCell.streetNameTextField.text!.isEmpty {
                     UIAlertController.displayErrorMessageWithTarget(self, errorMessage: AddressStrings.addressIsRequired, title: AddressStrings.incompleteInformation)
                 } else {
                     self.fireGuestCheckout()
                 }
+                
+                /*
+                else if self.summaryViewController!.guestCheckoutTableViewCell.emailTextField.text!.isEmpty {
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: RegisterStrings.emailRequired, title: AddressStrings.incompleteInformation)
+                    } else if !self.summaryViewController!.guestCheckoutTableViewCell.emailTextField.text!.isValidEmail() {
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: RegisterStrings.invalidEmail, title: AddressStrings.incompleteInformation)
+                    }
+                */
             }
         } else if self.selectedIndex == 1 {
             //Check if what payment type user choose
@@ -813,11 +852,12 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
         self.selectedIndex++
         self.overViewViewController?.paymentSuccessModel = paymentSuccessModel
         let viewController: UIViewController = viewControllers[2]
-        setSelectedViewController(viewController, transition: UIViewAnimationOptions.TransitionNone)
+        setSelectedViewController(viewController, transition: UIViewAnimationOptions.TransitionFlipFromLeft)
         self.navigationItem.leftBarButtonItems = []
         self.navigationItem.rightBarButtonItems = []
         self.continueButton(CheckoutStrings.continueShopping)
         self.thirdCircle()
+        self.saveAndContinueButtonHeightConstraint.constant = 0
     }
     
     //MARK: -
@@ -856,7 +896,7 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
                     self.isValidToSelectPayment = true
                     
                     self.selectedIndex++
-                    self.setSelectedViewControllerWithIndex(self.selectedIndex, transition: UIViewAnimationOptions.TransitionNone)
+                    self.setSelectedViewControllerWithIndex(self.selectedIndex, transition: UIViewAnimationOptions.TransitionFlipFromLeft)
                 } else {
                     let message: String = dictionary["message"] as! String
                     UIAlertController.displayErrorMessageWithTarget(self, errorMessage: message)
@@ -895,7 +935,6 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
                 if paymentSuccessModel.isSuccessful {
                     self.redirectToSuccessPage(paymentSuccessModel)
                 } else {
-                    self.selectedIndex--
                     UIAlertController.displayErrorMessageWithTarget(self, errorMessage: paymentSuccessModel.message, title: Constants.Localized.someThingWentWrong)
                 }
             } else {
@@ -1039,8 +1078,12 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
                     self.fireSetCheckoutAddressWithAddressId("\(SessionManager.addressId())")
                 } else if refreshType == .Voucher {
                     self.fireVoucherWithVoucherId(values.first! as! String)
-                }  else if refreshType == .OverView {
+                } else if refreshType == .OverView {
                     self.fireOverView(values.first as! String, modalViewController: values[1] as! UIViewController)
+                } else if refreshType == .SaveBasicInfo {
+                    self.fireSaveBasicInfoWithFirstName(values[0] as! String, lastName: values[1] as! String, mobileNumber: values[2] as! String)
+                } else if refreshType == .VerifyOTP {
+                    self.fireVerifyOTPCode(self.summaryViewController!.mobileNumber, verificationCode:  values[0] as! String, type: "checkout", storeType: "0", verifyNumberViewController: values[1] as! VerifyNumberViewController)
                 }
             } else {
                 //Forcing user to logout.
@@ -1105,23 +1148,28 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
         verifyNumberViewController.startLoading()
         
         if verifyNumberViewController.submitButton.titleLabel!.text == "SUBMIT" {
-            Delay.delayWithDuration(3.0, completionHandler: { (success) -> Void in
-                verifyNumberViewController.stopLoading()
-                if self.showSuccess {
-                    verifyNumberViewController.dismissViewControllerAnimated(true, completion: { () -> Void in
-                        self.showSuccessModal()
-                    })
-                } else {
-                    self.showSuccess = true
-                    verifyNumberViewController.showWrongCodeLabel()
-                }
-            })
+            self.fireVerifyOTPCode(self.summaryViewController!.mobileNumber, verificationCode: textField.text, type: "checkout", storeType: "0",verifyNumberViewController: verifyNumberViewController)
         } else {
             Delay.delayWithDuration(3.0, completionHandler: { (success) -> Void in
                 verifyNumberViewController.stopLoading()
                 verifyNumberViewController.updateUIToDefault()
             })
         }
+    }
+    
+    
+    //MARK: - 
+    //MARK: - Show Verified Success Modal
+    func showVerifiedSuccessModal(verifyNumberViewController: VerifyNumberViewController) {
+        verifyNumberViewController.dismissViewControllerAnimated(true, completion: { () -> Void in
+            self.showSuccessModal()
+        })
+    }
+    
+    //MARK: -
+    //MARK: - Show WrongCode Label Modal
+    func showWrongCodeLabelModal(verifyNumberViewController: VerifyNumberViewController) {
+        verifyNumberViewController.showWrongCodeLabel()
     }
     
     func verifyNumberViewController(verifyNumberViewController: VerifyNumberViewController, changeState modalState: ModalState) {
@@ -1156,5 +1204,146 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
     func successModalViewController(successModalViewController: SuccessModalViewController, didTapButton doneButton: UIButton) {
         successModalViewController.dismissViewControllerAnimated(true, completion: nil)
         self.hideDimView()
+        
+        self.selectedIndex++
+        self.setSelectedViewControllerWithIndex(self.selectedIndex, transition: UIViewAnimationOptions.TransitionFlipFromLeft)
+    }
+    
+    //MARK: -
+    //MARK: - Fire Save Basic Info
+    func fireSaveBasicInfoWithFirstName(firstName: String, lastName: String, mobileNumber: String) {
+        self.showHUD()
+        WebServiceManager.fireSaveBasicInfoWithUrl(APIAtlas.saveBasicInfoUrl, firstName: firstName, lastName: lastName, contactNo: mobileNumber, accessToken: SessionManager.accessToken()) { (successful, responseObject, requestErrorType) -> Void in
+            self.yiHud?.hide()
+            println("mobile number: \(mobileNumber)")
+            println(responseObject as! NSDictionary)
+            if successful {
+                println(responseObject)
+                var basicInfoModel: BasicInfoModel = BasicInfoModel.parseDataFromDictionary(responseObject as! NSDictionary)
+                
+                if basicInfoModel.isSuccessful {
+                    if basicInfoModel.isVerified {
+                        self.selectedIndex++
+                        self.setSelectedViewControllerWithIndex(self.selectedIndex, transition: UIViewAnimationOptions.TransitionFlipFromLeft)
+                    } else {
+                        Toast.displayToastWithMessage("not verified", duration: 2.0, view: self.navigationController!.view)
+                    }
+                } else {
+                    if !SessionManager.isMobileVerified() {
+                        self.fireGetAuthenticatedOTP()
+                    }
+                }
+            } else {
+                if requestErrorType == .ResponseError {
+                    //Error in api requirements
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                } else if requestErrorType == .AccessTokenExpired {
+                    self.fireRefreshToken(.SaveBasicInfo, values: [firstName, lastName, mobileNumber])
+                } else if requestErrorType == .PageNotFound {
+                    //Page not found
+                    Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    //No internet connection
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    //Request timeout
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    //Unhandled error
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
+                }
+            }
+        }
+    }
+    
+    //MARK: -
+    //MARK: - Fire Get OTP
+    func fireGetOTP(contactNumber: String, areaCode: String, type: String, storeType: String) {
+        self.showHUD()
+        
+        WebServiceManager.fireUnauthenticatedOTPRequestWithUrl(APIAtlas.unauthenticateOTP, contactNumber: contactNumber, areaCode: areaCode, type: type, storeType: storeType, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+            if successful {
+                self.fireGetAuthenticatedOTP()
+            } else {
+                self.yiHud?.hide()
+                if requestErrorType == .ResponseError {
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                } else if requestErrorType == .AccessTokenExpired {
+                    //self.fireRefreshToken(.SaveBasicInfo, values: [firstName, lastName, mobileNumber])
+                } else if requestErrorType == .PageNotFound {
+                    Toast.displayToastWithMessage("Page not found.", duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    Toast.displayToastWithMessage(Constants.Localized.error, duration: 1.5, view: self.view)
+                } else if requestErrorType == .Cancel {
+                    //Do nothing
+                }
+            }
+        })
+    }
+    
+    //MARK: -
+    //MARK: - Fire Get Authenticated OTP
+    func fireGetAuthenticatedOTP() {
+        self.showHUD()
+        
+        WebServiceManager.fireAuthenticatedOTPRequestWithUrl(APIAtlas.authenticatedOTP, accessToken: SessionManager.accessToken(), type: "checkout") { (successful, responseObject, requestErrorType) -> Void in
+            self.yiHud?.hide()
+            if successful {
+                self.showVerifyNumberModal()
+            } else {
+                self.yiHud?.hide()
+                if requestErrorType == .ResponseError {
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                } else if requestErrorType == .AccessTokenExpired {
+                    //self.fireRefreshToken(.SaveBasicInfo, values: [firstName, lastName, mobileNumber])
+                } else if requestErrorType == .PageNotFound {
+                    Toast.displayToastWithMessage("Page not found.", duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    Toast.displayToastWithMessage(Constants.Localized.error, duration: 1.5, view: self.view)
+                } else if requestErrorType == .Cancel {
+                    //Do nothing
+                }
+            }
+        }
+    }
+    
+    //MARK: - 
+    //MARK: - Fire VerifyOTPCode
+    func fireVerifyOTPCode(contactNo: String, verificationCode: String, type: String, storeType: String, verifyNumberViewController: VerifyNumberViewController) {
+        WebServiceManager.fireVerifyOTPCodeWithUrl(APIAtlas.verifyAuthenticatedOTPCodeUrl, contactNo: contactNo, verificationCode: verificationCode, type: type, storeType: storeType, accessToken: SessionManager.accessToken()) { (successful, responseObject, requestErrorType) -> Void in
+            
+            if successful {
+                self.showVerifiedSuccessModal(verifyNumberViewController)
+            } else {
+                println("contact number: \(contactNo)")
+                if requestErrorType == .ResponseError {
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                }  else if requestErrorType == .AccessTokenExpired {
+                    self.fireRefreshToken(.VerifyOTP, values: [verificationCode, verifyNumberViewController])
+                } else if requestErrorType == .PageNotFound {
+                    Toast.displayToastWithMessage("Page not found.", duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    Toast.displayToastWithMessage(Constants.Localized.error, duration: 1.5, view: self.view)
+                } else if requestErrorType == .Cancel {
+                    //Do nothing
+                }
+            }
+        }
     }
 }
