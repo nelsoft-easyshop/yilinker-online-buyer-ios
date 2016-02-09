@@ -95,7 +95,7 @@ class IncompleteRequirementsTableViewCell: UITableViewCell, UITextFieldDelegate 
     }
     
     func textFieldDidChange(textField: UITextField) {
-        println(textField.text)
+        self.delegate?.incompleteRequirementsTableViewCell(self, didChangeValueAtTextField: textField, textValue: textField.text)
     }
     
     //MARK: - 
