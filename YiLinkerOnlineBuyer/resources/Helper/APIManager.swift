@@ -220,6 +220,8 @@ struct APIAtlas {
     static let authenticatedOTP = "v2/auth/sms/send"
     static let verifyAuthenticatedOTPCodeUrl = "v2/auth/token/validate"
     
+    //Fogot Password
+    static let forgotPasswordV2 = "v2/user/resetPassword"
 }
 
 class APIManager: AFHTTPSessionManager {
