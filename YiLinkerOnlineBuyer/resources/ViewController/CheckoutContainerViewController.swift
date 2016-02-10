@@ -896,10 +896,13 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
                     SessionManager.setUserFullName(fullName)
                     SessionManager.setFullAddress(address)
                     
-                    self.isValidToSelectPayment = true
                     
+                    self.fireGetOTP(registerModel.mobileNumber, areaCode: "63", type: "guest_checkout", storeType: "")
+                    
+                    
+                   /* self.isValidToSelectPayment = true
                     self.selectedIndex++
-                    self.setSelectedViewControllerWithIndex(self.selectedIndex, transition: UIViewAnimationOptions.TransitionFlipFromLeft)
+                    self.setSelectedViewControllerWithIndex(self.selectedIndex, transition: UIViewAnimationOptions.TransitionFlipFromLeft)*/
                 } else {
                     let message: String = dictionary["message"] as! String
                     UIAlertController.displayErrorMessageWithTarget(self, errorMessage: message)
@@ -1086,7 +1089,14 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
                 } else if refreshType == .SaveBasicInfo {
                     self.fireSaveBasicInfoWithFirstName(values[0] as! String, lastName: values[1] as! String, mobileNumber: values[2] as! String)
                 } else if refreshType == .VerifyOTP {
-                    self.fireVerifyOTPCode(self.summaryViewController!.mobileNumber, verificationCode:  values[0] as! String, type: "checkout", storeType: "0", verifyNumberViewController: values[1] as! VerifyNumberViewController)
+                    var mobileNumber: String = ""
+                    if SessionManager.isLoggedIn() {
+                        mobileNumber = self.summaryViewController!.mobileNumber
+                    } else {
+                        mobileNumber = values[0] as! String
+                    }
+                    
+                   self.fireVerifyOTPCode(mobileNumber, verificationCode:  values[2] as! String, type: "checkout", storeType: "", verifyNumberViewController: values[1] as! VerifyNumberViewController)
                 }
             } else {
                 //Forcing user to logout.
@@ -1149,9 +1159,17 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
         verifyNumberViewController.moveScreenToDefaultPosition()
         
         verifyNumberViewController.startLoading()
+        var mobileNumber: String = ""
         
         if verifyNumberViewController.submitButton.titleLabel!.text == "SUBMIT" {
-            self.fireVerifyOTPCode(self.summaryViewController!.mobileNumber, verificationCode: textField.text, type: "checkout", storeType: "0",verifyNumberViewController: verifyNumberViewController)
+            if SessionManager.isLoggedIn() {
+                mobileNumber =  self.summaryViewController!.mobileNumber
+            } else {
+                let registerModel: RegisterModel = self.summaryViewController!.guestUser()
+                mobileNumber = registerModel.mobileNumber
+            }
+            
+            self.fireVerifyOTPCode(mobileNumber, verificationCode: textField.text, type: "checkout", storeType: "",verifyNumberViewController: verifyNumberViewController)
         } else {
             Delay.delayWithDuration(3.0, completionHandler: { (success) -> Void in
                 verifyNumberViewController.stopLoading()
@@ -1208,8 +1226,14 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
         successModalViewController.dismissViewControllerAnimated(true, completion: nil)
         self.hideDimView()
         
-        self.selectedIndex++
-        self.setSelectedViewControllerWithIndex(self.selectedIndex, transition: UIViewAnimationOptions.TransitionFlipFromLeft)
+        if SessionManager.isLoggedIn() {
+            self.selectedIndex++
+            self.setSelectedViewControllerWithIndex(self.selectedIndex, transition: UIViewAnimationOptions.TransitionFlipFromLeft)
+        } else {
+            self.isValidToSelectPayment = true
+            self.selectedIndex++
+            self.setSelectedViewControllerWithIndex(self.selectedIndex, transition: UIViewAnimationOptions.TransitionFlipFromLeft)
+        }
     }
     
     //MARK: -
@@ -1266,7 +1290,7 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
         
         WebServiceManager.fireUnauthenticatedOTPRequestWithUrl(APIAtlas.unauthenticateOTP, contactNumber: contactNumber, areaCode: areaCode, type: type, storeType: storeType, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
             if successful {
-                self.fireGetAuthenticatedOTP()
+                self.showVerifyNumberModal()
             } else {
                 self.yiHud?.hide()
                 if requestErrorType == .ResponseError {
@@ -1323,7 +1347,19 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
     //MARK: - 
     //MARK: - Fire VerifyOTPCode
     func fireVerifyOTPCode(contactNo: String, verificationCode: String, type: String, storeType: String, verifyNumberViewController: VerifyNumberViewController) {
-        WebServiceManager.fireVerifyOTPCodeWithUrl(APIAtlas.verifyAuthenticatedOTPCodeUrl, contactNo: contactNo, verificationCode: verificationCode, type: type, storeType: storeType, accessToken: SessionManager.accessToken()) { (successful, responseObject, requestErrorType) -> Void in
+        var url: String = ""
+        var type2: String = ""
+        if SessionManager.isLoggedIn() {
+            url = APIAtlas.verifyAuthenticatedOTPCodeUrl
+            type2 = "checkout"
+        } else {
+            url = APIAtlas.verifyUnAuthenticatedOTPCodeUrl
+            type2 = "guest_checkout"
+        }
+        
+        WebServiceManager.fireVerifyOTPCodeWithUrl(url, contactNo: contactNo, verificationCode: verificationCode, type: type2, storeType: storeType, accessToken: SessionManager.accessToken()) { (successful, responseObject, requestErrorType) -> Void in
+            
+            self.yiHud?.hide()
             
             if successful {
                 self.showVerifiedSuccessModal(verifyNumberViewController)
@@ -1331,9 +1367,9 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
                 println("contact number: \(contactNo)")
                 if requestErrorType == .ResponseError {
                     let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
-                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                    verifyNumberViewController.showWrongCodeLabel()
                 }  else if requestErrorType == .AccessTokenExpired {
-                    self.fireRefreshToken(.VerifyOTP, values: [verificationCode, verifyNumberViewController])
+                    self.fireRefreshToken(.VerifyOTP, values: [verificationCode, verifyNumberViewController, contactNo])
                 } else if requestErrorType == .PageNotFound {
                     Toast.displayToastWithMessage("Page not found.", duration: 1.5, view: self.view)
                 } else if requestErrorType == .NoInternetConnection {
