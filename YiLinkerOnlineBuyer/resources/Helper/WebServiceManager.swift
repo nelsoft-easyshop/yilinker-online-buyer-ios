@@ -128,6 +128,7 @@ class WebServiceManager: NSObject {
     
     //Register
     static let verificationCodeKey = "verificationCode"
+    static let referralCodeRegistrationKey = "referralCode"
     
     //MARK: -
     //MARK: - Fire Login Request With URL
@@ -853,7 +854,7 @@ class WebServiceManager: NSObject {
     class func fireRegisterRequestWithUrl(url: String, contactNumber: String, password: String, areaCode: String, referralCode: String,  verificationCode: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
         let manager: APIManager = APIManager.sharedInstance
         
-        let parameters: NSDictionary = [self.contactNumberKey: contactNumber, self.passwordKey: password, self.areaCodeKey: areaCode, self.referralCodeKey: referralCode, self.verificationCodeKey: verificationCode]
+        let parameters: NSDictionary = [self.contactNumberKey: contactNumber, self.passwordKey: password, self.areaCodeKey: areaCode, self.referralCodeRegistrationKey: referralCode, self.verificationCodeKey: verificationCode]
         
         if Reachability.isConnectedToNetwork() {
             manager.POST(url, parameters: parameters, success: {
