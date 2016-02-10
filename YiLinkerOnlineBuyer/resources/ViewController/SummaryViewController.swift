@@ -48,6 +48,7 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
     var firstName: String = ""
     var lastName: String = ""
     var mobileNumber: String = ""
+    var email: String = ""
     
     //MARK: - 
     //MARK: - Life Cycle
@@ -85,8 +86,8 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
             self.lastName = SessionManager.lastName()
         }
         
-        if SessionManager.mobileNumber() != "" {
-            self.mobileNumber = SessionManager.mobileNumber()
+        if SessionManager.emailAddress() != "" {
+            self.email = SessionManager.emailAddress()
         }
         
         self.tableView.reloadData()
@@ -776,9 +777,9 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
             cell.setLastNameAndDisabledTextFieldWithValue(SessionManager.lastName())
         } else if SessionManager.mobileNumber() != "" {
             cell.setMobileNumberAndDisabledTextWithFieldWithValue(SessionManager.mobileNumber())
+        } else if SessionManager.emailAddress() != "" {
+            cell.setEmailAndDisabledTextFieldWithValue(SessionManager.emailAddress())
         }
-        
-        cell.setEmailAndDisabledTextFieldWithValue("")
         
         return cell
     }
@@ -862,6 +863,8 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
             self.lastName = textValue
         } else if textField == incompleteRequirementsTableViewCell.mobileNumberTextField {
             self.mobileNumber = textValue
+        } else if textField == incompleteRequirementsTableViewCell.emailAddressTextField {
+            self.email = textValue
         }
     }
     
@@ -881,6 +884,12 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
                 self.tableView.endEditing(true)
             }
         } else if textField.isEqual(incompleteRequirementsTableViewCell.mobileNumberTextField) {
+            if incompleteRequirementsTableViewCell.emailAddressTextField.enabled == true {
+                incompleteRequirementsTableViewCell.emailAddressTextField.becomeFirstResponder()
+            } else {
+                self.tableView.endEditing(true)
+            }
+        } else if textField.isEqual(incompleteRequirementsTableViewCell.emailAddressTextField) {
             self.tableView.endEditing(true)
         }
     }

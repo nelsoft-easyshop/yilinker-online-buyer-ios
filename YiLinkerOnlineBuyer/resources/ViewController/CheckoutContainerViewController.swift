@@ -1215,7 +1215,6 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
         self.showHUD()
         WebServiceManager.fireSaveBasicInfoWithUrl(APIAtlas.saveBasicInfoUrl, firstName: firstName, lastName: lastName, contactNo: mobileNumber, accessToken: SessionManager.accessToken()) { (successful, responseObject, requestErrorType) -> Void in
             self.yiHud?.hide()
-            println("mobile number: \(mobileNumber)")
             println(responseObject as! NSDictionary)
             if successful {
                 println(responseObject)
