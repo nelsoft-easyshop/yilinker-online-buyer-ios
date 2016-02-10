@@ -345,7 +345,6 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
         self.paymentLabel.text = CheckoutStrings.payment
         self.overViewLabel.text = CheckoutStrings.overView
         
-        self.continueButton.setTitle(CheckoutStrings.saveAndContinue, forState: UIControlState.Normal)
         self.initDimView()
     }
     
@@ -486,7 +485,11 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
     func setSelectedViewControllerWithIndex(index: Int, transition: UIViewAnimationOptions) {
         if index == 0 {
             self.firsCircle()
-            self.continueButton(CheckoutStrings.saveAndContinue)
+            if SessionManager.isMobileVerified() {
+                self.continueButton.setTitle(CheckoutStrings.saveAndContinue, forState: UIControlState.Normal)
+            } else {
+                self.continueButton.setTitle("Save and Verify", forState: UIControlState.Normal)
+            }
         } else if index == 1 {
             self.secondCircle()
             self.continueButton(CheckoutStrings.saveAndGoToPayment)
