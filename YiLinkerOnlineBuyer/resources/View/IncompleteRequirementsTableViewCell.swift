@@ -65,7 +65,6 @@ class IncompleteRequirementsTableViewCell: UITableViewCell, UITextFieldDelegate 
         self.firstNameLabel.required()
         self.lastNameLabel.required()
         self.mobileNumberLabel.required()
-        self.emailAddressLabel.required()
     }
     
     //MARK: -

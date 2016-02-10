@@ -129,7 +129,7 @@ struct APIAtlas {
     static let activityLogs = "v1/auth/user/activityLog?access_token="
     static let getCategories = "v1/product/getCategories?parentId="
     static let productList = "v1/product/getProductList"
-    static let guestUserUrl = "v1/guestUser"
+    static let guestUserUrl = "v2/guestUser"
     static let updateMobileNumber = "v1/auth/user/changeContactNumber"
     static let smsVerification = "v1/auth/sms/verify"
     static let changePassword = "v1/auth/user/changePassword"
