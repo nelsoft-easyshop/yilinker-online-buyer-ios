@@ -773,11 +773,17 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         if SessionManager.firstName() != "" {
             cell.setFirstNameAndDisabledTextFieldWithValue(SessionManager.firstName())
-        } else if SessionManager.lastName() != "" {
+        }
+       
+        if SessionManager.lastName() != "" {
             cell.setLastNameAndDisabledTextFieldWithValue(SessionManager.lastName())
-        } else if SessionManager.mobileNumber() != "" {
+        }
+        
+        if SessionManager.mobileNumber() != "" {
             cell.setMobileNumberAndDisabledTextWithFieldWithValue(SessionManager.mobileNumber())
-        } else if SessionManager.emailAddress() != "" {
+        }
+        
+        if SessionManager.emailAddress() != "" {
             cell.setEmailAndDisabledTextFieldWithValue(SessionManager.emailAddress())
         }
         
