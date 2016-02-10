@@ -6,8 +6,10 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="OverViewViewController" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
             <connections>
+                <outlet property="continueShoppingButton" destination="62h-p9-N3Y" id="4Qt-8r-4mr"/>
                 <outlet property="tableView" destination="8sQ-Kd-ADX" id="aHx-3v-QlP"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+                <outlet property="viewTransactionButton" destination="foZ-Ak-RUq" id="zNK-XU-ocT"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -15,8 +17,38 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="foZ-Ak-RUq">
+                    <rect key="frame" x="10" y="463" width="300" height="40"/>
+                    <color key="backgroundColor" red="0.2666666667" green="0.64313725489999995" blue="0.56862745100000001" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="40" id="cg1-6U-Ag9"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <state key="normal" title="VIEW TRANSACTION">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="viewTransaction:" destination="-1" eventType="touchUpInside" id="Z9Z-0z-gce"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="62h-p9-N3Y">
+                    <rect key="frame" x="10" y="511" width="300" height="40"/>
+                    <color key="backgroundColor" red="0.3803921569" green="0.12549019610000001" blue="0.46666666670000001" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="40" id="erw-4e-Gsa"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <state key="normal" title="CONTINUE SHOPPING">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="continueShopping:" destination="-1" eventType="touchUpInside" id="OCI-I1-SoZ"/>
+                    </connections>
+                </button>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="8sQ-Kd-ADX">
-                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="450"/>
                     <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
                     <color key="sectionIndexBackgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
                     <connections>
@@ -27,10 +59,16 @@
             </subviews>
             <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
-                <constraint firstItem="8sQ-Kd-ADX" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="XXg-4B-hQU"/>
-                <constraint firstAttribute="trailing" secondItem="8sQ-Kd-ADX" secondAttribute="trailing" id="Z7H-Jd-ZaG"/>
-                <constraint firstItem="8sQ-Kd-ADX" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="f2F-ij-5dx"/>
-                <constraint firstAttribute="bottom" secondItem="8sQ-Kd-ADX" secondAttribute="bottom" id="zbg-o0-sdK"/>
+                <constraint firstItem="8sQ-Kd-ADX" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="AVo-aj-Oei"/>
+                <constraint firstAttribute="bottom" secondItem="62h-p9-N3Y" secondAttribute="bottom" constant="17" id="EQj-12-7O7"/>
+                <constraint firstAttribute="trailing" secondItem="foZ-Ak-RUq" secondAttribute="trailing" constant="10" id="Lme-We-uu1"/>
+                <constraint firstItem="foZ-Ak-RUq" firstAttribute="top" secondItem="8sQ-Kd-ADX" secondAttribute="bottom" constant="13" id="QcP-BU-cYO"/>
+                <constraint firstItem="8sQ-Kd-ADX" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="TsL-S0-86K"/>
+                <constraint firstItem="foZ-Ak-RUq" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="10" id="dAf-Ev-WMf"/>
+                <constraint firstAttribute="trailing" secondItem="62h-p9-N3Y" secondAttribute="trailing" constant="10" id="xDs-8k-lkU"/>
+                <constraint firstItem="62h-p9-N3Y" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="10" id="xnb-RA-RcQ"/>
+                <constraint firstItem="62h-p9-N3Y" firstAttribute="top" secondItem="foZ-Ak-RUq" secondAttribute="bottom" constant="8" id="yH0-RT-UYC"/>
+                <constraint firstAttribute="trailing" secondItem="8sQ-Kd-ADX" secondAttribute="trailing" id="ywE-xJ-HMJ"/>
             </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
         </view>

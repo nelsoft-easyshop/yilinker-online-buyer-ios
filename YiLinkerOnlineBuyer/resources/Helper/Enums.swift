@@ -66,6 +66,8 @@ enum CheckoutRefreshType {
     case OverView
     case Voucher
     case SetAddress
+    case SaveBasicInfo
+    case VerifyOTP
 }
 
 enum TargetType {

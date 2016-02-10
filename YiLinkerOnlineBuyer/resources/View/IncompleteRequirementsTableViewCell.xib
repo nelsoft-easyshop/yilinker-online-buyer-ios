@@ -40,17 +40,6 @@
                             <constraint firstAttribute="height" constant="1" id="Fc7-3t-TVl"/>
                         </constraints>
                     </view>
-                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="eq1-Fw-Rcq">
-                        <rect key="frame" x="10" y="61" width="151" height="30"/>
-                        <constraints>
-                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="151" id="5qJ-77-BnS"/>
-                            <constraint firstAttribute="height" constant="30" id="LmJ-Ez-x7r"/>
-                            <constraint firstAttribute="width" priority="750" constant="151" id="jIZ-oD-gMe"/>
-                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="30" id="nOb-3U-La5"/>
-                        </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="next"/>
-                    </textField>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Last Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wgy-Vn-hWQ">
                         <rect key="frame" x="170" y="34" width="83" height="25"/>
                         <constraints>
@@ -69,6 +58,7 @@
                             <constraint firstAttribute="height" constant="30" id="VJ5-Tq-jJT"/>
                             <constraint firstAttribute="width" priority="750" constant="151" id="dbQ-dL-vlj"/>
                         </constraints>
+                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="next"/>
                     </textField>
@@ -82,7 +72,7 @@
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Email Address" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FER-a2-WiK">
+                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Email Address" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FER-a2-WiK">
                         <rect key="frame" x="170" y="99" width="109" height="25"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="109" id="gJ0-QX-Tfu"/>
@@ -92,7 +82,7 @@
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="iKW-TT-NYj">
+                    <textField hidden="YES" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="iKW-TT-NYj">
                         <rect key="frame" x="170" y="126" width="151" height="30"/>
                         <constraints>
                             <constraint firstAttribute="width" priority="750" constant="151" id="6wI-xP-KRl"/>
@@ -121,8 +111,21 @@
                             <constraint firstAttribute="width" priority="750" constant="151" id="ahA-Mn-lmA"/>
                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="151" id="uTc-nI-G1G"/>
                         </constraints>
+                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences" keyboardType="numberPad" returnKeyType="next"/>
+                    </textField>
+                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="eq1-Fw-Rcq">
+                        <rect key="frame" x="10" y="61" width="151" height="30"/>
+                        <constraints>
+                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="151" id="5qJ-77-BnS"/>
+                            <constraint firstAttribute="height" constant="30" id="LmJ-Ez-x7r"/>
+                            <constraint firstAttribute="width" priority="750" constant="151" id="jIZ-oD-gMe"/>
+                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="30" id="nOb-3U-La5"/>
+                        </constraints>
+                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="next"/>
                     </textField>
                 </subviews>
                 <constraints>

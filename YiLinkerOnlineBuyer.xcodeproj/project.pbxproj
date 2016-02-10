@@ -169,6 +169,7 @@
 		0C742FA81C58A5A800A31441 /* FeedBackTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C742FA61C58A5A800A31441 /* FeedBackTableViewCell.xib */; };
 		0C74406C1BDF42EB0019792A /* Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C74406B1BDF42EB0019792A /* Toast.swift */; };
 		0C74406E1BDF4A8A0019792A /* Delay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C74406D1BDF4A8A0019792A /* Delay.swift */; };
+		0C7441141C6475D100997F91 /* BasicInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C7441131C6475D100997F91 /* BasicInfoModel.swift */; };
 		0C79FD941C3B51FF00B6F2DF /* WebServiceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C79FD931C3B51FF00B6F2DF /* WebServiceManager.swift */; };
 		0C8A7C7B1B6772670039F013 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0C8A7C7A1B6772670039F013 /* Images.xcassets */; };
 		0C8A7C8A1B6772670039F013 /* YiLinkerOnlineBuyerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8A7C891B6772670039F013 /* YiLinkerOnlineBuyerTests.swift */; };
@@ -755,6 +756,7 @@
 		0C742FA61C58A5A800A31441 /* FeedBackTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FeedBackTableViewCell.xib; sourceTree = "<group>"; };
 		0C74406B1BDF42EB0019792A /* Toast.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Toast.swift; sourceTree = "<group>"; };
 		0C74406D1BDF4A8A0019792A /* Delay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Delay.swift; sourceTree = "<group>"; };
+		0C7441131C6475D100997F91 /* BasicInfoModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicInfoModel.swift; sourceTree = "<group>"; };
 		0C79FD931C3B51FF00B6F2DF /* WebServiceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebServiceManager.swift; sourceTree = "<group>"; };
 		0C8A7C6E1B6772670039F013 /* YiLinkerOnlineBuyer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YiLinkerOnlineBuyer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0C8A7C721B6772670039F013 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -1601,6 +1603,7 @@
 				F7E294861BFA27AC00A465A9 /* ActivityLogItemsModel.swift */,
 				0CC53C861C018289002361D4 /* VoucherModel.swift */,
 				0C144DD91C0806B0000728B4 /* HomeModel */,
+				0C7441131C6475D100997F91 /* BasicInfoModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -2627,6 +2630,7 @@
 				79F417761B7C3ADB0047D02D /* CartProductAttributeViewController.swift in Sources */,
 				0C99374A1B750583000D6074 /* HalfVerticalImageCollectionViewCell.swift in Sources */,
 				B77B8DC31B9B54B40002C513 /* W_Conversation.swift in Sources */,
+				0C7441141C6475D100997F91 /* BasicInfoModel.swift in Sources */,
 				0C11D2311C103B620063D06E /* UIScrollViewExtension.swift in Sources */,
 				F7D9BAB91BBD70830097B76C /* TransactionProductDetailsDescriptionViewController.swift in Sources */,
 				B77B8DD91B9B554A0002C513 /* MessageThreadVC.swift in Sources */,

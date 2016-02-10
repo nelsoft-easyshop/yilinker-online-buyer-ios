@@ -12,6 +12,7 @@
                 <outlet property="firstCircleLabel" destination="uJy-WJ-8t1" id="UfQ-b4-ckW"/>
                 <outlet property="overViewLabel" destination="vpw-I9-coW" id="JfE-up-nYL"/>
                 <outlet property="paymentLabel" destination="tLl-69-YyH" id="cyL-RC-QX9"/>
+                <outlet property="saveAndContinueButtonHeightConstraint" destination="u0W-Bz-zX4" id="esW-Fq-ahK"/>
                 <outlet property="secondCircleLabel" destination="1GJ-ux-GGX" id="RCf-lR-NrA"/>
                 <outlet property="summaryLabel" destination="DJG-FG-X4k" id="Kcf-Rz-HxD"/>
                 <outlet property="thirdCircleLabel" destination="dXs-e6-m70" id="Jes-bO-WXu"/>
@@ -183,7 +184,7 @@
                 <constraint firstItem="1oI-tI-jhe" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="zR6-1v-Jcb"/>
             </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
-            <point key="canvasLocation" x="391.5" y="394.5"/>
+            <point key="canvasLocation" x="515.5" y="219.5"/>
         </view>
     </objects>
 </document>
