@@ -325,21 +325,21 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
         if requestErrorType == .ResponseError {
             //Error in api requirements
             let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
-            Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message)
         } else if requestErrorType == .AccessTokenExpired {
             self.fireRefreshToken(requestType, hasImage: hasImage, firstName: firstName, lastName: lastName, profilePhoto: profilePhoto, userDocument: userDocument, referrerPersonCode: self.referrerPersonCode)
         } else if requestErrorType == .PageNotFound {
             //Page not found
-            Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
+            Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.navigationController!.view)
         } else if requestErrorType == .NoInternetConnection {
             //No internet connection
-            Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+            Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.navigationController!.view)
         } else if requestErrorType == .RequestTimeOut {
             //Request timeout
-            Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+            Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.navigationController!.view)
         } else if requestErrorType == .UnRecognizeError {
             //Unhandled error
-            Toast.displayToastWithMessage(Constants.Localized.error, duration: 1.5, view: self.view)
+            Toast.displayToastWithMessage(Constants.Localized.error, duration: 1.5, view: self.navigationController!.view)
         }
     }
 
