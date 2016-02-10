@@ -100,6 +100,7 @@ class ProfileViewController: UIViewController{
                         SessionManager.setFirstName(self.profileDetails.firstName)
                         SessionManager.setLastName(self.profileDetails.lastName)
                         SessionManager.setMobileNumber(self.profileDetails.contactNumber)
+                        SessionManager.setEmailAddress(self.profileDetails.email)
                         
                         self.tableView.hidden = false
                         self.tableView.reloadData()

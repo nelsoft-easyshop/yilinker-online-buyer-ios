@@ -86,6 +86,23 @@ class SessionManager {
         NSUserDefaults.standardUserDefaults().synchronize()
     }
     
+    //MARK: -
+    //MARK: - Set Email Address
+    class func setEmailAddress(lastName: String) {
+        NSUserDefaults.standardUserDefaults().setObject(lastName, forKey: "emailAddress")
+        NSUserDefaults.standardUserDefaults().synchronize()
+    }
+    
+    //MARK: -
+    //MARK: - Email Address
+    class func emailAddress() -> String {
+        var result: String = ""
+        if let val: AnyObject = NSUserDefaults.standardUserDefaults().objectForKey("emailAddress") as? String {
+            result = val as! String
+        }
+        return result
+    }
+    
     //MARK: - 
     //MARK: - First Name
     class func firstName() -> String {

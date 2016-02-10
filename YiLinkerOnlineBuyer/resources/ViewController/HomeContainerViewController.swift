@@ -580,6 +580,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                 SessionManager.setFirstName(self.profileModel.firstName)
                 SessionManager.setLastName(self.profileModel.lastName)
                 SessionManager.setMobileNumber(self.profileModel.contactNumber)
+                SessionManager.setEmailAddress(self.profileModel.email)
                 
                 println("first name: \(self.profileModel.firstName)")
                 println("last name: \(self.profileModel.lastName)")
