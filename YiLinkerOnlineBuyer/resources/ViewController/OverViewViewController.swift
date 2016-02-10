@@ -67,7 +67,7 @@ class OverViewViewController: UIViewController, UITableViewDelegate, UITableView
         let cell: PlainTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(Constants.Checkout.OverView.plainTableViewCellNibNameAndIdentifier, forIndexPath: indexPath) as! PlainTableViewCell
         
         cell.productNameLabel.text = self.paymentSuccessModel.data.orderedProductsModel[indexPath.row].productName
-        cell.productQuantityLabel.text = "\(self.paymentSuccessModel.data.orderedProductsModel[indexPath.row].quantity)"
+        cell.productQuantityLabel.text = "x\(self.paymentSuccessModel.data.orderedProductsModel[indexPath.row].quantity)"
         
         return cell
     }
