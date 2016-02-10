@@ -27,28 +27,28 @@ struct APIAtlas {
     
     static func COD() -> String {
         if SessionManager.isLoggedIn() {
-            return "v1/auth/payment/doPaymentCod"
+            return "v2/auth/payment/doPaymentCod"
         } else {
             SessionManager.loadCookies()
-            return "v1/payment/doPaymentCod"
+            return "v2/payment/doPaymentCod"
         }
     }
     
     static func pesoPay() -> String {
         if SessionManager.isLoggedIn() {
-            return "v1/auth/payment/doPesoPay"
+            return "v2/auth/payment/doPesoPay"
         } else {
             SessionManager.loadCookies()
-            return "v1/payment/doPesoPay"
+            return "v2/payment/doPesoPay"
         }
     }
     
     static func overView() -> String {
         if SessionManager.isLoggedIn() {
-            return "v1/auth/payment/checkoutOverview"
+            return "v2/auth/payment/checkoutOverview"
         } else {
             SessionManager.loadCookies()
-            return "v1/payment/checkoutOverview"
+            return "v2/payment/checkoutOverview"
         }
     }
     
@@ -72,20 +72,20 @@ struct APIAtlas {
     
     static func updateCheckout() -> String {
         if SessionManager.isLoggedIn() {
-            return "v1/auth/cart/cartToCheckout"
+            return "v2/auth/cart/cartToCheckout"
         } else {
             SessionManager.loadCookies()
-            return "v1/cart/cartToCheckout"
+            return "v2/cart/cartToCheckout"
         }
     }
     
     
     static func voucher() -> String {
         if SessionManager.isLoggedIn() {
-            return "v1/auth/cart/applyVoucher"
+            return "v2/auth/cart/applyVoucher"
         } else {
             SessionManager.loadCookies()
-            return "v1/cart/applyVoucher"
+            return "v2/cart/applyVoucher"
         }
     }
     
@@ -119,10 +119,10 @@ struct APIAtlas {
     static let citiesUrl = "v1/location/getChildCities"
     static let barangay = "v1/location/getBarangaysByCity"
     static let addAddressUrl = "v1/auth/address/addNewAddress"
-    static let updateCheckoutUrl = "v1/auth/cart/cartToCheckout"
-    static let updateGuestCheckout = "v1/cart/cartToCheckout"
+    static let updateCheckoutUrl = "v2/auth/cart/cartToCheckout"
+    static let updateGuestCheckout = "v2/cart/cartToCheckout"
     static let editAddress = "v1/auth/address/editUserAddress"
-    static let setCheckoutAddressUrl = "v1/auth/user/setAddress"
+    static let setCheckoutAddressUrl = "v2/auth/user/setAddress"
     static let cashOnDeliveryUrl = APIAtlas.COD()
     static let pesoPayUrl = APIAtlas.pesoPay()
     static let overViewUrl = APIAtlas.overView()
@@ -219,7 +219,7 @@ struct APIAtlas {
     static let saveBasicInfoUrl = "v1/auth/update-basic-info"
     static let authenticatedOTP = "v2/auth/sms/send"
     static let verifyAuthenticatedOTPCodeUrl = "v2/auth/token/validate"
-    
+    static let verifyUnAuthenticatedOTPCodeUrl = "v2/token/validate"
     //Fogot Password
     static let forgotPasswordV2 = "v2/user/resetPassword"
 }

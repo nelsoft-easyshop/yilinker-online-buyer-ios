@@ -90,6 +90,10 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
             self.email = SessionManager.emailAddress()
         }
         
+        if SessionManager.mobileNumber() != "" {
+            self.mobileNumber = SessionManager.mobileNumber()
+        }
+        
         self.tableView.reloadData()
     }
     

@@ -95,7 +95,7 @@ class VerifyNumberViewController: UIViewController, UITextFieldDelegate {
     //MARK: - Show Wrong Code Label
     func showWrongCodeLabel() {
         self.timeLeftVerticalSpacingConstant.constant = 0
-        
+        self.stopLoading()
         UIView.animateWithDuration(0.5, animations: { () -> Void in
             self.view.layoutIfNeeded()
             }, completion: { (Bool) -> Void in
@@ -174,7 +174,8 @@ class VerifyNumberViewController: UIViewController, UITextFieldDelegate {
         self.wrongCodeLabel.hidden = false
         
         self.updateSubmitButtonUIForResendCode()
-        
+        self.stopLoading()
+            
         UIView.animateWithDuration(0.5, animations: { () -> Void in
             self.view.layoutIfNeeded()
             self.submitButton.layoutIfNeeded()
@@ -215,7 +216,7 @@ class VerifyNumberViewController: UIViewController, UITextFieldDelegate {
         
         self.codeTextField.hidden = false
         self.timerLabel.hidden = false
-        
+        self.codeTextField.text = ""
         self.containerViewHeightConstraint.constant = 240
         
         self.wrongCodeLabel.text = "Wrong Code"
@@ -223,7 +224,9 @@ class VerifyNumberViewController: UIViewController, UITextFieldDelegate {
         
         self.updateSubmitButtonUIForSubmitCode()
         
-        self.timeInterval = 10
+        self.timeInterval = 300
+        
+        self.view.userInteractionEnabled = true
         
         UIView.animateWithDuration(0.5, animations: { () -> Void in
             self.view.layoutIfNeeded()

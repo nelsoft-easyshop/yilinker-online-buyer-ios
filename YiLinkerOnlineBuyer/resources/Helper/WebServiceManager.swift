@@ -1117,8 +1117,16 @@ class WebServiceManager: NSObject {
     //MARK: - Verify OTP Code
     class func fireVerifyOTPCodeWithUrl(url: String, contactNo: String, verificationCode: String, type: String, storeType: String, accessToken: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) -> NSURLSessionDataTask {
         let manager: APIManager = APIManager.sharedInstance
+        var parameters: NSDictionary = NSDictionary()
         
-        let parameters: NSDictionary = [self.contactNumberKey: contactNo, self.verificationCodeKey: verificationCode, self.typeKey: type, self.storeTypeKey: storeType, self.accessTokenKey: accessToken]
+        if SessionManager.isLoggedIn() {
+            parameters = [self.contactNumberKey: contactNo, self.verificationCodeKey: verificationCode, self.typeKey: type, self.storeTypeKey: storeType, self.accessTokenKey: accessToken]
+        } else {
+            parameters = [self.contactNumberKey: contactNo, self.verificationCodeKey: verificationCode, self.typeKey: type]
+        }
+        
+        println(parameters)
+        println(url)
         
         let sessionDataTask: NSURLSessionDataTask = self.firePostRequestSessionDataTaskWithUrl(url, parameters: parameters) { (successful,  responseObject, requestErrorType) -> Void in
             actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
