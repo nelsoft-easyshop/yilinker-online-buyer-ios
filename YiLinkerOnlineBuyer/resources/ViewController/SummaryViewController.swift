@@ -411,7 +411,7 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     func guestCheckoutTableViewCell(guestCheckoutTableViewCell: GuestCheckoutTableViewCell, didClickDone textfieldTag: Int, textField: UITextField) {
         self.view.endEditing(true)
-        self.checkoutContainerViewController.fireGuestCheckout()
+//        self.checkoutContainerViewController.fireGuestCheckout()
     }
     func guestCheckoutTableViewCell(guestCheckoutTableViewCell: GuestCheckoutTableViewCell, didStartEditingTextFieldWithTag textfieldTag: Int, textField: UITextField) {
         self.currentTextFieldTag = textfieldTag
