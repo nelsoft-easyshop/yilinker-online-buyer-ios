@@ -199,7 +199,7 @@ struct APIAtlas {
     //Voucher Url
     static let voucherUrl = APIAtlas.voucher()
     
-    static let mergeFacebook = "v1/facebook/auth"
+    static let mergeFacebook = "v1/socialmedia/merge"
     
     //Webview
     static let flashSale = "flash-sale"

@@ -498,6 +498,7 @@ class LoginAndRegisterTableViewController: UITableViewController {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
             self.dismissLoader()
+            println(responseObject)
             
             let loginModel: LoginModel = LoginModel.parseDataFromDictionary(responseObject as! NSDictionary)
             if loginModel.isSuccessful {
