@@ -90,15 +90,16 @@ class WebServiceManager: NSObject {
     static let cityIdIdKey = "cityId"
     
     //Guest User
-    static let guestFirstNameKey = "user_guest[firstName]"
-    static let guestLastNameKey = "user_guest[lastName]"
-    static let guestEmailKey = "user_guest[email]"
-    static let guestContactNumberKey = "user_guest[contactNumber]"
-    static let guestTitleKey = "user_address[title]"
-    static let guestStreetNameKey = "user_address[streetName]"
-    static let guestZipCodeKey = "user_address[zipCode]"
-    static let guestLocationKey = "user_address[location]"
-    static let guestIsDefaultKey = "user_address[isDefault]"
+    static let guestFirstNameKey = "firstName"
+    static let guestLastNameKey = "lastName"
+    static let guestEmailKey = "email"
+    static let guestContactNumberKey = "contactNumber"
+    static let guestTitleKey = "title"
+    static let guestStreetNameKey = "streetName"
+    static let guestZipCodeKey = "zipCode"
+    static let guestLocationKey = "location"
+    static let guestIsDefaultKey = "isDefault"
+    static let guestConfirmationCodeKey = "confirmationCode"
     
     //OverView
     static let transactionIdKey = "transactionId"
@@ -466,9 +467,9 @@ class WebServiceManager: NSObject {
     
     //MARK: -
     //MARK: - Fire Guest Checkout
-    class func fireGuestCheckoutWithUrl(url: String, firstName: String, lastName: String, email: String, contactNumber: String, title: String, streetName: String, zipCode: String, location: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+    class func fireGuestCheckoutWithUrl(url: String, firstName: String, lastName: String, email: String, contactNumber: String, title: String, streetName: String, zipCode: String, location: String, confirmationCode: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
         
-        let parameters: NSDictionary = ["user_guest[firstName]": firstName,
+        let parameters: NSDictionary = ["firstName": firstName,
             self.guestLastNameKey: lastName,
             self.guestEmailKey: email,
             self.guestContactNumberKey: contactNumber,
@@ -476,7 +477,8 @@ class WebServiceManager: NSObject {
             self.guestStreetNameKey: streetName,
             self.guestZipCodeKey: zipCode,
             self.guestLocationKey: location,
-            self.guestIsDefaultKey: true]
+            self.guestIsDefaultKey: true,
+            self.guestConfirmationCodeKey: confirmationCode]
         SessionManager.loadCookies()
         self.firePostRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
             actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
@@ -918,10 +920,10 @@ class WebServiceManager: NSObject {
     //MARK: -
     //MARK: - Fire Get Authenticated OTP (One Time Password) With URL
     //Parameters  "type":"register/forgot-password", "storeType":"0/1"
-    class func fireAuthenticatedOTPRequestWithUrl(url: String, accessToken: String, type: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+    class func fireAuthenticatedOTPRequestWithUrl(url: String, accessToken: String, type: String, contactNumber: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
         let manager: APIManager = APIManager.sharedInstance
         
-        let parameters: NSDictionary = [self.accessTokenKey: accessToken, self.typeKey: type]
+        let parameters: NSDictionary = [self.accessTokenKey: accessToken, self.typeKey: type, self.contactNumberKey: contactNumber]
         
         if Reachability.isConnectedToNetwork() {
             manager.POST(url, parameters: parameters, success: {
