@@ -1158,7 +1158,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     
     func showHUD() {
         self.yiHud = YiHUD.initHud()
-        self.yiHud!.showHUDToView(self.view)
+        self.yiHud!.showHUDToView(self.navigationController!.view)
     }
     
     func addBadge(type: String) {
