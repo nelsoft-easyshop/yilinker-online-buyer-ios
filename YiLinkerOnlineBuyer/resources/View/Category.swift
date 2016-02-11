@@ -74,6 +74,20 @@ extension UITextField {
         return passwordTest.evaluateWithObject(self.text)
     }
     
+    func isAphaOnly() -> Bool {
+        let passwordRegEx = "[A-Za-z]*"
+        let passwordTest = NSPredicate(format: "SELF MATCHES %@", passwordRegEx)
+        
+        return passwordTest.evaluateWithObject(self.text)
+    }
+    
+    func isNumericOnly() -> Bool {
+        let passwordRegEx = "[0-9]*"
+        let passwordTest = NSPredicate(format: "SELF MATCHES %@", passwordRegEx)
+        
+        return passwordTest.evaluateWithObject(self.text)
+    }
+    
     func isValidName() -> Bool {
         let nameRegex = "^[a-zA-Z ]*$"
         let nameTest = NSPredicate(format: "SELF MATCHES %@", nameRegex)

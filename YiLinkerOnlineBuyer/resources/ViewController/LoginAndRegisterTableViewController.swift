@@ -81,6 +81,7 @@ struct RegisterStrings {
     static let activationCodeRequired: String = StringHelper.localizedStringWithKey("ACTIVATION_CODE_REQUIRED_LOCALIZE_KEY")
     static let contactRequired: String = StringHelper.localizedStringWithKey("CONTACT_REQUIRED_LOCALIZE_KEY")
     static let numbersAndLettersOnly: String = StringHelper.localizedStringWithKey("NUMBER_LETTERS_LOCALIZE_KEY")
+    static let numbersAndLettersCombination: String = StringHelper.localizedStringWithKey("NUMBER_LETTERS_COMBINATION_LOCALIZE_KEY")
     static let successRegister: String = StringHelper.localizedStringWithKey("SUCCESS_REGISTER_LOCALIZED_KEY")
     static let thankyou: String = StringHelper.localizedStringWithKey("THANKYOU_LOCALIZED_KEY")
     
@@ -491,7 +492,7 @@ class LoginAndRegisterTableViewController: UITableViewController {
         self.showLoader()
         let manager: APIManager = APIManager.sharedInstance
         
-        let parameters: NSDictionary = [LoginConstants.clientIdKey: Constants.Credentials.clientID(), LoginConstants.clientSecretKey: Constants.Credentials.clientSecret(), LoginConstants.clientSecretKey: Constants.Credentials.grantBuyer, "token": facebookAccessToken, "accountType": "facebook"]
+        let parameters: NSDictionary = [LoginConstants.clientIdKey: Constants.Credentials.clientID(), LoginConstants.clientSecretKey: Constants.Credentials.clientSecret(), LoginConstants.clientSecretKey: Constants.Credentials.grantBuyer, LoginConstants.grantTypeKey: Constants.Credentials.grantBuyer, "token": facebookAccessToken, "accountType": "facebook"]
         
         manager.POST(APIAtlas.mergeFacebook, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
@@ -596,12 +597,14 @@ extension LoginAndRegisterTableViewController: LoginRegisterTableViewCellDelegat
             errorMessage = RegisterStrings.contactRequired
         } else if !simplifiedRegistrationCell.passwordTextField.isNotEmpty() {
             errorMessage = RegisterStrings.passwordRequired
-        } else if !simplifiedRegistrationCell.passwordTextField.isAlphaNumeric() {
-            errorMessage = RegisterStrings.illegalPassword
-        } else if !simplifiedRegistrationCell.passwordTextField.isValidPassword() {
-            errorMessage = RegisterStrings.numbersAndLettersOnly
+        } else if simplifiedRegistrationCell.passwordTextField.isNumericOnly() || simplifiedRegistrationCell.passwordTextField.isAphaOnly() {
+            errorMessage = RegisterStrings.numbersAndLettersCombination
         } else if !simplifiedRegistrationCell.passwordTextField.isGreaterThanEightCharacters() {
             errorMessage = RegisterStrings.eightCharacters
+        } else if !simplifiedRegistrationCell.passwordTextField.isValidPassword() {
+            errorMessage = RegisterStrings.numbersAndLettersOnly
+        }  else if !simplifiedRegistrationCell.passwordTextField.isAlphaNumeric() {
+            errorMessage = RegisterStrings.illegalPassword
         } else if !simplifiedRegistrationCell.confirmPasswordTextField.isNotEmpty() {
             errorMessage = RegisterStrings.reTypePasswordError
         } else if simplifiedRegistrationCell.passwordTextField.text != simplifiedRegistrationCell.confirmPasswordTextField.text {
@@ -698,12 +701,14 @@ extension LoginAndRegisterTableViewController: ForgotPasswordTableViewCellDelega
             errorMessage = RegisterStrings.contactRequired
         } else if !forgotPasswordCell.passwordTextField.isNotEmpty() {
             errorMessage = RegisterStrings.passwordRequired
-        } else if !forgotPasswordCell.passwordTextField.isAlphaNumeric() {
-            errorMessage = RegisterStrings.illegalPassword
-        } else if !forgotPasswordCell.passwordTextField.isValidPassword() {
-            errorMessage = RegisterStrings.numbersAndLettersOnly
+        } else if forgotPasswordCell.passwordTextField.isNumericOnly() || forgotPasswordCell.passwordTextField.isAphaOnly() {
+            errorMessage = RegisterStrings.numbersAndLettersCombination
         } else if !forgotPasswordCell.passwordTextField.isGreaterThanEightCharacters() {
             errorMessage = RegisterStrings.eightCharacters
+        } else if !forgotPasswordCell.passwordTextField.isValidPassword() {
+            errorMessage = RegisterStrings.numbersAndLettersOnly
+        }  else if !forgotPasswordCell.passwordTextField.isAlphaNumeric() {
+            errorMessage = RegisterStrings.illegalPassword
         } else if !forgotPasswordCell.confirmPasswordTextField.isNotEmpty() {
             errorMessage = RegisterStrings.reTypePasswordError
         } else if forgotPasswordCell.passwordTextField.text != forgotPasswordCell.confirmPasswordTextField.text {
