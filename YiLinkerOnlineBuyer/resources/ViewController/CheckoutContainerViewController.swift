@@ -909,14 +909,12 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
                     self.selectedIndex++
                     self.setSelectedViewControllerWithIndex(self.selectedIndex, transition: UIViewAnimationOptions.TransitionFlipFromLeft)*/
                 } else {
-                    let message: String = dictionary["message"] as! String
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: message)
+                    self.tempVerifyNumberViewController!.showWrongCodeLabel()
                 }
             } else {
                 if requestErrorType == .ResponseError {
-                    //Error in api requirements
                     let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
-                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                    self.tempVerifyNumberViewController!.showWrongCodeLabel()
                 } else if requestErrorType == .PageNotFound {
                     //Page not found
                     Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
