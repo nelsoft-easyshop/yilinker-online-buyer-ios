@@ -128,7 +128,7 @@ class WebServiceManager: NSObject {
     
     //Register
     static let verificationCodeKey = "verificationCode"
-    static let referralCodeRegistrationKey = "referralCode"
+    static let referralCodeRegistrationKey = "referrerCode"
     
     //MARK: -
     //MARK: - Fire Login Request With URL
