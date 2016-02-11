@@ -145,7 +145,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         super.viewDidLoad()
         
         let nib = UINib(nibName: "ReviewTableViewCell", bundle: nil)
-        self.tableView.registerNib(nib, forCellReuseIdentifier: "reviewIdentifier")
+        self.tableView.registerNib(nib, forCellReuseIdentifier: "ReviewTableViewCell")
         self.tableView.rowHeight = UITableViewAutomaticDimension
         self.tableView.estimatedRowHeight = 100.0
         
@@ -219,7 +219,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell: ReviewTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("reviewIdentifier") as! ReviewTableViewCell
+        let cell: ReviewTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("ReviewTableViewCell") as! ReviewTableViewCell
         
         cell.selectionStyle = UITableViewCellSelectionStyle.None
         
