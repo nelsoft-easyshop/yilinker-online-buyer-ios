@@ -646,6 +646,7 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
             (successful, responseObject, requestErrorType) -> Void in
             self.yiHud?.hide()
             
+            println(responseObject)
             if successful {
                 let jsonResult: NSDictionary = responseObject as! NSDictionary
                 if jsonResult["isSuccessful"] as! Bool != true {
@@ -881,7 +882,7 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
     func fireGuestCheckout() {
         self.showHUD()
         let registerModel: RegisterModel = self.summaryViewController!.guestUser()
-        WebServiceManager.fireGuestCheckoutWithUrl(APIAtlas.guestUserUrl, firstName: registerModel.firstName, lastName: registerModel.lastName, email: registerModel.emailAddress, contactNumber: registerModel.mobileNumber, title: registerModel.title, streetName: registerModel.streetName, zipCode: registerModel.zipCode, location: registerModel.location) {
+        WebServiceManager.fireGuestCheckoutWithUrl(APIAtlas.guestUserUrl, firstName: registerModel.firstName, lastName: registerModel.lastName, email: registerModel.emailAddress, contactNumber: registerModel.mobileNumber, title: registerModel.title, streetName: registerModel.streetName, zipCode: registerModel.zipCode, location: registerModel.location, confirmationCode: "") {
             (successful, responseObject, requestErrorType) -> Void in
             self.yiHud?.hide()
             if successful {
@@ -1256,7 +1257,7 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
                     }
                 } else {
                     if !SessionManager.isMobileVerified() {
-                        self.fireGetAuthenticatedOTP()
+                        self.fireGetAuthenticatedOTP(mobileNumber)
                     }
                 }
             } else {
@@ -1315,10 +1316,10 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
     
     //MARK: -
     //MARK: - Fire Get Authenticated OTP
-    func fireGetAuthenticatedOTP() {
+    func fireGetAuthenticatedOTP(mobileNumber: String) {
         self.showHUD()
         
-        WebServiceManager.fireAuthenticatedOTPRequestWithUrl(APIAtlas.authenticatedOTP, accessToken: SessionManager.accessToken(), type: "checkout") { (successful, responseObject, requestErrorType) -> Void in
+        WebServiceManager.fireAuthenticatedOTPRequestWithUrl(APIAtlas.authenticatedOTP, accessToken: SessionManager.accessToken(), type: "checkout", contactNumber: mobileNumber) { (successful, responseObject, requestErrorType) -> Void in
             self.yiHud?.hide()
             if successful {
                 self.showVerifyNumberModal()
