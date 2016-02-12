@@ -1103,10 +1103,10 @@ class WebServiceManager: NSObject {
     
     //MARK: -
     //MARK: - Fire Save Update Basic Info With Url
-    class func fireSaveBasicInfoWithUrl(url: String, firstName: String, lastName: String, contactNo: String, accessToken: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) -> NSURLSessionDataTask {
+    class func fireSaveBasicInfoWithUrl(url: String, firstName: String, lastName: String, contactNo: String, confirmationCode: String, email: String, accessToken: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) -> NSURLSessionDataTask {
         let manager: APIManager = APIManager.sharedInstance
         
-        let parameters: NSDictionary = [self.firstNameKey: firstName, self.lastNameKey: lastName, self.contactNoKey: contactNo, self.accessTokenKey: accessToken]
+        let parameters: NSDictionary = [self.firstNameKey: firstName, self.lastNameKey: lastName, self.contactNoKey: contactNo, self.guestConfirmationCodeKey: confirmationCode, self.emailKey: email, self.accessTokenKey: accessToken]
         
         let sessionDataTask: NSURLSessionDataTask = self.firePostRequestSessionDataTaskWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
             actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
