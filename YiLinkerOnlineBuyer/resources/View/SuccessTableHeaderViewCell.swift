@@ -14,6 +14,7 @@ class SuccessTableHeaderViewCell: UITableViewCell {
     @IBOutlet weak var congratsLabel: UILabel!
     @IBOutlet weak var successMessageLabel: UILabel!
     
+    @IBOutlet weak var messageLabel: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
     }

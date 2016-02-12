@@ -10,6 +10,7 @@
         </mutableArray>
         <mutableArray key="Panton.otf">
             <string>Panton-Regular</string>
+            <string>Panton-Regular</string>
         </mutableArray>
     </customFonts>
     <objects>
@@ -44,9 +45,21 @@
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="6" translatesAutoresizingMaskIntoConstraints="NO" id="g4W-VF-J2e">
+                                <rect key="frame" x="8" y="123" width="462" height="23"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="23" id="WTf-bK-C9i"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="12"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstAttribute="trailing" secondItem="g4W-VF-J2e" secondAttribute="trailing" constant="8" id="Gdh-zk-lIe"/>
+                            <constraint firstAttribute="bottom" secondItem="g4W-VF-J2e" secondAttribute="bottom" id="RqW-Ql-VGf"/>
+                            <constraint firstItem="g4W-VF-J2e" firstAttribute="leading" secondItem="Sgv-Eb-weR" secondAttribute="leading" constant="8" id="ao7-TG-vWV"/>
                             <constraint firstItem="6cG-H6-B0b" firstAttribute="top" secondItem="BM0-a3-qEi" secondAttribute="bottom" constant="1" id="eLY-ek-1F8"/>
                             <constraint firstAttribute="height" constant="146" id="gnC-Ys-kcY"/>
                             <constraint firstItem="BM0-a3-qEi" firstAttribute="top" secondItem="Sgv-Eb-weR" secondAttribute="topMargin" constant="58" id="tjY-DO-P8x"/>
@@ -88,6 +101,7 @@
             </tableViewCellContentView>
             <connections>
                 <outlet property="congratsLabel" destination="BM0-a3-qEi" id="Z3K-QB-oaV"/>
+                <outlet property="messageLabel" destination="g4W-VF-J2e" id="3ZK-l4-KVq"/>
                 <outlet property="roundedView" destination="Sgv-Eb-weR" id="6P6-5W-dk3"/>
                 <outlet property="successMessageLabel" destination="6cG-H6-B0b" id="uvC-tf-VVG"/>
             </connections>
