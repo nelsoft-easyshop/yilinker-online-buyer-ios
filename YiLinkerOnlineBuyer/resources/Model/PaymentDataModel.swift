@@ -13,12 +13,14 @@ class PaymentDataModel: NSObject {
     var invoiceNumber: String = ""
     var totalPrice: String = ""
     var orderedProductsModel: [OrderedProductsModel] = []
+    var message: String = ""
     
-    init (orderId: Int, invoiceNumber: String, totalPrice: String, orderedProductsModel: [OrderedProductsModel]) {
+    init (orderId: Int, invoiceNumber: String, totalPrice: String, orderedProductsModel: [OrderedProductsModel], message: String) {
         self.orderId = orderId
         self.invoiceNumber = invoiceNumber
         self.totalPrice = totalPrice
         self.orderedProductsModel = orderedProductsModel
+        self.message = message
     }
     
     override init() {
@@ -30,6 +32,7 @@ class PaymentDataModel: NSObject {
         var invoiceNumber: String = ""
         var orderedProductsModel: [OrderedProductsModel] = []
         var totalPriceString: String = ""
+        var message: String = ""
         
         if let val: AnyObject = dictionary["orderId"] {
             if let tempOrderId = dictionary["orderId"] as? Int {
@@ -49,12 +52,19 @@ class PaymentDataModel: NSObject {
             }
         }
         
+        if let val: AnyObject = dictionary["message"] {
+            if let tempVal = dictionary["message"] as? String {
+                message = ("\(tempVal)")
+            }
+        }
+        
+        
         var orderProducts: [NSDictionary] = dictionary["orderProducts"] as! [NSDictionary]
         
         for productDictionary in orderProducts {
             orderedProductsModel.append(OrderedProductsModel.parseDataWithDictionary(productDictionary))
         }
 
-        return PaymentDataModel(orderId: orderId, invoiceNumber: invoiceNumber, totalPrice: totalPriceString, orderedProductsModel: orderedProductsModel)
+        return PaymentDataModel(orderId: orderId, invoiceNumber: invoiceNumber, totalPrice: totalPriceString, orderedProductsModel: orderedProductsModel, message: message)
     }
 }
