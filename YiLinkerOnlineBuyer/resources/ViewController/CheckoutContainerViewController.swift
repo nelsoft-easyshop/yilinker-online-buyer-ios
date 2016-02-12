@@ -759,14 +759,22 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
                         }
                         
                         if errorMessage == "" {
-                            self.fireSaveBasicInfoWithFirstName(self.summaryViewController!.firstName, lastName: self.summaryViewController!.lastName, mobileNumber: self.summaryViewController!.mobileNumber)
+                            if SessionManager.isMobileVerified() {
+                                self.fireSaveBasicInfoWithFirstName(self.summaryViewController!.firstName, lastName: self.summaryViewController!.lastName, mobileNumber: self.summaryViewController!.mobileNumber, confirmationCode: "", email: self.summaryViewController!.email)
+                            } else {
+                                self.fireGetAuthenticatedOTP(self.summaryViewController!.mobileNumber)
+                            }
                         } else {
                             Toast.displayToastWithMessage(errorMessage, view: self.navigationController!.view)
                         }
                         
                     } else {
-                        self.selectedIndex++
-                        self.setSelectedViewControllerWithIndex(self.selectedIndex, transition: UIViewAnimationOptions.TransitionFlipFromLeft)
+                        if SessionManager.isMobileVerified() {
+                            self.selectedIndex++
+                            self.setSelectedViewControllerWithIndex(self.selectedIndex, transition: UIViewAnimationOptions.TransitionFlipFromLeft)
+                        } else {
+                            self.fireGetAuthenticatedOTP(self.summaryViewController!.mobileNumber)
+                        }
                     }
                 } else {
                     UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Please choose/add a checkout address.")
@@ -1090,7 +1098,7 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
                 } else if refreshType == .OverView {
                     self.fireOverView(values.first as! String, modalViewController: values[1] as! UIViewController)
                 } else if refreshType == .SaveBasicInfo {
-                    self.fireSaveBasicInfoWithFirstName(values[0] as! String, lastName: values[1] as! String, mobileNumber: values[2] as! String)
+                    self.fireSaveBasicInfoWithFirstName(values[0] as! String, lastName: values[1] as! String, mobileNumber: values[2] as! String, confirmationCode: values[3] as! String, email: values[4] as! String)
                 } else if refreshType == .VerifyOTP {
                     var mobileNumber: String = ""
                     if SessionManager.isLoggedIn() {
@@ -1167,7 +1175,9 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
         if verifyNumberViewController.submitButton.titleLabel!.text == "SUBMIT" {
             if SessionManager.isLoggedIn() {
                 mobileNumber =  self.summaryViewController!.mobileNumber
-                self.fireVerifyOTPCode(mobileNumber, verificationCode: textField.text, type: "checkout", storeType: "",verifyNumberViewController: verifyNumberViewController)
+                self.tempVerifyNumberViewController = verifyNumberViewController
+//                self.fireVerifyOTPCode(mobileNumber, verificationCode: textField.text, type: "checkout", storeType: "",verifyNumberViewController: verifyNumberViewController)
+                self.fireSaveBasicInfoWithFirstName(self.summaryViewController!.firstName, lastName: self.summaryViewController!.lastName, mobileNumber: self.summaryViewController!.mobileNumber, confirmationCode: textField.text, email: self.summaryViewController!.email)
             } else {
                 let registerModel: RegisterModel = self.summaryViewController!.guestUser()
                 mobileNumber = registerModel.mobileNumber
@@ -1244,9 +1254,9 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
     
     //MARK: -
     //MARK: - Fire Save Basic Info
-    func fireSaveBasicInfoWithFirstName(firstName: String, lastName: String, mobileNumber: String) {
+    func fireSaveBasicInfoWithFirstName(firstName: String, lastName: String, mobileNumber: String, confirmationCode: String, email: String) {
         self.showHUD()
-        WebServiceManager.fireSaveBasicInfoWithUrl(APIAtlas.saveBasicInfoUrl, firstName: firstName, lastName: lastName, contactNo: mobileNumber, accessToken: SessionManager.accessToken()) { (successful, responseObject, requestErrorType) -> Void in
+        WebServiceManager.fireSaveBasicInfoWithUrl(APIAtlas.saveBasicInfoUrl, firstName: firstName, lastName: lastName, contactNo: mobileNumber, confirmationCode: confirmationCode, email: email, accessToken: SessionManager.accessToken()) { (successful, responseObject, requestErrorType) -> Void in
             self.yiHud?.hide()
             println(responseObject as! NSDictionary)
             if successful {
@@ -1254,24 +1264,33 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
                 var basicInfoModel: BasicInfoModel = BasicInfoModel.parseDataFromDictionary(responseObject as! NSDictionary)
                 
                 if basicInfoModel.isSuccessful {
-                    if basicInfoModel.isVerified {
+//                    if basicInfoModel.isVerified {
+//                    self.selectedIndex++
+//                    self.setSelectedViewControllerWithIndex(self.selectedIndex, transition: UIViewAnimationOptions.TransitionFlipFromLeft)
+//                    } else {
+//                        Toast.displayToastWithMessage("not verified", duration: 2.0, view: self.navigationController!.view)
+//                    }
+                    if SessionManager.isMobileVerified() {
                         self.selectedIndex++
                         self.setSelectedViewControllerWithIndex(self.selectedIndex, transition: UIViewAnimationOptions.TransitionFlipFromLeft)
                     } else {
-                        Toast.displayToastWithMessage("not verified", duration: 2.0, view: self.navigationController!.view)
+                        self.showVerifiedSuccessModal(self.tempVerifyNumberViewController!)
                     }
                 } else {
-                    if !SessionManager.isMobileVerified() {
-                        self.fireGetAuthenticatedOTP(mobileNumber)
-                    }
+                    Toast.displayToastWithMessage(basicInfoModel.message, duration: 1.5, view: self.view)
+                    self.tempVerifyNumberViewController?.showWrongCodeLabel()
+//                    if !SessionManager.isMobileVerified() {
+//                        self.fireGetAuthenticatedOTP(mobileNumber)
+//                    }
                 }
             } else {
                 if requestErrorType == .ResponseError {
                     //Error in api requirements
                     let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    self.tempVerifyNumberViewController?.showWrongCodeLabel()
                     Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
                 } else if requestErrorType == .AccessTokenExpired {
-                    self.fireRefreshToken(.SaveBasicInfo, values: [firstName, lastName, mobileNumber])
+                    self.fireRefreshToken(.SaveBasicInfo, values: [firstName, lastName, mobileNumber, confirmationCode, email])
                 } else if requestErrorType == .PageNotFound {
                     //Page not found
                     Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)

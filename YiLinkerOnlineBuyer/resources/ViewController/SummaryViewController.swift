@@ -74,7 +74,7 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
            self.checkoutContainerViewController.fireProvinces()
         }
         
-        if SessionManager.mobileNumber() != "" && SessionManager.firstName() != "" && SessionManager.lastName() != "" {
+        if SessionManager.mobileNumber() != "" && SessionManager.firstName() != "" && SessionManager.lastName() != "" &&  SessionManager.emailAddress() != "" {
             self.isIncompleteInformation = false
         }
         
@@ -789,6 +789,8 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         if SessionManager.emailAddress() != "" {
             cell.setEmailAndDisabledTextFieldWithValue(SessionManager.emailAddress())
+        } else {
+            cell.emailAddressTextField.enabled = true
         }
         
         return cell
