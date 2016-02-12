@@ -209,6 +209,9 @@ struct APIAtlas {
     static let mobileProductList = "mobile-product-list"
     
     //MARK: - V2 APIs
+    //Login
+    static let loginUrlV2 = "v2/login"
+    
     //OTP
     static let unauthenticateOTP = "v2/sms/send"
     
