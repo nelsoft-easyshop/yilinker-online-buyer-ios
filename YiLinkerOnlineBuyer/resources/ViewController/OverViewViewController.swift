@@ -38,6 +38,7 @@ class OverViewViewController: UIViewController, UITableViewDelegate, UITableView
         super.viewDidLoad()
     
         let successHeaderView: SuccessTableHeaderViewCell = XibHelper.puffViewWithNibName("SuccessTableHeaderViewCell", index: 0) as! SuccessTableHeaderViewCell
+        successHeaderView.messageLabel.text = self.paymentSuccessModel.data.message
         self.tableView.tableHeaderView = successHeaderView
         
         let totalTableViewCell: TotalTableViewCell = XibHelper.puffViewWithNibName(Constants.Checkout.OverView.totalTableViewCellNibNameAndIdentifier, index: 0) as! TotalTableViewCell
