@@ -495,6 +495,7 @@ YOUR_MOBILE_LOCALIZE_KEY = "您的手机号码";
 OLDNUMBER_LOCALIZE_KEY = "旧联系电话";
 NEWNUMBER_LOCALIZE_KEY = "新联系电话";
 SUBMIT_LOCALIZE_KEY = "提";
+CONFIRMPASSWORD_NEW_LOCALIZE_KEY = "確認新密碼"; //No Chinese Strin
 COMPLETEFIELDS_LOCALIZE_KEY = "完成必要的字段!"; //No Chinese String
 INCORRECTMOBILE_LOCALIZE_KEY = "不正确的旧手机号码!"; //No Chinese String
 SUBMIT_CAPS_LOCALIZE_KEY = "提"; //No Chinese String

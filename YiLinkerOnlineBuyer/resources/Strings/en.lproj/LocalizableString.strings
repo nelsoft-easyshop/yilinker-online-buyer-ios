@@ -111,6 +111,7 @@ FIRST_NAME_LOCALIZE_KEY = "First Name";
 LAST_NAME_LOCALIZE_KEY = "Last Name";
 EMAIL_ADDRESS_LOCALIZE_KEY = "email address";
 PASSWORD_LOCALIZE_KEY = "password";
+PASSWORD_NEW_LOCALIZE_KEY = " New Password";
 RE_TYPE_PASSWORD_LOCALIZE_KEY = "Re-type password";
 REGISTER_ME_NOW_LOCALIZE_KEY = "REGISTER ME NOW";
 NUMBER_LETTERS_LOCALIZE_KEY = "Password must be a minimum of 8 alphanumeric characters.";
@@ -119,7 +120,7 @@ SUCCESS_REGISTER_LOCALIZED_KEY = "Successfully registered.";
 THANKYOU_LOCALIZED_KEY = "Thank you";
 MOBILE_LOCALIZED_KEY = "Mobile Number";
 REFERRAL_LOCALIZED_KEY = "Referral Code";
-GET_ACTIVATION_LOCALIZED_KEY = "Get Activation Key";
+GET_ACTIVATION_LOCALIZED_KEY = "Get Confirmation Code";
 ACTIVATION_CODE_LOCALIZED_KEY = "Activation Code";
 
 // MARK: - Register Error
@@ -505,6 +506,7 @@ CHANGEPASSWORD_LOCALIZE_KEY = "Change Password";
 OLDPASSWORD_LOCALIZE_KEY = "Old Password";
 NEWPASSWORD_LOCALIZE_KEY = "New Password";
 CONFIRMPASSWORD_LOCALIZE_KEY = "Confirm Password";
+CONFIRMPASSWORD_NEW_LOCALIZE_KEY = "Confirm New Password";
 SUBMIT_LOCALIZE_KEY = "Submit";
 PASSWORDMISMATCH_LOCALIZE_KEY = "Password does not match!";
 
