@@ -61,6 +61,8 @@ struct RegisterStrings {
     static let emailAddress: String = StringHelper.localizedStringWithKey("EMAIL_ADDRESS_LOCALIZE_KEY")
     static let password: String = StringHelper.localizedStringWithKey("PASSWORD_LOCALIZE_KEY")
     static let confirmPassword: String = StringHelper.localizedStringWithKey("CONFIRMPASSWORD_LOCALIZE_KEY")
+    static let newPassword: String = StringHelper.localizedStringWithKey("NEWPASSWORD_LOCALIZE_KEY")
+    static let confirmNewPassword: String = StringHelper.localizedStringWithKey("CONFIRMPASSWORD_NEW_LOCALIZE_KEY")
     static let mobileNumber: String = StringHelper.localizedStringWithKey("MOBILE_LOCALIZED_KEY")
     static let referral: String = StringHelper.localizedStringWithKey("REFERRAL_LOCALIZED_KEY")
     
