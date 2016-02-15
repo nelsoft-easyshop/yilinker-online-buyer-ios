@@ -170,7 +170,7 @@ class VerifyNumberViewController: UIViewController, UITextFieldDelegate {
         
         self.containerViewHeightConstraint.constant = 200
         
-        self.wrongCodeLabel.text = "Session Expired"
+        self.wrongCodeLabel.text = "Activation Code has expired"
         self.wrongCodeLabel.hidden = false
         
         self.updateSubmitButtonUIForResendCode()
