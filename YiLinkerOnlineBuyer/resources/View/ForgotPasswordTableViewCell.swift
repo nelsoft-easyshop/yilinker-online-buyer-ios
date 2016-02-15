@@ -112,12 +112,12 @@ class ForgotPasswordTableViewCell: UITableViewCell {
     
     //Decrement the time
     func subtractTime() {
-        self.resendActivationLabel.text = "Resend Confirmation Code in \(self.seconds) Sec"
+        self.resendActivationLabel.text = "Resend Code in \(self.seconds) Seconds"
         self.seconds--
         if(seconds == 0)  {
             self.timer.invalidate()
             self.sendActivationCodeButton.setTitle(RegisterStrings.getActivation, forState: UIControlState.Normal)
-            self.resendActivationLabel.text = "“Resend Confirmation Code in 60"
+            self.resendActivationLabel.text = "“Resend Code in 60 Seconds"
             self.resendActivationLabel.hidden = true
             self.sendActivationCodeButton.enabled = true
             self.sendActivationCodeButton.alpha = 1.0
