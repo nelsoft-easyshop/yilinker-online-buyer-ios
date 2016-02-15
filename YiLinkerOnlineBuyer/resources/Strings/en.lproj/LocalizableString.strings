@@ -105,6 +105,7 @@ INVALID_MOBILE_REQUIRED_LOCALIZE_KEY = "Mobile Number is not valid";
 
 // MARK: - Sing In Success Message
 SUCCESS_LOGIN_LOCALIZE_KEY = "Successfully login.";
+LOGIN_LOCALIZE_KEY = "Login";
 
 // MARK: - Register
 FIRST_NAME_LOCALIZE_KEY = "First Name";

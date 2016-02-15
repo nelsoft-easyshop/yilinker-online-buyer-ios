@@ -104,6 +104,7 @@ INVALID_MOBILE_REQUIRED_LOCALIZE_KEY = "手机号码不是有效的。"; //No ch
 
 // MARK: - Sing In Success Message
 SUCCESS_LOGIN_LOCALIZE_KEY = "登录成功";
+LOGIN_LOCALIZE_KEY = "登錄";
 
 // MARK: - Register
 FIRST_NAME_LOCALIZE_KEY = "名";

@@ -36,6 +36,7 @@ struct LoginStrings {
     static let accountTitle: String = StringHelper.localizedStringWithKey("ACCOUNT_TITLE_LOCLAIZE_KEY")
     static let registerTitle: String = StringHelper.localizedStringWithKey("REGISTER_TITLE_LOCALIZE_KEY")
     static let resetTitle: String = StringHelper.localizedStringWithKey("RESET_PASSWORD_TITLE_LOCALIZE_KEY")
+    static let login: String = StringHelper.localizedStringWithKey("LOGIN_LOCALIZE_KEY")
 }
 
 
