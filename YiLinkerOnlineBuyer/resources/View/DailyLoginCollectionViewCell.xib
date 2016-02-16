@@ -19,7 +19,7 @@
                         </constraints>
                     </pageControl>
                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="HsO-G9-FKS">
-                        <rect key="frame" x="8" y="6" width="364" height="140"/>
+                        <rect key="frame" x="0.0" y="0.0" width="379" height="152"/>
                         <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="rib-Oe-IoF">
                             <size key="itemSize" width="50" height="140"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -35,12 +35,12 @@
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </view>
             <constraints>
-                <constraint firstItem="HsO-G9-FKS" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="8" id="0Nf-OG-WjH"/>
+                <constraint firstItem="HsO-G9-FKS" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="0Nf-OG-WjH"/>
                 <constraint firstAttribute="bottom" secondItem="k0m-c9-CtB" secondAttribute="bottom" constant="8" id="5RL-nl-pRV"/>
-                <constraint firstAttribute="trailing" secondItem="HsO-G9-FKS" secondAttribute="trailing" constant="7" id="F5N-22-hTL"/>
+                <constraint firstAttribute="trailing" secondItem="HsO-G9-FKS" secondAttribute="trailing" id="F5N-22-hTL"/>
                 <constraint firstItem="k0m-c9-CtB" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="8" id="Ogg-4f-3Re"/>
-                <constraint firstAttribute="bottom" secondItem="HsO-G9-FKS" secondAttribute="bottom" constant="6" id="hFH-bw-Vhj"/>
-                <constraint firstItem="HsO-G9-FKS" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="6" id="p0U-Zu-gHD"/>
+                <constraint firstAttribute="bottom" secondItem="HsO-G9-FKS" secondAttribute="bottom" id="hFH-bw-Vhj"/>
+                <constraint firstItem="HsO-G9-FKS" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="p0U-Zu-gHD"/>
                 <constraint firstAttribute="trailing" secondItem="k0m-c9-CtB" secondAttribute="trailing" constant="7" id="zHg-26-237"/>
             </constraints>
             <size key="customSize" width="387" height="152"/>
