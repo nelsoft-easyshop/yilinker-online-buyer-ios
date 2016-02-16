@@ -67,7 +67,7 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="cxb-Wz-4YI">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="516"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <collectionViewLayout key="collectionViewLayout" id="l8d-zZ-tFW"/>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="npl-0w-kgw">
@@ -85,42 +85,16 @@
                                     <outlet property="delegate" destination="vXZ-lx-hvc" id="rbN-9p-bPF"/>
                                 </connections>
                             </collectionView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Beh-zQ-cgf" customClass="RoundedButton" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
-                                <rect key="frame" x="134" y="517" width="52" height="52"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="52" id="JwC-lc-VBR"/>
-                                    <constraint firstAttribute="width" constant="52" id="tkf-bn-a9P"/>
-                                </constraints>
-                                <state key="normal" image="circular_close">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="1"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                        <color key="value" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                        <real key="value" value="1"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <action selector="tap:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="D25-SB-D4j"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="cxb-Wz-4YI" secondAttribute="bottom" constant="52" id="03s-1z-kgO"/>
+                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="cxb-Wz-4YI" secondAttribute="bottom" id="03s-1z-kgO"/>
                             <constraint firstItem="b0Q-N7-XxI" firstAttribute="top" secondItem="kh9-bI-dsS" secondAttribute="top" id="9J8-aV-R4w"/>
                             <constraint firstItem="cxb-Wz-4YI" firstAttribute="top" secondItem="kh9-bI-dsS" secondAttribute="top" id="CXT-47-Ssh"/>
                             <constraint firstAttribute="trailing" secondItem="cxb-Wz-4YI" secondAttribute="trailing" id="F3v-vF-ucg"/>
                             <constraint firstItem="cxb-Wz-4YI" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="NBg-Td-1n8"/>
                             <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="b0Q-N7-XxI" secondAttribute="bottom" id="O9j-T6-3Kp"/>
-                            <constraint firstAttribute="centerX" secondItem="Beh-zQ-cgf" secondAttribute="centerX" id="Uzm-aD-46N"/>
                             <constraint firstItem="b0Q-N7-XxI" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="nFs-1K-3W2"/>
-                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="Beh-zQ-cgf" secondAttribute="bottom" constant="-1" id="ogs-du-XF2"/>
                             <constraint firstAttribute="trailing" secondItem="b0Q-N7-XxI" secondAttribute="trailing" id="pAF-2R-9d8"/>
                         </constraints>
                     </view>
@@ -135,7 +109,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="circular_close" width="50" height="50"/>
         <image name="sample" width="640" height="960"/>
     </resources>
 </document>

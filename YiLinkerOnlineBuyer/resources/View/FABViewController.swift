@@ -264,7 +264,7 @@ class FABViewController: UIViewController, FABCollectionViewCellDelegate, FABPro
     func fabCollectionViewCellDidTapCell(fabCollectionViewCell: UICollectionViewCell) {
         let indexPath: NSIndexPath = self.collectionView.indexPathForCell(fabCollectionViewCell)!
         self.deleteCells(UIButton())
-        self.delegate!.fabViewController(self, didSelectIndex: indexPath.row)
+        self.delegate!.fabViewController(self, didSelectIndex: indexPath.row - 1)
     }
     
     //MARK: -
@@ -272,7 +272,7 @@ class FABViewController: UIViewController, FABCollectionViewCellDelegate, FABPro
     func fABProfileCollectionViewCellDidTap(fABProfileCollectionViewCell: FABProfileCollectionViewCell) {
         let indexPath: NSIndexPath = self.collectionView.indexPathForCell(fABProfileCollectionViewCell)!
         self.deleteCells(UIButton())
-        self.delegate!.fabViewController(self, didSelectIndex: indexPath.row)
+        self.delegate!.fabViewController(self, didSelectIndex: indexPath.row - 1)
     }
     
     //MARK: - 
@@ -312,10 +312,21 @@ class FABViewController: UIViewController, FABCollectionViewCellDelegate, FABPro
         
         fabCollectionViewCell.iconButton.setImage(UIImage(named: self.textAndIcons[indexPath.row].icon), forState: UIControlState.Normal)
         fabCollectionViewCell.iconButton.imageView?.contentMode = UIViewContentMode.ScaleAspectFit
-        fabCollectionViewCell.iconButton.imageEdgeInsets = UIEdgeInsetsMake(insetSpace, insetSpace, insetSpace, insetSpace)
         fabCollectionViewCell.iconButton.contentVerticalAlignment = UIControlContentVerticalAlignment.Center
         fabCollectionViewCell.iconButton.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Center
         fabCollectionViewCell.iconButton.clipsToBounds = true
+        
+        if self.textAndIcons[indexPath.row].leftTitle == "" {
+            fabCollectionViewCell.leftLabel.hidden = true
+            fabCollectionViewCell.iconButton.backgroundColor = Constants.Colors.appTheme
+            fabCollectionViewCell.iconButton.layer.borderColor = UIColor.clearColor().CGColor
+            fabCollectionViewCell.iconButton.imageEdgeInsets = UIEdgeInsetsMake(15, 15, 15, 15)
+        } else {
+            fabCollectionViewCell.iconButton.backgroundColor = UIColor.clearColor()
+            fabCollectionViewCell.leftLabel.hidden = false
+            fabCollectionViewCell.iconButton.layer.borderColor = UIColor.whiteColor().CGColor
+            fabCollectionViewCell.iconButton.imageEdgeInsets = UIEdgeInsetsMake(insetSpace, insetSpace, insetSpace, insetSpace)
+        }
         
         if self.textAndIcons[indexPath.row].rightTitle == "0 unread message(s)" || self.textAndIcons[indexPath.row].rightTitle == "" {
             fabCollectionViewCell.rightLabel.hidden = true
