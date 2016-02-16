@@ -30,6 +30,7 @@ class ForgotPasswordTableViewCell: UITableViewCell {
     
     @IBOutlet weak var sendActivationCodeButton: UIButton!
     @IBOutlet weak var resetPasswordButton: UIButton!
+    @IBOutlet weak var resendActivationLabel: UILabel!
     
     @IBOutlet weak var downImageView: UIImageView!
     
@@ -77,12 +78,13 @@ class ForgotPasswordTableViewCell: UITableViewCell {
         
         //Set placeholder
         self.mobileNumberTextField.attributedPlaceholder = StringHelper.required(RegisterStrings.mobileNumber)
-        self.passwordTextField.attributedPlaceholder = StringHelper.required(RegisterStrings.password)
-        self.confirmPasswordTextField.attributedPlaceholder = StringHelper.required(RegisterStrings.confirmPassword)
+        self.passwordTextField.attributedPlaceholder = StringHelper.required(RegisterStrings.newPassword)
+        self.confirmPasswordTextField.attributedPlaceholder = StringHelper.required(RegisterStrings.confirmNewPassword)
         self.activationCodeTextField.attributedPlaceholder = StringHelper.required(RegisterStrings.activationCode)
         self.sendActivationCodeButton.setTitle(RegisterStrings.getActivation, forState: .Normal)
         self.resetPasswordButton.setTitle(RegisterStrings.resetPassword.uppercaseString, forState: .Normal)
         
+        self.resendActivationLabel.hidden = true
     }
     
     func didTapAreaCode() {
@@ -104,15 +106,19 @@ class ForgotPasswordTableViewCell: UITableViewCell {
         self.timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: Selector("subtractTime"), userInfo: nil, repeats: true)
         self.sendActivationCodeButton.enabled = false
         self.sendActivationCodeButton.alpha = 0.5
+        self.resendActivationLabel.hidden = false
+        self.sendActivationCodeButton.setTitle("", forState: UIControlState.Normal)
     }
     
     //Decrement the time
     func subtractTime() {
-        self.sendActivationCodeButton.setTitle("\(self.seconds)", forState: UIControlState.Normal)
+        self.resendActivationLabel.text = "Resend Code in \(self.seconds) Seconds"
         self.seconds--
         if(seconds == 0)  {
             self.timer.invalidate()
             self.sendActivationCodeButton.setTitle(RegisterStrings.getActivation, forState: UIControlState.Normal)
+            self.resendActivationLabel.text = "“Resend Code in 60 Seconds"
+            self.resendActivationLabel.hidden = true
             self.sendActivationCodeButton.enabled = true
             self.sendActivationCodeButton.alpha = 1.0
             self.delegate?.forgotPasswordTableViewCell(self, didTimerEnded: self.sendActivationCodeButton)

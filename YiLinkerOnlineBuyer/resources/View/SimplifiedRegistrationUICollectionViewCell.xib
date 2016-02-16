@@ -109,6 +109,16 @@
                             <action selector="buttonAction:" destination="gTV-IL-0wX" eventType="touchUpInside" id="vPl-1Y-X4J"/>
                         </connections>
                     </button>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Resend Code in 60 Sec" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K58-6n-W8D">
+                        <rect key="frame" x="219" y="208" width="140" height="35"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="140" id="rz9-jq-cWi"/>
+                            <constraint firstAttribute="height" constant="35" id="xgY-Kj-xeg"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="8"/>
+                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </view>
@@ -127,8 +137,10 @@
                 <constraint firstItem="IKW-Ge-ZNg" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="16" id="a9V-yR-HDm"/>
                 <constraint firstAttribute="trailing" secondItem="NPw-da-yDo" secondAttribute="trailing" constant="20" id="d7v-2C-59k"/>
                 <constraint firstItem="IKW-Ge-ZNg" firstAttribute="top" secondItem="Ekh-6d-zIq" secondAttribute="bottom" constant="12" id="dfW-RS-xGQ"/>
+                <constraint firstAttribute="trailing" secondItem="K58-6n-W8D" secondAttribute="trailing" constant="20" id="dut-66-xkL"/>
                 <constraint firstAttribute="trailing" secondItem="pfo-Nv-Oqt" secondAttribute="trailing" constant="20" id="e4p-B7-a5Q"/>
                 <constraint firstItem="vOc-Jg-uDZ" firstAttribute="leading" secondItem="Ekh-6d-zIq" secondAttribute="trailing" constant="-1" id="fPK-Bu-T6t"/>
+                <constraint firstItem="K58-6n-W8D" firstAttribute="top" secondItem="d98-k9-bVg" secondAttribute="bottom" constant="12" id="fVb-L8-vHf"/>
                 <constraint firstItem="Ekh-6d-zIq" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="16" id="lqu-Cw-My5"/>
                 <constraint firstAttribute="trailing" secondItem="d98-k9-bVg" secondAttribute="trailing" constant="20" id="t3K-w7-Ybz"/>
                 <constraint firstItem="d98-k9-bVg" firstAttribute="top" secondItem="NPw-da-yDo" secondAttribute="bottom" constant="12" id="trk-dF-fSh"/>
@@ -147,6 +159,7 @@
                 <outlet property="passwordTextField" destination="IKW-Ge-ZNg" id="48w-nx-vMj"/>
                 <outlet property="referralCodeTextField" destination="d98-k9-bVg" id="bVv-Ar-8ZL"/>
                 <outlet property="registerButton" destination="pfo-Nv-Oqt" id="0Jn-ZC-grc"/>
+                <outlet property="resendActivationLabel" destination="K58-6n-W8D" id="JNz-Ou-deF"/>
                 <outlet property="sendActivationCodeButton" destination="0ik-Ag-uNF" id="76v-nW-qb0"/>
             </connections>
             <point key="canvasLocation" x="242.5" y="173"/>

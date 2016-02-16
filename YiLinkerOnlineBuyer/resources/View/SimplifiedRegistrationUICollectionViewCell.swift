@@ -31,6 +31,7 @@ class SimplifiedRegistrationUICollectionViewCell: UICollectionViewCell {
 
     @IBOutlet weak var sendActivationCodeButton: UIButton!
     @IBOutlet weak var registerButton: UIButton!
+    @IBOutlet weak var resendActivationLabel: UILabel!
     
     @IBOutlet weak var downImageView: UIImageView!
     
@@ -86,6 +87,8 @@ class SimplifiedRegistrationUICollectionViewCell: UICollectionViewCell {
         self.activationCodeTextField.attributedPlaceholder = StringHelper.required(RegisterStrings.activationCode)
         self.sendActivationCodeButton.setTitle(RegisterStrings.getActivation, forState: .Normal)
         self.registerButton.setTitle(RegisterStrings.register.uppercaseString, forState: .Normal)
+        
+        self.resendActivationLabel.hidden = true
     }
     
     func didTapAreaCode() {
@@ -107,15 +110,19 @@ class SimplifiedRegistrationUICollectionViewCell: UICollectionViewCell {
         self.timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: Selector("subtractTime"), userInfo: nil, repeats: true)
         self.sendActivationCodeButton.enabled = false
         self.sendActivationCodeButton.alpha = 0.5
+        self.resendActivationLabel.hidden = false
+        self.sendActivationCodeButton.setTitle("", forState: UIControlState.Normal)
     }
     
     //Decrement the time
     func subtractTime() {
-        self.sendActivationCodeButton.setTitle("\(self.seconds)", forState: UIControlState.Normal)
+        self.resendActivationLabel.text = "Resend Code in \(self.seconds) Seconds"
         self.seconds--
         if(seconds == 0)  {
             self.timer.invalidate()
             self.sendActivationCodeButton.setTitle(RegisterStrings.getActivation, forState: UIControlState.Normal)
+            self.resendActivationLabel.text = "“Resend Code in 60 Seconds"
+            self.resendActivationLabel.hidden = true
             self.sendActivationCodeButton.enabled = true
             self.sendActivationCodeButton.alpha = 1.0
             self.delegate?.simplifiedRegistrationCell(self, didTimerEnded: self.sendActivationCodeButton)
