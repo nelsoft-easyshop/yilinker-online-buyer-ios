@@ -945,12 +945,14 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         let rightInset: Int = 15
         self.view.layoutIfNeeded()
         
-        if IphoneType.isIphone6() || IphoneType.isIphone6Plus() {
+        /*if IphoneType.isIphone6() || IphoneType.isIphone6Plus() {
             println((self.view.frame.size.width / 2) - 8)
             return (self.view.frame.size.width / 2) - 8
         } else {
             return (self.view.frame.size.width / 2) - 8
-        }
+        }*/
+        
+        return SectionHeight.sectionThreeCellWidth()
     }
     
     //MARK: -

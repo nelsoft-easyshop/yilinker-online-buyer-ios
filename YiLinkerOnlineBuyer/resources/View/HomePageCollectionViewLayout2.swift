@@ -10,17 +10,58 @@ import UIKit
 
 struct SectionHeight {
     static func sectionOneHeight() -> CGFloat {
+        //height = screenWidth * height ratio / width ratio
         //ratio 8:3
         let screenSize: CGRect = UIScreen.mainScreen().bounds
-        return (screenSize.width * 3) / 8
+        return (screenSize.width * 250) / 616
+        //return 500
+    }
+    
+    static func sectionTwoHeight() -> CGFloat {
+        //116 x 110
+        let screenSize: CGRect = UIScreen.mainScreen().bounds
+        return (screenSize.width * 110) / 616
+        //return 500
+    }
+    
+    static func sectionThreeHeight() -> CGFloat {
+        //116 x 110
+        let screenSize: CGRect = UIScreen.mainScreen().bounds
+        return (screenSize.width * 150) / 616
+    }
+    
+    static func sectionThreeCellWidth() -> CGFloat {
+        //116 x 110
+        return (SectionHeight.sectionThreeHeight() * 300) / (150)
+        //return 500
+    }
+    
+    static func sectionSixHeight() -> CGFloat {
+        //201 x 616
+        let screenSize: CGRect = UIScreen.mainScreen().bounds
+        return (screenSize.width * 201) / (430)
+        //return 253
+    }
+    
+    static func sectionSixFirstCellWidth() -> CGFloat {
+        //201 x 616
+        println(SectionHeight.sectionSixHeight())
+        let screenSize: CGRect = UIScreen.mainScreen().bounds
+        return (SectionHeight.sectionSixHeight() * 319) / (490)
+        //return 500
+    }
+    
+    static func sectionSixSecondCellWidth() -> CGFloat {
+        let screenSize: CGRect = UIScreen.mainScreen().bounds
+        return (screenSize.width  - 15) - (SectionHeight.sectionSixFirstCellWidth())
         //return 500
     }
     
     static let sectionOne: CGFloat = SectionHeight.sectionOneHeight()
-    static let sectionTwo: CGFloat = 70.0
-    static let sectionThree: CGFloat = 120.0
+    static let sectionTwo: CGFloat = SectionHeight.sectionTwoHeight()
+    static let sectionThree: CGFloat = SectionHeight.sectionThreeHeight()
     static let sectionFive: CGFloat = 230.0
-    static let sectionSix: CGFloat = 240.0
+    static let sectionSix: CGFloat = SectionHeight.sectionSixHeight()
     static let sectionEight: CGFloat = 338
     static let sectionNine: CGFloat = 250
     static let sectionTen: CGFloat = 287
@@ -186,12 +227,12 @@ class HomePageCollectionViewLayout2: UICollectionViewLayout {
             let indexPath = NSIndexPath(forItem: x, inSection: section)
             let attributes = UICollectionViewLayoutAttributes(forCellWithIndexPath: indexPath)
             if x == 0 {
-                attributes.frame = CGRectMake(horizontalInset, self.sectionYOffsetWithSectionNumber(section), screenRect!.width / 3, SectionHeight.sectionSix)
+                attributes.frame = CGRectMake(horizontalInset, self.sectionYOffsetWithSectionNumber(section), SectionHeight.sectionSixFirstCellWidth(), SectionHeight.sectionSix)
             } else if x == 1 {
-                attributes.frame = CGRectMake((screenRect!.width / 3) + (horizontalInset * 2), self.sectionYOffsetWithSectionNumber(section), ((screenRect!.width) - (screenRect!.width / 3)) - (horizontalInset * 3), (SectionHeight.sectionSix -  horizontalInset) / 2)
+                attributes.frame = CGRectMake(SectionHeight.sectionSixFirstCellWidth() + (horizontalInset * 2), self.sectionYOffsetWithSectionNumber(section), SectionHeight.sectionSixSecondCellWidth(), (SectionHeight.sectionSix -  horizontalInset) / 2)
             } else {
                 let extraSpace: CGFloat = 2.0
-                 attributes.frame = CGRectMake((screenRect!.width / 3) + (horizontalInset * 2), self.sectionYOffsetWithSectionNumber(section) + (SectionHeight.sectionSix / 2) + extraSpace, ((screenRect!.width) - (screenRect!.width / 3)) - (horizontalInset * 3), (SectionHeight.sectionSix -  horizontalInset) / 2)
+                 attributes.frame = CGRectMake(SectionHeight.sectionSixFirstCellWidth() + (horizontalInset * 2), self.sectionYOffsetWithSectionNumber(section) + (SectionHeight.sectionSix / 2) + extraSpace, SectionHeight.sectionSixSecondCellWidth(), (SectionHeight.sectionSix -  horizontalInset) / 2)
             }
             
             let key = self.layoutKeyForIndexPath(indexPath)
