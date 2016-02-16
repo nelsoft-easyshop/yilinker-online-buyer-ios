@@ -335,35 +335,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             return true
         } else {
             self.circularDraweView("circular-drawer")
-            let storyBoard: UIStoryboard = UIStoryboard(name: "FAB", bundle: nil)
-            var fabViewController: FABViewController?
-            fabViewController  = storyBoard.instantiateViewControllerWithIdentifier("FABViewController") as? FABViewController
-            fabViewController!.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
-            fabViewController!.providesPresentationContextTransitionStyle = true
-            fabViewController!.definesPresentationContext = true
-            fabViewController!.view.backgroundColor = UIColor.clearColor()
-            fabViewController!.delegate = self
-            
-            if SessionManager.isLoggedIn() {
-                fabViewController!.addtextAndIconsWithLeftText("FOLLOWED SELLER", rightText: "", icon: "fab_following", isProfile: false)
-                fabViewController!.addtextAndIconsWithLeftText("MESSAGING", rightText: "\(SessionManager.getUnReadMessagesCount()) unread message(s)", icon: "fab_messaging", isProfile: false)
-                fabViewController!.addtextAndIconsWithLeftText("CATEGORIES", rightText: "", icon: "fab_promo", isProfile: false)
-                fabViewController!.addtextAndIconsWithLeftText("HELP", rightText: "", icon: "fab_help", isProfile: false)
-                fabViewController!.addtextAndIconsWithLeftText("PROFILE", rightText: "\(SessionManager.userFullName()) \(SessionManager.city()) \(SessionManager.province())", icon: SessionManager.profileImageStringUrl(), isProfile: true)
-                self.tabBarController!.presentViewController(fabViewController!, animated: false) { () -> Void in
-                    
-                }
-            } else {
-                self.circularDraweView("circular-drawer")
-                fabViewController!.addtextAndIconsWithLeftText(FABStrings.register, rightText: "", icon: "fab_register", isProfile: false)
-                fabViewController!.addtextAndIconsWithLeftText(FABStrings.signIn, rightText: "", icon: "fab_signin", isProfile: false)
-                fabViewController!.addtextAndIconsWithLeftText(FABStrings.categories, rightText: "", icon: "fab_category", isProfile: false)
-                fabViewController!.addtextAndIconsWithLeftText(FABStrings.help, rightText: "", icon: "fab_help", isProfile: false)
-                
-                self.tabBarController!.presentViewController(fabViewController!, animated: false) { () -> Void in
-                    
-                }
-            }
+            self.showFAB()
             
             return false
         }
@@ -1731,10 +1703,12 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                     self.redirectToLoginRegister(true)
                 })
             } else {
-                let navigationController: UINavigationController = self.customTabBarController!.viewControllers![2] as! UINavigationController
-                let hiddenViewController: HiddenViewController = navigationController.viewControllers[0] as! HiddenViewController
-                hiddenViewController.selectViewControllerAtIndex(index)
-                self.customTabBarController!.selectedIndex = 2
+                if index != -1 {
+                    let navigationController: UINavigationController = self.customTabBarController!.viewControllers![2] as! UINavigationController
+                    let hiddenViewController: HiddenViewController = navigationController.viewControllers[0] as! HiddenViewController
+                    hiddenViewController.selectViewControllerAtIndex(index)
+                    self.customTabBarController!.selectedIndex = 2
+                }
             }
         }
     }
@@ -1744,5 +1718,41 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         let loginRegisterViewController: LoginAndRegisterTableViewController = storyBoard.instantiateViewControllerWithIdentifier("LoginAndRegisterTableViewController") as! LoginAndRegisterTableViewController
         loginRegisterViewController.isLogin = isLogin
         self.customTabBarController!.presentViewController(loginRegisterViewController, animated: true, completion: nil)
+    }
+    
+    //MARK: - 
+    //MARK: -
+    func showFAB() {
+        let storyBoard: UIStoryboard = UIStoryboard(name: "FAB", bundle: nil)
+        var fabViewController: FABViewController?
+        fabViewController  = storyBoard.instantiateViewControllerWithIdentifier("FABViewController") as? FABViewController
+        fabViewController!.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
+        fabViewController!.providesPresentationContextTransitionStyle = true
+        fabViewController!.definesPresentationContext = true
+        fabViewController!.view.backgroundColor = UIColor.clearColor()
+        fabViewController!.delegate = self
+        
+        if SessionManager.isLoggedIn() {
+            fabViewController!.addtextAndIconsWithLeftText("", rightText: "", icon: "close-white", isProfile: false)
+            fabViewController!.addtextAndIconsWithLeftText("FOLLOWED SELLER", rightText: "", icon: "fab_following", isProfile: false)
+            fabViewController!.addtextAndIconsWithLeftText("MESSAGING", rightText: "\(SessionManager.getUnReadMessagesCount()) unread message(s)", icon: "fab_messaging", isProfile: false)
+            fabViewController!.addtextAndIconsWithLeftText("CATEGORIES", rightText: "", icon: "fab_promo", isProfile: false)
+            fabViewController!.addtextAndIconsWithLeftText("HELP", rightText: "", icon: "fab_help", isProfile: false)
+            fabViewController!.addtextAndIconsWithLeftText("PROFILE", rightText: "\(SessionManager.userFullName()) \(SessionManager.city()) \(SessionManager.province())", icon: SessionManager.profileImageStringUrl(), isProfile: true)
+            self.tabBarController!.presentViewController(fabViewController!, animated: false) { () -> Void in
+                
+            }
+        } else {
+            self.circularDraweView("circular-drawer")
+            fabViewController!.addtextAndIconsWithLeftText("", rightText: "", icon: "close-white", isProfile: false)
+            fabViewController!.addtextAndIconsWithLeftText(FABStrings.register, rightText: "", icon: "fab_register", isProfile: false)
+            fabViewController!.addtextAndIconsWithLeftText(FABStrings.signIn, rightText: "", icon: "fab_signin", isProfile: false)
+            fabViewController!.addtextAndIconsWithLeftText(FABStrings.categories, rightText: "", icon: "fab_category", isProfile: false)
+            fabViewController!.addtextAndIconsWithLeftText(FABStrings.help, rightText: "", icon: "fab_help", isProfile: false)
+            
+            self.tabBarController!.presentViewController(fabViewController!, animated: false) { () -> Void in
+                
+            }
+        }
     }
 }
