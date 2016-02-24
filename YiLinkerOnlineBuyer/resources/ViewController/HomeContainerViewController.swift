@@ -1689,10 +1689,12 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     
     func redirectToHiddenWithIndex(index: Int) {
         if SessionManager.isLoggedIn() {
-            let navigationController: UINavigationController = self.customTabBarController!.viewControllers![2] as! UINavigationController
-            let hiddenViewController: HiddenViewController = navigationController.viewControllers[0] as! HiddenViewController
-            hiddenViewController.selectViewControllerAtIndex(index)
-            self.customTabBarController!.selectedIndex = 2
+            if index != -1 {
+                let navigationController: UINavigationController = self.customTabBarController!.viewControllers![2] as! UINavigationController
+                let hiddenViewController: HiddenViewController = navigationController.viewControllers[0] as! HiddenViewController
+                hiddenViewController.selectViewControllerAtIndex(index)
+                self.customTabBarController!.selectedIndex = 2
+            }
         } else {
             if index == 0 {
                 Delay.delayWithDuration(0.5, completionHandler: { (success) -> Void in
