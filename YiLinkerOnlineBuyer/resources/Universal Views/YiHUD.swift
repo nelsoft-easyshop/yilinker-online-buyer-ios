@@ -16,6 +16,7 @@ class YiHUD: UIView {
     override func awakeFromNib() {
         let bounds = CGRect(x: 0, y: 0, width: self.frame.size.width, height: self.frame.size.height)
         self.backgroundColor = UIColor.clearColor()
+        self.dimView.backgroundColor = UIColor.blackColor()
         self.dimView.alpha = 0.7
         self.dimView.layer.cornerRadius = 7
     }
@@ -45,6 +46,7 @@ class YiHUD: UIView {
             view.addSubview(self)
         }
         
+        view.layoutIfNeeded()
         self.center = view.convertPoint(view.center, fromView: self)
     }
     

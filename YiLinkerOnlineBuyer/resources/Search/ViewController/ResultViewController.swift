@@ -125,6 +125,10 @@ class ResultViewController: UIViewController {
             self.baseSearchURL = APIAtlas.todaysPromo
             //todo fire search
         }
+        
+        if productCollectionViewData.count == 0 && sellerCollectionViewData.count == 0  {
+            self.fireSearch()
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -234,7 +238,6 @@ class ResultViewController: UIViewController {
         }
         
         self.baseSearchURL = searchSuggestion.searchUrl
-        self.fireSearch()
     }
     
     //MARK: - Tap Gesture Action Selector

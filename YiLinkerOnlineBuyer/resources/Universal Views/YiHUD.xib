@@ -10,7 +10,7 @@
             <rect key="frame" x="0.0" y="0.0" width="53" height="53"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1S5-4n-0xG">
+                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1S5-4n-0xG">
                     <rect key="frame" x="0.0" y="0.0" width="53" height="53"/>
                     <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
@@ -19,12 +19,6 @@
                 </activityIndicatorView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-            <constraints>
-                <constraint firstAttribute="bottom" secondItem="1S5-4n-0xG" secondAttribute="bottom" id="HEs-ts-TlI"/>
-                <constraint firstItem="1S5-4n-0xG" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="RoQ-7d-Ycb"/>
-                <constraint firstItem="1S5-4n-0xG" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="TWT-6s-f58"/>
-                <constraint firstAttribute="trailing" secondItem="1S5-4n-0xG" secondAttribute="trailing" id="Why-KU-HqU"/>
-            </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="dimView" destination="1S5-4n-0xG" id="pKS-V4-Oy1"/>
