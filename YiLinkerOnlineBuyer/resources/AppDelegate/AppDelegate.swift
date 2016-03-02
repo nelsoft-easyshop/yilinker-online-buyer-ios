@@ -51,7 +51,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GGLInstanceIDDelegate {
         println(gcmSenderID)
         GIDSignIn.sharedInstance().clientID = "613594712632-q9iak1vgc6ua44fkc9kg5tut0s5vuo5m.apps.googleusercontent.com"
         
-        if let font = UIFont(name: "Panton-Regular", size: 20) {
+        if let font = UIFont(name: "Panton-SEMIBOLD", size: 15) {
             UINavigationBar.appearance().titleTextAttributes = [NSFontAttributeName: font, NSForegroundColorAttributeName: UIColor.whiteColor()]
         }
         
