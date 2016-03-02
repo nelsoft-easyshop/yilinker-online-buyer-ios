@@ -141,18 +141,19 @@ class MyPointsTableViewController: UITableViewController, PointsBreakdownTableVi
         } else if indexPath.row == 1 {
             let cell = tableView.dequeueReusableCellWithIdentifier(cellPointsDetails, forIndexPath: indexPath) as! PointsDetailsTableViewCell
             return cell
-        }else if indexPath.row == 2 {
+        } else if indexPath.row == 2 {
             let cell = tableView.dequeueReusableCellWithIdentifier(cellPointsBreakDownHeader, forIndexPath: indexPath) as! PointsBreakdownTableViewCell
             cell.delegate = self
             
             if myPointsHistory.data.count == 0 {
-                cell.breakDownView.hidden = true
+//                cell.breakDownView.hidden = true
+                cell.breakDownLabel.text = ""
             } else {
                 cell.breakDownView.hidden = false
             }
             
             return cell
-        }else {
+        } else {
             let cell = tableView.dequeueReusableCellWithIdentifier(cellPoints, forIndexPath: indexPath) as! PointsTableViewCell
             
             println("Index \(indexPath.row)")
@@ -332,29 +333,23 @@ class MyPointsTableViewController: UITableViewController, PointsBreakdownTableVi
     
     func fireRefreshToken(type: String) {
         self.showHUD()
-        let manager = APIManager.sharedInstance
-        let parameters: NSDictionary = [
-            "client_id": Constants.Credentials.clientID,
-            "client_secret": Constants.Credentials.clientSecret,
-            "grant_type": Constants.Credentials.grantRefreshToken,
-            "refresh_token": SessionManager.refreshToken()]
-        
-        manager.POST(APIAtlas.refreshTokenUrl, parameters: parameters, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            
-            if type == "totalPoints" {
-                self.fireGetTotalPoints()
-            } else if type == "pointsHistory" {
-                self.fireGetPointsHistory()
-            }
-            
+        WebServiceManager.fireRefreshTokenWithUrl(APIAtlas.refreshTokenUrl, actionHandler: {
+            (successful, responseObject, requestErrorType) -> Void in
+            self.hud?.hide(true)
             SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+            if successful {
+                if type == "totalPoints" {
+                    self.fireGetTotalPoints()
+                } else if type == "pointsHistory" {
+                    self.fireGetPointsHistory()
+                }
+            } else {
+                //Show UIAlert and force the user to logout
                 self.hud?.hide(true)
+                UIAlertController.displayAlertRedirectionToLogin(self, actionHandler: { (sucess) -> Void in
+                    SessionManager.logoutWithTarget(self)
+                })
+            }
         })
-        
     }
-    
 }

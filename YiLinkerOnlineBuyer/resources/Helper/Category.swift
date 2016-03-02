@@ -487,6 +487,13 @@ extension String {
         return dateFormatter.dateFromString(self)!
     }
     
+    func formatToTwoDecimalNoTrailling() -> String {
+        let formatter = NSNumberFormatter()
+        formatter.minimumFractionDigits = 2
+        formatter.maximumFractionDigits = 2
+        return "\(formatter.stringFromNumber((self as NSString).doubleValue)!)"
+    }
+    
 }
 
 extension NSURL {
