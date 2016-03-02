@@ -21,9 +21,14 @@ class HelpViewController: UIViewController {
     @IBOutlet weak var facebookButton: UIButton!
     @IBOutlet weak var twitterButton: UIButton!
     @IBOutlet weak var instagramButton: UIButton!
+    var appVersion: String  = ""
     
+    @IBOutlet weak var versionLabel: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.appVersion = (NSBundle.mainBundle().infoDictionary!["CFBundleShortVersionString"] as! String)
+        
         self.initializeViews()
         self.initializeNavigationBar()
     }
@@ -34,10 +39,10 @@ class HelpViewController: UIViewController {
             self.edgesForExtendedLayout = .None
         }
         
-        
-        emailTextButton.titleLabel?.text = StringHelper.localizedStringWithKey("HELP_EMAIL")
-        callTextButton.titleLabel?.text = StringHelper.localizedStringWithKey("HELP_CALL")
-        titleLabel.text = StringHelper.localizedStringWithKey("HELP_FOR_CUSTOMER_SERVICE")
+        self.versionLabel.text = "v \(self.appVersion)"
+        self.emailTextButton.titleLabel?.text = StringHelper.localizedStringWithKey("HELP_EMAIL")
+        self.callTextButton.titleLabel?.text = StringHelper.localizedStringWithKey("HELP_CALL")
+        self.titleLabel.text = StringHelper.localizedStringWithKey("HELP_FOR_CUSTOMER_SERVICE")
     }
     
     override func didReceiveMemoryWarning() {
