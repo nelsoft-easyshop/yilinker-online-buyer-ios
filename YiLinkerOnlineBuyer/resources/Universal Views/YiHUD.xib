@@ -10,25 +10,26 @@
             <rect key="frame" x="0.0" y="0.0" width="53" height="53"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="yibo" translatesAutoresizingMaskIntoConstraints="NO" id="cPI-iO-h66">
-                    <rect key="frame" x="4" y="5" width="44" height="44"/>
-                </imageView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1S5-4n-0xG">
+                    <rect key="frame" x="0.0" y="0.0" width="53" height="53"/>
+                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                </view>
+                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" animating="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="odq-cG-pH1">
+                    <rect key="frame" x="16" y="17" width="20" height="20"/>
+                </activityIndicatorView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="cPI-iO-h66" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="4" id="2vv-Xw-U5h"/>
-                <constraint firstAttribute="trailing" secondItem="cPI-iO-h66" secondAttribute="trailing" constant="5" id="ECZ-AG-Qlz"/>
-                <constraint firstItem="cPI-iO-h66" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="5" id="h1w-NO-oi7"/>
-                <constraint firstAttribute="bottom" secondItem="cPI-iO-h66" secondAttribute="bottom" constant="4" id="sDC-AS-cD6"/>
+                <constraint firstAttribute="bottom" secondItem="1S5-4n-0xG" secondAttribute="bottom" id="HEs-ts-TlI"/>
+                <constraint firstItem="1S5-4n-0xG" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="RoQ-7d-Ycb"/>
+                <constraint firstItem="1S5-4n-0xG" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="TWT-6s-f58"/>
+                <constraint firstAttribute="trailing" secondItem="1S5-4n-0xG" secondAttribute="trailing" id="Why-KU-HqU"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
-                <outlet property="yiboImageView" destination="cPI-iO-h66" id="FbF-B4-Trd"/>
+                <outlet property="dimView" destination="1S5-4n-0xG" id="pKS-V4-Oy1"/>
             </connections>
             <point key="canvasLocation" x="331.5" y="259.5"/>
         </view>
     </objects>
-    <resources>
-        <image name="yibo" width="606" height="510"/>
-    </resources>
 </document>
