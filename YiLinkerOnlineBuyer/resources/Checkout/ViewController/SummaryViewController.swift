@@ -29,7 +29,7 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
     var currentTextFieldTag: Int = 0
     
     var totalPrice: String = ""
-    var hud: MBProgressHUD?
+    var yiHud: YiHUD?
     
     var cartItems: [CartProductDetailsModel] = []
     var addressPickerType: AddressPickerType = AddressPickerType.Barangay
@@ -109,16 +109,8 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
     //MARK: -
     //MARK: - Show HUD
     func showHUD() {
-        if self.hud != nil {
-            self.hud!.hide(true)
-            self.hud = nil
-        }
-        
-        self.hud = MBProgressHUD(view: self.view)
-        self.hud?.removeFromSuperViewOnHide = true
-        self.hud?.dimBackground = false
-        self.view.addSubview(self.hud!)
-        self.hud?.show(true)
+       self.yiHud = YiHUD.initHud()
+       self.yiHud!.showHUDToView(self.view)
     }
     
     //MARK: -

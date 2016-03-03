@@ -46,7 +46,7 @@ class TransactionLeaveSellerFeedbackViewController: UIViewController {
     var typeFeedback = StringHelper.localizedStringWithKey("TRANSACTION_LEAVE_FEEDBACK_TYPE_LOCALIZE_KEY")
     var sendTitle = StringHelper.localizedStringWithKey("TRANSACTION_LEAVE_FEEDBACK_SEND_LOCALIZE_KEY")
     
-    var hud: MBProgressHUD?
+    var yiHud: YiHUD?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -217,7 +217,7 @@ class TransactionLeaveSellerFeedbackViewController: UIViewController {
                 self.showAlert(title: "Feedback", message: responseObject["message"] as! String)
             }
             
-            self.hud?.hide(true)
+            self.yiHud?.hide()
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
                 
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
@@ -232,7 +232,7 @@ class TransactionLeaveSellerFeedbackViewController: UIViewController {
                    self.showAlert(title: Constants.Localized.error, message: Constants.Localized.someThingWentWrong)
                 }
                 
-                self.hud?.hide(true)
+                self.yiHud?.hide()
         })
     }
     
@@ -254,7 +254,7 @@ class TransactionLeaveSellerFeedbackViewController: UIViewController {
             
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                self.hud?.hide(true)
+                self.yiHud?.hide()
                 self.showAlert(title: Constants.Localized.error, message: Constants.Localized.someThingWentWrong)
         })
     }
@@ -269,16 +269,8 @@ class TransactionLeaveSellerFeedbackViewController: UIViewController {
     
     //MARK: Show HUD
     func showHUD() {
-        if self.hud != nil {
-            self.hud!.hide(true)
-            self.hud = nil
-        }
-        
-        self.hud = MBProgressHUD(view: self.view)
-        self.hud?.removeFromSuperViewOnHide = true
-        self.hud?.dimBackground = false
-        self.navigationController?.view.addSubview(self.hud!)
-        self.hud?.show(true)
+       self.yiHud = YiHUD.initHud()
+       self.yiHud!.showHUDToView(self.view)
     }
 
 }

@@ -46,7 +46,7 @@ class VerifyMobileNumberViewController: UIViewController {
     var seconds: Int = 300
     var timer = NSTimer()
     
-    var hud: MBProgressHUD?
+    var yiHud: YiHUD?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -157,21 +157,13 @@ class VerifyMobileNumberViewController: UIViewController {
     
     //Show loader
     func showLoader() {
-        if self.hud != nil {
-            self.hud!.hide(true)
-            self.hud = nil
-        }
-        
-        self.hud = MBProgressHUD(view: self.view)
-        self.hud?.removeFromSuperViewOnHide = true
-        self.hud?.dimBackground = false
-        self.view.addSubview(self.hud!)
-        self.hud?.show(true)
+       self.yiHud = YiHUD.initHud()
+       self.yiHud!.showHUDToView(self.view)
     }
     
     //Hide loader
     func dismissLoader() {
-        self.hud?.hide(true)
+        self.yiHud?.hide()
     }
     
     //Check the mobile number to identify what specific request is needed.
@@ -266,7 +258,7 @@ class VerifyMobileNumberViewController: UIViewController {
         self.showLoader()
         
         WebServiceManager.fireChangeMobileNumber(APIAtlas.updateMobileNumber, accessToken: SessionManager.accessToken(), parameters: params, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
-            self.hud?.hide(true)
+            self.yiHud?.hide()
             if successful {
                 if let isSuccessful: Bool = responseObject["isSuccessful"] as? Bool {
                     if isSuccessful {
@@ -296,7 +288,7 @@ class VerifyMobileNumberViewController: UIViewController {
     func fireVerifyVerificationCode(code: String) {
         self.showLoader()
         WebServiceManager.fireVerifyVerificationCode(APIAtlas.smsVerification, accessToken: SessionManager.accessToken(), code: code, actionHandler:  { (successful, responseObject, requestErrorType) -> Void in
-            self.hud?.hide(true)
+            self.yiHud?.hide()
             if successful {
                 if let isSuccessful: Bool = responseObject["isSuccessful"] as? Bool {
                     if isSuccessful {

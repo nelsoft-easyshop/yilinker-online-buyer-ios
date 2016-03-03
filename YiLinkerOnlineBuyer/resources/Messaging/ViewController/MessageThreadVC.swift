@@ -66,7 +66,7 @@ class MessageThreadVC: UIViewController {
     
     let uploadImageSegueIdentifier = "upload_image"
     
-    var hud: MBProgressHUD?
+    var yiHud: YiHUD?
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if (segue.identifier == uploadImageSegueIdentifier){
@@ -518,7 +518,7 @@ class MessageThreadVC: UIViewController {
                 self.messages = W_Messages.parseMessages(responseObject as! NSDictionary)
                 self.threadTableView.reloadData()
                 self.goToBottomTableView()
-                self.hud?.hide(true)
+                self.yiHud?.hide()
                 //SVProgressHUD.dismiss()
                 }, failure: {
                     (task: NSURLSessionDataTask!, error: NSError!) in
@@ -539,7 +539,7 @@ class MessageThreadVC: UIViewController {
                     self.messages = Array<W_Messages>()
                     self.threadTableView.reloadData()
                     
-                    self.hud?.hide(true)
+                    self.yiHud?.hide()
                     //SVProgressHUD.dismiss()
             })
             
@@ -560,18 +560,11 @@ class MessageThreadVC: UIViewController {
         }
     }
     
-    //Show HUD
+    //MARK: -
+    //MARK: - Show HUD
     func showHUD() {
-        if self.hud != nil {
-            self.hud!.hide(true)
-            self.hud = nil
-        }
-        
-        self.hud = MBProgressHUD(view: self.view)
-        self.hud?.removeFromSuperViewOnHide = true
-        self.hud?.dimBackground = false
-        self.view.addSubview(self.hud!)
-        self.hud?.show(true)
+        self.yiHud = YiHUD.initHud()
+        self.yiHud!.showHUDToView(self.view)
     }
     
     func fireRefreshToken() {

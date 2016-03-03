@@ -58,7 +58,7 @@ class ResultAllViewController: UIViewController, UICollectionViewDataSource, UIC
     
     var fullDimView: UIView?
     
-    var hud: MBProgressHUD?
+    var yiHud: YiHUD?
     
     var totalResultCount: Int = -1
     
@@ -593,20 +593,12 @@ class ResultAllViewController: UIViewController, UICollectionViewDataSource, UIC
     // MARK : - Functions
     //Loader function
     func showLoader() {
-        if self.hud != nil {
-            self.hud!.hide(true)
-            self.hud = nil
-        }
-        
-        self.hud = MBProgressHUD(view: self.view)
-        self.hud?.removeFromSuperViewOnHide = true
-        self.hud?.dimBackground = false
-        self.view.addSubview(self.hud!)
-        self.hud?.show(true)
+       self.yiHud = YiHUD.initHud()
+       self.yiHud!.showHUDToView(self.view)
     }
     
     func dismissLoader() {
-        self.hud?.hide(true)
+        self.yiHud?.hide()
     }
     
     func changeViewType() {

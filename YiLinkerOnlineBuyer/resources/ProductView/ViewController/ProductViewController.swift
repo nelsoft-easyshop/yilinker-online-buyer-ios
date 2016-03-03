@@ -117,7 +117,6 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     var delegate: ProductViewControllerDelegate?
     
     var emptyView: EmptyView?
-    var hud: MBProgressHUD?
     var tabController = CustomTabBarController()
     
     var unitIdIndex: Int = 0

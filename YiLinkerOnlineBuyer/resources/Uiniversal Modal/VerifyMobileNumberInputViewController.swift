@@ -31,7 +31,7 @@ class VerifyMobileNumberInputViewController: UIViewController {
     
     var screenHeight: CGFloat?
     
-    var hud: MBProgressHUD?
+    var yiHud: YiHUD?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -110,20 +110,12 @@ class VerifyMobileNumberInputViewController: UIViewController {
     }
     
     func showLoader() {
-        if self.hud != nil {
-            self.hud!.hide(true)
-            self.hud = nil
-        }
-        
-        self.hud = MBProgressHUD(view: self.view)
-        self.hud?.removeFromSuperViewOnHide = true
-        self.hud?.dimBackground = false
-        self.view.addSubview(self.hud!)
-        self.hud?.show(true)
+       self.yiHud = YiHUD.initHud()
+       self.yiHud!.showHUDToView(self.view)
     }
     
     func dismissLoader() {
-        self.hud?.hide(true)
+        self.yiHud?.hide()
     }
     
     
@@ -144,7 +136,7 @@ class VerifyMobileNumberInputViewController: UIViewController {
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
-                self.hud?.hide(true)
+                self.yiHud?.hide()
         })
     }
     

@@ -42,7 +42,7 @@ class ViewFeedBackViewController: UIViewController, UITableViewDelegate, UITable
     
     var tabController = CustomTabBarController()
     
-    var hud: MBProgressHUD?
+    var yiHud: YiHUD?
     var delegate: ViewFeedBackViewControllerDelegate?
     
     var cancelTitle = StringHelper.localizedStringWithKey("CANCEL_LOCALIZE_KEY")
@@ -231,16 +231,8 @@ class ViewFeedBackViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     func showHUD() {
-        if self.hud != nil {
-            self.hud!.hide(true)
-            self.hud = nil
-        }
-        
-        self.hud = MBProgressHUD(view: self.view)
-        self.hud?.removeFromSuperViewOnHide = true
-        self.hud?.dimBackground = false
-        self.navigationController?.view.addSubview(self.hud!)
-        self.hud?.show(true)
+       self.yiHud = YiHUD.initHud()
+       self.yiHud!.showHUDToView(self.view)
     }
     
     func showAlert(#title: String!, message: String!) {

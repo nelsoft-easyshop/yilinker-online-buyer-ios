@@ -28,7 +28,7 @@ class LoginTableViewCell: UITableViewCell, UITextFieldDelegate, FBSDKLoginButton
     
     var delegate: LoginTableViewCellDelegate?
     
-    var hud: MBProgressHUD?
+    var yiHud: YiHUD?
     var mainController: UIViewController?
     
     override func awakeFromNib() {

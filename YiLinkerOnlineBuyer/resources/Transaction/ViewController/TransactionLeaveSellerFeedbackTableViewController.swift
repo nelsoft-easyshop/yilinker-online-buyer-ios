@@ -18,7 +18,7 @@ class TransactionLeaveSellerFeedbackTableViewController: UITableViewController, 
     var rateComm: Int = 0
     var feedback: String = ""
     
-    var hud: MBProgressHUD?
+    var yiHud: YiHUD?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -154,7 +154,7 @@ class TransactionLeaveSellerFeedbackTableViewController: UITableViewController, 
                 self.showAlert(title: "Feedback", message: responseObject["message"] as! String)
             }
             
-            self.hud?.hide(true)
+            self.yiHud?.hide()
             self.tableView.reloadData()
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
                 println(error.description)
@@ -170,7 +170,7 @@ class TransactionLeaveSellerFeedbackTableViewController: UITableViewController, 
                     self.tableView.reloadData()
                 }
                 
-                self.hud?.hide(true)
+                self.yiHud?.hide()
         })
     }
     
@@ -200,7 +200,7 @@ class TransactionLeaveSellerFeedbackTableViewController: UITableViewController, 
                 let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
                 UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: Constants.Localized.someThingWentWrong)
                 
-                self.hud?.hide(true)
+                self.yiHud?.hide()
         })
     }
     
@@ -232,16 +232,8 @@ class TransactionLeaveSellerFeedbackTableViewController: UITableViewController, 
     
     //MARK: Show HUD
     func showHUD() {
-        if self.hud != nil {
-            self.hud!.hide(true)
-            self.hud = nil
-        }
-        
-        self.hud = MBProgressHUD(view: self.view)
-        self.hud?.removeFromSuperViewOnHide = true
-        self.hud?.dimBackground = false
-        self.navigationController?.view.addSubview(self.hud!)
-        self.hud?.show(true)
+       self.yiHud = YiHUD.initHud()
+       self.yiHud!.showHUDToView(self.view)
     }
     
     //MARK: Show alert dialog box

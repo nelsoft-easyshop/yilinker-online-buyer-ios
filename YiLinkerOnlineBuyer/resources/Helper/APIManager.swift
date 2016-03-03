@@ -9,8 +9,8 @@
 struct APIEnvironment {
     
     static var development = false
-    static var staging = false
-    static var production = true
+    static var staging = true
+    static var production = false
     
     static func baseUrl() -> String {
         if development {

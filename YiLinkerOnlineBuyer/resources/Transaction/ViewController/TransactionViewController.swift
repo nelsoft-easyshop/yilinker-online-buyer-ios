@@ -56,7 +56,7 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
     var transactionType: String = ""
     
     //MBProgressHUD declaration and initialization
-    var hud: MBProgressHUD?
+    var yiHud: YiHUD?
     //EmptyView declatation and initialization - used to add view if encountered an error from the api like Server Error
     var emptyView : EmptyView?
     
@@ -344,7 +344,7 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
                 } else {
                   
                 }*/
-                self.hud?.hide(true)
+                self.yiHud?.hide()
                 self.refreshPage = true
                 
                 }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
@@ -377,9 +377,9 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
                     /*if self.refreshPage {
                         UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                     } else {
-                        self.hud?.hide(true)
+                        self.yiHud?.hide()
                     }*/
-                    self.hud?.hide(true)
+                    self.yiHud?.hide()
             })
         }
     }
@@ -419,12 +419,12 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
             /*if self.refreshPage {
                 UIApplication.sharedApplication().networkActivityIndicatorVisible = false
             } else {
-                self.hud?.hide(true)
+                self.yiHud?.hide()
             }*/
-            self.hud?.hide(true)
+            self.yiHud?.hide()
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                self.hud?.hide(true)
+                self.yiHud?.hide()
                 let alertController = UIAlertController(title: Constants.Localized.someThingWentWrong, message: "", preferredStyle: .Alert)
                 let defaultAction = UIAlertAction(title: Constants.Localized.ok, style: .Default, handler: nil)
                 alertController.addAction(defaultAction)
@@ -442,18 +442,11 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
         presentViewController(alertController, animated: true, completion: nil)
     }
     
-    //MARK: Show HUD
+    //MARK: -
+    //MARK: - Show HUD
     func showHUD() {
-        if self.hud != nil {
-            self.hud!.hide(true)
-            self.hud = nil
-        }
-        
-        self.hud = MBProgressHUD(view: self.view)
-        self.hud?.removeFromSuperViewOnHide = true
-        self.hud?.dimBackground = false
-        self.navigationController?.view.addSubview(self.hud!)
-        self.hud?.show(true)
+        self.yiHud = YiHUD.initHud()
+        self.yiHud!.showHUDToView(self.view)
     }
 
     //MARK: Customize navigation bar

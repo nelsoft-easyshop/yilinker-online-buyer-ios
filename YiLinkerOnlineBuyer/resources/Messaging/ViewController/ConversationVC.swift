@@ -54,7 +54,7 @@ class ConversationVC: UIViewController, EmptyViewDelegate{
     
     var emptyView : EmptyView?
     var contentViewFrame: CGRect?
-    var hud: MBProgressHUD?
+    var yiHud: YiHUD?
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if (segue.identifier == messageThreadSegueIdentifier){
@@ -263,7 +263,7 @@ class ConversationVC: UIViewController, EmptyViewDelegate{
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
             //SVProgressHUD.dismiss()
-            self.hud?.hide(true)
+            self.yiHud?.hide()
             //self.showSuccessMessage()
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
@@ -278,7 +278,7 @@ class ConversationVC: UIViewController, EmptyViewDelegate{
                 }
                 
                 //SVProgressHUD.dismiss()
-                self.hud?.hide(true)
+                self.yiHud?.hide()
                 self.addEmptyView()
         })
     }
@@ -298,7 +298,7 @@ class ConversationVC: UIViewController, EmptyViewDelegate{
                 (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
                 SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
                 //SVProgressHUD.dismiss()
-                self.hud?.hide(true)
+                self.yiHud?.hide()
                 //self.showSuccessMessage()
                 }, failure: {
                     (task: NSURLSessionDataTask!, error: NSError!) in
@@ -313,7 +313,7 @@ class ConversationVC: UIViewController, EmptyViewDelegate{
                     }
                     
                     //SVProgressHUD.dismiss()
-                    self.hud?.hide(true)
+                    self.yiHud?.hide()
                     self.addEmptyView()
             })
         } else {
@@ -345,7 +345,7 @@ class ConversationVC: UIViewController, EmptyViewDelegate{
                 self.conversations = W_Conversation.parseConversations(responseObject as! NSDictionary)
                 self.conversationTableView.reloadData()
                 
-                self.hud?.hide(true)
+                self.yiHud?.hide()
                 //SVProgressHUD.dismiss()
                 }, failure: {
                     (task: NSURLSessionDataTask!, error: NSError!) in
@@ -365,7 +365,7 @@ class ConversationVC: UIViewController, EmptyViewDelegate{
                         self.conversations = Array<W_Conversation>()
                         self.conversationTableView.reloadData()
                         
-                        self.hud?.hide(true)
+                        self.yiHud?.hide()
                         //SVProgressHUD.dismiss()
                         
                         self.addEmptyView()
@@ -466,17 +466,10 @@ extension ConversationVC : UITableViewDataSource{
         }
     }
     
-    //Show HUD
+    //MARK: -
+    //MARK: - Show HUD
     func showHUD() {
-        if self.hud != nil {
-            self.hud!.hide(true)
-            self.hud = nil
-        }
-        
-        self.hud = MBProgressHUD(view: self.view)
-        self.hud?.removeFromSuperViewOnHide = true
-        self.hud?.dimBackground = false
-        self.view.addSubview(self.hud!)
-        self.hud?.show(true)
+        self.yiHud = YiHUD.initHud()
+        self.yiHud!.showHUDToView(self.view)
     }
 }

@@ -27,7 +27,7 @@ class MessagingThreadViewController: UIViewController {
     var sender: MessagingContactModel!
     var receiver: MessagingContactModel!
     
-    var hud: MBProgressHUD?
+    var yiHud: YiHUD?
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var newMessageView: UIView!
@@ -304,7 +304,7 @@ class MessagingThreadViewController: UIViewController {
             if let tempUserId: String = self.receiver?.userId {
                 WebServiceManager.fireGetConversationThreadListWithUrl("\(APIAtlas.ACTION_GET_CONVERSATION_MESSAGES_V2)?access_token=\(SessionManager.accessToken())", page: "\(self.page)", limit: "\(self.LIMIT)", userId: tempUserId, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
                     
-                    self.hud?.hide(true)
+                    self.yiHud?.hide()
                     UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                     if successful {
                         if self.page == 1 {
@@ -530,7 +530,7 @@ class MessagingThreadViewController: UIViewController {
         self.showHUD()
         WebServiceManager.fireRefreshTokenWithUrl(APIAtlas.refreshTokenUrl, actionHandler: {
             (successful, responseObject, requestErrorType) -> Void in
-            self.hud?.hide(true)
+            self.yiHud?.hide()
             
             if successful {
                 SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
@@ -695,16 +695,8 @@ class MessagingThreadViewController: UIViewController {
     
     //Show HUD
     func showHUD() {
-        if self.hud != nil {
-            self.hud!.hide(true)
-            self.hud = nil
-        }
-        
-        self.hud = MBProgressHUD(view: self.view)
-        self.hud?.removeFromSuperViewOnHide = true
-        self.hud?.dimBackground = false
-        self.tabBarController!.view.addSubview(self.hud!)
-        self.hud?.show(true)
+       self.yiHud = YiHUD.initHud()
+       self.yiHud!.showHUDToView(self.view)
     }
     
     // Keyboard notification function
