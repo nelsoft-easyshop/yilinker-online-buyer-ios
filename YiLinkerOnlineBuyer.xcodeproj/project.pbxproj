@@ -18,6 +18,7 @@
 		0C574A241BC5173F00913F29 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C574A231BC5173F00913F29 /* Security.framework */; };
 		0C574A261BC5174900913F29 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C574A251BC5174900913F29 /* SystemConfiguration.framework */; };
 		0C574A281BC5175000913F29 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C574A271BC5175000913F29 /* UIKit.framework */; };
+		0C77B32D1C87E77D0069D063 /* TransactionViews.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C77B32C1C87E77D0069D063 /* TransactionViews.xib */; };
 		0C8A7C7B1B6772670039F013 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0C8A7C7A1B6772670039F013 /* Images.xcassets */; };
 		0C8A7C8A1B6772670039F013 /* YiLinkerOnlineBuyerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8A7C891B6772670039F013 /* YiLinkerOnlineBuyerTests.swift */; };
 		0CAB81971C86817C00B653A9 /* ActivityLogItemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAB7EEE1C86817B00B653A9 /* ActivityLogItemModel.swift */; };
@@ -603,6 +604,7 @@
 		0C574A231BC5173F00913F29 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		0C574A251BC5174900913F29 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		0C574A271BC5175000913F29 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		0C77B32C1C87E77D0069D063 /* TransactionViews.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TransactionViews.xib; sourceTree = "<group>"; };
 		0C8A7C6E1B6772670039F013 /* YiLinkerOnlineBuyer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YiLinkerOnlineBuyer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0C8A7C721B6772670039F013 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0C8A7C7A1B6772670039F013 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
@@ -2580,6 +2582,7 @@
 		0CAB81231C86817B00B653A9 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				0C77B32C1C87E77D0069D063 /* TransactionViews.xib */,
 				0CAB81241C86817B00B653A9 /* TransactionButtons.swift */,
 				0CAB81251C86817B00B653A9 /* TransactionCancelOrderView.swift */,
 				0CAB81261C86817B00B653A9 /* TransactionDeliveryLog2TableViewCell.swift */,
@@ -3043,6 +3046,7 @@
 				0CAB81AB1C86817C00B653A9 /* ChangeAddressCollectionViewCell.xib in Resources */,
 				0CAB82601C86817C00B653A9 /* FlashSaleCollectionViewCell.xib in Resources */,
 				0CAB81D01C86817C00B653A9 /* GuestCheckoutContainerViewController.xib in Resources */,
+				0C77B32D1C87E77D0069D063 /* TransactionViews.xib in Resources */,
 				0CAB82111C86817C00B653A9 /* Panton Thin.otf in Resources */,
 				0CAB820E1C86817C00B653A9 /* Panton SemiBold Italic.otf in Resources */,
 				0CAB83A91C86817C00B653A9 /* EmptyView.xib in Resources */,

@@ -17,7 +17,7 @@ class MessagingContactListViewController: UIViewController {
     @IBOutlet weak var noResultLabel: UILabel!
     var emptyView : EmptyView?
     
-    var hud: MBProgressHUD?
+    var yiHud: YiHUD?
     
     var contactsTableData: [MessagingContactModel] = []
     
@@ -118,7 +118,7 @@ class MessagingContactListViewController: UIViewController {
             
             WebServiceManager.fireGetContactListWithUrl("\(APIAtlas.ACTION_GET_CONTACTS_V2)?access_token=\(SessionManager.accessToken())", keyword: self.keyword, page: "\(self.page)", limit: "\(self.LIMIT)", actionHandler: { (successful, responseObject, requestErrorType) -> Void in
                 
-                self.hud?.hide(true)
+                self.yiHud?.hide()
                 UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                 
                 if successful {
@@ -189,7 +189,7 @@ class MessagingContactListViewController: UIViewController {
         self.showHUD()
         WebServiceManager.fireRefreshTokenWithUrl(APIAtlas.refreshTokenUrl, actionHandler: {
             (successful, responseObject, requestErrorType) -> Void in
-            self.hud?.hide(true)
+            self.yiHud?.hide()
             
             if successful {
                 SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
@@ -207,19 +207,11 @@ class MessagingContactListViewController: UIViewController {
         })
     }
     
-    //MARK: Util Functions
-    //Show HUD
+    //MARK: -
+    //MARK: - Show HUD
     func showHUD() {
-        if self.hud != nil {
-            self.hud!.hide(true)
-            self.hud = nil
-        }
-        
-        self.hud = MBProgressHUD(view: self.view)
-        self.hud?.removeFromSuperViewOnHide = true
-        self.hud?.dimBackground = false
-        self.tabBarController!.view.addSubview(self.hud!)
-        self.hud?.show(true)
+        self.yiHud = YiHUD.initHud()
+        self.yiHud!.showHUDToView(self.view)
     }
     
     //Reset data

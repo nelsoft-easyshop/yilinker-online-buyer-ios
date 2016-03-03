@@ -18,7 +18,7 @@ class ActivityLogTableViewController: UITableViewController {
     var activities: ActivityLogItemsModel = ActivityLogItemsModel(isSuccessful: false, message: "", activities: [])
     
     // Global variables
-    var hud: MBProgressHUD?
+    var yiHud: YiHUD?
     
     var isPageEnd: Bool = false
     var logsDictionary = Dictionary<String, String>()
@@ -138,18 +138,11 @@ class ActivityLogTableViewController: UITableViewController {
         presentViewController(alertController, animated: true, completion: nil)
     }
     
-    // MARK: Show HUD
+    //MARK: -
+    //MARK: - Show HUD
     func showHUD() {
-        if self.hud != nil {
-            self.hud!.hide(true)
-            self.hud = nil
-        }
-        
-        self.hud = MBProgressHUD(view: self.view)
-        self.hud?.removeFromSuperViewOnHide = true
-        self.hud?.dimBackground = false
-        self.navigationController?.view.addSubview(self.hud!)
-        self.hud?.show(true)
+        self.yiHud = YiHUD.initHud()
+        self.yiHud!.showHUDToView(self.view)
     }
     
     // MARK: - Set tableview section header
@@ -273,37 +266,37 @@ class ActivityLogTableViewController: UITableViewController {
                         self.isPageEnd = true
                     }
                     
-                    self.hud?.hide(true)
+                    self.yiHud?.hide()
                     self.tableView.reloadData()
                 } else {
                     if requestErrorType == .ResponseError {
                         //Error in api requirements
                         let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
                         self.showAlert(title: Constants.Localized.error, message: errorModel.message)
-                        self.hud?.hide(true)
+                        self.yiHud?.hide()
                     } else if requestErrorType == .AccessTokenExpired {
                         self.requestRefreshToken()
                     } else if requestErrorType == .PageNotFound {
                         //Page not found
                         Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
-                        self.hud?.hide(true)
+                        self.yiHud?.hide()
                     } else if requestErrorType == .NoInternetConnection {
                         //No internet connection
                         Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
-                        self.hud?.hide(true)
+                        self.yiHud?.hide()
                     } else if requestErrorType == .RequestTimeOut {
                         //Request timeout
                         Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
-                        self.hud?.hide(true)
+                        self.yiHud?.hide()
                     } else if requestErrorType == .UnRecognizeError {
                         //Unhandled error
                         UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
-                        self.hud?.hide(true)
+                        self.yiHud?.hide()
                     }
                 }
             })
         } else {
-            self.hud?.hide(true)
+            self.yiHud?.hide()
             let titleString = StringHelper.localizedStringWithKey("ACTIVITY_LOGS_TITLE_LOCALIZE_KEY")
             let noMoreDataString = StringHelper.localizedStringWithKey("NO_MORE_DATA_LOCALIZE_KEY")
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: noMoreDataString, title: titleString)
@@ -340,7 +333,7 @@ class ActivityLogTableViewController: UITableViewController {
             
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                self.hud?.hide(true)
+                self.yiHud?.hide()
                 let alertController = UIAlertController(title: Constants.Localized.someThingWentWrong, message: "", preferredStyle: .Alert)
                 let defaultAction = UIAlertAction(title: Constants.Localized.ok, style: .Default, handler: nil)
                 alertController.addAction(defaultAction)

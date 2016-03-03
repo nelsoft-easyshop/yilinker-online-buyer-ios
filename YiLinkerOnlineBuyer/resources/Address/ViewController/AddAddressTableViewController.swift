@@ -30,7 +30,7 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
     
     var addressModel: AddressModelV2 = AddressModelV2()
     var activeTextField: Int = 0
-    var hud: MBProgressHUD?
+    var yiHud: YiHUD?
     
     //for selected values in picker view
     var barangayRow: Int = 0
@@ -60,18 +60,11 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
         }
     }
     
-    //Show HUD
+    //MARK: -
+    //MARK: - Show HUD
     func showHUD() {
-        if self.hud != nil {
-            self.hud!.hide(true)
-            self.hud = nil
-        }
-        
-        self.hud = MBProgressHUD(view: self.view)
-        self.hud?.removeFromSuperViewOnHide = true
-        self.hud?.dimBackground = false
-        self.navigationController!.view.addSubview(self.hud!)
-        self.hud?.show(true)
+        self.yiHud = YiHUD.initHud()
+        self.yiHud!.showHUDToView(self.view)
     }
     
     
@@ -361,7 +354,7 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
         
         manager.POST(APIAtlas.addAddressUrl, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-                self.hud?.hide(true)
+                self.yiHud?.hide()
                 self.navigationController!.popViewControllerAnimated(true)
                 self.delegate!.addAddressTableViewController(didAddAddressSucceed: self)
             }, failure: {
@@ -371,7 +364,7 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
                     self.requestRefreshToken(AddressRefreshType.Create)
                 } else {
                     self.showAlert(title: Constants.Localized.someThingWentWrong, message: nil)
-                    self.hud?.hide(true)
+                    self.yiHud?.hide()
                 }
         })
     }
@@ -395,7 +388,7 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
         
         manager.POST(APIAtlas.editAddress, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            self.hud?.hide(true)
+            self.yiHud?.hide()
             self.navigationController!.popViewControllerAnimated(true)
             self.delegate!.addAddressTableViewController(didAddAddressSucceed: self)
             SessionManager.setLang("\(cell.latitude())")
@@ -411,7 +404,7 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
                     UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: Constants.Localized.someThingWentWrong)
                 } else {
                     self.showAlert(title: Constants.Localized.someThingWentWrong, message: nil)
-                    self.hud?.hide(true)
+                    self.yiHud?.hide()
                 }
         })
     }
@@ -434,7 +427,7 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
             
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                self.hud?.hide(true)
+                self.yiHud?.hide()
                 let alertController = UIAlertController(title: Constants.Localized.someThingWentWrong, message: "", preferredStyle: .Alert)
                 let defaultAction = UIAlertAction(title: Constants.Localized.ok, style: .Default, handler: nil)
                 alertController.addAction(defaultAction)
@@ -447,7 +440,7 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
         self.showHUD()
         manager.POST(APIAtlas.provinceUrl, parameters: nil, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            self.hud?.hide(true)
+            self.yiHud?.hide()
             self.provinceModel = ProvinceModel.parseDataWithDictionary(responseObject)
             if self.provinceModel.location.count != 0 && self.addressModel.title == "" {
                 self.addressModel.province = self.provinceModel.location[0]
@@ -466,7 +459,7 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
             
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                self.hud?.hide(true)
+                self.yiHud?.hide()
                 self.showAlert(title: Constants.Localized.someThingWentWrong, message: nil)
         })
     }
@@ -480,7 +473,7 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
             self.cityModel = CityModel.parseDataWithDictionary(responseObject)
-            self.hud?.hide(true)
+            self.yiHud?.hide()
                 //get all cities and assign get the id and title of the first city
                 if self.cityModel.cityId.count != 0 && !self.isEdit {
                     self.addressModel.city = self.cityModel.location[0]
@@ -502,7 +495,7 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
                 }
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                self.hud?.hide(true)
+                self.yiHud?.hide()
                 self.showAlert(title: Constants.Localized.someThingWentWrong, message: nil)
                 
                 if let task = task.response as? NSHTTPURLResponse {
@@ -528,7 +521,7 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
         self.showHUD()
         manager.POST(APIAtlas.barangay, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-                self.hud?.hide(true)
+                self.yiHud?.hide()
                 self.barangayModel = BarangayModel.parseDataWithDictionary(responseObject)
             
                 if self.barangayModel.barangayId.count != 0 && !self.isEdit {
@@ -547,7 +540,7 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
             
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                self.hud?.hide(true)
+                self.yiHud?.hide()
                 self.showAlert(title: Constants.Localized.someThingWentWrong, message: nil)
         })
     }

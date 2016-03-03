@@ -19,7 +19,7 @@ class CategoriesViewController: UIViewController, EmptyViewDelegate, UIWebViewDe
     var categoryId: Int = 1
     
     var emptyView: EmptyView?
-    var hud: MBProgressHUD?
+    var yiHud: YiHUD?
     var isFromFAB: Bool = false
     
     override func viewDidLoad() {
@@ -213,17 +213,11 @@ class CategoriesViewController: UIViewController, EmptyViewDelegate, UIWebViewDe
 //        }
     }
     
+    //MARK: -
+    //MARK: - Show HUD
     func showHUD() {
-        if self.hud != nil {
-            self.hud!.hide(true)
-            self.hud = nil
-        }
-        
-        self.hud = MBProgressHUD(view: self.view)
-        self.hud?.removeFromSuperViewOnHide = true
-        self.hud?.dimBackground = false
-        self.view.addSubview(self.hud!)
-        self.hud?.show(true)
+        self.yiHud = YiHUD.initHud()
+        self.yiHud!.showHUDToView(self.view)
     }
     
     // MARK: - Request
@@ -235,7 +229,7 @@ class CategoriesViewController: UIViewController, EmptyViewDelegate, UIWebViewDe
         manager.GET(APIAtlas.getCategories + String(parentId), parameters: nil, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
-            self.hud?.hide(true)
+            self.yiHud?.hide()
             self.categoryModel = CategoryModel.parseCategories(responseObject)
             
             if self.tableView != nil {
@@ -245,13 +239,13 @@ class CategoriesViewController: UIViewController, EmptyViewDelegate, UIWebViewDe
         
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                self.hud?.hide(true)
+                self.yiHud?.hide()
         })
     }
 
     // MARK: - Web View Delegate
     
     func webViewDidFinishLoad(webView: UIWebView) {
-        self.hud?.hide(true)
+        self.yiHud?.hide()
     }
 }

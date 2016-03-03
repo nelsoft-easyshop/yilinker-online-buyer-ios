@@ -57,7 +57,7 @@ class NewDisputeTableViewController: UITableViewController, UIPickerViewDataSour
     
     var itemIndexToRemove: Int = -1
     
-    var hud: MBProgressHUD?
+    var yiHud: YiHUD?
     
     var reasonId: Int = 0
     
@@ -161,9 +161,9 @@ class NewDisputeTableViewController: UITableViewController, UIPickerViewDataSour
         WebServiceManager.fireSubmitDispute(APIAtlas.postResolutionCenterAddCase, parameter: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
             if successful {
                 self.navigationController?.popViewControllerAnimated(true)
-                self.hud?.hide(true)
+                self.yiHud?.hide()
             } else {
-                self.hud?.hide(true)
+                self.yiHud?.hide()
                 if requestErrorType == .ResponseError {
                     //Error in api requirements
                     let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
@@ -190,16 +190,8 @@ class NewDisputeTableViewController: UITableViewController, UIPickerViewDataSour
     
     // MARK: hudle in darkness
     func showHUD() {
-        if self.hud != nil {
-            self.hud!.hide(true)
-            self.hud = nil
-        }
-        
-        self.hud = MBProgressHUD(view: self.view)
-        self.hud?.removeFromSuperViewOnHide = true
-        self.hud?.dimBackground = false
-        self.view.addSubview(self.hud!)
-        self.hud?.show(true)
+       self.yiHud = YiHUD.initHud()
+       self.yiHud!.showHUDToView(self.view)
     }
     
     // MARK: - Add Picker View
@@ -361,18 +353,18 @@ class NewDisputeTableViewController: UITableViewController, UIPickerViewDataSour
 //                    self.transactionIds.append(self.transactionModel.invoice_number[i])
 //                }
 //            }
-            self.hud?.hide(true)
+            self.yiHud?.hide()
             self.tableView.reloadData()
 //            self.isCaseDetailsDone = true
 //            self.requestChecker()
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
-//                self.hud?.hide(true)
+//                self.yiHud?.hide()
                 println(error.userInfo)
                 self.isCaseDetailsDone = true
                 self.requestChecker()
                 
                 
-                self.hud?.hide(true)
+                self.yiHud?.hide()
                 
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                 
@@ -397,9 +389,9 @@ class NewDisputeTableViewController: UITableViewController, UIPickerViewDataSour
                 } else {
                     UIAlertController.displayErrorMessageWithTarget(self, errorMessage: responseObject["message"] as! String, title: ProductStrings.alertError)
                 }
-                self.hud?.hide(true)
+                self.yiHud?.hide()
             } else {
-                self.hud?.hide(true)
+                self.yiHud?.hide()
                 if requestErrorType == .ResponseError {
                     //Error in api requirements
                     let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
@@ -426,7 +418,7 @@ class NewDisputeTableViewController: UITableViewController, UIPickerViewDataSour
     func requestChecker() {
         if self.isCaseDetailsDone && self.isReasonsDone {
             self.tableView.reloadData()
-            self.hud?.hide(true)
+            self.yiHud?.hide()
         }
     }
     
@@ -434,7 +426,7 @@ class NewDisputeTableViewController: UITableViewController, UIPickerViewDataSour
         self.showHUD()
         WebServiceManager.fireRefreshTokenWithUrl(APIAtlas.refreshTokenUrl, actionHandler: {
             (successful, responseObject, requestErrorType) -> Void in
-            self.hud?.hide(true)
+            self.yiHud?.hide()
             
             if successful {
                 SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)

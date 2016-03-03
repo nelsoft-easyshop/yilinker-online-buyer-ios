@@ -26,7 +26,7 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
     
     var delegate: ChangeAddressViewControllerDelegate?
     
-    var hud: MBProgressHUD?
+    var yiHud: YiHUD?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,18 +44,11 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
         self.regsiterNib()
     }
     
-    //Show HUD
+    //MARK: -
+    //MARK: - Show HUD
     func showHUD() {
-        if self.hud != nil {
-            self.hud!.hide(true)
-            self.hud = nil
-        }
-        
-        self.hud = MBProgressHUD(view: self.view)
-        self.hud?.removeFromSuperViewOnHide = true
-        self.hud?.dimBackground = false
-        self.view.addSubview(self.hud!)
-        self.hud?.show(true)
+        self.yiHud = YiHUD.initHud()
+        self.yiHud!.showHUDToView(self.view)
     }
     
     func titleView() {
@@ -252,7 +245,7 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
             }
             
             self.collectionView.reloadData()
-            self.hud?.hide(true)
+            self.yiHud?.hide()
             
             if self.getAddressModel.listOfAddress.count == 1 {
                 self.fireSetDefaultAddressWithAddressId("\(self.getAddressModel.listOfAddress[0].userAddressId)", indexPath: NSIndexPath(forItem: 0, inSection: 0)!)
@@ -271,7 +264,7 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
                     self.addEmptyView()
                 }
                 
-                self.hud?.hide(true)
+                self.yiHud?.hide()
         })
     }
     
@@ -290,7 +283,7 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
                 self.showAlert(title: responseObject["message"] as! String, message: nil)
             }
             
-            self.hud?.hide(true)
+            self.yiHud?.hide()
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
@@ -305,7 +298,7 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
                     self.addEmptyView()
                 }
                 
-                self.hud?.hide(true)
+                self.yiHud?.hide()
         })
     }
     
@@ -330,7 +323,7 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
             
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                self.hud?.hide(true)
+                self.yiHud?.hide()
                 let alertController = UIAlertController(title: Constants.Localized.someThingWentWrong, message: "", preferredStyle: .Alert)
                 let defaultAction = UIAlertAction(title: Constants.Localized.ok, style: .Default, handler: nil)
                 alertController.addAction(defaultAction)
@@ -364,11 +357,11 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
                 self.showAlert(title: responseObject["message"] as! String, message: nil)
             }
             
-            self.hud?.hide(true)
+            self.yiHud?.hide()
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                self.hud?.hide(true)
+                self.yiHud?.hide()
                 
                 if task.statusCode == 401 {
                     self.requestRefreshToken(AddressRefreshType.SetDefault, uid:addressId.toInt()!, indexPath: nil)
@@ -380,7 +373,7 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
                     self.addEmptyView()
                 }
                 
-                self.hud?.hide(true)
+                self.yiHud?.hide()
         })
         
     }

@@ -63,10 +63,8 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
     
     var selectedAttributes: [String] = []
     
-    var hud: MBProgressHUD?
-    var isEditingAttributes: Bool = false
-    
     var yiHud: YiHUD?
+    var isEditingAttributes: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()

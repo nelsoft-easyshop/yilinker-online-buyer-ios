@@ -25,7 +25,7 @@ class ContactListVC: UIViewController, EmptyViewDelegate{
     
     var selectedContact : W_Contact?
     
-    var hud: MBProgressHUD?
+    var yiHud: YiHUD?
     var emptyView : EmptyView?
     var contentViewFrame: CGRect?
     
@@ -177,7 +177,7 @@ class ContactListVC: UIViewController, EmptyViewDelegate{
                     self.contactTableView.reloadData()
                     
                     //SVProgressHUD.dismiss()
-                    self.hud?.hide(true)
+                    self.yiHud?.hide()
                     }, failure: {
                         (task: NSURLSessionDataTask!, error: NSError!) in
                         let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
@@ -194,7 +194,7 @@ class ContactListVC: UIViewController, EmptyViewDelegate{
                         self.contactTableView.reloadData()
                         
                         //SVProgressHUD.dismiss()
-                        self.hud?.hide(true)
+                        self.yiHud?.hide()
                 })
             } else {
                 self.addEmptyView()
@@ -237,18 +237,11 @@ class ContactListVC: UIViewController, EmptyViewDelegate{
         self.emptyView?.hidden = true
     }
     
-    //Show HUD
+    //MARK: -
+    //MARK: - Show HUD
     func showHUD() {
-        if self.hud != nil {
-            self.hud!.hide(true)
-            self.hud = nil
-        }
-        
-        self.hud = MBProgressHUD(view: self.view)
-        self.hud?.removeFromSuperViewOnHide = true
-        self.hud?.dimBackground = false
-        self.view.addSubview(self.hud!)
-        self.hud?.show(true)
+        self.yiHud = YiHUD.initHud()
+        self.yiHud!.showHUDToView(self.view)
     }
     
 }
