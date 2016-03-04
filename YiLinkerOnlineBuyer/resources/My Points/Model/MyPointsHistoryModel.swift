@@ -11,9 +11,9 @@ import UIKit
 class MyPointsHistoryModel: NSObject {
     var isSuccessful: Bool = false
     var message: String = ""
-    var data: [MyPointsModel] = []
+    var data: [PointModel] = []
     
-    init(isSuccessful: Bool, message: String, data: [MyPointsModel]) {
+    init(isSuccessful: Bool, message: String, data: [PointModel]) {
         self.isSuccessful = isSuccessful
         self.message = message
         self.data = data
@@ -23,7 +23,7 @@ class MyPointsHistoryModel: NSObject {
         
         var isSuccessful: Bool = false
         var message: String = ""
-        var data: [MyPointsModel] = []
+        var data: [PointModel] = []
         
         if dictionary.isKindOfClass(NSDictionary) {
             if dictionary["message"] != nil {
@@ -39,9 +39,15 @@ class MyPointsHistoryModel: NSObject {
             }
             
             if dictionary["data"] != nil {
-                for subValue in dictionary["data"] as! NSArray {
-                    let model: MyPointsModel = MyPointsModel.parseDataWithDictionary(subValue as! NSDictionary)
-                    data.append(model)
+                if let tempDict = dictionary["data"] as? NSArray {
+                    if tempDict.count != 0 {
+                        if tempDict[0]["points"]  != nil {
+                            for subValue in tempDict[0]["points"] as! NSArray {
+                                let model: PointModel = PointModel.parseDataWithDictionary(subValue as! NSDictionary)
+                                data.append(model)
+                            }
+                        }
+                    }
                 }
             }
         }

@@ -159,24 +159,26 @@ class MyPointsTableViewController: UITableViewController, PointsBreakdownTableVi
             println("Index \(indexPath.row)")
             println("Count \(myPointsHistory.data.count)")
             
-            let tempModel: MyPointsModel = myPointsHistory.data[indexPath.row - 3]
+            let tempModel: PointModel = myPointsHistory.data[indexPath.row - 3]
             
-            let dateFormatter = NSDateFormatter()
-            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss.s6"
-            let date: NSDate = dateFormatter.dateFromString(tempModel.date)!
+            if tempModel.date.isNotEmpty() {
+                let dateFormatter = NSDateFormatter()
+                dateFormatter.dateFormat = "MM/dd/yyyy HH:mm:ss"
+                let date: NSDate = dateFormatter.dateFromString(tempModel.date)!
+                
+                let dateFormatter1 = NSDateFormatter()
+                dateFormatter1.dateFormat = "MMM dd, yyyy"
+                let dateAdded = dateFormatter1.stringFromDate(date)
+                
+                cell.dateLabel.text = dateAdded
+            }
             
-            let dateFormatter1 = NSDateFormatter()
-            dateFormatter1.dateFormat = "MMM dd, yyyy"
-            let dateAdded = dateFormatter1.stringFromDate(date)
-            
-            
-            cell.dateLabel.text = dateAdded
-            cell.detailsLabel.text = tempModel.userPointTypeName
+            cell.detailsLabel.text = tempModel.pointDescription
         
-            var points: String = tempModel.points
+            var points: String = tempModel.amount
             
-            if Array(tempModel.points)[0] != "-" {
-                points = "+\(tempModel.points)"
+            if Array(tempModel.amount)[0] != "-" {
+                points = "+\(tempModel.amount)"
             }
             
             if points.rangeOfString("+") != nil {
@@ -188,16 +190,16 @@ class MyPointsTableViewController: UITableViewController, PointsBreakdownTableVi
             }
             
             if points.toInt() < 1 {
-                if Array(tempModel.points)[0] != "-" {
-                    cell.pointsLabel.text = "+0" + points.formatToTwoDecimalNoTrailling()
+                if Array(tempModel.amount)[0] != "-" {
+                    cell.pointsLabel.text = "+" + points.formatToNoTrailling()
                 } else {
-                    cell.pointsLabel.text = "-0" + points.formatToTwoDecimalNoTrailling()
+                    cell.pointsLabel.text = "-" + points.formatToNoTrailling()
                 }
             } else {
-                if Array(tempModel.points)[0] != "-" {
-                    cell.pointsLabel.text = "+" + points.formatToTwoDecimalNoTrailling()
+                if Array(tempModel.amount)[0] != "-" {
+                    cell.pointsLabel.text = "+" + points.formatToNoTrailling()
                 } else {
-                    cell.pointsLabel.text = "-" + points.formatToTwoDecimalNoTrailling()
+                    cell.pointsLabel.text = "-" + points.formatToNoTrailling()
                 }
             }
             
@@ -246,7 +248,7 @@ class MyPointsTableViewController: UITableViewController, PointsBreakdownTableVi
         
         manager.GET(APIAtlas.getPointsTotal, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            
+            println(responseObject)
             self.totalPointsModel = TotalPointsModel.parseDataWithDictionary(responseObject as! NSDictionary)
             
             if self.totalPointsModel.isSuccessful {
@@ -287,6 +289,7 @@ class MyPointsTableViewController: UITableViewController, PointsBreakdownTableVi
             manager.GET(url, parameters: nil, success: {
                 (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
     
+                println(responseObject)
                 self.getCtr++
                 //self.myPointsHistory = MyPointsHistoryModel.parseDataWithDictionary(responseObject as! NSDictionary)
                 

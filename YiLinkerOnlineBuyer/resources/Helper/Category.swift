@@ -494,6 +494,13 @@ extension String {
         return "\(formatter.stringFromNumber((self as NSString).doubleValue)!)"
     }
     
+    func formatToNoTrailling() -> String {
+        let formatter = NSNumberFormatter()
+        formatter.minimumFractionDigits = 0
+        formatter.maximumFractionDigits = 2
+        return "\(formatter.stringFromNumber((self as NSString).doubleValue)!)"
+    }
+    
 }
 
 extension NSURL {

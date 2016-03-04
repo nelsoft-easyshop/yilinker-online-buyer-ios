@@ -9,13 +9,43 @@
 import UIKit
 
 class PointModel: NSObject {
+    var amount: String = ""
+    var pointDescription: String = ""
     var date: String = ""
-    var details: String = ""
-    var points: String = ""
     
-    init(date: String, details: String, points: String) {
+    init(amount: String, pointDescription: String, date: String) {
+        self.amount = amount
+        self.pointDescription = pointDescription
         self.date = date
-        self.details = details
-        self.points = points
+    }
+    
+    class func parseDataWithDictionary(dictionary: AnyObject) -> PointModel {
+        
+        var amount: String = ""
+        var pointDescription: String = ""
+        var date: String = ""
+        
+        if dictionary.isKindOfClass(NSDictionary) {
+            
+            if dictionary["amount"] != nil {
+                if let tempVar = dictionary["amount"] as? String {
+                    amount = tempVar
+                }
+            }
+            
+            if dictionary["description"] != nil {
+                if let tempVar = dictionary["description"] as? String {
+                    pointDescription = tempVar
+                }
+            }
+            
+            if dictionary["date"] != nil {
+                if let tempVar = dictionary["date"] as? String {
+                    date = tempVar
+                }
+            }
+        }
+        
+        return PointModel(amount: amount, pointDescription: pointDescription, date: date)
     }
 }
