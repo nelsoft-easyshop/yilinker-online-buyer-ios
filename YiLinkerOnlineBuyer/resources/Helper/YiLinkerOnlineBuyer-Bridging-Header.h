@@ -20,3 +20,4 @@
 #import "TTRangeSliderDelegate.h"
 #define MR_SHORTHAND
 #import <CoreData+MagicalRecord.h>
+#import "MPGNotification.h"
