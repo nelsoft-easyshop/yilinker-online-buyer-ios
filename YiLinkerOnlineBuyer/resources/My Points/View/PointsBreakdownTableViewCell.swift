@@ -17,11 +17,15 @@ class PointsBreakdownTableViewCell: UITableViewCell {
     var delegate: PointsBreakdownTableViewCellDelegate?
 
     @IBOutlet weak var breakDownView: UIView!
-    @IBOutlet weak var howToButton: SemiRoundedButton!
+    @IBOutlet weak var howToButton: UIButton!
+    @IBOutlet weak var breakDownLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        
+        howToButton.layer.cornerRadius = 5
+        howToButton.setTitle(StringHelper.localizedStringWithKey("EARN_MORE_POINTS_LOCALIZE_KEY"), forState: UIControlState.Normal)
+        breakDownLabel.text = StringHelper.localizedStringWithKey("BREAKDOWN_LOCALIZE_KEY")
     }
     
     @IBAction func buttonAction(sender: AnyObject) {

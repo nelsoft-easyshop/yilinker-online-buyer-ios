@@ -52,7 +52,7 @@ class ResolutionCenterViewController: UIViewController, UITableViewDataSource, U
     
     var currentSelectedFilter = SelectedFilters(time:.Total,status:.Both)
     
-    var hud: MBProgressHUD?
+    var yiHud: YiHUD?
     
     /// Don't Call fireGetCases() everytime this screen is shown
     /// Call it intentionally whenever a screen completes
@@ -308,16 +308,8 @@ class ResolutionCenterViewController: UIViewController, UITableViewDataSource, U
     }
     
     func showHUD() {
-        if self.hud != nil {
-            self.hud!.hide(true)
-            self.hud = nil
-        }
-        
-        self.hud = MBProgressHUD(view: self.view)
-        self.hud?.removeFromSuperViewOnHide = true
-        self.hud?.dimBackground = false
-        self.view.addSubview(self.hud!)
-        self.hud?.show(true)
+       self.yiHud = YiHUD.initHud()
+       self.yiHud!.showHUDToView(self.view)
     }
     
     func fireGetCases() {
@@ -375,6 +367,7 @@ class ResolutionCenterViewController: UIViewController, UITableViewDataSource, U
         
         WebServiceManager.fireGetCasesWithUrl(urlString, parameter: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
             self.resolutionCenterModel = ResolutionCenterModel.parseDataWithDictionary(responseObject)
+            self.yiHud?.hide()
             if successful {
                 if self.resolutionCenterModel.resolutionArray.count == 0 {
                     self.emptyLabel.hidden = false
@@ -384,7 +377,6 @@ class ResolutionCenterViewController: UIViewController, UITableViewDataSource, U
                     self.resolutionTableView.reloadData()
                 }
             } else {
-                self.hud?.hide(true)
                 if requestErrorType == .ResponseError {
                     //Error in api requirements
                     self.emptyLabel.hidden = false
@@ -431,7 +423,7 @@ class ResolutionCenterViewController: UIViewController, UITableViewDataSource, U
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                self.hud?.hide(true)
+                self.yiHud?.hide()
         })
         
     }
@@ -453,9 +445,9 @@ class ResolutionCenterViewController: UIViewController, UITableViewDataSource, U
                 } else {
                     self.view.makeToast(DisputeStrings.noAvailableTransaction, duration: 3.0, position: CSToastPositionBottom, style: CSToastManager.sharedStyle())
                 }
-                self.hud?.hide(true)
+                self.yiHud?.hide()
             } else {
-                self.hud?.hide(true)
+                self.yiHud?.hide()
                 if requestErrorType == .ResponseError {
                     //Error in api requirements
                     let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)

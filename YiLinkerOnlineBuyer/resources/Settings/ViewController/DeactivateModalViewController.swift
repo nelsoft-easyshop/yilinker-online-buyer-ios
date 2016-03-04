@@ -28,7 +28,7 @@ class DeactivateModalViewController: UIViewController {
     var mainViewOriginalFrame: CGRect?
     var screenHeight: CGFloat?
     
-    var hud: MBProgressHUD?
+    var yiHud: YiHUD?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -83,21 +83,13 @@ class DeactivateModalViewController: UIViewController {
     //MARK: Loader function
     //Loader function
     func showLoader() {
-        if self.hud != nil {
-            self.hud!.hide(true)
-            self.hud = nil
-        }
-        
-        self.hud = MBProgressHUD(view: self.view)
-        self.hud?.removeFromSuperViewOnHide = true
-        self.hud?.dimBackground = false
-        self.view.addSubview(self.hud!)
-        self.hud?.show(true)
+        self.yiHud = YiHUD.initHud()
+        self.yiHud!.showHUDToView(self.view)
     }
     
     //Hide loader
     func dismissLoader() {
-        self.hud?.hide(true)
+        self.yiHud?.hide()
     }
     
     //MARK: -
@@ -122,7 +114,7 @@ class DeactivateModalViewController: UIViewController {
         var url: String = APIAtlas.deactivate
         
         WebServiceManager.fireDeactivateWithUrl(url, accessToken: SessionManager.accessToken(), password: password) { (successful, responseObject, requestErrorType) -> Void in
-            self.hud?.hide(true)
+            self.yiHud?.hide()
             println(responseObject)
             if successful{
                 if let dictionary: NSDictionary = responseObject as? NSDictionary {
@@ -187,7 +179,7 @@ class DeactivateModalViewController: UIViewController {
         self.showLoader()
         WebServiceManager.fireRefreshTokenWithUrl(APIAtlas.refreshTokenUrl, actionHandler: {
             (successful, responseObject, requestErrorType) -> Void in
-            self.hud?.hide(true)
+            self.yiHud?.hide()
             
             if successful {
                 SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)

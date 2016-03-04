@@ -42,7 +42,7 @@ class ChangeMobileNumberViewController: UIViewController {
     
     var mobileNumber: String = ""
     
-    var hud: MBProgressHUD?
+    var yiHud: YiHUD?
     
     var isFromCheckout: Bool = false
 
@@ -197,19 +197,11 @@ class ChangeMobileNumberViewController: UIViewController {
     
     //Loader function
     func showLoader() {
-        if self.hud != nil {
-            self.hud!.hide(true)
-            self.hud = nil
-        }
-        
-        self.hud = MBProgressHUD(view: self.view)
-        self.hud?.removeFromSuperViewOnHide = true
-        self.hud?.dimBackground = false
-        self.view.addSubview(self.hud!)
-        self.hud?.show(true)
+        self.yiHud = YiHUD.initHud()
+        self.yiHud!.showHUDToView(self.view)
     }
     
     func dismissLoader() {
-        self.hud?.hide(true)
+        self.yiHud?.hidden
     }
 }

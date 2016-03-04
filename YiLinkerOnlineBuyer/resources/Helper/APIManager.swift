@@ -8,9 +8,9 @@
 
 struct APIEnvironment {
     
-    static var development = false
+    static var development = true
     static var staging = false
-    static var production = true
+    static var production = false
     
     static func baseUrl() -> String {
         if development {
@@ -225,6 +225,10 @@ struct APIAtlas {
     static let verifyUnAuthenticatedOTPCodeUrl = "v2/token/validate"
     //Fogot Password
     static let forgotPasswordV2 = "v2/user/resetPassword"
+    
+    //My Points
+    static let getPointsTotal = "v1/auth/user/getPoints"
+    static let getPointsHistory = "v1/auth/user/getPointHistory"
 }
 
 class APIManager: AFHTTPSessionManager {

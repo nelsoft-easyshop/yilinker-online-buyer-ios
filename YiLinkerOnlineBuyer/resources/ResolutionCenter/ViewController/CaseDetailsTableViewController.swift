@@ -44,7 +44,7 @@ class CaseDetailsTableViewController: UITableViewController {
     
     private var disputeId: String = ""
     
-    var hud: MBProgressHUD?
+    var yiHud: YiHUD?
     
     // MARK: - View Life Cycle
     
@@ -119,17 +119,11 @@ class CaseDetailsTableViewController: UITableViewController {
         self.disputeId = data.resolutionId
     }
     
+    //MARK: -
+    //MARK: - Show HUD
     func showHUD() {
-        if self.hud != nil {
-            self.hud!.hide(true)
-            self.hud = nil
-        }
-        
-        self.hud = MBProgressHUD(view: self.view)
-        self.hud?.removeFromSuperViewOnHide = true
-        self.hud?.dimBackground = false
-        self.view.addSubview(self.hud!)
-        self.hud?.show(true)
+        self.yiHud = YiHUD.initHud()
+        self.yiHud!.showHUDToView(self.view)
     }
     
     func fireGetCases() {
@@ -181,11 +175,11 @@ class CaseDetailsTableViewController: UITableViewController {
                 alert.addAction(okButton)
                 self.presentViewController(alert, animated: true, completion: nil)
             }
-            self.hud?.hide(true)
+            self.yiHud?.hide()
             
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                self.hud?.hide(true)
+                self.yiHud?.hide()
                 
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                 
@@ -221,7 +215,7 @@ class CaseDetailsTableViewController: UITableViewController {
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                self.hud?.hide(true)
+                self.yiHud?.hide()
         })
         
     }

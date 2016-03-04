@@ -17,7 +17,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
     var productReviewModel: ProductReviewsModel?
     var productReviews: [ProductReviewsModel] = [ProductReviewsModel]()
     
-    var hud: MBProgressHUD?
+    var yiHud: YiHUD?
     var dimView: UIView = UIView()
     
     var is_successful: Bool = false
@@ -216,20 +216,18 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
             url = APIAtlas.getSellerInfo
         }
         
-        self.showHUD()
         WebServiceManager.fireSellerWithUrl(url, accessToken: SessionManager.accessToken(), sellerId: sellerId) {
             (successful, responseObject, requestErrorType) -> Void in
-            self.hud?.hide(true)
+            self.yiHud?.hide()
             if successful {
                 if responseObject["isSuccessful"] as! Bool {
                     self.sellerModel = SellerModel.parseSellerDataFromDictionary(responseObject as! NSDictionary)
                     self.is_successful = self.sellerModel!.is_allowed
-                    self.hud!.hide(true)
+                    self.yiHud?.hide()
                     self.titleView(self.sellerModel!.store_name)
                     self.populateData()
                 } else {
                     self.showAlert(title: "Error", message: responseObject["message"] as! String)
-                    self.hud?.hide(true)
                 }
             } else {
                 if requestErrorType == .ResponseError {
@@ -262,6 +260,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
     func fireSellerFeedback() {
         WebServiceManager.fireSellerFeedbackWithUrl(APIAtlas.buyerSellerFeedbacks, sellerId: sellerId) {
             (successful, responseObject, requestErrorType) -> Void in
+            self.yiHud?.hide()
             if successful {
                 if responseObject["isSuccessful"] as! Bool {
                     self.sellerModel = SellerModel.parseSellerReviewsDataFromDictionary(responseObject as! NSDictionary)
@@ -299,6 +298,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         WebServiceManager.fireFollowSellerWithUrl(APIAtlas.followSeller, sellerId: self.sellerId, accessToken: SessionManager.accessToken()) { (successful, responseObject, requestErrorType) -> Void in
             UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+            self.yiHud?.hide()
             if successful {
                 self.followSellerModel = FollowedSellerModel.parseFollowSellerDataWithDictionary(responseObject as! NSDictionary)
                 self.is_successful = true
@@ -337,6 +337,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         WebServiceManager.fireUnFollowSellerWithUrl(APIAtlas.unfollowSeller, sellerId: self.sellerId, accessToken: SessionManager.accessToken()) { (successful, responseObject, requestErrorType) -> Void in
             UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+            self.yiHud?.hide()
             if successful {
                 self.followSellerModel = FollowedSellerModel.parseFollowSellerDataWithDictionary(responseObject as! NSDictionary)
                 self.is_successful = false
@@ -377,7 +378,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.showHUD()
         WebServiceManager.fireRefreshTokenWithUrl(APIAtlas.refreshTokenUrl, actionHandler: {
             (successful, responseObject, requestErrorType) -> Void in
-            self.hud?.hide(true)
+            self.yiHud?.hide()
             
             if successful {
                 SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
@@ -681,7 +682,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 manager.POST(url, parameters: parameters, success: {
                     (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
                     self.contacts = W_Contact.parseContacts(responseObject as! NSDictionary)
-                    self.hud?.hide(true)
+                    self.yiHud?.hide()
                     self.tableView.reloadData()
                     }, failure: {
                         (task: NSURLSessionDataTask!, error: NSError!) in
@@ -699,7 +700,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
                             self.contacts = Array<W_Contact>()
                         }
                         
-                        self.hud?.hide(true)
+                        self.yiHud?.hide()
                 })
             }
     }
@@ -760,16 +761,8 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
     //MARK: -
     //MARK: Show HUD
     func showHUD() {
-        if self.hud != nil {
-            self.hud!.hide(true)
-            self.hud = nil
-        }
-        
-        self.hud = MBProgressHUD(view: self.view)
-        self.hud?.removeFromSuperViewOnHide = true
-        self.hud?.dimBackground = false
-        self.navigationController?.view.addSubview(self.hud!)
-        self.hud?.show(true)
+       self.yiHud = YiHUD.initHud()
+       self.yiHud!.showHUDToView(self.view)
     }
     
     //MARK: -

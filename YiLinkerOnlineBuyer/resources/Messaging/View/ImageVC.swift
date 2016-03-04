@@ -26,7 +26,7 @@ class ImageVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
     
     var imageVCDelegate : ImageVCDelegate?
     
-    var hud : MBProgressHUD?
+    var yiHud: YiHUD?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -101,7 +101,7 @@ class ImageVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
                     data.appendPartWithFileData(imageData, name: "image", fileName: "image_\(self.recipient?.userId)_\(self.sender?.userId)_\(sequence)", mimeType: "image/JPEG")
                     }, success: { (task : NSURLSessionDataTask!, responseObject: AnyObject!) -> Void in
                         self.imageVCDelegate?.sendMessage(W_Messages.parseUploadImageResponse(responseObject))
-                        self.hud?.hide(true)
+                        self.yiHud?.hide()
                         //SVProgressHUD.dismiss()
                         self.goBack()
                     }) { (task : NSURLSessionDataTask!, error: NSError!) -> Void in
@@ -117,7 +117,7 @@ class ImageVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
                         }
                         
                         println(error.description)
-                        self.hud?.hide(true)
+                        self.yiHud?.hide()
                         //SVProgressHUD.dismiss()
                 }
             } else {
@@ -138,7 +138,7 @@ class ImageVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
         let parameters: NSDictionary = ["client_id": Constants.Credentials.clientID(), "client_secret": Constants.Credentials.clientSecret(), "grant_type": Constants.Credentials.grantRefreshToken, "refresh_token":  SessionManager.refreshToken()]
         manager.POST(APIAtlas.refreshTokenUrl, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            self.hud?.hide(true)
+            self.yiHud?.hide()
             SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
@@ -238,16 +238,8 @@ class ImageVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCo
     
     //Show HUD
     func showHUD() {
-        if self.hud != nil {
-            self.hud!.hide(true)
-            self.hud = nil
-        }
-        
-        self.hud = MBProgressHUD(view: self.view)
-        self.hud?.removeFromSuperViewOnHide = true
-        self.hud?.dimBackground = false
-        self.view.addSubview(self.hud!)
-        self.hud?.show(true)
+       self.yiHud = YiHUD.initHud()
+       self.yiHud!.showHUDToView(self.view)
     }
     
 }

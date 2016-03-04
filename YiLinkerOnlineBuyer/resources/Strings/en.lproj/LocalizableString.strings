@@ -447,6 +447,14 @@ MYPOINTS_LOCALIZE_KEY = "My\nPoints";
 RESOLUTIONCENTER_LOCALIZE_KEY = "Resolution\nCenter";
 SETTINGS_LOCALIZE_KEY = "Settings";
 
+// MARK: - My Points
+MY_POINTS_TITLE_LOCALIZE_KEY = "My Points";
+POINTS_LOCALIZE_KEY = "Points";
+POINTS_EARNED_LOCALIZE_KEY = "POINTS EARNED";
+MY_POINTS_DESCRIPTION_LOCALIZE_KEY = "Points are earned by certain activities in your account, e.g. increasing your Followers, receiving Feedback received from Buyers and by referring Buyers into YiLinker. Spending your points on our platform will be available soon, so watch out for that. ";
+BREAKDOWN_LOCALIZE_KEY = "Breakdown";
+EARN_MORE_POINTS_LOCALIZE_KEY = "HOW TO EARN MORE POINTS";
+
 //Edit Profile
 EDITPROFILE_TRY_AGAIN = "Please try again.";
 EDITPROFILE_LOCALIZE_KEY = "Edit Profile";

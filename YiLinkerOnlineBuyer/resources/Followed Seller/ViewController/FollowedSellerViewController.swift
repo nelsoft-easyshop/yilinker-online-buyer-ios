@@ -13,10 +13,10 @@ class FollowedSellerViewController: UIViewController, EmptyViewDelegate {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var emptyLabel: UILabel!
     
-    var yiHud: YiHUD?
-    var hud: MBProgressHUD?
     var emptyView: EmptyView?
     var followedSellerModel: FollowedSellerModel!
+    
+    var yiHud: YiHUD?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -106,7 +106,7 @@ class FollowedSellerViewController: UIViewController, EmptyViewDelegate {
     func requestFollowedSelers() {
         WebServiceManager.fireFollwedSellersWithUrl(APIAtlas.getFollowedSellers, page: "1", limit: "999", accessToken: SessionManager.accessToken(), actionHandler: { (successful, responseObject, requestErrorType) -> Void in
             if successful {
-                self.hud?.hide(true)
+                self.yiHud?.hide()
                 UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                 self.followedSellerModel = FollowedSellerModel.parseDataWithDictionary(responseObject)
                 
@@ -116,7 +116,7 @@ class FollowedSellerViewController: UIViewController, EmptyViewDelegate {
                     self.emptyLabel.hidden = false
                 }
             } else {
-                self.hud?.hide(true)
+                self.yiHud?.hide()
                 if requestErrorType == .ResponseError {
                     //Error in api requirements
                     let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
@@ -144,7 +144,7 @@ class FollowedSellerViewController: UIViewController, EmptyViewDelegate {
         self.showHUD()
         WebServiceManager.fireRefreshTokenWithUrl(APIAtlas.refreshTokenUrl, actionHandler: {
             (successful, responseObject, requestErrorType) -> Void in
-            self.hud?.hide(true)
+            self.yiHud?.hide()
             
             if successful {
                 SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
@@ -165,7 +165,7 @@ class FollowedSellerViewController: UIViewController, EmptyViewDelegate {
     // MARK: - Empty View
     
     func addEmptyView() {
-        self.hud?.hide(true)
+        self.yiHud?.hide()
         if self.emptyView == nil {
             self.emptyView = UIView.loadFromNibNamed("EmptyView", bundle: nil) as? EmptyView
             self.emptyView?.frame = self.view.frame

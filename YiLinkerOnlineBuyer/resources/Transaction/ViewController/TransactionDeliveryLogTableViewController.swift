@@ -16,7 +16,7 @@ class TransactionDeliveryLogTableViewController: UITableViewController {
     var orderProductId: String = ""
     var transactionId: String = ""
     
-    var hud: MBProgressHUD?
+    var yiHud: YiHUD?
     var tableHeaderView: UIView!
     var tidLabel: UILabel!
     var noDeliveryLog: UIView!
@@ -180,16 +180,8 @@ class TransactionDeliveryLogTableViewController: UITableViewController {
     }
     
     func showHUD() {
-        if self.hud != nil {
-            self.hud!.hide(true)
-            self.hud = nil
-        }
-        
-        self.hud = MBProgressHUD(view: self.view)
-        self.hud?.removeFromSuperViewOnHide = true
-        self.hud?.dimBackground = false
-        self.navigationController?.view.addSubview(self.hud!)
-        self.hud?.show(true)
+       self.yiHud = YiHUD.initHud()
+       self.yiHud!.showHUDToView(self.view)
     }
     
     func initializeDeliveryLogsItem() {
@@ -240,9 +232,9 @@ class TransactionDeliveryLogTableViewController: UITableViewController {
                 UIAlertController.displayErrorMessageWithTarget(self, errorMessage: self.deliveryLogs.message, title: StringHelper.localizedStringWithKey("ERROR_LOCALIZE_KEY"))
             }
             
-            self.hud?.hide(true)
+            self.yiHud?.hide()
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
-                self.hud?.hide(true)
+                self.yiHud?.hide()
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
                 
                 if task.statusCode == 401 {
@@ -254,7 +246,7 @@ class TransactionDeliveryLogTableViewController: UITableViewController {
                         let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
                         let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
                         UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: Constants.Localized.someThingWentWrong)
-                        self.hud?.hide(true)
+                        self.yiHud?.hide()
                         //UIAlertController.displayNoInternetConnectionError(self)
                     }
                 }
@@ -285,7 +277,7 @@ class TransactionDeliveryLogTableViewController: UITableViewController {
                 let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
                 let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
                 UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: Constants.Localized.someThingWentWrong)
-                self.hud?.hide(true)
+                self.yiHud?.hide()
         })
         
     }

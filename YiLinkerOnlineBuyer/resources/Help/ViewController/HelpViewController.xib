@@ -10,6 +10,7 @@
             <string>Panton-Regular</string>
             <string>Panton-Regular</string>
             <string>Panton-Regular</string>
+            <string>Panton-Regular</string>
         </mutableArray>
     </customFonts>
     <objects>
@@ -25,6 +26,7 @@
                 <outlet property="instagramButton" destination="0gs-tC-Lce" id="Hxm-fA-wfC"/>
                 <outlet property="titleLabel" destination="QBw-Lr-arm" id="0Nw-sm-wGJ"/>
                 <outlet property="twitterButton" destination="MUP-fp-vVz" id="9vk-gH-Fe0"/>
+                <outlet property="versionLabel" destination="HnA-84-DdC" id="T8J-2C-wzq"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -181,6 +183,16 @@
                         <constraint firstAttribute="height" constant="26" id="dHp-cZ-Rrw"/>
                     </constraints>
                 </view>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="V 1.0.4" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HnA-84-DdC">
+                    <rect key="frame" x="8" y="522" width="304" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="304" id="5fE-Uq-yCf"/>
+                        <constraint firstAttribute="height" constant="21" id="c9A-3m-PvF"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="14"/>
+                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
@@ -195,6 +207,8 @@
                 <constraint firstAttribute="centerX" secondItem="QBw-Lr-arm" secondAttribute="centerX" id="BB9-Vr-gM0"/>
                 <constraint firstItem="0dn-ag-ede" firstAttribute="leading" secondItem="k8B-Ke-GLs" secondAttribute="trailing" constant="8" id="CE5-Ew-F5r"/>
                 <constraint firstItem="QBw-Lr-arm" firstAttribute="top" secondItem="Xkn-dp-2OT" secondAttribute="bottom" constant="20" id="Esg-81-fzS"/>
+                <constraint firstAttribute="trailing" secondItem="HnA-84-DdC" secondAttribute="trailing" constant="8" id="L2A-EN-Bbf"/>
+                <constraint firstItem="HnA-84-DdC" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="OTw-pc-vhg"/>
                 <constraint firstItem="MY8-Qp-zFh" firstAttribute="leading" secondItem="AVo-il-tXg" secondAttribute="trailing" constant="7" id="P6R-j6-m2g"/>
                 <constraint firstItem="AVo-il-tXg" firstAttribute="width" secondItem="FeV-fQ-CdR" secondAttribute="width" id="Pfd-mx-y22"/>
                 <constraint firstItem="FeV-fQ-CdR" firstAttribute="top" secondItem="QBw-Lr-arm" secondAttribute="bottom" constant="37" id="QPd-tQ-iAf"/>
@@ -212,6 +226,7 @@
                 <constraint firstItem="AVo-il-tXg" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="nQY-So-jIH"/>
                 <constraint firstItem="fi5-It-lU4" firstAttribute="leading" secondItem="Ksf-B1-L46" secondAttribute="trailing" constant="6" id="pyj-2A-VjZ"/>
                 <constraint firstItem="Ksf-B1-L46" firstAttribute="leading" secondItem="yKJ-DU-6hq" secondAttribute="trailing" constant="8" id="qev-h4-Ska"/>
+                <constraint firstAttribute="bottom" secondItem="HnA-84-DdC" secondAttribute="bottom" constant="25" id="qwi-pO-2H3"/>
                 <constraint firstItem="9nN-rd-M8d" firstAttribute="top" secondItem="QBw-Lr-arm" secondAttribute="bottom" constant="35" id="sJk-PU-vTp"/>
                 <constraint firstItem="yKJ-DU-6hq" firstAttribute="leading" secondItem="MY8-Qp-zFh" secondAttribute="trailing" constant="8" id="vvh-yJ-Prm"/>
                 <constraint firstItem="fi5-It-lU4" firstAttribute="top" secondItem="FeV-fQ-CdR" secondAttribute="bottom" constant="4" id="zfa-vm-PN6"/>

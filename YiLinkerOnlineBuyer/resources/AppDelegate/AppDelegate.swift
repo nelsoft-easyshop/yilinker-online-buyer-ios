@@ -66,6 +66,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GGLInstanceIDDelegate {
         
         MagicalRecord.setupCoreDataStack()
         
+        UIApplication.sharedApplication().registerForRemoteNotifications()
+        
         return FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
     }
     
@@ -77,6 +79,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GGLInstanceIDDelegate {
         let cleanToken: String = trimEnds.stringByReplacingOccurrencesOfString(" ", withString: "", options: nil, range: nil)
         SessionManager.setDeviceToken(cleanToken)
         println("Device Token > \(cleanToken)")
+        println("Device Token w/o trim > \(deviceToken.description)")
         
 //        // Register for Push Notitications, if running iOS 8
 //        if application.respondsToSelector("registerUserNotificationSettings:") {
@@ -181,10 +184,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GGLInstanceIDDelegate {
         if application.applicationState == UIApplicationState.Active {
             UIApplication.sharedApplication().applicationIconBadgeNumber = 0
             var body: NSDictionary = userInfo["aps"] as! NSDictionary
-            let alertController = UIAlertController(title: "YiLinkeraa", message: body["alert"] as? String, preferredStyle: .Alert)
+            let alertController = UIAlertController(title: "YiLinker", message: body["alert"] as? String, preferredStyle: .Alert)
             alertController.addAction(UIAlertAction(title: ProductStrings.alertOk, style: .Default, handler: nil))
             self.window?.rootViewController?.presentViewController(alertController, animated: true, completion: nil)
+        } else if application.applicationState ==  UIApplicationState.Background {
+           self.startPage()
         }
+    }
+    
+    
+    func application(application: UIApplication, handleActionWithIdentifier identifier: String?, forRemoteNotification userInfo: [NSObject : AnyObject], completionHandler: () -> Void) {
+        var body: NSDictionary = userInfo["aps"] as! NSDictionary
+        println(body)
     }
     
     func onTokenRefresh(){
