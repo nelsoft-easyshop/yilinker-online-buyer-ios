@@ -79,7 +79,7 @@ struct Constants {
         //development
         static func clientID() -> String {
             if APIEnvironment.development {
-                return "1_167rxzqvid8g8swggwokcoswococscocc8ck44wo0g88owgkcc"
+                return "1_4qzm05tv6uwwko4c4c8gs00sco0c40os08owg8sg0wswoo0w8o"
             } else if APIEnvironment.staging {
                 return "1_167rxzqvid8g8swggwokcoswococscocc8ck44wo0g88owgkcc"
             } else {
@@ -89,7 +89,7 @@ struct Constants {
         
         static func clientSecret() -> String {
             if APIEnvironment.development {
-                return "317eq8nohry84ooc0o8woo8000c0k844c4cggws84g80scwwog"
+                return "1vgsjw5b0u74kssco8cooock0oc8c0sscoksk0sgsc08s8k4gw"
             } else if APIEnvironment.staging {
                 return "317eq8nohry84ooc0o8woo8000c0k844c4cggws84g80scwwog"
             } else {

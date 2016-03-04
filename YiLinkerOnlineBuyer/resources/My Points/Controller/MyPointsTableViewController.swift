@@ -140,6 +140,11 @@ class MyPointsTableViewController: UITableViewController, PointsBreakdownTableVi
             return cell
         } else if indexPath.row == 1 {
             let cell = tableView.dequeueReusableCellWithIdentifier(cellPointsDetails, forIndexPath: indexPath) as! PointsDetailsTableViewCell
+            if myPointsHistory.data.count == 0 {
+                cell.detailsLabel.text = StringHelper.localizedStringWithKey("MY_POINTS_DESCRIPTION_LOCALIZE_KEY")
+            } else {
+                cell.hide()
+            }
             return cell
         } else if indexPath.row == 2 {
             let cell = tableView.dequeueReusableCellWithIdentifier(cellPointsBreakDownHeader, forIndexPath: indexPath) as! PointsBreakdownTableViewCell
@@ -239,7 +244,6 @@ class MyPointsTableViewController: UITableViewController, PointsBreakdownTableVi
         self.navigationController?.view.addSubview(self.hud!)
         self.hud?.show(true)
     }
-
     
     func fireGetTotalPoints() {
         showHUD()

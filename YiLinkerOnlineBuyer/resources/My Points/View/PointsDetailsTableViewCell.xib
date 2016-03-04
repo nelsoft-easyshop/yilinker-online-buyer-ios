@@ -29,7 +29,9 @@
             </tableViewCellContentView>
             <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
             <connections>
+                <outlet property="bottomConstraint" destination="WIf-tw-nUb" id="yRI-hj-o05"/>
                 <outlet property="detailsLabel" destination="9Jo-dH-LPV" id="9Wg-v0-Fqe"/>
+                <outlet property="topConstraint" destination="kXv-K3-lfI" id="kBd-Kt-OrI"/>
             </connections>
             <point key="canvasLocation" x="286.5" y="183.5"/>
         </tableViewCell>
