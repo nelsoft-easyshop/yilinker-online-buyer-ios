@@ -166,27 +166,53 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GGLInstanceIDDelegate {
         completionHandler(UIBackgroundFetchResult.NoData);
         
         
+        var body: NSDictionary = userInfo["aps"] as! NSDictionary
+        
+        var targetType: String = ""
+        var target: String = ""
+        
+        if let temp = body["targetType"] as? String {
+            targetType = temp
+        }
+        
+        if let temp = body["target"] as? String {
+            target = temp
+        }
+        
         // Rj
         if application.applicationState == UIApplicationState.Active {
             UIApplication.sharedApplication().applicationIconBadgeNumber = 0
-            var body: NSDictionary = userInfo["aps"] as! NSDictionary
-            let alertController = UIAlertController(title: "YiLinker", message: body["alert"] as? String, preferredStyle: .Alert)
-            alertController.addAction(UIAlertAction(title: ProductStrings.alertOk, style: .Default, handler: nil))
-            self.window?.rootViewController?.presentViewController(alertController, animated: true, completion: nil)
+   
+            var easyNotification: MPGNotification = MPGNotification(title: "YiLinker", subtitle: body["alert"] as? String, backgroundColor: Constants.Colors.appTheme, iconImage: UIImage(named: "yibo"))
+            
+            easyNotification.duration = 5.0
+            
+            for v in easyNotification.subviews {
+                for subView in v.subviews {
+                    if subView.isKindOfClass(UILabel) {
+                        let label: UILabel = subView as! UILabel
+                        label.adjustsFontSizeToFitWidth = true
+                        label.minimumScaleFactor = 0.6
+                    }
+                }
+            }
+            
+            easyNotification.showWithButtonHandler({ (MPGNotification, index) -> Void in
+                for view in self.window!.subviews {
+                    view.removeFromSuperview()
+                }
+                
+                let storyBoard: UIStoryboard = UIStoryboard(name: "HomeStoryBoard", bundle: nil)
+                let tabBarController: UITabBarController = storyBoard.instantiateViewControllerWithIdentifier("TabBarController") as! UITabBarController
+                self.window?.rootViewController = tabBarController
+                
+                let nav = tabBarController.viewControllers!.first as! UINavigationController
+                let homeController: HomeContainerViewController = nav.viewControllers.first as! HomeContainerViewController
+                homeController.didClickItemWithTarget(target, targetType: targetType, sectionTitle: "Push Notif")
+            })
+          
         } else {
             UIApplication.sharedApplication().applicationIconBadgeNumber = 0
-            var body: NSDictionary = userInfo["aps"] as! NSDictionary
-            
-            var targetType: String = ""
-            var target: String = ""
-            
-            if let temp = body["targetType"] as? String {
-                 targetType = temp
-            }
-            
-            if let temp = body["target"] as? String {
-                target = temp
-            }
             
             for view in self.window!.subviews {
                 view.removeFromSuperview()
@@ -199,17 +225,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GGLInstanceIDDelegate {
             let nav = tabBarController.viewControllers!.first as! UINavigationController
             let homeController: HomeContainerViewController = nav.viewControllers.first as! HomeContainerViewController
             homeController.didClickItemWithTarget(target, targetType: targetType, sectionTitle: "Push Notif")
-           /*if targetType == "seller" {
-                self.window?.rootViewController = tabBarController
-            } else if targetType == "productList" {
-                self.window?.rootViewController = tabBarController
-            } else if targetType == "sellerList" {
-                
-            } else if targetType == "product" {
-                self.window?.rootViewController = tabBarController
-            } else if targetType == "webView" {
-                self.window?.rootViewController = tabBarController
-            }*/
         }
     }
     
