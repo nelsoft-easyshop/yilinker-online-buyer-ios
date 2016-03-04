@@ -81,20 +81,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GGLInstanceIDDelegate {
         println("Device Token > \(cleanToken)")
         println("Device Token w/o trim > \(deviceToken.description)")
         
-//        // Register for Push Notitications, if running iOS 8
-//        if application.respondsToSelector("registerUserNotificationSettings:") {
-//            
-//            let types:UIUserNotificationType = (.Alert | .Badge | .Sound)
-//            let settings:UIUserNotificationSettings = UIUserNotificationSettings(forTypes: types, categories: nil)
-//            
-//            application.registerUserNotificationSettings(settings)
-//            application.registerForRemoteNotifications()
-//            
-//        } else {
-//            // Register for Push Notifications before iOS 8
-//            application.registerForRemoteNotificationTypes(.Alert | .Badge | .Sound)
-//        }
-        
         GGLInstanceID.sharedInstance().startWithConfig(GGLInstanceIDConfig.defaultConfig())
         registrationOptions = [kGGLInstanceIDRegisterAPNSOption:deviceToken,
             kGGLInstanceIDAPNSServerTypeSandboxOption:true]
@@ -187,11 +173,45 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GGLInstanceIDDelegate {
             let alertController = UIAlertController(title: "YiLinker", message: body["alert"] as? String, preferredStyle: .Alert)
             alertController.addAction(UIAlertAction(title: ProductStrings.alertOk, style: .Default, handler: nil))
             self.window?.rootViewController?.presentViewController(alertController, animated: true, completion: nil)
-        } else if application.applicationState ==  UIApplicationState.Background {
-           self.startPage()
+        } else {
+            UIApplication.sharedApplication().applicationIconBadgeNumber = 0
+            var body: NSDictionary = userInfo["aps"] as! NSDictionary
+            
+            var targetType: String = ""
+            var target: String = ""
+            
+            if let temp = body["targetType"] as? String {
+                 targetType = temp
+            }
+            
+            if let temp = body["target"] as? String {
+                target = temp
+            }
+            
+            for view in self.window!.subviews {
+                view.removeFromSuperview()
+            }
+            
+            let storyBoard: UIStoryboard = UIStoryboard(name: "HomeStoryBoard", bundle: nil)
+            let tabBarController: UITabBarController = storyBoard.instantiateViewControllerWithIdentifier("TabBarController") as! UITabBarController
+            self.window?.rootViewController = tabBarController
+            
+            let nav = tabBarController.viewControllers!.first as! UINavigationController
+            let homeController: HomeContainerViewController = nav.viewControllers.first as! HomeContainerViewController
+            homeController.didClickItemWithTarget(target, targetType: targetType, sectionTitle: "Push Notif")
+           /*if targetType == "seller" {
+                self.window?.rootViewController = tabBarController
+            } else if targetType == "productList" {
+                self.window?.rootViewController = tabBarController
+            } else if targetType == "sellerList" {
+                
+            } else if targetType == "product" {
+                self.window?.rootViewController = tabBarController
+            } else if targetType == "webView" {
+                self.window?.rootViewController = tabBarController
+            }*/
         }
     }
-    
     
     func application(application: UIApplication, handleActionWithIdentifier identifier: String?, forRemoteNotification userInfo: [NSObject : AnyObject], completionHandler: () -> Void) {
         var body: NSDictionary = userInfo["aps"] as! NSDictionary
