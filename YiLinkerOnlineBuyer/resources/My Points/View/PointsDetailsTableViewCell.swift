@@ -9,7 +9,9 @@
 import UIKit
 
 class PointsDetailsTableViewCell: UITableViewCell {
+    @IBOutlet weak var topConstraint: NSLayoutConstraint!
 
+    @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var detailsLabel: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -17,10 +19,10 @@ class PointsDetailsTableViewCell: UITableViewCell {
         detailsLabel.text = StringHelper.localizedStringWithKey("MY_POINTS_DESCRIPTION_LOCALIZE_KEY")
     }
 
-    override func setSelected(selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+    func hide() {
+        self.detailsLabel.text = ""
+        self.topConstraint.constant = 0
+        self.bottomConstraint.constant = 0
     }
 
 }
