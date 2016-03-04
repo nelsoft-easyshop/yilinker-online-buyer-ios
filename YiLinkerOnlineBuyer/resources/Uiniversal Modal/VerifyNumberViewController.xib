@@ -9,6 +9,7 @@
             <string>Panton-SemiBold</string>
             <string>Panton-SemiBold</string>
             <string>Panton-SemiBold</string>
+            <string>Panton-SemiBold</string>
         </mutableArray>
         <mutableArray key="Panton.otf">
             <string>Panton-Regular</string>
@@ -18,15 +19,18 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="VerifyNumberViewController" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
             <connections>
                 <outlet property="activityIndicator" destination="xo2-N6-Fei" id="yAW-lq-cbH"/>
+                <outlet property="activityIndicator2" destination="mcb-eN-fwP" id="5gr-KI-wCb"/>
                 <outlet property="codeTextField" destination="THh-au-F8T" id="PZS-YC-yaJ"/>
                 <outlet property="containerView" destination="GeV-Iy-Faz" id="1bF-s3-YOu"/>
                 <outlet property="containerViewHeightConstraint" destination="ake-o1-7es" id="pTJ-qm-zr5"/>
                 <outlet property="messageLabel" destination="kHa-U7-hSm" id="z2f-Ey-K9u"/>
+                <outlet property="resendCodeButton" destination="9Ai-HZ-ep5" id="VWd-jf-ow6"/>
+                <outlet property="resendCodeHorizontalSpaceConstant" destination="xGl-T5-AJ7" id="IE7-yL-Jzv"/>
                 <outlet property="submitButton" destination="d1K-RB-Yy9" id="fmO-y8-s01"/>
                 <outlet property="timeLeftVerticalSpacingConstant" destination="NsX-Bc-sRG" id="ewK-QO-R6L"/>
                 <outlet property="timerLabel" destination="95I-9s-mnp" id="kiI-vl-pR0"/>
                 <outlet property="verifyTitleLabel" destination="bce-mc-Lyp" id="9Zq-Zd-McT"/>
-                <outlet property="verticalSpacingConstant" destination="65q-hs-nQb" id="lRG-R1-4VK"/>
+                <outlet property="verticalSpacingConstant" destination="65q-hs-nQb" id="hgT-O6-sSd"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
                 <outlet property="wrongCodeLabel" destination="kec-Cr-gL4" id="XXg-ud-HX5"/>
             </connections>
@@ -51,7 +55,7 @@
                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Time Left  00: 56" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="95I-9s-mnp">
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Time Left  00: 00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="95I-9s-mnp">
                                     <rect key="frame" x="92" y="82" width="116" height="21"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="21" id="hZX-cL-lv7"/>
@@ -68,7 +72,7 @@
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                     <textInputTraits key="textInputTraits" returnKeyType="send"/>
                                 </textField>
-                                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Wrong code" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kec-Cr-gL4">
+                                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Wrong code" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="6" translatesAutoresizingMaskIntoConstraints="NO" id="kec-Cr-gL4">
                                     <rect key="frame" x="82" y="86" width="137" height="14"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="14" id="84O-Lb-H2P"/>
@@ -77,19 +81,12 @@
                                     <color key="textColor" red="0.89631470960000004" green="0.029226388759999999" blue="0.12704667019999999" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="xo2-N6-Fei">
-                                    <rect key="frame" x="199" y="159" width="20" height="20"/>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="20" id="SPU-jZ-tst"/>
-                                        <constraint firstAttribute="width" constant="20" id="jrO-sE-STU"/>
-                                    </constraints>
-                                    <color key="color" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </activityIndicatorView>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="d1K-RB-Yy9">
-                                    <rect key="frame" x="78" y="154" width="145" height="30"/>
+                                    <rect key="frame" x="154" y="149" width="130" height="30"/>
                                     <color key="backgroundColor" red="0.2666666667" green="0.64313725489999995" blue="0.56862745100000001" alpha="1" colorSpace="calibratedRGB"/>
                                     <constraints>
-                                        <constraint firstAttribute="height" constant="30" id="OVV-7G-4Mu"/>
+                                        <constraint firstAttribute="width" constant="130" id="Nzn-gj-fzd"/>
+                                        <constraint firstAttribute="height" constant="30" id="xc9-GP-zbm"/>
                                     </constraints>
                                     <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="12"/>
                                     <state key="normal" title="SUBMIT">
@@ -100,27 +97,62 @@
                                         <action selector="submit:" destination="-1" eventType="touchUpInside" id="uBc-AO-8Pj"/>
                                     </connections>
                                 </button>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Ai-HZ-ep5">
+                                    <rect key="frame" x="16" y="149" width="130" height="30"/>
+                                    <color key="backgroundColor" red="0.3803921569" green="0.12549019610000001" blue="0.46666666670000001" alpha="1" colorSpace="calibratedRGB"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="130" id="KkK-Md-pzi"/>
+                                        <constraint firstAttribute="height" constant="30" id="wWC-9I-LdZ"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="11"/>
+                                    <state key="normal" title="RESEND CODE">
+                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="submit:" destination="-1" eventType="touchUpInside" id="UKg-qF-f9U"/>
+                                    </connections>
+                                </button>
+                                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="mcb-eN-fwP">
+                                    <rect key="frame" x="121" y="154" width="20" height="20"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="20" id="arH-tO-1dK"/>
+                                        <constraint firstAttribute="height" constant="20" id="nOo-xf-pHb"/>
+                                    </constraints>
+                                    <color key="color" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </activityIndicatorView>
+                                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="xo2-N6-Fei">
+                                    <rect key="frame" x="258" y="154" width="20" height="20"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="20" id="n3d-hr-FXl"/>
+                                        <constraint firstAttribute="width" constant="20" id="vWt-4O-8NW"/>
+                                    </constraints>
+                                    <color key="color" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </activityIndicatorView>
                             </subviews>
                             <color key="backgroundColor" red="0.88235294117647056" green="0.88235294117647056" blue="0.88235294117647056" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
                                 <constraint firstAttribute="trailing" secondItem="THh-au-F8T" secondAttribute="trailing" constant="13" id="22E-Od-SUO"/>
-                                <constraint firstItem="xo2-N6-Fei" firstAttribute="top" secondItem="d1K-RB-Yy9" secondAttribute="bottom" constant="-25" id="6R3-NP-u6a"/>
+                                <constraint firstItem="xo2-N6-Fei" firstAttribute="leading" secondItem="d1K-RB-Yy9" secondAttribute="trailing" constant="-26" id="2sU-N7-tEN"/>
+                                <constraint firstItem="d1K-RB-Yy9" firstAttribute="top" secondItem="xo2-N6-Fei" secondAttribute="bottom" constant="-25" id="7DM-JI-q9t"/>
                                 <constraint firstItem="THh-au-F8T" firstAttribute="leading" secondItem="06n-ac-Hr4" secondAttribute="leading" constant="14" id="9tg-GE-x6R"/>
+                                <constraint firstAttribute="bottom" secondItem="9Ai-HZ-ep5" secondAttribute="bottom" constant="21" id="DQb-fe-fDG"/>
+                                <constraint firstItem="mcb-eN-fwP" firstAttribute="top" secondItem="9Ai-HZ-ep5" secondAttribute="bottom" constant="-25" id="Dsr-Bk-Ktp"/>
                                 <constraint firstItem="95I-9s-mnp" firstAttribute="leading" secondItem="06n-ac-Hr4" secondAttribute="leading" constant="92" id="JQf-Qg-Xu3"/>
                                 <constraint firstAttribute="trailing" secondItem="kec-Cr-gL4" secondAttribute="trailing" constant="81" id="N89-Qm-PBU"/>
                                 <constraint firstItem="95I-9s-mnp" firstAttribute="top" secondItem="kHa-U7-hSm" secondAttribute="bottom" constant="20" id="NsX-Bc-sRG"/>
-                                <constraint firstItem="xo2-N6-Fei" firstAttribute="leading" secondItem="d1K-RB-Yy9" secondAttribute="trailing" constant="-24" id="Qiy-UF-nmQ"/>
-                                <constraint firstAttribute="trailing" secondItem="d1K-RB-Yy9" secondAttribute="trailing" constant="77" id="RWz-hN-5I4"/>
                                 <constraint firstItem="kHa-U7-hSm" firstAttribute="leading" secondItem="06n-ac-Hr4" secondAttribute="leading" constant="55" id="VXD-lS-fEo"/>
                                 <constraint firstAttribute="trailing" secondItem="95I-9s-mnp" secondAttribute="trailing" constant="92" id="ac9-Tx-Ghj"/>
+                                <constraint firstAttribute="bottom" secondItem="d1K-RB-Yy9" secondAttribute="bottom" constant="21" id="fdy-et-5Cf"/>
+                                <constraint firstItem="mcb-eN-fwP" firstAttribute="leading" secondItem="9Ai-HZ-ep5" secondAttribute="trailing" constant="-25" id="gYq-jA-hBQ"/>
+                                <constraint firstItem="d1K-RB-Yy9" firstAttribute="leading" secondItem="9Ai-HZ-ep5" secondAttribute="trailing" constant="8" id="gsC-cz-U4d"/>
                                 <constraint firstItem="kec-Cr-gL4" firstAttribute="top" secondItem="kHa-U7-hSm" secondAttribute="bottom" constant="24" id="gvc-pt-idv"/>
                                 <constraint firstItem="kHa-U7-hSm" firstAttribute="top" secondItem="06n-ac-Hr4" secondAttribute="top" constant="14" id="kFL-3d-aNn"/>
                                 <constraint firstItem="kec-Cr-gL4" firstAttribute="leading" secondItem="06n-ac-Hr4" secondAttribute="leading" constant="82" id="nLP-44-uHp"/>
-                                <constraint firstAttribute="bottom" secondItem="d1K-RB-Yy9" secondAttribute="bottom" constant="16" id="nuu-4Q-PQu"/>
                                 <constraint firstAttribute="height" constant="200" id="q9w-C1-O9c"/>
-                                <constraint firstItem="d1K-RB-Yy9" firstAttribute="leading" secondItem="06n-ac-Hr4" secondAttribute="leading" constant="78" id="qrk-08-nOE"/>
                                 <constraint firstAttribute="bottom" secondItem="THh-au-F8T" secondAttribute="bottom" constant="59" id="rea-Jh-UNT"/>
                                 <constraint firstAttribute="trailing" secondItem="kHa-U7-hSm" secondAttribute="trailing" constant="55" id="x3U-Q2-mAI"/>
+                                <constraint firstItem="9Ai-HZ-ep5" firstAttribute="leading" secondItem="06n-ac-Hr4" secondAttribute="leading" constant="16" id="xGl-T5-AJ7"/>
                             </constraints>
                             <variation key="default">
                                 <mask key="constraints">

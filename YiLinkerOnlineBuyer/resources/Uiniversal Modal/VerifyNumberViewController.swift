@@ -10,7 +10,7 @@ import UIKit
 
 protocol VerifyNumberViewControllerDelegate {
     func verifyNumberViewController(verifyNumberViewController: VerifyNumberViewController, didStartEditing textField: UITextField)
-    func verifyNumberViewController(verifyNumberViewController: VerifyNumberViewController, didTapSend textField: UITextField)
+    func verifyNumberViewController(verifyNumberViewController: VerifyNumberViewController, didTapSend textField: UITextField, button: UIButton)
     func verifyNumberViewController(verifyNumberViewController: VerifyNumberViewController, changeState modalState: ModalState)
 }
 
@@ -27,12 +27,17 @@ class VerifyNumberViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var verticalSpacingConstant: NSLayoutConstraint!
     @IBOutlet weak var timeLeftVerticalSpacingConstant: NSLayoutConstraint!
     @IBOutlet weak var wrongCodeLabel: UILabel!
-    
+    @IBOutlet weak var resendCodeHorizontalSpaceConstant: NSLayoutConstraint!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
-    var timeInterval: Int = 300
+    @IBOutlet weak var activityIndicator2: UIActivityIndicatorView!
+    @IBOutlet weak var resendCodeButton: UIButton!
+    var timeInterval: Int = 3600
+    let originalTime: Int = 3600
+    var timeToResend: Int = 60
     
     var delegate: VerifyNumberViewControllerDelegate?
+    var timer: NSTimer = NSTimer()
     
     //MARK: - 
     //MARK: - Life Cycle
@@ -40,6 +45,8 @@ class VerifyNumberViewController: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
 
         self.submitButton.layer.cornerRadius = 5
+        self.resendCodeButton.layer.cornerRadius = 5
+        
         self.codeTextField.delegate = self
         let tapGesture: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "moveScreenToDefaultPosition")
         //self.view.addGestureRecognizer(tapGesture)
@@ -47,7 +54,9 @@ class VerifyNumberViewController: UIViewController, UITextFieldDelegate {
         self.containerView.layer.cornerRadius = 5
         self.containerView.clipsToBounds = true
         self.activityIndicator.layer.zPosition = 100
-        let timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "updateTime", userInfo: nil, repeats: true)
+        self.activityIndicator2.layer.zPosition = 100
+        
+        self.timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "updateTime", userInfo: nil, repeats: true)
         
         if IphoneType.isIphone6() {
             self.verticalSpacingConstant.constant = 170
@@ -67,15 +76,30 @@ class VerifyNumberViewController: UIViewController, UITextFieldDelegate {
         self.timeInterval--
         let (hour, min, seconds): (Int, Int, Int) = self.secondsToHoursMinutesSeconds(self.timeInterval)
         if self.timeInterval < 0 {
-             self.delegate?.verifyNumberViewController(self, changeState: .SessionExpired)
+            self.delegate?.verifyNumberViewController(self, changeState: .SessionExpired)
+            self.timer.invalidate()
         } else {
             if self.timeInterval >= 10 {
-                self.timerLabel.text = "Time Left  0\(min):\(seconds)"
+                if min >= 10 {
+                    self.timerLabel.text = "Time Left  \(min):\(seconds)"
+                } else {
+                    self.timerLabel.text = "Time Left  0\(min):\(seconds)"
+                }
             } else {
                 self.timerLabel.text = "Time Left  0\(min):0\(seconds)"
             }
         }
         
+        if timeToResend != 0 {
+            self.timeToResend--
+            self.resendCodeButton.alpha = 0.8
+            self.resendCodeButton.enabled = false
+            self.resendCodeButton.setTitle("\(timeToResend)", forState: .Normal)
+        } else {
+            self.resendCodeButton.alpha = 1
+            self.resendCodeButton.enabled = true
+            self.resendCodeButton.setTitle("RESEND CODE", forState: .Normal)
+        }
     }
     
     //MARK: -
@@ -116,7 +140,7 @@ class VerifyNumberViewController: UIViewController, UITextFieldDelegate {
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         self.view.endEditing(true)
-        self.delegate?.verifyNumberViewController(self, didTapSend: textField)
+        self.delegate?.verifyNumberViewController(self, didTapSend: textField, button: self.submitButton)
         return true
     }
     
@@ -175,11 +199,15 @@ class VerifyNumberViewController: UIViewController, UITextFieldDelegate {
         
         self.updateSubmitButtonUIForResendCode()
         self.stopLoading()
-            
+        
+        //16
+        self.resendCodeHorizontalSpaceConstant.constant =  85
+        
         UIView.animateWithDuration(0.5, animations: { () -> Void in
             self.view.layoutIfNeeded()
             self.submitButton.layoutIfNeeded()
             self.containerView.layoutIfNeeded()
+            self.resendCodeButton.layoutIfNeeded()
         })
     }
     
@@ -189,6 +217,8 @@ class VerifyNumberViewController: UIViewController, UITextFieldDelegate {
         self.submitButton.setTitle("RESEND CODE", forState: UIControlState.Normal)
         self.submitButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
         self.submitButton.backgroundColor = Constants.Colors.appTheme
+        
+        self.submitButton.hidden = true
     }
     
     //MARK: -
@@ -197,12 +227,21 @@ class VerifyNumberViewController: UIViewController, UITextFieldDelegate {
         self.submitButton.setTitle("SUBMIT", forState: UIControlState.Normal)
         self.submitButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
         self.submitButton.backgroundColor = Constants.Colors.onlineColor
+        
+        self.submitButton.hidden = false
     }
     
     //MARK: - 
     //MARK: - Submit
     @IBAction func submit(sender: UIButton) {
-        self.delegate?.verifyNumberViewController(self, didTapSend: self.codeTextField)
+        if !self.activityIndicator.isAnimating() || !self.activityIndicator2.isAnimating() {
+            self.delegate?.verifyNumberViewController(self, didTapSend: self.codeTextField, button: sender)
+        }
+    }
+    
+    //MARK: - Activate Resend Button
+    func activateResendButton() {
+        self.timeToResend = 60
     }
     
     //MARK: - 
@@ -214,6 +253,8 @@ class VerifyNumberViewController: UIViewController, UITextFieldDelegate {
             self.verticalSpacingConstant.constant = 170
         }
         
+        self.resendCodeHorizontalSpaceConstant.constant =  16
+        
         self.codeTextField.hidden = false
         self.timerLabel.hidden = false
         self.codeTextField.text = ""
@@ -224,7 +265,7 @@ class VerifyNumberViewController: UIViewController, UITextFieldDelegate {
         
         self.updateSubmitButtonUIForSubmitCode()
         
-        self.timeInterval = 300
+        self.timeInterval = self.originalTime
         
         self.view.userInteractionEnabled = true
         
@@ -232,6 +273,9 @@ class VerifyNumberViewController: UIViewController, UITextFieldDelegate {
             self.view.layoutIfNeeded()
             self.submitButton.layoutIfNeeded()
             self.containerView.layoutIfNeeded()
+            self.resendCodeButton.layoutIfNeeded()
         })
+        
+        self.timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "updateTime", userInfo: nil, repeats: true)
     }
 }

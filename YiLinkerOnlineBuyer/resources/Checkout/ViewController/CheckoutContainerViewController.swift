@@ -762,7 +762,9 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
                             if SessionManager.isMobileVerified() {
                                 self.fireSaveBasicInfoWithFirstName(self.summaryViewController!.firstName, lastName: self.summaryViewController!.lastName, mobileNumber: self.summaryViewController!.mobileNumber, confirmationCode: "", email: self.summaryViewController!.email)
                             } else {
-                                self.fireGetAuthenticatedOTP(self.summaryViewController!.mobileNumber)
+                                self.fireGetAuthenticatedOTP(self.summaryViewController!.mobileNumber, actionHandler: { (isSuccessful) -> Void in
+                                    
+                                })
                             }
                         } else {
                             Toast.displayToastWithMessage(errorMessage, view: self.navigationController!.view)
@@ -773,7 +775,9 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
                             self.selectedIndex++
                             self.setSelectedViewControllerWithIndex(self.selectedIndex, transition: UIViewAnimationOptions.TransitionFlipFromLeft)
                         } else {
-                            self.fireGetAuthenticatedOTP(self.summaryViewController!.mobileNumber)
+                            self.fireGetAuthenticatedOTP(self.summaryViewController!.mobileNumber, actionHandler: { (isSuccessful) -> Void in
+                                
+                            })
                         }
                     }
                 } else {
@@ -795,7 +799,12 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
                     UIAlertController.displayErrorMessageWithTarget(self, errorMessage: AddressStrings.addressIsRequired, title: AddressStrings.incompleteInformation)
                 } else {
 //                    self.fireGuestCheckout()
-                    self.fireGetOTP(self.summaryViewController!.guestCheckoutTableViewCell.mobileNumberTextField.text, areaCode: "63", type: "guest_checkout", storeType: "")
+                    self.fireGetOTP(self.summaryViewController!.guestCheckoutTableViewCell.mobileNumberTextField.text, areaCode: "63", type: "guest_checkout", storeType: "", actionHandler: { (isSuccessful) -> Void in
+
+                        if isSuccessful {
+                            self.showVerifyNumberModal()
+                        }
+                    })
                 }
                 
                 /*
@@ -1107,7 +1116,9 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
                         mobileNumber = values[0] as! String
                     }
                     
-                   self.fireVerifyOTPCode(mobileNumber, verificationCode:  values[2] as! String, type: "checkout", storeType: "", verifyNumberViewController: values[1] as! VerifyNumberViewController)
+                    self.fireVerifyOTPCode(mobileNumber, verificationCode:  values[2] as! String, type: "checkout", storeType: "", verifyNumberViewController: values[1] as! VerifyNumberViewController, actionHandler: { (isSuccessful) -> Void in
+                        
+                    })
                 }
             } else {
                 //Forcing user to logout.
@@ -1166,13 +1177,12 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
         })
     }
     
-    func verifyNumberViewController(verifyNumberViewController: VerifyNumberViewController, didTapSend textField: UITextField) {
+    func verifyNumberViewController(verifyNumberViewController: VerifyNumberViewController, didTapSend textField: UITextField, button: UIButton) {
         verifyNumberViewController.moveScreenToDefaultPosition()
-        
-        verifyNumberViewController.startLoading()
         var mobileNumber: String = ""
         
-        if verifyNumberViewController.submitButton.titleLabel!.text == "SUBMIT" {
+        if verifyNumberViewController.submitButton == button {
+            verifyNumberViewController.startLoading()
             if SessionManager.isLoggedIn() {
                 mobileNumber =  self.summaryViewController!.mobileNumber
                 self.tempVerifyNumberViewController = verifyNumberViewController
@@ -1187,10 +1197,32 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
             
             
         } else {
-            Delay.delayWithDuration(3.0, completionHandler: { (success) -> Void in
-                verifyNumberViewController.stopLoading()
-                verifyNumberViewController.updateUIToDefault()
-            })
+            verifyNumberViewController.activityIndicator2.startAnimating()
+            if SessionManager.isLoggedIn() {
+                self.fireGetAuthenticatedOTP(self.summaryViewController!.mobileNumber, actionHandler: { (isSuccessful) -> Void in
+                    verifyNumberViewController.activityIndicator2.stopAnimating()
+                    
+                    if isSuccessful {
+                        verifyNumberViewController.timeToResend = 60
+                        
+                        if verifyNumberViewController.submitButton.hidden {
+                            verifyNumberViewController.updateUIToDefault()
+                        }
+                    }
+                })
+            } else {
+                self.fireGetOTP(self.summaryViewController!.guestCheckoutTableViewCell.mobileNumberTextField.text, areaCode: "63", type: "guest_checkout", storeType: "", actionHandler: { (isSuccessful) -> Void in
+                    verifyNumberViewController.activityIndicator2.stopAnimating()
+                    
+                    if isSuccessful {
+                        verifyNumberViewController.timeToResend = 60
+                        
+                        if verifyNumberViewController.submitButton.hidden {
+                            verifyNumberViewController.updateUIToDefault()
+                        }
+                    }
+                })
+            }
         }
     }
     
@@ -1310,13 +1342,14 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
     
     //MARK: -
     //MARK: - Fire Get OTP
-    func fireGetOTP(contactNumber: String, areaCode: String, type: String, storeType: String) {
+    func fireGetOTP(contactNumber: String, areaCode: String, type: String, storeType: String, actionHandler: (isSuccessful: Bool) -> Void) {
         self.showHUD()
         
         WebServiceManager.fireUnauthenticatedOTPRequestWithUrl(APIAtlas.unauthenticateOTP, contactNumber: contactNumber, areaCode: areaCode, type: type, storeType: storeType, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
             println(responseObject)
+            actionHandler(isSuccessful: successful)
             if successful {
-                self.showVerifyNumberModal()
+                
             } else {
                 self.yiHud?.hide()
                 if requestErrorType == .ResponseError {
@@ -1341,11 +1374,12 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
     
     //MARK: -
     //MARK: - Fire Get Authenticated OTP
-    func fireGetAuthenticatedOTP(mobileNumber: String) {
+    func fireGetAuthenticatedOTP(mobileNumber: String, actionHandler: (isSuccessful: Bool) -> Void) {
         self.showHUD()
         
         WebServiceManager.fireAuthenticatedOTPRequestWithUrl(APIAtlas.authenticatedOTP, accessToken: SessionManager.accessToken(), type: "checkout", contactNumber: mobileNumber) { (successful, responseObject, requestErrorType) -> Void in
             self.yiHud?.hide()
+            actionHandler(isSuccessful: successful)
             if successful {
                 self.showVerifyNumberModal()
             } else {
@@ -1372,7 +1406,7 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
     
     //MARK: - 
     //MARK: - Fire VerifyOTPCode
-    func fireVerifyOTPCode(contactNo: String, verificationCode: String, type: String, storeType: String, verifyNumberViewController: VerifyNumberViewController) {
+    func fireVerifyOTPCode(contactNo: String, verificationCode: String, type: String, storeType: String, verifyNumberViewController: VerifyNumberViewController, actionHandler: (isSuccessful: Bool) -> Void) {
         var url: String = ""
         var type2: String = ""
         if SessionManager.isLoggedIn() {
@@ -1386,9 +1420,10 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
         WebServiceManager.fireVerifyOTPCodeWithUrl(url, contactNo: contactNo, verificationCode: verificationCode, type: type2, storeType: storeType, accessToken: SessionManager.accessToken()) { (successful, responseObject, requestErrorType) -> Void in
             
             self.yiHud?.hide()
-            
+            actionHandler(isSuccessful: successful)
             if successful {
                 self.showVerifiedSuccessModal(verifyNumberViewController)
+                println(responseObject as! NSDictionary)
             } else {
                 println("contact number: \(contactNo)")
                 if requestErrorType == .ResponseError {

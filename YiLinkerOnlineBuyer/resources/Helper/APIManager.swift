@@ -8,8 +8,8 @@
 
 struct APIEnvironment {
     
-    static var development = false
-    static var staging = true
+    static var development = true
+    static var staging = false
     static var production = false
     
     static func baseUrl() -> String {
