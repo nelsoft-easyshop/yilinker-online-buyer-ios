@@ -169,6 +169,7 @@ class HiddenViewController: UIViewController {
     }
     
     func selectViewControllerAtIndex(index: Int) {
+        self.navigationController?.popToRootViewControllerAnimated(false)
         if self.viewControllers.count == 0 {
             self.initViews()
         }
