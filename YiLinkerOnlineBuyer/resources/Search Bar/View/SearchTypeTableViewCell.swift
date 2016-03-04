@@ -9,16 +9,18 @@
 import UIKit
 
 class SearchTypeTableViewCell: UITableViewCell {
-
+    
+    @IBOutlet weak var iconImageView: UIImageView!
+    @IBOutlet weak var typeLabel: UILabel!
+    @IBOutlet weak var iconWidthConstant: NSLayoutConstraint!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
 
-    override func setSelected(selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+    func hideIcon() {
+        self.iconWidthConstant.constant = 0
     }
     
 }
