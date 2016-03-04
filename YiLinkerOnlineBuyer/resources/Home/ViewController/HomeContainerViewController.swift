@@ -189,6 +189,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     func setupSearchBar() {
         self.searchBarView = SearchBarView.initSearchBar()
         self.searchBarView?.showSearchBarToView(self.topBarView, mainView: self.view)
+        self.searchBarView?.delegate = self
         self.view.layoutIfNeeded()
     }
     
@@ -1766,5 +1767,29 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                 
             }
         }
+    }
+}
+
+extension HomeContainerViewController: SearchBarViewDelegate {
+    func searchBarView(searchBarView: SearchBarView, didTapScanQRCode button: UIButton) {
+        //QR
+    }
+    
+    func searchBarView(searchBarView: SearchBarView, didTapProfile button: UIButton) {
+        if SessionManager.isLoggedIn() {
+            var profileViewController = ProfileViewController(nibName: "ProfileViewController", bundle: nil)
+            profileViewController.isFromSearchBar = true
+            self.navigationController?.pushViewController(profileViewController, animated: true)
+        } else {
+            self.redirectToLoginRegister(true)
+        }
+    }
+    
+    func searchBarView(searchBarView: SearchBarView, didTextChanged textField: UITextField) {
+        
+    }
+    
+    func searchBarView(searchBarView: SearchBarView, didSeacrhTypeChanged searchType: SearchType) {
+        
     }
 }

@@ -48,7 +48,7 @@ class SearchBarView: UIView {
     var searchAutoCompleteTableView: UITableView?
     var isAutoCompleteHidden: Bool = true
     
-    var searchSuggestions: [SearchSuggestionModel] = [SearchSuggestionModel(suggestion: "Suggestion1", imageURL: "", searchUrl: ""), SearchSuggestionModel(suggestion: "Suggestion2", imageURL: "", searchUrl: ""), SearchSuggestionModel(suggestion: "Suggestion2", imageURL: "", searchUrl: "")]
+    var searchSuggestions: [SearchSuggestionModel] = []
     
     //MARK: -
     //MARK: - Awake Form Nib
@@ -108,19 +108,22 @@ class SearchBarView: UIView {
             self.delegate?.searchBarView(self, didTapProfile: sender)
             self.hideSearchTypePicker()
             self.hideAutoComplete()
-            searchSuggestions.removeAtIndex(0)
         }
     }
     
     @IBAction func textFieldAction(sender: AnyObject) {
-        self.delegate?.searchBarView(self, didTextChanged: self.searchTextField)
-        if count(self.searchTextField.text) > 2 {
-            self.showAutoComplete()
-        } else {
-            self.hideAutoComplete()
+        if count(self.searchTextField.text) > 1 {
+            self.delegate?.searchBarView(self, didTextChanged: self.searchTextField)
         }
-        
     }
+    
+    //MARK: -
+    //MARK: - Pass Value
+    func passSearchSuggestions(searchSuggestions: [SearchSuggestionModel]) {
+        self.searchSuggestions = searchSuggestions
+        self.showAutoComplete()
+    }
+    
     
     //MARK: -
     //MARK: - Other Functions
@@ -266,6 +269,8 @@ extension SearchBarView: UITableViewDataSource, UITableViewDelegate {
         if tableView == self.searchTypeTableView {
             self.hideSearchTypePicker()
             self.searchTypeImageView.image = UIImage(named: self.searchTypeImage[indexPath.row])
+        } else {
+            
         }
     }
 }
