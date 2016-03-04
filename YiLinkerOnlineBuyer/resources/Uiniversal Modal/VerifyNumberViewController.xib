@@ -27,6 +27,7 @@
                 <outlet property="resendCodeButton" destination="9Ai-HZ-ep5" id="VWd-jf-ow6"/>
                 <outlet property="resendCodeHorizontalSpaceConstant" destination="xGl-T5-AJ7" id="IE7-yL-Jzv"/>
                 <outlet property="submitButton" destination="d1K-RB-Yy9" id="fmO-y8-s01"/>
+                <outlet property="submitButtonHorizontalConstraint" destination="QL7-Jc-QVi" id="iBp-mH-yMo"/>
                 <outlet property="timeLeftVerticalSpacingConstant" destination="NsX-Bc-sRG" id="ewK-QO-R6L"/>
                 <outlet property="timerLabel" destination="95I-9s-mnp" id="kiI-vl-pR0"/>
                 <outlet property="verifyTitleLabel" destination="bce-mc-Lyp" id="9Zq-Zd-McT"/>
@@ -52,15 +53,6 @@
                                         <constraint firstAttribute="height" constant="48" id="gY0-OK-voE"/>
                                     </constraints>
                                     <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="12"/>
-                                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Time Left  00: 00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="95I-9s-mnp">
-                                    <rect key="frame" x="92" y="82" width="116" height="21"/>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="21" id="hZX-cL-lv7"/>
-                                    </constraints>
-                                    <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="14"/>
                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                     <nil key="highlightedColor"/>
                                 </label>
@@ -129,6 +121,15 @@
                                     </constraints>
                                     <color key="color" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </activityIndicatorView>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Calculating time" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="95I-9s-mnp">
+                                    <rect key="frame" x="36" y="70" width="228" height="21"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="21" id="hZX-cL-lv7"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="14"/>
+                                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
                             </subviews>
                             <color key="backgroundColor" red="0.88235294117647056" green="0.88235294117647056" blue="0.88235294117647056" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
@@ -138,14 +139,14 @@
                                 <constraint firstItem="THh-au-F8T" firstAttribute="leading" secondItem="06n-ac-Hr4" secondAttribute="leading" constant="14" id="9tg-GE-x6R"/>
                                 <constraint firstAttribute="bottom" secondItem="9Ai-HZ-ep5" secondAttribute="bottom" constant="21" id="DQb-fe-fDG"/>
                                 <constraint firstItem="mcb-eN-fwP" firstAttribute="top" secondItem="9Ai-HZ-ep5" secondAttribute="bottom" constant="-25" id="Dsr-Bk-Ktp"/>
-                                <constraint firstItem="95I-9s-mnp" firstAttribute="leading" secondItem="06n-ac-Hr4" secondAttribute="leading" constant="92" id="JQf-Qg-Xu3"/>
+                                <constraint firstItem="95I-9s-mnp" firstAttribute="leading" secondItem="06n-ac-Hr4" secondAttribute="leading" constant="36" id="JQf-Qg-Xu3"/>
                                 <constraint firstAttribute="trailing" secondItem="kec-Cr-gL4" secondAttribute="trailing" constant="81" id="N89-Qm-PBU"/>
-                                <constraint firstItem="95I-9s-mnp" firstAttribute="top" secondItem="kHa-U7-hSm" secondAttribute="bottom" constant="20" id="NsX-Bc-sRG"/>
+                                <constraint firstItem="95I-9s-mnp" firstAttribute="top" secondItem="kHa-U7-hSm" secondAttribute="bottom" constant="8" id="NsX-Bc-sRG"/>
+                                <constraint firstItem="d1K-RB-Yy9" firstAttribute="leading" secondItem="06n-ac-Hr4" secondAttribute="leading" constant="154" id="QL7-Jc-QVi"/>
                                 <constraint firstItem="kHa-U7-hSm" firstAttribute="leading" secondItem="06n-ac-Hr4" secondAttribute="leading" constant="55" id="VXD-lS-fEo"/>
-                                <constraint firstAttribute="trailing" secondItem="95I-9s-mnp" secondAttribute="trailing" constant="92" id="ac9-Tx-Ghj"/>
+                                <constraint firstAttribute="trailing" secondItem="95I-9s-mnp" secondAttribute="trailing" constant="36" id="ac9-Tx-Ghj"/>
                                 <constraint firstAttribute="bottom" secondItem="d1K-RB-Yy9" secondAttribute="bottom" constant="21" id="fdy-et-5Cf"/>
                                 <constraint firstItem="mcb-eN-fwP" firstAttribute="leading" secondItem="9Ai-HZ-ep5" secondAttribute="trailing" constant="-25" id="gYq-jA-hBQ"/>
-                                <constraint firstItem="d1K-RB-Yy9" firstAttribute="leading" secondItem="9Ai-HZ-ep5" secondAttribute="trailing" constant="8" id="gsC-cz-U4d"/>
                                 <constraint firstItem="kec-Cr-gL4" firstAttribute="top" secondItem="kHa-U7-hSm" secondAttribute="bottom" constant="24" id="gvc-pt-idv"/>
                                 <constraint firstItem="kHa-U7-hSm" firstAttribute="top" secondItem="06n-ac-Hr4" secondAttribute="top" constant="14" id="kFL-3d-aNn"/>
                                 <constraint firstItem="kec-Cr-gL4" firstAttribute="leading" secondItem="06n-ac-Hr4" secondAttribute="leading" constant="82" id="nLP-44-uHp"/>

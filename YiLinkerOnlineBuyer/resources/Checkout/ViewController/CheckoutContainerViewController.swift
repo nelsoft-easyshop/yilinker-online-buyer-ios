@@ -1203,11 +1203,7 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
                     verifyNumberViewController.activityIndicator2.stopAnimating()
                     
                     if isSuccessful {
-                        verifyNumberViewController.timeToResend = 60
-                        
-                        if verifyNumberViewController.submitButton.hidden {
-                            verifyNumberViewController.updateUIToDefault()
-                        }
+                        verifyNumberViewController.updateUIToDefault()
                     }
                 })
             } else {
@@ -1215,17 +1211,16 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
                     verifyNumberViewController.activityIndicator2.stopAnimating()
                     
                     if isSuccessful {
-                        verifyNumberViewController.timeToResend = 60
-                        
-                        if verifyNumberViewController.submitButton.hidden {
-                            verifyNumberViewController.updateUIToDefault()
-                        }
+                        verifyNumberViewController.updateUIToDefault()
                     }
                 })
             }
         }
     }
     
+    func verifyNumberViewControllerWillDismiss(verifyNumberViewController: VerifyNumberViewController) {
+        self.hideDimView()
+    }
     
     //MARK: - 
     //MARK: - Show Verified Success Modal
@@ -1346,7 +1341,7 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
         self.showHUD()
         
         WebServiceManager.fireUnauthenticatedOTPRequestWithUrl(APIAtlas.unauthenticateOTP, contactNumber: contactNumber, areaCode: areaCode, type: type, storeType: storeType, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
-            println(responseObject)
+            self.yiHud?.hide()
             actionHandler(isSuccessful: successful)
             if successful {
                 
