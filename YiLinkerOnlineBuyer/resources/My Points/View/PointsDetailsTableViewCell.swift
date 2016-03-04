@@ -10,9 +10,11 @@ import UIKit
 
 class PointsDetailsTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var detailsLabel: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        detailsLabel.text = StringHelper.localizedStringWithKey("MY_POINTS_DESCRIPTION_LOCALIZE_KEY")
     }
 
     override func setSelected(selected: Bool, animated: Bool) {

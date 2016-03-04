@@ -1,5 +1,5 @@
 //
-//  PointsTableViewCell.swift
+//  PointsEarnedTableViewCell.swift
 //  YiLinkerOnlineBuyer
 //
 //  Created by John Paul Chan on 8/24/15.
@@ -8,16 +8,15 @@
 
 import UIKit
 
-class PointsTableViewCell: UITableViewCell {
+class PointsEarnedTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var dateLabel: UILabel!
-    @IBOutlet weak var detailsLabel: UILabel!
     @IBOutlet weak var pointsLabel: UILabel!
-    @IBOutlet weak var pointsTitleLabel: UILabel!
-    
+    @IBOutlet weak var pointsEarnedLabel: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        
+        pointsEarnedLabel.text = StringHelper.localizedStringWithKey("POINTS_EARNED_LOCALIZE_KEY")
     }
 
     override func setSelected(selected: Bool, animated: Bool) {

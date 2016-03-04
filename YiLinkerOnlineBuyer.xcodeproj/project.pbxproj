@@ -312,17 +312,6 @@
 		0CAB82B71C86817C00B653A9 /* MessagingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAB80551C86817B00B653A9 /* MessagingViewController.swift */; };
 		0CAB82B81C86817C00B653A9 /* MessagingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CAB80561C86817B00B653A9 /* MessagingViewController.xib */; };
 		0CAB82B91C86817C00B653A9 /* cancelUrl in Resources */ = {isa = PBXBuildFile; fileRef = 0CAB80581C86817B00B653A9 /* cancelUrl */; };
-		0CAB82BA1C86817C00B653A9 /* PointModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAB805B1C86817B00B653A9 /* PointModel.swift */; };
-		0CAB82BB1C86817C00B653A9 /* PointsBreakdownTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAB805D1C86817B00B653A9 /* PointsBreakdownTableViewCell.swift */; };
-		0CAB82BC1C86817C00B653A9 /* PointsBreakdownTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CAB805E1C86817B00B653A9 /* PointsBreakdownTableViewCell.xib */; };
-		0CAB82BD1C86817C00B653A9 /* PointsDetailsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAB805F1C86817B00B653A9 /* PointsDetailsTableViewCell.swift */; };
-		0CAB82BE1C86817C00B653A9 /* PointsDetailsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CAB80601C86817B00B653A9 /* PointsDetailsTableViewCell.xib */; };
-		0CAB82BF1C86817C00B653A9 /* PointsEarnedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAB80611C86817B00B653A9 /* PointsEarnedTableViewCell.swift */; };
-		0CAB82C01C86817C00B653A9 /* PointsEarnedTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CAB80621C86817B00B653A9 /* PointsEarnedTableViewCell.xib */; };
-		0CAB82C11C86817C00B653A9 /* PointsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAB80631C86817B00B653A9 /* PointsTableViewCell.swift */; };
-		0CAB82C21C86817C00B653A9 /* PointsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CAB80641C86817B00B653A9 /* PointsTableViewCell.xib */; };
-		0CAB82C31C86817C00B653A9 /* MyPointsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAB80661C86817B00B653A9 /* MyPointsTableViewController.swift */; };
-		0CAB82C41C86817C00B653A9 /* MyPointsTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CAB80671C86817B00B653A9 /* MyPointsTableViewController.xib */; };
 		0CAB82C51C86817C00B653A9 /* OrderedProductsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAB806A1C86817B00B653A9 /* OrderedProductsModel.swift */; };
 		0CAB82C61C86817C00B653A9 /* ProductAttributeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAB806B1C86817B00B653A9 /* ProductAttributeModel.swift */; };
 		0CAB82C71C86817C00B653A9 /* ProductAvailableAttributeCombinationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAB806C1C86817B00B653A9 /* ProductAvailableAttributeCombinationModel.swift */; };
@@ -369,29 +358,6 @@
 		0CAB82F01C86817C00B653A9 /* ProductViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CAB80971C86817B00B653A9 /* ProductViewController.xib */; };
 		0CAB82F11C86817C00B653A9 /* ProductViewsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAB80981C86817B00B653A9 /* ProductViewsViewController.swift */; };
 		0CAB82F21C86817C00B653A9 /* ProductViewsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CAB80991C86817B00B653A9 /* ProductViewsViewController.xib */; };
-		0CAB82F31C86817C00B653A9 /* ProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAB809C1C86817B00B653A9 /* ProfileModel.swift */; };
-		0CAB82F41C86817C00B653A9 /* ProfileUserDetailsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAB809D1C86817B00B653A9 /* ProfileUserDetailsModel.swift */; };
-		0CAB82F51C86817C00B653A9 /* EditProfileAccountInformationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAB809F1C86817B00B653A9 /* EditProfileAccountInformationTableViewCell.swift */; };
-		0CAB82F61C86817C00B653A9 /* EditProfileAccountInformationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CAB80A01C86817B00B653A9 /* EditProfileAccountInformationTableViewCell.xib */; };
-		0CAB82F71C86817C00B653A9 /* EditProfileAddPhotoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAB80A11C86817B00B653A9 /* EditProfileAddPhotoTableViewCell.swift */; };
-		0CAB82F81C86817C00B653A9 /* EditProfileAddPhotoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CAB80A21C86817B00B653A9 /* EditProfileAddPhotoTableViewCell.xib */; };
-		0CAB82F91C86817C00B653A9 /* EditProfileAddressTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAB80A31C86817B00B653A9 /* EditProfileAddressTableViewCell.swift */; };
-		0CAB82FA1C86817C00B653A9 /* EditProfileAddressTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CAB80A41C86817B00B653A9 /* EditProfileAddressTableViewCell.xib */; };
-		0CAB82FB1C86817C00B653A9 /* EditProfilePersonalInformationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAB80A51C86817B00B653A9 /* EditProfilePersonalInformationTableViewCell.swift */; };
-		0CAB82FC1C86817C00B653A9 /* EditProfilePersonalInformationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CAB80A61C86817B00B653A9 /* EditProfilePersonalInformationTableViewCell.xib */; };
-		0CAB82FD1C86817C00B653A9 /* ProductImagesViewCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAB80A71C86817B00B653A9 /* ProductImagesViewCollectionViewCell.swift */; };
-		0CAB82FE1C86817C00B653A9 /* ProfileHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAB80A81C86817B00B653A9 /* ProfileHeaderTableViewCell.swift */; };
-		0CAB82FF1C86817C00B653A9 /* ProfileHeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CAB80A91C86817B00B653A9 /* ProfileHeaderTableViewCell.xib */; };
-		0CAB83001C86817C00B653A9 /* ProfileSettingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAB80AA1C86817B00B653A9 /* ProfileSettingsTableViewCell.swift */; };
-		0CAB83011C86817C00B653A9 /* ProfileSettingsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CAB80AB1C86817B00B653A9 /* ProfileSettingsTableViewCell.xib */; };
-		0CAB83021C86817C00B653A9 /* ProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAB80AC1C86817B00B653A9 /* ProfileTableViewCell.swift */; };
-		0CAB83031C86817C00B653A9 /* ProfileTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CAB80AD1C86817B00B653A9 /* ProfileTableViewCell.xib */; };
-		0CAB83041C86817C00B653A9 /* EditProfileTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAB80AF1C86817B00B653A9 /* EditProfileTableViewController.swift */; };
-		0CAB83051C86817C00B653A9 /* EditProfileTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CAB80B01C86817B00B653A9 /* EditProfileTableViewController.xib */; };
-		0CAB83061C86817C00B653A9 /* ProfileSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAB80B11C86817B00B653A9 /* ProfileSettingsViewController.swift */; };
-		0CAB83071C86817C00B653A9 /* ProfileSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CAB80B21C86817B00B653A9 /* ProfileSettingsViewController.xib */; };
-		0CAB83081C86817C00B653A9 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAB80B31C86817B00B653A9 /* ProfileViewController.swift */; };
-		0CAB83091C86817C00B653A9 /* ProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CAB80B41C86817B00B653A9 /* ProfileViewController.xib */; };
 		0CAB830A1C86817C00B653A9 /* CaseDetailsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAB80B71C86817B00B653A9 /* CaseDetailsModel.swift */; };
 		0CAB830B1C86817C00B653A9 /* DisputeReasonsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAB80B81C86817B00B653A9 /* DisputeReasonsModel.swift */; };
 		0CAB830C1C86817C00B653A9 /* ResolutionCenterModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAB80B91C86817B00B653A9 /* ResolutionCenterModel.swift */; };
@@ -577,6 +543,44 @@
 		0CAB83C01C86817C00B653A9 /* WishlistTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CAB81921C86817C00B653A9 /* WishlistTableViewCell.xib */; };
 		0CAB83C11C86817C00B653A9 /* WishlistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAB81941C86817C00B653A9 /* WishlistViewController.swift */; };
 		0CAB83C21C86817C00B653A9 /* YiLinkerOnlineBuyer.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0CAB81951C86817C00B653A9 /* YiLinkerOnlineBuyer.xcdatamodeld */; };
+		798D849B1C86BE0E00D2A1F7 /* ProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798D84821C86BE0E00D2A1F7 /* ProfileModel.swift */; };
+		798D849C1C86BE0E00D2A1F7 /* ProfileUserDetailsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798D84831C86BE0E00D2A1F7 /* ProfileUserDetailsModel.swift */; };
+		798D849D1C86BE0E00D2A1F7 /* EditProfileAccountInformationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798D84851C86BE0E00D2A1F7 /* EditProfileAccountInformationTableViewCell.swift */; };
+		798D849E1C86BE0E00D2A1F7 /* EditProfileAccountInformationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 798D84861C86BE0E00D2A1F7 /* EditProfileAccountInformationTableViewCell.xib */; };
+		798D849F1C86BE0E00D2A1F7 /* EditProfileAddPhotoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798D84871C86BE0E00D2A1F7 /* EditProfileAddPhotoTableViewCell.swift */; };
+		798D84A01C86BE0E00D2A1F7 /* EditProfileAddPhotoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 798D84881C86BE0E00D2A1F7 /* EditProfileAddPhotoTableViewCell.xib */; };
+		798D84A11C86BE0E00D2A1F7 /* EditProfileAddressTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798D84891C86BE0E00D2A1F7 /* EditProfileAddressTableViewCell.swift */; };
+		798D84A21C86BE0E00D2A1F7 /* EditProfileAddressTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 798D848A1C86BE0E00D2A1F7 /* EditProfileAddressTableViewCell.xib */; };
+		798D84A31C86BE0E00D2A1F7 /* EditProfilePersonalInformationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798D848B1C86BE0E00D2A1F7 /* EditProfilePersonalInformationTableViewCell.swift */; };
+		798D84A41C86BE0E00D2A1F7 /* EditProfilePersonalInformationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 798D848C1C86BE0E00D2A1F7 /* EditProfilePersonalInformationTableViewCell.xib */; };
+		798D84A51C86BE0E00D2A1F7 /* ProductImagesViewCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798D848D1C86BE0E00D2A1F7 /* ProductImagesViewCollectionViewCell.swift */; };
+		798D84A61C86BE0E00D2A1F7 /* ProfileHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798D848E1C86BE0E00D2A1F7 /* ProfileHeaderTableViewCell.swift */; };
+		798D84A71C86BE0E00D2A1F7 /* ProfileHeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 798D848F1C86BE0E00D2A1F7 /* ProfileHeaderTableViewCell.xib */; };
+		798D84A81C86BE0E00D2A1F7 /* ProfileSettingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798D84901C86BE0E00D2A1F7 /* ProfileSettingsTableViewCell.swift */; };
+		798D84A91C86BE0E00D2A1F7 /* ProfileSettingsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 798D84911C86BE0E00D2A1F7 /* ProfileSettingsTableViewCell.xib */; };
+		798D84AA1C86BE0E00D2A1F7 /* ProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798D84921C86BE0E00D2A1F7 /* ProfileTableViewCell.swift */; };
+		798D84AB1C86BE0E00D2A1F7 /* ProfileTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 798D84931C86BE0E00D2A1F7 /* ProfileTableViewCell.xib */; };
+		798D84AC1C86BE0E00D2A1F7 /* EditProfileTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798D84951C86BE0E00D2A1F7 /* EditProfileTableViewController.swift */; };
+		798D84AD1C86BE0E00D2A1F7 /* EditProfileTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 798D84961C86BE0E00D2A1F7 /* EditProfileTableViewController.xib */; };
+		798D84AE1C86BE0E00D2A1F7 /* ProfileSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798D84971C86BE0E00D2A1F7 /* ProfileSettingsViewController.swift */; };
+		798D84AF1C86BE0E00D2A1F7 /* ProfileSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 798D84981C86BE0E00D2A1F7 /* ProfileSettingsViewController.xib */; };
+		798D84B01C86BE0E00D2A1F7 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798D84991C86BE0E00D2A1F7 /* ProfileViewController.swift */; };
+		798D84B11C86BE0E00D2A1F7 /* ProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 798D849A1C86BE0E00D2A1F7 /* ProfileViewController.xib */; };
+		798D84C51C86C14500D2A1F7 /* MyPointsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798D84B41C86C14500D2A1F7 /* MyPointsTableViewController.swift */; };
+		798D84C61C86C14500D2A1F7 /* MyPointsTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 798D84B51C86C14500D2A1F7 /* MyPointsTableViewController.xib */; };
+		798D84C71C86C14500D2A1F7 /* MyPointsHistoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798D84B71C86C14500D2A1F7 /* MyPointsHistoryModel.swift */; };
+		798D84C81C86C14500D2A1F7 /* MyPointsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798D84B81C86C14500D2A1F7 /* MyPointsModel.swift */; };
+		798D84C91C86C14500D2A1F7 /* PointModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798D84B91C86C14500D2A1F7 /* PointModel.swift */; };
+		798D84CA1C86C14500D2A1F7 /* TotalPointsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798D84BA1C86C14500D2A1F7 /* TotalPointsModel.swift */; };
+		798D84CB1C86C14500D2A1F7 /* UserPointsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798D84BB1C86C14500D2A1F7 /* UserPointsModel.swift */; };
+		798D84CC1C86C14500D2A1F7 /* PointsBreakdownTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798D84BD1C86C14500D2A1F7 /* PointsBreakdownTableViewCell.swift */; };
+		798D84CD1C86C14500D2A1F7 /* PointsBreakdownTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 798D84BE1C86C14500D2A1F7 /* PointsBreakdownTableViewCell.xib */; };
+		798D84CE1C86C14500D2A1F7 /* PointsDetailsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798D84BF1C86C14500D2A1F7 /* PointsDetailsTableViewCell.swift */; };
+		798D84CF1C86C14500D2A1F7 /* PointsDetailsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 798D84C01C86C14500D2A1F7 /* PointsDetailsTableViewCell.xib */; };
+		798D84D01C86C14500D2A1F7 /* PointsEarnedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798D84C11C86C14500D2A1F7 /* PointsEarnedTableViewCell.swift */; };
+		798D84D11C86C14500D2A1F7 /* PointsEarnedTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 798D84C21C86C14500D2A1F7 /* PointsEarnedTableViewCell.xib */; };
+		798D84D21C86C14500D2A1F7 /* PointsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798D84C31C86C14500D2A1F7 /* PointsTableViewCell.swift */; };
+		798D84D31C86C14500D2A1F7 /* PointsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 798D84C41C86C14500D2A1F7 /* PointsTableViewCell.xib */; };
 		9F7BC2CF1BF124C100218E10 /* yilinker_pinned_certificate.cer in Resources */ = {isa = PBXBuildFile; fileRef = 9F7BC2CE1BF124C100218E10 /* yilinker_pinned_certificate.cer */; };
 		BE00C15B75D7E76D254AAEC1 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D038C18A7712E626564D2D3 /* libPods.a */; };
 /* End PBXBuildFile section */
@@ -906,17 +910,6 @@
 		0CAB80551C86817B00B653A9 /* MessagingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagingViewController.swift; sourceTree = "<group>"; };
 		0CAB80561C86817B00B653A9 /* MessagingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MessagingViewController.xib; sourceTree = "<group>"; };
 		0CAB80581C86817B00B653A9 /* cancelUrl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cancelUrl; sourceTree = "<group>"; };
-		0CAB805B1C86817B00B653A9 /* PointModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PointModel.swift; sourceTree = "<group>"; };
-		0CAB805D1C86817B00B653A9 /* PointsBreakdownTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PointsBreakdownTableViewCell.swift; sourceTree = "<group>"; };
-		0CAB805E1C86817B00B653A9 /* PointsBreakdownTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PointsBreakdownTableViewCell.xib; sourceTree = "<group>"; };
-		0CAB805F1C86817B00B653A9 /* PointsDetailsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PointsDetailsTableViewCell.swift; sourceTree = "<group>"; };
-		0CAB80601C86817B00B653A9 /* PointsDetailsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PointsDetailsTableViewCell.xib; sourceTree = "<group>"; };
-		0CAB80611C86817B00B653A9 /* PointsEarnedTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PointsEarnedTableViewCell.swift; sourceTree = "<group>"; };
-		0CAB80621C86817B00B653A9 /* PointsEarnedTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PointsEarnedTableViewCell.xib; sourceTree = "<group>"; };
-		0CAB80631C86817B00B653A9 /* PointsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PointsTableViewCell.swift; sourceTree = "<group>"; };
-		0CAB80641C86817B00B653A9 /* PointsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PointsTableViewCell.xib; sourceTree = "<group>"; };
-		0CAB80661C86817B00B653A9 /* MyPointsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPointsTableViewController.swift; sourceTree = "<group>"; };
-		0CAB80671C86817B00B653A9 /* MyPointsTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyPointsTableViewController.xib; sourceTree = "<group>"; };
 		0CAB806A1C86817B00B653A9 /* OrderedProductsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderedProductsModel.swift; sourceTree = "<group>"; };
 		0CAB806B1C86817B00B653A9 /* ProductAttributeModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductAttributeModel.swift; sourceTree = "<group>"; };
 		0CAB806C1C86817B00B653A9 /* ProductAvailableAttributeCombinationModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductAvailableAttributeCombinationModel.swift; sourceTree = "<group>"; };
@@ -963,29 +956,6 @@
 		0CAB80971C86817B00B653A9 /* ProductViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProductViewController.xib; sourceTree = "<group>"; };
 		0CAB80981C86817B00B653A9 /* ProductViewsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductViewsViewController.swift; sourceTree = "<group>"; };
 		0CAB80991C86817B00B653A9 /* ProductViewsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProductViewsViewController.xib; sourceTree = "<group>"; };
-		0CAB809C1C86817B00B653A9 /* ProfileModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileModel.swift; sourceTree = "<group>"; };
-		0CAB809D1C86817B00B653A9 /* ProfileUserDetailsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileUserDetailsModel.swift; sourceTree = "<group>"; };
-		0CAB809F1C86817B00B653A9 /* EditProfileAccountInformationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditProfileAccountInformationTableViewCell.swift; sourceTree = "<group>"; };
-		0CAB80A01C86817B00B653A9 /* EditProfileAccountInformationTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditProfileAccountInformationTableViewCell.xib; sourceTree = "<group>"; };
-		0CAB80A11C86817B00B653A9 /* EditProfileAddPhotoTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditProfileAddPhotoTableViewCell.swift; sourceTree = "<group>"; };
-		0CAB80A21C86817B00B653A9 /* EditProfileAddPhotoTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditProfileAddPhotoTableViewCell.xib; sourceTree = "<group>"; };
-		0CAB80A31C86817B00B653A9 /* EditProfileAddressTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditProfileAddressTableViewCell.swift; sourceTree = "<group>"; };
-		0CAB80A41C86817B00B653A9 /* EditProfileAddressTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditProfileAddressTableViewCell.xib; sourceTree = "<group>"; };
-		0CAB80A51C86817B00B653A9 /* EditProfilePersonalInformationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditProfilePersonalInformationTableViewCell.swift; sourceTree = "<group>"; };
-		0CAB80A61C86817B00B653A9 /* EditProfilePersonalInformationTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditProfilePersonalInformationTableViewCell.xib; sourceTree = "<group>"; };
-		0CAB80A71C86817B00B653A9 /* ProductImagesViewCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductImagesViewCollectionViewCell.swift; sourceTree = "<group>"; };
-		0CAB80A81C86817B00B653A9 /* ProfileHeaderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileHeaderTableViewCell.swift; sourceTree = "<group>"; };
-		0CAB80A91C86817B00B653A9 /* ProfileHeaderTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileHeaderTableViewCell.xib; sourceTree = "<group>"; };
-		0CAB80AA1C86817B00B653A9 /* ProfileSettingsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileSettingsTableViewCell.swift; sourceTree = "<group>"; };
-		0CAB80AB1C86817B00B653A9 /* ProfileSettingsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileSettingsTableViewCell.xib; sourceTree = "<group>"; };
-		0CAB80AC1C86817B00B653A9 /* ProfileTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileTableViewCell.swift; sourceTree = "<group>"; };
-		0CAB80AD1C86817B00B653A9 /* ProfileTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileTableViewCell.xib; sourceTree = "<group>"; };
-		0CAB80AF1C86817B00B653A9 /* EditProfileTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditProfileTableViewController.swift; sourceTree = "<group>"; };
-		0CAB80B01C86817B00B653A9 /* EditProfileTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditProfileTableViewController.xib; sourceTree = "<group>"; };
-		0CAB80B11C86817B00B653A9 /* ProfileSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileSettingsViewController.swift; sourceTree = "<group>"; };
-		0CAB80B21C86817B00B653A9 /* ProfileSettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileSettingsViewController.xib; sourceTree = "<group>"; };
-		0CAB80B31C86817B00B653A9 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
-		0CAB80B41C86817B00B653A9 /* ProfileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileViewController.xib; sourceTree = "<group>"; };
 		0CAB80B71C86817B00B653A9 /* CaseDetailsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CaseDetailsModel.swift; sourceTree = "<group>"; };
 		0CAB80B81C86817B00B653A9 /* DisputeReasonsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisputeReasonsModel.swift; sourceTree = "<group>"; };
 		0CAB80B91C86817B00B653A9 /* ResolutionCenterModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResolutionCenterModel.swift; sourceTree = "<group>"; };
@@ -1174,6 +1144,44 @@
 		0CAB81941C86817C00B653A9 /* WishlistViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WishlistViewController.swift; sourceTree = "<group>"; };
 		0CAB81961C86817C00B653A9 /* YiLinkerOnlineBuyer.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = YiLinkerOnlineBuyer.xcdatamodel; sourceTree = "<group>"; };
 		5D038C18A7712E626564D2D3 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		798D84821C86BE0E00D2A1F7 /* ProfileModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileModel.swift; sourceTree = "<group>"; };
+		798D84831C86BE0E00D2A1F7 /* ProfileUserDetailsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileUserDetailsModel.swift; sourceTree = "<group>"; };
+		798D84851C86BE0E00D2A1F7 /* EditProfileAccountInformationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditProfileAccountInformationTableViewCell.swift; sourceTree = "<group>"; };
+		798D84861C86BE0E00D2A1F7 /* EditProfileAccountInformationTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditProfileAccountInformationTableViewCell.xib; sourceTree = "<group>"; };
+		798D84871C86BE0E00D2A1F7 /* EditProfileAddPhotoTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditProfileAddPhotoTableViewCell.swift; sourceTree = "<group>"; };
+		798D84881C86BE0E00D2A1F7 /* EditProfileAddPhotoTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditProfileAddPhotoTableViewCell.xib; sourceTree = "<group>"; };
+		798D84891C86BE0E00D2A1F7 /* EditProfileAddressTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditProfileAddressTableViewCell.swift; sourceTree = "<group>"; };
+		798D848A1C86BE0E00D2A1F7 /* EditProfileAddressTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditProfileAddressTableViewCell.xib; sourceTree = "<group>"; };
+		798D848B1C86BE0E00D2A1F7 /* EditProfilePersonalInformationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditProfilePersonalInformationTableViewCell.swift; sourceTree = "<group>"; };
+		798D848C1C86BE0E00D2A1F7 /* EditProfilePersonalInformationTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditProfilePersonalInformationTableViewCell.xib; sourceTree = "<group>"; };
+		798D848D1C86BE0E00D2A1F7 /* ProductImagesViewCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductImagesViewCollectionViewCell.swift; sourceTree = "<group>"; };
+		798D848E1C86BE0E00D2A1F7 /* ProfileHeaderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileHeaderTableViewCell.swift; sourceTree = "<group>"; };
+		798D848F1C86BE0E00D2A1F7 /* ProfileHeaderTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileHeaderTableViewCell.xib; sourceTree = "<group>"; };
+		798D84901C86BE0E00D2A1F7 /* ProfileSettingsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileSettingsTableViewCell.swift; sourceTree = "<group>"; };
+		798D84911C86BE0E00D2A1F7 /* ProfileSettingsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileSettingsTableViewCell.xib; sourceTree = "<group>"; };
+		798D84921C86BE0E00D2A1F7 /* ProfileTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileTableViewCell.swift; sourceTree = "<group>"; };
+		798D84931C86BE0E00D2A1F7 /* ProfileTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileTableViewCell.xib; sourceTree = "<group>"; };
+		798D84951C86BE0E00D2A1F7 /* EditProfileTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditProfileTableViewController.swift; sourceTree = "<group>"; };
+		798D84961C86BE0E00D2A1F7 /* EditProfileTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditProfileTableViewController.xib; sourceTree = "<group>"; };
+		798D84971C86BE0E00D2A1F7 /* ProfileSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileSettingsViewController.swift; sourceTree = "<group>"; };
+		798D84981C86BE0E00D2A1F7 /* ProfileSettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileSettingsViewController.xib; sourceTree = "<group>"; };
+		798D84991C86BE0E00D2A1F7 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		798D849A1C86BE0E00D2A1F7 /* ProfileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileViewController.xib; sourceTree = "<group>"; };
+		798D84B41C86C14500D2A1F7 /* MyPointsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPointsTableViewController.swift; sourceTree = "<group>"; };
+		798D84B51C86C14500D2A1F7 /* MyPointsTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyPointsTableViewController.xib; sourceTree = "<group>"; };
+		798D84B71C86C14500D2A1F7 /* MyPointsHistoryModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPointsHistoryModel.swift; sourceTree = "<group>"; };
+		798D84B81C86C14500D2A1F7 /* MyPointsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPointsModel.swift; sourceTree = "<group>"; };
+		798D84B91C86C14500D2A1F7 /* PointModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PointModel.swift; sourceTree = "<group>"; };
+		798D84BA1C86C14500D2A1F7 /* TotalPointsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TotalPointsModel.swift; sourceTree = "<group>"; };
+		798D84BB1C86C14500D2A1F7 /* UserPointsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserPointsModel.swift; sourceTree = "<group>"; };
+		798D84BD1C86C14500D2A1F7 /* PointsBreakdownTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PointsBreakdownTableViewCell.swift; sourceTree = "<group>"; };
+		798D84BE1C86C14500D2A1F7 /* PointsBreakdownTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PointsBreakdownTableViewCell.xib; sourceTree = "<group>"; };
+		798D84BF1C86C14500D2A1F7 /* PointsDetailsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PointsDetailsTableViewCell.swift; sourceTree = "<group>"; };
+		798D84C01C86C14500D2A1F7 /* PointsDetailsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PointsDetailsTableViewCell.xib; sourceTree = "<group>"; };
+		798D84C11C86C14500D2A1F7 /* PointsEarnedTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PointsEarnedTableViewCell.swift; sourceTree = "<group>"; };
+		798D84C21C86C14500D2A1F7 /* PointsEarnedTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PointsEarnedTableViewCell.xib; sourceTree = "<group>"; };
+		798D84C31C86C14500D2A1F7 /* PointsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PointsTableViewCell.swift; sourceTree = "<group>"; };
+		798D84C41C86C14500D2A1F7 /* PointsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PointsTableViewCell.xib; sourceTree = "<group>"; };
 		9140515446F9D97EC8790C7B /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		9F7BC2CE1BF124C100218E10 /* yilinker_pinned_certificate.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = yilinker_pinned_certificate.cer; sourceTree = "<group>"; };
 		F7CCDA451B940268000F5AD4 /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = "Pods/../build/Debug-iphoneos/libPods.a"; sourceTree = "<group>"; };
@@ -1287,9 +1295,9 @@
 				0CAB801A1C86817B00B653A9 /* LoginAndRegister */,
 				0CAB802F1C86817B00B653A9 /* Messaging */,
 				0CAB80571C86817B00B653A9 /* Model */,
-				0CAB80591C86817B00B653A9 /* MyPoints */,
+				798D84B21C86C14500D2A1F7 /* My Points */,
 				0CAB80681C86817B00B653A9 /* ProductView */,
-				0CAB809A1C86817B00B653A9 /* Profile */,
+				798D84801C86BE0E00D2A1F7 /* Profile */,
 				0CAB80B51C86817B00B653A9 /* ResolutionCenter */,
 				0CAB80C81C86817B00B653A9 /* Search */,
 				0CAB80E01C86817B00B653A9 /* Seller */,
@@ -2137,48 +2145,6 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-		0CAB80591C86817B00B653A9 /* MyPoints */ = {
-			isa = PBXGroup;
-			children = (
-				0CAB805A1C86817B00B653A9 /* Model */,
-				0CAB805C1C86817B00B653A9 /* View */,
-				0CAB80651C86817B00B653A9 /* ViewController */,
-			);
-			path = MyPoints;
-			sourceTree = "<group>";
-		};
-		0CAB805A1C86817B00B653A9 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				0CAB805B1C86817B00B653A9 /* PointModel.swift */,
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
-		0CAB805C1C86817B00B653A9 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				0CAB805D1C86817B00B653A9 /* PointsBreakdownTableViewCell.swift */,
-				0CAB805E1C86817B00B653A9 /* PointsBreakdownTableViewCell.xib */,
-				0CAB805F1C86817B00B653A9 /* PointsDetailsTableViewCell.swift */,
-				0CAB80601C86817B00B653A9 /* PointsDetailsTableViewCell.xib */,
-				0CAB80611C86817B00B653A9 /* PointsEarnedTableViewCell.swift */,
-				0CAB80621C86817B00B653A9 /* PointsEarnedTableViewCell.xib */,
-				0CAB80631C86817B00B653A9 /* PointsTableViewCell.swift */,
-				0CAB80641C86817B00B653A9 /* PointsTableViewCell.xib */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		0CAB80651C86817B00B653A9 /* ViewController */ = {
-			isa = PBXGroup;
-			children = (
-				0CAB80661C86817B00B653A9 /* MyPointsTableViewController.swift */,
-				0CAB80671C86817B00B653A9 /* MyPointsTableViewController.xib */,
-			);
-			path = ViewController;
-			sourceTree = "<group>";
-		};
 		0CAB80681C86817B00B653A9 /* ProductView */ = {
 			isa = PBXGroup;
 			children = (
@@ -2252,60 +2218,6 @@
 				0CAB80971C86817B00B653A9 /* ProductViewController.xib */,
 				0CAB80981C86817B00B653A9 /* ProductViewsViewController.swift */,
 				0CAB80991C86817B00B653A9 /* ProductViewsViewController.xib */,
-			);
-			path = ViewController;
-			sourceTree = "<group>";
-		};
-		0CAB809A1C86817B00B653A9 /* Profile */ = {
-			isa = PBXGroup;
-			children = (
-				0CAB809B1C86817B00B653A9 /* Model */,
-				0CAB809E1C86817B00B653A9 /* View */,
-				0CAB80AE1C86817B00B653A9 /* ViewController */,
-			);
-			path = Profile;
-			sourceTree = "<group>";
-		};
-		0CAB809B1C86817B00B653A9 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				0CAB809C1C86817B00B653A9 /* ProfileModel.swift */,
-				0CAB809D1C86817B00B653A9 /* ProfileUserDetailsModel.swift */,
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
-		0CAB809E1C86817B00B653A9 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				0CAB809F1C86817B00B653A9 /* EditProfileAccountInformationTableViewCell.swift */,
-				0CAB80A01C86817B00B653A9 /* EditProfileAccountInformationTableViewCell.xib */,
-				0CAB80A11C86817B00B653A9 /* EditProfileAddPhotoTableViewCell.swift */,
-				0CAB80A21C86817B00B653A9 /* EditProfileAddPhotoTableViewCell.xib */,
-				0CAB80A31C86817B00B653A9 /* EditProfileAddressTableViewCell.swift */,
-				0CAB80A41C86817B00B653A9 /* EditProfileAddressTableViewCell.xib */,
-				0CAB80A51C86817B00B653A9 /* EditProfilePersonalInformationTableViewCell.swift */,
-				0CAB80A61C86817B00B653A9 /* EditProfilePersonalInformationTableViewCell.xib */,
-				0CAB80A71C86817B00B653A9 /* ProductImagesViewCollectionViewCell.swift */,
-				0CAB80A81C86817B00B653A9 /* ProfileHeaderTableViewCell.swift */,
-				0CAB80A91C86817B00B653A9 /* ProfileHeaderTableViewCell.xib */,
-				0CAB80AA1C86817B00B653A9 /* ProfileSettingsTableViewCell.swift */,
-				0CAB80AB1C86817B00B653A9 /* ProfileSettingsTableViewCell.xib */,
-				0CAB80AC1C86817B00B653A9 /* ProfileTableViewCell.swift */,
-				0CAB80AD1C86817B00B653A9 /* ProfileTableViewCell.xib */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		0CAB80AE1C86817B00B653A9 /* ViewController */ = {
-			isa = PBXGroup;
-			children = (
-				0CAB80AF1C86817B00B653A9 /* EditProfileTableViewController.swift */,
-				0CAB80B01C86817B00B653A9 /* EditProfileTableViewController.xib */,
-				0CAB80B11C86817B00B653A9 /* ProfileSettingsViewController.swift */,
-				0CAB80B21C86817B00B653A9 /* ProfileSettingsViewController.xib */,
-				0CAB80B31C86817B00B653A9 /* ProfileViewController.swift */,
-				0CAB80B41C86817B00B653A9 /* ProfileViewController.xib */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -2800,6 +2712,107 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		798D84801C86BE0E00D2A1F7 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				798D84811C86BE0E00D2A1F7 /* Model */,
+				798D84841C86BE0E00D2A1F7 /* View */,
+				798D84941C86BE0E00D2A1F7 /* ViewController */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		798D84811C86BE0E00D2A1F7 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				798D84821C86BE0E00D2A1F7 /* ProfileModel.swift */,
+				798D84831C86BE0E00D2A1F7 /* ProfileUserDetailsModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		798D84841C86BE0E00D2A1F7 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				798D84851C86BE0E00D2A1F7 /* EditProfileAccountInformationTableViewCell.swift */,
+				798D84861C86BE0E00D2A1F7 /* EditProfileAccountInformationTableViewCell.xib */,
+				798D84871C86BE0E00D2A1F7 /* EditProfileAddPhotoTableViewCell.swift */,
+				798D84881C86BE0E00D2A1F7 /* EditProfileAddPhotoTableViewCell.xib */,
+				798D84891C86BE0E00D2A1F7 /* EditProfileAddressTableViewCell.swift */,
+				798D848A1C86BE0E00D2A1F7 /* EditProfileAddressTableViewCell.xib */,
+				798D848B1C86BE0E00D2A1F7 /* EditProfilePersonalInformationTableViewCell.swift */,
+				798D848C1C86BE0E00D2A1F7 /* EditProfilePersonalInformationTableViewCell.xib */,
+				798D848D1C86BE0E00D2A1F7 /* ProductImagesViewCollectionViewCell.swift */,
+				798D848E1C86BE0E00D2A1F7 /* ProfileHeaderTableViewCell.swift */,
+				798D848F1C86BE0E00D2A1F7 /* ProfileHeaderTableViewCell.xib */,
+				798D84901C86BE0E00D2A1F7 /* ProfileSettingsTableViewCell.swift */,
+				798D84911C86BE0E00D2A1F7 /* ProfileSettingsTableViewCell.xib */,
+				798D84921C86BE0E00D2A1F7 /* ProfileTableViewCell.swift */,
+				798D84931C86BE0E00D2A1F7 /* ProfileTableViewCell.xib */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		798D84941C86BE0E00D2A1F7 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				798D84951C86BE0E00D2A1F7 /* EditProfileTableViewController.swift */,
+				798D84961C86BE0E00D2A1F7 /* EditProfileTableViewController.xib */,
+				798D84971C86BE0E00D2A1F7 /* ProfileSettingsViewController.swift */,
+				798D84981C86BE0E00D2A1F7 /* ProfileSettingsViewController.xib */,
+				798D84991C86BE0E00D2A1F7 /* ProfileViewController.swift */,
+				798D849A1C86BE0E00D2A1F7 /* ProfileViewController.xib */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		798D84B21C86C14500D2A1F7 /* My Points */ = {
+			isa = PBXGroup;
+			children = (
+				798D84B31C86C14500D2A1F7 /* Controller */,
+				798D84B61C86C14500D2A1F7 /* Model */,
+				798D84BC1C86C14500D2A1F7 /* View */,
+			);
+			name = "My Points";
+			path = "YiLinkerOnlineBuyer/resources/My Points";
+			sourceTree = SOURCE_ROOT;
+		};
+		798D84B31C86C14500D2A1F7 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				798D84B41C86C14500D2A1F7 /* MyPointsTableViewController.swift */,
+				798D84B51C86C14500D2A1F7 /* MyPointsTableViewController.xib */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		798D84B61C86C14500D2A1F7 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				798D84B71C86C14500D2A1F7 /* MyPointsHistoryModel.swift */,
+				798D84B81C86C14500D2A1F7 /* MyPointsModel.swift */,
+				798D84B91C86C14500D2A1F7 /* PointModel.swift */,
+				798D84BA1C86C14500D2A1F7 /* TotalPointsModel.swift */,
+				798D84BB1C86C14500D2A1F7 /* UserPointsModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		798D84BC1C86C14500D2A1F7 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				798D84BD1C86C14500D2A1F7 /* PointsBreakdownTableViewCell.swift */,
+				798D84BE1C86C14500D2A1F7 /* PointsBreakdownTableViewCell.xib */,
+				798D84BF1C86C14500D2A1F7 /* PointsDetailsTableViewCell.swift */,
+				798D84C01C86C14500D2A1F7 /* PointsDetailsTableViewCell.xib */,
+				798D84C11C86C14500D2A1F7 /* PointsEarnedTableViewCell.swift */,
+				798D84C21C86C14500D2A1F7 /* PointsEarnedTableViewCell.xib */,
+				798D84C31C86C14500D2A1F7 /* PointsTableViewCell.swift */,
+				798D84C41C86C14500D2A1F7 /* PointsTableViewCell.xib */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -2901,9 +2914,9 @@
 				0CAB81C41C86817C00B653A9 /* CategoriesViewController.xib in Resources */,
 				0CAB82101C86817C00B653A9 /* Panton Thin Italic.otf in Resources */,
 				0CAB81EE1C86817C00B653A9 /* VoucherTableViewCell.xib in Resources */,
-				0CAB82C01C86817C00B653A9 /* PointsEarnedTableViewCell.xib in Resources */,
 				0CAB837F1C86817C00B653A9 /* TransactionCancelOrderStatusViewController.xib in Resources */,
 				0CAB82E21C86817C00B653A9 /* ProductsTableViewCell.xib in Resources */,
+				798D84C61C86C14500D2A1F7 /* MyPointsTableViewController.xib in Resources */,
 				0CAB82EA1C86817C00B653A9 /* ProductDetailsExtendedViewController.xib in Resources */,
 				0CAB81CB1C86817C00B653A9 /* CheckoutViews.xib in Resources */,
 				0CAB820D1C86817C00B653A9 /* Panton Regular Italic.otf in Resources */,
@@ -2911,13 +2924,14 @@
 				0CAB82E51C86817C00B653A9 /* SeeMoreTableViewCell.xib in Resources */,
 				0CAB82051C86817C00B653A9 /* Panton ExtraBold Italic.otf in Resources */,
 				0CAB828D1C86817C00B653A9 /* LoginTableViewCell.xib in Resources */,
+				798D84A91C86BE0E00D2A1F7 /* ProfileSettingsTableViewCell.xib in Resources */,
 				0CAB83151C86817C00B653A9 /* DisputeViewController.xib in Resources */,
-				0CAB83051C86817C00B653A9 /* EditProfileTableViewController.xib in Resources */,
 				0CAB83831C86817C00B653A9 /* TransactionCancelViewController.xib in Resources */,
 				0CAB82181C86817C00B653A9 /* pulltorefresharrow.png in Resources */,
 				0CAB83351C86817C00B653A9 /* GeneralRatingTableViewCell.xib in Resources */,
 				0CAB82711C86817C00B653A9 /* ProductItemWithVerticalDisplayCollectionViewCell.xib in Resources */,
 				0CAB83BA1C86817C00B653A9 /* YiHUD.xib in Resources */,
+				798D84AB1C86BE0E00D2A1F7 /* ProfileTableViewCell.xib in Resources */,
 				0CAB82AB1C86817C00B653A9 /* MessagingThreadViewController.xib in Resources */,
 				0C8A7C7B1B6772670039F013 /* Images.xcassets in Resources */,
 				0CAB839D1C86817C00B653A9 /* VerifyMobileNumberViewController.xib in Resources */,
@@ -2936,8 +2950,8 @@
 				0CAB81F91C86817C00B653A9 /* CustomizeShoppingCollectionViewCell.xib in Resources */,
 				0CAB83551C86817C00B653A9 /* StartPageStoryBoard.storyboard in Resources */,
 				0CAB81FD1C86817C00B653A9 /* CustomizeShoppingTableViewCell.xib in Resources */,
+				798D84AD1C86BE0E00D2A1F7 /* EditProfileTableViewController.xib in Resources */,
 				0CAB83701C86817C00B653A9 /* TransactionLeaveProductFeedbackRateTableViewCell.xib in Resources */,
-				0CAB82C41C86817C00B653A9 /* MyPointsTableViewController.xib in Resources */,
 				0CAB81C21C86817C00B653A9 /* CategoriesTableViewCell.xib in Resources */,
 				0CAB83491C86817C00B653A9 /* SellerCategoryViewController.xib in Resources */,
 				0CAB81BC1C86817C00B653A9 /* CartTableViewCell.xib in Resources */,
@@ -2956,13 +2970,13 @@
 				0CAB837C1C86817C00B653A9 /* TransactionViewController.xib in Resources */,
 				0CAB83A01C86817C00B653A9 /* LaunchScreen.xib in Resources */,
 				0CAB826F1C86817C00B653A9 /* LayoutNineCollectionViewCell.xib in Resources */,
-				0CAB82C21C86817C00B653A9 /* PointsTableViewCell.xib in Resources */,
 				0CAB836E1C86817C00B653A9 /* TransactionLeaveFeedbackRateTableViewCell.xib in Resources */,
 				0CAB821C1C86817C00B653A9 /* LICENSE in Resources */,
 				0CAB834F1C86817C00B653A9 /* ViewFeedBackViewController.xib in Resources */,
 				0CAB82E81C86817C00B653A9 /* ProductDescriptionViewController.xib in Resources */,
 				0CAB82201C86817C00B653A9 /* FABCollectionViewCell.xib in Resources */,
 				0CAB83451C86817C00B653A9 /* SellerTableHeaderView.xib in Resources */,
+				798D84A21C86BE0E00D2A1F7 /* EditProfileAddressTableViewCell.xib in Resources */,
 				0CAB822F1C86817C00B653A9 /* ChangeMobileNumberViewController.xib in Resources */,
 				0CAB83331C86817C00B653A9 /* FeedBackTableViewCell.xib in Resources */,
 				0CAB81E31C86817C00B653A9 /* ShipToTableViewCell.xib in Resources */,
@@ -2984,13 +2998,15 @@
 				0CAB81F41C86817C00B653A9 /* SuccessModalViewController.xib in Resources */,
 				0CAB833F1C86817C00B653A9 /* SellerCategoryTableViewCell.xib in Resources */,
 				0CAB829F1C86817C00B653A9 /* MessagingContactTableViewCell.xib in Resources */,
+				798D84D11C86C14500D2A1F7 /* PointsEarnedTableViewCell.xib in Resources */,
 				0CAB819E1C86817C00B653A9 /* ActivityLogHeaderTableViewCell.xib in Resources */,
+				798D84CF1C86C14500D2A1F7 /* PointsDetailsTableViewCell.xib in Resources */,
 				0CAB82331C86817C00B653A9 /* HelpViewController.xib in Resources */,
 				0CAB82DA1C86817C00B653A9 /* ProductResultGridCollectionViewCell.xib in Resources */,
 				0CAB83891C86817C00B653A9 /* TransactionDetailsViewController.xib in Resources */,
 				0CAB82161C86817C00B653A9 /* GoogleService-Info.plist in Resources */,
 				0CAB826B1C86817C00B653A9 /* HomeStoryBoard.storyboard in Resources */,
-				0CAB83091C86817C00B653A9 /* ProfileViewController.xib in Resources */,
+				798D849E1C86BE0E00D2A1F7 /* EditProfileAccountInformationTableViewCell.xib in Resources */,
 				0CAB83931C86817C00B653A9 /* TransactionProductDetailsDescriptionViewController.xib in Resources */,
 				0CAB83401C86817C00B653A9 /* SellerCollectionViewCell.xib in Resources */,
 				0CAB81CD1C86817C00B653A9 /* DeliverToTableViewCell.xib in Resources */,
@@ -3003,16 +3019,15 @@
 				0CAB831E1C86817C00B653A9 /* FilterTableViewCell.xib in Resources */,
 				0CAB82081C86817C00B653A9 /* Panton ExtraLight.otf in Resources */,
 				0CAB82A01C86817C00B653A9 /* MessagingConversationListViewController.xib in Resources */,
-				0CAB83031C86817C00B653A9 /* ProfileTableViewCell.xib in Resources */,
 				0CAB83741C86817C00B653A9 /* TransactionProductDetailsViewController.xib in Resources */,
 				0CAB81DA1C86817C00B653A9 /* OrderSummaryTableViewCell.xib in Resources */,
 				0CAB83851C86817C00B653A9 /* TransactionDeliveryLogTableViewController.xib in Resources */,
-				0CAB82FC1C86817C00B653A9 /* EditProfilePersonalInformationTableViewCell.xib in Resources */,
 				0CAB829D1C86817C00B653A9 /* MessagingContactListViewController.xib in Resources */,
 				0CAB83681C86817C00B653A9 /* TransactionDetailsTableViewCell.xib in Resources */,
 				0CAB827D1C86817C00B653A9 /* TwoColumnGridCollectionViewCell.xib in Resources */,
 				0CAB82AC1C86817C00B653A9 /* MessagingViewController.xib in Resources */,
 				0CAB83271C86817C00B653A9 /* FilterViewController.xib in Resources */,
+				798D84CD1C86C14500D2A1F7 /* PointsBreakdownTableViewCell.xib in Resources */,
 				0CAB82DB1C86817C00B653A9 /* ProductResultListCollectionViewCell.xib in Resources */,
 				0CAB83311C86817C00B653A9 /* AboutSellerTableViewCell.xib in Resources */,
 				0CAB81AD1C86817C00B653A9 /* ChangeAddressFooterCollectionViewCell.xib in Resources */,
@@ -3024,22 +3039,19 @@
 				0CAB83AC1C86817C00B653A9 /* NoInternetConnectionView.xib in Resources */,
 				0CAB82871C86817C00B653A9 /* LoginHeaderTableViewCell.xib in Resources */,
 				0CAB82E41C86817C00B653A9 /* ProductWithCenterNameCollectionViewCell.xib in Resources */,
-				0CAB82FA1C86817C00B653A9 /* EditProfileAddressTableViewCell.xib in Resources */,
 				0CAB81DF1C86817C00B653A9 /* PaymentWebViewViewController.xib in Resources */,
 				0CAB82291C86817C00B653A9 /* FollowedSellerTableViewCell.xib in Resources */,
 				0CAB82A41C86817C00B653A9 /* MessagingReceiverImageTableViewCell.xib in Resources */,
 				0CAB82E71C86817C00B653A9 /* ProductAttributeViewController.xib in Resources */,
 				0CAB81BE1C86817C00B653A9 /* CartProductAttributeViewController.xib in Resources */,
-				0CAB82FF1C86817C00B653A9 /* ProfileHeaderTableViewCell.xib in Resources */,
+				798D84AF1C86BE0E00D2A1F7 /* ProfileSettingsViewController.xib in Resources */,
 				0CAB81B31C86817C00B653A9 /* ChangeAddressViewController.xib in Resources */,
 				0CAB82A21C86817C00B653A9 /* MessagingConversationTableViewCell.xib in Resources */,
-				0CAB82F61C86817C00B653A9 /* EditProfileAccountInformationTableViewCell.xib in Resources */,
 				0CAB83251C86817C00B653A9 /* SortTableViewCell.xib in Resources */,
 				0CAB82031C86817C00B653A9 /* Panton Bold Italic.otf in Resources */,
 				0CAB82811C86817C00B653A9 /* ViewMoreFooterCollectionViewCell.xib in Resources */,
 				9F7BC2CF1BF124C100218E10 /* yilinker_pinned_certificate.cer in Resources */,
 				0CAB825C1C86817C00B653A9 /* CarouselCollectionViewCell.xib in Resources */,
-				0CAB82F81C86817C00B653A9 /* EditProfileAddPhotoTableViewCell.xib in Resources */,
 				0CAB827F1C86817C00B653A9 /* VerticalImageCollectionViewCell.xib in Resources */,
 				0CAB83221C86817C00B653A9 /* SearchSuggestionTableViewCell.xib in Resources */,
 				0CAB82EE1C86817C00B653A9 /* ProductReviewViewController.xib in Resources */,
@@ -3050,7 +3062,6 @@
 				0CAB82111C86817C00B653A9 /* Panton Thin.otf in Resources */,
 				0CAB820E1C86817C00B653A9 /* Panton SemiBold Italic.otf in Resources */,
 				0CAB83A91C86817C00B653A9 /* EmptyView.xib in Resources */,
-				0CAB82BC1C86817C00B653A9 /* PointsBreakdownTableViewCell.xib in Resources */,
 				0CAB81D41C86817C00B653A9 /* IncompleteRequirementsTableViewCell.xib in Resources */,
 				0CAB83641C86817C00B653A9 /* TransactionDeliveryLogTableViewCell.xib in Resources */,
 				0CAB82641C86817C00B653A9 /* FullScreenImageCollectionViewCell.xib in Resources */,
@@ -3059,19 +3070,21 @@
 				0CAB832B1C86817C00B653A9 /* ResultViewController.xib in Resources */,
 				0CAB81E51C86817C00B653A9 /* SuccessTableHeaderViewCell.xib in Resources */,
 				0CAB81B11C86817C00B653A9 /* AddAddressTableViewController.xib in Resources */,
+				798D84A71C86BE0E00D2A1F7 /* ProfileHeaderTableViewCell.xib in Resources */,
 				0CAB82041C86817C00B653A9 /* Panton Bold.otf in Resources */,
 				0CAB82F21C86817C00B653A9 /* ProductViewsViewController.xib in Resources */,
 				0CAB82751C86817C00B653A9 /* ScrollToTopView.xib in Resources */,
 				0CAB82911C86817C00B653A9 /* SimplifiedLoginUICollectionViewCell.xib in Resources */,
 				0CAB82EC1C86817C00B653A9 /* ProductFullScreenViewController.xib in Resources */,
+				798D84A41C86BE0E00D2A1F7 /* EditProfilePersonalInformationTableViewCell.xib in Resources */,
 				0CAB820A1C86817C00B653A9 /* Panton Heavy.otf in Resources */,
 				0CAB820F1C86817C00B653A9 /* Panton SemiBold.otf in Resources */,
 				0CAB82A61C86817C00B653A9 /* MessagingReceiverTableViewCell.xib in Resources */,
 				0CAB82761C86817C00B653A9 /* SectionBackground.xib in Resources */,
 				0CAB82681C86817C00B653A9 /* HalfVerticalImageCollectionViewCell.xib in Resources */,
+				798D84A01C86BE0E00D2A1F7 /* EditProfileAddPhotoTableViewCell.xib in Resources */,
 				0CAB826D1C86817C00B653A9 /* LayoutHeaderCollectionViewCell.xib in Resources */,
 				0CAB83AE1C86817C00B653A9 /* PlainTableViewCell.xib in Resources */,
-				0CAB83071C86817C00B653A9 /* ProfileSettingsViewController.xib in Resources */,
 				0CAB83561C86817C00B653A9 /* LocalizableString.strings in Resources */,
 				0CAB82731C86817C00B653A9 /* ScrollableCollectionViewCell.xib in Resources */,
 				0CAB81AF1C86817C00B653A9 /* NewAddressTableViewCell.xib in Resources */,
@@ -3081,9 +3094,7 @@
 				0CAB833B1C86817C00B653A9 /* NoReviewTableViewCell.xib in Resources */,
 				0CAB836C1C86817C00B653A9 /* TransactionLeaveFeedbackFieldTableViewCell.xib in Resources */,
 				0CAB82621C86817C00B653A9 /* FullImageCollectionViewCell.xib in Resources */,
-				0CAB82BE1C86817C00B653A9 /* PointsDetailsTableViewCell.xib in Resources */,
 				0CAB83471C86817C00B653A9 /* FeedBackViewController.xib in Resources */,
-				0CAB83011C86817C00B653A9 /* ProfileSettingsTableViewCell.xib in Resources */,
 				0CAB82791C86817C00B653A9 /* SellerCarouselCollectionViewCell.xib in Resources */,
 				0CAB81D61C86817C00B653A9 /* MapTableViewCell.xib in Resources */,
 				0CAB81F71C86817C00B653A9 /* CustomizeSelectedCollectionViewCell.xib in Resources */,
@@ -3092,9 +3103,11 @@
 				0CAB82F01C86817C00B653A9 /* ProductViewController.xib in Resources */,
 				0CAB82001C86817C00B653A9 /* dummyHomePage.json in Resources */,
 				0CAB828F1C86817C00B653A9 /* RegisterTableViewCell.xib in Resources */,
+				798D84D31C86C14500D2A1F7 /* PointsTableViewCell.xib in Resources */,
 				0CAB838D1C86817C00B653A9 /* TransactionLeaveProductFeedbackTableViewController.xib in Resources */,
 				0CAB833D1C86817C00B653A9 /* ReviewTableViewCell.xib in Resources */,
 				0CAB82B81C86817C00B653A9 /* MessagingViewController.xib in Resources */,
+				798D84B11C86BE0E00D2A1F7 /* ProfileViewController.xib in Resources */,
 				0CAB83B61C86817C00B653A9 /* TodaysPromoViewController.xib in Resources */,
 				0CAB822B1C86817C00B653A9 /* FollowedSellerViewController.xib in Resources */,
 				0CAB820C1C86817C00B653A9 /* Panton Light.otf in Resources */,
@@ -3174,6 +3187,7 @@
 				0CAB83981C86817C00B653A9 /* VerifyMobileNumberInputViewController.swift in Sources */,
 				0CAB831B1C86817C00B653A9 /* SearchSellerModel.swift in Sources */,
 				0CAB823D1C86817C00B653A9 /* HexaColor.swift in Sources */,
+				798D849D1C86BE0E00D2A1F7 /* EditProfileAccountInformationTableViewCell.swift in Sources */,
 				0CAB82DC1C86817C00B653A9 /* ProductReviewFooterView.swift in Sources */,
 				0CAB81F31C86817C00B653A9 /* SuccessModalViewController.swift in Sources */,
 				0CAB819C1C86817C00B653A9 /* DeliveryLogsModel.swift in Sources */,
@@ -3185,9 +3199,10 @@
 				0CAB82A31C86817C00B653A9 /* MessagingReceiverImageTableViewCell.swift in Sources */,
 				0CAB81BD1C86817C00B653A9 /* CartProductAttributeViewController.swift in Sources */,
 				0CAB82A71C86817C00B653A9 /* MessagingSenderImageTableViewCell.swift in Sources */,
+				798D84D01C86C14500D2A1F7 /* PointsEarnedTableViewCell.swift in Sources */,
 				0CAB833E1C86817C00B653A9 /* SellerCategoryTableViewCell.swift in Sources */,
-				0CAB82F31C86817C00B653A9 /* ProfileModel.swift in Sources */,
 				0CAB83661C86817C00B653A9 /* TransactionDescriptionView.swift in Sources */,
+				798D84A31C86BE0E00D2A1F7 /* EditProfilePersonalInformationTableViewCell.swift in Sources */,
 				0CAB83161C86817C00B653A9 /* NewDisputeTableViewController.swift in Sources */,
 				0CAB82821C86817C00B653A9 /* HomeContainerViewController.swift in Sources */,
 				0CAB81D71C86817C00B653A9 /* NetTotalTableViewCell.swift in Sources */,
@@ -3236,8 +3251,8 @@
 				0CAB82511C86817C00B653A9 /* LayoutFiveModel.swift in Sources */,
 				0CAB81A91C86817C00B653A9 /* ProvinceModel.swift in Sources */,
 				0CAB83711C86817C00B653A9 /* TransactionProductDetailsTableViewCell.swift in Sources */,
-				0CAB83081C86817C00B653A9 /* ProfileViewController.swift in Sources */,
 				0CAB83AF1C86817C00B653A9 /* RoundedButton.swift in Sources */,
+				798D849C1C86BE0E00D2A1F7 /* ProfileUserDetailsModel.swift in Sources */,
 				0CAB825B1C86817C00B653A9 /* CarouselCollectionViewCell.swift in Sources */,
 				0CAB830A1C86817C00B653A9 /* CaseDetailsModel.swift in Sources */,
 				0CAB82521C86817C00B653A9 /* LayoutFourModel.swift in Sources */,
@@ -3259,17 +3274,14 @@
 				0CAB83921C86817C00B653A9 /* TransactionProductDetailsDescriptionViewController.swift in Sources */,
 				0CAB83A81C86817C00B653A9 /* EmptyView.swift in Sources */,
 				0CAB821B1C86817C00B653A9 /* UIScrollViewExtension.swift in Sources */,
-				0CAB82BD1C86817C00B653A9 /* PointsDetailsTableViewCell.swift in Sources */,
 				0CAB81D91C86817C00B653A9 /* OrderSummaryTableViewCell.swift in Sources */,
 				0CAB82651C86817C00B653A9 /* HalfPagerCollectionViewCell.swift in Sources */,
 				0CAB83A51C86817C00B653A9 /* DynamicRoundedLabel.swift in Sources */,
 				0CAB83571C86817C00B653A9 /* TransactionCancellationModel.swift in Sources */,
-				0CAB82BA1C86817C00B653A9 /* PointModel.swift in Sources */,
 				0CAB83441C86817C00B653A9 /* SellerTableHeaderView.swift in Sources */,
 				0CAB83A21C86817C00B653A9 /* DiscountLabel.swift in Sources */,
 				0CAB82361C86817C00B653A9 /* ButtonToTabBehaviorizer.swift in Sources */,
 				0CAB837A1C86817C00B653A9 /* TransactionTableViewCell.swift in Sources */,
-				0CAB83001C86817C00B653A9 /* ProfileSettingsTableViewCell.swift in Sources */,
 				0CAB83201C86817C00B653A9 /* ProductResultListCollectionViewCell.swift in Sources */,
 				0CAB82981C86817C00B653A9 /* MessagingMessageModel.swift in Sources */,
 				0CAB81A81C86817C00B653A9 /* GetAddressesModel.swift in Sources */,
@@ -3287,8 +3299,8 @@
 				0CAB81F51C86817C00B653A9 /* SummaryViewController.swift in Sources */,
 				0CAB82C51C86817C00B653A9 /* OrderedProductsModel.swift in Sources */,
 				0CAB82D01C86817C00B653A9 /* ProductAttributeTableViewCell.swift in Sources */,
+				798D84CC1C86C14500D2A1F7 /* PointsBreakdownTableViewCell.swift in Sources */,
 				0CAB82941C86817C00B653A9 /* LoginAndRegisterTableViewController.swift in Sources */,
-				0CAB82FE1C86817C00B653A9 /* ProfileHeaderTableViewCell.swift in Sources */,
 				0CAB83591C86817C00B653A9 /* TransactionDetailsProductsModel.swift in Sources */,
 				0CAB831A1C86817C00B653A9 /* SearchResultModel.swift in Sources */,
 				0CAB835A1C86817C00B653A9 /* TransactionModel.swift in Sources */,
@@ -3306,13 +3318,13 @@
 				0CAB82351C86817C00B653A9 /* APIManager.swift in Sources */,
 				0CAB83861C86817C00B653A9 /* TransactionDeliveryLogViewController.swift in Sources */,
 				0CAB82221C86817C00B653A9 /* FABProfileCollectionViewCell.swift in Sources */,
+				798D84AC1C86BE0E00D2A1F7 /* EditProfileTableViewController.swift in Sources */,
 				0CAB82B21C86817C00B653A9 /* MessageThreadTVC.swift in Sources */,
 				0CAB835C1C86817C00B653A9 /* TransactionProductDetailsModel.swift in Sources */,
 				0CAB82CC1C86817C00B653A9 /* ProductReviewsModel.swift in Sources */,
 				0CAB82771C86817C00B653A9 /* SeeMoreTableViewCell.swift in Sources */,
 				0CAB82E91C86817C00B653A9 /* ProductDetailsExtendedViewController.swift in Sources */,
 				0CAB81B81C86817C00B653A9 /* CartProductDetailsModel.swift in Sources */,
-				0CAB82BB1C86817C00B653A9 /* PointsBreakdownTableViewCell.swift in Sources */,
 				0CAB82CB1C86817C00B653A9 /* ProductReviewModel.swift in Sources */,
 				0CAB82971C86817C00B653A9 /* MessagingConversationModel.swift in Sources */,
 				0CAB829A1C86817C00B653A9 /* W_Conversation.swift in Sources */,
@@ -3320,13 +3332,14 @@
 				0CAB827C1C86817C00B653A9 /* TwoColumnGridCollectionViewCell.swift in Sources */,
 				0CAB81C51C86817C00B653A9 /* PaymentDataModel.swift in Sources */,
 				0CAB81DC1C86817C00B653A9 /* PaymentTableViewCell.swift in Sources */,
+				798D84D21C86C14500D2A1F7 /* PointsTableViewCell.swift in Sources */,
 				0CAB83171C86817C00B653A9 /* ResolutionCenterViewController.swift in Sources */,
 				0CAB831D1C86817C00B653A9 /* FilterTableViewCell.swift in Sources */,
 				0CAB83781C86817C00B653A9 /* TransactionSectionHeaderView.swift in Sources */,
 				0CAB83801C86817C00B653A9 /* TransactionCancelOrderSuccessViewController.swift in Sources */,
 				0CAB83A71C86817C00B653A9 /* DynamicRoundedView.swift in Sources */,
-				0CAB82F41C86817C00B653A9 /* ProfileUserDetailsModel.swift in Sources */,
 				0CAB82A91C86817C00B653A9 /* MessagingSenderTableViewCell.swift in Sources */,
+				798D84AA1C86BE0E00D2A1F7 /* ProfileTableViewCell.swift in Sources */,
 				0CAB83181C86817C00B653A9 /* ResolutionFilterViewController.swift in Sources */,
 				0CAB82B41C86817C00B653A9 /* MessagingContactListViewController.swift in Sources */,
 				0CAB83B41C86817C00B653A9 /* TextViewAutoHeight.swift in Sources */,
@@ -3336,7 +3349,6 @@
 				0CAB821D1C86817C00B653A9 /* TTRangeSlider.m in Sources */,
 				0CAB81C01C86817C00B653A9 /* CategoryModel.swift in Sources */,
 				0CAB825D1C86817C00B653A9 /* DailyLoginCollectionViewCell.swift in Sources */,
-				0CAB82FD1C86817C00B653A9 /* ProductImagesViewCollectionViewCell.swift in Sources */,
 				0CAB83B91C86817C00B653A9 /* YiHUD.swift in Sources */,
 				0CAB82321C86817C00B653A9 /* HelpViewController.swift in Sources */,
 				0CAB83241C86817C00B653A9 /* SortTableViewCell.swift in Sources */,
@@ -3345,12 +3357,12 @@
 				0CAB82671C86817C00B653A9 /* HalfVerticalImageCollectionViewCell.swift in Sources */,
 				0CAB837D1C86817C00B653A9 /* TransactionViews.swift in Sources */,
 				0CAB83771C86817C00B653A9 /* TransactionSectionFooterView.swift in Sources */,
-				0CAB82F51C86817C00B653A9 /* EditProfileAccountInformationTableViewCell.swift in Sources */,
 				0CAB83BB1C86817C00B653A9 /* WebViewController.swift in Sources */,
 				0CAB82E61C86817C00B653A9 /* ProductAttributeViewController.swift in Sources */,
 				0CAB835D1C86817C00B653A9 /* TransactionButtons.swift in Sources */,
 				0CAB82901C86817C00B653A9 /* SimplifiedLoginUICollectionViewCell.swift in Sources */,
 				0CAB823A1C86817C00B653A9 /* DateUtility.swift in Sources */,
+				798D849B1C86BE0E00D2A1F7 /* ProfileModel.swift in Sources */,
 				0CAB83651C86817C00B653A9 /* TransactionDeliveryStatusView.swift in Sources */,
 				0CAB82831C86817C00B653A9 /* HomePageCollectionViewController.swift in Sources */,
 				0CAB82D81C86817C00B653A9 /* ProductImagesView.swift in Sources */,
@@ -3358,10 +3370,12 @@
 				0CAB82451C86817C00B653A9 /* Toast.swift in Sources */,
 				0CAB83A11C86817C00B653A9 /* CustomTabBarController.swift in Sources */,
 				0CAB822A1C86817C00B653A9 /* FollowedSellerViewController.swift in Sources */,
+				798D84C71C86C14500D2A1F7 /* MyPointsHistoryModel.swift in Sources */,
 				0CAB838E1C86817C00B653A9 /* TransactionLeaveSellerFeedbackTableViewController.swift in Sources */,
 				0CAB83AB1C86817C00B653A9 /* NoInternetConnectionView.swift in Sources */,
 				0CAB82B11C86817C00B653A9 /* MessageThreadImageTVC.swift in Sources */,
 				0CAB827E1C86817C00B653A9 /* VerticalImageCollectionViewCell.swift in Sources */,
+				798D849F1C86BE0E00D2A1F7 /* EditProfileAddPhotoTableViewCell.swift in Sources */,
 				0CAB82D21C86817C00B653A9 /* ProductDescriptionView.swift in Sources */,
 				0CAB82571C86817C00B653A9 /* LayoutTenModel.swift in Sources */,
 				0CAB83611C86817C00B653A9 /* TransactionDeliveryLogSignatureTableViewCell.swift in Sources */,
@@ -3372,12 +3386,13 @@
 				0CAB83691C86817C00B653A9 /* TransactionDetailsView.swift in Sources */,
 				0CAB83941C86817C00B653A9 /* TransactionProductDetailsViewController.swift in Sources */,
 				0CAB82A11C86817C00B653A9 /* MessagingConversationTableViewCell.swift in Sources */,
+				798D84C51C86C14500D2A1F7 /* MyPointsTableViewController.swift in Sources */,
 				0CAB83341C86817C00B653A9 /* GeneralRatingTableViewCell.swift in Sources */,
 				0CAB81FA1C86817C00B653A9 /* CustomizeShoppingCollectionViewLayout.swift in Sources */,
-				0CAB82F71C86817C00B653A9 /* EditProfileAddPhotoTableViewCell.swift in Sources */,
 				0CAB824B1C86817C00B653A9 /* HomeEntity.swift in Sources */,
 				0CAB82741C86817C00B653A9 /* ScrollToTopView.swift in Sources */,
 				0CAB81E71C86817C00B653A9 /* TotalSummaryPriceTableViewCell.swift in Sources */,
+				798D84CB1C86C14500D2A1F7 /* UserPointsModel.swift in Sources */,
 				0CAB82261C86817C00B653A9 /* HiddenViewController.swift in Sources */,
 				0CAB83301C86817C00B653A9 /* AboutSellerTableViewCell.swift in Sources */,
 				0CAB82691C86817C00B653A9 /* HomePageCollectionViewLayout.swift in Sources */,
@@ -3386,21 +3401,21 @@
 				0CAB83531C86817C00B653A9 /* StartPageViewController.swift in Sources */,
 				0CAB82591C86817C00B653A9 /* LayoutTwoModel.swift in Sources */,
 				0CAB81EB1C86817C00B653A9 /* UserMapView.swift in Sources */,
-				0CAB82FB1C86817C00B653A9 /* EditProfilePersonalInformationTableViewCell.swift in Sources */,
 				0CAB834C1C86817C00B653A9 /* SellerViewController.swift in Sources */,
 				0CAB82AD1C86817C00B653A9 /* ContactListTVC.swift in Sources */,
 				0CAB83761C86817C00B653A9 /* TransactionPurchaseDetailsView.swift in Sources */,
 				0CAB822C1C86817C00B653A9 /* ForgotPasswordTableViewCell.swift in Sources */,
+				798D84A11C86BE0E00D2A1F7 /* EditProfileAddressTableViewCell.swift in Sources */,
+				798D84B01C86BE0E00D2A1F7 /* ProfileViewController.swift in Sources */,
 				0CAB83231C86817C00B653A9 /* SellerResultCollectionViewCell.swift in Sources */,
 				0CAB82471C86817C00B653A9 /* WebServiceManager.swift in Sources */,
 				0CAB832C1C86817C00B653A9 /* SearchViewController.swift in Sources */,
 				0CAB83B31C86817C00B653A9 /* SemiRoundedButton.swift in Sources */,
 				0CAB828A1C86817C00B653A9 /* LoginRegisterTableViewCell.swift in Sources */,
-				0CAB82C11C86817C00B653A9 /* PointsTableViewCell.swift in Sources */,
 				0CAB834A1C86817C00B653A9 /* SellerSubCategoryViewController.swift in Sources */,
+				798D84CA1C86C14500D2A1F7 /* TotalPointsModel.swift in Sources */,
 				0CAB82D51C86817C00B653A9 /* ProductDetailsExtendedView.swift in Sources */,
 				0CAB82541C86817C00B653A9 /* LayoutOneModel.swift in Sources */,
-				0CAB83041C86817C00B653A9 /* EditProfileTableViewController.swift in Sources */,
 				0CAB82D91C86817C00B653A9 /* ProductImageView.swift in Sources */,
 				0CAB82AF1C86817C00B653A9 /* ConversationTVC.swift in Sources */,
 				0CAB83881C86817C00B653A9 /* TransactionDetailsViewController.swift in Sources */,
@@ -3425,11 +3440,13 @@
 				0CAB81AA1C86817C00B653A9 /* ChangeAddressCollectionViewCell.swift in Sources */,
 				0CAB83261C86817C00B653A9 /* FilterViewController.swift in Sources */,
 				0CAB81ED1C86817C00B653A9 /* VoucherTableViewCell.swift in Sources */,
+				798D84C81C86C14500D2A1F7 /* MyPointsModel.swift in Sources */,
 				0CAB836D1C86817C00B653A9 /* TransactionLeaveFeedbackRateTableViewCell.swift in Sources */,
 				0CAB839E1C86817C00B653A9 /* VerifyNumberViewController.swift in Sources */,
 				0CAB83C11C86817C00B653A9 /* WishlistViewController.swift in Sources */,
 				0CAB81AE1C86817C00B653A9 /* NewAddressTableViewCell.swift in Sources */,
 				0CAB82551C86817C00B653A9 /* LayoutSevenModel.swift in Sources */,
+				798D84A81C86BE0E00D2A1F7 /* ProfileSettingsTableViewCell.swift in Sources */,
 				0CAB82611C86817C00B653A9 /* FullImageCollectionViewCell.swift in Sources */,
 				0CAB838C1C86817C00B653A9 /* TransactionLeaveProductFeedbackTableViewController.swift in Sources */,
 				0CAB82211C86817C00B653A9 /* FABCollectionViewLayout.swift in Sources */,
@@ -3443,17 +3460,15 @@
 				0CAB82531C86817C00B653A9 /* LayoutNineModel.swift in Sources */,
 				0CAB82581C86817C00B653A9 /* LayoutThreeModel.swift in Sources */,
 				0CAB81F21C86817C00B653A9 /* PaymentWebViewViewController.swift in Sources */,
-				0CAB82F91C86817C00B653A9 /* EditProfileAddressTableViewCell.swift in Sources */,
 				0CAB81E41C86817C00B653A9 /* SuccessTableHeaderViewCell.swift in Sources */,
 				0CAB824D1C86817C00B653A9 /* HomePageProductModel.swift in Sources */,
 				0CAB82501C86817C00B653A9 /* LayoutEightModel.swift in Sources */,
-				0CAB82BF1C86817C00B653A9 /* PointsEarnedTableViewCell.swift in Sources */,
 				0CAB82441C86817C00B653A9 /* StringHelper.swift in Sources */,
 				0CAB826C1C86817C00B653A9 /* LayoutHeaderCollectionViewCell.swift in Sources */,
-				0CAB82C31C86817C00B653A9 /* MyPointsTableViewController.swift in Sources */,
 				0CAB82281C86817C00B653A9 /* FollowedSellerTableViewCell.swift in Sources */,
 				0CAB83B11C86817C00B653A9 /* RoundedLabel.swift in Sources */,
 				0CAB82D71C86817C00B653A9 /* ProductExtendedView.swift in Sources */,
+				798D84CE1C86C14500D2A1F7 /* PointsDetailsTableViewCell.swift in Sources */,
 				0CAB82851C86817C00B653A9 /* RegisterModel.swift in Sources */,
 				0CAB828C1C86817C00B653A9 /* LoginTableViewCell.swift in Sources */,
 				0CAB83951C86817C00B653A9 /* TransactionViewController.swift in Sources */,
@@ -3462,6 +3477,7 @@
 				0CAB82951C86817C00B653A9 /* MessageComposer.swift in Sources */,
 				0CAB833A1C86817C00B653A9 /* NoReviewTableViewCell.swift in Sources */,
 				0CAB83671C86817C00B653A9 /* TransactionDetailsTableViewCell.swift in Sources */,
+				798D84A51C86BE0E00D2A1F7 /* ProductImagesViewCollectionViewCell.swift in Sources */,
 				0CAB83211C86817C00B653A9 /* SearchSuggestionTableViewCell.swift in Sources */,
 				0CAB81CA1C86817C00B653A9 /* CheckoutViews.swift in Sources */,
 				0CAB81991C86817C00B653A9 /* ActivityLogModel.swift in Sources */,
@@ -3492,6 +3508,7 @@
 				0CAB82E11C86817C00B653A9 /* ProductsTableViewCell.swift in Sources */,
 				0CAB82C81C86817C00B653A9 /* ProductDetailsModel.swift in Sources */,
 				0CAB81971C86817C00B653A9 /* ActivityLogItemModel.swift in Sources */,
+				798D84AE1C86BE0E00D2A1F7 /* ProfileSettingsViewController.swift in Sources */,
 				0CAB81CC1C86817C00B653A9 /* DeliverToTableViewCell.swift in Sources */,
 				0CAB81FB1C86817C00B653A9 /* CustomizeShoppingFlowLayout.swift in Sources */,
 				0CAB834E1C86817C00B653A9 /* ViewFeedBackViewController.swift in Sources */,
@@ -3500,13 +3517,14 @@
 				0CAB83481C86817C00B653A9 /* SellerCategoryViewController.swift in Sources */,
 				0CAB829E1C86817C00B653A9 /* MessagingContactTableViewCell.swift in Sources */,
 				0CAB81B71C86817C00B653A9 /* CartModel.swift in Sources */,
+				798D84A61C86BE0E00D2A1F7 /* ProfileHeaderTableViewCell.swift in Sources */,
+				798D84C91C86C14500D2A1F7 /* PointModel.swift in Sources */,
 				0CAB824C1C86817C00B653A9 /* HomePageModel.swift in Sources */,
 				0CAB83A61C86817C00B653A9 /* DynamicRoundedTextField.swift in Sources */,
 				0CAB81D51C86817C00B653A9 /* MapTableViewCell.swift in Sources */,
 				0CAB81A11C86817C00B653A9 /* ActivityLogTableViewController.swift in Sources */,
 				0CAB83AD1C86817C00B653A9 /* PlainTableViewCell.swift in Sources */,
 				0CAB832E1C86817C00B653A9 /* SellerModel.swift in Sources */,
-				0CAB83061C86817C00B653A9 /* ProfileSettingsViewController.swift in Sources */,
 				0CAB835B1C86817C00B653A9 /* TransactionProductDetailsDeliveryStatusModel.swift in Sources */,
 				0CAB82271C86817C00B653A9 /* FollwedSellerModel.swift in Sources */,
 				0CAB824F1C86817C00B653A9 /* HomeSellerModel.swift in Sources */,
@@ -3514,7 +3532,6 @@
 				0CAB82781C86817C00B653A9 /* SellerCarouselCollectionViewCell.swift in Sources */,
 				0CAB82241C86817C00B653A9 /* OneByOneCollectionViewFlowLayout.swift in Sources */,
 				0CAB81B61C86817C00B653A9 /* AppDelegate.swift in Sources */,
-				0CAB83021C86817C00B653A9 /* ProfileTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

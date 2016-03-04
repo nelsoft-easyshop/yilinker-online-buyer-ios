@@ -165,6 +165,15 @@ SAVE_AND_CONTINUE_LOCALIZE_KEY = "保存并继续";
 SAVE_AND_GO_TO_PAYMENT_LOCALIZE_KEY = "保存并进入支付";
 CONTINUE_SHOPPING_LOCALIZE_KEY = "继续购物";
 
+// MARK: - My Points
+MY_POINTS_TITLE_LOCALIZE_KEY = "我的积分";
+POINTS_LOCALIZE_KEY = "积分";
+POINTS_EARNED_LOCALIZE_KEY = "已赚取的积分";
+MY_POINTS_DESCRIPTION_LOCALIZE_KEY = "点是由某些活动，在您的帐户，如赚收到了来自买家和参照买家进入YiLinker增加你的关注者，接收反馈。我们的平台上花费您的积分也将很快面市，所以，要当心了。";//No Chinese String
+BREAKDOWN_LOCALIZE_KEY = "分解";//No Chinese String
+EARN_MORE_POINTS_LOCALIZE_KEY = "如何赚取更多积分";
+POINTS_LOCALIZE_KEY = "积分";//No Chinese String
+
 // MARK: - Address
 MOBILE_NUMBER_LOCALIZE_KEY = "手机号码";
 EMAIL_ADDRESS_LOCALIZE_KEY = "邮件地址";

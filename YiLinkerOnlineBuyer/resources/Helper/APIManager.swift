@@ -225,6 +225,10 @@ struct APIAtlas {
     static let verifyUnAuthenticatedOTPCodeUrl = "v2/token/validate"
     //Fogot Password
     static let forgotPasswordV2 = "v2/user/resetPassword"
+    
+    //My Points
+    static let getPointsTotal = "v1/auth/user/getPoints"
+    static let getPointsHistory = "v1/auth/user/getPointHistory"
 }
 
 class APIManager: AFHTTPSessionManager {
