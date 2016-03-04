@@ -39,7 +39,10 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     var wishlisViewController: WishlistViewController?
     var cartViewController: CartViewController?
     
+    
+    
     var emptyView: EmptyView?
+    var searchBarView: SearchBarView?
     var yiHud: YiHUD?
     var profileModel: ProfileUserDetailsModel = ProfileUserDetailsModel()
     var customTabBarController: CustomTabBarController?
@@ -48,6 +51,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var backToTopButton: UIButton!
+    @IBOutlet weak var topBarView: UIView!
     
     let placeHolder: String = "dummy-placeholder"
     
@@ -91,7 +95,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     }
     
     override func viewDidLayoutSubviews() {
-        
+        self.setupSearchBar()
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -153,7 +157,6 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         
         self.backToTopButton.layer.cornerRadius = 15
         self.setupBackToTopButton()
-        
         self.addPullToRefresh()
         
         let languageType: LanguageType = LanguageHelper.currentLanguge()
@@ -180,6 +183,13 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                 appDelegate.changeRootToHomeView()
             })
             })
+    }
+    
+    //MARK: - Add Pull To Refresh
+    func setupSearchBar() {
+        self.searchBarView = SearchBarView.initSearchBar()
+        self.searchBarView?.showSearchBarToView(self.topBarView, mainView: self.view)
+        self.view.layoutIfNeeded()
     }
     
     //MARK: -
