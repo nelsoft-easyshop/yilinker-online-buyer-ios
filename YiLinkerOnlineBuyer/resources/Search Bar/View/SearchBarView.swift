@@ -10,15 +10,15 @@ import UIKit
 
 enum SearchType {
     case Seller
-    case Buyer
+    case Product
 }
-
 
 protocol SearchBarViewDelegate {
     func searchBarView(searchBarView: SearchBarView, didTapScanQRCode button: UIButton)
     func searchBarView(searchBarView: SearchBarView, didTapProfile button: UIButton)
     func searchBarView(searchBarView: SearchBarView, didTextChanged textField: UITextField)
     func searchBarView(searchBarView: SearchBarView, didSeacrhTypeChanged searchType: SearchType)
+    func searchBarView(searchBarView: SearchBarView, didTapSearch textField: UITextField)
 }
 
 class SearchBarView: UIView {
@@ -73,6 +73,8 @@ class SearchBarView: UIView {
         self.searchView.layer.cornerRadius = 15
         self.searchTypeView.layer.cornerRadius = 15
         self.searchTextField.layer.cornerRadius = 15
+    
+        self.searchTextField.addTarget(self, action: "textFieldDidReturn:", forControlEvents: .EditingDidEndOnExit)
         
         self.dropDownView.transform = CGAffineTransformMakeRotation(CGFloat(M_PI_4))
         
@@ -114,7 +116,15 @@ class SearchBarView: UIView {
     @IBAction func textFieldAction(sender: AnyObject) {
         if count(self.searchTextField.text) > 1 {
             self.delegate?.searchBarView(self, didTextChanged: self.searchTextField)
+        } else {
+            self.searchSuggestions = []
+            self.passSearchSuggestions(self.searchSuggestions)
         }
+    }
+    
+    func textFieldDidReturn(textField: UITextField!) {
+        textField.resignFirstResponder()
+        self.delegate?.searchBarView(self, didTapSearch: textField)
     }
     
     //MARK: -
@@ -203,8 +213,17 @@ class SearchBarView: UIView {
     func showAutoComplete() {
         self.hideSearchTypePicker()
         self.isAutoCompleteHidden = false
+        
+        var tableHeight: Int = 0
+        
+        if self.searchSuggestions.count > 10 {
+            tableHeight = 300
+        } else {
+            self.searchSuggestions.count * 30
+        }
+        
         if self.searchAutoCompleteTableView == nil {
-            self.searchAutoCompleteTableView = UITableView(frame: CGRectMake(self.searchView.frame.origin.x + self.searchTypeView.frame.width + 10, self.topBarView!.frame.origin.y + self.frame.size.height - 5, self.searchTextField.frame.width + 20, CGFloat(self.searchSuggestions.count * 30)))
+            self.searchAutoCompleteTableView = UITableView(frame: CGRectMake(self.searchView.frame.origin.x + self.searchTypeView.frame.width + 10, self.topBarView!.frame.origin.y + self.frame.size.height - 5, self.searchTextField.frame.width + 20, CGFloat(tableHeight)))
             self.searchAutoCompleteTableView!.layer.cornerRadius = 10
             self.searchAutoCompleteTableView!.alpha = 0
             self.applyPlainShadow(self.searchAutoCompleteTableView!)
@@ -220,10 +239,11 @@ class SearchBarView: UIView {
             self.parentView?.layoutIfNeeded()
             self.animateView(self.searchAutoCompleteTableView!, show: true)
         } else {
-            self.searchAutoCompleteTableView!.frame = CGRectMake(self.searchAutoCompleteTableView!.frame.origin.x, self.searchAutoCompleteTableView!.frame.origin.y, self.searchAutoCompleteTableView!.frame.width, CGFloat(self.searchSuggestions.count * 30))
+            self.searchAutoCompleteTableView!.frame = CGRectMake(self.searchAutoCompleteTableView!.frame.origin.x, self.searchAutoCompleteTableView!.frame.origin.y, self.searchAutoCompleteTableView!.frame.width, CGFloat(tableHeight))
              self.parentView?.layoutIfNeeded()
             self.animateView(self.searchAutoCompleteTableView!, show: true)
         }
+        self.searchAutoCompleteTableView?.reloadData()
     }
     
     //MARK: - Hide Search Type Picker
@@ -255,6 +275,7 @@ extension SearchBarView: UITableViewDataSource, UITableViewDelegate {
             return cell
         } else {
             var cell: SearchTypeTableViewCell = self.searchAutoCompleteTableView!.dequeueReusableCellWithIdentifier("SearchTypeTableViewCell") as! SearchTypeTableViewCell
+            cell.typeLabel.text = self.searchSuggestions[indexPath.row].suggestion
             cell.hideIcon()
             return cell
         }
@@ -268,7 +289,13 @@ extension SearchBarView: UITableViewDataSource, UITableViewDelegate {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         if tableView == self.searchTypeTableView {
             self.hideSearchTypePicker()
+            self.searchTextField.text = ""
             self.searchTypeImageView.image = UIImage(named: self.searchTypeImage[indexPath.row])
+            if indexPath.row == 0 {
+                self.delegate?.searchBarView(self, didSeacrhTypeChanged: .Product)
+            } else if indexPath.row == 1 {
+                self.delegate?.searchBarView(self, didSeacrhTypeChanged: .Seller)
+            }
         } else {
             
         }

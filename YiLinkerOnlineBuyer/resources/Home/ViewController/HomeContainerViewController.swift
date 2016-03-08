@@ -88,6 +88,13 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     
     var oldPushNotifData: String = ""
     
+    //Search
+    var searchType = SearchType.Product
+    let manager = APIManager.sharedInstance
+    
+    var searchTask: NSURLSessionDataTask?
+    var suggestions: [SearchSuggestionModel] = []
+    
     //MARK: - Life Cycle
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -286,7 +293,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     //For GCM Registration
     func fireCreateRegistration(registrationID : String) {
         self.showHUD()
-        let manager: APIManager = APIManager.sharedInstance
+//        let manager: APIManager = APIManager.sharedInstance
         let parameters: NSDictionary = [
             "registrationId": "\(registrationID)",
             "access_token"  : SessionManager.accessToken(),
@@ -1771,6 +1778,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
 }
 
 extension HomeContainerViewController: SearchBarViewDelegate {
+    
     func searchBarView(searchBarView: SearchBarView, didTapScanQRCode button: UIButton) {
         var qrCodeScannerViewController = QRCodeScannerViewController(nibName: "QRCodeScannerViewController", bundle: nil)
         
@@ -1788,10 +1796,89 @@ extension HomeContainerViewController: SearchBarViewDelegate {
     }
     
     func searchBarView(searchBarView: SearchBarView, didTextChanged textField: UITextField) {
-        
+        if self.searchType == .Product {
+            self.fireSearch(textField.text, searchBarView: searchBarView)
+        }
     }
     
     func searchBarView(searchBarView: SearchBarView, didSeacrhTypeChanged searchType: SearchType) {
+        self.searchType = searchType
+    }
+    
+    func searchBarView(searchBarView: SearchBarView, didTapSearch textField: UITextField) {
+        if (self.searchTask != nil) {
+            self.searchTask?.cancel()
+            searchTask = nil
+        }
         
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+        textField.resignFirstResponder()
+        let newString = textField.text.stringByReplacingOccurrencesOfString(" ", withString: "+")
+        
+        var resultController = ResultViewController(nibName: "ResultViewController", bundle: nil)
+        
+        if self.searchType == .Product {
+            resultController.isSellerSearch = false
+            resultController.passModel(SearchSuggestionModel(suggestion: textField.text, imageURL: "", searchUrl: "\(APIAtlas.searchBuyer)\(newString)"))
+        } else {
+            resultController.isSellerSearch = true
+            resultController.passModel(SearchSuggestionModel(suggestion: textField.text, imageURL: "", searchUrl: "\(APIAtlas.searchSeller)\(newString)"))
+        }
+        
+        self.navigationController?.pushViewController(resultController, animated:true);
+    }
+    
+    //API Request
+    //MARK: - API Request
+    func fireSearch(queryString: String, searchBarView: SearchBarView){
+        if (self.searchTask != nil) {
+            self.searchTask?.cancel()
+            self.searchTask = nil
+            searchBarView.hideLoader()
+        }
+        
+        searchBarView.showLoader()
+        self.searchTask = WebServiceManager.fireSearcProducthWithUrl(APIAtlas.searchUrl, queryString: queryString, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+            searchBarView.hideLoader()
+            if successful {
+                if  let dictionary: NSDictionary = responseObject as? NSDictionary {
+                    if let isSuccessful: Bool = dictionary["isSuccessful"] as? Bool{
+                        if isSuccessful {
+                            self.suggestions.removeAll(keepCapacity: false)
+                            if let value: AnyObject = responseObject["data"] {
+                                for subValue in value as! NSArray {
+                                    let model: SearchSuggestionModel = SearchSuggestionModel.parseDataFromDictionary(subValue as! NSDictionary)
+                                    
+                                    self.suggestions.append(model)
+                                }
+                                searchBarView.passSearchSuggestions(self.suggestions)
+                            }
+                        } else {
+                            let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                            Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                        }
+                    }
+                } else {
+                    UIAlertController.displaySomethingWentWrongError(self)
+                }
+            } else {
+                if requestErrorType == .ResponseError {
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                } else if requestErrorType == .PageNotFound {
+                    Toast.displayToastWithMessage("Page not found.", duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    Toast.displayToastWithMessage(Constants.Localized.error, duration: 1.5, view: self.view)
+                } else if requestErrorType == .Cancel {
+                } else {
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                }
+            }
+        })
     }
 }

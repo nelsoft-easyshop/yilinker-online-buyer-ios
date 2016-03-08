@@ -108,7 +108,11 @@ extension QRCodeScannerViewController: AVCaptureMetadataOutputObjectsDelegate {
             if metadataObj.stringValue != nil {
                 var qrCode: String = metadataObj.stringValue
                 if qrCode.contains("http"){
-                    
+                    var slug: String = ""
+                    if let range = qrCode.rangeOfString("/", options: NSStringCompareOptions.BackwardsSearch) {
+                        slug = qrCode.substringFromIndex(range.endIndex)
+                        println(slug)
+                    }
                 } else {
                     
                 }
