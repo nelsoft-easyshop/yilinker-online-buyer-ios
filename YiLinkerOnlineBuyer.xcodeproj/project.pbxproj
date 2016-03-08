@@ -585,6 +585,8 @@
 		798D84D11C86C14500D2A1F7 /* PointsEarnedTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 798D84C21C86C14500D2A1F7 /* PointsEarnedTableViewCell.xib */; };
 		798D84D21C86C14500D2A1F7 /* PointsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798D84C31C86C14500D2A1F7 /* PointsTableViewCell.swift */; };
 		798D84D31C86C14500D2A1F7 /* PointsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 798D84C41C86C14500D2A1F7 /* PointsTableViewCell.xib */; };
+		79DBF22F1C898B9B004EA438 /* QRCodeScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79DBF22D1C898B9B004EA438 /* QRCodeScannerViewController.swift */; };
+		79DBF2301C898B9B004EA438 /* QRCodeScannerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79DBF22E1C898B9B004EA438 /* QRCodeScannerViewController.xib */; };
 		9F7BC2CF1BF124C100218E10 /* yilinker_pinned_certificate.cer in Resources */ = {isa = PBXBuildFile; fileRef = 9F7BC2CE1BF124C100218E10 /* yilinker_pinned_certificate.cer */; };
 		BE00C15B75D7E76D254AAEC1 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D038C18A7712E626564D2D3 /* libPods.a */; };
 /* End PBXBuildFile section */
@@ -1190,6 +1192,8 @@
 		798D84C21C86C14500D2A1F7 /* PointsEarnedTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PointsEarnedTableViewCell.xib; sourceTree = "<group>"; };
 		798D84C31C86C14500D2A1F7 /* PointsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PointsTableViewCell.swift; sourceTree = "<group>"; };
 		798D84C41C86C14500D2A1F7 /* PointsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PointsTableViewCell.xib; sourceTree = "<group>"; };
+		79DBF22D1C898B9B004EA438 /* QRCodeScannerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QRCodeScannerViewController.swift; sourceTree = "<group>"; };
+		79DBF22E1C898B9B004EA438 /* QRCodeScannerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QRCodeScannerViewController.xib; sourceTree = "<group>"; };
 		9140515446F9D97EC8790C7B /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		9F7BC2CE1BF124C100218E10 /* yilinker_pinned_certificate.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = yilinker_pinned_certificate.cer; sourceTree = "<group>"; };
 		F7CCDA451B940268000F5AD4 /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = "Pods/../build/Debug-iphoneos/libPods.a"; sourceTree = "<group>"; };
@@ -1286,6 +1290,7 @@
 		0CAB7EEB1C86817B00B653A9 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				79DBF2291C898B82004EA438 /* QR Code Scanner */,
 				0CAB7EEC1C86817B00B653A9 /* ActivityLog */,
 				0CAB7EFC1C86817B00B653A9 /* Address */,
 				0CAB7F131C86817B00B653A9 /* AppDelegate */,
@@ -2735,28 +2740,28 @@
 		790E597A1C87D06D0073FE23 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-            );
-            path = Controller;
-            sourceTree = "<group>";
-        };
-        790E597C1C87D06D0073FE23 /* View */ = {
-            isa = PBXGroup;
-            children = (
-                790E597D1C87D0B90073FE23 /* SearchBarView.swift */,
-                790E597F1C87D0D00073FE23 /* SearchBarView.xib */,
-                790E59811C880C980073FE23 /* SearchTypeTableViewCell.swift */,
-                790E59821C880C980073FE23 /* SearchTypeTableViewCell.xib */,
-            );
-            path = View;
-            sourceTree = "<group>";
-        };
-        790E597B1C87D06D0073FE23 /* Model */ = {
-            isa = PBXGroup;
-            children = (
-            );
-            path = Model;
-            sourceTree = "<group>";
-        };
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		790E597B1C87D06D0073FE23 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		790E597C1C87D06D0073FE23 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				790E597D1C87D0B90073FE23 /* SearchBarView.swift */,
+				790E597F1C87D0D00073FE23 /* SearchBarView.xib */,
+				790E59811C880C980073FE23 /* SearchTypeTableViewCell.swift */,
+				790E59821C880C980073FE23 /* SearchTypeTableViewCell.xib */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		798D84801C86BE0E00D2A1F7 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
@@ -2827,10 +2832,10 @@
 			children = (
 				798D84B41C86C14500D2A1F7 /* MyPointsTableViewController.swift */,
 				798D84B51C86C14500D2A1F7 /* MyPointsTableViewController.xib */,
-            );
-            path = Controller;
-            sourceTree = "<group>";
-        };
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
 		798D84B61C86C14500D2A1F7 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -2839,10 +2844,10 @@
 				798D84B91C86C14500D2A1F7 /* PointModel.swift */,
 				798D84BA1C86C14500D2A1F7 /* TotalPointsModel.swift */,
 				798D84BB1C86C14500D2A1F7 /* UserPointsModel.swift */,
-            );
-            path = Model;
-            sourceTree = "<group>";
-        };
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		798D84BC1C86C14500D2A1F7 /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -2854,11 +2859,44 @@
 				798D84C21C86C14500D2A1F7 /* PointsEarnedTableViewCell.xib */,
 				798D84C31C86C14500D2A1F7 /* PointsTableViewCell.swift */,
 				798D84C41C86C14500D2A1F7 /* PointsTableViewCell.xib */,
-            );
-            path = View;
-            sourceTree = "<group>";
-        };
-
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		79DBF2291C898B82004EA438 /* QR Code Scanner */ = {
+			isa = PBXGroup;
+			children = (
+				79DBF22A1C898B82004EA438 /* Controller */,
+				79DBF22B1C898B82004EA438 /* Model */,
+				79DBF22C1C898B82004EA438 /* View */,
+			);
+			name = "QR Code Scanner";
+			path = "YiLinkerOnlineBuyer/resources/QR Code Scanner";
+			sourceTree = SOURCE_ROOT;
+		};
+		79DBF22A1C898B82004EA438 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				79DBF22D1C898B9B004EA438 /* QRCodeScannerViewController.swift */,
+				79DBF22E1C898B9B004EA438 /* QRCodeScannerViewController.xib */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		79DBF22B1C898B82004EA438 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		79DBF22C1C898B82004EA438 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -3087,6 +3125,7 @@
 				0CAB82871C86817C00B653A9 /* LoginHeaderTableViewCell.xib in Resources */,
 				0CAB82E41C86817C00B653A9 /* ProductWithCenterNameCollectionViewCell.xib in Resources */,
 				0CAB81DF1C86817C00B653A9 /* PaymentWebViewViewController.xib in Resources */,
+				79DBF2301C898B9B004EA438 /* QRCodeScannerViewController.xib in Resources */,
 				0CAB82291C86817C00B653A9 /* FollowedSellerTableViewCell.xib in Resources */,
 				0CAB82A41C86817C00B653A9 /* MessagingReceiverImageTableViewCell.xib in Resources */,
 				0CAB82E71C86817C00B653A9 /* ProductAttributeViewController.xib in Resources */,
@@ -3312,6 +3351,7 @@
 				0CAB83121C86817C00B653A9 /* DisputeAddItemViewController.swift in Sources */,
 				0CAB81AC1C86817C00B653A9 /* ChangeAddressFooterCollectionViewCell.swift in Sources */,
 				0CAB82991C86817C00B653A9 /* W_Contact.swift in Sources */,
+				79DBF22F1C898B9B004EA438 /* QRCodeScannerViewController.swift in Sources */,
 				0CAB81EF1C86817C00B653A9 /* CheckoutContainerViewController.swift in Sources */,
 				0CAB83791C86817C00B653A9 /* TransactionSellerView.swift in Sources */,
 				0CAB832F1C86817C00B653A9 /* SellerSubCategoryModel.swift in Sources */,
@@ -3650,8 +3690,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -3696,8 +3736,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -3725,7 +3765,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Technology Nelsoft (2A6XNT4658)";
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3748,7 +3788,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Technology Nelsoft (2A6XNT4658)";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",

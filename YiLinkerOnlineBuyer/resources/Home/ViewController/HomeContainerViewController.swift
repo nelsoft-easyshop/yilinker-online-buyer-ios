@@ -1772,7 +1772,9 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
 
 extension HomeContainerViewController: SearchBarViewDelegate {
     func searchBarView(searchBarView: SearchBarView, didTapScanQRCode button: UIButton) {
-        //QR
+        var qrCodeScannerViewController = QRCodeScannerViewController(nibName: "QRCodeScannerViewController", bundle: nil)
+        
+        self.presentViewController(qrCodeScannerViewController, animated: true, completion: nil)
     }
     
     func searchBarView(searchBarView: SearchBarView, didTapProfile button: UIButton) {
