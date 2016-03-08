@@ -35,13 +35,11 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
         self.titleView()
         self.backButton()
         //self.view.layoutIfNeeded()
+        self.regsiterNib()
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         layout.minimumLineSpacing = 20
         layout.footerReferenceSize = CGSizeMake(self.collectionView.frame.size.width, 41)
         collectionView.collectionViewLayout = layout
-        collectionView.dataSource = self
-        collectionView.delegate = self
-        self.regsiterNib()
     }
     
     //MARK: -
