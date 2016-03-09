@@ -86,6 +86,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GGLInstanceIDDelegate {
             kGGLInstanceIDAPNSServerTypeSandboxOption:true]
         GGLInstanceID.sharedInstance().tokenWithAuthorizedEntity(gcmSenderID,
             scope: kGGLInstanceIDScopeGCM, options: registrationOptions, handler: registrationHandler)
+        
+        if !SessionManager.isDeviceRegistered() {
+            self.fireRegisterDeviceID(cleanToken)
+        }
     }
     
     func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
@@ -168,22 +172,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GGLInstanceIDDelegate {
         
         var body: NSDictionary = userInfo["aps"] as! NSDictionary
         
-        var targetType: String = ""
-        var target: String = ""
-        
-        if let temp = body["targetType"] as? String {
-            targetType = temp
-        }
-        
-        if let temp = body["target"] as? String {
-            target = temp
-        }
+        let pushNotificationModel: PushNotificationModel = PushNotificationModel.parseDataFromDictionary(body)
         
         // Rj
         if application.applicationState == UIApplicationState.Active {
             UIApplication.sharedApplication().applicationIconBadgeNumber = 0
    
-            var easyNotification: MPGNotification = MPGNotification(title: "YiLinker", subtitle: body["alert"] as? String, backgroundColor: Constants.Colors.appTheme, iconImage: UIImage(named: "yibo"))
+            var easyNotification: MPGNotification = MPGNotification(title: pushNotificationModel.title, subtitle: pushNotificationModel.message, backgroundColor: Constants.Colors.appTheme, iconImage: UIImage(named: "yibo"))
             
             easyNotification.duration = 5.0
             
@@ -208,7 +203,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GGLInstanceIDDelegate {
                 
                 let nav = tabBarController.viewControllers!.first as! UINavigationController
                 let homeController: HomeContainerViewController = nav.viewControllers.first as! HomeContainerViewController
-                homeController.didClickItemWithTarget(target, targetType: targetType, sectionTitle: "Push Notif")
+                homeController.didClickItemWithTarget(pushNotificationModel.target, targetType: pushNotificationModel.targetType, sectionTitle: pushNotificationModel.title)
             })
           
         } else {
@@ -224,7 +219,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GGLInstanceIDDelegate {
             
             let nav = tabBarController.viewControllers!.first as! UINavigationController
             let homeController: HomeContainerViewController = nav.viewControllers.first as! HomeContainerViewController
-            homeController.didClickItemWithTarget(target, targetType: targetType, sectionTitle: "Push Notif")
+            
+            homeController.didClickItemWithTarget(pushNotificationModel.target, targetType: pushNotificationModel.targetType, sectionTitle: pushNotificationModel.title)
         }
     }
     
@@ -324,6 +320,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GGLInstanceIDDelegate {
         style.backgroundColor = Constants.Colors.appTheme
         CSToastManager.setSharedStyle(style)
         CSToastManager.setTapToDismissEnabled(true)
+    }
+    
+    
+    func fireRegisterDeviceID(deviceId: String) {
+        WebServiceManager.fireRegisterDeviceFromUrl(APIAtlas.registerDeviceUrl, deviceID: deviceId) { (successful, responseObject, requestErrorType) -> Void in
+            if successful {
+                SessionManager.setIsDeviceTokenRegistered(true)
+            }
+        }
     }
 }
 

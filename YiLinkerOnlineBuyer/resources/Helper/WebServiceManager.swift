@@ -131,6 +131,8 @@ class WebServiceManager: NSObject {
     static let verificationCodeKey = "verificationCode"
     static let referralCodeRegistrationKey = "referrerCode"
     
+    static let deviceTokenKey = "deviceToken"
+    
     //MARK: -
     //MARK: - Fire Login Request With URL
     class func fireLoginRequestWithUrl(url: String, emailAddress: String, password: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) -> NSURLSessionDataTask {
@@ -1131,6 +1133,18 @@ class WebServiceManager: NSObject {
         println(url)
         
         let sessionDataTask: NSURLSessionDataTask = self.firePostRequestSessionDataTaskWithUrl(url, parameters: parameters) { (successful,  responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+        
+        return sessionDataTask
+    }
+    
+    class func fireRegisterDeviceFromUrl(url: String, deviceID: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) -> NSURLSessionDataTask {
+        let manager: APIManager = APIManager.sharedInstance
+        
+        let parameters: NSDictionary = [self.deviceTokenKey: deviceID]
+        
+        let sessionDataTask: NSURLSessionDataTask = self.firePostRequestSessionDataTaskWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
             actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
         }
         
