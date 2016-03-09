@@ -229,6 +229,9 @@ struct APIAtlas {
     //My Points
     static let getPointsTotal = "v1/auth/user/getPoints"
     static let getPointsHistory = "v1/auth/user/getPointHistory"
+    
+    //Push Notif
+    static let registerDeviceUrl = "v2/device/add-device-token"
 }
 
 class APIManager: AFHTTPSessionManager {
