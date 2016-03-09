@@ -37,6 +37,11 @@ class ProfileViewController: UIViewController{
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
+        //Add Nav Bar
+        if self.respondsToSelector("edgesForExtendedLayout") {
+            self.edgesForExtendedLayout = UIRectEdge.None
+        }
+        
         self.fireGetUserInfo()
     }
     

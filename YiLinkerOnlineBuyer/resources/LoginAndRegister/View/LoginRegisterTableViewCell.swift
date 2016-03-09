@@ -41,6 +41,9 @@ class LoginRegisterTableViewCell: UITableViewCell {
     var tempCtr: Int = 0
     var oldScrollValue: CGFloat = 0
     
+    var referralCode: String = ""
+    var isLogin: Bool = true
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -48,8 +51,15 @@ class LoginRegisterTableViewCell: UITableViewCell {
         self.registerNibs()
         self.activateButton(self.signInButton)
         self.deActivateButton(self.registerButton)
+        
+        let delay = 0.1 * Double(NSEC_PER_SEC)
+        let time = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
+        dispatch_after(time, dispatch_get_main_queue()) {
+            self.checkView()
+        }
+        
     }
-
+    
     func initializeViews() {
         let screenSize: CGRect = UIScreen.mainScreen().bounds
         self.screenWidth = screenSize.width
@@ -59,6 +69,21 @@ class LoginRegisterTableViewCell: UITableViewCell {
         
         self.signInButton.setTitle(LoginStrings.login.uppercaseString, forState: .Normal)
         self.registerButton.setTitle(RegisterStrings.register.uppercaseString, forState: .Normal)
+
+    }
+    
+    func checkView() {
+        if self.isLogin {
+            self.delegate?.loginRegisterTableViewCell(self, didTapSignIn: self.registerButton)
+            self.activateButton(self.signInButton)
+            self.deActivateButton(self.registerButton)
+            self.collectionView.scrollToItemAtIndexPath(NSIndexPath(forRow: 0, inSection: 0), atScrollPosition: UICollectionViewScrollPosition.CenteredHorizontally, animated: false)
+        } else {
+            self.delegate?.loginRegisterTableViewCell(self, didTapRegister: self.signInButton)
+            self.deActivateButton(self.signInButton)
+            self.activateButton(self.registerButton)
+            self.collectionView.scrollToItemAtIndexPath(NSIndexPath(forRow: 1, inSection: 0), atScrollPosition: UICollectionViewScrollPosition.CenteredHorizontally, animated: false)
+        }
     }
     
     func registerNibs() {
@@ -122,6 +147,7 @@ extension LoginRegisterTableViewCell: UICollectionViewDataSource, UICollectionVi
             return cell
         } else {
             let cell: SimplifiedRegistrationUICollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifierRegistration, forIndexPath: indexPath) as! SimplifiedRegistrationUICollectionViewCell
+            cell.referralCodeTextField.text = self.referralCode
             cell.delegate = self
             return cell
         }

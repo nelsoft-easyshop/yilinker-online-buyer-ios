@@ -39,7 +39,10 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     var wishlisViewController: WishlistViewController?
     var cartViewController: CartViewController?
     
+    
+    
     var emptyView: EmptyView?
+    var searchBarView: SearchBarView?
     var yiHud: YiHUD?
     var profileModel: ProfileUserDetailsModel = ProfileUserDetailsModel()
     var customTabBarController: CustomTabBarController?
@@ -48,6 +51,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var backToTopButton: UIButton!
+    @IBOutlet weak var topBarView: UIView!
     
     let placeHolder: String = "dummy-placeholder"
     
@@ -84,6 +88,15 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     
     var oldPushNotifData: String = ""
     
+    //Search
+    var searchType = SearchType.Product
+    let manager = APIManager.sharedInstance
+    
+    var searchTask: NSURLSessionDataTask?
+    var suggestions: [SearchSuggestionModel] = []
+    
+    var refferalCode: String = ""
+    
     //MARK: - Life Cycle
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -91,7 +104,8 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     }
     
     override func viewDidLayoutSubviews() {
-        
+        self.setupSearchBar()
+        self.setupBackToTopButton()
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -152,8 +166,6 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         self.tabBarController!.delegate = self
         
         self.backToTopButton.layer.cornerRadius = 15
-        self.setupBackToTopButton()
-        
         self.addPullToRefresh()
         
         let languageType: LanguageType = LanguageHelper.currentLanguge()
@@ -182,6 +194,14 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             })
     }
     
+    //MARK: - Add Pull To Refresh
+    func setupSearchBar() {
+        self.searchBarView = SearchBarView.initSearchBar()
+        self.searchBarView?.showSearchBarToView(self.topBarView, mainView: self.view)
+        self.searchBarView?.delegate = self
+        self.view.layoutIfNeeded()
+    }
+    
     //MARK: -
     //MARK: - Back To Top Button
     func setupBackToTopButton() {
@@ -192,6 +212,12 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         self.backToTopButton.layer.shadowOffset = CGSizeMake(0, 5)
         self.backToTopButton.layer.shadowRadius = 5
         self.backToTopButton.layer.shadowOpacity = 1.0
+    }
+    
+    //MARK: -
+    //MARK: - Close Keyboard
+    func closeKeyboard() {
+        self.view.endEditing(true)
     }
     
     //MARK: -
@@ -275,7 +301,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     //For GCM Registration
     func fireCreateRegistration(registrationID : String) {
         self.showHUD()
-        let manager: APIManager = APIManager.sharedInstance
+//        let manager: APIManager = APIManager.sharedInstance
         let parameters: NSDictionary = [
             "registrationId": "\(registrationID)",
             "access_token"  : SessionManager.accessToken(),
@@ -1581,6 +1607,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     func scrollViewDidScroll(scrollView: UIScrollView) {
         let indexes: [NSIndexPath] = self.collectionView.indexPathsForVisibleItems() as! [NSIndexPath]
         var isShowBackToTop: Bool = true
+        self.closeKeyboard()
         for index in indexes {
             if index.section == 2 {
                 isShowBackToTop = false
@@ -1719,6 +1746,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         let storyBoard: UIStoryboard = UIStoryboard(name: "StartPageStoryBoard", bundle: nil)
         let loginRegisterViewController: LoginAndRegisterTableViewController = storyBoard.instantiateViewControllerWithIdentifier("LoginAndRegisterTableViewController") as! LoginAndRegisterTableViewController
         loginRegisterViewController.isLogin = isLogin
+        loginRegisterViewController.refferalCode = self.refferalCode
         self.customTabBarController!.presentViewController(loginRegisterViewController, animated: true, completion: nil)
     }
     
@@ -1756,5 +1784,145 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                 
             }
         }
+    }
+}
+
+extension HomeContainerViewController: QRCodeScannerViewControllerDelegate {
+    func qrCodeScannerViewController(qrCodeScannerViewController: QRCodeScannerViewController, code: String) {
+        if code.contains("http"){
+            var slug: String = ""
+            if let range = code.rangeOfString("/", options: NSStringCompareOptions.BackwardsSearch) {
+                slug = code.substringFromIndex(range.endIndex)
+                println(slug)
+                
+                let sellerViewController: SellerViewController = SellerViewController(nibName: "SellerViewController", bundle: nil)
+                sellerViewController.slug = slug
+                self.navigationController!.pushViewController(sellerViewController, animated: true)
+            }
+        } else {
+            if !SessionManager.isLoggedIn() {
+                self.refferalCode = code
+                self.redirectToLoginRegister(false)
+            } else {
+            }
+            
+        }
+    }
+}
+
+extension HomeContainerViewController: SearchBarViewDelegate {
+    
+    func searchBarView(searchBarView: SearchBarView, didTapScanQRCode button: UIButton) {
+        var qrCodeScannerViewController = QRCodeScannerViewController(nibName: "QRCodeScannerViewController", bundle: nil)
+        qrCodeScannerViewController.delegate = self
+        self.presentViewController(qrCodeScannerViewController, animated: true, completion: nil)
+    }
+    
+    func searchBarView(searchBarView: SearchBarView, didTapProfile button: UIButton) {
+        if SessionManager.isLoggedIn() {
+            var profileViewController = ProfileViewController(nibName: "ProfileViewController", bundle: nil)
+            profileViewController.isFromSearchBar = true
+            self.navigationController?.pushViewController(profileViewController, animated: true)
+        } else {
+            self.redirectToLoginRegister(true)
+        }
+    }
+    
+    func searchBarView(searchBarView: SearchBarView, didTextChanged textField: UITextField) {
+        if self.searchType == .Product {
+            self.fireSearch(textField.text, searchBarView: searchBarView)
+        }
+    }
+    
+    func searchBarView(searchBarView: SearchBarView, didSeacrhTypeChanged searchType: SearchType) {
+        self.searchType = searchType
+    }
+    
+    func searchBarView(searchBarView: SearchBarView, didTapSearch textField: UITextField) {
+        if (self.searchTask != nil) {
+            self.searchTask?.cancel()
+            searchTask = nil
+        }
+        
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+        textField.resignFirstResponder()
+        let newString = textField.text.stringByReplacingOccurrencesOfString(" ", withString: "+")
+        
+        var resultController = ResultViewController(nibName: "ResultViewController", bundle: nil)
+        
+        if self.searchType == .Product {
+            resultController.isSellerSearch = false
+            resultController.passModel(SearchSuggestionModel(suggestion: textField.text, imageURL: "", searchUrl: "\(APIAtlas.searchBuyer)\(newString)"))
+        } else {
+            resultController.isSellerSearch = true
+            resultController.passModel(SearchSuggestionModel(suggestion: textField.text, imageURL: "", searchUrl: "\(APIAtlas.searchSeller)\(newString)"))
+        }
+        
+        resultController.searchType = self.searchType
+        
+        self.navigationController?.pushViewController(resultController, animated:true);
+    }
+    
+    func searchBarView(searchBarView: SearchBarView, didChooseSuggestion suggestion: SearchSuggestionModel) {
+        var resultController = ResultViewController(nibName: "ResultViewController", bundle: nil)
+        resultController.isSellerSearch = false
+        resultController.searchType = self.searchType
+        resultController.passModel(suggestion)
+        self.navigationController?.pushViewController(resultController, animated:true);
+    }
+    
+    //API Request
+    //MARK: - API Request
+    func fireSearch(queryString: String, searchBarView: SearchBarView){
+        if (self.searchTask != nil) {
+            self.searchTask?.cancel()
+            self.searchTask = nil
+            searchBarView.hideLoader()
+        }
+        
+        searchBarView.showLoader()
+        self.searchTask = WebServiceManager.fireSearcProducthWithUrl(APIAtlas.searchUrl, queryString: queryString, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+            searchBarView.hideLoader()
+            if successful {
+                if  let dictionary: NSDictionary = responseObject as? NSDictionary {
+                    if let isSuccessful: Bool = dictionary["isSuccessful"] as? Bool{
+                        if isSuccessful {
+                            self.suggestions.removeAll(keepCapacity: false)
+                            if let value: AnyObject = responseObject["data"] {
+                                for subValue in value as! NSArray {
+                                    let model: SearchSuggestionModel = SearchSuggestionModel.parseDataFromDictionary(subValue as! NSDictionary)
+                                    
+                                    self.suggestions.append(model)
+                                }
+                                searchBarView.passSearchSuggestions(self.suggestions)
+                            }
+                        }
+//                        else {
+//                            let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+//                            Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+//                        }
+                    }
+                } else {
+                    UIAlertController.displaySomethingWentWrongError(self)
+                }
+            } else {
+                if requestErrorType == .ResponseError {
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                } else if requestErrorType == .PageNotFound {
+                    Toast.displayToastWithMessage("Page not found.", duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    Toast.displayToastWithMessage(Constants.Localized.error, duration: 1.5, view: self.view)
+                } else if requestErrorType == .Cancel {
+                } else {
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                }
+            }
+        })
     }
 }

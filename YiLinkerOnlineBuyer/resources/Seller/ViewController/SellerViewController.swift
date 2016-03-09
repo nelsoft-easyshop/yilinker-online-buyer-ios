@@ -22,6 +22,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     var is_successful: Bool = false
     var sellerId: Int = 0
+    var slug: String = ""
     var sellerContactNumber: String = ""
     var sellerName: String = ""
     
@@ -216,7 +217,14 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
             url = APIAtlas.getSellerInfo
         }
         
-        WebServiceManager.fireSellerWithUrl(url, accessToken: SessionManager.accessToken(), sellerId: sellerId) {
+        var params: String = ""
+        if self.slug.isEmpty {
+            params = "\(sellerId)"
+        } else {
+            params = self.slug
+        }
+        
+        WebServiceManager.fireSellerWithUrl(url, accessToken: SessionManager.accessToken(), sellerId: params) {
             (successful, responseObject, requestErrorType) -> Void in
             self.yiHud?.hide()
             if successful {

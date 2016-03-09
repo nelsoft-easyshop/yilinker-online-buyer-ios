@@ -544,6 +544,10 @@
 		0CAB83C01C86817C00B653A9 /* WishlistTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CAB81921C86817C00B653A9 /* WishlistTableViewCell.xib */; };
 		0CAB83C11C86817C00B653A9 /* WishlistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAB81941C86817C00B653A9 /* WishlistViewController.swift */; };
 		0CAB83C21C86817C00B653A9 /* YiLinkerOnlineBuyer.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0CAB81951C86817C00B653A9 /* YiLinkerOnlineBuyer.xcdatamodeld */; };
+		790E597E1C87D0B90073FE23 /* SearchBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 790E597D1C87D0B90073FE23 /* SearchBarView.swift */; };
+		790E59801C87D0D00073FE23 /* SearchBarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 790E597F1C87D0D00073FE23 /* SearchBarView.xib */; };
+		790E59831C880C980073FE23 /* SearchTypeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 790E59811C880C980073FE23 /* SearchTypeTableViewCell.swift */; };
+		790E59841C880C980073FE23 /* SearchTypeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 790E59821C880C980073FE23 /* SearchTypeTableViewCell.xib */; };
 		798D84C51C86C14500D2A1F7 /* MyPointsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798D84B41C86C14500D2A1F7 /* MyPointsTableViewController.swift */; };
 		798D84C61C86C14500D2A1F7 /* MyPointsTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 798D84B51C86C14500D2A1F7 /* MyPointsTableViewController.xib */; };
 		798D84C71C86C14500D2A1F7 /* MyPointsHistoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798D84B71C86C14500D2A1F7 /* MyPointsHistoryModel.swift */; };
@@ -559,6 +563,8 @@
 		798D84D11C86C14500D2A1F7 /* PointsEarnedTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 798D84C21C86C14500D2A1F7 /* PointsEarnedTableViewCell.xib */; };
 		798D84D21C86C14500D2A1F7 /* PointsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798D84C31C86C14500D2A1F7 /* PointsTableViewCell.swift */; };
 		798D84D31C86C14500D2A1F7 /* PointsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 798D84C41C86C14500D2A1F7 /* PointsTableViewCell.xib */; };
+		79DBF22F1C898B9B004EA438 /* QRCodeScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79DBF22D1C898B9B004EA438 /* QRCodeScannerViewController.swift */; };
+		79DBF2301C898B9B004EA438 /* QRCodeScannerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79DBF22E1C898B9B004EA438 /* QRCodeScannerViewController.xib */; };
 		799B9A3A1C8EACEA006472E8 /* ProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799B9A211C8EACEA006472E8 /* ProfileModel.swift */; };
 		799B9A3B1C8EACEA006472E8 /* ProfileUserDetailsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799B9A221C8EACEA006472E8 /* ProfileUserDetailsModel.swift */; };
 		799B9A3C1C8EACEA006472E8 /* EditProfileAccountInformationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799B9A241C8EACEA006472E8 /* EditProfileAccountInformationTableViewCell.swift */; };
@@ -1146,6 +1152,10 @@
 		0CAB81941C86817C00B653A9 /* WishlistViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WishlistViewController.swift; sourceTree = "<group>"; };
 		0CAB81961C86817C00B653A9 /* YiLinkerOnlineBuyer.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = YiLinkerOnlineBuyer.xcdatamodel; sourceTree = "<group>"; };
 		5D038C18A7712E626564D2D3 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		790E597D1C87D0B90073FE23 /* SearchBarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchBarView.swift; sourceTree = "<group>"; };
+		790E597F1C87D0D00073FE23 /* SearchBarView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchBarView.xib; sourceTree = "<group>"; };
+		790E59811C880C980073FE23 /* SearchTypeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchTypeTableViewCell.swift; sourceTree = "<group>"; };
+		790E59821C880C980073FE23 /* SearchTypeTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchTypeTableViewCell.xib; sourceTree = "<group>"; };
 		798D84B41C86C14500D2A1F7 /* MyPointsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPointsTableViewController.swift; sourceTree = "<group>"; };
 		798D84B51C86C14500D2A1F7 /* MyPointsTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyPointsTableViewController.xib; sourceTree = "<group>"; };
 		798D84B71C86C14500D2A1F7 /* MyPointsHistoryModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPointsHistoryModel.swift; sourceTree = "<group>"; };
@@ -1161,6 +1171,8 @@
 		798D84C21C86C14500D2A1F7 /* PointsEarnedTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PointsEarnedTableViewCell.xib; sourceTree = "<group>"; };
 		798D84C31C86C14500D2A1F7 /* PointsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PointsTableViewCell.swift; sourceTree = "<group>"; };
 		798D84C41C86C14500D2A1F7 /* PointsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PointsTableViewCell.xib; sourceTree = "<group>"; };
+		79DBF22D1C898B9B004EA438 /* QRCodeScannerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QRCodeScannerViewController.swift; sourceTree = "<group>"; };
+		79DBF22E1C898B9B004EA438 /* QRCodeScannerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QRCodeScannerViewController.xib; sourceTree = "<group>"; };
 		799B9A211C8EACEA006472E8 /* ProfileModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileModel.swift; sourceTree = "<group>"; };
 		799B9A221C8EACEA006472E8 /* ProfileUserDetailsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileUserDetailsModel.swift; sourceTree = "<group>"; };
 		799B9A241C8EACEA006472E8 /* EditProfileAccountInformationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditProfileAccountInformationTableViewCell.swift; sourceTree = "<group>"; };
@@ -1296,6 +1308,7 @@
 		0CAB7EEB1C86817B00B653A9 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				79DBF2291C898B82004EA438 /* QR Code Scanner */,
 				0C759FB51C900B24002A08E2 /* PushNotification */,
 				0CAB7EEC1C86817B00B653A9 /* ActivityLog */,
 				0CAB7EFC1C86817B00B653A9 /* Address */,
@@ -1319,6 +1332,7 @@
 				798D84801C86BE0E00D2A1F7 /* Profile */,
 				0CAB80B51C86817B00B653A9 /* ResolutionCenter */,
 				0CAB80C81C86817B00B653A9 /* Search */,
+				790E59791C87D06D0073FE23 /* Search Bar */,
 				0CAB80E01C86817B00B653A9 /* Seller */,
 				0CAB81071C86817B00B653A9 /* Settings */,
 				0CAB810D1C86817B00B653A9 /* StartPage */,
@@ -2731,40 +2745,99 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		798D84801C86BE0E00D2A1F7 /* Profile */ = {
+		790E59791C87D06D0073FE23 /* Search Bar */ = {
 			isa = PBXGroup;
 			children = (
-				799B9A201C8EACEA006472E8 /* Model */,
-				799B9A231C8EACEA006472E8 /* View */,
-				799B9A331C8EACEA006472E8 /* ViewController */,
-				798D84811C86BE0E00D2A1F7 /* Model */,
-				798D84841C86BE0E00D2A1F7 /* View */,
-				798D84941C86BE0E00D2A1F7 /* ViewController */,
+				790E597A1C87D06D0073FE23 /* Controller */,
+				790E597B1C87D06D0073FE23 /* Model */,
+				790E597C1C87D06D0073FE23 /* View */,
 			);
-			path = Profile;
+			name = "Search Bar";
+			path = "YiLinkerOnlineBuyer/resources/Search Bar";
+			sourceTree = SOURCE_ROOT;
+		};
+		790E597A1C87D06D0073FE23 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Controller;
 			sourceTree = "<group>";
 		};
-		798D84811C86BE0E00D2A1F7 /* Model */ = {
+		790E597B1C87D06D0073FE23 /* Model */ = {
 			isa = PBXGroup;
 			children = (
 			);
 			path = Model;
 			sourceTree = "<group>";
 		};
-		798D84841C86BE0E00D2A1F7 /* View */ = {
+		790E597C1C87D06D0073FE23 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				790E597D1C87D0B90073FE23 /* SearchBarView.swift */,
+				790E597F1C87D0D00073FE23 /* SearchBarView.xib */,
+				790E59811C880C980073FE23 /* SearchTypeTableViewCell.swift */,
+				790E59821C880C980073FE23 /* SearchTypeTableViewCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
 		};
-		798D84941C86BE0E00D2A1F7 /* ViewController */ = {
+		798D84801C86BE0E00D2A1F7 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
+				799B9A201C8EACEA006472E8 /* Model */,
+				799B9A231C8EACEA006472E8 /* View */,
+				799B9A331C8EACEA006472E8 /* ViewController */,
 			);
-			path = ViewController;
+			path = Profile;
 			sourceTree = "<group>";
-		};
+        };
+        799B9A201C8EACEA006472E8 /* Model */ = {
+            isa = PBXGroup;
+            children = (
+                799B9A211C8EACEA006472E8 /* ProfileModel.swift */,
+                799B9A221C8EACEA006472E8 /* ProfileUserDetailsModel.swift */,
+            );
+            name = Model;
+            path = YiLinkerOnlineBuyer/resources/Profile/Model;
+            sourceTree = SOURCE_ROOT;
+        };
+        799B9A231C8EACEA006472E8 /* View */ = {
+            isa = PBXGroup;
+            children = (
+                799B9A241C8EACEA006472E8 /* EditProfileAccountInformationTableViewCell.swift */,
+                799B9A251C8EACEA006472E8 /* EditProfileAccountInformationTableViewCell.xib */,
+                799B9A261C8EACEA006472E8 /* EditProfileAddPhotoTableViewCell.swift */,
+                799B9A271C8EACEA006472E8 /* EditProfileAddPhotoTableViewCell.xib */,
+                799B9A281C8EACEA006472E8 /* EditProfileAddressTableViewCell.swift */,
+                799B9A291C8EACEA006472E8 /* EditProfileAddressTableViewCell.xib */,
+                799B9A2A1C8EACEA006472E8 /* EditProfilePersonalInformationTableViewCell.swift */,
+                799B9A2B1C8EACEA006472E8 /* EditProfilePersonalInformationTableViewCell.xib */,
+                799B9A2C1C8EACEA006472E8 /* ProductImagesViewCollectionViewCell.swift */,
+                799B9A2D1C8EACEA006472E8 /* ProfileHeaderTableViewCell.swift */,
+                799B9A2E1C8EACEA006472E8 /* ProfileHeaderTableViewCell.xib */,
+                799B9A2F1C8EACEA006472E8 /* ProfileSettingsTableViewCell.swift */,
+                799B9A301C8EACEA006472E8 /* ProfileSettingsTableViewCell.xib */,
+                799B9A311C8EACEA006472E8 /* ProfileTableViewCell.swift */,
+                799B9A321C8EACEA006472E8 /* ProfileTableViewCell.xib */,
+            );
+            name = View;
+            path = YiLinkerOnlineBuyer/resources/Profile/View;
+            sourceTree = SOURCE_ROOT;
+        };
+        799B9A331C8EACEA006472E8 /* ViewController */ = {
+            isa = PBXGroup;
+            children = (
+                799B9A341C8EACEA006472E8 /* EditProfileTableViewController.swift */,
+                799B9A351C8EACEA006472E8 /* EditProfileTableViewController.xib */,
+                799B9A361C8EACEA006472E8 /* ProfileSettingsViewController.swift */,
+                799B9A371C8EACEA006472E8 /* ProfileSettingsViewController.xib */,
+                799B9A381C8EACEA006472E8 /* ProfileViewController.swift */,
+                799B9A391C8EACEA006472E8 /* ProfileViewController.xib */,
+            );
+            name = ViewController;
+            path = YiLinkerOnlineBuyer/resources/Profile/ViewController;
+            sourceTree = SOURCE_ROOT;
+        };
 		798D84B21C86C14500D2A1F7 /* My Points */ = {
 			isa = PBXGroup;
 			children = (
@@ -2812,53 +2885,40 @@
 			path = View;
 			sourceTree = "<group>";
 		};
-		799B9A201C8EACEA006472E8 /* Model */ = {
+		79DBF2291C898B82004EA438 /* QR Code Scanner */ = {
 			isa = PBXGroup;
 			children = (
-				799B9A211C8EACEA006472E8 /* ProfileModel.swift */,
-				799B9A221C8EACEA006472E8 /* ProfileUserDetailsModel.swift */,
+				79DBF22A1C898B82004EA438 /* Controller */,
+				79DBF22B1C898B82004EA438 /* Model */,
+				79DBF22C1C898B82004EA438 /* View */,
 			);
-			name = Model;
-			path = YiLinkerOnlineBuyer/resources/Profile/Model;
+			name = "QR Code Scanner";
+			path = "YiLinkerOnlineBuyer/resources/QR Code Scanner";
 			sourceTree = SOURCE_ROOT;
 		};
-		799B9A231C8EACEA006472E8 /* View */ = {
+		79DBF22A1C898B82004EA438 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				799B9A241C8EACEA006472E8 /* EditProfileAccountInformationTableViewCell.swift */,
-				799B9A251C8EACEA006472E8 /* EditProfileAccountInformationTableViewCell.xib */,
-				799B9A261C8EACEA006472E8 /* EditProfileAddPhotoTableViewCell.swift */,
-				799B9A271C8EACEA006472E8 /* EditProfileAddPhotoTableViewCell.xib */,
-				799B9A281C8EACEA006472E8 /* EditProfileAddressTableViewCell.swift */,
-				799B9A291C8EACEA006472E8 /* EditProfileAddressTableViewCell.xib */,
-				799B9A2A1C8EACEA006472E8 /* EditProfilePersonalInformationTableViewCell.swift */,
-				799B9A2B1C8EACEA006472E8 /* EditProfilePersonalInformationTableViewCell.xib */,
-				799B9A2C1C8EACEA006472E8 /* ProductImagesViewCollectionViewCell.swift */,
-				799B9A2D1C8EACEA006472E8 /* ProfileHeaderTableViewCell.swift */,
-				799B9A2E1C8EACEA006472E8 /* ProfileHeaderTableViewCell.xib */,
-				799B9A2F1C8EACEA006472E8 /* ProfileSettingsTableViewCell.swift */,
-				799B9A301C8EACEA006472E8 /* ProfileSettingsTableViewCell.xib */,
-				799B9A311C8EACEA006472E8 /* ProfileTableViewCell.swift */,
-				799B9A321C8EACEA006472E8 /* ProfileTableViewCell.xib */,
+				79DBF22D1C898B9B004EA438 /* QRCodeScannerViewController.swift */,
+				79DBF22E1C898B9B004EA438 /* QRCodeScannerViewController.xib */,
 			);
-			name = View;
-			path = YiLinkerOnlineBuyer/resources/Profile/View;
-			sourceTree = SOURCE_ROOT;
+			path = Controller;
+			sourceTree = "<group>";
 		};
-		799B9A331C8EACEA006472E8 /* ViewController */ = {
+		79DBF22B1C898B82004EA438 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				799B9A341C8EACEA006472E8 /* EditProfileTableViewController.swift */,
-				799B9A351C8EACEA006472E8 /* EditProfileTableViewController.xib */,
-				799B9A361C8EACEA006472E8 /* ProfileSettingsViewController.swift */,
-				799B9A371C8EACEA006472E8 /* ProfileSettingsViewController.xib */,
-				799B9A381C8EACEA006472E8 /* ProfileViewController.swift */,
-				799B9A391C8EACEA006472E8 /* ProfileViewController.xib */,
 			);
-			name = ViewController;
-			path = YiLinkerOnlineBuyer/resources/Profile/ViewController;
-			sourceTree = SOURCE_ROOT;
+			path = Model;
+			sourceTree = "<group>";
 		};
+		79DBF22C1C898B82004EA438 /* View */ = {
+			isa = PBXGroup;
+			children = (
+            );
+            path = View;
+            sourceTree = "<group>";
+        };
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -2986,6 +3046,7 @@
 				0CAB82141C86817C00B653A9 /* GooglePlus.bundle in Resources */,
 				0CAB82D11C86817C00B653A9 /* ProductAttributeTableViewCell.xib in Resources */,
 				0CAB834D1C86817C00B653A9 /* SellerViewController.xib in Resources */,
+				790E59801C87D0D00073FE23 /* SearchBarView.xib in Resources */,
 				0CAB81CF1C86817C00B653A9 /* DicountVoucherTableViewCell.xib in Resources */,
 				0CAB822D1C86817C00B653A9 /* ForgotPasswordTableViewCell.xib in Resources */,
 				0CAB82311C86817C00B653A9 /* ChangePasswordViewController.xib in Resources */,
@@ -3089,6 +3150,7 @@
 				0CAB82E41C86817C00B653A9 /* ProductWithCenterNameCollectionViewCell.xib in Resources */,
 				799B9A3D1C8EACEA006472E8 /* EditProfileAccountInformationTableViewCell.xib in Resources */,
 				0CAB81DF1C86817C00B653A9 /* PaymentWebViewViewController.xib in Resources */,
+				79DBF2301C898B9B004EA438 /* QRCodeScannerViewController.xib in Resources */,
 				0CAB82291C86817C00B653A9 /* FollowedSellerTableViewCell.xib in Resources */,
 				0CAB82A41C86817C00B653A9 /* MessagingReceiverImageTableViewCell.xib in Resources */,
 				0CAB82E71C86817C00B653A9 /* ProductAttributeViewController.xib in Resources */,
@@ -3101,6 +3163,7 @@
 				9F7BC2CF1BF124C100218E10 /* yilinker_pinned_certificate.cer in Resources */,
 				0CAB825C1C86817C00B653A9 /* CarouselCollectionViewCell.xib in Resources */,
 				0CAB827F1C86817C00B653A9 /* VerticalImageCollectionViewCell.xib in Resources */,
+				790E59841C880C980073FE23 /* SearchTypeTableViewCell.xib in Resources */,
 				0CAB83221C86817C00B653A9 /* SearchSuggestionTableViewCell.xib in Resources */,
 				0CAB82EE1C86817C00B653A9 /* ProductReviewViewController.xib in Resources */,
 				0CAB81AB1C86817C00B653A9 /* ChangeAddressCollectionViewCell.xib in Resources */,
@@ -3309,6 +3372,7 @@
 				0CAB83121C86817C00B653A9 /* DisputeAddItemViewController.swift in Sources */,
 				0CAB81AC1C86817C00B653A9 /* ChangeAddressFooterCollectionViewCell.swift in Sources */,
 				0CAB82991C86817C00B653A9 /* W_Contact.swift in Sources */,
+				79DBF22F1C898B9B004EA438 /* QRCodeScannerViewController.swift in Sources */,
 				799B9A3E1C8EACEA006472E8 /* EditProfileAddPhotoTableViewCell.swift in Sources */,
 				0CAB81EF1C86817C00B653A9 /* CheckoutContainerViewController.swift in Sources */,
 				0CAB83791C86817C00B653A9 /* TransactionSellerView.swift in Sources */,
@@ -3395,6 +3459,7 @@
 				0CAB83281C86817C00B653A9 /* ResultAllViewController.swift in Sources */,
 				0CAB825A1C86817C00B653A9 /* TargetModel.swift in Sources */,
 				0CAB821D1C86817C00B653A9 /* TTRangeSlider.m in Sources */,
+				790E59831C880C980073FE23 /* SearchTypeTableViewCell.swift in Sources */,
 				0CAB81C01C86817C00B653A9 /* CategoryModel.swift in Sources */,
 				0CAB825D1C86817C00B653A9 /* DailyLoginCollectionViewCell.swift in Sources */,
 				0CAB83B91C86817C00B653A9 /* YiHUD.swift in Sources */,
@@ -3422,6 +3487,7 @@
 				0CAB838E1C86817C00B653A9 /* TransactionLeaveSellerFeedbackTableViewController.swift in Sources */,
 				0CAB83AB1C86817C00B653A9 /* NoInternetConnectionView.swift in Sources */,
 				0CAB82B11C86817C00B653A9 /* MessageThreadImageTVC.swift in Sources */,
+				790E597E1C87D0B90073FE23 /* SearchBarView.swift in Sources */,
 				0CAB827E1C86817C00B653A9 /* VerticalImageCollectionViewCell.swift in Sources */,
 				0CAB82D21C86817C00B653A9 /* ProductDescriptionView.swift in Sources */,
 				0CAB82571C86817C00B653A9 /* LayoutTenModel.swift in Sources */,
@@ -3721,8 +3787,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3732,7 +3798,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "08b87f05-72cb-405b-a4ea-f5e52edaabdb";
 				SWIFT_OBJC_BRIDGING_HEADER = "YiLinkerOnlineBuyer/Resources/Helper/YiLinkerOnlineBuyer-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -3744,8 +3810,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3760,7 +3826,7 @@
 					"\"${PODS_ROOT}/Google/Libraries” $(inherited) \"${PODS_ROOT}/GoogleAppUtilities/Libraries\" $(inherited) \"${PODS_ROOT}/GoogleAuthUtilities/Libraries\" $(inherited) \"${PODS_ROOT}/GoogleInterchangeUtilities/Libraries\" $(inherited) \"${PODS_ROOT}/GoogleNetworkingUtilities/Libraries\" $(inherited) \"${PODS_ROOT}/GoogleSignIn/Libraries\" $(inherited) \"${PODS_ROOT}/GoogleSymbolUtilities/Libraries\" $(inherited) \"${PODS_ROOT}/GoogleUtilities/Libraries\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "08b87f05-72cb-405b-a4ea-f5e52edaabdb";
 				SWIFT_OBJC_BRIDGING_HEADER = "YiLinkerOnlineBuyer/Resources/Helper/YiLinkerOnlineBuyer-Bridging-Header.h";
 			};
 			name = Release;
