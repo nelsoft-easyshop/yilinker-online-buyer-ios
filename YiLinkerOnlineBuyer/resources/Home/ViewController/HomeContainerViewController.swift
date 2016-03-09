@@ -95,6 +95,8 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     var searchTask: NSURLSessionDataTask?
     var suggestions: [SearchSuggestionModel] = []
     
+    var refferalCode: String = ""
+    
     //MARK: - Life Cycle
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -103,6 +105,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     
     override func viewDidLayoutSubviews() {
         self.setupSearchBar()
+        self.setupBackToTopButton()
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -163,7 +166,6 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         self.tabBarController!.delegate = self
         
         self.backToTopButton.layer.cornerRadius = 15
-        self.setupBackToTopButton()
         self.addPullToRefresh()
         
         let languageType: LanguageType = LanguageHelper.currentLanguge()
@@ -210,6 +212,12 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         self.backToTopButton.layer.shadowOffset = CGSizeMake(0, 5)
         self.backToTopButton.layer.shadowRadius = 5
         self.backToTopButton.layer.shadowOpacity = 1.0
+    }
+    
+    //MARK: -
+    //MARK: - Close Keyboard
+    func closeKeyboard() {
+        self.view.endEditing(true)
     }
     
     //MARK: -
@@ -1599,6 +1607,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     func scrollViewDidScroll(scrollView: UIScrollView) {
         let indexes: [NSIndexPath] = self.collectionView.indexPathsForVisibleItems() as! [NSIndexPath]
         var isShowBackToTop: Bool = true
+        self.closeKeyboard()
         for index in indexes {
             if index.section == 2 {
                 isShowBackToTop = false
@@ -1737,6 +1746,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         let storyBoard: UIStoryboard = UIStoryboard(name: "StartPageStoryBoard", bundle: nil)
         let loginRegisterViewController: LoginAndRegisterTableViewController = storyBoard.instantiateViewControllerWithIdentifier("LoginAndRegisterTableViewController") as! LoginAndRegisterTableViewController
         loginRegisterViewController.isLogin = isLogin
+        loginRegisterViewController.refferalCode = self.refferalCode
         self.customTabBarController!.presentViewController(loginRegisterViewController, animated: true, completion: nil)
     }
     
@@ -1777,11 +1787,34 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     }
 }
 
+extension HomeContainerViewController: QRCodeScannerViewControllerDelegate {
+    func qrCodeScannerViewController(qrCodeScannerViewController: QRCodeScannerViewController, code: String) {
+        if code.contains("http"){
+            var slug: String = ""
+            if let range = code.rangeOfString("/", options: NSStringCompareOptions.BackwardsSearch) {
+                slug = code.substringFromIndex(range.endIndex)
+                println(slug)
+                
+                let sellerViewController: SellerViewController = SellerViewController(nibName: "SellerViewController", bundle: nil)
+                sellerViewController.slug = slug
+                self.navigationController!.pushViewController(sellerViewController, animated: true)
+            }
+        } else {
+            if !SessionManager.isLoggedIn() {
+                self.refferalCode = code
+                self.redirectToLoginRegister(false)
+            } else {
+            }
+            
+        }
+    }
+}
+
 extension HomeContainerViewController: SearchBarViewDelegate {
     
     func searchBarView(searchBarView: SearchBarView, didTapScanQRCode button: UIButton) {
         var qrCodeScannerViewController = QRCodeScannerViewController(nibName: "QRCodeScannerViewController", bundle: nil)
-        
+        qrCodeScannerViewController.delegate = self
         self.presentViewController(qrCodeScannerViewController, animated: true, completion: nil)
     }
     
@@ -1825,6 +1858,16 @@ extension HomeContainerViewController: SearchBarViewDelegate {
             resultController.passModel(SearchSuggestionModel(suggestion: textField.text, imageURL: "", searchUrl: "\(APIAtlas.searchSeller)\(newString)"))
         }
         
+        resultController.searchType = self.searchType
+        
+        self.navigationController?.pushViewController(resultController, animated:true);
+    }
+    
+    func searchBarView(searchBarView: SearchBarView, didChooseSuggestion suggestion: SearchSuggestionModel) {
+        var resultController = ResultViewController(nibName: "ResultViewController", bundle: nil)
+        resultController.isSellerSearch = false
+        resultController.searchType = self.searchType
+        resultController.passModel(suggestion)
         self.navigationController?.pushViewController(resultController, animated:true);
     }
     
@@ -1853,10 +1896,11 @@ extension HomeContainerViewController: SearchBarViewDelegate {
                                 }
                                 searchBarView.passSearchSuggestions(self.suggestions)
                             }
-                        } else {
-                            let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
-                            Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
                         }
+//                        else {
+//                            let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+//                            Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+//                        }
                     }
                 } else {
                     UIAlertController.displaySomethingWentWrongError(self)
