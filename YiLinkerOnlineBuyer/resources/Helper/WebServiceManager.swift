@@ -1,4 +1,4 @@
-//
+    //
 //  WebServiceManager.swift
 //  YiLinkerOnlineBuyer
 //
@@ -130,6 +130,8 @@ class WebServiceManager: NSObject {
     //Register
     static let verificationCodeKey = "verificationCode"
     static let referralCodeRegistrationKey = "referrerCode"
+    
+    static let deviceTokenKey = "deviceToken"
     
     //MARK: -
     //MARK: - Fire Login Request With URL
@@ -972,7 +974,9 @@ class WebServiceManager: NSObject {
             parameters = [self.userIdKey: sellerId]
         }
         
-        self.firePostRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+        
+        self.fireGetRequestWithUrl(url, parameters: parameters){ (successful, responseObject, requestErrorType) -> Void in
+            println(responseObject)
             actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
         }
     }
@@ -1132,6 +1136,18 @@ class WebServiceManager: NSObject {
         println(url)
         
         let sessionDataTask: NSURLSessionDataTask = self.firePostRequestSessionDataTaskWithUrl(url, parameters: parameters) { (successful,  responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+        
+        return sessionDataTask
+    }
+    
+    class func fireRegisterDeviceFromUrl(url: String, deviceID: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) -> NSURLSessionDataTask {
+        let manager: APIManager = APIManager.sharedInstance
+        
+        let parameters: NSDictionary = [self.deviceTokenKey: deviceID]
+        
+        let sessionDataTask: NSURLSessionDataTask = self.firePostRequestSessionDataTaskWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
             actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
         }
         

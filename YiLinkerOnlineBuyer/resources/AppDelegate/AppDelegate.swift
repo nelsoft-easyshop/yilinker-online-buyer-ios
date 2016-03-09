@@ -81,25 +81,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GGLInstanceIDDelegate {
         println("Device Token > \(cleanToken)")
         println("Device Token w/o trim > \(deviceToken.description)")
         
-//        // Register for Push Notitications, if running iOS 8
-//        if application.respondsToSelector("registerUserNotificationSettings:") {
-//            
-//            let types:UIUserNotificationType = (.Alert | .Badge | .Sound)
-//            let settings:UIUserNotificationSettings = UIUserNotificationSettings(forTypes: types, categories: nil)
-//            
-//            application.registerUserNotificationSettings(settings)
-//            application.registerForRemoteNotifications()
-//            
-//        } else {
-//            // Register for Push Notifications before iOS 8
-//            application.registerForRemoteNotificationTypes(.Alert | .Badge | .Sound)
-//        }
-        
         GGLInstanceID.sharedInstance().startWithConfig(GGLInstanceIDConfig.defaultConfig())
         registrationOptions = [kGGLInstanceIDRegisterAPNSOption:deviceToken,
             kGGLInstanceIDAPNSServerTypeSandboxOption:true]
         GGLInstanceID.sharedInstance().tokenWithAuthorizedEntity(gcmSenderID,
             scope: kGGLInstanceIDScopeGCM, options: registrationOptions, handler: registrationHandler)
+        
+        if !SessionManager.isDeviceRegistered() {
+            self.fireRegisterDeviceID(cleanToken)
+        }
     }
     
     func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
@@ -180,18 +170,59 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GGLInstanceIDDelegate {
         completionHandler(UIBackgroundFetchResult.NoData);
         
         
+        var body: NSDictionary = userInfo["aps"] as! NSDictionary
+        
+        let pushNotificationModel: PushNotificationModel = PushNotificationModel.parseDataFromDictionary(body)
+        
         // Rj
         if application.applicationState == UIApplicationState.Active {
             UIApplication.sharedApplication().applicationIconBadgeNumber = 0
-            var body: NSDictionary = userInfo["aps"] as! NSDictionary
-            let alertController = UIAlertController(title: "YiLinker", message: body["alert"] as? String, preferredStyle: .Alert)
-            alertController.addAction(UIAlertAction(title: ProductStrings.alertOk, style: .Default, handler: nil))
-            self.window?.rootViewController?.presentViewController(alertController, animated: true, completion: nil)
-        } else if application.applicationState ==  UIApplicationState.Background {
-           self.startPage()
+   
+            var easyNotification: MPGNotification = MPGNotification(title: pushNotificationModel.title, subtitle: pushNotificationModel.message, backgroundColor: Constants.Colors.appTheme, iconImage: UIImage(named: "yibo"))
+            
+            easyNotification.duration = 5.0
+            
+            for v in easyNotification.subviews {
+                for subView in v.subviews {
+                    if subView.isKindOfClass(UILabel) {
+                        let label: UILabel = subView as! UILabel
+                        label.adjustsFontSizeToFitWidth = true
+                        label.minimumScaleFactor = 0.6
+                    }
+                }
+            }
+            
+            easyNotification.showWithButtonHandler({ (MPGNotification, index) -> Void in
+                for view in self.window!.subviews {
+                    view.removeFromSuperview()
+                }
+                
+                let storyBoard: UIStoryboard = UIStoryboard(name: "HomeStoryBoard", bundle: nil)
+                let tabBarController: UITabBarController = storyBoard.instantiateViewControllerWithIdentifier("TabBarController") as! UITabBarController
+                self.window?.rootViewController = tabBarController
+                
+                let nav = tabBarController.viewControllers!.first as! UINavigationController
+                let homeController: HomeContainerViewController = nav.viewControllers.first as! HomeContainerViewController
+                homeController.didClickItemWithTarget(pushNotificationModel.target, targetType: pushNotificationModel.targetType, sectionTitle: pushNotificationModel.title)
+            })
+          
+        } else {
+            UIApplication.sharedApplication().applicationIconBadgeNumber = 0
+            
+            for view in self.window!.subviews {
+                view.removeFromSuperview()
+            }
+            
+            let storyBoard: UIStoryboard = UIStoryboard(name: "HomeStoryBoard", bundle: nil)
+            let tabBarController: UITabBarController = storyBoard.instantiateViewControllerWithIdentifier("TabBarController") as! UITabBarController
+            self.window?.rootViewController = tabBarController
+            
+            let nav = tabBarController.viewControllers!.first as! UINavigationController
+            let homeController: HomeContainerViewController = nav.viewControllers.first as! HomeContainerViewController
+            
+            homeController.didClickItemWithTarget(pushNotificationModel.target, targetType: pushNotificationModel.targetType, sectionTitle: pushNotificationModel.title)
         }
     }
-    
     
     func application(application: UIApplication, handleActionWithIdentifier identifier: String?, forRemoteNotification userInfo: [NSObject : AnyObject], completionHandler: () -> Void) {
         var body: NSDictionary = userInfo["aps"] as! NSDictionary
@@ -214,12 +245,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GGLInstanceIDDelegate {
     }
     
     func startPage() {
-        for view in self.window!.subviews {
+        /*for view in self.window!.subviews {
             view.removeFromSuperview()
         }
         let startingPageStoryBoard: UIStoryboard = UIStoryboard(name: "StartPageStoryBoard", bundle: nil)
         let startingPageViewController: StartPageViewController = startingPageStoryBoard.instantiateViewControllerWithIdentifier("StartPageViewController") as! StartPageViewController
-        self.window?.rootViewController = startingPageViewController
+        self.window?.rootViewController = startingPageViewController*/
+        
+        for view in self.window!.subviews {
+            view.removeFromSuperview()
+        }
+        
+        let storyBoard: UIStoryboard = UIStoryboard(name: "HomeStoryBoard", bundle: nil)
+        let tabBarController: UITabBarController = storyBoard.instantiateViewControllerWithIdentifier("TabBarController") as! UITabBarController
+        self.window?.rootViewController = tabBarController
     }
     
     func application(application: UIApplication,
@@ -281,6 +320,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GGLInstanceIDDelegate {
         style.backgroundColor = Constants.Colors.appTheme
         CSToastManager.setSharedStyle(style)
         CSToastManager.setTapToDismissEnabled(true)
+    }
+    
+    
+    func fireRegisterDeviceID(deviceId: String) {
+        WebServiceManager.fireRegisterDeviceFromUrl(APIAtlas.registerDeviceUrl, deviceID: deviceId) { (successful, responseObject, requestErrorType) -> Void in
+            if successful {
+                SessionManager.setIsDeviceTokenRegistered(true)
+            }
+        }
     }
 }
 

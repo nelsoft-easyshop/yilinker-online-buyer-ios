@@ -516,7 +516,7 @@
         <!--Home-->
         <scene sceneID="f5o-jU-cQQ">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="50F-va-nfX" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="Navigation" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="50F-va-nfX" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Home" image="home" id="pUK-hO-T7N"/>
                     <toolbarItems/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>

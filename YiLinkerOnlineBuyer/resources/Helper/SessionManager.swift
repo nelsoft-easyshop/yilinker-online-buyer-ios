@@ -518,5 +518,20 @@ class SessionManager {
         NSUserDefaults.standardUserDefaults().synchronize()
     }
 
+
+     class func setIsDeviceTokenRegistered(isDeviceRegistered: Bool) {
+        NSUserDefaults.standardUserDefaults().setBool(isDeviceRegistered, forKey: "isDeviceRegistered")
+        NSUserDefaults.standardUserDefaults().synchronize()
+    }
+    
+    class func isDeviceRegistered() -> Bool {
+        var userDefaults : NSUserDefaults = NSUserDefaults.standardUserDefaults()
+        
+        if (userDefaults.objectForKey("isDeviceRegistered") != nil) {
+            return true
+        }
+        
+        return false
+    }
     
 }

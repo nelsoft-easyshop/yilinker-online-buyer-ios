@@ -18,6 +18,7 @@
 		0C574A241BC5173F00913F29 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C574A231BC5173F00913F29 /* Security.framework */; };
 		0C574A261BC5174900913F29 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C574A251BC5174900913F29 /* SystemConfiguration.framework */; };
 		0C574A281BC5175000913F29 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C574A271BC5175000913F29 /* UIKit.framework */; };
+		0C759FB81C900B3B002A08E2 /* PushNotificationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C759FB71C900B3B002A08E2 /* PushNotificationModel.swift */; };
 		0C77B32D1C87E77D0069D063 /* TransactionViews.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C77B32C1C87E77D0069D063 /* TransactionViews.xib */; };
 		0C8A7C7B1B6772670039F013 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0C8A7C7A1B6772670039F013 /* Images.xcassets */; };
 		0C8A7C8A1B6772670039F013 /* YiLinkerOnlineBuyerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8A7C891B6772670039F013 /* YiLinkerOnlineBuyerTests.swift */; };
@@ -547,29 +548,6 @@
 		790E59801C87D0D00073FE23 /* SearchBarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 790E597F1C87D0D00073FE23 /* SearchBarView.xib */; };
 		790E59831C880C980073FE23 /* SearchTypeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 790E59811C880C980073FE23 /* SearchTypeTableViewCell.swift */; };
 		790E59841C880C980073FE23 /* SearchTypeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 790E59821C880C980073FE23 /* SearchTypeTableViewCell.xib */; };
-		798D849B1C86BE0E00D2A1F7 /* ProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798D84821C86BE0E00D2A1F7 /* ProfileModel.swift */; };
-		798D849C1C86BE0E00D2A1F7 /* ProfileUserDetailsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798D84831C86BE0E00D2A1F7 /* ProfileUserDetailsModel.swift */; };
-		798D849D1C86BE0E00D2A1F7 /* EditProfileAccountInformationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798D84851C86BE0E00D2A1F7 /* EditProfileAccountInformationTableViewCell.swift */; };
-		798D849E1C86BE0E00D2A1F7 /* EditProfileAccountInformationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 798D84861C86BE0E00D2A1F7 /* EditProfileAccountInformationTableViewCell.xib */; };
-		798D849F1C86BE0E00D2A1F7 /* EditProfileAddPhotoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798D84871C86BE0E00D2A1F7 /* EditProfileAddPhotoTableViewCell.swift */; };
-		798D84A01C86BE0E00D2A1F7 /* EditProfileAddPhotoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 798D84881C86BE0E00D2A1F7 /* EditProfileAddPhotoTableViewCell.xib */; };
-		798D84A11C86BE0E00D2A1F7 /* EditProfileAddressTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798D84891C86BE0E00D2A1F7 /* EditProfileAddressTableViewCell.swift */; };
-		798D84A21C86BE0E00D2A1F7 /* EditProfileAddressTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 798D848A1C86BE0E00D2A1F7 /* EditProfileAddressTableViewCell.xib */; };
-		798D84A31C86BE0E00D2A1F7 /* EditProfilePersonalInformationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798D848B1C86BE0E00D2A1F7 /* EditProfilePersonalInformationTableViewCell.swift */; };
-		798D84A41C86BE0E00D2A1F7 /* EditProfilePersonalInformationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 798D848C1C86BE0E00D2A1F7 /* EditProfilePersonalInformationTableViewCell.xib */; };
-		798D84A51C86BE0E00D2A1F7 /* ProductImagesViewCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798D848D1C86BE0E00D2A1F7 /* ProductImagesViewCollectionViewCell.swift */; };
-		798D84A61C86BE0E00D2A1F7 /* ProfileHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798D848E1C86BE0E00D2A1F7 /* ProfileHeaderTableViewCell.swift */; };
-		798D84A71C86BE0E00D2A1F7 /* ProfileHeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 798D848F1C86BE0E00D2A1F7 /* ProfileHeaderTableViewCell.xib */; };
-		798D84A81C86BE0E00D2A1F7 /* ProfileSettingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798D84901C86BE0E00D2A1F7 /* ProfileSettingsTableViewCell.swift */; };
-		798D84A91C86BE0E00D2A1F7 /* ProfileSettingsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 798D84911C86BE0E00D2A1F7 /* ProfileSettingsTableViewCell.xib */; };
-		798D84AA1C86BE0E00D2A1F7 /* ProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798D84921C86BE0E00D2A1F7 /* ProfileTableViewCell.swift */; };
-		798D84AB1C86BE0E00D2A1F7 /* ProfileTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 798D84931C86BE0E00D2A1F7 /* ProfileTableViewCell.xib */; };
-		798D84AC1C86BE0E00D2A1F7 /* EditProfileTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798D84951C86BE0E00D2A1F7 /* EditProfileTableViewController.swift */; };
-		798D84AD1C86BE0E00D2A1F7 /* EditProfileTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 798D84961C86BE0E00D2A1F7 /* EditProfileTableViewController.xib */; };
-		798D84AE1C86BE0E00D2A1F7 /* ProfileSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798D84971C86BE0E00D2A1F7 /* ProfileSettingsViewController.swift */; };
-		798D84AF1C86BE0E00D2A1F7 /* ProfileSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 798D84981C86BE0E00D2A1F7 /* ProfileSettingsViewController.xib */; };
-		798D84B01C86BE0E00D2A1F7 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798D84991C86BE0E00D2A1F7 /* ProfileViewController.swift */; };
-		798D84B11C86BE0E00D2A1F7 /* ProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 798D849A1C86BE0E00D2A1F7 /* ProfileViewController.xib */; };
 		798D84C51C86C14500D2A1F7 /* MyPointsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798D84B41C86C14500D2A1F7 /* MyPointsTableViewController.swift */; };
 		798D84C61C86C14500D2A1F7 /* MyPointsTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 798D84B51C86C14500D2A1F7 /* MyPointsTableViewController.xib */; };
 		798D84C71C86C14500D2A1F7 /* MyPointsHistoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798D84B71C86C14500D2A1F7 /* MyPointsHistoryModel.swift */; };
@@ -587,6 +565,29 @@
 		798D84D31C86C14500D2A1F7 /* PointsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 798D84C41C86C14500D2A1F7 /* PointsTableViewCell.xib */; };
 		79DBF22F1C898B9B004EA438 /* QRCodeScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79DBF22D1C898B9B004EA438 /* QRCodeScannerViewController.swift */; };
 		79DBF2301C898B9B004EA438 /* QRCodeScannerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79DBF22E1C898B9B004EA438 /* QRCodeScannerViewController.xib */; };
+		799B9A3A1C8EACEA006472E8 /* ProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799B9A211C8EACEA006472E8 /* ProfileModel.swift */; };
+		799B9A3B1C8EACEA006472E8 /* ProfileUserDetailsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799B9A221C8EACEA006472E8 /* ProfileUserDetailsModel.swift */; };
+		799B9A3C1C8EACEA006472E8 /* EditProfileAccountInformationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799B9A241C8EACEA006472E8 /* EditProfileAccountInformationTableViewCell.swift */; };
+		799B9A3D1C8EACEA006472E8 /* EditProfileAccountInformationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 799B9A251C8EACEA006472E8 /* EditProfileAccountInformationTableViewCell.xib */; };
+		799B9A3E1C8EACEA006472E8 /* EditProfileAddPhotoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799B9A261C8EACEA006472E8 /* EditProfileAddPhotoTableViewCell.swift */; };
+		799B9A3F1C8EACEA006472E8 /* EditProfileAddPhotoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 799B9A271C8EACEA006472E8 /* EditProfileAddPhotoTableViewCell.xib */; };
+		799B9A401C8EACEA006472E8 /* EditProfileAddressTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799B9A281C8EACEA006472E8 /* EditProfileAddressTableViewCell.swift */; };
+		799B9A411C8EACEA006472E8 /* EditProfileAddressTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 799B9A291C8EACEA006472E8 /* EditProfileAddressTableViewCell.xib */; };
+		799B9A421C8EACEA006472E8 /* EditProfilePersonalInformationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799B9A2A1C8EACEA006472E8 /* EditProfilePersonalInformationTableViewCell.swift */; };
+		799B9A431C8EACEA006472E8 /* EditProfilePersonalInformationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 799B9A2B1C8EACEA006472E8 /* EditProfilePersonalInformationTableViewCell.xib */; };
+		799B9A441C8EACEA006472E8 /* ProductImagesViewCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799B9A2C1C8EACEA006472E8 /* ProductImagesViewCollectionViewCell.swift */; };
+		799B9A451C8EACEA006472E8 /* ProfileHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799B9A2D1C8EACEA006472E8 /* ProfileHeaderTableViewCell.swift */; };
+		799B9A461C8EACEA006472E8 /* ProfileHeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 799B9A2E1C8EACEA006472E8 /* ProfileHeaderTableViewCell.xib */; };
+		799B9A471C8EACEA006472E8 /* ProfileSettingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799B9A2F1C8EACEA006472E8 /* ProfileSettingsTableViewCell.swift */; };
+		799B9A481C8EACEA006472E8 /* ProfileSettingsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 799B9A301C8EACEA006472E8 /* ProfileSettingsTableViewCell.xib */; };
+		799B9A491C8EACEA006472E8 /* ProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799B9A311C8EACEA006472E8 /* ProfileTableViewCell.swift */; };
+		799B9A4A1C8EACEA006472E8 /* ProfileTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 799B9A321C8EACEA006472E8 /* ProfileTableViewCell.xib */; };
+		799B9A4B1C8EACEA006472E8 /* EditProfileTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799B9A341C8EACEA006472E8 /* EditProfileTableViewController.swift */; };
+		799B9A4C1C8EACEA006472E8 /* EditProfileTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 799B9A351C8EACEA006472E8 /* EditProfileTableViewController.xib */; };
+		799B9A4D1C8EACEA006472E8 /* ProfileSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799B9A361C8EACEA006472E8 /* ProfileSettingsViewController.swift */; };
+		799B9A4E1C8EACEA006472E8 /* ProfileSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 799B9A371C8EACEA006472E8 /* ProfileSettingsViewController.xib */; };
+		799B9A4F1C8EACEA006472E8 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799B9A381C8EACEA006472E8 /* ProfileViewController.swift */; };
+		799B9A501C8EACEA006472E8 /* ProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 799B9A391C8EACEA006472E8 /* ProfileViewController.xib */; };
 		9F7BC2CF1BF124C100218E10 /* yilinker_pinned_certificate.cer in Resources */ = {isa = PBXBuildFile; fileRef = 9F7BC2CE1BF124C100218E10 /* yilinker_pinned_certificate.cer */; };
 		BE00C15B75D7E76D254AAEC1 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D038C18A7712E626564D2D3 /* libPods.a */; };
 /* End PBXBuildFile section */
@@ -614,6 +615,7 @@
 		0C574A231BC5173F00913F29 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		0C574A251BC5174900913F29 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		0C574A271BC5175000913F29 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		0C759FB71C900B3B002A08E2 /* PushNotificationModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PushNotificationModel.swift; sourceTree = "<group>"; };
 		0C77B32C1C87E77D0069D063 /* TransactionViews.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TransactionViews.xib; sourceTree = "<group>"; };
 		0C8A7C6E1B6772670039F013 /* YiLinkerOnlineBuyer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YiLinkerOnlineBuyer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0C8A7C721B6772670039F013 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -1154,29 +1156,6 @@
 		790E597F1C87D0D00073FE23 /* SearchBarView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchBarView.xib; sourceTree = "<group>"; };
 		790E59811C880C980073FE23 /* SearchTypeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchTypeTableViewCell.swift; sourceTree = "<group>"; };
 		790E59821C880C980073FE23 /* SearchTypeTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchTypeTableViewCell.xib; sourceTree = "<group>"; };
-		798D84821C86BE0E00D2A1F7 /* ProfileModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileModel.swift; sourceTree = "<group>"; };
-		798D84831C86BE0E00D2A1F7 /* ProfileUserDetailsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileUserDetailsModel.swift; sourceTree = "<group>"; };
-		798D84851C86BE0E00D2A1F7 /* EditProfileAccountInformationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditProfileAccountInformationTableViewCell.swift; sourceTree = "<group>"; };
-		798D84861C86BE0E00D2A1F7 /* EditProfileAccountInformationTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditProfileAccountInformationTableViewCell.xib; sourceTree = "<group>"; };
-		798D84871C86BE0E00D2A1F7 /* EditProfileAddPhotoTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditProfileAddPhotoTableViewCell.swift; sourceTree = "<group>"; };
-		798D84881C86BE0E00D2A1F7 /* EditProfileAddPhotoTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditProfileAddPhotoTableViewCell.xib; sourceTree = "<group>"; };
-		798D84891C86BE0E00D2A1F7 /* EditProfileAddressTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditProfileAddressTableViewCell.swift; sourceTree = "<group>"; };
-		798D848A1C86BE0E00D2A1F7 /* EditProfileAddressTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditProfileAddressTableViewCell.xib; sourceTree = "<group>"; };
-		798D848B1C86BE0E00D2A1F7 /* EditProfilePersonalInformationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditProfilePersonalInformationTableViewCell.swift; sourceTree = "<group>"; };
-		798D848C1C86BE0E00D2A1F7 /* EditProfilePersonalInformationTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditProfilePersonalInformationTableViewCell.xib; sourceTree = "<group>"; };
-		798D848D1C86BE0E00D2A1F7 /* ProductImagesViewCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductImagesViewCollectionViewCell.swift; sourceTree = "<group>"; };
-		798D848E1C86BE0E00D2A1F7 /* ProfileHeaderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileHeaderTableViewCell.swift; sourceTree = "<group>"; };
-		798D848F1C86BE0E00D2A1F7 /* ProfileHeaderTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileHeaderTableViewCell.xib; sourceTree = "<group>"; };
-		798D84901C86BE0E00D2A1F7 /* ProfileSettingsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileSettingsTableViewCell.swift; sourceTree = "<group>"; };
-		798D84911C86BE0E00D2A1F7 /* ProfileSettingsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileSettingsTableViewCell.xib; sourceTree = "<group>"; };
-		798D84921C86BE0E00D2A1F7 /* ProfileTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileTableViewCell.swift; sourceTree = "<group>"; };
-		798D84931C86BE0E00D2A1F7 /* ProfileTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileTableViewCell.xib; sourceTree = "<group>"; };
-		798D84951C86BE0E00D2A1F7 /* EditProfileTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditProfileTableViewController.swift; sourceTree = "<group>"; };
-		798D84961C86BE0E00D2A1F7 /* EditProfileTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditProfileTableViewController.xib; sourceTree = "<group>"; };
-		798D84971C86BE0E00D2A1F7 /* ProfileSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileSettingsViewController.swift; sourceTree = "<group>"; };
-		798D84981C86BE0E00D2A1F7 /* ProfileSettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileSettingsViewController.xib; sourceTree = "<group>"; };
-		798D84991C86BE0E00D2A1F7 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
-		798D849A1C86BE0E00D2A1F7 /* ProfileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileViewController.xib; sourceTree = "<group>"; };
 		798D84B41C86C14500D2A1F7 /* MyPointsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPointsTableViewController.swift; sourceTree = "<group>"; };
 		798D84B51C86C14500D2A1F7 /* MyPointsTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyPointsTableViewController.xib; sourceTree = "<group>"; };
 		798D84B71C86C14500D2A1F7 /* MyPointsHistoryModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPointsHistoryModel.swift; sourceTree = "<group>"; };
@@ -1194,6 +1173,29 @@
 		798D84C41C86C14500D2A1F7 /* PointsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PointsTableViewCell.xib; sourceTree = "<group>"; };
 		79DBF22D1C898B9B004EA438 /* QRCodeScannerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QRCodeScannerViewController.swift; sourceTree = "<group>"; };
 		79DBF22E1C898B9B004EA438 /* QRCodeScannerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QRCodeScannerViewController.xib; sourceTree = "<group>"; };
+		799B9A211C8EACEA006472E8 /* ProfileModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileModel.swift; sourceTree = "<group>"; };
+		799B9A221C8EACEA006472E8 /* ProfileUserDetailsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileUserDetailsModel.swift; sourceTree = "<group>"; };
+		799B9A241C8EACEA006472E8 /* EditProfileAccountInformationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditProfileAccountInformationTableViewCell.swift; sourceTree = "<group>"; };
+		799B9A251C8EACEA006472E8 /* EditProfileAccountInformationTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditProfileAccountInformationTableViewCell.xib; sourceTree = "<group>"; };
+		799B9A261C8EACEA006472E8 /* EditProfileAddPhotoTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditProfileAddPhotoTableViewCell.swift; sourceTree = "<group>"; };
+		799B9A271C8EACEA006472E8 /* EditProfileAddPhotoTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditProfileAddPhotoTableViewCell.xib; sourceTree = "<group>"; };
+		799B9A281C8EACEA006472E8 /* EditProfileAddressTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditProfileAddressTableViewCell.swift; sourceTree = "<group>"; };
+		799B9A291C8EACEA006472E8 /* EditProfileAddressTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditProfileAddressTableViewCell.xib; sourceTree = "<group>"; };
+		799B9A2A1C8EACEA006472E8 /* EditProfilePersonalInformationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditProfilePersonalInformationTableViewCell.swift; sourceTree = "<group>"; };
+		799B9A2B1C8EACEA006472E8 /* EditProfilePersonalInformationTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditProfilePersonalInformationTableViewCell.xib; sourceTree = "<group>"; };
+		799B9A2C1C8EACEA006472E8 /* ProductImagesViewCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductImagesViewCollectionViewCell.swift; sourceTree = "<group>"; };
+		799B9A2D1C8EACEA006472E8 /* ProfileHeaderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileHeaderTableViewCell.swift; sourceTree = "<group>"; };
+		799B9A2E1C8EACEA006472E8 /* ProfileHeaderTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileHeaderTableViewCell.xib; sourceTree = "<group>"; };
+		799B9A2F1C8EACEA006472E8 /* ProfileSettingsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileSettingsTableViewCell.swift; sourceTree = "<group>"; };
+		799B9A301C8EACEA006472E8 /* ProfileSettingsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileSettingsTableViewCell.xib; sourceTree = "<group>"; };
+		799B9A311C8EACEA006472E8 /* ProfileTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileTableViewCell.swift; sourceTree = "<group>"; };
+		799B9A321C8EACEA006472E8 /* ProfileTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileTableViewCell.xib; sourceTree = "<group>"; };
+		799B9A341C8EACEA006472E8 /* EditProfileTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditProfileTableViewController.swift; sourceTree = "<group>"; };
+		799B9A351C8EACEA006472E8 /* EditProfileTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditProfileTableViewController.xib; sourceTree = "<group>"; };
+		799B9A361C8EACEA006472E8 /* ProfileSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileSettingsViewController.swift; sourceTree = "<group>"; };
+		799B9A371C8EACEA006472E8 /* ProfileSettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileSettingsViewController.xib; sourceTree = "<group>"; };
+		799B9A381C8EACEA006472E8 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		799B9A391C8EACEA006472E8 /* ProfileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileViewController.xib; sourceTree = "<group>"; };
 		9140515446F9D97EC8790C7B /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		9F7BC2CE1BF124C100218E10 /* yilinker_pinned_certificate.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = yilinker_pinned_certificate.cer; sourceTree = "<group>"; };
 		F7CCDA451B940268000F5AD4 /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = "Pods/../build/Debug-iphoneos/libPods.a"; sourceTree = "<group>"; };
@@ -1231,6 +1233,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0C759FB51C900B24002A08E2 /* PushNotification */ = {
+			isa = PBXGroup;
+			children = (
+				0C759FB61C900B24002A08E2 /* Model */,
+			);
+			path = PushNotification;
+			sourceTree = "<group>";
+		};
+		0C759FB61C900B24002A08E2 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				0C759FB71C900B3B002A08E2 /* PushNotificationModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		0C8A7C651B6772670039F013 = {
 			isa = PBXGroup;
 			children = (
@@ -1291,6 +1309,7 @@
 			isa = PBXGroup;
 			children = (
 				79DBF2291C898B82004EA438 /* QR Code Scanner */,
+				0C759FB51C900B24002A08E2 /* PushNotification */,
 				0CAB7EEC1C86817B00B653A9 /* ActivityLog */,
 				0CAB7EFC1C86817B00B653A9 /* Address */,
 				0CAB7F131C86817B00B653A9 /* AppDelegate */,
@@ -2765,57 +2784,60 @@
 		798D84801C86BE0E00D2A1F7 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
-				798D84811C86BE0E00D2A1F7 /* Model */,
-				798D84841C86BE0E00D2A1F7 /* View */,
-				798D84941C86BE0E00D2A1F7 /* ViewController */,
+				799B9A201C8EACEA006472E8 /* Model */,
+				799B9A231C8EACEA006472E8 /* View */,
+				799B9A331C8EACEA006472E8 /* ViewController */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
-		};
-		798D84811C86BE0E00D2A1F7 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				798D84821C86BE0E00D2A1F7 /* ProfileModel.swift */,
-				798D84831C86BE0E00D2A1F7 /* ProfileUserDetailsModel.swift */,
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
-		798D84841C86BE0E00D2A1F7 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				798D84851C86BE0E00D2A1F7 /* EditProfileAccountInformationTableViewCell.swift */,
-				798D84861C86BE0E00D2A1F7 /* EditProfileAccountInformationTableViewCell.xib */,
-				798D84871C86BE0E00D2A1F7 /* EditProfileAddPhotoTableViewCell.swift */,
-				798D84881C86BE0E00D2A1F7 /* EditProfileAddPhotoTableViewCell.xib */,
-				798D84891C86BE0E00D2A1F7 /* EditProfileAddressTableViewCell.swift */,
-				798D848A1C86BE0E00D2A1F7 /* EditProfileAddressTableViewCell.xib */,
-				798D848B1C86BE0E00D2A1F7 /* EditProfilePersonalInformationTableViewCell.swift */,
-				798D848C1C86BE0E00D2A1F7 /* EditProfilePersonalInformationTableViewCell.xib */,
-				798D848D1C86BE0E00D2A1F7 /* ProductImagesViewCollectionViewCell.swift */,
-				798D848E1C86BE0E00D2A1F7 /* ProfileHeaderTableViewCell.swift */,
-				798D848F1C86BE0E00D2A1F7 /* ProfileHeaderTableViewCell.xib */,
-				798D84901C86BE0E00D2A1F7 /* ProfileSettingsTableViewCell.swift */,
-				798D84911C86BE0E00D2A1F7 /* ProfileSettingsTableViewCell.xib */,
-				798D84921C86BE0E00D2A1F7 /* ProfileTableViewCell.swift */,
-				798D84931C86BE0E00D2A1F7 /* ProfileTableViewCell.xib */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		798D84941C86BE0E00D2A1F7 /* ViewController */ = {
-			isa = PBXGroup;
-			children = (
-				798D84951C86BE0E00D2A1F7 /* EditProfileTableViewController.swift */,
-				798D84961C86BE0E00D2A1F7 /* EditProfileTableViewController.xib */,
-				798D84971C86BE0E00D2A1F7 /* ProfileSettingsViewController.swift */,
-				798D84981C86BE0E00D2A1F7 /* ProfileSettingsViewController.xib */,
-				798D84991C86BE0E00D2A1F7 /* ProfileViewController.swift */,
-				798D849A1C86BE0E00D2A1F7 /* ProfileViewController.xib */,
-			);
-			path = ViewController;
-			sourceTree = "<group>";
-		};
+        };
+        799B9A201C8EACEA006472E8 /* Model */ = {
+            isa = PBXGroup;
+            children = (
+                799B9A211C8EACEA006472E8 /* ProfileModel.swift */,
+                799B9A221C8EACEA006472E8 /* ProfileUserDetailsModel.swift */,
+            );
+            name = Model;
+            path = YiLinkerOnlineBuyer/resources/Profile/Model;
+            sourceTree = SOURCE_ROOT;
+        };
+        799B9A231C8EACEA006472E8 /* View */ = {
+            isa = PBXGroup;
+            children = (
+                799B9A241C8EACEA006472E8 /* EditProfileAccountInformationTableViewCell.swift */,
+                799B9A251C8EACEA006472E8 /* EditProfileAccountInformationTableViewCell.xib */,
+                799B9A261C8EACEA006472E8 /* EditProfileAddPhotoTableViewCell.swift */,
+                799B9A271C8EACEA006472E8 /* EditProfileAddPhotoTableViewCell.xib */,
+                799B9A281C8EACEA006472E8 /* EditProfileAddressTableViewCell.swift */,
+                799B9A291C8EACEA006472E8 /* EditProfileAddressTableViewCell.xib */,
+                799B9A2A1C8EACEA006472E8 /* EditProfilePersonalInformationTableViewCell.swift */,
+                799B9A2B1C8EACEA006472E8 /* EditProfilePersonalInformationTableViewCell.xib */,
+                799B9A2C1C8EACEA006472E8 /* ProductImagesViewCollectionViewCell.swift */,
+                799B9A2D1C8EACEA006472E8 /* ProfileHeaderTableViewCell.swift */,
+                799B9A2E1C8EACEA006472E8 /* ProfileHeaderTableViewCell.xib */,
+                799B9A2F1C8EACEA006472E8 /* ProfileSettingsTableViewCell.swift */,
+                799B9A301C8EACEA006472E8 /* ProfileSettingsTableViewCell.xib */,
+                799B9A311C8EACEA006472E8 /* ProfileTableViewCell.swift */,
+                799B9A321C8EACEA006472E8 /* ProfileTableViewCell.xib */,
+            );
+            name = View;
+            path = YiLinkerOnlineBuyer/resources/Profile/View;
+            sourceTree = SOURCE_ROOT;
+        };
+        799B9A331C8EACEA006472E8 /* ViewController */ = {
+            isa = PBXGroup;
+            children = (
+                799B9A341C8EACEA006472E8 /* EditProfileTableViewController.swift */,
+                799B9A351C8EACEA006472E8 /* EditProfileTableViewController.xib */,
+                799B9A361C8EACEA006472E8 /* ProfileSettingsViewController.swift */,
+                799B9A371C8EACEA006472E8 /* ProfileSettingsViewController.xib */,
+                799B9A381C8EACEA006472E8 /* ProfileViewController.swift */,
+                799B9A391C8EACEA006472E8 /* ProfileViewController.xib */,
+            );
+            name = ViewController;
+            path = YiLinkerOnlineBuyer/resources/Profile/ViewController;
+            sourceTree = SOURCE_ROOT;
+        };
 		798D84B21C86C14500D2A1F7 /* My Points */ = {
 			isa = PBXGroup;
 			children = (
@@ -2893,10 +2915,10 @@
 		79DBF22C1C898B82004EA438 /* View */ = {
 			isa = PBXGroup;
 			children = (
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
+            );
+            path = View;
+            sourceTree = "<group>";
+        };
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -3008,14 +3030,14 @@
 				0CAB82E51C86817C00B653A9 /* SeeMoreTableViewCell.xib in Resources */,
 				0CAB82051C86817C00B653A9 /* Panton ExtraBold Italic.otf in Resources */,
 				0CAB828D1C86817C00B653A9 /* LoginTableViewCell.xib in Resources */,
-				798D84A91C86BE0E00D2A1F7 /* ProfileSettingsTableViewCell.xib in Resources */,
 				0CAB83151C86817C00B653A9 /* DisputeViewController.xib in Resources */,
+				799B9A431C8EACEA006472E8 /* EditProfilePersonalInformationTableViewCell.xib in Resources */,
 				0CAB83831C86817C00B653A9 /* TransactionCancelViewController.xib in Resources */,
 				0CAB82181C86817C00B653A9 /* pulltorefresharrow.png in Resources */,
 				0CAB83351C86817C00B653A9 /* GeneralRatingTableViewCell.xib in Resources */,
+				799B9A411C8EACEA006472E8 /* EditProfileAddressTableViewCell.xib in Resources */,
 				0CAB82711C86817C00B653A9 /* ProductItemWithVerticalDisplayCollectionViewCell.xib in Resources */,
 				0CAB83BA1C86817C00B653A9 /* YiHUD.xib in Resources */,
-				798D84AB1C86BE0E00D2A1F7 /* ProfileTableViewCell.xib in Resources */,
 				0CAB82AB1C86817C00B653A9 /* MessagingThreadViewController.xib in Resources */,
 				0C8A7C7B1B6772670039F013 /* Images.xcassets in Resources */,
 				0CAB839D1C86817C00B653A9 /* VerifyMobileNumberViewController.xib in Resources */,
@@ -3035,7 +3057,6 @@
 				0CAB81F91C86817C00B653A9 /* CustomizeShoppingCollectionViewCell.xib in Resources */,
 				0CAB83551C86817C00B653A9 /* StartPageStoryBoard.storyboard in Resources */,
 				0CAB81FD1C86817C00B653A9 /* CustomizeShoppingTableViewCell.xib in Resources */,
-				798D84AD1C86BE0E00D2A1F7 /* EditProfileTableViewController.xib in Resources */,
 				0CAB83701C86817C00B653A9 /* TransactionLeaveProductFeedbackRateTableViewCell.xib in Resources */,
 				0CAB81C21C86817C00B653A9 /* CategoriesTableViewCell.xib in Resources */,
 				0CAB83491C86817C00B653A9 /* SellerCategoryViewController.xib in Resources */,
@@ -3051,6 +3072,7 @@
 				0CAB82E01C86817C00B653A9 /* ProductSellerViewCollectionViewCell.xib in Resources */,
 				0CAB81EA1C86817C00B653A9 /* TotalTableViewCell.xib in Resources */,
 				0CAB82091C86817C00B653A9 /* Panton Heavy Italic.otf in Resources */,
+				799B9A4A1C8EACEA006472E8 /* ProfileTableViewCell.xib in Resources */,
 				0CAB81DB1C86817C00B653A9 /* OverViewViewController.xib in Resources */,
 				0CAB837C1C86817C00B653A9 /* TransactionViewController.xib in Resources */,
 				0CAB83A01C86817C00B653A9 /* LaunchScreen.xib in Resources */,
@@ -3061,7 +3083,6 @@
 				0CAB82E81C86817C00B653A9 /* ProductDescriptionViewController.xib in Resources */,
 				0CAB82201C86817C00B653A9 /* FABCollectionViewCell.xib in Resources */,
 				0CAB83451C86817C00B653A9 /* SellerTableHeaderView.xib in Resources */,
-				798D84A21C86BE0E00D2A1F7 /* EditProfileAddressTableViewCell.xib in Resources */,
 				0CAB822F1C86817C00B653A9 /* ChangeMobileNumberViewController.xib in Resources */,
 				0CAB83331C86817C00B653A9 /* FeedBackTableViewCell.xib in Resources */,
 				0CAB81E31C86817C00B653A9 /* ShipToTableViewCell.xib in Resources */,
@@ -3069,9 +3090,11 @@
 				0CAB83601C86817C00B653A9 /* TransactionDeliveryLog2TableViewCell.xib in Resources */,
 				0CAB83391C86817C00B653A9 /* NewSellerScrollableCollectionViewCell.xib in Resources */,
 				0CAB83721C86817C00B653A9 /* TransactionProductDetailsTableViewCell.xib in Resources */,
+				799B9A481C8EACEA006472E8 /* ProfileSettingsTableViewCell.xib in Resources */,
 				0CAB837B1C86817C00B653A9 /* TransactionTableViewCell.xib in Resources */,
 				0CAB81E81C86817C00B653A9 /* TotalSummaryPriceTableViewCell.xib in Resources */,
 				0CAB83101C86817C00B653A9 /* ResolutionCenterCell.xib in Resources */,
+				799B9A501C8EACEA006472E8 /* ProfileViewController.xib in Resources */,
 				0CAB82341C86817C00B653A9 /* HelpViewController.strings in Resources */,
 				0CAB838F1C86817C00B653A9 /* TransactionLeaveSellerFeedbackTableViewController.xib in Resources */,
 				0CAB830E1C86817C00B653A9 /* DisputeAddItemTableViewCell.xib in Resources */,
@@ -3080,6 +3103,7 @@
 				0CAB827B1C86817C00B653A9 /* TodaysPromoViewController.xib in Resources */,
 				0CAB82B91C86817C00B653A9 /* cancelUrl in Resources */,
 				0CAB83621C86817C00B653A9 /* TransactionDeliveryLogSignatureTableViewCell.xib in Resources */,
+				799B9A3F1C8EACEA006472E8 /* EditProfileAddPhotoTableViewCell.xib in Resources */,
 				0CAB81F41C86817C00B653A9 /* SuccessModalViewController.xib in Resources */,
 				0CAB833F1C86817C00B653A9 /* SellerCategoryTableViewCell.xib in Resources */,
 				0CAB829F1C86817C00B653A9 /* MessagingContactTableViewCell.xib in Resources */,
@@ -3091,7 +3115,6 @@
 				0CAB83891C86817C00B653A9 /* TransactionDetailsViewController.xib in Resources */,
 				0CAB82161C86817C00B653A9 /* GoogleService-Info.plist in Resources */,
 				0CAB826B1C86817C00B653A9 /* HomeStoryBoard.storyboard in Resources */,
-				798D849E1C86BE0E00D2A1F7 /* EditProfileAccountInformationTableViewCell.xib in Resources */,
 				0CAB83931C86817C00B653A9 /* TransactionProductDetailsDescriptionViewController.xib in Resources */,
 				0CAB83401C86817C00B653A9 /* SellerCollectionViewCell.xib in Resources */,
 				0CAB81CD1C86817C00B653A9 /* DeliverToTableViewCell.xib in Resources */,
@@ -3117,6 +3140,7 @@
 				0CAB83311C86817C00B653A9 /* AboutSellerTableViewCell.xib in Resources */,
 				0CAB81AD1C86817C00B653A9 /* ChangeAddressFooterCollectionViewCell.xib in Resources */,
 				0CAB83541C86817C00B653A9 /* FAB.storyboard in Resources */,
+				799B9A461C8EACEA006472E8 /* ProfileHeaderTableViewCell.xib in Resources */,
 				0CAB82121C86817C00B653A9 /* Panton.otf in Resources */,
 				0CAB83BC1C86817C00B653A9 /* WebViewController.xib in Resources */,
 				0CAB83291C86817C00B653A9 /* ResultAllViewController.xib in Resources */,
@@ -3124,13 +3148,13 @@
 				0CAB83AC1C86817C00B653A9 /* NoInternetConnectionView.xib in Resources */,
 				0CAB82871C86817C00B653A9 /* LoginHeaderTableViewCell.xib in Resources */,
 				0CAB82E41C86817C00B653A9 /* ProductWithCenterNameCollectionViewCell.xib in Resources */,
+				799B9A3D1C8EACEA006472E8 /* EditProfileAccountInformationTableViewCell.xib in Resources */,
 				0CAB81DF1C86817C00B653A9 /* PaymentWebViewViewController.xib in Resources */,
 				79DBF2301C898B9B004EA438 /* QRCodeScannerViewController.xib in Resources */,
 				0CAB82291C86817C00B653A9 /* FollowedSellerTableViewCell.xib in Resources */,
 				0CAB82A41C86817C00B653A9 /* MessagingReceiverImageTableViewCell.xib in Resources */,
 				0CAB82E71C86817C00B653A9 /* ProductAttributeViewController.xib in Resources */,
 				0CAB81BE1C86817C00B653A9 /* CartProductAttributeViewController.xib in Resources */,
-				798D84AF1C86BE0E00D2A1F7 /* ProfileSettingsViewController.xib in Resources */,
 				0CAB81B31C86817C00B653A9 /* ChangeAddressViewController.xib in Resources */,
 				0CAB82A21C86817C00B653A9 /* MessagingConversationTableViewCell.xib in Resources */,
 				0CAB83251C86817C00B653A9 /* SortTableViewCell.xib in Resources */,
@@ -3153,23 +3177,22 @@
 				0CAB83641C86817C00B653A9 /* TransactionDeliveryLogTableViewCell.xib in Resources */,
 				0CAB82641C86817C00B653A9 /* FullScreenImageCollectionViewCell.xib in Resources */,
 				0CAB81A21C86817C00B653A9 /* ActivityLogTableViewController.xib in Resources */,
+				799B9A4E1C8EACEA006472E8 /* ProfileSettingsViewController.xib in Resources */,
 				0CAB834B1C86817C00B653A9 /* SellerSubCategoryViewController.xib in Resources */,
 				0CAB832B1C86817C00B653A9 /* ResultViewController.xib in Resources */,
 				0CAB81E51C86817C00B653A9 /* SuccessTableHeaderViewCell.xib in Resources */,
 				0CAB81B11C86817C00B653A9 /* AddAddressTableViewController.xib in Resources */,
-				798D84A71C86BE0E00D2A1F7 /* ProfileHeaderTableViewCell.xib in Resources */,
+				799B9A4C1C8EACEA006472E8 /* EditProfileTableViewController.xib in Resources */,
 				0CAB82041C86817C00B653A9 /* Panton Bold.otf in Resources */,
 				0CAB82F21C86817C00B653A9 /* ProductViewsViewController.xib in Resources */,
 				0CAB82751C86817C00B653A9 /* ScrollToTopView.xib in Resources */,
 				0CAB82911C86817C00B653A9 /* SimplifiedLoginUICollectionViewCell.xib in Resources */,
 				0CAB82EC1C86817C00B653A9 /* ProductFullScreenViewController.xib in Resources */,
-				798D84A41C86BE0E00D2A1F7 /* EditProfilePersonalInformationTableViewCell.xib in Resources */,
 				0CAB820A1C86817C00B653A9 /* Panton Heavy.otf in Resources */,
 				0CAB820F1C86817C00B653A9 /* Panton SemiBold.otf in Resources */,
 				0CAB82A61C86817C00B653A9 /* MessagingReceiverTableViewCell.xib in Resources */,
 				0CAB82761C86817C00B653A9 /* SectionBackground.xib in Resources */,
 				0CAB82681C86817C00B653A9 /* HalfVerticalImageCollectionViewCell.xib in Resources */,
-				798D84A01C86BE0E00D2A1F7 /* EditProfileAddPhotoTableViewCell.xib in Resources */,
 				0CAB826D1C86817C00B653A9 /* LayoutHeaderCollectionViewCell.xib in Resources */,
 				0CAB83AE1C86817C00B653A9 /* PlainTableViewCell.xib in Resources */,
 				0CAB83561C86817C00B653A9 /* LocalizableString.strings in Resources */,
@@ -3194,7 +3217,6 @@
 				0CAB838D1C86817C00B653A9 /* TransactionLeaveProductFeedbackTableViewController.xib in Resources */,
 				0CAB833D1C86817C00B653A9 /* ReviewTableViewCell.xib in Resources */,
 				0CAB82B81C86817C00B653A9 /* MessagingViewController.xib in Resources */,
-				798D84B11C86BE0E00D2A1F7 /* ProfileViewController.xib in Resources */,
 				0CAB83B61C86817C00B653A9 /* TodaysPromoViewController.xib in Resources */,
 				0CAB822B1C86817C00B653A9 /* FollowedSellerViewController.xib in Resources */,
 				0CAB820C1C86817C00B653A9 /* Panton Light.otf in Resources */,
@@ -3274,7 +3296,6 @@
 				0CAB83981C86817C00B653A9 /* VerifyMobileNumberInputViewController.swift in Sources */,
 				0CAB831B1C86817C00B653A9 /* SearchSellerModel.swift in Sources */,
 				0CAB823D1C86817C00B653A9 /* HexaColor.swift in Sources */,
-				798D849D1C86BE0E00D2A1F7 /* EditProfileAccountInformationTableViewCell.swift in Sources */,
 				0CAB82DC1C86817C00B653A9 /* ProductReviewFooterView.swift in Sources */,
 				0CAB81F31C86817C00B653A9 /* SuccessModalViewController.swift in Sources */,
 				0CAB819C1C86817C00B653A9 /* DeliveryLogsModel.swift in Sources */,
@@ -3289,7 +3310,6 @@
 				798D84D01C86C14500D2A1F7 /* PointsEarnedTableViewCell.swift in Sources */,
 				0CAB833E1C86817C00B653A9 /* SellerCategoryTableViewCell.swift in Sources */,
 				0CAB83661C86817C00B653A9 /* TransactionDescriptionView.swift in Sources */,
-				798D84A31C86BE0E00D2A1F7 /* EditProfilePersonalInformationTableViewCell.swift in Sources */,
 				0CAB83161C86817C00B653A9 /* NewDisputeTableViewController.swift in Sources */,
 				0CAB82821C86817C00B653A9 /* HomeContainerViewController.swift in Sources */,
 				0CAB81D71C86817C00B653A9 /* NetTotalTableViewCell.swift in Sources */,
@@ -3306,6 +3326,7 @@
 				0CAB83C21C86817C00B653A9 /* YiLinkerOnlineBuyer.xcdatamodeld in Sources */,
 				0CAB83581C86817C00B653A9 /* TransactionDetailsModel.swift in Sources */,
 				0CAB82B51C86817C00B653A9 /* MessagingConversationListViewController.swift in Sources */,
+				799B9A3A1C8EACEA006472E8 /* ProfileModel.swift in Sources */,
 				0CAB830F1C86817C00B653A9 /* ResolutionCenterCell.swift in Sources */,
 				0CAB81CE1C86817C00B653A9 /* DicountVoucherTableViewCell.swift in Sources */,
 				0CAB825F1C86817C00B653A9 /* FlashSaleCollectionViewCell.swift in Sources */,
@@ -3317,6 +3338,7 @@
 				0CAB831C1C86817C00B653A9 /* SearchSuggestionModel.swift in Sources */,
 				0CAB82191C86817C00B653A9 /* PullToRefreshOption.swift in Sources */,
 				0CAB824E1C86817C00B653A9 /* HomeProductModel.swift in Sources */,
+				799B9A471C8EACEA006472E8 /* ProfileSettingsTableViewCell.swift in Sources */,
 				0CAB82C71C86817C00B653A9 /* ProductAvailableAttributeCombinationModel.swift in Sources */,
 				0CAB82301C86817C00B653A9 /* ChangePasswordViewController.swift in Sources */,
 				0CAB83B01C86817C00B653A9 /* RoundedImageView.swift in Sources */,
@@ -3339,7 +3361,6 @@
 				0CAB81A91C86817C00B653A9 /* ProvinceModel.swift in Sources */,
 				0CAB83711C86817C00B653A9 /* TransactionProductDetailsTableViewCell.swift in Sources */,
 				0CAB83AF1C86817C00B653A9 /* RoundedButton.swift in Sources */,
-				798D849C1C86BE0E00D2A1F7 /* ProfileUserDetailsModel.swift in Sources */,
 				0CAB825B1C86817C00B653A9 /* CarouselCollectionViewCell.swift in Sources */,
 				0CAB830A1C86817C00B653A9 /* CaseDetailsModel.swift in Sources */,
 				0CAB82521C86817C00B653A9 /* LayoutFourModel.swift in Sources */,
@@ -3352,6 +3373,7 @@
 				0CAB81AC1C86817C00B653A9 /* ChangeAddressFooterCollectionViewCell.swift in Sources */,
 				0CAB82991C86817C00B653A9 /* W_Contact.swift in Sources */,
 				79DBF22F1C898B9B004EA438 /* QRCodeScannerViewController.swift in Sources */,
+				799B9A3E1C8EACEA006472E8 /* EditProfileAddPhotoTableViewCell.swift in Sources */,
 				0CAB81EF1C86817C00B653A9 /* CheckoutContainerViewController.swift in Sources */,
 				0CAB83791C86817C00B653A9 /* TransactionSellerView.swift in Sources */,
 				0CAB832F1C86817C00B653A9 /* SellerSubCategoryModel.swift in Sources */,
@@ -3381,12 +3403,14 @@
 				0CAB81E91C86817C00B653A9 /* TotalTableViewCell.swift in Sources */,
 				0CAB83901C86817C00B653A9 /* TransactionLeaveSellerFeedbackViewController.swift in Sources */,
 				0CAB82481C86817C00B653A9 /* XibHelper.swift in Sources */,
+				799B9A4B1C8EACEA006472E8 /* EditProfileTableViewController.swift in Sources */,
 				0CAB83B51C86817C00B653A9 /* TodaysPromoViewController.swift in Sources */,
 				0CAB82EF1C86817C00B653A9 /* ProductViewController.swift in Sources */,
 				0CAB83821C86817C00B653A9 /* TransactionCancelViewController.swift in Sources */,
 				0CAB81F51C86817C00B653A9 /* SummaryViewController.swift in Sources */,
 				0CAB82C51C86817C00B653A9 /* OrderedProductsModel.swift in Sources */,
 				0CAB82D01C86817C00B653A9 /* ProductAttributeTableViewCell.swift in Sources */,
+				799B9A3B1C8EACEA006472E8 /* ProfileUserDetailsModel.swift in Sources */,
 				798D84CC1C86C14500D2A1F7 /* PointsBreakdownTableViewCell.swift in Sources */,
 				0CAB82941C86817C00B653A9 /* LoginAndRegisterTableViewController.swift in Sources */,
 				0CAB83591C86817C00B653A9 /* TransactionDetailsProductsModel.swift in Sources */,
@@ -3404,9 +3428,9 @@
 				0CAB836B1C86817C00B653A9 /* TransactionLeaveFeedbackFieldTableViewCell.swift in Sources */,
 				0CAB83521C86817C00B653A9 /* StarterContentPageViewController.swift in Sources */,
 				0CAB82351C86817C00B653A9 /* APIManager.swift in Sources */,
+				799B9A441C8EACEA006472E8 /* ProductImagesViewCollectionViewCell.swift in Sources */,
 				0CAB83861C86817C00B653A9 /* TransactionDeliveryLogViewController.swift in Sources */,
 				0CAB82221C86817C00B653A9 /* FABProfileCollectionViewCell.swift in Sources */,
-				798D84AC1C86BE0E00D2A1F7 /* EditProfileTableViewController.swift in Sources */,
 				0CAB82B21C86817C00B653A9 /* MessageThreadTVC.swift in Sources */,
 				0CAB835C1C86817C00B653A9 /* TransactionProductDetailsModel.swift in Sources */,
 				0CAB82CC1C86817C00B653A9 /* ProductReviewsModel.swift in Sources */,
@@ -3415,6 +3439,7 @@
 				0CAB81B81C86817C00B653A9 /* CartProductDetailsModel.swift in Sources */,
 				0CAB82CB1C86817C00B653A9 /* ProductReviewModel.swift in Sources */,
 				0CAB82971C86817C00B653A9 /* MessagingConversationModel.swift in Sources */,
+				799B9A401C8EACEA006472E8 /* EditProfileAddressTableViewCell.swift in Sources */,
 				0CAB829A1C86817C00B653A9 /* W_Conversation.swift in Sources */,
 				0CAB81D11C86817C00B653A9 /* GuestCheckoutTableViewCell.swift in Sources */,
 				0CAB827C1C86817C00B653A9 /* TwoColumnGridCollectionViewCell.swift in Sources */,
@@ -3427,7 +3452,6 @@
 				0CAB83801C86817C00B653A9 /* TransactionCancelOrderSuccessViewController.swift in Sources */,
 				0CAB83A71C86817C00B653A9 /* DynamicRoundedView.swift in Sources */,
 				0CAB82A91C86817C00B653A9 /* MessagingSenderTableViewCell.swift in Sources */,
-				798D84AA1C86BE0E00D2A1F7 /* ProfileTableViewCell.swift in Sources */,
 				0CAB83181C86817C00B653A9 /* ResolutionFilterViewController.swift in Sources */,
 				0CAB82B41C86817C00B653A9 /* MessagingContactListViewController.swift in Sources */,
 				0CAB83B41C86817C00B653A9 /* TextViewAutoHeight.swift in Sources */,
@@ -3451,7 +3475,6 @@
 				0CAB835D1C86817C00B653A9 /* TransactionButtons.swift in Sources */,
 				0CAB82901C86817C00B653A9 /* SimplifiedLoginUICollectionViewCell.swift in Sources */,
 				0CAB823A1C86817C00B653A9 /* DateUtility.swift in Sources */,
-				798D849B1C86BE0E00D2A1F7 /* ProfileModel.swift in Sources */,
 				0CAB83651C86817C00B653A9 /* TransactionDeliveryStatusView.swift in Sources */,
 				0CAB82831C86817C00B653A9 /* HomePageCollectionViewController.swift in Sources */,
 				0CAB82D81C86817C00B653A9 /* ProductImagesView.swift in Sources */,
@@ -3459,13 +3482,13 @@
 				0CAB82451C86817C00B653A9 /* Toast.swift in Sources */,
 				0CAB83A11C86817C00B653A9 /* CustomTabBarController.swift in Sources */,
 				0CAB822A1C86817C00B653A9 /* FollowedSellerViewController.swift in Sources */,
+				799B9A4D1C8EACEA006472E8 /* ProfileSettingsViewController.swift in Sources */,
 				798D84C71C86C14500D2A1F7 /* MyPointsHistoryModel.swift in Sources */,
 				0CAB838E1C86817C00B653A9 /* TransactionLeaveSellerFeedbackTableViewController.swift in Sources */,
 				0CAB83AB1C86817C00B653A9 /* NoInternetConnectionView.swift in Sources */,
 				0CAB82B11C86817C00B653A9 /* MessageThreadImageTVC.swift in Sources */,
 				790E597E1C87D0B90073FE23 /* SearchBarView.swift in Sources */,
 				0CAB827E1C86817C00B653A9 /* VerticalImageCollectionViewCell.swift in Sources */,
-				798D849F1C86BE0E00D2A1F7 /* EditProfileAddPhotoTableViewCell.swift in Sources */,
 				0CAB82D21C86817C00B653A9 /* ProductDescriptionView.swift in Sources */,
 				0CAB82571C86817C00B653A9 /* LayoutTenModel.swift in Sources */,
 				0CAB83611C86817C00B653A9 /* TransactionDeliveryLogSignatureTableViewCell.swift in Sources */,
@@ -3476,6 +3499,7 @@
 				0CAB83691C86817C00B653A9 /* TransactionDetailsView.swift in Sources */,
 				0CAB83941C86817C00B653A9 /* TransactionProductDetailsViewController.swift in Sources */,
 				0CAB82A11C86817C00B653A9 /* MessagingConversationTableViewCell.swift in Sources */,
+				0C759FB81C900B3B002A08E2 /* PushNotificationModel.swift in Sources */,
 				798D84C51C86C14500D2A1F7 /* MyPointsTableViewController.swift in Sources */,
 				0CAB83341C86817C00B653A9 /* GeneralRatingTableViewCell.swift in Sources */,
 				0CAB81FA1C86817C00B653A9 /* CustomizeShoppingCollectionViewLayout.swift in Sources */,
@@ -3495,12 +3519,11 @@
 				0CAB82AD1C86817C00B653A9 /* ContactListTVC.swift in Sources */,
 				0CAB83761C86817C00B653A9 /* TransactionPurchaseDetailsView.swift in Sources */,
 				0CAB822C1C86817C00B653A9 /* ForgotPasswordTableViewCell.swift in Sources */,
-				798D84A11C86BE0E00D2A1F7 /* EditProfileAddressTableViewCell.swift in Sources */,
-				798D84B01C86BE0E00D2A1F7 /* ProfileViewController.swift in Sources */,
 				0CAB83231C86817C00B653A9 /* SellerResultCollectionViewCell.swift in Sources */,
 				0CAB82471C86817C00B653A9 /* WebServiceManager.swift in Sources */,
 				0CAB832C1C86817C00B653A9 /* SearchViewController.swift in Sources */,
 				0CAB83B31C86817C00B653A9 /* SemiRoundedButton.swift in Sources */,
+				799B9A4F1C8EACEA006472E8 /* ProfileViewController.swift in Sources */,
 				0CAB828A1C86817C00B653A9 /* LoginRegisterTableViewCell.swift in Sources */,
 				0CAB834A1C86817C00B653A9 /* SellerSubCategoryViewController.swift in Sources */,
 				798D84CA1C86C14500D2A1F7 /* TotalPointsModel.swift in Sources */,
@@ -3536,7 +3559,6 @@
 				0CAB83C11C86817C00B653A9 /* WishlistViewController.swift in Sources */,
 				0CAB81AE1C86817C00B653A9 /* NewAddressTableViewCell.swift in Sources */,
 				0CAB82551C86817C00B653A9 /* LayoutSevenModel.swift in Sources */,
-				798D84A81C86BE0E00D2A1F7 /* ProfileSettingsTableViewCell.swift in Sources */,
 				0CAB82611C86817C00B653A9 /* FullImageCollectionViewCell.swift in Sources */,
 				0CAB838C1C86817C00B653A9 /* TransactionLeaveProductFeedbackTableViewController.swift in Sources */,
 				0CAB82211C86817C00B653A9 /* FABCollectionViewLayout.swift in Sources */,
@@ -3566,15 +3588,17 @@
 				0CAB82C91C86817C00B653A9 /* ProductImagesModel.swift in Sources */,
 				0CAB82951C86817C00B653A9 /* MessageComposer.swift in Sources */,
 				0CAB833A1C86817C00B653A9 /* NoReviewTableViewCell.swift in Sources */,
+				799B9A421C8EACEA006472E8 /* EditProfilePersonalInformationTableViewCell.swift in Sources */,
 				0CAB83671C86817C00B653A9 /* TransactionDetailsTableViewCell.swift in Sources */,
-				798D84A51C86BE0E00D2A1F7 /* ProductImagesViewCollectionViewCell.swift in Sources */,
 				0CAB83211C86817C00B653A9 /* SearchSuggestionTableViewCell.swift in Sources */,
 				0CAB81CA1C86817C00B653A9 /* CheckoutViews.swift in Sources */,
 				0CAB81991C86817C00B653A9 /* ActivityLogModel.swift in Sources */,
 				0CAB829C1C86817C00B653A9 /* ImageVC.swift in Sources */,
 				0CAB821E1C86817C00B653A9 /* README.md in Sources */,
 				0CAB82401C86817C00B653A9 /* LanguageHelper.swift in Sources */,
+				799B9A451C8EACEA006472E8 /* ProfileHeaderTableViewCell.swift in Sources */,
 				0CAB827A1C86817C00B653A9 /* SellerCollectionViewCell.swift in Sources */,
+				799B9A3C1C8EACEA006472E8 /* EditProfileAccountInformationTableViewCell.swift in Sources */,
 				0CAB82B01C86817C00B653A9 /* ConversationVC.swift in Sources */,
 				0CAB82921C86817C00B653A9 /* SimplifiedRegistrationUICollectionViewCell.swift in Sources */,
 				0CAB82AE1C86817C00B653A9 /* ContactListVC.swift in Sources */,
@@ -3594,11 +3618,11 @@
 				0CAB81C81C86817C00B653A9 /* VoucherModel.swift in Sources */,
 				0CAB81B01C86817C00B653A9 /* AddAddressTableViewController.swift in Sources */,
 				0CAB81B21C86817C00B653A9 /* ChangeAddressViewController.swift in Sources */,
+				799B9A491C8EACEA006472E8 /* ProfileTableViewCell.swift in Sources */,
 				0CAB81A41C86817C00B653A9 /* AddressModelV2.swift in Sources */,
 				0CAB82E11C86817C00B653A9 /* ProductsTableViewCell.swift in Sources */,
 				0CAB82C81C86817C00B653A9 /* ProductDetailsModel.swift in Sources */,
 				0CAB81971C86817C00B653A9 /* ActivityLogItemModel.swift in Sources */,
-				798D84AE1C86BE0E00D2A1F7 /* ProfileSettingsViewController.swift in Sources */,
 				0CAB81CC1C86817C00B653A9 /* DeliverToTableViewCell.swift in Sources */,
 				0CAB81FB1C86817C00B653A9 /* CustomizeShoppingFlowLayout.swift in Sources */,
 				0CAB834E1C86817C00B653A9 /* ViewFeedBackViewController.swift in Sources */,
@@ -3607,7 +3631,6 @@
 				0CAB83481C86817C00B653A9 /* SellerCategoryViewController.swift in Sources */,
 				0CAB829E1C86817C00B653A9 /* MessagingContactTableViewCell.swift in Sources */,
 				0CAB81B71C86817C00B653A9 /* CartModel.swift in Sources */,
-				798D84A61C86BE0E00D2A1F7 /* ProfileHeaderTableViewCell.swift in Sources */,
 				798D84C91C86C14500D2A1F7 /* PointModel.swift in Sources */,
 				0CAB824C1C86817C00B653A9 /* HomePageModel.swift in Sources */,
 				0CAB83A61C86817C00B653A9 /* DynamicRoundedTextField.swift in Sources */,

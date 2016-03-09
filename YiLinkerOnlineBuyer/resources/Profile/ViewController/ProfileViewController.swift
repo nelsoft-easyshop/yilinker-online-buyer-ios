@@ -41,6 +41,7 @@ class ProfileViewController: UIViewController{
         if self.respondsToSelector("edgesForExtendedLayout") {
             self.edgesForExtendedLayout = UIRectEdge.None
         }
+        
         self.fireGetUserInfo()
     }
     
@@ -49,7 +50,6 @@ class ProfileViewController: UIViewController{
     func initializeViews() {
         tableView.tableFooterView = UIView(frame: CGRectZero)
         self.title = StringHelper.localizedStringWithKey("PROFILE_HIDDEN_LOCALIZE_KEY")
-        
         
         if self.isFromSearchBar {
             self.addBackButton()
