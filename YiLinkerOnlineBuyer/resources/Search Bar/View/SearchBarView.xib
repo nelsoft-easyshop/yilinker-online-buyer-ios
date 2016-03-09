@@ -67,9 +67,9 @@
                             </constraints>
                         </view>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Search Product Here. . ." minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="P8r-D3-eRl">
-                            <rect key="frame" x="55" y="2" width="214" height="25"/>
+                            <rect key="frame" x="56" y="2" width="214" height="25"/>
                             <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="13"/>
-                            <textInputTraits key="textInputTraits"/>
+                            <textInputTraits key="textInputTraits" returnKeyType="search"/>
                             <connections>
                                 <action selector="textFieldAction:" destination="iN0-l3-epB" eventType="editingChanged" id="gm8-Le-CWS"/>
                             </connections>
@@ -81,10 +81,10 @@
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstItem="P8r-D3-eRl" firstAttribute="leading" secondItem="QJi-ML-B23" secondAttribute="trailing" constant="10" id="3xa-BE-JqJ"/>
+                        <constraint firstItem="P8r-D3-eRl" firstAttribute="leading" secondItem="QJi-ML-B23" secondAttribute="trailing" constant="11" id="3xa-BE-JqJ"/>
                         <constraint firstAttribute="bottom" secondItem="qtt-od-gk3" secondAttribute="bottom" constant="5" id="4Ml-Sg-cdR"/>
                         <constraint firstItem="QJi-ML-B23" firstAttribute="top" secondItem="4C9-qX-0uS" secondAttribute="top" id="Qvl-zH-ds0"/>
-                        <constraint firstAttribute="trailing" secondItem="P8r-D3-eRl" secondAttribute="trailing" constant="24" id="YFY-NJ-meh"/>
+                        <constraint firstAttribute="trailing" secondItem="P8r-D3-eRl" secondAttribute="trailing" constant="23" id="YFY-NJ-meh"/>
                         <constraint firstAttribute="trailing" secondItem="qtt-od-gk3" secondAttribute="trailing" constant="8" id="h7y-r6-Pf4"/>
                         <constraint firstItem="QJi-ML-B23" firstAttribute="leading" secondItem="4C9-qX-0uS" secondAttribute="leading" id="o74-Nd-bVG"/>
                         <constraint firstItem="P8r-D3-eRl" firstAttribute="top" secondItem="4C9-qX-0uS" secondAttribute="top" constant="2" id="tAt-RY-M7I"/>
@@ -93,6 +93,9 @@
                         <constraint firstAttribute="height" constant="30" id="yip-iE-YtT"/>
                     </constraints>
                 </view>
+                <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZNy-0I-MW3">
+                    <rect key="frame" x="365" y="35" width="10" height="10"/>
+                </imageView>
             </subviews>
             <color key="backgroundColor" red="0.37647058820000001" green="0.12549019610000001" blue="0.46666666670000001" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
@@ -115,8 +118,9 @@
                 <outlet property="searchTypeImageView" destination="mes-H0-QO3" id="AkR-fz-5Rh"/>
                 <outlet property="searchTypeView" destination="QJi-ML-B23" id="RBi-XR-yfM"/>
                 <outlet property="searchView" destination="4C9-qX-0uS" id="wLb-eL-B3S"/>
+                <outlet property="tempImageView" destination="ZNy-0I-MW3" id="sHV-k9-uv5"/>
             </connections>
-            <point key="canvasLocation" x="245.5" y="108.5"/>
+            <point key="canvasLocation" x="-8.5" y="37.5"/>
         </view>
     </objects>
     <resources>

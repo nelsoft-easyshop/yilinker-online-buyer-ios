@@ -19,6 +19,7 @@ protocol SearchBarViewDelegate {
     func searchBarView(searchBarView: SearchBarView, didTextChanged textField: UITextField)
     func searchBarView(searchBarView: SearchBarView, didSeacrhTypeChanged searchType: SearchType)
     func searchBarView(searchBarView: SearchBarView, didTapSearch textField: UITextField)
+    func searchBarView(searchBarView: SearchBarView, didChooseSuggestion suggestion: SearchSuggestionModel)
 }
 
 class SearchBarView: UIView {
@@ -36,6 +37,7 @@ class SearchBarView: UIView {
     @IBOutlet weak var searchTypeView: UIView!
     @IBOutlet weak var dropDownView: UIView!
     @IBOutlet weak var searchTypeImageView: UIImageView!
+    @IBOutlet weak var tempImageView: UIImageView!
     
     @IBOutlet weak var searchTextField: UITextField!
     
@@ -47,6 +49,7 @@ class SearchBarView: UIView {
     
     var searchAutoCompleteTableView: UITableView?
     var isAutoCompleteHidden: Bool = true
+    var isQRCode: Bool = true
     
     var searchSuggestions: [SearchSuggestionModel] = []
     
@@ -72,7 +75,17 @@ class SearchBarView: UIView {
         self.searchView.frame = CGRectMake(0, 0, view.frame.size.width, view.frame.size.height)
         self.searchView.layer.cornerRadius = 15
         self.searchTypeView.layer.cornerRadius = 15
-        self.searchTextField.layer.cornerRadius = 15
+        
+        if isQRCode {
+            self.scanQRButton.setImage(UIImage(named: "scan-qr-icon"), forState: .Normal)
+        } else {
+            self.scanQRButton.setImage(UIImage(named: "back-white"), forState: .Normal)
+        }
+        
+        if SessionManager.isLoggedIn() {
+            self.tempImageView.sd_setImageWithURL(NSURL(string: SessionManager.profileImageStringUrl()), placeholderImage: UIImage(named: "dummy-placeholder"))
+            self.profileButton.setImage(self.tempImageView.image, forState: .Normal)
+        }
     
         self.searchTextField.addTarget(self, action: "textFieldDidReturn:", forControlEvents: .EditingDidEndOnExit)
         
@@ -297,7 +310,8 @@ extension SearchBarView: UITableViewDataSource, UITableViewDelegate {
                 self.delegate?.searchBarView(self, didSeacrhTypeChanged: .Seller)
             }
         } else {
-            
+            self.hideAutoComplete()
+            self.delegate?.searchBarView(self, didChooseSuggestion: self.searchSuggestions[indexPath.row])
         }
     }
 }

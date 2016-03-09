@@ -111,6 +111,7 @@ class LoginAndRegisterTableViewController: UITableViewController {
     
     var loginSessionDataTask: NSURLSessionDataTask = NSURLSessionDataTask()
     
+    var refferalCode: String = ""
     var isHideCloseButton: Bool = false
     var isGuestUser: Bool = false
     var isLogin: Bool = true
@@ -211,6 +212,8 @@ class LoginAndRegisterTableViewController: UITableViewController {
             } else {
                 let loginRegisterTableViewCell: LoginRegisterTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(self.loginResgisterTableViewCellNibName) as! LoginRegisterTableViewCell
                 loginRegisterTableViewCell.delegate = self
+                loginRegisterTableViewCell.isLogin = self.isLogin
+                loginRegisterTableViewCell.referralCode = self.refferalCode
                 loginRegisterTableViewCell.selectionStyle = .None
                 return loginRegisterTableViewCell
             }

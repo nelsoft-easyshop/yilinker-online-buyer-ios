@@ -9,7 +9,13 @@
 import UIKit
 import AVFoundation
 
+protocol QRCodeScannerViewControllerDelegate {
+    func qrCodeScannerViewController(qrCodeScannerViewController: QRCodeScannerViewController, code: String)
+}
+
 class QRCodeScannerViewController: UIViewController {
+    
+    var delegate: QRCodeScannerViewControllerDelegate?
 
     @IBOutlet weak var navigationBar: UINavigationBar!
     @IBOutlet weak var previewView: UIView!
@@ -107,16 +113,8 @@ extension QRCodeScannerViewController: AVCaptureMetadataOutputObjectsDelegate {
             
             if metadataObj.stringValue != nil {
                 var qrCode: String = metadataObj.stringValue
-                if qrCode.contains("http"){
-                    var slug: String = ""
-                    if let range = qrCode.rangeOfString("/", options: NSStringCompareOptions.BackwardsSearch) {
-                        slug = qrCode.substringFromIndex(range.endIndex)
-                        println(slug)
-                    }
-                } else {
-                    
-                }
-                self.resultLabel.text = metadataObj.stringValue
+                self.dismissViewControllerAnimated(true, completion: nil)
+                self.delegate?.qrCodeScannerViewController(self, code: qrCode)
             }
         }
     }
