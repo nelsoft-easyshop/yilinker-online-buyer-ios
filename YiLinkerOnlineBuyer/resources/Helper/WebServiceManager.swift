@@ -503,6 +503,7 @@ class WebServiceManager: NSObject {
         let manager: APIManager = APIManager.sharedInstance
         
         self.fireGetRequestWithUrl(url, parameters: []) { (successful, responseObject, requestErrorType) -> Void in
+            println(responseObject)
             actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
         }
     }
@@ -962,7 +963,7 @@ class WebServiceManager: NSObject {
  
     //MARK: -
     //MARK: - Fire Seller With Url
-    class func fireSellerWithUrl(url: String, accessToken: String, sellerId: Int, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+    class func fireSellerWithUrl(url: String, accessToken: String, sellerId: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
         var parameters: NSDictionary = NSDictionary()
         
         if SessionManager.isLoggedIn() {
