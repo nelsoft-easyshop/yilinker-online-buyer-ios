@@ -142,7 +142,7 @@ class ActivityLogTableViewController: UITableViewController {
     //MARK: - Show HUD
     func showHUD() {
         self.yiHud = YiHUD.initHud()
-        self.yiHud!.showHUDToView(self.view)
+        self.yiHud!.showHUDToView(self.navigationController!.view)
     }
     
     // MARK: - Set tableview section header
@@ -248,7 +248,7 @@ class ActivityLogTableViewController: UITableViewController {
             
             let perPage: String = "&perPage=15&"
             let page: String = "page=\(self.page)"
-            let url: String = "\(APIAtlas.activityLogs)(\(SessionManager.accessToken())&\(perPage))\(page))"
+            let url: String = "\(APIAtlas.activityLogs)\(SessionManager.accessToken())&\(perPage)\(page)"
             var parameters: NSDictionary = [:]
             
             WebServiceManager.fireGetActivityLogWithUrl(url, parameters: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
@@ -275,7 +275,7 @@ class ActivityLogTableViewController: UITableViewController {
                         self.showAlert(title: Constants.Localized.error, message: errorModel.message)
                         self.yiHud?.hide()
                     } else if requestErrorType == .AccessTokenExpired {
-                        self.requestRefreshToken()
+                        self.fireRefreshToken()
                     } else if requestErrorType == .PageNotFound {
                         //Page not found
                         Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
@@ -313,31 +313,23 @@ class ActivityLogTableViewController: UITableViewController {
     * Function to refresh token to get another access token
     *
     */
-    func requestRefreshToken() {
-        
+    //MARK: -
+    //MARK: - Fire Refresh Token
+    func fireRefreshToken() {
         self.showHUD()
-        
-        let parameters: NSDictionary = ["client_id": Constants.Credentials.clientID(),
-            "client_secret": Constants.Credentials.clientSecret(),
-            "grant_type": Constants.Credentials.grantRefreshToken,
-            "refresh_token": SessionManager.refreshToken()]
-        
-        let manager = APIManager.sharedInstance
-        
-        manager.POST(APIAtlas.loginUrl, parameters: parameters, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+        WebServiceManager.fireRefreshTokenWithUrl(APIAtlas.refreshTokenUrl, actionHandler: {
+            (successful, responseObject, requestErrorType) -> Void in
+            self.yiHud?.hide()
             
-            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
-            
-            self.fireActivityLog()
-            
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                self.yiHud?.hide()
-                let alertController = UIAlertController(title: Constants.Localized.someThingWentWrong, message: "", preferredStyle: .Alert)
-                let defaultAction = UIAlertAction(title: Constants.Localized.ok, style: .Default, handler: nil)
-                alertController.addAction(defaultAction)
-                self.presentViewController(alertController, animated: true, completion: nil)
+            if successful {
+                SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+                self.fireActivityLog()
+            } else {
+                //Forcing user to logout.
+                UIAlertController.displayAlertRedirectionToLogin(self, actionHandler: { (sucess) -> Void in
+                    
+                })
+            }
         })
     }
 }

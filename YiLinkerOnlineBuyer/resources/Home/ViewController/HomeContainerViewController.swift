@@ -870,6 +870,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         
         if cell.isKindOfClass(TwoColumnGridCollectionViewCell) {
             let towColumnCell: TwoColumnGridCollectionViewCell = collectionView.cellForItemAtIndexPath(indexPath) as! TwoColumnGridCollectionViewCell
+            
             self.didClickItemWithTarget(towColumnCell.target, targetType: towColumnCell.targetType)
         } else if cell.isKindOfClass(FullImageCollectionViewCell) {
             let fullImageCell: FullImageCollectionViewCell = collectionView.cellForItemAtIndexPath(indexPath) as! FullImageCollectionViewCell
@@ -947,7 +948,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         
         let fullImageCell: FullImageCollectionViewCell = halfPagerCollectionViewCell.collectionView.dequeueReusableCellWithReuseIdentifier(halfPagerCollectionViewCell.fullImageCellNib, forIndexPath: indexPath) as! FullImageCollectionViewCell
         
-        fullImageCell.itemProductImageView.sd_setImageWithURL(NSURL(string: layoutThreeModel.data[indexPath.row].image), placeholderImage: UIImage(named: "dummy-placeholder"), completed: { (downloadedImage, NSError, SDImageCacheType, NSURL) -> Void in
+        fullImageCell.itemProductImageView.sd_setImageWithURL(StringHelper.convertStringToUrl(layoutThreeModel.data[indexPath.row].image), placeholderImage: UIImage(named: "dummy-placeholder"), completed: { (downloadedImage, NSError, SDImageCacheType, NSURL) -> Void in
             if let imageView = fullImageCell.itemProductImageView {
                 if downloadedImage != nil {
                     imageView.fadeInImageWithImage(downloadedImage)
@@ -1086,21 +1087,21 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         flashSaleCell.secondSecondDigit.text = self.secondSecondsString
         
         if layoutFourModel.data.count >= 1 {
-            flashSaleCell.productOneImageView.sd_setImageWithURL(NSURL(string: layoutFourModel.data[0].image), placeholderImage: UIImage(named: "dummy-placeholder"))
+            flashSaleCell.productOneImageView.sd_setImageWithURL(StringHelper.convertStringToUrl(layoutFourModel.data[0].image), placeholderImage: UIImage(named: "dummy-placeholder"))
             flashSaleCell.productOneDiscountLabel.text = "\(layoutFourModel.data[0].discountPercentage)% OFF"
             flashSaleCell.productOneImageView.target = layoutFourModel.data[0].target.targetUrl
             flashSaleCell.productOneImageView.targetType = layoutFourModel.data[0].target.targetType
         }
         
         if layoutFourModel.data.count >= 2 {
-            flashSaleCell.productTwoImageView.sd_setImageWithURL(NSURL(string: layoutFourModel.data[1].image), placeholderImage: UIImage(named: "dummy-placeholder"))
+            flashSaleCell.productTwoImageView.sd_setImageWithURL(StringHelper.convertStringToUrl(layoutFourModel.data[1].image), placeholderImage: UIImage(named: "dummy-placeholder"))
             flashSaleCell.productTwoImageView.target = layoutFourModel.data[1].target.targetUrl
             flashSaleCell.productTwoImageView.targetType = layoutFourModel.data[1].target.targetType
             flashSaleCell.productTwoDiscountLabel.text = "\(layoutFourModel.data[1].discountPercentage)% OFF"
         }
         
         if layoutFourModel.data.count >= 3 {
-            flashSaleCell.productThreeImageView.sd_setImageWithURL(NSURL(string: layoutFourModel.data[2].image), placeholderImage: UIImage(named: "dummy-placeholder"))
+            flashSaleCell.productThreeImageView.sd_setImageWithURL(StringHelper.convertStringToUrl(layoutFourModel.data[2].image), placeholderImage: UIImage(named: "dummy-placeholder"))
             flashSaleCell.productThreeImageView.target = layoutFourModel.data[2].target.targetUrl
             flashSaleCell.productThreeImageView.targetType = layoutFourModel.data[2].target.targetType
             flashSaleCell.productThreeDiscountLabel.text = "\(layoutFourModel.data[2].discountPercentage) OFF%"
@@ -1119,7 +1120,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         twoColumnGridCollectionViewCell.target = layoutTenModel.data[indexPath.row].target.targetUrl
         twoColumnGridCollectionViewCell.targetType = layoutTenModel.data[indexPath.row].target.targetType
         
-        twoColumnGridCollectionViewCell.productItemImageView.sd_setImageWithURL(NSURL(string: layoutTenModel.data[indexPath.row].image), placeholderImage: UIImage(named: self.placeHolder), completed: { (downloadedImage, NSError, SDImageCacheType, NSURL) -> Void in
+        twoColumnGridCollectionViewCell.productItemImageView.sd_setImageWithURL(StringHelper.convertStringToUrl(layoutTenModel.data[indexPath.row].image), placeholderImage: UIImage(named: self.placeHolder), completed: { (downloadedImage, NSError, SDImageCacheType, NSURL) -> Void in
             if let imageView = twoColumnGridCollectionViewCell.productItemImageView {
                 if downloadedImage != nil {
                     imageView.fadeInImageWithImage(downloadedImage)
@@ -1157,7 +1158,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             layoutNineCollectionViewCell.productImageViewOne.title = layoutNineModel.data[0].name
             layoutNineCollectionViewCell.productImageViewOne.target = layoutNineModel.data[0].target.targetUrl
             layoutNineCollectionViewCell.productImageViewOne.targetType = layoutNineModel.data[0].target.targetType
-            layoutNineCollectionViewCell.productImageViewOne.sd_setImageWithURL(NSURL(string: layoutNineModel.data[0].image), placeholderImage: UIImage(named: self.placeHolder), completed: { (downloadedImage, NSError, SDImageCacheType, NSURL) -> Void in
+            layoutNineCollectionViewCell.productImageViewOne.sd_setImageWithURL(StringHelper.convertStringToUrl(layoutNineModel.data[0].image), placeholderImage: UIImage(named: self.placeHolder), completed: { (downloadedImage, NSError, SDImageCacheType, NSURL) -> Void in
                 if let imageView = layoutNineCollectionViewCell.productImageViewOne {
                     if downloadedImage != nil {
                         imageView.fadeInImageWithImage(downloadedImage)
@@ -1165,9 +1166,8 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                 }
             })
             
-            
             layoutNineCollectionViewCell.productTwoNameLabel.text = layoutNineModel.data[1].name
-            layoutNineCollectionViewCell.productImageViewTwo.sd_setImageWithURL(NSURL(string: layoutNineModel.data[1].image), placeholderImage: UIImage(named: self.placeHolder), completed: { (downloadedImage, NSError, SDImageCacheType, NSURL) -> Void in
+            layoutNineCollectionViewCell.productImageViewTwo.sd_setImageWithURL(StringHelper.convertStringToUrl(layoutNineModel.data[1].image), placeholderImage: UIImage(named: self.placeHolder), completed: { (downloadedImage, NSError, SDImageCacheType, NSURL) -> Void in
                 if let imageView = layoutNineCollectionViewCell.productImageViewTwo {
                     if downloadedImage != nil {
                         imageView.fadeInImageWithImage(downloadedImage)
@@ -1180,7 +1180,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             layoutNineCollectionViewCell.productImageViewTwo.title = layoutNineModel.data[1].name
             
             layoutNineCollectionViewCell.productThreeNameLabel.text = layoutNineModel.data[2].name
-            layoutNineCollectionViewCell.productImageViewThree.sd_setImageWithURL(NSURL(string: layoutNineModel.data[2].image), placeholderImage: UIImage(named: self.placeHolder), completed: { (downloadedImage, NSError, SDImageCacheType, NSURL) -> Void in
+            layoutNineCollectionViewCell.productImageViewThree.sd_setImageWithURL(StringHelper.convertStringToUrl(layoutNineModel.data[2].image), placeholderImage: UIImage(named: self.placeHolder), completed: { (downloadedImage, NSError, SDImageCacheType, NSURL) -> Void in
                 if let imageView = layoutNineCollectionViewCell.productImageViewThree {
                     if downloadedImage != nil {
                         imageView.fadeInImageWithImage(downloadedImage)
@@ -1193,7 +1193,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             layoutNineCollectionViewCell.productImageViewThree.title = layoutNineModel.data[2].name
             
             layoutNineCollectionViewCell.productFourNameLabel.text = layoutNineModel.data[3].name
-            layoutNineCollectionViewCell.productImageViewFour.sd_setImageWithURL(NSURL(string: layoutNineModel.data[3].image), placeholderImage: UIImage(named: self.placeHolder), completed: { (downloadedImage, NSError, SDImageCacheType, NSURL) -> Void in
+            layoutNineCollectionViewCell.productImageViewFour.sd_setImageWithURL(StringHelper.convertStringToUrl(layoutNineModel.data[3].image), placeholderImage: UIImage(named: self.placeHolder), completed: { (downloadedImage, NSError, SDImageCacheType, NSURL) -> Void in
                 if let imageView = layoutNineCollectionViewCell.productImageViewFour {
                     if downloadedImage != nil {
                         imageView.fadeInImageWithImage(downloadedImage)
@@ -1206,7 +1206,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             
             
             layoutNineCollectionViewCell.productFiveNameLabel.text = layoutNineModel.data[4].name
-            layoutNineCollectionViewCell.productImageViewFive.sd_setImageWithURL(NSURL(string: layoutNineModel.data[4].image), placeholderImage: UIImage(named: self.placeHolder), completed: { (downloadedImage, NSError, SDImageCacheType, NSURL) -> Void in
+            layoutNineCollectionViewCell.productImageViewFive.sd_setImageWithURL(StringHelper.convertStringToUrl(layoutNineModel.data[4].image), placeholderImage: UIImage(named: self.placeHolder), completed: { (downloadedImage, NSError, SDImageCacheType, NSURL) -> Void in
                 if let imageView = layoutNineCollectionViewCell.productImageViewFive {
                     if downloadedImage != nil {
                         imageView.fadeInImageWithImage(downloadedImage)
@@ -1236,7 +1236,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         if self.homePageModel.data[indexPath.section].isKindOfClass(LayoutFiveModel) {
             let layoutFiveModel: LayoutFiveModel = self.homePageModel.data[indexPath.section] as! LayoutFiveModel
             if indexPath.row < layoutFiveModel.data.count {
-                verticalImageCollectionViewCell.productItemImageView.sd_setImageWithURL(NSURL(string: layoutFiveModel.data[indexPath.row].image), placeholderImage: UIImage(named: self.placeHolder), completed: { (downloadedImage, NSError, SDImageCacheType, NSURL) -> Void in
+                verticalImageCollectionViewCell.productItemImageView.sd_setImageWithURL(StringHelper.convertStringToUrl(layoutFiveModel.data[indexPath.row].image), placeholderImage: UIImage(named: self.placeHolder), completed: { (downloadedImage, NSError, SDImageCacheType, NSURL) -> Void in
                     if let imageView = verticalImageCollectionViewCell.productItemImageView {
                         if downloadedImage != nil {
                             imageView.fadeInImageWithImage(downloadedImage)
@@ -1267,7 +1267,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             let layoutSevenModel: LayoutSevenModel = self.homePageModel.data[indexPath.section] as! LayoutSevenModel
             
             if indexPath.row < layoutSevenModel.data.count {
-                verticalImageCollectionViewCell.productItemImageView.sd_setImageWithURL(NSURL(string: layoutSevenModel.data[indexPath.row].image), placeholderImage: UIImage(named: self.placeHolder), completed: { (downloadedImage, NSError, SDImageCacheType, NSURL) -> Void in
+                verticalImageCollectionViewCell.productItemImageView.sd_setImageWithURL(StringHelper.convertStringToUrl(layoutSevenModel.data[indexPath.row].image), placeholderImage: UIImage(named: self.placeHolder), completed: { (downloadedImage, NSError, SDImageCacheType, NSURL) -> Void in
                     if let imageView = verticalImageCollectionViewCell.productItemImageView {
                         if downloadedImage != nil {
                             imageView.fadeInImageWithImage(downloadedImage)
@@ -1307,7 +1307,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             let layoutFiveModel: LayoutFiveModel = self.homePageModel.data[indexPath.section] as! LayoutFiveModel
             
             if indexPath.row < layoutFiveModel.data.count {
-                halfVerticalImageCollectionViewCell.productItemImageView.sd_setImageWithURL(NSURL(string: layoutFiveModel.data[indexPath.row].image), placeholderImage: UIImage(named: self.placeHolder), completed: { (downloadedImage, NSError, SDImageCacheType, NSURL) -> Void in
+                halfVerticalImageCollectionViewCell.productItemImageView.sd_setImageWithURL(StringHelper.convertStringToUrl(layoutFiveModel.data[indexPath.row].image), placeholderImage: UIImage(named: self.placeHolder), completed: { (downloadedImage, NSError, SDImageCacheType, NSURL) -> Void in
                     if let imageView = halfVerticalImageCollectionViewCell.productItemImageView {
                         if downloadedImage != nil {
                             imageView.fadeInImageWithImage(downloadedImage)
@@ -1338,7 +1338,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             let layoutSevenModel: LayoutSevenModel = self.homePageModel.data[indexPath.section] as! LayoutSevenModel
             
             if indexPath.row < layoutSevenModel.data.count {
-                halfVerticalImageCollectionViewCell.productItemImageView.sd_setImageWithURL(NSURL(string: layoutSevenModel.data[indexPath.row].image), placeholderImage: UIImage(named: self.placeHolder), completed: { (downloadedImage, NSError, SDImageCacheType, NSURL) -> Void in
+                halfVerticalImageCollectionViewCell.productItemImageView.sd_setImageWithURL(StringHelper.convertStringToUrl(layoutSevenModel.data[indexPath.row].image), placeholderImage: UIImage(named: self.placeHolder), completed: { (downloadedImage, NSError, SDImageCacheType, NSURL) -> Void in
                     if let imageView = halfVerticalImageCollectionViewCell.productItemImageView {
                         if downloadedImage != nil {
                             imageView.fadeInImageWithImage(downloadedImage)
@@ -1385,20 +1385,21 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             fullImageCollectionViewCell.target = layoutOneModel.data[indexPath.row].target.targetUrl
             fullImageCollectionViewCell.targetType = layoutOneModel.data[indexPath.row].target.targetType
             
-            fullImageCollectionViewCell.itemProductImageView.sd_setImageWithURL(NSURL(string: layoutOneModel.data[indexPath.row].image), placeholderImage:  UIImage(named: placeHolder), completed: { (downloadedImage, NSError, SDImageCacheType, NSURL) -> Void in
+            fullImageCollectionViewCell.itemProductImageView.sd_setImageWithURL(StringHelper.convertStringToUrl(layoutOneModel.data[indexPath.row].image), placeholderImage: UIImage(named: placeHolder), completed: { (downloadedImage, NSError, SDImageCacheType, NSURL) -> Void in
                 if let imageView = fullImageCollectionViewCell.itemProductImageView {
                     if downloadedImage != nil {
                         imageView.fadeInImageWithImage(downloadedImage)
                     }
                 }
             })
+            
         } else if self.homePageModel.data[indexPath.section].isKindOfClass(LayoutSixModel) {
             let layoutSixModel: LayoutSixModel = self.homePageModel.data[indexPath.section] as! LayoutSixModel
             
             fullImageCollectionViewCell.target = layoutSixModel.data[indexPath.row].target.targetUrl
             fullImageCollectionViewCell.targetType = layoutSixModel.data[indexPath.row].target.targetType
             
-            fullImageCollectionViewCell.itemProductImageView.sd_setImageWithURL(NSURL(string: layoutSixModel.data[indexPath.row].image), placeholderImage: UIImage(named: placeHolder), completed: { (downloadedImage, NSError, SDImageCacheType, NSURL) -> Void in
+            fullImageCollectionViewCell.itemProductImageView.sd_setImageWithURL(StringHelper.convertStringToUrl(layoutSixModel.data[indexPath.row].image), placeholderImage: UIImage(named: placeHolder), completed: { (downloadedImage, NSError, SDImageCacheType, NSURL) -> Void in
                 if let imageView = fullImageCollectionViewCell.itemProductImageView {
                     if downloadedImage != nil {
                         imageView.fadeInImageWithImage(downloadedImage)
@@ -1412,7 +1413,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             fullImageCollectionViewCell.target = layoutTwoModel.data[indexPath.row].target.targetUrl
             fullImageCollectionViewCell.targetType = layoutTwoModel.data[indexPath.row].target.targetType
             
-            fullImageCollectionViewCell.itemProductImageView.sd_setImageWithURL(NSURL(string: layoutTwoModel.data[indexPath.row].image), placeholderImage: UIImage(named: placeHolder), completed: { (downloadedImage, NSError, SDImageCacheType, NSURL) -> Void in
+            fullImageCollectionViewCell.itemProductImageView.sd_setImageWithURL(StringHelper.convertStringToUrl(layoutTwoModel.data[indexPath.row].image), placeholderImage: UIImage(named: placeHolder), completed: { (downloadedImage, NSError, SDImageCacheType, NSURL) -> Void in
                 if let imageView = fullImageCollectionViewCell.itemProductImageView {
                     if downloadedImage != nil {
                         imageView.fadeInImageWithImage(downloadedImage)
@@ -1486,7 +1487,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         
         sellerCollectionView.sellerTitleLabel.text = layoutEightModel.data[indexPath.row].name
         sellerCollectionView.sellerSubTitleLabel.text = layoutEightModel.data[indexPath.row].specialty
-        sellerCollectionView.sellerProfileImageView.sd_setImageWithURL(NSURL(string: layoutEightModel.data[indexPath.row].image), placeholderImage: UIImage(named: self.placeHolder), completed: { (downloadedImage, NSError, SDImageCacheType, NSURL) -> Void in
+        sellerCollectionView.sellerProfileImageView.sd_setImageWithURL(StringHelper.convertStringToUrl(layoutEightModel.data[indexPath.row].image), placeholderImage: UIImage(named: self.placeHolder), completed: { (downloadedImage, NSError, SDImageCacheType, NSURL) -> Void in
             if let imageView = sellerCollectionView.sellerProfileImageView {
                 if downloadedImage != nil {
                     imageView.fadeInImageWithImage(downloadedImage)
@@ -1497,7 +1498,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         if layoutEightModel.data[indexPath.row].data.count >= 1 {
             sellerCollectionView.productOneImageView.target = layoutEightModel.data[indexPath.row].data[0].target.targetUrl
             sellerCollectionView.productOneImageView.targetType = layoutEightModel.data[indexPath.row].data[0].target.targetType
-            sellerCollectionView.productOneImageView.sd_setImageWithURL(NSURL(string: layoutEightModel.data[indexPath.row].data[0].image), placeholderImage: UIImage(named: self.placeHolder), completed: { (downloadedImage, NSError, SDImageCacheType, NSURL) -> Void in
+            sellerCollectionView.productOneImageView.sd_setImageWithURL(StringHelper.convertStringToUrl(layoutEightModel.data[indexPath.row].data[0].image), placeholderImage: UIImage(named: self.placeHolder), completed: { (downloadedImage, NSError, SDImageCacheType, NSURL) -> Void in
                 if let imageView = sellerCollectionView.productOneImageView {
                     if downloadedImage != nil {
                         imageView.fadeInImageWithImage(downloadedImage)
@@ -1510,7 +1511,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         if layoutEightModel.data[indexPath.row].data.count >= 2 {
             sellerCollectionView.productTwoImageView.target = layoutEightModel.data[indexPath.row].data[1].target.targetUrl
             sellerCollectionView.productTwoImageView.targetType = layoutEightModel.data[indexPath.row].data[1].target.targetType
-            sellerCollectionView.productTwoImageView.sd_setImageWithURL(NSURL(string: layoutEightModel.data[indexPath.row].data[1].image), placeholderImage: UIImage(named: self.placeHolder), completed: { (downloadedImage, NSError, SDImageCacheType, NSURL) -> Void in
+            sellerCollectionView.productTwoImageView.sd_setImageWithURL(StringHelper.convertStringToUrl(layoutEightModel.data[indexPath.row].data[1].image), placeholderImage: UIImage(named: self.placeHolder), completed: { (downloadedImage, NSError, SDImageCacheType, NSURL) -> Void in
                 if let imageView = sellerCollectionView.productTwoImageView {
                     if downloadedImage != nil {
                         imageView.fadeInImageWithImage(downloadedImage)
@@ -1522,7 +1523,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         if layoutEightModel.data[indexPath.row].data.count >= 3 {
             sellerCollectionView.productThreeImageView.target = layoutEightModel.data[indexPath.row].data[2].target.targetUrl
             sellerCollectionView.productThreeImageView.targetType = layoutEightModel.data[indexPath.row].data[2].target.targetType
-            sellerCollectionView.productThreeImageView.sd_setImageWithURL(NSURL(string: layoutEightModel.data[indexPath.row].data[2].image), placeholderImage: UIImage(named: self.placeHolder), completed: { (downloadedImage, NSError, SDImageCacheType, NSURL) -> Void in
+            sellerCollectionView.productThreeImageView.sd_setImageWithURL(StringHelper.convertStringToUrl(layoutEightModel.data[indexPath.row].data[2].image), placeholderImage: UIImage(named: self.placeHolder), completed: { (downloadedImage, NSError, SDImageCacheType, NSURL) -> Void in
                 if let imageView = sellerCollectionView.productThreeImageView {
                     if downloadedImage != nil {
                         imageView.fadeInImageWithImage(downloadedImage)
@@ -1716,7 +1717,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         fullImageCollectionViewCell.target = layoutTwoModel.data[indexPath.row].target.targetUrl
         fullImageCollectionViewCell.targetType = layoutTwoModel.data[indexPath.row].target.targetType
         
-        fullImageCollectionViewCell.itemProductImageView.sd_setImageWithURL(NSURL(string: layoutTwoModel.data[indexPath.row].image), placeholderImage: UIImage(named: placeHolder), completed: { (downloadedImage, NSError, SDImageCacheType, NSURL) -> Void in
+        fullImageCollectionViewCell.itemProductImageView.sd_setImageWithURL(StringHelper.convertStringToUrl(layoutTwoModel.data[indexPath.row].image), placeholderImage: UIImage(named: placeHolder), completed: { (downloadedImage, NSError, SDImageCacheType, NSURL) -> Void in
             if let imageView = fullImageCollectionViewCell.itemProductImageView {
                 if downloadedImage != nil {
                     imageView.fadeInImageWithImage(downloadedImage)
@@ -1775,7 +1776,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     }
     
     //MARK: - 
-    //MARK: -
+    //MARK: - Show Fab
     func showFAB() {
         let storyBoard: UIStoryboard = UIStoryboard(name: "FAB", bundle: nil)
         var fabViewController: FABViewController?
@@ -1792,7 +1793,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             fabViewController!.addtextAndIconsWithLeftText("MESSAGING", rightText: "\(SessionManager.getUnReadMessagesCount()) unread message(s)", icon: "fab_messaging", isProfile: false)
             fabViewController!.addtextAndIconsWithLeftText("CATEGORIES", rightText: "", icon: "fab_promo", isProfile: false)
             fabViewController!.addtextAndIconsWithLeftText("HELP", rightText: "", icon: "fab_help", isProfile: false)
-            fabViewController!.addtextAndIconsWithLeftText("PROFILE", rightText: "\(SessionManager.userFullName()) \(SessionManager.city()) \(SessionManager.province())", icon: SessionManager.profileImageStringUrl(), isProfile: true)
+            fabViewController!.addtextAndIconsWithLeftText("PROFILE", rightText: "\(SessionManager.userFullName()) \n \(SessionManager.city()) \(SessionManager.province())", icon: SessionManager.profileImageStringUrl(), isProfile: true)
             self.tabBarController!.presentViewController(fabViewController!, animated: false) { () -> Void in
                 
             }

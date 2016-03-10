@@ -489,18 +489,36 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
             if successful {
                 self.productDetailsModel = ProductDetailsModel.parseDataWithDictionary(responseObject)
                 self.productId = self.productDetailsModel.id
-                if !self.isFromCart {
-                    self.unitId = self.productDetailsModel.productUnits[0].productUnitId
+                if self.productDetailsModel.isSuccessful {
+                    if !self.isFromCart {
+                        self.unitId = self.productDetailsModel.productUnits[0].productUnitId
+                    }
+                    
+                    self.getUnitIdIndexFrom()
+                    
+                    self.attributes = self.productDetailsModel.attributes
+                    self.requestSellerDetails()
+                    
+                    self.productRequest = true
+                    self.productSuccess = true
+                    self.checkRequests()
+                } else {
+                    self.productRequest = true
+                    self.productSuccess = false
+                    self.checkRequests()
+                    //Error in api requirements
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    let alert = UIAlertController(title: ProductStrings.alertError, message: errorModel.message, preferredStyle: UIAlertControllerStyle.Alert)
+                    let okButton = UIAlertAction(title: ProductStrings.alertOk, style: UIAlertActionStyle.Cancel) { (alert) -> Void in
+                        self.barCloseAction()
+                    }
+                    
+                    alert.addAction(okButton)
+                    self.presentViewController(alert, animated: true, completion: nil)
+                    self.yiHud?.hide()
                 }
-                
-                self.getUnitIdIndexFrom()
-                
-                self.attributes = self.productDetailsModel.attributes
-                self.requestSellerDetails()
-                
-                self.productRequest = true
-                self.productSuccess = true
-                self.checkRequests()
+        
+               
             } else {
                 self.productRequest = true
                 self.productSuccess = false
