@@ -150,6 +150,8 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         self.registerCellWithNibName(self.twoColumnGridCell)
         
         self.fireGetHomePageData(true)
+        
+        self.changeDashBoardToCategory()
 
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         
@@ -365,6 +367,24 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             
             return false
         }
+    }
+    
+    //MARK: - 
+    //MARK: - Change DashBoard to Category
+    func changeDashBoardToCategory() {
+        var viewControllers: [UIViewController] = self.tabBarController!.viewControllers as! [UIViewController]
+        
+        let webViewController: WebViewController = WebViewController(nibName: "WebViewController", bundle: nil) as WebViewController
+        webViewController.urlString = APIAtlas.category
+        webViewController.title = WebviewStrings.categories
+        viewControllers[1] = webViewController
+        self.tabBarController!.viewControllers = viewControllers
+        
+        
+        let unselectedImage: UIImage = UIImage(named: "dashboard-category")!.imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
+        let item1: UITabBarItem = self.tabBarController?.tabBar.items![1] as! UITabBarItem
+        item1.selectedImage = unselectedImage
+        item1.image = unselectedImage
     }
     
     //MARK: - Circular Drawer View
