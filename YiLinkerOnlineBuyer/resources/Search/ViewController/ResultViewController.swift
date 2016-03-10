@@ -617,7 +617,7 @@ extension ResultViewController: UICollectionViewDataSource, UICollectionViewDele
         case .Grid :
             let cell: ProductResultGridCollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifierGrid, forIndexPath: indexPath) as! ProductResultGridCollectionViewCell
             var tempModel: SearchResultModel = self.productCollectionViewData[indexPath.row]
-            cell.setProductImage(tempModel.imageUrl)
+            cell.setProductImage(tempModel.imageUrlThumbnail)
             cell.setProductName(tempModel.productName)
             cell.setOriginalPrice(tempModel.originalPrice.formatToPeso())
             cell.setNewPrice(tempModel.newPrice.formatToPeso())
@@ -626,7 +626,7 @@ extension ResultViewController: UICollectionViewDataSource, UICollectionViewDele
         case .List :
             let cell: ProductResultListCollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifierList, forIndexPath: indexPath) as! ProductResultListCollectionViewCell
             var tempModel: SearchResultModel = self.productCollectionViewData[indexPath.row]
-            cell.setProductImage(tempModel.imageUrl)
+            cell.setProductImage(tempModel.imageUrlThumbnail)
             cell.setProductName(tempModel.productName)
             cell.setOriginalPrice(tempModel.originalPrice.formatToPeso())
             cell.setNewPrice(tempModel.newPrice.formatToPeso())
@@ -729,6 +729,8 @@ extension ResultViewController: UITableViewDataSource, UITableViewDelegate {
         var reload_distance: CGFloat = 10
         var temp: CGFloat = h + reload_distance
         self.closeKeyboard()
+        self.searchBarView?.hideSearchTypePicker()
+        self.searchBarView?.hideAutoComplete()
         if y > temp {
             self.fireSearch()
         }

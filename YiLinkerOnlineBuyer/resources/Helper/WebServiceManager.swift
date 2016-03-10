@@ -800,9 +800,12 @@ class WebServiceManager: NSObject {
         if Reachability.isConnectedToNetwork() {
             manager.POST(url, parameters: parameters, success: {
                 (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+                
+                println(responseObject)
                 actionHandler(successful: true, responseObject: responseObject, requestErrorType: .NoError)
                 }, failure: {
                     (task: NSURLSessionDataTask!, error: NSError!) in
+                    println(error)
                     if let task = task.response as? NSHTTPURLResponse {
                         if error.userInfo != nil {
                             actionHandler(successful: false, responseObject: error.userInfo!, requestErrorType: .ResponseError)
