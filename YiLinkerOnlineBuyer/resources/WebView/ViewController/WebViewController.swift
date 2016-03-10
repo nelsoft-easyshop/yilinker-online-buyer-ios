@@ -51,6 +51,8 @@ class WebViewController: UIViewController, UIWebViewDelegate, EmptyViewDelegate 
     
     var hud: YiHUD?
     
+    var isBackButtonVisible: Bool = true
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.webView.delegate = self
@@ -79,7 +81,10 @@ class WebViewController: UIViewController, UIWebViewDelegate, EmptyViewDelegate 
             self.loadUrlWithUrlString(self.urlString)
         }
         
-        self.backButton()
+        if isBackButtonVisible {
+            self.backButton()
+        }
+
         self.edgesForExtendedLayout = UIRectEdge.None
         self.pleaseLabel.text = WebviewStrings.please
     }
