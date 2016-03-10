@@ -111,6 +111,8 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     override func viewWillAppear(animated: Bool) {
         UIApplication.sharedApplication().statusBarStyle = .LightContent
         self.navigationController?.setNavigationBarHidden(true, animated: true)
+        
+        self.setupSearchBar()
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -201,6 +203,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         self.searchBarView = SearchBarView.initSearchBar()
         self.searchBarView?.showSearchBarToView(self.topBarView, mainView: self.view)
         self.searchBarView?.delegate = self
+        self.searchBarView?.setProfileImage(SessionManager.profileImageStringUrl())
         self.view.layoutIfNeeded()
     }
     
@@ -1921,10 +1924,11 @@ extension HomeContainerViewController: SearchBarViewDelegate {
                                 searchBarView.passSearchSuggestions(self.suggestions)
                             }
                         }
-//                        else {
-//                            let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
-//                            Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
-//                        }
+                        else {
+                            self.suggestions.removeAll(keepCapacity: false)
+                            self.suggestions.append(SearchSuggestionModel(suggestion: SearchBarView.noResultsString, imageURL: "", searchUrl: ""))
+                            searchBarView.passSearchSuggestions(self.suggestions)
+                        }
                     }
                 } else {
                     UIAlertController.displaySomethingWentWrongError(self)

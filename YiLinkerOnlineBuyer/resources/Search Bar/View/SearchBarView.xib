@@ -28,7 +28,7 @@
                         <action selector="buttonAction:" destination="iN0-l3-epB" eventType="touchUpInside" id="wtc-5G-0Cy"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CFL-5a-1jB">
+                <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CFL-5a-1jB">
                     <rect key="frame" x="342" y="10" width="25" height="25"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="25" id="Jq9-xV-Tdw"/>

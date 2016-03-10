@@ -122,6 +122,7 @@ class ResultViewController: UIViewController {
         self.initializeViews()
         self.addBNavBarBackButton()
         self.registerNibs()
+        self.hideDimView()
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -150,6 +151,7 @@ class ResultViewController: UIViewController {
             self.initializeTapGestures()
             self.actionViewHeight.constant = 45
         } else {
+            self.removeGesture()
             self.actionViewHeight.constant = 0
         }
         self.view.layoutIfNeeded()
@@ -203,7 +205,7 @@ class ResultViewController: UIViewController {
         } else {
             self.searchBarView?.searchTypeImageView.image  = UIImage(named: "seller-icon")
         }
-        
+        self.searchBarView?.setProfileImage(SessionManager.profileImageStringUrl())
         self.searchBarView?.delegate = self
         self.view.layoutIfNeeded()
     }
@@ -262,6 +264,20 @@ class ResultViewController: UIViewController {
         //Add tap getsure to close keyboard
 //        let tapGesture = UITapGestureRecognizer(target: self, action: "closeKeyboard")
 //        self.view.addGestureRecognizer(tapGesture)
+    }
+    
+    func removeGesture() {
+        if filterTapGesture != nil {
+            self.sortView.removeGestureRecognizer(filterTapGesture)
+        }
+        
+        if sortTapGesture != nil {
+            self.filterView.removeGestureRecognizer(sortTapGesture)
+        }
+        
+        if viewTypeTapGesture != nil {
+            self.viewTypeView.removeGestureRecognizer(viewTypeTapGesture)
+        }
     }
     
     //MARK: - Fucntions Pass Details
@@ -841,10 +857,11 @@ extension ResultViewController: SearchBarViewDelegate {
                                 searchBarView.passSearchSuggestions(self.suggestions)
                             }
                         }
-//                        else {
-//                            let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
-//                            Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
-//                        }
+                        else {
+                            self.suggestions.removeAll(keepCapacity: false)
+                            self.suggestions.append(SearchSuggestionModel(suggestion: SearchBarView.noResultsString, imageURL: "", searchUrl: ""))
+                            searchBarView.passSearchSuggestions(self.suggestions)
+                        }
                     }
                 } else {
                     UIAlertController.displaySomethingWentWrongError(self)
