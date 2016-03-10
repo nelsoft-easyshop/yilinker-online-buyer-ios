@@ -212,6 +212,18 @@ class MyPointsTableViewController: UITableViewController, PointsBreakdownTableVi
         }
     }
     
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        if myPointsHistory.data.count != 0 {
+            if indexPath.row == 1 {
+                return 0
+            } else {
+                return UITableViewAutomaticDimension
+            }
+        } else {
+            return UITableViewAutomaticDimension
+        }
+    }
+    
     override func scrollViewDidEndDragging(aScrollView: UIScrollView, willDecelerate decelerate: Bool) {
         var offset: CGPoint = aScrollView.contentOffset
         var bounds: CGRect = aScrollView.bounds
@@ -288,7 +300,7 @@ class MyPointsTableViewController: UITableViewController, PointsBreakdownTableVi
 
             myPointsPage++
             
-            let url: String = "\(APIAtlas.getPointsHistory)?access_token=\(SessionManager.accessToken())&perPage=15&page=\(myPointsPage)"
+            let url: String = "\(APIAtlas.getPointsHistory)?access_token=\(SessionManager.accessToken())&perPage=10&page=\(myPointsPage)"
             
             manager.GET(url, parameters: nil, success: {
                 (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
@@ -300,7 +312,7 @@ class MyPointsTableViewController: UITableViewController, PointsBreakdownTableVi
                 let pointHistory: MyPointsHistoryModel = MyPointsHistoryModel.parseDataWithDictionary(responseObject as! NSDictionary)
                 println("Count 1 \(self.myPointsHistory.data.count)")
                 
-                if pointHistory.data.count < 15 {
+                if pointHistory.data.count < 10 {
                     self.isMyPointsEnd = true
                 }
                 
