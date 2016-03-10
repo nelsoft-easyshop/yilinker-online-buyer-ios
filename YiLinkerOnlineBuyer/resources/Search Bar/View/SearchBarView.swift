@@ -24,6 +24,8 @@ protocol SearchBarViewDelegate {
 
 class SearchBarView: UIView {
     
+    static let noResultsString : String = StringHelper.localizedStringWithKey("NORESULT_LOCALIZE_KEY")
+    
     var delegate: SearchBarViewDelegate?
     
     var parentView: UIView?
@@ -50,6 +52,7 @@ class SearchBarView: UIView {
     var searchAutoCompleteTableView: UITableView?
     var isAutoCompleteHidden: Bool = true
     var isQRCode: Bool = true
+    var searchType: SearchType = .Product
     
     var searchSuggestions: [SearchSuggestionModel] = []
     
@@ -71,7 +74,7 @@ class SearchBarView: UIView {
     func showSearchBarToView(view: UIView, mainView: UIView) {
         self.parentView = mainView
         self.topBarView = view
-        
+
         self.searchView.frame = CGRectMake(0, 0, view.frame.size.width, view.frame.size.height)
         self.searchView.layer.cornerRadius = 15
         self.searchTypeView.layer.cornerRadius = 15
@@ -80,11 +83,6 @@ class SearchBarView: UIView {
             self.scanQRButton.setImage(UIImage(named: "scan-qr-icon"), forState: .Normal)
         } else {
             self.scanQRButton.setImage(UIImage(named: "back-white"), forState: .Normal)
-        }
-        
-        if SessionManager.isLoggedIn() {
-            self.tempImageView.sd_setImageWithURL(NSURL(string: SessionManager.profileImageStringUrl()), placeholderImage: UIImage(named: "dummy-placeholder"))
-            self.profileButton.setImage(self.tempImageView.image, forState: .Normal)
         }
     
         self.searchTextField.addTarget(self, action: "textFieldDidReturn:", forControlEvents: .EditingDidEndOnExit)
@@ -110,6 +108,16 @@ class SearchBarView: UIView {
         }
         
         view.layoutIfNeeded()
+    }
+    
+    func setProfileImage(url: String) {
+        if SessionManager.isLoggedIn() && url.isNotEmpty() {
+            self.tempImageView.sd_setImageWithURL(NSURL(string: url), placeholderImage: UIImage(named: "dummy-placeholder"), completed: { (downloadedImage, NSError, SDImageCacheType, NSURL) -> Void in
+                self.profileButton.setImage(self.tempImageView.image, forState: .Normal)
+            })
+        }
+        
+        self.topBarView!.layoutIfNeeded()
     }
     
     //MARK: -
@@ -197,7 +205,8 @@ class SearchBarView: UIView {
             self.searchTypeTableView = UITableView(frame: CGRectMake(self.searchView.frame.origin.x, self.topBarView!.frame.origin.y + self.frame.size.height - 5, 90, 60))
             self.searchTypeTableView!.layer.cornerRadius = 10
             self.searchTypeTableView!.alpha = 0
-            self.applyPlainShadow(self.searchTypeTableView!)
+            self.searchTypeTableView!.layer.borderColor = Constants.Colors.backgroundGray.CGColor
+            self.searchTypeTableView!.layer.borderWidth = 1
             
             var nib = UINib(nibName: "SearchTypeTableViewCell", bundle: nil)
             self.searchTypeTableView!.registerNib(nib, forCellReuseIdentifier: "SearchTypeTableViewCell")
@@ -232,14 +241,16 @@ class SearchBarView: UIView {
         if self.searchSuggestions.count > 10 {
             tableHeight = 300
         } else {
-            self.searchSuggestions.count * 30
+            tableHeight = self.searchSuggestions.count * 30
         }
         
         if self.searchAutoCompleteTableView == nil {
             self.searchAutoCompleteTableView = UITableView(frame: CGRectMake(self.searchView.frame.origin.x + self.searchTypeView.frame.width + 10, self.topBarView!.frame.origin.y + self.frame.size.height - 5, self.searchTextField.frame.width + 20, CGFloat(tableHeight)))
             self.searchAutoCompleteTableView!.layer.cornerRadius = 10
             self.searchAutoCompleteTableView!.alpha = 0
-            self.applyPlainShadow(self.searchAutoCompleteTableView!)
+            self.searchAutoCompleteTableView!.layer.borderColor = Constants.Colors.backgroundGray.CGColor
+            self.searchAutoCompleteTableView!.layer.borderWidth = 1
+            
             
             var nib = UINib(nibName: "SearchTypeTableViewCell", bundle: nil)
             self.searchAutoCompleteTableView!.registerNib(nib, forCellReuseIdentifier: "SearchTypeTableViewCell")
@@ -302,16 +313,25 @@ extension SearchBarView: UITableViewDataSource, UITableViewDelegate {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         if tableView == self.searchTypeTableView {
             self.hideSearchTypePicker()
-            self.searchTextField.text = ""
             self.searchTypeImageView.image = UIImage(named: self.searchTypeImage[indexPath.row])
             if indexPath.row == 0 {
+                if self.searchType != .Product {
+                    self.searchTextField.text = ""
+                }
+                self.searchType = .Product
                 self.delegate?.searchBarView(self, didSeacrhTypeChanged: .Product)
             } else if indexPath.row == 1 {
+                if self.searchType != .Seller {
+                    self.searchTextField.text = ""
+                }
+                self.searchType = .Seller
                 self.delegate?.searchBarView(self, didSeacrhTypeChanged: .Seller)
             }
         } else {
-            self.hideAutoComplete()
-            self.delegate?.searchBarView(self, didChooseSuggestion: self.searchSuggestions[indexPath.row])
+            if self.searchSuggestions[indexPath.row].suggestion != SearchBarView.noResultsString {
+                self.hideAutoComplete()
+                self.delegate?.searchBarView(self, didChooseSuggestion: self.searchSuggestions[indexPath.row])
+            }
         }
     }
 }
