@@ -18,7 +18,10 @@ class ProductSellerViewCollectionViewCell: UICollectionViewCell {
     }
     
     func setImage(image: String) {
-        self.imageView.sd_setImageWithURL(NSURL(string: image)!, placeholderImage: UIImage(named: "dummy-placeholder"))
+        var url : NSString = image
+        var urlStr : NSString = url.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
+        var imageURL = NSURL(string: urlStr as String)!
+        self.imageView.sd_setImageWithURL(imageURL, placeholderImage: UIImage(named: "dummy-placeholder"))
     }
 
 }
