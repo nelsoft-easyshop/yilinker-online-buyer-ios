@@ -1631,6 +1631,8 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         let indexes: [NSIndexPath] = self.collectionView.indexPathsForVisibleItems() as! [NSIndexPath]
         var isShowBackToTop: Bool = true
         self.closeKeyboard()
+        self.searchBarView!.hideSearchTypePicker()
+        self.searchBarView!.hideAutoComplete()
         for index in indexes {
             if index.section == 2 {
                 isShowBackToTop = false

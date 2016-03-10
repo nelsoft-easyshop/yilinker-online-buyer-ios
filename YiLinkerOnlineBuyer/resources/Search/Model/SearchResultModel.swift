@@ -15,15 +15,17 @@ class SearchResultModel: NSObject {
     var originalPrice: String = ""
     var newPrice: String = ""
     var imageUrl: String = ""
+    var imageUrlThumbnail: String = ""
     var discount: Int = 0
     var slug: String = ""
     
-    init(id: String, productName: String, originalPrice: String, newPrice: String, imageUrl: String,discount: Int, slug: String){
+    init(id: String, productName: String, originalPrice: String, newPrice: String, imageUrl: String, imageUrlThumbnail: String, discount: Int, slug: String){
         self.id = id
         self.productName = productName
         self.originalPrice = originalPrice
         self.newPrice = newPrice
         self.imageUrl = imageUrl
+        self.imageUrlThumbnail = imageUrlThumbnail
         self.discount = discount
         self.slug = slug
     }
@@ -34,6 +36,7 @@ class SearchResultModel: NSObject {
         var originalPrice: String = ""
         var newPrice: String = ""
         var imageUrl: String = ""
+        var imageUrlThumbnail: String = ""
         var discount: Int = 0
         var slug: String = ""
         
@@ -67,6 +70,12 @@ class SearchResultModel: NSObject {
             }
         }
         
+        if let value: AnyObject = dictionary["imageUrlThumbnail"] {
+            if value as! NSObject != NSNull() {
+                imageUrlThumbnail = value as! String
+            }
+        }
+        
         if let value: AnyObject = dictionary["discount"] {
             if value as! NSObject != NSNull() {
                 discount = value as! Int
@@ -79,7 +88,7 @@ class SearchResultModel: NSObject {
             }
         }
         
-        return SearchResultModel(id: id, productName: productName, originalPrice: originalPrice, newPrice: newPrice, imageUrl: imageUrl, discount: discount, slug: slug)
+        return SearchResultModel(id: id, productName: productName, originalPrice: originalPrice, newPrice: newPrice, imageUrl: imageUrl, imageUrlThumbnail: imageUrlThumbnail, discount: discount, slug: slug)
     }
 
 }
