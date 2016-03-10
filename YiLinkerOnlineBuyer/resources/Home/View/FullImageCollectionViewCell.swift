@@ -17,7 +17,8 @@ class FullImageCollectionViewCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-
+        
     }
+    
     
 }
