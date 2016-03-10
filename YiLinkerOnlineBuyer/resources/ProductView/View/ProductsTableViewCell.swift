@@ -62,8 +62,10 @@ class ProductsTableViewCell: UITableViewCell, UICollectionViewDelegate, UICollec
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        let productModel: HomePageProductModel = self.productModels[indexPath.row]
-        self.delegate?.productstableViewCellDidTapProductWithTarget(productModel.target, type: productModel.targetType, productId: productModel.productId)
+        if self.productModels.count > indexPath.row {
+            let productModel: HomePageProductModel = self.productModels[indexPath.row]
+            self.delegate?.productstableViewCellDidTapProductWithTarget(productModel.target, type: productModel.targetType, productId: productModel.productId)
+        }
     }
     
     @IBAction func moreSellerProduct(sender: AnyObject) {

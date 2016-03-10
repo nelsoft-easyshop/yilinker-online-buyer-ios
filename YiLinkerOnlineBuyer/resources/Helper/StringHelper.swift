@@ -41,4 +41,10 @@ class StringHelper: NSObject {
         
         return NSDictionary()
     }
+    
+    class func convertStringToUrl(string: String) -> NSURL {
+        var url : NSString = string
+        var urlStr : NSString = url.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
+        return NSURL(string: urlStr as String)!
+    }
 }

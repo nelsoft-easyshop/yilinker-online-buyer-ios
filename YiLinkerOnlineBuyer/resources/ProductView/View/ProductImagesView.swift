@@ -177,6 +177,11 @@ class ProductImagesView: UIView, UICollectionViewDataSource, UICollectionViewDel
         self.imagesModel = model.images
 
         self.pageControl.numberOfPages = self.imagesModel.count
+        
+        for imageModel in self.imagesModel {
+            self.loadAllImages(imageModel.fullImageLocation)
+        }
+        
         self.collectionView.reloadData()
     }
 
@@ -199,9 +204,15 @@ class ProductImagesView: UIView, UICollectionViewDataSource, UICollectionViewDel
         }
         
         self.images = images
-        println(self.images)
         self.pageControl.numberOfPages = self.images.count
         self.collectionView.reloadData()
+    }
+    
+    //MARK: - 
+    //MARK: - Load All Images
+    func loadAllImages(image: String) {
+        let imageView: UIImageView = UIImageView(frame: CGRectZero)
+        imageView.sd_setImageWithURL(StringHelper.convertStringToUrl(image))
     }
 }
 
