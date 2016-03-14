@@ -1270,7 +1270,7 @@ Phiippines</string>
                                         <constraint firstAttribute="width" constant="20" id="aGK-xB-tPi"/>
                                     </constraints>
                                 </imageView>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="CANCEL THIS ORDER" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="7" translatesAutoresizingMaskIntoConstraints="NO" id="pCM-TD-2h3">
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CANCEL THIS ORDER" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="7" translatesAutoresizingMaskIntoConstraints="NO" id="pCM-TD-2h3">
                                     <rect key="frame" x="38" y="4" width="133" height="21"/>
                                     <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="14"/>
                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1297,7 +1297,7 @@ Phiippines</string>
                             </connections>
                         </button>
                     </subviews>
-                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="trailing" secondItem="1JB-FW-kJb" secondAttribute="trailing" id="3sy-hJ-TnX"/>
                         <constraint firstItem="1JB-FW-kJb" firstAttribute="leading" secondItem="gOp-uy-NuM" secondAttribute="leading" id="OGw-pW-33w"/>

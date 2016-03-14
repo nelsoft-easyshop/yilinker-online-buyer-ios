@@ -122,6 +122,10 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
             self.table[indexSection].transactions[indexRow].hasProductFeedback = false
             self.hasProductFeedback = self.table[indexSection].transactions[indexRow].hasProductFeedback
         }
+    }
+    
+    
+    override func viewDidAppear(animated: Bool) {
         self.fireTransactionProductDetailsDeliveryStatus()
         self.fireTransactionProductDetails()
     }
@@ -467,7 +471,6 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
         let feedbackView = TransactionLeaveSellerFeedbackTableViewController(nibName: "TransactionLeaveSellerFeedbackTableViewController", bundle: nil)
         feedbackView.edgesForExtendedLayout = UIRectEdge.None
         self.navigationController?.pushViewController(feedbackView, animated: true)
-        self.myTimer!.invalidate()
     }
     
     //MARK: Navigation bar
@@ -485,7 +488,6 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
     
     func back() {
         self.navigationController!.popViewControllerAnimated(true)
-        self.myTimer!.invalidate()
     }
     
     //MARK: Delivery Status
@@ -561,7 +563,6 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
         deliveryLogs.edgesForExtendedLayout = UIRectEdge.None
         deliveryLogs.orderProductId = orderProductId
         deliveryLogs.transactionId = transactionId
-        self.myTimer!.invalidate()
         self.navigationController?.pushViewController(deliveryLogs, animated: true)
     }
     
@@ -626,8 +627,7 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
         cancelOrder.providesPresentationContextTransitionStyle = true
         cancelOrder.definesPresentationContext = true
         cancelOrder.view.frame.origin.y = cancelOrder.view.frame.size.height
-        self.tabBarController?.presentViewController(cancelOrder, animated: true, completion: nil)
-        self.myTimer!.invalidate()
+        self.presentViewController(cancelOrder, animated: true, completion: nil)
     }
     
     func leaveProductFeedback(tag: Int) {
@@ -637,7 +637,6 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
             feedbackView.orderProductId = self.orderProductId.toInt()!
             feedbackView.productId = self.productId.toInt()!
             self.navigationController?.pushViewController(feedbackView, animated: true)
-            self.myTimer!.invalidate()
         } else {
             self.showView()
             var attributeModal = ViewFeedBackViewController(nibName: "ViewFeedBackViewController", bundle: nil)
@@ -650,7 +649,6 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
             attributeModal.definesPresentationContext = true
             attributeModal.screenWidth = self.view.frame.width
             self.tabBarController?.presentViewController(attributeModal, animated: true, completion: nil)
-            self.myTimer!.invalidate()
         }
     }
 
@@ -690,21 +688,18 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
         successController.providesPresentationContextTransitionStyle = true
         successController.definesPresentationContext = true
         successController.view.backgroundColor = UIColor.clearColor()
-        self.tabBarController?.presentViewController(successController, animated: true, completion: nil)
-        self.myTimer!.invalidate()
+        self.presentViewController(successController, animated: true, completion: nil)
     }
     
     // MARK: - TransactionCancelOrderSuccessViewControllerDelegate
     func closeCancelOrderSuccessViewController() {
         self.navigationController?.popToRootViewControllerAnimated(true)
-        self.myTimer!.invalidate()
         self.dismissView()
     }
     
     func returnToDashboardAction() {
         self.dismissView()
         self.navigationController?.popToRootViewControllerAnimated(true)
-        self.myTimer!.invalidate()
     }
     
     //MARK: Get transactions details by id
@@ -718,7 +713,7 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
             let data = NSJSONSerialization.dataWithJSONObject(responseObject, options: nil, error: nil)
              var formattedRating: String = NSString(data: data!, encoding: NSUTF8StringEncoding) as! String
             
-            println(formattedRating)
+            self.hideProgressBar()
             
             if responseObject["isSuccessful"] as! Bool {
                 self.transactionProductDetailsModel = TransactionProductDetailsModel.parseFromDataDictionary(responseObject as! NSDictionary)
@@ -735,11 +730,6 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
             }
             
             self.tableView.reloadData()
-            
-            self.hideProgressBar()
-            
-            self.refreshPage = true
-            self.timerRefresh()
             
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
@@ -760,7 +750,6 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
     
     //MARK: Get transactions details by id
     func fireTransactionProductDetailsDeliveryStatus() {
-        self.showProgressBar()
         let manager = APIManager.sharedInstance
         
         manager.GET(APIAtlas.transactionDeliveryStatus+"\(SessionManager.accessToken())&transactionId=\(self.transactionId)", parameters: nil, success: {
@@ -769,8 +758,6 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
             if responseObject["isSuccessful"] as! Bool {
                 self.transactionDeliveryStatus = TransactionProductDetailsDeliveryStatusModel.parseDataFromDictionary(responseObject as! NSDictionary)
             }
-    
-            self.hideProgressBar()
             
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
                 //self.yiHud?.hide()
@@ -786,22 +773,23 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
                     self.hideProgressBar()
                     self.tableView.reloadData()
                 }
-                self.refreshtag = 1002
                 
+                self.hideProgressBar()
         })
     }
     
     //MARK: Get transactions details by id
     func fireTransactionProductDetailsDeliveryStatusRefresh() {
-        self.showProgressBar()
         let manager = APIManager.sharedInstance
         manager.GET(APIAtlas.transactionDeliveryStatus+"\(SessionManager.accessToken())&transactionId=\(self.transactionId)", parameters: nil, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
+             self.hideProgressBar()
+            
             if responseObject["isSuccessful"] as! Bool {
                 self.transactionDeliveryStatus = TransactionProductDetailsDeliveryStatusModel.parseDataFromDictionary(responseObject as! NSDictionary)
             }
-            self.hideProgressBar()
+            
             }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
                 //self.yiHud?.hide()
                 let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
@@ -815,6 +803,7 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
                     self.tableView.reloadData()
                     self.hideProgressBar()
                 }
+                
                 self.refreshtag = 1002
                 
         })
@@ -868,29 +857,13 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
     }
     
     func showProgressBar() {
-        if self.refreshPage {
-            UIApplication.sharedApplication().networkActivityIndicatorVisible = true
-        } else {
-            self.showHUD()
-        }
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+        self.showHUD()
     }
     
     func hideProgressBar() {
-        if self.refreshPage {
-            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-        } else {
-            self.yiHud?.hide()
-        }
-    }
-    
-    //You can create a scheduled timer which automatically adds itself to the runloop and starts firing:
-    //NSTimer.scheduledTimerWithTimeInterval(0.5, target: self, selector: "timerDidFire:", userInfo: userInfo, repeats: true)
-    func timerRefresh(){
-        time++
-        //Or, you can keep your current code, and add the timer to the runloop when you're ready for it:
-        myTimer = NSTimer.scheduledTimerWithTimeInterval(10, target: self, selector: Selector("fireTransactionProductDetailsDeliveryStatusRefresh"), userInfo: nil, repeats: true)
-        //myTimer = NSTimer(timeInterval: 10, target: self, selector: "fireTransactionProductDetailsDeliveryStatusRefresh", userInfo: nil, repeats: true)
-        //NSRunLoop.currentRunLoop().addTimer(myTimer!, forMode: NSRunLoopCommonModes)
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+        self.yiHud?.hide()
     }
 }
 
