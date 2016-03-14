@@ -3798,7 +3798,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "dbafa5c7-e762-42e0-909d-5324f8b26cb1";
 				SWIFT_OBJC_BRIDGING_HEADER = "YiLinkerOnlineBuyer/Resources/Helper/YiLinkerOnlineBuyer-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -3826,7 +3826,7 @@
 					"\"${PODS_ROOT}/Google/Libraries” $(inherited) \"${PODS_ROOT}/GoogleAppUtilities/Libraries\" $(inherited) \"${PODS_ROOT}/GoogleAuthUtilities/Libraries\" $(inherited) \"${PODS_ROOT}/GoogleInterchangeUtilities/Libraries\" $(inherited) \"${PODS_ROOT}/GoogleNetworkingUtilities/Libraries\" $(inherited) \"${PODS_ROOT}/GoogleSignIn/Libraries\" $(inherited) \"${PODS_ROOT}/GoogleSymbolUtilities/Libraries\" $(inherited) \"${PODS_ROOT}/GoogleUtilities/Libraries\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "dbafa5c7-e762-42e0-909d-5324f8b26cb1";
 				SWIFT_OBJC_BRIDGING_HEADER = "YiLinkerOnlineBuyer/Resources/Helper/YiLinkerOnlineBuyer-Bridging-Header.h";
 			};
 			name = Release;
