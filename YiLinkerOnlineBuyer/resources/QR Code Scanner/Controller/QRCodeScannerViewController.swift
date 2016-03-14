@@ -27,6 +27,8 @@ class QRCodeScannerViewController: UIViewController {
     
     var isTorchOn: Bool = false
     
+    var scanCount: Int = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -77,6 +79,11 @@ class QRCodeScannerViewController: UIViewController {
         captureSession?.stopRunning()
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        self.scanCount = 0
+    }
+    
     @IBAction func backAction(sender: AnyObject) {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
@@ -111,10 +118,13 @@ extension QRCodeScannerViewController: AVCaptureMetadataOutputObjectsDelegate {
             // If the found metadata is equal to the QR code metadata then update the status label's text and set the bounds
             let barCodeObject = videoPreviewLayer?.transformedMetadataObjectForMetadataObject(metadataObj as AVMetadataMachineReadableCodeObject) as! AVMetadataMachineReadableCodeObject
             
-            if metadataObj.stringValue != nil {
-                var qrCode: String = metadataObj.stringValue
-                self.dismissViewControllerAnimated(true, completion: nil)
-                self.delegate?.qrCodeScannerViewController(self, code: qrCode)
+            if self.scanCount == 0{
+                if metadataObj.stringValue != nil {
+                    self.scanCount++
+                    var qrCode: String = metadataObj.stringValue
+                    self.dismissViewControllerAnimated(true, completion: nil)
+                    self.delegate?.qrCodeScannerViewController(self, code: qrCode)
+                }
             }
         }
     }

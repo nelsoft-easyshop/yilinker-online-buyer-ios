@@ -154,7 +154,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         self.fireGetHomePageData(true)
         
         self.changeDashBoardToCategory()
-
+        
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "onRegistration:",
@@ -306,7 +306,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     //For GCM Registration
     func fireCreateRegistration(registrationID : String) {
         self.showHUD()
-//        let manager: APIManager = APIManager.sharedInstance
+        //        let manager: APIManager = APIManager.sharedInstance
         let parameters: NSDictionary = [
             "registrationId": "\(registrationID)",
             "access_token"  : SessionManager.accessToken(),
@@ -372,7 +372,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         }
     }
     
-    //MARK: - 
+    //MARK: -
     //MARK: - Change DashBoard to Category
     func changeDashBoardToCategory() {
         var viewControllers: [UINavigationController] = self.tabBarController!.viewControllers as! [UINavigationController]
@@ -606,6 +606,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                 SessionManager.setLastName(self.profileModel.lastName)
                 SessionManager.setMobileNumber(self.profileModel.contactNumber)
                 SessionManager.setEmailAddress(self.profileModel.email)
+                SessionManager.setReferrerCode(self.profileModel.referrerCode)
                 
                 println("first name: \(self.profileModel.firstName)")
                 println("last name: \(self.profileModel.lastName)")
@@ -697,8 +698,8 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     //MARK: -
     //MARK: - Show HUD
     func showHUD() {
-       self.yiHud = YiHUD.initHud()
-       self.yiHud!.showHUDToView(self.view)
+        self.yiHud = YiHUD.initHud()
+        self.yiHud!.showHUDToView(self.view)
     }
     
     //MARK: -
@@ -742,7 +743,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         }
     }
     
-    //MARK: - 
+    //MARK: -
     //MARK: -
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         if self.layouts[indexPath.section] == "1" {
@@ -899,7 +900,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     func carouselCollectionViewCell(carouselCollectionViewCell: CarouselCollectionViewCell, cellForRowAtIndexPath indexPath: NSIndexPath) -> FullImageCollectionViewCell {
         let parentIndexPath: NSIndexPath = self.collectionView.indexPathForCell(carouselCollectionViewCell)!
         let layoutOneModel: LayoutOneModel = self.homePageModel.data[parentIndexPath.section] as! LayoutOneModel
-
+        
         return self.fullImageCollectionViewCellWithIndexPath(indexPath, fullImageCollectionView: carouselCollectionViewCell.collectionView)
     }
     
@@ -972,10 +973,10 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         self.view.layoutIfNeeded()
         
         /*if IphoneType.isIphone6() || IphoneType.isIphone6Plus() {
-            println((self.view.frame.size.width / 2) - 8)
-            return (self.view.frame.size.width / 2) - 8
+        println((self.view.frame.size.width / 2) - 8)
+        return (self.view.frame.size.width / 2) - 8
         } else {
-            return (self.view.frame.size.width / 2) - 8
+        return (self.view.frame.size.width / 2) - 8
         }*/
         
         return SectionHeight.sectionThreeCellWidth()
@@ -1384,7 +1385,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         
         if self.homePageModel.data[indexPath.section].isKindOfClass(LayoutOneModel) {
             let layoutOneModel: LayoutOneModel = self.homePageModel.data[indexPath.section] as! LayoutOneModel
-        
+            
             fullImageCollectionViewCell.target = layoutOneModel.data[indexPath.row].target.targetUrl
             fullImageCollectionViewCell.targetType = layoutOneModel.data[indexPath.row].target.targetType
             
@@ -1627,7 +1628,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             let webViewController: WebViewController = WebViewController(nibName: "WebViewController", bundle: nil)
             webViewController.urlString = target
             self.navigationController!.pushViewController(webViewController, animated: true)
-        } 
+        }
     }
     
     //MARK: -
@@ -1675,7 +1676,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                 (value: Bool) in
         })
     }
-
+    
     //MARK: -
     //MARK: - Back To Top
     @IBAction func backToTop(sender: AnyObject) {
@@ -1738,7 +1739,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         return dailyLoginCollectionViewCell.collectionView.frame.size.width
     }
     
-    //MARK: - 
+    //MARK: -
     //MARK: - FAB View Controller Delegate
     func fabViewController(viewController: FABViewController, didSelectIndex index: Int) {
         self.redirectToHiddenWithIndex(index)
@@ -1780,7 +1781,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         self.customTabBarController!.presentViewController(loginRegisterViewController, animated: true, completion: nil)
     }
     
-    //MARK: - 
+    //MARK: -
     //MARK: - Show Fab
     func showFAB() {
         let storyBoard: UIStoryboard = UIStoryboard(name: "FAB", bundle: nil)
@@ -1820,22 +1821,40 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
 extension HomeContainerViewController: QRCodeScannerViewControllerDelegate {
     func qrCodeScannerViewController(qrCodeScannerViewController: QRCodeScannerViewController, code: String) {
         if code.contains("http"){
-            var slug: String = ""
-            if let range = code.rangeOfString("/", options: NSStringCompareOptions.BackwardsSearch) {
-                slug = code.substringFromIndex(range.endIndex)
-                println(slug)
-                
-                let sellerViewController: SellerViewController = SellerViewController(nibName: "SellerViewController", bundle: nil)
-                sellerViewController.slug = slug
-                self.navigationController!.pushViewController(sellerViewController, animated: true)
-            }
-        } else {
-            if !SessionManager.isLoggedIn() {
-                self.refferalCode = code
-                self.redirectToLoginRegister(false)
+            if code.contains("referralCode") {
+                var qrCode: String = ""
+                if let range = code.rangeOfString("=", options: NSStringCompareOptions.BackwardsSearch) {
+                    qrCode = code.substringFromIndex(range.endIndex)
+                    println(qrCode)
+                    if !SessionManager.isLoggedIn() {
+                        self.refferalCode = qrCode
+                        self.redirectToLoginRegister(false)
+                    } else if SessionManager.referrerCode().isEmpty {
+                            var editViewController = EditProfileTableViewController(nibName: "EditProfileTableViewController", bundle: nil)
+                            editViewController.isFromQRScanner = true
+                            self.profileModel.referrerCode = qrCode
+                            editViewController.passModel(self.profileModel)
+                            self.navigationController?.pushViewController(editViewController, animated:true)
+                    } else {
+                        Toast.displayToastWithMessage(StringHelper.localizedStringWithKey("HAVE_REFERRER_LOCALIZE_KEY"), duration: 1.5, view: self.view)
+                    }
+                }
+            } else if code.contains("store") {
+                var slug: String = ""
+                if let range = code.rangeOfString("/", options: NSStringCompareOptions.BackwardsSearch) {
+                    slug = code.substringFromIndex(range.endIndex)
+                    println(slug)
+                    
+                    let sellerViewController: SellerViewController = SellerViewController(nibName: "SellerViewController", bundle: nil)
+                    sellerViewController.slug = slug
+                    self.navigationController!.pushViewController(sellerViewController, animated: true)
+                }
             } else {
+                Toast.displayToastWithMessage(StringHelper.localizedStringWithKey("INVALID_QR_LOCALIZE_KEY"), duration: 1.5, view: self.view)
             }
             
+        } else {
+            Toast.displayToastWithMessage(StringHelper.localizedStringWithKey("INVALID_QR_LOCALIZE_KEY"), duration: 1.5, view: self.view)
         }
     }
 }
@@ -1887,6 +1906,8 @@ extension HomeContainerViewController: SearchBarViewDelegate {
             resultController.isSellerSearch = true
             resultController.passModel(SearchSuggestionModel(suggestion: textField.text, imageURL: "", searchUrl: "\(APIAtlas.searchSeller)\(newString)"))
         }
+        
+        resultController.profileModel = self.profileModel
         
         resultController.searchType = self.searchType
         

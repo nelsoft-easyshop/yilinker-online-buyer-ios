@@ -31,6 +31,8 @@ class ReferralCodeTableViewCell: UITableViewCell, UITextFieldDelegate {
     @IBOutlet weak var yourReferralCodeLabel: UILabel!
     @IBOutlet weak var titleLabel: UILabel!
     
+    var isFromQRScanner: Bool = false
+    
     var delegate: ReferralCodeTableViewCellDelegate?
     
     //MARK: -
@@ -77,7 +79,7 @@ class ReferralCodeTableViewCell: UITableViewCell, UITextFieldDelegate {
     //MARK: - Set Referrer Code With Code
     func setReferrerCodeWithCode(code: String) {
         self.referralPersonTextField.text = code
-        self.referralPersonTextField.enabled = false
+        self.referralPersonTextField.enabled = self.isFromQRScanner
     }
     
     //MARK: - 

@@ -26,12 +26,14 @@ MESSAGE_LOGIN_ERROR_TITLE_LOCALIZE_KEY = "Unable to Proceed";
 MESSAGE_LOGIN_ERROR_MESSAGE_LOCALIZE_KEY = "You must be logged in to send a message";
 
 // Global
+INVALID_QR_LOCALIZE_KEY = "Invalid QR Code!";
 SOMETHINGWENTWRONG_LOCALIZE_KEY = "Something Went Wrong";
 OKBUTTON_LOCALIZE_KEY = "OK";
 ERROR_LOCALIZE_KEY = "Error";
 FAILED_LOCALIZE_KEY = "Failed";
 CONNECTIONUNREACHABLE_LOCALIZE_KEY = "Connection Unreachable";
 CONNECTIONERRORMESSAGE_LOCALIZE_KEY = "Cannot retrieve data. Please check your internet connection.";
+HAVE_REFERRER_LOCALIZE_KEY = "You already have referrer code!";
 
 // MARK: - HIDDEN
 SIGNIN_HIDDEN_LOCALIZE_KEY = "Sign In";

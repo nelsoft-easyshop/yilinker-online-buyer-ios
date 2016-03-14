@@ -62,6 +62,7 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
     var profileImage: UIImage?
     var validIDImage: UIImage?
     var isForProfilePicture: Bool = false
+    var isFromQRScanner: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -86,6 +87,7 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
         lastName = profileModel.lastName
         mobileNumber = profileModel.contactNumber
         emailAddress = profileModel.email
+        referrerPersonCode = profileModel.referrerCode
     }
     
     //MARK: Initializations
@@ -260,6 +262,7 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
             
             self.dismissLoader()
             if successful {
+                SessionManager.setReferrerCode(self.referrerPersonCode)
                 Toast.displayToastWithMessage(EditProfileLocalizedStrings.successfullyUpdateProfile, duration: 2.0, view: self.navigationController!.view)
                 self.navigationController?.popViewControllerAnimated(true)
             } else {
@@ -299,6 +302,8 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
                         
                         SessionManager.setLang(self.profileUserDetailsModel.address.latitude)
                         SessionManager.setLong(self.profileUserDetailsModel.address.longitude)
+                        
+                        SessionManager.setReferrerCode(self.profileUserDetailsModel.referrerCode)
                 
                         self.tableView.reloadData()
                         self.dismissLoader()
@@ -592,12 +597,18 @@ extension EditProfileTableViewController: EditProfilePersonalInformationTableVie
     func referralCodeTableViewCellWithIndexPath(indexPath: NSIndexPath) -> ReferralCodeTableViewCell {
         let cell: ReferralCodeTableViewCell = tableView.dequeueReusableCellWithIdentifier(ReferralCodeTableViewCell.nibNameAndIdentifier(), forIndexPath: indexPath) as! ReferralCodeTableViewCell
         
+        cell.isFromQRScanner = self.isFromQRScanner
+        
         if self.profileUserDetailsModel.referralCode != "" {
             cell.setYourReferralCodeWithCode(self.profileUserDetailsModel.referralCode)
         }
         
         if self.profileUserDetailsModel.referrerCode != "" {
-            cell.setReferrerCodeWithCode("\(self.profileUserDetailsModel.referrerCode) - \(self.profileUserDetailsModel.referrerName)")
+            if self.isFromQRScanner {
+                cell.setReferrerCodeWithCode("\(self.profileUserDetailsModel.referrerCode)")
+            } else {
+                cell.setReferrerCodeWithCode("\(self.profileUserDetailsModel.referrerCode) - \(self.profileUserDetailsModel.referrerName)")
+            }
         }
         
         cell.delegate = self

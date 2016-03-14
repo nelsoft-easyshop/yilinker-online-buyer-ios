@@ -94,6 +94,23 @@ class SessionManager {
     }
     
     //MARK: -
+    //MARK: - Set Referrer Code
+    class func setReferrerCode(referrerCode: String) {
+        NSUserDefaults.standardUserDefaults().setObject(referrerCode, forKey: "referrerCode")
+        NSUserDefaults.standardUserDefaults().synchronize()
+    }
+    
+    //MARK: -
+    //MARK: - Email Address
+    class func referrerCode() -> String {
+        var result: String = ""
+        if let val: AnyObject = NSUserDefaults.standardUserDefaults().objectForKey("referrerCode") as? String {
+            result = val as! String
+        }
+        return result
+    }
+    
+    //MARK: -
     //MARK: - Email Address
     class func emailAddress() -> String {
         var result: String = ""

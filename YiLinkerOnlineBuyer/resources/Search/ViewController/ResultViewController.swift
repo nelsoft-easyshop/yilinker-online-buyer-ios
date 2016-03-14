@@ -51,6 +51,8 @@ class ResultViewController: UIViewController {
     
     @IBOutlet weak var actionViewHeight: NSLayoutConstraint!
     
+    var profileModel: ProfileUserDetailsModel = ProfileUserDetailsModel()
+    
     //Util Views
     var fullDimView: UIView?    //Dim view for filter
     var hud: YiHUD?
