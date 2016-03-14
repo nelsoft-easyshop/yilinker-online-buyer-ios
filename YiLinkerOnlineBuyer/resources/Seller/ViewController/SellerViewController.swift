@@ -266,7 +266,14 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
     //MARK: -
     //MARK: Get seller ratings and feedback
     func fireSellerFeedback() {
-        WebServiceManager.fireSellerFeedbackWithUrl(APIAtlas.buyerSellerFeedbacks, sellerId: sellerId) {
+        var params: String = ""
+        if self.slug.isEmpty {
+            params = "\(sellerId)"
+        } else {
+            params = self.slug
+        }
+        
+        WebServiceManager.fireSellerFeedbackWithUrl(APIAtlas.buyerSellerFeedbacks, sellerId: params) {
             (successful, responseObject, requestErrorType) -> Void in
             self.yiHud?.hide()
             if successful {
@@ -304,7 +311,15 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
     //MARK: Follow seller
     func fireFollowSeller() {
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
-        WebServiceManager.fireFollowSellerWithUrl(APIAtlas.followSeller, sellerId: self.sellerId, accessToken: SessionManager.accessToken()) { (successful, responseObject, requestErrorType) -> Void in
+        
+        var params: String = ""
+        if self.slug.isEmpty {
+            params = "\(sellerId)"
+        } else {
+            params = self.slug
+        }
+        
+        WebServiceManager.fireFollowSellerWithUrl(APIAtlas.followSeller, sellerId: params, accessToken: SessionManager.accessToken()) { (successful, responseObject, requestErrorType) -> Void in
             UIApplication.sharedApplication().networkActivityIndicatorVisible = false
             self.yiHud?.hide()
             if successful {
