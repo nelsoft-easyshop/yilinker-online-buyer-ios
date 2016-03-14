@@ -154,18 +154,22 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
     // MARK: - Table View Delegate
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let transactionDetails = TransactionDetailsViewController(nibName: "TransactionDetailsViewController", bundle: nil)
-        transactionDetails.transactionId = tableData[indexPath.row].invoice_number2
-        transactionDetails.totalProducts = tableData[indexPath.row].product_count2
-        transactionDetails.orderStatus = tableData[indexPath.row].order_status2
-        transactionDetails.paymentType = tableData[indexPath.row].payment_type2
-        transactionDetails.dateCreated = tableData[indexPath.row].date_added2
-        transactionDetails.totalQuantity = tableData[indexPath.row].total_quantity2
-        transactionDetails.totalUnitCost = tableData[indexPath.row].total_unit_price2
-        transactionDetails.shippingFee = tableData[indexPath.row].total_handling_fee2
-        transactionDetails.totalCost = tableData[indexPath.row].total_price2
-        transactionDetails.orderId = tableData[indexPath.row].order_id2
-        transactionDetails.orderStatusId = tableData[indexPath.row].order_status_id2
-        transactionDetails.transactionType = self.transactionType
+        
+        if indexPath.row < tableData.count {
+            transactionDetails.transactionId = tableData[indexPath.row].invoice_number2
+            transactionDetails.totalProducts = tableData[indexPath.row].product_count2
+            transactionDetails.orderStatus = tableData[indexPath.row].order_status2
+            transactionDetails.paymentType = tableData[indexPath.row].payment_type2
+            transactionDetails.dateCreated = tableData[indexPath.row].date_added2
+            transactionDetails.totalQuantity = tableData[indexPath.row].total_quantity2
+            transactionDetails.totalUnitCost = tableData[indexPath.row].total_unit_price2
+            transactionDetails.shippingFee = tableData[indexPath.row].total_handling_fee2
+            transactionDetails.totalCost = tableData[indexPath.row].total_price2
+            transactionDetails.orderId = tableData[indexPath.row].order_id2
+            transactionDetails.orderStatusId = tableData[indexPath.row].order_status_id2
+            transactionDetails.transactionType = self.transactionType
+        }
+        
         self.navigationController?.pushViewController(transactionDetails, animated: true)
     }
     
