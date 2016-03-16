@@ -1340,6 +1340,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                 halfVerticalImageCollectionViewCell.targetType = layoutFiveModel.data[indexPath.row].target.targetType
                 
                 halfVerticalImageCollectionViewCell.originalPriceLabel.text = layoutFiveModel.data[indexPath.row].originalPrice.addPesoSign()
+                
                 halfVerticalImageCollectionViewCell.originalPriceLabel.drawDiscountLine(false)
                 
                 if layoutFiveModel.data[indexPath.row].discountPercentage.toDouble() == 0 || layoutFiveModel.data[indexPath.row].discountPercentage.toDouble() == nil {

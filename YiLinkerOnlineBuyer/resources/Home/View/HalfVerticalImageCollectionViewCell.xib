@@ -53,7 +53,7 @@
                             </mask>
                         </variation>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="P 3,000" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="6" translatesAutoresizingMaskIntoConstraints="NO" id="KnZ-NC-aQ1" customClass="DiscountLabel" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="P 23,000.00" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="6" translatesAutoresizingMaskIntoConstraints="NO" id="KnZ-NC-aQ1" customClass="DiscountLabel" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
                         <rect key="frame" x="137" y="42" width="56" height="21"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="21" id="1gh-ec-odW"/>
