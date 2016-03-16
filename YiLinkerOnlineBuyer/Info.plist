@@ -23,6 +23,14 @@
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
+			<key>CFBundleURLName</key>
+			<string>com.easyshop.YiLinkerOnlineBuyer</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>YiLinkerOnlineBuyer</string>
+			</array>
+		</dict>
+		<dict>
 			<key>CFBundleTypeRole</key>
 			<string>None</string>
 			<key>CFBundleURLSchemes</key>
