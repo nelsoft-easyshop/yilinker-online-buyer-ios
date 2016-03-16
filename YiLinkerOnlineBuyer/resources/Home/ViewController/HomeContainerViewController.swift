@@ -39,7 +39,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     var wishlisViewController: WishlistViewController?
     var cartViewController: CartViewController?
     
-    
+    var scrollYPosition: CGFloat = 0.0
     
     var emptyView: EmptyView?
     var searchBarView: SearchBarView?
@@ -179,6 +179,14 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         } else {
             println("Device language is english!")
         }
+        
+        if self.isJsonStringEmpty() {
+            self.addEmptyView()
+        } else {
+            //show cached data
+            //self.showNoDataBanner()
+            self.populateHomePageWithDictionary(self.coreDataJsonString())
+        }
     }
     
     //MARK: - Add Pull To Refresh
@@ -228,9 +236,12 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     //MARK: -
     //MARK: - collectionViewLayout()
     func collectionViewLayout() {
+        self.collectionView.collectionViewLayout = UICollectionViewLayout()
+        
         let homePageCollectionViewLayout: HomePageCollectionViewLayout2 = HomePageCollectionViewLayout2()
         homePageCollectionViewLayout.homePageModel = self.homePageModel
         homePageCollectionViewLayout.layouts = self.layouts
+        
         self.collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         self.collectionView.collectionViewLayout = homePageCollectionViewLayout
         //decoration view
@@ -411,9 +422,9 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     //MARK: - Fire Get Home Page Data
     //Request for getting json data for populating homepage
     func fireGetHomePageData(showHuD: Bool) {
-        if showHuD {
+        /*if showHuD {
             self.showHUD()
-        }
+        }*/
         
         WebServiceManager.fireGetHomePageDataWithUrl(APIAtlas.homeUrl, actionHandler: {
             (successful, responseObject, requestErrorType) -> Void in
@@ -537,6 +548,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     //MARK: -
     //MARK: - Populate Home PageWith  Dictionary
     func populateHomePageWithDictionary(dictionary: NSDictionary) {
+        let yPosition: CGFloat = self.scrollYPosition
         self.collectionView.hidden = false
         self.homePageModel = HomePageModel.parseDataFromDictionary(dictionary)
         self.layouts.removeAll(keepCapacity: true)
@@ -576,6 +588,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         dispatch_async(dispatch_get_main_queue(), {
             self.collectionView.reloadData()
             self.collectionViewLayout()
+            self.collectionView.setContentOffset(CGPointMake(0, yPosition), animated: false)
         })
     }
     
@@ -1634,11 +1647,16 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     //MARK: -
     //MARK: - Scroll View Delegate
     func scrollViewDidScroll(scrollView: UIScrollView) {
+        self.scrollYPosition = scrollView.contentOffset.y
         let indexes: [NSIndexPath] = self.collectionView.indexPathsForVisibleItems() as! [NSIndexPath]
         var isShowBackToTop: Bool = true
         self.closeKeyboard()
-        self.searchBarView!.hideSearchTypePicker()
-        self.searchBarView!.hideAutoComplete()
+        
+        if self.searchBarView != nil {
+            self.searchBarView!.hideSearchTypePicker()
+            self.searchBarView!.hideAutoComplete()
+        }
+        
         for index in indexes {
             if index.section == 2 {
                 isShowBackToTop = false
@@ -1707,10 +1725,14 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     //MARK: -
     //MARK: - Daily Login Data Source
     func dailyLoginCollectionViewCell(dailyLoginCollectionViewCell: DailyLoginCollectionViewCell, numberOfItemsInSection section: Int) -> Int {
-        let parentIndexPath: NSIndexPath = self.collectionView.indexPathForCell(dailyLoginCollectionViewCell)!
-        let layoutTwoModel: LayoutTwoModel = self.homePageModel.data[parentIndexPath.section] as! LayoutTwoModel
-        
-        return layoutTwoModel.data.count
+        if self.collectionView.indexPathForCell(dailyLoginCollectionViewCell) != nil {
+            let parentIndexPath: NSIndexPath = self.collectionView.indexPathForCell(dailyLoginCollectionViewCell)!
+            let layoutTwoModel: LayoutTwoModel = self.homePageModel.data[parentIndexPath.section] as! LayoutTwoModel
+            
+            return layoutTwoModel.data.count
+        } else {
+            return 0
+        }
     }
     
     func dailyLoginCollectionViewCell(dailyLoginCollectionViewCell: DailyLoginCollectionViewCell, cellForRowAtIndexPath indexPath: NSIndexPath) -> FullImageCollectionViewCell {

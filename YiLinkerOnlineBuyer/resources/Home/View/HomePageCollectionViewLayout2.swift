@@ -45,7 +45,6 @@ struct SectionHeight {
     
     static func sectionSixFirstCellWidth() -> CGFloat {
         //201 x 616
-        println(SectionHeight.sectionSixHeight())
         let screenSize: CGRect = UIScreen.mainScreen().bounds
         return (SectionHeight.sectionSixHeight() * 319) / (490)
         //return 500
