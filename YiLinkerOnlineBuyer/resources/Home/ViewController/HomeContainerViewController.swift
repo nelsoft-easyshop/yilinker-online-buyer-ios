@@ -1820,41 +1820,36 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
 
 extension HomeContainerViewController: QRCodeScannerViewControllerDelegate {
     func qrCodeScannerViewController(qrCodeScannerViewController: QRCodeScannerViewController, code: String) {
-        if code.contains("http"){
-            if code.contains("referralCode") {
-                var qrCode: String = ""
-                if let range = code.rangeOfString("=", options: NSStringCompareOptions.BackwardsSearch) {
-                    qrCode = code.substringFromIndex(range.endIndex)
-                    println(qrCode)
-                    if !SessionManager.isLoggedIn() {
-                        self.refferalCode = qrCode
-                        self.redirectToLoginRegister(false)
-                    } else if SessionManager.referrerCode().isEmpty {
-                            var editViewController = EditProfileTableViewController(nibName: "EditProfileTableViewController", bundle: nil)
-                            editViewController.isFromQRScanner = true
-                            self.profileModel.referrerCode = qrCode
-                            editViewController.passModel(self.profileModel)
-                            self.navigationController?.pushViewController(editViewController, animated:true)
-                    } else {
-                        Toast.displayToastWithMessage(StringHelper.localizedStringWithKey("HAVE_REFERRER_LOCALIZE_KEY"), duration: 1.5, view: self.view)
-                    }
+        if code.contains("referralCode") {
+            var qrCode: String = ""
+            if let range = code.rangeOfString("=", options: NSStringCompareOptions.BackwardsSearch) {
+                qrCode = code.substringFromIndex(range.endIndex)
+                println(qrCode)
+                if !SessionManager.isLoggedIn() {
+                    self.refferalCode = qrCode
+                    self.redirectToLoginRegister(false)
+                } else if SessionManager.referrerCode().isEmpty {
+                    var editViewController = EditProfileTableViewController(nibName: "EditProfileTableViewController", bundle: nil)
+                    editViewController.isFromQRScanner = true
+                    self.profileModel.referrerCode = qrCode
+                    editViewController.passModel(self.profileModel)
+                    self.navigationController?.pushViewController(editViewController, animated:true)
+                } else {
+                    Toast.displayToastWithMessage(StringHelper.localizedStringWithKey("HAVE_REFERRER_LOCALIZE_KEY"), duration: 1.5, view: self.view)
                 }
-            } else if code.contains("store") {
-                var slug: String = ""
-                if let range = code.rangeOfString("/", options: NSStringCompareOptions.BackwardsSearch) {
-                    slug = code.substringFromIndex(range.endIndex)
-                    println(slug)
-                    
-                    let sellerViewController: SellerViewController = SellerViewController(nibName: "SellerViewController", bundle: nil)
-                    sellerViewController.slug = slug
-                    self.navigationController!.pushViewController(sellerViewController, animated: true)
-                }
-            } else {
-                Toast.displayToastWithMessage(StringHelper.localizedStringWithKey("INVALID_QR_LOCALIZE_KEY"), duration: 1.5, view: self.view)
             }
-            
+        } else if code.contains("store") {
+            var slug: String = ""
+            if let range = code.rangeOfString("/", options: NSStringCompareOptions.BackwardsSearch) {
+                slug = code.substringFromIndex(range.endIndex)
+                println(slug)
+                
+                let sellerViewController: SellerViewController = SellerViewController(nibName: "SellerViewController", bundle: nil)
+                sellerViewController.slug = slug
+                self.navigationController!.pushViewController(sellerViewController, animated: true)
+            }
         } else {
-            Toast.displayToastWithMessage(StringHelper.localizedStringWithKey("INVALID_QR_LOCALIZE_KEY"), duration: 1.5, view: self.view)
+            UIApplication.sharedApplication().openURL(StringHelper.convertStringToUrl(code))
         }
     }
 }

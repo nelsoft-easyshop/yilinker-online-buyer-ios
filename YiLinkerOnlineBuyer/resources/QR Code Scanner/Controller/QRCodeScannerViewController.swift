@@ -28,6 +28,7 @@ class QRCodeScannerViewController: UIViewController {
     var isTorchOn: Bool = false
     
     var scanCount: Int = 0
+    var isErrorShown: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -118,12 +119,24 @@ extension QRCodeScannerViewController: AVCaptureMetadataOutputObjectsDelegate {
             // If the found metadata is equal to the QR code metadata then update the status label's text and set the bounds
             let barCodeObject = videoPreviewLayer?.transformedMetadataObjectForMetadataObject(metadataObj as AVMetadataMachineReadableCodeObject) as! AVMetadataMachineReadableCodeObject
             
-            if self.scanCount == 0{
-                if metadataObj.stringValue != nil {
-                    self.scanCount++
-                    var qrCode: String = metadataObj.stringValue
-                    self.dismissViewControllerAnimated(true, completion: nil)
-                    self.delegate?.qrCodeScannerViewController(self, code: qrCode)
+            if metadataObj.stringValue.contains("http") {
+                if self.scanCount == 0{
+                    if metadataObj.stringValue != nil {
+                        self.scanCount++
+                        var qrCode: String = metadataObj.stringValue
+                        self.dismissViewControllerAnimated(true, completion: nil)
+                        self.delegate?.qrCodeScannerViewController(self, code: qrCode)
+                    }
+                }
+            } else {
+                if !self.isErrorShown {
+                    Toast.displayToastWithMessage(StringHelper.localizedStringWithKey("INVALID_QR_LOCALIZE_KEY"), duration: 1.5, view: self.view)
+                    self.isErrorShown = true
+                }
+                
+                let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(1 * Double(NSEC_PER_SEC)))
+                dispatch_after(delayTime, dispatch_get_main_queue()) {
+                    self.isErrorShown = false
                 }
             }
         }

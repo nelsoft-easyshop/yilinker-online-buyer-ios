@@ -63,7 +63,7 @@
                         <action selector="buttonAction:" destination="-1" eventType="touchUpInside" id="4Ga-e7-l73"/>
                     </connections>
                 </button>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WXk-54-mpH">
+                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WXk-54-mpH">
                     <rect key="frame" x="8" y="493" width="359" height="81"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="81" id="msL-U1-dCT"/>
