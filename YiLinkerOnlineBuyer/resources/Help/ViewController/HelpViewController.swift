@@ -17,6 +17,7 @@ class HelpViewController: UIViewController {
     @IBOutlet weak var callTextButton: UIButton!
     @IBOutlet weak var emailIconButton: UIButton!
     @IBOutlet weak var callIconButton: UIButton!
+    @IBOutlet weak var sendFeedbackButton: UIButton!
     
     @IBOutlet weak var facebookButton: UIButton!
     @IBOutlet weak var twitterButton: UIButton!
@@ -24,6 +25,8 @@ class HelpViewController: UIViewController {
     var appVersion: String  = ""
     
     @IBOutlet weak var versionLabel: UILabel!
+    @IBOutlet weak var logoHeightConstraint: NSLayoutConstraint!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -43,11 +46,23 @@ class HelpViewController: UIViewController {
         self.emailTextButton.titleLabel?.text = StringHelper.localizedStringWithKey("HELP_EMAIL")
         self.callTextButton.titleLabel?.text = StringHelper.localizedStringWithKey("HELP_CALL")
         self.titleLabel.text = StringHelper.localizedStringWithKey("HELP_FOR_CUSTOMER_SERVICE")
+        self.sendFeedbackButton.setTitle(StringHelper.localizedStringWithKey("HELP_SEND_FEEDBACK"), forState: .Normal)
+        
+        self.sendFeedbackButton.layer.cornerRadius = 5
+        
+        if IphoneType.isIphone4() {
+            self.logoHeightConstraint.constant = 110
+        } else if IphoneType.isIphone5() {
+            self.logoHeightConstraint.constant = 160
+        } else if IphoneType.isIphone6() {
+            self.logoHeightConstraint.constant = 190
+        } else if IphoneType.isIphone6Plus() {
+            self.logoHeightConstraint.constant = 220
+        }
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     func initializeNavigationBar() {
@@ -93,5 +108,9 @@ class HelpViewController: UIViewController {
     }
     
     
+    @IBAction func sendFeedbackAction(sender: UIButton) {
+        var suggestionsViewController = SuggestionViewController(nibName: "SuggestionViewController", bundle: nil)
+        self.navigationController?.pushViewController(suggestionsViewController, animated:true)
+    }
     
 }

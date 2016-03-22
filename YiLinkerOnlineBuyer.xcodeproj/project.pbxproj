@@ -548,6 +548,9 @@
 		790E59801C87D0D00073FE23 /* SearchBarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 790E597F1C87D0D00073FE23 /* SearchBarView.xib */; };
 		790E59831C880C980073FE23 /* SearchTypeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 790E59811C880C980073FE23 /* SearchTypeTableViewCell.swift */; };
 		790E59841C880C980073FE23 /* SearchTypeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 790E59821C880C980073FE23 /* SearchTypeTableViewCell.xib */; };
+		791B4E071C9AA7EF00B3FB94 /* SuggestionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 791B4E061C9AA7EF00B3FB94 /* SuggestionViewModel.swift */; };
+		7980D03D1C994E2800F6C148 /* SuggestionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7980D03B1C994E2800F6C148 /* SuggestionViewController.swift */; };
+		7980D03E1C994E2800F6C148 /* SuggestionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7980D03C1C994E2800F6C148 /* SuggestionViewController.xib */; };
 		798D84C51C86C14500D2A1F7 /* MyPointsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798D84B41C86C14500D2A1F7 /* MyPointsTableViewController.swift */; };
 		798D84C61C86C14500D2A1F7 /* MyPointsTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 798D84B51C86C14500D2A1F7 /* MyPointsTableViewController.xib */; };
 		798D84C71C86C14500D2A1F7 /* MyPointsHistoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798D84B71C86C14500D2A1F7 /* MyPointsHistoryModel.swift */; };
@@ -589,7 +592,7 @@
 		79DBF22F1C898B9B004EA438 /* QRCodeScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79DBF22D1C898B9B004EA438 /* QRCodeScannerViewController.swift */; };
 		79DBF2301C898B9B004EA438 /* QRCodeScannerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79DBF22E1C898B9B004EA438 /* QRCodeScannerViewController.xib */; };
 		9F7BC2CF1BF124C100218E10 /* yilinker_pinned_certificate.cer in Resources */ = {isa = PBXBuildFile; fileRef = 9F7BC2CE1BF124C100218E10 /* yilinker_pinned_certificate.cer */; };
-		BE00C15B75D7E76D254AAEC1 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D038C18A7712E626564D2D3 /* libPods.a */; };
+		CE8B2C50B923932D0D9A2B82 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 13599842A00C070178791D1F /* libPods.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1151,11 +1154,14 @@
 		0CAB81921C86817C00B653A9 /* WishlistTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WishlistTableViewCell.xib; sourceTree = "<group>"; };
 		0CAB81941C86817C00B653A9 /* WishlistViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WishlistViewController.swift; sourceTree = "<group>"; };
 		0CAB81961C86817C00B653A9 /* YiLinkerOnlineBuyer.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = YiLinkerOnlineBuyer.xcdatamodel; sourceTree = "<group>"; };
-		5D038C18A7712E626564D2D3 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		13599842A00C070178791D1F /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		790E597D1C87D0B90073FE23 /* SearchBarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchBarView.swift; sourceTree = "<group>"; };
 		790E597F1C87D0D00073FE23 /* SearchBarView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchBarView.xib; sourceTree = "<group>"; };
 		790E59811C880C980073FE23 /* SearchTypeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchTypeTableViewCell.swift; sourceTree = "<group>"; };
 		790E59821C880C980073FE23 /* SearchTypeTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchTypeTableViewCell.xib; sourceTree = "<group>"; };
+		791B4E061C9AA7EF00B3FB94 /* SuggestionViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SuggestionViewModel.swift; sourceTree = "<group>"; };
+		7980D03B1C994E2800F6C148 /* SuggestionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SuggestionViewController.swift; sourceTree = "<group>"; };
+		7980D03C1C994E2800F6C148 /* SuggestionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SuggestionViewController.xib; sourceTree = "<group>"; };
 		798D84B41C86C14500D2A1F7 /* MyPointsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPointsTableViewController.swift; sourceTree = "<group>"; };
 		798D84B51C86C14500D2A1F7 /* MyPointsTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyPointsTableViewController.xib; sourceTree = "<group>"; };
 		798D84B71C86C14500D2A1F7 /* MyPointsHistoryModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPointsHistoryModel.swift; sourceTree = "<group>"; };
@@ -1219,7 +1225,7 @@
 				0C574A181BC5171100913F29 /* Foundation.framework in Frameworks */,
 				0C574A161BC5170400913F29 /* AssetsLibrary.framework in Frameworks */,
 				0C574A141BC516FC00913F29 /* AddressBook.framework in Frameworks */,
-				BE00C15B75D7E76D254AAEC1 /* libPods.a in Frameworks */,
+				CE8B2C50B923932D0D9A2B82 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1308,8 +1314,6 @@
 		0CAB7EEB1C86817B00B653A9 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				79DBF2291C898B82004EA438 /* QR Code Scanner */,
-				0C759FB51C900B24002A08E2 /* PushNotification */,
 				0CAB7EEC1C86817B00B653A9 /* ActivityLog */,
 				0CAB7EFC1C86817B00B653A9 /* Address */,
 				0CAB7F131C86817B00B653A9 /* AppDelegate */,
@@ -1330,6 +1334,8 @@
 				798D84B21C86C14500D2A1F7 /* My Points */,
 				0CAB80681C86817B00B653A9 /* ProductView */,
 				798D84801C86BE0E00D2A1F7 /* Profile */,
+				0C759FB51C900B24002A08E2 /* PushNotification */,
+				79DBF2291C898B82004EA438 /* QR Code Scanner */,
 				0CAB80B51C86817B00B653A9 /* ResolutionCenter */,
 				0CAB80C81C86817B00B653A9 /* Search */,
 				790E59791C87D06D0073FE23 /* Search Bar */,
@@ -1338,6 +1344,7 @@
 				0CAB810D1C86817B00B653A9 /* StartPage */,
 				0CAB81131C86817B00B653A9 /* StoryBoard */,
 				0CAB81161C86817B00B653A9 /* Strings */,
+				7980D0361C994E0100F6C148 /* Suggestions */,
 				0CAB811B1C86817B00B653A9 /* Transaction */,
 				0CAB815E1C86817C00B653A9 /* Uiniversal Modal */,
 				0CAB81691C86817C00B653A9 /* Universal Views */,
@@ -2740,7 +2747,7 @@
 				0C574A151BC5170400913F29 /* AssetsLibrary.framework */,
 				0C574A131BC516FC00913F29 /* AddressBook.framework */,
 				F7CCDA451B940268000F5AD4 /* libPods.a */,
-				5D038C18A7712E626564D2D3 /* libPods.a */,
+				13599842A00C070178791D1F /* libPods.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -2779,6 +2786,49 @@
 				790E59821C880C980073FE23 /* SearchTypeTableViewCell.xib */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		7980D0361C994E0100F6C148 /* Suggestions */ = {
+			isa = PBXGroup;
+			children = (
+				7980D0371C994E0200F6C148 /* Model */,
+				7980D0381C994E0200F6C148 /* View  */,
+				7980D0391C994E0200F6C148 /* View Controller */,
+				7980D03A1C994E0200F6C148 /* View Model */,
+			);
+			name = Suggestions;
+			path = YiLinkerOnlineBuyer/resources/Suggestions;
+			sourceTree = SOURCE_ROOT;
+		};
+		7980D0371C994E0200F6C148 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		7980D0381C994E0200F6C148 /* View  */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "View ";
+			sourceTree = "<group>";
+		};
+		7980D0391C994E0200F6C148 /* View Controller */ = {
+			isa = PBXGroup;
+			children = (
+				7980D03B1C994E2800F6C148 /* SuggestionViewController.swift */,
+				7980D03C1C994E2800F6C148 /* SuggestionViewController.xib */,
+			);
+			path = "View Controller";
+			sourceTree = "<group>";
+		};
+		7980D03A1C994E0200F6C148 /* View Model */ = {
+			isa = PBXGroup;
+			children = (
+				791B4E061C9AA7EF00B3FB94 /* SuggestionViewModel.swift */,
+			);
+			path = "View Model";
 			sourceTree = "<group>";
 		};
 		798D84801C86BE0E00D2A1F7 /* Profile */ = {
@@ -3091,6 +3141,7 @@
 				0CAB83391C86817C00B653A9 /* NewSellerScrollableCollectionViewCell.xib in Resources */,
 				0CAB83721C86817C00B653A9 /* TransactionProductDetailsTableViewCell.xib in Resources */,
 				799B9A481C8EACEA006472E8 /* ProfileSettingsTableViewCell.xib in Resources */,
+				7980D03E1C994E2800F6C148 /* SuggestionViewController.xib in Resources */,
 				0CAB837B1C86817C00B653A9 /* TransactionTableViewCell.xib in Resources */,
 				0CAB81E81C86817C00B653A9 /* TotalSummaryPriceTableViewCell.xib in Resources */,
 				0CAB83101C86817C00B653A9 /* ResolutionCenterCell.xib in Resources */,
@@ -3337,6 +3388,7 @@
 				0CAB83BD1C86817C00B653A9 /* WishlistModel.swift in Sources */,
 				0CAB831C1C86817C00B653A9 /* SearchSuggestionModel.swift in Sources */,
 				0CAB82191C86817C00B653A9 /* PullToRefreshOption.swift in Sources */,
+				791B4E071C9AA7EF00B3FB94 /* SuggestionViewModel.swift in Sources */,
 				0CAB824E1C86817C00B653A9 /* HomeProductModel.swift in Sources */,
 				799B9A471C8EACEA006472E8 /* ProfileSettingsTableViewCell.swift in Sources */,
 				0CAB82C71C86817C00B653A9 /* ProductAvailableAttributeCombinationModel.swift in Sources */,
@@ -3415,6 +3467,7 @@
 				0CAB82941C86817C00B653A9 /* LoginAndRegisterTableViewController.swift in Sources */,
 				0CAB83591C86817C00B653A9 /* TransactionDetailsProductsModel.swift in Sources */,
 				0CAB831A1C86817C00B653A9 /* SearchResultModel.swift in Sources */,
+				7980D03D1C994E2800F6C148 /* SuggestionViewController.swift in Sources */,
 				0CAB835A1C86817C00B653A9 /* TransactionModel.swift in Sources */,
 				0CAB83421C86817C00B653A9 /* SellerSubCategoryTableViewCell.swift in Sources */,
 				0CAB81A71C86817C00B653A9 /* CityModel.swift in Sources */,
@@ -3788,7 +3841,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Technology Nelsoft (2A6XNT4658)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Technology Nelsoft (2A6XNT4658)";
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3811,7 +3864,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Technology Nelsoft (2A6XNT4658)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Technology Nelsoft (2A6XNT4658)";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",

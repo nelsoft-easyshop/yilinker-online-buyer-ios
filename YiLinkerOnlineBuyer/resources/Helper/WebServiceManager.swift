@@ -133,6 +133,13 @@ class WebServiceManager: NSObject {
     
     static let deviceTokenKey = "deviceToken"
     
+    //Feedback suggestion
+    static let titleKey = "title"
+    static let descriptionKey = "description"
+    static let phoneModelKey = "phoneModel"
+    static let osVersionKey = "osVersion"
+    static let osNameKey = "osName"
+    
     //MARK: -
     //MARK: - Fire Login Request With URL
     class func fireLoginRequestWithUrl(url: String, emailAddress: String, password: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) -> NSURLSessionDataTask {
@@ -521,6 +528,7 @@ class WebServiceManager: NSObject {
                 actionHandler(successful: true, responseObject: responseObject, requestErrorType: .NoError)
                 }, failure: {
                     (task   : NSURLSessionDataTask!, error: NSError!) in
+                    println(error)
                     if let task = task.response as? NSHTTPURLResponse {
                         if task.statusCode == Constants.WebServiceStatusCode.pageNotFound {
                             //Page not found
@@ -1155,5 +1163,13 @@ class WebServiceManager: NSObject {
         }
         
         return sessionDataTask
+    }
+    
+    //MARK: - Fire Save Feedback
+    class func fireSaveFeedBackWithUrl(url: String, title: String, description: String,  phoneModel: String,  osVersion: String,  osName: String,  access_token: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+        let parameters: NSDictionary = [self.accessTokenKey: access_token, self.titleKey: title, self.descriptionKey: description, self.phoneModelKey: phoneModel, self.osVersionKey: osVersion, self.osNameKey: osName]
+        self.firePostRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
     }
 }

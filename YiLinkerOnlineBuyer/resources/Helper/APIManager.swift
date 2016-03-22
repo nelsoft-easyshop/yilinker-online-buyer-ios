@@ -89,6 +89,15 @@ struct APIAtlas {
         }
     }
     
+    static func mobileFeedBack() -> String {
+        if SessionManager.isLoggedIn() {
+            return "v2/auth/mobile-feedback/add"
+        } else {
+            SessionManager.loadCookies()
+            return "v2/mobile-feedback/add"
+        }
+    }
+    
     static let refreshTokenUrl = "v1/login"
     static let loginUrl = "v1/login"
     static let registerUrl = "v1/user/register"
