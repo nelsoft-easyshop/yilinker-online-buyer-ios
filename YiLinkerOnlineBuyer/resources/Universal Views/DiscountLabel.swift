@@ -19,7 +19,13 @@ class DiscountLabel: UILabel {
         let myString: NSString = self.text!
         let stringSize: CGSize = myString.sizeWithAttributes([NSFontAttributeName: self.font])
         let discoutLine: CALayer = CALayer()
-        discoutLine.frame = CGRectMake(0, self.frame.size.height / 2, stringSize.width, 1)
+        var myText: String = self.text!
+        if count(myText) >= 10 {
+            discoutLine.frame = CGRectMake(0, self.frame.size.height / 2, stringSize.width - 10, 1)
+        } else {
+            discoutLine.frame = CGRectMake(0, self.frame.size.height / 2, stringSize.width, 1)
+        }
+        
         if floatLeft {
             discoutLine.frame.origin.x = self.frame.size.width - discoutLine.frame.size.width
         }

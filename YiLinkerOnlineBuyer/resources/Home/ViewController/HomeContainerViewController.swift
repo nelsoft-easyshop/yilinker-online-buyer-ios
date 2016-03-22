@@ -442,7 +442,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                     SessionManager.saveCookies()
                 }
             } else {
-                self.yiHud?.hide()
+                //self.yiHud?.hide()
                 
                 if requestErrorType == .ResponseError {
                     //Error in api requirements
@@ -459,8 +459,8 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                         self.addEmptyView()
                     } else {
                         //show cached data
-                        self.showNoDataBanner()
-                        self.populateHomePageWithDictionary(self.coreDataJsonString())
+                        //self.showNoDataBanner()
+                        //self.populateHomePageWithDictionary(self.coreDataJsonString())
                     }
                     
                 } else if requestErrorType == .RequestTimeOut {
@@ -469,8 +469,8 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                         self.addEmptyView()
                     } else {
                         //show cached data
-                        self.showNoDataBanner()
-                        self.populateHomePageWithDictionary(self.coreDataJsonString())
+//                        self.showNoDataBanner()
+//                        self.populateHomePageWithDictionary(self.coreDataJsonString())
                     }
                 } else if requestErrorType == .UnRecognizeError {
                     //Unhandled error
@@ -1340,6 +1340,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                 halfVerticalImageCollectionViewCell.targetType = layoutFiveModel.data[indexPath.row].target.targetType
                 
                 halfVerticalImageCollectionViewCell.originalPriceLabel.text = layoutFiveModel.data[indexPath.row].originalPrice.addPesoSign()
+                
                 halfVerticalImageCollectionViewCell.originalPriceLabel.drawDiscountLine(false)
                 
                 if layoutFiveModel.data[indexPath.row].discountPercentage.toDouble() == 0 || layoutFiveModel.data[indexPath.row].discountPercentage.toDouble() == nil {
