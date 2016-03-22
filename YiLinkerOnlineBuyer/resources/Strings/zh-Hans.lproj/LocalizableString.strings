@@ -403,7 +403,17 @@ WEBVIEW_PLEASE = "请尝试稍后再来看我";//No Chinese String
 HELP_FOR_CUSTOMER_SERVICE= "为客户服务援助";
 HELP_EMAIL = "电子邮件：";
 HELP_CALL = "电话:";
+HELP_SEND_FEEDBACK = "发送反馈";
 
+// MARK: - Suggestion Feedback
+SUGGESTION_HEADLINE = "你想要发送反馈意见吗？";//No Chinese String
+SUGGESTION_SUB_HEADLINE = "我们想知道我们如何可以使 YiLinker 更好。";//No Chinese String
+SUGGESTION_TITLE = "反馈";//No Chinese String
+SUGGESTION_TITLE_LABEL = "反馈";//No Chinese String
+SUGGESTION_DESCRIPTION = "描述";//No Chinese String
+SUGGESTION_SEND = "发送";//No Chinese String
+SUGGESTION_TITLE_REQUIRED = "标题是必需的 ！";//No Chinese String
+SUGGESTION_DESC_REQUIRED = "描述为必填项 ！";//No Chinese String
 
 //Cart
 CART_TITLE_LOCALIZE_KEY = "购物车";
