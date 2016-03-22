@@ -4,6 +4,9 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
     <customFonts key="customFonts">
+        <mutableArray key="Panton Bold.otf">
+            <string>Panton-Bold</string>
+        </mutableArray>
         <mutableArray key="Panton.otf">
             <string>Panton-Regular</string>
             <string>Panton-Regular</string>
@@ -24,6 +27,8 @@
                 <outlet property="emailTextButton" destination="k8B-Ke-GLs" id="tQd-d5-xXG"/>
                 <outlet property="facebookButton" destination="W1c-Fc-e7A" id="tta-Es-k7g"/>
                 <outlet property="instagramButton" destination="0gs-tC-Lce" id="Hxm-fA-wfC"/>
+                <outlet property="logoHeightConstraint" destination="OHU-jK-EAa" id="Gbp-Is-6gE"/>
+                <outlet property="sendFeedbackButton" destination="E1g-Dc-wi8" id="rpk-7D-Vm6"/>
                 <outlet property="titleLabel" destination="QBw-Lr-arm" id="0Nw-sm-wGJ"/>
                 <outlet property="twitterButton" destination="MUP-fp-vVz" id="9vk-gH-Fe0"/>
                 <outlet property="versionLabel" destination="HnA-84-DdC" id="T8J-2C-wzq"/>
@@ -193,9 +198,25 @@
                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="E1g-Dc-wi8">
+                    <rect key="frame" x="16" y="366" width="288" height="30"/>
+                    <color key="backgroundColor" red="0.3294117647" green="0.71372549019999998" blue="0.65490196079999996" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="30" id="Fl6-yW-cq8"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="11"/>
+                    <state key="normal" title="SEND A FEEDBACK">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="sendFeedbackAction:" destination="-1" eventType="touchUpInside" id="Wr6-HF-dqS"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
+                <constraint firstAttribute="trailing" secondItem="E1g-Dc-wi8" secondAttribute="trailing" constant="16" id="1j8-Hc-OqK"/>
                 <constraint firstItem="AVo-il-tXg" firstAttribute="width" secondItem="9nN-rd-M8d" secondAttribute="width" id="1nS-2d-gXQ"/>
                 <constraint firstAttribute="trailing" secondItem="FeV-fQ-CdR" secondAttribute="trailing" constant="8" id="1p9-rm-Ge4"/>
                 <constraint firstItem="k8B-Ke-GLs" firstAttribute="leading" secondItem="rGN-II-Gkp" secondAttribute="trailing" constant="8" id="20O-oi-hx3"/>
@@ -207,6 +228,7 @@
                 <constraint firstAttribute="centerX" secondItem="QBw-Lr-arm" secondAttribute="centerX" id="BB9-Vr-gM0"/>
                 <constraint firstItem="0dn-ag-ede" firstAttribute="leading" secondItem="k8B-Ke-GLs" secondAttribute="trailing" constant="8" id="CE5-Ew-F5r"/>
                 <constraint firstItem="QBw-Lr-arm" firstAttribute="top" secondItem="Xkn-dp-2OT" secondAttribute="bottom" constant="20" id="Esg-81-fzS"/>
+                <constraint firstItem="E1g-Dc-wi8" firstAttribute="top" secondItem="yKJ-DU-6hq" secondAttribute="bottom" constant="8" id="K3U-Tc-2EH"/>
                 <constraint firstAttribute="trailing" secondItem="HnA-84-DdC" secondAttribute="trailing" constant="8" id="L2A-EN-Bbf"/>
                 <constraint firstItem="HnA-84-DdC" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="OTw-pc-vhg"/>
                 <constraint firstItem="MY8-Qp-zFh" firstAttribute="leading" secondItem="AVo-il-tXg" secondAttribute="trailing" constant="7" id="P6R-j6-m2g"/>
@@ -217,6 +239,7 @@
                 <constraint firstAttribute="trailing" secondItem="fi5-It-lU4" secondAttribute="trailing" constant="8" id="YWy-dy-qQz"/>
                 <constraint firstItem="rGN-II-Gkp" firstAttribute="leading" secondItem="9nN-rd-M8d" secondAttribute="trailing" constant="8" id="Yyv-Vk-CGZ"/>
                 <constraint firstItem="AVo-il-tXg" firstAttribute="width" secondItem="fi5-It-lU4" secondAttribute="width" id="cKu-Zg-lqe"/>
+                <constraint firstItem="E1g-Dc-wi8" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="16" id="cxp-1E-Ny6"/>
                 <constraint firstItem="AVo-il-tXg" firstAttribute="top" secondItem="9nN-rd-M8d" secondAttribute="bottom" constant="6" id="czh-3L-DOv"/>
                 <constraint firstItem="MY8-Qp-zFh" firstAttribute="top" secondItem="rGN-II-Gkp" secondAttribute="bottom" constant="13" id="eLm-te-SZn"/>
                 <constraint firstItem="0dn-ag-ede" firstAttribute="top" secondItem="QBw-Lr-arm" secondAttribute="bottom" constant="37" id="eiS-se-TKP"/>
