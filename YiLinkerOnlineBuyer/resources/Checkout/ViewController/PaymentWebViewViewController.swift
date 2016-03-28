@@ -59,8 +59,9 @@ class PaymentWebViewViewController: UIViewController, UIWebViewDelegate {
     //MARK: -
     //MARK: - Show HUD
     func showHUD() {
+        self.view.layoutIfNeeded()
        self.yiHud = YiHUD.initHud()
-       self.yiHud!.showHUDToView(self.view)
+       self.yiHud!.showHUDToView(self.navigationController!.view)
     }
     
     //MARK: -
