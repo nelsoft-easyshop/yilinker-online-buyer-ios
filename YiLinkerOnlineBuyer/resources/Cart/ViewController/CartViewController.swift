@@ -72,10 +72,6 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         self.checkoutButton.layer.cornerRadius = 5
         
-        self.navigationController?.navigationBar.titleTextAttributes =
-            [NSForegroundColorAttributeName: UIColor.whiteColor(),
-                NSFontAttributeName: UIFont(name: "Panton-Regular", size: 21)!]
-        
         self.dimView = UIView(frame: UIScreen.mainScreen().bounds)
         self.dimView?.backgroundColor = UIColor.blackColor()
         self.dimView?.alpha = 0
