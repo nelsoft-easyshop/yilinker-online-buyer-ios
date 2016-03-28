@@ -70,10 +70,6 @@ class WishlistViewController: UIViewController {
         wishlistTableView.registerNib(nib, forCellReuseIdentifier: "WishlistTableViewCell")
         
         //Initialize navigation bar's title
-        self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
-        self.navigationController?.navigationBar.titleTextAttributes =
-            [NSForegroundColorAttributeName: UIColor.whiteColor(),
-                NSFontAttributeName: UIFont(name: "Panton-Regular", size: 21)!]
         self.title = WishlistLocalizedStrings.title
     }
     
