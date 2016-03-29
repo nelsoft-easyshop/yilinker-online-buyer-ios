@@ -1871,6 +1871,18 @@ extension HomeContainerViewController: QRCodeScannerViewControllerDelegate {
                 sellerViewController.slug = slug
                 self.navigationController!.pushViewController(sellerViewController, animated: true)
             }
+        } else if code.contains("item") {
+            var slug: String = ""
+            if let range = code.rangeOfString("/", options: NSStringCompareOptions.BackwardsSearch) {
+                slug = code.substringFromIndex(range.endIndex)
+                println(slug)
+                
+                let productViewController: ProductViewController = ProductViewController(nibName: "ProductViewController", bundle: nil)
+                productViewController.tabController = self.tabBarController as! CustomTabBarController
+                productViewController.productId = slug
+                self.navigationController!.pushViewController(productViewController, animated: true)
+
+            }
         } else {
             UIApplication.sharedApplication().openURL(StringHelper.convertStringToUrl(code))
         }
