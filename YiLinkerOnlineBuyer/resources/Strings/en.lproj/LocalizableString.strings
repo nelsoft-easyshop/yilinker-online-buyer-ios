@@ -432,6 +432,7 @@ SEARCH_LOCALIZE_KEY = "Search";
 PRODUCT_LOCALIZE_KEY = "Product";
 SELLER_LOCALIZE_KEY = "Seller";
 BROWSECATEGORY_LOCALIZE_KEY = "Browse by Category";
+KEYWORD_SHORT_LOCALIZE_KEY = "Keyword too short!";
 
 //Search Results
 RESULTS_LOCALIZE_KEY = "Results";

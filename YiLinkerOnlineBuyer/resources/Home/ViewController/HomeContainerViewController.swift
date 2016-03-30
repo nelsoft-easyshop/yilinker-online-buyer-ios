@@ -1918,30 +1918,34 @@ extension HomeContainerViewController: SearchBarViewDelegate {
     }
     
     func searchBarView(searchBarView: SearchBarView, didTapSearch textField: UITextField) {
-        if (self.searchTask != nil) {
-            self.searchTask?.cancel()
-            searchTask = nil
-        }
-        
-        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-        textField.resignFirstResponder()
-        let newString = textField.text.stringByReplacingOccurrencesOfString(" ", withString: "+")
-        
-        var resultController = ResultViewController(nibName: "ResultViewController", bundle: nil)
-        
-        if self.searchType == .Product {
-            resultController.isSellerSearch = false
-            resultController.passModel(SearchSuggestionModel(suggestion: textField.text, imageURL: "", searchUrl: "\(APIAtlas.searchBuyer)\(newString)"))
+        if count(textField.text) < 3 {
+            Toast.displayToastWithMessage(StringHelper.localizedStringWithKey("KEYWORD_SHORT_LOCALIZE_KEY"), duration: 1.5, view: self.view)
         } else {
-            resultController.isSellerSearch = true
-            resultController.passModel(SearchSuggestionModel(suggestion: textField.text, imageURL: "", searchUrl: "\(APIAtlas.searchSeller)\(newString)"))
+            if (self.searchTask != nil) {
+                self.searchTask?.cancel()
+                searchTask = nil
+            }
+            
+            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+            textField.resignFirstResponder()
+            let newString = textField.text.stringByReplacingOccurrencesOfString(" ", withString: "+")
+            
+            var resultController = ResultViewController(nibName: "ResultViewController", bundle: nil)
+            
+            if self.searchType == .Product {
+                resultController.isSellerSearch = false
+                resultController.passModel(SearchSuggestionModel(suggestion: textField.text, imageURL: "", searchUrl: "\(APIAtlas.searchBuyer)\(newString)"))
+            } else {
+                resultController.isSellerSearch = true
+                resultController.passModel(SearchSuggestionModel(suggestion: textField.text, imageURL: "", searchUrl: "\(APIAtlas.searchSeller)\(newString)"))
+            }
+            
+            resultController.profileModel = self.profileModel
+            
+            resultController.searchType = self.searchType
+            
+            self.navigationController?.pushViewController(resultController, animated:true);
         }
-        
-        resultController.profileModel = self.profileModel
-        
-        resultController.searchType = self.searchType
-        
-        self.navigationController?.pushViewController(resultController, animated:true);
     }
     
     func searchBarView(searchBarView: SearchBarView, didChooseSuggestion suggestion: SearchSuggestionModel) {
