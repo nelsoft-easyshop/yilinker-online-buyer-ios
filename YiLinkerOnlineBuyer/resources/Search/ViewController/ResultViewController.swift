@@ -807,25 +807,29 @@ extension ResultViewController: SearchBarViewDelegate {
     }
     
     func searchBarView(searchBarView: SearchBarView, didTapSearch textField: UITextField) {
-        if (self.searchTask != nil) {
-            self.searchTask?.cancel()
-            searchTask = nil
-        }
-        
-        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-        textField.resignFirstResponder()
-        let newString = textField.text.stringByReplacingOccurrencesOfString(" ", withString: "+")
-        
-        if self.searchType == .Product {
-            self.isSellerSearch = false
-            self.passModel(SearchSuggestionModel(suggestion: textField.text, imageURL: "", searchUrl: "\(APIAtlas.searchBuyer)\(newString)"))
+        if count(textField.text) < 3 {
+            Toast.displayToastWithMessage(StringHelper.localizedStringWithKey("KEYWORD_SHORT_LOCALIZE_KEY"), duration: 1.5, view: self.view)
         } else {
-            self.isSellerSearch = true
-            self.passModel(SearchSuggestionModel(suggestion: textField.text, imageURL: "", searchUrl: "\(APIAtlas.searchSeller)\(newString)"))
+            if (self.searchTask != nil) {
+                self.searchTask?.cancel()
+                searchTask = nil
+            }
+            
+            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+            textField.resignFirstResponder()
+            let newString = textField.text.stringByReplacingOccurrencesOfString(" ", withString: "+")
+            
+            if self.searchType == .Product {
+                self.isSellerSearch = false
+                self.passModel(SearchSuggestionModel(suggestion: textField.text, imageURL: "", searchUrl: "\(APIAtlas.searchBuyer)\(newString)"))
+            } else {
+                self.isSellerSearch = true
+                self.passModel(SearchSuggestionModel(suggestion: textField.text, imageURL: "", searchUrl: "\(APIAtlas.searchSeller)\(newString)"))
+            }
+            self.resultCollectionView.reloadData()
+            self.page = 1
+            self.fireSearch()
         }
-        self.resultCollectionView.reloadData()
-        self.page = 1
-        self.fireSearch()
     }
     
     func searchBarView(searchBarView: SearchBarView, didChooseSuggestion suggestion: SearchSuggestionModel) {
