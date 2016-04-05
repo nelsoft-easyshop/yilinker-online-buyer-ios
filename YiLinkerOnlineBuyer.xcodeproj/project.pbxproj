@@ -544,6 +544,7 @@
 		0CAB83C01C86817C00B653A9 /* WishlistTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CAB81921C86817C00B653A9 /* WishlistTableViewCell.xib */; };
 		0CAB83C11C86817C00B653A9 /* WishlistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAB81941C86817C00B653A9 /* WishlistViewController.swift */; };
 		0CAB83C21C86817C00B653A9 /* YiLinkerOnlineBuyer.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0CAB81951C86817C00B653A9 /* YiLinkerOnlineBuyer.xcdatamodeld */; };
+		0CB3CF881CAE2690005C098C /* ParseHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CB3CF871CAE2690005C098C /* ParseHelper.swift */; };
 		790E597E1C87D0B90073FE23 /* SearchBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 790E597D1C87D0B90073FE23 /* SearchBarView.swift */; };
 		790E59801C87D0D00073FE23 /* SearchBarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 790E597F1C87D0D00073FE23 /* SearchBarView.xib */; };
 		790E59831C880C980073FE23 /* SearchTypeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 790E59811C880C980073FE23 /* SearchTypeTableViewCell.swift */; };
@@ -1154,6 +1155,7 @@
 		0CAB81921C86817C00B653A9 /* WishlistTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WishlistTableViewCell.xib; sourceTree = "<group>"; };
 		0CAB81941C86817C00B653A9 /* WishlistViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WishlistViewController.swift; sourceTree = "<group>"; };
 		0CAB81961C86817C00B653A9 /* YiLinkerOnlineBuyer.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = YiLinkerOnlineBuyer.xcdatamodel; sourceTree = "<group>"; };
+		0CB3CF871CAE2690005C098C /* ParseHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseHelper.swift; sourceTree = "<group>"; };
 		13599842A00C070178791D1F /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		790E597D1C87D0B90073FE23 /* SearchBarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchBarView.swift; sourceTree = "<group>"; };
 		790E597F1C87D0D00073FE23 /* SearchBarView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchBarView.xib; sourceTree = "<group>"; };
@@ -1946,6 +1948,7 @@
 		0CAB7FC41C86817B00B653A9 /* Helper */ = {
 			isa = PBXGroup;
 			children = (
+				0CB3CF871CAE2690005C098C /* ParseHelper.swift */,
 				0CAB7FC51C86817B00B653A9 /* APIManager.swift */,
 				0CAB7FC61C86817B00B653A9 /* ButtonToTabBehaviorizer.swift */,
 				0CAB7FC71C86817B00B653A9 /* Category.swift */,
@@ -3493,6 +3496,7 @@
 				0CAB82CB1C86817C00B653A9 /* ProductReviewModel.swift in Sources */,
 				0CAB82971C86817C00B653A9 /* MessagingConversationModel.swift in Sources */,
 				799B9A401C8EACEA006472E8 /* EditProfileAddressTableViewCell.swift in Sources */,
+				0CB3CF881CAE2690005C098C /* ParseHelper.swift in Sources */,
 				0CAB829A1C86817C00B653A9 /* W_Conversation.swift in Sources */,
 				0CAB81D11C86817C00B653A9 /* GuestCheckoutTableViewCell.swift in Sources */,
 				0CAB827C1C86817C00B653A9 /* TwoColumnGridCollectionViewCell.swift in Sources */,
