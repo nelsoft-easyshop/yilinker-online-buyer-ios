@@ -337,6 +337,12 @@ class FABViewController: UIViewController, FABCollectionViewCellDelegate, FABPro
             fabCollectionViewCell.rightLabelWidth.constant = width2 + rightLabelPadding
         }
         
+        fabCollectionViewCell.iconButton.transform = CGAffineTransformMakeRotation((180.0 * CGFloat(M_PI)) / 180.0)
+        
+        UIView.animateWithDuration(1.0, animations: {
+            fabCollectionViewCell.iconButton.transform = CGAffineTransformMakeRotation((180.0 * CGFloat(M_PI)) / 90)
+        })
+        
         return fabCollectionViewCell
     }
     
@@ -360,10 +366,9 @@ class FABViewController: UIViewController, FABCollectionViewCellDelegate, FABPro
         profileImageView.sd_setImageWithURL(NSURL(string: self.textAndIcons[indexPath.row].icon), placeholderImage: UIImage(named: "dummy-placeholder"))
         profileImageView.contentMode = UIViewContentMode.ScaleAspectFill
         
-        UIView.animateWithDuration(0.5, delay: 0.5, usingSpringWithDamping: 0.8, initialSpringVelocity: 3.0, options: UIViewAnimationOptions.CurveEaseInOut, animations: ({
+        UIView.animateWithDuration(1.5, delay: 0.1, usingSpringWithDamping: 0.3, initialSpringVelocity: 3.0, options: UIViewAnimationOptions.CurveEaseInOut, animations: ({
             fabProfileCollectionViewCell.profileImageView.transform = CGAffineTransformMakeScale(1.5, 1.5)
         }), completion: nil)
-        
         
         return fabProfileCollectionViewCell
     }
