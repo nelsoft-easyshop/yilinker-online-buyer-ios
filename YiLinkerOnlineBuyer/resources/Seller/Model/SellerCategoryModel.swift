@@ -72,7 +72,13 @@ class SellerCategoryModel: NSObject {
             if let tempArr = dictionary["data"] as? NSArray {
                 for subValue in tempArr as NSArray {
                     name.append(subValue["name"] as! String)
-                    categoryId.append(subValue["categoryId"] as! Int)
+                   
+                    if let x = subValue["categoryId"] as? Int {
+                        categoryId.append(x)
+                    } else {
+                        categoryId.append(0)
+                    }
+                    
                     if let tempArr2 = subValue["subcategories"] as? NSArray {
                         subCategories3.append(subValue["subcategories"] as! NSArray)
                         var i: Int = tempArr2.count
