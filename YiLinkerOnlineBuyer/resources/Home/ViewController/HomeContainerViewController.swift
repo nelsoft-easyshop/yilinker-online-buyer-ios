@@ -180,13 +180,10 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             println("Device language is english!")
         }
         
-        if self.isJsonStringEmpty() {
-            self.addEmptyView()
-        } else {
-            //show cached data
-            //self.showNoDataBanner()
+        if !self.isJsonStringEmpty() {
             self.populateHomePageWithDictionary(self.coreDataJsonString())
         }
+        
     }
     
     //MARK: - Add Pull To Refresh
