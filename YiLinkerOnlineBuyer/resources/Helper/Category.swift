@@ -282,6 +282,25 @@ extension UIAlertController {
             // ...
         }
     }
+    
+    class func showAlertTwoButtonsWithTitle(title: String, message: String, positiveString: String, negativeString: String, viewController: UIViewController, actionHandler: (isYes: Bool) -> Void) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+        
+        let cancelAction = UIAlertAction(title: negativeString, style: .Cancel) { (action) in
+            actionHandler(isYes: false)
+        }
+        
+        alertController.addAction(cancelAction)
+        
+        let OKAction = UIAlertAction(title: positiveString, style: .Default) { (action) in
+            actionHandler(isYes: true)
+        }
+        alertController.addAction(OKAction)
+        
+        viewController.presentViewController(alertController, animated: true) {
+            // ...
+        }
+    }
 }
 
 

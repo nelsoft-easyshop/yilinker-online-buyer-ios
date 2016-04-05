@@ -404,6 +404,8 @@ HELP_FOR_CUSTOMER_SERVICE= "为客户服务援助";
 HELP_EMAIL = "电子邮件：";
 HELP_CALL = "电话:";
 HELP_SEND_FEEDBACK = "发送反馈";
+HELP_CHECK_FOR_UPDATES = "检查有更新";
+HELP_WHATS_NEW = "什么是新";
 
 // MARK: - Suggestion Feedback
 SUGGESTION_HEADLINE = "你想要发送反馈意见吗？";//No Chinese String

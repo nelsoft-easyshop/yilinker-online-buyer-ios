@@ -398,6 +398,8 @@ HELP_FOR_CUSTOMER_SERVICE= "For Customer Service Assistance";
 HELP_EMAIL = "Email  :";
 HELP_CALL = "Call     :";
 HELP_SEND_FEEDBACK = "SEND A FEEDBACK";
+HELP_CHECK_FOR_UPDATES = "CHECK FOR UPDATES";
+HELP_WHATS_NEW = "WHAT'S NEW";
 
 // MARK: - Suggestion Feedback
 SUGGESTION_HEADLINE = "Do you want to send a feedback?";
