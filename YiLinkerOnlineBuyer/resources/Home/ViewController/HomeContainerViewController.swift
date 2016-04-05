@@ -1883,7 +1883,11 @@ extension HomeContainerViewController: QRCodeScannerViewControllerDelegate {
                 self.navigationController!.pushViewController(productViewController, animated: true)
 
             }
-        } else {
+        } else if code.contains("register") {
+            self.redirectToLoginRegister(false)
+        } else if code.contains("login") {
+            self.redirectToLoginRegister(true)
+        }else {
             UIApplication.sharedApplication().openURL(StringHelper.convertStringToUrl(code))
         }
     }
