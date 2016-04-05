@@ -552,6 +552,9 @@
 		791B4E071C9AA7EF00B3FB94 /* SuggestionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 791B4E061C9AA7EF00B3FB94 /* SuggestionViewModel.swift */; };
 		7980D03D1C994E2800F6C148 /* SuggestionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7980D03B1C994E2800F6C148 /* SuggestionViewController.swift */; };
 		7980D03E1C994E2800F6C148 /* SuggestionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7980D03C1C994E2800F6C148 /* SuggestionViewController.xib */; };
+		7987B3481CB35E670033B50D /* HelpWhatsNewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7987B3461CB35E670033B50D /* HelpWhatsNewViewController.swift */; };
+		7987B3491CB35E670033B50D /* HelpWhatsNewViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7987B3471CB35E670033B50D /* HelpWhatsNewViewController.xib */; };
+		7987B34B1CB39F490033B50D /* AppDetailsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7987B34A1CB39F490033B50D /* AppDetailsModel.swift */; };
 		798D84C51C86C14500D2A1F7 /* MyPointsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798D84B41C86C14500D2A1F7 /* MyPointsTableViewController.swift */; };
 		798D84C61C86C14500D2A1F7 /* MyPointsTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 798D84B51C86C14500D2A1F7 /* MyPointsTableViewController.xib */; };
 		798D84C71C86C14500D2A1F7 /* MyPointsHistoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798D84B71C86C14500D2A1F7 /* MyPointsHistoryModel.swift */; };
@@ -1164,6 +1167,9 @@
 		791B4E061C9AA7EF00B3FB94 /* SuggestionViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SuggestionViewModel.swift; sourceTree = "<group>"; };
 		7980D03B1C994E2800F6C148 /* SuggestionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SuggestionViewController.swift; sourceTree = "<group>"; };
 		7980D03C1C994E2800F6C148 /* SuggestionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SuggestionViewController.xib; sourceTree = "<group>"; };
+		7987B3461CB35E670033B50D /* HelpWhatsNewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HelpWhatsNewViewController.swift; path = YiLinkerOnlineBuyer/resources/Help/ViewController/HelpWhatsNewViewController.swift; sourceTree = SOURCE_ROOT; };
+		7987B3471CB35E670033B50D /* HelpWhatsNewViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = HelpWhatsNewViewController.xib; path = YiLinkerOnlineBuyer/resources/Help/ViewController/HelpWhatsNewViewController.xib; sourceTree = SOURCE_ROOT; };
+		7987B34A1CB39F490033B50D /* AppDetailsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDetailsModel.swift; path = YiLinkerOnlineBuyer/resources/Model/AppDetailsModel.swift; sourceTree = SOURCE_ROOT; };
 		798D84B41C86C14500D2A1F7 /* MyPointsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPointsTableViewController.swift; sourceTree = "<group>"; };
 		798D84B51C86C14500D2A1F7 /* MyPointsTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyPointsTableViewController.xib; sourceTree = "<group>"; };
 		798D84B71C86C14500D2A1F7 /* MyPointsHistoryModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPointsHistoryModel.swift; sourceTree = "<group>"; };
@@ -1941,6 +1947,8 @@
 			children = (
 				0CAB7FC01C86817B00B653A9 /* HelpViewController.swift */,
 				0CAB7FC11C86817B00B653A9 /* HelpViewController.xib */,
+				7987B3461CB35E670033B50D /* HelpWhatsNewViewController.swift */,
+				7987B3471CB35E670033B50D /* HelpWhatsNewViewController.xib */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -2184,6 +2192,7 @@
 			isa = PBXGroup;
 			children = (
 				0CAB80581C86817B00B653A9 /* cancelUrl */,
+				7987B34A1CB39F490033B50D /* AppDetailsModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -3125,6 +3134,7 @@
 				0CAB82E01C86817C00B653A9 /* ProductSellerViewCollectionViewCell.xib in Resources */,
 				0CAB81EA1C86817C00B653A9 /* TotalTableViewCell.xib in Resources */,
 				0CAB82091C86817C00B653A9 /* Panton Heavy Italic.otf in Resources */,
+				7987B3491CB35E670033B50D /* HelpWhatsNewViewController.xib in Resources */,
 				799B9A4A1C8EACEA006472E8 /* ProfileTableViewCell.xib in Resources */,
 				0CAB81DB1C86817C00B653A9 /* OverViewViewController.xib in Resources */,
 				0CAB837C1C86817C00B653A9 /* TransactionViewController.xib in Resources */,
@@ -3616,6 +3626,7 @@
 				0CAB83C11C86817C00B653A9 /* WishlistViewController.swift in Sources */,
 				0CAB81AE1C86817C00B653A9 /* NewAddressTableViewCell.swift in Sources */,
 				0CAB82551C86817C00B653A9 /* LayoutSevenModel.swift in Sources */,
+				7987B34B1CB39F490033B50D /* AppDetailsModel.swift in Sources */,
 				0CAB82611C86817C00B653A9 /* FullImageCollectionViewCell.swift in Sources */,
 				0CAB838C1C86817C00B653A9 /* TransactionLeaveProductFeedbackTableViewController.swift in Sources */,
 				0CAB82211C86817C00B653A9 /* FABCollectionViewLayout.swift in Sources */,
@@ -3695,6 +3706,7 @@
 				0CAB81A11C86817C00B653A9 /* ActivityLogTableViewController.swift in Sources */,
 				0CAB83AD1C86817C00B653A9 /* PlainTableViewCell.swift in Sources */,
 				0CAB832E1C86817C00B653A9 /* SellerModel.swift in Sources */,
+				7987B3481CB35E670033B50D /* HelpWhatsNewViewController.swift in Sources */,
 				0CAB835B1C86817C00B653A9 /* TransactionProductDetailsDeliveryStatusModel.swift in Sources */,
 				0CAB82271C86817C00B653A9 /* FollwedSellerModel.swift in Sources */,
 				0CAB824F1C86817C00B653A9 /* HomeSellerModel.swift in Sources */,

@@ -98,6 +98,8 @@ struct APIAtlas {
         }
     }
     
+    static let appItunesURL = "https://itunes.apple.com/ph/app/yilinker-buyer/id1048641709?mt=8"
+    static let appLookupUrl = "http://itunes.apple.com/lookup?bundleId=com.easyshop.YiLinkerOnlineBuyer"
     static let refreshTokenUrl = "v1/login"
     static let loginUrl = "v1/login"
     static let registerUrl = "v1/user/register"

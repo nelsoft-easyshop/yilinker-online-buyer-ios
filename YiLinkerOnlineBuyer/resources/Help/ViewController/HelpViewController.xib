@@ -6,6 +6,8 @@
     <customFonts key="customFonts">
         <mutableArray key="Panton Bold.otf">
             <string>Panton-Bold</string>
+            <string>Panton-Bold</string>
+            <string>Panton-Bold</string>
         </mutableArray>
         <mutableArray key="Panton.otf">
             <string>Panton-Regular</string>
@@ -22,6 +24,7 @@
                 <outlet property="callIconButton" destination="Ksf-B1-L46" id="Jby-sQ-QAW"/>
                 <outlet property="callLabel" destination="MY8-Qp-zFh" id="ZX0-K5-ihR"/>
                 <outlet property="callTextButton" destination="yKJ-DU-6hq" id="VVB-dd-DR7"/>
+                <outlet property="checkUpdatesButton" destination="I7t-0W-A80" id="r7B-O3-x76"/>
                 <outlet property="emailIconButton" destination="0dn-ag-ede" id="Kaq-vQ-nYc"/>
                 <outlet property="emailLabel" destination="rGN-II-Gkp" id="mDd-jy-4uk"/>
                 <outlet property="emailTextButton" destination="k8B-Ke-GLs" id="tQd-d5-xXG"/>
@@ -33,6 +36,7 @@
                 <outlet property="twitterButton" destination="MUP-fp-vVz" id="9vk-gH-Fe0"/>
                 <outlet property="versionLabel" destination="HnA-84-DdC" id="T8J-2C-wzq"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+                <outlet property="whatsNewButton" destination="A1z-gp-zvJ" id="0mk-aU-4Fh"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -213,6 +217,36 @@
                         <action selector="sendFeedbackAction:" destination="-1" eventType="touchUpInside" id="Wr6-HF-dqS"/>
                     </connections>
                 </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="I7t-0W-A80">
+                    <rect key="frame" x="16" y="401" width="288" height="30"/>
+                    <color key="backgroundColor" red="0.3294117647" green="0.71372549019999998" blue="0.65490196079999996" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="30" id="Y33-Nc-BcE"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="11"/>
+                    <state key="normal" title="CHECK FOR UPDATES">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="checkForUpdatesAction:" destination="-1" eventType="touchUpInside" id="hAs-kM-j1R"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="A1z-gp-zvJ">
+                    <rect key="frame" x="16" y="435" width="288" height="30"/>
+                    <color key="backgroundColor" red="0.3294117647" green="0.71372549019999998" blue="0.65490196079999996" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="30" id="ApP-uk-W2N"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="11"/>
+                    <state key="normal" title="WHAT'S NEW">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="whatsNewAction:" destination="-1" eventType="touchUpInside" id="BHV-2M-dso"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
@@ -220,11 +254,15 @@
                 <constraint firstItem="AVo-il-tXg" firstAttribute="width" secondItem="9nN-rd-M8d" secondAttribute="width" id="1nS-2d-gXQ"/>
                 <constraint firstAttribute="trailing" secondItem="FeV-fQ-CdR" secondAttribute="trailing" constant="8" id="1p9-rm-Ge4"/>
                 <constraint firstItem="k8B-Ke-GLs" firstAttribute="leading" secondItem="rGN-II-Gkp" secondAttribute="trailing" constant="8" id="20O-oi-hx3"/>
+                <constraint firstItem="I7t-0W-A80" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="16" id="31r-nP-c7W"/>
+                <constraint firstAttribute="trailing" secondItem="I7t-0W-A80" secondAttribute="trailing" constant="16" id="52l-kW-nPq"/>
+                <constraint firstItem="A1z-gp-zvJ" firstAttribute="top" secondItem="I7t-0W-A80" secondAttribute="bottom" constant="4" id="5Kn-Ao-cGH"/>
                 <constraint firstItem="k8B-Ke-GLs" firstAttribute="top" secondItem="QBw-Lr-arm" secondAttribute="bottom" constant="33" id="5dM-11-pn1"/>
                 <constraint firstItem="9nN-rd-M8d" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="6Hx-Hm-xVU"/>
                 <constraint firstItem="Ksf-B1-L46" firstAttribute="top" secondItem="0dn-ag-ede" secondAttribute="bottom" constant="14" id="6cI-C8-Gze"/>
                 <constraint firstItem="rGN-II-Gkp" firstAttribute="top" secondItem="QBw-Lr-arm" secondAttribute="bottom" constant="37" id="6rj-Us-EHW"/>
                 <constraint firstAttribute="centerX" secondItem="Xkn-dp-2OT" secondAttribute="centerX" id="7Kv-FP-OtL"/>
+                <constraint firstItem="A1z-gp-zvJ" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="16" id="82u-3y-g59"/>
                 <constraint firstAttribute="centerX" secondItem="QBw-Lr-arm" secondAttribute="centerX" id="BB9-Vr-gM0"/>
                 <constraint firstItem="0dn-ag-ede" firstAttribute="leading" secondItem="k8B-Ke-GLs" secondAttribute="trailing" constant="8" id="CE5-Ew-F5r"/>
                 <constraint firstItem="QBw-Lr-arm" firstAttribute="top" secondItem="Xkn-dp-2OT" secondAttribute="bottom" constant="20" id="Esg-81-fzS"/>
@@ -238,6 +276,7 @@
                 <constraint firstItem="k8B-Ke-GLs" firstAttribute="leading" secondItem="rGN-II-Gkp" secondAttribute="trailing" constant="8" id="Ump-1Y-xgb"/>
                 <constraint firstAttribute="trailing" secondItem="fi5-It-lU4" secondAttribute="trailing" constant="8" id="YWy-dy-qQz"/>
                 <constraint firstItem="rGN-II-Gkp" firstAttribute="leading" secondItem="9nN-rd-M8d" secondAttribute="trailing" constant="8" id="Yyv-Vk-CGZ"/>
+                <constraint firstAttribute="trailing" secondItem="A1z-gp-zvJ" secondAttribute="trailing" constant="16" id="ale-TP-5P6"/>
                 <constraint firstItem="AVo-il-tXg" firstAttribute="width" secondItem="fi5-It-lU4" secondAttribute="width" id="cKu-Zg-lqe"/>
                 <constraint firstItem="E1g-Dc-wi8" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="16" id="cxp-1E-Ny6"/>
                 <constraint firstItem="AVo-il-tXg" firstAttribute="top" secondItem="9nN-rd-M8d" secondAttribute="bottom" constant="6" id="czh-3L-DOv"/>
@@ -246,6 +285,7 @@
                 <constraint firstItem="Xkn-dp-2OT" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="30" id="fFw-1h-LtQ"/>
                 <constraint firstItem="yKJ-DU-6hq" firstAttribute="top" secondItem="k8B-Ke-GLs" secondAttribute="bottom" constant="4" id="frQ-Li-0Tl"/>
                 <constraint firstItem="yKJ-DU-6hq" firstAttribute="leading" secondItem="MY8-Qp-zFh" secondAttribute="trailing" constant="8" id="geZ-W9-6v6"/>
+                <constraint firstItem="I7t-0W-A80" firstAttribute="top" secondItem="E1g-Dc-wi8" secondAttribute="bottom" constant="5" id="mG9-lC-lrm"/>
                 <constraint firstItem="AVo-il-tXg" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="nQY-So-jIH"/>
                 <constraint firstItem="fi5-It-lU4" firstAttribute="leading" secondItem="Ksf-B1-L46" secondAttribute="trailing" constant="6" id="pyj-2A-VjZ"/>
                 <constraint firstItem="Ksf-B1-L46" firstAttribute="leading" secondItem="yKJ-DU-6hq" secondAttribute="trailing" constant="8" id="qev-h4-Ska"/>
