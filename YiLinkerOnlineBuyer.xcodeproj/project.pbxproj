@@ -555,6 +555,8 @@
 		7987B3481CB35E670033B50D /* HelpWhatsNewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7987B3461CB35E670033B50D /* HelpWhatsNewViewController.swift */; };
 		7987B3491CB35E670033B50D /* HelpWhatsNewViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7987B3471CB35E670033B50D /* HelpWhatsNewViewController.xib */; };
 		7987B34B1CB39F490033B50D /* AppDetailsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7987B34A1CB39F490033B50D /* AppDetailsModel.swift */; };
+		7987B34E1CB3BFF20033B50D /* BottomLoaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7987B34C1CB3BFF20033B50D /* BottomLoaderTableViewCell.swift */; };
+		7987B34F1CB3BFF20033B50D /* BottomLoaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7987B34D1CB3BFF20033B50D /* BottomLoaderTableViewCell.xib */; };
 		798D84C51C86C14500D2A1F7 /* MyPointsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798D84B41C86C14500D2A1F7 /* MyPointsTableViewController.swift */; };
 		798D84C61C86C14500D2A1F7 /* MyPointsTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 798D84B51C86C14500D2A1F7 /* MyPointsTableViewController.xib */; };
 		798D84C71C86C14500D2A1F7 /* MyPointsHistoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798D84B71C86C14500D2A1F7 /* MyPointsHistoryModel.swift */; };
@@ -570,6 +572,8 @@
 		798D84D11C86C14500D2A1F7 /* PointsEarnedTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 798D84C21C86C14500D2A1F7 /* PointsEarnedTableViewCell.xib */; };
 		798D84D21C86C14500D2A1F7 /* PointsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798D84C31C86C14500D2A1F7 /* PointsTableViewCell.swift */; };
 		798D84D31C86C14500D2A1F7 /* PointsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 798D84C41C86C14500D2A1F7 /* PointsTableViewCell.xib */; };
+		799A00B71CB4B3760032E509 /* BottomLoaderCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799A00B51CB4B3760032E509 /* BottomLoaderCollectionReusableView.swift */; };
+		799A00B81CB4B3760032E509 /* BottomLoaderCollectionReusableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 799A00B61CB4B3760032E509 /* BottomLoaderCollectionReusableView.xib */; };
 		799B9A3A1C8EACEA006472E8 /* ProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799B9A211C8EACEA006472E8 /* ProfileModel.swift */; };
 		799B9A3B1C8EACEA006472E8 /* ProfileUserDetailsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799B9A221C8EACEA006472E8 /* ProfileUserDetailsModel.swift */; };
 		799B9A3C1C8EACEA006472E8 /* EditProfileAccountInformationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799B9A241C8EACEA006472E8 /* EditProfileAccountInformationTableViewCell.swift */; };
@@ -1170,6 +1174,8 @@
 		7987B3461CB35E670033B50D /* HelpWhatsNewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HelpWhatsNewViewController.swift; path = YiLinkerOnlineBuyer/resources/Help/ViewController/HelpWhatsNewViewController.swift; sourceTree = SOURCE_ROOT; };
 		7987B3471CB35E670033B50D /* HelpWhatsNewViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = HelpWhatsNewViewController.xib; path = YiLinkerOnlineBuyer/resources/Help/ViewController/HelpWhatsNewViewController.xib; sourceTree = SOURCE_ROOT; };
 		7987B34A1CB39F490033B50D /* AppDetailsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDetailsModel.swift; path = YiLinkerOnlineBuyer/resources/Model/AppDetailsModel.swift; sourceTree = SOURCE_ROOT; };
+		7987B34C1CB3BFF20033B50D /* BottomLoaderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BottomLoaderTableViewCell.swift; path = "YiLinkerOnlineBuyer/resources/Universal Views/BottomLoaderTableViewCell.swift"; sourceTree = SOURCE_ROOT; };
+		7987B34D1CB3BFF20033B50D /* BottomLoaderTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BottomLoaderTableViewCell.xib; path = "YiLinkerOnlineBuyer/resources/Universal Views/BottomLoaderTableViewCell.xib"; sourceTree = SOURCE_ROOT; };
 		798D84B41C86C14500D2A1F7 /* MyPointsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPointsTableViewController.swift; sourceTree = "<group>"; };
 		798D84B51C86C14500D2A1F7 /* MyPointsTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyPointsTableViewController.xib; sourceTree = "<group>"; };
 		798D84B71C86C14500D2A1F7 /* MyPointsHistoryModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPointsHistoryModel.swift; sourceTree = "<group>"; };
@@ -1185,6 +1191,8 @@
 		798D84C21C86C14500D2A1F7 /* PointsEarnedTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PointsEarnedTableViewCell.xib; sourceTree = "<group>"; };
 		798D84C31C86C14500D2A1F7 /* PointsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PointsTableViewCell.swift; sourceTree = "<group>"; };
 		798D84C41C86C14500D2A1F7 /* PointsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PointsTableViewCell.xib; sourceTree = "<group>"; };
+		799A00B51CB4B3760032E509 /* BottomLoaderCollectionReusableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BottomLoaderCollectionReusableView.swift; path = "YiLinkerOnlineBuyer/resources/Universal Views/BottomLoaderCollectionReusableView.swift"; sourceTree = SOURCE_ROOT; };
+		799A00B61CB4B3760032E509 /* BottomLoaderCollectionReusableView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BottomLoaderCollectionReusableView.xib; path = "YiLinkerOnlineBuyer/resources/Universal Views/BottomLoaderCollectionReusableView.xib"; sourceTree = SOURCE_ROOT; };
 		799B9A211C8EACEA006472E8 /* ProfileModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileModel.swift; sourceTree = "<group>"; };
 		799B9A221C8EACEA006472E8 /* ProfileUserDetailsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileUserDetailsModel.swift; sourceTree = "<group>"; };
 		799B9A241C8EACEA006472E8 /* EditProfileAccountInformationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditProfileAccountInformationTableViewCell.swift; sourceTree = "<group>"; };
@@ -2662,6 +2670,10 @@
 				0CAB81831C86817C00B653A9 /* ViewImageViewController.xib */,
 				0CAB81841C86817C00B653A9 /* YiHUD.swift */,
 				0CAB81851C86817C00B653A9 /* YiHUD.xib */,
+				7987B34C1CB3BFF20033B50D /* BottomLoaderTableViewCell.swift */,
+				7987B34D1CB3BFF20033B50D /* BottomLoaderTableViewCell.xib */,
+				799A00B51CB4B3760032E509 /* BottomLoaderCollectionReusableView.swift */,
+				799A00B61CB4B3760032E509 /* BottomLoaderCollectionReusableView.xib */,
 			);
 			path = "Universal Views";
 			sourceTree = "<group>";
@@ -3191,6 +3203,7 @@
 				0CAB831E1C86817C00B653A9 /* FilterTableViewCell.xib in Resources */,
 				0CAB82081C86817C00B653A9 /* Panton ExtraLight.otf in Resources */,
 				0CAB82A01C86817C00B653A9 /* MessagingConversationListViewController.xib in Resources */,
+				7987B34F1CB3BFF20033B50D /* BottomLoaderTableViewCell.xib in Resources */,
 				0CAB83741C86817C00B653A9 /* TransactionProductDetailsViewController.xib in Resources */,
 				0CAB81DA1C86817C00B653A9 /* OrderSummaryTableViewCell.xib in Resources */,
 				0CAB83851C86817C00B653A9 /* TransactionDeliveryLogTableViewController.xib in Resources */,
@@ -3226,6 +3239,7 @@
 				0CAB82811C86817C00B653A9 /* ViewMoreFooterCollectionViewCell.xib in Resources */,
 				9F7BC2CF1BF124C100218E10 /* yilinker_pinned_certificate.cer in Resources */,
 				0CAB825C1C86817C00B653A9 /* CarouselCollectionViewCell.xib in Resources */,
+				799A00B81CB4B3760032E509 /* BottomLoaderCollectionReusableView.xib in Resources */,
 				0CAB827F1C86817C00B653A9 /* VerticalImageCollectionViewCell.xib in Resources */,
 				790E59841C880C980073FE23 /* SearchTypeTableViewCell.xib in Resources */,
 				0CAB83221C86817C00B653A9 /* SearchSuggestionTableViewCell.xib in Resources */,
@@ -3391,6 +3405,7 @@
 				0CAB83581C86817C00B653A9 /* TransactionDetailsModel.swift in Sources */,
 				0CAB82B51C86817C00B653A9 /* MessagingConversationListViewController.swift in Sources */,
 				799B9A3A1C8EACEA006472E8 /* ProfileModel.swift in Sources */,
+				799A00B71CB4B3760032E509 /* BottomLoaderCollectionReusableView.swift in Sources */,
 				0CAB830F1C86817C00B653A9 /* ResolutionCenterCell.swift in Sources */,
 				0CAB81CE1C86817C00B653A9 /* DicountVoucherTableViewCell.swift in Sources */,
 				0CAB825F1C86817C00B653A9 /* FlashSaleCollectionViewCell.swift in Sources */,
@@ -3552,6 +3567,7 @@
 				799B9A4D1C8EACEA006472E8 /* ProfileSettingsViewController.swift in Sources */,
 				798D84C71C86C14500D2A1F7 /* MyPointsHistoryModel.swift in Sources */,
 				0CAB838E1C86817C00B653A9 /* TransactionLeaveSellerFeedbackTableViewController.swift in Sources */,
+				7987B34E1CB3BFF20033B50D /* BottomLoaderTableViewCell.swift in Sources */,
 				0CAB83AB1C86817C00B653A9 /* NoInternetConnectionView.swift in Sources */,
 				0CAB82B11C86817C00B653A9 /* MessageThreadImageTVC.swift in Sources */,
 				790E597E1C87D0B90073FE23 /* SearchBarView.swift in Sources */,

@@ -32,6 +32,7 @@ class ResultViewController: UIViewController {
     let reuseIdentifierGrid: String = "ProductResultGridCollectionViewCell"
     let reuseIdentifierList: String = "ProductResultListCollectionViewCell"
     let reuseIdentifierSeller: String = "SellerResultCollectionViewCell"
+    let reuseIdentifierLoader: String = "BottomLoaderCollectionReusableView"
     
     //IB Views
     @IBOutlet weak var noResultLabel: UILabel!
@@ -99,7 +100,7 @@ class ResultViewController: UIViewController {
     var selectedMaxPrice: Double = 0    //Selected max price by the user
     var selectedMinPrice: Double = 0    //Selected min price by the user
     var page: Int = 1                   //Page used for the pagination
-    let perPage: Int = 15               //Number of results in each page
+    let perPage: Int = 2               //Number of results in each page
     var filtersString: [String] = []    //Generated string based the filter attributes
     var selectedSortTypeIndex: Int = -1
     var filterAtributes: [FilterAttributeModel] = []
@@ -113,6 +114,8 @@ class ResultViewController: UIViewController {
     var searchTask: NSURLSessionDataTask?
     var suggestions: [SearchSuggestionModel] = []
     var searchQuery: String = ""
+    
+    var showBottomLoader: Bool = false
     
     @IBOutlet weak var topBarView: UIView!
     override func viewDidLoad() {
@@ -232,7 +235,9 @@ class ResultViewController: UIViewController {
         
         var cellNib = UINib(nibName: reuseIdentifierSeller, bundle: nil)
         self.resultCollectionView?.registerNib(cellNib, forCellWithReuseIdentifier: reuseIdentifierSeller)
-    }
+        
+        var loaderNib = UINib(nibName: reuseIdentifierLoader, bundle: nil)
+        self.resultCollectionView?.registerNib(loaderNib, forSupplementaryViewOfKind: UICollectionElementKindSectionFooter, withReuseIdentifier: reuseIdentifierLoader)    }
     
     func addBNavBarBackButton() {
         var backButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
@@ -372,7 +377,7 @@ class ResultViewController: UIViewController {
         self.searchBarView?.hideAutoComplete()
         self.searchBarView?.hideSearchTypePicker()
         if self.isSellerSearch {
-            if (self.sellerCollectionViewData.count % 15) == 0 {
+            if (self.sellerCollectionViewData.count % self.perPage) == 0 {
                 self.fireSearchRequest()
             } else {
                 let noMoreLocalizeString: String = StringHelper.localizedStringWithKey("NOMORERESULTS_LOCALIZE_KEY")
@@ -380,7 +385,7 @@ class ResultViewController: UIViewController {
                 UIAlertController.displayErrorMessageWithTarget(self, errorMessage: noMoreLocalizeString, title: resultsLocalizeString)
             }
         } else {
-            if (self.productCollectionViewData.count % 15) == 0 {
+            if (self.productCollectionViewData.count % self.perPage) == 0 {
                 self.fireSearchRequest()
             } else {
                 let noMoreLocalizeString: String = StringHelper.localizedStringWithKey("NOMORERESULTS_LOCALIZE_KEY")
@@ -399,7 +404,7 @@ class ResultViewController: UIViewController {
             self.dismissLoader()
             if successful {
                 if self.isSellerSearch {
-                    if (self.sellerCollectionViewData.count % 15) == 0 {
+                    if (self.sellerCollectionViewData.count % self.perPage) == 0 {
                         self.populateSellerCollectionView(responseObject)
                         self.page++
                     } else {
@@ -408,7 +413,7 @@ class ResultViewController: UIViewController {
                         UIAlertController.displayErrorMessageWithTarget(self, errorMessage: noMoreLocalizeString, title: resultsLocalizeString)
                     }
                 } else {
-                    if (self.productCollectionViewData.count % 15) == 0 {
+                    if (self.productCollectionViewData.count % self.perPage) == 0 {
                         self.populateProductCollectionView(responseObject)
                         self.page++
                     } else {
@@ -574,12 +579,20 @@ class ResultViewController: UIViewController {
     
     //Loader function
     func showLoader() {
-        self.hud = YiHUD.initHud()
-        self.hud?.showHUDToView(self.view)
+        if !showBottomLoader {
+            self.hud = YiHUD.initHud()
+            self.hud?.showHUDToView(self.view)
+        } else {
+            self.resultCollectionView.reloadData()
+            var item = self.resultCollectionView.numberOfItemsInSection(0) - 1
+            var lastItemIndex = NSIndexPath(forItem: item, inSection: 0)
+            self.resultCollectionView?.scrollToItemAtIndexPath(lastItemIndex, atScrollPosition: UICollectionViewScrollPosition.Top, animated: true)
+        }
     }
     
     func dismissLoader() {
         self.hud?.hide()
+        self.showBottomLoader = false
     }
     
     func hideDimView() {
@@ -604,7 +617,6 @@ extension ResultViewController: UICollectionViewDataSource, UICollectionViewDele
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         return 1
     }
-    
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if self.isSellerSearch {
@@ -671,6 +683,22 @@ extension ResultViewController: UICollectionViewDataSource, UICollectionViewDele
         }
     }
     
+    
+    func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
+//        if kind == UICollectionElementKindSectionFooter {
+            let cell: BottomLoaderCollectionReusableView = collectionView.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: reuseIdentifierLoader, forIndexPath: indexPath) as! BottomLoaderCollectionReusableView
+            if self.showBottomLoader {
+                cell.hidden = false
+            } else {
+                cell.hidden = true
+            }
+            return cell
+            
+//        } else {
+//            return UICollectionReusableView(frame: CGRectZero)
+//        }
+    }
+    
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         if self.isSellerSearch {
             let sellerViewController: SellerViewController = SellerViewController(nibName: "SellerViewController", bundle: nil)
@@ -734,6 +762,7 @@ extension ResultViewController: UITableViewDataSource, UITableViewDelegate {
         self.searchBarView?.hideSearchTypePicker()
         self.searchBarView?.hideAutoComplete()
         if y > temp {
+            self.showBottomLoader = true
             self.fireSearch()
         }
     }
