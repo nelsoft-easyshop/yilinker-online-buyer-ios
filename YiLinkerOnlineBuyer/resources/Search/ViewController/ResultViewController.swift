@@ -336,11 +336,22 @@ class ResultViewController: UIViewController {
     func tapFilterViewAction() {
         if self.filterAtributes.count != 0 {
             self.filterView.alpha = 1
-            var attributeModal = FilterViewController(nibName: "FilterViewController", bundle: nil)
+//            var attributeModal = FilterViewController(nibName: "FilterViewController", bundle: nil)
+//            attributeModal.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
+//            attributeModal.providesPresentationContextTransitionStyle = true
+//            attributeModal.definesPresentationContext = true
+//            attributeModal.delegate = self
+//            attributeModal.passFilter(self.filterAtributes, maxPrice: self.maxPrice, minPrice: self.minPrice)
+//            attributeModal.maxPrice = self.maxPrice
+//            attributeModal.minPrice = self.minPrice
+//            attributeModal.selectedMaxPrice = self.selectedMaxPrice
+//            attributeModal.selectedMinPrice = self.selectedMinPrice
+//            self.tabBarController?.presentViewController(attributeModal, animated: true, completion: nil)
+            
+            var attributeModal = SearchFilterTableViewController(nibName: "SearchFilterTableViewController", bundle: nil)
             attributeModal.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
             attributeModal.providesPresentationContextTransitionStyle = true
             attributeModal.definesPresentationContext = true
-            attributeModal.delegate = self
             attributeModal.passFilter(self.filterAtributes, maxPrice: self.maxPrice, minPrice: self.minPrice)
             attributeModal.maxPrice = self.maxPrice
             attributeModal.minPrice = self.minPrice
