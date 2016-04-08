@@ -167,7 +167,7 @@ class ProductImagesView: UIView, UICollectionViewDataSource, UICollectionViewDel
         
         if model.productUnits[unitId].discount != 0 {
             self.discountPercentLabel.hidden = false
-            self.discountPercentLabel.text = "\(model.productUnits[unitId].discount)% OFF "
+            self.discountPercentLabel.text = "\(model.productUnits[unitId].discount)% \(HomeStrings.off) "
         } else {
             self.discountPercentLabel.hidden = true
         }
@@ -198,7 +198,7 @@ class ProductImagesView: UIView, UICollectionViewDataSource, UICollectionViewDel
         
         if model.productUnits[unitId].discount != 0 {
             self.discountPercentLabel.hidden = false
-            self.discountPercentLabel.text = "\(model.productUnits[unitId].discount)% OFF "
+            self.discountPercentLabel.text = "\(model.productUnits[unitId].discount)% \(HomeStrings.off) "
         } else {
             self.discountPercentLabel.hidden = true
         }

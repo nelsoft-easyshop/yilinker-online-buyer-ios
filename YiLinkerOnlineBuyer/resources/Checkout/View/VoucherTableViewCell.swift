@@ -15,6 +15,7 @@ protocol VoucherTableViewCellDelegate {
 }
 
 class VoucherTableViewCell: UITableViewCell, UITextFieldDelegate {
+    
     @IBOutlet weak var addTextField: UIButton!
     @IBOutlet weak var voucherTextField: UITextField!
     @IBOutlet weak var voucherLabel: UILabel!
@@ -32,7 +33,9 @@ class VoucherTableViewCell: UITableViewCell, UITextFieldDelegate {
             self.addButton.enabled = false
         }
         
-         self.voucherTextField.delegate = self
+        self.voucherTextField.delegate = self
+        self.voucherLabel.text = StringHelper.localizedStringWithKey("VOUCHER_CODE_LOCALIZE_KEY")
+        self.addButton.setTitle(StringHelper.localizedStringWithKey("ADD_LOCALIZE_KEY"), forState: UIControlState.Normal)
     }
     
     override func setSelected(selected: Bool, animated: Bool) {

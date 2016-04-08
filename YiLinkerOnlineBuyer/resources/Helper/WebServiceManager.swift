@@ -388,6 +388,7 @@ class WebServiceManager: NSObject {
         }
     }
     
+    //MARK: -
     //MARK: - Fire Get Wishlist data list With Url
     class func fireGetWishlistWithUrl(url: String, access_token: String, wishlist: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
         let parameters: NSDictionary = [self.accessTokenKey: access_token, self.wishlistKey: wishlist]
@@ -396,6 +397,7 @@ class WebServiceManager: NSObject {
         }
     }
     
+    //MARK: -
     //MARK: - Fire Delete Wishlist Item
     class func fireDeleteWishlistItemWithUrl(url: String, access_token: String, productId: String, unitId: String, quantity: Int, wishlist: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
         let parameters: NSDictionary = [self.accessTokenKey: access_token, self.productIdKey: productId, self.unitIdKey: unitId, self.quantityKey: quantity, self.wishlistKey: wishlist]
@@ -404,6 +406,7 @@ class WebServiceManager: NSObject {
         }
     }
     
+    //MARK: -
     //MARK: - Fire Add Wishlist Item to Cart
     class func fireAddWishlistItemToCartWithUrl(url: String, access_token: String, itemIds: Int, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
         let parameters: NSDictionary = [self.accessTokenKey: access_token, self.itemIdsKey: itemIds]
@@ -412,6 +415,7 @@ class WebServiceManager: NSObject {
         }
     }
     
+    //MARK: -
     //MARK: - Fire Get Cart data list With Url
     class func fireGetCartWithUrl(url: String, access_token: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
         let parameters: NSDictionary = [self.accessTokenKey: access_token]
@@ -420,6 +424,7 @@ class WebServiceManager: NSObject {
         }
     }
     
+    //MARK: -
     //MARK: - Fire Delete Cart Item
     class func fireDeleteCartItemWithUrl(url: String, access_token: String, productId: String, unitId: String, quantity: Int, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
         let parameters: NSDictionary = [self.accessTokenKey: access_token, self.productIdKey: productId, self.unitIdKey: unitId, self.quantityKey: quantity]
@@ -428,6 +433,7 @@ class WebServiceManager: NSObject {
         }
     }
 
+    //MARK: -
     //MARK: - Fire Update Cart Item
     class func fireUpdateCartItemWithUrl(url: String, access_token: String, productId: String, unitId: String, itemId: String, quantity: Int, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
         let parameters: NSDictionary = [self.accessTokenKey: access_token, self.productIdKey: productId, self.unitIdKey: unitId, self.itemIdKey: itemId, self.quantityKey: quantity]
@@ -436,6 +442,7 @@ class WebServiceManager: NSObject {
         }
     }
     
+    //MARK: -
     //MARK: - Fire Checkout Cart Item
     class func fireCheckoutCartItemWithUrl(url: String, access_token: String, cart: [Int], actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
         let parameters: NSDictionary = [self.accessTokenKey: access_token, self.cartKey: cart]
@@ -507,6 +514,7 @@ class WebServiceManager: NSObject {
         return sessionDataTask
     }
     
+    //MARK: -
     //MARK: - Get Product/Seller List
     class func fireGetProductSellerListWithUrl(url: String,actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
         let manager: APIManager = APIManager.sharedInstance
@@ -1069,7 +1077,8 @@ class WebServiceManager: NSObject {
         }
     }
     
-    // MARK: - Product Details Calls
+    //MARK: -
+    //MARK: - Product Details Calls
     // Get Product Details
     class func fireGetProductDetailsWithUrl(url: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
         self.fireGetRequestWithUrl(url, parameters: []) { (successful, responseObject, requestErrorType) -> Void in
@@ -1077,6 +1086,8 @@ class WebServiceManager: NSObject {
         }
     }
     
+    //MARK: - 
+    //MARK: - Get Review Details
     // Get Review Details
     class func fireGetReviewDetailsWithUrl(url: String, productId: String, accessToken: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
         var parameters: NSDictionary = [self.productIdKey: productId]
@@ -1085,6 +1096,8 @@ class WebServiceManager: NSObject {
         }
     }
     
+    //MARK: - 
+    //MARK: - Get Seller Details
     // Get Seller Details
     class func fireGetSellerDetailsWithUrl(url: String, userId: Int, accessToken: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
         var parameters: NSDictionary = [self.userIdKey: userId, self.accessTokenKey: accessToken]
@@ -1093,6 +1106,8 @@ class WebServiceManager: NSObject {
         }
     }
     
+    //MARK: -
+    //MARK: - Update Wishlist
     // Update Wishlist
     class func fireUpdateWishlistWithUrl(url: String, productId: String, unitId: String, quantity: String, wishlist: String, accessToken: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
         var parameters: NSDictionary = [self.productIdKey: productId, self.unitIdKey: unitId, self.quantityKey: quantity, self.wishlistKey: wishlist, self.accessTokenKey: accessToken]
@@ -1101,6 +1116,8 @@ class WebServiceManager: NSObject {
         }
     }
     
+    //MARK: -
+    //MARK: - Add Item To Cart
     // Add Item To Cart
     class func fireAddToCartWithUrl(url: String, productId: String, unitId: String, quantity: Int, accessToken: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
         var parameters: NSDictionary = [self.productIdKey: productId, self.unitIdKey: unitId, self.quantityKey: quantity, self.accessTokenKey: accessToken]
@@ -1109,6 +1126,8 @@ class WebServiceManager: NSObject {
         }
     }
     
+    //MARK: -
+    //MARK: - Cart To Checkout
     // Cart To Checkout
     class func fireCartToCheckoutWithUrl(url: String, cart: [Int], accessToken: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
         var parameters: NSDictionary = [self.cartKey: cart, self.accessTokenKey: accessToken]
