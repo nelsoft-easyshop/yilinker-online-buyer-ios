@@ -25,7 +25,7 @@ class ProductResultGridCollectionViewCell: UICollectionViewCell {
         if text == "0" {
             discountLabel.hidden = true
         } else {
-            discountLabel.text = text + "% OFF"
+            discountLabel.text = text + "% \(HomeStrings.off)"
         }
     }
     

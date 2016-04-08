@@ -319,14 +319,15 @@ extension SearchBarView: UITableViewDataSource, UITableViewDelegate {
                 if self.searchType != .Product {
                     self.searchTextField.text = ""
                 }
-                self.searchTextField.placeholder = StringHelper.localizedStringWithKey("SEARCH_S_PLACEHOLDER_LOCALIZE_KEY")
+                self.searchTextField.placeholder = StringHelper.localizedStringWithKey("SEARCH_P_PLACEHOLDER_LOCALIZE_KEY")
                 self.searchType = .Product
                 self.delegate?.searchBarView(self, didSeacrhTypeChanged: .Product)
             } else if indexPath.row == 1 {
                 if self.searchType != .Seller {
                     self.searchTextField.text = ""
                 }
-                self.searchTextField.placeholder = StringHelper.localizedStringWithKey("SEARCH_P_PLACEHOLDER_LOCALIZE_KEY")
+                
+                self.searchTextField.placeholder = StringHelper.localizedStringWithKey("SEARCH_S_PLACEHOLDER_LOCALIZE_KEY")
                 self.searchType = .Seller
                 self.delegate?.searchBarView(self, didSeacrhTypeChanged: .Seller)
             }
