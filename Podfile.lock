@@ -75,6 +75,7 @@ PODS:
   - GoogleUtilities (1.0.1):
     - GoogleSymbolUtilities (~> 1.0)
   - hpple (0.2.0)
+  - LTNavigationBar (2.1.2)
   - MagicalRecord/Shorthand (2.2)
   - MBProgressHUD (0.9.1)
   - MPGNotification (1.2.4)
@@ -93,6 +94,7 @@ DEPENDENCIES:
   - Google/CloudMessaging
   - Google/SignIn
   - hpple
+  - LTNavigationBar
   - MagicalRecord/Shorthand
   - MBProgressHUD
   - MPGNotification
@@ -118,6 +120,7 @@ SPEC CHECKSUMS:
   GoogleSymbolUtilities: a7b0feed1fe667c8d5e647177938d0ecd62d6948
   GoogleUtilities: e3475cd4d45134221d2f3f3626095a1c49b62041
   hpple: 3b765f96fc2cd56ad1a49aef6f7be5cb2aa64b57
+  LTNavigationBar: bfc5fc06a83463009b9d99675f2a32dcbb631b00
   MagicalRecord: 2dc87179ae7c1f2a274442624ec65a07d4357a6f
   MBProgressHUD: c47f2c166c126cf2ce36498d80f33e754d4e93ad
   MPGNotification: f0e3924087afa9b3eccd5ce624e03965ae31ae61

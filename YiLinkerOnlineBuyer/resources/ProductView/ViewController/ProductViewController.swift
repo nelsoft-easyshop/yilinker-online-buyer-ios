@@ -143,6 +143,8 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.navigationController!.navigationBar.lt_setBackgroundColor(UIColor.redColor())
+        
         let nib = UINib(nibName: "ReviewTableViewCell", bundle: nil)
         self.tableView.registerNib(nib, forCellReuseIdentifier: "ReviewTableViewCell")
         self.tableView.rowHeight = UITableViewAutomaticDimension
@@ -181,18 +183,18 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     override func viewWillAppear(animated: Bool) {
         isExiting = true
         UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.Default
-        self.navigationController?.navigationBar.barTintColor = .whiteColor()
-        self.navigationController?.navigationBar.tintColor = .grayColor()
+//        self.navigationController?.navigationBar.barTintColor = .whiteColor()
+//        self.navigationController?.navigationBar.tintColor = .grayColor()
         if self.productDetailsModel == nil {
-            configureNavigationBar()
+           // configureNavigationBar()
         }
+        
+        
     }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        if self.tableView.contentOffset.y <= 140 {
-            self.navigationController?.navigationBar.alpha = 0
-        }
+        
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -244,7 +246,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
 
-        if scrollView.contentOffset.y > 0 {
+     /*   if scrollView.contentOffset.y > 0 {
             if self.lastContentOffset > scrollView.contentOffset.y && scrollView.contentOffset.y <= 140.0 { // hide
                 if visibility >= 0.0 && visibility <= 1.0 {
                     visibility -= Double(scrollView.contentOffset.y / 14) * 0.005
@@ -288,7 +290,20 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
             self.tableView.transform = CGAffineTransformMakeTranslation(0.0, self.containerScrollView.contentOffset.y * -1.0)
         }
         
-        self.lastContentOffset = scrollView.contentOffset.y
+        self.lastContentOffset = scrollView.contentOffset.y*/
+        
+        
+
+        var color: UIColor = UIColor(red: 0 / 255.0, green: 175 / 255.0, blue: 240 / 255.0, alpha: 1)
+        var offsetY: CGFloat = scrollView.contentOffset.y
+        if offsetY > 50 {
+            var alpha: CGFloat = min(1, 1 - ((50 + 64 - offsetY) / 64))
+            self.navigationController!.navigationBar.lt_setBackgroundColor(self.navigationController!.navigationBar.backgroundColor?.colorWithAlphaComponent(alpha))
+        }
+        else {
+            ///self.navigationController!.navigationBar.lt_setBackgroundColor(self.navigationController!.navigationBar.backgroundColor?.colorWithAlphaComponent(0))
+        }
+
     }
 
     // Scroll to position when reached position

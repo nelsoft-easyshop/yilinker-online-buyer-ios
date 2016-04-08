@@ -1631,9 +1631,9 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             resultViewController.pageTitle = sectionTitle
             self.navigationController!.pushViewController(resultViewController, animated: true)
         } else if targetType == "product" {
-            let productViewController: ProductViewController = ProductViewController(nibName: "ProductViewController", bundle: nil)
-            productViewController.tabController = self.tabBarController as! CustomTabBarController
-            productViewController.productId = target
+            let productViewController: ProductViewController2 = ProductViewController2(nibName: "ProductViewController2", bundle: nil)
+            //productViewController.tabController = self.tabBarController as! CustomTabBarController
+            //productViewController.productId = target
             self.navigationController?.pushViewController(productViewController, animated: true)
         } else if targetType == "webView" {
             let webViewController: WebViewController = WebViewController(nibName: "WebViewController", bundle: nil)
