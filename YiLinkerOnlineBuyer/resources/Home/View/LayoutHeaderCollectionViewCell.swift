@@ -36,6 +36,8 @@ class LayoutHeaderCollectionViewCell: UICollectionViewCell {
         self.viewMoreButton.layer.cornerRadius = 11
         self.viewMoreButton.layer.borderColor = Constants.Colors.appTheme.CGColor
         self.viewMoreButton.layer.borderWidth = 1.0
+        
+        self.viewMoreButton.setTitle(HomeCollectionViewStrings.viewMoreItems, forState: UIControlState.Normal)
     }
     
     //MARK: - Update Title Line

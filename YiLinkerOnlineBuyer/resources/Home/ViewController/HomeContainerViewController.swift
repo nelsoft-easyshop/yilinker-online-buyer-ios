@@ -17,6 +17,9 @@ struct HomeStrings {
     static let wishlistError: String = StringHelper.localizedStringWithKey("WISHLIST_ERROR_LOCALIZE_KEY")
     static let error: String = StringHelper.localizedStringWithKey("ERROR_LOCALIZE_KEY")
     static let somethingWentWrong: String = StringHelper.localizedStringWithKey("SOMETHING_WENT_WRONG_LOCALIZE_KEY")
+    static let home: String = StringHelper.localizedStringWithKey("HOME_LOCALIZE_KEY")
+    static let backToTop: String = StringHelper.localizedStringWithKey("BACK_TO_TOP_LOCALIZE_KEY")
+    static let off: String = StringHelper.localizedStringWithKey("OFF_LOCALIZE_KEY")
 }
 
 struct FABStrings {
@@ -137,6 +140,8 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.title = HomeStrings.home
         //header
         self.registerHeaderCollectionView(self.sectionHeaderNibName)
         self.registerCellWithNibName(self.carouselCellNibName)
@@ -222,6 +227,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         self.backToTopButton.layer.shadowOffset = CGSizeMake(0, 5)
         self.backToTopButton.layer.shadowRadius = 5
         self.backToTopButton.layer.shadowOpacity = 1.0
+        self.backToTopButton.setTitle(HomeStrings.backToTop, forState: UIControlState.Normal)
     }
     
     //MARK: -
@@ -1102,7 +1108,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         
         if layoutFourModel.data.count >= 1 {
             flashSaleCell.productOneImageView.sd_setImageWithURL(StringHelper.convertStringToUrl(layoutFourModel.data[0].image), placeholderImage: UIImage(named: "dummy-placeholder"))
-            flashSaleCell.productOneDiscountLabel.text = "\(layoutFourModel.data[0].discountPercentage)% OFF"
+            flashSaleCell.productOneDiscountLabel.text = "\(layoutFourModel.data[0].discountPercentage)% \(HomeStrings.off)"
             flashSaleCell.productOneImageView.target = layoutFourModel.data[0].target.targetUrl
             flashSaleCell.productOneImageView.targetType = layoutFourModel.data[0].target.targetType
         }
@@ -1111,14 +1117,14 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             flashSaleCell.productTwoImageView.sd_setImageWithURL(StringHelper.convertStringToUrl(layoutFourModel.data[1].image), placeholderImage: UIImage(named: "dummy-placeholder"))
             flashSaleCell.productTwoImageView.target = layoutFourModel.data[1].target.targetUrl
             flashSaleCell.productTwoImageView.targetType = layoutFourModel.data[1].target.targetType
-            flashSaleCell.productTwoDiscountLabel.text = "\(layoutFourModel.data[1].discountPercentage)% OFF"
+            flashSaleCell.productTwoDiscountLabel.text = "\(layoutFourModel.data[1].discountPercentage) \(HomeStrings.off)"
         }
         
         if layoutFourModel.data.count >= 3 {
             flashSaleCell.productThreeImageView.sd_setImageWithURL(StringHelper.convertStringToUrl(layoutFourModel.data[2].image), placeholderImage: UIImage(named: "dummy-placeholder"))
             flashSaleCell.productThreeImageView.target = layoutFourModel.data[2].target.targetUrl
             flashSaleCell.productThreeImageView.targetType = layoutFourModel.data[2].target.targetType
-            flashSaleCell.productThreeDiscountLabel.text = "\(layoutFourModel.data[2].discountPercentage) OFF%"
+            flashSaleCell.productThreeDiscountLabel.text = "\(layoutFourModel.data[2].discountPercentage) \(HomeStrings.off)"
         }
         
         return flashSaleCell
@@ -1815,11 +1821,11 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         
         if SessionManager.isLoggedIn() {
             fabViewController!.addtextAndIconsWithLeftText("", rightText: "", icon: "close-white", isProfile: false)
-            fabViewController!.addtextAndIconsWithLeftText("FOLLOWED SELLER", rightText: "", icon: "fab_following", isProfile: false)
-            fabViewController!.addtextAndIconsWithLeftText("MESSAGING", rightText: "\(SessionManager.getUnReadMessagesCount()) unread message(s)", icon: "fab_messaging", isProfile: false)
-            fabViewController!.addtextAndIconsWithLeftText("CATEGORIES", rightText: "", icon: "fab_promo", isProfile: false)
-            fabViewController!.addtextAndIconsWithLeftText("HELP", rightText: "", icon: "fab_help", isProfile: false)
-            fabViewController!.addtextAndIconsWithLeftText("PROFILE", rightText: "\(SessionManager.userFullName()) \n \(SessionManager.city()) \(SessionManager.province())", icon: SessionManager.profileImageStringUrl(), isProfile: true)
+            fabViewController!.addtextAndIconsWithLeftText(FABStrings.followedSeller, rightText: "", icon: "fab_following", isProfile: false)
+            fabViewController!.addtextAndIconsWithLeftText(FABStrings.messaging, rightText: "\(SessionManager.getUnReadMessagesCount()) unread message(s)", icon: "fab_messaging", isProfile: false)
+            fabViewController!.addtextAndIconsWithLeftText(FABStrings.categories, rightText: "", icon: "fab_promo", isProfile: false)
+            fabViewController!.addtextAndIconsWithLeftText(FABStrings.help, rightText: "", icon: "fab_help", isProfile: false)
+            fabViewController!.addtextAndIconsWithLeftText(FABStrings.profile, rightText: "\(SessionManager.userFullName()) \n \(SessionManager.city()) \(SessionManager.province())", icon: SessionManager.profileImageStringUrl(), isProfile: true)
             self.tabBarController!.presentViewController(fabViewController!, animated: false) { () -> Void in
                 
             }

@@ -482,7 +482,7 @@ extension String {
     
     func formatToPercentage() -> String {
         if self.toDouble() != nil {
-            let stringNum: String = "\(round(self.toDouble()!))% OFF"
+            let stringNum: String = "\(round(self.toDouble()!))% \(HomeStrings.off)"
             return stringNum.stringByReplacingOccurrencesOfString(".0", withString: "")
         } else {
             return ""

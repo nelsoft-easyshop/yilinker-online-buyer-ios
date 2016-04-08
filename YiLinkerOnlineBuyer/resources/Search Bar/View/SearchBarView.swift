@@ -47,7 +47,7 @@ class SearchBarView: UIView {
     var searchTypeTableView: UITableView?
     var isSearchTypeHidden: Bool = true
     var searchTypeImage: [String] = ["product-icon", "seller-icon"]
-    var searchTypeText: [String] = ["Product", "Seller"]
+    var searchTypeText: [String] = [StringHelper.localizedStringWithKey("PRODUCT_LOCALIZE_KEY"), StringHelper.localizedStringWithKey("SELLER_LOCALIZE_KEY")]
     
     var searchAutoCompleteTableView: UITableView?
     var isAutoCompleteHidden: Bool = true
@@ -107,6 +107,7 @@ class SearchBarView: UIView {
             view.addSubview(self)
         }
         
+        self.searchTextField.placeholder = StringHelper.localizedStringWithKey("SEARCH_P_PLACEHOLDER_LOCALIZE_KEY")
         view.layoutIfNeeded()
     }
     
@@ -318,12 +319,14 @@ extension SearchBarView: UITableViewDataSource, UITableViewDelegate {
                 if self.searchType != .Product {
                     self.searchTextField.text = ""
                 }
+                self.searchTextField.placeholder = StringHelper.localizedStringWithKey("SEARCH_S_PLACEHOLDER_LOCALIZE_KEY")
                 self.searchType = .Product
                 self.delegate?.searchBarView(self, didSeacrhTypeChanged: .Product)
             } else if indexPath.row == 1 {
                 if self.searchType != .Seller {
                     self.searchTextField.text = ""
                 }
+                self.searchTextField.placeholder = StringHelper.localizedStringWithKey("SEARCH_P_PLACEHOLDER_LOCALIZE_KEY")
                 self.searchType = .Seller
                 self.delegate?.searchBarView(self, didSeacrhTypeChanged: .Seller)
             }
