@@ -124,7 +124,7 @@ class FilterViewController: UIViewController, FilterTableViewCellDelegate {
         cell.passModel(tableData[indexPath.row], attributeNameIndex: indexPath.row)
         cell.delegate = self
     
-    return cell
+        return cell
     }
     
     

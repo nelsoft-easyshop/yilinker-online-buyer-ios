@@ -14,6 +14,8 @@ protocol FilterTableViewCellDelegate {
 
 class FilterTableViewCell: UITableViewCell {
     
+    static let reuseIdentifier: String = "FilterTableViewCell"
+    
     var delegate: FilterTableViewCellDelegate?
     
     @IBOutlet weak var titleLabel: UILabel!
