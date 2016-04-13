@@ -652,6 +652,7 @@ extension ResultViewController: UICollectionViewDataSource, UICollectionViewDele
             cell.setProductName(tempModel.productName)
             cell.setOriginalPrice(tempModel.originalPrice.formatToPeso())
             cell.setNewPrice(tempModel.newPrice.formatToPeso())
+            cell.setIsOverseas(tempModel.isOverseas)
             cell.setDiscount("\(tempModel.discount)")
             return cell
         case .List :
@@ -661,6 +662,7 @@ extension ResultViewController: UICollectionViewDataSource, UICollectionViewDele
             cell.setProductName(tempModel.productName)
             cell.setOriginalPrice(tempModel.originalPrice.formatToPeso())
             cell.setNewPrice(tempModel.newPrice.formatToPeso())
+            cell.setIsOverseas(tempModel.isOverseas)
             cell.setDiscount("\(tempModel.discount)")
             return cell
             

@@ -18,8 +18,9 @@ class SearchResultModel: NSObject {
     var imageUrlThumbnail: String = ""
     var discount: Int = 0
     var slug: String = ""
+    var isOverseas: Bool = false
     
-    init(id: String, productName: String, originalPrice: String, newPrice: String, imageUrl: String, imageUrlThumbnail: String, discount: Int, slug: String){
+    init(id: String, productName: String, originalPrice: String, newPrice: String, imageUrl: String, imageUrlThumbnail: String, discount: Int, slug: String, isOverseas: Bool){
         self.id = id
         self.productName = productName
         self.originalPrice = originalPrice
@@ -28,6 +29,7 @@ class SearchResultModel: NSObject {
         self.imageUrlThumbnail = imageUrlThumbnail
         self.discount = discount
         self.slug = slug
+        self.isOverseas = isOverseas
     }
     
     class func parseDataWithDictionary(dictionary: AnyObject) -> SearchResultModel {
@@ -39,6 +41,7 @@ class SearchResultModel: NSObject {
         var imageUrlThumbnail: String = ""
         var discount: Int = 0
         var slug: String = ""
+        var isOverseas: Bool = false
         
         if let value: AnyObject = dictionary["id"] {
             if value as! NSObject != NSNull() {
@@ -88,7 +91,13 @@ class SearchResultModel: NSObject {
             }
         }
         
-        return SearchResultModel(id: id, productName: productName, originalPrice: originalPrice, newPrice: newPrice, imageUrl: imageUrl, imageUrlThumbnail: imageUrlThumbnail, discount: discount, slug: slug)
+        if let value: AnyObject = dictionary["isOverseas"] {
+            if value as! NSObject != NSNull() {
+                isOverseas = value as! Bool
+            }
+        }
+        
+        return SearchResultModel(id: id, productName: productName, originalPrice: originalPrice, newPrice: newPrice, imageUrl: imageUrl, imageUrlThumbnail: imageUrlThumbnail, discount: discount, slug: slug, isOverseas: isOverseas)
     }
 
 }
