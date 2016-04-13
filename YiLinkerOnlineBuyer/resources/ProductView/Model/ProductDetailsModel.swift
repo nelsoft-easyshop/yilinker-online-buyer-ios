@@ -21,6 +21,7 @@ class ProductDetailsModel {
     var shortDescription: String = ""
     var fullDescription: String = ""
     var sellerId: Int = 0
+    var isOverseas: Bool = false
     
     var attributes: [ProductAttributeModel] = [] //done
     var productUnits: [ProductUnitsModel] = []
@@ -28,7 +29,7 @@ class ProductDetailsModel {
     //DETAILS ???
     //BADGES  ???
     
-    init(message: String, isSuccessful: Bool, id: String, title: String, slug: String, image: String, images: NSArray, shortDescription: String, fullDescription: String, sellerId: Int, attributes: NSArray, productUnits: NSArray) {
+    init(message: String, isSuccessful: Bool, id: String, title: String, slug: String, image: String, images: NSArray, shortDescription: String, fullDescription: String, sellerId: Int, isOverseas: Bool, attributes: NSArray, productUnits: NSArray) {
         
         self.message = message
         self.isSuccessful = isSuccessful
@@ -41,6 +42,7 @@ class ProductDetailsModel {
         self.shortDescription = shortDescription
         self.fullDescription = fullDescription
         self.sellerId = sellerId
+        self.isOverseas = isOverseas
         
         self.attributes = attributes as! [ProductAttributeModel]
         self.productUnits = productUnits as! [ProductUnitsModel]
@@ -59,6 +61,7 @@ class ProductDetailsModel {
         var shortDescription: String = ""
         var fullDescription: String = ""
         var sellerId: Int = 0
+        var isOverseas: Bool = false
         
         var attributes: [ProductAttributeModel] = [] //done
         var productUnits: [ProductUnitsModel] = []
@@ -130,6 +133,12 @@ class ProductDetailsModel {
                         sellerId = 0
                     }
                     
+                    if let tempVar = value["isOverseas"] as? Bool {
+                        isOverseas = tempVar
+                    } else {
+                        isOverseas = false
+                    }
+                    
                     for subValue in value["attributes"] as! NSArray {
                         let model: ProductAttributeModel = ProductAttributeModel.parseAttribute(subValue as! NSDictionary)
                         attributes.append(model)
@@ -154,6 +163,7 @@ class ProductDetailsModel {
             shortDescription: shortDescription,
             fullDescription: fullDescription,
             sellerId: sellerId,
+            isOverseas: isOverseas,
             attributes: attributes,
             productUnits: productUnits)
         
