@@ -100,7 +100,7 @@ class ResultViewController: UIViewController {
     var selectedMaxPrice: Double = 0    //Selected max price by the user
     var selectedMinPrice: Double = 0    //Selected min price by the user
     var page: Int = 1                   //Page used for the pagination
-    let perPage: Int = 2               //Number of results in each page
+    let perPage: Int = 12               //Number of results in each page
     var filtersString: [String] = []    //Generated string based the filter attributes
     var selectedSortTypeIndex: Int = -1
     var filterAtributes: [FilterAttributeModel] = []
@@ -336,22 +336,11 @@ class ResultViewController: UIViewController {
     func tapFilterViewAction() {
         if self.filterAtributes.count != 0 {
             self.filterView.alpha = 1
-//            var attributeModal = FilterViewController(nibName: "FilterViewController", bundle: nil)
-//            attributeModal.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
-//            attributeModal.providesPresentationContextTransitionStyle = true
-//            attributeModal.definesPresentationContext = true
-//            attributeModal.delegate = self
-//            attributeModal.passFilter(self.filterAtributes, maxPrice: self.maxPrice, minPrice: self.minPrice)
-//            attributeModal.maxPrice = self.maxPrice
-//            attributeModal.minPrice = self.minPrice
-//            attributeModal.selectedMaxPrice = self.selectedMaxPrice
-//            attributeModal.selectedMinPrice = self.selectedMinPrice
-//            self.tabBarController?.presentViewController(attributeModal, animated: true, completion: nil)
-            
-            var attributeModal = SearchFilterTableViewController(nibName: "SearchFilterTableViewController", bundle: nil)
+            var attributeModal = FilterViewController(nibName: "FilterViewController", bundle: nil)
             attributeModal.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
             attributeModal.providesPresentationContextTransitionStyle = true
             attributeModal.definesPresentationContext = true
+            attributeModal.delegate = self
             attributeModal.passFilter(self.filterAtributes, maxPrice: self.maxPrice, minPrice: self.minPrice)
             attributeModal.maxPrice = self.maxPrice
             attributeModal.minPrice = self.minPrice
@@ -364,6 +353,23 @@ class ResultViewController: UIViewController {
                 self.fullDimView!.alpha = 1
                 }, completion: { finished in
             })
+//
+//            var attributeModal = SearchFilterTableViewController(nibName: "SearchFilterTableViewController", bundle: nil)
+//            attributeModal.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
+//            attributeModal.providesPresentationContextTransitionStyle = true
+//            attributeModal.definesPresentationContext = true
+//            attributeModal.passFilter(self.filterAtributes, maxPrice: self.maxPrice, minPrice: self.minPrice)
+//            attributeModal.maxPrice = self.maxPrice
+//            attributeModal.minPrice = self.minPrice
+//            attributeModal.selectedMaxPrice = self.selectedMaxPrice
+//            attributeModal.selectedMinPrice = self.selectedMinPrice
+//            self.tabBarController?.presentViewController(attributeModal, animated: true, completion: nil)
+//            
+//            self.fullDimView!.hidden = false
+//            UIView.animateWithDuration(0.3, animations: {
+//                self.fullDimView!.alpha = 1
+//                }, completion: { finished in
+//            })
         }
         
         if !self.dimView.hidden {
