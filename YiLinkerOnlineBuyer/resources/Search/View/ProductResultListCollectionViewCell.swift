@@ -15,11 +15,13 @@ class ProductResultListCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var originalPriceLabel: UILabel!
     @IBOutlet weak var newPriceLabel: RoundedLabel!
     
+    @IBOutlet weak var overseasView: UIView!
     @IBOutlet weak var productImageView: UIImageView!
     @IBOutlet weak var wishListImageView: UIImageView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        self.overseasView.hidden = true
     }
     
     func setDiscount(text: String) {
@@ -45,5 +47,9 @@ class ProductResultListCollectionViewCell: UICollectionViewCell {
     
     func setProductImage(text: String) {
         productImageView.sd_setImageWithURL(NSURL(string: text), placeholderImage: UIImage(named: "dummy-placeholder"))
+    }
+    
+    func setIsOverseas(isOverseas: Bool) {
+        self.overseasView.hidden = !isOverseas
     }
 }

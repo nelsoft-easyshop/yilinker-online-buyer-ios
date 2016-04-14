@@ -72,14 +72,45 @@
                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cJX-5O-O5Z">
+                                        <rect key="frame" x="122" y="0.0" width="65" height="65"/>
+                                        <subviews>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pink-triangle" translatesAutoresizingMaskIntoConstraints="NO" id="s9f-c1-qaf">
+                                                <rect key="frame" x="0.0" y="0.0" width="65" height="65"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="65" id="0MY-Yt-Szm"/>
+                                                    <constraint firstAttribute="height" constant="65" id="LS6-Hv-V21"/>
+                                                </constraints>
+                                            </imageView>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="international-icon" translatesAutoresizingMaskIntoConstraints="NO" id="cTs-fB-RMF">
+                                                <rect key="frame" x="32" y="8" width="25" height="25"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="25" id="3ex-9G-5yt"/>
+                                                    <constraint firstAttribute="width" constant="25" id="cHC-Of-cp8"/>
+                                                </constraints>
+                                            </imageView>
+                                        </subviews>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="65" id="0Y3-M1-fqd"/>
+                                            <constraint firstAttribute="width" constant="65" id="0ll-Zm-9SS"/>
+                                            <constraint firstAttribute="trailing" secondItem="cTs-fB-RMF" secondAttribute="trailing" constant="8" id="Bhw-pN-1cU"/>
+                                            <constraint firstItem="s9f-c1-qaf" firstAttribute="top" secondItem="cJX-5O-O5Z" secondAttribute="top" id="CnF-v6-pUk"/>
+                                            <constraint firstItem="cTs-fB-RMF" firstAttribute="top" secondItem="cJX-5O-O5Z" secondAttribute="top" constant="8" id="W3S-6j-a4n"/>
+                                            <constraint firstAttribute="trailing" secondItem="s9f-c1-qaf" secondAttribute="trailing" id="XMe-Tm-oXo"/>
+                                        </constraints>
+                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="N2l-fS-ZkD" firstAttribute="top" secondItem="SPI-WQ-MB1" secondAttribute="bottom" constant="4" id="8OX-o9-Wew"/>
                                     <constraint firstItem="Vz5-po-Z1k" firstAttribute="top" secondItem="KAE-Og-ScH" secondAttribute="top" constant="21" id="AjM-ZM-7ZH"/>
                                     <constraint firstAttribute="trailing" secondItem="N2l-fS-ZkD" secondAttribute="trailing" constant="94" id="EJZ-RX-tJn"/>
+                                    <constraint firstItem="cJX-5O-O5Z" firstAttribute="top" secondItem="KAE-Og-ScH" secondAttribute="top" id="NRT-v3-UqW"/>
                                     <constraint firstItem="NyL-VY-AYZ" firstAttribute="leading" secondItem="KAE-Og-ScH" secondAttribute="leading" constant="8" id="ObW-oh-ZbZ"/>
                                     <constraint firstItem="N2l-fS-ZkD" firstAttribute="leading" secondItem="KAE-Og-ScH" secondAttribute="leading" constant="8" id="PBl-dT-KeG"/>
+                                    <constraint firstAttribute="trailing" secondItem="cJX-5O-O5Z" secondAttribute="trailing" id="Siy-cd-Fwl"/>
                                     <constraint firstItem="NyL-VY-AYZ" firstAttribute="top" secondItem="KAE-Og-ScH" secondAttribute="top" constant="5" id="UMX-eL-cLO"/>
                                     <constraint firstAttribute="trailing" secondItem="Vz5-po-Z1k" secondAttribute="trailing" constant="8" id="WQZ-bG-oaa"/>
                                     <constraint firstItem="Vz5-po-Z1k" firstAttribute="leading" secondItem="NyL-VY-AYZ" secondAttribute="trailing" constant="1" id="dMT-lJ-nHb"/>
@@ -142,6 +173,7 @@
                 <outlet property="discountLabel" destination="a7a-at-GEV" id="uKw-zU-cjR"/>
                 <outlet property="newPriceLabel" destination="N2l-fS-ZkD" id="cGs-GU-8wZ"/>
                 <outlet property="originalPriceLabel" destination="SPI-WQ-MB1" id="3di-v8-FSd"/>
+                <outlet property="overseasView" destination="cJX-5O-O5Z" id="9kl-Kw-RGd"/>
                 <outlet property="productImageView" destination="78L-2F-B9I" id="qmt-R5-7Bt"/>
                 <outlet property="productNameLabel" destination="NyL-VY-AYZ" id="mgI-a4-R0I"/>
                 <outlet property="wishListImageView" destination="Vz5-po-Z1k" id="Jf3-fe-AXc"/>
@@ -151,6 +183,8 @@
     </objects>
     <resources>
         <image name="dummy-placeholder" width="1280" height="800"/>
+        <image name="international-icon" width="256" height="288"/>
+        <image name="pink-triangle" width="200" height="200"/>
         <image name="wishlist" width="25" height="25"/>
     </resources>
 </document>

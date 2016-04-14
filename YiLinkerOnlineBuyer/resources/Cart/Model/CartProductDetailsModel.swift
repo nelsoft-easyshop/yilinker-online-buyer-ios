@@ -28,11 +28,12 @@ class CartProductDetailsModel {
     var unitId: String = ""
     var itemId: Int = 0
     var quantity: Int = 0
+    var isCODAvailable: Bool = false
     
     //DETAILS ???
     //BADGES  ???
     
-    init(selected: Bool, id: String, title: String, slug: String, image: String, images: NSArray, selectedUnitImage: String, shortDescription: String, fullDescription: String, sellerId: Int, attributes: NSArray, productUnits: NSArray, unitId: String, itemId: Int, quantity: Int) {
+    init(selected: Bool, id: String, title: String, slug: String, image: String, images: NSArray, selectedUnitImage: String, shortDescription: String, fullDescription: String, sellerId: Int, attributes: NSArray, productUnits: NSArray, unitId: String, itemId: Int, quantity: Int, isCODAvailable: Bool) {
         self.selected = selected
         self.id = id
         self.title = title
@@ -50,6 +51,8 @@ class CartProductDetailsModel {
         self.unitId = unitId
         self.itemId = itemId
         self.quantity = quantity
+        
+        self.isCODAvailable = isCODAvailable
     }
     
     class func parseDataWithDictionary(dictionary: AnyObject) -> CartProductDetailsModel {
@@ -71,6 +74,8 @@ class CartProductDetailsModel {
         var unitId: String = ""
         var itemId: Int = 0
         var quantity: Int = 0
+        
+        var isCODAvailable: Bool = false
         
         //DETAILS ???
         //BADGES  ???
@@ -140,6 +145,10 @@ class CartProductDetailsModel {
                 quantity = tempVar.toInt()!
             }
             
+            if let tempVar = dictionary["isCODAvailable"] as? Bool {
+                isCODAvailable = tempVar
+            }
+            
             // data
         } // dictionary
         
@@ -158,7 +167,8 @@ class CartProductDetailsModel {
             productUnits: productUnits,
             unitId: unitId,
             itemId: itemId,
-            quantity: quantity)
+            quantity: quantity,
+            isCODAvailable: isCODAvailable)
         
         
     } // parseDataWithDictionary
