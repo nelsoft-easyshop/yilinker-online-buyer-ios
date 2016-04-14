@@ -465,7 +465,7 @@ extension CartViewController: UITableViewDelegate, UITableViewDataSource {
                 cell.productPriceLabel.text = tempProductUnit.discountedPrice.formatToPeso() + " x \(tempModel.quantity)"
             }
         }
-        
+        cell.codView.hidden = !tempModel.isCODAvailable
         cell.productNameLabel.text = tempModel.title
         cell.delegate = self
         return cell

@@ -34,6 +34,10 @@ class CartTableViewCell: UITableViewCell, UIScrollViewDelegate {
     @IBOutlet weak var productDetailsView: UIView!
     @IBOutlet weak var checkBoxView: UIView!
     
+    @IBOutlet weak var codView: UIView!
+    @IBOutlet weak var codNotAvailableLabel: UILabel!
+    @IBOutlet weak var codXLabel: UILabel!
+    
     @IBOutlet weak var editLabel: UILabel!
     @IBOutlet weak var deleteLabel: UILabel!
     @IBOutlet weak var deleteButton: UIButton!
@@ -109,6 +113,7 @@ class CartTableViewCell: UITableViewCell, UIScrollViewDelegate {
         productNameLabel.frame = CGRectMake(productNameLabel.frame.origin.x, productNameLabel.frame.origin.y, (width - 187), productNameLabel.frame.height)
         productDetailsLabel.frame = CGRectMake(productDetailsLabel.frame.origin.x, productDetailsLabel.frame.origin.y, (width - 187), productDetailsLabel.frame.height)
         productPriceLabel.frame = CGRectMake(productPriceLabel.frame.origin.x, productPriceLabel.frame.origin.y, (width - 187), productPriceLabel.frame.height)
+        codView.frame = CGRectMake((width - 110), codView.frame.origin.y, codView.frame.width, codView.frame.height)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "enclosingTableViewDidScroll", name: swipeForOptionsCellEnclosingTableViewDidBeginScrollingNotification, object: nil)
         
@@ -120,6 +125,11 @@ class CartTableViewCell: UITableViewCell, UIScrollViewDelegate {
         
         editLabel.text = StringHelper.localizedStringWithKey("CART_EDIT_LOCALIZE_KEY")
         deleteLabel.text = StringHelper.localizedStringWithKey("CART_DELETE_LOCALIZE_KEY")
+        
+        codNotAvailableLabel.text = StringHelper.localizedStringWithKey("COD_NOT_AVAILABLE_LOCALIZE_KEY")
+        codXLabel.layer.cornerRadius = codXLabel.frame.height / 2
+        codXLabel.layer.borderWidth = 0.25
+        codXLabel.layer.borderColor = Constants.Colors.grayText.CGColor
     }
     
     func contentTapAction() {

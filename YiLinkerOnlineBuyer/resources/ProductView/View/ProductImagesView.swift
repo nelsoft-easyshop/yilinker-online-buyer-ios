@@ -31,6 +31,8 @@ class ProductImagesView: UIView, UICollectionViewDataSource, UICollectionViewDel
     @IBOutlet weak var originalPrice: UILabel!
     @IBOutlet weak var priceCustomLabel: DiscountLabel!
     @IBOutlet weak var discountPercentLabel: UILabel!
+    @IBOutlet weak var overseasContainerView: UIView!
+    @IBOutlet weak var overseasHeightConstant: NSLayoutConstraint!
     
     var imagesModel: [ProductImagesModel]!
     
@@ -49,6 +51,7 @@ class ProductImagesView: UIView, UICollectionViewDataSource, UICollectionViewDel
         self.rateContainerView.layer.cornerRadius = self.rateContainerView.frame.size.width / 2
         self.messageContainerView.layer.cornerRadius = self.messageContainerView.frame.size.width / 2
         self.shareContainerView.layer.cornerRadius = self.shareContainerView.frame.size.width / 2
+        self.overseasContainerView.layer.cornerRadius = self.overseasContainerView.frame.size.width / 2
         self.discountPercentLabel.layer.cornerRadius = 5
         
         self.collectionView.dataSource = self
@@ -172,6 +175,14 @@ class ProductImagesView: UIView, UICollectionViewDataSource, UICollectionViewDel
             self.discountPercentLabel.hidden = true
         }
         
+        if model.isOverseas {
+            self.overseasContainerView.hidden = false
+            self.overseasHeightConstant.constant = 42
+        } else {
+            self.overseasContainerView.hidden = false
+            self.overseasHeightConstant.constant = 0
+        }
+        
         self.width = width
         
         self.imagesModel = model.images
@@ -183,6 +194,7 @@ class ProductImagesView: UIView, UICollectionViewDataSource, UICollectionViewDel
         }
         
         self.collectionView.reloadData()
+        self.layoutIfNeeded()
     }
 
     func updateDetails(model: ProductDetailsModel, unitId: Int, images: [String]) {
