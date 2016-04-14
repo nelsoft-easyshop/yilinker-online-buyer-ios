@@ -522,6 +522,13 @@ ADDRESS_LOCALIZE_KEY = "Address";
 DEFAULTADDRESS_LOCALIZE_KEY = "Default Address";
 CHANGEADDRESS_LOCALIZE_KEY = "Change Address";
 
+//Global Preferences
+GLOBAL_PREFERENCES_KEY = "Global Preferences";
+PROFILE_COUNTRY_KEY = "Country";
+PROFILE_LANGUAGE_KEY = "Language";
+PROFILE_COUNTRY_PREFERENCE_KEY = "Country Preferences";
+PROFILE_LANGUAGE_PREFERENCE_KEY_KEY = "Language Preferences";
+
 //Personal Information
 PERSONALINFO_LOCALIZE_KEY = "Personal Information";
 FIRSTNAME_LOCALIZE_KEY = "First Name";
