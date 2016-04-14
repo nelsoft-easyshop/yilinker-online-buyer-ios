@@ -550,6 +550,10 @@
 		790E59831C880C980073FE23 /* SearchTypeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 790E59811C880C980073FE23 /* SearchTypeTableViewCell.swift */; };
 		790E59841C880C980073FE23 /* SearchTypeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 790E59821C880C980073FE23 /* SearchTypeTableViewCell.xib */; };
 		791B4E071C9AA7EF00B3FB94 /* SuggestionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 791B4E061C9AA7EF00B3FB94 /* SuggestionViewModel.swift */; };
+		797C2BC11CBF744500B1406A /* GlobalPreferencesPickerTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797C2BBF1CBF744500B1406A /* GlobalPreferencesPickerTableViewController.swift */; };
+		797C2BC21CBF744500B1406A /* GlobalPreferencesPickerTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 797C2BC01CBF744500B1406A /* GlobalPreferencesPickerTableViewController.xib */; };
+		797C2BC51CBF7C2300B1406A /* GlobalPreferencesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797C2BC31CBF7C2300B1406A /* GlobalPreferencesTableViewCell.swift */; };
+		797C2BC61CBF7C2300B1406A /* GlobalPreferencesTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 797C2BC41CBF7C2300B1406A /* GlobalPreferencesTableViewCell.xib */; };
 		7980D03D1C994E2800F6C148 /* SuggestionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7980D03B1C994E2800F6C148 /* SuggestionViewController.swift */; };
 		7980D03E1C994E2800F6C148 /* SuggestionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7980D03C1C994E2800F6C148 /* SuggestionViewController.xib */; };
 		7987B3481CB35E670033B50D /* HelpWhatsNewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7987B3461CB35E670033B50D /* HelpWhatsNewViewController.swift */; };
@@ -1175,6 +1179,10 @@
 		790E59811C880C980073FE23 /* SearchTypeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchTypeTableViewCell.swift; sourceTree = "<group>"; };
 		790E59821C880C980073FE23 /* SearchTypeTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchTypeTableViewCell.xib; sourceTree = "<group>"; };
 		791B4E061C9AA7EF00B3FB94 /* SuggestionViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SuggestionViewModel.swift; sourceTree = "<group>"; };
+		797C2BBF1CBF744500B1406A /* GlobalPreferencesPickerTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalPreferencesPickerTableViewController.swift; sourceTree = "<group>"; };
+		797C2BC01CBF744500B1406A /* GlobalPreferencesPickerTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GlobalPreferencesPickerTableViewController.xib; sourceTree = "<group>"; };
+		797C2BC31CBF7C2300B1406A /* GlobalPreferencesTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalPreferencesTableViewCell.swift; sourceTree = "<group>"; };
+		797C2BC41CBF7C2300B1406A /* GlobalPreferencesTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GlobalPreferencesTableViewCell.xib; sourceTree = "<group>"; };
 		7980D03B1C994E2800F6C148 /* SuggestionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SuggestionViewController.swift; sourceTree = "<group>"; };
 		7980D03C1C994E2800F6C148 /* SuggestionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SuggestionViewController.xib; sourceTree = "<group>"; };
 		7987B3461CB35E670033B50D /* HelpWhatsNewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HelpWhatsNewViewController.swift; path = YiLinkerOnlineBuyer/resources/Help/ViewController/HelpWhatsNewViewController.swift; sourceTree = SOURCE_ROOT; };
@@ -2958,6 +2966,8 @@
 				799B9A301C8EACEA006472E8 /* ProfileSettingsTableViewCell.xib */,
 				799B9A311C8EACEA006472E8 /* ProfileTableViewCell.swift */,
 				799B9A321C8EACEA006472E8 /* ProfileTableViewCell.xib */,
+				797C2BC31CBF7C2300B1406A /* GlobalPreferencesTableViewCell.swift */,
+				797C2BC41CBF7C2300B1406A /* GlobalPreferencesTableViewCell.xib */,
 			);
 			name = View;
 			path = YiLinkerOnlineBuyer/resources/Profile/View;
@@ -2972,6 +2982,8 @@
 				799B9A371C8EACEA006472E8 /* ProfileSettingsViewController.xib */,
 				799B9A381C8EACEA006472E8 /* ProfileViewController.swift */,
 				799B9A391C8EACEA006472E8 /* ProfileViewController.xib */,
+				797C2BBF1CBF744500B1406A /* GlobalPreferencesPickerTableViewController.swift */,
+				797C2BC01CBF744500B1406A /* GlobalPreferencesPickerTableViewController.xib */,
 			);
 			name = ViewController;
 			path = YiLinkerOnlineBuyer/resources/Profile/ViewController;
@@ -3239,6 +3251,7 @@
 				0CAB81AD1C86817C00B653A9 /* ChangeAddressFooterCollectionViewCell.xib in Resources */,
 				0CAB83541C86817C00B653A9 /* FAB.storyboard in Resources */,
 				799B9A461C8EACEA006472E8 /* ProfileHeaderTableViewCell.xib in Resources */,
+				797C2BC21CBF744500B1406A /* GlobalPreferencesPickerTableViewController.xib in Resources */,
 				0CAB82121C86817C00B653A9 /* Panton.otf in Resources */,
 				0CAB83BC1C86817C00B653A9 /* WebViewController.xib in Resources */,
 				0CAB83291C86817C00B653A9 /* ResultAllViewController.xib in Resources */,
@@ -3249,6 +3262,7 @@
 				799B9A3D1C8EACEA006472E8 /* EditProfileAccountInformationTableViewCell.xib in Resources */,
 				0CAB81DF1C86817C00B653A9 /* PaymentWebViewViewController.xib in Resources */,
 				79DBF2301C898B9B004EA438 /* QRCodeScannerViewController.xib in Resources */,
+				797C2BC61CBF7C2300B1406A /* GlobalPreferencesTableViewCell.xib in Resources */,
 				0CAB82291C86817C00B653A9 /* FollowedSellerTableViewCell.xib in Resources */,
 				0CAB82A41C86817C00B653A9 /* MessagingReceiverImageTableViewCell.xib in Resources */,
 				0CAB82E71C86817C00B653A9 /* ProductAttributeViewController.xib in Resources */,
@@ -3425,6 +3439,7 @@
 				0CAB83C21C86817C00B653A9 /* YiLinkerOnlineBuyer.xcdatamodeld in Sources */,
 				0CAB83581C86817C00B653A9 /* TransactionDetailsModel.swift in Sources */,
 				0CAB82B51C86817C00B653A9 /* MessagingConversationListViewController.swift in Sources */,
+				797C2BC51CBF7C2300B1406A /* GlobalPreferencesTableViewCell.swift in Sources */,
 				799B9A3A1C8EACEA006472E8 /* ProfileModel.swift in Sources */,
 				799A00B71CB4B3760032E509 /* BottomLoaderCollectionReusableView.swift in Sources */,
 				0CAB830F1C86817C00B653A9 /* ResolutionCenterCell.swift in Sources */,
@@ -3744,6 +3759,7 @@
 				0CAB83A61C86817C00B653A9 /* DynamicRoundedTextField.swift in Sources */,
 				0CAB81D51C86817C00B653A9 /* MapTableViewCell.swift in Sources */,
 				0CAB81A11C86817C00B653A9 /* ActivityLogTableViewController.swift in Sources */,
+				797C2BC11CBF744500B1406A /* GlobalPreferencesPickerTableViewController.swift in Sources */,
 				0CAB83AD1C86817C00B653A9 /* PlainTableViewCell.swift in Sources */,
 				0CAB832E1C86817C00B653A9 /* SellerModel.swift in Sources */,
 				7987B3481CB35E670033B50D /* HelpWhatsNewViewController.swift in Sources */,

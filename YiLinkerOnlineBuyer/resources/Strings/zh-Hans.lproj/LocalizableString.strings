@@ -516,9 +516,14 @@ SAVE_LOCALIZE_KEY = "保存";
 
 
 //Address
-ADDRESS_LOCALIZE_KEY = "地址";
-DEFAULTADDRESS_LOCALIZE_KEY = "无效地址";
-CHANGEADDRESS_LOCALIZE_KEY = "更改地址";
+ADDRESS_LOCALIZE_KEY = "地址";//No Chinese String
+DEFAULTADDRESS_LOCALIZE_KEY = "无效地址";//No Chinese String
+CHANGEADDRESS_LOCALIZE_KEY = "更改地址";//No Chinese String
+
+//Global Preferences
+GLOBAL_PREFERENCES_KEY = "全球首选项";
+PROFILE_COUNTRY_KEY = "国家";
+PROFILE_LANGUAGE_KEY = "语言";
 
 //Personal Information
 PERSONALINFO_LOCALIZE_KEY = "个人信息";
