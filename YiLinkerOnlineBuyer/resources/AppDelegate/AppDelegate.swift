@@ -253,7 +253,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GGLInstanceIDDelegate {
             view.removeFromSuperview()
         }
         
-        let countryViewController: CountryViewController = CountryViewController(nibName: "CountryViewController", bundle: nil)
+        var countryViewController: CountryViewController =  CountryViewController()
+        
+        if IphoneType.isIphone4() {
+            countryViewController = CountryViewController(nibName: "CountryViewController4s", bundle: nil)
+        } else if IphoneType.isIphone5() {
+            countryViewController = CountryViewController(nibName: "CountryViewController5", bundle: nil)
+        } else if IphoneType.isIphone6() {
+            countryViewController = CountryViewController(nibName: "CountryViewController6", bundle: nil)
+        } else {
+            countryViewController = CountryViewController(nibName: "CountryViewController6plus", bundle: nil)
+        }
+        
+        
         self.window?.rootViewController = countryViewController
     }
     

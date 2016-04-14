@@ -22,5 +22,5 @@ class LanguageHelper: NSObject {
             return .English
         }
     }
-    
+
 }

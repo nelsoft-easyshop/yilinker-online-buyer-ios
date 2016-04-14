@@ -8,12 +8,20 @@
 
 import UIKit
 
-class CountryViewController: UIViewController {
+class CountryViewController: UIViewController, LGAlertViewDelegate {
 
+    @IBOutlet weak var dropDownImageView: UIImageView!
+    @IBOutlet weak var selectCountryButton: UIButton!
+    @IBOutlet weak var activityindicatorView:
+    UIActivityIndicatorView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        self.selectCountryButton.backgroundColor = UIColor.clearColor()
+        self.selectCountryButton.layer.cornerRadius = 3
+        self.selectCountryButton.layer.borderWidth = 0.5
+        self.selectCountryButton.layer.borderColor = UIColor.lightGrayColor().CGColor
     }
 
     override func didReceiveMemoryWarning() {
@@ -48,16 +56,41 @@ class CountryViewController: UIViewController {
         alertView.cancelButtonTextAlignment = .Right
         alertView.separatorsColor = nil
         alertView.destructiveButtonTitleColor = UIColor.whiteColor()
-        alertView.buttonsTitleColor = UIColor.whiteColor()
+        
+        alertView.buttonsTitleColor = UIColor.darkGrayColor()
         alertView.cancelButtonTitleColor = UIColor.whiteColor()
+        alertView.buttonsTitleColorHighlighted = UIColor.whiteColor()
+        
         alertView.destructiveButtonBackgroundColor = UIColor(red: 1.0, green: 0.0, blue: 0.0, alpha: 0.5)
         alertView.buttonsBackgroundColor = Constants.Colors.alphaAppThemeColor
         alertView.buttonsBackgroundColorHighlighted = Constants.Colors.appTheme
         alertView.cancelButtonBackgroundColorHighlighted = UIColor(white: 0.5, alpha: 1.0)
+        alertView.delegate = self
         alertView.showAnimated(true, completionHandler: nil)
     }
     
-
+    func alertView(alertView: LGAlertView!, buttonPressedWithTitle title: String!, index: UInt) {
+        self.selectCountryButton.setTitle(title, forState: .Normal)
+        self.dropDownImageView.hidden = true
+        self.activityindicatorView.startAnimating()
+        self.selectCountryButton.enabled = false
+        
+        Delay.delayWithDuration(3.0, completionHandler: { (success) -> Void in
+            self.dropDownImageView.hidden = !true
+            self.activityindicatorView.stopAnimating()
+            self.selectCountryButton.enabled = true
+            
+            if index == 0 {
+                SessionManager.isLanguageChinese = false
+            } else {
+                SessionManager.isLanguageChinese = true
+            }
+            
+            let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+            appDelegate.changeRootToHomeView()
+        })
+    }
+    
     /*
     // MARK: - Navigation
 
