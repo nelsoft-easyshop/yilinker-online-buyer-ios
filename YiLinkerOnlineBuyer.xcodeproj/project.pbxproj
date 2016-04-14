@@ -19,6 +19,7 @@
 		0C574A261BC5174900913F29 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C574A251BC5174900913F29 /* SystemConfiguration.framework */; };
 		0C574A281BC5175000913F29 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C574A271BC5175000913F29 /* UIKit.framework */; };
 		0C759FB81C900B3B002A08E2 /* PushNotificationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C759FB71C900B3B002A08E2 /* PushNotificationModel.swift */; };
+		0C75A2B51CBDE9A3006ACF05 /* CountryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C75A2B31CBDE9A3006ACF05 /* CountryViewController.swift */; };
 		0C77B32D1C87E77D0069D063 /* TransactionViews.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C77B32C1C87E77D0069D063 /* TransactionViews.xib */; };
 		0C8A7C7B1B6772670039F013 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0C8A7C7A1B6772670039F013 /* Images.xcassets */; };
 		0C8A7C8A1B6772670039F013 /* YiLinkerOnlineBuyerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8A7C891B6772670039F013 /* YiLinkerOnlineBuyerTests.swift */; };
@@ -545,6 +546,10 @@
 		0CAB83C11C86817C00B653A9 /* WishlistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAB81941C86817C00B653A9 /* WishlistViewController.swift */; };
 		0CAB83C21C86817C00B653A9 /* YiLinkerOnlineBuyer.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0CAB81951C86817C00B653A9 /* YiLinkerOnlineBuyer.xcdatamodeld */; };
 		0CB3CF881CAE2690005C098C /* ParseHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CB3CF871CAE2690005C098C /* ParseHelper.swift */; };
+		0CD262271CBF38EA00DDCBA9 /* CountryViewController4s.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CD262231CBF38EA00DDCBA9 /* CountryViewController4s.xib */; };
+		0CD262281CBF38EA00DDCBA9 /* CountryViewController5.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CD262241CBF38EA00DDCBA9 /* CountryViewController5.xib */; };
+		0CD262291CBF38EA00DDCBA9 /* CountryViewController6.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CD262251CBF38EA00DDCBA9 /* CountryViewController6.xib */; };
+		0CD2622A1CBF38EA00DDCBA9 /* CountryViewController6plus.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CD262261CBF38EA00DDCBA9 /* CountryViewController6plus.xib */; };
 		790E597E1C87D0B90073FE23 /* SearchBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 790E597D1C87D0B90073FE23 /* SearchBarView.swift */; };
 		790E59801C87D0D00073FE23 /* SearchBarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 790E597F1C87D0D00073FE23 /* SearchBarView.xib */; };
 		790E59831C880C980073FE23 /* SearchTypeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 790E59811C880C980073FE23 /* SearchTypeTableViewCell.swift */; };
@@ -633,6 +638,7 @@
 		0C574A251BC5174900913F29 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		0C574A271BC5175000913F29 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		0C759FB71C900B3B002A08E2 /* PushNotificationModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PushNotificationModel.swift; sourceTree = "<group>"; };
+		0C75A2B31CBDE9A3006ACF05 /* CountryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountryViewController.swift; sourceTree = "<group>"; };
 		0C77B32C1C87E77D0069D063 /* TransactionViews.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TransactionViews.xib; sourceTree = "<group>"; };
 		0C8A7C6E1B6772670039F013 /* YiLinkerOnlineBuyer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YiLinkerOnlineBuyer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0C8A7C721B6772670039F013 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -1169,6 +1175,10 @@
 		0CAB81941C86817C00B653A9 /* WishlistViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WishlistViewController.swift; sourceTree = "<group>"; };
 		0CAB81961C86817C00B653A9 /* YiLinkerOnlineBuyer.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = YiLinkerOnlineBuyer.xcdatamodel; sourceTree = "<group>"; };
 		0CB3CF871CAE2690005C098C /* ParseHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseHelper.swift; sourceTree = "<group>"; };
+		0CD262231CBF38EA00DDCBA9 /* CountryViewController4s.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CountryViewController4s.xib; sourceTree = "<group>"; };
+		0CD262241CBF38EA00DDCBA9 /* CountryViewController5.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CountryViewController5.xib; sourceTree = "<group>"; };
+		0CD262251CBF38EA00DDCBA9 /* CountryViewController6.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CountryViewController6.xib; sourceTree = "<group>"; };
+		0CD262261CBF38EA00DDCBA9 /* CountryViewController6plus.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CountryViewController6plus.xib; sourceTree = "<group>"; };
 		13599842A00C070178791D1F /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		790E597D1C87D0B90073FE23 /* SearchBarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchBarView.swift; sourceTree = "<group>"; };
 		790E597F1C87D0D00073FE23 /* SearchBarView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchBarView.xib; sourceTree = "<group>"; };
@@ -2525,6 +2535,11 @@
 			children = (
 				0CAB81111C86817B00B653A9 /* StarterContentPageViewController.swift */,
 				0CAB81121C86817B00B653A9 /* StartPageViewController.swift */,
+				0C75A2B31CBDE9A3006ACF05 /* CountryViewController.swift */,
+				0CD262231CBF38EA00DDCBA9 /* CountryViewController4s.xib */,
+				0CD262241CBF38EA00DDCBA9 /* CountryViewController5.xib */,
+				0CD262251CBF38EA00DDCBA9 /* CountryViewController6.xib */,
+				0CD262261CBF38EA00DDCBA9 /* CountryViewController6plus.xib */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -3115,6 +3130,7 @@
 				0CAB837F1C86817C00B653A9 /* TransactionCancelOrderStatusViewController.xib in Resources */,
 				0CAB82E21C86817C00B653A9 /* ProductsTableViewCell.xib in Resources */,
 				798D84C61C86C14500D2A1F7 /* MyPointsTableViewController.xib in Resources */,
+				0CD262281CBF38EA00DDCBA9 /* CountryViewController5.xib in Resources */,
 				0CAB82EA1C86817C00B653A9 /* ProductDetailsExtendedViewController.xib in Resources */,
 				0CAB81CB1C86817C00B653A9 /* CheckoutViews.xib in Resources */,
 				0CAB820D1C86817C00B653A9 /* Panton Regular Italic.otf in Resources */,
@@ -3233,6 +3249,7 @@
 				0CAB82AC1C86817C00B653A9 /* MessagingViewController.xib in Resources */,
 				0CAB83271C86817C00B653A9 /* FilterViewController.xib in Resources */,
 				798D84CD1C86C14500D2A1F7 /* PointsBreakdownTableViewCell.xib in Resources */,
+				0CD262291CBF38EA00DDCBA9 /* CountryViewController6.xib in Resources */,
 				0CAB82DB1C86817C00B653A9 /* ProductResultListCollectionViewCell.xib in Resources */,
 				0CAB83311C86817C00B653A9 /* AboutSellerTableViewCell.xib in Resources */,
 				79AE91171CB4EDC300DB04D4 /* FilterHeaderTableViewCell.xib in Resources */,
@@ -3260,6 +3277,7 @@
 				0CAB82811C86817C00B653A9 /* ViewMoreFooterCollectionViewCell.xib in Resources */,
 				9F7BC2CF1BF124C100218E10 /* yilinker_pinned_certificate.cer in Resources */,
 				0CAB825C1C86817C00B653A9 /* CarouselCollectionViewCell.xib in Resources */,
+				0CD2622A1CBF38EA00DDCBA9 /* CountryViewController6plus.xib in Resources */,
 				799A00B81CB4B3760032E509 /* BottomLoaderCollectionReusableView.xib in Resources */,
 				0CAB827F1C86817C00B653A9 /* VerticalImageCollectionViewCell.xib in Resources */,
 				790E59841C880C980073FE23 /* SearchTypeTableViewCell.xib in Resources */,
@@ -3297,6 +3315,7 @@
 				0CAB83561C86817C00B653A9 /* LocalizableString.strings in Resources */,
 				0CAB82731C86817C00B653A9 /* ScrollableCollectionViewCell.xib in Resources */,
 				0CAB81AF1C86817C00B653A9 /* NewAddressTableViewCell.xib in Resources */,
+				0CD262271CBF38EA00DDCBA9 /* CountryViewController4s.xib in Resources */,
 				0CAB83991C86817C00B653A9 /* VerifyMobileNumberInputViewController.xib in Resources */,
 				0CAB81B51C86817C00B653A9 /* MapViewController.xib in Resources */,
 				0CAB83B81C86817C00B653A9 /* ViewImageViewController.xib in Resources */,
@@ -3649,6 +3668,7 @@
 				0CAB82421C86817C00B653A9 /* Reachability.swift in Sources */,
 				0CAB82861C86817C00B653A9 /* LoginHeaderTableViewCell.swift in Sources */,
 				0CAB82D41C86817C00B653A9 /* ProductDetailsBottomView.swift in Sources */,
+				0C75A2B51CBDE9A3006ACF05 /* CountryViewController.swift in Sources */,
 				0CAB838A1C86817C00B653A9 /* TransactionLeaveFeedbackViewController.swift in Sources */,
 				0CAB81B91C86817C00B653A9 /* CartProductAttributeTableViewCell.swift in Sources */,
 				0CAB824A1C86817C00B653A9 /* ErrorModel.swift in Sources */,

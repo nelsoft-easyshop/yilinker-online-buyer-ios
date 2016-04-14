@@ -11,6 +11,7 @@ class SessionManager {
     static let sharedInstance = SessionManager()
 
     var loginType: LoginType = LoginType.GoogleLogin
+    static var isLanguageChinese: Bool = false
     
     class func setGcmToken(accessToken: String) {
         NSUserDefaults.standardUserDefaults().setObject(accessToken, forKey: "gcmToken")

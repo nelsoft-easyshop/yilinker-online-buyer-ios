@@ -62,6 +62,7 @@ struct Constants {
         static let offlineColor = HexaColor.colorWithHexa(0xda202d)
         static let onlineColor = HexaColor.colorWithHexa(0x54b6a7)
         static let statusBarBackgroundColor = HexaColor.colorWithHexa(0x602077)
+        static let alphaAppThemeColor = HexaColor.colorWithHexa(0xD7D2E3)
     }
     
     struct Facebook {
