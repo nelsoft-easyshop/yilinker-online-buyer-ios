@@ -221,6 +221,8 @@ REMEMBER_PAYMENT_LOCALIZE_KEY = "Remember Payment Option";
 DELIVER_TO_LOCALIZE_KEY = "Deliver to:";
 COD_LOCALIZE_KEY = "CoD";
 CREDIT_CARD_LOCALIZE_KEY = "Creditcard";
+NO_COD_LOCALIZE_KEY = "Not available for COD";
+COD_NOT_AVAILABLE_LOCALIZE_KEY = "COD is not available in this transaction";
 
 // MARK: - Checkout OverView
 CONGRATULATIONS_LOCALIZE_KEY = "Congratulations!";

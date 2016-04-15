@@ -21,6 +21,9 @@
 		0C759FB81C900B3B002A08E2 /* PushNotificationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C759FB71C900B3B002A08E2 /* PushNotificationModel.swift */; };
 		0C75A2B51CBDE9A3006ACF05 /* CountryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C75A2B31CBDE9A3006ACF05 /* CountryViewController.swift */; };
 		0C77B32D1C87E77D0069D063 /* TransactionViews.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C77B32C1C87E77D0069D063 /* TransactionViews.xib */; };
+		0C8417D91CC0C6120076B9B9 /* OverseasCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8417D71CC0C6120076B9B9 /* OverseasCollectionViewCell.swift */; };
+		0C8417DA1CC0C6120076B9B9 /* OverseasCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C8417D81CC0C6120076B9B9 /* OverseasCollectionViewCell.xib */; };
+		0C8417DC1CC0C7A00076B9B9 /* LayoutElevenModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8417DB1CC0C7A00076B9B9 /* LayoutElevenModel.swift */; };
 		0C8A7C7B1B6772670039F013 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0C8A7C7A1B6772670039F013 /* Images.xcassets */; };
 		0C8A7C8A1B6772670039F013 /* YiLinkerOnlineBuyerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8A7C891B6772670039F013 /* YiLinkerOnlineBuyerTests.swift */; };
 		0CAB81971C86817C00B653A9 /* ActivityLogItemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAB7EEE1C86817B00B653A9 /* ActivityLogItemModel.swift */; };
@@ -640,6 +643,9 @@
 		0C759FB71C900B3B002A08E2 /* PushNotificationModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PushNotificationModel.swift; sourceTree = "<group>"; };
 		0C75A2B31CBDE9A3006ACF05 /* CountryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountryViewController.swift; sourceTree = "<group>"; };
 		0C77B32C1C87E77D0069D063 /* TransactionViews.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TransactionViews.xib; sourceTree = "<group>"; };
+		0C8417D71CC0C6120076B9B9 /* OverseasCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OverseasCollectionViewCell.swift; sourceTree = "<group>"; };
+		0C8417D81CC0C6120076B9B9 /* OverseasCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OverseasCollectionViewCell.xib; sourceTree = "<group>"; };
+		0C8417DB1CC0C7A00076B9B9 /* LayoutElevenModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayoutElevenModel.swift; sourceTree = "<group>"; };
 		0C8A7C6E1B6772670039F013 /* YiLinkerOnlineBuyer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YiLinkerOnlineBuyer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0C8A7C721B6772670039F013 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0C8A7C7A1B6772670039F013 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
@@ -2044,6 +2050,7 @@
 				0CAB7FEC1C86817B00B653A9 /* LayoutThreeModel.swift */,
 				0CAB7FED1C86817B00B653A9 /* LayoutTwoModel.swift */,
 				0CAB7FEE1C86817B00B653A9 /* TargetModel.swift */,
+				0C8417DB1CC0C7A00076B9B9 /* LayoutElevenModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -2090,6 +2097,8 @@
 				0CAB80141C86817B00B653A9 /* VerticalImageCollectionViewCell.xib */,
 				0CAB80151C86817B00B653A9 /* ViewMoreFooterCollectionViewCell.swift */,
 				0CAB80161C86817B00B653A9 /* ViewMoreFooterCollectionViewCell.xib */,
+				0C8417D71CC0C6120076B9B9 /* OverseasCollectionViewCell.swift */,
+				0C8417D81CC0C6120076B9B9 /* OverseasCollectionViewCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -3333,6 +3342,7 @@
 				0CAB828F1C86817C00B653A9 /* RegisterTableViewCell.xib in Resources */,
 				798D84D31C86C14500D2A1F7 /* PointsTableViewCell.xib in Resources */,
 				0CAB838D1C86817C00B653A9 /* TransactionLeaveProductFeedbackTableViewController.xib in Resources */,
+				0C8417DA1CC0C6120076B9B9 /* OverseasCollectionViewCell.xib in Resources */,
 				0CAB833D1C86817C00B653A9 /* ReviewTableViewCell.xib in Resources */,
 				0CAB82B81C86817C00B653A9 /* MessagingViewController.xib in Resources */,
 				0CAB83B61C86817C00B653A9 /* TodaysPromoViewController.xib in Resources */,
@@ -3443,6 +3453,7 @@
 				0CAB81A61C86817C00B653A9 /* BasicInfoModel.swift in Sources */,
 				0CAB83C21C86817C00B653A9 /* YiLinkerOnlineBuyer.xcdatamodeld in Sources */,
 				0CAB83581C86817C00B653A9 /* TransactionDetailsModel.swift in Sources */,
+				0C8417D91CC0C6120076B9B9 /* OverseasCollectionViewCell.swift in Sources */,
 				0CAB82B51C86817C00B653A9 /* MessagingConversationListViewController.swift in Sources */,
 				799B9A3A1C8EACEA006472E8 /* ProfileModel.swift in Sources */,
 				799A00B71CB4B3760032E509 /* BottomLoaderCollectionReusableView.swift in Sources */,
@@ -3483,6 +3494,7 @@
 				0CAB83711C86817C00B653A9 /* TransactionProductDetailsTableViewCell.swift in Sources */,
 				0CAB83AF1C86817C00B653A9 /* RoundedButton.swift in Sources */,
 				0CAB825B1C86817C00B653A9 /* CarouselCollectionViewCell.swift in Sources */,
+				0C8417DC1CC0C7A00076B9B9 /* LayoutElevenModel.swift in Sources */,
 				0CAB830A1C86817C00B653A9 /* CaseDetailsModel.swift in Sources */,
 				0CAB82521C86817C00B653A9 /* LayoutFourModel.swift in Sources */,
 				0CAB82A51C86817C00B653A9 /* MessagingReceiverTableViewCell.swift in Sources */,

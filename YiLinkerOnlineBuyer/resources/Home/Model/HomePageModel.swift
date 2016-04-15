@@ -55,6 +55,8 @@ class HomePageModel: NSObject {
                 data.append(LayoutNineModel.parseDataFromDictionary(sectionDictionary))
             } else if layoutId == 10 {
                 data.append(LayoutTenModel.parseDataFromDictionary(sectionDictionary))
+            } else if layoutId == 11 {
+                data.append(LayoutElevenModel.parseDataFromDictionary(sectionDictionary))
             }
         }
         
