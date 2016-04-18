@@ -196,6 +196,8 @@ class ResultViewController: UIViewController {
         self.initializeDimView()
         
         self.noResultLabel.hidden = true
+        
+        self.sortPickerTableView.tableFooterView = UIView(frame: CGRectZero)
     }
     
     //MARK: - Add Pull To Refresh
