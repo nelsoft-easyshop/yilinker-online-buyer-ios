@@ -14,6 +14,12 @@ enum ResultViewType {
     case Seller
 }
 
+enum ResultFilterViewType {
+    case Default
+    case Sort
+    case Country
+}
+
 struct ResultViewLocalizedString {
     static let resultsLocalizeString: String = StringHelper.localizedStringWithKey("RESULTS_LOCALIZE_KEY")
     static let listLocalizeString: String = StringHelper.localizedStringWithKey("LIST_LOCALIZE_KEY")
@@ -48,7 +54,11 @@ class ResultViewController: UIViewController {
     @IBOutlet weak var filterLabel: UILabel!
     @IBOutlet weak var sortLabel: UILabel!
     @IBOutlet weak var viewTypeLabel: UILabel!
+    @IBOutlet weak var countryView: UIView!
+    @IBOutlet weak var countryImageView: UIImageView!
+    @IBOutlet weak var countryLabel: UILabel!
     @IBOutlet weak var actionView: UIView!
+    @IBOutlet weak var filterHeaderLabel: UILabel!
     
     @IBOutlet weak var actionViewHeight: NSLayoutConstraint!
     
@@ -62,11 +72,13 @@ class ResultViewController: UIViewController {
     var pageTitle: String = ""
     var isSellerSearch: Bool = false
     var categoryName: String = ""
+    var filterViewType: ResultFilterViewType = .Default
     
     //Tap gesture for the action views
     var sortTapGesture: UITapGestureRecognizer!
     var filterTapGesture: UITapGestureRecognizer!
     var viewTypeTapGesture: UITapGestureRecognizer!
+    var countryTapGesture: UITapGestureRecognizer!
     
     //Variable for determining what cell will be shown in the collectionview
     var resultViewType: ResultViewType = ResultViewType.Grid
@@ -270,6 +282,10 @@ class ResultViewController: UIViewController {
         viewTypeTapGesture = UITapGestureRecognizer(target:self, action:"tapViewTypeViewAction")
         viewTypeView.addGestureRecognizer(viewTypeTapGesture)
         
+        countryTapGesture = UITapGestureRecognizer(target:self, action:"tapCountryViewAction")
+        countryView.addGestureRecognizer(countryTapGesture)
+
+        
         //Add tap getsure to close keyboard
 //        let tapGesture = UITapGestureRecognizer(target: self, action: "closeKeyboard")
 //        self.view.addGestureRecognizer(tapGesture)
@@ -286,6 +302,10 @@ class ResultViewController: UIViewController {
         
         if viewTypeTapGesture != nil {
             self.viewTypeView.removeGestureRecognizer(viewTypeTapGesture)
+        }
+        
+        if countryTapGesture != nil {
+            self.countryView.removeGestureRecognizer(countryTapGesture)
         }
     }
     
@@ -384,6 +404,21 @@ class ResultViewController: UIViewController {
         
         if !self.dimView.hidden {
             self.tapSortViewAction()
+        }
+    }
+
+    func tapCountryViewAction() {
+        if self.dimView.hidden {
+            UIView.animateWithDuration(0.3, animations: {
+                self.dimView.hidden = false
+                self.dimView.alpha = 1.0
+            })
+        } else {
+            UIView.animateWithDuration(0.3, animations: {
+                self.dimView.alpha = 0
+                }, completion: { finished in
+                    self.dimView.hidden = true
+            })
         }
     }
     
