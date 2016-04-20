@@ -32,11 +32,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GGLInstanceIDDelegate {
         self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
 
         //self.toastStyle()
-        if SessionManager.accessToken() == "" {
-            self.countryPage()
-        } else {
-            self.changeRootToHomeView()
-        }
+//        if SessionManager.accessToken() == "" {
+//            self.countryPage()
+//        } else {
+//            self.changeRootToHomeView()
+//        }
         
         UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: true)
         self.window?.makeKeyAndVisible()
@@ -67,6 +67,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GGLInstanceIDDelegate {
         MagicalRecord.setupCoreDataStack()
         
         UIApplication.sharedApplication().registerForRemoteNotifications()
+        
+        println(SessionManager.selectedCountryCode())
+        
+        if SessionManager.selectedCountryCode() == "" {
+            self.countryPage()
+        } else {
+            self.changeRootToHomeView()
+        }
         
         return FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
     }
