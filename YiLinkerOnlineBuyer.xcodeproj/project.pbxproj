@@ -550,6 +550,9 @@
 		0CD262281CBF38EA00DDCBA9 /* CountryViewController5.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CD262241CBF38EA00DDCBA9 /* CountryViewController5.xib */; };
 		0CD262291CBF38EA00DDCBA9 /* CountryViewController6.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CD262251CBF38EA00DDCBA9 /* CountryViewController6.xib */; };
 		0CD2622A1CBF38EA00DDCBA9 /* CountryViewController6plus.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CD262261CBF38EA00DDCBA9 /* CountryViewController6plus.xib */; };
+		70739FE11CC7523200C4E0DC /* CountryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70739FE01CC7523200C4E0DC /* CountryModel.swift */; };
+		70739FE31CC7536100C4E0DC /* BasicModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70739FE21CC7536100C4E0DC /* BasicModel.swift */; };
+		70739FE71CC768A500C4E0DC /* CountryEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70739FE61CC768A500C4E0DC /* CountryEntity.swift */; };
 		790E597E1C87D0B90073FE23 /* SearchBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 790E597D1C87D0B90073FE23 /* SearchBarView.swift */; };
 		790E59801C87D0D00073FE23 /* SearchBarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 790E597F1C87D0D00073FE23 /* SearchBarView.xib */; };
 		790E59831C880C980073FE23 /* SearchTypeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 790E59811C880C980073FE23 /* SearchTypeTableViewCell.swift */; };
@@ -1185,6 +1188,9 @@
 		0CD262251CBF38EA00DDCBA9 /* CountryViewController6.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CountryViewController6.xib; sourceTree = "<group>"; };
 		0CD262261CBF38EA00DDCBA9 /* CountryViewController6plus.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CountryViewController6plus.xib; sourceTree = "<group>"; };
 		13599842A00C070178791D1F /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		70739FE01CC7523200C4E0DC /* CountryModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountryModel.swift; sourceTree = "<group>"; };
+		70739FE21CC7536100C4E0DC /* BasicModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BasicModel.swift; path = YiLinkerOnlineBuyer/resources/Model/BasicModel.swift; sourceTree = SOURCE_ROOT; };
+		70739FE61CC768A500C4E0DC /* CountryEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountryEntity.swift; sourceTree = "<group>"; };
 		790E597D1C87D0B90073FE23 /* SearchBarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchBarView.swift; sourceTree = "<group>"; };
 		790E597F1C87D0D00073FE23 /* SearchBarView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchBarView.xib; sourceTree = "<group>"; };
 		790E59811C880C980073FE23 /* SearchTypeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchTypeTableViewCell.swift; sourceTree = "<group>"; };
@@ -2231,6 +2237,7 @@
 		0CAB80571C86817B00B653A9 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				70739FE21CC7536100C4E0DC /* BasicModel.swift */,
 				0CAB80581C86817B00B653A9 /* cancelUrl */,
 				7987B34A1CB39F490033B50D /* AppDetailsModel.swift */,
 			);
@@ -2519,18 +2526,12 @@
 		0CAB810D1C86817B00B653A9 /* StartPage */ = {
 			isa = PBXGroup;
 			children = (
-				0CAB810E1C86817B00B653A9 /* Model */,
+				70739FE61CC768A500C4E0DC /* CountryEntity.swift */,
+				70739FE01CC7523200C4E0DC /* CountryModel.swift */,
 				0CAB810F1C86817B00B653A9 /* View */,
 				0CAB81101C86817B00B653A9 /* ViewController */,
 			);
 			path = StartPage;
-			sourceTree = "<group>";
-		};
-		0CAB810E1C86817B00B653A9 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Model;
 			sourceTree = "<group>";
 		};
 		0CAB810F1C86817B00B653A9 /* View */ = {
@@ -3507,6 +3508,7 @@
 				0CAB81E21C86817C00B653A9 /* ShipToTableViewCell.swift in Sources */,
 				0CAB82631C86817C00B653A9 /* FullScreenImageCollectionViewCell.swift in Sources */,
 				0CAB82CD1C86817C00B653A9 /* ProductSellerModel.swift in Sources */,
+				70739FE11CC7523200C4E0DC /* CountryModel.swift in Sources */,
 				0CAB823E1C86817C00B653A9 /* IPhoneType.swift in Sources */,
 				0CAB83121C86817C00B653A9 /* DisputeAddItemViewController.swift in Sources */,
 				0CAB81AC1C86817C00B653A9 /* ChangeAddressFooterCollectionViewCell.swift in Sources */,
@@ -3665,6 +3667,7 @@
 				0CAB83231C86817C00B653A9 /* SellerResultCollectionViewCell.swift in Sources */,
 				0CAB82471C86817C00B653A9 /* WebServiceManager.swift in Sources */,
 				0CAB832C1C86817C00B653A9 /* SearchViewController.swift in Sources */,
+				70739FE31CC7536100C4E0DC /* BasicModel.swift in Sources */,
 				0CAB83B31C86817C00B653A9 /* SemiRoundedButton.swift in Sources */,
 				799B9A4F1C8EACEA006472E8 /* ProfileViewController.swift in Sources */,
 				0CAB828A1C86817C00B653A9 /* LoginRegisterTableViewCell.swift in Sources */,
@@ -3779,6 +3782,7 @@
 				0CAB829E1C86817C00B653A9 /* MessagingContactTableViewCell.swift in Sources */,
 				0CAB81B71C86817C00B653A9 /* CartModel.swift in Sources */,
 				798D84C91C86C14500D2A1F7 /* PointModel.swift in Sources */,
+				70739FE71CC768A500C4E0DC /* CountryEntity.swift in Sources */,
 				0CAB824C1C86817C00B653A9 /* HomePageModel.swift in Sources */,
 				0CAB83A61C86817C00B653A9 /* DynamicRoundedTextField.swift in Sources */,
 				0CAB81D51C86817C00B653A9 /* MapTableViewCell.swift in Sources */,
@@ -3944,7 +3948,7 @@
 					"$(PROJECT_DIR)/YiLinkerOnlineBuyer/Resources/External",
 				);
 				INFOPLIST_FILE = YiLinkerOnlineBuyer/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "dbafa5c7-e762-42e0-909d-5324f8b26cb1";
@@ -3967,7 +3971,7 @@
 					"$(PROJECT_DIR)/YiLinkerOnlineBuyer/Resources/External",
 				);
 				INFOPLIST_FILE = YiLinkerOnlineBuyer/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
