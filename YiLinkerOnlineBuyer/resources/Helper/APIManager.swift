@@ -8,8 +8,8 @@
 
 struct APIEnvironment {
     
-    static var development = false
-    static var staging = true
+    static var development = true
+    static var staging = false
     static var production = false
     
     static func baseUrl() -> String {
@@ -243,6 +243,9 @@ struct APIAtlas {
     
     //Push Notif
     static let registerDeviceUrl = "v2/device/add-device-token"
+    
+    //Globalization
+    static let getLanguages = "v3/get-languages"
 }
 
 class APIManager: AFHTTPSessionManager {

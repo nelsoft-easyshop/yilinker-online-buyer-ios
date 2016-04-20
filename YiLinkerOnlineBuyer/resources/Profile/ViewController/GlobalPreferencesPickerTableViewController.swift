@@ -15,8 +15,13 @@ enum GlobalPreferencesPickerType {
 
 class GlobalPreferencesPickerTableViewController: UITableViewController {
     
-    var tableData: [String] = ["Sample01", "Sample02", "Sample03", "Sample04"]
+    typealias GlobalPreference = (isSelected: Bool, data: AnyObject)
+    
+    var tableData: [GlobalPreference] = []
     var type = GlobalPreferencesPickerType.Country
+    
+    var emptyView: EmptyView?
+    var hud: YiHUD?
         
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,6 +29,16 @@ class GlobalPreferencesPickerTableViewController: UITableViewController {
         self.initializeViews()
         self.registerNibs()
         self.addBackButton()
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if self.emptyView != nil {
+            self.emptyView?.hidden = true
+        }
+        
+        self.fireGetData()
     }
 
     override func didReceiveMemoryWarning() {
@@ -91,11 +106,15 @@ class GlobalPreferencesPickerTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCellWithIdentifier(GlobalPreferencesTableViewCell.reuseIdentifier, forIndexPath: indexPath) as! GlobalPreferencesTableViewCell
         cell.selectionStyle = UITableViewCellSelectionStyle.Default
         
-        cell.setIsChecked(false)
-        cell.setValueText(self.tableData[indexPath.row])
-        cell.setValueImage("http://grandtuhonsupremo.com/wp-content/uploads/2011/01/Philippines-Flag-icon.png")
+        if self.type == .Country {
+            
+        } else if self.type == .Language {
+            if let temp = self.tableData[indexPath.row].data as? LanguageModel {
+                cell.setValueText("\(temp.name) (\(temp.code.uppercaseString))")
+            }
+        }
         
-//        indexPath.row % 2 == 0 ? cell.setType(.Country) : cell.setType(.Language)
+        cell.setIsChecked(self.tableData[indexPath.row].isSelected)
         cell.setType(self.type)
 
         return cell
@@ -103,5 +122,78 @@ class GlobalPreferencesPickerTableViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        
+        for var i = 0; i < self.tableData.count; i++ {
+            self.tableData[i].isSelected = false
+        }
+        
+        self.tableData[indexPath.row].isSelected = true
+        self.tableView.reloadData()
+    }
+    
+    // MARK: - API CALLS
+    func fireGetData() {
+        self.showLoader()
+        
+        if self.type == .Country {
+            
+        } else if self.type == .Language {
+            WebServiceManager.fireGetLanguagesWithUrl(APIAtlas.getLanguages, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+                
+                self.dismissLoader()
+                
+                if successful {
+                    if let response = responseObject as? NSDictionary {
+                        if let data = response["data"] as? NSArray {
+                            self.tableData.removeAll(keepCapacity: false)
+                            
+                            for obj in data {
+                                if let temp = obj as? NSDictionary {
+                                    self.tableData.append(GlobalPreference(isSelected: false, data: LanguageModel.pareseDataFromResponseObject(temp)))
+                                }
+                            }
+                            self.tableView.reloadData()
+                        }
+                    }
+                } else {
+                    self.addEmptyView()
+                }
+            })
+        }
+    }
+    
+    
+    // MARK: - Functions
+    func addEmptyView() {
+        if self.emptyView == nil {
+            self.tableData.removeAll(keepCapacity: false)
+            self.tableView.reloadData()
+            self.emptyView = UIView.loadFromNibNamed("EmptyView", bundle: nil) as? EmptyView
+            self.emptyView?.frame = self.view.frame
+            self.emptyView!.delegate = self
+            self.view.addSubview(self.emptyView!)
+        } else {
+            self.emptyView!.hidden = false
+        }
+    }
+    
+    // MARK: - Loader function
+    func showLoader() {
+        self.hud = YiHUD.initHud()
+        self.hud?.showHUDToView(self.view)
+        self.view.userInteractionEnabled = false
+    }
+    
+    func dismissLoader() {
+        self.hud?.hide()
+        self.view.userInteractionEnabled = true
+    }
+}
+
+// MARK: - EmptyView Delegate
+extension GlobalPreferencesPickerTableViewController: EmptyViewDelegate {
+    func didTapReload() {
+        self.emptyView?.hidden = true
+        self.fireGetData()
     }
 }
