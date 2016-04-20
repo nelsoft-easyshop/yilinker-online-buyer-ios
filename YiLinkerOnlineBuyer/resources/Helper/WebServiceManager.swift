@@ -1241,4 +1241,13 @@ class WebServiceManager: NSObject {
         }
     }
     
+    //MARK: -
+    //MARK: - Globalization
+    
+    //MARK: - Get Language
+    class func fireGetLanguagesWithUrl(url: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+        self.fireGetRequestWithUrl(url, parameters: []) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+    }
 }

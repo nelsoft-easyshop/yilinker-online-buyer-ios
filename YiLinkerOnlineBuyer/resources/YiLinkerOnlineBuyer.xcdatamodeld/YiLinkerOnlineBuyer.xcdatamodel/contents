@@ -3,7 +3,12 @@
     <entity name="HomeEntity" representedClassName="HomeEntity" syncable="YES">
         <attribute name="json" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
+    <entity name="LanguageEntity" syncable="YES">
+        <attribute name="dateUpdated" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="json" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
     <elements>
         <element name="HomeEntity" positionX="-45" positionY="0" width="128" height="60"/>
+        <element name="LanguageEntity" positionX="-45" positionY="9" width="128" height="75"/>
     </elements>
 </model>
