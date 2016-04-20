@@ -8,12 +8,15 @@
 
 struct APIEnvironment {
     
-    static var development = true
+    static var development = false
+    static var sprint = true
     static var staging = false
     static var production = false
     
     static func baseUrl() -> String {
         if development {
+            return "http://dev.online.api.easydeal.ph/api"
+        } else if sprint {
             return "http://sprint.online.api.easydeal.ph/api"
         } else if staging {
             return "http://online.api.easydeal.ph/api"
