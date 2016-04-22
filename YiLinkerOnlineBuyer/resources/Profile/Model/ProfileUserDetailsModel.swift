@@ -39,7 +39,9 @@ class ProfileUserDetailsModel: NSObject {
     
     var totalPoints: String = ""
     
-    init(userId: String, fullName: String, firstName: String, lastName: String, email: String, contactNumber: String, profileImageUrl: String, coverPhoto: String, gender: String, birthdate: String, address: AddressModelV2, userDocuments: String, transactionCount: Int, wishlistCount: Int, cartCount: Int, messageCount: Int, followingCount: Int, isEmailSubscribed: Bool, isSmsSubscribed: Bool, isEmailVerified: Bool, isMobileVerified: Bool, referralCode: String, referrerCode: String, referrerName: String, totalPoints: String) {
+    var country: CountryModel = CountryModel()
+    
+    init(userId: String, fullName: String, firstName: String, lastName: String, email: String, contactNumber: String, profileImageUrl: String, coverPhoto: String, gender: String, birthdate: String, address: AddressModelV2, userDocuments: String, transactionCount: Int, wishlistCount: Int, cartCount: Int, messageCount: Int, followingCount: Int, isEmailSubscribed: Bool, isSmsSubscribed: Bool, isEmailVerified: Bool, isMobileVerified: Bool, referralCode: String, referrerCode: String, referrerName: String, totalPoints: String, country: CountryModel) {
         self.userId = userId
         self.fullName = fullName
         self.firstName = firstName
@@ -65,6 +67,7 @@ class ProfileUserDetailsModel: NSObject {
         self.referrerCode = referrerCode
         self.referrerName = referrerName
         self.totalPoints = totalPoints
+        self.country = country
     }
     
     override init() {
@@ -99,6 +102,8 @@ class ProfileUserDetailsModel: NSObject {
         var referrerCode: String = ""
         var referrerName: String = ""
         var totalPoints: String = ""
+        
+        var country: CountryModel = CountryModel()
         
         if let value: AnyObject = dictionary["userId"] {
             if value as! NSObject != NSNull() {
@@ -263,6 +268,12 @@ class ProfileUserDetailsModel: NSObject {
             totalPoints = value
         }
         
+        if let value = dictionary["country"] as? NSDictionary {
+            country = CountryModel.parseDataFromDictionary(value)
+            SessionManager.setSelectedCountryCode(country.code)
+            SessionManager.setSelectedLanguageCode(country.defaultLanguage.code)
+        }
+        
         return ProfileUserDetailsModel(userId: userId,
             fullName: fullName,
             firstName: firstName,
@@ -284,7 +295,8 @@ class ProfileUserDetailsModel: NSObject {
             isSmsSubscribed: isSmsSubscribed,
             isEmailVerified: isEmailVerified,
             isMobileVerified: isMobileVerified, referralCode: referralCode, referrerCode: referrerCode, referrerName: referrerName,
-            totalPoints: totalPoints)
+            totalPoints: totalPoints,
+            country: country)
     }
     
 

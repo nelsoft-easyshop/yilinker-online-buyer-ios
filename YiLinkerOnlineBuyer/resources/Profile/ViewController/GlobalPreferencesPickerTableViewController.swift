@@ -8,12 +8,20 @@
 
 import UIKit
 
+protocol GlobalPreferencesPickerTableViewControllerDelegate {
+    func globalPreferencesPickerTableViewController(globalPreferencesPickerTableViewController: GlobalPreferencesPickerTableViewController, country: CountryModel)
+    
+    func globalPreferencesPickerTableViewController(globalPreferencesPickerTableViewController: GlobalPreferencesPickerTableViewController, language: LanguageModel)
+}
+
 enum GlobalPreferencesPickerType {
     case Country
     case Language
 }
 
 class GlobalPreferencesPickerTableViewController: UITableViewController {
+    
+    var delegate: GlobalPreferencesPickerTableViewControllerDelegate?
     
     typealias GlobalPreference = (isSelected: Bool, data: AnyObject)
     
@@ -22,6 +30,9 @@ class GlobalPreferencesPickerTableViewController: UITableViewController {
     
     var emptyView: EmptyView?
     var hud: YiHUD?
+    
+    var selectedCountry = CountryModel()
+    var selectedLanguage = LanguageModel()
         
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -107,7 +118,10 @@ class GlobalPreferencesPickerTableViewController: UITableViewController {
         cell.selectionStyle = UITableViewCellSelectionStyle.Default
         
         if self.type == .Country {
-            
+            if let temp = self.tableData[indexPath.row].data as? CountryModel {
+                cell.setValueText("\(temp.name)")
+                cell.setValueImage(temp.flag)
+            }
         } else if self.type == .Language {
             if let temp = self.tableData[indexPath.row].data as? LanguageModel {
                 cell.setValueText("\(temp.name) (\(temp.code.uppercaseString))")
@@ -129,6 +143,14 @@ class GlobalPreferencesPickerTableViewController: UITableViewController {
         
         self.tableData[indexPath.row].isSelected = true
         self.tableView.reloadData()
+        
+        if self.type == .Country {
+            self.delegate?.globalPreferencesPickerTableViewController(self, country: self.tableData[indexPath.row].data as! CountryModel)
+        } else if self.type == .Language{
+            self.delegate?.globalPreferencesPickerTableViewController(self, language: self.tableData[indexPath.row].data as! LanguageModel)
+        }
+        
+        self.navigationController?.popViewControllerAnimated(true)
     }
     
     // MARK: - API CALLS
@@ -136,32 +158,161 @@ class GlobalPreferencesPickerTableViewController: UITableViewController {
         self.showLoader()
         
         if self.type == .Country {
-            
-        } else if self.type == .Language {
-            WebServiceManager.fireGetLanguagesWithUrl(APIAtlas.getLanguages, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+            var countryEntities: [CountryEntity] = CountryEntity.findAll() as! [CountryEntity]
+            let countryEntity: CountryEntity = countryEntities.first!
+            if NSDate().subractDate(countryEntity.dateUpdated) > 1 {
+                self.fireGetLanguageData()
+            } else {
+                let basicModel: BasicModel = BasicModel.parseDataFromResponseObjec(StringHelper.convertStringToDictionary(countryEntity.json))
                 
-                self.dismissLoader()
-                
-                if successful {
-                    if let response = responseObject as? NSDictionary {
-                        if let data = response["data"] as? NSArray {
-                            self.tableData.removeAll(keepCapacity: false)
-                            
-                            for obj in data {
-                                if let temp = obj as? NSDictionary {
-                                    self.tableData.append(GlobalPreference(isSelected: false, data: LanguageModel.pareseDataFromResponseObject(temp)))
-                                }
+                if basicModel.dataAnyObject.isKindOfClass(NSArray) {
+                    var dictionaries: [NSDictionary] = basicModel.dataAnyObject as! [NSDictionary]
+                    
+                    for dictionary in dictionaries {
+                        let model: CountryModel = CountryModel.parseDataFromDictionary(dictionary)
+                        if model.isActive {
+                            if self.selectedCountry.countryID == model.countryID {
+                                self.tableData.append(GlobalPreference(isSelected: true, data: model))
+                            } else {
+                                self.tableData.append(GlobalPreference(isSelected: false, data: model))
                             }
-                            self.tableView.reloadData()
                         }
                     }
-                } else {
-                    self.addEmptyView()
                 }
-            })
+                self.tableView.reloadData()
+                self.dismissLoader()
+            }
+        } else if self.type == .Language {
+            var languageEntities: [LanguageEntity] = LanguageEntity.findAll() as! [LanguageEntity]
+            
+            if languageEntities.count == 0 {
+                self.fireGetLanguageData()
+            } else{
+                let languageEntity: LanguageEntity = languageEntities.first!
+                if NSDate().subractDate(languageEntity.dateUpdated) > 1 {
+                    self.fireGetLanguageData()
+                } else {
+                    let basicModel: BasicModel = BasicModel.parseDataFromResponseObjec(StringHelper.convertStringToDictionary(languageEntity.json))
+                    
+                    if basicModel.dataAnyObject.isKindOfClass(NSArray) {
+                        var dictionaries: [NSDictionary] = basicModel.dataAnyObject as! [NSDictionary]
+                        
+                        for dictionary in dictionaries {
+                            let model: LanguageModel = LanguageModel.pareseDataFromResponseObject(dictionary)
+                            if self.selectedLanguage.languageId == model.languageId {
+                                self.tableData.append(GlobalPreference(isSelected: true, data: model))
+                            } else {
+                                self.tableData.append(GlobalPreference(isSelected: false, data: model))
+                            }
+                        }
+                    }
+                    self.tableView.reloadData()
+                    self.dismissLoader()
+                }
+            }
         }
     }
     
+    func fireGetLanguageData() {
+        WebServiceManager.fireGetLanguagesWithUrl(APIAtlas.getLanguages, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+            self.dismissLoader()
+            
+            if successful {
+                self.saveLanguagesToCoreData(responseObject)
+                if let response = responseObject as? NSDictionary {
+                    if let data = response["data"] as? NSArray {
+                        self.tableData.removeAll(keepCapacity: false)
+                        
+                        for obj in data {
+                            if let temp = obj as? NSDictionary {
+                                if self.selectedLanguage.languageId == LanguageModel.pareseDataFromResponseObject(temp).languageId {
+                                    self.tableData.append(GlobalPreference(isSelected: true, data: LanguageModel.pareseDataFromResponseObject(temp)))
+                                } else {
+                                    self.tableData.append(GlobalPreference(isSelected: false, data: LanguageModel.pareseDataFromResponseObject(temp)))
+                                }
+                            }
+                        }
+                        self.tableView.reloadData()
+                    }
+                }
+            } else {
+                self.addEmptyView()
+            }
+        })
+    }
+    
+    //MARK: -
+    //MARK: - Save Countries to Core Data
+    func saveLanguagesToCoreData(responseObject: AnyObject) {
+        var languageEntities: [LanguageEntity] = LanguageEntity.findAll() as! [LanguageEntity]
+        
+        if languageEntities.count == 0 {
+            let languageEntity: LanguageEntity = LanguageEntity.createEntity() as! LanguageEntity
+            languageEntity.json = StringHelper.convertDictionaryToJsonString(responseObject as! NSDictionary) as String
+            languageEntity.dateUpdated = NSDate()
+            languageEntities.append(languageEntity)
+            NSManagedObjectContext.defaultContext().saveToPersistentStoreAndWait()
+        } else{
+            let languageEntity: LanguageEntity = languageEntities.first!
+            if NSDate().subractDate(languageEntity.dateUpdated) > 1 {
+                languageEntity.json = StringHelper.convertDictionaryToJsonString(responseObject as! NSDictionary) as String
+                languageEntities.append(languageEntity)
+                languageEntity.dateUpdated = NSDate()
+                NSManagedObjectContext.defaultContext().saveToPersistentStoreAndWait()
+            }
+        }
+    }
+
+    
+    func fireGetCountriesAPICall() {
+        WebServiceManager.fireGetCountries(APIAtlas.getCountriesUrl, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+            if successful {
+                //save json data to core data
+                self.saveCountriesToCoreData(responseObject)
+                
+                let basicModel: BasicModel = BasicModel.parseDataFromResponseObjec(responseObject)
+                
+                if basicModel.dataAnyObject.isKindOfClass(NSArray) {
+                    var dictionaries: [NSDictionary] = basicModel.dataAnyObject as! [NSDictionary]
+                    
+                    for dictionary in dictionaries {
+                        let model: CountryModel = CountryModel.parseDataFromDictionary(dictionary)
+                        if model.isActive {
+                            if self.selectedCountry.countryID == model.countryID {
+                                self.tableData.append(GlobalPreference(isSelected: true, data: model))
+                            } else {
+                                self.tableData.append(GlobalPreference(isSelected: false, data: model))
+                            }
+                        }
+                    }
+                }
+                self.tableView.reloadData()
+                self.dismissLoader()
+            }
+        })
+    }
+    
+    //MARK: -
+    //MARK: - Save Countries to Core Data
+    func saveCountriesToCoreData(responseObject: AnyObject) {
+        var countryEntities: [CountryEntity] = CountryEntity.findAll() as! [CountryEntity]
+        
+        if countryEntities.count == 0 {
+            let countryEntity: CountryEntity = CountryEntity.createEntity() as! CountryEntity
+            countryEntity.json = StringHelper.convertDictionaryToJsonString(responseObject as! NSDictionary) as String
+            countryEntity.dateUpdated = NSDate()
+            countryEntities.append(countryEntity)
+            NSManagedObjectContext.defaultContext().saveToPersistentStoreAndWait()
+        } else{
+            let countryEntity: CountryEntity = countryEntities.first!
+            if NSDate().subractDate(countryEntity.dateUpdated) > 1 {
+                countryEntity.json = StringHelper.convertDictionaryToJsonString(responseObject as! NSDictionary) as String
+                countryEntities.append(countryEntity)
+                countryEntity.dateUpdated = NSDate()
+                NSManagedObjectContext.defaultContext().saveToPersistentStoreAndWait()
+            }
+        }
+    }
     
     // MARK: - Functions
     func addEmptyView() {
