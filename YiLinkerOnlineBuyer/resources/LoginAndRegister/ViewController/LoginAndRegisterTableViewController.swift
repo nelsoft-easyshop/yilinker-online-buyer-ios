@@ -101,7 +101,7 @@ class LoginAndRegisterTableViewController: UITableViewController {
     let loginResgisterTableViewCellNibName = "LoginRegisterTableViewCell"
     let logoRegisterTableViewCellNibName = "LoginRegisterLogoTableViewCell"
     let resetPasswordTableViewCellNibName = "ForgotPasswordTableViewCell"
-
+    
     let headerCellHeight: CGFloat = 64
     let loginCellHeight: CGFloat = 400
     let logoCellHeight: CGFloat = 190
@@ -124,7 +124,13 @@ class LoginAndRegisterTableViewController: UITableViewController {
     var tempSimplifiedRegistrationCell: SimplifiedRegistrationUICollectionViewCell?
     var tempForgotPasswordCell: ForgotPasswordTableViewCell?
     
-    //MARK: - 
+    var countries: [CountryModel] = []
+    var languages: [LanguageModel] = []
+    
+    var selectedCountry = CountryModel()
+    var selectedLanguage = LanguageModel()
+    
+    //MARK: -
     //MARK: - View Did Load
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -148,7 +154,12 @@ class LoginAndRegisterTableViewController: UITableViewController {
             
         }
     }
-
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        self.fireGetLanguageData()
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -179,7 +190,7 @@ class LoginAndRegisterTableViewController: UITableViewController {
         // Return the number of sections.
         return 1
     }
-
+    
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete method implementation.
         // Return the number of rows in the section.
@@ -197,7 +208,7 @@ class LoginAndRegisterTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return self.headerCellHeight
     }
-
+    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if indexPath.row == 0 {
             let logoRegisterTableViewCell: LoginRegisterLogoTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(self.logoRegisterTableViewCellNibName) as! LoginRegisterLogoTableViewCell
@@ -227,23 +238,23 @@ class LoginAndRegisterTableViewController: UITableViewController {
             return self.registerCellHeight
         }
     }
-
     
-    //MARK: - 
+    
+    //MARK: -
     //MARK: - Footer View
     func footerView() -> UIView {
         let footerView: UIView = UIView(frame: CGRectZero)
         return footerView
     }
     
-    //MARK: - 
+    //MARK: -
     //MARK: - Register Cell With Identifier
     func registerCellWithIdentifier(nibName: String) {
         let nib: UINib = UINib(nibName: nibName, bundle: nil)
         self.tableView.registerNib(nib, forCellReuseIdentifier: nibName)
     }
     
-    //MARK: - 
+    //MARK: -
     //MARK: - Get Facebook Access Token
     func getFaceBookAccessToken() -> String {
         var accessToken = FBSDKAccessToken.currentAccessToken().tokenString
@@ -284,7 +295,7 @@ class LoginAndRegisterTableViewController: UITableViewController {
             appDelegate.changeRootToHomeView()
         })
     }
-
+    
     
     //MARK: -
     //MARK: - Fire Login With Email
@@ -524,6 +535,76 @@ class LoginAndRegisterTableViewController: UITableViewController {
                 self.dismissLoader()
         })
     }
+    
+    //MARK: -
+    //MARK: - Get Languages
+    func fireGetLanguageData() {
+        self.showLoader()
+        var languageEntities: [LanguageEntity] = LanguageEntity.findAll() as! [LanguageEntity]
+        
+        if languageEntities.count == 0 {
+            self.fireGetLanguageData()
+        } else{
+            let languageEntity: LanguageEntity = languageEntities.first!
+            if NSDate().subractDate(languageEntity.dateUpdated) > 1 {
+                self.fireGetLanguageData()
+            } else {
+                let basicModel: BasicModel = BasicModel.parseDataFromResponseObjec(StringHelper.convertStringToDictionary(languageEntity.json))
+                
+                if basicModel.dataAnyObject.isKindOfClass(NSArray) {
+                    var dictionaries: [NSDictionary] = basicModel.dataAnyObject as! [NSDictionary]
+                    
+                    for dictionary in dictionaries {
+                        let model: LanguageModel = LanguageModel.pareseDataFromResponseObject(dictionary)
+                        self.languages.append(model)
+                    }
+                }
+                self.dismissLoader()
+            }
+        }
+    }
+    
+    func fireGetLanguageAPICall() {
+        WebServiceManager.fireGetLanguagesWithUrl(APIAtlas.getLanguages, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+            self.dismissLoader()
+            
+            if successful {
+                self.saveLanguagesToCoreData(responseObject)
+                if let response = responseObject as? NSDictionary {
+                    if let data = response["data"] as? NSArray {
+                        
+                        for obj in data {
+                            if let temp = obj as? NSDictionary {
+                                self.languages.append(LanguageModel.pareseDataFromResponseObject(temp))
+                            }
+                        }
+                    }
+                }
+            }
+        })
+    }
+    
+    //MARK: -
+    //MARK: - Save Countries to Core Data
+    func saveLanguagesToCoreData(responseObject: AnyObject) {
+        var languageEntities: [LanguageEntity] = LanguageEntity.findAll() as! [LanguageEntity]
+        
+        if languageEntities.count == 0 {
+            let languageEntity: LanguageEntity = LanguageEntity.createEntity() as! LanguageEntity
+            languageEntity.json = StringHelper.convertDictionaryToJsonString(responseObject as! NSDictionary) as String
+            languageEntity.dateUpdated = NSDate()
+            languageEntities.append(languageEntity)
+            NSManagedObjectContext.defaultContext().saveToPersistentStoreAndWait()
+        } else{
+            let languageEntity: LanguageEntity = languageEntities.first!
+            if NSDate().subractDate(languageEntity.dateUpdated) > 1 {
+                languageEntity.json = StringHelper.convertDictionaryToJsonString(responseObject as! NSDictionary) as String
+                languageEntities.append(languageEntity)
+                languageEntity.dateUpdated = NSDate()
+                NSManagedObjectContext.defaultContext().saveToPersistentStoreAndWait()
+            }
+        }
+    }
 }
 
 extension LoginAndRegisterTableViewController: LoginRegisterTableViewCellDelegate {
@@ -642,9 +723,13 @@ extension LoginAndRegisterTableViewController: LoginRegisterTableViewCellDelegat
     
     func simplifiedRegistrationCell(simplifiedRegistrationCell: SimplifiedRegistrationUICollectionViewCell, didTapLanguagePreference languagePreferenceView: UIView) {
         self.tempSimplifiedRegistrationCell = simplifiedRegistrationCell
+        var buttonTitles: [String] = []
         
-        var alertView: LGAlertView = LGAlertView(title: "Select a Language", message: "Please choose your prefered language.", style: LGAlertViewStyle.ActionSheet, buttonTitles: ["English", "Chinese Simplified", "Chinese Traditional"], cancelButtonTitle: nil, destructiveButtonTitle: nil, actionHandler: nil, cancelHandler: nil, destructiveHandler: nil)
-    
+        for language in self.languages {
+            buttonTitles.append("\(language.name) (\(language.code.uppercaseString)")
+        }
+        
+        var alertView: LGAlertView = LGAlertView(title: "Select a Language", message: "Please choose your prefered language.", style: LGAlertViewStyle.ActionSheet, buttonTitles: buttonTitles, cancelButtonTitle: nil, destructiveButtonTitle: nil, actionHandler: nil, cancelHandler: nil, destructiveHandler: nil)
         
         alertView.coverColor = UIColor(white: 1.0, alpha: 0.9)
         alertView.layerShadowColor = UIColor(white: 0.0, alpha: 0.3)
@@ -676,14 +761,32 @@ extension LoginAndRegisterTableViewController: LoginRegisterTableViewCellDelegat
         alertView.buttonsBackgroundColor = Constants.Colors.alphaAppThemeColor
         alertView.buttonsBackgroundColorHighlighted = Constants.Colors.appTheme
         alertView.cancelButtonBackgroundColorHighlighted = UIColor(white: 0.5, alpha: 1.0)
-//        alertView.delegate = self
+        //        alertView.delegate = self
         alertView.showAnimated(true, completionHandler: nil)
     }
     
     func simplifiedRegistrationCell(simplifiedRegistrationCell: SimplifiedRegistrationUICollectionViewCell, didTapAreaCode areaCodeView: UIView) {
         self.tempSimplifiedRegistrationCell = simplifiedRegistrationCell
         
-        var alertView: LGAlertView = LGAlertView(title: "Select a Language", message: "Please choose your country area code.", style: LGAlertViewStyle.ActionSheet, buttonTitles: ["+63", "+86"], cancelButtonTitle: nil, destructiveButtonTitle: nil, actionHandler: nil, cancelHandler: nil, destructiveHandler: nil)
+        var countryEntities: [CountryEntity] = CountryEntity.findAll() as! [CountryEntity]
+        let countryEntity: CountryEntity = countryEntities.first!
+        var buttonTitles: [String] = []
+        
+        let basicModel: BasicModel = BasicModel.parseDataFromResponseObjec(StringHelper.convertStringToDictionary(countryEntity.json))
+        
+        if basicModel.dataAnyObject.isKindOfClass(NSArray) {
+            var dictionaries: [NSDictionary] = basicModel.dataAnyObject as! [NSDictionary]
+            
+            for dictionary in dictionaries {
+                let model: CountryModel = CountryModel.parseDataFromDictionary(dictionary)
+                if model.isActive {
+                    buttonTitles.append("+\(model.areaCode)")
+                    self.countries.append(model)
+                }
+            }
+        }
+        
+        var alertView: LGAlertView = LGAlertView(title: "Select a Area Code", message: "Please choose your Area Code.", style: LGAlertViewStyle.ActionSheet, buttonTitles: buttonTitles, cancelButtonTitle: nil, destructiveButtonTitle: nil, actionHandler: nil, cancelHandler: nil, destructiveHandler: nil)
         
         
         alertView.coverColor = UIColor(white: 1.0, alpha: 0.9)
@@ -844,5 +947,11 @@ extension LoginAndRegisterTableViewController: ForgotPasswordTableViewCellDelega
     
     func forgotPasswordTableViewCell(forgotPasswordTableViewCell: ForgotPasswordTableViewCell, didTimerEnded sendActivationCodeButton: UIButton) {
         self.tempForgotPasswordCell = forgotPasswordTableViewCell
+    }
+}
+
+extension LoginAndRegisterTableViewController: LGAlertViewDelegate {
+    func alertView(alertView: LGAlertView!, buttonPressedWithTitle title: String!, index: UInt) {
+        
     }
 }
