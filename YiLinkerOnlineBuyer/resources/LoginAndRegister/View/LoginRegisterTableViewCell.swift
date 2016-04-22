@@ -45,6 +45,9 @@ class LoginRegisterTableViewCell: UITableViewCell {
     var referralCode: String = ""
     var isLogin: Bool = true
     
+    var selectedCountry = CountryModel()
+    var selectedLanguage = LanguageModel()
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -149,6 +152,9 @@ extension LoginRegisterTableViewCell: UICollectionViewDataSource, UICollectionVi
         } else {
             let cell: SimplifiedRegistrationUICollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifierRegistration, forIndexPath: indexPath) as! SimplifiedRegistrationUICollectionViewCell
             cell.referralCodeTextField.text = self.referralCode
+            cell.languagePreferenceLabel.text = "\(self.selectedLanguage.name) (\(self.selectedLanguage.code.uppercaseString))"
+            cell.areaCodeLabel.text = "+\(self.selectedCountry.areaCode)"
+            cell.areaCodeImageView.sd_setImageWithURL(NSURL(string: self.selectedCountry.flag), placeholderImage: UIImage(named: "dummy-placeholder"))
             cell.delegate = self
             return cell
         }

@@ -369,6 +369,13 @@ extension NSDate {
         return dateWithHoursAdded
     }
     
+    func subractDate(endDate : NSDate) -> Int {
+        let calendar = NSCalendar.currentCalendar()
+        let flags = NSCalendarUnit.CalendarUnitDay
+        let components = calendar.components(flags, fromDate: self, toDate: endDate, options: nil)
+        return components.day
+    }
+    
 //    func differenceInMinutesWithCurrentDate() -> Double {
 //        return (self.timeIntervalSinceNow / 60)
 //    }

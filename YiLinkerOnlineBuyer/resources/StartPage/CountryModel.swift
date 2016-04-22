@@ -17,8 +17,13 @@ class CountryModel: NSObject {
     var areaCode: String = ""
     var isActive: Bool = false
     var flag: String = ""
+    var defaultLanguage: LanguageModel = LanguageModel()
     
-    init(countryID: Int, name: String, code: String, domain: String, areaCode: String, isActive: Bool, flag: String) {
+    override init(){
+        
+    }
+    
+    init(countryID: Int, name: String, code: String, domain: String, areaCode: String, isActive: Bool, flag: String, defaultLanguage: LanguageModel) {
         self.countryID = countryID
         self.name = name
         self.code = code
@@ -26,6 +31,7 @@ class CountryModel: NSObject {
         self.areaCode = areaCode
         self.isActive = isActive
         self.flag = flag
+        self.defaultLanguage = defaultLanguage
     }
     
     class func parseDataFromDictionary(dictionary: NSDictionary) -> CountryModel {
@@ -37,6 +43,7 @@ class CountryModel: NSObject {
         var areaCode: String = ""
         var isActive: Bool = false
         var flag: String = ""
+        var defaultLanguage: LanguageModel = LanguageModel()
         
         countryID = ParseHelper.int(dictionary, key: "countryId", defaultValue: 0)
         name = ParseHelper.string(dictionary, key: "name", defaultValue: "")
@@ -46,6 +53,10 @@ class CountryModel: NSObject {
         flag = ParseHelper.string(dictionary, key: "flag", defaultValue: "")
         isActive = ParseHelper.bool(dictionary, key: "isActive", defaultValue: false)
         
-        return CountryModel(countryID: countryID, name: name, code: code, domain: domain, areaCode: areaCode, isActive: isActive, flag: flag)
+        if let temp = dictionary["defaultLanguage"] as? NSDictionary {
+            defaultLanguage = LanguageModel.pareseDataFromResponseObject(temp)
+        }
+        
+        return CountryModel(countryID: countryID, name: name, code: code, domain: domain, areaCode: areaCode, isActive: isActive, flag: flag, defaultLanguage: defaultLanguage)
     }
 }
