@@ -14,6 +14,11 @@ class LanguageModel: NSObject {
     var name: String = ""
     var code: String = ""
     
+    
+    override init() {
+        
+    }
+    
     init(languageId: Int, name: String, code: String) {
         self.languageId = languageId
         self.name = name
