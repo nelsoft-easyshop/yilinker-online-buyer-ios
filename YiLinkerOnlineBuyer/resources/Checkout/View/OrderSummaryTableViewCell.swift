@@ -14,9 +14,11 @@ class OrderSummaryTableViewCell: UITableViewCell {
     @IBOutlet weak var itemTitleLabel: UILabel!
     @IBOutlet weak var quantityLabel: UILabel!
     @IBOutlet weak var priceLabel: UILabel!
-    
+    @IBOutlet weak var noCODLabel: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
+        
+        self.noCODLabel.text = StringHelper.localizedStringWithKey("NO_COD_LOCALIZE_KEY")
     }
 
     override func setSelected(selected: Bool, animated: Bool) {

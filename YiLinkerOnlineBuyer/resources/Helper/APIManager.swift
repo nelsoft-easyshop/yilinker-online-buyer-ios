@@ -101,6 +101,11 @@ struct APIAtlas {
         }
     }
     
+    static func homeUrl(version: String, languageCode: String) -> String {
+        return "ph/\(languageCode)/\(version)/home/getData"
+    }
+    
+
     static let V3 = "v3"
     
     static let appItunesURL = "https://itunes.apple.com/ph/app/yilinker-buyer/id1048641709?mt=8"
@@ -109,7 +114,7 @@ struct APIAtlas {
     static let loginUrl = "login"
     static let registerUrl = "user/register"
     static let getUserInfoUrl = "auth/user/getUser"
-    static let homeUrl = "v2/home/getData"
+
     static let cartUrl = "auth/cart/getCart"
     static let wishlistUrl = "auth/cart/getCart"
     static let updateWishlistUrl = "auth/cart/updateCartItem"
@@ -139,6 +144,7 @@ struct APIAtlas {
     static let updateGuestCheckout = "cart/cartToCheckout"
     static let editAddress = "auth/address/editUserAddress"
     static let setCheckoutAddressUrl = "auth/user/setAddress"
+
     static let cashOnDeliveryUrl = APIAtlas.COD()
     static let pesoPayUrl = APIAtlas.pesoPay()
     static let overViewUrl = APIAtlas.overView()

@@ -11,6 +11,7 @@
         <mutableArray key="Panton.otf">
             <string>Panton-Regular</string>
             <string>Panton-Regular</string>
+            <string>Panton-Regular</string>
         </mutableArray>
     </customFonts>
     <objects>
@@ -54,6 +55,23 @@
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="close2" translatesAutoresizingMaskIntoConstraints="NO" id="JKp-tu-mjo">
+                        <rect key="frame" x="198" y="56" width="7" height="7"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="7" id="3lJ-zX-PkR"/>
+                            <constraint firstAttribute="width" constant="7" id="XcK-uT-Jta"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Not available for COD" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R6W-GJ-Ehp">
+                        <rect key="frame" x="198" y="49" width="122" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="0GT-Rk-Zrc"/>
+                            <constraint firstAttribute="width" constant="122" id="CU5-qV-WWa"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="11"/>
+                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="trailingMargin" secondItem="9F7-2V-DNu" secondAttribute="trailing" constant="82" id="38g-1T-aPl"/>
@@ -65,13 +83,18 @@
                     <constraint firstItem="9F7-2V-DNu" firstAttribute="bottom" secondItem="H2p-sc-9uM" secondAttribute="bottomMargin" id="NAQ-Hj-vlb"/>
                     <constraint firstItem="LgQ-GA-VF4" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="5" id="PW9-b3-fFX"/>
                     <constraint firstItem="lPX-NO-SZY" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="QuA-ff-trx"/>
+                    <constraint firstAttribute="bottom" secondItem="R6W-GJ-Ehp" secondAttribute="bottom" id="WnY-yG-Uqr"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="JKp-tu-mjo" secondAttribute="trailing" constant="107" id="c2c-wP-o3g"/>
                     <constraint firstItem="lJ8-9G-qKe" firstAttribute="leading" secondItem="lPX-NO-SZY" secondAttribute="trailing" constant="9" id="e3L-la-fzV"/>
                     <constraint firstItem="9F7-2V-DNu" firstAttribute="leading" secondItem="lPX-NO-SZY" secondAttribute="trailing" constant="8" id="fVX-Et-CLW"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="JKp-tu-mjo" secondAttribute="bottom" constant="-1" id="k6I-g0-YfE"/>
+                    <constraint firstAttribute="trailing" secondItem="R6W-GJ-Ehp" secondAttribute="trailing" id="lqs-WQ-2Le"/>
                     <constraint firstAttribute="trailingMargin" secondItem="lJ8-9G-qKe" secondAttribute="trailing" constant="82" id="rKu-qg-GfR"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
                 <outlet property="itemTitleLabel" destination="LgQ-GA-VF4" id="w5p-rC-VxI"/>
+                <outlet property="noCODLabel" destination="R6W-GJ-Ehp" id="fhR-WB-g2r"/>
                 <outlet property="priceLabel" destination="9F7-2V-DNu" id="xMH-LL-5oJ"/>
                 <outlet property="productImageView" destination="lPX-NO-SZY" id="5mA-8h-gkR"/>
                 <outlet property="quantityLabel" destination="lJ8-9G-qKe" id="P40-jC-yve"/>
@@ -80,6 +103,7 @@
         </tableViewCell>
     </objects>
     <resources>
+        <image name="close2" width="200" height="200"/>
         <image name="dummy-placeholder" width="1280" height="800"/>
     </resources>
 </document>

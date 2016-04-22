@@ -36,7 +36,7 @@ struct FABStrings {
     static let profile: String = StringHelper.localizedStringWithKey("PROFILE_LOCALIZE_KEY")
 }
 
-class HomeContainerViewController: UIViewController, UITabBarControllerDelegate, EmptyViewDelegate, CarouselCollectionViewCellDataSource, CarouselCollectionViewCellDelegate, HalfPagerCollectionViewCellDelegate, HalfPagerCollectionViewCellDataSource, FlashSaleCollectionViewCellDelegate, LayoutHeaderCollectionViewCellDelegate, SellerCarouselCollectionViewCellDataSource, SellerCarouselCollectionViewCellDelegate, LayoutNineCollectionViewCellDelegate, DailyLoginCollectionViewCellDataSource, DailyLoginCollectionViewCellDelegate, FABViewControllerDelegate {
+class HomeContainerViewController: UIViewController, UITabBarControllerDelegate, EmptyViewDelegate, CarouselCollectionViewCellDataSource, CarouselCollectionViewCellDelegate, HalfPagerCollectionViewCellDelegate, HalfPagerCollectionViewCellDataSource, FlashSaleCollectionViewCellDelegate, LayoutHeaderCollectionViewCellDelegate, SellerCarouselCollectionViewCellDataSource, SellerCarouselCollectionViewCellDelegate, LayoutNineCollectionViewCellDelegate, DailyLoginCollectionViewCellDataSource, DailyLoginCollectionViewCellDelegate, FABViewControllerDelegate, OverseasCollectionViewCellDelegate, OverseasCollectionViewCellDataSource {
     
     var searchViewContoller: SearchViewController?
     var wishlisViewController: WishlistViewController?
@@ -155,6 +155,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         self.registerCellWithNibName(self.sellerCarouselNibName)
         self.registerCellWithNibName(self.layoutNineNibName)
         self.registerCellWithNibName(self.twoColumnGridCell)
+        self.registerCellWithNibName(OverseasCollectionViewCell.nibNameAndIdentifier())
         
         self.fireGetHomePageData(true)
         
@@ -429,7 +430,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             self.showHUD()
         }*/
         
-        WebServiceManager.fireGetHomePageDataWithUrl(APIAtlas.homeUrl, actionHandler: {
+        WebServiceManager.fireGetHomePageDataWithUrl(APIAtlas.homeUrl("v2", languageCode: "en"), actionHandler: {
             (successful, responseObject, requestErrorType) -> Void in
             if successful {
                 self.populateHomePageWithDictionary(responseObject as! NSDictionary)
@@ -585,6 +586,8 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                 self.layouts.append("9")
             } else if model.isKindOfClass(LayoutTenModel) {
                 self.layouts.append("10")
+            } else if model.isKindOfClass(LayoutElevenModel) {
+                self.layouts.append("11")
             }
         }
         
@@ -754,6 +757,8 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             return 1
         case 10:
             return self.homePageModel.data[section].data.count
+        case 11:
+            return 1
         default:
             return 0
         }
@@ -795,6 +800,8 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             return self.layoutNineCollectionViewCellWithIndexPath(indexPath)
         } else if self.layouts[indexPath.section] == "10" {
             return self.twoColumnGridCollectionViewCellWithIndexPath(indexPath)
+        } else if self.layouts[indexPath.section] == "11" {
+            return self.overseasCollectionViewCell(indexPath)
         } else {
             return UICollectionViewCell()
         }
@@ -1487,6 +1494,17 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         return sellerCarosuel
     }
     
+    //MARK: - 
+    //MARK: - Overseas Collection View Cell
+    func overseasCollectionViewCell(indexPath: NSIndexPath) -> OverseasCollectionViewCell {
+        let overseasCollectionViewCell: OverseasCollectionViewCell = self.collectionView.dequeueReusableCellWithReuseIdentifier(OverseasCollectionViewCell.nibNameAndIdentifier(), forIndexPath: indexPath) as! OverseasCollectionViewCell
+        
+        overseasCollectionViewCell.delegate = self
+        overseasCollectionViewCell.dataSource = self
+        
+        return overseasCollectionViewCell
+    }
+    
     //MARK: -
     //MARK: - Seller Carousel Data Source
     func sellerCarouselCollectionViewCell(sellerCarouselCollectionViewCell: SellerCarouselCollectionViewCell, numberOfItemsInSection section: Int) -> Int {
@@ -1645,6 +1663,9 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             let webViewController: WebViewController = WebViewController(nibName: "WebViewController", bundle: nil)
             webViewController.urlString = target
             self.navigationController!.pushViewController(webViewController, animated: true)
+        } else if targetType == "countryProductList" {
+            //code here...
+            Toast.displayToastWithMessage("country prod list action here", view: self.navigationController!.view)
         }
     }
     
@@ -2017,5 +2038,47 @@ extension HomeContainerViewController: SearchBarViewDelegate {
                 }
             }
         })
+    }
+}
+
+extension HomeContainerViewController: OverseasCollectionViewCellDataSource {
+    func overseasCollectionViewCell(overseasCollectionViewCell: OverseasCollectionViewCell, numberOfItemsInSection section: Int) -> Int {
+        let indexPath: NSIndexPath = self.collectionView.indexPathForCell(overseasCollectionViewCell)!
+        let layoutElevenModel: LayoutElevenModel  = self.homePageModel.data[indexPath.section] as! LayoutElevenModel
+        return layoutElevenModel.data.count;
+    }
+    
+    func overseasCollectionViewCell(overseasCollectionViewCell: OverseasCollectionViewCell, cellForRowAtIndexPath indexPath: NSIndexPath) -> FullImageCollectionViewCell {
+
+        let indexPath2: NSIndexPath = self.collectionView.indexPathForCell(overseasCollectionViewCell)!
+        let layoutElevenModel: LayoutElevenModel  = self.homePageModel.data[indexPath2.section] as! LayoutElevenModel
+
+        
+        let fullImageCell: FullImageCollectionViewCell = overseasCollectionViewCell.collectionView.dequeueReusableCellWithReuseIdentifier("FullImageCollectionViewCell", forIndexPath: indexPath) as! FullImageCollectionViewCell
+        
+        fullImageCell.itemProductImageView.sd_setImageWithURL(StringHelper.convertStringToUrl(layoutElevenModel.data[indexPath.row].image), placeholderImage: UIImage(named: "dummy-placeholder"), completed: { (downloadedImage, NSError, SDImageCacheType, NSURL) -> Void in
+            if let imageView = fullImageCell.itemProductImageView {
+                if downloadedImage != nil {
+                    imageView.fadeInImageWithImage(downloadedImage)
+                }
+            }
+        })
+        
+        fullImageCell.target = layoutElevenModel.data[indexPath.row].target.targetUrl
+        fullImageCell.targetType = layoutElevenModel.data[indexPath.row].target.targetType
+        
+        return fullImageCell
+    }
+    
+    func itemWidthInOverseasCollectionViewCell(overseasCollectionViewCell: OverseasCollectionViewCell) -> CGFloat {
+        return 80
+    }
+}
+
+extension HomeContainerViewController: OverseasCollectionViewCellDelegate {
+    func overseasCollectionViewCell(carouselCollectionViewCell: OverseasCollectionViewCell, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        let fullImageCell: FullImageCollectionViewCell = carouselCollectionViewCell.collectionView.cellForItemAtIndexPath(indexPath) as! FullImageCollectionViewCell
+        
+        self.didClickItemWithTarget(fullImageCell.target, targetType: fullImageCell.targetType)
     }
 }
