@@ -532,8 +532,11 @@ class WebServiceManager: NSObject {
     //This function is for removing repeated codes in handler
     private static func firePostRequestWithUrl(url: String, parameters: AnyObject, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
         let manager = APIManager.sharedInstance
+        
+        let tempURL = "\(APIAtlas.V3)/\(SessionManager.selectedCountryCode())/\(SessionManager.selectedLanguageCode())/\(url)"
+        
         if Reachability.isConnectedToNetwork() {
-            self.postTask = manager.POST(url, parameters: parameters, success: {
+            self.postTask = manager.POST(tempURL, parameters: parameters, success: {
                 (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
                 actionHandler(successful: true, responseObject: responseObject, requestErrorType: .NoError)
                 }, failure: {
@@ -572,9 +575,12 @@ class WebServiceManager: NSObject {
     //This function is for removing repeated codes in handler
     private static func firePostRequestSessionDataTaskWithUrl(url: String, parameters: AnyObject, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) -> NSURLSessionDataTask {
         let manager = APIManager.sharedInstance
+        
+        let tempURL = "\(APIAtlas.V3)/\(SessionManager.selectedCountryCode())/\(SessionManager.selectedLanguageCode())/\(url)"
+        
         var sessionDataTask: NSURLSessionDataTask = NSURLSessionDataTask()
         if Reachability.isConnectedToNetwork() {
-           sessionDataTask = manager.POST(url, parameters: parameters, success: {
+           sessionDataTask = manager.POST(tempURL, parameters: parameters, success: {
                 (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
                 actionHandler(successful: true, responseObject: responseObject, requestErrorType: .NoError)
                 }, failure: {
@@ -616,9 +622,12 @@ class WebServiceManager: NSObject {
     //This function is for removing repeated codes in handler
     private static func fireGetRequestSessionDataTaskWithUrl(url: String, parameters: AnyObject, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) -> NSURLSessionDataTask {
         let manager = APIManager.sharedInstance
+        
+        let tempURL = "\(APIAtlas.V3)/\(SessionManager.selectedCountryCode())/\(SessionManager.selectedLanguageCode())/\(url)"
+        
         var sessionDataTask: NSURLSessionDataTask = NSURLSessionDataTask()
         if Reachability.isConnectedToNetwork() {
-            sessionDataTask = manager.GET(url, parameters: parameters, success: {
+            sessionDataTask = manager.GET(tempURL, parameters: parameters, success: {
                 (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
                 actionHandler(successful: true, responseObject: responseObject, requestErrorType: .NoError)
                 }, failure: {
@@ -659,9 +668,12 @@ class WebServiceManager: NSObject {
     //This function is for removing repeated codes in handler
     private static func firePostRequestWithImage(url: String, parameters: AnyObject, image: UIImage, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
         let manager = APIManager.sharedInstance
+        
+        let tempURL = "\(APIAtlas.V3)/\(SessionManager.selectedCountryCode())/\(SessionManager.selectedLanguageCode())/\(url)"
+        
         if Reachability.isConnectedToNetwork() {
             
-            self.postTask = manager.POST(url, parameters: parameters,
+            self.postTask = manager.POST(tempURL, parameters: parameters,
                 constructingBodyWithBlock: { (formData: AFMultipartFormData!) -> Void in
                     formData.appendPartWithFileData(UIImageJPEGRepresentation(image, 1.0), name: "image", fileName: "yilinker", mimeType: "image/JPEG")
                 }, success: { (task, responseObject) -> Void in
@@ -697,9 +709,12 @@ class WebServiceManager: NSObject {
     
     private static func firePostRequestWithImages(url: String, parameters: AnyObject, imageData: [NSData?], imageKeys: [String], actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
         let manager = APIManager.sharedInstance
+        
+        let tempURL = "\(APIAtlas.V3)/\(SessionManager.selectedCountryCode())/\(SessionManager.selectedLanguageCode())/\(url)"
+        
         if Reachability.isConnectedToNetwork() {
             
-            self.postTask = manager.POST(url, parameters: parameters,
+            self.postTask = manager.POST(tempURL, parameters: parameters,
                 constructingBodyWithBlock: { (formData: AFMultipartFormData!) -> Void in
                     for var i = 0; i < imageData.count; i++ {
                         if imageData[i] != nil {
@@ -743,8 +758,11 @@ class WebServiceManager: NSObject {
     //This function is for removing repeated codes in handler
     private static func fireGetRequestWithUrl(url: String, parameters: AnyObject, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
         let manager = APIManager.sharedInstance
+        
+        let tempURL = "\(APIAtlas.V3)/\(SessionManager.selectedCountryCode())/\(SessionManager.selectedLanguageCode())/\(url)"
+        
         if Reachability.isConnectedToNetwork() {
-            manager.GET(url, parameters: parameters, success: {
+            manager.GET(tempURL, parameters: parameters, success: {
                 (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
                 actionHandler(successful: true, responseObject: responseObject, requestErrorType: .NoError)
                 }, failure: {
