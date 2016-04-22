@@ -562,6 +562,7 @@
 		790E59841C880C980073FE23 /* SearchTypeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 790E59821C880C980073FE23 /* SearchTypeTableViewCell.xib */; };
 		791B4E071C9AA7EF00B3FB94 /* SuggestionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 791B4E061C9AA7EF00B3FB94 /* SuggestionViewModel.swift */; };
 		792CB74F1CC5FE54004A48F5 /* LanguageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792CB74E1CC5FE54004A48F5 /* LanguageModel.swift */; };
+		795476B31CC8A7B700AEAA49 /* LanguageEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 795476B21CC8A7B700AEAA49 /* LanguageEntity.swift */; };
 		797C2BC11CBF744500B1406A /* GlobalPreferencesPickerTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797C2BBF1CBF744500B1406A /* GlobalPreferencesPickerTableViewController.swift */; };
 		797C2BC21CBF744500B1406A /* GlobalPreferencesPickerTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 797C2BC01CBF744500B1406A /* GlobalPreferencesPickerTableViewController.xib */; };
 		797C2BC51CBF7C2300B1406A /* GlobalPreferencesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797C2BC31CBF7C2300B1406A /* GlobalPreferencesTableViewCell.swift */; };
@@ -1203,6 +1204,7 @@
 		790E59821C880C980073FE23 /* SearchTypeTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchTypeTableViewCell.xib; sourceTree = "<group>"; };
 		791B4E061C9AA7EF00B3FB94 /* SuggestionViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SuggestionViewModel.swift; sourceTree = "<group>"; };
 		792CB74E1CC5FE54004A48F5 /* LanguageModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguageModel.swift; sourceTree = "<group>"; };
+		795476B21CC8A7B700AEAA49 /* LanguageEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguageEntity.swift; sourceTree = "<group>"; };
 		797C2BBF1CBF744500B1406A /* GlobalPreferencesPickerTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalPreferencesPickerTableViewController.swift; sourceTree = "<group>"; };
 		797C2BC01CBF744500B1406A /* GlobalPreferencesPickerTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GlobalPreferencesPickerTableViewController.xib; sourceTree = "<group>"; };
 		797C2BC31CBF7C2300B1406A /* GlobalPreferencesTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalPreferencesTableViewCell.swift; sourceTree = "<group>"; };
@@ -2968,6 +2970,7 @@
 		799B9A201C8EACEA006472E8 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				795476B21CC8A7B700AEAA49 /* LanguageEntity.swift */,
 				799B9A211C8EACEA006472E8 /* ProfileModel.swift */,
 				799B9A221C8EACEA006472E8 /* ProfileUserDetailsModel.swift */,
 				792CB74E1CC5FE54004A48F5 /* LanguageModel.swift */,
@@ -3737,6 +3740,7 @@
 				0CAB82501C86817C00B653A9 /* LayoutEightModel.swift in Sources */,
 				0CAB82441C86817C00B653A9 /* StringHelper.swift in Sources */,
 				0CAB826C1C86817C00B653A9 /* LayoutHeaderCollectionViewCell.swift in Sources */,
+				795476B31CC8A7B700AEAA49 /* LanguageEntity.swift in Sources */,
 				0CAB82281C86817C00B653A9 /* FollowedSellerTableViewCell.swift in Sources */,
 				0CAB83B11C86817C00B653A9 /* RoundedLabel.swift in Sources */,
 				0CAB82D71C86817C00B653A9 /* ProductExtendedView.swift in Sources */,

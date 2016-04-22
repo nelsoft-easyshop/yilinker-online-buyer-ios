@@ -87,6 +87,12 @@ class SessionManager {
         NSUserDefaults.standardUserDefaults().synchronize()
     }
     
+    //MARK: -
+    //MARK: - Set Selected Language Code
+    class func setSelectedLanguageCode(languageCode: String) {
+        NSUserDefaults.standardUserDefaults().setObject(languageCode, forKey: "languageCode")
+        NSUserDefaults.standardUserDefaults().synchronize()
+    }
     
     //MARK: - 
     //MARK: - Set Last Name
@@ -112,8 +118,18 @@ class SessionManager {
     //MARK: -
     //MARK: - Country Code
     class func selectedCountryCode() -> String {
-        var result: String = ""
+        var result: String = "PH"
         if let val: AnyObject = NSUserDefaults.standardUserDefaults().objectForKey("countryCode") as? String {
+            result = val as! String
+        }
+        return result
+    }
+    
+    //MARK: -
+    //MARK: - Country Code
+    class func selectedLanguageCode() -> String {
+        var result: String = "EN"
+        if let val: AnyObject = NSUserDefaults.standardUserDefaults().objectForKey("languageCode") as? String {
             result = val as! String
         }
         return result

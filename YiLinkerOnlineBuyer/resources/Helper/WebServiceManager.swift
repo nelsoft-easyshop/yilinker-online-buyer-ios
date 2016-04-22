@@ -28,6 +28,7 @@ class WebServiceManager: NSObject {
     static let firstNameKey = "firstName"
     static let lastNameKey = "lastName"
     static let contactNumberKey = "contactNumber"
+    static let languageKey = "language"
     
     //Guest Register dictionary keys
     static let plainPasswordFirstKey = "user_guest[plainPassword][first]"
@@ -113,6 +114,8 @@ class WebServiceManager: NSObject {
     static let profilePhotoKey = "profilePhoto"
     static let userDocumentKey = "userDocument"
     static let referrerCodeKey = "referralCode"
+    static let languageIdKey = "languageId"
+    static let countryIdKey = "countryId"
     
     //Verify Mobile Number
     static let codeKey = "code"
@@ -326,15 +329,15 @@ class WebServiceManager: NSObject {
     }
     
     //MARK: - Fire Update Profile
-    class func fireUpdateProfileWithUrl(url: String, hasImage: Bool, accessToken: String, firstName: String, lastName: String, profilePhoto: NSData? = nil, userDocument: NSData? = nil, referrerPersonCode: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+    class func fireUpdateProfileWithUrl(url: String, hasImage: Bool, accessToken: String, firstName: String, lastName: String, profilePhoto: NSData? = nil, userDocument: NSData? = nil, referrerPersonCode: String, countryId: Int, languageId: Int, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
         let tempUrl: String = url +  "?access_token=" + accessToken
         if hasImage {
-            let parameters: NSDictionary = [firstNameKey: firstName, lastNameKey: lastName, referrerCodeKey: referrerPersonCode]
+            let parameters: NSDictionary = [firstNameKey: firstName, lastNameKey: lastName, referrerCodeKey: referrerPersonCode, languageIdKey: languageId, countryIdKey: countryId]
             self.firePostRequestWithImages(tempUrl, parameters: parameters, imageData: [profilePhoto, userDocument], imageKeys: [profilePhotoKey, userDocumentKey]) { (successful, responseObject, requestErrorType) -> Void in
                 actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
             }
         } else {
-            let parameters: NSDictionary = [firstNameKey: firstName, lastNameKey: lastName, referrerCodeKey: referrerPersonCode]
+            let parameters: NSDictionary = [firstNameKey: firstName, lastNameKey: lastName, referrerCodeKey: referrerPersonCode, languageIdKey: languageId, countryIdKey: countryId]
             self.firePostRequestWithUrl(tempUrl, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
                 actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
             }
@@ -530,8 +533,11 @@ class WebServiceManager: NSObject {
     //This function is for removing repeated codes in handler
     private static func firePostRequestWithUrl(url: String, parameters: AnyObject, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
         let manager = APIManager.sharedInstance
+        
+        let tempURL = "\(APIAtlas.V3)/\(SessionManager.selectedCountryCode())/\(SessionManager.selectedLanguageCode())/\(url)"
+        
         if Reachability.isConnectedToNetwork() {
-            self.postTask = manager.POST(url, parameters: parameters, success: {
+            self.postTask = manager.POST(tempURL, parameters: parameters, success: {
                 (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
                 actionHandler(successful: true, responseObject: responseObject, requestErrorType: .NoError)
                 }, failure: {
@@ -570,9 +576,12 @@ class WebServiceManager: NSObject {
     //This function is for removing repeated codes in handler
     private static func firePostRequestSessionDataTaskWithUrl(url: String, parameters: AnyObject, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) -> NSURLSessionDataTask {
         let manager = APIManager.sharedInstance
+        
+        let tempURL = "\(APIAtlas.V3)/\(SessionManager.selectedCountryCode())/\(SessionManager.selectedLanguageCode())/\(url)"
+        
         var sessionDataTask: NSURLSessionDataTask = NSURLSessionDataTask()
         if Reachability.isConnectedToNetwork() {
-           sessionDataTask = manager.POST(url, parameters: parameters, success: {
+           sessionDataTask = manager.POST(tempURL, parameters: parameters, success: {
                 (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
                 actionHandler(successful: true, responseObject: responseObject, requestErrorType: .NoError)
                 }, failure: {
@@ -614,9 +623,12 @@ class WebServiceManager: NSObject {
     //This function is for removing repeated codes in handler
     private static func fireGetRequestSessionDataTaskWithUrl(url: String, parameters: AnyObject, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) -> NSURLSessionDataTask {
         let manager = APIManager.sharedInstance
+        
+        let tempURL = "\(APIAtlas.V3)/\(SessionManager.selectedCountryCode())/\(SessionManager.selectedLanguageCode())/\(url)"
+        
         var sessionDataTask: NSURLSessionDataTask = NSURLSessionDataTask()
         if Reachability.isConnectedToNetwork() {
-            sessionDataTask = manager.GET(url, parameters: parameters, success: {
+            sessionDataTask = manager.GET(tempURL, parameters: parameters, success: {
                 (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
                 actionHandler(successful: true, responseObject: responseObject, requestErrorType: .NoError)
                 }, failure: {
@@ -657,9 +669,12 @@ class WebServiceManager: NSObject {
     //This function is for removing repeated codes in handler
     private static func firePostRequestWithImage(url: String, parameters: AnyObject, image: UIImage, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
         let manager = APIManager.sharedInstance
+        
+        let tempURL = "\(APIAtlas.V3)/\(SessionManager.selectedCountryCode())/\(SessionManager.selectedLanguageCode())/\(url)"
+        
         if Reachability.isConnectedToNetwork() {
             
-            self.postTask = manager.POST(url, parameters: parameters,
+            self.postTask = manager.POST(tempURL, parameters: parameters,
                 constructingBodyWithBlock: { (formData: AFMultipartFormData!) -> Void in
                     formData.appendPartWithFileData(UIImageJPEGRepresentation(image, 1.0), name: "image", fileName: "yilinker", mimeType: "image/JPEG")
                 }, success: { (task, responseObject) -> Void in
@@ -695,9 +710,12 @@ class WebServiceManager: NSObject {
     
     private static func firePostRequestWithImages(url: String, parameters: AnyObject, imageData: [NSData?], imageKeys: [String], actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
         let manager = APIManager.sharedInstance
+        
+        let tempURL = "\(APIAtlas.V3)/\(SessionManager.selectedCountryCode())/\(SessionManager.selectedLanguageCode())/\(url)"
+        
         if Reachability.isConnectedToNetwork() {
             
-            self.postTask = manager.POST(url, parameters: parameters,
+            self.postTask = manager.POST(tempURL, parameters: parameters,
                 constructingBodyWithBlock: { (formData: AFMultipartFormData!) -> Void in
                     for var i = 0; i < imageData.count; i++ {
                         if imageData[i] != nil {
@@ -741,8 +759,11 @@ class WebServiceManager: NSObject {
     //This function is for removing repeated codes in handler
     private static func fireGetRequestWithUrl(url: String, parameters: AnyObject, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
         let manager = APIManager.sharedInstance
+        
+        let tempURL = "\(APIAtlas.V3)/\(SessionManager.selectedCountryCode())/\(SessionManager.selectedLanguageCode())/\(url)"
+        
         if Reachability.isConnectedToNetwork() {
-            manager.GET(url, parameters: parameters, success: {
+            manager.GET(tempURL, parameters: parameters, success: {
                 (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
                 actionHandler(successful: true, responseObject: responseObject, requestErrorType: .NoError)
                 }, failure: {
@@ -822,28 +843,9 @@ class WebServiceManager: NSObject {
         
         let parameters: NSDictionary = [self.emailKey: emailAddress, self.passwordKey: password, self.firstNameKey: firstName, self.lastNameKey: lastName, self.contactNumberKey: mobileNumber]
         
-        if Reachability.isConnectedToNetwork() {
-            manager.POST(url, parameters: parameters, success: {
-                (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-                actionHandler(successful: true, responseObject: responseObject, requestErrorType: .NoError)
-                }, failure: {
-                    (task: NSURLSessionDataTask!, error: NSError!) in
-                    if let task = task.response as? NSHTTPURLResponse {
-                        if error.userInfo != nil {
-                            actionHandler(successful: false, responseObject: error.userInfo!, requestErrorType: .ResponseError)
-                        } else if task.statusCode == Constants.WebServiceStatusCode.pageNotFound {
-                            actionHandler(successful: false, responseObject: [], requestErrorType: .PageNotFound)
-                        } else if task.statusCode == Constants.WebServiceStatusCode.requestTimeOut {
-                            actionHandler(successful: false, responseObject: [], requestErrorType: .RequestTimeOut)
-                        } else {
-                            actionHandler(successful: false, responseObject: [], requestErrorType: .UnRecognizeError)
-                        }
-                    } else {
-                        actionHandler(successful: false, responseObject: [], requestErrorType: .NoInternetConnection)
-                    }
-            })
-        } else {
-            actionHandler(successful: false, responseObject: [], requestErrorType: .NoInternetConnection)
+        
+        self.firePostRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
         }
     }
     
@@ -854,31 +856,8 @@ class WebServiceManager: NSObject {
         
         let parameters: NSDictionary = [self.verificationCodeKey: verficationCode, self.newPasswordKey: newPassword, self.storeTypeKey: storeType]
         
-        if Reachability.isConnectedToNetwork() {
-            manager.POST(url, parameters: parameters, success: {
-                (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-                
-                println(responseObject)
-                actionHandler(successful: true, responseObject: responseObject, requestErrorType: .NoError)
-                }, failure: {
-                    (task: NSURLSessionDataTask!, error: NSError!) in
-                    println(error)
-                    if let task = task.response as? NSHTTPURLResponse {
-                        if error.userInfo != nil {
-                            actionHandler(successful: false, responseObject: error.userInfo!, requestErrorType: .ResponseError)
-                        } else if task.statusCode == Constants.WebServiceStatusCode.pageNotFound {
-                            actionHandler(successful: false, responseObject: [], requestErrorType: .PageNotFound)
-                        } else if task.statusCode == Constants.WebServiceStatusCode.requestTimeOut {
-                            actionHandler(successful: false, responseObject: [], requestErrorType: .RequestTimeOut)
-                        } else {
-                            actionHandler(successful: false, responseObject: [], requestErrorType: .UnRecognizeError)
-                        }
-                    } else {
-                        actionHandler(successful: false, responseObject: [], requestErrorType: .NoInternetConnection)
-                    }
-            })
-        } else {
-            actionHandler(successful: false, responseObject: [], requestErrorType: .NoInternetConnection)
+        self.firePostRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
         }
     }
     
@@ -889,61 +868,20 @@ class WebServiceManager: NSObject {
         
         let parameters: NSDictionary = [self.plainPasswordFirstKey: password, self.plainPasswordSecondKey: password, self.referralCodeKey: referralCode]
         
-        if Reachability.isConnectedToNetwork() {
-            manager.POST(url, parameters: parameters, success: {
-                (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-                actionHandler(successful: true, responseObject: responseObject, requestErrorType: .NoError)
-                }, failure: {
-                    (task: NSURLSessionDataTask!, error: NSError!) in
-                    if let task = task.response as? NSHTTPURLResponse {
-                        if error.userInfo != nil {
-                            actionHandler(successful: false, responseObject: error.userInfo!, requestErrorType: .ResponseError)
-                        } else if task.statusCode == Constants.WebServiceStatusCode.pageNotFound {
-                            actionHandler(successful: false, responseObject: [], requestErrorType: .PageNotFound)
-                        } else if task.statusCode == Constants.WebServiceStatusCode.requestTimeOut {
-                            actionHandler(successful: false, responseObject: [], requestErrorType: .RequestTimeOut)
-                        } else {
-                            actionHandler(successful: false, responseObject: [], requestErrorType: .UnRecognizeError)
-                        }
-                    } else {
-                        actionHandler(successful: false, responseObject: [], requestErrorType: .NoInternetConnection)
-                    }
-            })
-        } else {
-            actionHandler(successful: false, responseObject: [], requestErrorType: .NoInternetConnection)
+        self.firePostRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
         }
     }
     
     //MARK: -
     //MARK: - Fire Register Request With URL v2
-    class func fireRegisterRequestWithUrl(url: String, contactNumber: String, password: String, areaCode: String, referralCode: String,  verificationCode: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+    class func fireRegisterRequestWithUrl(url: String, contactNumber: String, password: String, areaCode: String, referralCode: String,  verificationCode: String, language: Int, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
         let manager: APIManager = APIManager.sharedInstance
         
-        let parameters: NSDictionary = [self.contactNumberKey: contactNumber, self.passwordKey: password, self.areaCodeKey: areaCode, self.referralCodeRegistrationKey: referralCode, self.verificationCodeKey: verificationCode]
+        let parameters: NSDictionary = [self.contactNumberKey: contactNumber, self.passwordKey: password, self.areaCodeKey: areaCode, self.referralCodeRegistrationKey: referralCode, self.verificationCodeKey: verificationCode, self.languageKey: language]
         
-        if Reachability.isConnectedToNetwork() {
-            manager.POST(url, parameters: parameters, success: {
-                (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-                actionHandler(successful: true, responseObject: responseObject, requestErrorType: .NoError)
-                }, failure: {
-                    (task: NSURLSessionDataTask!, error: NSError!) in
-                    println(error)
-                    if let task = task.response as? NSHTTPURLResponse {
-                        if error.userInfo != nil {
-                            actionHandler(successful: false, responseObject: error.userInfo!, requestErrorType: .ResponseError)
-                        } else if task.statusCode == Constants.WebServiceStatusCode.pageNotFound {
-                            actionHandler(successful: false, responseObject: [], requestErrorType: .PageNotFound)
-                        } else if task.statusCode == Constants.WebServiceStatusCode.requestTimeOut {
-                            actionHandler(successful: false, responseObject: [], requestErrorType: .RequestTimeOut)
-                        } else {
-                            actionHandler(successful: false, responseObject: [], requestErrorType: .UnRecognizeError)
-                        }
-                    } else {
-                        actionHandler(successful: false, responseObject: [], requestErrorType: .NoInternetConnection)
-                    }
-            })
-        } else {
-            actionHandler(successful: false, responseObject: [], requestErrorType: .NoInternetConnection)
+        self.firePostRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
         }
     }
     
@@ -955,28 +893,8 @@ class WebServiceManager: NSObject {
         
         let parameters: NSDictionary = [self.contactNumberKey: contactNumber, self.areaCodeKey: areaCode, self.typeKey: type, self.storeTypeKey: storeType]
         
-        if Reachability.isConnectedToNetwork() {
-            manager.POST(url, parameters: parameters, success: {
-                (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-                actionHandler(successful: true, responseObject: responseObject, requestErrorType: .NoError)
-                }, failure: {
-                    (task: NSURLSessionDataTask!, error: NSError!) in
-                    if let task = task.response as? NSHTTPURLResponse {
-                        if error.userInfo != nil {
-                            actionHandler(successful: false, responseObject: error.userInfo!, requestErrorType: .ResponseError)
-                        } else if task.statusCode == Constants.WebServiceStatusCode.pageNotFound {
-                            actionHandler(successful: false, responseObject: [], requestErrorType: .PageNotFound)
-                        } else if task.statusCode == Constants.WebServiceStatusCode.requestTimeOut {
-                            actionHandler(successful: false, responseObject: [], requestErrorType: .RequestTimeOut)
-                        } else {
-                            actionHandler(successful: false, responseObject: [], requestErrorType: .UnRecognizeError)
-                        }
-                    } else {
-                        actionHandler(successful: false, responseObject: [], requestErrorType: .NoInternetConnection)
-                    }
-            })
-        } else {
-            actionHandler(successful: false, responseObject: [], requestErrorType: .NoInternetConnection)
+        self.firePostRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
         }
     }
     
@@ -988,28 +906,8 @@ class WebServiceManager: NSObject {
         
         let parameters: NSDictionary = [self.accessTokenKey: accessToken, self.typeKey: type, self.contactNumberKey: contactNumber]
         
-        if Reachability.isConnectedToNetwork() {
-            manager.POST(url, parameters: parameters, success: {
-                (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-                actionHandler(successful: true, responseObject: responseObject, requestErrorType: .NoError)
-                }, failure: {
-                    (task: NSURLSessionDataTask!, error: NSError!) in
-                    if let task = task.response as? NSHTTPURLResponse {
-                        if error.userInfo != nil {
-                            actionHandler(successful: false, responseObject: error.userInfo!, requestErrorType: .ResponseError)
-                        } else if task.statusCode == Constants.WebServiceStatusCode.pageNotFound {
-                            actionHandler(successful: false, responseObject: [], requestErrorType: .PageNotFound)
-                        } else if task.statusCode == Constants.WebServiceStatusCode.requestTimeOut {
-                            actionHandler(successful: false, responseObject: [], requestErrorType: .RequestTimeOut)
-                        } else {
-                            actionHandler(successful: false, responseObject: [], requestErrorType: .UnRecognizeError)
-                        }
-                    } else {
-                        actionHandler(successful: false, responseObject: [], requestErrorType: .NoInternetConnection)
-                    }
-            })
-        } else {
-            actionHandler(successful: false, responseObject: [], requestErrorType: .NoInternetConnection)
+        self.firePostRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
         }
     }
     
