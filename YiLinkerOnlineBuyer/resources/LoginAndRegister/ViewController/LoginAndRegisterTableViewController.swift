@@ -37,6 +37,11 @@ struct LoginStrings {
     static let registerTitle: String = StringHelper.localizedStringWithKey("REGISTER_TITLE_LOCALIZE_KEY")
     static let resetTitle: String = StringHelper.localizedStringWithKey("RESET_PASSWORD_TITLE_LOCALIZE_KEY")
     static let login: String = StringHelper.localizedStringWithKey("LOGIN_LOCALIZE_KEY")
+    
+    static let selectLanguage: String = StringHelper.localizedStringWithKey("REGISTER_SELECT_LANGUAGE_LOCALIZED_KEY")
+    static let chooseLanguage: String = StringHelper.localizedStringWithKey("REGISTER_CHOOSE_LANGUAGE_LOCALIZED_KEY")
+    static let selectAreaCode: String = StringHelper.localizedStringWithKey("REGISTER_SELECT_AREA_CODE_LOCALIZED_KEY")
+    static let chooseAreaCode: String = StringHelper.localizedStringWithKey("REGISTER_CHOOSE_AREA_CODE_LOCALIZED_KEY")
 }
 
 
@@ -124,6 +129,9 @@ class LoginAndRegisterTableViewController: UITableViewController {
     var tempSimplifiedRegistrationCell: SimplifiedRegistrationUICollectionViewCell?
     var tempForgotPasswordCell: ForgotPasswordTableViewCell?
     
+    var languageAlertView: LGAlertView?
+    var areaCodeAlertView: LGAlertView?
+    
     var countries: [CountryModel] = []
     var languages: [LanguageModel] = []
     
@@ -158,6 +166,7 @@ class LoginAndRegisterTableViewController: UITableViewController {
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         self.fireGetLanguageData()
+        self.initializeDefaultValues()
     }
     
     override func didReceiveMemoryWarning() {
@@ -169,10 +178,36 @@ class LoginAndRegisterTableViewController: UITableViewController {
         self.view.endEditing(true)
     }
     
+    func initializeDefaultValues() {
+        var countryEntities: [CountryEntity] = CountryEntity.findAll() as! [CountryEntity]
+        let countryEntity: CountryEntity = countryEntities.first!
+        
+        let basicModel: BasicModel = BasicModel.parseDataFromResponseObjec(StringHelper.convertStringToDictionary(countryEntity.json))
+        
+        if basicModel.dataAnyObject.isKindOfClass(NSArray) {
+            var dictionaries: [NSDictionary] = basicModel.dataAnyObject as! [NSDictionary]
+            
+            for dictionary in dictionaries {
+                let model: CountryModel = CountryModel.parseDataFromDictionary(dictionary)
+                if model.isActive {
+                    println(model.code)
+                    println(SessionManager.selectedCountryCode())
+                    if model.code == SessionManager.selectedCountryCode() {
+                        self.selectedCountry = model
+                        self.selectedLanguage = model.defaultLanguage
+                    }
+                }
+            }
+        }
+    }
+    
     //MARK: - Util Function
     //Loader function
     func showLoader() {
-        self.hud = YiHUD.initHud()
+        if self.hud == nil {
+            self.hud = YiHUD.initHud()
+        }
+        
         self.hud?.showHUDToView(self.view)
         self.view.userInteractionEnabled = false
     }
@@ -225,6 +260,8 @@ class LoginAndRegisterTableViewController: UITableViewController {
                 loginRegisterTableViewCell.delegate = self
                 loginRegisterTableViewCell.isLogin = self.isLogin
                 loginRegisterTableViewCell.referralCode = self.refferalCode
+                loginRegisterTableViewCell.selectedCountry = self.selectedCountry
+                loginRegisterTableViewCell.selectedLanguage = self.selectedLanguage
                 loginRegisterTableViewCell.selectionStyle = .None
                 return loginRegisterTableViewCell
             }
@@ -392,10 +429,10 @@ class LoginAndRegisterTableViewController: UITableViewController {
     
     //MARK: -
     //MARK: - Fire Register User
-    func fireRegisterUser(contactNumber: String, password: String, areaCode: String, referralCode: String, verificationCode: String) {
+    func fireRegisterUser(contactNumber: String, password: String, areaCode: String, referralCode: String, verificationCode: String, language: Int) {
         self.showLoader()
         
-        WebServiceManager.fireRegisterRequestWithUrl(APIAtlas.registerV2, contactNumber: contactNumber, password: password, areaCode: areaCode, referralCode: referralCode, verificationCode: verificationCode, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+        WebServiceManager.fireRegisterRequestWithUrl(APIAtlas.registerV2, contactNumber: contactNumber, password: password, areaCode: areaCode, referralCode: referralCode, verificationCode: verificationCode, language: language, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
             if successful {
                 self.dismissLoader()
                 let registerModel: RegisterModel = RegisterModel.parseDataFromDictionary(responseObject as! NSDictionary)
@@ -543,11 +580,11 @@ class LoginAndRegisterTableViewController: UITableViewController {
         var languageEntities: [LanguageEntity] = LanguageEntity.findAll() as! [LanguageEntity]
         
         if languageEntities.count == 0 {
-            self.fireGetLanguageData()
+            self.fireGetLanguageAPICall()
         } else{
             let languageEntity: LanguageEntity = languageEntities.first!
             if NSDate().subractDate(languageEntity.dateUpdated) > 1 {
-                self.fireGetLanguageData()
+                self.fireGetLanguageAPICall()
             } else {
                 let basicModel: BasicModel = BasicModel.parseDataFromResponseObjec(StringHelper.convertStringToDictionary(languageEntity.json))
                 
@@ -712,7 +749,7 @@ extension LoginAndRegisterTableViewController: LoginRegisterTableViewCellDelegat
         if errorMessage != "" {
             Toast.displayToastWithMessage(errorMessage, duration: 1.5, view: self.view)
         } else {
-            self.fireRegisterUser(simplifiedRegistrationCell.mobileNumberTextField.text, password: simplifiedRegistrationCell.passwordTextField.text, areaCode: "63", referralCode: simplifiedRegistrationCell.referralCodeTextField.text, verificationCode: simplifiedRegistrationCell.activationCodeTextField.text)
+            self.fireRegisterUser(simplifiedRegistrationCell.mobileNumberTextField.text, password: simplifiedRegistrationCell.passwordTextField.text, areaCode: self.selectedCountry.areaCode, referralCode: simplifiedRegistrationCell.referralCodeTextField.text, verificationCode: simplifiedRegistrationCell.activationCodeTextField.text, language: self.selectedLanguage.languageId)
         }
     }
     
@@ -726,43 +763,45 @@ extension LoginAndRegisterTableViewController: LoginRegisterTableViewCellDelegat
         var buttonTitles: [String] = []
         
         for language in self.languages {
-            buttonTitles.append("\(language.name) (\(language.code.uppercaseString)")
+            buttonTitles.append("\(language.name) (\(language.code.uppercaseString))")
         }
         
-        var alertView: LGAlertView = LGAlertView(title: "Select a Language", message: "Please choose your prefered language.", style: LGAlertViewStyle.ActionSheet, buttonTitles: buttonTitles, cancelButtonTitle: nil, destructiveButtonTitle: nil, actionHandler: nil, cancelHandler: nil, destructiveHandler: nil)
         
-        alertView.coverColor = UIColor(white: 1.0, alpha: 0.9)
-        alertView.layerShadowColor = UIColor(white: 0.0, alpha: 0.3)
-        alertView.layerShadowRadius = 4.0
-        alertView.layerCornerRadius = 0.0
-        alertView.layerBorderWidth = 2.0
-        alertView.layerBorderColor = Constants.Colors.appTheme
-        alertView.backgroundColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.7)
-        alertView.buttonsHeight = 44.0
-        alertView.titleFont = UIFont.boldSystemFontOfSize(18.0)
-        alertView.titleTextColor = UIColor.darkGrayColor()
-        alertView.messageTextColor = UIColor.lightGrayColor()
-        alertView.width = min(self.view.bounds.size.width, self.view.bounds.size.height)
-        alertView.offsetVertical = 0.0
-        alertView.cancelButtonOffsetY = 0.0
-        alertView.titleTextAlignment = .Left
-        alertView.messageTextAlignment = .Left
-        alertView.destructiveButtonTextAlignment = .Right
-        alertView.buttonsTextAlignment = .Right
-        alertView.cancelButtonTextAlignment = .Right
-        alertView.separatorsColor = nil
-        alertView.destructiveButtonTitleColor = UIColor.whiteColor()
+        self.languageAlertView = LGAlertView(title: LoginStrings.selectLanguage, message: LoginStrings.chooseLanguage, style: LGAlertViewStyle.ActionSheet, buttonTitles: buttonTitles, cancelButtonTitle: nil, destructiveButtonTitle: nil, actionHandler: nil, cancelHandler: nil, destructiveHandler: nil)
         
-        alertView.buttonsTitleColor = UIColor.darkGrayColor()
-        alertView.cancelButtonTitleColor = UIColor.whiteColor()
-        alertView.buttonsTitleColorHighlighted = UIColor.whiteColor()
+        self.languageAlertView!.coverColor = UIColor(white: 0.0, alpha: 0.7)
+        self.languageAlertView!.layerShadowColor = UIColor(white: 0.0, alpha: 0.3)
+        self.languageAlertView!.layerShadowRadius = 4.0
+        self.languageAlertView!.layerCornerRadius = 0.0
+        self.languageAlertView!.layerBorderWidth = 2.0
+        self.languageAlertView!.layerBorderColor = Constants.Colors.appTheme
+        self.languageAlertView!.backgroundColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+        self.languageAlertView!.buttonsHeight = 44.0
+        self.languageAlertView!.titleFont = UIFont.boldSystemFontOfSize(18.0)
+        self.languageAlertView!.titleTextColor = UIColor.darkGrayColor()
+        self.languageAlertView!.messageTextColor = UIColor.lightGrayColor()
+        self.languageAlertView!.width = min(self.view.bounds.size.width, self.view.bounds.size.height)
+        self.languageAlertView!.offsetVertical = 0.0
+        self.languageAlertView!.cancelButtonOffsetY = 0.0
+        self.languageAlertView!.titleTextAlignment = .Left
+        self.languageAlertView!.messageTextAlignment = .Left
+        self.languageAlertView!.destructiveButtonTextAlignment = .Right
+        self.languageAlertView!.buttonsTextAlignment = .Right
+        self.languageAlertView!.cancelButtonTextAlignment = .Right
+        self.languageAlertView!.separatorsColor = nil
+        self.languageAlertView!.destructiveButtonTitleColor = UIColor.whiteColor()
         
-        alertView.destructiveButtonBackgroundColor = UIColor(red: 1.0, green: 0.0, blue: 0.0, alpha: 0.5)
-        alertView.buttonsBackgroundColor = Constants.Colors.alphaAppThemeColor
-        alertView.buttonsBackgroundColorHighlighted = Constants.Colors.appTheme
-        alertView.cancelButtonBackgroundColorHighlighted = UIColor(white: 0.5, alpha: 1.0)
-        //        alertView.delegate = self
-        alertView.showAnimated(true, completionHandler: nil)
+        self.languageAlertView!.buttonsTitleColor = UIColor.darkGrayColor()
+        self.languageAlertView!.cancelButtonTitleColor = UIColor.whiteColor()
+        self.languageAlertView!.buttonsTitleColorHighlighted = UIColor.whiteColor()
+        
+        self.languageAlertView!.destructiveButtonBackgroundColor = UIColor(red: 1.0, green: 0.0, blue: 0.0, alpha: 0.5)
+        self.languageAlertView!.buttonsBackgroundColor = Constants.Colors.alphaAppThemeColor
+        self.languageAlertView!.buttonsBackgroundColorHighlighted = Constants.Colors.appTheme
+        self.languageAlertView!.cancelButtonBackgroundColorHighlighted = UIColor(white: 0.5, alpha: 1.0)
+        self.languageAlertView!.delegate = self
+        self.languageAlertView!.showAnimated(true, completionHandler: nil)
+        
     }
     
     func simplifiedRegistrationCell(simplifiedRegistrationCell: SimplifiedRegistrationUICollectionViewCell, didTapAreaCode areaCodeView: UIView) {
@@ -786,48 +825,51 @@ extension LoginAndRegisterTableViewController: LoginRegisterTableViewCellDelegat
             }
         }
         
-        var alertView: LGAlertView = LGAlertView(title: "Select a Area Code", message: "Please choose your Area Code.", style: LGAlertViewStyle.ActionSheet, buttonTitles: buttonTitles, cancelButtonTitle: nil, destructiveButtonTitle: nil, actionHandler: nil, cancelHandler: nil, destructiveHandler: nil)
+        self.areaCodeAlertView = LGAlertView(title: LoginStrings.selectAreaCode, message: LoginStrings.chooseAreaCode, style: LGAlertViewStyle.ActionSheet, buttonTitles: buttonTitles, cancelButtonTitle: nil, destructiveButtonTitle: nil, actionHandler: nil, cancelHandler: nil, destructiveHandler: nil)
         
         
-        alertView.coverColor = UIColor(white: 1.0, alpha: 0.9)
-        alertView.layerShadowColor = UIColor(white: 0.0, alpha: 0.3)
-        alertView.layerShadowRadius = 4.0
-        alertView.layerCornerRadius = 0.0
-        alertView.layerBorderWidth = 2.0
-        alertView.layerBorderColor = Constants.Colors.appTheme
-        alertView.backgroundColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.7)
-        alertView.buttonsHeight = 44.0
-        alertView.titleFont = UIFont.boldSystemFontOfSize(18.0)
-        alertView.titleTextColor = UIColor.darkGrayColor()
-        alertView.messageTextColor = UIColor.lightGrayColor()
-        alertView.width = min(self.view.bounds.size.width, self.view.bounds.size.height)
-        alertView.offsetVertical = 0.0
-        alertView.cancelButtonOffsetY = 0.0
-        alertView.titleTextAlignment = .Left
-        alertView.messageTextAlignment = .Left
-        alertView.destructiveButtonTextAlignment = .Right
-        alertView.buttonsTextAlignment = .Right
-        alertView.cancelButtonTextAlignment = .Right
-        alertView.separatorsColor = nil
-        alertView.destructiveButtonTitleColor = UIColor.whiteColor()
+        self.areaCodeAlertView!.coverColor = UIColor(white: 0.0, alpha: 0.7)
+        self.areaCodeAlertView!.layerShadowColor = UIColor(white: 0.0, alpha: 0.3)
+        self.areaCodeAlertView!.layerShadowRadius = 4.0
+        self.areaCodeAlertView!.layerCornerRadius = 0.0
+        self.areaCodeAlertView!.layerBorderWidth = 2.0
+        self.areaCodeAlertView!.layerBorderColor = Constants.Colors.appTheme
+        self.areaCodeAlertView!.backgroundColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+        self.areaCodeAlertView!.buttonsHeight = 44.0
+        self.areaCodeAlertView!.titleFont = UIFont.boldSystemFontOfSize(18.0)
+        self.areaCodeAlertView!.titleTextColor = UIColor.darkGrayColor()
+        self.areaCodeAlertView!.messageTextColor = UIColor.lightGrayColor()
+        self.areaCodeAlertView!.width = min(self.view.bounds.size.width, self.view.bounds.size.height)
+        self.areaCodeAlertView!.offsetVertical = 0.0
+        self.areaCodeAlertView!.cancelButtonOffsetY = 0.0
+        self.areaCodeAlertView!.titleTextAlignment = .Left
+        self.areaCodeAlertView!.messageTextAlignment = .Left
+        self.areaCodeAlertView!.destructiveButtonTextAlignment = .Right
+        self.areaCodeAlertView!.buttonsTextAlignment = .Right
+        self.areaCodeAlertView!.cancelButtonTextAlignment = .Right
+        self.areaCodeAlertView!.separatorsColor = nil
+        self.areaCodeAlertView!.destructiveButtonTitleColor = UIColor.whiteColor()
         
-        alertView.buttonsTitleColor = UIColor.darkGrayColor()
-        alertView.cancelButtonTitleColor = UIColor.whiteColor()
-        alertView.buttonsTitleColorHighlighted = UIColor.whiteColor()
+        self.areaCodeAlertView!.buttonsTitleColor = UIColor.darkGrayColor()
+        self.areaCodeAlertView!.cancelButtonTitleColor = UIColor.whiteColor()
+        self.areaCodeAlertView!.buttonsTitleColorHighlighted = UIColor.whiteColor()
         
-        alertView.destructiveButtonBackgroundColor = UIColor(red: 1.0, green: 0.0, blue: 0.0, alpha: 0.5)
-        alertView.buttonsBackgroundColor = Constants.Colors.alphaAppThemeColor
-        alertView.buttonsBackgroundColorHighlighted = Constants.Colors.appTheme
-        alertView.cancelButtonBackgroundColorHighlighted = UIColor(white: 0.5, alpha: 1.0)
-        //        alertView.delegate = self
-        alertView.showAnimated(true, completionHandler: nil)
+        self.areaCodeAlertView!.destructiveButtonBackgroundColor = UIColor(red: 1.0, green: 0.0, blue: 0.0, alpha: 0.5)
+        self.areaCodeAlertView!.buttonsBackgroundColor = Constants.Colors.alphaAppThemeColor
+        self.areaCodeAlertView!.buttonsBackgroundColorHighlighted = Constants.Colors.appTheme
+        self.areaCodeAlertView!.cancelButtonBackgroundColorHighlighted = UIColor(white: 0.5, alpha: 1.0)
+        self.areaCodeAlertView!.delegate = self
+        self.areaCodeAlertView!.showAnimated(true, completionHandler: nil)
+        
+        
+        
     }
     
     func simplifiedRegistrationCell(simplifiedRegistrationCell: SimplifiedRegistrationUICollectionViewCell, didTapSendActivationCode sendActivationCodeButton: UIButton) {
         self.closeKeyboard()
         self.tempSimplifiedRegistrationCell = simplifiedRegistrationCell
         if simplifiedRegistrationCell.mobileNumberTextField.isNotEmpty() {
-            self.fireGetOTP(simplifiedRegistrationCell.mobileNumberTextField.text, areaCode: "63", type: "register", storeType: "")
+            self.fireGetOTP(simplifiedRegistrationCell.mobileNumberTextField.text, areaCode: self.selectedCountry.areaCode, type: "register", storeType: "")
         } else {
             Toast.displayToastWithMessage(RegisterStrings.contactRequired, duration: 1.5, view: self.view)
         }
@@ -952,6 +994,13 @@ extension LoginAndRegisterTableViewController: ForgotPasswordTableViewCellDelega
 
 extension LoginAndRegisterTableViewController: LGAlertViewDelegate {
     func alertView(alertView: LGAlertView!, buttonPressedWithTitle title: String!, index: UInt) {
-        
+        if alertView == self.languageAlertView {
+            self.selectedLanguage = self.languages[Int(index)]
+            self.tempSimplifiedRegistrationCell?.languagePreferenceLabel.text = "\(self.selectedLanguage.name) (\(self.selectedLanguage.code.uppercaseString))"
+        } else if alertView == self.areaCodeAlertView {
+            self.selectedCountry = self.countries[Int(index)]
+            self.tempSimplifiedRegistrationCell?.areaCodeLabel.text = "+\(self.selectedCountry.areaCode)"
+            self.tempSimplifiedRegistrationCell?.areaCodeImageView.sd_setImageWithURL(NSURL(string: self.selectedCountry.flag), placeholderImage: UIImage(named: "dummy-placeholder"))
+        }
     }
 }

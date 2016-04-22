@@ -28,6 +28,7 @@ class WebServiceManager: NSObject {
     static let firstNameKey = "firstName"
     static let lastNameKey = "lastName"
     static let contactNumberKey = "contactNumber"
+    static let languageKey = "language"
     
     //Guest Register dictionary keys
     static let plainPasswordFirstKey = "user_guest[plainPassword][first]"
@@ -842,28 +843,9 @@ class WebServiceManager: NSObject {
         
         let parameters: NSDictionary = [self.emailKey: emailAddress, self.passwordKey: password, self.firstNameKey: firstName, self.lastNameKey: lastName, self.contactNumberKey: mobileNumber]
         
-        if Reachability.isConnectedToNetwork() {
-            manager.POST(url, parameters: parameters, success: {
-                (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-                actionHandler(successful: true, responseObject: responseObject, requestErrorType: .NoError)
-                }, failure: {
-                    (task: NSURLSessionDataTask!, error: NSError!) in
-                    if let task = task.response as? NSHTTPURLResponse {
-                        if error.userInfo != nil {
-                            actionHandler(successful: false, responseObject: error.userInfo!, requestErrorType: .ResponseError)
-                        } else if task.statusCode == Constants.WebServiceStatusCode.pageNotFound {
-                            actionHandler(successful: false, responseObject: [], requestErrorType: .PageNotFound)
-                        } else if task.statusCode == Constants.WebServiceStatusCode.requestTimeOut {
-                            actionHandler(successful: false, responseObject: [], requestErrorType: .RequestTimeOut)
-                        } else {
-                            actionHandler(successful: false, responseObject: [], requestErrorType: .UnRecognizeError)
-                        }
-                    } else {
-                        actionHandler(successful: false, responseObject: [], requestErrorType: .NoInternetConnection)
-                    }
-            })
-        } else {
-            actionHandler(successful: false, responseObject: [], requestErrorType: .NoInternetConnection)
+        
+        self.firePostRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
         }
     }
     
@@ -874,31 +856,8 @@ class WebServiceManager: NSObject {
         
         let parameters: NSDictionary = [self.verificationCodeKey: verficationCode, self.newPasswordKey: newPassword, self.storeTypeKey: storeType]
         
-        if Reachability.isConnectedToNetwork() {
-            manager.POST(url, parameters: parameters, success: {
-                (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-                
-                println(responseObject)
-                actionHandler(successful: true, responseObject: responseObject, requestErrorType: .NoError)
-                }, failure: {
-                    (task: NSURLSessionDataTask!, error: NSError!) in
-                    println(error)
-                    if let task = task.response as? NSHTTPURLResponse {
-                        if error.userInfo != nil {
-                            actionHandler(successful: false, responseObject: error.userInfo!, requestErrorType: .ResponseError)
-                        } else if task.statusCode == Constants.WebServiceStatusCode.pageNotFound {
-                            actionHandler(successful: false, responseObject: [], requestErrorType: .PageNotFound)
-                        } else if task.statusCode == Constants.WebServiceStatusCode.requestTimeOut {
-                            actionHandler(successful: false, responseObject: [], requestErrorType: .RequestTimeOut)
-                        } else {
-                            actionHandler(successful: false, responseObject: [], requestErrorType: .UnRecognizeError)
-                        }
-                    } else {
-                        actionHandler(successful: false, responseObject: [], requestErrorType: .NoInternetConnection)
-                    }
-            })
-        } else {
-            actionHandler(successful: false, responseObject: [], requestErrorType: .NoInternetConnection)
+        self.firePostRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
         }
     }
     
@@ -909,61 +868,20 @@ class WebServiceManager: NSObject {
         
         let parameters: NSDictionary = [self.plainPasswordFirstKey: password, self.plainPasswordSecondKey: password, self.referralCodeKey: referralCode]
         
-        if Reachability.isConnectedToNetwork() {
-            manager.POST(url, parameters: parameters, success: {
-                (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-                actionHandler(successful: true, responseObject: responseObject, requestErrorType: .NoError)
-                }, failure: {
-                    (task: NSURLSessionDataTask!, error: NSError!) in
-                    if let task = task.response as? NSHTTPURLResponse {
-                        if error.userInfo != nil {
-                            actionHandler(successful: false, responseObject: error.userInfo!, requestErrorType: .ResponseError)
-                        } else if task.statusCode == Constants.WebServiceStatusCode.pageNotFound {
-                            actionHandler(successful: false, responseObject: [], requestErrorType: .PageNotFound)
-                        } else if task.statusCode == Constants.WebServiceStatusCode.requestTimeOut {
-                            actionHandler(successful: false, responseObject: [], requestErrorType: .RequestTimeOut)
-                        } else {
-                            actionHandler(successful: false, responseObject: [], requestErrorType: .UnRecognizeError)
-                        }
-                    } else {
-                        actionHandler(successful: false, responseObject: [], requestErrorType: .NoInternetConnection)
-                    }
-            })
-        } else {
-            actionHandler(successful: false, responseObject: [], requestErrorType: .NoInternetConnection)
+        self.firePostRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
         }
     }
     
     //MARK: -
     //MARK: - Fire Register Request With URL v2
-    class func fireRegisterRequestWithUrl(url: String, contactNumber: String, password: String, areaCode: String, referralCode: String,  verificationCode: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+    class func fireRegisterRequestWithUrl(url: String, contactNumber: String, password: String, areaCode: String, referralCode: String,  verificationCode: String, language: Int, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
         let manager: APIManager = APIManager.sharedInstance
         
-        let parameters: NSDictionary = [self.contactNumberKey: contactNumber, self.passwordKey: password, self.areaCodeKey: areaCode, self.referralCodeRegistrationKey: referralCode, self.verificationCodeKey: verificationCode]
+        let parameters: NSDictionary = [self.contactNumberKey: contactNumber, self.passwordKey: password, self.areaCodeKey: areaCode, self.referralCodeRegistrationKey: referralCode, self.verificationCodeKey: verificationCode, self.languageKey: language]
         
-        if Reachability.isConnectedToNetwork() {
-            manager.POST(url, parameters: parameters, success: {
-                (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-                actionHandler(successful: true, responseObject: responseObject, requestErrorType: .NoError)
-                }, failure: {
-                    (task: NSURLSessionDataTask!, error: NSError!) in
-                    println(error)
-                    if let task = task.response as? NSHTTPURLResponse {
-                        if error.userInfo != nil {
-                            actionHandler(successful: false, responseObject: error.userInfo!, requestErrorType: .ResponseError)
-                        } else if task.statusCode == Constants.WebServiceStatusCode.pageNotFound {
-                            actionHandler(successful: false, responseObject: [], requestErrorType: .PageNotFound)
-                        } else if task.statusCode == Constants.WebServiceStatusCode.requestTimeOut {
-                            actionHandler(successful: false, responseObject: [], requestErrorType: .RequestTimeOut)
-                        } else {
-                            actionHandler(successful: false, responseObject: [], requestErrorType: .UnRecognizeError)
-                        }
-                    } else {
-                        actionHandler(successful: false, responseObject: [], requestErrorType: .NoInternetConnection)
-                    }
-            })
-        } else {
-            actionHandler(successful: false, responseObject: [], requestErrorType: .NoInternetConnection)
+        self.firePostRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
         }
     }
     
@@ -975,28 +893,8 @@ class WebServiceManager: NSObject {
         
         let parameters: NSDictionary = [self.contactNumberKey: contactNumber, self.areaCodeKey: areaCode, self.typeKey: type, self.storeTypeKey: storeType]
         
-        if Reachability.isConnectedToNetwork() {
-            manager.POST(url, parameters: parameters, success: {
-                (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-                actionHandler(successful: true, responseObject: responseObject, requestErrorType: .NoError)
-                }, failure: {
-                    (task: NSURLSessionDataTask!, error: NSError!) in
-                    if let task = task.response as? NSHTTPURLResponse {
-                        if error.userInfo != nil {
-                            actionHandler(successful: false, responseObject: error.userInfo!, requestErrorType: .ResponseError)
-                        } else if task.statusCode == Constants.WebServiceStatusCode.pageNotFound {
-                            actionHandler(successful: false, responseObject: [], requestErrorType: .PageNotFound)
-                        } else if task.statusCode == Constants.WebServiceStatusCode.requestTimeOut {
-                            actionHandler(successful: false, responseObject: [], requestErrorType: .RequestTimeOut)
-                        } else {
-                            actionHandler(successful: false, responseObject: [], requestErrorType: .UnRecognizeError)
-                        }
-                    } else {
-                        actionHandler(successful: false, responseObject: [], requestErrorType: .NoInternetConnection)
-                    }
-            })
-        } else {
-            actionHandler(successful: false, responseObject: [], requestErrorType: .NoInternetConnection)
+        self.firePostRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
         }
     }
     
@@ -1008,28 +906,8 @@ class WebServiceManager: NSObject {
         
         let parameters: NSDictionary = [self.accessTokenKey: accessToken, self.typeKey: type, self.contactNumberKey: contactNumber]
         
-        if Reachability.isConnectedToNetwork() {
-            manager.POST(url, parameters: parameters, success: {
-                (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-                actionHandler(successful: true, responseObject: responseObject, requestErrorType: .NoError)
-                }, failure: {
-                    (task: NSURLSessionDataTask!, error: NSError!) in
-                    if let task = task.response as? NSHTTPURLResponse {
-                        if error.userInfo != nil {
-                            actionHandler(successful: false, responseObject: error.userInfo!, requestErrorType: .ResponseError)
-                        } else if task.statusCode == Constants.WebServiceStatusCode.pageNotFound {
-                            actionHandler(successful: false, responseObject: [], requestErrorType: .PageNotFound)
-                        } else if task.statusCode == Constants.WebServiceStatusCode.requestTimeOut {
-                            actionHandler(successful: false, responseObject: [], requestErrorType: .RequestTimeOut)
-                        } else {
-                            actionHandler(successful: false, responseObject: [], requestErrorType: .UnRecognizeError)
-                        }
-                    } else {
-                        actionHandler(successful: false, responseObject: [], requestErrorType: .NoInternetConnection)
-                    }
-            })
-        } else {
-            actionHandler(successful: false, responseObject: [], requestErrorType: .NoInternetConnection)
+        self.firePostRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
         }
     }
     

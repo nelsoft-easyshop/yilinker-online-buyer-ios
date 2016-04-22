@@ -213,6 +213,7 @@
             <size key="customSize" width="383" height="160"/>
             <connections>
                 <outlet property="activationCodeTextField" destination="1be-va-DaB" id="oU2-5T-tYP"/>
+                <outlet property="areaCodeImageView" destination="8gI-E3-Ppk" id="Af1-ae-qcz"/>
                 <outlet property="areaCodeLabel" destination="Sxr-m8-pG5" id="74m-wb-iPe"/>
                 <outlet property="areaCodeView" destination="Ekh-6d-zIq" id="fOy-6A-LB9"/>
                 <outlet property="confirmPasswordTextField" destination="NPw-da-yDo" id="Xsq-c6-1xC"/>

@@ -91,7 +91,7 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
         emailAddress = profileModel.email
         referrerPersonCode = profileModel.referrerCode
         country = profileModel.country
-        language = profileModel.country.defaultLanguage
+        language = profileModel.language
     }
     
     //MARK: Initializations
@@ -212,7 +212,7 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
                 cell.viewImageConstraint.constant = 75
             }
             
-            cell.languageValueLabel.text = "\(profileUserDetailsModel.country.defaultLanguage.name) (\(profileUserDetailsModel.country.defaultLanguage.code.uppercaseString))"
+            cell.languageValueLabel.text = "\(profileUserDetailsModel.language.name) (\(profileUserDetailsModel.language.code.uppercaseString))"
             
             cell.countryFlagImageView.sd_setImageWithURL(NSURL(string: profileUserDetailsModel.country.flag), placeholderImage: UIImage(named: "dummy-placeholder"))
             cell.countryValueLabel.text =  profileUserDetailsModel.country.name
@@ -273,6 +273,8 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
             self.dismissLoader()
             if successful {
                 SessionManager.setReferrerCode(self.referrerPersonCode)
+                SessionManager.setSelectedCountryCode(self.country.code)
+                SessionManager.setSelectedLanguageCode(self.language.code)
                 Toast.displayToastWithMessage(EditProfileLocalizedStrings.successfullyUpdateProfile, duration: 2.0, view: self.navigationController!.view)
                 self.navigationController?.popViewControllerAnimated(true)
             } else {
@@ -833,7 +835,7 @@ extension EditProfileTableViewController: GlobalPreferencesPickerTableViewContro
     
     func globalPreferencesPickerTableViewController(globalPreferencesPickerTableViewController: GlobalPreferencesPickerTableViewController, language: LanguageModel) {
         self.language = language
-        self.profileUserDetailsModel.country.defaultLanguage = language
+        self.profileUserDetailsModel.language = language
         self.tableView.reloadData()
     }
 }
