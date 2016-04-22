@@ -41,6 +41,37 @@ class CountryViewController: UIViewController, LGAlertViewDelegate {
     //MARK: - Fire Get Countries
     func fireGetCountries() {
         self.showHUD()
+        
+        var countryEntities: [CountryEntity] = CountryEntity.findAll() as! [CountryEntity]
+        
+        if countryEntities.count == 0 {
+            self.fireGetCountriesAPICall()
+        } else{
+            let countryEntity: CountryEntity = countryEntities.first!
+            if NSDate().subractDate(countryEntity.dateUpdated) > 1 {
+                self.fireGetCountriesAPICall()
+            } else {
+                let basicModel: BasicModel = BasicModel.parseDataFromResponseObjec(StringHelper.convertStringToDictionary(countryEntity.json))
+                
+                if basicModel.dataAnyObject.isKindOfClass(NSArray) {
+                    var dictionaries: [NSDictionary] = basicModel.dataAnyObject as! [NSDictionary]
+                    
+                    for dictionary in dictionaries {
+                        let model: CountryModel = CountryModel.parseDataFromDictionary(dictionary)
+                        if model.isActive {
+                            self.countries.append(model)
+                            self.countryTitles.append(model.name)
+                        }
+                    }
+                    self.yiHud!.hide()
+                } else {
+                    self.yiHud!.hide()
+                }
+            }
+        }
+    }
+    
+    func fireGetCountriesAPICall() {
         WebServiceManager.fireGetCountries(APIAtlas.getCountriesUrl, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
             if successful {
                 //save json data to core data
@@ -53,8 +84,11 @@ class CountryViewController: UIViewController, LGAlertViewDelegate {
                     
                     for dictionary in dictionaries {
                         let model: CountryModel = CountryModel.parseDataFromDictionary(dictionary)
-                        self.countries.append(model)
-                        self.countryTitles.append(model.name)
+                        if model.isActive {
+                            self.countries.append(model)
+                            self.countryTitles.append(model.name)
+                        }
+                        
                     }
                     
                     self.yiHud!.hide()
@@ -69,10 +103,22 @@ class CountryViewController: UIViewController, LGAlertViewDelegate {
     //MARK: - Save Countries to Core Data
     func saveCountriesToCoreData(responseObject: AnyObject) {
         var countryEntities: [CountryEntity] = CountryEntity.findAll() as! [CountryEntity]
-        let countryEntity: CountryEntity = CountryEntity.createEntity() as! CountryEntity
-        countryEntity.json = StringHelper.convertDictionaryToJsonString(responseObject as! NSDictionary) as String
-        countryEntities.append(countryEntity)
-        NSManagedObjectContext.defaultContext().saveToPersistentStoreAndWait()
+        
+        if countryEntities.count == 0 {
+            let countryEntity: CountryEntity = CountryEntity.createEntity() as! CountryEntity
+            countryEntity.json = StringHelper.convertDictionaryToJsonString(responseObject as! NSDictionary) as String
+            countryEntity.dateUpdated = NSDate()
+            countryEntities.append(countryEntity)
+            NSManagedObjectContext.defaultContext().saveToPersistentStoreAndWait()
+        } else{
+            let countryEntity: CountryEntity = countryEntities.first!
+            if NSDate().subractDate(countryEntity.dateUpdated) > 1 {
+                countryEntity.json = StringHelper.convertDictionaryToJsonString(responseObject as! NSDictionary) as String
+                countryEntities.append(countryEntity)
+                countryEntity.dateUpdated = NSDate()
+                NSManagedObjectContext.defaultContext().saveToPersistentStoreAndWait()
+            }
+        }
     }
     
     //MARK: -
@@ -134,6 +180,9 @@ class CountryViewController: UIViewController, LGAlertViewDelegate {
         
             SessionManager.setSelectedCountryCode(self.countries[Int(index)].code)
             println(self.countries[Int(index)].code)
+            
+            let lang = self.countries[Int(index)].defaultLanguage
+            SessionManager.setSelectedLanguageCode(lang.code)
             
             let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
             appDelegate.changeRootToHomeView()

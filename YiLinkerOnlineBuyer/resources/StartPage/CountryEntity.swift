@@ -9,5 +9,5 @@
 class CountryEntity: NSManagedObject {
 
     @NSManaged var json: String
-
+    @NSManaged var dateUpdated: NSDate
 }
