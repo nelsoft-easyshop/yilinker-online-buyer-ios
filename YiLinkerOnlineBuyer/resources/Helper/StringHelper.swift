@@ -18,7 +18,7 @@ class StringHelper: NSObject {
     class func localizedStringWithKey(key: String) -> String {
         var language: String = ""
         
-        if SessionManager.isLanguageChinese {
+        if SessionManager.selectedLanguageCode() == "cn" {
             language = "zh-Hans"
         } else {
             language = "en"
