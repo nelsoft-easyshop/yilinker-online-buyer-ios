@@ -10,6 +10,7 @@ import UIKit
 
 protocol SimplifiedRegistrationUICollectionViewCellDelegate {
     func simplifiedRegistrationCell(simplifiedRegistrationCell: SimplifiedRegistrationUICollectionViewCell, textFieldShouldReturn textField: UITextField)
+    func simplifiedRegistrationCell(simplifiedRegistrationCell: SimplifiedRegistrationUICollectionViewCell, didTapLanguagePreference languagePreferenceView: UIView)
     func simplifiedRegistrationCell(simplifiedRegistrationCell: SimplifiedRegistrationUICollectionViewCell, didTapAreaCode areaCodeView: UIView)
     func simplifiedRegistrationCell(simplifiedRegistrationCell: SimplifiedRegistrationUICollectionViewCell, didTapSendActivationCode sendActivationCodeButton: UIButton)
     func simplifiedRegistrationCell(simplifiedRegistrationCell: SimplifiedRegistrationUICollectionViewCell, didTapRegister registerButton: UIButton)
@@ -25,6 +26,9 @@ class SimplifiedRegistrationUICollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var confirmPasswordTextField: UITextField!
     @IBOutlet weak var referralCodeTextField: UITextField!
     @IBOutlet weak var activationCodeTextField: UITextField!
+    
+    @IBOutlet weak var languagePreferenceLabel: UILabel!
+    @IBOutlet weak var languagePreferenceView: UIView!
     
     @IBOutlet weak var areaCodeView: UIView!
     @IBOutlet weak var areaCodeLabel: UILabel!
@@ -42,8 +46,11 @@ class SimplifiedRegistrationUICollectionViewCell: UICollectionViewCell {
         super.awakeFromNib()
         self.initializeViews()
         
-        let viewTapGesture = UITapGestureRecognizer(target:self, action:"didTapAreaCode")
-        self.areaCodeView.addGestureRecognizer(viewTapGesture)
+        let languageTapGesture = UITapGestureRecognizer(target:self, action:"didTapLanguagePrefence")
+        self.languagePreferenceView.addGestureRecognizer(languageTapGesture)
+        
+        let areaCodeTapGesture = UITapGestureRecognizer(target:self, action:"didTapAreaCode")
+        self.areaCodeView.addGestureRecognizer(areaCodeTapGesture)
     }
     
     func initializeViews() {
@@ -71,7 +78,7 @@ class SimplifiedRegistrationUICollectionViewCell: UICollectionViewCell {
         self.referralCodeTextField.layer.borderColor = Constants.Colors.backgroundGray.CGColor
         self.activationCodeTextField.layer.borderColor = Constants.Colors.backgroundGray.CGColor
         self.areaCodeView.layer.borderColor = Constants.Colors.backgroundGray.CGColor
-        
+        self.languagePreferenceView.layer.borderColor = Constants.Colors.backgroundGray.CGColor
         
         self.mobileNumberTextField.layer.borderWidth = 1
         self.passwordTextField.layer.borderWidth = 1
@@ -79,6 +86,7 @@ class SimplifiedRegistrationUICollectionViewCell: UICollectionViewCell {
         self.referralCodeTextField.layer.borderWidth = 1
         self.activationCodeTextField.layer.borderWidth = 1
         self.areaCodeView.layer.borderWidth = 1
+        self.languagePreferenceView.layer.borderWidth = 1
         
         //Set placeholder
         self.mobileNumberTextField.attributedPlaceholder = StringHelper.required(RegisterStrings.mobileNumber)
@@ -93,6 +101,12 @@ class SimplifiedRegistrationUICollectionViewCell: UICollectionViewCell {
     
     func didTapAreaCode() {
         self.delegate?.simplifiedRegistrationCell(self, didTapAreaCode: self.areaCodeView)
+        println("Area Code")
+    }
+    
+    func didTapLanguagePrefence() {
+        self.delegate?.simplifiedRegistrationCell(self, didTapLanguagePreference: self.languagePreferenceView)
+        println("Language Pref")
     }
     
     @IBAction func buttonAction(sender: UIButton) {
@@ -128,6 +142,7 @@ class SimplifiedRegistrationUICollectionViewCell: UICollectionViewCell {
             self.delegate?.simplifiedRegistrationCell(self, didTimerEnded: self.sendActivationCodeButton)
         }
     }
+    
 }
 
 //MARK: -

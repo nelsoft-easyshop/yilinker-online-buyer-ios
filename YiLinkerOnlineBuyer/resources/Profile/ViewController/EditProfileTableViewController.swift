@@ -106,6 +106,7 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
         self.tableView.tableFooterView = UIView(frame: CGRectZero)
         
         var tapTableView = UITapGestureRecognizer(target:self, action:"hideKeyboard")
+        tapTableView.cancelsTouchesInView = false
         self.tableView.addGestureRecognizer(tapTableView)
         
         //Initializes 'dimView' (backround of the modals) attributes
@@ -232,7 +233,7 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
         if indexPath.row == 0 {
             return 150
         } else if indexPath.row == 1 {
-            return 200
+            return 310
         } else if indexPath.row == 2 {
             return 180
         }  else if indexPath.row == 3 {
@@ -398,7 +399,7 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
     
     // Hide Keyboard
     func hideKeyboard() {
-        self.view.endEditing(true)
+//        self.view.endEditing(true)
     }
     
     func hideDimView() {
@@ -590,6 +591,18 @@ extension EditProfileTableViewController: EditProfilePersonalInformationTableVie
                 }, completion: { finished in
             })
         }
+    }
+    
+    func didTapCountryAction() {
+        let globalPref: GlobalPreferencesPickerTableViewController = GlobalPreferencesPickerTableViewController(nibName: "GlobalPreferencesPickerTableViewController", bundle: nil)
+        globalPref.type = .Country
+        self.navigationController!.pushViewController(globalPref, animated: true)
+    }
+    
+    func didTapLanguageAction() {
+        let globalPref: GlobalPreferencesPickerTableViewController = GlobalPreferencesPickerTableViewController(nibName: "GlobalPreferencesPickerTableViewController", bundle: nil)
+        globalPref.type = .Language
+        self.navigationController!.pushViewController(globalPref, animated: true)
     }
     
     //MARK: - 

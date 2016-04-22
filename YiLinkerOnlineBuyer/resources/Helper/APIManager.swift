@@ -8,12 +8,15 @@
 
 struct APIEnvironment {
     
-    static var development = false
+    static var development = true
+    static var sprint = false
     static var staging = false
-    static var production = true
+    static var production = false
     
     static func baseUrl() -> String {
         if development {
+            return "http://dev.online.api.easydeal.ph/api"
+        } else if sprint {
             return "http://sprint.online.api.easydeal.ph/api"
         } else if staging {
             return "http://online.api.easydeal.ph/api"
@@ -98,13 +101,17 @@ struct APIAtlas {
         }
     }
     
+    static func homeUrl(version: String, languageCode: String) -> String {
+        return "v3/ph/\(languageCode)/\(version)/home/getData"
+    }
+    
     static let appItunesURL = "https://itunes.apple.com/ph/app/yilinker-buyer/id1048641709?mt=8"
     static let appLookupUrl = "http://itunes.apple.com/lookup?bundleId=com.easyshop.YiLinkerOnlineBuyer"
     static let refreshTokenUrl = "v1/login"
     static let loginUrl = "v1/login"
     static let registerUrl = "v1/user/register"
     static let getUserInfoUrl = "v1/auth/user/getUser"
-    static let homeUrl = "v2/home/getData"
+
     static let cartUrl = "v1/auth/cart/getCart"
     static let wishlistUrl = "v1/auth/cart/getCart"
     static let updateWishlistUrl = "v1/auth/cart/updateCartItem"
@@ -243,6 +250,12 @@ struct APIAtlas {
     
     //Push Notif
     static let registerDeviceUrl = "v2/device/add-device-token"
+    
+    //Globalization
+    static let getLanguages = "v3/get-languages"
+    
+    //MARK: - Get Countries
+    static let getCountriesUrl = "v3/get-countries"
 }
 
 class APIManager: AFHTTPSessionManager {

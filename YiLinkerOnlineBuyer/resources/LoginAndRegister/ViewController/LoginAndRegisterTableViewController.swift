@@ -105,7 +105,7 @@ class LoginAndRegisterTableViewController: UITableViewController {
     let headerCellHeight: CGFloat = 64
     let loginCellHeight: CGFloat = 400
     let logoCellHeight: CGFloat = 190
-    let registerCellHeight: CGFloat = 412
+    let registerCellHeight: CGFloat = 462
     
     var hud: YiHUD?
     
@@ -640,8 +640,84 @@ extension LoginAndRegisterTableViewController: LoginRegisterTableViewCellDelegat
         self.tempSimplifiedRegistrationCell = simplifiedRegistrationCell
     }
     
+    func simplifiedRegistrationCell(simplifiedRegistrationCell: SimplifiedRegistrationUICollectionViewCell, didTapLanguagePreference languagePreferenceView: UIView) {
+        self.tempSimplifiedRegistrationCell = simplifiedRegistrationCell
+        
+        var alertView: LGAlertView = LGAlertView(title: "Select a Language", message: "Please choose your prefered language.", style: LGAlertViewStyle.ActionSheet, buttonTitles: ["English", "Chinese Simplified", "Chinese Traditional"], cancelButtonTitle: nil, destructiveButtonTitle: nil, actionHandler: nil, cancelHandler: nil, destructiveHandler: nil)
+    
+        
+        alertView.coverColor = UIColor(white: 1.0, alpha: 0.9)
+        alertView.layerShadowColor = UIColor(white: 0.0, alpha: 0.3)
+        alertView.layerShadowRadius = 4.0
+        alertView.layerCornerRadius = 0.0
+        alertView.layerBorderWidth = 2.0
+        alertView.layerBorderColor = Constants.Colors.appTheme
+        alertView.backgroundColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.7)
+        alertView.buttonsHeight = 44.0
+        alertView.titleFont = UIFont.boldSystemFontOfSize(18.0)
+        alertView.titleTextColor = UIColor.darkGrayColor()
+        alertView.messageTextColor = UIColor.lightGrayColor()
+        alertView.width = min(self.view.bounds.size.width, self.view.bounds.size.height)
+        alertView.offsetVertical = 0.0
+        alertView.cancelButtonOffsetY = 0.0
+        alertView.titleTextAlignment = .Left
+        alertView.messageTextAlignment = .Left
+        alertView.destructiveButtonTextAlignment = .Right
+        alertView.buttonsTextAlignment = .Right
+        alertView.cancelButtonTextAlignment = .Right
+        alertView.separatorsColor = nil
+        alertView.destructiveButtonTitleColor = UIColor.whiteColor()
+        
+        alertView.buttonsTitleColor = UIColor.darkGrayColor()
+        alertView.cancelButtonTitleColor = UIColor.whiteColor()
+        alertView.buttonsTitleColorHighlighted = UIColor.whiteColor()
+        
+        alertView.destructiveButtonBackgroundColor = UIColor(red: 1.0, green: 0.0, blue: 0.0, alpha: 0.5)
+        alertView.buttonsBackgroundColor = Constants.Colors.alphaAppThemeColor
+        alertView.buttonsBackgroundColorHighlighted = Constants.Colors.appTheme
+        alertView.cancelButtonBackgroundColorHighlighted = UIColor(white: 0.5, alpha: 1.0)
+//        alertView.delegate = self
+        alertView.showAnimated(true, completionHandler: nil)
+    }
+    
     func simplifiedRegistrationCell(simplifiedRegistrationCell: SimplifiedRegistrationUICollectionViewCell, didTapAreaCode areaCodeView: UIView) {
         self.tempSimplifiedRegistrationCell = simplifiedRegistrationCell
+        
+        var alertView: LGAlertView = LGAlertView(title: "Select a Language", message: "Please choose your country area code.", style: LGAlertViewStyle.ActionSheet, buttonTitles: ["+63", "+86"], cancelButtonTitle: nil, destructiveButtonTitle: nil, actionHandler: nil, cancelHandler: nil, destructiveHandler: nil)
+        
+        
+        alertView.coverColor = UIColor(white: 1.0, alpha: 0.9)
+        alertView.layerShadowColor = UIColor(white: 0.0, alpha: 0.3)
+        alertView.layerShadowRadius = 4.0
+        alertView.layerCornerRadius = 0.0
+        alertView.layerBorderWidth = 2.0
+        alertView.layerBorderColor = Constants.Colors.appTheme
+        alertView.backgroundColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.7)
+        alertView.buttonsHeight = 44.0
+        alertView.titleFont = UIFont.boldSystemFontOfSize(18.0)
+        alertView.titleTextColor = UIColor.darkGrayColor()
+        alertView.messageTextColor = UIColor.lightGrayColor()
+        alertView.width = min(self.view.bounds.size.width, self.view.bounds.size.height)
+        alertView.offsetVertical = 0.0
+        alertView.cancelButtonOffsetY = 0.0
+        alertView.titleTextAlignment = .Left
+        alertView.messageTextAlignment = .Left
+        alertView.destructiveButtonTextAlignment = .Right
+        alertView.buttonsTextAlignment = .Right
+        alertView.cancelButtonTextAlignment = .Right
+        alertView.separatorsColor = nil
+        alertView.destructiveButtonTitleColor = UIColor.whiteColor()
+        
+        alertView.buttonsTitleColor = UIColor.darkGrayColor()
+        alertView.cancelButtonTitleColor = UIColor.whiteColor()
+        alertView.buttonsTitleColorHighlighted = UIColor.whiteColor()
+        
+        alertView.destructiveButtonBackgroundColor = UIColor(red: 1.0, green: 0.0, blue: 0.0, alpha: 0.5)
+        alertView.buttonsBackgroundColor = Constants.Colors.alphaAppThemeColor
+        alertView.buttonsBackgroundColorHighlighted = Constants.Colors.appTheme
+        alertView.cancelButtonBackgroundColorHighlighted = UIColor(white: 0.5, alpha: 1.0)
+        //        alertView.delegate = self
+        alertView.showAnimated(true, completionHandler: nil)
     }
     
     func simplifiedRegistrationCell(simplifiedRegistrationCell: SimplifiedRegistrationUICollectionViewCell, didTapSendActivationCode sendActivationCodeButton: UIButton) {

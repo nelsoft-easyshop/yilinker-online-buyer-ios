@@ -80,6 +80,14 @@ class SessionManager {
         NSUserDefaults.standardUserDefaults().synchronize()
     }
     
+    //MARK: -
+    //MARK: - Set Selected Country Code
+    class func setSelectedCountryCode(countryCode: String) {
+        NSUserDefaults.standardUserDefaults().setObject(countryCode, forKey: "countryCode")
+        NSUserDefaults.standardUserDefaults().synchronize()
+    }
+    
+    
     //MARK: - 
     //MARK: - Set Last Name
     class func setLastName(lastName: String) {
@@ -99,6 +107,16 @@ class SessionManager {
     class func setReferrerCode(referrerCode: String) {
         NSUserDefaults.standardUserDefaults().setObject(referrerCode, forKey: "referrerCode")
         NSUserDefaults.standardUserDefaults().synchronize()
+    }
+    
+    //MARK: -
+    //MARK: - Country Code
+    class func selectedCountryCode() -> String {
+        var result: String = ""
+        if let val: AnyObject = NSUserDefaults.standardUserDefaults().objectForKey("countryCode") as? String {
+            result = val as! String
+        }
+        return result
     }
     
     //MARK: -

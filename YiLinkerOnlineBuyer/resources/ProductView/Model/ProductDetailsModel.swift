@@ -133,7 +133,7 @@ class ProductDetailsModel {
                         sellerId = 0
                     }
                     
-                    if let tempVar = value["isOverseas"] as? Bool {
+                    if let tempVar = value["isInternationalWarehouse"] as? Bool {
                         isOverseas = tempVar
                     } else {
                         isOverseas = false

@@ -187,8 +187,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         }
         
         if !self.isJsonStringEmpty() {
-            //self.populateHomePageWithDictionary(self.coreDataJsonString())
-            self.populateHomePageWithDictionary(ParseLocalJSON.fileName("dummyHomePage"))
+            self.populateHomePageWithDictionary(self.coreDataJsonString())
         }
         
     }
@@ -431,11 +430,10 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             self.showHUD()
         }*/
         
-        WebServiceManager.fireGetHomePageDataWithUrl(APIAtlas.homeUrl, actionHandler: {
+        WebServiceManager.fireGetHomePageDataWithUrl(APIAtlas.homeUrl("v2", languageCode: "en"), actionHandler: {
             (successful, responseObject, requestErrorType) -> Void in
             if successful {
-                //self.populateHomePageWithDictionary(responseObject as! NSDictionary)
-                self.populateHomePageWithDictionary(ParseLocalJSON.fileName("dummyHomePage"))
+                self.populateHomePageWithDictionary(responseObject as! NSDictionary)
                 self.yiHud?.hide()
                 
                 self.addOrUpdateHomeDataToCoreDataWithDataString(StringHelper.convertDictionaryToJsonString(responseObject as! NSDictionary) as String)
@@ -548,8 +546,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     //MARK: -  Core Data Json String
     func coreDataJsonString() -> NSDictionary {
         let homeEntities: [HomeEntity] = HomeEntity.findAll() as! [HomeEntity]
-        //return StringHelper.convertStringToDictionary(homeEntities.first!.json)
-        return ParseLocalJSON.fileName("dummyHomePage")
+        return StringHelper.convertStringToDictionary(homeEntities.first!.json)
     }
     
     //MARK: -
@@ -1666,6 +1663,9 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             let webViewController: WebViewController = WebViewController(nibName: "WebViewController", bundle: nil)
             webViewController.urlString = target
             self.navigationController!.pushViewController(webViewController, animated: true)
+        } else if targetType == "countryProductList" {
+            //code here...
+            Toast.displayToastWithMessage("country prod list action here", view: self.navigationController!.view)
         }
     }
     
@@ -2043,11 +2043,29 @@ extension HomeContainerViewController: SearchBarViewDelegate {
 
 extension HomeContainerViewController: OverseasCollectionViewCellDataSource {
     func overseasCollectionViewCell(overseasCollectionViewCell: OverseasCollectionViewCell, numberOfItemsInSection section: Int) -> Int {
-        return 3
+        let indexPath: NSIndexPath = self.collectionView.indexPathForCell(overseasCollectionViewCell)!
+        let layoutElevenModel: LayoutElevenModel  = self.homePageModel.data[indexPath.section] as! LayoutElevenModel
+        return layoutElevenModel.data.count;
     }
     
     func overseasCollectionViewCell(overseasCollectionViewCell: OverseasCollectionViewCell, cellForRowAtIndexPath indexPath: NSIndexPath) -> FullImageCollectionViewCell {
+
+        let indexPath2: NSIndexPath = self.collectionView.indexPathForCell(overseasCollectionViewCell)!
+        let layoutElevenModel: LayoutElevenModel  = self.homePageModel.data[indexPath2.section] as! LayoutElevenModel
+
+        
         let fullImageCell: FullImageCollectionViewCell = overseasCollectionViewCell.collectionView.dequeueReusableCellWithReuseIdentifier("FullImageCollectionViewCell", forIndexPath: indexPath) as! FullImageCollectionViewCell
+        
+        fullImageCell.itemProductImageView.sd_setImageWithURL(StringHelper.convertStringToUrl(layoutElevenModel.data[indexPath.row].image), placeholderImage: UIImage(named: "dummy-placeholder"), completed: { (downloadedImage, NSError, SDImageCacheType, NSURL) -> Void in
+            if let imageView = fullImageCell.itemProductImageView {
+                if downloadedImage != nil {
+                    imageView.fadeInImageWithImage(downloadedImage)
+                }
+            }
+        })
+        
+        fullImageCell.target = layoutElevenModel.data[indexPath.row].target.targetUrl
+        fullImageCell.targetType = layoutElevenModel.data[indexPath.row].target.targetType
         
         return fullImageCell
     }
@@ -2059,6 +2077,8 @@ extension HomeContainerViewController: OverseasCollectionViewCellDataSource {
 
 extension HomeContainerViewController: OverseasCollectionViewCellDelegate {
     func overseasCollectionViewCell(carouselCollectionViewCell: OverseasCollectionViewCell, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-
+        let fullImageCell: FullImageCollectionViewCell = carouselCollectionViewCell.collectionView.cellForItemAtIndexPath(indexPath) as! FullImageCollectionViewCell
+        
+        self.didClickItemWithTarget(fullImageCell.target, targetType: fullImageCell.targetType)
     }
 }
