@@ -471,6 +471,7 @@ class ResultViewController: UIViewController {
     
     func generateSearchURL() -> String {
         var url: String = self.baseSearchURL
+        
         if self.selectedSortTypeIndex != -1 {
             url = "\(self.baseSearchURL)&\(self.sortParameter[self.selectedSortTypeIndex])"
         }
@@ -494,6 +495,11 @@ class ResultViewController: UIViewController {
         }
         
         url += "&perPage=\(self.perPage)"
+        
+        if !url.contains("?") && url.contains("&") {
+            let range = url.rangeOfString("&")
+            url = url.stringByReplacingCharactersInRange(range!, withString: "?")
+        }
         
         return url
     }
