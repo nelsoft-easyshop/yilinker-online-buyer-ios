@@ -430,7 +430,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             self.showHUD()
         }*/
         
-        WebServiceManager.fireGetHomePageDataWithUrl(APIAtlas.homeUrl("v2", languageCode: "en"), actionHandler: {
+        WebServiceManager.fireGetHomePageDataWithUrl(APIAtlas.homeUrl, actionHandler: {
             (successful, responseObject, requestErrorType) -> Void in
             if successful {
                 self.populateHomePageWithDictionary(responseObject as! NSDictionary)
@@ -1665,7 +1665,11 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             self.navigationController!.pushViewController(webViewController, animated: true)
         } else if targetType == "countryProductList" {
             //code here...
-            Toast.displayToastWithMessage("country prod list action here", view: self.navigationController!.view)
+//            Toast.displayToastWithMessage("country prod list action here", view: self.navigationController!.view)
+            let resultViewController: ResultViewController = ResultViewController(nibName: "ResultViewController", bundle: nil)
+            resultViewController.pageTitle = sectionTitle
+            resultViewController.passModel(SearchSuggestionModel(suggestion: "", imageURL: "", searchUrl: target))
+            self.navigationController!.pushViewController(resultViewController, animated: true)
         }
     }
     

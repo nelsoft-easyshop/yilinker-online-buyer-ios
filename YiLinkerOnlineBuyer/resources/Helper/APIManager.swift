@@ -105,7 +105,8 @@ struct APIAtlas {
         return "home/getData"
     }
     
-
+    static let V1 = "v1"
+    static let V2 = "v2"
     static let V3 = "v3"
     
     static let appItunesURL = "https://itunes.apple.com/ph/app/yilinker-buyer/id1048641709?mt=8"
@@ -114,7 +115,7 @@ struct APIAtlas {
     static let loginUrl = "login"
     static let registerUrl = "user/register"
     static let getUserInfoUrl = "auth/user/getUser"
-
+    static let homeUrl = "v2/home/getData"
     static let cartUrl = "auth/cart/getCart"
     static let wishlistUrl = "auth/cart/getCart"
     static let updateWishlistUrl = "auth/cart/updateCartItem"
