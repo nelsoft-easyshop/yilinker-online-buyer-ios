@@ -158,7 +158,7 @@ class ViewFeedBackViewController: UIViewController, UITableViewDelegate, UITable
             url = APIAtlas.productReviews
         }
         
-        WebServiceManager.fireSellerFeedbackWithUrl(url, parameters: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+        WebServiceManager.fireSellerFeedbackWithUrl(url, parameters: parameters!, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
             if successful {
                 if responseObject["isSuccessful"] as! Bool {
                     if self.feedback {
@@ -279,9 +279,7 @@ class ViewFeedBackViewController: UIViewController, UITableViewDelegate, UITable
                 self.fireSellerFeedback()
                 UIApplication.sharedApplication().networkActivityIndicatorVisible = false
             } else {
-                let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
-                let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: Constants.Localized.someThingWentWrong)
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: "")
                 UIApplication.sharedApplication().networkActivityIndicatorVisible = false
             }
         })
