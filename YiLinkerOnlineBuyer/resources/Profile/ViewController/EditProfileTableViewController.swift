@@ -280,7 +280,7 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
                 Toast.displayToastWithMessage(EditProfileLocalizedStrings.successfullyUpdateProfile, duration: 2.0, view: self.navigationController!.view)
                 
                 if self.originalCountry.code == self.country.code {
-                    Delay.delayWithDuration(0.5, completionHandler: { (success) -> Void in
+                    Delay.delayWithDuration(2.5, completionHandler: { (success) -> Void in
                         let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
                         appDelegate.changeRootToHomeView()
                     })

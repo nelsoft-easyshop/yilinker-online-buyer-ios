@@ -156,7 +156,7 @@ class ProductImagesView: UIView, UICollectionViewDataSource, UICollectionViewDel
     // Functions
     
     func setDetails(model: ProductDetailsModel, unitId: Int, width: CGFloat) {
-
+        let off: String = StringHelper.localizedStringWithKey("OFF_LOCALIZE_KEY")
         self.nameLabel.text = model.title
 
         if model.productUnits[unitId].price != model.productUnits[unitId].discountedPrice {
@@ -170,7 +170,7 @@ class ProductImagesView: UIView, UICollectionViewDataSource, UICollectionViewDel
         
         if model.productUnits[unitId].discount != 0 {
             self.discountPercentLabel.hidden = false
-            self.discountPercentLabel.text = "\(model.productUnits[unitId].discount)% \(HomeStrings.off) "
+            self.discountPercentLabel.text = "\(model.productUnits[unitId].discount)% \(off) "
         } else {
             self.discountPercentLabel.hidden = true
         }
@@ -209,8 +209,9 @@ class ProductImagesView: UIView, UICollectionViewDataSource, UICollectionViewDel
         }
         
         if model.productUnits[unitId].discount != 0 {
+            let off: String = StringHelper.localizedStringWithKey("OFF_LOCALIZE_KEY")
             self.discountPercentLabel.hidden = false
-            self.discountPercentLabel.text = "\(model.productUnits[unitId].discount)% \(HomeStrings.off) "
+            self.discountPercentLabel.text = "\(model.productUnits[unitId].discount)% \(off)"
         } else {
             self.discountPercentLabel.hidden = true
         }

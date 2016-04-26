@@ -516,8 +516,9 @@ extension String {
     }
     
     func formatToPercentage() -> String {
+        let off: String = StringHelper.localizedStringWithKey("OFF_LOCALIZE_KEY")
         if self.toDouble() != nil {
-            let stringNum: String = "\(round(self.toDouble()!))% \(HomeStrings.off)"
+            let stringNum: String = "\(round(self.toDouble()!))% \(off)"
             return stringNum.stringByReplacingOccurrencesOfString(".0", withString: "")
         } else {
             return ""

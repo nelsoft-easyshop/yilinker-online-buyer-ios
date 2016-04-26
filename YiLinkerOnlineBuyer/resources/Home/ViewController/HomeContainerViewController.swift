@@ -8,35 +8,20 @@
 
 import UIKit
 
-struct HomeStrings {
-    static let featured: String = StringHelper.localizedStringWithKey("FEATURED_LOCALIZE_KEY")
-    static let hotItems: String = StringHelper.localizedStringWithKey("HOT_ITEMS_LOCALIZE_KEY")
-    static let newItem: String = StringHelper.localizedStringWithKey("NEW_ITEMS_LOCALIZE_KEY")
-    static let seller: String = StringHelper.localizedStringWithKey("SELLERS_LOCALIZE_KEY")
-    
-    static let wishlistError: String = StringHelper.localizedStringWithKey("WISHLIST_ERROR_LOCALIZE_KEY")
-    static let error: String = StringHelper.localizedStringWithKey("ERROR_LOCALIZE_KEY")
-    static let somethingWentWrong: String = StringHelper.localizedStringWithKey("SOMETHING_WENT_WRONG_LOCALIZE_KEY")
-    static let home: String = StringHelper.localizedStringWithKey("HOME_LOCALIZE_KEY")
-    static let backToTop: String = StringHelper.localizedStringWithKey("BACK_TO_TOP_LOCALIZE_KEY")
-    static let off: String = StringHelper.localizedStringWithKey("OFF_LOCALIZE_KEY")
-}
-
-struct FABStrings {
-    static let signIn: String = StringHelper.localizedStringWithKey("SIGNIN_LOCALIZE_KEY")
-    static let help: String = StringHelper.localizedStringWithKey("HELP_LOCALIZE_KEY")
-    static let register: String = StringHelper.localizedStringWithKey("REGISTER_LOCALIZE_KEY")
-    static let messaging: String = StringHelper.localizedStringWithKey("MESSAGING_LOCALIZE_KEY")
-    static let customizeShopping: String = StringHelper.localizedStringWithKey("CUSTOMIZE_SHOPPING_LOCALIZE_KEY")
-    static let todaysPromo: String = StringHelper.localizedStringWithKey("TODAYS_PROMO_LOCALIZE_KEY")
-    static let categories: String = StringHelper.localizedStringWithKey("CATEGORIES_LOCALIZE_KEY")
-    static let mustBeSignIn: String = StringHelper.localizedStringWithKey("MUST_BE_SIGNIN_LOCALIZE_KEY")
-    static let followedSeller: String = StringHelper.localizedStringWithKey("FOLLOWED_SELLER_LOCALIZE_KEY")
-    static let logout: String = StringHelper.localizedStringWithKey("LOGOUT_LOCALIZE_KEY")
-    static let profile: String = StringHelper.localizedStringWithKey("PROFILE_LOCALIZE_KEY")
-}
 
 class HomeContainerViewController: UIViewController, UITabBarControllerDelegate, EmptyViewDelegate, CarouselCollectionViewCellDataSource, CarouselCollectionViewCellDelegate, HalfPagerCollectionViewCellDelegate, HalfPagerCollectionViewCellDataSource, FlashSaleCollectionViewCellDelegate, LayoutHeaderCollectionViewCellDelegate, SellerCarouselCollectionViewCellDataSource, SellerCarouselCollectionViewCellDelegate, LayoutNineCollectionViewCellDelegate, DailyLoginCollectionViewCellDataSource, DailyLoginCollectionViewCellDelegate, FABViewControllerDelegate, OverseasCollectionViewCellDelegate, OverseasCollectionViewCellDataSource {
+    
+    let featured: String = StringHelper.localizedStringWithKey("FEATURED_LOCALIZE_KEY")
+    let hotItems: String = StringHelper.localizedStringWithKey("HOT_ITEMS_LOCALIZE_KEY")
+    let newItem: String = StringHelper.localizedStringWithKey("NEW_ITEMS_LOCALIZE_KEY")
+    let seller: String = StringHelper.localizedStringWithKey("SELLERS_LOCALIZE_KEY")
+    
+    let wishlistError: String = StringHelper.localizedStringWithKey("WISHLIST_ERROR_LOCALIZE_KEY")
+    let error: String = StringHelper.localizedStringWithKey("ERROR_LOCALIZE_KEY")
+    let somethingWentWrong: String = StringHelper.localizedStringWithKey("SOMETHING_WENT_WRONG_LOCALIZE_KEY")
+    let home: String = StringHelper.localizedStringWithKey("HOME_LOCALIZE_KEY")
+    let backToTop: String = StringHelper.localizedStringWithKey("BACK_TO_TOP_LOCALIZE_KEY")
+    let off: String = StringHelper.localizedStringWithKey("OFF_LOCALIZE_KEY")
     
     var searchViewContoller: SearchViewController?
     var wishlisViewController: WishlistViewController?
@@ -141,7 +126,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.title = HomeStrings.home
+        self.title = self.home
         //header
         self.registerHeaderCollectionView(self.sectionHeaderNibName)
         self.registerCellWithNibName(self.carouselCellNibName)
@@ -228,7 +213,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         self.backToTopButton.layer.shadowOffset = CGSizeMake(0, 5)
         self.backToTopButton.layer.shadowRadius = 5
         self.backToTopButton.layer.shadowOpacity = 1.0
-        self.backToTopButton.setTitle(HomeStrings.backToTop, forState: UIControlState.Normal)
+        self.backToTopButton.setTitle(self.backToTop, forState: UIControlState.Normal)
     }
     
     //MARK: -
@@ -346,7 +331,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                     if task.statusCode == 401 {
                         self.fireRefreshToken()
                     } else {
-                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: HomeStrings.somethingWentWrong, title: HomeStrings.error)
+                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: self.somethingWentWrong, title: self.error)
                     }
                 }
                 self.yiHud?.hide()
@@ -374,7 +359,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             if SessionManager.isLoggedIn() {
                 return true
             } else {
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: HomeStrings.wishlistError, title: HomeStrings.error)
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: self.wishlistError, title: self.error)
                 return false
             }
         } else if self != viewController && viewController != tabBarController.viewControllers![2] as! UIViewController {
@@ -1115,7 +1100,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         
         if layoutFourModel.data.count >= 1 {
             flashSaleCell.productOneImageView.sd_setImageWithURL(StringHelper.convertStringToUrl(layoutFourModel.data[0].image), placeholderImage: UIImage(named: "dummy-placeholder"))
-            flashSaleCell.productOneDiscountLabel.text = "\(layoutFourModel.data[0].discountPercentage)% \(HomeStrings.off)"
+            flashSaleCell.productOneDiscountLabel.text = "\(layoutFourModel.data[0].discountPercentage)% \(self.off)"
             flashSaleCell.productOneImageView.target = layoutFourModel.data[0].target.targetUrl
             flashSaleCell.productOneImageView.targetType = layoutFourModel.data[0].target.targetType
         }
@@ -1124,14 +1109,14 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             flashSaleCell.productTwoImageView.sd_setImageWithURL(StringHelper.convertStringToUrl(layoutFourModel.data[1].image), placeholderImage: UIImage(named: "dummy-placeholder"))
             flashSaleCell.productTwoImageView.target = layoutFourModel.data[1].target.targetUrl
             flashSaleCell.productTwoImageView.targetType = layoutFourModel.data[1].target.targetType
-            flashSaleCell.productTwoDiscountLabel.text = "\(layoutFourModel.data[1].discountPercentage) \(HomeStrings.off)"
+            flashSaleCell.productTwoDiscountLabel.text = "\(layoutFourModel.data[1].discountPercentage) \(self.off)"
         }
         
         if layoutFourModel.data.count >= 3 {
             flashSaleCell.productThreeImageView.sd_setImageWithURL(StringHelper.convertStringToUrl(layoutFourModel.data[2].image), placeholderImage: UIImage(named: "dummy-placeholder"))
             flashSaleCell.productThreeImageView.target = layoutFourModel.data[2].target.targetUrl
             flashSaleCell.productThreeImageView.targetType = layoutFourModel.data[2].target.targetType
-            flashSaleCell.productThreeDiscountLabel.text = "\(layoutFourModel.data[2].discountPercentage) \(HomeStrings.off)"
+            flashSaleCell.productThreeDiscountLabel.text = "\(layoutFourModel.data[2].discountPercentage) \(self.off)"
         }
         
         return flashSaleCell
@@ -1844,23 +1829,35 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         fabViewController!.view.backgroundColor = UIColor.clearColor()
         fabViewController!.delegate = self
         
+        let signIn: String = StringHelper.localizedStringWithKey("SIGNIN_LOCALIZE_KEY")
+        let help: String = StringHelper.localizedStringWithKey("HELP_LOCALIZE_KEY")
+        let register: String = StringHelper.localizedStringWithKey("REGISTER_LOCALIZE_KEY")
+        let messaging: String = StringHelper.localizedStringWithKey("MESSAGING_LOCALIZE_KEY")
+        let customizeShopping: String = StringHelper.localizedStringWithKey("CUSTOMIZE_SHOPPING_LOCALIZE_KEY")
+        let todaysPromo: String = StringHelper.localizedStringWithKey("TODAYS_PROMO_LOCALIZE_KEY")
+        let categories: String = StringHelper.localizedStringWithKey("CATEGORIES_LOCALIZE_KEY")
+        let mustBeSignIn: String = StringHelper.localizedStringWithKey("MUST_BE_SIGNIN_LOCALIZE_KEY")
+        let followedSeller: String = StringHelper.localizedStringWithKey("FOLLOWED_SELLER_LOCALIZE_KEY")
+        let logout: String = StringHelper.localizedStringWithKey("LOGOUT_LOCALIZE_KEY")
+        let profile: String = StringHelper.localizedStringWithKey("PROFILE_LOCALIZE_KEY")
+        
         if SessionManager.isLoggedIn() {
             fabViewController!.addtextAndIconsWithLeftText("", rightText: "", icon: "close-white", isProfile: false)
-            fabViewController!.addtextAndIconsWithLeftText(FABStrings.followedSeller, rightText: "", icon: "fab_following", isProfile: false)
-            fabViewController!.addtextAndIconsWithLeftText(FABStrings.messaging, rightText: "\(SessionManager.getUnReadMessagesCount()) unread message(s)", icon: "fab_messaging", isProfile: false)
-            fabViewController!.addtextAndIconsWithLeftText(FABStrings.categories, rightText: "", icon: "fab_promo", isProfile: false)
-            fabViewController!.addtextAndIconsWithLeftText(FABStrings.help, rightText: "", icon: "fab_help", isProfile: false)
-            fabViewController!.addtextAndIconsWithLeftText(FABStrings.profile, rightText: "\(SessionManager.userFullName()) \n \(SessionManager.city()) \(SessionManager.province())", icon: SessionManager.profileImageStringUrl(), isProfile: true)
+            fabViewController!.addtextAndIconsWithLeftText(followedSeller, rightText: "", icon: "fab_following", isProfile: false)
+            fabViewController!.addtextAndIconsWithLeftText(messaging, rightText: "\(SessionManager.getUnReadMessagesCount()) unread message(s)", icon: "fab_messaging", isProfile: false)
+            fabViewController!.addtextAndIconsWithLeftText(categories, rightText: "", icon: "fab_promo", isProfile: false)
+            fabViewController!.addtextAndIconsWithLeftText(help, rightText: "", icon: "fab_help", isProfile: false)
+            fabViewController!.addtextAndIconsWithLeftText(profile, rightText: "\(SessionManager.userFullName()) \n \(SessionManager.city()) \(SessionManager.province())", icon: SessionManager.profileImageStringUrl(), isProfile: true)
             self.tabBarController!.presentViewController(fabViewController!, animated: false) { () -> Void in
                 
             }
         } else {
             self.circularDraweView("circular-drawer")
             fabViewController!.addtextAndIconsWithLeftText("", rightText: "", icon: "close-white", isProfile: false)
-            fabViewController!.addtextAndIconsWithLeftText(FABStrings.register, rightText: "", icon: "fab_register", isProfile: false)
-            fabViewController!.addtextAndIconsWithLeftText(FABStrings.signIn, rightText: "", icon: "fab_signin", isProfile: false)
-            fabViewController!.addtextAndIconsWithLeftText(FABStrings.categories, rightText: "", icon: "fab_category", isProfile: false)
-            fabViewController!.addtextAndIconsWithLeftText(FABStrings.help, rightText: "", icon: "fab_help", isProfile: false)
+            fabViewController!.addtextAndIconsWithLeftText(register, rightText: "", icon: "fab_register", isProfile: false)
+            fabViewController!.addtextAndIconsWithLeftText(signIn, rightText: "", icon: "fab_signin", isProfile: false)
+            fabViewController!.addtextAndIconsWithLeftText(categories, rightText: "", icon: "fab_category", isProfile: false)
+            fabViewController!.addtextAndIconsWithLeftText(help, rightText: "", icon: "fab_help", isProfile: false)
             
             self.tabBarController!.presentViewController(fabViewController!, animated: false) { () -> Void in
                 

@@ -24,10 +24,12 @@ class ProductResultGridCollectionViewCell: UICollectionViewCell {
     }
     
     func setDiscount(text: String) {
+        let off: String = StringHelper.localizedStringWithKey("OFF_LOCALIZE_KEY")
+        
         if text == "0" {
             discountLabel.hidden = true
         } else {
-            discountLabel.text = text + "% \(HomeStrings.off)"
+            discountLabel.text = text + "% \(off)"
         }
     }
     
