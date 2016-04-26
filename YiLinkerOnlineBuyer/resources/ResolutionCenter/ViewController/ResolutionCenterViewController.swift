@@ -314,9 +314,8 @@ class ResolutionCenterViewController: UIViewController, UITableViewDataSource, U
     
     func fireGetCases() {
         self.showHUD()
-        
-        let manager = APIManager.sharedInstance
-        var parameters: NSDictionary = NSDictionary();
+    
+        var parameters: NSDictionary = NSDictionary()
         var urlString: String = APIAtlas.getResolutionCenterCases
         
         // add filters to parameter
@@ -363,7 +362,6 @@ class ResolutionCenterViewController: UIViewController, UITableViewDataSource, U
                 }
             }
         }
-        println(parameters)
         
         WebServiceManager.fireGetCasesWithUrl(urlString, parameter: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
             self.resolutionCenterModel = ResolutionCenterModel.parseDataWithDictionary(responseObject)
@@ -403,29 +401,28 @@ class ResolutionCenterViewController: UIViewController, UITableViewDataSource, U
     
     func fireRefreshToken(type: String) {
         self.showHUD()
-        let manager = APIManager.sharedInstance
-        let parameters: NSDictionary = [
-            "client_id": Constants.Credentials.clientID(),
-            "client_secret": Constants.Credentials.clientSecret(),
-            "grant_type": Constants.Credentials.grantRefreshToken,
-            "refresh_token": SessionManager.refreshToken()]
-        
-        manager.POST(APIAtlas.refreshTokenUrl, parameters: parameters, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+        WebServiceManager.fireRefreshTokenWithUrl(APIAtlas.refreshTokenUrl, actionHandler: {
+            (successful, responseObject, requestErrorType) -> Void in
+            self.yiHud?.hide()
             
-            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
-            if type == "cases" {
-                self.fireGetCases()
+            if successful {
+                SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+                if type == "cases" {
+                    self.fireGetCases()
+                } else {
+                    self.requestGetTransactionsIds()
+                }
             } else {
-                self.requestGetTransactionsIds()
+                //Forcing user to logout.
+                UIAlertController.displayAlertRedirectionToLogin(self, actionHandler: { (sucess) -> Void in
+                    SessionManager.logout()
+                    FBSDKLoginManager().logOut()
+                    GPPSignIn.sharedInstance().signOut()
+                    let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+                    appDelegate.startPage()
+                })
             }
-            
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                self.yiHud?.hide()
         })
-        
     }
     
     // Get Transaction ids
